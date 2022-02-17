@@ -7190,6 +7190,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           distiBuyMethod: vendor ==='CISCO' ?
                             isEstimateId === "true" ? 'AVT Technology Solutions LLC' : 'TECH DATA' 
                           : '',
+          customerBuyMethod: 'TDANDAVT'
         },
       },
     },
@@ -7201,6 +7202,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
   };
   setTimeout(() => {
     res.json(response);
+    // res.json(utils.getQuotePreviewResponse())
   }, 2000);
 });
 

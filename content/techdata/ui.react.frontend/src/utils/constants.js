@@ -20,6 +20,10 @@ export const QUOTE_PREVIEW_AVT_TYPE_VALUE = 'tdavnet67';
 export const QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE = 'sap46';
 export const QUOTE_PREVIEW_TECH_DATA = 'TECH DATA';
 export const QUOTE_PREVIEW_AVT_TECHNOLOGY = 'AVT Technology Solutions LLC';
+export const QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE = 'TDANDAVT';
+export const QUOTE_PREVIEW_CREATE_POPUP_ACTION = 'Create Quote';
+export const QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD = 'TD';
+export const QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD = 'AVT';
 
 // Configuration
 export const ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY = 'Configuration Table Interactions';

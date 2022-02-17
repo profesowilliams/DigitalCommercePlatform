@@ -18,14 +18,18 @@ import {
   isDealSelectorHidden,
   isDealConfiguration,
   isTechDataDistiBuy,
-  isAVTTechDistiBuy
+  isAVTTechDistiBuy,
+  isTechDataCustomerMethod,
+  isAVTTechCustomerMethod
 } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
 import { 
   LOCAL_STORAGE_KEY_USER_DATA,
   QUOTE_PREVIEW_AVT_TYPE_VALUE,
-  QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE
+  QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE,
+  QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE,
+  QUOTE_PREVIEW_CREATE_POPUP_ACTION
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 
@@ -42,10 +46,8 @@ function QuotePreview(props) {
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
   const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
   const [modal, setModal] = useState(null);
-  const [isExclusiveFlag, setIsExclusiveFlag] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
   const [tier, setTier] = useState('');
-  const [distyBuyType, setDistyBuyType] = useState('');
-
   const modalConfig = componentProp?.modalConfig;
   const DEAL_ATTRIBUTE_FIELDNAME = "DEALIDENTIFIER";
 
@@ -54,13 +56,14 @@ function QuotePreview(props) {
   /**
    * 
    * @param {string} distiBuyMethodParam 
-   * @param {boolean} isExclusive 
+   * @param {string} customerBuyMethod 
+   * @param {string} buyMethodParam
    * @returns {string}
    */
-  const setQuoteDetailsEffect = (distiBuyMethodParam, isExclusive, buyMethodParam) => {
-    return isTechDataDistiBuy(distiBuyMethodParam) && !isExclusive ? 
+  const setQuoteDetailsEffect = (distiBuyMethodParam, customerBuyMethod, buyMethodParam) => {
+    return isTechDataDistiBuy(distiBuyMethodParam) && isTechDataCustomerMethod(customerBuyMethod) ? 
               QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE : 
-              isAVTTechDistiBuy(distiBuyMethodParam) && isExclusive ? 
+              isAVTTechDistiBuy(distiBuyMethodParam) && isAVTTechCustomerMethod(customerBuyMethod) ? 
                 QUOTE_PREVIEW_AVT_TYPE_VALUE :
                 buyMethodParam;
   };
@@ -71,13 +74,13 @@ function QuotePreview(props) {
   useEffect(() => {
     const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
     if(quoteDetailsResponse) {
-      const isExclusive = isNotEmptyValue(quoteDetailsResponse.isExclusive) ? quoteDetailsResponse.isExclusive : false 
+      const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
       const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
-      setIsExclusiveFlag(isExclusive);
-      setDistyBuyType(distiBuyMethodParam);
+      // force in False until the logic from UI are completed for this issue
+      // setShowPopUp(customerBuyMethod === QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE); // Flag to know if need to show the popup
       setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
       // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
-      quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, isExclusive, quoteDetailsResponse.buyMethod);
+      quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
       setQuoteDetails(quoteDetailsResponse);
       // Show Modal When Quote Cannot Be Created.
       if (cannotCreateQuote(quoteDetailsResponse)) {
@@ -95,7 +98,7 @@ function QuotePreview(props) {
   const cannotCreateQuote = (quoteDetailsResponse) => 
     isDealConfiguration(quoteDetailsResponse.source) 
       && (
-        (quoteDetailsResponse.isExclusive && isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod)) 
+        (quoteDetailsResponse?.isExclusive && isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod)) 
         || (!isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod) && !isAVTTechDistiBuy(quoteDetailsResponse.distiBuyMethod))
       );
 
@@ -113,11 +116,11 @@ function QuotePreview(props) {
 
   const closeModal = () => setModal(null);
 
-  const showErrorModal = () => showSimpleModal('Create Quote', (
+  const showErrorModal = () => showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
     <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
   ));
 
-  const showCannotCreateQuoteForDeal = () => showSimpleModal('Create Quote', (
+  const showCannotCreateQuoteForDeal = () => showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
     <div>{modalConfig?.cannotCreateQuoteForDeal}</div>
   ));
 
@@ -194,8 +197,8 @@ function QuotePreview(props) {
    * @param {any} quoteParam 
    */
   const validateCreateQuoteSystem = (quoteParam) => {
-    if (isAVTTechDistiBuy(distyBuyType) && !isExclusiveFlag) {
-      showSimpleModal('Create Quote', (
+    if (showPopUp) {
+      showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
         <ModalQuoteCreateModal
           createQuote={createQuote} 
           quoteDetails={quoteParam} 
@@ -236,8 +239,7 @@ function QuotePreview(props) {
     
     if (cannotCreateQuote(quote)) {
       showCannotCreateQuoteForDeal();
-    } 
-    else if(pricingRequired || dealRequired || userMissingFields) {
+    } else if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
 
       setQuoteWithoutEndUser(userMissingFields);

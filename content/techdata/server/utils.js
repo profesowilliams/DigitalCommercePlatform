@@ -2830,4 +2830,6779 @@ module.exports = {
         },
       }
     },
+    getQuotePreviewResponse() {
+      return {
+        "content": {
+          "quotePreview": {
+            "quoteDetails": {
+              "shipTo": null,
+              "endUser": [
+                {
+                  "id": null,
+                  "companyName": "ASOLO HOSPITAL SERVICE SPA",
+                  "name": "Michele Franceschi",
+                  "line1": "V OSPEDALE 18",
+                  "line2": null,
+                  "line3": null,
+                  "city": "CASTELFRANCO VENETO",
+                  "state": "TV",
+                  "zip": null,
+                  "postalCode": "31033",
+                  "country": "IT",
+                  "email": "michele.franceschi@coopservice.it",
+                  "contactEmail": null,
+                  "phoneNumber": null
+                }
+              ],
+              "reseller": [
+                {
+                  "id": "38048612",
+                  "companyName": null,
+                  "name": " ",
+                  "line1": null,
+                  "line2": null,
+                  "line3": null,
+                  "city": null,
+                  "state": null,
+                  "zip": null,
+                  "postalCode": null,
+                  "country": null,
+                  "email": null,
+                  "contactEmail": null,
+                  "phoneNumber": null
+                }
+              ],
+              "source": {
+                "type": "Deal",
+                "value": "53901574"
+              },
+              "notes": null,
+              "items": [
+                {
+                  "id": "1.0",
+                  "parent": null,
+                  "vendorPartNo": "C9300X-12Y-A",
+                  "manufacturer": "CISCO",
+                  "description": "Catalyst 9300X 12x25G Fiber Ports, modular uplink Switch",
+                  "quantity": 7,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Catalyst 9300X 12x25G Fiber Ports, modular uplink Switch",
+                  "mfrNumber": "C9300X-12Y-A",
+                  "tdNumber": "",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 20057.02,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "20,057.02",
+                  "extendedPrice": "81431.49",
+                  "extendedPriceFormatted": "81431.49",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": null,
+                  "urlProductSpecs": null,
+                  "children": [
+                    {
+                      "id": "1.0.1",
+                      "parent": "1.0",
+                      "vendorPartNo": "CON-SSSNT-C9300X21",
+                      "manufacturer": "CISCO",
+                      "description": "SOLN SUPP 8X5XNBD Catalyst 9300X 12x25G Fiber Ports, modul",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y12M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSSNT",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "SOLN SUPP 8X5XNBD Catalyst 9300X 12x25G Fiber Ports, modul",
+                      "mfrNumber": "CON-SSSNT-C9300X21",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 1845.75,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "1,845.75",
+                      "extendedPrice": "8398.18",
+                      "extendedPriceFormatted": "8398.18",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.0.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "SOLN SUPP 8X5XNBD Catalyst 9300X 12x25G Fiber Ports, modul",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 1199.74,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.1",
+                      "parent": "1.0",
+                      "vendorPartNo": "SC9300UK9-175",
+                      "manufacturer": "CISCO",
+                      "description": "Cisco Catalyst 9300 XE 17.5 UNIVERSAL UNIVERSAL",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Catalyst 9300 XE 17.5 UNIVERSAL UNIVERSAL",
+                      "mfrNumber": "SC9300UK9-175",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "Cisco Catalyst 9300 XE 17.5 UNIVERSAL UNIVERSAL",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.2",
+                      "parent": "1.0",
+                      "vendorPartNo": "PWR-C1-715WAC-P",
+                      "manufacturer": "CISCO",
+                      "description": "715W AC 80+ platinum Config 1 Power Supply",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Config 1 - power supply - hot-plug / redundant - 715 Watt",
+                      "mfrNumber": "PWR-C1-715WAC-P",
+                      "tdNumber": "14154830",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/e5/1d/e51d33dd-091a-4558-9f1f-37e51ad98071.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.2",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {
+                        "75x75": [
+                          {
+                            "id": "e51d33dd-091a-4558-9f1f-37e51ad98071",
+                            "url": "http://cdn.cnetcontent.com/e5/1d/e51d33dd-091a-4558-9f1f-37e51ad98071.jpg",
+                            "type": "Product shot",
+                            "angle": "Right-angle"
+                          }
+                        ],
+                        "640x480": [
+                          {
+                            "id": "2117f4ea-dd66-4ebc-832e-417aa2951ede",
+                            "url": "http://cdn.cnetcontent.com/21/17/2117f4ea-dd66-4ebc-832e-417aa2951ede.jpg",
+                            "type": "Product shot",
+                            "angle": "Right-angle"
+                          }
+                        ],
+                        "200x150": [
+                          {
+                            "id": "991ef749-b972-4081-8048-4d15232a0f14",
+                            "url": "http://cdn.cnetcontent.com/99/1e/991ef749-b972-4081-8048-4d15232a0f14.jpg",
+                            "type": "Product shot",
+                            "angle": "Right-angle"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d33eed49-176d-4a15-a9e3-fecf6d6845a1",
+                            "url": "http://cdn.cnetcontent.com/d3/3e/d33eed49-176d-4a15-a9e3-fecf6d6845a1.jpg",
+                            "type": "Product shot",
+                            "angle": "Right-angle"
+                          }
+                        ]
+                      },
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Config 1 - power supply - hot-plug / redundant - 715 Watt",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.3",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300-SPS-NONE",
+                      "manufacturer": "CISCO",
+                      "description": "No Secondary Power Supply Selected",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "No Secondary Power Supply Selected",
+                      "mfrNumber": "C9300-SPS-NONE",
+                      "tdNumber": "14173557",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000719.png",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.3",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {
+                        "130x80": [
+                          {
+                            "id": "80000719.png",
+                            "url": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000719.png",
+                            "type": "Category Image",
+                            "angle": "Front"
+                          }
+                        ]
+                      },
+                      "logos": {},
+                      "displayName": "No Secondary Power Supply Selected",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.4",
+                      "parent": "1.0",
+                      "vendorPartNo": "CAB-TA-EU",
+                      "manufacturer": "CISCO",
+                      "description": "Europe AC Type A Power Cable",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco power cable - 8 ft",
+                      "mfrNumber": "CAB-TA-EU",
+                      "tdNumber": "14119555",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.4",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco power cable - 8 ft",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.5",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300X-NW-A-12",
+                      "manufacturer": "CISCO",
+                      "description": "C9300 Network Advantage, 12-port license",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "C9300 Network Advantage, 12-port license",
+                      "mfrNumber": "C9300X-NW-A-12",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.5",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "C9300 Network Advantage, 12-port license",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.6",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300-STACK-NONE",
+                      "manufacturer": "CISCO",
+                      "description": "No Stack Cable Selected",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco configuration option",
+                      "mfrNumber": "C9300-STACK-NONE",
+                      "tdNumber": "14173558",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.6",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco configuration option",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.7",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300-SPWR-NONE",
+                      "manufacturer": "CISCO",
+                      "description": "No Stack Power Cable Selected",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco configuration option",
+                      "mfrNumber": "C9300-SPWR-NONE",
+                      "tdNumber": "14173584",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.7",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco configuration option",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.8",
+                      "parent": "1.0",
+                      "vendorPartNo": "SSD-240G",
+                      "manufacturer": "CISCO",
+                      "description": "Cisco pluggable USB3.0 SSD storage",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco pluggable USB3.0 SSD storage",
+                      "mfrNumber": "SSD-240G",
+                      "tdNumber": "14265386",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000229.png",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.8",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {
+                        "130x80": [
+                          {
+                            "id": "80000229.png",
+                            "url": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000229.png",
+                            "type": "Category Image",
+                            "angle": "Front"
+                          }
+                        ]
+                      },
+                      "logos": {},
+                      "displayName": "Cisco pluggable USB3.0 SSD storage",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.9",
+                      "parent": "1.0",
+                      "vendorPartNo": "PWR-C1-BLANK",
+                      "manufacturer": "CISCO",
+                      "description": "Config 1 Power Supply Blank",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco power supply slot cover",
+                      "mfrNumber": "PWR-C1-BLANK",
+                      "tdNumber": "14118113",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.9",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco power supply slot cover",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.10",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300X-NM-BLANK",
+                      "manufacturer": "CISCO",
+                      "description": "Catalyst 9300 Network Module Blank Module",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Catalyst 9300 Network Module Blank Module",
+                      "mfrNumber": "C9300X-NM-BLANK",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.10",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "Catalyst 9300 Network Module Blank Module",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.11",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300X-DNA-12Y-A",
+                      "manufacturer": "CISCO",
+                      "description": "C9300 DNA Advantage, Term License",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "C9300 DNA Advantage, Term License",
+                      "mfrNumber": "C9300X-DNA-12Y-A",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.11",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "C9300 DNA Advantage, Term License",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.12",
+                      "parent": "1.0",
+                      "vendorPartNo": "PI-LFAS-T",
+                      "manufacturer": "CISCO",
+                      "description": "Prime Infrastructure Lifecycle & Assurance Term - Smart Lic",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Prime Infrastructure Lifecycle and Assurance - Term License - 1 license",
+                      "mfrNumber": "PI-LFAS-T",
+                      "tdNumber": "14118810",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.12",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Prime Infrastructure Lifecycle and Assurance - Term License - 1 license",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.13",
+                      "parent": "1.0",
+                      "vendorPartNo": "TE-EMBEDDED-T",
+                      "manufacturer": "CISCO",
+                      "description": "Cisco ThousandEyes Enterprise Agent IBN Embedded",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco ThousandEyes Enterprise Agent IBN",
+                      "mfrNumber": "TE-EMBEDDED-T",
+                      "tdNumber": "14265380",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000404.png",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.13",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {
+                        "130x80": [
+                          {
+                            "id": "80000404.png",
+                            "url": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000404.png",
+                            "type": "Category Image",
+                            "angle": "Front"
+                          }
+                        ]
+                      },
+                      "logos": {},
+                      "displayName": "Cisco ThousandEyes Enterprise Agent IBN",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.14",
+                      "parent": "1.0",
+                      "vendorPartNo": "C9300X-NM-NONE",
+                      "manufacturer": "CISCO",
+                      "description": "Catalyst 9300 No-Network Module Selection",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Catalyst 9300 No-Network Module Selection",
+                      "mfrNumber": "C9300X-NM-NONE",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.14",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "Catalyst 9300 No-Network Module Selection",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.15",
+                      "parent": "1.0",
+                      "vendorPartNo": "NETWORK-PNP-LIC",
+                      "manufacturer": "CISCO",
+                      "description": "Network Plug-n-Play Connect for zero-touch device deployment",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Network Plug-n-Play Connect - license - 1 license",
+                      "mfrNumber": "NETWORK-PNP-LIC",
+                      "tdNumber": "14118344",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.15",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Network Plug-n-Play Connect - license - 1 license",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.11.0.1",
+                      "parent": "1.11",
+                      "vendorPartNo": "CON-SSTCM-C9300XXD",
+                      "manufacturer": "CISCO",
+                      "description": "SOLN SUPP SW SUB C9300 DNA Advantage,",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y12M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTCM",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "SOLN SUPP SW SUB C9300 DNA Advantage,",
+                      "mfrNumber": "CON-SSTCM-C9300XXD",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 116.15,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "116.15",
+                      "extendedPrice": "528.50",
+                      "extendedPriceFormatted": "528.50",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.11.0.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "SOLN SUPP SW SUB C9300 DNA Advantage,",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 75.5,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.11.1",
+                      "parent": "1.11",
+                      "vendorPartNo": "C9300-DNA-L-A-3Y",
+                      "manufacturer": "CISCO",
+                      "description": "DNA Advantage 3 Year License",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y36M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTC",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "DNA Advantage 3 Year License",
+                      "mfrNumber": "C9300-DNA-L-A-3Y",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 2371.45,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "2,371.45",
+                      "extendedPrice": "9628.08",
+                      "extendedPriceFormatted": "9628.08",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.11.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "DNA Advantage 3 Year License",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 1375.44,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.12.1",
+                      "parent": "1.12",
+                      "vendorPartNo": "PI-LFAS-AP-T-3Y",
+                      "manufacturer": "CISCO",
+                      "description": "PI Dev Lic for Lifecycle & Assurance Term 3Y",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y36M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTC",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Prime Infrastructure Lifecycle and Assurance - Term License (3 years) - 1 device",
+                      "mfrNumber": "PI-LFAS-AP-T-3Y",
+                      "tdNumber": "14155542",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.12.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Prime Infrastructure Lifecycle and Assurance - Term License (3 years) - 1 device",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "1.13.1",
+                      "parent": "1.13",
+                      "vendorPartNo": "TE-EMBEDDED-T-3Y",
+                      "manufacturer": "CISCO",
+                      "description": "ThousandEyes - Enterprise Agents",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 32,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y36M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTC",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "ThousandEyes - Enterprise Agents",
+                      "mfrNumber": "TE-EMBEDDED-T-3Y",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "1.13.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "ThousandEyes - Enterprise Agents",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    }
+                  ],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "1.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": null,
+                  "logos": null,
+                  "displayName": "Catalyst 9300X 12x25G Fiber Ports, modular uplink Switch",
+                  "authorization": {
+                    "canOrder": false,
+                    "canViewPrice": false,
+                    "customerCanView": false
+                  },
+                  "posType": "",
+                  "purchaseCost": 11633.07,
+                  "attributes": null
+                },
+                {
+                  "id": "2.0",
+                  "parent": null,
+                  "vendorPartNo": "CAB-SPWR-150CM=",
+                  "manufacturer": "CISCO",
+                  "description": "Catalyst Stack Power Cable 150 CM Spare",
+                  "quantity": 7,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco StackPower - power cable - 5 ft",
+                  "mfrNumber": "CAB-SPWR-150CM=",
+                  "tdNumber": "10117336",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 253.96,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "253.96",
+                  "extendedPrice": "1031.10",
+                  "extendedPriceFormatted": "1031.10",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                  "urlProductSpecs": null,
+                  "children": [],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "2.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {},
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco StackPower - power cable - 5 ft",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 147.3,
+                  "attributes": null
+                },
+                {
+                  "id": "3.0",
+                  "parent": null,
+                  "vendorPartNo": "STACK-T1-3M=",
+                  "manufacturer": "CISCO",
+                  "description": "3M Type 1 Stacking Cable",
+                  "quantity": 7,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco StackWise 480 - stacking cable - 10 ft",
+                  "mfrNumber": "STACK-T1-3M=",
+                  "tdNumber": "11025581",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 408.82,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "408.82",
+                  "extendedPrice": "1659.84",
+                  "extendedPriceFormatted": "1659.84",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                  "urlProductSpecs": null,
+                  "children": [],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "3.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {},
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco StackWise 480 - stacking cable - 10 ft",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 237.12,
+                  "attributes": null
+                },
+                {
+                  "id": "4.0",
+                  "parent": null,
+                  "vendorPartNo": "PWR-C1-715WAC-P=",
+                  "manufacturer": "CISCO",
+                  "description": "715W AC 80+ platinum Config 1 Power Supply Spare",
+                  "quantity": 7,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco Config 1 - power supply - hot-plug / redundant - 715 Watt",
+                  "mfrNumber": "PWR-C1-715WAC-P=",
+                  "tdNumber": "13546329",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 1474.78,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "1,474.78",
+                  "extendedPrice": "5987.59",
+                  "extendedPriceFormatted": "5987.59",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                  "urlProductSpecs": null,
+                  "children": [
+                    {
+                      "id": "4.1",
+                      "parent": "4.0",
+                      "vendorPartNo": "NO-POWER-CORD",
+                      "manufacturer": "CISCO",
+                      "description": "ECO friendly green option, no power cable will be shipped",
+                      "quantity": 7,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "No Power Cord Chosen",
+                      "mfrNumber": "NO-POWER-CORD",
+                      "tdNumber": "14260025",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000852.png",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "4.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {
+                        "130x80": [
+                          {
+                            "id": "80000852.png",
+                            "url": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000852.png",
+                            "type": "Category Image",
+                            "angle": "Front"
+                          }
+                        ]
+                      },
+                      "logos": {},
+                      "displayName": "No Power Cord Chosen",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    }
+                  ],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "4.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {},
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco Config 1 - power supply - hot-plug / redundant - 715 Watt",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 855.37,
+                  "attributes": null
+                },
+                {
+                  "id": "5.0",
+                  "parent": null,
+                  "vendorPartNo": "SFP-H25G-CU3M=",
+                  "manufacturer": "CISCO",
+                  "description": "25GBASE-CU SFP28 Cable 3 Meter",
+                  "quantity": 8,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco SFP28 Passive Copper Cable - direct attach cable - 10 ft - orange",
+                  "mfrNumber": "SFP-H25G-CU3M=",
+                  "tdNumber": "12166793",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 147.48,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "147.48",
+                  "extendedPrice": "684.32",
+                  "extendedPriceFormatted": "684.32",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/b8/ec/b8ec1932-d93d-4a07-a07e-e5b04f7404dd.jpg",
+                  "urlProductSpecs": null,
+                  "children": [],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "5.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {
+                    "200x150": [
+                      {
+                        "id": "fe2e160c-080e-4981-ba10-11b54c6b7d1a",
+                        "url": "http://cdn.cnetcontent.com/fe/2e/fe2e160c-080e-4981-ba10-11b54c6b7d1a.jpg",
+                        "type": "Product shot",
+                        "angle": "Front"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "b8ec1932-d93d-4a07-a07e-e5b04f7404dd",
+                        "url": "http://cdn.cnetcontent.com/b8/ec/b8ec1932-d93d-4a07-a07e-e5b04f7404dd.jpg",
+                        "type": "Product shot",
+                        "angle": "Front"
+                      }
+                    ]
+                  },
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco SFP28 Passive Copper Cable - direct attach cable - 10 ft - orange",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 85.54,
+                  "attributes": null
+                },
+                {
+                  "id": "6.0",
+                  "parent": null,
+                  "vendorPartNo": "C9200L-48P-4X-E",
+                  "manufacturer": "CISCO",
+                  "description": "Catalyst 9200L 48-port PoE+, 4 x 10G, Network Essentials",
+                  "quantity": 20,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 68,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 26,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 68,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco Catalyst 9200L - Network Essentials - switch - 48 ports - managed - rack-mountable",
+                  "mfrNumber": "C9200L-48P-4X-E",
+                  "tdNumber": "13510290",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 9753.66,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "9,753.66",
+                  "extendedPrice": "62423.40",
+                  "extendedPriceFormatted": "62423.40",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/45/c7/45c7dcd5-21f4-4eb5-9fdb-211fc06fd365.jpg",
+                  "urlProductSpecs": null,
+                  "children": [
+                    {
+                      "id": "6.0.1",
+                      "parent": "6.0",
+                      "vendorPartNo": "CON-SSSNT-C9200L4X",
+                      "manufacturer": "CISCO",
+                      "description": "SOLN SUPP 8X5XNBD Catalyst 9200L 48-port PoE+, 4 x 10G, Ne",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y12M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSSNT",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Solution Support - extended service agreement",
+                      "mfrNumber": "CON-SSSNT-C9200L4X",
+                      "tdNumber": "13524319",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 686.55,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "686.55",
+                      "extendedPrice": "8925.20",
+                      "extendedPriceFormatted": "8925.20",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.0.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Solution Support - extended service agreement",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 446.26,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.1",
+                      "parent": "6.0",
+                      "vendorPartNo": "C9200L-NW-E-48",
+                      "manufacturer": "CISCO",
+                      "description": "C9200L Network Essentials, 48-port license",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Network Essentials - Term License - 48 ports",
+                      "mfrNumber": "C9200L-NW-E-48",
+                      "tdNumber": "14115425",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Network Essentials - Term License - 48 ports",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.2",
+                      "parent": "6.0",
+                      "vendorPartNo": "CAB-TA-EU",
+                      "manufacturer": "CISCO",
+                      "description": "Europe AC Type A Power Cable",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco power cable - 8 ft",
+                      "mfrNumber": "CAB-TA-EU",
+                      "tdNumber": "14119555",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.2",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco power cable - 8 ft",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.3",
+                      "parent": "6.0",
+                      "vendorPartNo": "PWR-C5-BLANK",
+                      "manufacturer": "CISCO",
+                      "description": "Config 5 Power Supply Blank",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco power supply blank cover",
+                      "mfrNumber": "PWR-C5-BLANK",
+                      "tdNumber": "14120862",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.3",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco power supply blank cover",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.4",
+                      "parent": "6.0",
+                      "vendorPartNo": "C9200-STACK-BLANK",
+                      "manufacturer": "CISCO",
+                      "description": "Catalyst 9200 Blank Stack Module",
+                      "quantity": 40,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco blank panel",
+                      "mfrNumber": "C9200-STACK-BLANK",
+                      "tdNumber": "14135250",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.4",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco blank panel",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.5",
+                      "parent": "6.0",
+                      "vendorPartNo": "C9200L-DNA-E-48",
+                      "manufacturer": "CISCO",
+                      "description": "C9200L Cisco DNA Essentials, 48-port Term license",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Digital Network Architecture Essentials - Term License - 48 ports",
+                      "mfrNumber": "C9200L-DNA-E-48",
+                      "tdNumber": "14119524",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.5",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Digital Network Architecture Essentials - Term License - 48 ports",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.6",
+                      "parent": "6.0",
+                      "vendorPartNo": "NETWORK-PNP-NONE",
+                      "manufacturer": "CISCO",
+                      "description": "Network Plug-n-Play Opt Out SKU",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Network Plug and Play - license - 1 license",
+                      "mfrNumber": "NETWORK-PNP-NONE",
+                      "tdNumber": "14118016",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.6",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Network Plug and Play - license - 1 license",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.5.0.1",
+                      "parent": "6.5",
+                      "vendorPartNo": "CON-SSTCM-C92LE48",
+                      "manufacturer": "CISCO",
+                      "description": "SOLN SUPP SW SUBC9200L Cisco DNA Ess",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y12M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTCM",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "SOLN SUPP SW SUBC9200L Cisco DNA Ess",
+                      "mfrNumber": "CON-SSTCM-C92LE48",
+                      "tdNumber": "14230490",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 64.4,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "64.40",
+                      "extendedPrice": "837.20",
+                      "extendedPriceFormatted": "837.20",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.5.0.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "SOLN SUPP SW SUBC9200L Cisco DNA Ess",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 41.86,
+                      "attributes": null
+                    },
+                    {
+                      "id": "6.5.1",
+                      "parent": "6.5",
+                      "vendorPartNo": "C9200L-DNA-E-48-3Y",
+                      "manufacturer": "CISCO",
+                      "description": "C9200L Cisco DNA Essentials, 48-port, 3 Year Term license",
+                      "quantity": 20,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 55,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 13,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 55,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y36M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTC",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Digital Network Architecture Essentials - Term License (3 years) - 48 ports",
+                      "mfrNumber": "C9200L-DNA-E-48-3Y",
+                      "tdNumber": "13510351",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 1501.6,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "1,501.60",
+                      "extendedPrice": "13514.40",
+                      "extendedPriceFormatted": "13514.40",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "6.5.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Digital Network Architecture Essentials - Term License (3 years) - 48 ports",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 675.72,
+                      "attributes": null
+                    }
+                  ],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "6.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {
+                    "75x75": [
+                      {
+                        "id": "45c7dcd5-21f4-4eb5-9fdb-211fc06fd365",
+                        "url": "http://cdn.cnetcontent.com/45/c7/45c7dcd5-21f4-4eb5-9fdb-211fc06fd365.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ],
+                    "200x150": [
+                      {
+                        "id": "4c4d8c9d-43d8-4999-8226-37a0b65deef3",
+                        "url": "http://cdn.cnetcontent.com/4c/4d/4c4d8c9d-43d8-4999-8226-37a0b65deef3.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "1f6f3e8c-2e84-4f08-b1f5-600bb26bfb8a",
+                        "url": "http://cdn.cnetcontent.com/1f/6f/1f6f3e8c-2e84-4f08-b1f5-600bb26bfb8a.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ]
+                  },
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco Catalyst 9200L - Network Essentials - switch - 48 ports - managed - rack-mountable",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 3121.17,
+                  "attributes": null
+                },
+                {
+                  "id": "7.0",
+                  "parent": null,
+                  "vendorPartNo": "C9200L-24P-4G-E",
+                  "manufacturer": "CISCO",
+                  "description": "Catalyst 9200L 24-port PoE+, 4 x 1G, Network Essentials",
+                  "quantity": 17,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 70,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 28,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 70,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco Catalyst 9200L - Network Essentials - switch - 24 ports - rack-mountable",
+                  "mfrNumber": "C9200L-24P-4G-E",
+                  "tdNumber": "13510293",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 3680.25,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "3,680.25",
+                  "extendedPrice": "18769.36",
+                  "extendedPriceFormatted": "18769.36",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/a5/9c/a59c5930-69d6-4171-85f5-098186c571ca.jpg",
+                  "urlProductSpecs": null,
+                  "children": [
+                    {
+                      "id": "7.0.1",
+                      "parent": "7.0",
+                      "vendorPartNo": "CON-SSSNT-C920L24G",
+                      "manufacturer": "CISCO",
+                      "description": "SOLN SUPP 8X5XNBD Catalyst 9200L 24-port PoE+, 4 x 1G, Net",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y12M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSSNT",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Solution Support - extended service agreement",
+                      "mfrNumber": "CON-SSSNT-C920L24G",
+                      "tdNumber": "13543273",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 259.9,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "259.90",
+                      "extendedPrice": "2871.98",
+                      "extendedPriceFormatted": "2871.98",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.0.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Solution Support - extended service agreement",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 168.94,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.1",
+                      "parent": "7.0",
+                      "vendorPartNo": "C9200L-NW-E-24",
+                      "manufacturer": "CISCO",
+                      "description": "C9200L Network Essentials, 24-port license",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Network Essentials - Term License - 24 ports",
+                      "mfrNumber": "C9200L-NW-E-24",
+                      "tdNumber": "14115424",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Network Essentials - Term License - 24 ports",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.2",
+                      "parent": "7.0",
+                      "vendorPartNo": "CAB-TA-EU",
+                      "manufacturer": "CISCO",
+                      "description": "Europe AC Type A Power Cable",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco power cable - 8 ft",
+                      "mfrNumber": "CAB-TA-EU",
+                      "tdNumber": "14119555",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.2",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco power cable - 8 ft",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.3",
+                      "parent": "7.0",
+                      "vendorPartNo": "PWR-C5-BLANK",
+                      "manufacturer": "CISCO",
+                      "description": "Config 5 Power Supply Blank",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco power supply blank cover",
+                      "mfrNumber": "PWR-C5-BLANK",
+                      "tdNumber": "14120862",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.3",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco power supply blank cover",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.4",
+                      "parent": "7.0",
+                      "vendorPartNo": "C9200-STACK-BLANK",
+                      "manufacturer": "CISCO",
+                      "description": "Catalyst 9200 Blank Stack Module",
+                      "quantity": 34,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco blank panel",
+                      "mfrNumber": "C9200-STACK-BLANK",
+                      "tdNumber": "14135250",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.4",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco blank panel",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.5",
+                      "parent": "7.0",
+                      "vendorPartNo": "C9200L-DNA-E-24",
+                      "manufacturer": "CISCO",
+                      "description": "C9200L Cisco DNA Essentials, 24-port Term license",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Digital Network Architecture Essentials - Term License - 24 ports",
+                      "mfrNumber": "C9200L-DNA-E-24",
+                      "tdNumber": "14119515",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.5",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Digital Network Architecture Essentials - Term License - 24 ports",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.6",
+                      "parent": "7.0",
+                      "vendorPartNo": "NETWORK-PNP-NONE",
+                      "manufacturer": "CISCO",
+                      "description": "Network Plug-n-Play Opt Out SKU",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Network Plug and Play - license - 1 license",
+                      "mfrNumber": "NETWORK-PNP-NONE",
+                      "tdNumber": "14118016",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.6",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Network Plug and Play - license - 1 license",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.5.0.1",
+                      "parent": "7.5",
+                      "vendorPartNo": "CON-SSTCM-C92LE24",
+                      "manufacturer": "CISCO",
+                      "description": "SOLN SUPP SW SUBC9200L Cisco DNA Ess",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 35,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y12M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTCM",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "SOLN SUPP SW SUBC9200L Cisco DNA Ess",
+                      "mfrNumber": "CON-SSTCM-C92LE24",
+                      "tdNumber": "14231356",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 34.5,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "34.50",
+                      "extendedPrice": "381.31",
+                      "extendedPriceFormatted": "381.31",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.5.0.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "SOLN SUPP SW SUBC9200L Cisco DNA Ess",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 22.43,
+                      "attributes": null
+                    },
+                    {
+                      "id": "7.5.1",
+                      "parent": "7.5",
+                      "vendorPartNo": "C9200L-DNA-E-24-3Y",
+                      "manufacturer": "CISCO",
+                      "description": "C9200L Cisco DNA Essentials, 24-port, 3 Year Term license",
+                      "quantity": 17,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 55,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 13,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 55,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y36M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": "SSTC",
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco Digital Network Architecture Essentials - Term License (3 years) - 24 ports",
+                      "mfrNumber": "C9200L-DNA-E-24-3Y",
+                      "tdNumber": "13510345",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 817.84,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "817.84",
+                      "extendedPrice": "6256.51",
+                      "extendedPriceFormatted": "6256.51",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "7.5.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco Digital Network Architecture Essentials - Term License (3 years) - 24 ports",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 368.03,
+                      "attributes": null
+                    }
+                  ],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "7.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {
+                    "75x75": [
+                      {
+                        "id": "a59c5930-69d6-4171-85f5-098186c571ca",
+                        "url": "http://cdn.cnetcontent.com/a5/9c/a59c5930-69d6-4171-85f5-098186c571ca.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "3a1aebde-7048-47fe-8b9f-632b43c8fb37",
+                        "url": "http://cdn.cnetcontent.com/3a/1a/3a1aebde-7048-47fe-8b9f-632b43c8fb37.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ],
+                    "200x150": [
+                      {
+                        "id": "be3db7c0-9575-40fe-a1cd-7eb05590537f",
+                        "url": "http://cdn.cnetcontent.com/be/3d/be3db7c0-9575-40fe-a1cd-7eb05590537f.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ],
+                    "640x480": [
+                      {
+                        "id": "e24f2707-377f-441c-99d2-84936bcbcf3d",
+                        "url": "http://cdn.cnetcontent.com/e2/4f/e24f2707-377f-441c-99d2-84936bcbcf3d.jpg",
+                        "type": "Product shot",
+                        "angle": "Left-angle"
+                      }
+                    ]
+                  },
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco Catalyst 9200L - Network Essentials - switch - 24 ports - rack-mountable",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 1104.08,
+                  "attributes": null
+                },
+                {
+                  "id": "8.0",
+                  "parent": null,
+                  "vendorPartNo": "C9200L-STACK-KIT=",
+                  "manufacturer": "CISCO",
+                  "description": "Cisco Catalyst 9200L Stack Module",
+                  "quantity": 18,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 55,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 13,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 55,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco - network stacking module",
+                  "mfrNumber": "C9200L-STACK-KIT=",
+                  "tdNumber": "13518910",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 1675.89,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "1,675.89",
+                  "extendedPrice": "13574.70",
+                  "extendedPriceFormatted": "13574.70",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                  "urlProductSpecs": null,
+                  "children": [
+                    {
+                      "id": "8.1",
+                      "parent": "8.0",
+                      "vendorPartNo": "C9200-STACK",
+                      "manufacturer": "CISCO",
+                      "description": "Catalyst 9200 Stack Module",
+                      "quantity": 36,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Catalyst 9200 Stack Module",
+                      "mfrNumber": "C9200-STACK",
+                      "tdNumber": null,
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": null,
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "8.1",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": null,
+                      "logos": null,
+                      "displayName": "Catalyst 9200 Stack Module",
+                      "authorization": {
+                        "canOrder": false,
+                        "canViewPrice": false,
+                        "customerCanView": false
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    },
+                    {
+                      "id": "8.2",
+                      "parent": "8.0",
+                      "vendorPartNo": "STACK-T4-50CM",
+                      "manufacturer": "CISCO",
+                      "description": "50CM Type 4 Stacking Cable",
+                      "quantity": 18,
+                      "unitPrice": null,
+                      "unitPriceFormatted": "",
+                      "totalPrice": null,
+                      "totalPriceFormatted": "",
+                      "msrp": null,
+                      "invoice": null,
+                      "shipDates": null,
+                      "invoices": null,
+                      "trackings": null,
+                      "discounts": [
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 0,
+                          "formattedValue": null
+                        },
+                        {
+                          "type": null,
+                          "value": 42,
+                          "formattedValue": null
+                        }
+                      ],
+                      "contract": {
+                        "id": null,
+                        "status": null,
+                        "duration": "P0Y0M0DT0H0M",
+                        "renewedDuration": null,
+                        "startDate": null,
+                        "endDate": null,
+                        "newAgreementStartDate": null,
+                        "newAgreementEndDate": null,
+                        "newUsagePeriodStartDate": null,
+                        "newUsagePeriodEndDate": null,
+                        "supportLevel": null,
+                        "serviceLevel": null,
+                        "usagePeriod": null,
+                        "renewalTerm": 0
+                      },
+                      "shortDescription": "Cisco stacking cable - 1.6 ft",
+                      "mfrNumber": "STACK-T4-50CM",
+                      "tdNumber": "14117360",
+                      "upcNumber": null,
+                      "unitPriceCurrency": null,
+                      "unitCost": 0,
+                      "unitCostCurrency": null,
+                      "unitListPrice": 0,
+                      "unitListPriceCurrency": null,
+                      "extendedListPrice": 0,
+                      "unitListPriceFormatted": "0.00",
+                      "extendedPrice": "0.00",
+                      "extendedPriceFormatted": "0.00",
+                      "availability": null,
+                      "rebateValue": null,
+                      "urlProductImage": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg",
+                      "urlProductSpecs": null,
+                      "children": null,
+                      "agreements": null,
+                      "ancillaryChargesWithTitles": null,
+                      "annuity": null,
+                      "isSubLine": false,
+                      "displayLineNumber": "8.2",
+                      "licenseStartDate": null,
+                      "licenseEndDate": null,
+                      "contractStartDate": null,
+                      "contractEndDate": null,
+                      "serviceContractDetails": null,
+                      "contractNo": null,
+                      "contractType": null,
+                      "license": null,
+                      "status": null,
+                      "vendorStatus": null,
+                      "customerPOLine": null,
+                      "supplierQuoteRef": null,
+                      "configID": null,
+                      "locationID": null,
+                      "serials": null,
+                      "paKs": null,
+                      "images": {},
+                      "logos": {
+                        "200x150": [
+                          {
+                            "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                            "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                          }
+                        ],
+                        "400x300": [
+                          {
+                            "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                            "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                          }
+                        ],
+                        "75x75": [
+                          {
+                            "id": "c50819db-6344-452e-a701-da44b7795b61",
+                            "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                          }
+                        ]
+                      },
+                      "displayName": "Cisco stacking cable - 1.6 ft",
+                      "authorization": {
+                        "canOrder": true,
+                        "canViewPrice": true,
+                        "customerCanView": true
+                      },
+                      "posType": "",
+                      "purchaseCost": 0,
+                      "attributes": null
+                    }
+                  ],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "8.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {},
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco - network stacking module",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 754.15,
+                  "attributes": null
+                },
+                {
+                  "id": "9.0",
+                  "parent": null,
+                  "vendorPartNo": "GLC-SX-MMD=",
+                  "manufacturer": "CISCO",
+                  "description": "1000BASE-SX SFP transceiver module, MMF, 850nm, DOM",
+                  "quantity": 55,
+                  "unitPrice": null,
+                  "unitPriceFormatted": "",
+                  "totalPrice": null,
+                  "totalPriceFormatted": "",
+                  "msrp": null,
+                  "invoice": null,
+                  "shipDates": null,
+                  "invoices": null,
+                  "trackings": null,
+                  "discounts": [
+                    {
+                      "type": null,
+                      "value": 60,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 18,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 42,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 0,
+                      "formattedValue": null
+                    },
+                    {
+                      "type": null,
+                      "value": 60,
+                      "formattedValue": null
+                    }
+                  ],
+                  "contract": null,
+                  "shortDescription": "Cisco - SFP (mini-GBIC) transceiver module - GigE",
+                  "mfrNumber": "GLC-SX-MMD=",
+                  "tdNumber": "10140275",
+                  "upcNumber": null,
+                  "unitPriceCurrency": null,
+                  "unitCost": 0,
+                  "unitCostCurrency": null,
+                  "unitListPrice": 589.91,
+                  "unitListPriceCurrency": null,
+                  "extendedListPrice": 0,
+                  "unitListPriceFormatted": "589.91",
+                  "extendedPrice": "12977.80",
+                  "extendedPriceFormatted": "12977.80",
+                  "availability": null,
+                  "rebateValue": null,
+                  "urlProductImage": "http://cdn.cnetcontent.com/18/fd/18fdd4ca-7645-490a-ac48-b3a2ca7bd41f.jpg",
+                  "urlProductSpecs": null,
+                  "children": [],
+                  "agreements": null,
+                  "ancillaryChargesWithTitles": null,
+                  "annuity": null,
+                  "isSubLine": false,
+                  "displayLineNumber": "9.0",
+                  "licenseStartDate": null,
+                  "licenseEndDate": null,
+                  "contractStartDate": null,
+                  "contractEndDate": null,
+                  "serviceContractDetails": null,
+                  "contractNo": null,
+                  "contractType": null,
+                  "license": null,
+                  "status": null,
+                  "vendorStatus": null,
+                  "customerPOLine": null,
+                  "supplierQuoteRef": null,
+                  "configID": null,
+                  "locationID": null,
+                  "serials": null,
+                  "paKs": null,
+                  "images": {
+                    "200x150": [
+                      {
+                        "id": "be25a1cb-2877-476d-bc93-abfd94d6cc0f",
+                        "url": "http://cdn.cnetcontent.com/be/25/be25a1cb-2877-476d-bc93-abfd94d6cc0f.jpg",
+                        "type": "Product shot",
+                        "angle": "Right-angle"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "18fdd4ca-7645-490a-ac48-b3a2ca7bd41f",
+                        "url": "http://cdn.cnetcontent.com/18/fd/18fdd4ca-7645-490a-ac48-b3a2ca7bd41f.jpg",
+                        "type": "Product shot",
+                        "angle": "Right-angle"
+                      }
+                    ]
+                  },
+                  "logos": {
+                    "200x150": [
+                      {
+                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+                      }
+                    ],
+                    "400x300": [
+                      {
+                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+                      }
+                    ],
+                    "75x75": [
+                      {
+                        "id": "c50819db-6344-452e-a701-da44b7795b61",
+                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+                      }
+                    ]
+                  },
+                  "displayName": "Cisco - SFP (mini-GBIC) transceiver module - GigE",
+                  "authorization": {
+                    "canOrder": true,
+                    "canViewPrice": true,
+                    "customerCanView": true
+                  },
+                  "posType": "",
+                  "purchaseCost": 235.96,
+                  "attributes": null
+                }
+              ],
+              "id": null,
+              "orders": null,
+              "customerPO": null,
+              "endUserPO": null,
+              "poDate": null,
+              "quoteReference": null,
+              "spaId": null,
+              "currency": "USD",
+              "currencySymbol": "$",
+              "subTotal": 249880.96,
+              "subTotalFormatted": "249,880.96",
+              "tier": null,
+              "configurationId": "53901574",
+              "description": "ASOLO HOSPITAL SERVICE SPA Quote",
+              "vendor": "CISCO",
+              "buyMethod": "tdavnet67",
+              "customerBuyMethod": 'TDANDAVT', //'AVT' //"TD",//"TDANDAVT",
+              "distiBuyMethod": 'AVT Technology Solutions LLC',// 'TECH DATA', "AVT Technology Solutions LLC",
+              "isExclusive": true,
+              "attributes": null
+            }
+          }
+        },
+        "error": {
+          "code": 0,
+          "messages": [],
+          "isError": false
+        }
+      }
+    }
 };
