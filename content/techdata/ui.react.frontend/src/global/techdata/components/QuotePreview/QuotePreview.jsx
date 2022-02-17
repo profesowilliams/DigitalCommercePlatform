@@ -29,7 +29,6 @@ import {
   LOCAL_STORAGE_KEY_USER_DATA,
   QUOTE_PREVIEW_AVT_TYPE_VALUE,
   QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE,
-  QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE,
   QUOTE_PREVIEW_CREATE_POPUP_ACTION,
   QUOTE_PREVIEW_TECH_DATA,
   QUOTE_PREVIEW_AVT_TECHNOLOGY,
@@ -101,8 +100,8 @@ function QuotePreview(props) {
    * @returns 
    */
   const cannotCreateQuote = (quoteDetailsResponse) => {
-    const distiBuyMethod = quoteDetailsResponse.distiBuyMethod;
-    const customerBuyMethod = quoteDetailsResponse.customerBuyMethod;
+    const distiBuyMethod = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
+    const customerBuyMethod = isNotEmptyValue(quoteDetailsResponse.customerBuyMethod) ? quoteDetailsResponse.customerBuyMethod : '';
    
     // DistiBuyMethod = “TECH DATA” and CustomerBuyMethod = "AVT"
     const firstCondition = compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_TECH_DATA) && compareBuyMethod(customerBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD);

@@ -19,7 +19,7 @@ export const isTechDataCustomerMethod = (customerMethod) => customerMethod?.toUp
 
 export const isAVTTechCustomerMethod = (customerMethod) => customerMethod?.toUpperCase() === QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD.toUpperCase() || QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE.toUpperCase();
 
-export const compareBuyMethod = (currentBuyMethod, expectedBuyMethod) => currentBuyMethod.toUpperCase() === expectedBuyMethod.toUpperCase();
+export const compareBuyMethod = (currentBuyMethod, expectedBuyMethod) => currentBuyMethod?.toUpperCase() === expectedBuyMethod?.toUpperCase(); 
 
 export const isEstimate = (source) => source.type === 'Estimate'
 
