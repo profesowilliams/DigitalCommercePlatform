@@ -6762,7 +6762,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     content: {
       quotePreview: {
         quoteDetails: {
-          isExclusive: false,
+          isExclusive: isEstimateId === "true" && vendor ==='CISCO' ? false : true,
           shipTo: null,
           buyMethod: "sap46",
           endUser: [
@@ -7185,7 +7185,10 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           tier: isEstimateId === "true" ? null : 'Commercial',
           configurationId: "QJ128146301OP",
           description: "Deal ID 52296358",
-          vendor: vendor || "CISCO"
+          vendor: vendor || "CISCO",
+          distiBuyMethod: vendor ==='CISCO' ?
+                            isEstimateId === "true" ? 'AVT Technology Solutions LLC' : 'TECH DATA' 
+                          : '',
         },
       },
     },

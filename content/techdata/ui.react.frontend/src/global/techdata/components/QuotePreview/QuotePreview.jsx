@@ -10,10 +10,23 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
-import { isPricingOptionsRequired, isAllowedQuantityIncrease, isDealRequired, isEndUserMissing, isDealSelectorHidden, isDealConfiguration, isTechDataDistiBuy, isAVTTechDistiBuy } from "./QuoteTools";
+import {
+  isPricingOptionsRequired,
+  isAllowedQuantityIncrease,
+  isDealRequired,
+  isEndUserMissing,
+  isDealSelectorHidden,
+  isDealConfiguration,
+  isTechDataDistiBuy,
+  isAVTTechDistiBuy
+} from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
-import { LOCAL_STORAGE_KEY_USER_DATA, QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_DEAL_TYPE } from "../../../../utils/constants";
+import { 
+  LOCAL_STORAGE_KEY_USER_DATA,
+  QUOTE_PREVIEW_AVT_TYPE_VALUE,
+  QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE
+} from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 
 function QuotePreview(props) {
@@ -30,38 +43,55 @@ function QuotePreview(props) {
   const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
   const [modal, setModal] = useState(null);
   const [isExclusiveFlag, setIsExclusiveFlag] = useState(false);
-  const [systemInfoDone, setSystemInfoDone] = useState(false);
-  const [dealType, setDealType] = useState('');
   const [tier, setTier] = useState('');
+  const [distyBuyType, setDistyBuyType] = useState('');
 
   const modalConfig = componentProp?.modalConfig;
-
-  //Please do not change the below method without consulting your Dev Lead
-  function invokeModal(modal) {
-    setModal(modal);
-  }
   const DEAL_ATTRIBUTE_FIELDNAME = "DEALIDENTIFIER";
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
+  
+  /**
+   * 
+   * @param {string} distiBuyMethodParam 
+   * @param {boolean} isExclusive 
+   * @returns {string}
+   */
+  const setQuoteDetailsEffect = (distiBuyMethodParam, isExclusive, buyMethodParam) => {
+    return isTechDataDistiBuy(distiBuyMethodParam) && !isExclusive ? 
+              QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE : 
+              isAVTTechDistiBuy(distiBuyMethodParam) && isExclusive ? 
+                QUOTE_PREVIEW_AVT_TYPE_VALUE :
+                buyMethodParam;
+  };
 
+  /**
+   * Getting the values of the Quote
+   */
   useEffect(() => {
     const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
     if(quoteDetailsResponse) {
-      setQuoteDetails(quoteDetailsResponse);
-      const isExclusive = quoteDetailsResponse.isExclusive;
-      setIsExclusiveFlag(isExclusive ? true : false);
-      setDealType(isNotEmptyValue(quoteDetailsResponse.source?.type)) ? quoteDetailsResponse.source?.type : '';
+      const isExclusive = isNotEmptyValue(quoteDetailsResponse.isExclusive) ? quoteDetailsResponse.isExclusive : false 
+      const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
+      setIsExclusiveFlag(isExclusive);
+      setDistyBuyType(distiBuyMethodParam);
       setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
-
+      // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
+      quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, isExclusive, quoteDetailsResponse.buyMethod);
+      setQuoteDetails(quoteDetailsResponse);
       // Show Modal When Quote Cannot Be Created.
       if (cannotCreateQuote(quoteDetailsResponse)) {
         showCannotCreateQuoteForDeal();
       }
-      
     }
   }, [apiResponse]);
 
-
+  /**
+   * In case of the buy method is not AVT and it is exclusive. 
+   * Or if it is TechData but is exclusive. 
+   * @param {any} quoteDetailsResponse 
+   * @returns 
+   */
   const cannotCreateQuote = (quoteDetailsResponse) => 
     isDealConfiguration(quoteDetailsResponse.source) 
       && (
@@ -110,6 +140,7 @@ function QuotePreview(props) {
    * the end user and redirect to ordersGrid
    * @param {any} quoteDetailsResponse 
    * @param {string} buyMethodParam 
+   * 
    * @returns 
    */
   const createQuote = async (quoteDetailsResponse, buyMethodParam = '') => {
@@ -121,12 +152,11 @@ function QuotePreview(props) {
       if (quoteDetails.reseller && quoteDetails.reseller.length > 0 && activeCustomer) {
         quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, name }
       }
-
-      if (quoteDetails.buyMethod && buyMethodParam !== '' && activeCustomer) {
+      if (buyMethodParam !== '' ){
+        // 	SHOW system selection popup only if Reseller has SAP 6.8 account
         quoteDetails.buyMethod = buyMethodParam;
-      } else if (dealType === QUOTE_PREVIEW_DEAL_TYPE) {
-        quoteDetails.buyMethod = QUOTE_PREVIEW_AVT_TYPE_VALUE; // In case of the dealType are "Deal" force the buyMethod value to tdavnet67
       }
+
       const result = await usPost(componentProp.quickQuoteEndpoint, {quoteDetails});
       if (!result.data?.error?.isError && result.data?.content?.confirmationId) {
         const { confirmationId } = result.data.content;
@@ -164,10 +194,9 @@ function QuotePreview(props) {
    * @param {any} quoteParam 
    */
   const validateCreateQuoteSystem = (quoteParam) => {
-    if (!isExclusiveFlag && dealType !== QUOTE_PREVIEW_DEAL_TYPE) {
+    if (isAVTTechDistiBuy(distyBuyType) && !isExclusiveFlag) {
       showSimpleModal('Create Quote', (
-        <ModalQuoteCreateModal 
-          setSystemInfoDone={setSystemInfoDone} 
+        <ModalQuoteCreateModal
           createQuote={createQuote} 
           quoteDetails={quoteParam} 
           setModal={setModal}
@@ -215,13 +244,9 @@ function QuotePreview(props) {
       setQuoteWithoutDealPricing(pricingRequired);
       setQuoteWithoutDeal(dealRequired);
     } else {
-      if (!isExclusiveFlag && !systemInfoDone) {
         validateCreateQuoteSystem(quote);
-      } else {
-        createQuote(quote);
-      }
     }
-  }
+  };
 
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => {
@@ -255,7 +280,7 @@ function QuotePreview(props) {
 
       return newGeneralDetails;
     });
-  }
+  };
 
   const setDealApplyAnalytics = (generalInfo) => {
     pushEvent(
@@ -270,7 +295,7 @@ function QuotePreview(props) {
     );
   };
 
-  const endUserInfoChange = (endUserlInformation) =>{
+  const endUserInfoChange = (endUserlInformation) => {
     setQuoteWithoutEndUser(false);
     setQuoteDetails((previousQuoteDetails) => (
       {
@@ -278,7 +303,7 @@ function QuotePreview(props) {
         endUser: [endUserlInformation],
       }
     ));
-  }
+  };
 
   /**
    * The keys for company info (reseller) from API response is different when compared to

@@ -3,7 +3,6 @@ import { QUOTE_PREVIEW_AVT_TYPE_VALUE, QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE } from
 
 const ModalQuoteCreateModal = ({
     setModal,
-    setSystemInfoDone,
     createQuote,
     quoteDetails,
     modalConfig,
@@ -35,9 +34,8 @@ const ModalQuoteCreateModal = ({
   };
 
   const veryfyBuyMethodAction = async () => {
-    setSystemInfoDone(true);
     setModal(null);
-    await createQuote(quoteDetails, buyMethod, setModal);
+    await createQuote(quoteDetails, buyMethod);
   };
   
   const cancelAction = () => {
