@@ -311,7 +311,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Type = input.QuoteDetails.Source.Type ?? string.Empty,  // Expected Values : Estimate / Renewal / VendorQuote / ""
                     Value = input.QuoteDetails.Source.Value ?? string.Empty // 
                 };
-                createModelFrom.Attributes = BuildAttribute(createModelFrom.VendorReference.Value, "ORIGINALESTIMATEID");
+                var vendorAtribue = BuildAttribute(createModelFrom.VendorReference.Value, "ORIGINALESTIMATEID");
+                createModelFrom.Attributes = new List<AttributeDto> { vendorAtribue };
             }
 
             return createModelFrom;
@@ -383,6 +384,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                         Name = !string.IsNullOrWhiteSpace(item.ShortDescription) ?  item.ShortDescription : item.MFRNumber,
                     }
                 };
+            List<AttributeDto> lstAttributes = BuildLineAttibutes(item, id);
 
             var requestItem = new ItemModel
             {
@@ -396,24 +398,35 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 UnitCost = (decimal)item.UnitPrice,
                 Product = lstProduct,
                 PurchaseCost = item.PurchaseCost,
-                Attributes = BuildAttribute(id, "vendorquoteid"),
+                Attributes = lstAttributes,
 
             };
             return requestItem;
         }
 
-        private List<AttributeDto> BuildAttribute(string id, string attributeName = "vendorquoteid")
+        private List<AttributeDto> BuildLineAttibutes(Line item, string id)
         {
-            if (string.IsNullOrWhiteSpace(id)) return new List<AttributeDto>();
+            List<AttributeDto> lstAttributes = new List<AttributeDto>();
 
-            List<AttributeDto> lstAttributes = new List<AttributeDto>
+            var vendorAtribue = BuildAttribute(id, "vendorquoteid");
+            lstAttributes.Add(vendorAtribue);
+
+            if (item?.Contract?.Duration != null)
             {
-                new AttributeDto {Name= attributeName, Value=id }
-            };
+                var dealDuration = BuildAttribute(item.Contract.Duration, "DEALDURATION");
+                lstAttributes.Add(dealDuration);
+            }
 
             return lstAttributes;
-
         }
+
+        private AttributeDto BuildAttribute(string id, string attributeName = "vendorquoteid")
+        {
+            if (string.IsNullOrWhiteSpace(id)) return new AttributeDto();
+
+            return new AttributeDto { Name = attributeName, Value = id };
+        }
+
 
         private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList, string companyName = "")
         {

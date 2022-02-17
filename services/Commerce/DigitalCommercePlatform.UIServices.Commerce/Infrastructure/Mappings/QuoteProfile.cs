@@ -393,6 +393,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         public string Resolve(DetailedDto source, QuotePreview destination, string destMember, ResolutionContext context)
         {
             var distiBuyMethod = source.DistiBuyMethod?.ToUpper();
+            if (distiBuyMethod == null)
+                return "";
             return distiBuyMethod;
         }
     }

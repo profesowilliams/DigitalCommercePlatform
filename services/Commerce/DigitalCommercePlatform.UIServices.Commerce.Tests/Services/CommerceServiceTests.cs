@@ -802,6 +802,33 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void BuildLineAttibutes_Test()
+        {
+            //arrange
+            Line item = new Line
+            {
+                TDNumber = "1231234444",
+                MFRNumber = "CISCO_35345",
+                Manufacturer = "CISCO",
+                ShortDescription = "TEST PRODUCT",
+                Quantity = 1,
+                UnitPrice = (decimal?)12.08
+            };
+            string id = "TT132145197LJ";
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildLineAttibutes" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { item,id });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
         public void GetAccountDetails()
         {
             //arrange 
