@@ -35,23 +35,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
             _mockAppSettings.Setup(x => x.GetSetting("Feature.UI.QuoteDeals.ReturnDummyRecords")).Returns("true");
         }
 
-        public class RequestInput
+        GetQuotesForGrid.Request RequestInput = new GetQuotesForGrid.Request
         {
-            public string CreatedBy { get; private set; }
-            public string QuoteIdFilter { get; private set; }
-            public string VendorReference { get; private set; }
-            public DateTime? CreatedFrom { get; private set; }
-            public DateTime? CreatedTo { get; private set; }
-            public string SortBy { get; private set; }
-            public string SortDirection { get; private set; }
-            public int? PageSize { get; private set; } = 25;
-            public int? PageNumber { get; private set; } = 1;
-            public bool? WithPaginationInfo { get; private set; } = true;
-            public string Manufacturer { get; private set; }
-            public string EndUserName { get; private set; }
-            public bool Details { get; private set; } = true;
-            public string DealId { get; private set; }
-        }
+            CreatedBy = "Nilesh",
+            QuoteIdFilter = "17645",
+            VendorReference = "Cisco",
+            CreatedFrom = DateTime.Now,
+            CreatedTo = DateTime.Now,
+            SortBy = "QuoteId",
+            SortDirection = "desc",
+            PageSize = 25,
+            PageNumber = 1,
+            WithPaginationInfo = true,
+            Manufacturer = "Cisco",
+            EndUserName = "PUBLICX",
+            Details = true,
+            DealId = "54789",
+            LatestRevisionOnly = Models.Quote.Find.LatestRevisionOnly.Y
+        };
+
 
         [Theory]
         [AutoDomainData]
@@ -64,8 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
                    .ReturnsAsync(expected);
 
             var handler = new GetQuotesForGrid.Handler(_mockCommerceService.Object, _mapper.Object, _logger.Object, _mockAppSettings.Object);
-            var request = new GetQuotesForGrid.Request();
-            var result = await handler.Handle(request, It.IsAny<CancellationToken>());
+            var result = await handler.Handle(RequestInput, It.IsAny<CancellationToken>());
             result.Should().NotBeNull();
         }
     }

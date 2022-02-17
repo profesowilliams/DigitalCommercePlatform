@@ -70,9 +70,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
 
         [HttpGet]
         [Route("details")]
-        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id, [FromQuery] bool details = true)
+        public async Task<IActionResult> GetQuoteDetails([FromQuery] IReadOnlyCollection<string> id, [FromQuery] bool details = true, [FromQuery] bool latestRevision = true)
         {
-            var response = await Mediator.Send(new GetQuote.Request(id, details)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetQuote.Request(id, details, latestRevision)).ConfigureAwait(false);
             return Ok(response);
         }
 

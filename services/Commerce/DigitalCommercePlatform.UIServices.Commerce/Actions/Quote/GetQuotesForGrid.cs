@@ -37,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public string EndUserName { get; set; }
             public bool Details { get; set; } = true;
             public string DealId { get; set; }
-
+            public LatestRevisionOnly? LatestRevisionOnly { get; set; } = Models.Quote.Find.LatestRevisionOnly.Y;
             public Request()
             {
             }
@@ -75,6 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                 var createdTo = request.CreatedTo?.ToShortDateString();
                 if (createdFrom != null) { dateFrom = DateTime.Parse(createdFrom, new CultureInfo("en-US", true)); };
                 if (createdTo != null) { dateTo = DateTime.Parse(createdTo, new CultureInfo("en-US", true)); };
+                request.LatestRevisionOnly = request.LatestRevisionOnly ?? LatestRevisionOnly.Y;
                 request.EndUserName = string.IsNullOrWhiteSpace(request.EndUserName) ? null : request.EndUserName + "*";
 
                 var query = new FindModel()
@@ -93,8 +94,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     CreatedTo = dateTo,
                     EndUserName = request.EndUserName,
                     Details = request.Details,
-                    DealId=request.DealId
-                    
+                    DealId=request.DealId,
+                    LatestRevisionOnly = request.LatestRevisionOnly,
                 };
                 var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                 var getProductResponse = _mapper.Map<Response>(quoteDetails);

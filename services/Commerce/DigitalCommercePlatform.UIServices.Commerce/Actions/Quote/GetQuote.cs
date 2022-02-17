@@ -20,11 +20,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
-
-            public Request(IReadOnlyCollection<string> id, bool details)
+            public bool LatestRevision { get; set; } = true;
+            public Request(IReadOnlyCollection<string> id, bool details, bool latestRevision )
             {
                 Id = id;
                 Details = details;
+                LatestRevision = latestRevision;
             }
         }
 

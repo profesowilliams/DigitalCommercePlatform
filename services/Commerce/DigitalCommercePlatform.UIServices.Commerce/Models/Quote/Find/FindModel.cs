@@ -5,6 +5,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find
 {
+    
+    public enum LatestRevisionOnly
+    {
+        Y, 
+        All
+    }
     [ExcludeFromCodeCoverage]
     public class FindModel
     {
@@ -56,5 +62,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find
         public bool? WithPaginationInfo { get; set; }
         public string VendorReference { get; set; }
         public string DealId { get; set; }
+        public LatestRevisionOnly? LatestRevisionOnly { get; set; }
     }
 }

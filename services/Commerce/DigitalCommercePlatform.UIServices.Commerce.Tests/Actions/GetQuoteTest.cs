@@ -35,6 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
 
         public IReadOnlyCollection<string> Id { get; private set; }
         public bool Details { get; private set; } = true;
+        public bool LatestRevision { get; private set; } = true;
         [Theory]
         [AutoDomainData]
         public async Task GetQuoteDetails(QuoteModel expected)
@@ -45,7 +46,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
                   .ReturnsAsync(expected);
 
             var handler = new GetQuote.Handler(_mockCommerceService.Object, _mapper.Object,_logger.Object,_mockquoteItemChildrenService.Object, _mockHelperService.Object);
-            var request = new GetQuote.Request(Id,Details);
+            var request = new GetQuote.Request(Id,Details, LatestRevision);
             var result = await handler.Handle(request, It.IsAny<CancellationToken>());
             result.Should().NotBeNull();
         }
