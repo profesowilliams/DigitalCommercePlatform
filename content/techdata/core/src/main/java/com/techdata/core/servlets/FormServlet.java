@@ -96,6 +96,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                                         textFieldRegexExpr = textFieldRegexExpr.replace(A_TO_Z_LOWERCASE, EXTRA_REGEX_CHARS + A_TO_Z_LOWERCASE);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
+                                        handleAttachmentsInEmail(formConfigurations,emailParams);
                                         if (isValidFileInEmailRequest(request)) {
                                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
                                                         internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
@@ -162,9 +163,9 @@ public class FormServlet extends SlingAllMethodsServlet {
                         final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
                         StringBuilder value = new StringBuilder();
 
-                        if (key.equals(FILE_PARAM_NAME))
+                        if (key.contains(FILE_PARAM_NAME))
                         {
-                                handleFileParameterProcessing(pArr, attachments);
+                                handleFileParameterProcessing(pArr, attachments, key, emailParams);
                         }else{
                                 handleNonFileParameterProcessing(pArr, key, emailParams, value);
                         }
@@ -196,19 +197,27 @@ public class FormServlet extends SlingAllMethodsServlet {
                 return input;
         }
 
-        private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments) throws IOException {
+        private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments, String key, Map<String, String> emailParams ) throws IOException {
                 RequestParameter fileRequestParameter = pArr[0];
-
                 LOG.debug("file input parameter found. Name is {} ", fileRequestParameter.getFileName());
                 if (StringUtils.isNotEmpty(fileRequestParameter.getFileName()) && fileRequestParameter.getInputStream() != null )
                 {
                         InputStream file = fileRequestParameter.getInputStream();
                         attachments.put(fileRequestParameter.getFileName(), new ByteArrayDataSource(file, fileRequestParameter.getContentType()));
+                        emailParams.put(key, fileRequestParameter.getFileName());
                 } else{
                         LOG.error("Error in determining file uploaded");
                 }
         }
-
+        private void handleAttachmentsInEmail(FormConfigurations formConfigurations,Map<String, String> emailParams){
+                for (int i=1;i<=formConfigurations.filesCount();i++){
+                        if (emailParams.get("file")==null){
+                               emailParams.put("file","");
+                        } else if (emailParams.get("file"+i)==null){
+                                emailParams.put("file"+i,"");
+                        }
+                }
+        }
         private void populateEmailAttributesFromCAConfig(FormConfigurations formConfigurations, Map<String, String> emailParams) {
                 toEmailAddresses = formConfigurations.toEmails();
                 submitterEmailFieldName = formConfigurations.submitterEmailFieldName();

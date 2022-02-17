@@ -51,6 +51,9 @@ public @interface FormConfigurations {
     @Property(label = "File Threshold in MB", description = "Specify upload file threshold size for form")
     int fileThresholdInMB() default 10;
 
+    @Property(label = "Number of File Attachements Available", description = "Specify the number of files can be uploaded on form.")
+    int filesCount() default 10;
+
     @Property(label = "Target Groups Array", description = "Target Groups Array")
     String[] formSubmissionTargetGroups() default StringUtils.EMPTY;
 
