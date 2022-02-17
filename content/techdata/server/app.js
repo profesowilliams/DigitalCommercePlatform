@@ -1141,6 +1141,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
   const quoteDetailsResponse = {
     content: {
       details: {
+        canCheckOut: false,
         status: id === "IN_PIPELINE" ? id: "OPEN",
         shipTo: {
           id: null,

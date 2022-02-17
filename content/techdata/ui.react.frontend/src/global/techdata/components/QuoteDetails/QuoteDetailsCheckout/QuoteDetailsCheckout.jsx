@@ -5,6 +5,7 @@ function QuoteDetailsCheckout({
   labels,
   onQuoteCheckout,
   onQuoteOptionChanged,
+  quoteDetails
 }) {
   const checkoutLabel = labels?.checkoutLabel || "Checkout";
   const dropdownLabel = labels?.dropdownLabel || "Quote Options";
@@ -48,7 +49,7 @@ function QuoteDetailsCheckout({
         ></div>
         {!isWhiteLabelMode && (
           <div className="cmp-td-quote-checkout__button cmp-widget">
-            <button className="cmp-quote-button" onClick={onCheckout}>
+            <button className="cmp-quote-button" onClick={onCheckout} disabled={!quoteDetails.canCheckOut}>
               <div className="cmp-td-quote-checkout__button__title">
                 {checkoutLabel}
               </div>
