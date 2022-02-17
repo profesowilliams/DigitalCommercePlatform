@@ -20,7 +20,8 @@ import {
   isTechDataDistiBuy,
   isAVTTechDistiBuy,
   isTechDataCustomerMethod,
-  isAVTTechCustomerMethod
+  isAVTTechCustomerMethod,
+  compareBuyMethod
 } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
@@ -29,7 +30,11 @@ import {
   QUOTE_PREVIEW_AVT_TYPE_VALUE,
   QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE,
   QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE,
-  QUOTE_PREVIEW_CREATE_POPUP_ACTION
+  QUOTE_PREVIEW_CREATE_POPUP_ACTION,
+  QUOTE_PREVIEW_TECH_DATA,
+  QUOTE_PREVIEW_AVT_TECHNOLOGY,
+  QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD,
+  QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 
@@ -90,17 +95,29 @@ function QuotePreview(props) {
   }, [apiResponse]);
 
   /**
-   * In case of the buy method is not AVT and it is exclusive. 
-   * Or if it is TechData but is exclusive. 
+   * In case of the distribution buy method is not AVT or TECH DATA. 
+   * Or if it is AVT or TECH DATA but the customer buy method does not match. 
    * @param {any} quoteDetailsResponse 
    * @returns 
    */
-  const cannotCreateQuote = (quoteDetailsResponse) => 
-    isDealConfiguration(quoteDetailsResponse.source) 
-      && (
-        (quoteDetailsResponse?.isExclusive && isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod)) 
-        || (!isTechDataDistiBuy(quoteDetailsResponse.distiBuyMethod) && !isAVTTechDistiBuy(quoteDetailsResponse.distiBuyMethod))
-      );
+  const cannotCreateQuote = (quoteDetailsResponse) => {
+    const distiBuyMethod = quoteDetailsResponse.distiBuyMethod;
+    const customerBuyMethod = quoteDetailsResponse.customerBuyMethod;
+   
+    // DistiBuyMethod = “TECH DATA” and CustomerBuyMethod = "AVT"
+    const firstCondition = compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_TECH_DATA) && compareBuyMethod(customerBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD);
+
+    // DistiBuyMethod = “AVT Technology Solutions LLC” and CustomerBuyMethod = "TD"
+    const secondCondition = compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY) && compareBuyMethod(customerBuyMethod, QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD);
+
+    // DistiBuyMethod value is not “TECH DATA” or  “AVT Technology Solutions LLC”
+    const thirdCondition = !compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_TECH_DATA) && !compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY);
+
+    return isDealConfiguration(quoteDetailsResponse.source) && (firstCondition || secondCondition|| thirdCondition);
+    
+  }
+    
+    
 
 
   const showSimpleModal = (title, content, onModalClosed=closeModal) =>
