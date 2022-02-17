@@ -259,6 +259,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Currency = "USD",
                 Id = "123",
                 IsExclusive = true,
+                CustomerBuyMethod = "TDANDAVT",
                 Items = items
             };
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel

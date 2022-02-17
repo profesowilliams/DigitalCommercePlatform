@@ -123,6 +123,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void GetAccountDetails_BuyMethod()
+        {
+            var result = GetHelperService().GetCustomerAccountDetails();
+            Assert.NotNull(result.Result.BuyMethod);
+        }
+
+        [Fact]
+        public void GetAccountDetails_Exception()
+        {
+            var result = GetHelperService().GetCustomerAccountDetails();
+            Assert.Null(result.Exception);
+        }
+
+        [Fact]
         public void GetOrderPricingConditions()
         {
             TypeModel orderType = new();

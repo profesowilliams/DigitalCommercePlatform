@@ -348,22 +348,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         /// <returns></returns>
         public async Task<AccountDetails> GetCustomerAccountDetails()
         {
-            bool? response = false;
+            string response = "TD";
             try
             {
                 var customerId = _context.User.ActiveCustomer.CustomerNumber;
                 string _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
                 var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
                 var appResponse = await _middleTierHttpClient.GetAsync<IEnumerable<AccountDetails>>(customerURL);
-                response = appResponse is null ? false : appResponse.FirstOrDefault().IsExclusive;
-
+                response = appResponse is null ? "TD" : appResponse.FirstOrDefault()?.BuyMethod;
+                response = string.IsNullOrWhiteSpace(response) ? "TD" : response;
             }
             catch (Exception ex)
             {
                 _logger.LogInformation("Error while consuming App-Customer Service " + ex.Message);
-                response = false;
+                response = "TD";
             }
-            return new AccountDetails { IsExclusive = response };
+            return new AccountDetails
+            {
+                BuyMethod = response.ToUpper()
+            };
         }
 
         /// <summary>
@@ -574,9 +577,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private void MovePaymentInformation(Item line, List<Item> subLines)
         {
 
-            line.Freight =  subLines.FirstOrDefault()?.Freight ?? 0.00M;
-            line.OtherFees =  subLines.FirstOrDefault()?.OtherFees ?? 0.00M;
-            line.Tax =  subLines.FirstOrDefault()?.Tax ?? 0.00M;
+            line.Freight = subLines.FirstOrDefault()?.Freight ?? 0.00M;
+            line.OtherFees = subLines.FirstOrDefault()?.OtherFees ?? 0.00M;
+            line.Tax = subLines.FirstOrDefault()?.Tax ?? 0.00M;
 
         }
         private void MapSerials(Item line, List<Item> subLines)

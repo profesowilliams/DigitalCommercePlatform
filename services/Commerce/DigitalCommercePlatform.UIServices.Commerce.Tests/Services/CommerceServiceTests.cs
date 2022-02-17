@@ -820,7 +820,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 BuyMethod = "tdavnet69",
                 Currency = "USD",
                 Id = "123",
-                IsExclusive = true
+                IsExclusive = true,
+                CustomerBuyMethod ="AVT"
             };
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel
             {

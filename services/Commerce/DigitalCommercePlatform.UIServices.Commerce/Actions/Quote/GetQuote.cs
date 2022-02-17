@@ -68,8 +68,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         getQuoteResponse.Details.Items = await _helperQueryService.PopulateLinesFor(getQuoteResponse.Details.Items, string.Empty, getQuoteResponse.Details.QuoteSource.System);
                         getQuoteResponse.Details.Items = _quoteItemChildrenService.GetQuoteLinesWithChildren(new QuotePreviewModel { QuoteDetails = new QuotePreview { Items = getQuoteResponse.Details.Items } });
                         var accountDetail = await _helperQueryService.GetCustomerAccountDetails();
-                        getQuoteResponse.Details.BuyMethod = accountDetail?.BuyMethod ?? "TDShop46";
-                        getQuoteResponse.Details.IsExclusive = accountDetail?.IsExclusive;
+                        getQuoteResponse.Details.BuyMethod = accountDetail.BuyMethod.Equals("TD") ? "sap46" : "tdavnet67";
+                        getQuoteResponse.Details.CustomerBuyMethod = accountDetail?.BuyMethod;
                         getQuoteResponse.Details.CheckoutSystem = _helperQueryService.GetCheckoutSystem(quoteDetails.Source);
                     }
                 }

@@ -35,13 +35,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote
         public string Created { get; set; }
         public string Expires { get; set; }
         public string BuyMethod { get; set; }
+        public string CustomerBuyMethod { get; set; }
         public List<string> Deals { get; set; }
         public List<AttributeModel> Attributes { get; set; }
         public bool? IsExclusive { get; set; }
         public string CheckoutSystem { get; set; }
         public bool CanCheckOut { get; set; } = true;
-
-
     }
 
 }

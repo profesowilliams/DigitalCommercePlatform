@@ -581,9 +581,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
                 quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name, string.Empty);
 
-                var isExclusive = _helperService.GetCustomerAccountDetails().Result.IsExclusive;
-                quotePreview.IsExclusive = isExclusive;
-                quotePreview.BuyMethod = isExclusive == true ? "tdavnet67" : "sap46";
+                var customerBuyMethod = _helperService.GetCustomerAccountDetails().Result.BuyMethod;
+                quotePreview.CustomerBuyMethod = customerBuyMethod;
+                quotePreview.BuyMethod = customerBuyMethod.Equals("TD") ? "sap46" : "tdavnet67";
                 QuotePreviewModel response = new QuotePreviewModel
                 {
                     QuoteDetails = quotePreview
