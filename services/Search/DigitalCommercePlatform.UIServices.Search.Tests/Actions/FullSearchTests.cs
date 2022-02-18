@@ -5,12 +5,14 @@ using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -106,7 +108,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         }
 
         [Theory]
-        [AutoDomainData]
+        [AutoDomainData((nameof(GetRequests)))]
         public void ValidatorReturnValidWhenValidRequest(FullSearch.Request request)
         {
             //arrange
@@ -119,12 +121,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             result.ShouldNotHaveAnyValidationErrors();
         }
 
-        [Fact]
-        public void ValidationThrowsErrorForMissingSearchStringInvalidRequest()
+        [Theory]
+        [AutoDomainData((nameof(GetWrongRequests)))]
+        public void ValidationThrowsErrorForMissingSearchStringOrCategoryRefinementGroup(FullSearch.Request request)
         {
             //arrange
             var sut = new FullSearch.Validator();
-            var request = new FullSearch.Request(false, new FullSearchRequestModel(), null,"en-US");
 
             //act
             var result = sut.TestValidate(request);
@@ -187,6 +189,24 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
 
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.Is<SearchRequestDto>(r => r.GetDetails.ContainsKey(Enums.Details.TopRefinementsAndResult) && r.GetDetails[Enums.Details.TopRefinementsAndResult]), It.IsAny<bool>()), Times.Once);
         }
+
+        public static List<object[]> GetRequests =>
+            new()
+            {
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test" }, null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Categories" } } }, null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test", RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Categories" } } }, null, "en-US") }
+            };
+
+        public static List<object[]> GetWrongRequests =>
+            new()
+            {
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel(), null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { Page = 1, PageSize = 2 }, null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = null }, null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "" }, null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Test" } } }, null, "en-US") },
+            };
 
         private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object, _itemsPerPageServiceMock.Object);
     }

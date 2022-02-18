@@ -7,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.Profile;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Providers.Settings;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -118,6 +119,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 response.ItemsPerPageOptions = _itemsPerPageService.GetDefaultItemsPerPageOptions();
 
                 return new Response(response);
+            }
+        }
+
+        public class Validator : AbstractValidator<Request>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Keyword).NotEmpty().When(w => string.IsNullOrEmpty(w.CategoryId)).WithMessage("Please provide keyword or categoryId or both");
             }
         }
     }

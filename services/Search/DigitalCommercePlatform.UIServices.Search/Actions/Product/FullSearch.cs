@@ -109,7 +109,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             public Validator()
             {
                 RuleFor(c => c.FullSearchRequestModel).NotNull();
-                RuleFor(c => c.FullSearchRequestModel.SearchString).NotNull();
+                RuleFor(c => c.FullSearchRequestModel.SearchString).NotEmpty().When(w => w.FullSearchRequestModel?.RefinementGroups?.Find(x => x.Group.ToUpperInvariant() == "CATEGORIES") == null).WithMessage("Please provide SearchString or RefinementGroup Categories or both");
             }
         }
     }

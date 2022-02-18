@@ -9,8 +9,10 @@ using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
+using FluentValidation.TestHelper;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -166,6 +168,54 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             result.Results.Should().NotBeNull();
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>()), Times.Once);
         }
+
+        [Theory]
+        [AutoDomainData(nameof(GetRequests))]
+        
+        public void ValidatorReturnValidWhenValidRequest(KeywordSearch.Request request)
+        {
+            //arrange
+            var sut = new KeywordSearch.Validator();
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(GetWrongRequests))]
+        public void ValidationThrowsErrorForMissingSearchStringInvalidRequest(KeywordSearch.Request request)
+        {
+            //arrange
+            request.Keyword = null;
+            request.CategoryId = null;
+            var sut = new KeywordSearch.Validator();
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldHaveValidationErrorFor(r => r.Keyword);
+        }
+
+        public static List<object[]> GetRequests =>
+            new()
+            {
+                new object[] { new KeywordSearch.Request(false, "keyword", "categoryId", null, null) },
+                new object[] { new KeywordSearch.Request(false, "keyword", null, null, null) },
+                new object[] { new KeywordSearch.Request(false, null, "categoryId", null, null) }
+            };
+
+        public static List<object[]> GetWrongRequests =>
+            new()
+            {
+                new object[] { new KeywordSearch.Request(false, "", "", null, null) },
+                new object[] {new KeywordSearch.Request(false, null, "", null, null) },
+                new object[] {new KeywordSearch.Request(false, "", null, null, null) },
+                new object[] {new KeywordSearch.Request(false, null, null, null, null) }
+            };
 
         private KeywordSearch.Handler GetHandler() => new(new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object, _itemsPerPageServiceMock.Object, _defaultIndicatorsServiceMock.Object, _marketServiceMock.Object));
     }
