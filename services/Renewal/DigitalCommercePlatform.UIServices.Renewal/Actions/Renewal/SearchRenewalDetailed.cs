@@ -95,9 +95,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
 
                 var response = new PaginatedResponseModel<DetailedModel>
                 {
-                    Items = renewalsResponse.Response,
+                    Items = renewalsResponse?.Response,
                     RefinementGroups = refainmentGroup,
-                    TotalItems = request.WithPaginationInfo ? renewalsResponse.Count : null,
+                    TotalItems = request.WithPaginationInfo ? renewalsResponse?.Count : null,
                     PageSize = request.WithPaginationInfo ? request.PageSize : null,
                     PageNumber = request.WithPaginationInfo ? request.Page : null
                 };
