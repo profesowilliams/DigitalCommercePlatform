@@ -21,7 +21,8 @@ import {
   isAVTTechDistiBuy,
   isTechDataCustomerMethod,
   isAVTTechCustomerMethod,
-  compareBuyMethod
+  compareBuyMethod,
+  isTechDataAndAVTTechCustomerMethod
 } from "./QuoteTools";
 import Modal from '../Modal/Modal';
 import { pushEvent } from '../../../../utils/dataLayerUtils';
@@ -33,7 +34,8 @@ import {
   QUOTE_PREVIEW_TECH_DATA,
   QUOTE_PREVIEW_AVT_TECHNOLOGY,
   QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD,
-  QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD
+  QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD,
+  QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 
@@ -80,8 +82,7 @@ function QuotePreview(props) {
     if(quoteDetailsResponse) {
       const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
       const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
-      // force in False until the logic from UI are completed for this issue
-      // setShowPopUp(customerBuyMethod === QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE); // Flag to know if need to show the popup
+      setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
       setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
       // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
       quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
