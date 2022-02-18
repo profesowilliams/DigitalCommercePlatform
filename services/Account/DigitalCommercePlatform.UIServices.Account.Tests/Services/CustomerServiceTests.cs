@@ -96,7 +96,39 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
                 Error = new ErrorInformation()
                 {
                     IsError = true,
-                    Messages = new System.Collections.Generic.List<string>() { "Internal error occurred while processing your request" }
+                    Messages = new System.Collections.Generic.List<string>() { "Http exception occurred." }
+                }
+            };
+
+            result.Should().BeEquivalentTo(expectedResponse);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task RegisterCustomerAsync_ClientReturnsConflict_ReturnsValidResponse(RegisterCustomerRequestModel model, CancellationToken cancellationToken)
+        {
+            //Arrange
+            _middleTierHttpClient.Setup(t => t.PostAsync<RegisterCustomerResponseModel>(
+                It.IsAny<string>(),
+                It.IsAny<List<object>>(),
+                It.IsAny<object>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<Dictionary<string, string>>()))
+                .Throws(new RemoteServerHttpException("", System.Net.HttpStatusCode.Conflict, new object()));
+
+            var request = new RegisterCustomer.Request(model);
+
+            //Act
+            var sut = GetService();
+            var result = await sut.RegisterCustomerAsync(request, cancellationToken);
+
+            //Assert
+            var expectedResponse = new ResponseBase<RegisterCustomer.Response>()
+            {
+                Error = new ErrorInformation()
+                {
+                    IsError = true,
+                    Messages = new System.Collections.Generic.List<string>() { "Customer already exists." }
                 }
             };
 

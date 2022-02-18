@@ -3,12 +3,14 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Account.Actions.RegisterCustomer;
 using DigitalCommercePlatform.UIServices.Account.Models.Customers;
 using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -52,14 +54,37 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
                 return MapResponse(registerResponse);
             }
-            catch (Exception)
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Code == HttpStatusCode.Conflict)
+                {
+                    return new ResponseBase<RegisterCustomer.Response>()
+                    {
+                        Error = new ErrorInformation()
+                        {
+                            IsError = true,
+                            Messages = new System.Collections.Generic.List<string>() { "Customer already exists." }
+                        }
+                    };
+                }
+
+                return new ResponseBase<RegisterCustomer.Response>()
+                {
+                    Error = new ErrorInformation()
+                    {
+                        IsError = true,
+                        Messages = new System.Collections.Generic.List<string>() { "Http exception occurred." }
+                    }
+                };
+            }
+            catch (Exception ex)
             {
                 return new ResponseBase<RegisterCustomer.Response>()
                 {
                     Error = new ErrorInformation()
                     {
                         IsError = true,
-                        Messages = new System.Collections.Generic.List<string>() { "Internal error occurred while processing your request" }
+                        Messages = new System.Collections.Generic.List<string>() { "Internal error occurred while processing your request: " + ex.Message }
                     }
                 };
             }
