@@ -36,6 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         EstimateAndVendor=5,
         EstimateAndRenewal=6,
         VendorAndRenewal=7,
-        Deal=8
+        Deal=8,
+        EstimateAndVendorAndDeal=9,
     }
 }

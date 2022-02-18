@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Content.Services
@@ -174,20 +175,15 @@ namespace DigitalCommercePlatform.UIServices.Content.Services
 
         private string RenderErrorMessage(RemoteServerHttpException ex)
         {
-            var error = ex.Details == null?ex.Message.ToUpper():ex?.Details.ToString().ToUpper();
-            error = error.Replace("{", "");
-            error = error.Replace("}", "");
-            error = error.Replace("=", "");
-            error = error.Replace("\"", "");
-            var errorMessage = error?.Split(',').ToList();
-
-            if (!string.IsNullOrWhiteSpace(errorMessage.Where(a => a.Contains("BODY")).FirstOrDefault()))
+            var error = ex.Details == null?  ex.Message.ToUpper(): ex?.Details.ToString().ToUpper();
+            int idx = error.IndexOf("BODY");
+            if (idx != -1)
             {
-                error = errorMessage.Where(a => a.Contains("BODY")).FirstOrDefault();
-                error.Replace(" BODY ", "");
+                string msg = @error.Substring(idx + 4);
+                error = msg.Replace("{", "").Replace("}", "").Replace("=", "");                
             }
-
             return error;
         }
+            
     }
 }

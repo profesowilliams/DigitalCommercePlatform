@@ -428,47 +428,44 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
             if (request.Criteria.ConfigurationType == null)
             {
-                request.Criteria.ConfigurationType = ConfigType.EstimateAndVendor;
+                request.Criteria.ConfigurationType = ConfigType.EstimateAndVendorAndDeal;
             };
 
+            switch (request.Criteria.ConfigurationType)
+            {
+                case ConfigType.Estimate:
+                    ConfigurationType = "&type=Estimate";
+                    break;
+                case ConfigType.Deal:
+                    ConfigurationType = "&type=Deal";
+                    break;
+                case ConfigType.Renewal:
+                    ConfigurationType = "&type=Renewal";
+                    break;
+                case ConfigType.RenewalQuote:
+                    ConfigurationType = "&type=RenewalQuote";
+                    break;
+                case ConfigType.VendorQuote:
+                    ConfigurationType = "&type=VendorQuote";
+                    break;
+                case ConfigType.EstimateAndVendor:
+                    ConfigurationType = "&type=VendorQuote&type=Estimate";
+                    break;
+                case ConfigType.EstimateAndVendorAndDeal:
+                    ConfigurationType = "&type=VendorQuote&type=Estimate&type=Deal";
+                    break;
+                case ConfigType.EstimateAndRenewal:
+                    ConfigurationType = "&type=Renewal&type=Estimate";
+                    break;
+                case ConfigType.VendorAndRenewal:
+                    ConfigurationType = "&type=Renewal&type=VendorQuote";
+                    break;
 
-            if (request.Criteria.ConfigurationType == ConfigType.Estimate)
-            {
-                return ConfigurationType.AppendPathSegment("&type=Estimate");
+                default:
+                    ConfigurationType = "&type=Renewal&type=VendorQuote&type=RenewalQuote&type=Estimate&type=Deal";
+                    break;
             }
-            if (request.Criteria.ConfigurationType == ConfigType.Deal)
-            {
-                return ConfigurationType.AppendPathSegment("&type=Deal");
-            }
-            else if (request.Criteria.ConfigurationType == ConfigType.Renewal)
-            {
-                return ConfigurationType.AppendPathSegment("&type=Renewal");
-            }
-            else if (request.Criteria.ConfigurationType == ConfigType.RenewalQuote)
-            {
-                return ConfigurationType.AppendPathSegment("&type=RenewalQuote");
-            }
-            else if (request.Criteria.ConfigurationType == ConfigType.VendorQuote)
-            {
-                return ConfigurationType.AppendPathSegment("&type=VendorQuote");
-            }
-            else if (request.Criteria.ConfigurationType == ConfigType.EstimateAndVendor)
-            {
-                return ConfigurationType.AppendPathSegment("&type=VendorQuote&type=Estimate");
-            }
-            else if (request.Criteria.ConfigurationType == ConfigType.EstimateAndRenewal)
-            {
-                return ConfigurationType.AppendPathSegment("&type=Renewal&type=Estimate");
-            }
-            else if (request.Criteria.ConfigurationType == ConfigType.VendorAndRenewal)
-            {
-                return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote");
-            }
-            else
-            {
-                return ConfigurationType.AppendPathSegment("&type=Renewal&type=VendorQuote&type=RenewalQuote&type=Estimate&type=Deal");
-            }
-
+            return ConfigurationType;
         }
 
         public async Task<SpaDetails.Response> GetSpaDetails(SpaDetails.Request request)

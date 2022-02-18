@@ -355,6 +355,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public bool Resolve(QuoteModel source, QuotesForGridModel destination, bool destMember, ResolutionContext context)
         {
+            if (source?.QuoteType?.ToLower()== "renewal")
+                return false;
             if (source.CanDCPCheckOut == false)
                 return false;
             else
@@ -374,6 +376,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public bool Resolve(QuoteModel source, QuoteDetails destination, bool destMember, ResolutionContext context)
         {
+            if (source?.QuoteType?.ToLower() == "renewal")
+                return false;
             if (source.CanDCPCheckOut == false)
                 return false;
             else

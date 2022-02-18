@@ -37,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
             public string EndUserName { get; set; }
             public bool Details { get; set; } = true;
             public string DealId { get; set; }
+            public string QuoteType { get; set; }
             public LatestRevisionOnly? LatestRevisionOnly { get; set; } = Models.Quote.Find.LatestRevisionOnly.Y;
             public Request()
             {
@@ -96,6 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                     Details = request.Details,
                     DealId=request.DealId,
                     LatestRevisionOnly = request.LatestRevisionOnly,
+                    QuoteType=request.QuoteType
                 };
                 var quoteDetails = await _commerceQueryService.FindQuotes(query).ConfigureAwait(false);
                 var getProductResponse = _mapper.Map<Response>(quoteDetails);
