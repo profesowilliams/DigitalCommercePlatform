@@ -83,7 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
                 SummaryResponseModel renewalsResponse = await _renewalsService.GetRenewalsSummaryFor(request);
                 RefinementGroupsModel refainmentGroup = new();
 
-                if (_homeAccount != _context.ImpersonatedAccount)
+                if (_homeAccount != _context.ImpersonatedAccount && renewalsResponse.Response != null)
                 {
                     refainmentGroup = _sessionIdBasedCacheProvider.Get<RefinementGroupsModel>(request.SessionId);
 
