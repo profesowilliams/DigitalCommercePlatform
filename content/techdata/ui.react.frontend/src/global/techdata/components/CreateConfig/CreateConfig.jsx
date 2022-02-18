@@ -23,7 +23,10 @@ const CreateConfig = ({ componentProp }) => {
       }
 
       if (complete) {
-        analyticsObj.configuration.configComplete = '1'
+        analyticsObj.configuration.configComplete = '1';
+        analyticsObj.configuration.vendorName = localStorage.getItem('vendorName') || vendorName;
+      } else {
+        localStorage.setItem('vendorName', vendorName);
       }
       pushData(analyticsObj);
   }
