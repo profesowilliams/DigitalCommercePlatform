@@ -184,6 +184,9 @@
                         <item0             
                             jcr:primaryType="nt:unstructured"
                             subFilterOptionsLabel="Support and Subscriber"/>
+                        <item1             
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Standard"/>
                     </subFilterOptionList>
                 </item1>
             </filtersOptionsList>
