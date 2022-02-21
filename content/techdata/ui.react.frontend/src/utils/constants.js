@@ -42,3 +42,5 @@ export const ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT = 'orderDetailsSearch';
 
 // LocalStorage
 export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';
+
+export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to access this information';

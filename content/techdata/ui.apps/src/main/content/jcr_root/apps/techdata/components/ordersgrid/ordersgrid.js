@@ -181,6 +181,10 @@ use(function () {
     jsonObject["legacyOrderDetailsUrl"] = properties["legacyOrderDetailsUrl"];
   }
 
+  if (properties && properties["errorLoginMessage"]) {
+    jsonObject["errorLoginMessage"] = properties["errorLoginMessage"];
+  }
+
   if (properties && properties["defaultSortingColumnKey"]) {
     optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
   }

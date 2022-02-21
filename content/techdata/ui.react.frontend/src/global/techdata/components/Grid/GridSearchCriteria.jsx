@@ -26,6 +26,8 @@ function GridSearchCriteria({
   ButtonsComponentHeader,
   uiServiceEndPoint,
   category = '',
+  handleClickOptionsButton,
+  labelFilterGrid
 }) {
 	const filter = useRef(null);
 	const analyticsData = useRef(null); // ref for the analytics data to adobeData layer in case of be necessary
@@ -81,24 +83,25 @@ function GridSearchCriteria({
 					<div className='cmp-search-criteria__header__title'>{label ?? 'Filter'}</div>
 				</div>
         
-			<div className={` ${!flagOpenButton && expanded ? 'hidden' : ''}`}>
+			<div
+				onClick={() => {
+					setExpanded(!expanded);
+				}}
+			className={` ${!flagOpenButton && expanded ? 'hidden' : ''}`}>
 				{
 				ButtonsComponentHeader ? (<ButtonsComponentHeader 
 											handleChange={handleChange}
 											onSearch={onSearch}
 											expanded={expanded}
 											onClear={onClear}
+											labelFilterGrid={labelFilterGrid}
+											handleClickOptionsButton={handleClickOptionsButton}
 										 />) : null  
 				}
 			</div>
         
 			
       </div>
-      
-			<div className={` ${!flagOpenButton || expanded ? 'hidden' : ''}`}>
-        		{HeaderButtonOptions ? (<HeaderButtonOptions handleChange={handleChange} onSearch={onSearch} expanded={false} />) : null} 
-			</div>
-			
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
 					<Filters
@@ -111,6 +114,11 @@ function GridSearchCriteria({
 						onKeyPress={(isEnter) => isEnter && onSearch()}
 						onSearchRequest={onSearchRequest}
 						uiServiceEndPoint={uiServiceEndPoint}
+						onClear={onClear}
+						HeaderButtonOptions={HeaderButtonOptions}
+						expanded={expanded}
+						setExpanded={setExpanded}
+						handleClickOptionsButton={handleClickOptionsButton}
 					></Filters>
 				</div>
 				<div className='cmp-search-criteria__content__query-input__search'>

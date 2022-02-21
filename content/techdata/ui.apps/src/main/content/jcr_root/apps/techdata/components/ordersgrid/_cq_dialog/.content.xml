@@ -49,6 +49,12 @@
                                                     fieldDescription="Add /{order-id} as a parameter at the end of the URL."
                                                     jcr:primaryType="nt:unstructured"
                                                     name="./legacyOrderDetailsUrl" />
+                                            <errorLoginMessage
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Error Login Message"
+                                                    fieldDescription="Add the error login message"
+                                                    jcr:primaryType="nt:unstructured"
+                                                    name="./errorLoginMessage" />
                                             <paginationStyle
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"

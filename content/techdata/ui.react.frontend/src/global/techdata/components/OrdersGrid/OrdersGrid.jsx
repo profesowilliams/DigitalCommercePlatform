@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import GridComponent from '../Grid/Grid';
 import GridSearchCriteria from '../Grid/GridSearchCriteria';
 import Modal from '../Modal/Modal';
@@ -12,9 +12,12 @@ import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
 import {
     ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY,
     ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,
+    ERROR_LOGIN_MESSAGE,
     LOCAL_STORAGE_KEY_USER_DATA
 } from '../../../../utils/constants';
 import { pushEventAnalyticsGlobal, pushEvent } from '../../../../utils/dataLayerUtils';
+import OpenFilter from '../Widgets/OpenFilter';
+import ButtonLabelFilter from '../Widgets/ButtonLabelFilter';
 
 const Grid = React.memo(GridComponent);
 
@@ -31,6 +34,7 @@ function OrdersGrid(props) {
     const HAS_ORDER_ACCESS = hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.CAN_VIEW_ORDERS});
     const uiServiceEndPoint = componentProp.uiServiceEndPoint ? componentProp.uiServiceEndPoint : ''; 
     const filteredOrderId = useRef(null);
+    const errorLoginMessage = componentProp.errorLoginMessage ? componentProp.errorLoginMessage : ERROR_LOGIN_MESSAGE;
     const STATUS = {
         salesReview: 'salesreview',
         inProcess: 'inprocess',
@@ -78,7 +82,6 @@ function OrdersGrid(props) {
 
     const trackingModal = {
         title: componentProp.trackingsModal?.title ?? 'Order',
-        // buttonLabel: componentProp.trackingsModal?.buttonLabel ?? 'Download All Related Trackings',
         buttonIcon: componentProp.trackingsModal?.buttonIcon ?? 'fas fa-download',
         content:
             componentProp.trackingsModal?.content ??
@@ -343,62 +346,15 @@ function OrdersGrid(props) {
     ];
 
     /**
-	 * 
-	 * @param {boolean} status 
-	 */
-	const filterOpenOrderReportsAction = (status, handleChange, onSearch, onClear) => {
-		let query = '';
-        if (status) { 
-            query = '&status=OPEN';
-        } else {
-            query = '';
-            
-        }
-        if (query==='') {
-            onClear()
-        } else {
-            handleChange(query);
-		    onSearch();
-        }
-	};
-
-
-    /**
-     * @param {Object} props
-     * @param {boolean} props.expanded
-     * @param {({query}) => void} props.handleChange
-     * @param {() => void} props.onSearch
-     * @returns 
+     * 
+     * @param {boolean} expanded 
+     * @param {() => void} handleChange 
+     * @param {() => void} onSearch 
+     * @param {() => void} onClear 
      */
-    const OptionButtons = ({expanded, handleChange, onSearch}) =>{
-        
-        return (
-            <div className='cmp-search-criteria__header__button'>
-                <div className='cmp-search-criteria__header__filter__title' 
-                    onClick={() => {
-                        if (expandedOpenOrderFilter) {
-                            handleClickOptionsButton(false, handleChange, onSearch)    
-                        }
-                    }}
-                >
-                    <i className={`cmp-search-criteria__icon-button fas  fa-box-open`} title='Select Open Orders'></i>
-                </div>
-                
-                <div className='cmp-search-criteria__header__filter__title'>
-                    <i className={`cmp-search-criteria__icon-button fas  fa-file-pdf`} title='Export to PDF' ></i>
-                </div>
-                <div className='cmp-search-criteria__header__filter__title'>
-                    <i className={`cmp-search-criteria__icon-button fas fa-print`} title='Print'></i>
-                </div>
-                
-            </div>
-        )
-    };
-
-    const handleClickOptionsButton = (expanded, handleChange, onSearch, onClear) => {
-        
+    const handleClickOptionsButton = (expanded = false, handleChange, onSearch, onClear) => {
         setExpandedOpenOrderFilter(!expandedOpenOrderFilter);
-        let value;
+        let value;  
         if (expanded) {
             value = '';
         } else {
@@ -408,34 +364,22 @@ function OrdersGrid(props) {
         filterOpenOrderReportsAction(value, handleChange, onSearch, onClear)
     };
 
-	
-  /**
-   * @param {Object} props
-   * @param {boolean} props.expanded
-   * @param {({query}) => void} props.handleChange
-   * @param {() => void} props.onSearch
-   * @returns 
-   */
-	const ButtonOrderDetails = ({expanded, handleChange, onSearch, onClear}) => {
-        if (expanded && !expandedOpenOrderFilter) {
-            handleClickOptionsButton(true, handleChange, onSearch, onClear)
+    /**
+     * 
+     * @param {boolean} status 
+     * @param {(string) => void} handleChange 
+     * @param {() => void} onSearch 
+     * @param {() => void} onClear 
+     */
+     const filterOpenOrderReportsAction = (status, handleChange, onSearch, onClear) => {
+        const query = status ? '&status=OPEN' : '';
+        if (query==='') {
+            onClear()
+        } else {
+            handleChange(query);
+            onSearch();
         }
-        return (
-            <div
-                className={` ${expandedOpenOrderFilter || expanded ? 'hidden' : ''}`}
-                onClick={() => {
-                    handleClickOptionsButton(expanded, handleChange, onSearch, onClear)
-                }}
-            >
-                <div className='cmp-search-criteria__header__filter'>
-                    <div className='cmp-search-criteria__header__filter__title'>
-                        {labelFilterGrid}
-                    </div>
-                    <i className={`cmp-search-criteria__icon fas fa-times-circle`}></i>
-                </div>
-            </div>
-        );
-    };
+    };    
 
 	function handleAfterGridInit(config) {
 		columnApiRef.current = config.columnApi;
@@ -494,14 +438,16 @@ function OrdersGrid(props) {
             <div className='cmp-orders-grid'>
                 <GridSearchCriteria
                     Filters={OrdersGridSearch}
-                    HeaderButtonOptions={OptionButtons}
-                    ButtonsComponentHeader={ButtonOrderDetails}
+                    HeaderButtonOptions={OpenFilter}
+                    ButtonsComponentHeader={ButtonLabelFilter}
+                    labelFilterGrid={labelFilterGrid}
                     label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
                     componentProp={componentProp.searchCriteria}
                     onSearchRequest={handleOnSearchRequest}
                     onClearRequest={filteringExtension.onQueryChanged}
                     uiServiceEndPoint={uiServiceEndPoint}
                     category={ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY}
+                    handleClickOptionsButton={handleClickOptionsButton}
                 ></GridSearchCriteria>
                 <Grid
                     columnDefinition={columnDefs}
@@ -525,9 +471,9 @@ function OrdersGrid(props) {
   } else {
     return (
         <div className="cmp-error">
-        <div className="cmp-error__header">
-          You do not have the required entitlement to access this information
-        </div>
+            <div className="cmp-error__header">
+            {errorLoginMessage}
+            </div>
         </div>
     )
   }

@@ -12,6 +12,11 @@ function OrdersGridSearch({
   onKeyPress,
   onSearchRequest,
   uiServiceEndPoint,
+  onClear,
+  HeaderButtonOptions,
+  onSearch,
+  setExpanded,
+  handleClickOptionsButton,
 }) {
   const defaultKeywordDropdown = {
     label: "Keyword",
@@ -195,12 +200,15 @@ function OrdersGridSearch({
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
         defaultValue={dateDefaultToValue}
       ></SimpleDatePicker>
-
-      <div className="cmp-search-criteria__header__button">
-        <div className="cmp-search-criteria__header__filter__title">
-          <i className={`cmp-search-criteria__icon-button fas  fa-box-open fs-16`} title="Select Open Orders" ></i>
-        </div>
-      </div>
+      <HeaderButtonOptions 
+        handleChange={onQueryChanged}
+        onSearch={onSearch}
+        onClear={onClear}
+        expanded={false}
+        setExpanded={setExpanded}
+        handleClickOptionsButton={handleClickOptionsButton}
+      />
+      
     </div>
   );
 }
