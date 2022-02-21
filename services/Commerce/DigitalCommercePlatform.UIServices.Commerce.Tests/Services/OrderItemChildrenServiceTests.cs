@@ -1,5 +1,6 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetOrderDetails;
+using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Features.Client;
@@ -35,7 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void LinesAreEmptyForInvalidInput()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             var result = sut.GetOrderLinesWithChildren(null);
 
@@ -46,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void ChildrenLinesAreGenerated()
         {
             var substringService = new SubstringService();
-            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object);
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
             var sut = new OrderItemChildrenService(substringService, helperService);
             var orderModel = new OrderDetailModel
             {
@@ -71,7 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             Assert.Equal(2, result.Count);
         }
-        
+
         [Fact(DisplayName = "Subline Tracking Info is returned")]
         public void GetSubLineTracking_Test()
         {
@@ -104,8 +105,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                                 }
                             }
                         },
-                        new Models.Line 
-                        { 
+                        new Models.Line
+                        {
                             Id = "1.1",
                             Parent = "1.0",
                             Trackings = new List<TrackingDetails>{
@@ -143,9 +144,68 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             type = typeof(OrderItemChildrenService);
             objType = Activator.CreateInstance(type,
                 new SubstringService(),
-                new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object,_httpClientFactory.Object)
+                new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object)
             );
         }
+
+        [Fact]
+        public void InitialChildNumber_Test()
+        {
+            //arrange
+            List<Line> lstLines = new List<Line>();
+
+            Line line = new Line()
+            {
+                ConfigID = "123",
+                POSType = "",
+                Description = "Test hi",
+                ContractNo = "Contract No",
+                Id = "1.o1"
+            };
+            lstLines.Add(line);
+
+            Type type;
+            object objType;
+            InitiateOrderItemChildrenService(out type, out objType);
+
+            var subLineModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .First(x => x.Name == "InitialChildNumber" && x.IsPrivate);
+
+            //Act
+            var result = subLineModel.Invoke(objType, new object[] { lstLines });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void MapSubLineDisplayNumber_Test()
+        {
+            //arrange
+            List<Line> lstLines = new List<Line>();
+            double displayNumber = 1.0d;
+            double displayChildNumber = 0.1d;
+
+            Line line = new Line()
+            {
+                ConfigID = "123",
+                POSType = "",
+                Description = "Test hi",
+                ContractNo = "Contract No",
+                Id = "1.00"
+            };
+            lstLines.Add(line);
+
+            Type type;
+            object objType;
+            InitiateOrderItemChildrenService(out type, out objType);
+
+            var subLineModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+            .First(x => x.Name == "MapSubLineDisplayNumber" && x.IsPrivate);
+
+            //Act
+            subLineModel.Invoke(objType, new object[] { displayNumber, displayChildNumber, lstLines });
+            Assert.NotNull(line.DisplayLineNumber);
+        }
+
 
     }
 }

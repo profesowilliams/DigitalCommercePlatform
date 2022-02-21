@@ -30,21 +30,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             double displayChildNumber = 0.0;
             foreach (var item in parents)
             {
-                displayNumber = displayNumber + 1.0;
+                displayNumber = Math.Round((displayNumber + 1), 3, MidpointRounding.AwayFromZero);
                 item.DisplayLineNumber = displayNumber.ToString();
+
                 var subLines = orderDetails.Items.Where(i => (i.Parent == item.Id))?.ToList();
                 var sublineTracking = GetSubLineTracking(subLines ?? new List<Line>());
+
                 // If there are no tracking info at the parent but there are some on the children, create an empty list to add to
                 if (sublineTracking.Any() && item.Trackings == null)
                 {
                     item.Trackings = new List<Models.Order.TrackingDetails>();
                 }
                 item.Trackings?.AddRange(sublineTracking);
-
-                foreach (var child in subLines)
+                if (subLines.Any())
                 {
-                    displayChildNumber = displayChildNumber + 0.1;
-                    child.DisplayLineNumber = (displayNumber + displayChildNumber).ToString();
+                    MapSubLineDisplayNumber(displayNumber, displayChildNumber, subLines);
                 }
 
                 lines.Add(new Line
@@ -99,6 +99,34 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             }
             return lines;
+        }
+
+        private void MapSubLineDisplayNumber(double displayNumber, double displayChildNumber, List<Line> subLines)
+        {
+            double initialChildLineNumber = InitialChildNumber(subLines);
+
+            foreach (var child in subLines)
+            {
+                displayChildNumber = Math.Round((displayChildNumber + initialChildLineNumber), 3, MidpointRounding.AwayFromZero);
+                child.DisplayLineNumber = (Math.Round(displayNumber + displayChildNumber, 3, MidpointRounding.AwayFromZero)).ToString();
+            }            
+        }
+
+        private double InitialChildNumber(List<Line> subLines)
+        {
+            try
+            {
+                if (subLines.Count > 9 && subLines.Count < 99)
+                    return 0.01d;
+                else if (subLines.Count > 99 && subLines.Count < 1000)
+                    return 0.001d;
+                else
+                    return 0.1d;
+            }
+            catch (Exception)
+            {
+                return 0.1d;
+            }
         }
 
         private List<Models.Order.TrackingDetails> GetSubLineTracking(List<Line> subLines)
