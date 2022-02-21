@@ -1152,5 +1152,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(orderLevel);
         }
 
+        [Fact]
+        public void TestFromDate()
+        {
+            //InitiateHelperService(out Type type,out object objType);
+            var dateValue = new DateTime(2022, 1, 2);
+            var compareDate = new DateTime(2022, 1, 2, 0, 0, 0);
+            var dateOutput = (DateTime)GetHelperService().GetDateParameter(dateValue, "from");
+
+            Assert.Equal(compareDate, dateOutput);
+        }
+
+        [Fact]
+        public void TestToDate()
+        {
+            //InitiateHelperService(out Type type,out object objType);
+            var dateValue = new DateTime(2022, 1, 7);
+            var compareDate = new DateTime(2022, 1, 7, 23, 59, 59);
+            var dateOutput = (DateTime)GetHelperService().GetDateParameter(dateValue, "to");
+
+            Assert.Equal(compareDate, dateOutput);
+        }
     }
 }

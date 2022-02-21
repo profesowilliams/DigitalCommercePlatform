@@ -22,6 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Config
 
         public override void AddBaseComponents(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<IHelperService, HelperService>();
             services.AddTransient<IConfigService, ConfigService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
             services.AddHttpClient("OneSourceClient");

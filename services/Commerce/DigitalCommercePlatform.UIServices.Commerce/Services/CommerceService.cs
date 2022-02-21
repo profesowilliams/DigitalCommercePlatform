@@ -140,17 +140,19 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 if (!string.IsNullOrWhiteSpace(query.Id))
                 {
-                    query.Id = query.Id + "*";
+                    query.Id += "*";
                 }
                 else if (!string.IsNullOrWhiteSpace(query.EndUserName))
                 {
-                    query.EndUserName = query.EndUserName + "*";
+                    query.EndUserName += "*";
                 }
                 else if (!string.IsNullOrWhiteSpace(query.DealId))
                 {
-                    query.DealId = query.DealId + "*";
+                    query.DealId += "*";
                 }
 
+                query.CreatedFrom = _helperService.GetDateParameter((DateTime)query.CreatedFrom, "from");
+                query.CreatedTo = _helperService.GetDateParameter((DateTime)query.CreatedTo, "to");
                 query.SortBy = _helperService.GetParameterName(query.SortBy);
                 string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
                 var quoteURL = _appQuoteServiceUrl.AppendPathSegment("Find").BuildQuery(query);

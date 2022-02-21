@@ -193,26 +193,27 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             var origin = string.IsNullOrWhiteSpace(orderParameters.Origin) ? null : orderParameters.Origin.ToLower();
 
-            if (origin == "web")
-                orderParameters.Origin = "Web";
-            else if (origin == "b2b")
-                orderParameters.Origin = "B2B";
-            else if (origin == "pe")
-                orderParameters.Origin = "Manual";
-            else
-                orderParameters.Origin = null;
+            orderParameters.Origin = origin switch
+            {
+                "web" => "Web",
+                "b2b" => "B2B",
+                "pe" => "Manual",
+                _ => null,
+            };
 
             if (!string.IsNullOrWhiteSpace(orderParameters.Id))
             {
-                orderParameters.Id = orderParameters.Id + "*";
+                orderParameters.Id += "*";
             }
             else if (!string.IsNullOrWhiteSpace(orderParameters.CustomerPO))
             {
-                orderParameters.CustomerPO = orderParameters.CustomerPO + "*";
+                orderParameters.CustomerPO += "*";
             }
+            orderParameters.CreatedFrom = _helperService.GetDateParameter((DateTime)orderParameters.CreatedFrom, "from");
+            orderParameters.CreatedTo = _helperService.GetDateParameter((DateTime)orderParameters.CreatedTo, "to");
 
             string _appOrderServiceUrl = _appSettings.GetSetting("App.Order.Url");
-            var url = "";
+            var url = string.Empty;
             if (orderParameters.IdType == 0)
             {
                 url = _appOrderServiceUrl.AppendPathSegment("Find")

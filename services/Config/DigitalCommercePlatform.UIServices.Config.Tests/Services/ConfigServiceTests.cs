@@ -17,7 +17,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
 {
     public class ConfigServiceTests
     {
-
         private static readonly Random getrandom = new Random();
         private readonly IConfigService _configService;
         private readonly Mock<IAppSettings> _appSettings;
@@ -25,6 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
         private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
         private readonly Mock<ILogger<ConfigService>> _logger;
         private readonly Mock<IHttpClientFactory> _httpClientFactory;
+        private readonly Mock<IHelperService> _helperService;
         public ConfigServiceTests()
         {
             _appSettings = new Mock<IAppSettings>();
@@ -34,12 +34,14 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _logger = new Mock<ILogger<ConfigService>>();
             _httpClientFactory = new Mock<IHttpClientFactory>();
+            _helperService = new Mock<IHelperService>();
 
             _configService = new ConfigService(_appSettings.Object,
                                                _mapper.Object,
                                                _middleTierHttpClient.Object,
                                                _logger.Object,
-                                               _httpClientFactory.Object);
+                                               _httpClientFactory.Object,
+                                               _helperService.Object);
         }
 
         private void InitiateConfigService(out Type type, out object objType)
@@ -52,8 +54,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
                _mapper.Object,
                _middleTierHttpClient.Object,
                _logger.Object,
-               _httpClientFactory.Object
-                );
+               _httpClientFactory.Object,
+               _helperService.Object);
         }
 
         [Fact]

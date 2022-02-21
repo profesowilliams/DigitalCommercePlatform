@@ -8,13 +8,6 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "DigitalCommercePlatform.UIServices.Config": {
       "commandName": "Project",
       "commandLineArgs": "-c debug --n=\"UI.Config\" --c=\"https://eastus-dit-service.dc.tdebusiness.cloud/core-config/\" --p=5604 --urls=\"http://localhost\" --islocal=1",
@@ -24,6 +17,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5604"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

@@ -47,33 +47,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 return sortBy;
             }
-            if (parameter.ToLower() == "id")
+            sortBy = parameter.ToLower() switch
             {
-                sortBy = "Source.OriginId";
-            }
-            else if (parameter.ToLower() == "created")
-            {
-                sortBy = "Created";
-            }
-            else if (parameter.ToLower() == "quotevalue" || parameter.ToLower() == "formatedquotevalue")
-            {
-                sortBy = "Price";
-            }
-            else if (parameter.ToLower() == "updated")
-            {
-                sortBy = "Updated";
-            }
-            else if (parameter.ToLower() == "endusername")
-            {
-                sortBy = "EndUserName";
-            }
-            else
-            {
-                sortBy = "Created";
-            }
+                "id" => "Source.OriginId",
+                "created" => "Created",
+                "quotevalue" or "formattedquotevalue" => "Price",
+                "updated" => "Updated",
+                "endusername" => "EndUserName",
+                _ => "Created",
+            };
+            
             return sortBy;
         }
 
+        public DateTime? GetDateParameter(DateTime date, string paramType) => paramType.ToLower() == "from"
+                ? new DateTime(date.Year, date.Month, date.Day, 0, 0, 0)
+                : new DateTime(date.Year, date.Month, date.Day, 23, 59, 59);
 
         public bool GetOrderPricingConditions(string pricingConditionId, out TypeModel orderType, out LevelModel orderLevel)
         {

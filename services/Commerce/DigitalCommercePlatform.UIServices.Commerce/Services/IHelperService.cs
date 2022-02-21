@@ -4,12 +4,14 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
     public interface IHelperService
     {
         string GetParameterName(string parameter);
+        DateTime? GetDateParameter(DateTime date, string paramType);
         bool GetOrderPricingConditions(string pricingConditionId, out TypeModel orderType, out LevelModel orderLevel);
         Task<string> GetOrderType(string poType, string docType);
         Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName, string source);

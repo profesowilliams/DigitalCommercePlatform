@@ -43,11 +43,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly ILogger<ConfigService> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IHelperService _helperService;
         private readonly string _appConfigurationUrl;
         private readonly string _appSpaUrl;
 
         public ConfigService(IAppSettings appSettings, IMapper mapper, IMiddleTierHttpClient middleTierHttpClient,
-            ILogger<ConfigService> logger, IHttpClientFactory httpClientFactory)
+            ILogger<ConfigService> logger, IHttpClientFactory httpClientFactory, IHelperService helperService)
         {
             _appSettings = appSettings ?? throw new ArgumentNullException(nameof(appSettings));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -56,6 +57,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             _appConfigurationUrl = _appSettings.GetSetting("App.Configuration.Url");
             _appSpaUrl = _appSettings.GetSetting("App.Spa.Url");
+            _helperService = helperService ?? throw new ArgumentNullException();
         }
 
         /// <summary>
@@ -152,27 +154,28 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             FindResponse<Configuration> result = new();
             try
             {
-                if (request.Criteria?.SortBy?.ToLower() == "configid")
-                    request.Criteria.SortBy = "Id";
-                else if (request.Criteria?.SortBy?.ToLower() == "endusername")
-                    request.Criteria.SortBy = "EndUser";
-                else if (request.Criteria?.SortBy?.ToLower() == "expires")
-                    request.Criteria.SortBy = "Expirydate";
-                else
-                    request.Criteria.SortBy = "Created";
+                request.Criteria.SortBy = request.Criteria?.SortBy.ToLower() switch
+                {
+                    "configid" => "Id",
+                    "endusername" => "EndUser",
+                    "expires" => "Expirydate",
+                    _ => "Created",
+                };
 
                 if (request.Criteria.Id != null)
                 {
-                    request.Criteria.Id = request.Criteria.Id + "*";
+                    request.Criteria.Id += "*";
                 }
-                else if (request.Criteria.ConfigName != null)
+                else if (!string.IsNullOrEmpty(request.Criteria.ConfigName))
                 {
-                    request.Criteria.ConfigName = request.Criteria.ConfigName + "*";
+                    request.Criteria.ConfigName += "*";
                 }
-                else if (request.Criteria.EndUser != null)
+                else if (!string.IsNullOrEmpty(request.Criteria.EndUser))
                 {
-                    request.Criteria.EndUser = request.Criteria.EndUser + "*";
+                    request.Criteria.EndUser += "*";
                 }
+                request.Criteria.CreatedFrom = _helperService.GetDateParameter((DateTime)request.Criteria.CreatedFrom, "from");
+                request.Criteria.CreatedTo = _helperService.GetDateParameter((DateTime)request.Criteria.CreatedTo, "to");
 
                 var type = GetConfigurationType(request);
                 request.Criteria.ConfigurationType = null;
