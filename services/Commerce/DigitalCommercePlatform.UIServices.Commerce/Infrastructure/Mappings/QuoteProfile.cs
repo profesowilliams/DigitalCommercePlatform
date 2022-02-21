@@ -355,13 +355,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
     {
         public bool Resolve(QuoteModel source, QuotesForGridModel destination, bool destMember, ResolutionContext context)
         {
-            if (source?.QuoteType?.ToLower()== "renewal")
+            if(source?.QuoteType?.ToLower() == "renewal")
+            {
                 return false;
-            if (source.CanDCPCheckOut == false)
+            }
+            else if(source?.CanDCPCheckOut == false)
+            {
                 return false;
+            }
             else
             {
-                if (source.Expiry < DateTime.Today)
+                if (source?.Expiry < DateTime.Today)
                     return false;
                 else
                     return true;
@@ -377,12 +381,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
         public bool Resolve(QuoteModel source, QuoteDetails destination, bool destMember, ResolutionContext context)
         {
             if (source?.QuoteType?.ToLower() == "renewal")
+            {
                 return false;
-            if (source.CanDCPCheckOut == false)
+            }
+            else if (source?.CanDCPCheckOut == false)
+            {
                 return false;
+            }
             else
             {
-                if (source.Expiry < DateTime.Today)
+                if (source?.Expiry < DateTime.Today)
                     return false;
                 else
                     return true;
