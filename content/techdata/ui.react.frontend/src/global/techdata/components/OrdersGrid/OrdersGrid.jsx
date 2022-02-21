@@ -211,7 +211,7 @@ function OrdersGrid(props) {
             method: analyticObjectParam.method ,
             fromDate: analyticObjectParam.fromDate ,
             toDate: analyticObjectParam.toDate ,
-            nullSearch: isNotEmptyValue(responseLength) // when the UI/service not found a row return a null value, so if the result is empty then this value is true, else false
+            nullSearch: !isNotEmptyValue(responseLength) // when the UI/service not found a row return a null value, so if the result is empty then this value is true, else false
         };
         const objectToSend = {
           event: ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,
