@@ -6,6 +6,7 @@ import Button from "../Widgets/Button";
 import Loader from '../Widgets/Loader';
 import { waitFor } from "../../../../utils/utils";
 import axios from 'axios';
+import { pushData } from "../../../../utils/dataLayerUtils";
 
 const EditConfig = ({ componentProp }) => {
     // useEffect(() => {
@@ -37,6 +38,26 @@ const EditConfig = ({ componentProp }) => {
     const handleConfigInput = ({ target: { value } }) => {
         setConfigurationId(value);
     };
+
+    const analyticsData = (vendorName, configID, complete) => {
+      let analyticsObj = {
+           event: "editConfigStart",
+           configuration: {
+               configID: configID,
+               vendorName: vendorName,
+               configType: 'Estimate'
+           }
+      }
+
+      if (complete) {
+        analyticsObj.configuration.editConfigComplete  = '1';
+        analyticsObj.configuration.configID = localStorage.getItem('configID') || configID;
+      } else {
+        localStorage.setItem('configID', configID);
+      }
+      pushData(analyticsObj);
+    }
+
     const getRedirectUrl = async (e) => {
         var currentUrl = window.location.href.replace('.html', '.post2get.html');
         const body = { 
@@ -53,6 +74,7 @@ const EditConfig = ({ componentProp }) => {
         if (errorMessagesList){
             window.alert(errorMessagesList[0])
         }
+        analyticsData("Cisco", configurationId, false);
         setLoadingGetUrl(false);
         const {url} = result?.data?.content;
         window.open(
@@ -61,6 +83,13 @@ const EditConfig = ({ componentProp }) => {
             );
         return result.data;         
     }
+
+    useEffect(() => {
+        if (document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
+            analyticsData("Cisco", configurationId, true);
+        }
+    }, [])
+
     const handleGetUrl = useCallback(getRedirectUrl, [configurationId, isLoadingGetUrl]);
     return (
         <div className='cmp-widget'>
