@@ -90,7 +90,8 @@ const SearchBar = ({ data, componentProp }) => {
     if (searchTermText.length >= 3) {
       if (["all", "product", "content"].includes(selectedArea.area)) {
         const response = await axios.get(
-          replaceSearchTerm(typeAheadDomain, searchTerm)
+          replaceSearchTerm(typeAheadDomain, searchTerm),
+          { withCredentials: false }
         );
         setTypeAheadSuggestions(response.data);
         setAreaSelectionOpen(true);

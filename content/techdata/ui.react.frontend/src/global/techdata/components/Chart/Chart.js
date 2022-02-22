@@ -18,7 +18,7 @@ class Chart extends React.Component {
     }
 
     fetchApi = (url, id) => {
-        axios.get(url)
+        axios.get(url, { withCredentials: false })
             .then((response) => {
                 if(response.status === 200){
                     this.setState({

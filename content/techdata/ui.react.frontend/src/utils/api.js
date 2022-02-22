@@ -20,9 +20,19 @@ const USaxios = axios.create({
 axios.defaults.headers.common['TraceId'] = traceId;
 axios.defaults.headers.common['Accept-Language'] = 'en-us';
 axios.defaults.headers.common['Consumer'] = 'AEM';
-axios.defaults.headers.common['SessionId'] = sessionId;
+
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Site'] = 'NA';
+
+
+const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
+if(isHttpOnlyEnabled()) {
+  axios.defaults.withCredentials = true;
+  USaxios.defaults.withCredentials = true;
+}
+else {
+  axios.defaults.headers.common['SessionId'] = sessionId;
+}
 
 export const { get: usGet, post: usPost, put: usPut } = USaxios;
 

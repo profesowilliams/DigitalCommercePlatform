@@ -5,10 +5,15 @@ const port = 3000;
 const { URLSearchParams } = require("url");
 const fetch = require("node-fetch");
 const encodedParams = new URLSearchParams();
+var cookieParser = require('cookie-parser');
 var bodyParser = require("body-parser");
 var dateFormat = require("dateformat");
 var now = new Date();
 var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
+var SESSION_COOKIE = 'session-id';
+var isHttpOnlyEnabled = false;
+
+app.use(cookieParser());
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -26,8 +31,11 @@ function checkCreds(user, pass) {
 }
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+  if(isHttpOnlyEnabled){
+    res.header('Access-Control-Allow-Credentials',true);
+  }
   res.header(
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer"
@@ -68,17 +76,17 @@ app.post("/auth", function (req, res) {
   console.log(userid);
   console.log(password);
   console.log(redirect);
+  console.log(isHttpOnlyEnabled);
 
   res.append("custom", "value");
   res.type("application/json");
 
   if (checkCreds(userid, password)) {
-    res.redirect(redirect + "?code=" + codeValue);
+    if(isHttpOnlyEnabled){
+      res.cookie(SESSION_COOKIE, "secret-session-id", {expires: new Date(Date.now() + 9999999), httpOnly: true});
+    } 
+    res.redirect(redirect + "?code=" + codeValue);    
   } else {
-    // res.send({"userid" : req.body.userid, "password" : req.body.password, auth : checkCreds(userid, password)})
-    // res.render('<h1>error</h1>');
-    // res.write("<h1>error</h1>");
-
     res.set("Content-Type", "text/html");
     res.write("<html>");
     res.write("<head> <title> Hello TutorialsPoint </title> </head>");
@@ -329,7 +337,7 @@ app.get("/ui-account/v1/topQuotes/get", function (req, res) {
 app.get("/quote/MyQuote", function (req, res) {
   const code = req.query.code;
 
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
 
   res.json({
     content: {
@@ -354,7 +362,7 @@ app.get("/quote/MyQuote", function (req, res) {
 app.get("/myorderstatus", function (req, res) {
   const code = req.query.code;
 
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
 
   res.json({
     content: {
@@ -373,7 +381,7 @@ app.get("/myorderstatus", function (req, res) {
 });
 
 app.post("/quote/create", function (req, res) {
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
 
   res.json({
     content: {
@@ -388,7 +396,7 @@ app.post("/quote/create", function (req, res) {
   });
 });
 app.get("/activeCart", function (req, res) {
-  if (!req.headers["sessionid"])
+  if (!validateSession(req, res))
     return res.status(500).json({
       error: {
         code: 200,
@@ -430,7 +438,7 @@ app.get("/activeCart", function (req, res) {
             quantity: 1,
           },
         ],
-        totalQuantity: 0,
+        totalQuantity: 4,
       },
     },
     error: {
@@ -445,7 +453,7 @@ app.get("/configurationsSummary/get", function (req, res) {
   function random(min, max) {
     return Math.trunc(min + Math.random() * (max - min));
   }
-  if (!req.headers["sessionid"])
+  if (!validateSession(req, res))
     return res.status(401).json({
       error: {
         code: 0,
@@ -496,7 +504,7 @@ app.get("/ui-account/v1/getRenewals", function (req, res) {
 });
 
 app.get("/dealsSummary", function (req, res) {
-  if (!req.headers["sessionid"])
+  if (!validateSession(req, res))
     return res.status(500).json({
       error: {
         code: 0,
@@ -519,6 +527,8 @@ app.get("/dealsSummary", function (req, res) {
 
 //---QUOTES GRID MOCK API---//
 app.get("/ui-commerce/v1/quote/", function (req, res) {
+  if(!validateSession(req, res)) return;
+
   const id = req.query.quoteIdFilter;
   const details = req.query.details || true;
   const pageSize = req.query.PageSize || 25;
@@ -790,7 +800,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
 });
 
 app.get("/browse", function (req, res) {
-  if (!req.headers["sessionid"])
+  if (!validateSession(req, res))
     return res.status(500).json({
       error: {
         code: 0,
@@ -825,7 +835,7 @@ app.get("/browse", function (req, res) {
 });
 
 app.get("/savedCarts", function (req, res) {
-  if (!req.headers["sessionid"] || req.headers["site"] !== "US")
+  if (!validateSession(req, res) || req.headers["site"] !== "US")
     return res.status(500).json({
       error: {
         code: 0,
@@ -854,7 +864,7 @@ app.get("/savedCarts", function (req, res) {
 });
 
 app.get("/cart", function (req, res) {
-  if (!req.headers["sessionid"] || req.headers["site"] !== "US")
+  if (!validateSession(req, res) || req.headers["site"] !== "US")
     return res.status(500).json({
       error: {
         code: 0,
@@ -891,8 +901,24 @@ app.get("/cart", function (req, res) {
   });
 });
 
+function validateSession(req, res) {
+  console.log(req.cookies[SESSION_COOKIE], isHttpOnlyEnabled, !req.headers["sessionid"]);
+  if((isHttpOnlyEnabled && !req.cookies[SESSION_COOKIE]) || (!isHttpOnlyEnabled && !req.headers["sessionid"])){
+    res.status(401).json({
+      error: {
+        code: 401,
+        message: [],
+        isError: true,
+      },
+    });
+    return false;
+  }
+  return true;
+}
+
 //---QUOTE DETAILS MOCK API---//
 app.get("/ui-commerce/v1/quote/details", function (req, res) {
+  if(!validateSession(req, res)) return;
   const { id, type } = req.query;
   const errorObject = {
     content: null,
@@ -904,15 +930,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
       isError: true,
     },
   };
-  if (!req.headers["SessionId"] && !id) {
-    return res.status(500).json({
-      error: {
-        code: 0,
-        message: [],
-        isError: true,
-      },
-    });
-  }
 
   function getItems(amount) {
     let items = [];
@@ -1484,7 +1501,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
 app.get("/myorders", (req, res) => {
   console.log(utils.getRandomValues(100) + 1.0);
 
-  if (!req.headers["sessionid"])
+  if(!validateSession(req, res))
     return res.status(500).json({
       error: {
         code: 0,
@@ -1562,7 +1579,7 @@ app.get("/myorders", (req, res) => {
 });
 
 app.get("/getAddress", (req, res) => {
-  if (!req.headers["sessionid"])
+  if(!validateSession(req, res))
     return res.status(500).json({
       error: {
         code: 0,
@@ -1643,7 +1660,7 @@ app.get("/getAddress", (req, res) => {
 });
 
 app.get("/ui-account/v1/getAddress", (req, res) => {
-  if (!req.headers["sessionid"]) {
+  if(!validateSession(req, res)) {
     return res.status(500).json({
       error: {
         code: 0,
@@ -1730,7 +1747,7 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
 });
 
 app.get("/pricingConditions", (req, res) => {
-  if (!req.headers["sessionid"])
+  if(!validateSession(req, res))
     return res.status(500).json({
       error: {
         code: 0,
@@ -1765,7 +1782,7 @@ app.get("/pricingConditions", (req, res) => {
 });
 
 app.get("/estimates", function (req, res) {
-  if (!req.headers["sessionid"] || req.headers["site"] !== "US")
+  if (!validateSession(req, res) || req.headers["site"] !== "US")
     return res.status(500).json({
       error: {
         code: 0,
@@ -2877,7 +2894,7 @@ app.get("/estimates", function (req, res) {
 });
 app.get("/estimations/validate/:id", function (req, res) {
   const { id } = req.params;
-  if (!req.headers["sessionid"] || !id)
+  if (!validateSession(req, res) || !id)
     return res.status(500).json({
       error: {
         code: 0,
@@ -2974,7 +2991,7 @@ app.get(
 app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
   const { orderId, downloadAll } = req.query;
 
-  if (!req.headers["sessionid"] || orderId === "14009754975") {
+  if (!validateSession(req, res) || orderId === "14009754975") {
     return res.status(500).json({
       error: {
         code: 0,
@@ -3111,7 +3128,7 @@ app.post("/ui-commerce/v1/downloadQuoteDetails", async function (req, res) {
   const { acceptLanguage, site, consumer, traceId, sessionid, contentType } =
     req.headers;
 
-  if (!req.headers["sessionid"] && !sessionid) {
+  if (!validateSession(req, res)) {
     return res.status(500).json({
       error: {
         code: 0,
@@ -3132,7 +3149,7 @@ app.post("/ui-commerce/v1/downloadOrderDetails", async function (req, res) {
   const { acceptLanguage, site, consumer, traceId, sessionid, contentType } =
     req.headers;
 
-  if (!req.headers["sessionid"] && !sessionid) {
+  if (!validateSession(req, res) && !sessionid) {
     return res.status(500).json({
       error: {
         code: 0,
@@ -3337,6 +3354,8 @@ app.get("/typeahead", function (req, res) {
 });
 
 app.get("/ui-config/v1/configurations", function (req, res) {
+  if(!validateSession(req, res)) return;
+
   /**@type {string} */
   const url = req.url;
   const flag = url.includes("ConfigurationType=Deal"); // emulating filter errio like in SIT and UAT
@@ -3380,7 +3399,7 @@ app.get("/ui-config/v1/configurations", function (req, res) {
 
 app.get("/ui-config/v1/estimations/validate/", function (req, res) {
   const { id } = req.query;
-  if (!req.headers["sessionid"] || !id) {
+  if (!validateSession(req, res)) {
     return res.status(500).json({
       error: {
         code: 0,
@@ -6748,9 +6767,10 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
 });
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
+  if(!validateSession(req, res)) return;
   const { id, isEstimateId, vendor } = req.query;
 
-  if (!req.headers["sessionid"] || !id || !isEstimateId) {
+  if (!isEstimateId) {
     return res.status(500).json({
       error: {
         code: 0,
@@ -7209,7 +7229,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
 // Punchout to vendor - CREATE CONFIG //
 app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
   console.log("test post punchout url ✌✌✌");
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
   res.json({
     content: null,
     error: {
@@ -7221,7 +7241,7 @@ app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
 });
 //Replace cart id//
 app.put("/ui-content/v1/replaceCart", function (req, res) {
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
 
   return res.json({
     content: {
@@ -7237,7 +7257,7 @@ app.put("/ui-content/v1/replaceCart", function (req, res) {
 
 //---QUICK QUOTE CONTINUE BTN---//
 app.post("/ui-commerce/v1/quote/create", function (req, res) {
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return;
 
   res.json({
     content: {
@@ -7256,7 +7276,7 @@ app.post("/ui-commerce/v1/quote/create", function (req, res) {
 app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
   console.log(req.body);
 
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
 
   res.json({
     content: {
@@ -7275,7 +7295,7 @@ app.post("/ui-commerce/v1/quote/createFrom", function (req, res) {
   console.log("post submit");
   console.log(req.body);
 
-  if (!req.headers["sessionid"]) return res.status(401);
+  if (!validateSession(req, res)) return res.status(401);
 
   res.json({
     content: {
@@ -7296,7 +7316,7 @@ app.get("/ui-account/v1/topActions", function (req, res) {
   function getRandom(maxValue) {
     return Math.floor(Math.random() * maxValue);
   }
-  if (!req.headers["sessionid"]) {
+  if (!validateSession(req, res)) {
     return res.status(500).json({
       error: {
         code: 0,
