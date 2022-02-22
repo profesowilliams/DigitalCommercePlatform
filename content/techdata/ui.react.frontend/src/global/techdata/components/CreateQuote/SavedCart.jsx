@@ -5,6 +5,7 @@ import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import SavedCartSelectItem from './SavedCartSelectItem';
 import ManuallyTyped from './ManuallyTyped';
+import { pushAnalyticsEvent } from './analytics';
 
 const SavedCart = ({ 
   method, 
@@ -23,6 +24,7 @@ const SavedCart = ({
   const [cartName, setCartName] = useState("");
   const [step, setStep] = useState(0);
   const nextStep = () => {
+    pushAnalyticsEvent(true, method);
     setStep(step + 1);
   }
   const prevStep = () => {

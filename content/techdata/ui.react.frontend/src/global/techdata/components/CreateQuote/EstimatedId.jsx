@@ -5,6 +5,7 @@ import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import ManuallyTyped from './ManuallyTyped';
 import EstimatedIdSelectItem from './EstimatedIdSelectItem';
+import { pushAnalyticsEvent } from './analytics';
 
 const EstimatedId = ({ method, setMethod, methods, endpoints, next, buttonLabel }) => {
 	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
@@ -16,6 +17,7 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next, buttonLabel 
 	const [estimatedId, setEstimatedId] = useState("");
 	const [step, setStep] = useState(0);
 	const nextStep = () => {
+		pushAnalyticsEvent(true, method);
 		setStep(1);
 	};
 	const prevStep = () => {

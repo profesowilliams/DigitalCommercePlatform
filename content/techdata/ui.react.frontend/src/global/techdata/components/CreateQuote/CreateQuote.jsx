@@ -8,6 +8,7 @@ import Pricing from './Pricing';
 import EstimatedId from './EstimatedId';
 import { usPost } from '../../../../utils/api';
 import Modal from '../Modal/Modal';
+import { pushAnalyticsEvent } from './analytics';
 
 const fixedPayload = { 
     "createFromId": "96722368",
@@ -60,9 +61,11 @@ const QuoteCreate = ({
     }else if( methodSelected.key === 'active'  ){
       const { isError, message } = validateActiveCart();
       if(isError)
-        alert(message);
-      else
+      alert(message);
+      else {
+        pushAnalyticsEvent(true, methodSelected);
         setStep(1);
+      }
     }else{
       alert('Invalid cart, try again please')
     }
@@ -104,6 +107,9 @@ const QuoteCreate = ({
         params = {...params, createFromId: cartID };
       try {
         const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
+
+        pushAnalyticsEvent(false, methodSelected);
+
         if( isError ){
           showSimpleModal('Create Quote', (
             <div>{createQuoteError}</div>
