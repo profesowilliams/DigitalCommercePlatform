@@ -35,7 +35,6 @@ import {
   QUOTE_PREVIEW_AVT_TECHNOLOGY,
   QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD,
   QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD,
-  QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 

@@ -64,9 +64,9 @@ function OrdersGridSearch({
    */
   useEffect(() => {
     // setDefaultAllLicense(componentProp?.);
-    setDefaultAllMethod(isNotEmptyValue(componentProp?.methodsDropdown?.items[0]) ? componentProp?.methodsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY);
-    setDefaultAllVendor(isNotEmptyValue(componentProp?.vendorsDropdown?.items[0]) ? componentProp?.vendorsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_VENDORS_KEY);
-    setDefaultAllLine(isNotEmptyValue(componentProp?.linesDropdown?.items[0]) ? componentProp?.linesDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY);
+    setDefaultAllMethod(isNotEmptyValue(componentProp?.methodsDropdown?.items) ? componentProp?.methodsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY);
+    setDefaultAllVendor(isNotEmptyValue(componentProp?.vendorsDropdown?.items) ? componentProp?.vendorsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_VENDORS_KEY);
+    setDefaultAllLine(isNotEmptyValue(componentProp?.linesDropdown?.items) ? componentProp?.linesDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY);
   }, [componentProp]);
 
   const defaultVendorsDropdown = {
