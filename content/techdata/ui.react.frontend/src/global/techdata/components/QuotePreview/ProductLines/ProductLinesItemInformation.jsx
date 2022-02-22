@@ -1,9 +1,13 @@
 import React,{useCallback} from "react";
 import { dateToString } from "../../../helpers/formatting";
-import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
+import { pushEvent } from "../../../../../utils/dataLayerUtils";
+import {
+  ADOBE_DATA_LAYER_CLICK_EVENT,
+  ADOBE_DATA_LAYER_LINK_TYPE,
+  ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY
+} from "../../../../../utils/constants";
 
 function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl }) {
-
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.tdNumber ){
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -20,17 +24,19 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
     return null
   },[])
 
+  /**
+   * Handler event that add the analytic click info when
+   * the user click some Product Item with the information
+   */
   const handleClick = () => {
-    DataLayerUtils.pushEvent(
-      "click",
+    pushEvent(
+      ADOBE_DATA_LAYER_CLICK_EVENT,
       {
         name: line.displayName,
-        type: "link",
+        type: ADOBE_DATA_LAYER_LINK_TYPE,
+        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
       {
-        click: {
-          category: "Quote Detail Table Interactions",
-        },
         products: {
           productInfo: { parentSKU: line.tdNumber, name: line.displayName },
         },

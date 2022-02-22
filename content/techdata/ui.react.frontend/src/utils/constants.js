@@ -4,6 +4,8 @@
 // General
 export const ADOBE_DATA_LAYER_CLICK_EVENT = 'click';
 export const ADOBE_DATA_LAYER_LINK_TYPE = 'link';
+export const ADOBE_DATA_LAYER_BUTTON_TYPE = 'button';
+export const ADOBE_DATA_LAYER_QUANTITY_TYPE = 'quantity';
 export const ADOBE_DATA_LAYER_EVENT_PAGE_VIEW = 'page view';
 
 // Quotes
@@ -14,7 +16,13 @@ export const ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE = 'CTA';
 export const ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY = 'Quotes Table Interactions';
 export const ADOBE_DATA_LAYER_QUOTE_WHITE_LABEL_EVENT = 'qpWhiteLabel';
 
-//Quote Preview
+// Quotes Preview
+export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY = 'Quote Preview Table Interactions';
+export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE = 'Collapse Line Item';
+export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_LINE_ITEM = 'Open Line Item';
+export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_ALL = 'Open All';
+export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE_ALL = 'Collapse All';
+export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY_QUANTITY = 'quantity';
 export const QUOTE_PREVIEW_DEAL_TYPE = 'Deal';
 export const QUOTE_PREVIEW_AVT_TYPE_VALUE = 'tdavnet67';
 export const QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE = 'sap46';
@@ -29,6 +37,7 @@ export const QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD = 'AVT';
 export const ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY = 'Configuration Table Interactions';
 export const ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_NAME_ACTION = 'Create quote';
 export const ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS = 'From Config';
+export const CONFIGURATION_GRID_SEARCH_FIELD_CONFIGURATIONS_KEY = 'AllConfigurationTypes';
 
 // SearchBar
 export const ADOBE_DATA_LAYER_SEARCH_BAR_EVENT = 'internalSearch';

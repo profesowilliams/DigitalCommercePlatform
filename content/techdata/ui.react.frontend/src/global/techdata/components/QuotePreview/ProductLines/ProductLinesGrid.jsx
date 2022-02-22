@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { ADOBE_DATA_LAYER_EVENT_PAGE_VIEW } from "../../../../../utils/constants";
+import {
+  ADOBE_DATA_LAYER_BUTTON_TYPE,
+  ADOBE_DATA_LAYER_CLICK_EVENT,
+  ADOBE_DATA_LAYER_EVENT_PAGE_VIEW,
+  ADOBE_DATA_LAYER_LINK_TYPE,
+  ADOBE_DATA_LAYER_QUANTITY_TYPE,
+  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
+  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE,
+  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE_ALL,
+  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_ALL,
+  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_LINE_ITEM
+} from "../../../../../utils/constants";
 import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
+import { isNotEmptyValue } from "../../../../../utils/utils";
 import { thousandSeparator } from "../../../helpers/formatting";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
@@ -67,6 +79,93 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     pushEventAnalyticsGlobal(objectToSend);
   };
 
+  /**
+   * Handler that is called when the item 
+   * is collapsed
+   */
+   const handlerAnalyticCollapseAction = (item) => {
+    const productInfo = {
+      parentSKU : isNotEmptyValue(item?.data?.tdNumber) ? item?.data?.tdNumber : '',
+      name: isNotEmptyValue(item?.data?.displayName) ? item?.data?.displayName : ''
+    };
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
+      category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
+      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_LINE_ITEM,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      products: productInfo,
+      clickInfo,
+    };
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+
+  /**
+   * Handler that is called when the item 
+   * is expanded
+   */
+   const handlerAnalyticExpandAction = (item) => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
+      category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
+      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE,
+    };
+    const productInfo = {
+      parentSKU : isNotEmptyValue(item?.data?.tdNumber) ? item?.data?.tdNumber : '',
+      name: isNotEmptyValue(item?.data?.displayName) ? item?.data?.displayName : ''
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      products: productInfo,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+  
+  /**
+   * Handler that is called when the quantity
+   * item is clicked
+   */
+  const  handlerAnalyticQuantity = () => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
+      category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
+      name : ADOBE_DATA_LAYER_QUANTITY_TYPE,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+
+  const handlerAnalyticCollapsedAll = () => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_LINK_TYPE,
+      category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
+      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE_ALL,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+
+  const handlerAnalyticExpandeddAll = () => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_LINK_TYPE,
+      category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
+      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_ALL,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend)
+  };
+
   useEffect(() => {
     if (data) {
       getPopulateProdutcsToAnalytics(data);    
@@ -91,19 +190,28 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       headerName: "Select All",
       field: "id",
       width: "160px",
-      sortable: false,
+      // sortable: false,
       checkboxSelection: true,
       headerCheckboxSelection: true,
       expandable: true,
+      
       rowClass: ({ node, data }) => {
-        return `cmp-product-lines-grid__row ${
+        return `${
           !data?.children || data.children.length === 0
-            ? "cmp-product-lines-grid__row--notExpandable"
-            : ""
-        }`;
+              ? "`cmp-product-lines-grid__row`"
+              : ""
+        }`
       },
-      detailRenderer: ({ data }) => {
-        return (
+      cellClass: ({ node, data }) => {
+        return `${
+          !data?.children || data.children.length === 0
+              ? "cmp-product-lines-grid__row--notExpandable--orders"
+              : ""
+        }`
+      },
+      showRowGroup: true,
+      detailRenderer: ({ node, api, setValue, data, value }) => {
+      return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
               license={gridProps.agGridLicenseKey}
@@ -160,6 +268,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
               });
               node.selected && onSelectionChanged({ api });
             }}
+            handlerAnalyticQuantityEvent={handlerAnalyticQuantity}
           ></ProductLinesQuantityWidget>
         );
       },
@@ -196,6 +305,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     gridApi?.forEachNode((node) => {
       node.expanded = true;
     });
+    handlerAnalyticExpandeddAll();
     gridApi?.expandAll();
   }
 
@@ -203,6 +313,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     gridApi?.forEachNode((node) => {
       node.expanded = false;
     });
+    handlerAnalyticCollapsedAll();
     gridApi?.collapseAll();
   }
 
@@ -232,6 +343,8 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
           data={mutableGridData}
           onSelectionChanged={onSelectionChanged}
           onAfterGridInit={onAfterGridInit}
+          onExpandAnalytics={handlerAnalyticExpandAction}
+          onCollapseAnalytics={handlerAnalyticCollapseAction}
         ></Grid>
       </div>
     </section>

@@ -4,7 +4,12 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { useEffect } from "react";
-import { formateDatePicker, validateDatePicker, isQueryValid, isNotEmptyValue } from "../../../../utils/utils";
+import {
+  formateDatePicker,
+  validateDatePicker,
+  isQueryValid,
+  isNotEmptyValue,
+} from "../../../../utils/utils";
 import { 
   ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY,
   ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY, 
@@ -103,6 +108,17 @@ function OrdersGridSearch({
   };
 
   /**
+   * Function used to validate the key values with the constant
+   * values in the dispatchAnalyticsChange
+   * @param {string} keyValue 
+   * @param {string} compareValue 
+   * @returns 
+   */
+  const isEqual = (keyValue, compareValue) => {
+    return keyValue === compareValue;
+  };
+
+  /**
    * handler that create and return and object 
    * @param {any} query 
    * @returns 
@@ -112,24 +128,12 @@ function OrdersGridSearch({
       searchTerm:
         query.keyword?.key && query.keyword?.value ? query.keyword?.value : "",
       searchOption: isNotEmptyValue(query.keyword?.value),
-      vendorFilter: isNotEmptyValue(query.manufacturer?.key) && !validateKey(query.manufacturer?.key, defaultAllVendor),
-      license: isNotEmptyValue(query.license?.key) && !validateKey(query.license?.key, defaultAllLine),
-      method: isNotEmptyValue(query.method?.key) && !validateKey(query.method?.key, defaultAllMethod),
+      vendorFilter: isNotEmptyValue(query.manufacturer?.key) && !isEqual(query.manufacturer?.key, defaultAllVendor),
+      license: isNotEmptyValue(query.license?.key) && !isEqual(query.license?.key, defaultAllLine),
+      method: isNotEmptyValue(query.method?.key) && !isEqual(query.method?.key, defaultAllMethod),
       fromDate: isNotEmptyValue(query.from?.key),
       toDate: isNotEmptyValue(query.to?.key),
     };
-  };
-    
-
-  /**
-   * Function used to validate the key values with the constant
-   * values in the dispatchAnalyticsChange
-   * @param {string} keyValue 
-   * @param {string} compareValue 
-   * @returns 
-   */
-  const validateKey = (keyValue, compareValue) => {
-    return keyValue === compareValue;
   };
 
   function dispatchQueryChange(query) {

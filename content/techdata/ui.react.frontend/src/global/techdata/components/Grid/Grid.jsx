@@ -439,7 +439,7 @@ function Grid(props) {
 
   function onRowGroupOpened(row) {
     if (onExpandAnalytics && onCollapseAnalytics)
-      row.expanded ? onExpandAnalytics() : onCollapseAnalytics();
+      row.expanded ? onExpandAnalytics(row) : onCollapseAnalytics(row);
     onRowExpandOrCollapse(row);
   }
 

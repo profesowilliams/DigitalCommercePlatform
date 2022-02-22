@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid } from "../../../../utils/utils";
-import { CONFIGURATION_VALUE_ALL_CONFIG_TYPE } from "../../../../utils/constants";
+import { ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY } from "../../../../utils/constants";
 
 function ConfigurationGridSearch({
   componentProp,
@@ -15,7 +15,7 @@ function ConfigurationGridSearch({
   const [toMinDate, setToMinDate] = useState()
   const [fromMinDate, setFromMinDate] = useState()
   const currentDate = new Date();
-
+  const [defaultConfigurationField, setDefaultConfigurationField] = useState(null);
   const defaultKeywordDropdown = {
     label: "Keyword",
     items: [
@@ -33,6 +33,10 @@ function ConfigurationGridSearch({
       { key: "Deal", value: "Deal" },
     ],
   };
+
+  useEffect(() => {
+    setDefaultConfigurationField(isNotEmptyValue(componentProp?.configurationTypesDropdown?.items) ? componentProp?.configurationTypesDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY);
+  },[componentProp]);
 
   const config = {
     keywordDropdown: isNotEmpty(componentProp?.keywordDropdown)
@@ -52,16 +56,20 @@ function ConfigurationGridSearch({
   const _query = useRef({});
   const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
   const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
+  
+  const validateConfigFilter = (item) => isNotEmptyValue(item) || item !== defaultConfigurationField;
 
+  const validateSearchTerm = (key, value) => key && value ? value : '';
+  
   const dispatchAnalyticsChange = (query) => {
     return {
-      searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
+      searchTerm: validateSearchTerm(query.keyword?.key, query.keyword?.value),
       searchOption: isNotEmptyValue(query.keyword?.value),
-      configFilter: isNotEmptyValue(query.configurations.key),
+      configFilter: validateConfigFilter(query?.configurations?.key),
       fromDate: isNotEmptyValue(query.from?.key),
       toDate: isNotEmptyValue(query.to?.key),
     };
-  }
+  };
 
   function dispatchQueryChange(query) {
     let keyword =
