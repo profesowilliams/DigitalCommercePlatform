@@ -25,6 +25,7 @@ const CreateConfig = ({ componentProp }) => {
       if (complete) {
         analyticsObj.configuration.configComplete = '1';
         analyticsObj.configuration.vendorName = localStorage.getItem('vendorName') || vendorName;
+        localStorage.removeItem('vendorName');
       } else {
         localStorage.setItem('vendorName', vendorName);
       }

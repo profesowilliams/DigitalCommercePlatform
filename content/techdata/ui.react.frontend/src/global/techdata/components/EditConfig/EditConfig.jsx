@@ -52,6 +52,7 @@ const EditConfig = ({ componentProp }) => {
       if (complete) {
         analyticsObj.configuration.editConfigComplete  = '1';
         analyticsObj.configuration.configID = localStorage.getItem('configID') || configID;
+        localStorage.removeItem('configID');
       } else {
         localStorage.setItem('configID', configID);
       }
