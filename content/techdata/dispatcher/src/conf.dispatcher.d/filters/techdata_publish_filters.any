@@ -46,3 +46,5 @@
 # filter allow rules for POST/GET for cisco punch-out urls
 /0107 { /type "allow" /method "POST" /url "*/Quotes/GetCXML*" } # servlet allow
 /0108 { /type "allow" /method "GET" /url "*/Quotes/GetCXML*" } # servlet allow
+# SAML filter for SSO
+/0100 { /type "allow" /method "POST" /url "*/saml_login" }
