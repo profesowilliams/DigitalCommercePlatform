@@ -283,6 +283,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         private void CancelledOrderPayment(OrderModel order)
         {
             order.Tax = 0.0M;
+            order.Price = 0.0M;
             order.Freight = 0.0M;
             order.OtherFees = 0.0M;
             order.SubTotal = 0.0M;

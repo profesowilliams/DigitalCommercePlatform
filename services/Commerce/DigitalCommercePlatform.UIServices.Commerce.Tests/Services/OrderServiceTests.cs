@@ -319,6 +319,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Return = false,
                 Status = Status.SHIPPED,
                 Tax = 1.6M,
+                Price = 7.2M,
                 Freight = 3.7M,
                 OtherFees = 1.3M,
                 SubTotal = 7.9M,
@@ -365,6 +366,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Tax = 1.6M,
                 Freight = 3.7M,
                 OtherFees = 1.3M,
+                Price = 7.2M,
                 SubTotal = 7.9M,
                 Items= lstItems
             };
