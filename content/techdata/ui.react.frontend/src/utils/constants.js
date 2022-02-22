@@ -36,6 +36,9 @@ export const ADOBE_DATA_LAYER_SEARCH_BAR_EVENT = 'internalSearch';
 // Orders
 export const ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY = 'Orders Table Interactions';
 export const ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT = 'orderSearch';
+export const ORDER_GRID_SEARCH_FIELD_ALL_VENDORS_KEY = 'allVendors';
+export const ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY = 'allMethods';
+export const ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY = 'allLines';
 
 // Orders details
 export const ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT = 'orderDetailsSearch';

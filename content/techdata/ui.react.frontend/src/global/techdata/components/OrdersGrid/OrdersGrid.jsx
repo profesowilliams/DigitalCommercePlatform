@@ -231,7 +231,7 @@ function OrdersGrid(props) {
                 category,
                 name,
             })
-    }
+    };
 
     const columnDefs = [
         {
@@ -448,6 +448,7 @@ function OrdersGrid(props) {
                     uiServiceEndPoint={uiServiceEndPoint}
                     category={ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY}
                     handleClickOptionsButton={handleClickOptionsButton}
+                    flagOpenOrder={expandedOpenOrderFilter}
                 ></GridSearchCriteria>
                 <Grid
                     columnDefinition={columnDefs}

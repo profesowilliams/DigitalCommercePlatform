@@ -5,6 +5,11 @@ import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import { useEffect } from "react";
 import { formateDatePicker, validateDatePicker, isQueryValid, isNotEmptyValue } from "../../../../utils/utils";
+import { 
+  ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY,
+  ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY, 
+  ORDER_GRID_SEARCH_FIELD_ALL_VENDORS_KEY
+} from "../../../../utils/constants";
 
 function OrdersGridSearch({
   componentProp,
@@ -32,6 +37,9 @@ function OrdersGridSearch({
   const flagMethod = useRef(false);
   const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
   const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
+  const [defaultAllVendor, setDefaultAllVendor] = useState(null);
+  const [defaultAllMethod, setDefaultAllMethod] = useState(null);
+  const [defaultAllLine, setDefaultAllLine] = useState(null);
 
   /**
    * Effect if there is a ID param in the URL catch and
@@ -50,6 +58,16 @@ function OrdersGridSearch({
       onSearchRequest({ queryString: res }); // execute the filter afther get the new filter value
     }
   }, [idParam, componentProp]);
+
+  /**
+   * Effect used to set the default value for the analytics key
+   */
+  useEffect(() => {
+    // setDefaultAllLicense(componentProp?.);
+    setDefaultAllMethod(isNotEmptyValue(componentProp?.methodsDropdown?.items[0]) ? componentProp?.methodsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY);
+    setDefaultAllVendor(isNotEmptyValue(componentProp?.vendorsDropdown?.items[0]) ? componentProp?.vendorsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_VENDORS_KEY);
+    setDefaultAllLine(isNotEmptyValue(componentProp?.linesDropdown?.items[0]) ? componentProp?.linesDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY);
+  }, [componentProp]);
 
   const defaultVendorsDropdown = {
     label: "Vendors",
@@ -84,17 +102,34 @@ function OrdersGridSearch({
     datePlaceholder: componentProp?.datePlaceholder ?? "MM/DD/YYYY",
   };
 
+  /**
+   * handler that create and return and object 
+   * @param {any} query 
+   * @returns 
+   */
   const dispatchAnalyticsChange = (query) => {
     return {
       searchTerm:
         query.keyword?.key && query.keyword?.value ? query.keyword?.value : "",
       searchOption: isNotEmptyValue(query.keyword?.value),
-      vendorFilter: isNotEmptyValue(query.manufacturer?.key),
-      license: isNotEmptyValue(query.license?.key),
-      method: isNotEmptyValue(query.method?.key),
+      vendorFilter: isNotEmptyValue(query.manufacturer?.key) && !validateKey(query.manufacturer?.key, defaultAllVendor),
+      license: isNotEmptyValue(query.license?.key) && !validateKey(query.license?.key, defaultAllLine),
+      method: isNotEmptyValue(query.method?.key) && !validateKey(query.method?.key, defaultAllMethod),
       fromDate: isNotEmptyValue(query.from?.key),
       toDate: isNotEmptyValue(query.to?.key),
     };
+  };
+    
+
+  /**
+   * Function used to validate the key values with the constant
+   * values in the dispatchAnalyticsChange
+   * @param {string} keyValue 
+   * @param {string} compareValue 
+   * @returns 
+   */
+  const validateKey = (keyValue, compareValue) => {
+    return keyValue === compareValue;
   };
 
   function dispatchQueryChange(query) {

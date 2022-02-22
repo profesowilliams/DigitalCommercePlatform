@@ -27,7 +27,8 @@ function GridSearchCriteria({
   uiServiceEndPoint,
   category = '',
   handleClickOptionsButton,
-  labelFilterGrid
+  labelFilterGrid,
+  flagOpenOrder,
 }) {
 	const filter = useRef(null);
 	const analyticsData = useRef(null); // ref for the analytics data to adobeData layer in case of be necessary
@@ -92,7 +93,7 @@ function GridSearchCriteria({
 				ButtonsComponentHeader ? (<ButtonsComponentHeader 
 											handleChange={handleChange}
 											onSearch={onSearch}
-											expanded={expanded}
+											expanded={flagOpenOrder}
 											onClear={onClear}
 											labelFilterGrid={labelFilterGrid}
 											handleClickOptionsButton={handleClickOptionsButton}
