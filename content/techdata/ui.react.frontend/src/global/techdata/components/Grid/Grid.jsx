@@ -22,6 +22,8 @@ function Grid(props) {
     icons,
     omitCreatedQuery = false,
     contextMenuItems = undefined,
+    onExpandAnalytics,
+    onCollapseAnalytics,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -436,6 +438,8 @@ function Grid(props) {
   }
 
   function onRowGroupOpened(row) {
+    if (onExpandAnalytics && onCollapseAnalytics)
+      row.expanded ? onExpandAnalytics() : onCollapseAnalytics();
     onRowExpandOrCollapse(row);
   }
 

@@ -95,6 +95,36 @@ function ProductLinesGrid({
     }
   }
 
+  const onExpandAnalytics = () => {
+    DataLayerUtils.pushEvent(
+      "click",
+      {
+        name: "Open Line Item",
+        type: "button",
+      },
+      {
+        click: {
+          category: "Quote Detail Table Interactions",
+        },
+      }
+    );
+  };
+
+  const onCollapseAnalytics = () => {
+    DataLayerUtils.pushEvent(
+      "click",
+      {
+        name: "Collapse Line Item",
+        type: "button",
+      },
+      {
+        click: {
+          category: "Quote Detail Table Interactions",
+        },
+      }
+    );
+  };
+
   //default column defs
   const columnDefs = [
     {
@@ -103,35 +133,6 @@ function ProductLinesGrid({
       width: "100px",
       sortable: false,
       expandable: true,
-      onCellClicked: (event) => {
-        if (event.node.expanded === true) {
-          DataLayerUtils.pushEvent(
-            "click",
-            {
-              name: "Open Line Item",
-              type: "button",
-            },
-            {
-              click: {
-                category: "Quote Detail Table Interactions",
-              },
-            }
-          );
-        } else {
-          DataLayerUtils.pushEvent(
-            "click",
-            {
-              name: "Collapse Line Item",
-              type: "button",
-            },
-            {
-              click: {
-                category: "Quote Detail Table Interactions",
-              },
-            }
-          );
-        }
-      },
       rowClass: ({ node, data }) => {
         return `cmp-product-lines-grid__row ${
           !data?.children || data.children.length === 0
@@ -387,6 +388,8 @@ function ProductLinesGrid({
           onModelUpdateFinished={() => {
             markupChanged(mutableGridData);
           }}
+          onExpandAnalytics={onExpandAnalytics}
+          onCollapseAnalytics={onCollapseAnalytics}
         />
       </div>
     </section>
