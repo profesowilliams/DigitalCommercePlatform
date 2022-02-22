@@ -265,7 +265,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             //arrange
 
             var quotePreviewModel = GetQuotePreviewModel();
-            
+
             Line testLine = new()
             {
                 TDNumber = "1231234444",
@@ -285,7 +285,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id,"Estimate", quotePreviewModel });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id, "Estimate", quotePreviewModel });
 
             //Assert
             Assert.NotNull(testLine);
@@ -321,7 +321,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate", quotePreviewModel });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id, "Estimate", quotePreviewModel });
 
             //Assert
             Assert.NotNull(testLine);
@@ -345,7 +345,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Quantity = 1,
                 UnitPrice = (decimal?)12.08
             };
-            
+
 
             string id = "4735561697";
             Type type;
@@ -356,7 +356,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "GetLinesforRequest" && x.IsPrivate);
 
             //Act
-            var result = requestItemModel.Invoke(objType, new object[] { testLine, id ,"Estimate", quotePreviewModel });
+            var result = requestItemModel.Invoke(objType, new object[] { testLine, id, "Estimate", quotePreviewModel });
 
             //Assert
             Assert.NotNull(testLine);
@@ -460,7 +460,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             //arrange
             QuotePreviewModel request = new QuotePreviewModel();
 
-            request.QuoteDetails = new QuotePreview() { Id="123",Currency="USD",ConfigurationId="123",BuyMethod="Test",};
+            request.QuoteDetails = new QuotePreview() { Id = "123", Currency = "USD", ConfigurationId = "123", BuyMethod = "Test", };
             request.QuoteDetails.Source = new VendorReferenceModel() { Type = "123", Value = "123" };
 
             Type type;
@@ -608,7 +608,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [AutoDomainData]
         public async Task GetQuote(GetQuote.Request request)
         {
-            
+
 
             // Act
             var result = await _commerceService.GetQuote(request);
@@ -616,7 +616,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.Null(result);
         }
 
-        
+
 
         [Theory]
         [AutoDomainData]
@@ -664,7 +664,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Currency = "USD",
                 Id = "875439076",
                 Items = lstline,
-                Source=Type
+                Source = Type
             };
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel()
             {
@@ -725,7 +725,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             request.CreateModelFrom.PricingCondition = "Commercial";
 
             // Act
-            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>( () => _commerceService.CreateQuoteFromSavedCart(request));
+            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>(() => _commerceService.CreateQuoteFromSavedCart(request));
 
             // Assert
             Assert.Equal("Invalid savedCartId: 96725045", ex.Result.Message);
@@ -786,7 +786,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             //arrange
 
-            string id = "TT132145197LJ"; 
+            string id = "TT132145197LJ";
             string attributeName = "ORIGINALESTIMATEID";
 
             Type type;
@@ -824,7 +824,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "BuildLineAttibutes" && x.IsPrivate);
 
             //Act
-            var result = imageProductModel.Invoke(objType, new object[] { item,id });
+            var result = imageProductModel.Invoke(objType, new object[] { item, id });
             Assert.NotNull(result);
         }
 
@@ -832,7 +832,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void GetAccountDetails()
         {
             //arrange 
-            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123",true,"Cisco");
+            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123", true, "Cisco");
 
             //Act
             var result = _commerceService.QuotePreview(request);
@@ -848,7 +848,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Currency = "USD",
                 Id = "123",
                 IsExclusive = true,
-                CustomerBuyMethod ="AVT"
+                CustomerBuyMethod = "AVT"
             };
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel
             {

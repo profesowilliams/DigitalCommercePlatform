@@ -1,14 +1,13 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Return;
 using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
-using DigitalFoundation.Common.Features.Client.Exceptions;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -259,17 +258,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private Models.Order.Internal.OrderModel PopulateOrderDetails(OrderModel order)
         {
+
             if (order != null)
             {
-                order.Tax = CalculateTax(order);
-                order.Freight = CalculateFreight(order);
-                order.OtherFees = CalculateOtherFees(order);
-                order.SubTotal = order.Price ?? 0;
-                decimal? subtotal = order.SubTotal ?? 0;
-
-                order.Total = subtotal + order.OtherFees + order.Freight + order.Tax;
+                if (order?.Status.ToString().ToUpper() == "CANCELLED")
+                    CancelledOrderPayment(order);
+                else
+                    OrderPayment(order);
             }
             return order;
+        }
+
+        private void OrderPayment(OrderModel order)
+        {
+            order.Tax = CalculateTax(order);
+            order.Freight = CalculateFreight(order);
+            order.OtherFees = CalculateOtherFees(order);
+            order.SubTotal = order.Price ?? 0;
+            decimal? subtotal = order.SubTotal ?? 0;
+
+            order.Total = subtotal + order.OtherFees + order.Freight + order.Tax;
+        }
+
+        private void CancelledOrderPayment(OrderModel order)
+        {
+            order.Tax = 0.0M;
+            order.Freight = 0.0M;
+            order.OtherFees = 0.0M;
+            order.SubTotal = 0.0M;
+            decimal? subtotal = 0.0M;
+
+            order.Total = subtotal + order.OtherFees + order.Freight + order.Tax;
         }
 
         private decimal? CalculateFreight(OrderModel order)

@@ -296,6 +296,92 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void CancelledOrderPayment_Test()
+        {
+            Source source = new()
+            {
+                ID = "1234",
+                SalesOrg = "0100",
+                System = "Renewal"
+            };
+            List<Item> lstItems = new List<Item>();
+            Item item = new()
+            {
+                Tax = 1.6M,
+                Freight = 3.7M,
+                OtherFees = 1.3M,
+            };
+            lstItems.Add(item);
+            OrderModel orderModel = new()
+            {
+                Source = source,
+                Return = false,
+                Status = Status.SHIPPED,
+                Tax = 1.6M,
+                Freight = 3.7M,
+                OtherFees = 1.3M,
+                SubTotal = 7.9M,
+                Items = lstItems
+            };
+
+            //Act
+            Type type;
+            object objType;
+            InitiateOrderService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CancelledOrderPayment" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { orderModel });
+
+            // Assert
+            Assert.NotNull(orderModel.Total);
+        }
+
+
+        [Fact]
+        public void OrderPayment_Test()
+        {
+            Source source = new()
+            {
+                ID = "1234",
+                SalesOrg = "0100",
+                System = "Renewal"
+            };
+            List<Item> lstItems = new List<Item>();
+            Item item = new()
+            {
+                Tax = 1.6M,
+                Freight = 3.7M,
+                OtherFees = 1.3M,
+            };
+            lstItems.Add(item);
+            OrderModel orderModel = new()
+            {
+                Source = source,
+                Return = false,
+                Status = Status.SHIPPED,
+                Tax = 1.6M,
+                Freight = 3.7M,
+                OtherFees = 1.3M,
+                SubTotal = 7.9M,
+                Items= lstItems
+            };
+
+            //Act
+            Type type;
+            object objType;
+            InitiateOrderService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CancelledOrderPayment" && x.IsPrivate);
+
+            apiQuery.Invoke(objType, new object[] { orderModel });
+
+            // Assert
+            Assert.NotNull(orderModel.Total);
+        }
         private void InitiateOrderService(out Type type, out object objType)
         {
             type = typeof(OrderService);

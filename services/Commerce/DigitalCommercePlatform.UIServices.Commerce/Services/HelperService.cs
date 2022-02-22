@@ -56,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 "endusername" => "EndUserName",
                 _ => "Created",
             };
-            
+
             return sortBy;
         }
 
