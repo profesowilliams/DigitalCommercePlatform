@@ -222,11 +222,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
         );
       },
     },
-    {
-      headerName: "Line Number",
-      field: "configID",
-      sortable: false,
-    },
+    
     {
       headerName: "Item Information",
       field: "shortDescription",
