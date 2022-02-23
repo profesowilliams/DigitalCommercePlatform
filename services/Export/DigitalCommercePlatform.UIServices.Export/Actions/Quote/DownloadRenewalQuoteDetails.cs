@@ -8,6 +8,7 @@ using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,21 +55,18 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                GetRenewalQuoteDetailedRequest getRenewalRequest = new ();
-                getRenewalRequest.Id = new string[] { request.Id }; 
+                GetRenewalQuoteDetailedRequest getRenewalRequest = new();
+                getRenewalRequest.Id = new string[] { request.Id };
                 getRenewalRequest.Type = "Renewal";
 
-                var quoteDetailedModels = await _renewalService.GetRenewalsQuoteDetailedFor(getRenewalRequest);
-                Response response = new();
+                List<QuoteDetailedModel> quoteDetailedModels = await _renewalService.GetRenewalsQuoteDetailedFor(getRenewalRequest);
 
+                //call product service to get products details
+
+                Response response = new();
                 if (quoteDetailedModels?.Count > 0)
                 {
-                    RenewalQuoteDetails renewalDetails = new() 
-                    {
-                        Id = request.Id,
-                        QuoteDetailedModels = quoteDetailedModels
-                    };
-                    var binaryContentXls = await _documentGenerator.XlsGenerate(renewalDetails);
+                    var binaryContentXls = await _documentGenerator.XlsGenerate(quoteDetailedModels[0]);
                     DownloadableFile file = new(binaryContentXls, request.Id + ".xls", mimeType);
                     response.BinaryContent = file.BinaryContent;
                     response.MimeType = file.MimeType;

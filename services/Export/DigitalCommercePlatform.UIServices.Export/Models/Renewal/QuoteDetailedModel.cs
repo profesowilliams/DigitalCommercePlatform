@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Export.DocumentGenerators.Interfaces;
 using DigitalCommercePlatform.UIServices.Export.Models.Renewal.Internal;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Export.Models.Renewal
 {
     [ExcludeFromCodeCoverage]
-    public class QuoteDetailedModel : BaseResponseModel
+    public class QuoteDetailedModel : BaseResponseModel, IRenewalQuoteDetailsDocumentModel
     {
         public QuoteSourceModel Source { get; set; }
         public DateTime Published { get; set; }

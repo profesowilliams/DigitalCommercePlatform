@@ -224,14 +224,6 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             return GetTdLogo();
         }
 
-        private static Image GetTdLogo()
-        {
-            var filename = "td-synnex-logo.png";
-            string fileloc = "Content";
-            string path = Path.Combine(Directory.GetCurrentDirectory(), fileloc, filename);
-            return File.Exists(path) ? Image.FromFile(path) : null;
-        }
-
         private ExcelRange SetTermsConditionProperties(ExcelRange termsConditionLines)
         {
             termsConditionLines.Merge = true;

@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace DigitalCommercePlatform.UIServices.Export.Models.Renewal
 {
     [ExcludeFromCodeCoverage]
-    public class BaseResponseModel
+    public class BaseResponseModel : IBaseResponseModel
     {
         public decimal Revision { get; set; }
         public decimal SubRevision { get; set; }
