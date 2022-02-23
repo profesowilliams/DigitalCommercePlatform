@@ -97,7 +97,7 @@
         <item7
             jcr:primaryType="nt:unstructured"
             columnLabel="Price (USD)"
-            columnKey="price"
+            columnKey="total"
             sortable="{Boolean}true"
             columnType="plainText"
         />

@@ -10,6 +10,7 @@ import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
 import DueDateDayColumn from "./DueDateDayColumn";
 import DropdownDownloadList from "./DropdownDownloadList";
+import PriceColumn from "./PriceColumn";
 
 const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
@@ -21,7 +22,7 @@ const columnFieldsMap = (definition, eventProps) => {
     renewedduration: <ContractColumn data={data} />,
     dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
-    price: thousandSeparator(value),
+    total: <PriceColumn columnValue={data?.renewal} />,
     agreementnumber: data?.agreementNumber 
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
