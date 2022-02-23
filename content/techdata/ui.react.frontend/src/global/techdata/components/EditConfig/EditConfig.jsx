@@ -55,6 +55,7 @@ const EditConfig = ({ componentProp }) => {
         localStorage.removeItem('configID');
       } else {
         localStorage.setItem('configID', configID);
+        localStorage.setItem('editConfig', 'true');
       }
       pushData(analyticsObj);
     }
@@ -63,7 +64,7 @@ const EditConfig = ({ componentProp }) => {
         var currentUrl = window.location.href.replace('.html', '.post2get.html');
         const body = { 
             "PostBackURL": currentUrl + "/",
-            "Vendor": "Cisco",  
+            "Vendor": "Cisco",
             "ConfigurationId": configurationId,  
             "Function": "CCW_ESTIMATE",  
             "Action": "edit" 
@@ -86,8 +87,9 @@ const EditConfig = ({ componentProp }) => {
     }
 
     useEffect(() => {
-        if (document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
+        if (localStorage.getItem('editConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
             analyticsData("Cisco", configurationId, true);
+            localStorage.removeItem('editConfig');
         }
     }, [])
 

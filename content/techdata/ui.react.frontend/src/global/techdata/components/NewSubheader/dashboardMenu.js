@@ -6,7 +6,7 @@ export const dashboardMenu = (dashboardMenuItems, hasDCPAccess) => {
     let last = hasDCPAccess ? 0 : 2;
 
     const analyticsData = (label, type) => {
-        const hier = 'Dashboard > ' + label;
+        const hier = 'Dashboards > ' + label;
         pushEvent('click', {
             type: type,
             category: 'DCP subheader',

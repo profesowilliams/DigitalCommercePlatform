@@ -28,6 +28,7 @@ const CreateConfig = ({ componentProp }) => {
         localStorage.removeItem('vendorName');
       } else {
         localStorage.setItem('vendorName', vendorName);
+        localStorage.setItem('createConfig', 'true');
       }
       pushData(analyticsObj);
   }
@@ -89,8 +90,9 @@ const CreateConfig = ({ componentProp }) => {
   }
 
   useEffect(() => {
-    if (document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
+    if (localStorage.getItem('createConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
         analyticsData(methodSelected.label, true);
+        localStorage.removeItem('createConfig');
     }
   }, [])
 
