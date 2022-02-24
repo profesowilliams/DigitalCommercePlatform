@@ -328,7 +328,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     Virtual = flags.VirtualProduct,
                     Warehouse = flags.Warehouse,
                     FreeShipping = flags.FreeShipping,
-                    FreeShippingLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.FreeShipping)}.{flags.FreeShipping}".ToUpperInvariant())
+                    FreeShippingLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.FreeShipping)}.{flags.FreeShipping}".ToUpperInvariant()),
+                    VirtualLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.Virtual)}.{flags.VirtualProduct}".ToUpperInvariant())
                 };
             }
 

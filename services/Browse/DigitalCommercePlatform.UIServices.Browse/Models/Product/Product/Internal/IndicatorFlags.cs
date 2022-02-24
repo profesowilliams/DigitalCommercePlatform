@@ -20,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public bool Warehouse { get; set; }
 
         public bool Virtual { get; set; }
+        public string VirtualLabel { get; set; }
         public bool FreeShipping { get; set; }
         public string FreeShippingLabel { get; set; }
     }

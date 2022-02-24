@@ -317,6 +317,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Refurbished=true,
                             Returnable=true,
                             Virtual=true,
+                            VirtualLabel="VIRTUAL.TRUE_TRANSLATED",
                             Warehouse=true,
                             FreeShipping=false,
                             FreeShippingLabel="FREESHIPPING.FALSE_TRANSLATED"
@@ -574,6 +575,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Refurbished=true,
                             Returnable=true,
                             Virtual=true,
+                            VirtualLabel="VIRTUAL.TRUE_TRANSLATED",
                             Warehouse=true,
                             FreeShipping=true,
                             FreeShippingLabel="FREESHIPPING.TRUE_TRANSLATED"
@@ -836,6 +838,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Refurbished=true,
                             Returnable=true,
                             Virtual=true,
+                            VirtualLabel="VIRTUAL.TRUE_TRANSLATED",
                             Warehouse=true,
                             FreeShipping = true,
                             FreeShippingLabel = "FREESHIPPING.TRUE_TRANSLATED"
