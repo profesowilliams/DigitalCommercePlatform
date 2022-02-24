@@ -1,10 +1,12 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Config.Actions.GetRecentConfigurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
+using Flurl;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -156,6 +158,26 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
 
         }
 
+        [Fact]
+        public void Configuration_Test()
+        {
+            //arrange
 
+           
+            Config.Models.Configurations.Internal.FindModel findModel = new Config.Models.Configurations.Internal.FindModel();
+            string configurationFindUrl = "https";
+
+
+            Type type;
+            object objType;
+            InitiateConfigService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "Configuration" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { findModel, configurationFindUrl });
+            Assert.NotNull(result);
+
+        }
     }
 }

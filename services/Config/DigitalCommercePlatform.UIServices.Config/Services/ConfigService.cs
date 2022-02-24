@@ -149,75 +149,87 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             return getrandom.Next(min, max);
         }
 
-        public async Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request)
+        public Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request)
         {
-            FindResponse<Configuration> result = new();
             try
             {
-                request.Criteria.SortBy = request.Criteria?.SortBy.ToLower() switch
-                {
-                    "configid" => "Id",
-                    "endusername" => "EndUser",
-                    "expires" => "Expirydate",
-                    _ => "Created",
-                };
-
-                if (request.Criteria.Id != null)
-                {
-                    request.Criteria.Id += "*";
-                }
-                else if (!string.IsNullOrEmpty(request.Criteria.ConfigName))
-                {
-                    request.Criteria.ConfigName += "*";
-                }
-                else if (!string.IsNullOrEmpty(request.Criteria.EndUser))
-                {
-                    request.Criteria.EndUser += "*";
-                }
-                request.Criteria.CreatedFrom = _helperService.GetDateParameter((DateTime)request.Criteria.CreatedFrom, "from");
-                request.Criteria.CreatedTo = _helperService.GetDateParameter((DateTime)request.Criteria.CreatedTo, "to");
-
-                var type = GetConfigurationType(request);
-                request.Criteria.ConfigurationType = null;
-
-                var appServiceRequest = BuildConfigurationsAppServiceRequest(request);
-                var configurationFindUrl = _appConfigurationUrl
-                    .AppendPathSegment("find")
-                    .SetQueryParams(appServiceRequest);
-                configurationFindUrl += type;
-                var stringUrl = configurationFindUrl.ToString();
-
-                if (appServiceRequest.Details)
-                {
-                    var configurationFindResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<DetailedDto>>(configurationFindUrl);
-                    BuildResult(result, configurationFindResponse);
-                }
-                else
-                {
-                    var configurationFindResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<SummaryDto>>(configurationFindUrl);
-                    BuildResult(result, configurationFindResponse);
-                }
+                Models.Configurations.Internal.FindModel appServiceRequest;
+                Url configurationFindUrl;
+                FindConfigurationUrl(request, out appServiceRequest, out configurationFindUrl);
+                var  result = Configuration(appServiceRequest, configurationFindUrl);
+                return result;
             }
             catch (RemoteServerHttpException ex)
             {
-                if (ex.Message.Contains("Reported an error: NotFound"))
-                {
-                    return result;
-                }
-                else
-                {
                     _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
                     throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
-                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
                 throw;
             }
+        }
+
+        private async Task<FindResponse<Configuration>> Configuration(Models.Configurations.Internal.FindModel appServiceRequest ,string configurationFindUrl)
+        {
+            FindResponse<Configuration> result = new();
+            if (appServiceRequest.Details)
+            {
+                var configurationFindResponse = await _middleTierHttpClient
+                    .GetAsync<FindResponse<DetailedDto>>(configurationFindUrl);
+                if (configurationFindResponse != null)
+                    BuildResult(result, configurationFindResponse);
+                else
+                    return result;
+            }
+            else
+            {
+                var configurationFindResponse = await _middleTierHttpClient
+                    .GetAsync<FindResponse<SummaryDto>>(configurationFindUrl);
+                if (configurationFindResponse != null)
+                    BuildResult(result, configurationFindResponse);
+                else
+                    return result;
+            }
             return result;
+        }
+
+        private string FindConfigurationUrl(GetConfigurations.Request request, out Models.Configurations.Internal.FindModel appServiceRequest, out Url configurationFindUrl)
+        {
+            request.Criteria.SortBy = request.Criteria?.SortBy?.ToLower() switch
+            {
+                "configid" => "Id",
+                "endusername" => "EndUser",
+                "expires" => "Expirydate",
+                _ => "Created",
+            };
+
+            if (request.Criteria.Id != null)
+            {
+                request.Criteria.Id += "*";
+            }
+            else if (!string.IsNullOrEmpty(request.Criteria.ConfigName))
+            {
+                request.Criteria.ConfigName += "*";
+            }
+            else if (!string.IsNullOrEmpty(request.Criteria.EndUser))
+            {
+                request.Criteria.EndUser += "*";
+            }
+            if (request.Criteria.CreatedFrom != null && request.Criteria.CreatedTo != null && string.IsNullOrWhiteSpace(request.Criteria.Id))
+            {
+                request.Criteria.CreatedFrom = _helperService.GetDateParameter((DateTime)request.Criteria.CreatedFrom, "from");
+                request.Criteria.CreatedTo = _helperService.GetDateParameter((DateTime)request.Criteria.CreatedTo, "to");
+            }
+
+            var type = GetConfigurationType(request);
+            request.Criteria.ConfigurationType = null;
+
+            appServiceRequest = BuildConfigurationsAppServiceRequest(request);
+            configurationFindUrl = _appConfigurationUrl.AppendPathSegment("find").SetQueryParams(appServiceRequest);
+            configurationFindUrl += type;
+            return configurationFindUrl.ToString();
         }
 
         private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
@@ -231,7 +243,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         private async Task<IEnumerable<Configuration>> MapQuotesAsync(IEnumerable<Configuration> mappingResult)
         {
             string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            
+
             foreach (var configuration in mappingResult)
             {
                 try
@@ -248,11 +260,11 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     if (ex.Message.Contains("Reported an error: NotFound"))
                     {
-                        _logger.LogError(ex, "Exception calling quote service using config id  : " + configuration.ConfigId );
+                        _logger.LogError(ex, "Exception calling quote service using config id  : " + configuration.ConfigId);
                     }
                     else
                     {
-                        _logger.LogError(ex, "Exception at : " + nameof(ConfigService));                        
+                        _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
                     }
                 }
                 catch (Exception ex)
@@ -345,10 +357,12 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 var requestUrl = _appSettings.TryGetSetting(keyForGettingUrlFromSettings)
                     ?? throw new InvalidOperationException($"{keyForGettingUrlFromSettings} is missing from AppSettings");
 
+                //var requestUrl = "https://svcinternal.prod.svc.us.tdworldwide.com/OneSource/api/AccessManagement/GetPunchOutURL";//for local testing
+
                 _logger.LogInformation($"Requested url is: {requestUrl}");
 
                 var httpClient = _httpClientFactory.CreateClient("OneSourceClient");
-                var requestJson = new StringContent(System.Text.Json.JsonSerializer.Serialize(request), 
+                var requestJson = new StringContent(System.Text.Json.JsonSerializer.Serialize(request),
                     Encoding.UTF8, "application/json");
                 var httpResponse = await httpClient.PostAsync(requestUrl, requestJson);
 
@@ -382,7 +396,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             if (!string.IsNullOrEmpty(request.Vendor))
                 request.Vendor += "*";
 
-            FindSpaCriteriaModel spaRequest = new ()
+            FindSpaCriteriaModel spaRequest = new()
             {
                 MfrPartNumbers = MfrPartNumbers,
                 EndUserName = request.EndUserName,
@@ -391,7 +405,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 Details = request.Details,
                 PricingLevel = request.PricingOption.ToString(),
                 EndUserSpaOnly = request.EndUserSpaOnly,
-                VendorName=request.Vendor
+                VendorName = request.Vendor
             };
 
             var getDealsForGrid = GetDealsDetails(spaRequest);
@@ -508,7 +522,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public async Task<GetProductPrice.Response> GetProductPrice(GetProductPrice.Request request)
         {
-            
+
             string _appPriceUrl = _appSettings.GetSetting("App.Price.Url");
             GetProductPrice.Response response;
             string json = JsonConvert.SerializeObject(request, Formatting.Indented);
