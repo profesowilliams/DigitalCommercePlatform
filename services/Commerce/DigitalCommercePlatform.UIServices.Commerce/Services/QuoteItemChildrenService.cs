@@ -85,34 +85,100 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         }
         private void ApplyIdToItems(QuotePreviewModel quotePreviewModel)
         {
+            var hasAttributes = quotePreviewModel.QuoteDetails.Items
+                .Where(a => a.Attributes != null)
+                .SelectMany(p => p.Attributes
+                .Select(p => p.Name)
+                .Where(s => s.Equals("CONFIGPARENT", StringComparison.CurrentCultureIgnoreCase))).Any();
 
-            Parallel.ForEach(quotePreviewModel.QuoteDetails.Items,
-                new ParallelOptions { MaxDegreeOfParallelism = 3 }, item =>
+            if (hasAttributes)
+            {
+                DisplayIdForLinesWithAttibutes(quotePreviewModel);
+            }
+            else
+            {
+                var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => NullableTryParseDouble(i.Id) == 0.00).ToList();
+                if (linesWithoutId.Any())
                 {
-                    var parent = item?.Attributes?.Where(a => a.Name.ToUpper().Equals("CONFIGPARENT")).FirstOrDefault()?.Value;
-                    
-                    if (!string.IsNullOrWhiteSpace(parent))
-                    {
-                        var id = NullableTryParseDouble(item.Id);
-                        if (id != null)
-                        {
-                            double parentNumber = 0;
+                    DisplayIdForLinesWithoutId(quotePreviewModel, linesWithoutId);
+                }
+                else
+                {
+                    DisplayIdForAllLines(quotePreviewModel);
+                }
+            }
 
-                            if (id != parentNumber)
-                                item.Parent = parent;
-                            else
-                                item.Parent = null;
-                        }
-                    }
+        }
 
-                    var configLine = item?.Attributes?.Where(a => a.Name.ToUpper().Equals("CONFIGLINE")).FirstOrDefault()?.Value;
-                    if (!string.IsNullOrWhiteSpace(configLine))
-                    {
-                        item.DisplayLineNumber = configLine;
-                        item.Id = item.DisplayLineNumber;
-                    }
+        private void DisplayIdForAllLines(QuotePreviewModel quotePreviewModel)
+        {
+            string source = quotePreviewModel.QuoteDetails?.Source?.Type.ToLower() ?? string.Empty;
+            bool useId = (source.Equals("estimate") || source.Equals("deal")) ? true : false;
 
-                });
+            var parentNumber = 0.0;
+
+            foreach (var item in quotePreviewModel.QuoteDetails.Items)
+            {
+                if (!useId)
+                {
+                    parentNumber = parentNumber + 1.0;
+                    item.DisplayLineNumber = (Math.Round(parentNumber, 3, MidpointRounding.AwayFromZero)).ToString();
+                    item.Id = string.IsNullOrWhiteSpace(item.Id) ? (Math.Round(parentNumber, 3, MidpointRounding.AwayFromZero)).ToString() : item.Id;
+                }
+                else
+                {
+                    item.DisplayLineNumber = item.Id ?? string.Empty;
+                }
+            }                    
+        }
+
+        private void DisplayIdForLinesWithoutId(QuotePreviewModel quotePreviewModel, List<Line> linesWithoutId)
+        {
+            var maxLineNumber = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList().OrderByDescending(i => NullableTryParseDouble(i.Id)).FirstOrDefault().Id;
+            double parentNumber = 0;
+            double n;
+            bool isNumeric = double.TryParse(maxLineNumber, out n);
+
+            if (isNumeric)
+                parentNumber = n + 1.0;
+
+            foreach (var item in linesWithoutId)
+            {
+                parentNumber = parentNumber + 1.0;
+                item.DisplayLineNumber = parentNumber.ToString();
+                item.Id = parentNumber.ToString();
+            }
+        }
+
+        private void DisplayIdForLinesWithAttibutes(QuotePreviewModel quotePreviewModel)
+        {
+            Parallel.ForEach(quotePreviewModel.QuoteDetails.Items,
+                            new ParallelOptions { MaxDegreeOfParallelism = 3 }, item =>
+                            {
+                                var parent = item?.Attributes?.Where(a => a.Name.ToUpper().Equals("CONFIGPARENT")).FirstOrDefault()?.Value;
+
+                                if (!string.IsNullOrWhiteSpace(parent))
+                                {
+                                    var id = NullableTryParseDouble(item.Id);
+                                    if (id != null)
+                                    {
+                                        double parentNumber = 0;
+
+                                        if (id != parentNumber)
+                                            item.Parent = parent;
+                                        else
+                                            item.Parent = null;
+                                    }
+                                }
+
+                                var configLine = item?.Attributes?.Where(a => a.Name.ToUpper().Equals("CONFIGLINE")).FirstOrDefault()?.Value;
+                                if (!string.IsNullOrWhiteSpace(configLine))
+                                {
+                                    item.DisplayLineNumber = configLine;
+                                    item.Id = item.DisplayLineNumber;
+                                }
+
+                            });
         }
 
         private double? NullableTryParseDouble(string request)

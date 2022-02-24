@@ -138,6 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             {
                 QuoteDetails = new QuotePreview
                 {
+                    Source = new Models.Quote.Quote.Internal.VendorReferenceModel { Type="Estimate", Value ="AS21323ZXRE"},
                     Items = new List<Models.Line>
                     {
                         new Models.Line { Id = "1.0", Parent = null },
@@ -150,6 +151,43 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                         new Models.Line { Id = "2.2", Parent = "5532" },
                         new Models.Line { Id = "2.5", Parent = "5532" }
                     }
+
+                }
+            };
+
+            Type type;
+            object objType;
+            InitateQuoteItemChildrenService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "ApplyIdToItems" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { quotePreviewModel });
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void ApplyIdToItemsNull_Test()
+        {
+            //arrange
+
+            var quotePreviewModel = new QuotePreviewModel
+            {
+                QuoteDetails = new QuotePreview
+                {
+                    Items = new List<Models.Line>
+                    {
+                        new Models.Line { Id = "1.0", Parent = null },
+                        new Models.Line { Id = "1.1", Parent = "3232" },
+                        new Models.Line { Id = "1.2", Parent = "3232" },
+                        new Models.Line { Id = "1.0.1", Parent = "3232" },
+                        new Models.Line { Id = "2.0", Parent = null },
+                        new Models.Line { Id = "2.10", Parent = "5532" },
+                        new Models.Line { Id = "2.0.1", Parent = "5532" },
+                        new Models.Line { Id = "2.2", Parent = "5532" },
+                        new Models.Line { Id = "2.5", Parent = "5532" }
+                    }
+
                 }
             };
 
@@ -278,5 +316,138 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(quotePreviewModel.QuoteDetails.Items);
         }
 
+        [Fact]
+        public void DisplayIdForLinesWithAttibutes_Test()
+        {
+            //arrange
+
+
+            var lstAttributes = new List<AttributeModel>();
+            var attrLine = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "1.0"
+            };
+
+            var attrParent = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "1.3"
+            };
+            var lstAttributes2 = new List<AttributeModel>();
+            var attrLine2 = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "2.0"
+            };
+
+            var attrParent2 = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "2.0.1"
+            };
+
+            lstAttributes.Add(attrLine2);
+            lstAttributes.Add(attrParent2);
+
+            lstAttributes.Add(attrLine);
+            lstAttributes.Add(attrParent);
+
+            var quotePreviewModel = new QuotePreviewModel
+            {
+                QuoteDetails = new QuotePreview
+                {
+                    Items = new List<Models.Line>
+                    {
+                        new Models.Line { Id = "1.0", Parent = null },
+                        new Models.Line { Id = "1.1", Parent = "3232", Attributes = lstAttributes  },
+                        new Models.Line { Id = "1.2", Parent = "3232" },
+                        new Models.Line { Id = "1.0.1", Parent = "3232" },
+                        new Models.Line { Id = "2.0", Parent = null, Attributes = lstAttributes2  },
+                        new Models.Line { Id = "2.10", Parent = "5532" },
+                        new Models.Line { Id = "2.0.1", Parent = "5532" },
+                        new Models.Line { Id = "2.2", Parent = "5532" },
+                        new Models.Line { Id = "2.5", Parent = "5532" }
+                    }
+                }
+            };
+
+            Type type;
+            object objType;
+            InitateQuoteItemChildrenService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "DisplayIdForLinesWithAttibutes" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { quotePreviewModel });
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void DisplayIdForLinesWithoutId_Test()
+        {
+            //arrange
+            var items = new List<Models.Line>
+            {
+                new Models.Line { Id = "1.0", Parent = null },
+                new Models.Line { Id = "1.1", Parent = "1.0" },
+                new Models.Line { Id = "1.2", Parent = "1.2" },
+                new Models.Line { Id = "1.0.1", Parent = "3232" },
+                new Models.Line { Id = "2.0", Parent = null,},
+                new Models.Line { Id = "", Parent = "" },
+                new Models.Line { Id = "", Parent = "" },
+                new Models.Line { Id = "", Parent = "" },
+                new Models.Line { Id = "", Parent = "" }
+            };
+            var quotePreviewModel = new QuotePreviewModel
+            {
+                QuoteDetails = new QuotePreview
+                {
+                    Source = new Models.Quote.Quote.Internal.VendorReferenceModel { Type= "Estimate", Value = "RT133770817NW" },
+                    Items = items
+                }
+            };
+
+            Type type;
+            object objType;
+            InitateQuoteItemChildrenService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "DisplayIdForLinesWithoutId" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { quotePreviewModel, items});
+            Assert.NotNull(quotePreviewModel.QuoteDetails.Items[6].DisplayLineNumber);
+        }
+
+        [Fact]
+        public void DisplayIdForAllLines_Test()
+        {
+            //arrange
+            var items = new List<Models.Line>
+            {                
+                new Models.Line { Id = "", Parent = "" },
+                new Models.Line { Id = "", Parent = "" },
+                new Models.Line { Id = "", Parent = "" },
+                new Models.Line { Id = "", Parent = "" }
+            };
+            var quotePreviewModel = new QuotePreviewModel
+            {
+                QuoteDetails = new QuotePreview
+                {
+                    Source = new Models.Quote.Quote.Internal.VendorReferenceModel { Type = "Estimate", Value = "RT133770817NW" },
+                    Items = items
+                }
+            };
+
+            Type type;
+            object objType;
+            InitateQuoteItemChildrenService(out type, out objType);
+
+            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "DisplayIdForAllLines" && x.IsPrivate);
+
+            var result = queryLine.Invoke(objType, new object[] { quotePreviewModel });
+            Assert.NotNull(quotePreviewModel.QuoteDetails.Items[1].DisplayLineNumber);
+        }
     }
 }
