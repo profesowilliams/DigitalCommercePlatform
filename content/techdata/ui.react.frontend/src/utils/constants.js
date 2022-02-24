@@ -7,6 +7,10 @@ export const ADOBE_DATA_LAYER_LINK_TYPE = 'link';
 export const ADOBE_DATA_LAYER_BUTTON_TYPE = 'button';
 export const ADOBE_DATA_LAYER_QUANTITY_TYPE = 'quantity';
 export const ADOBE_DATA_LAYER_EVENT_PAGE_VIEW = 'page view';
+export const ADOBE_DATA_LAYER_OPEN_LINE_ITEM = 'Open Line Item';
+export const ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM = 'Open All';
+export const ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM = 'Collapse Line Item';
+export const ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM = 'Collapse All';
 
 // Quotes
 export const ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT = 'quoteExport';
@@ -18,10 +22,6 @@ export const ADOBE_DATA_LAYER_QUOTE_WHITE_LABEL_EVENT = 'qpWhiteLabel';
 
 // Quotes Preview
 export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY = 'Quote Preview Table Interactions';
-export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE = 'Collapse Line Item';
-export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_LINE_ITEM = 'Open Line Item';
-export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_ALL = 'Open All';
-export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE_ALL = 'Collapse All';
 export const ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY_QUANTITY = 'quantity';
 export const QUOTE_PREVIEW_DEAL_TYPE = 'Deal';
 export const QUOTE_PREVIEW_AVT_TYPE_VALUE = 'tdavnet67';
@@ -51,6 +51,8 @@ export const ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY = 'allLines';
 
 // Orders details
 export const ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT = 'orderDetailsSearch';
+export const ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY = 'Order Detail Table Interactions';
+export const ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION = 'Invoice';
 
 // LocalStorage
 export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';

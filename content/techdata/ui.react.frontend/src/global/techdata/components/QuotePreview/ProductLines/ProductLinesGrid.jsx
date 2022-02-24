@@ -6,10 +6,10 @@ import {
   ADOBE_DATA_LAYER_LINK_TYPE,
   ADOBE_DATA_LAYER_QUANTITY_TYPE,
   ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
-  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE,
-  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE_ALL,
-  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_ALL,
-  ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_LINE_ITEM
+  ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
+  ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM,
+  ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM,
+  ADOBE_DATA_LAYER_OPEN_LINE_ITEM
 } from "../../../../../utils/constants";
 import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 import { isNotEmptyValue } from "../../../../../utils/utils";
@@ -91,14 +91,14 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     const clickInfo = {
       type : ADOBE_DATA_LAYER_BUTTON_TYPE,
       category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
-      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_LINE_ITEM,
+      name : ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       products: productInfo,
       clickInfo,
     };
-    pushEventAnalyticsGlobal(objectToSend)
+    pushEventAnalyticsGlobal(objectToSend);
   };
 
   /**
@@ -109,7 +109,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     const clickInfo = {
       type : ADOBE_DATA_LAYER_BUTTON_TYPE,
       category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
-      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE,
+      name : ADOBE_DATA_LAYER_OPEN_LINE_ITEM,
     };
     const productInfo = {
       parentSKU : isNotEmptyValue(item?.data?.tdNumber) ? item?.data?.tdNumber : '',
@@ -120,7 +120,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       products: productInfo,
       clickInfo
     };
-    pushEventAnalyticsGlobal(objectToSend)
+    pushEventAnalyticsGlobal(objectToSend);
   };
   
   /**
@@ -137,33 +137,33 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo
     };
-    pushEventAnalyticsGlobal(objectToSend)
+    pushEventAnalyticsGlobal(objectToSend);
   };
 
   const handlerAnalyticCollapsedAll = () => {
     const clickInfo = {
       type : ADOBE_DATA_LAYER_LINK_TYPE,
       category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
-      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_COLLAPSE_ALL,
+      name : ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo
     };
-    pushEventAnalyticsGlobal(objectToSend)
+    pushEventAnalyticsGlobal(objectToSend);
   };
 
   const handlerAnalyticExpandeddAll = () => {
     const clickInfo = {
       type : ADOBE_DATA_LAYER_LINK_TYPE,
       category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
-      name : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CLICK_INFO_NAME_OPEN_ALL,
+      name : ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo
     };
-    pushEventAnalyticsGlobal(objectToSend)
+    pushEventAnalyticsGlobal(objectToSend);
   };
 
   useEffect(() => {

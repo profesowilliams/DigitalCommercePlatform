@@ -12,7 +12,17 @@ import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import { isNotEmptyValue, requestFileBlob } from "../../../../../utils/utils";
-import { ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT } from "../../../../../utils/constants";
+import {
+  ADOBE_DATA_LAYER_BUTTON_TYPE, 
+  ADOBE_DATA_LAYER_CLICK_EVENT,
+  ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM,
+  ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
+  ADOBE_DATA_LAYER_LINK_TYPE,
+  ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM,
+  ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
+  ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION,
+  ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT
+} from "../../../../../utils/constants";
 import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 
 function ProductLinesGrid({
@@ -78,6 +88,7 @@ function ProductLinesGrid({
     gridApi?.forEachNode((node) => {
       node.expanded = true;
     });
+    handlerAnalyticExpandeddAll();
     gridApi?.expandAll();
   }
 
@@ -85,6 +96,7 @@ function ProductLinesGrid({
     gridApi?.forEachNode((node) => {
       node.expanded = false;
     });
+    handlerAnalyticCollapsedAll();
     gridApi?.collapseAll();
   }
 
@@ -131,6 +143,13 @@ function ProductLinesGrid({
     const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
     requestFileBlob(invoiceUrl,'',{redirect:true});
   }
+
+  const handlerInvoiceClick = (data) => {
+    const orderID = data.id;
+    const invoiceId = data.invoices[0]?.id;
+    handlerAnalyticInvoiceClick(data)
+    openInvoicePdf(invoiceId, orderID);
+  };
 
   /**
    * handler that validate if a row in OrderDetails have a
@@ -298,7 +317,6 @@ function ProductLinesGrid({
               </a>
             </span>
           </div>
-          
       );
     },
   })
@@ -449,10 +467,8 @@ function ProductLinesGrid({
     field: "invoice",
     sortable: false,
     cellRenderer: (props) => {
-      const orderID = props.data.id;
-      const invoiceId = props.data.invoices[0]?.id;
       return (
-          <div onClick={() => openInvoicePdf(invoiceId, orderID)}>
+          <div onClick={() => handlerInvoiceClick(props.data)}>
             <span className='status'>
               <a
                 disabled="disabled"
@@ -766,6 +782,97 @@ function ProductLinesGrid({
     pushEventAnalyticsGlobal(objectToSend);
   };
 
+  const setProductInfoObject = (dataItem) => {
+    return {
+      parentSKU : isNotEmptyValue(dataItem?.tdNumber) ? dataItem?.tdNumber : '',
+      name: isNotEmptyValue(dataItem?.displayName) ? dataItem?.displayName : ''
+    };
+  }
+  
+
+  /**
+   * Handler that is called when the item 
+   * is collapsed
+   */
+   const handlerAnalyticCollapseAction = (item) => {
+    const productInfo = setProductInfoObject(item.data);
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
+      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
+      name : ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      products: productInfo,
+      clickInfo,
+    };
+    pushEventAnalyticsGlobal(objectToSend);
+  };
+
+  /**
+   * Handler that is called when the item 
+   * is expanded
+   */
+   const handlerAnalyticExpandAction = (item) => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
+      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
+      name : ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
+    };
+    const productInfo = setProductInfoObject(item.data);
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      products: productInfo,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend);
+  };
+  
+  /**
+   * Handler that is called when the quantity
+   * item is clicked
+   */
+  const  handlerAnalyticInvoiceClick = (item) => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
+      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
+      name : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION,
+    };
+    const productInfo = setProductInfoObject(item);
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      products: productInfo,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend);
+  };
+
+  const handlerAnalyticCollapsedAll = () => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_LINK_TYPE,
+      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
+      name : ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend);
+  };
+
+  const handlerAnalyticExpandeddAll = () => {
+    const clickInfo = {
+      type : ADOBE_DATA_LAYER_LINK_TYPE,
+      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
+      name : ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM,
+    };
+    const objectToSend = {
+      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      clickInfo
+    };
+    pushEventAnalyticsGlobal(objectToSend);
+  }; 
+
   return (
     <section>
       {whiteLabelMode && (
@@ -820,6 +927,8 @@ function ProductLinesGrid({
             filteringExtension.requestLocalFilter(request)
           }
           handlerIsRowMaster={handlerIsRowMaster}
+          onExpandAnalytics={handlerAnalyticExpandAction}
+          onCollapseAnalytics={handlerAnalyticCollapseAction}
         ></Grid>
       </div>
       {modal && <Modal
