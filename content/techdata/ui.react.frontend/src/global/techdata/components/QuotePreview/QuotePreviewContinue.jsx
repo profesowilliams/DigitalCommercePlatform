@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../Widgets/Button";
 import Link from "../Widgets/Link";
+import { isDealConfiguration } from "../QuotePreview/QuoteTools";
 import { pushEvent } from "../../../../utils/dataLayerUtils";
 
 const eventTypes = {
@@ -32,6 +33,8 @@ function QuotePreviewContinue({
     }
   };
 
+  const quoteDetailsSource = apiResponse?.content?.quotePreview?.quoteDetails?.source;
+
   const clickHandler = (evtName) => {
     if (evtName === eventTypes.button) {
       handleQuickQuote();
@@ -60,13 +63,17 @@ function QuotePreviewContinue({
         />
         <label htmlFor="make-default">{gridProps.defaultChoiceLabel}</label>
       </div>
-      <Link
-        callback={() => clickHandler(eventTypes.link)}
-        variant={"cmp-qp-continue__link"}
-        underline={"always"}
-      >
-        {gridProps.continueWithStandardPriceLabel}
-      </Link>
+      {/* Only render the "Continue With Standard Price" Link when the quote is not of type Deal. */}
+      {!isDealConfiguration(quoteDetailsSource) && (
+        <Link
+          callback={() => clickHandler(eventTypes.link)}
+          variant={"cmp-qp-continue__link"}
+          underline={"always"}
+          >
+          {gridProps.continueWithStandardPriceLabel}
+        </Link>
+      )}
+      
     </div>
   );
 }
