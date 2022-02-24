@@ -11,5 +11,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Helpers
         public const string Orderable = "Orderable";
         public const string Warehouse = "Warehouse";
         public const string Y = "Y";
+        public const string Virtual = "Virtual";
     }
 }

@@ -527,6 +527,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 {
                     Type = FreeShipping,
                     Value = "test"
+                },
+                new Dto.FullSearch.Internal.IndicatorDto
+                {
+                    Type = Virtual,
+                    Value = "test2"
                 }
             };
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
@@ -541,6 +546,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Should().NotBeNull();
             result.Products[0].Indicators.Should().NotBeNullOrEmpty();
             result.Products[0].Indicators[FreeShipping].Should().NotBeNull();
+            result.Products[0].Indicators[Virtual].Should().NotBeNull();
         }
 
         [Theory]
@@ -751,10 +757,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData(nameof(AddFreeShuppingIndicator_Test_Data))]
-        public void AddFreeShuppingIndicator_Test(ElasticItemDto productDto, ElasticItemModel productModel, string expectedValue)
+        public void AddFreeShuppingIndicator_Test(ElasticItemDto productDto, ElasticItemModel productModel, string[] expectedValues)
         {
             // Arrange
-            MethodInfo sut = typeof(SearchService).GetMethod("AddFreeShuppingIndicator", BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo sut = typeof(SearchService).GetMethod("AddIndicators", BindingFlags.Instance | BindingFlags.NonPublic);
             _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((Dictionary<string, string> dict, string key, string fallback) => { return $"{key}_Translated"; })
                 .Verifiable();
@@ -763,8 +769,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             sut.Invoke(_searchService, new object[] { productDto, productModel });
             //Assert
             _translationServiceMock.VerifyAll();
-            productModel.Indicators.Should().ContainKey("FreeShipping");
-            productModel.Indicators["FreeShipping"].Should().Be(expectedValue);
+            productModel.Indicators.Should().ContainKey(FreeShipping);
+            productModel.Indicators[FreeShipping].Should().Be(expectedValues[0]);
+            productModel.Indicators.Should().ContainKey(Virtual);
+            productModel.Indicators[Virtual].Should().Be(expectedValues[1]);
         }
 
         public static IEnumerable<object> AddFreeShuppingIndicator_Test_Data()
@@ -780,7 +788,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     {
                         Indicators = new()
                     },
-                    "FreeShipping.N_Translated"
+                    new string[] {"FreeShipping.N_Translated", "Virtual.N_Translated" }
                 },
                 new object[]
                 {
@@ -790,7 +798,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                         {
                             new IndicatorDto
                             {
-                                Type="FreeShipping",
+                                Type=FreeShipping,
                                 Value="Y"
                             }
                         }
@@ -799,7 +807,55 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     {
                         Indicators = new()
                     },
-                    "FreeShipping.Y_Translated"
+                    new string[] { "FreeShipping.Y_Translated", "Virtual.N_Translated" }
+                },
+                new object[]
+                {
+                    new ElasticItemDto
+                    {
+                        Indicators = new List<IndicatorDto>
+                        {
+                            new IndicatorDto
+                            {
+                                Type=FreeShipping,
+                                Value="Y"
+                            },
+                            new IndicatorDto
+                            {
+                                Type=Virtual,
+                                Value="N"
+                            }
+                        }
+                    },
+                    new ElasticItemModel
+                    {
+                        Indicators = new()
+                    },
+                    new string[] { "FreeShipping.Y_Translated", "Virtual.N_Translated" }
+                },
+                new object[]
+                {
+                    new ElasticItemDto
+                    {
+                        Indicators = new List<IndicatorDto>
+                        {
+                            new IndicatorDto
+                            {
+                                Type=FreeShipping,
+                                Value="Y"
+                            },
+                            new IndicatorDto
+                            {
+                                Type=Virtual,
+                                Value="Y"
+                            }
+                        }
+                    },
+                    new ElasticItemModel
+                    {
+                        Indicators = new()
+                    },
+                    new string[] { "FreeShipping.Y_Translated", "Virtual.Y_Translated" }
                 }
             };
         }

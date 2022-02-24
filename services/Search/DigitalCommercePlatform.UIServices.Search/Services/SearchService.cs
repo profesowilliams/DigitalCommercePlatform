@@ -51,6 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly ISiteSettings _siteSettings;
         private readonly ITranslationService _translationService;
         private readonly ICultureService _cultureService;
+        private readonly string[] Indicators = { FreeShipping, Virtual };
 
         public SearchService(SearchServiceArgs args)
         {
@@ -142,16 +143,16 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             }
         }
 
-        private void AddFreeShuppingIndicator(ElasticItemDto productDto, ElasticItemModel productModel)
+        private void AddIndicator(ElasticItemDto productDto, ElasticItemModel productModel, string indicatorName)
         {
-            var freeShipping = productDto.Indicators?.Find(x => x.Type == FreeShipping);
-            if (freeShipping != null)
+            var indicator = productDto.Indicators?.Find(x => x.Type == indicatorName);
+            if (indicator != null)
             {
-                productModel.Indicators.Add(FreeShipping, _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{freeShipping.Value}", freeShipping.Value));
+                productModel.Indicators.Add(indicatorName, _translationService.Translate(_indicatorsTranslations, $"{indicatorName}.{indicator.Value}", indicator.Value));
             }
             else
             {
-                productModel.Indicators.Add(FreeShipping, _translationService.Translate(_indicatorsTranslations, $"{FreeShipping}.{N}", N));
+                productModel.Indicators.Add(indicatorName, _translationService.Translate(_indicatorsTranslations, $"{indicatorName}.{N}", N));
             }
         }
 
@@ -160,7 +161,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             if (productModel.Indicators == null)
                 productModel.Indicators = new();
 
-            AddFreeShuppingIndicator(productDto, productModel);
+            foreach(var indicator in Indicators)
+            {
+                AddIndicator(productDto, productModel, indicator);
+            }
         }
 
         private List<RefinementModel> GetLocalizedRefinements(RefinementGroupResponseDto group)
