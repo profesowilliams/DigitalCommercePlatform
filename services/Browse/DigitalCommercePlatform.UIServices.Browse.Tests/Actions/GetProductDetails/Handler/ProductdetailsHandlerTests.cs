@@ -266,6 +266,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "DisplayName",
+                        CNETLanguage = "EN",
+                        CNETSite = "US",
                         Stock = new StockModel
                         {
                             TotalAvailable="2",
@@ -521,6 +523,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "DisplayName",
+                        CNETLanguage = "EN",
+                        CNETSite = "US",
                         Stock = new StockModel
                         {
                             TotalAvailable="2",
@@ -781,6 +785,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "DisplayName",
+                        CNETLanguage = "EN",
+                        CNETSite = "US",
                         Stock = new StockModel
                         {
                             TotalAvailable="2",

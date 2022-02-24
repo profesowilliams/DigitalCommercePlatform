@@ -46,6 +46,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string Virtual = "Virtual";
             private const string Warehouse = "Warehouse";
             private const string Y = "Y";
+            private const string CnetLanguage = "EN";
+            private const string CnetSite = "US";
             private readonly ICultureService _cultureService;
             private readonly string _imageSize;
             private readonly Dictionary<string, string> _indicatorsTranslations = null;
@@ -185,6 +187,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Description = x.Description;
                 product.SubstituteMaterialNumber = x.Plants?.FirstOrDefault()?.SubstituteMaterialNumber;
                 product.ManufacturerPartNumber = x.ManufacturerPartNumber;
+                product.CNETLanguage = CnetLanguage;
+                product.CNETSite = CnetSite;
 
                 var saleorgPlant = x.SalesOrganizations?.FirstOrDefault(s => s.Id == request.SalesOrg)?.DeliveryPlant;
                 product.UPC_EAN = !string.IsNullOrWhiteSpace(saleorgPlant) ? x.Plants?.FirstOrDefault(p => p.Id == saleorgPlant)?.UPC : null;

@@ -16,6 +16,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
         public string Description { get; set; }
         public string SubstituteMaterialNumber { get; set; }
         public string ManufacturerPartNumber { get; set; }
+        public string CNETLanguage { get; set; }
+        public string CNETSite { get; set; }
 
         [JsonProperty("UPC_EAN")]
         public string UPC_EAN { get; set; }
