@@ -245,9 +245,7 @@ function QuotesGrid(props) {
           options={options}
           contextMenuItems={contextMenuItems}
           config={componentProp}
-          onAfterGridInit={(config) => {
-            filteringExtension.onAfterGridInit(config);
-          }}
+          onAfterGridInit={(config) => filteringExtension.onAfterGridInit(config)}
           requestInterceptor={(request) => detailRedirectHandler(request)}
         ></Grid>
       </div>

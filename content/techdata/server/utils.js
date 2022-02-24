@@ -1384,8 +1384,8 @@ module.exports = {
         }
       }
     },
-    getConfigGridResponse() {
-      return {
+    getConfigGridResponse(sortBy, sortDir) {
+      const resp = {
         content: {
           pageNumber: 1,
           pageSize: 25,
@@ -1450,7 +1450,7 @@ module.exports = {
                   created: "",
                   status: "Pending",
                 },
-                {"id":"220209164308000130","salesOrg":"0100","system":"R3","status":"IN_PIPELINE","price":0.0,"priceFormatted":"0.00","currency":"USD","currencySymbol":"$","created":"01/01/01"}
+                { "id": "220209164308000130", "salesOrg": "0100", "system": "R3", "status": "IN_PIPELINE", "price": 0.0, "priceFormatted": "0.00", "currency": "USD", "currencySymbol": "$", "created": "01/01/01" }
               ],
               vendorQuoteId: null,
               action: "CreateQuote",
@@ -1494,7 +1494,7 @@ module.exports = {
               endUserName: "EUMETSAT",
               tdQuoteId: null,
               quotes: [
-                {"id":"220209164308000130","salesOrg":"0100","system":"R3","status":"IN_PIPELINE","price":0.0,"priceFormatted":"0.00","currency":"USD","currencySymbol":"$","created":"01/01/01"}
+                { "id": "220209164308000130", "salesOrg": "0100", "system": "R3", "status": "IN_PIPELINE", "price": 0.0, "priceFormatted": "0.00", "currency": "USD", "currencySymbol": "$", "created": "01/01/01" }
               ],
               vendorQuoteId: null,
               action: "CreateQuote",
@@ -2828,7 +2828,9 @@ module.exports = {
           messages: [],
           isError: false,
         },
-      }
+      };
+      resp.content.items.sort(this.sortItems(sortBy, sortDir));
+      return resp;
     },
     getQuotePreviewResponse() {
       return {
@@ -5750,5 +5752,14 @@ module.exports = {
           "isError": false
         }
       }
+  },
+  sortItems(sortBy, sortDir){
+    let sortOrder = sortDir === 'asc' ? 1 : -1;
+    return (itm1, itm2) => {
+      let result = (itm1[sortBy] < itm2[sortBy])
+        ? -1
+        : (itm1[sortBy] > itm2[sortBy]) ? 1 : 0;
+      return result * sortOrder;
     }
+  }
 };

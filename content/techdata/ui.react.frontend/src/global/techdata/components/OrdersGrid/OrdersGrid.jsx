@@ -7,7 +7,6 @@ import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
 import { isNotEmptyValue, requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
-import { usePreservedStore } from '../../hooks/usePreservedStore';
 import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
 import {
     ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY,
@@ -42,12 +41,10 @@ function OrdersGrid(props) {
         shipped: 'shipped',
         cancelled: 'cancelled',
     };
-
     const options = {
         defaultSortingColumnKey: 'id',
         defaultSortingDirection: 'asc',
     };
-
     const defaultIcons = [
          { iconKey: STATUS.inProcess, iconValue: 'fas fa-dolly', iconText: 'In Process' },
         { iconKey: STATUS.open, iconValue: 'fas fa-box-open', iconText: 'Open' },
@@ -55,7 +52,6 @@ function OrdersGrid(props) {
         { iconKey: STATUS.cancelled, iconValue: 'fas fa-ban', iconText: 'Cancelled' },
         { iconKey: STATUS.salesReview, iconValue: '', iconText: 'In Review' },
     ];
-
     const labelList = [
         {
             labelKey: 'multiple',
@@ -66,9 +62,7 @@ function OrdersGrid(props) {
             labelValue: componentProp.labelList?.find((label) => label.labelKey === 'pending')?.labelValue ?? 'Pending',
         },
     ];
-
     const pendingValue = componentProp.pendingValue ? componentProp.pendingValue : 'Pending' ;
-
     const invoicesModal = {
         title: componentProp.invoicesModal?.title ?? 'Order',
         buttonLabel: componentProp.invoicesModal?.buttonLabel ?? 'Download All Related Invoices',
@@ -79,7 +73,6 @@ function OrdersGrid(props) {
         pendingInfo:
             componentProp.invoicesModal?.pendingInfo ?? 'Invoice is pending and will appear here after shipment is processed',
     };
-
     const trackingModal = {
         title: componentProp.trackingsModal?.title ?? 'Order',
         buttonIcon: componentProp.trackingsModal?.buttonIcon ?? 'fas fa-download',
@@ -89,7 +82,6 @@ function OrdersGrid(props) {
         pendingInfo:
             componentProp.trackingsModal?.pendingInfo ?? 'Tracking is pending and will appear here after shipment is processed',
     };
-
     const analyticModel = useRef(null);
 
     //Please do not change the below method without consulting your Dev Lead
@@ -133,7 +125,8 @@ function OrdersGrid(props) {
         return async () => {
             downloadFileBlob(orderId);
         }
-    }
+  }
+
     function openInvoicePdf(invoiceId,orderId) {
         const url = componentProp.downloadAllInvoicesEndpoint || 'nourl';
         const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
@@ -180,14 +173,21 @@ function OrdersGrid(props) {
             if (invoices && invoices[0]?.id === 'Pending') {
                 return labelList.find((label) => label.labelKey === 'pending').labelValue;
             } else {
-                const invoiceId = typeof invoices === 'string' ? invoices :
-                    invoices && invoices.length ? invoices[0]?.id : invoices;
+              const invoiceId = typeof invoices === 'string'
+                ? invoices
+                : invoices && invoices.length
+                  ? invoices[0]?.id
+                  : invoices;
 
                 if (invoices && invoices.length) {
                     setValueParam(invoiceId); // set the value of the single invoice and this permit copy the value
                     // not is necessary in the multiples or pending values because that overwrite the value for a string
                 }
-                return (<div className="cmp-grid-url-underlined" onClick={() => {addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Invoice'); openInvoicePdf(invoiceId, line.id)}}>
+              return (
+                <div className="cmp-grid-url-underlined" onClick={() => {
+                      addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Invoice');
+                      openInvoicePdf(invoiceId, line.id)
+                }}>
                     {invoiceId}
                 </div>) ?? null;
             }
@@ -201,7 +201,7 @@ function OrdersGrid(props) {
      */
     const handleFilterComponent = (analyticObjectParam, responseLength) => {
         if  (!isNotEmptyValue(analyticObjectParam)) {
-            return // forcing the return if the object is empty
+            return; // forcing the return if the object is empty
         }
 
         const quotes = {
@@ -224,14 +224,12 @@ function OrdersGrid(props) {
         pushEventAnalyticsGlobal(objectToSend);
     };
     
-    const addOrderGridTracking = (event, type, category, name) => {
-        pushEvent(event, 
-            {
-                type,
-                category,
-                name,
-            })
-    };
+    const addOrderGridTracking = (event, type, category, name) =>
+        pushEvent(event, {
+            type,
+            category,
+            name,
+        });
 
     const columnDefs = [
         {
@@ -353,15 +351,11 @@ function OrdersGrid(props) {
      * @param {() => void} onClear 
      */
     const handleClickOptionsButton = (expanded = false, handleChange, onSearch, onClear) => {
+        let value = expanded ? '' : !orderReportStatus;
         setExpandedOpenOrderFilter(!expandedOpenOrderFilter);
-        let value;  
-        if (expanded) {
-            value = '';
-        } else {
-            value = !orderReportStatus;
-        }
+        
         setOrderReportStatus(value);
-        filterOpenOrderReportsAction(value, handleChange, onSearch, onClear)
+        filterOpenOrderReportsAction(value, handleChange, onSearch, onClear);
     };
 
     /**
@@ -373,26 +367,16 @@ function OrdersGrid(props) {
      */
      const filterOpenOrderReportsAction = (status, handleChange, onSearch, onClear) => {
         const query = status ? '&status=OPEN' : '';
-        if (query==='') {
-            onClear()
+        if (query === '') {
+            onClear();
         } else {
             handleChange(query);
             onSearch();
         }
     };    
 
-	function handleAfterGridInit(config) {
-		columnApiRef.current = config.columnApi;
-		filteringExtension.onAfterGridInit(config);
-	}
-	const columnApiRef = React.useRef();
-    const hasToSortAgain = React.useRef(false);
-   
-    const { onSortChanged, sortPreservedState } = usePreservedStore(columnApiRef);
-
     async function handleRequestInterceptor(request) {
-        // hasToSortAgain.current // I think this have somehting to have with the rerender
-        const response = await filteringExtension.requestInterceptor(request)
+        const response = await filteringExtension.requestInterceptor(request);
 
         handleFilterComponent(
             analyticModel.current,
@@ -404,36 +388,23 @@ function OrdersGrid(props) {
                 componentProp.shopDomain + componentProp.legacyOrderDetailsUrl.replace("{order-id}", filteredOrderId.current);
             window.location.href = redirectUrl;
         }
+
         if (response?.data?.content?.items?.length === 1) {
             const detailsRow = response.data.content.items[0];
             const redirectUrl = `${window.location.origin + componentProp.orderDetailUrl}?id=${detailsRow.id}`;
             window.location.href = redirectUrl;
         } else {
-            if (hasToSortAgain.current) {
-                sortPreservedState();
-                hasToSortAgain.current = false;
-            }
             return response;
         }
     }
     
     const handleOnSearchRequest = (query) => {
-        const queryStringId = query.queryString.split("&").filter(item => item.includes("id="));
-
-        if(queryStringId && queryStringId.length > 0){
-            const id = queryStringId[0].split("=")[1];
-
-            if(id && id.trim().length > 0){
-                filteredOrderId.current = id;
-            }
-        }
         filteringExtension.onQueryChanged(query);
         analyticModel.current = query.analyticsData;
-        hasToSortAgain.current = true
     };
 
-  if(HAS_ORDER_ACCESS) {
-    return (
+    if(HAS_ORDER_ACCESS) {
+      return (
         <section>
             <div className='cmp-orders-grid'>
                 <GridSearchCriteria
@@ -454,8 +425,7 @@ function OrdersGrid(props) {
                     columnDefinition={columnDefs}
                     options={options}
                     config={componentProp}
-                    onAfterGridInit={handleAfterGridInit}
-					onSortChanged={onSortChanged}
+                    onAfterGridInit={(config) => filteringExtension.onAfterGridInit(config)}
                     requestInterceptor={handleRequestInterceptor}
                 ></Grid>
             </div>
@@ -469,15 +439,15 @@ function OrdersGrid(props) {
             ></Modal>}
         </section>
     );
-  } else {
-    return (
-        <div className="cmp-error">
+    } else {
+        return (
+          <div className="cmp-error">
             <div className="cmp-error__header">
-            {errorLoginMessage}
+              {errorLoginMessage}
             </div>
-        </div>
-    )
-  }
+          </div>
+        );
+    }
 }
 
 export default OrdersGrid;

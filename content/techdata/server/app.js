@@ -22,6 +22,7 @@ var vendorConnections = { cisco: false, hp: false, dell: false };
 var utils = require("./utils");
 var mockResponses = require("./responses");
 var mockVendors = require("./vendors");
+const { SSL_OP_SSLREF2_REUSE_CERT_TYPE_BUG } = require("constants");
 
 function checkCreds(user, pass) {
   return (
@@ -533,6 +534,8 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
   const details = req.query.details || true;
   const pageSize = req.query.PageSize || 25;
   const pageNumber = req.query.PageNumber || 1;
+  const sortBy = req.query.SortBy ? req.query.SortBy : 'id';
+  const sortDir = req.query.SortDirection ? req.query.SortDirection : 'asc';
   const items = [];
   function getRandom(maxValue) {
     return Math.floor(Math.random() * maxValue);
@@ -567,6 +570,7 @@ app.get("/ui-commerce/v1/quote/", function (req, res) {
     });
     count++;
   }
+  items.sort(utils.sortItems(sortBy, sortDir));
   const response = {
     content: {
       items: items,
@@ -645,6 +649,8 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
   const pageNumber = req.query.PageNumber || 1;
   const id = req.query.id;
   const idType = req.query.idType;
+  const sortBy = req.query.SortBy ? req.query.SortBy : 'id';
+  const sortDir = req.query.SortDirection ? req.query.SortDirection : 'asc';
 
   const items = [];
   const status = ["Sales Review", "Open", "Shipped", "Cancelled", "In Process"];
@@ -780,6 +786,7 @@ app.get("/ui-commerce/v1/orders/", function (req, res) {
   }
 
   const itemsResponeOrderStatus = items.filter((i) => i.status === "open");
+  items.sort(utils.sortItems(sortBy, sortDir));
   const response = {
     content: {
       items: orderReportFlag ? itemsResponeOrderStatus : items,
@@ -3360,6 +3367,8 @@ app.get("/ui-config/v1/configurations", function (req, res) {
   const url = req.url;
   const flag = url.includes("ConfigurationType=Deal"); // emulating filter errio like in SIT and UAT
   const flagVendor = url.includes("ConfigurationType=VendorQuote"); // emulating filter errio like in SIT and UAT
+  const sortBy = req.query.SortBy ? req.query.SortBy : 'id';
+  const sortDir = req.query.SortDirection ? req.query.SortDirection : 'asc';
 
   if (flagVendor) {
     res.json({
@@ -3392,7 +3401,7 @@ app.get("/ui-config/v1/configurations", function (req, res) {
       traceId: "00-639eecd6bcc0504389ca76e3f667e295-8581b2077de66248-00",
     });
   } else {
-    const response = utils.getConfigGridResponse();
+    const response = utils.getConfigGridResponse(sortBy, sortDir);
     res.json(response);
   }
 });

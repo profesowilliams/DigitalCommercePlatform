@@ -58,7 +58,6 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
   };
 
   function dispatchQueryChange(query) {
-    //query = setTimestamps(query);
     let keyword =
       query.keyword?.key && query.keyword?.value
         ? `&${query.keyword.key}=${query.keyword.value}`

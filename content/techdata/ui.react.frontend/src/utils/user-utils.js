@@ -43,7 +43,7 @@ export const hasAccess = ({user, accessType})=> {
                 return true;
             }
         }
-
     }
     return false;
+    // return window.location.hostname === 'localhost' ? true : false;
 }
