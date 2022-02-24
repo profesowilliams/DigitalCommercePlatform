@@ -633,7 +633,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 quotePreview.EndUser = new List<Address> { endUser };
             }
             Address reseller = new Address();
-            if (configurationFindResponse?.Data?.FirstOrDefault().Reseller?.Address != null)
+            if (configurationFindResponse?.Data?.FirstOrDefault().Reseller?.Address?.Address1 != null)
             {
                 var objReseller = configurationFindResponse.Data?.FirstOrDefault().Reseller;
                 reseller = new()
