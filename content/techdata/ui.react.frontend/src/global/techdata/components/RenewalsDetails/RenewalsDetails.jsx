@@ -7,10 +7,11 @@ import { getUrlParams } from "../../../../utils";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
-  const { id = "41103698521", type = "renewal" } = getUrlParams();
+  const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [apiResponse, isLoading] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
+
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
@@ -28,7 +29,7 @@ function RenewalsDetails(props) {
           <ConfigGrid data={renewalsDetails} gridProps={componentProp} />
           <RenewalPreviewGrid
             data={renewalsDetails}
-            gridProps={componentProp.productLines}
+            gridProps={{...componentProp.productLines, excelFileUrl: componentProp?.uiServiceEndPointExcel}}
             shopDomainPage={componentProp.shopDomainPage}
           />
         </section>
@@ -40,3 +41,5 @@ function RenewalsDetails(props) {
 }
 
 export default RenewalsDetails;
+
+

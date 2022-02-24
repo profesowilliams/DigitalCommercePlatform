@@ -3152,6 +3152,27 @@ app.post("/ui-commerce/v1/downloadQuoteDetails", async function (req, res) {
   }
 });
 
+app.post("/ui-export/v1/downloadRenewalQuoteDetails", async function (req, res) {
+  const { acceptLanguage, site, consumer, traceId, sessionid, contentType } =
+    req.headers;
+
+  if (!req.headers["sessionid"] && !sessionid) {
+    return res.status(500).json({
+      error: {
+        code: 0,
+        message: ["SessionId Error"],
+        isError: true,
+      },
+    });
+  }
+
+  try {
+    res.download(`response.xlsx`);
+  } catch (error) {
+    console.log("Error", error);
+  }
+});
+
 app.post("/ui-commerce/v1/downloadOrderDetails", async function (req, res) {
   const { acceptLanguage, site, consumer, traceId, sessionid, contentType } =
     req.headers;
@@ -4064,37 +4085,49 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           source: {
             salesOrg: "0100",
             targetSystem: "R3",
-            key: "U100000000001",
+            key: "U100000008378",
             system: "RQ",
             type: null,
-            id: "U100000000001",
+            id: "U100000008378",
           },
-          published: "2022-01-21T17:50:16.48Z",
+          published: "2022-02-18T08:13:59.131Z",
           reseller: {
+            vendorAccountName: "Sirius Computer Solutions",
+            vendorAccountNumber: "2709447",
             id: "38054253",
             name: "TECH DATA CORPORATION",
             nameUpper: "TECH DATA CORPORATION",
-            contact: [{ name: " ", email: null, phone: null }],
+            contact: [
+              {
+                name: " ",
+                email: null,
+                phone: null,
+              },
+            ],
             address: null,
           },
           endUser: {
             id: null,
-            name: "Western Research",
-            nameUpper: "WESTERN RESEARCH",
+            name: "Memorial Health Services",
+            nameUpper: "MEMORIAL HEALTH SERVICES",
             contact: [
-              { name: " ", email: "doug@western-companies.com", phone: null },
+              {
+                name: "JIM GRANNIS",
+                email: "jgrannis@memorialcare.org",
+                phone: null,
+              },
             ],
             address: {
               id: null,
-              line1: "3100 W 7th St",
+              line1: "17360 Brookhurst St",
               line2: null,
               line3: null,
-              city: "Fort Worth",
+              city: "Fountain Valley",
               state: null,
-              postalCode: "76107-2795",
+              postalCode: "92708-3720",
               country: null,
-              county: null,
-              countryCode: "United States",
+              county: "ORANGE",
+              countryCode: "US",
             },
           },
           shipTo: null,
@@ -4103,14 +4136,14 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           vendorSalesAssociate: null,
           items: [
             {
-              id: null,
+              id: "1.0",
               group: null,
               solution: null,
               parent: null,
               product: [
                 {
                   type: "TECHDATA",
-                  id: "13247686",
+                  id: "14063638",
                   name: null,
                   manufacturer: null,
                   manufacturerId: null,
@@ -4120,16 +4153,16 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 },
                 {
                   type: "MANUFACTURER",
-                  id: "V-ESSPLS-VS-PF1PE-69",
-                  name: "Veeam Production Support - Technical support - for Veeam Backup Essentials Enterprise Plus for VMware - upgrade license - promo - upgrade from Standard - phone consulting - 1 year - 24x7 - response time: 1 h",
-                  manufacturer: "VEEAM",
-                  manufacturerId: "101",
+                  id: "VS7-EPL-P-SSS-C",
+                  name: "VMware Support and Subscription Production - Technical support - for VMware vSphere Enterprise Plus Edition (v. 7) - 1 processor - emergency phone consulting - 1 year - 24x7 - response time: 30 min",
+                  manufacturer: "VMWARE",
+                  manufacturerId: "21",
                   localManufacturer: null,
                   classification: null,
                   family: null,
                 },
               ],
-              quantity: 2.0,
+              quantity: 1.0,
               confirmedQuantity: 0.0,
               contractNumber: null,
               contractType: null,
@@ -4168,50 +4201,51 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               reinstatementFeeCost: null,
               reinstatementFeeSell: null,
               serialNumbers: [],
-              instance: null,
+              instance: "188294854",
               discounts: [],
               contract: {
-                id: "30711477",
-                duration: "2021 Years",
-                renewedDuration: " Years",
-                startDate: null,
-                endDate: "2021-10-11T00:00:00Z",
-                newAgreementStartDate: "2021-10-12T00:00:00Z",
-                newAgreementEndDate: "2021-10-12T00:00:00Z",
+                id: "377220903",
+                duration: null,
+                renewedDuration: "1 Year",
+                startDate: "2021-09-30T00:00:00Z",
+                endDate: "2022-09-30T00:00:00Z",
+                newAgreementStartDate: "2022-10-01T00:00:00Z",
+                newAgreementEndDate: null,
                 newUsagePeriodStartDate: null,
                 newUsagePeriodEndDate: null,
                 supportLevel: null,
-                serviceLevel: null,
+                serviceLevel: "Production",
                 usagePeriod: null,
               },
-              tdNumber: "11311823",
-              mfrNumber: "V-VBRVUL-0I-SU5AR-00",
-              shortDescription: "CANON PIXMA IP8720 - PRINTER - COLOR - INK-JET",
-              manufacturer: "VEEAM",
-              vendorPartNo: "V-VBRVUL-0I-SU5AR-00"
+              tdNumber: "14063638",
+              mfrNumber: "VS7-EPL-P-SSS-C",
+              shortDescription:
+                "VMware Support and Subscription Production - Technical support - for VMware vSphere Enterprise Plus Edition (v. 7) - 1 processor - emergency phone consulting - 1 year - 24x7 - response time: 30 min",
+              manufacturer: "VMWARE",
+              vendorPartNo: "VS7-EPL-P-SSS-C",
             },
           ],
           attributes: [],
           programName: "Standard",
-          quoteCurrent: true,
-          firstAvailableOrderDate: "2022-01-21T00:00:00Z",
-          lastOrderDate: "2021-10-11T00:00:00Z",
+          quoteCurrent: false,
+          firstAvailableOrderDate: "2022-02-18T00:00:00Z",
+          lastOrderDate: "0001-01-05T00:00:00Z",
           statusText: null,
           amountSaved: 0.0,
           linkedRenewals: [],
-          renewalGroupId: "null",
-          dueDate: "2021-10-11T00:00:00Z",
+          renewalGroupId: "U100000008377",
+          dueDate: "2022-09-30T00:00:00Z",
           incumbent: null,
           totalReinstatementFeeCost: null,
           totalReinstatementFeeSell: null,
-          endUserType: "academic",
-          revision: 1.0,
+          endUserType: "Commercial",
+          revision: 2.0,
           subRevision: 0.0,
           description: null,
           activeFlag: "Y",
           request: null,
           endUserPO: null,
-          customerPO: "30711477-R:4C:06SEP19 14:51:48",
+          customerPO: "377220903-R:16FEB22 07:27:33",
           price: 0.0,
           currency: "USD",
           documentType: null,
@@ -4219,9 +4253,9 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           type: null,
           level: null,
           creator: null,
-          created: "2022-01-21T17:50:16.48Z",
-          updated: "2022-01-21T17:50:16.48Z",
-          expiry: "2021-10-11T00:00:00Z",
+          created: "2022-02-18T08:13:59.131Z",
+          updated: "2022-02-18T08:13:59.131Z",
+          expiry: "0001-01-01T00:00:00",
           status: "Active",
           statusNotes: null,
           accountOwner: null,
@@ -4242,7 +4276,11 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
         },
       ],
     },
-    error: { code: 0, messages: [], isError: false },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
   };
   res.json(response);
 });

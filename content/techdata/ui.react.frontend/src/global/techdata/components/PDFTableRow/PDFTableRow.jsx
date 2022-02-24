@@ -15,7 +15,7 @@ const vendorPartNoStyle = {...styles.tableCell,width:'20%', wordBreak: 'break-al
 const textStyle = styles.cellText;
 const msrpStyle = {...styles.tableCell,width:'12%', wordBreak: 'break-all'};
 const imageStyle = {...styles.tableCell,width:'15%', height:'8vh', wordBreak: 'break-all'};
-const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
+const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => {
     
     const ImageValidation = ({quoteItem}) => {
         /**@type {string} */
@@ -90,6 +90,56 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags}) => {
                 
             ) : null}
         </>
+    }
+
+    if(isRenewals) {
+        console.log('is renewals', quoteItem);
+        console.log('header', quoteItem.name ,header);
+        return (
+            <View style={header ? styles.tableHeader : styles.tableRow}>
+                <PDFTableCell
+                    header={header}
+                    cellItem={quoteItem.id}
+                    cellWidth="10%"
+                    type={"string"}
+                    cellStyle={idStyle}
+                    style={textStyle}
+                />
+                <PDFTableCell 
+                    header={header}
+                    cellItem={quoteItem.name}
+                    cellWidth={flags && Object.keys(flags).length > 0 ? "45%" :"55%"}
+                    type={"string"}
+                    cellStyle={descriptionStyle}
+                    style={textStyle}
+                />
+                <PDFTableCell
+                    header={header}
+                    cellItem={`${quoteItem.manufacturer || ''} - ${quoteItem.manufacturerId || ''}`}
+                    type={"string"}
+                    cellWidth="15%"
+                    cellStyle={unitPriceStyle}
+                    style={textStyle}
+                />
+                <PDFTableCell
+                    header={header}
+                    cellItem={quoteItem.quantity}
+                    type={"int"}
+                    cellWidth="10%"  
+                    cellStyle={quantityStyle}
+                    style={textStyle}
+                />
+                <PDFTableCell
+                    header={header}
+                    cellItem={(currencySymbol + quoteItem.totalPriceFormatted) || ''}
+                    cellWidth={flags && Object.keys(flags).length > 0 ? "10%" :"15%"}
+                    type={"currency"}
+                    cellStyle={totalPriceStyle}
+                    style={textStyle}
+                />
+                <CheckBoxFields />
+            </View>
+        )
     }
 
     return (

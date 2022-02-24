@@ -15,22 +15,23 @@ function QuotePreviewContinue({
   handleQuickQuote,
   handleQuickQuoteWithoutDeals,
   isConfig,
-  apiResponse
+  apiResponse,
 }) {
   const [isDefault, setIsDefault] = useState(false);
   const handleInputChange = () => {
     setIsDefault(!isDefault);
   };
+
   const dataToPush = (quotePreviewFields) => {
     return {
       quotePreview: {
         quoteConfig: isConfig,
-        ...quotePreviewFields
+        ...quotePreviewFields,
       },
       quotes: {
-        quoteID: ""
-      }
-    }
+        quoteID: "",
+      },
+    };
   };
 
   const quoteDetailsSource = apiResponse?.content?.quotePreview?.quoteDetails?.source;

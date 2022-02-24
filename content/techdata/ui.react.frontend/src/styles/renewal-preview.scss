@@ -14,44 +14,38 @@
     justify-content: space-between;
     margin: 0 20px;
     margin-top: 1rem;
-    span{
+    span {
       font-size: 22px;
-      font-weight:500;
+      font-weight: 500;
       text-shadow: 0px 0px 0px #000c21;
     }
-
   }
   .cmp-renewal-preview {
     &__download {
-      span {
-        color: #555555;
-        font-size: 13px;
-        line-height: 13px;
-        display: inline-block;
-        cursor: pointer;
-        &:first-child {
-          padding-right: 20px;
-          border-right: 1px solid #d8d8d8;
-          &:before {
-            content: "\f1c1";
-            color: #000c21;
-            @include font-awesome;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 14px;
-            padding-right: 10px;
+      button {
+        background-color: inherit;
+        border: none;
+        span {
+          color: #555555;
+          font-size: 13px;
+          line-height: 13px;
+          display: inline-block;
+          cursor: pointer;
+          &:first-child {
+            padding-right: 20px;
+            border-right: 1px solid #d8d8d8;
           }
-        }
-        &:last-child {
-          padding-left: 20px;
-          &:before {
-            content: "\f1c3";
-            color: #000c21;
-            @include font-awesome;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 14px;
-            padding-right: 10px;
+          &:last-child {
+            padding-left: 20px;
+            &:before {
+              content: "\f1c3";
+              color: #000c21;
+              @include font-awesome;
+              font-size: 14px;
+              font-weight: 600;
+              line-height: 14px;
+              padding-right: 10px;
+            }
           }
         }
       }
@@ -88,7 +82,7 @@
     cursor: pointer;
     .short-desc {
       margin: 0;
-      color: #00558C;
+      color: #00558c;
       font-size: 12px;
       font-weight: 600;
     }

@@ -16,7 +16,6 @@ function RenewalsGrid(props) {
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
 
-
   const options = {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "asc",
@@ -34,10 +33,9 @@ function RenewalsGrid(props) {
   };
 
 
-
   function mapServiceData(response) {
     const mappedResponse = {...response};
-    const items = mappedResponse?.data?.content?.items;
+    const items = mappedResponse?.data?.content?.items?.map(val => ({...val, excelApi: componentProp?.uiServiceEndPointExcel}));
     const itemsWithActions = items ? items.map((data) => ({ ...data, actions: true })) : [];
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;

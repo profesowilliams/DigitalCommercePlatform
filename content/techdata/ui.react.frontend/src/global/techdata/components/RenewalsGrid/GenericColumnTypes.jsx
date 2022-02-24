@@ -1,9 +1,6 @@
 import React from "react";
 import {
-  getUserDataInitialState,
-  hasAccess,
   isInternalUser,
-  RENEWALS_TYPE,
 } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
 import ContractColumn from "./ContractColumn";
@@ -90,20 +87,15 @@ export const renewalPlanColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
-  // expandable: true,
   resizable: true,
   width:"300px",
   cellRenderer: ({data}) => {     
     return <ContractColumn data={data} />
   },
-  // detailRenderer: ({ data }) => {
-  //   return <div>Custom Renewals Plan Row Details</div>;
-  // },
 });
 
 export const plainResellerColumnFn = (definition) => {
   // check if Its a reseller or techdata employee
-  //refactor needed
   const { columnLabel, columnKey, sortable } = definition;
   if (isInternalUser) {
     return {
