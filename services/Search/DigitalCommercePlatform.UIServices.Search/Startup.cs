@@ -1,4 +1,4 @@
-//2022 (c) Tech Data Corporation - All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
 
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Features.Logging;
@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Search
             services.AddTransient<ICsvService, CsvService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
 
-            services.AddDigitalFoundationLocalizationProvider(StartupLogger);
+            services.AddLocalizationProvider(StartupLogger);
             services.AddSingleton<ITokenManagerService, TokenManagerService>();
 
             services.AddTransient<SearchServiceArgs>();

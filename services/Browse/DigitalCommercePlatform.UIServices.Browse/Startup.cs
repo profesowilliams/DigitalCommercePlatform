@@ -32,7 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Browse
             services.AddTransient<ISortingService, SortingService>();
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
 
-            services.AddDigitalFoundationLocalizationProvider(StartupLogger);
+            services.AddLocalizationProvider(StartupLogger);
             services.AddSingleton<ITokenManagerService, TokenManagerService>();
             services.AddSingleton<ITranslationService, TranslationService>();
 
