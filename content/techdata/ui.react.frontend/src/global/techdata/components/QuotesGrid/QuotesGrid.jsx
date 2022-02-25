@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 import Modal from "../Modal/Modal";
-import { getSingleQueryStringParameterFromUrl } from "../../../../utils/utils";
+import { getSingleQueryStringParameterFromUrl, isNotEmptyValue } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
@@ -21,6 +21,7 @@ function QuotesGrid(props) {
   const [modal, setModal] = useState(null);
   const [queryStringIdValue, setQueryStringIdValue] = useState(getSingleQueryStringParameterFromUrl("id"));
   const { spaDealsIdLabel } = componentProp;
+  const analyticModel = useRef(null);
 
   const getDateTransformed = (dateUTC) => {
     const formatedDate = new Date(dateUTC).toLocaleDateString();
@@ -65,6 +66,7 @@ function QuotesGrid(props) {
 
   const handleOnSearchRequest = (query) => {
     filteringExtension.onQueryChanged(query);
+    analyticModel.current = query.analyticsData;
   };
 
   /**
@@ -216,6 +218,22 @@ function QuotesGrid(props) {
       : [];
   };
 
+  const handleFilterComponent = (analyticsObject, responseLength) => {
+    const objectToSend = {
+      event: 'quoteSearch',
+      quotes: {
+        searchTerm: analyticsObject.searchTerm,
+        searchOption: analyticsObject.searchOption,
+        vendorFilter: analyticsObject.vendorFilter,
+        fromDate: analyticsObject.fromDate,
+        toDate: analyticsObject.toDate,
+        nullSearch: responseLength === 0
+      }
+    };
+
+    pushEventAnalyticsGlobal(objectToSend);
+   };
+
   async function detailRedirectHandler(request) {
     let response = await filteringExtension.requestInterceptor(request);
     if (queryStringIdValue && response?.data?.content?.items?.length === 1) {
@@ -225,9 +243,19 @@ function QuotesGrid(props) {
       }?id=${detailsRow.id}`;
       window.location.href = redirectUrl;
     } else {
+      pushAnalyticsEvent(response);
       return response;
     }
   }
+
+  const pushAnalyticsEvent = (response) => {
+    if (isNotEmptyValue(response?.data?.content?.items?.length)) {
+      if (analyticModel.current !== null) {
+        handleFilterComponent(analyticModel.current,
+          isNotEmptyValue(response?.data?.content?.items?.length ? response?.data?.content?.items?.length : 0));
+      }
+    }
+  };
 
   return (
     <section>
