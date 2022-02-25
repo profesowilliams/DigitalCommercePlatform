@@ -390,8 +390,8 @@ app.post("/quote/create", function (req, res) {
       confirmationId: "2946606046",
     },
     error: {
-      code: "",
-      message: "",
+      code: 11000,
+      messages: ["Invalid Products : 1,2,3,4"],
       isError: false,
     },
   });

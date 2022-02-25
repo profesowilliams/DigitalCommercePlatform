@@ -106,11 +106,17 @@ const QuoteCreate = ({
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };
       try {
-        const { data: { content, error: { isError, messages } } } = await usPost(endpoint, params);
+        const { data: { content, error: { isError, code, messages } } } = await usPost(endpoint, params);
 
         pushAnalyticsEvent(false, methodSelected);
 
-        if( isError ){
+        // Only display error messages coming from the backend response when the code returned is 11000
+        if (isError && code == 11000) {
+          showSimpleModal('Create Quote', (
+            <div>{messages[0]}</div>
+          ));
+        }
+        else if( isError ){
           showSimpleModal('Create Quote', (
             <div>{createQuoteError}</div>
           ));
