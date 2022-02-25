@@ -48,7 +48,7 @@ const handleClickCSV = () => {
 const {status} = orderDetails;
 
 const orderButton = (status) => {
-    switch (status.toLowerCase()) {
+    switch (status?.toLowerCase()) {
         case orderStatusValues.OPEN:
             return (
                 <button className="cmp-td-order-details__header__status__open">Open</button>

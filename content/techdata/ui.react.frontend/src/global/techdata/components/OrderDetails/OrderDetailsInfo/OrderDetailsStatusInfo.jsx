@@ -7,7 +7,7 @@ import  {orderStatusValues} from "../orderStatus";
 const OrderDetailsStatusInfo = ({ infoConfig, orderDetails }) => {
     let orderStatusFontAwesomeIcon="", orderStatusIconClassName="", orderStatusMessage="", orderStatusDescription = "", status = orderDetails?.status;
 
-    switch (status.toLowerCase()) {
+    switch (status?.toLowerCase()) {
         case orderStatusValues.OPEN:
             orderStatusFontAwesomeIcon="fa-check";
             orderStatusMessage=infoConfig.orderStatusItemsOpen;
