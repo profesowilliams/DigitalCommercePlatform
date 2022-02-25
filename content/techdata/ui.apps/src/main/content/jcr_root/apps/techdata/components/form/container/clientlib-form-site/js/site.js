@@ -40,7 +40,9 @@
                     } else if (i.type.startsWith("radio")) {
                         if (i.checked) {
                             newData.append(i.name, i.value);
-                        }
+                        }else {
+                            newData.append(i.name, "");
+                       }
                     } else {
                         newData.append(i.name, i.value);
                     }

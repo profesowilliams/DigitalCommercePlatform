@@ -176,12 +176,13 @@ public class FormServlet extends SlingAllMethodsServlet {
         private void handleNonFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr,
                                                       String key, Map<String, String> emailParams,
                                                       StringBuilder value) throws IOException {
-                value.append(pArr[0].toString());
-                if (pArr.length > 1)
+                if (pArr.length > 0)
                 {
                         for (RequestParameter rp : pArr)
                         {
-                                value.append(value.toString()).append(rp.toString()).append("|");
+                                if(StringUtils.isNotEmpty(rp.toString())){
+                                        value.append(rp.toString());
+                                }
                         }
                 }
                 LOG.debug("key is {}, value is {}",key, value);
