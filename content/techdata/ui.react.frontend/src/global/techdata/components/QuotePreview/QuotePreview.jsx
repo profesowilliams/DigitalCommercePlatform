@@ -119,14 +119,16 @@ function QuotePreview(props) {
     
 
 
-  const showSimpleModal = (title, content, onModalClosed=closeModal) =>
+  const showSimpleModal = (title, content, onModalClosed=closeModal, buttonLabel, modalAction) =>
     setModal((previousInfo) => ({
       content: content,
       properties: {
           title:  title,
+          buttonLabel
       },
       onModalClosed,
       ...previousInfo,
+      modalAction
     })
   );
 
@@ -181,10 +183,7 @@ function QuotePreview(props) {
         const { confirmationId } = result.data.content;
         showSimpleModal('Quote Submitted Successfully', (
           <div>Your quote is being created and will be available for your viewing in a few minutes. Quote Confirmation ID: {confirmationId}</div>
-        ), onModalClosed => {
-          closeModal();
-          window.location.href = URL_QUOTES_GRID;
-        });
+        ), closeModal, "Track My Quote", () => window.location.href = URL_QUOTES_GRID);
       }
       else {
         showErrorModal();
