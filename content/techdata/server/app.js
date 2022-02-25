@@ -1166,7 +1166,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
     content: {
       details: {
         canCheckOut: false,
-        status: id === "IN_PIPELINE" ? id: "OPEN",
+        status: id === "IN_PIPELINE" || id === "FAILED" ? id : "OPEN",
         shipTo: {
           id: null,
           companyName: "TELOS CORPORATION",

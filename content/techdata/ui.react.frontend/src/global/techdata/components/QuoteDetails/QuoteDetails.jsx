@@ -232,7 +232,8 @@ const QuoteDetails = ({ componentProp }) => {
 
   useEffect(() => {
     const detailsResponse = response?.content?.details;
-    const quoteHasData = detailsResponse && detailsResponse.status?.toUpperCase() !== "IN_PIPELINE";
+    const status = detailsResponse?.status?.toUpperCase();
+    const quoteHasData = detailsResponse && status !== "IN_PIPELINE" && status !== "FAILED";
 
     quoteHasData && setQuoteDetails(detailsResponse);
     quoteHasData && getPopulateProdutcsToAnalytics(detailsResponse);

@@ -89,7 +89,8 @@ function QuotesGrid(props) {
   };
 
   const enableLinkAndCheckout = (data) => {
-    return data?.status?.toUpperCase() !== "IN_PIPELINE";
+    const status = data?.status?.toUpperCase();
+    return status !== "IN_PIPELINE" && status !== "FAILED";
   }
 
   const columnDefs = [
