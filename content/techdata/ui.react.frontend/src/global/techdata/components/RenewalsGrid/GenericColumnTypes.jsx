@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  isInternalUser,
+  isInternalUser
 } from "../../../../utils/user-utils";
-import { thousandSeparator } from "../../helpers/formatting";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
 import DueDateDayColumn from "./DueDateDayColumn";
-import DropdownDownloadList from "./DropdownDownloadList";
 import PriceColumn from "./PriceColumn";
+import RenewalActionColumn from "./RenewalActionColumn";
 
 const columnFieldsMap = (definition, eventProps) => {
   const { columnKey } = definition;
@@ -16,7 +15,7 @@ const columnFieldsMap = (definition, eventProps) => {
     resellername: data?.reseller?.name,
     endUser: value?.name,
     vendor: `${value?.name} : ${data?.programName}`,
-    renewedduration: <ContractColumn data={data} />,
+    renewedduration: <ContractColumn data={data} eventProps={eventProps} />,
     dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
     total: <PriceColumn columnValue={data?.renewal} />,
@@ -72,11 +71,9 @@ export const buttonListColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
-  expandable:true,
-  valueFormatter: () => "",
-  detailRenderer: ({ data }) => (
-    <DropdownDownloadList data={data}  />
-  ),
+  // expandable:true,
+  cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} /> ,
+  // detailRenderer: ({ data }) => <RenewalDetailRenderers data={data}/>,
 });
 
 export const renewalPlanColumn = ({

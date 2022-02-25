@@ -1,14 +1,63 @@
 import React from "react";
+import { If } from "../../helpers/If";
 import Info from "../common/quotes/DisplayItemInfo";
+import { useRenewalGridState } from "./store/RenewalsStore";
 
-function ContractColumn({ data }) {
+function ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
+  const effects = useRenewalGridState(state => state.effects);
+  const detailRender = useRenewalGridState(state => state.detailRender);
+  const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
+  const [togglePlanUpdated, setToggleUpdatedPlan] = React.useState(false);
+  const [isToggled, setToggled] = React.useState(false);
+  React.useEffect(() => {
+    if (detailRender === "primary") setToggled(false)
+  }, [detailRender])
+  React.useEffect(() => {
+    if (!isToggled && renewalOptionState) setToggleUpdatedPlan(true)
+  }, [isToggled])
+  const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
+  const toggleExpandedRow = () => {
+    effects.setCustomState({ key: 'detailRender', value: 'secondary' })
+    eventProps.node.setExpanded(!isToggled);
+    setToggled(!isToggled);
+    setToggleUpdatedPlan(!togglePlanUpdated)
+  }
+  
   return (
     <>{data ? (
       <>
-        <div className="cmp-renewal-duration">
-          <Info label="Renewal">{renewed ? (renewed + ",") : "" } {data?.support}</Info>          
-          <i className="fas fa-caret-down" style={{ color: "#21314D", cursor: "pointer", fontSize:"1.2rem" }}/>
+        <div className="cmp-renewal-duration" onClick={toggleExpandedRow}>
+          {!togglePlanUpdated && (
+            <Info label="Renewal">
+              {renewed ? (renewed + ",") : ""} {data?.support}
+            </Info>
+          )}
+
+          {togglePlanUpdated && (
+            <Info label="Renewal">
+              {renewalOptionState}              
+            </Info>
+          )}
+
+          {isToggled ? (
+            <>
+              <If condition={data?.options && data?.options?.length > 0}>
+                <div className='cmp-triangle-up' key={Math.random()}>
+                  <i className="fas fa-caret-up" style={iconStyle} />
+                </div>
+              </If>
+
+            </>
+          ) : (
+            <>
+              <If condition={data?.options && data?.options?.length > 0}>
+                <div className='cmp-triangle-down' key={Math.random()}>
+                  <i className="fas fa-caret-down" style={iconStyle} />
+                </div>
+              </If>
+            </>
+          )}
         </div>
       </>
     ) : ""}</>

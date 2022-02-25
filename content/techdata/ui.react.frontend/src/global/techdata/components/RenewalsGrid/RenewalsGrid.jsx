@@ -5,6 +5,7 @@ import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
 import CustomRenewalPagination from "./CustomRenewalPagination";
 import { getColumnDefinitions } from "./GenericColumnTypes";
+import RenewalDetailRenderers from "./RenewalDetailRenderers";
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
@@ -36,7 +37,7 @@ function RenewalsGrid(props) {
   function mapServiceData(response) {
     const mappedResponse = {...response};
     const items = mappedResponse?.data?.content?.items?.map(val => ({...val, excelApi: componentProp?.uiServiceEndPointExcel}));
-    const itemsWithActions = items ? items.map((data) => ({ ...data, actions: true })) : [];
+    const itemsWithActions = items ? items.map((data) => ({ ...data })) : [];
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
@@ -63,7 +64,7 @@ function RenewalsGrid(props) {
 
   const _onAfterGridInit = (config) => {    
     const value =  config.api;     
-    effects.setCustomState({key:'paginationGridApi',value});      
+    effects.setCustomState({key:'gridApi',value});      
     onAfterGridInit(config);
   }
 
@@ -95,10 +96,11 @@ function RenewalsGrid(props) {
           isRenewals={true}   
           handlerIsRowMaster={() => true}
           icons={{
-            groupExpanded: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
-            groupContracted: '<i class="fas fa-ellipsis-h" style="font-size: 1.3rem;"></i>',
+            groupExpanded: '<i></i>',
+            groupContracted: '<i></i>',
           }}
           omitCreatedQuery={true}
+          customizedDetailedRender={RenewalDetailRenderers}
         />
       </div>
     </section>

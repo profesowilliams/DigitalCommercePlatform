@@ -6,14 +6,14 @@ import { useRenewalGridState } from "./store/RenewalsStore";
 
 function CustomRenewalPagination() {
   const paginationData = useRenewalGridState(state => state.pagination);
-  const paginationGridApi = useRenewalGridState(state => state.paginationGridApi);
+  const gridApi = useRenewalGridState(state => state.gridApi);
   const setPaginationData = useRenewalGridState(state => state.effects.setCustomState);
   const pageInputRef = useRef();
 
   const { totalCounter, stepBy, currentPage, currentResultsInPage, pageCount, pageNumber } =
   paginationData;
-  if (!paginationGridApi) return null
-  if (!(Object.keys(paginationGridApi).length)) return null
+  if (!gridApi) return null
+  if (!(Object.keys(gridApi).length)) return null
   
   const paginationGetTotalPages = () => (pageCount ?? Math.ceil(currentResultsInPage / totalCounter)); 
 
@@ -25,14 +25,14 @@ function CustomRenewalPagination() {
     currentResultsInPage,       
   );
 
-  const getCurrentPage = () => paginationGridApi?.paginationGetCurrentPage() + 1;
+  const getCurrentPage = () => gridApi?.paginationGetCurrentPage() + 1;
 
     const incrementHandler = () => {
       const value = {
         ...paginationData,    
       }
         setPaginationData({key:'pagination',value});
-        paginationGridApi?.paginationGoToNextPage();
+        gridApi?.paginationGoToNextPage();
     };
 
   const decrementHandler = () => {
@@ -40,10 +40,10 @@ function CustomRenewalPagination() {
       ...paginationData,    
     }
     setPaginationData({key:'pagination',value});
-    paginationGridApi?.paginationGoToPreviousPage();
+    gridApi?.paginationGoToPreviousPage();
   };
 
-  const goToSpecificPage = value => paginationGridApi?.paginationGoToPage(value);
+  const goToSpecificPage = value => gridApi?.paginationGoToPage(value);
 
   const handleInputBlur = ({target}) => {
     const value = parseInt(target.value) - 1;

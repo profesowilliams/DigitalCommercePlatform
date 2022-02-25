@@ -7,6 +7,7 @@
     align-items: center;
     gap: .6rem;
     justify-content: space-between;
+    cursor: pointer;
     span{
       white-space: nowrap;
       overflow: hidden;
@@ -153,19 +154,27 @@
   }
   .icon-container {
     margin: 0 0.8em;
-    padding: 0.7em;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    gap: 2%;
+    gap: 1%;
     button {
       cursor: pointer;
       background-color: inherit;
+      margin: 1rem;
+      display: flex;
+      align-items: center;
       svg,
       i {
         margin-right: 0.7em;
+        font-size: 18px;
       }
+    }
+    span.vertical-separator{
+      background: #cbc9c9;
+      width: 1px;
+      height: 24px;
     }
   }
   .cmp-grid.ag-theme-alpine .ag-paging-panel {
@@ -181,4 +190,13 @@ span.ag-group-value {
 .ag-cell-wrapper.ag-row-group {
   display: flex;
   justify-content: center;
+}
+
+.cmp-renewal-action-container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  padding-right: 2rem;
 }

@@ -54,7 +54,9 @@ const INITIAL_STATE = {
   customStartDate:undefined,
   customEndDate:undefined,
   aemConfig:null,
-  paginationGridApi:null
+  gridApi:null,
+  detailRender:'primary',
+  renewalOptionState:null
 };
 
 const store = (set, get, a) => ({

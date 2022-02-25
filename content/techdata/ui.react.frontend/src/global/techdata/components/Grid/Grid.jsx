@@ -22,6 +22,7 @@ function Grid(props) {
     icons,
     omitCreatedQuery = false,
     contextMenuItems = undefined,
+    customizedDetailedRender,
     onExpandAnalytics,
     onCollapseAnalytics,
   } = Object.assign({}, props);
@@ -234,6 +235,7 @@ function Grid(props) {
     filteredColumns = columnDefinition;
   }
 
+  if (typeof customizedDetailedRender === 'function') renderers.$$detailRenderer = customizedDetailedRender;
   // overwrite options with options from AEM
   if (options) {
     for (let key in options) {
