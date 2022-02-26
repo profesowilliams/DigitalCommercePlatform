@@ -7,6 +7,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -113,7 +114,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
-        
+
 
         [Fact]
         public void GetAccountDetails()
@@ -1173,5 +1174,128 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             Assert.Equal(compareDate, dateOutput);
         }
+
+        [Fact]
+        public void PopulateSavedCartLinesForQuoteRequest_Tests()
+        {
+            // Arrange 
+
+            List<Common.Cart.Models.Cart.ActiveCartLineModel> items = new List<Common.Cart.Models.Cart.ActiveCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.ActiveCartLineModel { ItemId = "100", ProductId="11357695", Quantity = 1,  ParentItemId = 0},
+                new Common.Cart.Models.Cart.ActiveCartLineModel { ItemId = "200", ProductId="13303764", Quantity = 1,  ParentItemId = 0},
+
+            };
+            // Act         
+
+            var result = GetHelperService().PopulateSavedCartLinesForQuoteRequest(items.AsReadOnly());
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void PopulateQuoteRequestLinesForAsync_Tests()
+        {
+            // Arrange 
+
+            List<Common.Cart.Models.Cart.SavedCartLineModel> items = new List<Common.Cart.Models.Cart.SavedCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "100", ProductId="11357695", Quantity = 1 },
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "200", ProductId="13303764", Quantity = 1 },
+            };
+            // Act         
+
+            var result = GetHelperService().PopulateQuoteRequestLinesForAsync(items,null);
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task PopulateQuoteRequestLinesForAsyncError_Tests()
+        {
+            // Arrange 
+
+            List<Common.Cart.Models.Cart.SavedCartLineModel> items = new List<Common.Cart.Models.Cart.SavedCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "100", ProductId="1135769XX", Quantity = 1 },
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "200", ProductId="13303764", Quantity = 1 },
+            };
+            // Act         
+
+            var ex = await Assert.ThrowsAsync<UIServiceException>(() => GetHelperService().PopulateQuoteRequestLinesForAsync(items, null));
+
+            // Assert
+            Assert.NotNull(ex.Message);
+        }
+
+
+        [Fact]
+        public void BuildProductApiURL_Tests()
+        {
+            // Arrange
+            List<Common.Cart.Models.Cart.SavedCartLineModel> items = new List<Common.Cart.Models.Cart.SavedCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "100", ProductId="11357695", Quantity = 1 },
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "200", ProductId="13303764", Quantity = 1 },
+            };
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BuildProductApiURL" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { items });
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetLinesForQuoteRequestFromSavedAndActiveCart_Tests()
+        {
+            // Arrange
+            List<Common.Cart.Models.Cart.SavedCartLineModel> items = new List<Common.Cart.Models.Cart.SavedCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "100", ProductId="11357695", Quantity = 1 },
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "200", ProductId="13303764", Quantity = 1 },
+            };
+            ProductData productDetails = new ProductData();
+            
+            ProductsModel P1 = new ProductsModel
+            {
+                Source = new SourceModel { ID = "11357695" },
+                GlobalManufacturer = "CISCO",
+                Name = "SHOW & SHARE SVR ENTERPRISE HW",
+                ManufacturerPartNumber = "SNSC220-ENT-K9"
+            };
+            ProductsModel P2 = new ProductsModel
+            {
+                Source = new SourceModel { ID = "13303764" },
+                GlobalManufacturer = "CISCOC",
+                Name = "ONE DNA ADVANTAGE ONPREM LIC 100M 3YR",
+                ManufacturerPartNumber = "C1DNA-P-100M-A-3Y"
+            };
+            ProductsModel[] Data = { P1, P2};
+            productDetails.Data = Data;
+
+            // Act
+            Type type;
+            object objType;
+            InitiateHelperService(out type, out objType);
+
+            var apiQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetLinesForQuoteRequestFromSavedAndActiveCart" && x.IsPrivate);
+
+            var result = apiQuery.Invoke(objType, new object[] { items, productDetails, null });
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
     }
 }

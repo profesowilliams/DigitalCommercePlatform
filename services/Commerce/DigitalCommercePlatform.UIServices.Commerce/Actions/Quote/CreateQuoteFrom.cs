@@ -49,45 +49,76 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                CreateModelResponse createModelResponse;
-                switch (request.CreateModelFrom.CreateFromType)
+                try
                 {
-                    case QuoteCreationSourceType.ActiveCart:
-                        createModelResponse = await _quoteService.CreateQuoteFromActiveCart(request);
-                        break;
+                    CreateModelResponse createModelResponse;
+                    switch (request.CreateModelFrom.CreateFromType)
+                    {
+                        case QuoteCreationSourceType.ActiveCart:
+                            createModelResponse = await _quoteService.CreateQuoteFromActiveCart(request);
+                            break;
 
-                    case QuoteCreationSourceType.SavedCart:
-                        createModelResponse = await _quoteService.CreateQuoteFromSavedCart(request);
-                        break;
-                    case QuoteCreationSourceType.Expired:
-                        createModelResponse = await _quoteService.CreateQuoteFromExpired(request);
-                        break;
+                        case QuoteCreationSourceType.SavedCart:
+                            createModelResponse = await _quoteService.CreateQuoteFromSavedCart(request);
+                            break;
+                        case QuoteCreationSourceType.Expired:
+                            createModelResponse = await _quoteService.CreateQuoteFromExpired(request);
+                            break;
 
-                    default:
-                        throw new UIServiceException("Invalid createFromType: " + request.CreateModelFrom.CreateFromType, (int)UIServiceExceptionCode.GenericBadRequestError);
+                        default:
+                            throw new UIServiceException("Invalid createFromType: " + request.CreateModelFrom.CreateFromType, (int)UIServiceExceptionCode.GenericBadRequestError);
+                    }
+                    var content = new Response
+                    {
+                        QuoteId = createModelResponse.Id,
+                        ConfirmationId = createModelResponse.Confirmation,
+                    };
+                    var response = new ResponseBase<Response> { Content = content };
+
+                    if (!string.IsNullOrWhiteSpace(createModelResponse.Id) || !string.IsNullOrWhiteSpace(createModelResponse.Confirmation))
+                    {
+                        return response;
+                    }
+
+                    if (createModelResponse.Messages != null)
+                    {
+                        foreach (var message in createModelResponse.Messages)
+                        {
+                            response.Error.Code = (int)UIServiceExceptionCode.QuoteCreationFailed;
+                            response.Error.IsError = true;
+                            response.Error.Messages.Add(message.Value);
+                        }
+                    }
+                    return response;
                 }
-                var content = new Response
+                catch (UIServiceException ui)
+                {                   
+                    ResponseBase<Response> response = RenderErrorResponse(ui?.InnerException?.Message ?? ui.Message);
+                    return response;
+                }
+                catch (System.Exception ex)
                 {
-                    QuoteId = createModelResponse.Id,
-                    ConfirmationId = createModelResponse.Confirmation,
-                };
-                var response = new ResponseBase<Response> { Content = content };
-
-                if (!string.IsNullOrWhiteSpace(createModelResponse.Id) || !string.IsNullOrWhiteSpace(createModelResponse.Confirmation))
-                {
+                    var error = ex?.InnerException?.Message ?? ex.Message;
+                    
+                    ResponseBase<Response> response = RenderErrorResponse(error);
                     return response;
                 }
 
-                if (createModelResponse.Messages != null)
+            }
+
+            private static ResponseBase<Response> RenderErrorResponse(string error)
+            {
+                var code = error.StartsWith("This create quote request contains obsolete", System.StringComparison.CurrentCultureIgnoreCase) ? 11000 : (int)UIServiceExceptionCode.GenericBadRequestError;
+                return new ResponseBase<Response>
                 {
-                    foreach (var message in createModelResponse.Messages)
+                    Content = null,
+                    Error = new ErrorInformation
                     {
-                        response.Error.Code = (int)UIServiceExceptionCode.QuoteCreationFailed;
-                        response.Error.IsError = true;
-                        response.Error.Messages.Add(message.Value);
+                        Code = code,
+                        IsError = true,
+                        Messages = new System.Collections.Generic.List<string> { error }
                     }
-                }
-                return response;
+                };
             }
         }
 

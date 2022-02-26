@@ -1,14 +1,19 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using Flurl;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -605,7 +610,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (subLines?.FirstOrDefault()?.Invoices != null && subLines?.FirstOrDefault()?.Invoices?.Count > 0)
             {
-
                 foreach (var invoice in subLines?.FirstOrDefault()?.Invoices)
                 {
                     if (invoices.Where(x => x.ID == invoice.ID).Count() == 0)
@@ -620,6 +624,140 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             orderDetail.Items = orderDetail.Items.Where(i => i.POSType?.ToUpper() != "KC").ToList();
             return orderDetail;
+        }
+
+        public async Task<List<ItemModel>> PopulateQuoteRequestLinesForAsync(List<Common.Cart.Models.Cart.SavedCartLineModel> items, TypeModel type)
+        {
+                string _appProductServiceURL = BuildProductApiURL(items);
+
+                ProductData productDetails = await _middleTierHttpClient.GetAsync<ProductData>(_appProductServiceURL);
+                if (productDetails?.Data != null)
+                {
+                    var invalidProducts = from item in items
+                                          where !productDetails.Data.ToList().Any(x => x.Source.ID == item.ProductId)
+                                          select item;
+
+                    return GetLinesForQuoteRequestFromSavedAndActiveCart(items, productDetails, invalidProducts);
+                }
+                else
+                    throw new UIServiceException("This create quote request contains obsolete products and can't be ordered.", 11000);
+
+        }
+
+        private List<ItemModel> GetLinesForQuoteRequestFromSavedAndActiveCart(List<Common.Cart.Models.Cart.SavedCartLineModel> items, ProductData productDetails, IEnumerable<Common.Cart.Models.Cart.SavedCartLineModel> invalidProducts)
+        {
+            if (invalidProducts == null || invalidProducts?.Count() == 0)
+            {
+                List<ItemModel> lstItemModel = GetLines(items, productDetails);
+                return lstItemModel;
+            }
+            else
+            {
+                var products = string.Join(",", invalidProducts.Select(x => x.ProductId));
+                throw new UIServiceException("This create quote request contains obsolete products and can't be ordered.Obsolete products are " + products, 11000);
+            }
+        }
+
+        private static List<ItemModel> GetLines(List<Common.Cart.Models.Cart.SavedCartLineModel> items, ProductData productDetails)
+        {
+            var lstItemModel = new List<ItemModel>();
+
+            foreach (var item in items)
+            {
+                var product = productDetails.Data.ToList().Where(p => p.Source.ID.Equals(item.ProductId)).FirstOrDefault();
+
+                var itemModel = new ItemModel
+                {
+                    Id = item.ItemId,
+                    Product = new List<ProductModel>
+                        {
+                            new ProductModel { Id = product.ManufacturerPartNumber, Manufacturer = product.GlobalManufacturer, Name = product.Name, Type = "2" }
+                        },
+                    Quantity = item.Quantity
+                };
+
+                lstItemModel.Add(itemModel);
+            }
+
+            return lstItemModel;
+        }
+
+        private string BuildProductApiURL(List<Common.Cart.Models.Cart.SavedCartLineModel> items)
+        {
+            StringBuilder sbTDPartNumber = new();
+            string _appProductServiceURL = _appSettings.GetSetting("Product.App.Url");
+
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    sbTDPartNumber = sbTDPartNumber.Append("&MaterialNumber=" + item.ProductId);
+                }
+            }
+
+            _appProductServiceURL = _appProductServiceURL.AppendPathSegment("Find") + "?&Details=False&SalesOrganization=0100&System=2&PageSize=" + items.Count + sbTDPartNumber.ToString();
+            return _appProductServiceURL;
+        }
+
+        public List<Common.Cart.Models.Cart.SavedCartLineModel> PopulateSavedCartLinesForQuoteRequest(IReadOnlyList<Common.Cart.Models.Cart.ActiveCartLineModel> items)
+        {
+            List<Common.Cart.Models.Cart.SavedCartLineModel> lstItems = new List<Common.Cart.Models.Cart.SavedCartLineModel>();
+            foreach (var item in items)
+            {
+                Common.Cart.Models.Cart.SavedCartLineModel savedCartLine = new Common.Cart.Models.Cart.SavedCartLineModel
+                {
+                    ItemId = item.ItemId,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    ParentItemId = item.ParentItemId.ToString()
+                };
+                lstItems.Add(savedCartLine);
+            }
+            return lstItems;
+        }
+
+        [ExcludeFromCodeCoverage]
+        public string RenderErrorMessage(RemoteServerHttpException ex, string errorFor)
+        {
+            string error = "This create quote request contains obsolete products and can't be ordered";
+            if (errorFor == "quote")
+            {
+                var errorMsg = JsonConvert.DeserializeObject<ErrorDetail>(ex.Details?.GetType().GetProperty("Body")?.GetValue(ex.Details, null).ToString(),
+                   new JsonSerializerSettings
+                   {
+                       Error = HandleDeserializationError
+                   });
+                StringBuilder product = new();
+                if (errorMsg.Messages != null)
+                {
+                    error = ErrorMessageFrom(errorMsg, ref product);
+                }
+                else
+                {
+                    error = ex.Message;
+                }
+            }
+            return error;
+        }
+
+        private static string ErrorMessageFrom(ErrorDetail errorMsg, ref StringBuilder product)
+        {
+            string error = "This create quote request contains obsolete products and can't be ordered.Obsolete products are ";
+            foreach (var msg in errorMsg?.Messages)
+            {
+                msg.Value = msg.Value ?? string.Empty;
+                if (msg.Value.StartsWith("Product", StringComparison.CurrentCultureIgnoreCase) && msg.Value.Contains("Not", StringComparison.CurrentCultureIgnoreCase))
+                    product = product.Append("," + msg?.Value.Substring(8, ((int)msg?.Value.IndexOf("Not") - 8)));
+            }
+            error += product.ToString();
+            return error;
+        }
+
+        [ExcludeFromCodeCoverage]
+        private void HandleDeserializationError(object sender, ErrorEventArgs errorArgs)
+        {
+            //var currentError = errorArgs.ErrorContext.Error.Message;
+            errorArgs.ErrorContext.Handled = true;
         }
     }
 }

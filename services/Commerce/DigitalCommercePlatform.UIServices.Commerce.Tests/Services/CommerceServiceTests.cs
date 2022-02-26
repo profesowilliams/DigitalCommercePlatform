@@ -44,6 +44,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             _logger = new Mock<ILogger<CommerceService>>();
             _appSettings = new Mock<IAppSettings>();
             _appSettings.Setup(s => s.GetSetting("App.Configuration.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-configuration/v1");
+            _appSettings.Setup(s => s.GetSetting("Product.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1");
+            _appSettings.Setup(s => s.GetSetting("App.Quote.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-quote/v1");
             _cartService = new Mock<ICartService>();
             _uiContext = new Mock<IUIContext>();
             _helperService = new Mock<IHelperService>();
@@ -887,6 +889,39 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             //Assert 
             Assert.NotNull(quotePreviewModel.Result);
+
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void CallCreateQuote_Exception()
+        {
+            //arrange
+            CreateModelFrom request = new CreateModelFrom
+            {
+                TargetSystem = "R13",
+                CreateFromId = "96722368",
+                CreateFromType = Models.Enums.QuoteCreationSourceType.SavedCart,
+                PricingCondition = "EduStudentStaff",
+                Items = new List<ItemModel> {
+                new ItemModel {
+                    Quantity =1,
+                    Product = new List<ProductModel> { new ProductModel { Type ="2", Id = "SNSC220-ENT-K9", Name = "SHOW & SHARE SVR ENTERPRISE HW", Manufacturer ="CISCO" }  },
+                    },
+                }
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var response = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CallCreateQuote" && x.IsPrivate);
+
+            var result = response.Invoke(objType, new object[] { request });
+
+            //Assert 
+            Assert.NotNull(result);
 
         }
     }

@@ -465,26 +465,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
                 if (activeCart.Items != null)
                 {
-                    request.CreateModelFrom.Items = new List<ItemModel>();
-                    foreach (var cartLine in activeCart.Items)
+                    try
                     {
-                        ItemModel item = new();
-                        item.Id = cartLine.ItemId;
-                        item.Product = new List<ProductModel> {
-                        new ProductModel {
-                            Id = cartLine.ProductId,
-                            Manufacturer = cartLine.ProductId, // call product service to get mfg part #
-                            Name = cartLine.ProductId,
-                            Type = "1",
-                        }
-                    };
-                        decimal tmpvalue;
-                        decimal? result = null;
-
-                        if (decimal.TryParse(Convert.ToString(cartLine.Quantity), out tmpvalue))
-                            result = tmpvalue;
-                        item.Quantity = result;
-                        request.CreateModelFrom.Items.Add(item);
+                        List<Common.Cart.Models.Cart.SavedCartLineModel> items = _helperService.PopulateSavedCartLinesForQuoteRequest(activeCart.Items);
+                        request.CreateModelFrom.Items = _helperService.PopulateQuoteRequestLinesForAsync(items, request.CreateModelFrom.Type).Result;
+                    }
+                    catch (UIServiceException e)
+                    {
+                        var error = e.Message ?? "";
+                        if (error.StartsWith("This create quote request contains", StringComparison.CurrentCultureIgnoreCase))
+                            throw new UIServiceException(error, 11000);
+                        else
+                            throw new UIServiceException(e.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                     }
                 }
                 request.CreateModelFrom.TargetSystem = "R3";
@@ -494,7 +490,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             catch (Exception ex)
             {
-                _logger.LogInformation("Error while creating Cart from Active Cart" + ex.Message);
+                //_logger.LogInformation("Error while creating Quote from Active Cart" + ex.Message);
                 throw ex;
             }
 
@@ -512,23 +508,23 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (savedCart.Items != null)
             {
-                createQuoteFrom.Items = new List<ItemModel>();
-                foreach (var cartLine in savedCart.Items)
+                // call product service to get product details
+                try
                 {
-                    var itemModel = new ItemModel();
-                    itemModel.Id = cartLine.ItemId;
-                    itemModel.Product = new List<ProductModel> {
-                        new ProductModel { Id = cartLine.ProductId, Manufacturer = cartLine.ProductId, Name = cartLine.ProductId, Type = "1", }
-                    };
-                    decimal tmpvalue;
-                    decimal? result = null;
-
-                    if (decimal.TryParse(Convert.ToString(cartLine.Quantity), out tmpvalue))
-                        result = tmpvalue;
-
-                    itemModel.Quantity = result;
-                    createQuoteFrom.Items.Add(itemModel);
+                    createQuoteFrom.Items = _helperService.PopulateQuoteRequestLinesForAsync(savedCart.Items, request.CreateModelFrom.Type).Result;
                 }
+                catch (UIServiceException uiEx)
+                {
+                    if (uiEx.Message.StartsWith("This create quote request contains obsolete"))
+                        throw new UIServiceException(uiEx.Message, 11000);
+                    else
+                        throw new UIServiceException(uiEx.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
             }
             //get order LEVEL and Type
             createQuoteFrom.TargetSystem = "R3";
@@ -694,7 +690,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 createModelFrom.ShipTo = _mapper.Map<ShipToModel>(customerAddress.ToList().FirstOrDefault().addresses.ToList().FirstOrDefault());
                 createModelFrom.Reseller = new ResellerModel
                 {
-                    Name = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerName : _uiContext.User.ActiveCustomer.CustomerNumber,
+                    Name = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerName : _uiContext.User.ActiveCustomer.CustomerName,
                     Id = _uiContext.User.ActiveCustomer == null ? _uiContext.User.CustomerList.FirstOrDefault().CustomerNumber : _uiContext.User.ActiveCustomer.CustomerNumber,
                     Contact = contactList
                 };
@@ -721,11 +717,33 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private async Task<CreateModelResponse> CallCreateQuote(CreateModelFrom createQuoteFrom)
         {
-            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            var createQuoteUrl = _appQuoteServiceUrl + "/CreateAsync";
-            _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteFrom, Formatting.Indented));
-            var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
-            return response;
+            try
+            {
+                string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+                var createQuoteUrl = _appQuoteServiceUrl + "/CreateAsync";
+                _logger.LogInformation("Calling App-Quote to create a quote \r\n" + JsonConvert.SerializeObject(createQuoteFrom, Formatting.Indented));
+                var response = await _middleTierHttpClient.PostAsync<CreateModelResponse>(createQuoteUrl, null, createQuoteFrom);
+                return response;
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                if (ex.Message.Contains("Error"))
+                {
+                    throw new UIServiceException(_helperService.RenderErrorMessage(ex, "quote"), 11000);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at : " + nameof(Commerce));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
 
         private async Task<IEnumerable<AccountAddressDetails>> GetAddress(string criteria, bool ignoreSalesOrganization)
