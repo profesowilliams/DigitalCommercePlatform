@@ -55,24 +55,26 @@ function QuotePreviewContinue({
       >
         {gridProps.confirmButtonLabel}
       </Button>
-      <div className="cmp-qp-continue__checkbox">
-        <input
-          type="checkbox"
-          name="make-default"
-          checked={isDefault}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="make-default">{gridProps.defaultChoiceLabel}</label>
-      </div>
       {/* Only render the "Continue With Standard Price" Link when the quote is not of type Deal. */}
       {!isDealConfiguration(quoteDetailsSource) && (
-        <Link
-          callback={() => clickHandler(eventTypes.link)}
-          variant={"cmp-qp-continue__link"}
-          underline={"always"}
-          >
-          {gridProps.continueWithStandardPriceLabel}
-        </Link>
+        <>
+          <div className="cmp-qp-continue__checkbox">
+            <input
+              type="checkbox"
+              name="make-default"
+              checked={isDefault}
+              onChange={handleInputChange}
+            />
+            <label htmlFor="make-default">{gridProps.defaultChoiceLabel}</label>
+          </div>
+          <Link
+            callback={() => clickHandler(eventTypes.link)}
+            variant={"cmp-qp-continue__link"}
+            underline={"always"}
+            >
+            {gridProps.continueWithStandardPriceLabel}
+          </Link>
+        </>
       )}
       
     </div>
