@@ -4,6 +4,7 @@
     <filter root="/apps/techdata/components"/>
     <filter root="/apps/techdata/templates"/>
     <filter root="/apps/techdata/i18n"/>
+    <filter root="/apps/techdata/config"/>
     <filter root="/apps/sling" />
     <filter root="/apps/msm/tech-data-americas-blueprint" mode="merge"/>
     <filter root="/apps/msm/tech-data-apac-blueprint" mode="merge"/>
