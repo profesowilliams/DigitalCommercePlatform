@@ -1,6 +1,7 @@
 //2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
@@ -128,6 +129,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var controller = GetController();
             var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
             result.Should().Equals(HttpStatusCode.BadRequest);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductVariants(GetProductVariantHandler.Response expected, string id)
+        {
+            mockMediator.Setup(x => x.Send(
+                       It.IsAny<GetProductVariantHandler.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var controller = GetController();
+            var result = await controller.GetProductVariant(id).ConfigureAwait(false);
+            result.Should().NotBeNull();
         }
     }
 }

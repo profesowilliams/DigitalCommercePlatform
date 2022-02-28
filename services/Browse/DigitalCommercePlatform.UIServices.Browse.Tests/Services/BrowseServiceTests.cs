@@ -3,6 +3,8 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
+using DigitalCommercePlatform.UIServices.Browse.Dto.ProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Services;
@@ -40,6 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
             _logger = new Mock<ILogger<BrowseService>>();
             _appSettings = new Mock<IAppSettings>();
+            _appSettings.Setup(s => s.GetSetting("Product.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1");
             _appSettings.Setup(s => s.GetSetting("Catalog.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1");
             _appSettings.Setup(s => s.GetSetting("Feature.DF.ProuctCatalog")).Returns("false");
             _appSettings.Setup(s => s.GetSetting("Browse.UI.External.Catalog.Url")).Returns("https://mtapnew.stage.svc.us.cstenet.com/ProductService/api/VendorProduct/getProductCatalog");
@@ -121,6 +124,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
 
             // Assert
             act.Should().ThrowAsync<Exception>();
+        }
+        
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductVariant_CallsApiOnce(GetProductVariantHandler.Request request, ProductVariantDto expected)
+        {
+            // Arrange
+            var url = $"https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1/ProductVariants?id={request.Id}";
+            _middleTierHttpClient.Setup(c =>
+                    c.GetAsync<ProductVariantDto>(It.Is<string>(u => u == url), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), It.IsAny<IDictionary<string, string>>()))
+                .ReturnsAsync(expected)
+                .Verifiable();
+
+            //Act
+            var result = await _browseService.GetProductVariant(request);
+
+            // Assert
+            _middleTierHttpClient.Verify();
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

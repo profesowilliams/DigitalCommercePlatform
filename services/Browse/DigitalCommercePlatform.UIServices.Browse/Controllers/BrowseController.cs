@@ -1,6 +1,7 @@
 //2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
@@ -55,6 +56,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
             var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site, Context.Language)).ConfigureAwait(false);
             return Ok(response);
+        }
+        
+        
+        [HttpGet]
+        [Route("product/variants")]
+        public async Task<ActionResult> GetProductVariant([FromQuery] string id)
+        {
+           var response = await Mediator.Send(new GetProductVariantHandler.Request(id)).ConfigureAwait(false);
+           return Ok(response);
         }
 
         [HttpGet]

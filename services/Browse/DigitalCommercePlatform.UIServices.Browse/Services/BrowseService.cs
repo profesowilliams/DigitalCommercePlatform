@@ -3,7 +3,9 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
+using DigitalCommercePlatform.UIServices.Browse.Dto.ProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
@@ -168,6 +170,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         {
             var validateProductUrl = _appProductURL.AppendPathSegment("Validate").SetQueryParam("id", productIds);
             return _middleTierHttpClient.GetAsync<IEnumerable<ValidateDto>>(validateProductUrl);
+        }
+
+        public async Task<ProductVariantDto> GetProductVariant(GetProductVariantHandler.Request request)
+        {
+            var url = _appProductURL.AppendPathSegment("ProductVariants").BuildQuery(new
+            {
+                id = request.Id,
+            });
+
+            var productVariantDto = await _middleTierHttpClient.GetAsync<ProductVariantDto>(url);
+            return productVariantDto;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetCatalogDeta
             //assert
             result.Should().NotBeNull();
             result.Content.Should().NotBeNull();
-            result.Content.Items.Should().BeEquivalentTo(response);         
+            result.Content.Items.Should().BeEquivalentTo(response);
         }
 
         [Fact]

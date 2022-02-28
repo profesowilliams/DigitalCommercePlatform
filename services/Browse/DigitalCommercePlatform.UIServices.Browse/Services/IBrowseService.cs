@@ -2,7 +2,9 @@
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
+using DigitalCommercePlatform.UIServices.Browse.Dto.ProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
@@ -25,5 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         Task<IEnumerable<ValidateDto>> ValidateProductTask(IEnumerable<string> productIds);
 
         Task<List<CatalogResponse>> GetCatalogUsingDF(ProductCatalogRequest request);
+
+        Task<ProductVariantDto> GetProductVariant(GetProductVariantHandler.Request request);
     }
 }
