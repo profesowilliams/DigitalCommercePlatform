@@ -8,12 +8,13 @@ const SelectMethod = ({
   setMethod, 
   methods, 
   createQuote, 
-  buttonTitle 
+  buttonTitle,
+  placeholderText
 }) => {
   return(
     <Fragment>
       <WidgetTitle>{title}</WidgetTitle>
-      <Dropdown selected={method} setValue={setMethod} options={methods} />
+      <Dropdown selected={method} setValue={setMethod} options={methods} placeholderText={placeholderText} />
       <button disabled={!method} className="cmp-quote-button" onClick={() => createQuote()}>{buttonTitle}</button>
     </Fragment>
   );

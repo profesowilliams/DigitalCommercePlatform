@@ -162,6 +162,7 @@ const QuoteCreate = ({
           methods={methods}
           createQuote={goToPricing}
           buttonTitle='Next'
+          placeholderText='Create from'
         /> 
       }
       {
