@@ -119,7 +119,7 @@ namespace DigitalCommercePlatform.UIServices.Order.AutoMapper
             return shipmentUtility.GetSingleCarrierInformation(new TrackingQuery()
             {
                 TrackingId = src.TrackingNumber
-            })?.CarrierImageURL;
+            })?.CarrierURL;
         }
 
         private string GetLink(string sourceId)
