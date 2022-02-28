@@ -33,6 +33,8 @@ function OrdersGridSearch({
     items: [
       { key: "id", value: "TD Order #" },
       { key: "customerPO", value: "Customer PO" },
+      { key: "confirmationNumber", value: "Confirmation # " },
+      { key: "Vendor", value: "Vendor Name" },
     ],
   };
   const _query = useRef({});
