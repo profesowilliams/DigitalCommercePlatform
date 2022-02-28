@@ -374,6 +374,51 @@
                                     </column>
                                 </items>
                             </searchCriteria>
+                            <statusLabelsList
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Status Label Tab"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <actions
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                    composite="{Boolean}true"
+                                                    fieldDescription="Add the Quote Status KEY and the label that should be displayed in the table when said status is returned.">
+                                                <field
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                        name="./statusLabelsList">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <labelKey
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        required="{Boolean}true"
+                                                                        fieldLabel="Label Key"
+                                                                        name="./labelKey"/>
+                                                                <labelValue
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        required="{Boolean}true"
+                                                                        fieldLabel="Label Value"
+                                                                        name="./labelValue"/>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </actions>
+                                        </items>
+                                    </column>
+                                </items>
+                            </statusLabelsList>
                         </items>
                     </tabs>
                 </items>

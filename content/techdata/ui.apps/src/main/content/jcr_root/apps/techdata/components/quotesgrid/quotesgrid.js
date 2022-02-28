@@ -86,6 +86,27 @@ use(function () {
     }
   }
 
+  // Get Status Labels (OPEN, IN_PIPELINE, CLOSED...)
+  var statusLabelsListValues = [];
+  var statusLabelsListNode = resourceResolver.getResource(currentNode.getPath() + "/statusLabelsList");
+
+  if (statusLabelsListNode !== null) {
+    var childrenList = statusLabelsListNode.getChildren();
+
+    for (var [key, res] in Iterator(childrenList)) {
+      var labelData = {};
+
+      labelData.labelKey = res.properties["labelKey"];
+      labelData.labelValue = res.properties["labelValue"];
+      
+      statusLabelsListValues.push(labelData);
+    }
+  }
+  
+  if (statusLabelsListValues != null) {
+    jsonObject["statusLabelsList"] = statusLabelsListValues;
+  }
+
   if (properties && properties["label"]) {
     jsonObject["label"] = properties["label"];
   }

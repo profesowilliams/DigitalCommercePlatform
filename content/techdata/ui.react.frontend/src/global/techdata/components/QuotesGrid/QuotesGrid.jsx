@@ -20,7 +20,7 @@ function QuotesGrid(props) {
   const filteringExtension = useGridFiltering();
   const [modal, setModal] = useState(null);
   const [queryStringIdValue, setQueryStringIdValue] = useState(getSingleQueryStringParameterFromUrl("id"));
-  const { spaDealsIdLabel } = componentProp;
+  const { spaDealsIdLabel, statusLabelsList } = componentProp;
   const analyticModel = useRef(null);
 
   const getDateTransformed = (dateUTC) => {
@@ -117,6 +117,15 @@ function QuotesGrid(props) {
           </div>
         );
       },
+    },
+    {
+      headerName: "Status",
+      field: "status",
+      sortable: true,
+      cellRenderer: (props) => {
+        const status = statusLabelsList.find(label => label.labelKey === props.value);
+        return <div>{status ? status.labelValue : props.value}</div>;
+      }
     },
     {
       headerName: "Quote Reference",
