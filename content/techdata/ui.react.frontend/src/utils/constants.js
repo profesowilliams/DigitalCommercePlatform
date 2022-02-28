@@ -54,6 +54,9 @@ export const ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT = 'orderDetailsSearch';
 export const ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY = 'Order Detail Table Interactions';
 export const ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION = 'Invoice';
 
+// Quote Details
+export const QUOTE_DETAILS_LOGO_LABEL_VALUE = 'logoLabel';
+
 // LocalStorage
 export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';
 

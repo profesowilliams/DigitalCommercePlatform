@@ -228,6 +228,15 @@ export const getDateValue = (date) => {
   return `${date.getFullYear()}-${zeroPad(dateMonth, 2)}-${zeroPad(dateDay, 2)}`;
 }
 
+/**
+ * reference
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat
+ * @param {number} value 
+ * @param {Object} extraOptions 
+ * @returns 
+ */
+export const formatPriceNumber = (value, extraOptions = {}) => new Intl.NumberFormat('en-US', extraOptions).format(value);
+
 const getDateNumber = (dateValue) => Number(
   `${dateValue.getFullYear()}${zeroPad(dateValue.getMonth() + 1, 2)}${zeroPad(dateValue.getDate(), 2)}`);
 

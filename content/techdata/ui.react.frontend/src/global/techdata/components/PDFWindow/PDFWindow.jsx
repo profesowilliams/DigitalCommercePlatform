@@ -1,15 +1,15 @@
 import React from 'react';
 import { Document, Page, Text, View , Image, PDFDownloadLink} from '@react-pdf/renderer';
-import * as ReactDOM from "react-dom";
+import { render } from 'react-dom';
 import PDFStyles from "./PDFStyles";
 import PDFTable from "./../PDFTable/PDFTable";
 import ReactPDFImageWrapper from "../ReactPDFImageWrapper/ReactPDFImageWrapper";
+import { formatPriceNumber } from '../../../../utils/utils';
 
 // Create styles
 const styles = PDFStyles;
 
 const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
-
     return (
         <>
                 <button id="pdfDownloadButton" onClick={() => downloadClicked(quoteDetails, true, logoURL, fileName, downloadLinkText)}>
@@ -19,7 +19,7 @@ const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
             <div id="pdfDownloadLink" className="cmp-pdfPrinter"></div>
         </>
     );
-}
+};
 
 /**
  * 
@@ -31,6 +31,9 @@ const PDFWindow = ({quoteDetails, logoURL, fileName, downloadLinkText}) =>  {
  * @param {string} whiteLabelLogo
  * @param {string[]} options
  * @param {any[]} ancillaryItems
+ * @param {any[]} checkboxItems
+ * @param {string} logoValueProp
+ * @param {any} actualQuoteLinesData
  */
 export const downloadClicked = (
     details,
@@ -42,7 +45,18 @@ export const downloadClicked = (
     options,
     ancillaryItems,
     checkboxItems,
+    logoValueProp,
+    actualQuoteLinesData,
 ) => {
+    const extraOptionsFormater = {
+        style: 'currency',
+        currency: 'USD'
+    };
+    const totalEndPrice = formatPriceNumber(
+        actualQuoteLinesData.summary.yourMarkup !== 0 ? actualQuoteLinesData.summary.endUserTotal : actualQuoteLinesData.summary.subtotal
+        , extraOptionsFormater
+    ).replace('$', '');
+    
     const imagePath = logoURL;
     let whiteLabelLogoFlag = false;
     let extraOptions = [];
@@ -55,7 +69,7 @@ export const downloadClicked = (
                     extraOptions[key] = value
                 }
             })
-            if (o === "The reseller logo") {
+            if (o === logoValueProp) {
                 whiteLabelLogoFlag = true;
             }
         })
@@ -111,7 +125,7 @@ export const downloadClicked = (
                                     <Text> </Text>
                                 </View>
                                 <View style={styles.subTotalSection}>
-                                    <Text>Quote Sub-total : {details.currencySymbol} {details.subTotalFormatted} </Text>
+                                    <Text>Quote Sub-total : {details.currencySymbol} {totalEndPrice} </Text>
                                 </View>
                             </View>
                         </View>
@@ -119,7 +133,7 @@ export const downloadClicked = (
                     </Page>
                 </Document>
         )
-    }
+    };
 
     const DownLoadLink = () => {
         return (
@@ -129,12 +143,12 @@ export const downloadClicked = (
                 }
             </PDFDownloadLink>
         )
-    }
+    };
 
 
     if (isDownloadLink)
     {
-        ReactDOM.render(<DownLoadLink fileName={fileName} downloadLinkText={downloadLinkText}/>, document.getElementById("pdfDownloadLink"));
+        render(<DownLoadLink fileName={fileName} downloadLinkText={downloadLinkText}/>, document.getElementById("pdfDownloadLink"));
     }
 };
 

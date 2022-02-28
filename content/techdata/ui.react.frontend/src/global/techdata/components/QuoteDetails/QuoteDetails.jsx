@@ -23,6 +23,7 @@ import {
   ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME,
   ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE,
   ADOBE_DATA_LAYER_CLICK_EVENT,
+  QUOTE_DETAILS_LOGO_LABEL_VALUE,
 } from "../../../../utils/constants";
 
 const QuoteDetails = ({ componentProp }) => {
@@ -142,6 +143,8 @@ const QuoteDetails = ({ componentProp }) => {
       whiteLabelOptions,
       ancillaryItemsProps ? ancillaryItemsProps : ancillaryItems,
       checkboxItems,
+      logoPropValue,
+      actualQuoteLinesData,
     );
   }
 
@@ -210,10 +213,11 @@ const QuoteDetails = ({ componentProp }) => {
   }
 
   const [checkboxItems, setCheckboxItems] = useState(null);
-
+  const [logoPropValue, setLogoPropValue] = useState(null);
   useEffect(() => {
     if (whiteLabel?.checkboxItems && checkboxItems === null) {
       setCheckboxItems(whiteLabel.checkboxItems);
+      setLogoPropValue(whiteLabel.checkboxItems[QUOTE_DETAILS_LOGO_LABEL_VALUE])
     }
   }, [whiteLabel]);
 
