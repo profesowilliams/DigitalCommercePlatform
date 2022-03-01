@@ -103,6 +103,10 @@
 			.planDetails {
 				text-align: left;
 				font-size: 12px;
+        margin-top: 8px;
+        p {
+          line-height: 1.6em;
+        }
 			}
 			.currentPlan {
 				text-align: left;
@@ -123,11 +127,8 @@
 					width: 1px;
 					height: 24px;
 				  }
-			}
-			
-			p {
-				line-height: 0.5em;
-			}
+			}			
+		
 		  }
 	}
   
