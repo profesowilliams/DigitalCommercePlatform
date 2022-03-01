@@ -7,6 +7,7 @@ import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
 import { thousandSeparator } from "../../../helpers/formatting";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
+import { ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY } from "../../../../../utils/constants";
 
 function ProductLinesGrid({
   gridProps,
@@ -53,12 +54,8 @@ function ProductLinesGrid({
       {
         name: "Open All",
         type: "link",
+        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
-      {
-        click: {
-          category: "Quote Detail Table Interactions",
-        },
-      }
     );
     gridApi?.forEachNode((node) => {
       node.expanded = true;
@@ -72,12 +69,8 @@ function ProductLinesGrid({
       {
         name: "Collapse All",
         type: "link",
+        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
-      {
-        click: {
-          category: "Quote Detail Table Interactions",
-        },
-      }
     );
     gridApi?.forEachNode((node) => {
       node.expanded = false;
@@ -101,12 +94,8 @@ function ProductLinesGrid({
       {
         name: "Open Line Item",
         type: "button",
+        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
-      {
-        click: {
-          category: "Quote Detail Table Interactions",
-        },
-      }
     );
   };
 
@@ -116,12 +105,8 @@ function ProductLinesGrid({
       {
         name: "Collapse Line Item",
         type: "button",
+        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
-      {
-        click: {
-          category: "Quote Detail Table Interactions",
-        },
-      }
     );
   };
 
