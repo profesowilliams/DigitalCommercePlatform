@@ -5,6 +5,7 @@ import { useRenewalGridState } from "./store/RenewalsStore";
 function RenewalPlanOptions({ labels, data }) {
     const effects = useRenewalGridState(st => st.effects);
     const renewalOptionState = useRenewalGridState(st => st.renewalOptionState);
+    const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
     const isCurrentPlan = plan => plan === data?.renewedDuration;
     const isSamePlan = option => option?.contractDuration+" "+data?.support === renewalOptionState;
@@ -15,6 +16,12 @@ function RenewalPlanOptions({ labels, data }) {
             effects.setCustomState({key:'renewalOptionState', value});
         }       
     } ,[])
+    const redirectToRenewalDetail = (id = "") => {
+        const renewalDetailsURL = encodeURI(
+          `${window.location.origin}${detailUrl}.html?id=${id}`
+        );
+        window.location.href = renewalDetailsURL;
+      };
     return (
         <div className="cmp-renewal-plan-column">
             {data?.options && data?.options.map(option => (
@@ -54,7 +61,7 @@ function RenewalPlanOptions({ labels, data }) {
                                    &nbsp;&nbsp;{labels.downloadXLSLabel}
                                </button>
                                <span className="vertical-separator"></span>
-                               <button>
+                               <button onClick={() => redirectToRenewalDetail(option?.id)}>
                                    <i className="far fa-eye"></i>
                                    &nbsp;&nbsp;{labels.seeDetailsLabel}
                                </button>

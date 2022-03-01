@@ -19,7 +19,7 @@ function RenewalsGrid(props) {
 
   const options = {
     defaultSortingColumnKey: "dueDate",
-    defaultSortingDirection: "asc",
+    defaultSortingDirection: "desc",
   };
 
   useEffect(()=>effects.setCustomState({key:'aemConfig',value:componentProp}),[])

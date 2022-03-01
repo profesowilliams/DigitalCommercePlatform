@@ -33,7 +33,7 @@ function DropdownDownloadList({ data }) {
       <span className="vertical-separator"></span>
       <button onClick={downloadXLS}>
         <i className="fas fa-file-excel"></i>
-        Download Excel
+        Download XLS
       </button>
       <span className="vertical-separator"></span>
       <button onClick={redirectToRenewalDetail}>

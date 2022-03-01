@@ -20,7 +20,7 @@ function AgreementInfo({
             <Info boldLabel noColon label={agreementInfo.programLabel}>{programName}</Info>
           )}
           {contract.duration && (
-            <Info boldLabel noColon label={agreementInfo.durationLabel}>{contract.duration}</Info>
+            <Info boldLabel noColon label={agreementInfo.durationLabel}>{contract.renewedDuration}</Info>
           )}
           {contract.serviceLevel && (
             <Info boldLabel noColon label={agreementInfo.supportLevelLabel}>
