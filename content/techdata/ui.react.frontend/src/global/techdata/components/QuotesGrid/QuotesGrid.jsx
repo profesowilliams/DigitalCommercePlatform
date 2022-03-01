@@ -258,12 +258,10 @@ function QuotesGrid(props) {
   }
 
   const pushAnalyticsEvent = (response) => {
-    if (isNotEmptyValue(response?.data?.content?.items?.length)) {
       if (analyticModel.current !== null) {
         handleFilterComponent(analyticModel.current,
-          isNotEmptyValue(response?.data?.content?.items?.length ? response?.data?.content?.items?.length : 0));
+          response?.data?.content?.items?.length ? response?.data?.content?.items?.length : 0);
       }
-    }
   };
 
   return (
