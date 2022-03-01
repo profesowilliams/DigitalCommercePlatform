@@ -134,4 +134,11 @@ public @interface ServiceEndPointsConfiguration {
      @Property(label = "Renewal Details Line Item Endpoint", description = "Renewal Details Line Item Endpoint")
     String renewalDetailLineItemEndpoint();
 
+     @Property(label = "Download PDF Renewals Grid Endpoint", description = "Download PDF Renewals Grid Endpoint")
+    String downloadPDFRenewalsEndpoint();
+
+    @Property(label = "Export XLS Renewals Grid Endpoint", description = "Export XLS Renewals Grid Endpoint")
+    String exportXLSRenewalsEndpoint();
+
+
 }
