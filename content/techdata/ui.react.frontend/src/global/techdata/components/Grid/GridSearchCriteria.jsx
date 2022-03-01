@@ -14,6 +14,9 @@ import Button from "../Widgets/Button";
  * @param {JSX.Element} props.HeaderButtonOptions
  * @param {JSX.Element} props.ButtonsComponentHeader
  * @param {string} props.category
+ * @param {(expanded : boolean, handleChange: ()=> void , onSearch: ()=> void, onClear: ()=> void ) => void} props.handleClickOptionsButton
+ * @param {string} props.labelFilterGrid
+ * @param {boolean} props.flagOpenOrder
  * @returns 
  */
 function GridSearchCriteria({
@@ -103,6 +106,15 @@ function GridSearchCriteria({
         
 			
       </div>
+	  		<div className={` ${!flagOpenButton || expanded ? 'hidden' : ''}`}>
+        		{HeaderButtonOptions ? (
+					<HeaderButtonOptions 
+						handleChange={handleChange}
+						onSearch={onSearch}
+						expanded={false}
+						handleClickOptionsButton={handleClickOptionsButton}
+					/>) : null} 
+			</div>
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>
 				<div className='cmp-search-criteria__content__query-input'>
 					<Filters
