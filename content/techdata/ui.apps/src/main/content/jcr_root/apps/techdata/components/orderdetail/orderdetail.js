@@ -155,6 +155,14 @@ use(function () {
         infoJsonObject["orderStatusLabel"] = properties["orderStatusLabel"];
     }
 
+    if (properties && properties["orderStatusItemsOpen"]) {
+        infoJsonObject["orderStatusItemsOpen"] = properties["orderStatusItemsOpen"];
+    }
+
+    if (properties && properties["orderStatusItemsOpenDescription"]) {
+        infoJsonObject["orderStatusItemsOpenDescription"] = properties["orderStatusItemsOpenDescription"];
+    }
+
     if (properties && properties["orderStatusItemsShipped"]) {
         infoJsonObject["orderStatusItemsShipped"] = properties["orderStatusItemsShipped"];
     }
@@ -178,6 +186,15 @@ use(function () {
     if (properties && properties["orderStatusItemsInReviewDescription"]) {
         infoJsonObject["orderStatusItemsInReviewDescription"] = properties["orderStatusItemsInReviewDescription"];
     }
+
+    if (properties && properties["orderStatusItemsCancelled"]) {
+        infoJsonObject["orderStatusItemsCancelled"] = properties["orderStatusItemsCancelled"];
+    }
+
+    if (properties && properties["orderStatusItemsCancelledDescription"]) {
+        infoJsonObject["orderStatusItemsCancelledDescription"] = properties["orderStatusItemsCancelledDescription"];
+    }
+
 
     if (properties && properties["endUserLabel"]) {
         infoJsonObject["endUserLabel"] = properties["endUserLabel"];
