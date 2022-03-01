@@ -6,10 +6,15 @@ import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
 
 function GridHeader({ gridProps, data }) {
-  const handlePdfDownload = () => {
-    downloadClicked(data, true, "", gridProps.pdf);
-  };
-
+  const downloadPDF = () => {
+    downloadClicked(
+      data,
+      true,
+      'logo',
+      'link text',
+    )
+  }
+  
   const downloadXLS = () => {
     try {
       generateExcelFileFromPost({
@@ -23,6 +28,7 @@ function GridHeader({ gridProps, data }) {
   };
 
 
+
   return (
     <div className="cmp-product-lines-grid__header">
       <span className="cmp-product-lines-grid__header__title">
@@ -31,12 +37,12 @@ function GridHeader({ gridProps, data }) {
       <div className={`cmp-renewal-preview__download`}>
         <button
           id="pdfDownloadLink"
-          onClick={handlePdfDownload}
+          onClick={downloadPDF}
         >
-          <span>{gridProps.pdf}</span>
+          <span>{gridProps?.pdf || "Download PDF"}</span>
         </button>
         <button onClick={downloadXLS}>
-          <span>{gridProps.xls}</span>
+          <span>{gridProps?.xls || "Download Excel"}</span>
         </button>
       </div>
     </div>
@@ -57,8 +63,8 @@ function GridSubTotal({data}) {
 function Note() {
   return (
     <p className="note">
-      <b>Note: </b>Pricing displayed is subject to vendor price changes and
-      exchange rate fluctuations.
+      <b>Note: </b>Pricing displayed is subject to vendor price changes and exchange
+      rate fluctuations.
     </p>
   );
 }
@@ -74,12 +80,9 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
   columnDefs[2] = {
     ...columnDefs[2],
     cellHeight: () => 80,
-    cellRenderer: ({ data }) => (
-      <RenewalProductLinesItemInformation
-        line={data}
-        shopDomainPage={shopDomainPage}
-      />
-    ),
+    cellRenderer: ({ data }) => <RenewalProductLinesItemInformation
+                line={data}
+                shopDomainPage={shopDomainPage}/>,
   };
 
   /*
@@ -97,7 +100,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
           config={gridConfig}
           data={mutableGridData}
         ></Grid>
-        <GridSubTotal  data={data}/>
+        <GridSubTotal data={data}/>
         <Note />
       </section>
     </div>
