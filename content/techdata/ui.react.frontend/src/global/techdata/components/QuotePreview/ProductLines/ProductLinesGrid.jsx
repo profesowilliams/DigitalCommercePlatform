@@ -196,6 +196,9 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       expandable: true,
       
       rowClass: ({ node, data }) => {
+        if (data?.children && data.children.length > 0) {
+          node.setExpanded(true);
+        }
         return `${
           !data?.children || data.children.length === 0
               ? "`cmp-product-lines-grid__row`"
