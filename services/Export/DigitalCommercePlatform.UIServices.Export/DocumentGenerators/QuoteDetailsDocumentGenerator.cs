@@ -406,18 +406,18 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void FillLineDataAttributes(Line line)
         {
-            var startDate = line.Attributes.FirstOrDefault(a => a.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
+            var startDate = line.Attributes?.FirstOrDefault(a => a.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
             Worksheet.Cells[_row, 6].Value = startDate ?? NA;
 
-            var autoRenew = line.Attributes.FirstOrDefault(a => a.Name.Equals("AUTORENEWALTERM"))?.Value;
+            var autoRenew = line.Attributes?.FirstOrDefault(a => a.Name.Equals("AUTORENEWALTERM"))?.Value;
             Worksheet.Cells[_row, 7].Value = int.TryParse(autoRenew, out int autoRenewInt)
                 ? autoRenewInt > 0 ? "Yes" : "No"
                 : NA;
 
-            var duration = line.Attributes.FirstOrDefault(a => a.Name.Equals("INITIALTERM"))?.Value;
+            var duration = line.Attributes?.FirstOrDefault(a => a.Name.Equals("INITIALTERM"))?.Value;
             Worksheet.Cells[_row, 8].Value = duration != null ? duration + " months" : NA;
 
-            var billing = line.Attributes.FirstOrDefault(a => a.Name.Equals("BILLINGTERM"))?.Value;
+            var billing = line.Attributes?.FirstOrDefault(a => a.Name.Equals("BILLINGTERM"))?.Value;
             Worksheet.Cells[_row, 9].Value = billing != null ? billing.Replace(" Billing", "") : NA;
         }
 
@@ -676,7 +676,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void SetProperties(IQuoteDetailsDocumentModel quoteDetails)
         {
-            if (quoteDetails.VendorReference != null || quoteDetails.VendorReference.Count == 0)
+            if (quoteDetails.VendorReference != null || quoteDetails.VendorReference?.Count == 0)
                 return;
 
             SetOriginalEstimateId(quoteDetails);
@@ -700,7 +700,9 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void SetQuickQuoteDealId(IQuoteDetailsDocumentModel quoteDetails)
         {
-            if (quoteDetails.VendorReference.Any(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase)))
+            if (quoteDetails.VendorReference == null)
+                return;
+            else if (quoteDetails.VendorReference.Any(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase)))
             {
                 QuickQuoteDealId = quoteDetails.VendorReference
                     .FirstOrDefault(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase))
@@ -710,7 +712,9 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void SetOriginalEstimateId(IQuoteDetailsDocumentModel quoteDetails)
         {
-            if (quoteDetails.VendorReference.Any(s => s.Type.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase)))
+            if (quoteDetails.VendorReference == null)
+                return;
+            else if (quoteDetails.VendorReference.Any(s => s.Type.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase)))
             {
                 OriginalEstimateId = quoteDetails.VendorReference
                     .FirstOrDefault(s => s.Type.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase))

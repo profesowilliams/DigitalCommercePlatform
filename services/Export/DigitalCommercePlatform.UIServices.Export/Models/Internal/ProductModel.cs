@@ -8,6 +8,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Internal
     {
         public string Type { get; set; }
         public string Id { get; set; }
+        public string VendorPartNumber { get; set; }
         public string Name { get; set; }
         public string Manufacturer { get; set; }
         public string LocalManufacturer { get; set; }

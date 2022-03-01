@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Actions.Quote.Download
             mDocGen = new ();
 
             mCommerceService.Setup(x => x.GetQuote(It.IsAny<GetQuote.Request>()))
-                .ReturnsAsync(new QuoteModel());
+                .ReturnsAsync(new QuoteDetails());
 
             var myProfile = new ExportProfile();
             var configuration = new MapperConfiguration(cfg => cfg.AddProfile(myProfile));

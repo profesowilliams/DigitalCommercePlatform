@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Actions.Quote.Download
         }
 
         [Fact]
-        public async Task QuoteIdValidationShouldReturnNoErrors()
+        public async Task QuoteResult_NoTNull_Tests()
         {
             DQD.Request request = new()
             {
@@ -26,8 +26,22 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Actions.Quote.Download
             var result = await _validator.TestValidateAsync(request);
 
             result.Should().NotBeNull();
+        }
+
+
+        [Fact]
+        public async Task QuoteIdValidationShouldReturnNoErrors()
+        {
+            DQD.Request request = new()
+            {
+                QuoteId = "aw3"
+            };
+            var result = await _validator.TestValidateAsync(request);
+
             result.ShouldNotHaveValidationErrorFor(x => x.QuoteId);
         }
+
+
 
         internal class InvalidQuoteIdData : TheoryData<DQD.Request>
         {

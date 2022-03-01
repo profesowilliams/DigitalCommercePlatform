@@ -32,4 +32,10 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Quote
         public string Created { get; set; }
         public string Expires { get; set; }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class Response<T>
+    {
+        public QuoteDetails Details { get; set; }
+    }
 }

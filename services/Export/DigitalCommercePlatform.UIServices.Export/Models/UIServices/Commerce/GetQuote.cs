@@ -14,11 +14,13 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.UIServices.Commerce
         {
             public IReadOnlyCollection<string> Id { get; set; }
             public bool Details { get; set; }
+            public string SessionId { get; set; }
 
-            public Request(IReadOnlyCollection<string> id, bool details)
+            public Request(IReadOnlyCollection<string> id, bool details, string sessionId)
             {
                 Id = id;
                 Details = details;
+                SessionId= sessionId;
             }
         }
 

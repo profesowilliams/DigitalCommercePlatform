@@ -34,8 +34,9 @@ namespace DigitalCommercePlatform.UIServices.Export.Controllers
 
         [HttpPost]
         [Route("downloadQuoteDetails")]
-        public async Task<ActionResult> DownloadQuoteDetails(DownloadQuoteDetails.Request request)
+        public async Task<ActionResult> DownloadQuoteDetails(DownloadQuoteDetails.Request request, [FromHeader] string SessionId)
         {
+            request.SessionId = SessionId;
             var response = await Mediator.Send(request).ConfigureAwait(false);
             if (response?.Content?.BinaryContent == null) 
                 return new NotFoundResult(); 

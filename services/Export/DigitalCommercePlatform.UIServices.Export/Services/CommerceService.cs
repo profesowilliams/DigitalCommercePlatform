@@ -7,6 +7,7 @@ using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using Flurl;
 using Microsoft.Extensions.Logging;
 using System;
@@ -25,7 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
         private readonly ILogger<CommerceService> _logger;
         private readonly IUIContext _uiContext;
         private readonly IAppSettings _appSettings;
-        private string _appQuoteServiceUrl;
         private readonly IMapper _mapper;
 
         public CommerceService(IMiddleTierHttpClient middleTierHttpClient,
@@ -41,13 +41,15 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
             _appSettings = appSettings;
         }
 
-        public async Task<QuoteModel> GetQuote(GetQuote.Request request)
+        public async Task<QuoteDetails> GetQuote(GetQuote.Request request)
         {
-            _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            var quoteURL = _appQuoteServiceUrl.BuildQuery(request);
+            string URL = _appSettings.GetSetting("UI.Commerce.Url");
+            URL= URL.AppendPathSegment("/quote/details").BuildQuery(request);
 
-            var getQuoteResponse = await _middleTierHttpClient.GetAsync<IEnumerable<QuoteModel>>(quoteURL);
-            return getQuoteResponse?.FirstOrDefault();
+            IDictionary<string, string> headersFromRequest = new Dictionary<string, string>();
+            headersFromRequest.Add("SessionId", request.SessionId);
+            var getUIQuoteResponse = await _middleTierHttpClient.GetAsync<ResponseBase<Response<QuoteDetails>>>(URL, null, null, headersFromRequest);
+            return getUIQuoteResponse?.Content.Details;
         }
 
         public async Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id)

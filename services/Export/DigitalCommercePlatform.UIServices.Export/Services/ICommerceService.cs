@@ -7,7 +7,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Services
 {
     public interface ICommerceService
     {
-        Task<QuoteModel> GetQuote(GetQuote.Request request);
+        Task<QuoteDetails> GetQuote(GetQuote.Request request);
         Task<Models.Order.Internal.OrderModel> GetOrderByIdAsync(string id);
         Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel OrderDetail);
     }

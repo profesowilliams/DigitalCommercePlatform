@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
             public AncillaryItem[] AncillaryItems { get; set; }
             public LineMarkup[] LineMarkup { get; set; }
             public string Logo { get; set; }
+            public string SessionId { get; set; }
 
             public Request()
             {
@@ -66,16 +67,23 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var getQuoteRequest = new GetQuote.Request(new List<string> { request.QuoteId }, true);
-                var quoteModel = await _commerceService.GetQuote(getQuoteRequest);
+                var getQuoteRequest = new GetQuote.Request(new List<string> { request.QuoteId }, true, request.SessionId);
+                QuoteDetails quoteDetails = await _commerceService.GetQuote(getQuoteRequest);
                 Response response = new();
 
-                if (quoteModel != null)
+                if (quoteDetails != null)
                 {
-                    var quoteDetails = _mapper.Map<QuoteDetails>(quoteModel);
+                    if(quoteDetails.Items!= null)
+                    {
+                        foreach (var item in quoteDetails.Items)
+                        {
+                            decimal? extendedPrice = item.Quantity * item.UnitPrice;
+                            item.ExtendedPrice = extendedPrice.ToString();
+                        }
+                    }
                     quoteDetails.Request = request;
                     var binaryContentXls = await _documentGenerator.XlsGenerate(quoteDetails);
-                    DownloadableFile file = new (binaryContentXls, request.QuoteId + ".xls", mimeType);
+                    DownloadableFile file = new(binaryContentXls, request.QuoteId + ".xls", mimeType);
                     response.BinaryContent = file.BinaryContent;
                     response.MimeType = file.MimeType;
                 }

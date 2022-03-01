@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(expected);
 
             DownloadQuoteDetails.Request criteria = new();
-            var result = await _controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadQuoteDetails(criteria,"Session").ConfigureAwait(false);
 
             result.Should().BeOfType<FileContentResult>();
         }
@@ -82,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Tests.Controller
                    .ReturnsAsync(response);
 
             DownloadQuoteDetails.Request criteria = new();
-            var result = await _controller.DownloadQuoteDetails(criteria).ConfigureAwait(false);
+            var result = await _controller.DownloadQuoteDetails(criteria,"session").ConfigureAwait(false);
 
             result.Should().BeOfType<NotFoundResult>();
         }
