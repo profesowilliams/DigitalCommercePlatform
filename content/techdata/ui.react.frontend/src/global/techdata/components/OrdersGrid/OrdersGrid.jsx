@@ -399,6 +399,15 @@ function OrdersGrid(props) {
     }
     
     const handleOnSearchRequest = (query) => {
+        const queryStringId = query.queryString.split("&").filter(item => item.includes("id="));
+
+        if (queryStringId && queryStringId.length > 0) {
+            const id = queryStringId[0].split("=")[1];
+
+            if (id && id.trim().length > 0) {
+                filteredOrderId.current = id;
+            }
+        }
         filteringExtension.onQueryChanged(query);
         analyticModel.current = query.analyticsData;
     };
