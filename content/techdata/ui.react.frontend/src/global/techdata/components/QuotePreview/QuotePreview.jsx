@@ -376,9 +376,12 @@ const [flagDeal, setFlagDeal] = useState(false);
             companyInfoChange={companyInfoChange}
             flagDeal={flagDeal}
           />
-          <div className="cmp-quote-preview__note">
-            <QuotePreviewNote note={componentProp.note} />
-          </div>
+          {
+            componentProp.note.enableNoteSection === 'true' &&
+              (<div className="cmp-quote-preview__note">
+                <QuotePreviewNote note={componentProp.note} />
+              </div>
+          )}
           <div className="cmp-quote-preview__lines">
             <QuotePreviewGrid
               isAllowedQuantityIncrease={isAllowedQuantityIncrease(quoteDetails)}

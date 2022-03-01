@@ -453,6 +453,15 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
+                                            <enableNoteSection
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Enable Note Section"
+                                                fieldLabel="Enable Note Section"
+                                                text="Enable Note Section"
+                                                name="./enableNoteSection"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
                                             <noteLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

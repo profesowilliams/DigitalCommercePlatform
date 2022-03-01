@@ -44,6 +44,10 @@ use(['../common/utils.js'], function (utils) {
         noteGrid["headerLabel"] = properties["noteLabel"];
     }
 
+    if (properties && properties["enableNoteSection"]) {
+            noteGrid["enableNoteSection"] = properties["enableNoteSection"];
+        }
+
     if (properties && properties["setupRequiredLabel"]) {
         noteGrid["setupRequiredLabel"] = properties["setupRequiredLabel"];
     }
