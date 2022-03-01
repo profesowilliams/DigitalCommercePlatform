@@ -4,7 +4,7 @@ import { pushEvent } from "../../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
   ADOBE_DATA_LAYER_LINK_TYPE,
-  ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY
+  ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY
 } from "../../../../../utils/constants";
 
 function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl }) {
@@ -34,7 +34,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
       {
         name: line.displayName,
         type: ADOBE_DATA_LAYER_LINK_TYPE,
-        category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
+        category: ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
       },
       {
         products: {
