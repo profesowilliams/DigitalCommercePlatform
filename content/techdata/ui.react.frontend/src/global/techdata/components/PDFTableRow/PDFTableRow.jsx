@@ -2,7 +2,7 @@ import React from "react";
 import PDFTableCell from "../PDFTableCell/PDFTableCell";
 import PDFStyles from "../PDFWindow/PDFStyles";
 import { Image, View } from '@react-pdf/renderer';
-import { getBase64FromUrl } from "../../../../utils/utils";
+import { formatPriceNumber, getBase64FromUrl } from "../../../../utils/utils";
 
 const styles = PDFStyles;
 const idStyle = {...styles.tableCell, width:'5%', textAlign:'center'};
@@ -46,14 +46,18 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
         );
     }
 
-    const CheckBoxFields = () => {        
+    const CheckBoxFields = () => {
+        const extraOptionsFormater = {
+            style: 'currency',
+            currency: 'USD'
+        };        
         return <>
             {flags && Object.keys(flags).length > 0 ? (
                 <>  
                     {flags.msrpLabel === true ? (
                         <PDFTableCell 
                             header={header}
-                            cellItem={quoteItem.msrp ? quoteItem.msrp : quoteItem.msrpLabel}
+                            cellItem={quoteItem.unitListPrice ? formatPriceNumber(quoteItem.unitListPrice, extraOptionsFormater) : quoteItem.msrpLabel}
                             cellWidth={"15%"}
                             type={"string"}
                             cellStyle={msrpStyle}
@@ -63,7 +67,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
                     {flags.manufacturerLabel === true ? (
                         <PDFTableCell 
                             header={header}
-                            cellItem={quoteItem.manufacturer ? quoteItem.manufacturer : quoteItem.manufacturerLabel}
+                            cellItem={quoteItem.mfrNumber ? quoteItem.mfrNumber  : quoteItem.manufacturerLabel}
                             cellWidth={"15%"}
                             type={"string"}
                             cellStyle={manufacturerStyle}
@@ -74,7 +78,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
                     {flags.partNumberTDLabel === true ? (
                         <PDFTableCell 
                             header={header}
-                            cellItem={quoteItem.vendorPartNo ? quoteItem.vendorPartNo : quoteItem.partNumberTDLabel}
+                            cellItem={quoteItem.tdNumber ? quoteItem.tdNumber : quoteItem.partNumberTDLabel}
                             cellWidth={"15%"}
                             type={"string"}
                             cellStyle={vendorPartNoStyle}

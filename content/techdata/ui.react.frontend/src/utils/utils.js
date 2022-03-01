@@ -235,7 +235,7 @@ export const getDateValue = (date) => {
  * @param {Object} extraOptions 
  * @returns 
  */
-export const formatPriceNumber = (value, extraOptions = {}) => new Intl.NumberFormat('en-US', extraOptions).format(value);
+export const formatPriceNumber = (value, extraOptions = {}) => new Intl.NumberFormat('en-US', extraOptions).format(typeof value === 'number' ? value : parseFloat(value));
 
 const getDateNumber = (dateValue) => Number(
   `${dateValue.getFullYear()}${zeroPad(dateValue.getMonth() + 1, 2)}${zeroPad(dateValue.getDate(), 2)}`);
