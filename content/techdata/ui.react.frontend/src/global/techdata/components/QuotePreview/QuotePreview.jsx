@@ -264,6 +264,8 @@ function QuotePreview(props) {
     }
   };
 
+const [flagDeal, setFlagDeal] = useState(false);
+
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => {
       setDealApplyAnalytics(generalInformation);
@@ -279,10 +281,12 @@ function QuotePreview(props) {
       newGeneralDetails.endUser[0] = newGeneralDetails.endUser.length > 0 ? newGeneralDetails.endUser[0] : {};
 
       if(generalInformation.deal?.endUserName
-        && generalInformation.deal.endUserName.trim().length > 0) {
+        && generalInformation.deal.endUserName.trim().length > 0) {         
         newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
       }
-
+      if (Object.keys(generalInformation.deal).length > 0) {
+        setFlagDeal(true)
+      }
       newGeneralDetails.attributes = newGeneralDetails.attributes || [];
       let dealIdAttribute = newGeneralDetails.attributes.filter((attribute) => attribute.name.toUpperCase() === DEAL_ATTRIBUTE_FIELDNAME);
 
@@ -370,6 +374,7 @@ function QuotePreview(props) {
             endUserInfoChange={endUserInfoChange}
             generalInfoChange={generalInfoChange}
             companyInfoChange={companyInfoChange}
+            flagDeal={flagDeal}
           />
           <div className="cmp-quote-preview__note">
             <QuotePreviewNote note={componentProp.note} />

@@ -4,7 +4,7 @@ import Button from '../../Widgets/Button';
 import { validateRequiredEnduserFields } from "../QuoteTools";
 import { pushEvent } from "../../../../../utils/dataLayerUtils";
 
-function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
+function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal}) {
     endUser = endUser && endUser[0];
     const initialState = {
         companyName: endUser?.companyName || '',
@@ -27,8 +27,10 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
     });
 
     const handleEditModeChange = () => {
+      if (!flagDeal) {
         handleEndUserAnalytics();
         setEditMode(prevEditMode => !prevEditMode);
+      }
     };
 
     const handleEndUserAnalytics = () => {
@@ -82,14 +84,14 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing}) {
       <div className="cmp-qp__enduser-info">
         <p
           onClick={handleEditModeChange}
-          className="cmp-qp__enduser-info--title"
+          className={!flagDeal ? "cmp-qp__enduser-info--title" : 'cmp-qp__enduser-info--title-nodeal'}
         >
           {info.endUserHeaderLabel}
         </p>
 
         {!editMode && (
-          <>          
-            {isEndUserMissing &&
+          <>   
+            {!flagDeal && 
                 <span className="errorEndUser">
                     Please fill all fields
                 </span>

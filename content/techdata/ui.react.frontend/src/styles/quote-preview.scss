@@ -180,6 +180,7 @@
     }
 }
 
+
 .cmp-qp__company-info, .cmp-qp__general-info, .cmp-qp__enduser-info {
     &--title {
         color: $brand-blue;
@@ -195,6 +196,14 @@
             font-family: 'Font Awesome 5 Free';
             color: $brand-light-blue-icon;
         }
+    }
+    &--title-nodeal {
+            color: $brand-blue;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 19px;
+            position: relative;
+            cursor: default;
     }
     &--sub-title {
         color: $brand-text-gray;
