@@ -30,7 +30,7 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
     const headerItems = {
         "id" : "ID",
         "description" : "Description",
-        "unitListPriceFormatted" : "Unit Price",
+        "unitPriceFormatted" : "Unit Price",
         "quantity": "Quantity",
         "totalPriceFormatted":"Total",
         ...extraOptions

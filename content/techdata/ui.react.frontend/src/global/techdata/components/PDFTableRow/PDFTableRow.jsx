@@ -16,7 +16,6 @@ const textStyle = styles.cellText;
 const msrpStyle = {...styles.tableCell,width:'12%', wordBreak: 'break-all'};
 const imageStyle = {...styles.tableCell,width:'15%', height:'8vh', wordBreak: 'break-all'};
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => {
-    
     const ImageValidation = ({quoteItem}) => {
         /**@type {string} */
         let urlImage = quoteItem?.urlProductImage;
@@ -166,7 +165,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
             />
             <PDFTableCell
                 header={header}
-                cellItem={currencySymbol + quoteItem.unitListPriceFormatted}
+                cellItem={currencySymbol + quoteItem.unitPriceFormatted}
                 type={"currency"}
                 cellWidth="15%"
                 cellStyle={unitPriceStyle}
