@@ -82,12 +82,9 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
                   >
                     {line.serialCellLabel ? line.serialCellLabel : "view"}
                   </a>
-                ) : (
-                  <div>
-                    {line.serialCellNotFoundMessage
+                ) : (line.serialCellNotFoundMessage
                       ? line.serialCellNotFoundMessage
-                      : "N/A"}
-                  </div>
+                      : "N/A"
                 )}
               </span>
               <span>
