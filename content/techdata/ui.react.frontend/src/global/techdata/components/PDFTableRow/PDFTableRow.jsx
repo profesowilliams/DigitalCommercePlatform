@@ -96,8 +96,6 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
     }
 
     if(isRenewals) {
-        console.log('is renewals', quoteItem);
-        console.log('header', quoteItem.name ,header);
         return (
             <View style={header ? styles.tableHeader : styles.tableRow}>
                 <PDFTableCell
@@ -157,7 +155,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
             />
             <PDFTableCell 
                 header={header}
-                cellItem={quoteItem.description}
+                cellItem={quoteItem.displayName}
                 cellWidth={flags && Object.keys(flags).length > 0 ? "45%" :"55%"}
                 type={"string"}
                 cellStyle={descriptionStyle}
