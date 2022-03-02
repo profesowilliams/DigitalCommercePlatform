@@ -4151,7 +4151,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   manufacturerId: null,
                   localManufacturer: null,
                   classification: null,
-                  family: null,
+                  family: "Prepaid Maintenance",
                 },
                 {
                   type: "MANUFACTURER",
@@ -4202,7 +4202,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               dealRegNumber: null,
               reinstatementFeeCost: null,
               reinstatementFeeSell: null,
-              serialNumbers: [],
+              serialNumbers: ["123testserial", "456testserial"],
               instance: "188294854",
               discounts: [],
               contract: {

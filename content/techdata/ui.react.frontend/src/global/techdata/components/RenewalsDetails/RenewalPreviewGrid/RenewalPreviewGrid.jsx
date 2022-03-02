@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Grid from "../../Grid/Grid";
+import Modal from "../../Modal/Modal";
 import { downloadClicked } from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
 
-function GridHeader({ gridProps, data }) {
+function GridHeader({ gridProps, data }) {  
   const downloadPDF = () => {
     downloadClicked(
       data,
@@ -70,6 +71,7 @@ function Note() {
 }
 
 function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
+  const [modal, setModal] = useState(null);
   const gridData = data.items ?? [];
   const gridConfig = {
     ...gridProps,
@@ -77,12 +79,18 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     paginationStyle: "none",
   };
 
+  columnDefs[1] = {
+    ...columnDefs[1],
+    valueGetter: ({ data }) => data.product.find(p => p.family).family
+  };
+
   columnDefs[2] = {
     ...columnDefs[2],
     cellHeight: () => 80,
     cellRenderer: ({ data }) => <RenewalProductLinesItemInformation
                 line={data}
-                shopDomainPage={shopDomainPage}/>,
+                shopDomainPage={shopDomainPage}
+                invokeModal={invokeModal}/>,
   };
 
   /*
@@ -90,6 +98,10 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     original state is preserved in gridData.
   */
   const mutableGridData = JSON.parse(JSON.stringify(gridData));
+
+  function invokeModal(modal) {
+    setModal(modal);
+  }
 
   return (
     <div className="cmp-product-lines-grid">
@@ -103,6 +115,14 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
         <GridSubTotal data={data}/>
         <Note />
       </section>
+      {modal && <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={() => setModal(null)}
+      ></Modal>}
     </div>
   );
 }

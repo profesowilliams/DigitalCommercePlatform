@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
+import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 
-function RenewalProductLinesItemInformation({ line, shopDomainPage = "" }) {
+function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeModal }) {
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.tdNumber) {
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -58,7 +59,36 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "" }) {
 
               <span>
                 <b>Serial №: </b>
-                {line.vendorPartNo || " N/A "}
+                {line.serialNumbers && line.serialNumbers.length ? (
+                  <a
+                    className="cmp-grid-url-underlined"
+                    href="#"
+                    target="_blank"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      invokeModal({
+                        content: (
+                          <OrderDetailsSerialNumbers
+                            data={line.serialNumbers}
+                          ></OrderDetailsSerialNumbers>
+                        ),
+                        properties: {
+                          title: line.serialModal
+                            ? line.serialModal
+                            : "Serial Numbers",
+                        },
+                      });
+                    }}
+                  >
+                    {line.serialCellLabel ? line.serialCellLabel : "view"}
+                  </a>
+                ) : (
+                  <div>
+                    {line.serialCellNotFoundMessage
+                      ? line.serialCellNotFoundMessage
+                      : "N/A"}
+                  </div>
+                )}
               </span>
               <span>
                 <b>Instance: </b>
