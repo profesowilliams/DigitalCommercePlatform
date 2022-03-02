@@ -143,8 +143,18 @@ function QuotePreview(props) {
   ));
 
   const onGridUpdate = (data, didQuantitiesChange) => {
-    let subTotal = data.reduce((subTotal, {extendedPrice}) => subTotal + extendedPrice, 0);
-    subTotal = Math.round((subTotal + Number.EPSILON) * 100) / 100
+      let subTotal = 0.00;
+      let totalQuoteValue = data.reduce((totalQuoteValue, { unitListPrice, quantity, children }) => {
+          if (quantity > 0)
+              subTotal = Number(subTotal) + Number(quantity * unitListPrice);
+
+          totalQuoteValue = children.reduce((totalQuoteValue, { unitListPrice, quantity }) => {
+              if (quantity > 0)
+                  subTotal = Number(subTotal) + Number(quantity * unitListPrice);
+          }, 0);
+      }, 0);
+
+      subTotal = Math.round((subTotal + Number.EPSILON) * 100) / 100;
 
     setQuoteDetails((previousQuoteDetails) => ({
       ...previousQuoteDetails,
