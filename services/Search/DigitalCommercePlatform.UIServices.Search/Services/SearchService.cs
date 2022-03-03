@@ -36,8 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     {
         private const string CNETAttributes = "CNETAttributes";
         private const string General = "General";
-        private const string TopRefinements = "TopRefinements";
-        private const string NotAvailableLabel = "NALabel";
+        private const string TopRefinements = "TopRefinements";        
         private readonly string _appProductUrl;
         private readonly string _appSearchUrl;
         private readonly IUIContext _context;
@@ -50,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly List<string> _refinementsGroupThatShouldBeLocalized;
         private readonly ISiteSettings _siteSettings;
         private readonly ITranslationService _translationService;
-        private readonly ICultureService _cultureService;
+        private readonly ICultureService _cultureService;        
         private readonly string[] Indicators = { FreeShipping, Virtual };
 
         public SearchService(SearchServiceArgs args)
@@ -64,13 +63,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _mapper = args.Mapper;
 
             _translationService = args.TranslationService;
-            _cultureService = args.cultureService;
+            _cultureService = args.cultureService;            
 
             _refinementsGroupThatShouldBeLocalized = args.SiteSettings.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized");
 
             _translationService.FetchTranslations("Search.UI.InternalRefinements", ref _internalRefinementsTranslations);
             _translationService.FetchTranslations("Search.UI.Indicators", ref _indicatorsTranslations);
-            _translationService.FetchTranslations("Search.UI.PriceLabel", ref _priceLabelTranslations);
+            _translationService.FetchTranslations(TranslationsConst.PriceLabel, ref _priceLabelTranslations);
         }
 
         public async Task<List<RefinementGroupResponseModel>> GetAdvancedRefinements(SearchRequestDto request)
@@ -219,7 +218,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
         private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
         {
-            var notAvailableLabelText = _translationService.Translate(_priceLabelTranslations, NotAvailableLabel);
+            var notAvailableLabelText = _translationService.Translate(_priceLabelTranslations, TranslationsConst.NALabel);
 
             foreach (var product in fullSearchResponse.Products)
             {
@@ -262,7 +261,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 BasePrice = appSearchProduct.Price.BasePrice.Format(),
                 BestPrice = appSearchProduct.Price.BestPrice.Format(),
                 BestPriceExpiration = appSearchProduct.Price.BestPriceExpiration.Format(),
-                ListPrice = appSearchProduct.Price.ListPrice.IsAvailable() ? appSearchProduct.Price.ListPrice.Value.Format() : notAvailableLabelText,
+                ListPrice = FormatHelper.ListPriceFormat(appSearchProduct.Price.ListPrice, notAvailableLabelText, appSearchProduct.Price.ListPriceAvailable),
                 PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice),
                 BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount
             };

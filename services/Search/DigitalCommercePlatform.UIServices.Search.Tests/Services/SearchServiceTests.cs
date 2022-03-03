@@ -34,8 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly SearchService _searchService;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Mock<ITranslationService> _translationServiceMock;
-        private readonly Mock<ICultureService> _cultureServiceMock;
-
+        private readonly Mock<ICultureService> _cultureServiceMock;        
 
         public SearchServiceTests()
         {
@@ -53,8 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
 
             _translationServiceMock = new Mock<ITranslationService>();
-            _cultureServiceMock = new Mock<ICultureService>();
-
+            _cultureServiceMock = new Mock<ICultureService>();            
 
             _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _siteSettingsMock.Object, mapper, _translationServiceMock.Object, _cultureServiceMock.Object));
         }
@@ -126,7 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var contextMock = new Mock<IUIContext>();
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
             var translationServiceMock = new Mock<ITranslationService>();
-            var profileServiceMock = new Mock<IProfileService>();
+            var profileServiceMock = new Mock<IProfileService>();            
 
             var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
             middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
@@ -136,6 +134,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object, 
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureService));
+            
 
             //Act
             var result = await searchService.GetFullSearchProductData(request, true);
@@ -188,16 +187,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
 
             var profileServiceMock = new Mock<IProfileService>();
-            var cultureServiceMock = new Mock<ICultureService>();
-
+            var cultureServiceMock = new Mock<ICultureService>();            
 
             var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
             middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
-
+                .Returns(Task.FromResult(appResponse));            
 
             var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object,
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureServiceMock.Object));
+
 
             //Act
             var result = await searchService.GetFullSearchProductData(new SearchRequestDto(), true);

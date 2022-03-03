@@ -4,6 +4,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
 using DigitalFoundation.Common.Providers.Settings;
@@ -13,6 +14,9 @@ using FluentValidation.TestHelper;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,6 +30,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly FakeLogger<ExportSearch.Handler> _logger;
         private readonly ExportSearch.Handler _sut;
+        private readonly Mock<ITranslationService> _translationMock;        
 
         public ExportSearchTests()
         {
@@ -36,8 +41,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _siteSettingsMock = new Mock<ISiteSettings>();
             _siteSettingsMock.Setup(x => x.GetSetting<int>("Search.UI.Export.MaxProducts")).Returns(100);
             _logger = new FakeLogger<ExportSearch.Handler>();
+            _translationMock = new();            
 
-            _sut = new ExportSearch.Handler(_httpClientMock.Object, _mapperMock.Object, _appsettingsMock.Object, _logger, _siteSettingsMock.Object);
+            _sut = new ExportSearch.Handler(_httpClientMock.Object, _mapperMock.Object, _appsettingsMock.Object, _logger, _siteSettingsMock.Object, _translationMock.Object);
         }
 
         [Theory]
@@ -141,6 +147,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public async Task Handle_ProperlyMapData(SearchResponseDto searchResponseDto, IEnumerable<ExportResponseModel> expectedResults, ExportSearch.Request request, SearchRequestDto searchRequestDto)
         {
             //arrange
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
             searchRequestDto.PageSize = 100;
             _mapperMock
                 .Setup(x => x.Map<SearchRequestDto>(request.Data))
@@ -148,7 +156,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
 
             _httpClientMock
                 .Setup(x => x.PostAsync<SearchResponseDto>("http://appsearch/Product", null, searchRequestDto, null, null))
-                .ReturnsAsync(searchResponseDto);
+                .ReturnsAsync(searchResponseDto);            
 
             //act
             var actual = await _sut.Handle(request, default);
@@ -210,8 +218,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                             TotalStock=5,
                             ProductStatus="Active",
                             Description="longDescription",
-                            ListPrice=20,
-                            BestPrice=15,
+                            ListPrice="$20.00",
+                            BestPrice="$15.00",
                             BestPriceExpiration=new DateTime(2100,1,1),
                             PromoIndicator="YES",
                             MaximumResults=true
@@ -339,7 +347,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                             ProductStatus=null,
                             Description="shortDescriptin",
                             ListPrice=null,
-                            BestPrice=15,
+                            BestPrice="$15.00",
                             BestPriceExpiration=null,
                             PromoIndicator="NO",
                             MaximumResults=false
@@ -381,7 +389,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                             ProductStatus=null,
                             Description="shortDescriptin",
                             ListPrice=null,
-                            BestPrice=15,
+                            BestPrice="$15.00",
                             BestPriceExpiration=null,
                             PromoIndicator="NO",
                             MaximumResults=false

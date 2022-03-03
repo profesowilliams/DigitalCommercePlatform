@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DigitalCommercePlatform.UIServices.Search.Services;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 
 namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 {
@@ -26,24 +28,35 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
         public class Handler : IRequestHandler<Request, IEnumerable<ExportResponseModel>>
         {
-            private readonly int _maxResults;
+            private readonly int _maxResults;            
             private const string DisplayStatus = "DisplayStatus";
             private readonly IMiddleTierHttpClient _httpClient;
             private readonly IMapper _mapper;
             private readonly ILogger<Handler> _logger;
             private readonly string _appSearchUrl;
+            private readonly ITranslationService _translationService;
+            private readonly Dictionary<string, string> _priceLabelTranslations = null;
 
-            public Handler(IMiddleTierHttpClient httpClient, IMapper mapper, IAppSettings appSettings, ILogger<Handler> logger, ISiteSettings siteSettings)
+            public Handler(
+                IMiddleTierHttpClient httpClient,
+                IMapper mapper,
+                IAppSettings appSettings,
+                ILogger<Handler> logger,
+                ISiteSettings siteSettings,
+                ITranslationService translationService)
             {
                 _httpClient = httpClient;
                 _mapper = mapper;
                 _logger = logger;
                 _appSearchUrl = appSettings.GetSetting("Search.App.Url");
                 _maxResults = siteSettings.GetSetting<int>("Search.UI.Export.MaxProducts");
+                _translationService = translationService;
+                _translationService.FetchTranslations(TranslationsConst.PriceLabel, ref _priceLabelTranslations);                
             }
 
             public async Task<IEnumerable<ExportResponseModel>> Handle(Request request, CancellationToken cancellationToken)
             {
+                var notAvailableLabelText = _translationService.Translate(_priceLabelTranslations, TranslationsConst.NALabel);
                 var requestDto = _mapper.Map<SearchRequestDto>(request.Data);
                 requestDto.PageSize = _maxResults;
 
@@ -76,8 +89,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                         TotalStock = p.Stock?.Total ?? 0,
                         ProductStatus = p.Indicators?.FirstOrDefault(x => x.Type == DisplayStatus)?.Value,
                         Description = !string.IsNullOrWhiteSpace(p.LongDescription) ? p.LongDescription : !string.IsNullOrWhiteSpace(p.ShortDescription) ? p.ShortDescription : p.Name,
-                        ListPrice = p.Price?.ListPrice,
-                        BestPrice = p.Price?.BestPrice,
+                        ListPrice = p.Price == null ? notAvailableLabelText : FormatHelper.ListPriceFormat(p.Price?.ListPrice, notAvailableLabelText, p.Price.ListPriceAvailable),
+                        BestPrice = p.Price?.BestPrice.Format(),
                         BestPriceExpiration = p.Price?.BestPriceExpiration,
                         PromoIndicator = p.Price != null && p.Price.BasePrice != null && p.Price.BestPrice != null && p.Price.BestPrice != p.Price.BasePrice ? "YES" : "NO",
                         MaximumResults = resultDto.TotalResults <= _maxResults

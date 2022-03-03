@@ -20,9 +20,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
 
         public string Description { get; set; }
 
-        public decimal? ListPrice { get; set; }
+        public string ListPrice { get; set; }
 
-        public decimal? BestPrice { get; set; }
+        public string BestPrice { get; set; }
 
         public DateTime? BestPriceExpiration { get; set; }
 

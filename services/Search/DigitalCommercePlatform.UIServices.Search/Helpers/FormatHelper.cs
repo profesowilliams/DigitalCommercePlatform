@@ -53,5 +53,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Helpers
         {
             return input.HasValue && input.Value != 0;
         }
+
+        public static string ListPriceFormat(decimal? listPrice, string naLabel, bool listPriceAvailable)
+        {
+            if (listPrice.HasValue && listPrice != 0)
+                return listPrice.Value.Format();
+
+            return listPriceAvailable ? 0m.Format() : naLabel;
+        }
     }
 }
