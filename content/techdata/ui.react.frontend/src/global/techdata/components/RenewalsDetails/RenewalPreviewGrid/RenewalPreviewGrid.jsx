@@ -81,7 +81,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
 
   columnDefs[1] = {
     ...columnDefs[1],
-    valueGetter: ({ data }) => data.product.find(p => p.family).family
+    valueGetter: ({ data }) => data.product.find(p => p.family)?.family ?? 'N/A'
   };
 
   columnDefs[2] = {
