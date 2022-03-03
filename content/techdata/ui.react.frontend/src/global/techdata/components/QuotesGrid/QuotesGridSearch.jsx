@@ -3,7 +3,12 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, validateDatePicker, isQueryValid, setTimestamps, isNotEmptyValue } from "../../../../utils/utils";
+import {
+  formateDatePicker,
+  validateDatePicker,
+  isQueryValid, 
+  isNotEmptyValue,
+  validateDatesForAnalytics } from "../../../../utils/utils";
 
 function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const _query = useRef({});
@@ -102,8 +107,8 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
       searchTerm: query.keyword?.key && query.keyword?.value ? query.keyword?.value : '',
       searchOption: isNotEmptyValue(query.keyword?.value),
       vendorFilter: query.manufacturer?.value === 'All Vendors' ? false : true,
-      fromDate: isNotEmptyValue(query.from?.key),
-      toDate: isNotEmptyValue(query.to?.key)
+      fromDate: validateDatesForAnalytics(query.from),
+      toDate: validateDatesForAnalytics(query.to)
     }
   }
 

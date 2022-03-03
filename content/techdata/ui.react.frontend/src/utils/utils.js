@@ -237,6 +237,11 @@ export const getDateValue = (date) => {
  */
 export const formatPriceNumber = (value, extraOptions = {}) => new Intl.NumberFormat('en-US', extraOptions).format(typeof value === 'number' ? value : parseFloat(value));
 
+/***
+   * validate if the date value is by defualt or setting by the user
+   */
+export const validateDatesForAnalytics = (dateQuery) => dateQuery?.isDefault ? false : isNotEmptyValue(dateQuery.key);
+
 const getDateNumber = (dateValue) => Number(
   `${dateValue.getFullYear()}${zeroPad(dateValue.getMonth() + 1, 2)}${zeroPad(dateValue.getDate(), 2)}`);
 

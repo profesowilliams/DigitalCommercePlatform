@@ -12,7 +12,6 @@ function SimpleDatePicker({
 	minDate,
 	maxDate
 }) {
-    
 	const [pickedDate, setPickedDate] = useState(null);
 	const pickerRef = useRef(null);
 
@@ -25,12 +24,12 @@ function SimpleDatePicker({
 				dateOneMounthAgo.setDate(dateOneMounthAgo.getDate() - 31)
 				setPickedDate(dateOneMounthAgo);
 				const newFrom = getNormalizedDate(dateOneMounthAgo);
-				onSelectedDateChanged({ key: 'from', value: newFrom });
+				onSelectedDateChanged({ key: 'from', value: newFrom, isDefault: true });
 			} else {
 				const now = new Date();
 				setPickedDate(now);
 				const newTo = getNormalizedDate(now);
-				onSelectedDateChanged({ key: 'to', value: newTo });
+				onSelectedDateChanged({ key: 'to', value: newTo, isDefault: true });
 			}
 		}
 		if (!defaultValue) {

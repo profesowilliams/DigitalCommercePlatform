@@ -9,6 +9,7 @@ import {
   validateDatePicker,
   isQueryValid,
   isNotEmptyValue,
+  validateDatesForAnalytics,
 } from "../../../../utils/utils";
 import { 
   ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY,
@@ -70,7 +71,6 @@ function OrdersGridSearch({
    * Effect used to set the default value for the analytics key
    */
   useEffect(() => {
-    // setDefaultAllLicense(componentProp?.);
     setDefaultAllMethod(isNotEmptyValue(componentProp?.methodsDropdown?.items) ? componentProp?.methodsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_METHODS_KEY);
     setDefaultAllVendor(isNotEmptyValue(componentProp?.vendorsDropdown?.items) ? componentProp?.vendorsDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_VENDORS_KEY);
     setDefaultAllLine(isNotEmptyValue(componentProp?.linesDropdown?.items) ? componentProp?.linesDropdown?.items[0].key : ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY);
@@ -133,8 +133,8 @@ function OrdersGridSearch({
       vendorFilter: isNotEmptyValue(query.manufacturer?.key) && !isEqual(query.manufacturer?.key, defaultAllVendor),
       license: isNotEmptyValue(query.license?.key) && !isEqual(query.license?.key, defaultAllLine),
       method: isNotEmptyValue(query.method?.key) && !isEqual(query.method?.key, defaultAllMethod),
-      fromDate: isNotEmptyValue(query.from?.key),
-      toDate: isNotEmptyValue(query.to?.key),
+      fromDate: validateDatesForAnalytics(query.from),
+      toDate: validateDatesForAnalytics(query.to),
     };
   };
 

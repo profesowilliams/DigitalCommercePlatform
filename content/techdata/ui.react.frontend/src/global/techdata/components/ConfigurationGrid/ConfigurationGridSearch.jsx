@@ -3,7 +3,13 @@ import QueryInput from "../Widgets/QueryInput";
 import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
-import { formateDatePicker, isNotEmptyValue, validateDatePicker, isQueryValid } from "../../../../utils/utils";
+import {
+  formateDatePicker,
+  isNotEmptyValue,
+  validateDatePicker,
+  isQueryValid,
+  validateDatesForAnalytics
+} from "../../../../utils/utils";
 import { ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY } from "../../../../utils/constants";
 
 function ConfigurationGridSearch({
@@ -66,8 +72,8 @@ function ConfigurationGridSearch({
       searchTerm: validateSearchTerm(query.keyword?.key, query.keyword?.value),
       searchOption: isNotEmptyValue(query.keyword?.value),
       configFilter: validateConfigFilter(query?.configurations?.key),
-      fromDate: isNotEmptyValue(query.from?.key),
-      toDate: isNotEmptyValue(query.to?.key),
+      fromDate: validateDatesForAnalytics(query.from),
+      toDate: validateDatesForAnalytics(query.to),
     };
   };
 
