@@ -5,6 +5,7 @@ using DigitalCommercePlatform.UIServices.Export.Models.Renewal.Internal;
 using OfficeOpenXml;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
@@ -76,11 +77,11 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
             BoldSectionHeader(startRow, startCol, "Total");
 
-            LabelValue(startRow + 1, startCol, "Subtotal", "?" + Model.Price.ToString());
-            LabelValue(startRow + 2, startCol, "Tax", "?" + "-");
-            LabelValue(startRow + 3, startCol, "Freight", "?" + "-");
-            LabelValue(startRow + 4, startCol, "Other fees", "?" + "-");
-            LabelValue(startRow + 5, startCol, "Total", "?" + Model.Price.ToString());
+            LabelValue(startRow + 1, startCol, "Subtotal", Model.Price.ToString());
+            LabelValue(startRow + 2, startCol, "Tax", "-");
+            LabelValue(startRow + 3, startCol, "Freight", "-");
+            LabelValue(startRow + 4, startCol, "Other fees", "-");
+            LabelValue(startRow + 5, startCol, "Total", Model.Price.ToString());
 
             LabelValue(startRow + 7, startCol, "Prices displayed in USD", "");
             StyleTotalSection(startRow, startCol);
@@ -111,13 +112,20 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         private void LineDetails(int startRow, int i, ItemModel item)
         {
             Worksheet.Cells[startRow + i, _col].Value = i;
-            Worksheet.Cells[startRow + i, _col + 1].Value = item.Product[0].Family;
-            Worksheet.Cells[startRow + i, _col + 2].Value = "?";
+            var family = item.Product?.Count > 0 && item.Product.Any(e => !string.IsNullOrWhiteSpace(e.Family))
+                ? item.Product.First(e => !string.IsNullOrWhiteSpace(e.Family)).Family
+                : "-";
+            Worksheet.Cells[startRow + i, _col + 1].Value = family;
+            Worksheet.Cells[startRow + i, _col + 2].Value = item.Product.FirstOrDefault()?.DisplayName ?? "-";
 
-            var serialNr = item.SerialNumbers?.Count > 0 ? item.SerialNumbers[0] : "-";
-            Worksheet.Cells[startRow + i, _col + 3].Value = serialNr;
+            var serialNrs = item.SerialNumbers?.Count > 0 ? string.Join(",", item.SerialNumbers)  : "-";
+            Worksheet.Cells[startRow + i, _col + 3].Value = serialNrs;
             Worksheet.Cells[startRow + i, _col + 4].Value = item.Instance;
-            Worksheet.Cells[startRow + i, _col + 5].Value = "?";
+
+            var vendorPartNr = item.Product?.Count > 0
+                ? item.Product.First().ManufacturerId
+                : "-";
+            Worksheet.Cells[startRow + i, _col + 5].Value = vendorPartNr;
             Worksheet.Cells[startRow + i, _col + 6].Value = item.Quantity;
             Worksheet.Cells[startRow + i, _col + 7].Value = item.UnitPrice;
             Worksheet.Cells[startRow + i, _col + 8].Value = item.TotalPrice;
@@ -154,13 +162,42 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             BoldSectionHeader(startRow, startCol, "Agreement Information");
 
-            LabelValue(startRow + 1, startCol, "Agreement №", "?");
-            LabelValue(startRow + 2, startCol, "Vendor quote №", "?");
-            LabelValue(startRow + 3, startCol, "Program", "?" + Model.ProgramName);
-            LabelValue(startRow + 4, startCol, "Duration", "?");
-            LabelValue(startRow + 5, startCol, "Support level", "?" + Model.Level);
-            LabelValue(startRow + 6, startCol, "Agreement start-end date", "?");
-            LabelValue(startRow + 7, startCol, "Usage start-end date", "?");
+            var contract = Model.Items.FirstOrDefault(e => e.Contract != null)?.Contract;
+            if (contract != null)
+            {
+                LabelValue(startRow + 1, startCol, "Agreement №", contract.Id);
+                var customerPo = string.IsNullOrWhiteSpace(Model.CustomerPO) ? "-" : Model.CustomerPO;
+                LabelValue(startRow + 2, startCol, "Vendor quote №", customerPo);
+                LabelValue(startRow + 3, startCol, "Program", Model.ProgramName);
+                LabelValue(startRow + 4, startCol, "Duration", contract.Duration);
+                LabelValue(startRow + 5, startCol, "Support level", contract.SupportLevel);
+
+                var newAgreementStartDate = contract.NewAgreementStartDate.HasValue
+                    ? contract.NewAgreementStartDate.Value.ToShortDateString()
+                    : string.Empty;
+                var newAgreementEndDate = contract.NewAgreementEndDate.HasValue
+                    ? contract.NewAgreementEndDate.Value.ToShortDateString()
+                    : string.Empty;
+                LabelValue(startRow + 6, startCol, "Agreement start-end date", $"{newAgreementStartDate} - {newAgreementEndDate}");
+
+                var newUsageStartDate = contract.NewUsagePeriodStartDate.HasValue
+                    ? contract.NewUsagePeriodStartDate.Value.ToShortDateString()
+                    : string.Empty;
+                var newUsageEndDate = contract.NewUsagePeriodEndDate.HasValue
+                    ? contract.NewUsagePeriodEndDate.Value.ToShortDateString()
+                    : string.Empty;
+                LabelValue(startRow + 7, startCol, "Usage start-end date", $"{newUsageStartDate} - {newUsageEndDate}");
+            }
+            else
+            {
+                LabelValue(startRow + 1, startCol, "Agreement №", "-");
+                LabelValue(startRow + 2, startCol, "Vendor quote №", "-");
+                LabelValue(startRow + 3, startCol, "Program", "-");
+                LabelValue(startRow + 4, startCol, "Duration", "-");
+                LabelValue(startRow + 5, startCol, "Support level", "-");
+                LabelValue(startRow + 6, startCol, "Agreement start-end date", "-");
+                LabelValue(startRow + 7, startCol, "Usage start-end date", "-");
+            }
 
             VerticalSegmentLine(startRow, startCol, 7);
 
@@ -171,18 +208,19 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             BoldSectionHeader(startRow, startCol, "End User");
 
-            LabelValue(startRow + 1, startCol, "Company name", "my val");
-            LabelValue(startRow + 2, startCol, "Name", Model.EndUser.Name);
+            var contact = Model.EndUser?.Contact?.Count > 0
+                ? Model.EndUser.Contact[0] : null;
 
-            var addressLines = $"{Model.EndUser.Address.Line1} {Model.EndUser.Address.Line2} {Model.EndUser.Address.Line3}";
+            LabelValue(startRow + 1, startCol, "Company name", Model.EndUser?.NameUpper);
+            LabelValue(startRow + 2, startCol, "Name", contact?.Name);
+
+            var addressLines = $"{Model.EndUser?.Address?.Line1} {Model.EndUser?.Address?.Line2} {Model.EndUser?.Address?.Line3}";
             LabelValue(startRow + 3, startCol, "Address", addressLines);
 
-            var locationData = $"{Model.EndUser.Address.City} {Model.EndUser.Address.State} {Model.EndUser.Address.PostalCode}";
+            var locationData = $"{Model.EndUser?.Address?.City} {Model.EndUser?.Address?.State} {Model.EndUser?.Address?.PostalCode}";
             LabelValue(startRow + 4, startCol, "City, State, Zip code", locationData);
-            LabelValue(startRow + 5, startCol, "Country", Model.EndUser.Address.Country);
-
-            var contact = Model.Reseller.Contact.Count > 0
-                ? Model.Reseller.Contact[0] : null;
+            LabelValue(startRow + 5, startCol, "Country", Model.EndUser?.Address?.Country);
+            
             LabelValue(startRow + 6, startCol, "Phone", contact?.Phone ?? "-");
             LabelValue(startRow + 7, startCol, "Email", contact?.Email ?? "-");
 
@@ -195,7 +233,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             BoldSectionHeader(startRow, startCol, "Reseller");
 
-            LabelValue(startRow + 1, startCol, "Company name", "?");
+            LabelValue(startRow + 1, startCol, "Company name", Model.Reseller.NameUpper);
             LabelValue(startRow + 2, startCol, "Reseller name", Model.Reseller.Name);
 
             var addressLines = $"{Model.Reseller.Address.Line1} {Model.Reseller.Address.Line2} {Model.Reseller.Address.Line3}";
@@ -230,10 +268,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private int BasicInformationSection(int startRow, int startCol)
         {
-            LabelValue(startRow, startCol, "Quote expiry date", "?");
-            LabelValue(startRow + 1, startCol, "Quote due date", Model.DueDate.ToShortDateString());
-            LabelValue(startRow + 2, startCol, "Ref №", "?");
-            LabelValue(startRow + 3, startCol, "End user previous order №", "?");
+            var expiryDate = Model.Expiry == DateTime.MinValue ? "-" : Model.Expiry.ToShortDateString();
+            LabelValue(startRow, startCol, "Quote expiry date", expiryDate);
+            var dueDate = Model.DueDate == DateTime.MinValue ? "-" : Model.DueDate.ToShortDateString();
+            LabelValue(startRow + 1, startCol, "Quote due date", dueDate);
+            LabelValue(startRow + 2, startCol, "Ref №", Model.Source.Id);
+            LabelValue(startRow + 3, startCol, "End user previous order №", "-");
 
             return 4;
         }

@@ -14,5 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models.Renewal.Internal
         public string LocalManufacturer { get; set; }
         public string Classification { get; set; }
         public string Family { get; set; }
+        public string Description { get; set; }
+        public string DisplayName { get; set; }
     }
 }
