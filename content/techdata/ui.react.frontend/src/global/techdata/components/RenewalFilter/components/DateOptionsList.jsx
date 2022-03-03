@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 
 export function DateOptionsList() {
@@ -24,7 +24,7 @@ export function DateOptionsList() {
             {item.label}
           </label>
         </li>
-      ))}    
+      ))}
     </div>
   );
 }

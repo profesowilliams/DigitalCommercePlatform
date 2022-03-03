@@ -678,7 +678,7 @@ $main-datepicker-color: #000c21;
   background: #F6F6F6;
   position: relative;
   display: inline-block;
-  width: 130px;
+  width: 95px;
   vertical-align: middle;
 }
 .DateInput__small {
@@ -692,13 +692,14 @@ $main-datepicker-color: #000c21;
   color: #dbdbdb;
 }
 .DateInput_input {
-  font-weight: 200;
-  font-size: 19px;
-  line-height: 24px;
-  color: #484848;
+  font-weight: normal;
+  color: #555555;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 19px;
   background-color: #fff;
   width: 100%;
-  padding: 11px 11px 9px;
+  padding: 11px 0 9px 0;
   border: 0;
   border-top: 0;
   border-right: 0;
@@ -761,6 +762,7 @@ $main-datepicker-color: #000c21;
 .DateRangePickerInput {
   background-color: #fff;
   display: inline-block;
+  padding-left: 21px;
 }
 .DateRangePickerInput__disabled {
   background: #f2f2f2;
@@ -775,13 +777,12 @@ $main-datepicker-color: #000c21;
 .DateRangePickerInput__block {
   display: block;
 }
-.DateRangePickerInput__showClearDates {
-  padding-right: 30px;
-}
 .DateRangePickerInput_arrow {
   display: inline-block;
   vertical-align: middle;
   color: #484848;
+  margin-right: 15px;
+  margin-left: 15px;
 }
 .DateRangePickerInput_arrow_svg {
   vertical-align: middle;
@@ -800,7 +801,7 @@ $main-datepicker-color: #000c21;
   padding: 10px;
   margin: 0 10px 0 5px;
   position: absolute;
-  right: 0;
+  right: -54px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -820,7 +821,7 @@ $main-datepicker-color: #000c21;
 .DateRangePickerInput_clearDates_svg {
   fill: #82888a;
   height: 12px;
-  width: 15px;
+  width: 19px;
   vertical-align: middle;
 }
 .DateRangePickerInput_clearDates_svg__small {
@@ -861,7 +862,12 @@ $main-datepicker-color: #000c21;
   direction: rtl;
 }
 .DateRangePicker_picker__directionLeft {
-  left: 0;
+  /**
+    Unfortunately the left is controlled via datepicker API and there
+    is no property exposed to control the left direction in the API. Overriding via CSS
+    using !important.
+  */
+  left: 40px !important;
 }
 .DateRangePicker_picker__directionRight {
   right: 0;
