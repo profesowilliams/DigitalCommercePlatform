@@ -137,18 +137,16 @@ function ProductLinesGrid({
    * @param {string} invoiceId 
    * @param {string} orderId 
    */
-  function openInvoicePdf(invoiceId,orderId) {
+  function openInvoicePdf(invoiceId, orderId) {
     const url = downloadInvoicesEndpoint || 'nourl';
     const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
     const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
     requestFileBlob(invoiceUrl,'',{redirect:true});
   }
 
-  const handlerInvoiceClick = (data) => {
-    const orderID = data.id;
-    const invoiceId = data.invoices[0]?.id;
-    handlerAnalyticInvoiceClick(data)
-    openInvoicePdf(invoiceId, orderID);
+  const handlerInvoiceClick = (lineData) => {
+    handlerAnalyticInvoiceClick(lineData)
+    openInvoicePdf(lineData.invoices[0]?.id, data?.orderNumber);
   };
 
   /**
