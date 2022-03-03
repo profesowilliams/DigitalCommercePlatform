@@ -90,6 +90,7 @@ function QuotePreview(props) {
       if (cannotCreateQuote(quoteDetailsResponse)) {
         showCannotCreateQuoteForDeal();
       }
+      setFlagDeal(!isDealConfiguration(quoteDetailsResponse.source));
     }
   }, [apiResponse]);
 
@@ -294,9 +295,7 @@ const [flagDeal, setFlagDeal] = useState(false);
         && generalInformation.deal.endUserName.trim().length > 0) {         
         newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
       }
-      if (Object.keys(generalInformation.deal).length > 0) {
-        setFlagDeal(true)
-      }
+      
       newGeneralDetails.attributes = newGeneralDetails.attributes || [];
       let dealIdAttribute = newGeneralDetails.attributes.filter((attribute) => attribute.name.toUpperCase() === DEAL_ATTRIBUTE_FIELDNAME);
 

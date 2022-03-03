@@ -25,13 +25,15 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal})
         ...infoState,
         [e.target.name]: e.target.value,
     });
-
-    const handleEditModeChange = () => {
-      if (!flagDeal) {
+ 
+const handleEditModeChange = () => {
+      
+      if (flagDeal) {
         handleEndUserAnalytics();
         setEditMode(prevEditMode => !prevEditMode);
       }
     };
+
 
     const handleEndUserAnalytics = () => {
       pushEvent(
@@ -84,14 +86,14 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal})
       <div className="cmp-qp__enduser-info">
         <p
           onClick={handleEditModeChange}
-          className={!flagDeal ? "cmp-qp__enduser-info--title" : 'cmp-qp__enduser-info--title-nodeal'}
+          className={flagDeal ? "cmp-qp__enduser-info--title" : 'cmp-qp__enduser-info--title-nodeal'}
         >
           {info.endUserHeaderLabel}
         </p>
 
         {!editMode && (
           <>   
-            {!flagDeal && 
+            {flagDeal && 
                 <span className="errorEndUser">
                     Please fill all fields
                 </span>
