@@ -27,12 +27,12 @@ function AgreementInfo({
               {contract.serviceLevel}
             </Info>
           )}
-          <Info boldLabel noColon label={agreementInfo.distiQuoteNoLabel}>{customerPO}</Info>
+          <Info boldLabel noColon label={agreementInfo.distiQuoteNoLabel}>{source.id}</Info>
           {contract.id && (
             <Info boldLabel noColon label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
           )}
           {source.id && (
-            <Info boldLabel noColon label={agreementInfo.distiQuoteLabel}>{source.id}</Info>
+            <Info boldLabel noColon label={agreementInfo.distiQuoteLabel}>{customerPO}</Info>
           )} <br/>
           {dueDate && (
             <Info boldLabel noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>

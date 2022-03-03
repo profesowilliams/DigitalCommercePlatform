@@ -4,7 +4,7 @@ import EndUserInfo from "./EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
 
 function ConfigGrid({ data, gridProps }) {
-  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry } = data;
+  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO } = data;
   const { quotePreview } = gridProps;
   return (
     <div className="cmp-renewals-qp__config-grid">
@@ -30,6 +30,7 @@ function ConfigGrid({ data, gridProps }) {
           agreementInfo={quotePreview.agreementInfo}
           contract={items[0].contract}
           expiry={expiry}
+          customerPO={customerPO}
         />
       </div>
     </div>

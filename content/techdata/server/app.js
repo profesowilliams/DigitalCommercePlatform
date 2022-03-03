@@ -4122,10 +4122,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             address: {
               id: null,
               line1: "17360 Brookhurst St",
-              line2: null,
+              line2: "Suite 107",
               line3: null,
               city: "Fountain Valley",
-              state: null,
+              state: "CA",
               postalCode: "92708-3720",
               country: null,
               county: "ORANGE",

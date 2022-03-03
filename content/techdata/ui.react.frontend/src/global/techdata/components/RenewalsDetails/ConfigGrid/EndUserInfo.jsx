@@ -12,12 +12,9 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
         <p>
           {endUser.name && <Info>{endUser.name}</Info>}
           {address?.line1 && <Info>{address?.line1}</Info>}      
-          <Info>
-            {(address?.line2 && `${address?.line2},`) +
-              (address?.state && `${address?.state} `) }
-          </Info>
-          <Info>{address?.postalCode}</Info>
-          {address?.city && <Info>{address?.city}</Info>}
+          {address?.line2 && <Info>{address?.line2}</Info>}   
+          <Info>{(address?.city ?? '') + (address?.state ? `, ${address?.state}` : '') + (address?.postalCode ? ` ${address?.postalCode}` : '')}</Info>      
+          <Info>{address?.countryCode}</Info>
         </p> <br />
         <p>
           {contact?.email && <Info label={productLines.emailLabel} noColon boldLabel>{contact?.email}</Info>}
