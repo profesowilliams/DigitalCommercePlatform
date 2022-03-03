@@ -1,5 +1,7 @@
 package com.techdata.core.models;
 
+import com.adobe.cq.dam.cfm.ContentElement;
+import com.adobe.cq.dam.cfm.ContentFragment;
 import com.adobe.cq.wcm.core.components.models.List;
 import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.day.cq.wcm.api.Page;
@@ -56,8 +58,13 @@ public class EnhancedListTest {
     private Page page;
     @Mock
     private ValueMap pageMap;
+    @Mock
+    private ContentFragment contentFragment;
+    @Mock
+    private ContentElement ce;
     String[] cqTags = new String[]{"techdata","aem"};
     String linkItems = "true";
+    String urlType = "srpPage";
     @BeforeEach
     void setUp() {
         enhancedList = new EnhancedList();
@@ -85,6 +92,14 @@ public class EnhancedListTest {
             listItemsField.set(enhancedList, linkItems);
         } catch (NoSuchFieldException | IllegalAccessException ignored) {
         }
+
+        Field urlTypeField = null;
+        try {
+            urlTypeField = enhancedList.getClass().getDeclaredField("urlType");
+            urlTypeField.setAccessible(true);
+            urlTypeField.set(enhancedList, urlType);
+        } catch (NoSuchFieldException | IllegalAccessException ignored) {
+        }
     }
     @Test
     void testgetListItems(){
@@ -99,14 +114,7 @@ public class EnhancedListTest {
         Mockito.lenient().when(cfListItem.getPath()).thenReturn("path/to/list/item");
         Mockito.lenient().when(pageManager.getPage("path/to/list/item")).thenReturn(page);
         Mockito.lenient().when(page.getProperties()).thenReturn(pageMap);
-        Mockito.lenient().when(pageMap.containsKey("cq:tags")).thenReturn(Boolean.TRUE);
-        Mockito.lenient().when(pageMap.get("cq:tags",String[].class)).thenReturn(cqTags);
-        //assertTrue(linkItems.equals("true"));
         assertEquals(1, enhancedList.getListItems().size());
-    }
-    @Test
-    void testgetcompareTagList(){
-        enhancedList.compareTagList(brandTagsList, brandTagsList);
     }
     @Test
     void testgetconvertArrayToList(){

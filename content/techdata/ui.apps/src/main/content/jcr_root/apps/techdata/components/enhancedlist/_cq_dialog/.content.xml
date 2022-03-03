@@ -25,30 +25,22 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <brandTags
+                                            <urlType
                                                 jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="URL Type"
+                                                name="./urlType">
                                                 <items jcr:primaryType="nt:unstructured">
-                                                    <heading
-                                                        granite:class="coral-Heading coral-Heading--4"
+                                                    <default
                                                         jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/heading"
-                                                        level="{Long}4"
-                                                        text="Options for Tags"/>
-                                                    <well
+                                                        text="Destination Page"
+                                                        value="destinationPage"/>
+                                                    <article
                                                         jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <tags
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="cq/gui/components/coral/common/form/tagfield"
-                                                                fieldLabel="Tags"
-                                                                multiple="{Boolean}true"
-                                                                name="./brandTags"/>
-                                                        </items>
-                                                    </well>
+                                                        text="SRP Page"
+                                                        value="srpPage"/>
                                                 </items>
-                                            </brandTags>
+                                            </urlType>
                                         </items>
                                     </column>
                                 </items>

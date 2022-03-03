@@ -2,6 +2,8 @@ package com.techdata.core.models;
 
 import com.adobe.cq.wcm.core.components.models.List;
 import com.adobe.cq.wcm.core.components.models.ListItem;
+import com.adobe.cq.dam.cfm.ContentElement;
+import com.adobe.cq.dam.cfm.ContentFragment;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -15,7 +17,7 @@ import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.apache.commons.lang.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,7 +28,8 @@ public class EnhancedList implements List {
     private static final Logger log = LoggerFactory.getLogger(EnhancedList.class);
 
     public static final String RESOURCE_TYPE = "techdata/components/enhancedlist";
-    private static final String PAGE_PROPERTY_CQ_TAGS = "cq:tags";
+    private static final String PN_VENDOR_PRODUCT_LINK = "vendor-product-link";
+    private static final String PAGE_PROPERTY_CF_PATH = "cfPath";
     @Self
     private SlingHttpServletRequest request;
 
@@ -38,7 +41,7 @@ public class EnhancedList implements List {
     String linkItems;
 
     @ValueMapValue(via="resource", injectionStrategy = InjectionStrategy.OPTIONAL)
-    String[] brandTags;
+    String urlType;
 
     @Override
     public Collection<ListItem> getListItems() {
@@ -46,38 +49,39 @@ public class EnhancedList implements List {
         Resource resource = request.getResource();
         PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
         Collection<ListItem> brandListItems = delegateList.getListItems();
-        java.util.List<String> brandTagsList = new ArrayList<>();
-        if(brandTags != null){
-            brandTagsList = convertArrayToList(brandTags);
-        }
         for (ListItem brandListItem : brandListItems) {
             log.debug("Inside brandListItem for loop = {}",  brandListItem.getPath());
             Page page = pageManager.getPage(brandListItem.getPath());
             ValueMap pageMap = page.getProperties();
-            if(pageMap.containsKey(PAGE_PROPERTY_CQ_TAGS)){
-                String[] cqTags = pageMap.get(PAGE_PROPERTY_CQ_TAGS, String[].class);
-                java.util.List<String> cqTagsList = convertArrayToList(cqTags);
-                EnhancedListItem item = new EnhancedListItem();
-                item.setTitle(page.getTitle());
-                if(brandTags != null && linkItems.equals("true")){
-                    boolean foundMatch = compareTagList(brandTagsList, cqTagsList);
-                    if(foundMatch){
-                        item.setLink(page.getPath());
-                    }
-                }else if(linkItems.equals("true")){
-                    item.setLink(page.getPath());
-                }
-                listOfBrandItems.add(item);
+            EnhancedListItem item = new EnhancedListItem();
+            item.setTitle(page.getTitle());
+            if("true".equals(linkItems) && "srpPage".equals(urlType)){
+                item.setLink(srpPageLink(pageMap, resource));
+            } else if (linkItems.equals("true")){
+                item.setLink(page.getPath());
             }
+            listOfBrandItems.add(item);
         }
         return listOfBrandItems;
     }
 
-    public boolean compareTagList(java.util.List<String> brandTagsList, java.util.List<String> cqTagsList){
-        return cqTagsList.containsAll(brandTagsList);
-    }
-
     public java.util.List<String> convertArrayToList(String[] array){
         return Arrays.asList(array);
+    }
+
+    public String srpPageLink(ValueMap pageMap, Resource resource){
+        String cfPath = pageMap.get(PAGE_PROPERTY_CF_PATH, StringUtils.EMPTY);
+        log.debug(" Enhancedlist Content Fragment Path  = {}", cfPath);
+        Resource cfResource = resource.getResourceResolver().getResource(cfPath);
+        if(cfResource != null) {
+            ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
+            if (contentFragment !=null){
+                ContentElement contentElement = contentFragment.getElement(PN_VENDOR_PRODUCT_LINK);
+                if(contentElement != null){
+                    return contentElement.getContent();
+                }
+            }
+        }
+        return StringUtils.EMPTY;
     }
 }
