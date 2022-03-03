@@ -37,7 +37,7 @@ function RenewalsGrid(props) {
   function mapServiceData(response) {
     const mappedResponse = {...response};
     const items = mappedResponse?.data?.content?.items?.map(val => ({...val, excelApi: componentProp?.uiServiceEndPointExcel}));
-    const itemsWithActions = items ? items.map((data) => ({ ...data })) : [];
+    const itemsWithActions = items ? items.map((data) => ({ ...data, actions: true })) : [];
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;

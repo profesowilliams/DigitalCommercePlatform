@@ -6,16 +6,11 @@ import { downloadClicked } from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
 
-function GridHeader({ gridProps, data }) {  
+function GridHeader({ gridProps, data }) {
   const downloadPDF = () => {
-    downloadClicked(
-      data,
-      true,
-      'logo',
-      'link text',
-    )
-  }
-  
+    downloadClicked(data, true, "", gridProps.pdf);
+  };
+
   const downloadXLS = () => {
     try {
       generateExcelFileFromPost({
@@ -27,7 +22,6 @@ function GridHeader({ gridProps, data }) {
       console.error("error", error);
     }
   };
-
 
 
   return (
@@ -64,8 +58,8 @@ function GridSubTotal({data}) {
 function Note() {
   return (
     <p className="note">
-      <b>Note: </b>Pricing displayed is subject to vendor price changes and exchange
-      rate fluctuations.
+      <b>Note: </b>Pricing displayed is subject to vendor price changes and
+      exchange rate fluctuations.
     </p>
   );
 }
