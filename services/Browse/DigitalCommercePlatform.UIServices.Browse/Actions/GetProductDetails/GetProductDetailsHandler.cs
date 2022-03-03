@@ -55,16 +55,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private readonly string _onOrderArrivalDateFormat;
             private readonly IBrowseService _productRepositoryServices;
             private readonly ITranslationService _translationService;
-            private Dictionary<string, string> _translations = null;
-            private readonly IPriceService _priceService;
+            private Dictionary<string, string> _translations = null;            
 
             public Handler(
                 IBrowseService productRepositoryServices,
                 ISiteSettings siteSettings,
                 IMapper mapper,
                 ITranslationService translationService,
-                ICultureService cultureService,
-                IPriceService priceService)
+                ICultureService cultureService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
@@ -72,8 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _mapper = mapper;
                 _translationService = translationService;
                 _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
-                _cultureService = cultureService;
-                _priceService = priceService;
+                _cultureService = cultureService;                
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -354,7 +351,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 product.Price = new PriceModel
                 {
-                    ListPrice = _priceService.GetListPrice(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
+                    ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
                     BasePrice = canViewPrice ? x.Price.BasePrice.Format() : null,
                     BestPrice = canViewPrice ? x.Price.BestPrice.Format() : null,
                     BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration.Format() : null,
@@ -366,7 +363,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                         MinQuantity = v.MinQuantity.Format("0")
                     })
                 };
-            }           
+            }
 
             private void MapStock(ProductDto x, ProductModel product, Flags flags)
             {

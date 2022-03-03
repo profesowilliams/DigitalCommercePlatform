@@ -50,21 +50,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
         public class PriceAfterMapAction : IMappingAction<PriceDto, PriceModel>
         {
             private readonly string _naLabel;
-            private readonly ITranslationService _translationService;
-            private readonly IPriceService _priceService;
+            private readonly ITranslationService _translationService;            
 
-            public PriceAfterMapAction(ITranslationService translationService, IPriceService priceService)
+            public PriceAfterMapAction(ITranslationService translationService)
             {
                 _translationService = translationService;
                 Dictionary<string, string> translations = null;
                 _translationService.FetchTranslations(TransaltionsConst.BrowseUIName, ref translations);
-                _naLabel = _translationService.Translate(translations, TransaltionsConst.NALabel);
-                _priceService = priceService;
+                _naLabel = _translationService.Translate(translations, TransaltionsConst.NALabel);                
             }
 
             public void Process(PriceDto source, PriceModel destination, ResolutionContext context)
             {
-                destination.ListPrice = _priceService.GetListPrice(source.ListPrice, _naLabel, source.ListPriceAvailable);
+                destination.ListPrice = FormatHelper.ListPriceFormat(source.ListPrice, _naLabel, source.ListPriceAvailable);
             }
         }
     }

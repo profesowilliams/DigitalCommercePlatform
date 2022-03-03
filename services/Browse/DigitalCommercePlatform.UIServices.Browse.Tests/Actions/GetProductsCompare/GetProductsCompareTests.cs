@@ -33,7 +33,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Browse.Actions.GetProductsCompare.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
-        private readonly Mock<IPriceService> _priceServiceMock;
 
         public GetProductsCompareTests()
         {
@@ -44,15 +43,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _translationServiceMock = new Mock<ITranslationService>();
             _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
-            _priceServiceMock = new();
 
             _sut = new Browse.Actions.GetProductsCompare.Handler(
                 _httpClientMock.Object,
                 _appSettingsMock.Object,
                 _siteSettingsMock.Object,
                 _cultureServiceMock.Object,
-                _translationServiceMock.Object,
-                _priceServiceMock.Object);
+                _translationServiceMock.Object);
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
@@ -433,9 +430,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 .Verifiable();
             _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(validateDtos)
-                .Verifiable();
-
-            _priceServiceMock.Setup(e => e.GetListPrice(It.IsAny<decimal>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(expectedProduct.Price.ListPrice);
+                .Verifiable();            
 
             //act
             var actual = await _sut.Handle(request, default).ConfigureAwait(false);
@@ -523,7 +518,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _appSettingsMock.Object,
             _siteSettingsMock.Object,
             _cultureServiceMock.Object,
-            _translationServiceMock.Object,
-            _priceServiceMock.Object);
+            _translationServiceMock.Object);
     }
 }

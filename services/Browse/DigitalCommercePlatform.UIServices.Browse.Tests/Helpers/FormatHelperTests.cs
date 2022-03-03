@@ -245,5 +245,51 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
             //assert
             result.Should().Be(expected);
         }
+
+        [Theory]
+        [AutoDomainData(nameof(GetListPriceData))]
+        public void GetListPriceFlagLisrPriceFalse_ResultWithPrice(decimal listPrice, string flag, bool listPriceAvailable, string expectedValue)
+        {
+            //act
+            string result = FormatHelper.ListPriceFormat(listPrice, flag, listPriceAvailable);
+
+            //assert            
+            result.Should().Be(expectedValue);
+        }
+
+        public static IEnumerable<object> GetListPriceData()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    null,
+                    "NA",
+                    true,
+                    "0,00 zł"
+                },
+                new object[]
+                {
+                    null,
+                    "NA",
+                    false,
+                    "NA"
+                },
+                new object[]
+                {
+                    192m,
+                    "NA",
+                    false,
+                    "192,00 zł"
+                },
+                 new object[]
+                {
+                    192m,
+                    "NA",
+                    true,
+                    "192,00 zł"
+                },
+            };
+        }
     }
 }

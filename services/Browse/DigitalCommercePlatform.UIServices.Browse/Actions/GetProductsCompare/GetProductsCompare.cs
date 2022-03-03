@@ -36,23 +36,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             private readonly string _onOrderArrivalDateFormat;
             private readonly string _productAppUrl;
             private readonly ITranslationService _translationService;
-            private Dictionary<string, string> _translations = null;
-            private readonly IPriceService _priceService;
+            private Dictionary<string, string> _translations = null;            
 
             public Handler(
                 IMiddleTierHttpClient httpClient,
                 IAppSettings appSettings,
                 ISiteSettings siteSettings,
                 ICultureService cultureService,
-                ITranslationService translationService,
-                IPriceService priceService)
+                ITranslationService translationService)
             {
                 _httpClient = httpClient;
                 _productAppUrl = appSettings.GetSetting("Product.App.Url");
                 _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
                 _cultureService = cultureService;
                 _translationService = translationService;
-                _priceService = priceService;
             }
 
             public async Task<CompareModel> Handle(Request request, CancellationToken cancellationToken)
@@ -220,7 +217,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                     BasePrice = x.Price?.BasePrice.Format(),
                     BestPrice = x.Price?.BestPrice.Format(),
                     BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration.Format() : null,
-                    ListPrice = _priceService.GetListPrice(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
+                    ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
                     PromoAmount = FormatHelper.FormatSubtraction(x.Price?.BasePrice, x.Price?.BestPrice),
                     BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
                     VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel

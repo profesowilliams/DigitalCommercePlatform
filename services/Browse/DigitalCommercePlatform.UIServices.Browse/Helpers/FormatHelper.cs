@@ -47,5 +47,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
         {
             return minuend.HasValue && subtrahend.HasValue ? Format((decimal)(minuend - subtrahend)) : null;
         }
+
+        public static string ListPriceFormat(decimal? listPrice, string naLabel, bool listPriceAvailable)
+        {
+            if (listPrice.HasValue && listPrice != 0)
+                return listPrice.Value.Format();
+
+            return listPriceAvailable ? 0m.Format() : naLabel;
+        }
     }
 }
