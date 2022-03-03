@@ -35,6 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly GetProductDetailsHandler.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
+        private readonly Mock<IPriceService> _priceServiceMock;
 
         public ProductDetailsHandlerTests()
         {
@@ -53,13 +54,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
             _cultureServiceMock = new Mock<ICultureService>();
+            _priceServiceMock = new();
 
             _sut = new GetProductDetailsHandler.Handler(
                 _mockBrowseService.Object,
                 _siteSettingsMock.Object,
                 _mapper,
                 _translationServiceMock.Object,
-                _cultureServiceMock.Object);
+                _cultureServiceMock.Object,
+                _priceServiceMock.Object
+                );
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
@@ -926,6 +930,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 .ReturnsAsync(validateDtos)
                 .Verifiable();
 
+            _priceServiceMock.Setup(e => e.GetListPrice(It.IsAny<decimal>(), It.IsAny<string>(), It.IsAny<bool>())).Returns(expectedProduct.Price.ListPrice);
+
             //act
             var actual = await _sut.Handle(request, default).ConfigureAwait(false);
 
@@ -978,6 +984,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _siteSettingsMock.Object,
             _mapper,
             _translationServiceMock.Object,
-            _cultureServiceMock.Object);
+            _cultureServiceMock.Object,
+            _priceServiceMock.Object);
     }
 }

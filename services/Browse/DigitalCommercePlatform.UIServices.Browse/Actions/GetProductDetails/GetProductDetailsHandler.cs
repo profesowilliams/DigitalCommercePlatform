@@ -56,13 +56,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private readonly IBrowseService _productRepositoryServices;
             private readonly ITranslationService _translationService;
             private Dictionary<string, string> _translations = null;
+            private readonly IPriceService _priceService;
 
             public Handler(
                 IBrowseService productRepositoryServices,
                 ISiteSettings siteSettings,
                 IMapper mapper,
                 ITranslationService translationService,
-                ICultureService cultureService)
+                ICultureService cultureService,
+                IPriceService priceService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
@@ -71,6 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _translationService = translationService;
                 _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
                 _cultureService = cultureService;
+                _priceService = priceService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -80,9 +83,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 await Task.WhenAll(validateDtoTask, productDetailsTask);
 
-                var validateDto = validateDtoTask.Result;
+                var validateDto = await validateDtoTask;
 
-                var productDetails = productDetailsTask.Result;
+                var productDetails = await productDetailsTask;
 
                 _cultureService.Process(request.Culture);
                 _translationService.FetchTranslations(TransaltionsConst.BrowseUIName, ref _translations);
@@ -351,7 +354,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                 product.Price = new PriceModel
                 {
-                    ListPrice = x.Price.ListPrice.Format(naLabel),
+                    ListPrice = _priceService.GetListPrice(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
                     BasePrice = canViewPrice ? x.Price.BasePrice.Format() : null,
                     BestPrice = canViewPrice ? x.Price.BestPrice.Format() : null,
                     BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration.Format() : null,
@@ -363,7 +366,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                         MinQuantity = v.MinQuantity.Format("0")
                     })
                 };
-            }
+            }           
 
             private void MapStock(ProductDto x, ProductModel product, Flags flags)
             {

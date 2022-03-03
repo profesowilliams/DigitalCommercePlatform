@@ -41,6 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Browse
             services.AddProfileProvider(StartupLogger);
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<ICultureService, CultureService>();
+            services.AddScoped<IPriceService, PriceService>();
         }
     }
 }

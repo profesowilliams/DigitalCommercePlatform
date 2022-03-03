@@ -41,7 +41,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
                 .ForMember(dest => dest.BestPriceExpiration, opt => opt.MapFrom(src => src.BestPriceExpiration.Format()))
                 .ForMember(dest => dest.BestPrice, opt => opt.MapFrom(src => src.BestPrice.Format()))
                 .ForMember(dest => dest.ListPrice, opt => opt.Ignore())
-                .ForMember(dest => dest.PromoAmount, opt => opt.MapFrom(src => FormatHelper.FormatSubtraction(src.BasePrice, src.BestPrice)))
+                .ForMember(dest => dest.PromoAmount, opt => opt.MapFrom(src => FormatHelper.FormatSubtraction(src.BasePrice, src.BestPrice)))                
                 .AfterMap<PriceAfterMapAction>();
 
             CreateMap<MainSpecificationDto, MainSpecificationModel>();
@@ -51,18 +51,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
         {
             private readonly string _naLabel;
             private readonly ITranslationService _translationService;
+            private readonly IPriceService _priceService;
 
-            public PriceAfterMapAction(ITranslationService translationService)
+            public PriceAfterMapAction(ITranslationService translationService, IPriceService priceService)
             {
                 _translationService = translationService;
                 Dictionary<string, string> translations = null;
                 _translationService.FetchTranslations(TransaltionsConst.BrowseUIName, ref translations);
                 _naLabel = _translationService.Translate(translations, TransaltionsConst.NALabel);
+                _priceService = priceService;
             }
 
             public void Process(PriceDto source, PriceModel destination, ResolutionContext context)
             {
-                destination.ListPrice = source.ListPrice.Format(_naLabel);
+                destination.ListPrice = _priceService.GetListPrice(source.ListPrice, _naLabel, source.ListPriceAvailable);
             }
         }
     }

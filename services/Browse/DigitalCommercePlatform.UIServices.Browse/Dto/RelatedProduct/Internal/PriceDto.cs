@@ -12,5 +12,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal
         public DateTime? BestPriceExpiration { get; set; }
         public decimal? BasePrice { get; set; }
         public bool? BestPriceIncludesWebDiscount { get; set; }
+        public bool ListPriceAvailable { get; set; }
     }
 }
