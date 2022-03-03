@@ -33,6 +33,7 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
         "unitPriceFormatted" : "Unit Price",
         "quantity": "Quantity",
         "totalPriceFormatted":"Total",
+        "clientExtendedPrice":"Total",
         ...extraOptions
     }
 

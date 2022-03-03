@@ -355,6 +355,13 @@ const QuoteDetails = ({ componentProp }) => {
     return generalInformationData;
   }
 
+  const onChangeQuoteDetails = (quoteDetailToChange) =>
+    setQuoteDetails(quoteDetailsTemp => {
+      const newQuotes = quoteDetailsTemp?.items?.map(quote => quote.id === quoteDetailToChange.id ? quoteDetailToChange : quote);
+      quoteDetailsTemp.items = newQuotes;
+      return quoteDetailsTemp;
+    });
+
   const renderHeader = () => {
     return whiteLabelMode
           ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} setWhiteLabelOptions={setWhiteLabelOptions} /> )
@@ -405,6 +412,7 @@ const QuoteDetails = ({ componentProp }) => {
           onMarkupChanged={(quote) => {
             setQuoteWithMarkup([...quote]);
           }}
+          onChangeQuoteDetails={onChangeQuoteDetails}
         />
         <QuoteSubtotal
           labels={whiteLabel}

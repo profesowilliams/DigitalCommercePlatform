@@ -2,7 +2,7 @@ import React from "react";
 import PDFTableCell from "../PDFTableCell/PDFTableCell";
 import PDFStyles from "../PDFWindow/PDFStyles";
 import { Image, View } from '@react-pdf/renderer';
-import { formatPriceNumber, getBase64FromUrl } from "../../../../utils/utils";
+import { formatPriceNumber, getBase64FromUrl, isNotEmptyValue } from "../../../../utils/utils";
 
 const styles = PDFStyles;
 const idStyle = {...styles.tableCell, width:'5%', textAlign:'center'};
@@ -16,6 +16,12 @@ const textStyle = styles.cellText;
 const msrpStyle = {...styles.tableCell,width:'12%', wordBreak: 'break-all'};
 const imageStyle = {...styles.tableCell,width:'15%', height:'8vh', wordBreak: 'break-all'};
 const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => {
+    const extraOptionsFormater = {
+        style: 'currency',
+        currency: 'USD'
+    };
+    debugger
+    const totalValue = isNotEmptyValue(quoteItem.clientExtendedPrice) && typeof quoteItem?.clientExtendedPrice !== 'string' ? formatPriceNumber(quoteItem.clientExtendedPrice, extraOptionsFormater).replace('$', '') : quoteItem.totalPriceFormatted;
     const ImageValidation = ({quoteItem}) => {
         /**@type {string} */
         let urlImage = quoteItem?.urlProductImage;
@@ -25,6 +31,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
            urlImage = '*'
         }
         return(
+    
             <View style={imageStyle}>
                 { urlImage ?
                     urlImage === '*' ? (
@@ -132,7 +139,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
                 />
                 <PDFTableCell
                     header={header}
-                    cellItem={(currencySymbol + quoteItem.totalPriceFormatted) || ''}
+                    cellItem={(currencySymbol + totalValue)}
                     cellWidth={flags && Object.keys(flags).length > 0 ? "10%" :"15%"}
                     type={"currency"}
                     cellStyle={totalPriceStyle}
@@ -179,8 +186,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
             />
             <PDFTableCell
                 header={header}
-                cellItem={currencySymbol + quoteItem.totalPriceFormatted}
-                // cellWidth="15%"
+                cellItem={(currencySymbol + totalValue)}
                 cellWidth={flags && Object.keys(flags).length > 0 ? "10%" :"15%"}
                 type={"currency"}
                 cellStyle={totalPriceStyle}

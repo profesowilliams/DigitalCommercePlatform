@@ -17,7 +17,8 @@ function ProductLinesGrid({
   quoteDetailColumns,
   whiteLabelColumns,
   onMarkupChanged,
-  shopDomainPage
+  shopDomainPage,
+  onChangeQuoteDetails,
 }) {
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items.map((el) => {
@@ -241,6 +242,9 @@ function ProductLinesGrid({
                 "clientUnitPrice",
                 Number(value) + Number(data.unitPrice)
               );
+              const detailsObject = data;
+              detailsObject.clientExtendedPrice = (Number(value) + Number(data.unitPrice)) * Number(data.quantity);
+              onChangeQuoteDetails(detailsObject);
               node.setDataValue(
                 "clientExtendedPrice",
                 (Number(value) + Number(data.unitPrice)) * Number(data.quantity)
