@@ -449,7 +449,6 @@ const QuoteDetails = ({ componentProp }) => {
           modalAction={modal.action}
           modalContent={modal.content}
           modalProperties={modal.properties}
-          modalAction={modal.modalAction}
           actionErrorMessage={modal.errorMessage}
           onModalClosed={() => setModal(null)}
       ></Modal>}

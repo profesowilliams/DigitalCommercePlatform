@@ -20,7 +20,6 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
         style: 'currency',
         currency: 'USD'
     };
-    debugger
     const totalValue = isNotEmptyValue(quoteItem.clientExtendedPrice) && typeof quoteItem?.clientExtendedPrice !== 'string' ? formatPriceNumber(quoteItem.clientExtendedPrice, extraOptionsFormater).replace('$', '') : quoteItem.totalPriceFormatted;
     const ImageValidation = ({quoteItem}) => {
         /**@type {string} */

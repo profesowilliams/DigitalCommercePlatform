@@ -45,13 +45,27 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
     if (quoteItems && quoteItems.length>0)
     {
         quoteLineItems = quoteItems.map((item, index) =>{
-            return <PDFTableRow
+            return  (
+                    <>
+                        <PDFTableRow
                         quoteItem={item}
                         key={index}
                         header={false}
                         flags={flagsValue}
                         currencySymbol={currencySymbol}
                     />
+                        {item?.children && item.children.length > 0 ? 
+                            item.children.map((subChildItem, index ) =>  
+                                <PDFTableRow
+                                    quoteItem={subChildItem}
+                                    key={index}
+                                    header={false}
+                                    flags={flagsValue}
+                                    currencySymbol={currencySymbol}
+                                />)
+                                
+                         : null}
+                </>)
         });
     }
 
