@@ -2966,18 +2966,21 @@ app.get(
             isConnected: vendorConnections["cisco"],
             connectionDate: utils.getRandomDate(),
             isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
+            userId: "techdata-xml-ws"
           },
           {
             vendor: "hp",
             isConnected: vendorConnections["hp"],
             connectionDate: utils.getRandomDate(),
             isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
+            userId: "techdata-xml-ws"
           },
           {
             vendor: "dell",
             isConnected: vendorConnections["dell"],
             connectionDate: utils.getRandomDate(),
             isValidRefreshToken: utils.getRandomNumber(10) % 2 ? true : false,
+            userId: "techdata-xml-ws"
           },
         ],
       },

@@ -4,7 +4,7 @@ import { get } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
 
 function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, disconnectedLabel }) {
-	let { vendor, isConnected, connectionDate, isValidRefreshToken } = fetchedVendor;
+	let { vendor, isConnected, connectionDate, isValidRefreshToken, userId } = fetchedVendor;
 	const [vendorToggled, setVendorToggled] = useState(isConnected);
 	const [toggleInProcess, setToggleInProcess] = useState(false);
 	const [error, setError] = useState(false);
@@ -77,6 +77,12 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 			</div>
 			<div className='cmp-vendor-connection__vendors__vendor__status'>
 				{vendorToggled ? connectedLabel ?? 'Connected' : disconnectedLabel ?? 'Disconnected'}
+				{userId && 
+					<div>
+						CCO ID: {userId}
+					</div>
+				}
+				
 			</div>
 			<div className='cmp-vendor-connection__vendors__vendor__toggler'>
 				<SlideToggle
