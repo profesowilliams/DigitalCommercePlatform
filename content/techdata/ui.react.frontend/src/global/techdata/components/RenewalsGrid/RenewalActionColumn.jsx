@@ -10,8 +10,14 @@ function RenewalActionColumn({ eventProps }) {
     const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem", width: '1.3rem' };
     const toggleExpandedRow = () => {
         effects.setCustomState({ key: 'detailRender', value: 'primary' })
-        eventProps.node.setExpanded(!isToggled);
+        eventProps.node.setExpanded(!isToggled);    
+        eventProps.api.forEachNode(node => {
+            if (node?.rowIndex !== eventProps.node?.rowIndex){
+                node.setExpanded(false);
+            }
+        })        
         setToggled(!isToggled);
+     
     }
     return (
         <>

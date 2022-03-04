@@ -19,6 +19,11 @@ function ContractColumn({ data, eventProps }) {
   const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
   const toggleExpandedRow = () => {
     effects.setCustomState({ key: 'detailRender', value: 'secondary' })
+    eventProps.api.forEachNode(node => {
+      if (node?.rowIndex !== eventProps.node?.rowIndex){
+          node.setExpanded(false);
+      }
+    })  
     eventProps.node.setExpanded(!isToggled);
     setToggled(!isToggled);
     setToggleUpdatedPlan(!togglePlanUpdated)

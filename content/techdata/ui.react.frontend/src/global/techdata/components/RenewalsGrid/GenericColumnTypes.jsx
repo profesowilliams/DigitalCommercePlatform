@@ -71,9 +71,7 @@ export const buttonListColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
-  // expandable:true,
   cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} /> ,
-  // detailRenderer: ({ data }) => <RenewalDetailRenderers data={data}/>,
 });
 
 export const renewalPlanColumn = ({
