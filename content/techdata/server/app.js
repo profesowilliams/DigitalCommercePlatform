@@ -979,7 +979,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         tdNumber: "000000000013278748",
         upcNumber: null,
         unitListPrice: "0.0",
-        unitListPriceFormatted: "0.00",
+        unitListPriceFormatted: utils.getRandomValues(100) + ".00",
         extendedPrice: null,
         extendedPriceFormatted: "",
         availability: null,
@@ -1081,7 +1081,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
             tdNumber: null,
             upcNumber: null,
             unitListPrice: null,
-            unitListPriceFormatted: "0.00",
+            unitListPriceFormatted: utils.getRandomValues(100) + ".00",
             extendedPrice: "0.0",
             extendedPriceFormatted: "0.0",
             availability: null,
@@ -1506,8 +1506,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
 });
 
 app.get("/myorders", (req, res) => {
-  console.log(utils.getRandomValues(100) + 1.0);
-
   if(!validateSession(req, res))
     return res.status(500).json({
       error: {

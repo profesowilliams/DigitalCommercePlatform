@@ -178,8 +178,11 @@ function ProductLinesGrid({
     },
     {
       headerName: "MSRP",
-      field: "msrp",
+      field: 'unitListPriceFormatted',
       sortable: false,
+      valueFormatter: ({ value }) => {
+        return "$" + value;
+      },
     },
     {
       headerName: "Unit Price",
@@ -291,12 +294,14 @@ function ProductLinesGrid({
   //whitelabel column defs
   const whiteLabelCols = () => {
     const cols = isNotEmpty(whiteLabelColumns)
+    
       ? whiteLabelColumns.map((el) => el.columnKey)
       : [
           "displayLineNumber",
           "displayName",
           "quantity",
           "msrp",
+          'unitListPriceFormatted',
           "unitPrice",
           "extendedPriceFormatted",
           "appliedMarkup",
