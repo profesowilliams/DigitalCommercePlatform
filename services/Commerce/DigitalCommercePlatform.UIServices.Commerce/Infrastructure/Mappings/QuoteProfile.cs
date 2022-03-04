@@ -42,6 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                 .ForMember(dest => dest.ShipDates, opt => opt.Ignore())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.PurchaseCost, opt => opt.MapFrom(src => src.PurchaseCost))
+                .ForMember(dest => dest.MSRP, opt => opt.MapFrom(src => src.UnitListPrice))
                 .ForMember(dest => dest.Attributes, opt => opt.MapFrom<LineAttributeResolver>())
                 .ForMember(dest => dest.Agreements, opt => opt.MapFrom(src => src.Agreements));
 
