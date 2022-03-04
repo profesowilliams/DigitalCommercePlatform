@@ -16,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Vendors
         public bool IsConnected { get; set; }
         public DateTime? ConnectionDate { get; set; }
         public bool IsValidRefreshToken { get; set; }
+        public string UserId { get; set; }
     }
 }

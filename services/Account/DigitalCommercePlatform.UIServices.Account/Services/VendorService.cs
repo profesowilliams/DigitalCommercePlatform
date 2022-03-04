@@ -80,7 +80,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     var response = new SetVendorConnection.Response();
                     response.Items = false;
                     return response;
-                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
                 else
                 {
@@ -119,7 +118,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             catch (Exception ex)
             {
                 // never throw exception 
-                _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
+                _logger.LogError(ex, "Exception when getting Vendor Connection : " + nameof(VendorService));
                 var validVendors = VendorList();
                 return BuildVendorListResponse(validVendors);
                
@@ -137,7 +136,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     Vendor = vendor,
                     ConnectionDate = null,
                     IsConnected = false,
-                    IsValidRefreshToken = false
+                    IsValidRefreshToken = false,
+                    UserId = string.Empty
                 });
             }
 
@@ -168,7 +168,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     var response = new VendorRefreshToken.Response();
                     response.IsSuccess = false;
                     return response;
-                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
                 else
                 {
@@ -207,7 +206,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                     var response = new GetVendorDisconnect.Response();
                     response.Items = false;
                     return response;
-                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
                 }
                 else
                 {
