@@ -34,6 +34,7 @@ const PDFTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) =>
         "quantity": "Quantity",
         "totalPriceFormatted":"Total",
         "clientExtendedPrice":"Total",
+        "discounts":"% Off List Price",
         ...extraOptions
     }
 

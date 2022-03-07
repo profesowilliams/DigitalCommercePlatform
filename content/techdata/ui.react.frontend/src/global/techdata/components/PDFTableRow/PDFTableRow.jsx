@@ -20,7 +20,15 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
         style: 'currency',
         currency: 'USD'
     };
-    const totalValue = isNotEmptyValue(quoteItem.clientExtendedPrice) && typeof quoteItem?.clientExtendedPrice !== 'string' ? formatPriceNumber(quoteItem.clientExtendedPrice, extraOptionsFormater).replace('$', '') : quoteItem.totalPriceFormatted;
+    const discountValue = 
+        quoteItem.discounts && quoteItem.discounts[0]?.formattedValue 
+            ? quoteItem.discounts[0]?.formattedValue 
+            : typeof quoteItem.discounts === 'string' ? quoteItem.discounts 
+                : 0;
+    const totalValue = 
+        isNotEmptyValue(quoteItem.clientExtendedPrice) && typeof quoteItem?.clientExtendedPrice !== 'string' 
+            ? formatPriceNumber(quoteItem.clientExtendedPrice, extraOptionsFormater).replace('$', '')
+            : quoteItem.totalPriceFormatted;
     const ImageValidation = ({quoteItem}) => {
         /**@type {string} */
         let urlImage = quoteItem?.urlProductImage;
@@ -170,6 +178,14 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
             <PDFTableCell
                 header={header}
                 cellItem={currencySymbol + quoteItem.unitPriceFormatted}
+                type={"currency"}
+                cellWidth="15%"
+                cellStyle={unitPriceStyle}
+                style={textStyle}
+            />
+            <PDFTableCell
+                header={header}
+                cellItem={currencySymbol + discountValue}
                 type={"currency"}
                 cellWidth="15%"
                 cellStyle={unitPriceStyle}
