@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ADOBE_DATA_LAYER_BUTTON_TYPE,
   ADOBE_DATA_LAYER_CLICK_EVENT,
@@ -33,6 +33,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
   const [gridApi, setGridApi] = useState(null);
   const [analyticsProduct, setAnalyticsProduct] = useState([]);
   const [flagAnalytic, setFlagAnalytic] = useState(true);
+  const collapseAllFlag = useRef(true)
   const gridData = data.items ?? [];
   /*
     grid data can be mutated intentionally by changing quantity in each row. 
@@ -196,7 +197,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       expandable: true,
       
       rowClass: ({ node, data }) => {
-        if (data?.children && data.children.length > 0) {
+        if (collapseAllFlag.current && data?.children && data.children.length > 0) {
           node.setExpanded(true);
         }
         return `${
@@ -309,6 +310,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
   }
 
   function collapseAll() {
+    collapseAllFlag.current = false
     gridApi?.forEachNode((node) => {
       node.expanded = false;
     });
