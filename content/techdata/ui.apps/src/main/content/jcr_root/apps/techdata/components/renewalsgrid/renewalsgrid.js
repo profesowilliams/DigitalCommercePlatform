@@ -175,6 +175,10 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["productGrid"] = productGrid;
     }
 
+    if (this.exportXLSRenewalsEndpoint != null) {
+        jsonObject["exportXLSRenewalsEndpoint"] = this.exportXLSRenewalsEndpoint;
+    }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };
