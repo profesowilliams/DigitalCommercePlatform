@@ -174,8 +174,9 @@ function QuotesGrid(props) {
       field: "quoteValue",
       sortable: true,
       valueFormatter: (props) => {
-        return props.data.currencySymbol + props.value;
+        return props.data.formatedQuoteValue + " " + props.data.currency;
       },
+      type: "rightAligned",
     },
     {
       headerName: "Checkout",
