@@ -1,5 +1,4 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
@@ -10,7 +9,6 @@ using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;

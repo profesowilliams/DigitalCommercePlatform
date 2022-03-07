@@ -15,7 +15,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public NameDto VendorSalesRep { get; set; }
         public NameDto VendorSalesAssociate { get; set; }
         public List<AttributeDto> Attributes { get; set; }
-        public bool? QuoteCurrent { get; set; }
         public DateTime FirstAvailableOrderDate { get; set; }
         public DateTime LastOrderDate { get; set; }
         public string StatusText { get; set; }
@@ -36,6 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public PartyDto ShipTo { get; set; }
         public string RenewedDuration { get; set; }
         public List<OptionsDto> Options { get; set; }
+        public bool? QuoteCurrent { get; set; }
         public RenewalInRuleDto Renewal { get; set; }
         public string ResellerPO { get; set; }
     }

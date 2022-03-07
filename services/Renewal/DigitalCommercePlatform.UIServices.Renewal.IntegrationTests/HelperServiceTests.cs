@@ -1,5 +1,4 @@
-﻿
-//2022 (c) Tech Data Corporation -. All Rights Reserved.using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Features.Client;
@@ -23,14 +22,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
             _appSettings = new Mock<IAppSettings>();
         }
 
-
-
         private HelperService GetHelperService()
         {
             return new HelperService(_logger.Object, _middleTierHttpClient.Object, _appSettings.Object);
         }
-
-
 
         [Fact]
         public void PopulateLinesFor_Test()
@@ -43,8 +38,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
                 MFRNumber = "C9200-NM-4X",
                 TDNumber = "13517170"
             };
-
-
 
             List<ItemModel> lstItems = new() { testLine };
             //Act

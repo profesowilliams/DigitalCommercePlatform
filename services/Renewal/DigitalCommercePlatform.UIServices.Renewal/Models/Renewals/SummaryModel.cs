@@ -27,7 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public NameModel VendorSalesAssociate { get; set; }
         public List<AttributeModel> Attributes { get; set; }
         public string ProgramName { get; set; }
-        public bool? QuoteCurrent { get; set; }
         public DateTime FirstAvailableOrderDate { get; set; }
         public DateTime LastOrderDate { get; set; }
         public string StatusText { get; set; }
@@ -45,6 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public string AgreementNumber { get; set; }
         public string Support { get; set; }
         public List<OptionsModel> Options { get; set; }
+        public bool? QuoteCurrent { get; set; }
         public RenewalInRuleModel Renewal { get; set; }
         public string ResellerPO { get; set; }
     }
