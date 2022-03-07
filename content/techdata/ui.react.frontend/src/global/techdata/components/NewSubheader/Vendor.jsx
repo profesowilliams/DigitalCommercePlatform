@@ -76,12 +76,17 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 				)}
 			</div>
 			<div className='cmp-vendor-connection__vendors__vendor__status'>
-				{vendorToggled ? connectedLabel ?? 'Connected' : disconnectedLabel ?? 'Disconnected'}
-				{userId && 
-					<div>
-						CCO ID: {userId}
-					</div>
-				}
+				{vendorToggled 
+				? 	<>
+						{connectedLabel ?? 'Connected'}
+						{userId && 
+							<div>
+								CCO ID: {userId}
+							</div>
+						}
+					</>
+				: 	disconnectedLabel ?? 'Disconnected'}
+				
 				
 			</div>
 			<div className='cmp-vendor-connection__vendors__vendor__toggler'>
