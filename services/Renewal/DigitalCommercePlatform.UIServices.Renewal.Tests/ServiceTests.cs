@@ -148,6 +148,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
                 {
                     new DetailedDto
                     {
+                        Vendor = new Dto.Renewals.Internal.VendorDto()
+                        {
+                            Name = "TestVendor"
+                        },
                         EndUserPO = "Test 1",
                         DueDate = DateTime.Now.AddDays(5)
                     },
@@ -452,6 +456,61 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 3");
             result.Should().NotBeNull();
             result.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void ServicesGetDetailedGetVendorLogo()
+        {
+            var request = new SearchRenewalDetailed.Request()
+            {
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseDetailedDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedDetailedData);
+
+            var helperQueryService = new Mock<IHelperService>();
+            helperQueryService.Setup(x => x.GetVendorLogo("TestVendor")).Returns("http://testVendor/logoUrl.svg");
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
+            var result = service.GetRenewalsDetailedFor(request).Result;
+
+            result.Response.FirstOrDefault().VendorLogo.Should().Be("http://testVendor/logoUrl.svg");
+        }
+
+        [Fact]
+        public void ServicesGetRenewalsQuoteDetailedGetVendorLogo()
+        {
+            var request = new GetRenewalQuoteDetailed.Request()
+            {
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            List<QuoteDetailedDto> ReturnsQuoteData = new List<QuoteDetailedDto>();
+            ReturnsQuoteData.Add(new()
+            {
+                Source = new(),
+
+                Items = new()
+                {
+                    new()
+                    {
+                        Product = new()
+                        {
+                            new() { Manufacturer = "TestVendor" }
+                        }
+                    }
+                }
+            });
+
+            httpClient.Setup(x => x.GetAsync<IEnumerable<QuoteDetailedDto>>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnsQuoteData);
+
+            var helperQueryService = new Mock<IHelperService>();
+            helperQueryService.Setup(x => x.GetVendorLogo("TestVendor")).Returns("http://testVendor/logoUrl.svg");
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
+            var result = service.GetRenewalsQuoteDetailedFor(request).Result;
+
+            result.FirstOrDefault().VendorLogo.Should().Be("http://testVendor/logoUrl.svg");
         }
 
         private ResponseSummaryDto ReturnedData()

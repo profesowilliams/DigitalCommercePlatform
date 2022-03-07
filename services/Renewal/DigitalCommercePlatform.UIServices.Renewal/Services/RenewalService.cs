@@ -61,6 +61,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             {
                 var coreResult = await _middleTierHttpClient.GetAsync<ResponseDetailedDto>(req).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
+                modelList.ForEach(model =>
+                {
+                    model.VendorLogo = _helperQueryService.GetVendorLogo(model.Vendor?.Name);
+                });
                 var count = coreResult.Count;
 
                 switch (request.SortBy?.ToLowerInvariant())
@@ -173,6 +177,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 if (quote != null)
                 {
                     _helperQueryService.PopulateLinesFor(quote.Items, string.Empty);
+                    var vendorName = quote.Items
+                        .SelectMany(i =>
+                            i.Product
+                            .Where(p =>
+                                !string.IsNullOrWhiteSpace(p.Manufacturer)
+                            )
+                        )
+                        .FirstOrDefault()
+                        .Manufacturer;
+                    quote.VendorLogo = _helperQueryService.GetVendorLogo(vendorName);
                 }
             });
 

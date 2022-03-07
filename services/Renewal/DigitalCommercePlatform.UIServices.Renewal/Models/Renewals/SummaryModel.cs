@@ -47,5 +47,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public bool? QuoteCurrent { get; set; }
         public RenewalInRuleModel Renewal { get; set; }
         public string ResellerPO { get; set; }
+        public string VendorLogo { get; set; }
     }
 }

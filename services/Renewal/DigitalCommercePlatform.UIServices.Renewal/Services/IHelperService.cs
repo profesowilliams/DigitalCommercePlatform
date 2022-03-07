@@ -8,5 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
     public interface IHelperService
     {
         Task<List<ItemModel>> PopulateLinesFor(List<ItemModel> items, string vendorName);
+        string GetVendorLogo(string vendorName);
     }
 }

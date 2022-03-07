@@ -40,6 +40,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
                                 .Extend("App.Renewal.Url", "v1")
                                 .Extend("App.Quote.Url", "v1")
                                 .Extend("App.Product.Url", "")
+                                .Extend("UI.Renewals.VendorLogos", "{\"TestVendor\":\"http://testVendor/logoUrl.svg\"}")
                    )
                        .MatchContains($"SiteSetting/{serviceName}")
                            .Returns(Defaults.GetSiteSettings())

@@ -44,5 +44,36 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
             var result = GetHelperService().PopulateLinesFor(lstItems, "Cisco");
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public void GetVendorLogo_Test()
+        {
+            //arrange
+            _appSettings.Setup(x => x.TryGetSetting<Dictionary<string, string>>("UI.Renewals.VendorLogos"))
+                .Returns(new Dictionary<string, string>() {
+                    { "TestVendor", "http://testVendor/logoUrl.svg" }
+                });
+
+            //Act
+            var result = GetHelperService().GetVendorLogo("TestVendor");
+            Assert.NotNull(result);
+            Assert.Equal("http://testVendor/logoUrl.svg", result);
+
+            result = GetHelperService().GetVendorLogo("AnotherVendor");
+            Assert.NotNull(result);
+            Assert.Equal(string.Empty, result);
+        }
+
+        [Fact]
+        public void GetVendorLogo_TestException()
+        {
+            //arrange
+            _appSettings.Setup(x => x.TryGetSetting("UI.Renewals.VendorLogos")).Returns<string>(null);
+
+            //Act
+            var result = GetHelperService().GetVendorLogo("TestVendor");
+            Assert.NotNull(result);
+            Assert.Equal(string.Empty, result);
+        }
     }
 }

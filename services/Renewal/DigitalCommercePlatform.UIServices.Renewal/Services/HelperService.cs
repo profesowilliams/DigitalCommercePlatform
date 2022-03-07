@@ -69,6 +69,24 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             return items;
         }
 
+        public string GetVendorLogo(string vendorName)
+        {
+            var vendorLogoUrl = string.Empty;
+            try
+            {
+                var vendorLogos = _appSettings.TryGetSetting<Dictionary<string, string>>("UI.Renewals.VendorLogos");
+                if (vendorLogos.ContainsKey(vendorName))
+                {
+                    vendorLogoUrl = vendorLogos[vendorName];
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogWarning(ex, "Error Getting VendorLogo for `{VendorName}`", vendorName);
+            }
+            return vendorLogoUrl;
+        }
+
         /// <summary>
         /// returns Application product API call URL
         /// </summary>
