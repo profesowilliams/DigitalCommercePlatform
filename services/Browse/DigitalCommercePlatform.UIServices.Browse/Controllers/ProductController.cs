@@ -1,11 +1,10 @@
-//2022 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Browse.Actions;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
-using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
@@ -22,14 +21,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 {
     [SetContextFromHeader]
     [ApiController]
-    [ApiVersion("1")]    
+    [ApiVersion("1")]
     [Route("/v{version:apiVersion}")]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
-    public partial class BrowseController : BaseUIServiceController
+    public class ProductController : BaseUIServiceController
     {
-        public BrowseController(
+        public ProductController(
             IMediator mediator,
-            ILogger<BrowseController> logger,
+            ILogger<ProductController> logger,
             IUIContext context,
             IAppSettings appSettings,
             ISiteSettings siteSettings)
@@ -44,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <param name="details"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("product/details")]
+        [Route("Details")]
         public async Task<ActionResult> GetProduct([FromQuery] IReadOnlyList<string> id)
         {
             var (salesOrg, site) = ContextHelper.ExtractSiteAndSalesOrgFromContext(Context, SalesOrg);
@@ -57,30 +56,38 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site, Context.Language)).ConfigureAwait(false);
             return Ok(response);
         }
-        
-        
-        [HttpGet]
-        [Route("product/variants")]
-        public async Task<ActionResult> GetProductVariant([FromQuery] string id)
-        {
-           var response = await Mediator.Send(new GetProductVariantHandler.Request(id)).ConfigureAwait(false);
-           return Ok(response);
-        }
+
 
         [HttpGet]
-        [Route("getProductCatalog")]
-        public async Task<IActionResult> GetProductCatalog([FromQuery] ProductCatalogRequest input)
+        [Route("Variants")]
+        public async Task<ActionResult> GetProductVariant([FromQuery] string id)
         {
-            var response = await Mediator.Send(new GetProductCatalogHandler.Request(input)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetProductVariantHandler.Request(id)).ConfigureAwait(false);
             return Ok(response);
         }
 
         [HttpGet]
-        [Route("Detail/RelatedProducts")]
+        [Route("RelatedProducts")]
         public async Task<ActionResult<RelatedProductResponseModel>> RelatedProducts([FromQuery(Name = "id")] string[] ids, bool sameManufacturerOnly)
         {
             var response = await Mediator.Send(new GetRelatedProductsHandler.Request { ProductId = ids, SameManufacturerOnly = sameManufacturerOnly }).ConfigureAwait(false);
             return Ok(response);
+        }
+
+        [HttpGet("Compare")]
+        public async Task<ActionResult> Get([FromQuery] string[] ids)
+        {
+            var (salesOrg, site) = ContextHelper.ExtractSiteAndSalesOrgFromContext(Context, SalesOrg);
+
+            if (salesOrg == null)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
+            }
+            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site, Culture = Context.Language };
+
+            var data = await Mediator.Send(request).ConfigureAwait(false);
+
+            return Ok(data);
         }
     }
 }

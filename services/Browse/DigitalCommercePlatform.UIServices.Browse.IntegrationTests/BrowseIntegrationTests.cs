@@ -60,7 +60,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
         }
 
         [Theory]
-        [InlineData("v1/Product/Details?id=13")]
+        [InlineData("v1/Details?id=13")]
         public async Task GetProductWithDetails(string input)
         {
             using var scope = fixture.CreateChildScope();

@@ -16,19 +16,19 @@ using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
 {
-    public class BrowseControllerV2Tests
+    public class CatalogControllerTests
     {
         private readonly Mock<IMediator> mockMediator;
         private readonly Mock<IAppSettings> _appSettingsMock;
-        private readonly Mock<ILogger<BrowseControllerV2>> mockLoggerFactory;
+        private readonly Mock<ILogger<CatalogController>> mockLoggerFactory;
         private readonly Mock<IUIContext> mockContext;
         private readonly Mock<ISiteSettings> mockSiteSettings;
 
-        public BrowseControllerV2Tests()
+        public CatalogControllerTests()
         {
             _appSettingsMock = new Mock<IAppSettings>();
             mockMediator = new Mock<IMediator>();
-            mockLoggerFactory = new Mock<ILogger<BrowseControllerV2>>();
+            mockLoggerFactory = new Mock<ILogger<CatalogController>>();
             mockContext = new Mock<IUIContext>();
             mockSiteSettings = new Mock<ISiteSettings>();
         }
@@ -47,8 +47,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             result.Should().NotBeNull();
         }
 
-        private BrowseControllerV2 GetController() =>
-             new BrowseControllerV2(mockMediator.Object, mockLoggerFactory.Object, mockContext.Object,
+        private CatalogController GetController() =>
+             new CatalogController(mockMediator.Object, mockLoggerFactory.Object, mockContext.Object,
                     _appSettingsMock.Object, mockSiteSettings.Object);
     }
 }
