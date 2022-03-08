@@ -56,7 +56,8 @@ const INITIAL_STATE = {
   aemConfig:null,
   gridApi:null,
   detailRender:'primary',
-  renewalOptionState:null
+  renewalOptionState:null,
+  resetFilter:false,
 };
 
 const store = (set, get, a) => ({

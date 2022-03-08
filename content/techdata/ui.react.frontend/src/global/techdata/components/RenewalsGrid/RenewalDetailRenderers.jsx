@@ -8,7 +8,7 @@ function RenewalDetailRenderers(props) {
     const aemConfig = useRenewalGridState(state => state.aemConfig);    
     return (
         <>
-            {detailRender === 'primary' && <DropdownDownloadList data={props.data} />}
+            {detailRender === 'primary' && <DropdownDownloadList data={props.data} aemConfig={aemConfig} />}
             {detailRender === 'secondary' && <RenewalPlanOptions data={props.data} labels={aemConfig.productGrid} />}
         </>
     )

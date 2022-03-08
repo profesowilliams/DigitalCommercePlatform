@@ -175,8 +175,8 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["productGrid"] = productGrid;
     }
 
-    if (this.exportXLSRenewalsEndpoint != null) {
-        jsonObject["exportXLSRenewalsEndpoint"] = this.exportXLSRenewalsEndpoint;
+    if (this.exportXLSRenewalsEndpoint != null && this.serviceData.uiServiceDomain) {
+        jsonObject["exportXLSRenewalsEndpoint"] = this.serviceData.uiServiceDomain + this.exportXLSRenewalsEndpoint;
     }
 
     return {

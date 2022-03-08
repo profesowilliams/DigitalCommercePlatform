@@ -19,6 +19,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   const filterList = useRenewalGridState(state => state.filterList);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
   const datePickerState = useRenewalGridState(state => state.datePickerState);
+  const resetFilter = useRenewalGridState(state => state.resetFilter);
   
   
 
@@ -40,6 +41,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     const optionFields = generateFilterFields(filterList, dateSelected, datePickerState);
     const queryString = JSON.stringify(optionFields);
     toggleFilterModal();   
+    if (resetFilter){
+      onQueryChanged();
+      effects.setCustomState({key:'resetFilter', value: false});
+      return;
+    }
     onQueryChanged({queryString},{filterStrategy:'post'});
   }
 

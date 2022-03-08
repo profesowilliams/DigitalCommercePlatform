@@ -42,7 +42,7 @@ export const renewalsEffects = (set, get) => {
   function clearDateFilters(){
     const {dateOptionsList} = get();
     const allOptionsFalse = dateOptionsList.slice().map(item => ({...item,checked:false}));
-    set({datePickerState:null,dateOptionsList:allOptionsFalse,dateSelected:null })
+    set({datePickerState:null,dateOptionsList:allOptionsFalse,dateSelected:null, resetFilter:true })
   }
 
   function setCustomState({key='', value }){

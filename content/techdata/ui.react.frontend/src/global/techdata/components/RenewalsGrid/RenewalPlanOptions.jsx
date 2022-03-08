@@ -1,11 +1,13 @@
 import React from "react";
+import { generateExcelFileFromPost } from "../../../../utils/utils";
 import { dateToString, thousandSeparator } from "../../helpers/formatting";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
 function RenewalPlanOptions({ labels, data }) {
     const effects = useRenewalGridState(st => st.effects);
     const renewalOptionState = useRenewalGridState(st => st.renewalOptionState);
-    const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
+    const { detailUrl = "", exportXLSRenewalsEndpoint = "" } = useRenewalGridState((state) => state.aemConfig);
+    
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
     const isCurrentPlan = plan => plan === data?.renewedDuration;
     const isSamePlan = option => option?.contractDuration+" "+data?.support === renewalOptionState;
@@ -22,6 +24,12 @@ function RenewalPlanOptions({ labels, data }) {
         );
         window.location.href = renewalDetailsURL;
       };
+    const exportXlsPlan = (id) =>{
+        const postData = {
+            id
+          };
+          generateExcelFileFromPost({url:exportXLSRenewalsEndpoint,name:`renewal-${id}.xlsx`,postData})
+    }
     return (
         <div className="cmp-renewal-plan-column">
             {data?.options && data?.options.map(option => (
@@ -56,7 +64,7 @@ function RenewalPlanOptions({ labels, data }) {
                                    &nbsp;&nbsp;{labels.downloadPDFLabel}
                                </button>
                                <span className="vertical-separator"></span>
-                               <button>
+                               <button onClick={() => exportXlsPlan(option?.id)}>
                                    <i className="fas fa-file-excel"></i>
                                    &nbsp;&nbsp;{labels.downloadXLSLabel}
                                </button>

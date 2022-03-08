@@ -2,8 +2,9 @@ import React from "react";
 import { generateExcelFileFromPost } from "../../../../utils/utils";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
-function DropdownDownloadList({ data }) {
+function DropdownDownloadList({ data, aemConfig }) {
   const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
+  const {exportXLSRenewalsEndpoint} = aemConfig;
 
   const redirectToRenewalDetail = () => {
     const renewalDetailsURL = encodeURI(
