@@ -235,6 +235,8 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void GenerateTotalSection(IQuoteDetailsDocumentModel quoteDetails)
         {
+            var markup = quoteDetails.Request.LineMarkup.ToList().Sum(x => x.MarkupValue);
+            quoteDetails.SubTotal = quoteDetails.SubTotal + markup;
             decimal totalAmount = quoteDetails.SubTotal;
 
             using var totalHeading = Worksheet.Cells[_row + 1, _col + 10, _row + 1, _col + 13];
