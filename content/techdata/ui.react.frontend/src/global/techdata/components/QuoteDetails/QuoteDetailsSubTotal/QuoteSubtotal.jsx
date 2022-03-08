@@ -20,10 +20,18 @@ const QuoteSubtotal = ({
     });
   }
 
-  function sum(array, field) {
+  function getSingleIntValue(data, field) {
+    return Number(data[field] || 0);
+  }
+
+  function getSingleIntValueByQuantity(data, field) {
+    return Number(data[field] || 0) * data.quantity;
+  }
+
+  function sum(array, field, getValue = getSingleIntValue) {
     if (!array) return 0;
     return array
-      .map((x) => Number(x[field] || 0))
+      .map((x) => getValue(x, field))
       .reduce((previous, current) => previous + current, 0);
   }
 
@@ -32,7 +40,7 @@ const QuoteSubtotal = ({
     switch (action.type) {
       case "getMSRP":
         return [...store.quotes]
-          .map((x) => Number(x.msrp || 0) + sum(x.children, "msrp"))
+          .map((x) => getSingleIntValueByQuantity(x, "unitListPrice") + sum(x.children, "unitListPrice", getSingleIntValueByQuantity))
           .reduce((previous, current) => previous + current, 0);
       case "getYourCost":
         return [...store.quotes]
