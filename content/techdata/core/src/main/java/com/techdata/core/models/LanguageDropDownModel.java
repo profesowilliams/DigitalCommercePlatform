@@ -2,11 +2,13 @@ package com.techdata.core.models;
 
 import com.adobe.cq.wcm.core.components.models.LanguageNavigation;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
+import com.day.cq.commons.jcr.JcrConstants;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.designer.Style;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
@@ -40,6 +42,9 @@ public class LanguageDropDownModel implements LanguageNavigation {
 	private static final int COUNTRY_ROOT_OFFSET = 2;
 	//	how many levels below nav root
 	private static final int REGION_ROOT_OFFSET = 0;
+
+	private static final String NAV_TITLE = "navTitle";
+	private static final String PAGE_TITLE = "pageTitle";
 
 	@Self
 	private SlingHttpServletRequest request;
@@ -133,7 +138,19 @@ public class LanguageDropDownModel implements LanguageNavigation {
 	}
 	
 	public String getCountryRootPageTitle() {
-		return currentPage.getParent(getCountryPageDepthFromCurrentPage()).getProperties().get("navTitle").toString();
+		Page page = currentPage.getParent(getCountryPageDepthFromCurrentPage());
+		String title = StringUtils.EMPTY;
+		if(page != null){
+			ValueMap properties = page.getProperties();
+			if(properties.containsKey(NAV_TITLE)){
+				title = properties.get(NAV_TITLE, String.class);
+			} else if (properties.containsKey(PAGE_TITLE)){
+				title = properties.get(PAGE_TITLE, String.class);
+			} else {
+				title = properties.get(JcrConstants.JCR_TITLE, String.class);
+			}
+		}
+		return title;
 	}
 
 	public String getOverRideCurrentPage(){

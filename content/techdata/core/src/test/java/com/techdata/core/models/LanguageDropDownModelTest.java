@@ -80,7 +80,8 @@ class LanguageDropDownModelTest {
         when(navPage.getDepth()).thenReturn(4);
         when(currentPage.getParent(2)).thenReturn(parentPage);
         when(parentPage.getProperties()).thenReturn(valueMap);
-        when(valueMap.get("navTitle")).thenReturn("navTitle");
+        when(valueMap.containsKey("navTitle")).thenReturn(true);
+        when(valueMap.get("navTitle", String.class)).thenReturn("navTitle");
         assertEquals("navTitle", underTest.getCountryRootPageTitle());
     }
     @Test
