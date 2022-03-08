@@ -4287,3 +4287,12 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   };
   res.json(response);
 });
+
+app.get("/libs/cq/i18n/dictionary", function (req, res) {
+  res.json(
+    {
+      "techdata.quotes.placeholder.createfrom": "Create From",
+      "techdata.quotes.placeholder.selectpricingtype": "Select pricing type"
+    }
+  );
+});

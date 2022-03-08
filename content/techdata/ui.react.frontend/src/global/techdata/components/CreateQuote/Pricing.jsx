@@ -4,7 +4,7 @@ import Button from '../Widgets/Button';
 import { get } from '../../../../utils/api';
 import WidgetTitle from '../Widgets/WidgetTitle';
 
-const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions, disableCreateQuoteButton, prev}) => {
+const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions, disableCreateQuoteButton, prev, placeholderText}) => {
   const [items, setItems] = useState([])
   useEffect(() =>{
     const getData = async () => {
@@ -30,7 +30,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
       <WidgetTitle>
         <a onClick={prev}><i className="fas fa-chevron-left"></i> Create quote from</a>
       </WidgetTitle>
-      <Dropdown selected={method} setValue={setMethod} options={items} label="Commercial(Non-Govt)" placeholderText="Select the pricing option"/>
+      <Dropdown selected={method} setValue={setMethod} options={items} label="Commercial(Non-Govt)" placeholderText={placeholderText}/>
       <Button btnClass="cmp-quote-button" disabled={!method || disableCreateQuoteButton} onClick={createQuote}>{buttonTitle}</Button>
     </>
   )

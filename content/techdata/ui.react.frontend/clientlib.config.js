@@ -9,6 +9,7 @@ module.exports = {
         name: "clientlib-react",
         allowProxy: true,
         categories: ["techdata.react"],
+        dependencies: ["granite.utils"],
         serializationFormat: "xml",
         jsProcessor: ["min:none"],
         assets: {

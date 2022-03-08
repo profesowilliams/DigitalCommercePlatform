@@ -9,6 +9,7 @@ import EstimatedId from './EstimatedId';
 import { usPost } from '../../../../utils/api';
 import Modal from '../Modal/Modal';
 import { pushAnalyticsEvent } from './analytics';
+import { getDictionaryValue } from '../../../../utils/utils';
 
 const fixedPayload = { 
     "createFromId": "96722368",
@@ -161,7 +162,7 @@ const QuoteCreate = ({
           methods={methods}
           createQuote={goToPricing}
           buttonTitle='Next'
-          placeholderText='Create from'
+          placeholderText={getDictionaryValue("techdata.quotes.placeholder.createfrom", "Create From")}
         /> 
       }
       {
@@ -195,6 +196,7 @@ const QuoteCreate = ({
           setMethod={(option)=>setPricing(option)}
           pricingConditions={pricingConditions}
           disableCreateQuoteButton={disableCreateQuoteButton}
+          placeholderText={getDictionaryValue("techdata.quotes.placeholder.selectpricingtype", "Select pricing type")}
           prev={prev}
         />
       }

@@ -255,3 +255,8 @@ window.onload = function() {
         document.getElementsByClassName('basicpage')[0].setAttribute('style', '');
     }
 }
+
+export const getDictionaryValue = (dictionaryKey, defaultValue) => {
+    let dictionaryValue = Granite?.I18n?.get(dictionaryKey);
+    return dictionaryValue != dictionaryKey ? dictionaryValue : defaultValue;
+}
