@@ -16,13 +16,11 @@ function ConfigGrid({ data, gridProps }) {
           resellerLabels={quotePreview.reseller}
           reseller={reseller}
         />
-        <div className="info-divider"></div>
         <EndUserInfo
           productLines={quotePreview.productLines}
           endUserType={endUserType}
           endUser={endUser}
         />
-        <div className="info-divider"></div>
         <AgreementInfo
           source={source}
           programName={programName}
