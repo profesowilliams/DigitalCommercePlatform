@@ -16,5 +16,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal
         public string Currency { get; set; }
         public decimal? Save { get; set; }
         public DateTime? ExpiryDate { get; set; }
+        public bool? QuoteCurrent { get; set; }
     }
 }

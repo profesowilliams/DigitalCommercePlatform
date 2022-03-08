@@ -35,7 +35,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public PartyDto ShipTo { get; set; }
         public string RenewedDuration { get; set; }
         public List<OptionsDto> Options { get; set; }
-        public bool? QuoteCurrent { get; set; }
         public RenewalInRuleDto Renewal { get; set; }
         public string ResellerPO { get; set; }
     }
