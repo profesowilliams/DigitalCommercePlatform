@@ -185,7 +185,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
             />
             <PDFTableCell
                 header={header}
-                cellItem={currencySymbol + discountValue}
+                cellItem={discountValue + '% '}
                 type={"currency"}
                 cellWidth="15%"
                 cellStyle={unitPriceStyle}
@@ -201,7 +201,7 @@ const PDFTableRow = ({quoteItem, header, currencySymbol, flags, isRenewals}) => 
             />
             <PDFTableCell
                 header={header}
-                cellItem={(currencySymbol + totalValue)}
+                cellItem={(currencySymbol + (totalValue !== '' ? totalValue : '0'))}
                 cellWidth={flags && Object.keys(flags).length > 0 ? "10%" :"15%"}
                 type={"currency"}
                 cellStyle={totalPriceStyle}
