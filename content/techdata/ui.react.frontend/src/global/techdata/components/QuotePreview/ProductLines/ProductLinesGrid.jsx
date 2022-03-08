@@ -218,6 +218,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       return (
           <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
             <ProductLinesChildGrid
+              gridProps={gridProps}
               license={gridProps.agGridLicenseKey}
               columns={columnDefs}
               data={data.children}
