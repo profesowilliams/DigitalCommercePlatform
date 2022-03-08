@@ -1,14 +1,15 @@
-import { PDFDownloadLink } from "@react-pdf/renderer";
+
 import React, { useState } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
 import {
-  downloadClicked,
   PDFRenewalDocument,
 } from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
+
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);

@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
+import { pushEvent } from "../../../../utils/dataLayerUtils";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
@@ -10,10 +11,11 @@ import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
 function RenewalsGrid(props) {
- 
   const { onAfterGridInit, onQueryChanged, requestInterceptor } =
     useGridFiltering();
   const effects = useRenewalGridState(state => state.effects); 
+
+  console.log('effects', effects);
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
 
@@ -35,7 +37,7 @@ function RenewalsGrid(props) {
 
   function mapServiceData(response) {
     const mappedResponse = {...response};
-    const items = mappedResponse?.data?.content?.items?.map(val => ({...val, excelApi: componentProp?.uiServiceEndPointExcel}));
+    const items = mappedResponse?.data?.content?.items?.map(val => ({ ...val }));
     const itemsWithActions = items ? items.map((data) => ({ ...data, actions: true })) : [];
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
@@ -60,6 +62,20 @@ function RenewalsGrid(props) {
     effects.setCustomState({key:'pagination',value})
     return mappedResponse;
   }
+
+  const onSortChanged = (evt) => {
+    const clickedColumn = evt?.columnApi
+    ?.getAllGridColumns()
+    .map(({ colId, sort }) => ({ colId, sort }))
+    .filter((col) => col.sort)
+    if(clickedColumn.length) {
+      pushEvent("click", {
+        type: "button",
+        category: "Renewals Table Interaction",
+        name: clickedColumn[0]?.colId,
+      });
+    }
+  };
 
   const _onAfterGridInit = (config) => {    
     const value =  config.api;     
@@ -92,7 +108,8 @@ function RenewalsGrid(props) {
           onAfterGridInit={_onAfterGridInit}
           requestInterceptor={customRequestInterceptor}        
           mapServiceData={mapServiceData}       
-          isRenewals={true}   
+          isRenewals={true}
+          onSortChanged={onSortChanged}
           handlerIsRowMaster={() => true}
           icons={{
             groupExpanded: '<i></i>',

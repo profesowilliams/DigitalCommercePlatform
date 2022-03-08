@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { generateExcelFileFromPost } from "../../../../utils/utils";
-import {
-  PDFRenewalDocument,
-} from "../PDFWindow/PDFRenewalWindow";
+import { PDFRenewalDocument } from "../PDFWindow/PDFRenewalWindow";
 import { useRenewalGridState } from "./store/RenewalsStore";
+import { pushEvent } from "../../../../utils/dataLayerUtils";
 
 function DropdownDownloadList({ data, aemConfig }) {
   const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
   const { exportXLSRenewalsEndpoint } = aemConfig;
-
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
+
+  const dataToPush = (name) => ({
+    type: "button",
+    category: "Renewals Action Column",
+    name,
+  });
   const redirectToRenewalDetail = () => {
+    pushEvent("click", dataToPush("see details"));
     const renewalDetailsURL = encodeURI(
       `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
     );
@@ -21,6 +26,7 @@ function DropdownDownloadList({ data, aemConfig }) {
 
   const downloadXLS = () => {
     try {
+      pushEvent("click", dataToPush("download XLS"));
       generateExcelFileFromPost({
         url: exportXLSRenewalsEndpoint,
         name: "renewalsQuote.xlsx",
@@ -52,7 +58,9 @@ function DropdownDownloadList({ data, aemConfig }) {
           loading ? "loading..." : openPDF(url);
 
           return (
-            <button>
+            <button
+              onClick={() => pushEvent("click", dataToPush("download PDF"))}
+            >
               <i className="fas fa-file-pdf"></i>
               Download PDF
             </button>
@@ -60,7 +68,12 @@ function DropdownDownloadList({ data, aemConfig }) {
         }}
       </PDFDownloadLink>
     ) : (
-      <button onClick={() => setPDFDownloadableOnDemand(true)}>
+      <button
+        onClick={() => {
+          pushEvent("click", dataToPush("download PDF"));
+          setPDFDownloadableOnDemand(true);
+        }}
+      >
         <i className="fas fa-file-pdf"></i>
         Download PDF
       </button>
