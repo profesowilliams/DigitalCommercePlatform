@@ -58,6 +58,7 @@ const INITIAL_STATE = {
   detailRender:'primary',
   renewalOptionState:null,
   resetFilter:false,
+  rowCollapsedIndexList:null
 };
 
 const store = (set, get, a) => ({

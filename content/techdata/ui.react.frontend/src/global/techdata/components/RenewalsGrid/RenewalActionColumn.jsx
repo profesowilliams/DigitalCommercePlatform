@@ -13,7 +13,7 @@ function RenewalActionColumn({ eventProps }) {
         eventProps.node.setExpanded(!isToggled);    
         eventProps.api.forEachNode(node => {
             if (node?.rowIndex !== eventProps.node?.rowIndex){
-                node.setExpanded(false);
+                node?.expanded && node.setExpanded(false);
             }
         })        
         setToggled(!isToggled);

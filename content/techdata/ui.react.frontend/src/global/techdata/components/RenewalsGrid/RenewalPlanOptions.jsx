@@ -9,10 +9,10 @@ function RenewalPlanOptions({ labels, data }) {
     const { detailUrl = "", exportXLSRenewalsEndpoint = "" } = useRenewalGridState((state) => state.aemConfig);
     
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
-    const isCurrentPlan = plan => plan === data?.renewedDuration;
+    const isCurrentPlan = plan => plan.quoteCurrent;
     const isSamePlan = option => option?.contractDuration+" "+data?.support === renewalOptionState;
     React.useEffect(()=>{
-        const currentPlan = data?.options.find(({contractDuration}) => isCurrentPlan(contractDuration));
+        const currentPlan = data?.options.find((plan) => isCurrentPlan(plan));
         if (currentPlan) {
             const value = currentPlan?.contractDuration+" "+data?.support
             effects.setCustomState({key:'renewalOptionState', value});
@@ -28,13 +28,36 @@ function RenewalPlanOptions({ labels, data }) {
         const postData = {
             id
           };
-          generateExcelFileFromPost({url:exportXLSRenewalsEndpoint,name:`renewal-${id}.xlsx`,postData})
+          const name = `renewal-${id}.xlsx`;
+          const url = exportXLSRenewalsEndpoint;
+          console.log("🚀 ~ file: RenewalPlanOptions.jsx ~ line 33 ~ exportXlsPlan ~ url", url)
+          generateExcelFileFromPost({url,postData})
+    }
+    const computeClassName = (optionList, index) => {
+        const mediumScreenWidth = 1160;
+        const largeScreenWidth = 1638;
+        const availWidth = window.screen.availWidth;
+        const isLastElement = ({cols}) => (index+1) % cols == 0;       
+        //on 1 single row no border bottom and last element no right border
+        if (optionList.length <= 4){
+            if(optionList.length-1 === index) return "card-no-border";
+            return "card-right-border";
+        }        
+        //on 4 cols and multiple rows hide right border only on the last element
+        if (availWidth >= largeScreenWidth){
+            if(isLastElement({cols:4})) return "card-bottom-border";            
+        }
+        //on 3 cols and multiple rows hide right border only on the last element
+        if (availWidth >= mediumScreenWidth){
+            if(isLastElement({cols:3})) return "card-bottom-border";            
+        }
+        return "card-full-border";
     }
     return (
         <div className="cmp-renewal-plan-column">
-            {data?.options && data?.options.map(option => (
+            {data?.options && data?.options.map((option, index) => (
                 <>
-                    <div className="card" key={option?.id}>
+                    <div className={computeClassName(data?.options, index)} key={option?.id}>
                         <div className="header">
                             <div className="leftHeader">                              
                                 <h4>
@@ -46,13 +69,13 @@ function RenewalPlanOptions({ labels, data }) {
                                         type="radio"
                                         onClick={() => selectPlan(option?.contractDuration+" "+data?.support)}
                                         />
-                                    <label htmlFor={option?.id}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
+                                    <label htmlFor={option?.id} style={{fontSize:isSamePlan(option) && '18px'}}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
                             </div>
-                            <div className="rightHeader"><h4>$ {thousandSeparator(option?.total)}</h4></div>
+                            <div className="rightHeader"><h4 htmlFor={option?.id} style={{fontSize:isSamePlan(option) && '18px'}}>$ {thousandSeparator(option?.total)}</h4></div>
                             <div className="clear"></div>
                         </div>
                         <div className="planDetails">
-                            <span className="currentPlan">{isCurrentPlan(option?.contractDuration) && 'Current Plan'}</span>
+                            <span className="currentPlan">{isCurrentPlan(option) && 'Current Plan'}</span>
                             <p>{labels.quoteIdLabel}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
                             <p>{labels.refNoLabel}  {option?.id}</p>
                             <p>{labels.expiryDateLabel}  {dateToString(option?.expiryDate.replace(/[zZ]/g, ''), "MM/dd/uu")}</p>

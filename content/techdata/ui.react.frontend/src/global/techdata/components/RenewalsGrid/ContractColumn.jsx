@@ -8,6 +8,7 @@ function ContractColumn({ data, eventProps }) {
   const effects = useRenewalGridState(state => state.effects);
   const detailRender = useRenewalGridState(state => state.detailRender);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
+  const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
   const [togglePlanUpdated, setToggleUpdatedPlan] = React.useState(false);
   const [isToggled, setToggled] = React.useState(false);
   React.useEffect(() => {
@@ -16,17 +17,25 @@ function ContractColumn({ data, eventProps }) {
   React.useEffect(() => {
     if (!isToggled && renewalOptionState) setToggleUpdatedPlan(true)
   }, [isToggled])
+  React.useEffect(() => {
+    const currentNode = eventProps.node; 
+    rowCollapsedIndexList?.includes(currentNode.rowIndex) && setToggled(false);
+  }, [rowCollapsedIndexList])
   const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
   const toggleExpandedRow = () => {
     effects.setCustomState({ key: 'detailRender', value: 'secondary' })
-    eventProps.api.forEachNode(node => {
-      if (node?.rowIndex !== eventProps.node?.rowIndex){
-          node.setExpanded(false);
-      }
-    })  
     eventProps.node.setExpanded(!isToggled);
     setToggled(!isToggled);
     setToggleUpdatedPlan(!togglePlanUpdated)
+    const rowCollapsedIndexList = [];
+    eventProps.api.forEachNode(node => {
+      const currentNode = eventProps.node;      
+      if (node?.rowIndex !== currentNode?.rowIndex){     
+          node?.expanded && node.setExpanded(false);        
+          rowCollapsedIndexList.push(node?.rowIndex);
+      }
+    });
+    effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
   }
   
   return (

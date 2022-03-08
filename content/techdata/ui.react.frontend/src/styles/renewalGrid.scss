@@ -1,3 +1,61 @@
+@mixin common-planoption-card {
+  padding: 20px;
+  text-align: left;
+  position: relative;
+  padding-bottom: 2rem;  
+  .rightHeader {
+    float: right;
+    font-size: 20px;
+    color: #000c21;
+    h4{
+      label{
+        cursor: pointer;
+      }
+    }
+  }
+  .clear {
+    clear: both;
+  }
+  .leftHeader {
+    float: left;
+    font-size: 20px;
+    color: #000c21;
+    h4{
+      label{
+        cursor: pointer;
+      }
+    }
+  }
+  .planDetails {
+    text-align: left;
+    font-size: 12px;
+    margin-top: 8px;
+    p {
+      line-height: 1.6em;
+    }
+  }
+  .currentPlan {
+    text-align: left;
+    font-style: italic;
+    color: #0ab00a;
+  }		
+  .footer{
+    display: flex;
+    margin-top: 2rem;
+    gap: 1px;
+    button {
+      width : 130px;
+      background-color: white;
+      cursor: pointer;
+    }
+    span.vertical-separator{
+      background: #cbc9c9;
+      width: 1px;
+      height: 24px;
+      }
+  }	
+}
+
 .cmp-renewals-grid {
   .ag-theme-alpine .ag-root-wrapper {
     border: none;
@@ -44,6 +102,31 @@
 	.cmp-due-date-column{
 		text-align: left;
 	}
+  @mixin bottom-border(){
+    &:nth-child(-n+4){			
+      &::before{
+        content: "";
+        position: absolute;
+        background-color: #e1e1e4;
+        height: 1px;
+        width: calc(100% - 9%);
+        left: 9px;
+        bottom: 0;				
+      }				
+    } 
+  }
+  @mixin right-border{
+    &::after{
+      content: "";
+      position: absolute;
+      background-color: #e1e1e4;
+      width: 1px;
+      height: calc(100% - 15%);
+      top: 0;
+      bottom: 0;
+      right: 0;				
+    }
+  }
 	.cmp-price-column{
 		text-align: right;
 	}
@@ -57,81 +140,22 @@
 		@media (max-width:750px){
 			display: flex;
 			flex-direction: column;
-		}
-		.card {	
-			padding: 20px;
-			text-align: left;
-			position: relative;
-			padding-bottom: 2rem;
-			&::after{
-				content: "";
-				position: absolute;
-				background-color: #e1e1e4;
-				width: 1px;
-				height: calc(100% - 15%);
-				top: 0;
-				bottom: 0;
-				right: 0;				
-			}
-			&:nth-child(-n+4){			
-				&::before{
-					content: "";
-					position: absolute;
-					background-color: #e1e1e4;
-					height: 1px;
-					width: calc(100% - 9%);
-					left: 9px;
-					bottom: 0;				
-				}
-				
-			}
-			.rightHeader {
-				float: right;
-				font-size: 20px;
-				color: #000c21;
-			}
-			.clear {
-				clear: both;
-			}
-			.leftHeader {
-				float: left;
-				font-size: 20px;
-				color: #000c21;
-				h4{
-					label{
-						cursor: pointer;
-					}
-				}
-			}
-			.planDetails {
-				text-align: left;
-				font-size: 12px;
-        margin-top: 8px;
-        p {
-          line-height: 1.6em;
-        }
-			}
-			.currentPlan {
-				text-align: left;
-				font-style: italic;
-				color: #0ab00a;
-			}		
-			.footer{
-				display: flex;
-				margin-top: 2rem;
-				gap: 1px;
-				button {
-					width : 130px;
-					background-color: white;
-					cursor: pointer;
-				}
-				span.vertical-separator{
-					background: #cbc9c9;
-					width: 1px;
-					height: 24px;
-				  }
-			}			
-		
+		}  
+    .card-no-border{
+      @include common-planoption-card;  
+    }
+    .card-bottom-border {    
+      @include common-planoption-card;  
+      @include bottom-border;  
+    }
+    .card-right-border {
+      @include common-planoption-card;  
+      @include right-border;   
+    }
+		.card-full-border {	
+      @include common-planoption-card;
+      @include bottom-border;
+      @include right-border;
 		  }
 	}
   
