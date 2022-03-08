@@ -37,15 +37,13 @@
           }
           &:last-child {
             padding-left: 20px;
-            &:before {
-              content: "\f1c3";
-              color: #000c21;
-              @include font-awesome;
-              font-size: 14px;
-              font-weight: 600;
-              line-height: 14px;
-              padding-right: 10px;
-            }
+          }
+          svg {
+            color: #000c21;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 14px;
+            margin-right: .4em;
           }
         }
       }

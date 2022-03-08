@@ -3,7 +3,6 @@ import PDFTableRow from "../PDFTableRow/PDFTableRow";
 import PDFAncilllaryRow from "../PDFTableRow/PDFAncilllaryRow";
 
 const PDFRenewalTable = ({quoteItems, currencySymbol, extraOptions, ancillaryItems}) => {
-    console.log('quote items', quoteItems);
     let quoteLineItems;
     const headerItems = {
         "id" : "ID",

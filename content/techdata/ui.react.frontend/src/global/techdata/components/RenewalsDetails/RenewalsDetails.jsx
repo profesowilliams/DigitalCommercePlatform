@@ -29,7 +29,7 @@ function RenewalsDetails(props) {
           <ConfigGrid data={renewalsDetails} gridProps={componentProp} />
           <RenewalPreviewGrid
             data={renewalsDetails}
-            gridProps={{...componentProp.productLines, excelFileUrl: componentProp?.uiServiceEndPointExcel}}
+            gridProps={{...componentProp.productLines, excelFileUrl: componentProp?.exportXLSRenewalsEndpoint}}
             shopDomainPage={componentProp.shopDomainPage}
           />
         </section>

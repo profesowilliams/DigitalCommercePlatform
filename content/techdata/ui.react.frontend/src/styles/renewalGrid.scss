@@ -250,6 +250,9 @@
     justify-content: flex-end;
     align-items: center;
     gap: 1%;
+    a {
+      text-decoration: none;
+    }
     button {
       cursor: pointer;
       background-color: inherit;

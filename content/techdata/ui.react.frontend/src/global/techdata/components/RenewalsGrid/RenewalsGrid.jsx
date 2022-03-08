@@ -33,7 +33,6 @@ function RenewalsGrid(props) {
     errorGettingDataMessage: "Internal server error please refresh the page",
   };
 
-
   function mapServiceData(response) {
     const mappedResponse = {...response};
     const items = mappedResponse?.data?.content?.items?.map(val => ({...val, excelApi: componentProp?.uiServiceEndPointExcel}));
