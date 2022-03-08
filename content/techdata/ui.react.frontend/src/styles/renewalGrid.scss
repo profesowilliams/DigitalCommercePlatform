@@ -44,6 +44,9 @@
 	.cmp-due-date-column{
 		text-align: left;
 	}
+	.cmp-price-column{
+		text-align: right;
+	}
   .cmp-renewal-plan-column{
 		display: grid;
 		grid-template-columns: repeat( auto-fit, minmax(380px, 1fr) );

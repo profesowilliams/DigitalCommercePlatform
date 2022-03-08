@@ -3,9 +3,7 @@ import { dateToString, thousandSeparator } from "../../helpers/formatting";
 
 function PriceColumn({ columnValue }) {
   return (
-    <div className="cmp-due-date-column"> 
-      {columnValue?.currency}   
-      {' '}    
+    <div className="cmp-price-column">       
       {thousandSeparator(columnValue?.total)}
     </div>
   );
