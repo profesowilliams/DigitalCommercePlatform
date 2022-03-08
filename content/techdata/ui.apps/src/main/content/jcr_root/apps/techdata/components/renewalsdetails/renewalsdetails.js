@@ -204,6 +204,11 @@ use(['../common/utils.js'], function(utils) {
     if (quotePreview != null) {
         jsonObject["quotePreview"] = quotePreview;
     }
+
+    if (this.exportXLSRenewalsEndpoint != null && this.serviceData.uiServiceDomain) {
+        jsonObject["exportXLSRenewalsEndpoint"] = this.serviceData.uiServiceDomain + this.exportXLSRenewalsEndpoint;
+    }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };
