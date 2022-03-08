@@ -338,7 +338,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             Worksheet.Cells[_row, 3].Style.Numberformat.Format = "0.0";
             Worksheet.Cells[_row, 3].Style.Border.Left.Style = Settings.DefaultBorder;
 
-            Worksheet.Cells[_row, 4].Value = !string.IsNullOrEmpty(line.Description) ? line.Description : NOT_AVAILABLE;
+            Worksheet.Cells[_row, 4].Value = !string.IsNullOrEmpty(line.ShortDescription) ? line.ShortDescription : NOT_AVAILABLE;
             Worksheet.Cells[_row, 5].Value = !string.IsNullOrEmpty(line.VendorPartNo) ? line.VendorPartNo : NOT_AVAILABLE;
             Worksheet.Cells[_row, 6].Value = NA;
             Worksheet.Cells[_row, 7].Value = NA;
@@ -374,7 +374,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             Worksheet.Cells[_row, 3].Value = line.DisplayLineNumber;
             Worksheet.Cells[_row, 3].Style.Numberformat.Format = "0.0";
-            Worksheet.Cells[_row, 4].Value = !string.IsNullOrEmpty(line.Description) ? line.Description : NOT_AVAILABLE;
+            Worksheet.Cells[_row, 4].Value = !string.IsNullOrEmpty(line.ShortDescription) ? line.ShortDescription : NOT_AVAILABLE;
             Worksheet.Cells[_row, 5].Value = !string.IsNullOrEmpty(line.VendorPartNo) ? line.VendorPartNo : NOT_AVAILABLE;
 
             FillLineDataAttributes(line);
