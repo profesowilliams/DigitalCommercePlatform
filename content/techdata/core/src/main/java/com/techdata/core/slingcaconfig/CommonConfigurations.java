@@ -13,5 +13,8 @@ public @interface CommonConfigurations {
 
     @Property(label = "AG-Grid License Key", description = "AG-Grid License Key")
     String agGridLicenseKey();
-    
+
+    @Property(label = "Enable Qualtrics Code", description = "Check to enable Qualtrics code.")
+    boolean enableQualtricsCode() default false;
+
 }

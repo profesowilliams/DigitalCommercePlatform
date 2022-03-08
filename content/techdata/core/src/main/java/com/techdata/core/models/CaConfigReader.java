@@ -174,6 +174,8 @@ public class CaConfigReader {
 
     private String productEmptyImageUrl;
 
+    private boolean enableQualtricsCode;
+
     private String downloadOrderDetailsEndpoint;
 
     private String dcpDomain;
@@ -293,6 +295,7 @@ public class CaConfigReader {
         FormConfigurations formConfigurations = page.adaptTo(ConfigurationBuilder.class).as(FormConfigurations.class);
 
         productEmptyImageUrl = commonConfigurations.productEmptyImageUrl();
+        enableQualtricsCode = commonConfigurations.enableQualtricsCode();
         agGridLicenseKey = commonConfigurations.agGridLicenseKey();
         allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
@@ -613,4 +616,9 @@ public class CaConfigReader {
     public String getFileThresholdInMB() {
         return fileThresholdInMB;
     }
+
+    public boolean isEnableQualtricsCode() {
+        return enableQualtricsCode;
+    }
+
 }
