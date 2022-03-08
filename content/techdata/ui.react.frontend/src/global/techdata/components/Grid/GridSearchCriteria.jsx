@@ -65,6 +65,7 @@ function GridSearchCriteria({
   }
 
 	function onClear() {
+		analyticsData.current = null;
 		if (typeof onClearRequest === 'function') {
 			onClearRequest();
 			handlerAnalyticsClearClickEvent(category)	// Analytic event handler

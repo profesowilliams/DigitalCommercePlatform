@@ -377,7 +377,6 @@ function OrdersGrid(props) {
 
     async function handleRequestInterceptor(request) {
         const response = await filteringExtension.requestInterceptor(request);
-
         handleFilterComponent(
             analyticModel.current,
             response?.data?.content?.items?.length
@@ -412,6 +411,17 @@ function OrdersGrid(props) {
         analyticModel.current = query.analyticsData;
     };
 
+    /**
+     * handler execute the clear event and
+     * add analytic events and manage the correct way
+     * @param {any} query 
+     * @param {any} options 
+     */
+    const handlerOnClearEvent = (query, options = { filterStrategy: 'get' }) => {
+        analyticModel.current = null; // forcing the null value to not enter into the analytic funtion again
+        filteringExtension.onQueryChanged(query, options);
+    };
+
     if(HAS_ORDER_ACCESS) {
       return (
         <section>
@@ -424,7 +434,7 @@ function OrdersGrid(props) {
                     label={componentProp.searchCriteria?.title ?? 'Filter Orders'}
                     componentProp={componentProp.searchCriteria}
                     onSearchRequest={handleOnSearchRequest}
-                    onClearRequest={filteringExtension.onQueryChanged}
+                    onClearRequest={handlerOnClearEvent}
                     uiServiceEndPoint={uiServiceEndPoint}
                     category={ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY}
                     handleClickOptionsButton={handleClickOptionsButton}
@@ -442,7 +452,6 @@ function OrdersGrid(props) {
                 modalAction={modal.action}
                 modalContent={modal.content}
                 modalProperties={modal.properties}
-                modalAction={modal.modalAction}
                 actionErrorMessage={modal.errorMessage}
                 onModalClosed={() => setModal(null)}
             ></Modal>}
