@@ -131,7 +131,6 @@ function OrdersGridSearch({
         query.keyword?.key && query.keyword?.value ? query.keyword?.value : "",
       searchOption: isNotEmptyValue(query.keyword?.value),
       vendorFilter: isNotEmptyValue(query.manufacturer?.key) && !isEqual(query.manufacturer?.key, defaultAllVendor),
-      license: isNotEmptyValue(query.license?.key) && !isEqual(query.license?.key, defaultAllLine),
       method: isNotEmptyValue(query.method?.key) && !isEqual(query.method?.key, defaultAllMethod),
       fromDate: validateDatesForAnalytics(query.from),
       toDate: validateDatesForAnalytics(query.to),

@@ -203,23 +203,18 @@ function OrdersGrid(props) {
         if  (!isNotEmptyValue(analyticObjectParam)) {
             return; // forcing the return if the object is empty
         }
-
-        const quotes = {
-            vendorFilter: analyticObjectParam.vendorFilter
-        };
         const order = {
             searchTerm: analyticObjectParam.searchTerm,
-            searchOption: analyticObjectParam.searchOption ,
-            license: analyticObjectParam.license ,
-            method: analyticObjectParam.method ,
-            fromDate: analyticObjectParam.fromDate ,
-            toDate: analyticObjectParam.toDate ,
+            searchOption: analyticObjectParam.searchOption,
+            method: analyticObjectParam.method,
+            fromDate: analyticObjectParam.fromDate,
+            toDate: analyticObjectParam.toDate,
+            vendorFilter: analyticObjectParam.vendorFilter,
             nullSearch: !isNotEmptyValue(responseLength) // when the UI/service not found a row return a null value, so if the result is empty then this value is true, else false
         };
         const objectToSend = {
           event: ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,
           order,
-          quotes,
         };
         pushEventAnalyticsGlobal(objectToSend);
     };
