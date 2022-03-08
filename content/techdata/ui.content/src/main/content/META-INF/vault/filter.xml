@@ -7,4 +7,5 @@
     <filter root="/etc/map.publish.dev"/>
     <filter root="/etc/map.publish.stage"/>
     <filter root="/etc/map.publish.prod"/>
+    <filter root="/etc/languages"/>
 </workspaceFilter>
