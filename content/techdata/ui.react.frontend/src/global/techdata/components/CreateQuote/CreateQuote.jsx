@@ -21,7 +21,7 @@ const QuoteCreate = ({
     requested, authError, componentProp, 
   }) => {
   const { 
-    label, quotePreviewUrl, buttonTitle, buttonTitleInProgress, createQuoteInProgress, createQuoteError, optionsList, pricingConditions,
+    label, quotePreviewUrl, quotesGridUrl, buttonTitle, buttonTitleInProgress, createQuoteInProgress, createQuoteError, optionsList, pricingConditions,
     ...endpoints
   } = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false);
@@ -126,8 +126,7 @@ const QuoteCreate = ({
             <div>{createQuoteInProgress}</div>
           ), onModalClosed => {
             closeModal();
-            const { quoteId } = content;
-            window.location.href = `${quotePreviewUrl}${quotePreviewUrl.indexOf('?') >= 0 ? '&' : '?' }quoteId=${quoteId}`;
+            window.location.href = quotesGridUrl;
           });
         }
       }

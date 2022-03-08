@@ -51,6 +51,10 @@ use(function () {
         jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl"));
     }
 
+    if (properties.get("quotesGridUrl") != null) {
+        jsonObject.put("quotesGridUrl", properties.get("quotesGridUrl"));
+    }
+
      if (this.uiServiceDomain != null) {
         jsonObject.put("endpoint", this.uiServiceDomain+this.createQuoteEndpoint);
         jsonObject.put("cartslistEndpoint", this.uiServiceDomain+this.savedCartsEndpoint);

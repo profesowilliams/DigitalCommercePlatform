@@ -39,8 +39,13 @@
 					<quotePreviewUrl
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-							fieldLabel="quote Preview Url"
+							fieldLabel="Quote Preview Url"
 							name="./quotePreviewUrl"/>
+					<quotesGridUrl
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+							fieldLabel="Quotes Grid Url"
+							name="./quotesGridUrl"/>
 					<optionsList
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
