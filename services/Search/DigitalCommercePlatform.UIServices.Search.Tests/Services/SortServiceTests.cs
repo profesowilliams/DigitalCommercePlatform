@@ -39,7 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public void GetDefaultSortingOptions_ReturnSortingOptions()
         {
             //arrange
-            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel<string>>>(key)).Returns(GetDefaultSortOptions);
+            _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel<string>>>(key)).Returns(GetDefaultSortOptionsUnauthenticated);
 
             _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), null))
                 .Returns((Dictionary<string, string> dict, string key, string fallback) => $"{key}Translated");
@@ -48,7 +48,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var actual = GetSut.GetDefaultSortingOptions(null);
 
             //assert
-            actual.Should().BeEquivalentTo(GetDefaultTranslatedSortOptions);
+            actual.Should().BeEquivalentTo(GetDefaultTranslatedSortOptionsUnauthenticated);
             _translationServiceMock.Verify(x => x.FetchTranslations(key, ref It.Ref<Dictionary<string, string>>.IsAny), Times.Once);
         }
 
@@ -98,13 +98,13 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
         [Theory]
         [AutoDomainData(nameof(GetSortingOptionsBasedOnRequest_ReturnExpected_Data))]
-        public void GetSortingOptionsBasedOnRequest_ReturnExpected(SortRequestModel sortRequestModel, IEnumerable<DropdownElementModel<string>> expectedValue)
+        public void GetSortingOptionsBasedOnRequest_ReturnExpected(SortRequestModel sortRequestModel, SearchProfileId searchProfileId, IEnumerable<DropdownElementModel<string>> expectedValue)
         {
             //arrange
             _siteSettingsMock.Setup(x => x.GetSetting<List<DropdownElementModel<string>>>(key)).Returns(GetDefaultSortOptions);
 
             //act
-            var actual = GetSut.GetSortingOptionsBasedOnRequest(sortRequestModel, null);
+            var actual = GetSut.GetSortingOptionsBasedOnRequest(sortRequestModel, searchProfileId);
 
             //assert
             actual.Should().BeEquivalentTo(expectedValue);
@@ -117,26 +117,37 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 new object[]
                 {
                     null,
+                    new SearchProfileId("38048612", "531517"),
                     GetDefaultSortOptions
                 },
                 new object[]
                 {
                     new SortRequestModel{ Type="Another", Direction=true},
+                    new SearchProfileId("38048612", "531517"),
                     GetDefaultSortOptions.Select(x=>{ x.Selected=false; return x; })
                 },
                 new object[]
                 {
                     new SortRequestModel{ Type="Stock"},
+                    new SearchProfileId("38048612", "531517"),
                     GetDefaultSortOptions.Select(x=>{x.Selected=x.Id=="Stock"; return x; })
                 },
                 new object[]
                 {
+                    new SortRequestModel{ Type="Stock"},
+                    null,
+                    GetDefaultSortOptionsUnauthenticated.Select(x=>{x.Selected=x.Id=="Relevance.True"; return x; })
+                },
+                new object[]
+                {
                     new SortRequestModel{ Type="Price", Direction=true},
+                    new SearchProfileId("38048612", "531517"),
                     GetDefaultSortOptions.Select(x=>{x.Selected=x.Id=="Price.True"; return x; })
                 },
                 new object[]
                 {
                     new SortRequestModel{ Type="Price", Direction=false},
+                    new SearchProfileId("38048612", "531517"),
                     GetDefaultSortOptions.Select(x=>{x.Selected=x.Id=="Price.False"; return x; })
                 }
             };
@@ -179,14 +190,14 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     null,
                     null,
                     0,
-                    GetDefaultTranslatedSortOptions
+                    GetDefaultTranslatedSortOptionsUnauthenticated
                 },
                 new object[]
                 {
                     new SearchProfileId(null,null),
                     null,
                     0,
-                    GetDefaultTranslatedSortOptions
+                    GetDefaultTranslatedSortOptionsUnauthenticated
                 },
                 new object[]
                 {
@@ -227,11 +238,29 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 new DropdownElementModel<string>{ Id="Price.False", Selected=false}
             };
 
+        private static List<DropdownElementModel<string>> GetDefaultSortOptionsUnauthenticated =>
+            new List<DropdownElementModel<string>>
+            {
+                new DropdownElementModel<string>{ Id="Relevance", Selected=false},
+                // Stock should be removed because it is an unauthanticated user
+                new DropdownElementModel<string>{ Id="Price.True", Selected=true},
+                new DropdownElementModel<string>{ Id="Price.False", Selected=false}
+            };
+
         private static List<DropdownElementModel<string>> GetDefaultTranslatedSortOptions =>
             new List<DropdownElementModel<string>>
             {
                 new DropdownElementModel<string>{ Id="Relevance", Selected=false, Name="RelevanceTranslated"},
                 new DropdownElementModel<string>{ Id="Stock", Selected=false, Name="StockTranslated"},
+                new DropdownElementModel<string>{ Id="Price.True", Selected=true, Name="Price.TrueTranslated"},
+                new DropdownElementModel<string>{ Id="Price.False", Selected=false, Name="Price.FalseTranslated"}
+            };
+
+        private static List<DropdownElementModel<string>> GetDefaultTranslatedSortOptionsUnauthenticated =>
+            new List<DropdownElementModel<string>>
+            {
+                new DropdownElementModel<string>{ Id="Relevance", Selected=false, Name="RelevanceTranslated"},
+                // Stock should be removed because it is an unauthanticated user
                 new DropdownElementModel<string>{ Id="Price.True", Selected=true, Name="Price.TrueTranslated"},
                 new DropdownElementModel<string>{ Id="Price.False", Selected=false, Name="Price.FalseTranslated"}
             };

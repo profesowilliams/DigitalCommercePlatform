@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
+using DigitalCommercePlatform.UIServices.Search.Models.Profile;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
@@ -26,7 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mapper _mapper;
         private readonly Mock<ISortService> _sortServiceMock;
         private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
-
 
         public FullSearchTests()
         {
@@ -112,7 +112,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public void ValidatorReturnValidWhenValidRequest(FullSearch.Request request)
         {
             //arrange
-            var sut = new FullSearch.Validator();
+            _sortServiceMock.Setup(x => x.GetSortingOptionsBasedOnRequest(It.IsAny<SortRequestModel>(), It.IsAny<SearchProfileId>())).Returns(GetDefaultSortOptions);
+            var sut = new FullSearch.Validator(_sortServiceMock.Object);
 
             //act
             var result = sut.TestValidate(request);
@@ -126,13 +127,29 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         public void ValidationThrowsErrorForMissingSearchStringOrCategoryRefinementGroup(FullSearch.Request request)
         {
             //arrange
-            var sut = new FullSearch.Validator();
+            _sortServiceMock.Setup(x => x.GetSortingOptionsBasedOnRequest(It.IsAny<SortRequestModel>(), It.IsAny<SearchProfileId>())).Returns(GetDefaultSortOptions);
+            var sut = new FullSearch.Validator(_sortServiceMock.Object);
 
             //act
             var result = sut.TestValidate(request);
 
             //assert
             result.ShouldHaveValidationErrorFor(r => r.FullSearchRequestModel.SearchString);
+        }
+
+        [Theory]
+        [AutoDomainData((nameof(GetWrongSortRequests)))]
+        public void ValidationThrowsErrorForInvalidSortingOptions(FullSearch.Request request)
+        {
+            //arrange
+            _sortServiceMock.Setup(x => x.GetSortingOptionsBasedOnRequest(It.IsAny<SortRequestModel>(), It.IsAny<SearchProfileId>())).Returns(GetDefaultSortOptions);
+            var sut = new FullSearch.Validator(_sortServiceMock.Object);
+
+            //act
+            var result = sut.TestValidate(request);
+
+            //assert
+            result.ShouldHaveValidationErrorFor(r => r.FullSearchRequestModel.Sort.Type);
         }
 
         [Theory]
@@ -195,7 +212,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             {
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test" }, null, "en-US") },
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Categories" } } }, null, "en-US") },
-                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test", RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Categories" } } }, null, "en-US") }
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test", RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Categories" } } }, null, "en-US") },
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test", Sort = new SortRequestModel { Type = "Relevance" } }, null, "en-US") },
             };
 
         public static List<object[]> GetWrongRequests =>
@@ -206,6 +224,21 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = null }, null, "en-US") },
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "" }, null, "en-US") },
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Test" } } }, null, "en-US") },
+            };
+
+        public static List<object[]> GetWrongSortRequests =>
+            new()
+            {
+                new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "test", Sort = new SortRequestModel { Type = "NotValidSortingOption" } }, null, "en-US") },
+            };
+
+        private static IEnumerable<DropdownElementModel<string>> GetDefaultSortOptions =>
+            new List<DropdownElementModel<string>>
+            {
+                        new DropdownElementModel<string>{ Id="Relevance", Selected=false},
+                        new DropdownElementModel<string>{ Id="Stock", Selected=false},
+                        new DropdownElementModel<string>{ Id="Price.True", Selected=true},
+                        new DropdownElementModel<string>{ Id="Price.False", Selected=false}
             };
 
         private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object, _itemsPerPageServiceMock.Object);

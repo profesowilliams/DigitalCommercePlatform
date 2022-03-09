@@ -9,7 +9,9 @@ using DigitalCommercePlatform.UIServices.Search.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -106,10 +108,24 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
         public class Validator : AbstractValidator<Request>
         {
-            public Validator()
+            private readonly ISortService _sortService;
+
+            public Validator(ISortService sortService)
             {
+                _sortService = sortService;
+
                 RuleFor(c => c.FullSearchRequestModel).NotNull();
                 RuleFor(c => c.FullSearchRequestModel.SearchString).NotEmpty().When(w => w.FullSearchRequestModel?.RefinementGroups?.Find(x => x.Group.ToUpperInvariant() == "CATEGORIES") == null).WithMessage("Please provide SearchString or RefinementGroup Categories or both");
+                
+                RuleFor(c => c).Must(CheckValidSortTypeRequest).WithName("FullSearchRequestModel.Sort.Type").WithMessage("Sort type is invalid.");
+            }
+
+            private bool CheckValidSortTypeRequest(Request request)
+            {
+                if (request?.FullSearchRequestModel?.Sort == null || request?.FullSearchRequestModel?.Sort?.Type == null) { return true; }
+                var sortOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort,  request.ProfileId);
+                var isValid = sortOptions.Any(x => x.Id.StartsWith(request?.FullSearchRequestModel?.Sort?.Type, StringComparison.InvariantCultureIgnoreCase));
+                return isValid;
             }
         }
     }

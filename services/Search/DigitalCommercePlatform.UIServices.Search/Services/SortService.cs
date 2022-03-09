@@ -21,8 +21,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
     public class SortService : ISortService
     {
-        private readonly List<DropdownElementModel<string>> _sortingOptions;
+        private List<DropdownElementModel<string>> _sortingOptions;
         private readonly IProfileService _profileService;
+        private const string _sortByStockId = "STOCK";
 
         public SortService(ISiteSettings siteSettings, ITranslationService translationService, IProfileService profileService)
         {
@@ -63,7 +64,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private void SetSortingOptionsBasedOnprofile(SearchProfileId profileId)
         {
             if (profileId is null || !profileId.HasValue)
+            {
+                _sortingOptions = RemoveStockFromSortingOptions(_sortingOptions);
                 return;
+            }
 
             var searchProfile = _profileService.GetSearchProfile(profileId);
             if (searchProfile is null)
@@ -75,6 +79,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 return;
 
             _sortingOptions.ForEach(x => x.Selected = x.Id == selectedOption.Id);
+        }
+
+        private static List<DropdownElementModel<string>> RemoveStockFromSortingOptions(List<DropdownElementModel<string>> sortOptions)
+        {
+            return sortOptions.Where(x => !x.Id.Equals(_sortByStockId, StringComparison.InvariantCultureIgnoreCase)).ToList();
         }
 
         public IEnumerable<DropdownElementModel<string>> GetDefaultSortingOptions(SearchProfileId profileId)
@@ -96,12 +105,17 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
             string sortingId = GetSortingId(type, direction);
 
-            return _sortingOptions.Select(x =>
+            var sortingOptions = _sortingOptions.Select(x =>
             {
                 x.Selected = sortingId is null ? x.Selected : sortingId.StartsWith(x.Id, StringComparison.InvariantCultureIgnoreCase);
 
                 return x;
             });
+            if (profileId == null || profileId?.UserId == null)
+            {
+                sortingOptions = RemoveStockFromSortingOptions(sortingOptions.ToList());
+            }
+            return sortingOptions;
         }
 
         private static string GetSortingId(string type, bool direction)
