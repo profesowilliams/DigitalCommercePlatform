@@ -63,17 +63,20 @@
              }
           });
         </script>
-    <sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader"
-         data-sly-test="${serviceData.enableQualtricsCode}">
-        <script type="text/javascript">
+<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader"
+     data-sly-test="${serviceData.enableQualtricsCode}">
+    <script type="text/javascript">
             if(typeof QSI === "undefined") {
-                QSI = {};
-                QSI.config = {
-                  externalReference: adobeDataLayer.page.visitor.ecID
-                };
+                // QSI object populated only for logged in user
+                if(adobeDataLayer.page && adobeDataLayer.page.visitor && adobeDataLayer.page.visitor.ecID) {
+                    QSI = {};
+                    QSI.config = {
+                      externalReference: adobeDataLayer.page.visitor.ecID
+                    };
+                }
             }
         </script>
-    </sly>
+</sly>
 <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
      data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
 <sly data-sly-test="${!isRedirectPage}">
