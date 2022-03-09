@@ -1,19 +1,17 @@
 import produce from "immer";
-import React from "react";
+import React, { useEffect } from "react";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import FilterDatePicker from "./FilterDatepicker";
 import SubFilter from "./SubFilter";
-
-
-const Count = ({ children }) => {
-  return <div className="count">{children}</div>;
-};
+import Count from "./Count";
 
 function Filter({ id }) {  
   const filterList = useRenewalGridState((state) => state.filterList);
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
-  const { setFilterList } = useRenewalGridState((state) => state.effects);
+  const { setFilterList, setAppliedFilterCount } = useRenewalGridState(
+    (state) => state.effects
+  );
 
   if (!filterList) return null;
 
@@ -60,6 +58,10 @@ function Filter({ id }) {
     }
     return k === 0 ? null : k;
   };
+
+  useEffect(() => {
+    setAppliedFilterCount();
+  }, [filterList, dateSelected]);
 
   return (
     <>

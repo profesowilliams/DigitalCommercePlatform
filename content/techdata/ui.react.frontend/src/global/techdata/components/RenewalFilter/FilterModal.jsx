@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
@@ -15,16 +15,14 @@ const FilterDialog = ({ children }) => {
 
 const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   // https://beta.reactjs.org/learn/choosing-the-state-structure#avoid-deeply-nested-state
-  const aemFilterData = normaliseState(aemData.filterListValues);  
+  const aemFilterData = normaliseState(aemData.filterListValues);
+
   const filterList = useRenewalGridState(state => state.filterList);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
   const datePickerState = useRenewalGridState(state => state.datePickerState);
   const resetFilter = useRenewalGridState(state => state.resetFilter);
-  
-  
-
-  
   const effects = useRenewalGridState(state => state.effects);
+
   const { setFilterList, toggleFilterModal } = effects;
 
   useEffect(() => {
@@ -35,12 +33,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   const root = filterList ? filterList[0] : false;
   const rootIds = root ? root.childIds : [];
-  
-  
+
   const showResult = () => {
     const optionFields = generateFilterFields(filterList, dateSelected, datePickerState);
     const queryString = JSON.stringify(optionFields);
-    toggleFilterModal();   
+    toggleFilterModal();
     if (resetFilter){
       onQueryChanged();
       effects.setCustomState({key:'resetFilter', value: false});
@@ -50,6 +47,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   }
 
   if (!filterList) return null;
+  
   return (
     <div className="filter-modal-container">
       <RenewalErrorBoundary>

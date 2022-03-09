@@ -40,6 +40,7 @@ const DATE_DEFAULT_OPTIONS = [
 const INITIAL_STATE = {
   filterList: null,
   isFilterModalOpen: false,
+  appliedFilterCount: 0,
   dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: false })),
   dateSelected: null,
   datePickerState: null,

@@ -15,7 +15,6 @@ function RenewalsGrid(props) {
     useGridFiltering();
   const effects = useRenewalGridState(state => state.effects); 
 
-  console.log('effects', effects);
   const componentProp = JSON.parse(props.componentProp);
   const { searchOptionsList } = componentProp;
 

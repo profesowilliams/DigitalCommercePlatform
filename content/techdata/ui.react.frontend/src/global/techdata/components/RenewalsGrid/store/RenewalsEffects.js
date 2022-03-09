@@ -45,6 +45,21 @@ export const renewalsEffects = (set, get) => {
     set({datePickerState:null,dateOptionsList:allOptionsFalse,dateSelected:null, resetFilter:true })
   }
 
+  function setAppliedFilterCount() {
+    const { filterList, dateSelected } = get();
+    let count = 0;
+
+    filterList.forEach((item) => {
+      if (item.childIds.length === 0 && item.checked === true) {
+        count += 1;
+      }
+    });
+
+    set({
+      appliedFilterCount: dateSelected !== null ? count + 1 : count,
+    });
+  }
+
   function setCustomState({key='', value }){
     set({[key]:value})
   }
@@ -57,6 +72,7 @@ export const renewalsEffects = (set, get) => {
     setDateOptionsList,
     setDatePickerState,
     clearDateFilters,   
-    setCustomState
+    setCustomState,
+    setAppliedFilterCount,
   };
 };

@@ -260,3 +260,16 @@ export const getDictionaryValue = (dictionaryKey, defaultValue) => {
     let dictionaryValue = Granite?.I18n?.get(dictionaryKey);
     return dictionaryValue != dictionaryKey ? dictionaryValue : defaultValue;
 }
+
+export default function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export const getDayMonthYear = (date, separator = "/") => {
+  const dateMonth = date.getMonth() + 1;
+  const dateDay = date.getDate();
+  return `${zeroPad(dateMonth, 2)}${separator}${zeroPad(
+    dateDay,
+    2
+  )}${separator}${date.getFullYear()}`;
+};

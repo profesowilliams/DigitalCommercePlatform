@@ -1,7 +1,27 @@
 import React, { useState } from "react";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
+import capitalizeFirstLetter, { getDayMonthYear } from "../../../../../utils/utils";
 
+function CustomDatePill({ clearDateFilters }) {
+  const datePickerState = useRenewalGridState((state) => state.datePickerState);
+
+  if (!datePickerState) return null;
+  const [startDate, endDate] = datePickerState;
+
+  return (
+    <div className="filter-tags">
+      <span className="filter-tags__title">
+        {getDayMonthYear(new Date(startDate))}
+        {" - "}
+        {getDayMonthYear(new Date(endDate))}{" "}
+      </span>
+      <span onClick={() => clearDateFilters()}>
+        <i className="fas fa-times filter-tags__close"></i>
+      </span>
+    </div>
+  );
+}
 
 function FilterTags() {
   const [showMore, setShowMore] = useState(false);
@@ -53,6 +73,23 @@ function FilterTags() {
     setFilterList(filtersCopy);
   };
 
+  const formatDatePill = (selectedDate) => {
+    switch (selectedDate) {
+      case "today":
+      case "overdue":
+        return capitalizeFirstLetter(selectedDate);
+      case "30":
+        return `0 - ${selectedDate} days`;
+      case "60":
+      case "90":
+        return `${selectedDate - 29} - ${selectedDate} days`;
+      case "91":
+        return `${selectedDate}+ days`;
+      default:
+        return selectedDate;
+    }
+  };
+
   return (
     <div className={`filter-tags-container ${showMore ? "active" : ""}`}>
       <span onClick={handleShowMore} className="filter-tags-more"></span>
@@ -69,7 +106,7 @@ function FilterTags() {
                 </span>
               </div>
             );
-          } else if (filter.field === "ProgramName" && filter.checked ) {
+          } else if (filter.field === "ProgramName" && filter.checked) {
             return (
               <div className="filter-tags" key={index}>
                 <span className="filter-tags__title" key={index}>
@@ -79,13 +116,16 @@ function FilterTags() {
                   <i className="fas fa-times filter-tags__close"></i>
                 </span>
               </div>
-            )
+            );
           }
         })}
-      <If condition={dateSelected}>
+      <If
+        condition={dateSelected && dateSelected !== "custom"}
+        Else={<CustomDatePill clearDateFilters={clearDateFilters} />}
+      >
         <div className="filter-tags">
           <span className="filter-tags__title">
-            Date {" "}
+            {formatDatePill(dateSelected)}{" "}
           </span>
           <span onClick={() => clearDateFilters()}>
             <i className="fas fa-times filter-tags__close"></i>

@@ -135,14 +135,6 @@
         position: absolute;
         right: 47px;
         top: 21px;
-        border-radius: 9.5px;
-        background-color: #001d44;
-        color: white;
-        text-align: center;
-        padding: 0px 12px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0;
       }
     }
   }
@@ -254,4 +246,15 @@
 }
 .cmp-vertical-space-separator{
   height:4rem;
+}
+
+.count {
+  border-radius: 9.5px;
+  background-color: #001d44;
+  color: white;
+  text-align: center;
+  padding: 0px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
 }

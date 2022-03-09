@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import FilterModal from "./FilterModal";
 import Button from "../Widgets/Button";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import { pushEvent } from "../../../../utils/dataLayerUtils";
+import Count from "./components/Count";
 
 export default function RenewalFilter({ aemData, onQueryChanged }) {
   const isFilterModalOpen = useRenewalGridState(
     (state) => state.isFilterModalOpen
   );
+  const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
   const effects = useRenewalGridState((state) => state.effects);
   const { toggleFilterModal } = effects;
+
   const handleFilterClick = () => {
     pushEvent("click", {
       type: "button",
@@ -29,6 +32,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
         className="cmp-renewals-filter-container"
         onClick={handleFilterClick}
       >
+        {appliedFilterCount !== 0 && <Count>{appliedFilterCount}</Count>}
         <Button btnClass="cmp-renewals-filter__button">Filter</Button>
         <i className="fas fa-sliders-h"></i>
       </div>
