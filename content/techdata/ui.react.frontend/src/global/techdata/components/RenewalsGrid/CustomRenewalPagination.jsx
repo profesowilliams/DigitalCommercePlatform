@@ -8,6 +8,7 @@ function CustomRenewalPagination() {
   const paginationData = useRenewalGridState(state => state.pagination);
   const gridApi = useRenewalGridState(state => state.gridApi);
   const setPaginationData = useRenewalGridState(state => state.effects.setCustomState);
+  const [paginationCounter, setPaginationCounter] = useState({ minCounter: 0, maxCounter: 0 });
   const pageInputRef = useRef();
 
   const { totalCounter, stepBy, currentPage, currentResultsInPage, pageCount, pageNumber } =
@@ -33,6 +34,7 @@ function CustomRenewalPagination() {
       }
         setPaginationData({key:'pagination',value});
         gridApi?.paginationGoToNextPage();
+        updatePaginationCounter();
     };
 
   const decrementHandler = () => {
@@ -41,14 +43,22 @@ function CustomRenewalPagination() {
     }
     setPaginationData({key:'pagination',value});
     gridApi?.paginationGoToPreviousPage();
+    updatePaginationCounter();
   };
 
   const goToSpecificPage = value => gridApi?.paginationGoToPage(value);
+
+  const updatePaginationCounter = () =>
+    setPaginationCounter({
+      minCounter: minPaginationCounter(),
+      maxCounter: maxPaginationCounter(),
+    });
 
   const handleInputBlur = ({target}) => {
     const value = parseInt(target.value) - 1;
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(),10)) return;
     goToSpecificPage(value);
+    updatePaginationCounter();
   }
 
   const goOnTwoDigits = ({target}) => {
@@ -67,13 +77,14 @@ function CustomRenewalPagination() {
     if(event.keyCode === 13){
       goToSpecificPage(value);
       pageInputRef.current.blur();
+      updatePaginationCounter();
     }
   }
 
   return (
     <div className="cmp-navigation">
       <p className="navigation__info"> 
-        {minPaginationCounter()}-{maxPaginationCounter()} of {totalCounter} results
+        {paginationCounter.minCounter > 0 ? paginationCounter.minCounter : minPaginationCounter()}-{paginationCounter.maxCounter > 0 ? paginationCounter.maxCounter : maxPaginationCounter()} of {totalCounter} results
       </p>
       <p className="cmp-navigation__actions">
         <button style={{cursor:getCurrentPage() !== 1 && 'pointer'}} disabled={getCurrentPage() === 1} onClick={decrementHandler}>
