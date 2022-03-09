@@ -4,9 +4,12 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetStock;
 using DigitalCommercePlatform.UIServices.Browse.Dto.ProductVariant;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Stock;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
+using DigitalCommercePlatform.UIServices.Browse.Models.Stock;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Cache;
 using DigitalFoundation.Common.Features.Client;
@@ -21,6 +24,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -44,12 +48,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             _appSettings = new Mock<IAppSettings>();
             _appSettings.Setup(s => s.GetSetting("Product.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-product/v1");
             _appSettings.Setup(s => s.GetSetting("Catalog.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-catalog/v1");
+            _appSettings.Setup(s => s.GetSetting("Stock.App.Url")).Returns("https://eastus-dit-service.dc.tdebusiness.cloud/app-stock/v1");
             _appSettings.Setup(s => s.GetSetting("Feature.DF.ProuctCatalog")).Returns("false");
             _appSettings.Setup(s => s.GetSetting("Browse.UI.External.Catalog.Url")).Returns("https://mtapnew.stage.svc.us.cstenet.com/ProductService/api/VendorProduct/getProductCatalog");
             _uiContext = new Mock<IUIContext>();
             _uiContext.SetupGet(x => x.User).Returns(new User { ActiveCustomer = new Customer { CustomerNumber = "123", System = "2" }, Customers = new List<string>() });                       
             _memoryCache = new MemoryCache(new MemoryCacheOptions());           
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new CatalogProfile())));
+            _mapper = new Mapper(new MapperConfiguration(cfg => 
+            {
+                cfg.AddProfile(new CatalogProfile());
+                cfg.AddProfile(new StockProfile());
+            }));
             _cacheProvider = new();
             _browseService = new BrowseService(_middleTierHttpClient.Object, _cacheProvider.Object, _appSettings.Object, _mapper, _logger.Object);
         }
@@ -143,6 +152,26 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
             // Assert
             _middleTierHttpClient.Verify();
             result.Should().BeEquivalentTo(expected);
+        }
+
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetStock_CallsApiOnce(GetStockHandler.Request request, IEnumerable<StockDto> expected)
+        {
+            // Arrange
+            var url = $"https://eastus-dit-service.dc.tdebusiness.cloud/app-stock/v1?id={request.Id}";
+            _middleTierHttpClient.Setup(c =>
+                    c.GetAsync<IEnumerable<StockDto>>(It.Is<string>(u => u == url), null, null, null))
+                .ReturnsAsync(expected)
+                .Verifiable();
+
+            //Act
+            var result = await _browseService.GetStock(request);
+
+            // Assert
+            _middleTierHttpClient.Verify();
+            result.Should().BeEquivalentTo(expected.First());
         }
     }
 }

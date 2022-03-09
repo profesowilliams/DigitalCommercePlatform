@@ -3,12 +3,14 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetStock;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.ProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
+using DigitalCommercePlatform.UIServices.Browse.Models.Stock;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,5 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         Task<List<CatalogResponse>> GetCatalogUsingDF(ProductCatalogRequest request);
 
         Task<ProductVariantDto> GetProductVariant(GetProductVariantHandler.Request request);
+
+        Task<StockModel> GetStock(GetStockHandler.Request request);
     }
 }

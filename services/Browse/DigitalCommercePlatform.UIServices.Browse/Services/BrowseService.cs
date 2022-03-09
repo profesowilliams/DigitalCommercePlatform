@@ -4,12 +4,15 @@ using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductSummary;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetStock;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.ProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct;
+using DigitalCommercePlatform.UIServices.Browse.Dto.Stock;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
+using DigitalCommercePlatform.UIServices.Browse.Models.Stock;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Cache;
 using DigitalFoundation.Common.Features.Client;
@@ -29,10 +32,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     public class BrowseService : IBrowseService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
-        private readonly string _appCatalogURL;
-        private readonly string _productCatalogURL;
-        private readonly string _appProductURL;
+        private readonly string _appCatalogUrl;
+        private readonly string _productCatalogUrl;
+        private readonly string _appProductUrl;
         private readonly string _productCatalogFeature;
+        private readonly string _appStockUrl;
         private readonly ILogger<BrowseService> _logger;
         private readonly ICacheProvider _cacheProvider;
         private readonly IMapper _mapper;
@@ -46,15 +50,16 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             _cacheProvider = cacheProvider;
             _mapper = mapper;
             _logger = logger;
-            _appCatalogURL = appSettings.GetSetting("Catalog.App.Url");
-            _appProductURL = appSettings.GetSetting("Product.App.Url");
-            _productCatalogURL = appSettings.GetSetting("Browse.UI.External.Catalog.Url");
+            _appCatalogUrl = appSettings.GetSetting("Catalog.App.Url");
+            _appProductUrl = appSettings.GetSetting("Product.App.Url");
+            _productCatalogUrl = appSettings.GetSetting("Browse.UI.External.Catalog.Url");
             _productCatalogFeature = appSettings.GetSetting("Feature.DF.ProuctCatalog");
+            _appStockUrl = appSettings.GetSetting("Stock.App.Url");
         }
 
         public async Task<ProductData> FindProductDetails(FindProductHandler.Request request)
         {
-            var ProductURL = _appProductURL.AppendPathSegment("Find").BuildQuery(request);
+            var ProductURL = _appProductUrl.AppendPathSegment("Find").BuildQuery(request);
 
             var getProductResponse = await _middleTierHttpClient.GetAsync<ProductData>(ProductURL);
             return getProductResponse;
@@ -62,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<IEnumerable<ProductDto>> GetProductDetails(GetProductDetailsHandler.Request request)
         {
-            var ProductURL = _appProductURL.BuildQuery(new
+            var ProductURL = _appProductUrl.BuildQuery(new
             {
                 id = request.Id,
                 details = true
@@ -92,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
                 catalog = await GetCatalogUsingProductService(request);
 
                 _cacheProvider.Put(key, catalog);
-                _logger.LogInformation($"URL used is {_productCatalogURL}:{"Feature toggle input"}:{_productCatalogFeature} ");
+                _logger.LogInformation($"URL used is {_productCatalogUrl}:{"Feature toggle input"}:{_productCatalogFeature} ");
             }
             catch (RemoteServerHttpException ex)
             {
@@ -113,11 +118,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         private async Task<List<CatalogResponse>> GetCatalogUsingProductService(GetProductCatalogHandler.Request request)
         {
-            if (string.IsNullOrWhiteSpace(_productCatalogURL))
+            if (string.IsNullOrWhiteSpace(_productCatalogUrl))
             {
                 throw new InvalidOperationException("External.Product.Catalog.Url is missing from AppSettings");
             }
-            var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogURL, null, request);
+            var response = await _middleTierHttpClient.PostAsync<List<CategoryDto>>(_productCatalogUrl, null, request);
             List<CatalogModel> tempcatalog = _mapper.Map<List<CatalogModel>>(response);
 
             List<CatalogResponse> catalog = new List<CatalogResponse>();
@@ -137,7 +142,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
         public async Task<List<CatalogResponse>> GetCatalogUsingDF(ProductCatalogRequest request)
         {
             List<CatalogResponse> catalog = new();
-            string catalogURL = _appCatalogURL.BuildQuery(request);
+            string catalogURL = _appCatalogUrl.BuildQuery(request);
 
             //catalogData are cached in app layer.
             var response = await _middleTierHttpClient.GetAsync<CatalogDto>(catalogURL).ConfigureAwait(false);
@@ -161,26 +166,38 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<RelatedProductResponseDto> GetRelatedProducts(RelatedProductRequestDto request)
         {
-            var url = _appProductURL.AppendPathSegment("/RelatedProducts");
+            var url = _appProductUrl.AppendPathSegment("/RelatedProducts");
             var getProductResponse = await _middleTierHttpClient.PostAsync<RelatedProductResponseDto>(url, null, request);
             return getProductResponse;
         }
 
         public Task<IEnumerable<ValidateDto>> ValidateProductTask(IEnumerable<string> productIds)
         {
-            var validateProductUrl = _appProductURL.AppendPathSegment("Validate").SetQueryParam("id", productIds);
+            var validateProductUrl = _appProductUrl.AppendPathSegment("Validate").SetQueryParam("id", productIds);
             return _middleTierHttpClient.GetAsync<IEnumerable<ValidateDto>>(validateProductUrl);
         }
 
         public async Task<ProductVariantDto> GetProductVariant(GetProductVariantHandler.Request request)
         {
-            var url = _appProductURL.AppendPathSegment("ProductVariants").BuildQuery(new
+            var url = _appProductUrl.AppendPathSegment("ProductVariants").BuildQuery(new
             {
                 id = request.Id,
             });
 
             var productVariantDto = await _middleTierHttpClient.GetAsync<ProductVariantDto>(url);
             return productVariantDto;
+        } 
+        
+        public async Task<StockModel> GetStock(GetStockHandler.Request request)
+        {
+            var url = _appStockUrl.BuildQuery(new
+            {
+                id = request.Id,
+            });
+
+            var stockDtos = await _middleTierHttpClient.GetAsync<IEnumerable<StockDto>>(url);
+
+            return _mapper.Map<StockModel>(stockDtos.FirstOrDefault());
         }
     }
 }
