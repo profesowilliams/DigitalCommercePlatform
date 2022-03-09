@@ -19,7 +19,9 @@ function GridHeader({ gridProps, data }) {
       generateExcelFileFromPost({
         url: gridProps?.excelFileUrl,
         name: `Renewals quote ${data?.source?.id}.xlsx`,
-        id: data?.source?.id,
+        postData: {
+          Id: data?.source?.id
+        },
       });
     } catch (error) {
       console.error("error", error);

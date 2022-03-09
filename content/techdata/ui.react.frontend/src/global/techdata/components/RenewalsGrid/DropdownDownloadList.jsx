@@ -29,8 +29,10 @@ function DropdownDownloadList({ data, aemConfig }) {
       pushEvent("click", dataToPush("download XLS"));
       generateExcelFileFromPost({
         url: exportXLSRenewalsEndpoint,
-        name: "renewalsQuote.xlsx",
-        id: data?.source?.id,
+        name: `Renewal ${data?.source?.id}.xlsx`,
+        postData: {
+          Id: data?.source?.id
+        },
       });
     } catch (error) {
       console.error("error", error);

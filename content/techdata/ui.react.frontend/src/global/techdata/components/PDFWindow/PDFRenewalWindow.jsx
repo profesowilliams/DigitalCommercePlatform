@@ -1,25 +1,15 @@
 import React from "react";
-import ReactPDF, {
+import {
   Document,
   Page,
   Text,
   View,
-  PDFDownloadLink,
-  PDFViewer,
 } from "@react-pdf/renderer";
-import * as ReactDOM from "react-dom";
 import PDFStyles from "./PDFStyles";
 import PDFRenewalTable from "./../PDFTable/PDFRenewalTable";
 
 // Create styles
 const styles = PDFStyles;
-/**
- *
- * @param {any} details
- * @param {boolean} isDownloadLink
- * @param {string} fileName
- * @param {string} downloadLinkText
- */
 
 export const PDFRenewalDocument = ({ reseller, endUser, items }) => {
   return (
