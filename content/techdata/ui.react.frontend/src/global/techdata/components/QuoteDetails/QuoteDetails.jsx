@@ -181,15 +181,15 @@ const QuoteDetails = ({ componentProp }) => {
         extraOptions.resellerLogo = true;
     }
     })
-    const lineMarkups = quoteDetails?.items.map(item => {
-      const response = []
-      response.push({
+    const lineMarkups = [];
+    quoteDetails?.items.forEach(item => {
+      lineMarkups.push({
         id: item.id,
         markupValue: isNotEmptyValue(item.appliedMarkup) ? item.appliedMarkup: 0,
       })
       if (item.children.length > 0) {
         item.children.forEach((children => {
-          response.push({
+          lineMarkups.push({
             id: children.id,
             markupValue: isNotEmptyValue(children.appliedMarkup) ? children.appliedMarkup: 0,
           })
