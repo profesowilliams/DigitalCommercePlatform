@@ -51,11 +51,15 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
             //arrange
             _appSettings.Setup(x => x.TryGetSetting<Dictionary<string, string>>("UI.Renewals.VendorLogos"))
                 .Returns(new Dictionary<string, string>() {
-                    { "TestVendor", "http://testVendor/logoUrl.svg" }
+                    { "testvendor", "http://testVendor/logoUrl.svg" }
                 });
 
             //Act
             var result = GetHelperService().GetVendorLogo("TestVendor");
+            Assert.NotNull(result);
+            Assert.Equal("http://testVendor/logoUrl.svg", result);
+
+            result = GetHelperService().GetVendorLogo("Testvendor");
             Assert.NotNull(result);
             Assert.Equal("http://testVendor/logoUrl.svg", result);
 

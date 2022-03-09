@@ -74,10 +74,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             var vendorLogoUrl = string.Empty;
             try
             {
+                var key = vendorName.ToLowerInvariant();
                 var vendorLogos = _appSettings.TryGetSetting<Dictionary<string, string>>("UI.Renewals.VendorLogos");
-                if (vendorLogos.ContainsKey(vendorName))
+                if (vendorLogos.ContainsKey(key))
                 {
-                    vendorLogoUrl = vendorLogos[vendorName];
+                    vendorLogoUrl = vendorLogos[key];
                 }
             }
             catch(Exception ex)
