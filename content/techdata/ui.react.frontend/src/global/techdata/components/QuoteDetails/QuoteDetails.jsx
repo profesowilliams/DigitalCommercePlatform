@@ -182,10 +182,20 @@ const QuoteDetails = ({ componentProp }) => {
     }
     })
     const lineMarkups = quoteDetails?.items.map(item => {
-      return {
+      const response = []
+      response.push({
         id: item.id,
-        markupValue: isNotEmptyValue(item.appliedMarkup) ? item.appliedMarkup : 0,
+        markupValue: isNotEmptyValue(item.appliedMarkup) ? item.appliedMarkup: 0,
+      })
+      if (item.children.length > 0) {
+        item.children.forEach((children => {
+          response.push({
+            id: children.id,
+            markupValue: isNotEmptyValue(children.appliedMarkup) ? children.appliedMarkup: 0,
+          })
+        }))
       }
+      return response;
     });
     try {
       const postData = {
