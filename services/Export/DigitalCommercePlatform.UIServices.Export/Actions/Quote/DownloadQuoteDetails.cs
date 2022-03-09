@@ -73,14 +73,6 @@ namespace DigitalCommercePlatform.UIServices.Export.Actions.Quote
 
                 if (quoteDetails != null)
                 {
-                    if(quoteDetails.Items!= null)
-                    {
-                        foreach (var item in quoteDetails.Items)
-                        {
-                            decimal? extendedPrice = item.Quantity * item.UnitPrice;
-                            item.ExtendedPrice = extendedPrice.ToString();
-                        }
-                    }
                     quoteDetails.Request = request;
                     var binaryContentXls = await _documentGenerator.XlsGenerate(quoteDetails);
                     DownloadableFile file = new(binaryContentXls, request.QuoteId + ".xls", mimeType);

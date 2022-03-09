@@ -42,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public List<AgreementModel> Agreements { get; set; }
         public IList<string> Serials { get; set; }
         public List<TrackingDetails> Trackings { get; set; }
-        public bool IsSubLine { get { return false; } }
+        public bool IsSubLine { get; set; }
         public string DisplayLineNumber { get { return Id; } }
 
         public string License { get; set; }

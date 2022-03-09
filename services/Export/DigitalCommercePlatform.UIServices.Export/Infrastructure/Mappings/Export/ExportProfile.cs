@@ -45,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(d => d.Trackings, o => o.Ignore())
                 .ForMember(d => d.StartDate, o => o.Ignore())
                 .ForMember(d => d.EndDate, o => o.Ignore())
+                .ForMember(d => d.IsSubLine, o => o.Ignore())
                 ;
 
             CreateMap<AddressModel, Address>()
@@ -133,6 +134,7 @@ namespace DigitalCommercePlatform.UIServices.Export.Infrastructure.Mappings.Expo
                 .ForMember(d => d.Children, o => o.Ignore())
                 .ForMember(d => d.Attributes, o => o.Ignore())
                 .ForMember(d => d.Agreements, o => o.Ignore())
+                .ForMember(d => d.IsSubLine, o => o.Ignore())
                 ;
 
             CreateMap<Internal.OrderModel, OrderDetailModel>()

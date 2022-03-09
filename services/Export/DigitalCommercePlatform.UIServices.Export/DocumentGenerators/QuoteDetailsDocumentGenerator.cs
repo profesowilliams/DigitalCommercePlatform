@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Export.Models.Quote;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
@@ -57,6 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             GenerateReportHeader();
             GenerateQuoteDetailHeader();
             SetProperties(quoteDetails);
+            ApplyMarkup(quoteDetails);
             FillQuoteAndDate(quoteDetails);
             FillHPEEstimateDealId(quoteDetails);
             GenerateNotes(quoteDetails);
@@ -71,7 +73,6 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             InnerHeaderRange();
             _row += 11;
             GetLineHeader();
-            ApplyMarkup(quoteDetails);
             GenerateItemLines(quoteDetails);
 
 
@@ -235,8 +236,6 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void GenerateTotalSection(IQuoteDetailsDocumentModel quoteDetails)
         {
-            var markup = quoteDetails.Request.LineMarkup.ToList().Sum(x => x.MarkupValue);
-            quoteDetails.SubTotal = quoteDetails.SubTotal + markup;
             decimal totalAmount = quoteDetails.SubTotal;
 
             using var totalHeading = Worksheet.Cells[_row + 1, _col + 10, _row + 1, _col + 13];
@@ -304,6 +303,16 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
                 {
                     MapLineLevelData(line, _row, EstimateDealId);
                     _row += 1;
+                    var subLines = line.Children;
+                    if (subLines.Any())
+                    {
+                        foreach (var subLine in subLines)
+                        {
+                            subLine.IsSubLine = true;
+                            MapLineLevelData(subLine, _row, EstimateDealId);
+                            _row += 1;
+                        }
+                    }
                 }
             }
 
@@ -321,7 +330,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             {
                 FillLineNumberData(line);
             }
-            else if (!string.IsNullOrEmpty(estimateDealId) && line.IsSubLine && !string.IsNullOrEmpty(line.DisplayLineNumber))
+            else if (line.IsSubLine && !string.IsNullOrEmpty(line.DisplayLineNumber))
             {
                 FillSubLineData(line);
             }
@@ -458,16 +467,56 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private static void ApplyMarkup(IQuoteDetailsDocumentModel quoteDetails)
         {
-            foreach (var line in quoteDetails.Items)
+            decimal totalMarkUp = 0.0M;
+            if (quoteDetails.Items != null)
             {
-                foreach (var markupItem in quoteDetails.Request.LineMarkup)
+                foreach (var item in quoteDetails.Items)
                 {
-                    if (markupItem.Id == line.Id && line.UnitPrice > 0 && markupItem.MarkupValue != 0)
+                    decimal extendedPrice;
+                    extendedPrice = AppluMarkUpForParentLine(quoteDetails, ref totalMarkUp, item);
+
+                    var sublines = item.Children;
+
+                    if (sublines.Any())
                     {
-                        line.UnitPrice += markupItem.MarkupValue;
-                        line.ExtendedPrice = (line.UnitPrice * line.Quantity).ToString();
+                        ApplyMarkUpForSubLines(quoteDetails, ref totalMarkUp, ref extendedPrice, sublines);
                     }
+
                 }
+            }
+
+            quoteDetails.SubTotal = totalMarkUp + quoteDetails.SubTotal;
+        }
+
+        private static decimal AppluMarkUpForParentLine(IQuoteDetailsDocumentModel quoteDetails, ref decimal totalMarkUp, Line item)
+        {
+            decimal extendedPrice;
+            if (quoteDetails.Request.LineMarkup.ToList().Where(x => x.Id.Equals(item.Id)).Any())
+            {
+                decimal markup = quoteDetails.Request.LineMarkup.ToList().Where(x => x.Id.Equals(item.Id)).FirstOrDefault().MarkupValue;
+
+                item.UnitPrice = markup + item.UnitPrice;
+                totalMarkUp += item.Quantity * markup;
+            }
+
+            if (decimal.TryParse((item.Quantity * (decimal)item.UnitPrice).ToString(), out extendedPrice))
+                item.ExtendedPrice = Math.Round(extendedPrice, 2).ToString();
+            return extendedPrice;
+        }
+
+        private static void ApplyMarkUpForSubLines(IQuoteDetailsDocumentModel quoteDetails, ref decimal totalMarkUp, ref decimal extendedPrice, List<Line> sublines)
+        {
+            foreach (var subLine in sublines)
+            {
+                if (quoteDetails.Request.LineMarkup.ToList().Where(x => x.Id.Equals(subLine.Id)).Any())
+                {
+                    var subLineMarkup = quoteDetails.Request.LineMarkup.ToList().Where(x => x.Id.Equals(subLine.Id)).FirstOrDefault().MarkupValue;
+
+                    subLine.UnitPrice = subLineMarkup + subLine.UnitPrice;
+                    totalMarkUp += subLine.Quantity * subLineMarkup;
+                }
+                if (decimal.TryParse((subLine.Quantity * (decimal)subLine.UnitPrice).ToString(), out extendedPrice))
+                    subLine.ExtendedPrice = Math.Round(extendedPrice, 2).ToString();
             }
         }
 
