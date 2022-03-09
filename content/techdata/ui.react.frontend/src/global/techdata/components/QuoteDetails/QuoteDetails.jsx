@@ -14,7 +14,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo";
 import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
-import { generateExcelFileFromPost } from "../../../../utils/utils";
+import { generateExcelFileFromPost, isNotEmptyValue } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT,
@@ -181,19 +181,16 @@ const QuoteDetails = ({ componentProp }) => {
         extraOptions.resellerLogo = true;
     }
     })
+    const lineMarkups = quoteDetails?.items.map(item => {
+      return {
+        id: item.id,
+        markupValue: isNotEmptyValue(item.appliedMarkup) ? item.appliedMarkup : 0,
+      }
+    });
     try {
       const postData = {
         "quoteId": id,
-        "lineMarkup": [
-            {
-                "id": "100",
-                "markupValue": 20.00
-            },
-            {
-                "id": "200",
-                "markupValue": 30.00
-            }
-        ],
+        "lineMarkup": lineMarkups,
         ...extraOptions,
         "logo": extraOptions.resellerLogo && whiteLabelLogoUpload ? whiteLabelLogoUpload : null
       };
