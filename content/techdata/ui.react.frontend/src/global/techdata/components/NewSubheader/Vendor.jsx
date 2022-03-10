@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import SlideToggle from '../Widgets/SlideToggle';
-import { get } from '../../../../utils/api';
+import { get, usGet } from '../../../../utils/api';
 import { useMounted } from '../../hooks/useMounted';
+import  Modal  from '../Modal/Modal';
 
 function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, disconnectedLabel }) {
 	let { vendor, isConnected, connectionDate, isValidRefreshToken, userId } = fetchedVendor;
 	const [vendorToggled, setVendorToggled] = useState(isConnected);
 	const [toggleInProcess, setToggleInProcess] = useState(false);
 	const [error, setError] = useState(false);
+	const [modal, setModal] = useState(null);
 	const mounted = useMounted();
 	const config = vendorConfig?.vendors?.find((v) => v.key?.toLowerCase() === vendor.toLowerCase());
 
@@ -66,6 +68,24 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 		}
 	}, [error]);
 
+	async function refreshConnectionData() {
+		const {data: { content: { refreshed } }} = await usGet(endpoints.vendorConnectionDataRefreshEndpoint);
+		if (refreshed) {
+			showDataRefreshed();
+		}
+	}
+
+	function showDataRefreshed() {
+		setModal((previousInfo)=> ( 
+			{
+				content: (<div>{vendorConfig.vendorConnectionRefreshMessage}</div>),
+				properties: {
+					title: "Vendor Connections"
+				},
+				...previousInfo
+			}));
+	}
+
 	return ( config ? (
 		<div className='cmp-vendor-connection__vendors__vendor'>
 			<div className='cmp-vendor-connection__vendors__vendor__logo'>
@@ -100,6 +120,22 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 					}}
 				></SlideToggle>
 			</div>
+			
+			{fetchedVendor?.vendor?.toLowerCase() === "cisco" && 
+				<div className='cmp-vendor-connection__vendors__vendor__refresh' onClick={() => refreshConnectionData()}>
+					<i className="fas fa-sync"></i>
+				</div>
+			}
+			
+			{modal && <Modal
+				modalAction={modal.action}
+				modalContent={modal.content}
+				modalProperties={modal.properties}
+				modalAction={modal.modalAction}
+				actionErrorMessage={modal.errorMessage}
+				onModalClosed={() => setModal(null)}>
+			</Modal>
+			}
 		</div>) : null
 	);
 }

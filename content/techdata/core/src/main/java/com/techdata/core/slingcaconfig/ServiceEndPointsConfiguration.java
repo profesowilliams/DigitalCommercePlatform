@@ -89,6 +89,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Vendor Disconnect Endpoint", description = "Vendor Disconnect Endpoint ")
     String vendorDisconnectEndpoint();
 
+    @Property(label = "Vendor Connection Data Refresh Endpoint", description = "Endpoint for Refreshing Data for Vendor Connection.")
+    String vendorConnectionDataRefreshEndpoint();
+
     @Property(label = "Quotes Preview Endpoint", description = "Quotes Preview Endpoint ")
     String quotesPreviewEndPoint();
 

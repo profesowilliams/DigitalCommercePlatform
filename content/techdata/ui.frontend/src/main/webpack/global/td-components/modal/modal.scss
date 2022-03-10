@@ -56,7 +56,7 @@
 		overflow: auto;
 		max-width: 100%;
 		width: fit-content;
-		min-width: 20%;
+		min-width: 25%;
 		box-shadow: 2px 2px 4px;
 	}
 	&_header {
@@ -180,7 +180,7 @@
 	&__vendors {
 		&__vendor {
 			display: grid;
-			grid-template-columns: 30% 60% 10%;
+			grid-template-columns: 20% 60% 10% 10%;
 			min-height: rem(53px);
 			height: fit-content;
 			align-items: center;
@@ -199,6 +199,11 @@
 			&__toggler {
 				justify-self: right;
 				align-self: center;
+				padding: 25%;
+			}
+			&__refresh {
+				padding: 25%;
+				cursor: pointer;
 			}
 			&:last-child {
 				border-bottom: 1px solid get-color('secondary-light-grey');

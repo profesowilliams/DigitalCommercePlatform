@@ -192,6 +192,8 @@ const NewSubheader = ({ componentProp }) => {
 			vendorConnectionsModal?.setConnectionsEndPoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/',
 		disconnectEndPoint:
 			vendorConnectionsModal?.disconnectEndPoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/',
+		refreshEndPoint:
+			vendorConnectionsModal?.vendorConnectionDataRefreshEndpoint ?? 'https://eastus-sit-ui.dc.tdebusiness.cloud/ui-account/v1/refreshData?VendorName=CISCO&Type=ALL',
 		title: vendorConnectionsModal?.title ?? 'Vendor Connections',
 		buttonLabel: vendorConnectionsModal?.buttonLabel ?? 'Connect All',
 		buttonIcon: vendorConnectionsModal?.buttonIcon ?? null,

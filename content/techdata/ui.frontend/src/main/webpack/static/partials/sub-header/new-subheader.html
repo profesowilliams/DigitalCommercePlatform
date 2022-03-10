@@ -1,121 +1,100 @@
-<div class="cmp-new-subheader aem-GridColumn aem-GridColumn--default--12">
-  <div class="cmp-tabs cmp-sub-header">
-    <div class="">
-      <div
-        data-component="NewSubheader"
-        data-cmp-type="react"
-        class="cmp-sub-header--sub-nav cmp-sub-header__wrapper"
-        data-config='{
-  "toolsIndex": "2",
-  "minified": "true",
-  "accountnumberLabel": "Account Number",
-  "menuItems": [
+<div class="cmp-tabs cmp-sub-header">
+  <div class="">
+    <div data-component="NewSubheader" data-cmp-type="react" class="cmp-sub-header--sub-nav cmp-sub-header__wrapper"
+      data-config='
       {
-        "title": "My Dashboard"
-      },
-      {
-        "title": "Configurations",
-        "link": "#",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
-      },
-      {
-        "title": "Deals",
-        "link": "#",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
-      },
-      {
-        "title": "Quotes",
-        "link": "/content/techdata/americas/us/en/dcp/configurations",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
-      },
-      {
-        "title": "Renewals",
-        "link": "/content/techdata/americas/us/en/dcp/configurations",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
-      },
-      {
-        "title": "Orders",
-        "link": "/content/techdata/americas/us/en/dcp/configurations",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
-      },
-      {
-        "title": "Returns",
-        "link": "/content/techdata/americas/us/en/dcp/configurations",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
-      },
-      {
-        "title": "Tools",
-        "link": "#",
-        "legacyLink":"/content/techdata/americas/us/en/legacy"
+        "minified": "true",
+        "accountnumberLabel": "Account Number",
+        "toolsIndex": "10",
+        "menuItems": [{
+          "title": "Dashboards"
+        }, {
+          "title": "Configurations",
+          "link": "/us/en/dcp/configurations.html",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/1Source/"
+        }, {
+          "title": "Favorites",
+          "link": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/favorites",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/favorites"
+        }, {
+          "title": "Saved Carts",
+          "link": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/carts",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/carts"
+        }, {
+          "title": "Deals",
+          "link": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/spa/search",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/spa/search"
+        }, {
+          "title": "Quotes",
+          "link": "/us/en/dcp/quotes.html",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/quotes"
+        }, {
+          "title": "Renewals",
+          "link": "/us/en/dcp/renewals.html",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/renewals"
+        }, {
+          "title": "Orders",
+          "link": "/us/en/dcp/orders.html",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/orderV2/search"
+        }, {
+          "title": "Returns",
+          "link": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/returns",
+          "legacyLink": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/returns"
+        }, {
+          "title": "Tools"
+        }],
+        "dashboardMenuItems": [{
+          "title": "Endpoint",
+          "imagePath": "/content/dam/techdata/shared/dcp/dashboard/EndPointDashboard.png",
+          "link": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/dashboard"
+        }, {
+          "title": "1Source (Legacy)",
+          "imagePath": "/content/dam/techdata/digital-commerce-platform/dashboards/1SourceDashboard.png",
+          "link": "https://shop-rc.cstenet.com/loginRedirect?returnUrl=https://shop-rc.cstenet.com/1source"
+        }, {
+          "title": "1Source (Beta)",
+          "imagePath": "/content/dam/techdata/digital-commerce-platform/dashboards/1SourceBetaDashboard.png",
+          "link": "https://uat.dc.tdebusiness.cloud/us/en/dcp/dashboard.html"
+        }],
+        "vendorConnectionsModal": {
+          "getConnectionsEndPoint": "http://localhost:3000/ui-account/v1/getVendorConnections",
+          "disconnectEndPoint": "http://localhost:3000/ui-account/v1/vendorDisconnect",
+          "setConnectionsEndPoint": "http://localhost:3000/ui-account/v1/setVendorConnection",
+          "vendorConnectionDataRefreshEndpoint": "http://localhost:3000/ui-account/v1/refreshData",
+          "loginPageCommonName": "vendorlogin",
+          "vendorSignInCodeParameter": "code",
+          "disableVendorConnectionLink": "false",
+          "title": "Vendor Connections",
+          "buttonLabel": "Close",
+          "buttonIcon": "fas fa server",
+          "content": "Manage your vendor connections below",
+          "connectedLabel": "Connect",
+          "disconnectedLabel": "Disconnect",
+          "vendorConnectionRefreshMessage": "Our systems are now retrieving refreshed data from the vendor. This can take up to a minute. Please refresh this page (F5) to see the results.",
+          "vendors": [{
+            "key": "cisco",
+            "logInUrl": "http://localhost:3000/vendor.html?q=CISCO&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-cisco.html",
+            "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Cisco_logo.svg",
+            "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-cisco.html"
+          },
+          {
+            "key": "hp",
+            "logInUrl": "http://localhost:3000/vendor.html?q=HP&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-hp.html",
+            "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Hewlett_Packard_Enterprise_logo.svg",
+            "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-hp.html"
+          },
+          {
+            "key": "dell",
+            "logInUrl": "http://localhost:3000/vendor.html?q=DELL&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-dell.html",
+            "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Dell_Logo.svg",
+            "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-dell.html"
+          }]
+        }
       }
-    ],
-  "dashboardMenuItems": [
-    {
-      "title": "Dashboard Legacy",
-      "imagePath": "/content/dam/techdata/digital-commerce-platform/dashboards/1SourceBetaDashboard.png",
-      "link": "https://shop.techdata.com"
-    },
-    {
-      "title": "Dashboard 2",
-      "imagePath": "/content/dam/techdata/digital-commerce-platform/dashboards/1SourceDashboard.png",
-      "link": "https://shop.techdata.com/1Source"},
-    {
-      "title": "Dashboard 3",
-      "imagePath": "/content/dam/techdata/digital-commerce-platform/dashboards/EndPointDashboard.png",
-      "link": "/content/techdata/language-masters/en/dcp/dashboard"
-    }
-  ],
-  "vendorConnectionsModal": {
-    "getConnectionsEndPoint": "http://localhost:3000/getVendorConnections",
-    "setConnectionsEndPoint": "http://localhost:3000/vendorConnect",
-    "disconnectEndPoint": "http://localhost:3000/ui-account/v1/vendorDisconnect",
-    "title": "Vendor Connections",
-    "buttonLabel": "Connect All",
-    "buttonIcon": "fas fa server",
-    "content": "Content to display on modal window",
-    "connectedLabel": "Connect",
-    "disconnectedLabel": "Disconnect",
-    "loginPageCommonName" : "vendorlogin",
-    "vendorSignInCodeParameter" : "code",
-    "disableVendorConnectionLink": "false",
-    "vendors": [
-      {
-        "key": "cisco",
-        "logInUrl": "http://localhost:3000/vendor.html?q=CISCO&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-cisco.html",
-        "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Cisco_logo.svg",
-        "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-cisco.html"
-      },
-      {
-        "key": "hp",
-        "logInUrl": "http://localhost:3000/vendor.html?q=HP&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-hp.html",
-        "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Hewlett_Packard_Enterprise_logo.svg",
-        "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-hp.html"
-      },
-      {
-        "key": "dell",
-        "logInUrl": "http://localhost:3000/vendor.html?q=DELL&redirectUrl=http://localhost:8080/vendor-pages/vendorlogin-dell.html",
-        "iconPath" : "/content/dam/techdata/tech-data-dot-com/global/site/brands/Dell_Logo.svg",
-        "connectLandingPage" : "http://localhost:8080/vendor-pages/vendor-dell.html"
-      }
-    ]
-  }
-}'
-      ></div>
+      '>
     </div>
   </div>
-  <div class="menucategorieslist cmp-sub-header__menu--hide">
-    <ul class="cmp-tools">
-      <li class="cmp-tools__category-name">
-        Category 1
-
-        <ul>
-          <li><a>Test 1</a></li>
-        </ul>
-
-        <ul>
-          <li><a>Test 2</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
 </div>
+
+      
+      

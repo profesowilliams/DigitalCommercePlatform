@@ -37,6 +37,10 @@ use(function() {
         vendorConnectionsModalObject["disconnectEndPoint"] = this.uiServiceDomain + this.vendorDisconnectEndpoint;
     }
 
+    if (this.uiServiceDomain != null && this.vendorConnectionDataRefreshEndpoint != null) {
+        vendorConnectionsModalObject["vendorConnectionDataRefreshEndpoint"] = this.uiServiceDomain + this.vendorConnectionDataRefreshEndpoint;
+    }
+
     if (this.vendorConnectionEndpoint != null && this.setVendorConnectionEndpoint != null) {
         vendorConnectionsModalObject["setConnectionsEndPoint"] = this.uiServiceDomain + this.setVendorConnectionEndpoint;
     }
@@ -55,6 +59,10 @@ use(function() {
 
     if (properties && properties["disableVendorConnectionLink"]) {
         vendorConnectionsModalObject["disableVendorConnectionLink"] = properties["disableVendorConnectionLink"];
+    }
+
+    if (properties && properties["vendorConnectionRefreshMessage"]) {
+        vendorConnectionsModalObject["vendorConnectionRefreshMessage"] = properties["vendorConnectionRefreshMessage"];
     }
     if (properties && properties["title"]) {
         vendorConnectionsModalObject["title"] = properties["title"];

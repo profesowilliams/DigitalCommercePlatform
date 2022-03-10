@@ -8,7 +8,8 @@ function VendorConnection({ vendorConfig, signInRequest }) {
 	const [error, setError] = useState(null);
 	const ENDPOINTS = {
 		getConnectionsEndPoint: vendorConfig.getConnectionsEndPoint,
-		setConnectionsEndPoint: vendorConfig.setConnectionsEndPoint
+		setConnectionsEndPoint: vendorConfig.setConnectionsEndPoint,
+		vendorConnectionDataRefreshEndpoint: vendorConfig.vendorConnectionDataRefreshEndpoint
 	};
 
 	async function vendorLogin(code, vendorName, redirectURL) {

@@ -164,6 +164,12 @@
                                                     fieldDescription="Enter Connected Label"
                                                     fieldLabel="Connected Label"
                                                     name="./connectedLabel"/>
+                                            <vendorConnectionRefreshMessage
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Enter Message to Display to the User when They Click on the Refresh Button on the Vendor Connections Modal."
+                                                    fieldLabel="Vendor Connection Refresh Message"
+                                                    name="./vendorConnectionRefreshMessage"/>
                                             <disconnectedLabel
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

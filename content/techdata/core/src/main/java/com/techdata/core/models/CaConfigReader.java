@@ -90,6 +90,8 @@ public class CaConfigReader {
 
     private String vendorDisconnectEndpoint;
 
+    private String vendorConnectionDataRefreshEndpoint;
+
     private String configurationsEndpoint;
 
     private  String shopDomain;
@@ -233,6 +235,7 @@ public class CaConfigReader {
         vendorConnectionEndpoint = serviceEndPointsConfiguration.vendorConnectionEndpoint();
         setVendorConnectionEndpoint = serviceEndPointsConfiguration.setVendorConnectionEndpoint();
         vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
+        vendorConnectionDataRefreshEndpoint = serviceEndPointsConfiguration.vendorConnectionDataRefreshEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
@@ -604,6 +607,10 @@ public class CaConfigReader {
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }
 
     public String getVendorDisconnectEndpoint() { return vendorDisconnectEndpoint; }
+
+    public String getVendorConnectionDataRefreshEndpoint() {
+        return vendorConnectionDataRefreshEndpoint;
+    }
 
     public String getAgGridLicenseKey() {
         return agGridLicenseKey;
