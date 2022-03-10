@@ -345,7 +345,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 configId = input.QuoteDetails.ConfigurationId;
             }
-            GetQuotePreviewDetails.Request productRequest = new GetQuotePreviewDetails.Request(configId, true, "CISCO");
+            GetQuotePreviewDetails.Request productRequest = new GetQuotePreviewDetails.Request(configId, true, "CISCO",Type);
 
             var configDetails = CreateResponseUsingEstimateId(productRequest);
             foreach (var item in input.QuoteDetails.Items)
@@ -576,20 +576,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             string _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
 
+            if (request.ConfigurationType == null)
+                request.ConfigurationType = "Deal";
+            else if(request.ConfigurationType.ToLower()=="deal")
+                request.ConfigurationType = "Deal";
+            else if (request.ConfigurationType.ToLower() == "estimate")
+                request.ConfigurationType = "Estimate";
+
             try
             {
-                var url = _appConfigServiceURL.AppendPathSegment("find")
-                      .SetQueryParams(new
-                      {
-                          Id = request.Id,
-                          Details = true,
-                          PageSize = 1,
-                          PageNumber = 1,
-                          WithPaginationInfo = false
-                      });
+
+                var url = _appConfigServiceURL.AppendPathSegment(request.Id)
+                     .SetQueryParams(new
+                     {
+                         Details = request.Details,
+                         vendor = request.Vendor,
+                         type = request.ConfigurationType
+                     });
 
                 var configurationFindResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<List<DetailedDto>>>(url);
+                        .GetAsync<FindResponse<IEnumerable<DetailedDto>>>(url);
 
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse?.Data?.FirstOrDefault());
                 if (quotePreview == null)
@@ -620,7 +626,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
         }
 
-        private bool MapEndUserAndResellerForQuotePreview(FindResponse<List<DetailedDto>> configurationFindResponse, QuotePreview quotePreview)
+        private bool MapEndUserAndResellerForQuotePreview(FindResponse<IEnumerable<DetailedDto>> configurationFindResponse, QuotePreview quotePreview)
         {
             if (configurationFindResponse?.Data?.FirstOrDefault()?.EndUser != null)
             {

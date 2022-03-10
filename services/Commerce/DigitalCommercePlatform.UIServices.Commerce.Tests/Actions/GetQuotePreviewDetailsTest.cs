@@ -32,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
         public bool Details { get; private set; } = true;
         public bool IsEstimateId { get; private set; }
         public string Vendor { get; private set; }
+        public string configurationType { get; private set; }
         [Theory]
         [AutoDomainData]
         public async Task GetQuoteDetails(QuotePreviewModel expected)
@@ -42,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
                   .ReturnsAsync(expected);
 
             var handler = new GetQuotePreviewDetails.Handler(_mockCommerceService.Object, _mapper.Object, _logger.Object, _mockquoteItemChildrenService.Object);
-            var request = new GetQuotePreviewDetails.Request(Id, IsEstimateId, Vendor);
+            var request = new GetQuotePreviewDetails.Request(Id, IsEstimateId, Vendor,configurationType);
             var result = await handler.Handle(request, It.IsAny<CancellationToken>());
             result.Should().NotBeNull();
         }

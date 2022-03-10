@@ -20,14 +20,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail
         {
             public string Id { get; set; }
             public bool Details { get; set; } = true;
-            public bool IsEstimateId { get; set; }
+            public bool IsEstimateId { get; set; } = true;
             public string Vendor { get; set; }
+            public string ConfigurationType { get; set; }
 
-            public Request(string id, bool isEstimateId, string vendor)
+            public Request(string id, bool isEstimateId, string vendor,string configurationType)
             {
                 Id = id;
                 IsEstimateId = isEstimateId;
                 Vendor = vendor;
+                ConfigurationType = configurationType;
             }
         }
 

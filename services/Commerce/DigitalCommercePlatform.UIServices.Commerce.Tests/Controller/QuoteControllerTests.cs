@@ -138,7 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetQuotePreview("1234", true, "cisco").ConfigureAwait(false);
+            var result = await controller.GetQuotePreview("1234", true, "cisco", "Deal").ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }

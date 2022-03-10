@@ -93,7 +93,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
 
             // Arrange
-            GetQuotePreviewDetails.Request request = new("CON-SNT-CTSIX520", true, "cisco");
+            GetQuotePreviewDetails.Request request = new("CON-SNT-CTSIX520", true, "cisco", "Deal");
 
 
             Type type = typeof(CommerceService);
@@ -120,7 +120,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
 
             // Arrange
-            GetQuotePreviewDetails.Request request = new("53761072", true, "cisco");
+            GetQuotePreviewDetails.Request request = new("53761072", true, "cisco","Deal");
 
 
             Type type = typeof(CommerceService);
@@ -160,7 +160,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Arrange
             var details = new List<DetailedDto> { detailedDto };
 
-            FindResponse<List<DetailedDto>> configurationFindResponse = new FindResponse<List<DetailedDto>>();
+            FindResponse<IEnumerable<DetailedDto>> configurationFindResponse = new FindResponse<IEnumerable<DetailedDto>>();
             configurationFindResponse.Data = details;
 
             QuotePreview quotePreview = new QuotePreview();
@@ -208,7 +208,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Arrange
             var details = new List<DetailedDto> { detailedDto };
 
-            FindResponse<List<DetailedDto>> configurationFindResponse = new FindResponse<List<DetailedDto>>();
+            FindResponse<IEnumerable<DetailedDto>> configurationFindResponse = new FindResponse<IEnumerable<DetailedDto>>();
             configurationFindResponse.Data = details;
 
             var quotePreview = new QuotePreview();
@@ -441,7 +441,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void CreateResponseUsingEstimateId_Test()
         {
             //arrange
-            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123", true, "Cisco");
+            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123", true, "Cisco", "Deal");
 
             Type type;
             object objType;
@@ -834,7 +834,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void GetAccountDetails()
         {
             //arrange 
-            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123", true, "Cisco");
+            GetQuotePreviewDetails.Request request = new GetQuotePreviewDetails.Request("123", true, "Cisco", "Deal");
 
             //Act
             var result = _commerceService.QuotePreview(request);
