@@ -3,6 +3,23 @@ import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 
 function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeModal }) {
+  const {product = [false,false]} = line;
+  const [techdata, manufacturer] = product;
+  const description = manufacturer?.name;
+  const formatDescription = (description = "") => {
+    if (!description) return "N/A";
+    const matchFirstWords = /^(.*?\s){12}/;
+    const matched = description.match(matchFirstWords);
+    if (!matched || (!matched.length)) return <p className="short-desc">{description}</p>
+    const firstTextRow = matched[0];
+    const secondTextRow = description.substring(firstTextRow.length);
+    return (
+      <>
+        <p className="short-desc">{firstTextRow}</p>
+        <p className="short-desc">{secondTextRow}</p>
+      </>
+    )
+  }
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.tdNumber) {
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -44,6 +61,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
       <div
         onClick={handleClick}
         className="cmp-product-lines-grid__item-information"
+        style={{width:'100%'}}
       >
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-product-lines-grid__item-information__box-text__header"></div>
@@ -54,7 +72,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
                 target="_blank"
                 className="cmp-product-lines-grid__item-information__box-text__header__link"
               >
-                <p className="short-desc">{line.shortDescription || " N/A "}</p>
+                {formatDescription(description)}
               </a>
 
               <span>

@@ -9,6 +9,8 @@ import {
 } from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
+import RenewalManufacturer from "./RenewalManufacturer";
+import { thousandSeparator } from "../../../helpers/formatting";
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
@@ -77,7 +79,7 @@ function GridHeader({ gridProps, data }) {
         <button onClick={downloadXLS}>
           <span>
             <i class="fas fa-file-excel"></i>
-            {gridProps?.xls || "Download Excel"}
+            {gridProps?.xls || "Download XLS"}
           </span>
         </button>
       </div>
@@ -92,7 +94,7 @@ function GridSubTotal({ data }) {
         Quote SubTotal:
       </span>
       <span className="cmp-renewal-preview__subtotal--value">
-        $ {data?.items?.[0]?.totalPrice}
+        $ {thousandSeparator(data?.price)}
       </span>
     </div>
   );
@@ -105,6 +107,14 @@ function Note() {
       exchange rate fluctuations.
     </p>
   );
+}
+
+function Price({value}){
+  return (
+    <div className="price">
+      {value}
+      </div>
+  )
 }
 
 function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
@@ -133,6 +143,20 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
       />
     ),
   };
+
+  //refactor later as renewals-grid
+  columnDefs[6] = {
+    ...columnDefs[6],
+    cellRenderer: (props) => Price(props)
+  }
+  columnDefs[4] = {
+    ...columnDefs[4],
+    cellRenderer: (props) => Price(props)
+  }
+  columnDefs[3] = {
+    ...columnDefs[3],
+    cellRenderer: (props) => RenewalManufacturer(props)
+  }
 
   /*
     mutableGridData is copied version of response that can be safely mutated,

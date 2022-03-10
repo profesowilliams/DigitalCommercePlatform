@@ -8,19 +8,20 @@ const columnDefs = [
   {
     headerName: "Product family",
     field: "vendorPartNo",
+    width: "120px",
     sortable: false,
   },
   {
     headerName: "Product details",
     field: "shortDescription",
     sortable: false,
-    width: "600px",
+    width: "300px",
   },
   {
     headerName: "Mfr. part №",
     field: "mfrNumber",
     sortable: false,
-    width: "400px",
+    width: "200px",
   },
   {
     headerName: "Unit price (USD)",
