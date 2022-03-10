@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
         }
 
         public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, 
-            ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService);
+            ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService,IOrderLevelsService OrderLevelsService);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -61,6 +61,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly string _catalog;
             private readonly IDefaultIndicatorsService _defaultIndicatorsService;
             private readonly IMarketService _marketService;
+            private readonly IOrderLevelsService _orderLevelsService;
             private const string _categories = "CATEGORIES";
 
             public Handler(KeywordSearchHandlerArgs args)
@@ -73,6 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _catalog = args.SiteSettings.TryGetSetting("Catalog.All.DefaultCatalog")?.ToString();
                 _defaultIndicatorsService = args.DefaultIndicatorsService;
                 _marketService = args.MarketService;
+                _orderLevelsService = args.OrderLevelsService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -108,7 +110,10 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 appRequest.Sort = _sortService.GetDefaultSortDto(request.ProfileId);
                 appRequest.PageSize = _itemsPerPageService.GetDefaultItemsPerPage();
                 appRequest.Territories = _marketService.GetMarkets(request.ProfileId);
-
+                if (!request.IsAnonymous)
+                {
+                    appRequest.OrderLevel = _orderLevelsService.GetOrderLevel(request.ProfileId);
+                }
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous);
                 if (!request.IsAnonymous && response.Products != null && response.Products.Count == 1)
                 {
@@ -117,6 +122,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                 response.SortingOptions = _sortService.GetDefaultSortingOptions(request.ProfileId);
                 response.ItemsPerPageOptions = _itemsPerPageService.GetDefaultItemsPerPageOptions();
+
+                if (!request.IsAnonymous)
+                {
+                    response.OrderLevels = _orderLevelsService.GetOrderLevelOptions(request.ProfileId);
+                }
+
 
                 return new Response(response);
             }

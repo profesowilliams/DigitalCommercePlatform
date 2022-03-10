@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mapper _mapper;
         private readonly Mock<ISortService> _sortServiceMock;
         private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
+        private readonly Mock<IOrderLevelsService> _orderLevelServiceMock;
 
         public FullSearchTests()
         {
@@ -35,6 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())));
             _sortServiceMock = new Mock<ISortService>();
             _itemsPerPageServiceMock = new Mock<IItemsPerPageService>();
+            _orderLevelServiceMock = new Mock<IOrderLevelsService>();
         }
 
         [Theory]
@@ -241,6 +243,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                         new DropdownElementModel<string>{ Id="Price.False", Selected=false}
             };
 
-        private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object, _itemsPerPageServiceMock.Object);
+        private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object, _itemsPerPageServiceMock.Object,_orderLevelServiceMock.Object);
     }
 }

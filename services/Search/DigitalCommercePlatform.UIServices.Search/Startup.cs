@@ -39,6 +39,7 @@ namespace DigitalCommercePlatform.UIServices.Search
             services.AddTransient<SearchServiceArgs>();
             services.AddSingleton<ITranslationService, TranslationService>();
             services.AddScoped<ISortService, SortService>();
+            services.AddScoped<IOrderLevelsService, OrderLevelsService>();
             services.AddScoped<IItemsPerPageService, ItemsPerPageService>();
 
             services.AddScoped<KeywordSearchHandlerArgs>();

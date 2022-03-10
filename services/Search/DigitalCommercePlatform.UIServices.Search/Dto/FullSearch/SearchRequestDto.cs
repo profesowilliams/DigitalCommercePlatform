@@ -20,5 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch
         public Dictionary<Details, bool> GetDetails { get; set; }
         public SearchProfileId SearchProfileId { get; set; }
         public string Culture { get; set; }
+        public string OrderLevel { get; set; }
     }
 }

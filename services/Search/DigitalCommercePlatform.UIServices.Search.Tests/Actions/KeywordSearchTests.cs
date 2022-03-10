@@ -29,6 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
         private readonly Mock<IMarketService> _marketServiceMock;
         private readonly Mock<IDefaultIndicatorsService> _defaultIndicatorsServiceMock;
+        private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
 
         public KeywordSearchTests()
         {
@@ -44,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _marketServiceMock = new Mock<IMarketService>();
 
             _defaultIndicatorsServiceMock = new Mock<IDefaultIndicatorsService>();
+            _orderLevelsServiceMock = new Mock<IOrderLevelsService>();
         }
 
         [Theory]
@@ -217,6 +219,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 new object[] {new KeywordSearch.Request(false, null, null, null, null) }
             };
 
-        private KeywordSearch.Handler GetHandler() => new(new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object, _itemsPerPageServiceMock.Object, _defaultIndicatorsServiceMock.Object, _marketServiceMock.Object));
+        private KeywordSearch.Handler GetHandler() => new(new(_searchServiceMock.Object, _logger, _mapper, _siteSettingsMock.Object, _sortServiceMock.Object, _itemsPerPageServiceMock.Object, _defaultIndicatorsServiceMock.Object, _marketServiceMock.Object,_orderLevelsServiceMock.Object));
     }
 }

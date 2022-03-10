@@ -53,14 +53,16 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly IMapper _mapper;
             private readonly ISortService _sortService;
             private readonly IItemsPerPageService _itemsPerPageService;
+            private readonly IOrderLevelsService _orderLevelsService;
 
-            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService, IItemsPerPageService itemsPerPageService)
+            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService, IItemsPerPageService itemsPerPageService, IOrderLevelsService orderLevelsService)
             {
                 _searchService = searchService;
                 _logger = logger;
                 _mapper = mapper;
                 _sortService = sortService;
                 _itemsPerPageService = itemsPerPageService;
+                _orderLevelsService = orderLevelsService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -94,12 +96,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     appRequest.Sort = _sortService.GetDefaultSortDto(request.ProfileId);
                 }
 
+                if (!request.IsAnonymous && appRequest.OrderLevel is null)
+                {
+                    appRequest.OrderLevel = _orderLevelsService.GetOrderLevel(request.ProfileId);
+                }
+
                 var response = await _searchService.GetFullSearchProductData(appRequest, request.IsAnonymous).ConfigureAwait(false);
 
                 if (request.FullSearchRequestModel.GetRefinements)
                 {
                     response.SortingOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort, request.ProfileId);
                     response.ItemsPerPageOptions = _itemsPerPageService.GetItemsPerPageOptionsBasedOnRequest(request.FullSearchRequestModel.PageSize);
+                }
+
+                if (!request.IsAnonymous)
+                {
+                    response.OrderLevels = _orderLevelsService.GetOrderLevelOptions(request.ProfileId, request.FullSearchRequestModel.OrderLevel);
                 }
 
                 return new Response(response);

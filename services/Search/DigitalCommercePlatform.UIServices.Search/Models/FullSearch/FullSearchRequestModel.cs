@@ -11,7 +11,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
         public int Page { get; set; } = 1;
         public int PageSize { get; set; }
         public string SearchString { get; set; }
-        public string OrderLevel { get; set; } = "Commercial";
+        public string OrderLevel { get; set; }
         public List<RefinementGroupRequestModel> RefinementGroups { get; set; }
         public SortRequestModel Sort { get; set; }
         public string[] Territories { get; set; }

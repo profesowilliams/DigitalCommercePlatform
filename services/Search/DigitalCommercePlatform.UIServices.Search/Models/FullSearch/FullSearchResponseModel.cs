@@ -20,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
         public IEnumerable<string> Territories { get; set; }
         public IEnumerable<DropdownElementModel<string>> SortingOptions { get; set; }
         public IEnumerable<DropdownElementModel<int>> ItemsPerPageOptions { get; set; }
+        public IEnumerable<DropdownElementModel<string>> OrderLevels { get; set; }
         public bool IsLoggedIn { get; set; }
     }
 }
