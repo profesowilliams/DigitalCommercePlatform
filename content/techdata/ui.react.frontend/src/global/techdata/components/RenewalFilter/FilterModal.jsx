@@ -67,7 +67,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
           btnClass="filter-modal-container__close"
         ></Button>
         <FilterDialog>
-          <FilterHeader />
+          <FilterHeader onQueryChanged={onQueryChanged}/>
           <ul className="filter-accordion">
             <FilterList rootIds={rootIds} />
           </ul>
