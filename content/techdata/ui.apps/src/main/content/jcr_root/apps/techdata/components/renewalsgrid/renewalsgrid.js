@@ -104,6 +104,10 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["ofTextLabel"] = properties["ofTextLabel"];
     }
 
+    if (properties && properties["filterType"]) {
+        jsonObject["filterType"] = properties["filterType"];
+    }
+
     let node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
     let filterListValues = [];
     if (node !== null) {
