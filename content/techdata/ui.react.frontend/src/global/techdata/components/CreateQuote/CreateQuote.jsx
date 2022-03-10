@@ -124,7 +124,7 @@ const QuoteCreate = ({
         }
         else {
           showSimpleModal('Create Quote', (
-            <div>{createQuoteInProgress}</div>
+            <div>{createQuoteInProgress.replace("{confirmation-id}", content.confirmationId)} </div>
           ), onModalClosed => {
             closeModal();
             window.location.href = quotesGridUrl;
