@@ -18,7 +18,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
     [SetContextFromHeader]
     [ApiController]
     [ApiVersion("1")]
-    [Route("/v{version:apiVersion}/stock")]
+    [Route("/v{version:apiVersion}")]
     [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     public class StockController : BaseUIServiceController
     {
@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         }
 
         [HttpGet]
-        [Route("details")]
+        [Route("{controller}/details")]
         public async Task<IActionResult> GetStock([FromQuery] string id)
         {
             try
