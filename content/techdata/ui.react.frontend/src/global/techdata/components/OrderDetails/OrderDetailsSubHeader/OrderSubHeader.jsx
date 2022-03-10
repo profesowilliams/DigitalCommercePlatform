@@ -87,30 +87,31 @@ const orderButton = (status) => {
 }
 
   return (
-      <div className="cmp-td-order-details__header">
-        <div className="cmp-td-order-details__header__details">
-          <button onClick={()=> {window.history.go(location.href.indexOf('#') > 0 ? -2 : -1); return false}} className="cmp-td-order-details__header__details--icon">
-              <i className="fas fa-chevron-left" />
-          </button>
-          <div className="cmp-td-order-details__header__details__order-number">{headerConfig.orderLabel} {id}</div>
-        <div>{headerConfig.orderDateLabel} {orderDetails?.created ? orderDetails?.created : "Order Date Not Found" }</div>
-        <div>{headerConfig.purchaseOrderLabel} {orderDetails?.poNumber ? orderDetails?.poNumber : "Purchase Order Not Found"}</div>
-        </div>
-
-        <div className="cmp-td-order-details__header__status" onClick={handleClickCSV}>
-          <a href="#">{headerConfig.exportCSVLabel}</a>
-          <div>{headerConfig.phoneNumberLabel}</div>
-            {orderButton(status)}
-        </div>
-          {modal &&
-              <Modal
-                modalExportChild={{Child:LineItemsExportXls, exportColumnList}}
-                modalProperties={modal.properties}
-                onModalClosed={() => setModal(null)}
-                modalAction={modal.modalAction}
-              />
-          }
-            
+      <div>
+            <div className="cmp-td-order-details__header">
+                <div className="cmp-td-order-details__header__details">
+                <button onClick={()=> {window.history.go(location.href.indexOf('#') > 0 ? -2 : -1); return false}} className="cmp-td-order-details__header__details--icon">
+                    <i className="fas fa-chevron-left" />
+                </button>
+                <div className="cmp-td-order-details__header__details__order-number">{headerConfig.orderLabel} {id}</div>
+                <div>{headerConfig.orderDateLabel} {orderDetails?.created ? orderDetails?.created : "Order Date Not Found" }</div>
+                <div>{headerConfig.purchaseOrderLabel} {orderDetails?.poNumber ? orderDetails?.poNumber : "Purchase Order Not Found"}</div>
+                </div>
+                <div className="cmp-td-order-details__header__status">
+                    <a href="#" onClick={handleClickCSV}>{headerConfig.exportCSVLabel}</a>
+                    <div>{headerConfig.phoneNumberLabel}</div>
+                    {orderButton(status)}
+                </div>            
+            </div>
+      
+            {modal &&
+                    <Modal
+                        modalExportChild={{Child:LineItemsExportXls, exportColumnList}}
+                        modalProperties={modal.properties}
+                        onModalClosed={() => setModal(null)}
+                        modalAction={modal.modalAction}
+                    />
+            }
       </div>
   );
 };

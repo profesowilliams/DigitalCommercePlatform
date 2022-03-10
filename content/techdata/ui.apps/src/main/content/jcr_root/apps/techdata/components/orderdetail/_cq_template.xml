@@ -45,8 +45,8 @@
     orderLabel="Order"
     orderDateLabel="Placed on"
     purchaseOrderLabel="Purchase Order:"
-    phoneNumberLabel="Phone number:"
-    exportCSVLabel="Export CSV"
+    phoneNumberLabel="Phone number: +1 (800) 237-8931"
+    exportCSVLabel="Export XLS"
     serialCellLabel="Serial №"
     serialModal="Serial numbers"
 >
