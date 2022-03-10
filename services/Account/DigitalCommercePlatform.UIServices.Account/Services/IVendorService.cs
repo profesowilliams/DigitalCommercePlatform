@@ -17,6 +17,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         Task<VendorRefreshToken.Response> VendorRefreshToken(VendorRefreshToken.Request request);
         Task<GetVendorDisconnect.Response> VendorDisconnect(GetVendorDisconnect.Request request);
         Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request);
-        Task<RefreshData.Response> RefreshVendor(RefreshData.Request request);
+        RefreshData.Response RefreshVendor(RefreshData.Request request);
     }
 }

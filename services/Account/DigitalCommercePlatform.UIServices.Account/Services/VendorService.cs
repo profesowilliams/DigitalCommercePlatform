@@ -66,8 +66,21 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                       });
 
                 var vendorResponse = await _middleTierHttpClient.GetAsync<HttpResponseModel>(url).ConfigureAwait(false);
-
+                              
                 var result = vendorResponse?.StatusCode ?? HttpStatusCode.OK;
+
+                if (vendorResponse?.StatusCode == HttpStatusCode.OK)
+                {
+                    RefreshData.Request refreshRequest = new()
+                    {
+                        FromDate = DateTime.Now.AddDays(30).Date,
+                        Type = "ALL",
+                        VendorName = request.Vendor
+                    };
+
+                    RefreshCongigurationData(refreshRequest, "estimate"); // fire and forget 
+                    RefreshCongigurationData(refreshRequest, "deal"); // fire and forget 
+                }
 
                 var response = new SetVendorConnection.Response();
                 response.Items = result == HttpStatusCode.OK ? true : false;
@@ -238,24 +251,49 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             return Task.FromResult(url);
         }
 
-        public async Task<RefreshData.Response> RefreshVendor(RefreshData.Request request)
+        public RefreshData.Response RefreshVendor(RefreshData.Request request)
         {
-            var configurationRefreshUrl = _appConfigurationUrl.AppendPathSegments("Refresh", request.VendorName, request.Type);
-
-            if (!string.IsNullOrWhiteSpace(request.Version))
+            if (request.Type.ToUpper() == "ALL")
             {
-                configurationRefreshUrl = configurationRefreshUrl.AppendPathSegment(request.Version);
+                RefreshCongigurationData(request, "estimate"); // fire and forget 
+                RefreshCongigurationData(request, "deal"); // fire and forget 
+            }
+            else
+            {
+                RefreshCongigurationData(request, request.Type); // fire and forget 
             }
 
-            var refreshResponse = await _middleTierHttpClient.PostAsync<HttpResponseModel>(configurationRefreshUrl, null, null);
-
-            var result = refreshResponse?.StatusCode ?? HttpStatusCode.OK;
-
             var response = new RefreshData.Response();
-            response.Refreshed = result == HttpStatusCode.OK ? true : false;
+            response.Refreshed = true; // always return true
+            return Task.FromResult(response).Result;
 
-            return response;
+        }
 
+        private void RefreshCongigurationData(RefreshData.Request request, string type)
+        {           
+            var url = _appSettings.GetSetting("Integration.Configuration.Url");
+            
+            request.FromDate = request.FromDate ?? DateTime.Now.AddDays(-1).Date;
+
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+
+                    //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.FromDate;//for Testing
+
+                    url = url.AppendPathSegments("configurations/refresh", request.VendorName, type)
+                     .SetQueryParams(new
+                     {
+                         since = request.FromDate
+                     });
+                    await _middleTierHttpClient.PostAsync<HttpResponseModel>(url).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception to fetch data from Mongo DB: " + nameof(VendorService));
+                }
+            });
         }
 
         private List<string> VendorList()

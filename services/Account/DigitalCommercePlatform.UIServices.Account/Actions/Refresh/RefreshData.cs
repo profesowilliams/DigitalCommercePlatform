@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +14,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Refresh
         {
             public string VendorName { get; set; }
             public string Type { get; set; }
-            public string Version { get; set; }
+            public string Version { get; set; }            
+            public DateTime? FromDate { get; set; }
         }
 
         public class Response
@@ -32,13 +34,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Refresh
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                var data = await _vendorService.RefreshVendor(request).ConfigureAwait(false);
-                var response = new Response
+                var data = _vendorService.RefreshVendor(request);
+                var result = new Response
                 {
                     Refreshed = data.Refreshed,
                 };
-
-                return new ResponseBase<Response> { Content = response };
+                var response = new ResponseBase<Response> { Content = result };
+                return await Task.FromResult(response);
             }
         }
     }

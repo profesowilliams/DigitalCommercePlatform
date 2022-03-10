@@ -38,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Actions.Refresh
             _vendorService.Setup(x => x.RefreshVendor(
                     It.IsAny<ActionsRefresh.RefreshData.Request>()
                     ))
-                .ReturnsAsync(expected);
+                .Returns(expected);
 
             var handler = new ActionsRefresh.RefreshData.Handler( _vendorService.Object);
 
@@ -47,7 +47,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Actions.Refresh
             {
                 VendorName = "Cisco",
                 Type = "Estimate",
-                Version = "1"
+                Version = "1",
+                FromDate = System.DateTime.Now.AddDays(30).Date 
             };
 
             var result = await handler.Handle(request, It.IsAny<CancellationToken>());
