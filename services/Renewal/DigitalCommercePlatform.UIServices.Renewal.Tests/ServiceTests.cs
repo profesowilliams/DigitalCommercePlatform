@@ -121,7 +121,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
                 Data = new List<SummaryDto>() 
                 { 
                     new SummaryDto
-                    {                
+                    {
+                        Vendor = new Dto.Renewals.Internal.VendorDto()
+                        {
+                            Name = "TestVendor"
+                        },
                         EndUserPO = "Test 1",
                         DueDate = DateTime.Now.AddDays(5)                        
                     },
@@ -511,6 +515,25 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var result = service.GetRenewalsQuoteDetailedFor(request).Result;
 
             result.FirstOrDefault().VendorLogo.Should().Be("http://testVendor/logoUrl.svg");
+        }
+
+        [Fact]
+        public void GetRenewalsSummaryForGetVendorLogo()
+        {
+            var request = new SearchRenewalSummary.Request()
+            {
+            };
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+
+            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null, null)).ReturnsAsync(ReturnedSummaryData);
+
+            var helperQueryService = new Mock<IHelperService>();
+            helperQueryService.Setup(x => x.GetVendorLogo("TestVendor")).Returns("http://testVendor/logoUrl.svg");
+
+            var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
+            var result = service.GetRenewalsSummaryFor(request).Result;
+
+            result.Response.FirstOrDefault().VendorLogo.Should().Be("http://testVendor/logoUrl.svg");
         }
 
         private ResponseSummaryDto ReturnedData()

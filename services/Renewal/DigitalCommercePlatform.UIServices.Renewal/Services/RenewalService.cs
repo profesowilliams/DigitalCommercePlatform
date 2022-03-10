@@ -117,6 +117,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             {
                 var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
+                modelList.ForEach(model =>
+                {
+                    model.VendorLogo = _helperQueryService.GetVendorLogo(model.Vendor?.Name);
+                });
                 var count = coreResult.Count;
 
                 switch (request.SortBy?.ToLowerInvariant())
