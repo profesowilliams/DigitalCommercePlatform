@@ -96,7 +96,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     appRequest.Sort = _sortService.GetDefaultSortDto(request.ProfileId);
                 }
 
-                if (!request.IsAnonymous && appRequest.OrderLevel is null)
+                if (request.IsAnonymous)
+                {
+                    appRequest.OrderLevel = null;
+                }
+                else if (appRequest.OrderLevel is null)
                 {
                     appRequest.OrderLevel = _orderLevelsService.GetOrderLevel(request.ProfileId);
                 }

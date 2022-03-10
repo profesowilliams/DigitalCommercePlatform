@@ -173,6 +173,56 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
 
         [Theory]
         [AutoDomainData]
+        public async Task DoNotShowOrderLevelsForAnonymousUser(FullSearch.Request request, FullSearchResponseModel appResponse)
+        {
+            //Arrange
+            request.IsAnonymous = true;
+            appResponse.OrderLevels = null;
+
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
+            
+            var sut = GetHandler();
+
+            //Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //Assert
+            result.Results.Should().NotBeNull();
+            result.Results.OrderLevels.Should().BeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task ShowOrderLevelsForLoggedInUser(FullSearch.Request request, FullSearchResponseModel appResponse)
+        {
+            //Arrange
+            request.IsAnonymous = false;
+            request.FullSearchRequestModel.OrderLevel = null;
+
+            var orderLevels = new List<DropdownElementModel<string>>
+            {
+                new DropdownElementModel<string> { Id = "Commercial", Name = "Commercial (Non-Govt)", Selected = true },
+                new DropdownElementModel<string> { Id = "EduHigher", Name = "Education (Higher)", Selected = false },
+                new DropdownElementModel<string> { Id = "EduK12", Name = "Education (K-12)", Selected = false }
+            };
+
+            _searchServiceMock.Setup(x => x.GetFullSearchProductData(It.IsAny<SearchRequestDto>(), It.IsAny<bool>())).Returns(Task.FromResult(appResponse));
+            _orderLevelServiceMock.Setup(x => x.GetOrderLevelOptions(It.IsAny<SearchProfileId>(), It.IsAny<string>())).Returns(orderLevels);
+
+            var sut = GetHandler();
+
+            //Act
+            var result = await sut.Handle(request, default).ConfigureAwait(false);
+
+            //Assert
+            result.Results.Should().NotBeNull();
+            result.Results.OrderLevels.Should().NotBeNull();
+            result.Results.OrderLevels.Single(i => i.Selected).Id.Should().Be("Commercial");
+        }
+
+
+        [Theory]
+        [AutoDomainData]
         public async Task Handle_CallServiceWithoutRefinements_WhenGetRefinementsIsFalse(FullSearch.Request request, FullSearchResponseModel appSearchResponse)
         {
             //arrange
