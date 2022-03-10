@@ -51,10 +51,10 @@ function ProductLinesGrid({
 
   function expandAll() {
     DataLayerUtils.pushEvent(
-      "click",
+      DataLayerUtils.ANALYTICS_TYPES.events.click,
       {
-        name: "Open All",
-        type: "link",
+        name: DataLayerUtils.ANALYTICS_TYPES.name.openAll,
+        type: DataLayerUtils.ANALYTICS_TYPES.types.link,
         category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
     );
@@ -66,10 +66,10 @@ function ProductLinesGrid({
 
   function collapseAll() {
     DataLayerUtils.pushEvent(
-      "click",
+      DataLayerUtils.ANALYTICS_TYPES.events.click,
       {
-        name: "Collapse All",
-        type: "link",
+        name: DataLayerUtils.ANALYTICS_TYPES.name.collapseAll,
+        type: DataLayerUtils.ANALYTICS_TYPES.types.link,
         category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
     );
@@ -91,10 +91,10 @@ function ProductLinesGrid({
 
   const onExpandAnalytics = () => {
     DataLayerUtils.pushEvent(
-      "click",
+      DataLayerUtils.ANALYTICS_TYPES.events.click,
       {
-        name: "Open Line Item",
-        type: "button",
+        name: DataLayerUtils.ANALYTICS_TYPES.name.openLineItem,
+        type: DataLayerUtils.ANALYTICS_TYPES.types.button,
         category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
     );
@@ -102,10 +102,10 @@ function ProductLinesGrid({
 
   const onCollapseAnalytics = () => {
     DataLayerUtils.pushEvent(
-      "click",
+      DataLayerUtils.ANALYTICS_TYPES.events.click,
       {
-        name: "Collapse Line Item",
-        type: "button",
+        name: DataLayerUtils.ANALYTICS_TYPES.name.collapseLineItem,
+        type: DataLayerUtils.ANALYTICS_TYPES.types.button,
         category: ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY,
       },
     );

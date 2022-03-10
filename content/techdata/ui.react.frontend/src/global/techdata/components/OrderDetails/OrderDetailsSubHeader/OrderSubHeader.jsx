@@ -3,7 +3,7 @@ import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Modal from "../../Modal/Modal";
 import LineItemsExportXls from "../OrderDetailItemExport/LineItemsExportXls";
 import  { orderStatusValues } from "../orderStatus";
-import { pushEvent } from '../../../../../utils/dataLayerUtils';
+import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 
 const OrderSubHeader = ({
       headerConfig,
@@ -29,11 +29,11 @@ const downloadXls = () => (fieldsList) => {
 }
 const handleClickCSV = () => {
 
-    pushEvent('click', 
+    pushEvent(ANALYTICS_TYPES.events.click, 
     {
-       type: 'link', 
+       type: ANALYTICS_TYPES.types.link, 
        name: headerConfig.exportCSVLabel,
-       category: 'Order Detail Table Interactions'
+       category: ANALYTICS_TYPES.category.orderDetailTableInteraction
     });
 
     const modal = {

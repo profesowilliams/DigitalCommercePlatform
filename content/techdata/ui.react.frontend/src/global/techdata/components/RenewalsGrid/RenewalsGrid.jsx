@@ -1,5 +1,5 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import React, { useEffect } from "react";
+import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
@@ -68,9 +68,9 @@ function RenewalsGrid(props) {
     .map(({ colId, sort }) => ({ colId, sort }))
     .filter((col) => col.sort)
     if(clickedColumn.length) {
-      pushEvent("click", {
-        type: "button",
-        category: "Renewals Table Interaction",
+      pushEvent(ANALYTICS_TYPES.events.click, {
+        type: ANALYTICS_TYPES.types.button,
+        category: ANALYTICS_TYPES.category.renewalsTableInteraction,
         name: clickedColumn[0]?.colId,
       });
     }

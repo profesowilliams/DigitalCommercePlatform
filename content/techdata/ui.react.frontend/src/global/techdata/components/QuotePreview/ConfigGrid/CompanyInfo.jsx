@@ -5,7 +5,7 @@ import Button from "../../Widgets/Button";
 import { usGet } from "../../../../../utils/api";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
-import { pushEvent } from "../../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};
@@ -87,11 +87,12 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
 
   const handleCompanyInfoAnalytics = () => {
     pushEvent(
-      "click",
+      ANALYTICS_TYPES.events.click,
       {
+        /** FOR REVIEWERS: is this ok like this?*/
         name: "Your Company Information",
-        type: "button",
-        category: "Quote Preview Table Interactions",
+        type: ANALYTICS_TYPES.types.button,
+        category: ANALYTICS_TYPES.category.quotePreviewTableInteractions,
       },
     );
   };

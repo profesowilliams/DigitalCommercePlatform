@@ -2,7 +2,7 @@ import React, { useEffect, useState, createRef } from "react";
 import Chart from "chart.js";
 import "chartjs-gauge";
 import { get } from "../../../../utils/api";
-import { pushData } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
 
 // import "./style.css";
 
@@ -18,7 +18,7 @@ const MyOrdersWidget = ({ componentProp }) => {
         let updatedEndPoint = endpoint;
 
         pushData({
-            event: "orderDaysSelected",
+            event: ANALYTICS_TYPES.events.orderDaysSelected,
             order: {
                 selectedDays: toggle ? 30 : 90
             }

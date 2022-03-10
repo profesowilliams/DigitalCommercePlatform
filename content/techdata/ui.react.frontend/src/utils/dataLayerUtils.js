@@ -25,6 +25,52 @@ const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
 const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
 const ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS = 'Clear all filters';
 
+/** Please, enter here all the analytics info that are going to be used in a future, in this way, we can have it in a more structured and cleaner way */
+export const ANALYTICS_TYPES = {
+  events: {
+    click: "click",
+    editConfigStart: "editConfigStart",
+    configStart: "configStart",
+    configSearch: "configSearch",
+    renewalSearch: "renewalSearch",
+    orderDaysSelected: "orderDaysSelected",
+    quoteStart: "quoteStart",
+    quoteComplete: "quoteComplete",
+    qpDealApply: "qpDealApply",
+    qpDealSearch: "qpDealSearch",
+  },
+  types: {
+    button: "button",
+    link: "link",
+  },
+  category: {
+    renewalsTableInteraction: "Renewals Table Interaction",
+    renewalsActionColumn: "Renewals Action Column",
+    dcpSubheader: 'DCP subheader',
+    orderDetailTableInteraction: "Order Detail Table Interactions",
+    profileDropdown:  "profile dropdown",
+    logOut: "Logout",
+    logIn: "login",
+    quotePreviewTableInteractions: "Quote Preview Table Interactions",
+    quoteDetailTableInteraction: "Quote Detail Table Interactions",
+  },
+  name: {
+    filterNumberCounter: (number) => `Filter Number ${number}`,
+    collapseAll: "Collapse All",
+    openAll: "Open All",
+    logOut: "Logout",
+    filterIcon: "Filter Icon",
+    downloadPDF: "download PDF",
+    downloadXLS: "download XLS",
+    seeDetails: "see details",
+    logIn: "login",
+    generalInformation: "General Information",
+    openLineItem: "Open Line Item",
+    collapseLineItem: "Collapse Line Item",
+    endUserInformation: "End User Information",
+  },
+};
+
 export const isDataLayerEnabled = () => {
   if (dataLayerEnabled === null) {
     dataLayerEnabled = document.body.hasAttribute('data-cmp-data-layer-enabled');
@@ -120,3 +166,4 @@ const setVisitorData = (object) => {
 
   return object;
 }
+

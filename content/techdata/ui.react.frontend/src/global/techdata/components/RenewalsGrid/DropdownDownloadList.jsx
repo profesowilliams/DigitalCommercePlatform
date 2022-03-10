@@ -3,7 +3,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { generateExcelFileFromPost } from "../../../../utils/utils";
 import { PDFRenewalDocument } from "../PDFWindow/PDFRenewalWindow";
 import { useRenewalGridState } from "./store/RenewalsStore";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 
 function DropdownDownloadList({ data, aemConfig }) {
   const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
@@ -12,12 +12,12 @@ function DropdownDownloadList({ data, aemConfig }) {
     useState(false);
 
   const dataToPush = (name) => ({
-    type: "button",
-    category: "Renewals Action Column",
+    type: ANALYTICS_TYPES.types.button,
+    category: ANALYTICS_TYPES.category.renewalsActionColumn,
     name,
   });
   const redirectToRenewalDetail = () => {
-    pushEvent("click", dataToPush("see details"));
+    pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.seeDetails));
     const renewalDetailsURL = encodeURI(
       `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
     );
@@ -26,13 +26,13 @@ function DropdownDownloadList({ data, aemConfig }) {
 
   const downloadXLS = () => {
     try {
-      pushEvent("click", dataToPush("download XLS"));
+      pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadXLS));
       generateExcelFileFromPost({
         url: exportXLSRenewalsEndpoint,
-        name: `Renewal ${data?.source?.id}.xlsx`,
+        name: `Renewals Quote ${data?.source?.id}.xlsx`,
         postData: {
           Id: data?.source?.id
-        },
+        }
       });
     } catch (error) {
       console.error("error", error);
@@ -61,7 +61,7 @@ function DropdownDownloadList({ data, aemConfig }) {
 
           return (
             <button
-              onClick={() => pushEvent("click", dataToPush("download PDF"))}
+              onClick={() => pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadPDF))}
             >
               <i className="fas fa-file-pdf"></i>
               Download PDF
@@ -72,7 +72,7 @@ function DropdownDownloadList({ data, aemConfig }) {
     ) : (
       <button
         onClick={() => {
-          pushEvent("click", dataToPush("download PDF"));
+          pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadPDF));
           setPDFDownloadableOnDemand(true);
         }}
       >

@@ -4,7 +4,7 @@ import VendorConnection from './VendorConnection';
 import {dashboardMenu} from "./dashboardMenu";
 import {getAbsolutePosition} from "../../helpers/absolutePosition";
 import {getQueryStringValue} from "../../../../utils/utils";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 
 const NewSubheader = ({ componentProp }) => {
 	const dashboardMenuIndex = 0;
@@ -149,9 +149,9 @@ const NewSubheader = ({ componentProp }) => {
 	}
 
 	const analyticsData = (label, type) => {
-        pushEvent('click', {
+        pushEvent(ANALYTICS_TYPES.events.click, {
             type: type,
-            category: 'DCP subheader',
+            category: ANALYTICS_TYPES.category.dcpSubheader,
             name: label,
             clickHier: label?.trim() || label
         });

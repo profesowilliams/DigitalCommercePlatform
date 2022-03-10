@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useCallback } from "react";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import { isInternalUser } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
 
@@ -84,7 +84,7 @@ function SearchFilter({
       queryString : `&${option}=${inputValue}`
     }
     onQueryChanged(query);
-    pushEvent("renewalSearch", null, {
+    pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {
         searchTerm: option,
         searchType: inputValue,

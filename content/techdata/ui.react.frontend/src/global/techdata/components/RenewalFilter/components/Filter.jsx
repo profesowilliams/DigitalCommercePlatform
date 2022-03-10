@@ -68,7 +68,19 @@ function Filter({ id }) {
       <li onClick={handleFilterClick} className="filter-accordion__item">
         <div className="filter-accordion__item--group">
           <h3 className={`${filter.open ? "active" : ""}`}>{filter.title}</h3>
-          <Count>{checkCount(filter)}</Count>
+          <Count
+            callback={() =>
+              pushEvent(ANALYTICS_TYPES.events.click, {
+                type: ANALYTICS_TYPES.types.button,
+                category: ANALYTICS_TYPES.category.renewalsTableInteraction,
+                name: ANALYTICS_TYPES.name.filterNumberCounter(
+                  appliedFilterCount
+                ),
+              })
+            }
+          >
+            {checkCount(filter)}
+          </Count>
         </div>
       </li>
       <If condition={filter.field === "date"}>

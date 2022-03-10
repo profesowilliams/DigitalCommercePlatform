@@ -41,11 +41,11 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const handleLinkClick = (linkUrl, dcpLink, linkTitle, linkTarget ) => {
       let finalLinkUrl = hasDCPAccess(userDataCheck) ? dcpLink : linkUrl 
       if(finalLinkUrl != undefined){
-        DataLayerUtils.pushEvent("click", {
+        DataLayerUtils.pushEvent(DataLayerUtils.ANALYTICS_TYPES.events.click, {
           name: linkTitle,
           selectionDepth: "",
-          type: "link",
-          category: "profile dropdown",
+          type: DataLayerUtils.ANALYTICS_TYPES.types.link,
+          category: DataLayerUtils.ANALYTICS_TYPES.category.profileDropdown,
         });
         linkTarget ?
           window.open(finalLinkUrl, 'blank') :
@@ -159,13 +159,13 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   };
 
   const handleSignOut = () => {
-    DataLayerUtils.pushEvent("click", {
+    DataLayerUtils.pushEvent(DataLayerUtils.ANALYTICS_TYPES.events.click, {
       carouselName: "",
       mastheadlevel: "",
-      name: "Logout",
+      name: DataLayerUtils.ANALYTICS_TYPES.name.logOut,
       selectionDepth: "",
-      type: "button",
-      category: "Logout",
+      type: DataLayerUtils.ANALYTICS_TYPES.types.button,
+      category: DataLayerUtils.ANALYTICS_TYPES.category.logOut,
     });
     signOut(
       config?.logoutURL ?? null,

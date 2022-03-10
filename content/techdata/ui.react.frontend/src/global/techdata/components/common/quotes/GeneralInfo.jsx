@@ -3,7 +3,7 @@ import useGet from "../../../hooks/useGet";
 import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
-import { pushData, pushEvent } from '../../../../../utils/dataLayerUtils';
+import { ANALYTICS_TYPES, pushData, pushEvent } from '../../../../../utils/dataLayerUtils';
 
 function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
@@ -118,11 +118,11 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
 
     const handleEditModeChangeAnalytics = () => {
         pushEvent(
-            "click",
+            ANALYTICS_TYPES.events.click,
             {
-                name: "General Information",
-                type: "button",
-                category: "Quote Preview Table Interactions",
+                name: ANALYTICS_TYPES.name.generalInformation,
+                type: ANALYTICS_TYPES.types.button,
+                category: ANALYTICS_TYPES.category.quotePreviewTableInteractions,
             },
         );
     };
@@ -248,7 +248,7 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
     const loadDeals = async (searchTerm) => {
        
         pushData({
-            event: "qpDealSearch",
+            event: ANALYTICS_TYPES.events.qpDealSearch,
             quote: {}
         });
 

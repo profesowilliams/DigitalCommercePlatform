@@ -9,7 +9,7 @@ import {
   MultipleQuotesInvokeModal,
   SingleQuotesInvokeModal,
 } from "./QuotesModals";
-import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import { isNotEmptyValue } from "../../../../utils/utils";
 import { 
   ADOBE_DATA_LAYER_LINK_TYPE,
@@ -230,7 +230,7 @@ function ConfigurationGrid(props) {
       
     };
     const objectToSend = {
-      event: "configSearch",
+      event: ANALYTICS_TYPES.events.configSearch,
       configuration,
     };
     pushEventAnalyticsGlobal(objectToSend);

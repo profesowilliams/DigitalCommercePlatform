@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../Widgets/Button";
 import Link from "../Widgets/Link";
 import { isDealConfiguration } from "../QuotePreview/QuoteTools";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 
 const eventTypes = {
   button: "button",
@@ -22,8 +22,10 @@ function QuotePreviewContinue({
     setIsDefault(!isDefault);
   };
 
-  const dataToPush = (quotePreviewFields) => {
-    return {
+  const dataToPush = (quotePreviewFields) => (
+    ANALYTICS_TYPES.events.quoteComplete,
+    null,
+    {
       quotePreview: {
         quoteConfig: isConfig,
         ...quotePreviewFields,
@@ -31,18 +33,19 @@ function QuotePreviewContinue({
       quotes: {
         quoteID: "",
       },
-    };
-  };
+    }
+  );
+  
 
   const quoteDetailsSource = apiResponse?.content?.quotePreview?.quoteDetails?.source;
 
   const clickHandler = (evtName) => {
     if (evtName === eventTypes.button) {
       handleQuickQuote();
-      pushEvent("quoteComplete", null, { ...dataToPush({ quickQuote: "1" }) });
+      pushEvent(dataToPush({ quickQuote: "1" }))
     } else if (evtName === eventTypes.link) {
       handleQuickQuoteWithoutDeals();
-      pushEvent("quoteComplete", null, { ...dataToPush({ standardPrice: "1" }) });
+      pushEvent(dataToPush({ standardPrice: "1" }))
     }
   };
 

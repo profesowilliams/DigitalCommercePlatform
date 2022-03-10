@@ -215,13 +215,13 @@ const SignIn = (props) => {
   };
 
   const onSignIn = () => {
-    DataLayerUtils.pushEvent("click", {
+    DataLayerUtils.pushEvent(DataLayerUtils.ANALYTICS_TYPES.events.click, {
       carouselName: "",
       mastheadlevel: "",
-      name: "Login",
+      name: DataLayerUtils.ANALYTICS_TYPES.name.logIn,
       selectionDepth: "",
-      type: "button",
-      category: "Login",
+      type: DataLayerUtils.ANALYTICS_TYPES.types.button,
+      category: DataLayerUtils.ANALYTICS_TYPES.category.logIn,
     });
     redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
   };

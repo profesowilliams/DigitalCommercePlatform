@@ -1,5 +1,5 @@
 import React from "react";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 
 export const dashboardMenu = (dashboardMenuItems, hasDCPAccess) => {
     let first = hasDCPAccess ? 2 : 0;
@@ -7,9 +7,9 @@ export const dashboardMenu = (dashboardMenuItems, hasDCPAccess) => {
 
     const analyticsData = (label, type) => {
         const hier = 'Dashboards > ' + label;
-        pushEvent('click', {
+        pushEvent(ANALYTICS_TYPES.events.click, {
             type: type,
-            category: 'DCP subheader',
+            category: ANALYTICS_TYPES.category.dcpSubheader,
             name: label,
             clickHier: hier
         });

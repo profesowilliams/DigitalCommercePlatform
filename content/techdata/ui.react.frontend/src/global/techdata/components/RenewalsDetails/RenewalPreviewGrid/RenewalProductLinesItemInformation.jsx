@@ -23,14 +23,14 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
 
   const handleClick = () => {
     DataLayerUtils.pushEvent(
-      "click",
+      DataLayerUtils.ANALYTICS_TYPES.events.click,
       {
         name: line.displayName,
-        type: "link",
+        type: DataLayerUtils.ANALYTICS_TYPES.types.link,
       },
       {
         click: {
-          category: "Quote Detail Table Interactions",
+          category: DataLayerUtils.ANALYTICS_TYPES.category.quoteDetailTableInteraction,
         },
         products: {
           productInfo: { parentSKU: line.tdNumber, name: line.displayName },

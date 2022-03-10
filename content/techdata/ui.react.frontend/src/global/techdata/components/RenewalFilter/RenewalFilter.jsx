@@ -2,22 +2,23 @@ import React from "react";
 import FilterModal from "./FilterModal";
 import Button from "../Widgets/Button";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
-import { pushEvent } from "../../../../utils/dataLayerUtils";
+import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import Count from "./components/Count";
+
 
 export default function RenewalFilter({ aemData, onQueryChanged }) {
   const isFilterModalOpen = useRenewalGridState(
     (state) => state.isFilterModalOpen
   );
-  const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
   const effects = useRenewalGridState((state) => state.effects);
-  const { toggleFilterModal } = effects;
+  const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
 
+  const { toggleFilterModal } = effects;
   const handleFilterClick = () => {
-    pushEvent("click", {
-      type: "button",
-      category: "Renewals Table Interactions",
-      name: "Filter Icon",
+    pushEvent(ANALYTICS_TYPES.events.click, {
+      type: ANALYTICS_TYPES.types.button,
+      category: ANALYTICS_TYPES.category.renewalsTableInteraction,
+      name: ANALYTICS_TYPES.name.filterIcon,
     });
     toggleFilterModal();
   };

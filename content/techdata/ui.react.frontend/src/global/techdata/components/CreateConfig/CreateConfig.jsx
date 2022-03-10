@@ -3,7 +3,7 @@ import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import { usPost } from "../../../../utils/api";
-import { pushData } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
 
 const CreateConfig = ({ componentProp }) => {
   const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText }  = JSON.parse(componentProp);
@@ -14,7 +14,7 @@ const CreateConfig = ({ componentProp }) => {
 
   const analyticsData = (vendorName, complete) => {
       let analyticsObj = {
-           event: "configStart",
+           event: ANALYTICS_TYPES.events.configStart,
            configuration: {
                configID: '',
                vendorName: vendorName,

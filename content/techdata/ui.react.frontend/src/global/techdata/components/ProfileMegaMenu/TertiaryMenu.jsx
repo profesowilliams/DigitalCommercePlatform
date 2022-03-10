@@ -11,12 +11,12 @@ function TertiaryMenu({tertiaryData, userData, innerRef, handleKeyDown}) {
       let finalLinkUrl = hasDCPAccess(userData) ? dcpLink : linkUrl;
       if (finalLinkUrl != undefined) {
         DataLayerUtils.pushEvent(
-          "click",
+          DataLayerUtils.ANALYTICS_TYPES.events.click,
           {
             name: linkTitle,
             selectionDepth: "",
-            type: "link",
-            category: "profile dropdown",
+            type: DataLayerUtils.ANALYTICS_TYPES.types.link,
+            category: DataLayerUtils.ANALYTICS_TYPES.category.profileDropdown,
           }
         );
         window.location.href = finalLinkUrl;

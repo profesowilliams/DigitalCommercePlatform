@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Info from '../../common/quotes/DisplayItemInfo';
 import Button from '../../Widgets/Button';
 import { validateRequiredEnduserFields } from "../QuoteTools";
-import { pushEvent } from "../../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 
 function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal}) {
     endUser = endUser && endUser[0];
@@ -37,11 +37,11 @@ const handleEditModeChange = () => {
 
     const handleEndUserAnalytics = () => {
       pushEvent(
-        "click",
+        ANALYTICS_TYPES.events.click,
         {
-          name: "End User Information",
-          type: "button",
-          category: "Quote Preview Table Interactions",
+          name: ANALYTICS_TYPES.name.endUserInformation,
+          type: ANALYTICS_TYPES.types.button,
+          category: ANALYTICS_TYPES.category.quotePreviewTableInteractions,
         },
       );
     }

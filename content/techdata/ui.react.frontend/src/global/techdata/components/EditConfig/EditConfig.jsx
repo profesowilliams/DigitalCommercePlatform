@@ -6,7 +6,7 @@ import Button from "../Widgets/Button";
 import Loader from '../Widgets/Loader';
 import { waitFor } from "../../../../utils/utils";
 import axios from 'axios';
-import { pushData } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
 
 const EditConfig = ({ componentProp }) => {
     // useEffect(() => {
@@ -41,7 +41,7 @@ const EditConfig = ({ componentProp }) => {
 
     const analyticsData = (vendorName, configID, complete) => {
       let analyticsObj = {
-           event: "editConfigStart",
+           event: ANALYTICS_TYPES.events.editConfigStart,
            configuration: {
                configID: configID,
                vendorName: vendorName,

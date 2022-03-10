@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { pushEvent } from "../../../../utils/dataLayerUtils";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";

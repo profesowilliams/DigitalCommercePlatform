@@ -25,7 +25,7 @@ import {
   isTechDataAndAVTTechCustomerMethod
 } from "./QuoteTools";
 import Modal from '../Modal/Modal';
-import { pushEvent } from '../../../../utils/dataLayerUtils';
+import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { 
   LOCAL_STORAGE_KEY_USER_DATA,
   QUOTE_PREVIEW_AVT_TYPE_VALUE,
@@ -313,7 +313,7 @@ const [flagDeal, setFlagDeal] = useState(false);
 
   const setDealApplyAnalytics = (generalInfo) => {
     pushEvent(
-      "qpDealApply",
+      ANALYTICS_TYPES.events.qpDealApply,
       null,
       {
         quotePreview: {
