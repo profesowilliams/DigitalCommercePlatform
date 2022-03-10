@@ -48,6 +48,7 @@ export default function useGridFiltering() {
                 const postData = JSON.parse(filter.current);
                 const response = await usPost(request.url, postData);
                 willDoPostRequest.current = false;
+                filter.current = null;
                 return response;
             }
 

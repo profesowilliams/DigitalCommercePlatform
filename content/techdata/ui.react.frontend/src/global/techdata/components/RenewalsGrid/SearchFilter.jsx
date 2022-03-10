@@ -164,8 +164,7 @@ function SearchFilter({
             </div>      
           <If condition={true}>
           <div className="cmp-search-options">
-            {options.map((option) => renderWithPermissions(option))}
-          <label onClick={() => fetchAll()}>Reset</label>
+            {options.map((option) => renderWithPermissions(option))}  
           </div>   
         </If>
       </div>   

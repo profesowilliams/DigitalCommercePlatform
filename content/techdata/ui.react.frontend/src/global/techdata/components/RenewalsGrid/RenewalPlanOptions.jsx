@@ -25,13 +25,11 @@ function RenewalPlanOptions({ labels, data }) {
         window.location.href = renewalDetailsURL;
       };
     const exportXlsPlan = (id) =>{
-        const postData = {
-            id
-          };
+          const postData = {id};
           const name = `renewal-${id}.xlsx`;
           const url = exportXLSRenewalsEndpoint;
           console.log("🚀 ~ file: RenewalPlanOptions.jsx ~ line 33 ~ exportXlsPlan ~ url", url)
-          generateExcelFileFromPost({url,postData})
+          generateExcelFileFromPost({url,name,postData})
     }
     const computeClassName = (optionList, index) => {
         const mediumScreenWidth = 1160;

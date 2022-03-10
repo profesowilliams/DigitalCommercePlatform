@@ -74,21 +74,6 @@ export const buttonListColumn = ({
   cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} /> ,
 });
 
-export const renewalPlanColumn = ({
-  columnLabel,
-  columnKey,
-  sortable = false,
-}) => ({
-  headerName: columnLabel,
-  field: columnKey,
-  sortable: sortable,
-  resizable: true,
-  width:"300px",
-  cellRenderer: ({data}) => {     
-    return <ContractColumn data={data} />
-  },
-});
-
 export const plainResellerColumnFn = (definition) => {
   // check if Its a reseller or techdata employee
   const { columnLabel, columnKey, sortable } = definition;
@@ -108,7 +93,6 @@ const columnTypes = {
   date: dateColumn,
   plainText: plainTextColumn,
   buttonList: buttonListColumn,
-  renewalPlan: renewalPlanColumn,
   plainResellerColumn: plainResellerColumnFn,
 };
 
