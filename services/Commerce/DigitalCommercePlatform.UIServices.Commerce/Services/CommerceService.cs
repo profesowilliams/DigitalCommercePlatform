@@ -70,9 +70,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var response = getQuoteResponse?.FirstOrDefault();
 
             if (response != null)
+            {
                 response = MapAnnuity(response);
+                MapEndUserName(response);
+            }
 
             return response;
+        }
+
+        private void MapEndUserName(QuoteModel response)
+        {
+            if ((response?.EndUser!=null) && (bool)response?.EndUser?.Contact?.Any())
+            {
+                response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name ?? "";
+                response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.EndUser.Contact.FirstOrDefault().Name;
+            }
         }
 
         private QuoteModel MapAnnuity(QuoteModel input)

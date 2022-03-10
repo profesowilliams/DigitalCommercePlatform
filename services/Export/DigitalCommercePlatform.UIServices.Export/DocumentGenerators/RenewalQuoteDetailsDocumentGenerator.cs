@@ -236,12 +236,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             LabelValue(startRow + 1, startCol, "Company name", Model.Reseller.NameUpper);
             LabelValue(startRow + 2, startCol, "Reseller name", Model.Reseller.Name);
 
-            var addressLines = $"{Model.Reseller.Address.Line1} {Model.Reseller.Address.Line2} {Model.Reseller.Address.Line3}";
+            var addressLines = $"{Model.Reseller?.Address?.Line1} {Model.Reseller?.Address?.Line2} {Model.Reseller?.Address?.Line3}";
             LabelValue(startRow + 3, startCol, "Address", addressLines);
 
-            var locationData = $"{Model.Reseller.Address.City} {Model.Reseller.Address.State} {Model.Reseller.Address.PostalCode}";
+            var locationData = $"{Model.Reseller?.Address?.City} {Model.Reseller?.Address?.State} {Model.Reseller?.Address?.PostalCode}";
             LabelValue(startRow + 4, startCol, "City, State, Zip code", locationData);
-            LabelValue(startRow + 5, startCol, "Country", Model.Reseller.Address.Country);
+            LabelValue(startRow + 5, startCol, "Country", Model.Reseller?.Address?.Country);
 
             var contact = Model.Reseller.Contact.Count > 0
                 ? Model.Reseller.Contact[0] : null;

@@ -924,5 +924,42 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
 
         }
+
+
+
+        [Fact]
+        public void EndUserName_Test()
+        {
+            //arrange
+            ContactModel contactModel = new ContactModel()
+            {
+                Name = "Sandy Shore",
+                Email = "sandyshore@gmail.com",
+                Phone = "000-000-0000"
+            };
+            IEnumerable<ContactModel> contact = new List<ContactModel>() { contactModel };
+            EndUserModel endUserModel= new EndUserModel()
+            {
+                Name ="Tom",
+                Contact= contact
+            };
+            QuoteModel quoteModel = new QuoteModel()
+            {
+                EndUser=endUserModel
+            };
+
+             //Act
+             Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var response = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapEndUserName" && x.IsPrivate);
+
+            var result = response.Invoke(objType, new object[] { quoteModel });
+
+            //Assert 
+            Assert.NotNull(quoteModel);
+        }
     }
 }
