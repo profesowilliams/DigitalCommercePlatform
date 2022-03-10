@@ -10,6 +10,12 @@ import PDFRenewalTable from "./../PDFTable/PDFRenewalTable";
 
 // Create styles
 const styles = PDFStyles;
+export const openPDF = (url) => {
+  if (url) {
+    window.open(url, "_blank");
+  }
+};
+
 
 export const PDFRenewalDocument = ({ reseller, endUser, items }) => {
   return (

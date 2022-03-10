@@ -5,7 +5,7 @@ import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
 import {
-  PDFRenewalDocument,
+  PDFRenewalDocument, openPDF
 } from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
@@ -30,23 +30,18 @@ function GridHeader({ gridProps, data }) {
     }
   };
 
-  const openPDF = (url) => {
-    if (url) {
-      window.open(url, "_blank");
-    }
-  };
-
-  const RenewalDocument = () => (
-    <PDFRenewalDocument
-      reseller={data?.reseller}
-      endUser={data?.endUser}
-      items={data?.items}
-    />
-  );
-
   const DownloadPDF = () =>
     isPDFDownloadableOnDemand ? (
-      <PDFDownloadLink document={<RenewalDocument />} fileName={"Renewals.pdf"}>
+      <PDFDownloadLink
+        document={
+          <PDFRenewalDocument
+            reseller={data?.reseller}
+            endUser={data?.endUser}
+            items={data?.items}
+          />
+        }
+        fileName={"Renewals.pdf"}
+      >
         {({ blob, url, loading, error }) => {
           loading ? "loading..." : openPDF(url);
 
