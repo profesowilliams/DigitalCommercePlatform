@@ -1,10 +1,10 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
-using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.Internal;
+using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.RefinementsDto;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
@@ -199,23 +199,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<RefinementGroupsModel> GetRefainmentGroup(RefinementRequest request)
         {
-            var count = await GetRenewalsSummaryCountFor(request);
+            var refinementGroupsResult = await GetRefinementGroups(request);
 
-            request.Details = false;
-
-            var coreResult = await GetSummary(count, request);
-            var rgroupModel = new RefinementGroupsModel()
-            {
-                Group = "RenewalAttributes",
-                Refinements = new List<RefinementsModel>()
-
-            };
-
-            rgroupModel.Refinements.Add(GetVendor(coreResult));
-            rgroupModel.Refinements.Add(GetEndUserType(coreResult));
-            rgroupModel.Refinements.Add(GetRenewalType(coreResult));
-
-            return rgroupModel;
+            return _mapper.Map<RefinementGroupsModel>(refinementGroupsResult);
         }
 
         private static void AddPartialSearchResellerId(List<string> resellerIds)
@@ -361,66 +347,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             return false;
         }
 
-        private async Task<List<SummaryDto>> GetSummary(int TotalCount, RefinementRequest request)
+        private async Task<RefinementGroupData> GetRefinementGroups(RefinementRequest request)
         {
-            var list = new List<SummaryDto>();
-            var length = (TotalCount / request.PageSize) + 2;
-
-            for (var i = 1; i < length; i++)
-            {
-                request.Page = i;
-
-                var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
-                var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
-
-                list.AddRange(coreResult.Data);
-            }
-
-            return list;
-        }
-
-        private static RefinementsModel GetVendor(IEnumerable<SummaryDto> list)
-        {
-            var vendors = list.Select(x => x.Vendor.Name).Distinct();
-            List<OptionsModel> options = new();
-
-            foreach (var vendor in vendors)
-            {
-               var subModel = list?.Where(x => x.Vendor.Name == vendor)?.Select(x => x.ProgramName)?.Distinct()?.Select(x => new OptionsBaseModel { Text = x, SearchKey = "ProgramName" }).ToList();
-               var element = new OptionsModel() { Text = vendor, SubOptions = subModel, SearchKey = "VendorName" };
-
-               
-                options.Add(element);
-            }
-
-            RefinementsModel result = new() { Name = "Vendors and Programs", Options = options };
-            result.Options = options;
-
-            return result;
-        }
-
-        private static RefinementsModel GetEndUserType(IEnumerable<SummaryDto> list)
-        {
-            RefinementsModel result = new()
-            { 
-                Name = "End user type",
-                SearchKey = "EndUserType",
-                Options = list?.Select(x => x.EndUserType)?.Distinct()?.Where(x => x != null)?.Select(w => new OptionsModel() { Text = w }).ToList()
-            };
-
-            return result;
-        }
-
-        private static RefinementsModel GetRenewalType(IEnumerable<SummaryDto> list)
-        {
-            RefinementsModel result = new()
-            {
-                Name = "Renewal Type",
-                SearchKey = "Type",
-                Options = list?.Select(x => x.Source.Type)?.Distinct()?.Where(x => x != null)?.Select(w => new OptionsModel() { Text = w }).ToList()
-            };
-
-            return result;
+            var req = _appRenewalServiceUrl.AppendPathSegment("GetRefinementGroups").BuildQuery(request);
+            return await _middleTierHttpClient.GetAsync<RefinementGroupData>(req).ConfigureAwait(false);
         }
     }
 }

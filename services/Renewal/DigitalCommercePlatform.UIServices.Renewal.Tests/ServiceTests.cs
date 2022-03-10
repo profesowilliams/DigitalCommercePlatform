@@ -1,9 +1,10 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.AutoMapper;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
+using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup.RefinementsDto;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
@@ -21,7 +22,12 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 {
     public class ServiceTests
     {
-        private static IMapper Mapper => new MapperConfiguration(config => config.AddProfile(new RenewalsMapper())).CreateMapper();
+        private static IMapper Mapper => new MapperConfiguration(config =>
+        {
+            config.AddProfile(new RenewalsMapper());
+            config.AddProfile(new RefinementGroupsMapper());
+        }).CreateMapper();
+
         private static Mock<ILogger<RenewalService>> Logger => new();
         private static Mock<IAppSettings> AppSettings
         {
@@ -96,7 +102,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         [AutoDomainData]
         public void ThrowsExceptionOtherThanRemoteServerHttpException(SearchRenewalSummary.Request request)
         {
-            //arrange            
+            // Arrange            
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
             httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null)).ThrowsAsync(new Exception("test 123"));
@@ -105,10 +111,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             
-            //act
+            // Act
             Func<Task> act = async () => await service.GetRenewalsSummaryFor(request);
 
-            //assert
+            // Assert
             act.Should().ThrowAsync<Exception>();
             httpClient.Verify(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(),null), Times.Once);
         }
@@ -175,11 +181,11 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
         [Theory]
         [AutoDomainData]
-        public void ServicesGetRefainmentGroupTests(RefinementRequest request)
+        public void ServicesGetRefainmentGroupTests(RefinementRequest request, RefinementGroupData response)
         {
             var httpClient = new Mock<IMiddleTierHttpClient>();
             
-            httpClient.Setup(x => x.GetAsync<ResponseSummaryDto>(It.IsAny<string>(), null, null,null)).ReturnsAsync(ReturnedData);
+            httpClient.Setup(x => x.GetAsync<RefinementGroupData>(It.IsAny<string>(), null, null,null)).ReturnsAsync(response);
 
             var helperQueryService = new Mock<IHelperService>();
 
@@ -189,8 +195,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             
             result.Should().NotBeNull();
             result.Group.Should().Be("RenewalAttributes");
-            result.Refinements.Should().NotBeEmpty();
-            result.Refinements.Count.Should().Be(3);           
+            result.Refinements.Count.Should().BeGreaterThan(0);           
         }
 
         [Fact]
