@@ -41,24 +41,45 @@ function RenewalsGrid(props) {
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
-    if (mappedResponse.status !== 200 && !(mappedResponse.data)){
-      return {data:{content: {items:null,totalItems,pageCount,pageNumber}}}
+    const refinementGroups = mappedResponse?.data?.content?.refinementGroups ?? "thomas";
+
+    if (mappedResponse.status !== 200 && !mappedResponse.data) {
+      return {
+        data: {
+          content: {
+            items: null,
+            totalItems,
+            pageCount,
+            pageNumber,
+            refinementGroups,
+          },
+        },
+      };
     }
-    mappedResponse.data.content = {items:itemsWithActions,totalItems,pageCount,pageNumber};
+
+    mappedResponse.data.content = {
+      items: itemsWithActions,
+      totalItems,
+      pageCount,
+      pageNumber,
+      refinementGroups,
+    };
     return mappedResponse;
   }
 
   const customRequestInterceptor = async (request) => {
-    const response = await requestInterceptor(request);   
+    const response = await requestInterceptor(request);
     const mappedResponse = mapServiceData(response);      
-    const {pageCount, pageNumber, totalItems} = mappedResponse?.data?.content;
+    const {pageCount, pageNumber, totalItems, refinementGroups} = mappedResponse?.data?.content;
     const value = {
       currentResultsInPage: mappedResponse?.data?.content?.items?.length,
       totalCounter: totalItems,   
       pageCount,
-      pageNumber          
-    }
+      pageNumber,    
+    };
+
     effects.setCustomState({key:'pagination',value})
+    effects.setCustomState({key:'refinements', value: refinementGroups})
     return mappedResponse;
   }
 

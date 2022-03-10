@@ -52,6 +52,7 @@ const INITIAL_STATE = {
     currentResultsInPage: 0,
     pageNumber: 1
   },
+  refinements: undefined,
   customStartDate:undefined,
   customEndDate:undefined,
   aemConfig:null,

@@ -5,9 +5,11 @@ import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
 import FilterList from "./components/FilterList";
 import FilterTags from "./components/FilterTags";
-import { generateFilterFields } from "./filterUtils/filterUtils";
 
-import normaliseState from "./normaliseData";
+import { generateFilterFields } from "./filterUtils/filterUtils";
+import normaliseAPIData from "./filterUtils/normaliseAPIData";
+import normaliseState from "./filterUtils/normaliseData";
+
 import { RenewalErrorBoundary } from "./renewalErrorBoundary";
 
 const FilterDialog = ({ children }) => {
@@ -15,8 +17,16 @@ const FilterDialog = ({ children }) => {
 };
 
 const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
-  // https://beta.reactjs.org/learn/choosing-the-state-structure#avoid-deeply-nested-state
-  const aemFilterData = normaliseState(aemData.filterListValues);
+  const filterData = useRenewalGridState(state => state.refinements);
+
+  let aemFilterData;
+  aemData.filterType = aemData.filterType === null ? "static" : aemData.filterType;
+  
+  if (aemData.filterType === "dynamic") {
+    aemFilterData = normaliseAPIData(filterData.refinements);
+  } else {
+    aemFilterData = normaliseState(aemData.filterListValues);
+  }
 
   const filterList = useRenewalGridState(state => state.filterList);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
