@@ -127,15 +127,17 @@
       width: rem(112px) !important;
       height: auto !important;
     }
+  }
 
-    & span {
-      font-size: rem(22.5px);
-      line-height: rem(22.5px);
+  .cmp-responsive-font {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
       position: absolute;
-      width: 100%; 
       text-align: center;
-      margin: auto;
-      top: calc(50% - 11.25px);
+      margin: 0 auto;
     }
   }
 }

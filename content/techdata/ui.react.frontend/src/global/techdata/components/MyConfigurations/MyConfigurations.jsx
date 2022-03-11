@@ -54,6 +54,23 @@ const MyConfigurations = ({ componentProp }) => {
       },
     });
   };
+
+  const getFontSize = (textLength) => {
+    const baseSize = 6;
+    if (textLength >= baseSize) {
+        textLength = baseSize - 2;
+    }
+    const fontSize = baseSize - textLength;
+    return `${fontSize}vw`;
+  };
+  
+  const donuts = document.querySelectorAll('.cmp-responsive-font span');
+    
+  donuts.forEach(donut => {
+    donut.style.fontSize = getFontSize(donut.textContent.length);
+  });
+
+
   useEffect(() => {
     if (summary) {
       createChart(domRef1.current.getContext("2d"), 1, "unQuoted", "Unquoted");
@@ -93,7 +110,7 @@ const MyConfigurations = ({ componentProp }) => {
             </div>
             <div className="cmp-dcp-widget-chart__chart-row">
               {orderLabels.map((item, i) => (
-                <div className="cmp-dcp-widget-chart__chart cmp-dcp-widget-chart__donut-chart">
+                <div className="cmp-dcp-widget-chart__chart cmp-dcp-widget-chart__donut-chart cmp-responsive-font">
                   <canvas width="125" height="100" ref={refs[i]} />
                   <span>{summary[item.key]}</span>
                 </div>
