@@ -183,6 +183,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                .ForMember(dest => dest.Vendor, opt => opt.MapFrom(src => src.Vendor.Name))
                .ForMember(dest => dest.DistiBuyMethod, opt => opt.MapFrom<BuyMethodResolver>())
                .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalCost)))
+               .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency == null ? "USD":src.Currency))
                .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
                //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))
                //.ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller))

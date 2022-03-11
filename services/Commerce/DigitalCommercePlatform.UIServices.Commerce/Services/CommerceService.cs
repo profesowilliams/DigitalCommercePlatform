@@ -585,18 +585,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             try
             {
-
-                var url = _appConfigServiceURL.AppendPathSegment(request.Id)
+                var url = _appConfigServiceURL
                      .SetQueryParams(new
                      {
-                         Details = request.Details,
+                         id = request.Id,
+                         Details = true,
                          vendor = request.Vendor,
                          type = request.ConfigurationType
                      });
 
-                var configurationFindResponse = await _middleTierHttpClient
-                        .GetAsync<FindResponse<IEnumerable<DetailedDto>>>(url);
+                var findResponse = await _middleTierHttpClient
+                      .GetAsync<DetailedDto>(url);
 
+
+                IEnumerable<DetailedDto> lstDetailDto = new List<DetailedDto>() { findResponse };
+
+                FindResponse<IEnumerable<DetailedDto>> configurationFindResponse = new FindResponse<IEnumerable<DetailedDto>> { Data = lstDetailDto ,Count=lstDetailDto.Count() };
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse?.Data?.FirstOrDefault());
                 if (quotePreview == null)
                 {
