@@ -347,19 +347,23 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice, string naLabel)
             {
                 if (x.Price == null)
+                {
+                    product.Price = new PriceModel { ListPrice = naLabel };
                     return;
+                }
 
+                string currency = x.Price.Currency;
                 product.Price = new PriceModel
                 {
-                    ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
-                    BasePrice = canViewPrice ? x.Price.BasePrice.Format() : null,
-                    BestPrice = canViewPrice ? x.Price.BestPrice.Format() : null,
+                    ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable, currency),
+                    BasePrice = canViewPrice && x.Price.BasePrice.HasValue ? x.Price.BasePrice.Value.Format(currency) : null,
+                    BestPrice = canViewPrice && x.Price.BestPrice.HasValue ? x.Price.BestPrice.Value.Format(currency) : null,
                     BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration.Format() : null,
                     BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
-                    PromoAmount = FormatHelper.FormatSubtraction(x.Price.BasePrice, x.Price.BestPrice),
+                    PromoAmount = FormatHelper.FormatSubtraction(x.Price.BasePrice, x.Price.BestPrice, currency),
                     VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel
                     {
-                        Price = v.Price.Format(),
+                        Price = v.Price.Format(currency),
                         MinQuantity = v.MinQuantity.Format("0")
                     })
                 };

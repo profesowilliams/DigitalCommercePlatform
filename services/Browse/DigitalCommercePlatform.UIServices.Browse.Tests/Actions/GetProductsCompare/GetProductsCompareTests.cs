@@ -128,8 +128,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                         MinQuantity=1,
                                         Price=3
                                     }
-                                }
-                            }
+                                },
+                                Currency = "USD"
+                            },
                         }
                     },
                     new List<ValidateDto>
@@ -236,7 +237,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                         MinQuantity=1,
                                         Price=3
                                     }
-                                }
+                                },
+                                Currency = "USD"
                             }
                         }
                     },
@@ -394,9 +396,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
 
         [Theory]
         [AutoDomainData]
-        public async Task Handler_ProperlyCalculateSpecificationMatrix(Browse.Actions.GetProductsCompare.Request request, IEnumerable<ProductDto> productDtos)
+        public async Task Handler_ProperlyCalculateSpecificationMatrix(Browse.Actions.GetProductsCompare.Request request, List<ProductDto> productDtos)
         {
             //arrange
+            productDtos.ForEach(e => e.Price = null);
             productDtos.First().ExtendedSpecifications = null;
 
             _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
@@ -451,7 +454,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     BasePrice = 89.99m,
                     BestPriceExpiration = DateTime.MaxValue,
                     BestPriceIncludesWebDiscount = true,
-                    ListPrice = 44.44m
+                    ListPrice = 44.44m,
+                    Currency = "USD"
                 },
             };
 
@@ -459,8 +463,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             {
                 Price = new PriceModel
                 {
-                    BestPrice = 75.55m.Format(),
-                    BasePrice = 89.99m.Format(),
+                    BestPrice = 75.55m.Format("USD"),
+                    BasePrice = 89.99m.Format("USD"),
                     BestPriceExpiration = DateTime.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
                 },

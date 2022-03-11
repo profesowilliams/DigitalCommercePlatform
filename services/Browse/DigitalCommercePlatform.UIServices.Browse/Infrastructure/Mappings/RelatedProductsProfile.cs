@@ -37,11 +37,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 
             CreateMap<SourceDto, SourceModel>();
             CreateMap<PriceDto, PriceModel>()
-                .ForMember(dest => dest.BasePrice, opt => opt.MapFrom(src => src.BasePrice.Format()))
                 .ForMember(dest => dest.BestPriceExpiration, opt => opt.MapFrom(src => src.BestPriceExpiration.Format()))
-                .ForMember(dest => dest.BestPrice, opt => opt.MapFrom(src => src.BestPrice.Format()))
+                .ForMember(dest => dest.PromoAmount, opt => opt.Ignore())
+                .ForMember(dest => dest.BasePrice, opt => opt.Ignore())
+                .ForMember(dest => dest.BestPrice, opt => opt.Ignore())
                 .ForMember(dest => dest.ListPrice, opt => opt.Ignore())
-                .ForMember(dest => dest.PromoAmount, opt => opt.MapFrom(src => FormatHelper.FormatSubtraction(src.BasePrice, src.BestPrice)))                
                 .AfterMap<PriceAfterMapAction>();
 
             CreateMap<MainSpecificationDto, MainSpecificationModel>();
@@ -50,19 +50,28 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
         public class PriceAfterMapAction : IMappingAction<PriceDto, PriceModel>
         {
             private readonly string _naLabel;
-            private readonly ITranslationService _translationService;            
+            private readonly ITranslationService _translationService;
 
             public PriceAfterMapAction(ITranslationService translationService)
             {
                 _translationService = translationService;
                 Dictionary<string, string> translations = null;
                 _translationService.FetchTranslations(TransaltionsConst.BrowseUIName, ref translations);
-                _naLabel = _translationService.Translate(translations, TransaltionsConst.NALabel);                
+                _naLabel = _translationService.Translate(translations, TransaltionsConst.NALabel);
             }
 
             public void Process(PriceDto source, PriceModel destination, ResolutionContext context)
             {
-                destination.ListPrice = FormatHelper.ListPriceFormat(source.ListPrice, _naLabel, source.ListPriceAvailable);
+                if (source == null)
+                {
+                    destination.ListPrice = _naLabel;
+                    return;
+                }
+
+                destination.ListPrice = FormatHelper.ListPriceFormat(source.ListPrice, _naLabel, source.ListPriceAvailable, source.Currency);
+                destination.BasePrice = source.BasePrice.HasValue ? source.BasePrice.Value.Format(source.Currency) : null;
+                destination.BestPrice = source.BestPrice.HasValue ? source.BestPrice.Value.Format(source.Currency) : null;
+                destination.PromoAmount = FormatHelper.FormatSubtraction(source.BasePrice, source.BestPrice, source.Currency);
             }
         }
     }
@@ -96,7 +105,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
         private static (List<ProductModel> products, List<SpecificationModel> specifications) GetSimilarProductsAndTheirSpecifications(RelatedProductResponseModel relatedProducts, string productId)
         {
             List<TypeModel> parentProduct = relatedProducts.ProductTypes[productId];
-            
+
             TypeModel similarProductsType = parentProduct?.SingleOrDefault(i => SimilarProductsType.Equals(i.Type, StringComparison.OrdinalIgnoreCase));
 
             if (similarProductsType?.Value == null || !similarProductsType.Value.Any())

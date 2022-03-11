@@ -151,7 +151,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         MinQuantity=1,
                                         Price=3
                                     }
-                                }
+                                },
+                                Currency = "USD"
                             },
                             ExtendedSpecifications = new List<ExtendedSpecificationDto>
                             {
@@ -469,7 +470,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         MinQuantity=1,
                                         Price=3
                                     }
-                                }
+                                },
+                                Currency = "USD"
                             },
                             ExtendedSpecifications = new List<ExtendedSpecificationDto>
                             {
@@ -701,7 +703,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         MinQuantity=1,
                                         Price=3
                                     }
-                                }
+                                },
+                                Currency = "USD"
                             },
                             ExtendedSpecifications = new List<ExtendedSpecificationDto>
                             {
@@ -889,8 +892,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
         [Theory]
         [AutoDomainData]
-        public async Task GetProductDetails(IEnumerable<ProductDto> expected)
+        public async Task GetProductDetails(List<ProductDto> expected)
         {
+            expected.ForEach(e => e.Price = null);
             expected.First().Plants.First().Stock.OnOrder = new OnOrderDto
             {
                 Stock = 44,
@@ -946,7 +950,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     BestPrice = 75.55m,
                     BasePrice = 89.99m,
                     BestPriceExpiration = DateTime.MaxValue,
-                    BestPriceIncludesWebDiscount = true,                    
+                    BestPriceIncludesWebDiscount = true,
+                    Currency = "USD"
                 },
             };
 
@@ -954,8 +959,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             {
                 Price = new PriceModel
                 {
-                    BestPrice = 75.55m.Format(),
-                    BasePrice = 89.99m.Format(),
+                    BestPrice = 75.55m.Format("USD"),
+                    BasePrice = 89.99m.Format("USD"),
                     BestPriceExpiration = DateTime.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
                 },

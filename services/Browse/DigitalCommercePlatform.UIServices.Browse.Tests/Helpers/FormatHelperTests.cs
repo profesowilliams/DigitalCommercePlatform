@@ -16,92 +16,26 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
             CultureInfo.CurrentCulture = new CultureInfo("pl-PL");
         }
 
-        public static IEnumerable<object> DateTimeData()
+        [Theory]
+        [AutoDomainData(nameof(DateTimeData))]
+        public void FormatDateTime_Tests(DateTime? input, string expected)
         {
-            return new[]
-            {
-                new object[]
-                {
-                    null,
-                    null
-                },
-                new object[]
-                {
-                    new DateTime(2022, 01, 26, 12, 58, 45, 999),
-                    "26.01.2022 12:58:45"
-                }
-            };
+            // arrange - act
+            var result = input.Format();
+
+            //assert
+            result.Should().Be(expected);
         }
 
-        public static IEnumerable<object> DecimalData()
+        [Theory]
+        [AutoDomainData(nameof(NullableIntData))]
+        public void FormatNullableInt_Tests(int? input, string expected)
         {
-            return new[]
-            {
-                new object[]
-                {
-                    0m,
-                    "0,00 zł",
-                },
-                new object[]
-                {
-                    44m,
-                    "44,00 zł",
-                },
-                new object[]
-                {
-                    444444.44m,
-                    "444 444,44 zł",
-                }
-            };
-        }
+            // arrange - act
+            var result = input.Format();
 
-        public static IEnumerable<object> IntData()
-        {
-            return new[]
-            {
-                new object[]
-                {
-                    0,
-                    "0"
-                },
-                new object[]
-                {
-                    44,
-                    "44",
-                },
-                new object[]
-                {
-                    444444,
-                    "444 444"
-                }
-            };
-        }
-
-        public static IEnumerable<object> NullableDecimalData()
-        {
-            return new[]
-            {
-                new object[]
-                {
-                    null,
-                    null,
-                },
-                new object[]
-                {
-                    0m,
-                    "0,00 zł",
-                },
-                new object[]
-                {
-                    44m,
-                    "44,00 zł",
-                },
-                new object[]
-                {
-                    444444.44m,
-                    "444 444,44 zł",
-                }
-            };
+            //assert
+            result.Should().Be(expected);
         }
 
         public static IEnumerable<object> NullableIntData()
@@ -131,77 +65,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
             };
         }
 
-        public static IEnumerable<object> SubtractionData()
-        {
-            return new[]
-            {
-                new object[]
-                {
-                    null,
-                    null,
-                    null
-                },
-                new object[]
-                {
-                    null,
-                    44m,
-                    null
-                },
-                new object[]
-                {
-                    44m,
-                    null,
-                    null
-                },
-                new object[]
-                {
-                    0m,
-                    0m,
-                    "0,00 zł"
-                },
-                new object[]
-                {
-                    44m,
-                    44m,
-                    "0,00 zł"
-                },
-                new object[]
-                {
-                    44.44m,
-                    44.44m,
-                    "0,00 zł"
-                },
-                new object[]
-                {
-                    14444444.88m,
-                    44.44m,
-                    "14 444 400,44 zł"
-                }
-            };
-        }
-
-        [Theory]
-        [AutoDomainData(nameof(DateTimeData))]
-        public void FormatDateTime_Tests(DateTime? input, string expected)
-        {
-            // arrange - act
-            var result = input.Format();
-
-            //assert
-            result.Should().Be(expected);
-        }
-
-        [Theory]
-        [AutoDomainData(nameof(DecimalData))]
-        public void FormatDecimal_Tests(decimal input, string expected)
-        {
-            // arrange - act
-            var result = input.Format();
-
-            //assert
-            result.Should().Be(expected);
-        }
-
         [Theory]
         [AutoDomainData(nameof(IntData))]
         public void FormatInt_Tests(int input, string expected)
@@ -214,33 +77,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
         }
 
         [Theory]
-        [AutoDomainData(nameof(NullableDecimalData))]
-        public void FormatNullableDecimal_Tests(decimal? input, string expected)
-        {
-            // arrange - act
-            var result = input.Format();
-
-            //assert
-            result.Should().Be(expected);
-        }
-
-        [Theory]
-        [AutoDomainData(nameof(NullableIntData))]
-        public void FormatNullableInt_Tests(int? input, string expected)
-        {
-            // arrange - act
-            var result = input.Format();
-
-            //assert
-            result.Should().Be(expected);
-        }
-
-        [Theory]
         [AutoDomainData(nameof(SubtractionData))]
-        public void FormatPromoAmount_Tests(decimal? minuend, decimal? subtrahend, string expected)
+        public void FormatPromoAmount_Tests(decimal? minuend, decimal? subtrahend, string currency, string expected)
         {
             // arrange - act
-            var result = FormatHelper.FormatSubtraction(minuend, subtrahend);
+            var result = FormatHelper.FormatSubtraction(minuend, subtrahend, currency);
 
             //assert
             result.Should().Be(expected);
@@ -248,10 +89,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
 
         [Theory]
         [AutoDomainData(nameof(GetListPriceData))]
-        public void GetListPriceFlagLisrPriceFalse_ResultWithPrice(decimal listPrice, string flag, bool listPriceAvailable, string expectedValue)
+        public void GetListPriceFlagLisrPriceFalse_ResultWithPrice(decimal listPrice, string flag, bool listPriceAvailable, string currency, string expectedValue)
         {
             //act
-            string result = FormatHelper.ListPriceFormat(listPrice, flag, listPriceAvailable);
+            string result = FormatHelper.ListPriceFormat(listPrice, flag, listPriceAvailable, currency);
 
             //assert            
             result.Should().Be(expectedValue);
@@ -266,6 +107,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
                     null,
                     "NA",
                     true,
+                    "PLN",
                     "0,00 zł"
                 },
                 new object[]
@@ -273,6 +115,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
                     null,
                     "NA",
                     false,
+                    "PLN",
                     "NA"
                 },
                 new object[]
@@ -280,6 +123,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
                     192m,
                     "NA",
                     false,
+                    "PLN",
                     "192,00 zł"
                 },
                  new object[]
@@ -287,8 +131,180 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Helpers
                     192m,
                     "NA",
                     true,
+                    "PLN",
                     "192,00 zł"
                 },
+            };
+        }
+
+        public static IEnumerable<object> DateTimeData()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    null,
+                    null
+                },
+                new object[]
+                {
+                    new DateTime(2022, 01, 26, 12, 58, 45, 999),
+                    "26.01.2022 12:58:45"
+                }
+            };
+        }
+
+        public static IEnumerable<object> IntData()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    0,
+                    "0"
+                },
+                new object[]
+                {
+                    44,
+                    "44",
+                },
+                new object[]
+                {
+                    444444,
+                    "444 444"
+                }
+            };
+        }
+
+        public static IEnumerable<object> SubtractionData()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    null,
+                    null,
+                    null,
+                    null
+                },
+                new object[]
+                {
+                    null,
+                    44m,
+                    null,
+                    null
+                },
+                new object[]
+                {
+                    44m,
+                    null,
+                    "PLN",
+                    null
+                },
+                new object[]
+                {
+                    0m,
+                    0m,
+                    "PLN",
+                    "0,00 zł"
+                },
+                new object[]
+                {
+                    44m,
+                    44m,
+                    "PLN",
+                    "0,00 zł"
+                },
+                new object[]
+                {
+                    44.44m,
+                    44.44m,
+                    "PLN",
+                    "0,00 zł"
+                },
+                new object[]
+                {
+                    14444444.88m,
+                    44.44m,
+                    "PLN",
+                    "14 444 400,44 zł"
+                }
+            };
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(GetCurrencyData))]
+        public void CurrencyFormat_Results(decimal amount, string currencyCode, string expectedValue)
+        {
+            //act
+            string result = amount.Format(currencyCode);
+
+            //assert            
+            result.Should().Be(expectedValue);
+        }
+
+        public static IEnumerable<object> GetCurrencyData()
+        {
+            return new[]
+            {
+                new object[]
+                {
+                    123.123m,
+                    "USD",
+                    "$123.12"
+                },
+                new object[]
+                {
+                    123.123m,
+                    "PLN",
+                    "123,12 zł"
+                },
+                new object[]
+                {
+                    192m,
+                    "PLN",
+                    "192,00 zł"
+                },
+                 new object[]
+                {
+                    192.15m,
+                    "PLN",
+                    "192,15 zł"
+                },
+            };
+        }
+
+        [Theory]
+        [AutoDomainData(nameof(GetWrongCurrencyData))]
+        public void CurrencyFormat_Exceptions(decimal amount, string currencyCode)
+        {
+            //act
+            Action act = () => amount.Format(currencyCode);
+
+            //assert            
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        public static IEnumerable<object> GetWrongCurrencyData()
+        {
+            return new[]
+            {
+                    new object[]
+                        {
+                            123.123m,
+                            "ABC"
+                        },
+                    new object[]
+                    {
+                        123.123m,
+                        string.Empty,
+                    },
+                     new object[]
+                    {
+                        123.123m,
+                        null
+                    }
+
             };
         }
     }

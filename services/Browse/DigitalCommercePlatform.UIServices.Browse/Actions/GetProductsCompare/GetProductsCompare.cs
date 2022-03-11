@@ -212,18 +212,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
             private void MapPrice(ProductDto x, ProductModel product, string naLabel)
             {
+                if (x.Price == null)
+                {
+                    product.Price = new PriceModel { ListPrice = naLabel };
+                    return;
+                }
+
+                string currency = x.Price.Currency;
                 product.Price = new PriceModel
                 {
-                    BasePrice = x.Price?.BasePrice.Format(),
-                    BestPrice = x.Price?.BestPrice.Format(),
-                    BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price?.BestPriceExpiration.Format() : null,
-                    ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable),
-                    PromoAmount = FormatHelper.FormatSubtraction(x.Price?.BasePrice, x.Price?.BestPrice),
+                    BasePrice = x.Price.BasePrice.HasValue ? x.Price.BasePrice.Value.Format(currency) : null,
+                    BestPrice = x.Price.BestPrice.HasValue ? x.Price.BestPrice.Value.Format(currency) : null,
+                    BestPriceExpiration = product.Authorization.CanViewPrice ? x.Price.BestPriceExpiration.Format() : null,
+                    ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable, currency),
+                    PromoAmount = FormatHelper.FormatSubtraction(x.Price?.BasePrice, x.Price?.BestPrice, currency),
                     BestPriceIncludesWebDiscount = product.Authorization.CanViewPrice ? x.Price?.BestPriceIncludesWebDiscount : null,
                     VolumePricing = x.Price?.VolumePricing?.Select(p => new VolumePricingModel
                     {
                         MinQuantity = p.MinQuantity.Format(),
-                        Price = p.Price.Format()
+                        Price = p.Price.Format(currency)
                     })
                 };
             }            

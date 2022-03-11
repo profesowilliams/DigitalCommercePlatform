@@ -1,17 +1,13 @@
 ﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using System;
+using System.Globalization;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Helpers
 {
     public static class FormatHelper
     {
-        private const string currencyFormat = "C";
         private const string intFormat = "N0";
-
-        public static string Format(this DateTime? input)
-        {
-            return input.HasValue ? input.Value.ToString() : null;
-        }
 
         public static string Format(this int? input)
         {
@@ -23,37 +19,52 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             return input.HasValue ? input.Value.Format() : defaultValue;
         }
 
-        public static string Format(this decimal? input, string defaultValue)
-        {
-            return input.HasValue ? input.Value.Format() : defaultValue;
-        }
-
-        public static string Format(this decimal? input)
-        {
-            return input.Format(null);
-        }
-
         public static string Format(this int input)
         {
             return input.ToString(intFormat);
         }
 
-        public static string Format(this decimal input)
+        public static string Format(this DateTime? input)
         {
-            return input.ToString(currencyFormat);
+            return input.HasValue ? input.Value.ToString() : null;
         }
 
-        public static string FormatSubtraction(decimal? minuend, decimal? subtrahend)
+        public static string Format(this decimal input, string currencyCode)
         {
-            return minuend.HasValue && subtrahend.HasValue ? Format((decimal)(minuend - subtrahend)) : null;
+            if (string.IsNullOrEmpty(currencyCode))
+                throw new ArgumentNullException(nameof(currencyCode));
+
+            var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                           let r = new RegionInfo(c.LCID)
+                           where r != null
+                           && r.ISOCurrencySymbol.ToUpper() == currencyCode.ToUpper()
+                           select c).FirstOrDefault();
+
+            if (culture == null)
+            {
+                string message = $"Cannot find the {nameof(culture)}";
+                throw new ArgumentNullException(message);
+            }
+
+            return string.Format(culture, "{0:C}", input);
         }
 
-        public static string ListPriceFormat(decimal? listPrice, string naLabel, bool listPriceAvailable)
+        public static string FormatSubtraction(decimal? minuend, decimal? subtrahend, string currency)
         {
-            if (listPrice.HasValue && listPrice != 0)
-                return listPrice.Value.Format();
+            return minuend.HasValue && subtrahend.HasValue ? Format((decimal)(minuend - subtrahend), currency) : null;
+        }
 
-            return listPriceAvailable ? 0m.Format() : naLabel;
+        public static bool IsAvailable(this decimal? input)
+        {
+            return input.HasValue && input.Value != 0;
+        }
+
+        public static string ListPriceFormat(decimal? listPrice, string naLabel, bool listPriceAvailable, string currency)
+        {
+            if (IsAvailable(listPrice))
+                return listPrice.Value.Format(currency);
+
+            return listPriceAvailable ? 0m.Format(currency) : naLabel;
         }
     }
 }
