@@ -35,7 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
                 throw new ArgumentNullException(nameof(currencyCode));
 
             var culture = (from c in CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                           let r = new RegionInfo(c.LCID)
+                           let r = new RegionInfo(c.Name)
                            where r != null
                            && r.ISOCurrencySymbol.ToUpper() == currencyCode.ToUpper()
                            select c).FirstOrDefault();
