@@ -18,8 +18,8 @@
 
       &:before,
       &:after,
-      &>.loading:before,
-      &>.loading:after {
+      &>.cmp-loading:before,
+      &>.cmp-loading:after {
           content: '';
           position: absolute;
           top: 0;
@@ -41,17 +41,17 @@
           background: lighten($color, 40%);
       }
 
-      &>.loading:before {
+      &>.cmp-loading:before {
           transform: rotate(-90deg);
           background: lighten($color, 50%);
       }
 
-      &>.loading:after {
+      &>.cmp-loading:after {
           transform: rotate(-135deg);
           background: lighten($color, 60%);
       }
   }
 
-  .spinner {
+  .cmp-spinner {
       @include spinner(5rem, 4rem, 0.75rem, 0.75rem);
   }
