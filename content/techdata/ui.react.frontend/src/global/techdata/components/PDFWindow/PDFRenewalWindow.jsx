@@ -16,7 +16,6 @@ export const openPDF = (url) => {
   }
 };
 
-
 export const PDFRenewalDocument = ({ reseller, endUser, items }) => {
   return (
     <Document>

@@ -29,6 +29,7 @@ export const dateColumn = ({ columnLabel, columnKey, sortable = false }) => ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
+  width: columnsWidth[columnKey] || null,
   valueFormatter: (props) => {
     return getDateTransformed(props.value);
   },
@@ -44,11 +45,17 @@ const getDateTransformed = (dateUTC) => {
   return isValidDate(dateValue) ? dateValue.toLocaleDateString() : dateUTC;
 };
 
-const columnsWidth  = {
-  "renewedduration" : "250px",
-  "vendor": "250px",
-  "dueDays": "190px"
-}
+const columnsWidth = {
+  resellername: "223.368px",
+  endUser: "223.368px",
+  vendor: "197.632px",
+  agreementnumber: "120.211px",
+  renewedduration: "197.632px",
+  dueDays: "133.737px",
+  dueDate: "109.526px",
+  total: "109.526px",
+  actions: "100px",
+};
 
 export const plainTextColumn = (definition) => {
   const { columnLabel, columnKey, sortable = false } = definition;
@@ -58,7 +65,7 @@ export const plainTextColumn = (definition) => {
     sortable: sortable,
     cellHeight: () => 45,    
     width: columnsWidth[columnKey] || null,
-    resizable: true,
+    resizable: false,
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
   };
 };
@@ -71,6 +78,7 @@ export const buttonListColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
+  width: columnsWidth[columnKey] || null,
   cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} /> ,
 });
 
@@ -82,6 +90,8 @@ export const plainResellerColumnFn = (definition) => {
       headerName: columnLabel,
       field: columnKey,
       sortable: sortable,
+      resizable: false,
+      width: columnsWidth[columnKey] || null,
       cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps)
     };
   } else {
