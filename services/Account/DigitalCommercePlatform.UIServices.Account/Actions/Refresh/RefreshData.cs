@@ -16,6 +16,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Actions.Refresh
             public string Type { get; set; }
             public string Version { get; set; }            
             public DateTime? FromDate { get; set; }
+            public string From { get; set; }
         }
 
         public class Response

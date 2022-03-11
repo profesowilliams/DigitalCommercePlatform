@@ -73,9 +73,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 {
                     RefreshData.Request refreshRequest = new()
                     {
-                        FromDate = DateTime.Now.AddDays(30).Date,
+                        FromDate = DateTime.Now.AddDays(-30).Date,
                         Type = "ALL",
-                        VendorName = request.Vendor
+                        VendorName = request.Vendor,
+                        From = "lastmonth"
                     };
 
                     RefreshCongigurationData(refreshRequest, "estimate"); // fire and forget 
@@ -274,18 +275,18 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             var url = _appSettings.GetSetting("Integration.Configuration.Url");
             
             request.FromDate = request.FromDate ?? DateTime.Now.AddDays(-1).Date;
-
+            request.From = request.From ?? "yesterday";
             _ = Task.Run(async () =>
             {
                 try
                 {
 
-                    //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.FromDate;//for Testing
+                    //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.From;//for Testing
 
                     url = url.AppendPathSegments("configurations/refresh", request.VendorName, type)
                      .SetQueryParams(new
                      {
-                         since = request.FromDate
+                         since = request.From
                      });
                     await _middleTierHttpClient.PostAsync<HttpResponseModel>(url).ConfigureAwait(false);
                 }

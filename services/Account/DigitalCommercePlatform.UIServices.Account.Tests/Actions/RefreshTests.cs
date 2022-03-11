@@ -48,7 +48,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Actions.Refresh
                 VendorName = "Cisco",
                 Type = "Estimate",
                 Version = "1",
-                FromDate = System.DateTime.Now.AddDays(30).Date 
+                FromDate = System.DateTime.Now.AddDays(30).Date, 
+                From = "yesterday"
             };
 
             var result = await handler.Handle(request, It.IsAny<CancellationToken>());
