@@ -9,7 +9,7 @@
     paginationStyle="scroll"
     itemsPerPage="25"
     actionColumnLabel="Create Quote"
-    createQuoteUrlSuffix=".html?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
+    createQuoteUrlSuffix=".html?id={id}&amp;type={type}&amp;vendor={vendor}&amp;sourceIsConfigsGrid=true"
     defaultSortingColumnKey="created"
     defaultSortingDirection="desc"
     menuCopy="Copy"

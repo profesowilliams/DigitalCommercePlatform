@@ -96,8 +96,8 @@ function ConfigurationGrid(props) {
     return componentProp.createQuoteUrl
       ?.replace("{id}", props.data.configId)
       .replace(
-        "{is-estimated-id}",
-        String(props.data.configurationType === "Estimate")
+        "{type}",
+        props.data.configurationType
       )
       .replace("{vendor}", props.data.vendor);
   };

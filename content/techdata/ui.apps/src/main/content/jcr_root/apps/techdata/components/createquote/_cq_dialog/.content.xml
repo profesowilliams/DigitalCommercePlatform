@@ -41,6 +41,13 @@
 							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
 							fieldLabel="Quote Preview Url"
 							name="./quotePreviewUrl"/>
+					<quotePreviewUrlSuffix
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Quote Preview Url parameters Suffix"
+							fieldDescription="Make sure to add .html at the beginning of the suffix"
+							jcr:primaryType="nt:unstructured"
+							rootPath="/content/techdata"
+							name="./quotePreviewUrlSuffix"/>
 					<quotesGridUrl
 							jcr:primaryType="nt:unstructured"
 							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

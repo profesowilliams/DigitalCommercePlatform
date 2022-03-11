@@ -41,8 +41,8 @@ import { isNotEmptyValue } from "../../../../utils/utils";
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
   const URL_QUOTES_GRID = componentProp.successRedirectPage ? componentProp.successRedirectPage : '#';
-  const { id, isEstimateId = true, vendor = 'cisco' } = getUrlParams();
-  const [apiResponse, isLoading] = useGet(`${componentProp.uiServiceEndPoint}?id=${id}&isEstimateId=${isEstimateId}&vendor=${vendor}`);
+  const { id, type, vendor = 'cisco', sourceIsConfigsGrid = false } = getUrlParams();
+  const [apiResponse, isLoading] = useGet(componentProp.uiServiceEndPoint.replace('{configuration-id}', id).replace('{type}', type).replace('{vendor}', vendor));
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [quoteDetails, setQuoteDetails] = useState({});
   const [loadingCreateQuote, setLoadingCreateQuote] = useState(false);
@@ -412,7 +412,7 @@ const [flagDeal, setFlagDeal] = useState(false);
             handleQuickQuote={handleQuickQuote}
             handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}
             apiResponse={apiResponse}
-            isConfig={isEstimateId}
+            isConfig={sourceIsConfigsGrid}
             />
         </section>
       )}

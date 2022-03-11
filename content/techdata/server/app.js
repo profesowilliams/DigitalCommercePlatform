@@ -3506,9 +3506,9 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
 //---QUOTE PREVIEW MOCK API---//
 app.get("/ui-commerce/v1/quote/preview", function (req, res) {
   if(!validateSession(req, res)) return;
-  const { id, isEstimateId, vendor } = req.query;
+  const { id, configurationType, vendor } = req.query;
 
-  if (!isEstimateId) {
+  if (!configurationType) {
     return res.status(500).json({
       error: {
         code: 0,
@@ -3521,7 +3521,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     content: {
       quotePreview: {
         quoteDetails: {
-          isExclusive: isEstimateId === "true" && vendor ==='CISCO' ? false : true,
+          isExclusive: configurationType === "Estimate" && vendor ==='CISCO' ? false : true,
           shipTo: null,
           buyMethod: "sap46",
           endUser: [
@@ -3545,7 +3545,7 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           reseller: null,
           configID: "WC121011624NR",
           source: {
-            type: isEstimateId === "true" ? "Estimate" : (id.toLowerCase() === "deal" ? "Deal" : "VendorQuote"),
+            type: configurationType,
             value: "QJ128146301OP",
           },
           notes: null,
@@ -3941,12 +3941,12 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           currencySymbol: "$",
           subTotal: 96957.48,
           subTotalFormatted: "96,957.48",
-          tier: isEstimateId === "true" ? null : 'Commercial',
+          tier: configurationType === "Estimate" ? null : 'Commercial',
           configurationId: "QJ128146301OP",
           description: "Deal ID 52296358",
           vendor: vendor || "CISCO",
           distiBuyMethod: vendor ==='CISCO' ?
-                            isEstimateId === "true" ? 'AVT Technology Solutions LLC' : 'TECH DATA' 
+                            configurationType === "Estimate" ? 'AVT Technology Solutions LLC' : 'TECH DATA' 
                           : '',
           customerBuyMethod: 'TDANDAVT'
         },

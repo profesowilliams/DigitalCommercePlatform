@@ -15,7 +15,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
     const getData = async () => {
       const { data: { content: { items } } } = await usGet(`${estimatedIdListEndpoint}&PageNumber=1`, { });
       if(items && items.length > 0){
-        const newItems = items.map(item =>({ id: item.configId, name: item.configId, vendor: item.vendor }));
+        const newItems = items.map(item =>({ id: item.configId, name: item.configId, vendor: item.vendor, configurationType: item.configurationType }));
         setEstimatedIdList(newItems);
         setEstimatedIdListError(false)
       }else{

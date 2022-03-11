@@ -48,7 +48,7 @@ use(function () {
     }
 
     if (properties.get("quotePreviewUrl") != null) {
-        jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl"));
+        jsonObject.put("quotePreviewUrl", properties.get("quotePreviewUrl") + properties.get("quotePreviewUrlSuffix"));
     }
 
     if (properties.get("quotesGridUrl") != null) {
