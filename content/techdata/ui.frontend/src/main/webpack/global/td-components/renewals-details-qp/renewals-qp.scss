@@ -10,9 +10,9 @@
         margin-right: 10px;
         margin-bottom: 0;
         color: #000c21;
-        font-size: 24px;
-        text-shadow: 0px 0px .3px #000c21;
-        box-shadow: 0px 0.5px 0px 0px #000c21;
+        font-size: 20px;
+        text-shadow: none;
+        box-shadow: none;
         span {
             color: get-color(brand-text-gray);
             line-height: 30px;
@@ -21,7 +21,7 @@
     .info-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        padding: 20px 40px;
+        padding: 30px 40px;
         .cmp-loader-roller {
             display: flex;
             flex-basis: 33.33%;
@@ -51,7 +51,7 @@
     }
     &--sub-title {
         color: #000c21;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 600;
         line-height: 18px;
         text-shadow: 0px 0px 0px #000c21;

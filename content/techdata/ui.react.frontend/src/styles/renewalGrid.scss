@@ -243,6 +243,10 @@
     button {
       background: none;
       color: #555555;
+      &.count {
+        background-color: #001d44;
+        color: #fff;
+      }
     }
     i,
     svg {
