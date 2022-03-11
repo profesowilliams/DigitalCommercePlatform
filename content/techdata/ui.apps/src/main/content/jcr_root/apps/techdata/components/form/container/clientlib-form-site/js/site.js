@@ -23,6 +23,7 @@
         var textAreas = form.getElementsByTagName('textarea');
         var textAreasList = Array.prototype.slice.call(textAreas);
         var invalidFileStatus = false;
+        var invalidInputStatus = false;
 
         inputsList.forEach(
             function (i) {
@@ -39,10 +40,11 @@
                                 	return;
                                 }
                         }else {
-								document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
-								validateFileOnSubmit();
-								return;
+									document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
+									validateFileOnSubmit();
+									return;
                         	}
+
                         }
                     } else if (i.type.startsWith("radio") || i.type.startsWith("checkbox")) {
                         if (i.checked) {
@@ -53,7 +55,12 @@
                     }
 
                     else {
-                        newData.append(i.name, i.value);
+                        if(validateAddress(i, i.value)){
+							newData.append(i.name, i.value);
+                        } else {
+                           invalidInputStatus = true;
+                            return;
+                        }
                     }
                 }
             }
@@ -72,15 +79,43 @@
                 newData.append(i.name, i.value);
             }
         );
-        if(invalidFileStatus) return null;
+        if(invalidFileStatus || invalidInputStatus) return null;
         return newData;
     }
 
     function validateFileOnSubmit(){
 		$("#formSubmit").click(function(event){
-    			event.preventDefault();
+    		event.preventDefault();
   		});
     }
+
+    function handlerInputFile() {
+            let submitButton = document.getElementById("formSubmit");
+            submitButton.disabled = false;
+        }
+
+    function validateAddress(element,value){
+        handlerInputFile();
+        var originalBorderColor = element.style.borderColor;
+        var parentDiv = element.closest("div");
+        var errorLabel = document.createElement("label");
+		 parentDiv.appendChild(errorLabel);
+        errorLabel.style.color = "red";
+    	if(!(/^[-a-zA-Z0-9.,;_@=%: \/()!$£*+{}?|#]+$/.test(value))){
+            parentDiv.childNodes.forEach(child => {
+            if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
+	            parentDiv.removeChild(child);
+             }
+
+			});
+		    errorLabel.innerText = "This field contains Invalid Characters. Please correct";
+        	return false;
+        }
+
+            setTimeout(function() { parentDiv.removeChild(errorLabel); element.style.borderColor = originalBorderColor  }, 1000);
+            return true;
+	}
+
 
     function processFileValidations(fileEle) {
         //  validate file for invalid file size and extensions
@@ -143,7 +178,6 @@
         }else if (validityState.typeMismatch) {
             errorLabel.innerText = (parentDiv.dataset.cmpConstraintMessage ? parentDiv.dataset.cmpConstraintMessage : "This field content does not match the type of " + type);
         }
-
         setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
     }
 
@@ -193,6 +227,8 @@
                     if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
                         if (i.type.startsWith("file")) { // Founding input file
                             var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+                        } else {
+							var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
                         }
                     }
 
@@ -203,13 +239,9 @@
         /////////////////////
 
         /**
-         * handler that change the attribute of the submit boton when the user upload something
+         * handler that change the attribute of the submit button when the user upload something
          * and permit validate again the file
          */
-        function handlerInputFile() {
-            let submitButton = document.getElementById("formSubmit");
-            submitButton.disabled = false;
-        }
 
         if (submitButton) {
 
