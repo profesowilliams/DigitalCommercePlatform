@@ -80,14 +80,16 @@ const QuoteCreate = ({
     return `${text} ${messages.join(' -- ')}`
   }
 
-  const showSimpleModal = (title, content, onModalClosed=closeModal) =>
+  const showSimpleModal = (title, content, onModalClosed=closeModal, buttonLabel, modalAction) =>
     setModal((previousInfo) => ({
       content: content,
       properties: {
           title:  title,
+          buttonLabel
       },
       onModalClosed,
       ...previousInfo,
+      modalAction
     })
   );
 
@@ -127,10 +129,7 @@ const QuoteCreate = ({
         else {
           showSimpleModal('Create Quote', (
             <div>{createQuoteInProgress.replace("{confirmation-id}", content.confirmationId)} </div>
-          ), onModalClosed => {
-            closeModal();
-            window.location.href = quotesGridUrl;
-          });
+          ), closeModal, "Track My Quote", () => window.location.href = quotesGridUrl);
         }
       }
       catch(e) {
