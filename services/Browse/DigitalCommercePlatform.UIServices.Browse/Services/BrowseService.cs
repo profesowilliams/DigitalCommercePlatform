@@ -1,4 +1,5 @@
-//2022 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -81,7 +82,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
             List<CatalogResponse> catalog = new();
             try
             {
-                request.Input.CorporateCode = "0100"; //Need to fix this                
+                request.Input.CorporateCode = "0100"; //Need to fix this
 
                 var key = $"{request.Input.Id}_{request.Input.CultureName}_{request.Input.CorporateCode}_{request.Input.Level}_{request.Input.ShortenSubcategories}";
 
@@ -186,8 +187,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
             var productVariantDto = await _middleTierHttpClient.GetAsync<ProductVariantDto>(url);
             return productVariantDto;
-        } 
-        
+        }
+
         public async Task<StockModel> GetStock(GetStockHandler.Request request)
         {
             var url = _appStockUrl.BuildQuery(new

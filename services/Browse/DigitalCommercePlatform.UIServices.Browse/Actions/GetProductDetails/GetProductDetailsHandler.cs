@@ -1,4 +1,4 @@
-//2022 (c) Tech Data Corporation - All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
 
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Dto.MarketingXML;
@@ -55,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private readonly string _onOrderArrivalDateFormat;
             private readonly IBrowseService _productRepositoryServices;
             private readonly ITranslationService _translationService;
-            private Dictionary<string, string> _translations = null;            
+            private Dictionary<string, string> _translations = null;
 
             public Handler(
                 IBrowseService productRepositoryServices,
@@ -70,7 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _mapper = mapper;
                 _translationService = translationService;
                 _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
-                _cultureService = cultureService;                
+                _cultureService = cultureService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -185,13 +185,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.MaterialType = x.MaterialType;
                 product.DisplayName = x.DisplayName;
                 product.Description = x.Description;
-                product.SubstituteMaterialNumber = x.Plants?.FirstOrDefault()?.SubstituteMaterialNumber;
+                product.SubstituteMaterialNumber = x.SubstituteMaterialNumber;
                 product.ManufacturerPartNumber = x.ManufacturerPartNumber;
                 product.CNETLanguage = CnetLanguage;
                 product.CNETSite = CnetSite;
 
                 var saleorgPlant = x.SalesOrganizations?.FirstOrDefault(s => s.Id == request.SalesOrg)?.DeliveryPlant;
-                product.UPC_EAN = !string.IsNullOrWhiteSpace(saleorgPlant) ? x.Plants?.FirstOrDefault(p => p.Id == saleorgPlant)?.UPC : null;
+                product.UPC_EAN = x.UPC;
 
                 product.Status = flags.DisplayStatus;
             }

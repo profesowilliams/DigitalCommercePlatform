@@ -1,4 +1,5 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -28,6 +29,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product
         public string GlobalManufacturer { get; set; }
         public string ManufacturerPartNumber { get; set; }
         public string MaterialType { get; set; }
+        public string UPC { get; set; }
+        public string CommodityCode { get; set; }
+        public string MaterialCountryOfOrgin { get; set; }
+        public string MultiLayerSerialNumberProfile { get; set; }
+        public string PurchaserPhone { get; set; }
+        public string SerialNumberProfile { get; set; }
+        public string SubstituteMaterialNumber { get; set; }
+        public VendorDto Vendor { get; set; }
         public StockDto Stock { get; set; }
         public IEnumerable<PlantDto> Plants { get; set; }
         public IEnumerable<WarehouseDto> Warehouses { get; set; }

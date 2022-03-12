@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal
@@ -7,6 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal
     public class VendorDto
     {
         public string Id { get; set; }
-        public string Description { get; set; }
+        public string Alias { get; set; }
     }
 }
