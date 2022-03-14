@@ -34,7 +34,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         private readonly SearchService _searchService;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Mock<ITranslationService> _translationServiceMock;
-        private readonly Mock<ICultureService> _cultureServiceMock;        
+        private readonly Mock<ICultureService> _cultureServiceMock;
 
         public SearchServiceTests()
         {
@@ -52,7 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
 
             _translationServiceMock = new Mock<ITranslationService>();
-            _cultureServiceMock = new Mock<ICultureService>();            
+            _cultureServiceMock = new Mock<ICultureService>();
 
             _searchService = new SearchService(new(_middleTierHttpClient.Object, _logger, _appSettingsMock.Object, _context.Object, _siteSettingsMock.Object, mapper, _translationServiceMock.Object, _cultureServiceMock.Object));
         }
@@ -62,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task FullSearchProduct_StockNull(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
             appResponse.Products[0].Indicators = new()
             {
                 new Dto.FullSearch.Internal.IndicatorDto
@@ -98,16 +99,21 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             bool bestPriceIncludesWebDiscount = true;
             decimal listPrice = 120;
             decimal promoAmmount = 20;
-            string culture = "pl-PL";
+            string culture = "pl-PL";                      
 
-            appResponse.Products.First().Price = new PriceDto
+            appResponse.Products.ForEach(e =>
             {
-                    BasePrice = basePrice,
-                    BestPrice = bestPrice,
-                    BestPriceExpiration = bestPriceExpiration, 
-                    BestPriceIncludesWebDiscount = bestPriceIncludesWebDiscount,
-                    ListPrice = listPrice
-            };
+                e.Price = new PriceDto
+                {
+                    BasePrice = 100,
+                    BestPrice = 80,
+                    ListPrice = 120,
+                    Currency = "PLN",
+                    ListPriceAvailable = true,
+                    BestPriceExpiration = new DateTime(2022, 02, 04),
+                    BestPriceIncludesWebDiscount = true
+                };
+            });          
 
             var cultureInfo = CultureInfo.GetCultureInfo(culture);
             var formattedBasePrice = String.Format(cultureInfo, "{0:C}", basePrice);
@@ -124,7 +130,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var contextMock = new Mock<IUIContext>();
             var mapper = new MapperConfiguration(cfg => cfg.AddProfile(new SearchProfile())).CreateMapper();
             var translationServiceMock = new Mock<ITranslationService>();
-            var profileServiceMock = new Mock<IProfileService>();            
+            var profileServiceMock = new Mock<IProfileService>();
 
             var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
             middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
@@ -132,9 +138,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             var cultureService = new CultureService(profileServiceMock.Object, siteSettingsMock.Object);
 
-            var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object, 
+            var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object,
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureService));
-            
+
 
             //Act
             var result = await searchService.GetFullSearchProductData(request, true);
@@ -187,11 +193,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
 
             var profileServiceMock = new Mock<IProfileService>();
-            var cultureServiceMock = new Mock<ICultureService>();            
+            var cultureServiceMock = new Mock<ICultureService>();
 
             var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
             middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));            
+                .Returns(Task.FromResult(appResponse));
 
             var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object,
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureServiceMock.Object));
@@ -219,6 +225,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task FullSearchProduct_VendorShippedFalseWhenIndicatorsNull(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
             appResponse.Products[0].Indicators = null;
 
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
@@ -237,6 +244,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task FullSearchProduct_VendorShippedFalseWhenVDINotNull(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
             appResponse.Products[0].Indicators = new()
             {
                 new Dto.FullSearch.Internal.IndicatorDto
@@ -267,6 +275,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task FullSearchProduct_VendorShippedTrue(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
             appResponse.Products[0].Indicators = new()
             {
                 new Dto.FullSearch.Internal.IndicatorDto
@@ -519,6 +528,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task GetFullSearchProduct_CheckIndicators(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
             appResponse.Products[0].Indicators = new()
             {
                 new Dto.FullSearch.Internal.IndicatorDto
@@ -552,6 +562,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         public async Task GetProductReturnsCorrectResult(SearchRequestDto request, SearchResponseDto appResponse)
         {
             //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
             appResponse.RefinementGroups.First().Group = "TopRefinements";
             appResponse.RefinementGroups.First().Refinements.First().OriginalGroupName = "InStock";
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))

@@ -28,7 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
         public class Handler : IRequestHandler<Request, IEnumerable<ExportResponseModel>>
         {
-            private readonly int _maxResults;            
+            private readonly int _maxResults;
             private const string DisplayStatus = "DisplayStatus";
             private readonly IMiddleTierHttpClient _httpClient;
             private readonly IMapper _mapper;
@@ -51,7 +51,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _appSearchUrl = appSettings.GetSetting("Search.App.Url");
                 _maxResults = siteSettings.GetSetting<int>("Search.UI.Export.MaxProducts");
                 _translationService = translationService;
-                _translationService.FetchTranslations(TranslationsConst.PriceLabel, ref _priceLabelTranslations);                
+                _translationService.FetchTranslations(TranslationsConst.PriceLabel, ref _priceLabelTranslations);
             }
 
             public async Task<IEnumerable<ExportResponseModel>> Handle(Request request, CancellationToken cancellationToken)
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                 var models = resultDto.Products.Select(p =>
                 {
-                    var export = new ExportResponseModel
+                    var result = new ExportResponseModel
                     {
                         ManufacturerName = p.CNETManufacturer ?? p.GlobalManufacturer,
                         ManufacturerPartNumber = p.ManufacturerPartNumber,
@@ -89,14 +89,23 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                         TotalStock = p.Stock?.Total ?? 0,
                         ProductStatus = p.Indicators?.FirstOrDefault(x => x.Type == DisplayStatus)?.Value,
                         Description = !string.IsNullOrWhiteSpace(p.LongDescription) ? p.LongDescription : !string.IsNullOrWhiteSpace(p.ShortDescription) ? p.ShortDescription : p.Name,
-                        ListPrice = p.Price == null ? notAvailableLabelText : FormatHelper.ListPriceFormat(p.Price?.ListPrice, notAvailableLabelText, p.Price.ListPriceAvailable),
-                        BestPrice = p.Price?.BestPrice.Format(),
-                        BestPriceExpiration = p.Price?.BestPriceExpiration,
-                        PromoIndicator = p.Price != null && p.Price.BasePrice != null && p.Price.BestPrice != null && p.Price.BestPrice != p.Price.BasePrice ? "YES" : "NO",
-                        MaximumResults = resultDto.TotalResults <= _maxResults
+                        MaximumResults = resultDto.TotalResults <= _maxResults,
+                        PromoIndicator = "NO"
                     };
 
-                    return export;
+                    if (p.Price == null)
+                    {
+                        result.ListPrice = notAvailableLabelText;
+                        return result;
+                    }
+
+                    result.ListPrice = FormatHelper.ListPriceFormat(p.Price.ListPrice, notAvailableLabelText, p.Price.ListPriceAvailable, p.Price.Currency);
+                    result.BestPrice = p.Price.BestPrice.IsAvailable() ? p.Price.BestPrice.Value.Format(p.Price.Currency) : null;
+                    result.BestPriceExpiration = p.Price.BestPriceExpiration;
+                    result.PromoIndicator = p.Price.BasePrice != null && p.Price.BestPrice != null && p.Price.BestPrice != p.Price.BasePrice ? "YES" : "NO";
+
+
+                    return result;
                 });
 
                 return models;

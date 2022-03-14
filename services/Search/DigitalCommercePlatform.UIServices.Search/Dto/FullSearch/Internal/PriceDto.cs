@@ -10,5 +10,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal
         public DateTime? BestPriceExpiration { get; set; }
         public bool? BestPriceIncludesWebDiscount { get; set; }
         public bool ListPriceAvailable { get; set; }
+        public string Currency { get; set; }
     }
 }

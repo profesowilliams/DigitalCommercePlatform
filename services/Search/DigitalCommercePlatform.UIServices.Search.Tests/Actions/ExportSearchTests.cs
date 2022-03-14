@@ -148,7 +148,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         {
             //arrange
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-
+            
             searchRequestDto.PageSize = 100;
             _mapperMock
                 .Setup(x => x.Map<SearchRequestDto>(request.Data))
@@ -202,7 +202,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                                     ListPrice=20,
                                     BestPrice=15,
                                     BestPriceExpiration=new DateTime(2100,1,1),
-                                    BasePrice=19
+                                    BasePrice=19,
+                                    Currency = "USD"
                                 }
                             }
                         }
@@ -287,6 +288,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                                 Name="name",
                                 Price = new Dto.FullSearch.Internal.PriceDto
                                 {
+                                    Currency = "USD",
                                     BestPrice=null,
                                     BasePrice=19
                                 }
@@ -306,7 +308,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                             Description="name",
                             ListPrice=null,
                             BestPrice=null,
-                            BestPriceExpiration=null,
+                            BestPriceExpiration=null,                            
                             PromoIndicator="NO",
                             MaximumResults=false
                         }
@@ -330,7 +332,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                                 Price = new Dto.FullSearch.Internal.PriceDto
                                 {
                                     BestPrice=15,
-                                    BasePrice=null
+                                    BasePrice=null,
+                                    Currency = "USD"
                                 }
                             }
                         }
@@ -372,7 +375,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                                 Price = new Dto.FullSearch.Internal.PriceDto
                                 {
                                     BestPrice=15,
-                                    BasePrice=15
+                                    BasePrice=15, 
+                                    Currency = "USD"
                                 }
                             }
                         }

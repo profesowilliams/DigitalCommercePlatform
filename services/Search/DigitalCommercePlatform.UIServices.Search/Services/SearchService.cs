@@ -258,11 +258,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
             return new PriceModel
             {
-                BasePrice = appSearchProduct.Price.BasePrice.Format(),
-                BestPrice = appSearchProduct.Price.BestPrice.Format(),
+                BasePrice = appSearchProduct.Price.BasePrice.IsAvailable() ? appSearchProduct.Price.BasePrice.Value.Format(appSearchProduct.Price.Currency) : null,
+                BestPrice = appSearchProduct.Price.BestPrice.IsAvailable() ? appSearchProduct.Price.BestPrice.Value.Format(appSearchProduct.Price.Currency) : null,
                 BestPriceExpiration = appSearchProduct.Price.BestPriceExpiration.Format(),
-                ListPrice = FormatHelper.ListPriceFormat(appSearchProduct.Price.ListPrice, notAvailableLabelText, appSearchProduct.Price.ListPriceAvailable),
-                PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice),
+                ListPrice = FormatHelper.ListPriceFormat(appSearchProduct.Price.ListPrice, notAvailableLabelText, appSearchProduct.Price.ListPriceAvailable, appSearchProduct.Price.Currency),
+                PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice, appSearchProduct.Price.Currency),
                 BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount
             };
         }
