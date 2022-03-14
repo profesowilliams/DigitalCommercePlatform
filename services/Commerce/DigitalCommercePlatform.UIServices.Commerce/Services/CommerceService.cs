@@ -589,8 +589,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                      .SetQueryParams(new
                      {
                          id = request.Id,
-                         Details = true,
-                         vendor = request.Vendor,
+                         vendorName = request.Vendor,
                          type = request.ConfigurationType
                      });
 
