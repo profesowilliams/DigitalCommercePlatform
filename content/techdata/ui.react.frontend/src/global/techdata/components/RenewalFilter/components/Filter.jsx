@@ -75,7 +75,7 @@ function Filter({ id }) {
                 type: ANALYTICS_TYPES.types.button,
                 category: ANALYTICS_TYPES.category.renewalsTableInteraction,
                 name: ANALYTICS_TYPES.name.filterNumberCounter(
-                  appliedFilterCount
+                  checkCount(filter)
                 ),
               })
             }

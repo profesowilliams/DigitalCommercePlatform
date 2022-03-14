@@ -44,7 +44,7 @@ export const ANALYTICS_TYPES = {
     link: "link",
   },
   category: {
-    renewalsTableInteraction: "Renewals Table Interaction",
+    renewalsTableInteraction: "Renewals Table Interactions",
     renewalsActionColumn: "Renewals Action Column",
     dcpSubheader: 'DCP subheader',
     orderDetailTableInteraction: "Order Detail Table Interactions",

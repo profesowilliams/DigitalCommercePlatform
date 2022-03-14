@@ -86,8 +86,8 @@ function SearchFilter({
     onQueryChanged(query);
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {
-        searchTerm: option,
-        searchType: inputValue,
+        searchTerm: inputValue,
+        searchType: option,
       },
     });
     onReset();
