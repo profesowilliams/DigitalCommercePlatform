@@ -255,7 +255,7 @@ function Grid(props) {
   }
 
   const handleNoRowMsg = (response) => {
-    if(response.isError) {
+    if(response?.isError) {
       noRowsErrorMessage.current = getDictionaryValue(`techdata.grids.message.error.${response.code}`, `Service ${response.code} error.`);
       gridApi.current.showNoRowsOverlay();
     }
@@ -290,7 +290,7 @@ function Grid(props) {
   }
 
   function postProcessResponse(response) {
-    if (response?.data?.error.isError) {
+    if (response?.data?.error?.isError) {
       response.data.error.code = normalizeErrorCode(response.data.error.code);
       return response?.data?.error;
     }
