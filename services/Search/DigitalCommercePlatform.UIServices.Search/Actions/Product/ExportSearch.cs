@@ -101,7 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                     result.ListPrice = FormatHelper.ListPriceFormat(p.Price.ListPrice, notAvailableLabelText, p.Price.ListPriceAvailable, p.Price.Currency);
                     result.BestPrice = p.Price.BestPrice.IsAvailable() ? p.Price.BestPrice.Value.Format(p.Price.Currency) : null;
-                    result.BestPriceExpiration = p.Price.BestPriceExpiration;
+                    result.BestPriceExpiration = p.Price.BestPriceExpiration == null ? null : DateOnly.FromDateTime((DateTime)p.Price.BestPriceExpiration);
                     result.PromoIndicator = p.Price.BasePrice != null && p.Price.BestPrice != null && p.Price.BestPrice != p.Price.BasePrice ? "YES" : "NO";
 
 

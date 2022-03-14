@@ -110,7 +110,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     ListPrice = 120,
                     Currency = "PLN",
                     ListPriceAvailable = true,
-                    BestPriceExpiration = new DateOnly(2022, 02, 04),
+                    BestPriceExpiration = new DateTime(2022, 02, 04),
                     BestPriceIncludesWebDiscount = true
                 };
             });          

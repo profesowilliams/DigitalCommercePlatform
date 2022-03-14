@@ -255,12 +255,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             {
                 return new PriceModel { ListPrice = notAvailableLabelText };
             }
-
+            DateOnly? BestPriceExpirationDateOnly = appSearchProduct.Price.BestPriceExpiration == null ? null : DateOnly.FromDateTime((DateTime)appSearchProduct.Price.BestPriceExpiration);
             return new PriceModel
             {
                 BasePrice = appSearchProduct.Price.BasePrice.IsAvailable() ? appSearchProduct.Price.BasePrice.Value.Format(appSearchProduct.Price.Currency) : null,
                 BestPrice = appSearchProduct.Price.BestPrice.IsAvailable() ? appSearchProduct.Price.BestPrice.Value.Format(appSearchProduct.Price.Currency) : null,
-                BestPriceExpiration = appSearchProduct.Price.BestPriceExpiration.Format(),
+                BestPriceExpiration = BestPriceExpirationDateOnly.Format(),
                 ListPrice = FormatHelper.ListPriceFormat(appSearchProduct.Price.ListPrice, notAvailableLabelText, appSearchProduct.Price.ListPriceAvailable, appSearchProduct.Price.Currency),
                 PromoAmount = FormatHelper.FormatSubtraction(appSearchProduct.Price.BasePrice, appSearchProduct.Price.BestPrice, appSearchProduct.Price.Currency),
                 BestPriceIncludesWebDiscount = appSearchProduct.Price.BestPriceIncludesWebDiscount
