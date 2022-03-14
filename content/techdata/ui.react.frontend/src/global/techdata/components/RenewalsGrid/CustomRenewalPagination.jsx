@@ -48,11 +48,13 @@ function CustomRenewalPagination() {
 
   const goToSpecificPage = value => gridApi?.paginationGoToPage(value);
 
-  const updatePaginationCounter = () =>
+  const updatePaginationCounter = () => {
     setPaginationCounter({
       minCounter: minPaginationCounter(),
       maxCounter: maxPaginationCounter(),
     });
+    gridApi?.refreshServerSideStore();
+  }
 
   const handleInputBlur = ({target}) => {
     const value = parseInt(target.value) - 1;
