@@ -86,8 +86,12 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 			}));
 	}
 
+	function isCiscoVendorConnected() {
+		return vendorToggled && fetchedVendor?.vendor?.toLowerCase() === "cisco";
+	}
+
 	return ( config ? (
-		<div className='cmp-vendor-connection__vendors__vendor'>
+		<div className={`cmp-vendor-connection__vendors__vendor ${isCiscoVendorConnected() ? 'connected': ''}`}>
 			<div className='cmp-vendor-connection__vendors__vendor__logo'>
 				{config && config.iconPath ? (
 					<img className={'cmp-vendor-connection__vendors__vendor__logo__img'} src={config.iconPath}></img>
@@ -121,7 +125,7 @@ function Vendor({ endpoints, fetchedVendor, vendorConfig, connectedLabel, discon
 				></SlideToggle>
 			</div>
 			
-			{fetchedVendor?.vendor?.toLowerCase() === "cisco" && 
+			{isCiscoVendorConnected() && 
 				<div className='cmp-vendor-connection__vendors__vendor__refresh' onClick={() => refreshConnectionData()}>
 					<i className="fas fa-sync"></i>
 				</div>

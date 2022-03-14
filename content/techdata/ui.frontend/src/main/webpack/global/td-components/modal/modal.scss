@@ -179,8 +179,11 @@
 	}
 	&__vendors {
 		&__vendor {
+			&.connected {
+				grid-template-columns: 20% 60% 10% 10%;
+			}	
 			display: grid;
-			grid-template-columns: 20% 60% 10% 10%;
+			grid-template-columns: 20% 60% 20%;
 			min-height: rem(53px);
 			height: fit-content;
 			align-items: center;
