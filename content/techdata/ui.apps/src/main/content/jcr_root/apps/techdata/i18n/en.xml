@@ -7,4 +7,10 @@
     <techdata.quotes.placeholder.createfrom jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Create From"/>
     <techdata.quotes.placeholder.selectpricingtype jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Select pricing type"/>
                 
+    <techdata.grids.message.noRows jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="No rows found"/>
+    <techdata.grids.message.error.401 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="You need to login"/>
+    <techdata.grids.message.error.403 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="No permissions"/>
+    <techdata.grids.message.error.404 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Not found"/>
+    <techdata.grids.message.error.408 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Timeout"/>
+    <techdata.grids.message.error.500 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Unknown error"/>
 </jcr:root>

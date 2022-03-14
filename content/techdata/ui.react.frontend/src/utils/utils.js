@@ -177,6 +177,29 @@ export const getBase64FromUrl = async (url) => {
     });
 }
 
+export const normalizeErrorCode = (errorCode) => {
+    return errorCode === 401 || errorCode === 403 || errorCode === 404 || errorCode === 408 ? errorCode : 500;
+}
+
+export const fromExceptionToErrorObject = (error) => {
+    const errorCode = normalizeErrorCode(
+        !error.response && error.isAxiosError && error.code === "ECONNABORTED"
+        ? 408
+        : error.response.status
+    );
+
+    return {
+        data: {
+            error: {
+                code: errorCode,
+                message: error.response?.statusText || error.message,
+                response: error.response,
+                isError: true,
+            }
+        }
+    }; // in case of error default value to show the no row message
+}
+
 /**
  * Function that validate if the value is a null or undefined
  * and return true or false for this case

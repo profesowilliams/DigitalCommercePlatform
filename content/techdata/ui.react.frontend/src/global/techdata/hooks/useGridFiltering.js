@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { usPost } from "../../../utils/api";
+import { fromExceptionToErrorObject } from '../../../utils/utils';
 
 // hook for extend base grid with filtering functionality
 export default function useGridFiltering() {
@@ -59,7 +60,7 @@ export default function useGridFiltering() {
             return response;
         } catch (error) {
             console.error(error);
-            return []; // in case of error default value to show the no row message
+            return fromExceptionToErrorObject(error);
         }
     }
 

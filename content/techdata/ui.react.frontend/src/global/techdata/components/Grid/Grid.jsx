@@ -3,7 +3,8 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formateDatePicker } from "../../../../utils/utils";
+import { formateDatePicker, normalizeErrorCode } from "../../../../utils/utils";
+import { getDictionaryValue } from '../../../../utils/utils';
 
 function Grid(props) {
   let {
@@ -30,6 +31,7 @@ function Grid(props) {
   const componentVersion = "1.3.0";
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
+  const noRowsErrorMessage = useRef(null);
   const [actualRange, setActualRange] = useState({
     from: null,
     to: null,
@@ -61,15 +63,18 @@ function Grid(props) {
   const CustomNoRowsOverlay = (props) => {
     return (
       <div className=" customErrorNoRows">
-        {props.noRowsMessageFunc()}
+        {props.noRowsMessageFunc(props)}
         <i className="far info-circle errorIcon"></i>
       </div>
     );
   };
 
   const noRowMsg = {
-    noRowsMessageFunc: () => "Sorry - no rows to display!",
-  };
+    noRowsMessageFunc: (props) => {
+      return noRowsErrorMessage.current
+    }
+  }
+
   /*
     function that returns AG grid vnode outside main return function to keep that
     node on useState hook and set it once per component lifecycle or on demand
@@ -249,6 +254,17 @@ function Grid(props) {
     setAgGrid(<AgGrid />);
   }
 
+  const handleNoRowMsg = (response) => {
+    if(response.isError) {
+      noRowsErrorMessage.current = getDictionaryValue(`techdata.grids.message.error.${response.code}`, `Service ${response.code} error.`);
+      gridApi.current.showNoRowsOverlay();
+    }
+    else if(!response?.items || response?.items.length === 0) {
+      noRowsErrorMessage.current = getDictionaryValue("techdata.grids.message.noRows", "No rows found.");
+      gridApi.current.showNoRowsOverlay();
+    }
+  };
+
   function createDataSource() {
     return {
       getRows: (params) => {
@@ -256,18 +272,11 @@ function Grid(props) {
         const sortKey = params.request.sortModel?.[0]?.colId;
         const sortDir = params.request.sortModel?.[0]?.sort;
 
-        const handleNoRowMsg = (response) => {
-          if (!response?.items || response?.items.length === 0) {
-            gridApi.current.showNoRowsOverlay();
-          }
-        };
-
         getGridData(
           config.itemsPerPage,
           pageNo,
           sortKey,
-          sortDir,
-          handleNoRowMsg
+          sortDir
         ).then((response) => {
           params.success({
             rowData: response?.items ?? 0,
@@ -278,6 +287,14 @@ function Grid(props) {
         });
       },
     };
+  }
+
+  function postProcessResponse(response) {
+    if (response?.data?.error.isError) {
+      response.data.error.code = normalizeErrorCode(response.data.error.code);
+      return response?.data?.error;
+    }
+    return response?.data?.content;
   }
 
   async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
@@ -316,11 +333,17 @@ function Grid(props) {
           },
         });
       } else {
-        globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
-        response = await get(apiUrl);
+        try {
+          globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
+          response = await get(apiUrl);
+        } catch (error) {
+          console.error(error);
+          response = fromExceptionToErrorObject(error);
+        }
       }
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
-      return response?.data?.content;
+
+      return postProcessResponse(response);
     }
   }
 

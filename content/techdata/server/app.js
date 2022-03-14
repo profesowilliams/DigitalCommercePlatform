@@ -4082,7 +4082,13 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
   res.json(
     {
       "techdata.quotes.placeholder.createfrom": "Create From",
-      "techdata.quotes.placeholder.selectpricingtype": "Select pricing type"
+      "techdata.quotes.placeholder.selectpricingtype": "Select pricing type",
+      "techdata.grids.message.noRows": "So Lonely - No rows found From i18n",
+      "techdata.grids.message.error.401": "It Wasn't Me - 401 From i18n",
+      "techdata.grids.message.error.403": "Lie About Us - 403 From i18n",
+      "techdata.grids.message.error.404": "Still haven't found what i'm looking for - 404 From i18n",
+      "techdata.grids.message.error.408": "Yesterday - 408 From i18n",
+      "techdata.grids.message.error.500": "Into the unknown - 500 From i18n",
     }
   );
 });
