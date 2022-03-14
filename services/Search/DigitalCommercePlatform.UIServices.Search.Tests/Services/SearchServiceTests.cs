@@ -95,7 +95,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             //Arrange
             decimal basePrice = 100;
             decimal bestPrice = 80;
-            DateTime bestPriceExpiration = new DateTime(2022, 02, 04);
+            DateOnly bestPriceExpiration = new DateOnly(2022, 02, 04);
             bool bestPriceIncludesWebDiscount = true;
             decimal listPrice = 120;
             decimal promoAmmount = 20;
@@ -110,7 +110,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     ListPrice = 120,
                     Currency = "PLN",
                     ListPriceAvailable = true,
-                    BestPriceExpiration = new DateTime(2022, 02, 04),
+                    BestPriceExpiration = new DateOnly(2022, 02, 04),
                     BestPriceIncludesWebDiscount = true
                 };
             });          

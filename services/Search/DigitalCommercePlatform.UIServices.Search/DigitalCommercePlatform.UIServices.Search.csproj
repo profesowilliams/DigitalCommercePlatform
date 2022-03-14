@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="27.2.1" />
-    <PackageReference Include="DigitalFoundation.Common" Version="6.0.47" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.48" />
     <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="6.0.47" />
     <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.47" />
     <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.47" />

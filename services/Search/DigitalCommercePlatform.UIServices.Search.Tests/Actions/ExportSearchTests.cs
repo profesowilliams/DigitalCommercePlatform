@@ -201,7 +201,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                                 {
                                     ListPrice=20,
                                     BestPrice=15,
-                                    BestPriceExpiration=new DateTime(2100,1,1),
+                                    BestPriceExpiration=new DateOnly(2100,1,1),
                                     BasePrice=19,
                                     Currency = "USD"
                                 }
@@ -221,7 +221,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                             Description="longDescription",
                             ListPrice="$20.00",
                             BestPrice="$15.00",
-                            BestPriceExpiration=new DateTime(2100,1,1),
+                            BestPriceExpiration=new DateOnly(2100,1,1),
                             PromoIndicator="YES",
                             MaximumResults=true
                         }

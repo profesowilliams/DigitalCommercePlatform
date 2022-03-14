@@ -24,7 +24,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Models.FullSearch
 
         public string BestPrice { get; set; }
 
-        public DateTime? BestPriceExpiration { get; set; }
+        public DateOnly? BestPriceExpiration { get; set; }
 
         public string PromoIndicator { get; set; }
 

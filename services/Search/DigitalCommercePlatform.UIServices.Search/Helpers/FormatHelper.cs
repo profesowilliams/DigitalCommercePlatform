@@ -10,6 +10,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Helpers
     {
         private const string intFormat = "N0";       
 
+        public static string Format(this DateOnly? input)
+        {
+            return input.HasValue ? input.Value.ToString() : null;
+        }
+
         public static string Format(this int? input)
         {
             return input.Format(null);
