@@ -16,7 +16,7 @@ function DisplayItemInfo({ children = null, label = null, condition = null, noCo
         <>
             <If condition={label && children} Else={SpanInfo} >
                 <span>
-                    {toggleBoldLabel()} {!noColon ? ':' : ''} {children}
+                    {toggleBoldLabel()}{!noColon ? ':' : ''} {children}
                 </span>
             </If>
         </>
