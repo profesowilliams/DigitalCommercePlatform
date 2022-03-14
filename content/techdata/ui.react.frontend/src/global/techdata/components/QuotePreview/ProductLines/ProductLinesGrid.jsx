@@ -40,14 +40,22 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
     so in order to not mutate props, mutableGridData is clone of the data that is
     used in full component lifecycle and orignal data is kept for reference
   */
-  const mutableGridData = JSON.parse(JSON.stringify(gridData));
+  const mutableGridData = JSON.parse(JSON.stringify(gridData)).map(item => {
+    if (item?.children?.length > 0) {
+      item.isExpandedByDefault = true;
+      item.isSecondExpandedByDefault = true;
+    } else {
+      item.isExpandedByDefault = false;
+      item.isSecondExpandedByDefault = false;
+    }
+    return item;
+  });
   const selectedLinesModel = [];
   let isDataMutated = false;
 
   useEffect(() => {
     gridApi?.selectAll();
   }, [gridApi]);
-
   /**
    * function that map the products of the quote and
    * get the information to attach into the analytics info
@@ -107,6 +115,14 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
    * is expanded
    */
    const handlerAnalyticExpandAction = (item) => {
+    if (item?.data?.isExpandedByDefault) {
+      item.data.isExpandedByDefault = false;
+      return;
+    }
+    if (item?.data.isSecondExpandedByDefault) {
+      item.data.isSecondExpandedByDefault = false;
+      return;
+    }
     const clickInfo = {
       type : ADOBE_DATA_LAYER_BUTTON_TYPE,
       category : ADOBE_DATA_LAYER_QUOTE_PREVIEW_CATEGORY,
@@ -296,7 +312,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       rowNode.selected && selectedLinesModel.push(_row);
     });
     if (typeof onQuoteLinesUpdated === "function") {
-      const didQuantitiesChange = !!gridData.find((row, index) => row.quantity !== mutableGridData[index].quantity);
+      const didQuantitiesChange = !!gridData.find((row, index) => row.quantity !== mutableGridData[index]?.quantity);
 
       onQuoteLinesUpdated(selectedLinesModel, didQuantitiesChange);
     }
