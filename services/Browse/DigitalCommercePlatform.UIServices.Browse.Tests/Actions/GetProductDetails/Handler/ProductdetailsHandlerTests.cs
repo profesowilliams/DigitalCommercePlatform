@@ -142,7 +142,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 BasePrice=10,
                                 BestPrice=10,
-                                BestPriceExpiration=new DateTime(2100,1,1),
+                                BestPriceExpiration=new DateOnly(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -294,7 +294,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             BasePrice="$10.00",
                             BestPrice="$10.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
+                            BestPriceExpiration=new DateOnly(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             PromoAmount="$0.00",
                             VolumePricing= new List<VolumePricingModel>
@@ -461,7 +461,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 BasePrice=10,
                                 BestPrice=1,
-                                BestPriceExpiration=new DateTime(2100,1,1),
+                                BestPriceExpiration=new DateOnly(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -553,7 +553,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             BasePrice="$10.00",
                             BestPrice="$1.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
+                            BestPriceExpiration=new DateOnly(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             VolumePricing= new List<VolumePricingModel>
                             {
@@ -694,7 +694,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 BasePrice=10,
                                 BestPrice=1,
-                                BestPriceExpiration=new DateTime(2100,1,1),
+                                BestPriceExpiration=new DateOnly(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -817,7 +817,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             BasePrice="$10.00",
                             BestPrice="$1.00",
-                            BestPriceExpiration=new DateTime(2100,1,1).ToString(new CultureInfo("en-US")),
+                            BestPriceExpiration=new DateOnly(2100,1,1).ToString(new CultureInfo("en-US")),
                             ListPrice="$2.00",
                             PromoAmount="$9.00",
                             VolumePricing= new List<VolumePricingModel>
@@ -949,7 +949,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 {
                     BestPrice = 75.55m,
                     BasePrice = 89.99m,
-                    BestPriceExpiration = DateTime.MaxValue,
+                    BestPriceExpiration = DateOnly.MaxValue,
                     BestPriceIncludesWebDiscount = true,
                     Currency = "USD"
                 },
@@ -961,7 +961,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 {
                     BestPrice = 75.55m.Format("USD"),
                     BasePrice = 89.99m.Format("USD"),
-                    BestPriceExpiration = DateTime.MaxValue.ToString(),
+                    BestPriceExpiration = DateOnly.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
                 },
             };

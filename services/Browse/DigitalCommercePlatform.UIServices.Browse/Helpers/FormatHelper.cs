@@ -29,6 +29,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Helpers
             return input.HasValue ? input.Value.ToString() : null;
         }
 
+        public static string Format(this DateOnly? input)
+        {
+            return input.HasValue ? input.Value.ToString() : null;
+        }
+
         public static string Format(this decimal input, string currencyCode)
         {
             if (string.IsNullOrEmpty(currencyCode))
