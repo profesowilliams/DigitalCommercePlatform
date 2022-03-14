@@ -78,9 +78,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                         VendorName = request.Vendor,
                         From = "lastmonth"
                     };
-
-                    RefreshCongigurationData(refreshRequest, "estimate"); // fire and forget 
-                    RefreshCongigurationData(refreshRequest, "deal"); // fire and forget 
+                    RefreshDealData(refreshRequest, "deal"); // fire and forget 
+                    RefreshEstimateData(refreshRequest, "estimate"); // fire and forget 
                 }
 
                 var response = new SetVendorConnection.Response();
@@ -256,12 +255,12 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             if (request.Type.ToUpper() == "ALL")
             {
-                RefreshCongigurationData(request, "estimate"); // fire and forget 
-                RefreshCongigurationData(request, "deal"); // fire and forget 
+                RefreshDealData(request, "deal"); // fire and forget 
+                RefreshEstimateData(request, "estimate"); // fire and forget 
             }
             else
             {
-                RefreshCongigurationData(request, request.Type); // fire and forget 
+                RefreshDealData(request, request.Type); // fire and forget 
             }
 
             var response = new RefreshData.Response();
@@ -270,10 +269,37 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 
         }
 
-        private void RefreshCongigurationData(RefreshData.Request request, string type)
+        private void RefreshDealData(RefreshData.Request request, string type)
         {           
             var url = _appSettings.GetSetting("Integration.Configuration.Url");
             
+            request.FromDate = request.FromDate ?? DateTime.Now.AddDays(-1).Date;
+            request.From = request.From ?? "yesterday";
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+
+                    //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.From;//for Testing
+
+                    url = url.AppendPathSegments("configurations/refresh", request.VendorName, type)
+                     .SetQueryParams(new
+                     {
+                         since = request.From
+                     });
+                    await _middleTierHttpClient.PostAsync<HttpResponseModel>(url).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Exception to fetch data from Mongo DB: " + nameof(VendorService));
+                }
+            });
+        }
+
+        private void RefreshEstimateData(RefreshData.Request request, string type)
+        {
+            var url = _appSettings.GetSetting("Integration.Configuration.Url");
+
             request.FromDate = request.FromDate ?? DateTime.Now.AddDays(-1).Date;
             request.From = request.From ?? "yesterday";
             _ = Task.Run(async () =>

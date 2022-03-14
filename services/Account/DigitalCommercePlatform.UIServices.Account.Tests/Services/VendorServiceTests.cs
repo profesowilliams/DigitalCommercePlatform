@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
@@ -70,6 +71,43 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { request });
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void RefreshDealData_Test()
+        {
+            //arrange
+            RefreshData.Request request = new RefreshData.Request() { Type = "deal", VendorName = "Cisco" };
+
+            Type type;
+            object objType;
+            InitiatVendorServiceTests(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "RefreshDealData" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { request,"deal" });
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void RefreshEstimateData_Test()
+        {
+            //arrange
+            RefreshData.Request request = new RefreshData.Request() { Type = "estimate", VendorName = "Cisco" };
+
+
+            Type type;
+            object objType;
+            InitiatVendorServiceTests(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "RefreshEstimateData" && x.IsPrivate);
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { request,"estimate" });
+            Assert.Null(result);
         }
 
         private void InitiatVendorServiceTests(out Type type, out object objType)
