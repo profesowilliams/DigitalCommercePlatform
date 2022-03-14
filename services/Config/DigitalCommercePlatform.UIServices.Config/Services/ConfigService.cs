@@ -391,7 +391,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         public Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request)
         {
-            string[] MfrPartNumbers = request.ProductIds?.Split(",").ToArray();
+            string[] MfrPartNumbers = new string[] { request.ProductIds };
 
             if (!string.IsNullOrEmpty(request.Vendor))
                 request.Vendor += "*";
