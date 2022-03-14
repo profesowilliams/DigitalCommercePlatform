@@ -851,23 +851,25 @@ app.get("/savedCarts", function (req, res) {
       },
     });
 
-  res.json({
-    content: {
-      items: [
-        { id: "96721037", name: "Test_Global_157024" },
-        { id: "96718606", name: "Blah 1" },
-        { id: "96718607", name: "Blah 2" },
-        { id: "96718608", name: "Blah 3" },
-        { id: "96718609", name: "Blah 4" },
-      ],
-      totalRecords: 2,
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  });
+  setTimeout(() => {
+    res.json({
+      content: {
+        items: [
+          { id: "96721037", name: "Test_Global_157024" },
+          { id: "96718606", name: "Blah 1" },
+          { id: "96718607", name: "Blah 2" },
+          { id: "96718608", name: "Blah 3" },
+          { id: "96718609", name: "Blah 4" },
+        ],
+        totalRecords: 2,
+      },
+      error: {
+        code: 0,
+        messages: [],
+        isError: false,
+      },
+    });
+  }, 2000)
 });
 
 app.get("/cart", function (req, res) {
@@ -1760,30 +1762,32 @@ app.get("/pricingConditions", (req, res) => {
         isError: true,
       },
     });
-
-  res.json({
-    content: {
-      pricingConditions: {
-        items: [
-          { key: "Commercial(Non-Govt)", value: "0" },
-          { key: "Education(Student,Staff)", value: "1" },
-          { key: "Education(Higher)", value: "2" },
-          { key: "Education(K-12)", value: "3" },
-          { key: "EducationE-Rate(K-12)", value: "4" },
-          { key: "Federal", value: "5" },
-          { key: "FederalGSA", value: "6" },
-          { key: "State", value: "7" },
-          { key: "Medical", value: "8" },
-          { key: "SEWPContract", value: "11" },
-        ],
+    
+  setTimeout(() => {
+    res.json({
+      content: {
+        pricingConditions: {
+          items: [
+            { key: "Commercial(Non-Govt)", value: "0" },
+            { key: "Education(Student,Staff)", value: "1" },
+            { key: "Education(Higher)", value: "2" },
+            { key: "Education(K-12)", value: "3" },
+            { key: "EducationE-Rate(K-12)", value: "4" },
+            { key: "Federal", value: "5" },
+            { key: "FederalGSA", value: "6" },
+            { key: "State", value: "7" },
+            { key: "Medical", value: "8" },
+            { key: "SEWPContract", value: "11" },
+          ],
+        },
       },
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  });
+      error: {
+        code: 0,
+        messages: [],
+        isError: false,
+      },
+    });
+  }, 2000)  
 });
 
 app.get("/estimates", function (req, res) {
@@ -2895,7 +2899,9 @@ app.get("/estimates", function (req, res) {
   var pageSize = +pageNumber + +PageSize
   seedResult.content.items =  seedResult.content.items.slice(pageNumber, pageSize);
 
-  res.json(seedResult);
+  setTimeout(() => {
+    res.json(seedResult);
+  }, 2000);
 });
 app.get("/estimations/validate/:id", function (req, res) {
   const { id } = req.params;

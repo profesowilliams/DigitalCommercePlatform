@@ -10,6 +10,7 @@ import { usPost } from '../../../../utils/api';
 import Modal from '../Modal/Modal';
 import { pushAnalyticsEvent } from './analytics';
 import { getDictionaryValue } from '../../../../utils/utils';
+import Loader from '../Widgets/Loader';
 
 const fixedPayload = { 
     "createFromId": "96722368",
@@ -33,6 +34,7 @@ const QuoteCreate = ({
   const [step, setStep] = useState(0);
   const [cartID, setCartID] = useState(false);
   const [createQuoteButtonEnabled, setCreateQuoteButtonEnabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [modal, setModal] = useState(null);
   const methods = optionsList;
@@ -110,9 +112,14 @@ const QuoteCreate = ({
       let params = { ...fixedPayload, pricingCondition: pricing.key === '1' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };
-      try {
-        const { data: { content, error: { isError, code, messages } } } = await usPost(endpoint, params);
-
+    try {
+        setIsLoading(true);
+      const { data: { content, error: { isError, code, messages } } } = await usPost(endpoint, params).catch((error) => {
+        if (error) {
+          setIsLoading(false);
+          }
+        });
+        setIsLoading(false);
         pushAnalyticsEvent(false, methodSelected);
 
         // Only display error messages coming from the backend response when the code returned is 11000
@@ -205,6 +212,7 @@ const QuoteCreate = ({
      {
         requested && <p>Loading</p>
       }
+      {isLoading && <Loader visible={true}/>}
       {modal && <Modal
           modalAction={modal.action}
           modalContent={modal.content}

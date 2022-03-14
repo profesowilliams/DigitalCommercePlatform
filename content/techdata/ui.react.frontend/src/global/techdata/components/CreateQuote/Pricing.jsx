@@ -3,13 +3,21 @@ import Dropdown from '../Widgets/Dropdown';
 import Button from '../Widgets/Button';
 import { get } from '../../../../utils/api';
 import WidgetTitle from '../Widgets/WidgetTitle';
+import Loader from '../Widgets/Loader';
 
 const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions, disableCreateQuoteButton, prev, placeholderText}) => {
   const [items, setItems] = useState([])
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() =>{
     const getData = async () => {
-      const {data: { content: { pricingConditions: { items } }, error: { isError } }} = await get(pricingConditions);
-      if( isError ) alert('Error in pricing conditions');
+      setIsLoading(true);
+      const { data: { content: { pricingConditions: { items } }, error: { isError } } } = await get(pricingConditions).catch((error) => {
+        if (error) {
+          setIsLoading(false);
+        }
+      });
+      setIsLoading(false);
+      if (isError) alert('Error in pricing conditions');
       if( items ){
         const newItems = items.map(item => ({label: item.key, key: item.value}) );
         const item = newItems.filter(item => item.label === 'Commercial(Non-Govt)');
@@ -30,7 +38,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
       <WidgetTitle>
         <a onClick={prev}><i className="fas fa-chevron-left"></i> Create quote from</a>
       </WidgetTitle>
-      <Dropdown selected={method} setValue={setMethod} options={items} label="Commercial(Non-Govt)" placeholderText={placeholderText}/>
+      {isLoading ? <Loader visible={true}/> : <Dropdown selected={method} setValue={setMethod} options={items} label="Select the pricing option" placeholderText="Select the pricing option"/>}
       <Button btnClass="cmp-quote-button" disabled={!method || disableCreateQuoteButton} onClick={createQuote}>{buttonTitle}</Button>
     </>
   )

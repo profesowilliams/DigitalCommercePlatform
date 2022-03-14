@@ -2,19 +2,28 @@
 import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
+import Loader from '../Widgets/Loader';
 
 const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, estimatedIddetailsEndpoint, label, buttonLabel }) => {
 // const EstimatedIdSelectItem = ({ onClick, buttonTitle }) => {
   const [selected, setSelected] = useState(false);
   const [estimatedIdList, setEstimatedIdList] = useState([]);
   const [estimatedIdListError, setEstimatedIdListError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const onChange = (el) => {
     setSelected(el);
   }
   useEffect(() => {
     const getData = async () => {
-      const { data: { content: { items } } } = await usGet(`${estimatedIdListEndpoint}&PageNumber=1`, { });
-      if(items && items.length > 0){
+      setIsLoading(true);
+      const { data: { content: { items } } } = await usGet(`${estimatedIdListEndpoint}&PageNumber=1`, {}).catch((error) => {
+        if (error) {
+          setIsLoading(false);
+        }
+      });
+      setIsLoading(false);
+      if (items && items.length > 0) {
         const newItems = items.map(item =>({ id: item.configId, name: item.configId, vendor: item.vendor, configurationType: item.configurationType }));
         setEstimatedIdList(newItems);
         setEstimatedIdListError(false)
@@ -33,8 +42,14 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
       return alert('Select an item to continue');
     try{
       const newEndpoint = estimatedIddetailsEndpoint.replace('{selected-id}', selected.id);
-      const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, { });
-      if( isError ) return alert('Error');
+      setIsLoading(true);
+      const { data: { content: { isValid }, error: { isError } } } = await usGet(newEndpoint, {}).catch((error) => {
+        if (error) {
+          setIsLoading(false);
+        }
+      });
+      setIsLoading(false);
+      if (isError) return alert('Error');
       if( isValid ){
         onClick(selected.id, {
           redirectToPreview:true,
@@ -52,7 +67,8 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
   return(
     <>
       { estimatedIdList.length > 0 && <SearchList items={estimatedIdList} selected={selected} onChange={onChange} label={label} buttonLabel={buttonLabel} estimatedIdListEndpoint={estimatedIdListEndpoint}/>}
-      { estimatedIdList.length === 0 && estimatedIdListError &&
+      { isLoading && <Loader visible={true}/> }
+      {estimatedIdList.length === 0 && estimatedIdListError &&
         <p className="cmp-error-message cmp-error-message__red">No Estimated ID's available </p>
       }
       <Button btnClass="cmp-quote-button" disabled={!selected} onClick={onNext}>{buttonTitle}</Button>
