@@ -299,9 +299,7 @@ const NewSubheader = ({ componentProp }) => {
 						</li>
 					)}
 					<li>
-						<a href='#'>
-							{accountnumberLabel}: {getAccountNumber()}
-						</a>
+						{accountnumberLabel}: {getAccountNumber()}
 					</li>
 					{(disableVendorConnectionLink && (disableVendorConnectionLink == false || disableVendorConnectionLink == "false"))&& (
                         <li
