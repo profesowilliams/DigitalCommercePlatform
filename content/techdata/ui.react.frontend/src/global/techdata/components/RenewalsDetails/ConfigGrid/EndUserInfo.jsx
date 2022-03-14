@@ -22,7 +22,7 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
         </p> <br />
         <p>          
           {endUserType && <Info label={productLines.endCustomerType} noColon boldLabel>{endUserType}</Info>}
-          <Info label={productLines.vendorAccountNo} noColon boldLabel>3456789</Info>
+          <Info label={productLines.vendorAccountNo} noColon boldLabel>{endUser?.vendorAccountNumber}</Info>
         </p>
       </div>
     );

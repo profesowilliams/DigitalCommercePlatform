@@ -19,7 +19,7 @@ function ConfigGrid({ data, gridProps }) {
         <EndUserInfo
           productLines={quotePreview.productLines}
           endUserType={endUserType}
-          endUser={endUser}
+          endUser={{...endUser, vendorAccountNumber: reseller?.vendorAccountNumber}}
         />
         <AgreementInfo
           source={source}
