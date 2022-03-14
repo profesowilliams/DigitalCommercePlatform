@@ -26,6 +26,18 @@
                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                             fieldLabel="Button Label"
                             name="./buttonLabel"/>
+                   <quotePreviewUrl
+							jcr:primaryType="nt:unstructured"
+							sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+							fieldLabel="Quote Preview Url"
+                            rootPath="/content/techdata"
+							name="./quotePreviewUrl"/>
+					<quotePreviewUrlSuffix
+							sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+							fieldLabel="Quote Preview Url parameters Suffix"
+							fieldDescription="Make sure to add .html at the beginning of the suffix"
+							jcr:primaryType="nt:unstructured"
+							name="./quotePreviewUrlSuffix"/>
                     <column
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/container">

@@ -3970,19 +3970,6 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
   }, 2000);
 });
 
-// Punchout to vendor - CREATE CONFIG //
-app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
-  console.log("test post punchout url ✌✌✌");
-  if (!validateSession(req, res)) return res.status(401);
-  res.json({
-    content: null,
-    error: {
-      code: 0,
-      messages: ["not bla blas"],
-      isError: false,
-    },
-  });
-});
 //Replace cart id//
 app.put("/ui-content/v1/replaceCart", function (req, res) {
   if (!validateSession(req, res)) return res.status(401);

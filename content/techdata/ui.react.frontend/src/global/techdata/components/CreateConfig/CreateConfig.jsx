@@ -6,7 +6,7 @@ import { usPost } from "../../../../utils/api";
 import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
 
 const CreateConfig = ({ componentProp }) => {
-  const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText }  = JSON.parse(componentProp);
+  const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText, nodePath }  = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ const CreateConfig = ({ componentProp }) => {
   const createConfig = async (e) => {
     e.preventDefault();
     setLoading(true);
-    var currentUrl = window.location.href.replace('.html', '.post2get.html');
+    var currentUrl = `${window.location.origin}${nodePath}.post2get.html`;
     const params = {
       "PostBackURL": (currentUrl || POST_BACK_URL) + "/",
       "Vendor": methodSelected.label,

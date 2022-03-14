@@ -5,7 +5,9 @@ use(function () {
     var listValues = [];
     var resourceResolver = resource.getResourceResolver();
     var node = resourceResolver.getResource(currentNode.getPath() + "/VendorList");
-
+    
+    jsonObject.put("nodePath", currentNode.getPath());
+    
     if (node !== null) {
         var childrenList = node.getChildren();
         for (var [key, res] in Iterator(childrenList)) {
