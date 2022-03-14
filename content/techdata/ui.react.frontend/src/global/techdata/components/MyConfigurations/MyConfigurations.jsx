@@ -56,12 +56,12 @@ const MyConfigurations = ({ componentProp }) => {
   };
 
   const getFontSize = (textLength) => {
-    const baseSize = 6;
+    const baseSize = 8;
     if (textLength >= baseSize) {
         textLength = baseSize - 2;
     }
     const fontSize = baseSize - textLength;
-    return `${fontSize}vw`;
+    return `${fontSize}vh`;
   };
   
   const donuts = document.querySelectorAll('.cmp-responsive-font span');
