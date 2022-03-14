@@ -183,8 +183,8 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["exportXLSRenewalsEndpoint"] = this.serviceData.uiServiceDomain + this.exportXLSRenewalsEndpoint;
     }
 
-    if (this.serviceData.renewalDetailsEndpoint && this.serviceData.uiServiceDomains) {
-        jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailsEndpoint || '';
+    if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
+        jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
     }
 
 
