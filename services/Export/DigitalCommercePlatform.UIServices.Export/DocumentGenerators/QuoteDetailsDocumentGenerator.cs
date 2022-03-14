@@ -303,7 +303,8 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
                 {
                     MapLineLevelData(line, _row, EstimateDealId);
                     _row += 1;
-                    var subLines = line.Children;
+                    var subLines = line.Children?.OrderBy(i => i.Id);
+                    
                     if (subLines.Any())
                     {
                         foreach (var subLine in subLines)
@@ -351,10 +352,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
             Worksheet.Cells[_row, 4].Value = !string.IsNullOrEmpty(line.ShortDescription) ? line.ShortDescription : NOT_AVAILABLE;
             Worksheet.Cells[_row, 5].Value = !string.IsNullOrEmpty(line.VendorPartNo) ? line.VendorPartNo : NOT_AVAILABLE;
-            Worksheet.Cells[_row, 6].Value = NA;
-            Worksheet.Cells[_row, 7].Value = NA;
-            Worksheet.Cells[_row, 8].Value = NA;
-            Worksheet.Cells[_row, 9].Value = NA;
+            SubLineDataAttributes(line);
 
             Worksheet.Cells[_row, 10].Value = ConvertTDNumber(line.TDNumber);
 
@@ -379,6 +377,21 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             {
                 Worksheet.Cells[_row, 14].Value = NA;
             }
+        }
+
+        private void SubLineDataAttributes(Line line)
+        {
+            var startDate = line.Attributes?.FirstOrDefault(s => s.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
+            Worksheet.Cells[_row, 6].Value = startDate ?? "";
+
+            var autoRenew = line.Attributes?.FirstOrDefault(s => s.Name.Equals("AUTORENEWALTERM"))?.Value;
+            Worksheet.Cells[_row, 7].Value = autoRenew ?? "";
+
+            var deal = line.Attributes?.FirstOrDefault(s => s.Name.Equals("DEALDURATION"))?.Value;
+            Worksheet.Cells[_row, 8].Value = deal ?? "";
+
+            var billing = line.Attributes?.FirstOrDefault(s => s.Name.Equals("BILLINGTERM"))?.Value;
+            Worksheet.Cells[_row, 9].Value = billing ?? "";
         }
 
         private void FillLineNumberData(Line line)
@@ -417,19 +430,18 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void FillLineDataAttributes(Line line)
         {
-            var startDate = line.Attributes?.FirstOrDefault(a => a.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
-            Worksheet.Cells[_row, 6].Value = startDate ?? NA;
 
-            var autoRenew = line.Attributes?.FirstOrDefault(a => a.Name.Equals("AUTORENEWALTERM"))?.Value;
-            Worksheet.Cells[_row, 7].Value = int.TryParse(autoRenew, out int autoRenewInt)
-                ? autoRenewInt > 0 ? "Yes" : "No"
-                : NA;
+            var startDate = line.Attributes?.FirstOrDefault(s => s.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
+            Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
-            var duration = line.Attributes?.FirstOrDefault(a => a.Name.Equals("INITIALTERM"))?.Value;
-            Worksheet.Cells[_row, 8].Value = duration != null ? duration + " months" : NA;
+            var autoRenew = line.Attributes?.FirstOrDefault(s => s.Name.Equals("AUTORENEWALTERM"))?.Value;
+            Worksheet.Cells[_row, 7].Value = autoRenew ?? "";
 
-            var billing = line.Attributes?.FirstOrDefault(a => a.Name.Equals("BILLINGTERM"))?.Value;
-            Worksheet.Cells[_row, 9].Value = billing != null ? billing.Replace(" Billing", "") : NA;
+            var deal = line.Attributes?.FirstOrDefault(s => s.Name.Equals("DEALDURATION"))?.Value;
+            Worksheet.Cells[_row, 8].Value = deal ?? "";
+
+            var billing = line.Attributes?.FirstOrDefault(s => s.Name.Equals("BILLINGTERM"))?.Value;
+            Worksheet.Cells[_row, 9].Value = billing ?? "";
         }
 
         private static string ConvertTDNumber(string tdNumber)
@@ -751,24 +763,24 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void SetQuickQuoteDealId(IQuoteDetailsDocumentModel quoteDetails)
         {
-            if (quoteDetails.VendorReference == null)
+            if (quoteDetails.Attributes == null)
                 return;
-            else if (quoteDetails.VendorReference.Any(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase)))
+            else if (quoteDetails.Attributes.Any(s => s.Name.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase)))
             {
-                QuickQuoteDealId = quoteDetails.VendorReference
-                    .FirstOrDefault(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase))
+                QuickQuoteDealId = quoteDetails.Attributes
+                    .FirstOrDefault(s => s.Name.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase))
                     .Value;
             }
         }
 
         private void SetOriginalEstimateId(IQuoteDetailsDocumentModel quoteDetails)
         {
-            if (quoteDetails.VendorReference == null)
+            if (quoteDetails.Attributes == null)
                 return;
-            else if (quoteDetails.VendorReference.Any(s => s.Type.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase)))
+            else if (quoteDetails.Attributes.Any(s => s.Name.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase)))
             {
-                OriginalEstimateId = quoteDetails.VendorReference
-                    .FirstOrDefault(s => s.Type.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase))
+                OriginalEstimateId = quoteDetails.Attributes
+                    .FirstOrDefault(s => s.Name.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase))
                     .Value;
             }
         }
