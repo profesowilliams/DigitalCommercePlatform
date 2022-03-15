@@ -21,8 +21,11 @@ function ContractColumn({ data, eventProps }) {
     const currentNode = eventProps.node; 
     rowCollapsedIndexList?.includes(currentNode.rowIndex) && setToggled(false);
   }, [rowCollapsedIndexList])
+
   const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
+  const hasOptions = data?.options && data?.options?.length > 0;
   const toggleExpandedRow = () => {
+    if (!hasOptions) return;
     effects.setCustomState({ key: 'detailRender', value: 'secondary' })
     eventProps.node.setExpanded(!isToggled);
     setToggled(!isToggled);
@@ -41,7 +44,7 @@ function ContractColumn({ data, eventProps }) {
   return (
     <>{data ? (
       <>
-        <div className="cmp-renewal-duration" onClick={toggleExpandedRow}>
+        <div className="cmp-renewal-duration" onClick={toggleExpandedRow} style={{cursor: !hasOptions && 'initial' }}>
           {!togglePlanUpdated && (
             <Info label="Renewal">
               {renewed ? (renewed + ",") : ""} {data?.support}
@@ -56,7 +59,7 @@ function ContractColumn({ data, eventProps }) {
 
           {isToggled ? (
             <>
-              <If condition={data?.options && data?.options?.length > 0}>
+              <If condition={hasOptions}>
                 <div className='cmp-triangle-up' key={Math.random()}>
                   <i className="fas fa-caret-up" style={iconStyle} />
                 </div>
@@ -65,7 +68,7 @@ function ContractColumn({ data, eventProps }) {
             </>
           ) : (
             <>
-              <If condition={data?.options && data?.options?.length > 0}>
+              <If condition={hasOptions}>
                 <div className='cmp-triangle-down' key={Math.random()}>
                   <i className="fas fa-caret-down" style={iconStyle} />
                 </div>
