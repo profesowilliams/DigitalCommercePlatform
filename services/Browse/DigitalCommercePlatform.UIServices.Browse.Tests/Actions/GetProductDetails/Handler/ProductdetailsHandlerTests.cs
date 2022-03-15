@@ -142,7 +142,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 BasePrice=10,
                                 BestPrice=10,
-                                BestPriceExpiration=new DateOnly(2100,1,1),
+                                BestPriceExpiration=new DateTime(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -461,7 +461,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 BasePrice=10,
                                 BestPrice=1,
-                                BestPriceExpiration=new DateOnly(2100,1,1),
+                                BestPriceExpiration=new DateTime(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -694,7 +694,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             {
                                 BasePrice=10,
                                 BestPrice=1,
-                                BestPriceExpiration=new DateOnly(2100,1,1),
+                                BestPriceExpiration=new DateTime(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -949,7 +949,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 {
                     BestPrice = 75.55m,
                     BasePrice = 89.99m,
-                    BestPriceExpiration = DateOnly.MaxValue,
+                    BestPriceExpiration = DateTime.MaxValue,
                     BestPriceIncludesWebDiscount = true,
                     Currency = "USD"
                 },
@@ -967,7 +967,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             };
             var canViewPrice = true;
             const string naLabel = "n/a";
-            MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
 
             //Act
             sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice, naLabel });

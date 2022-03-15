@@ -13,6 +13,7 @@ using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -344,7 +345,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     };
             }
 
-            private void MapPrice(ProductDto x, ProductModel product, bool canViewPrice, string naLabel)
+            private static void MapPrice(ProductDto x, ProductModel product, bool canViewPrice, string naLabel)
             {
                 if (x.Price == null)
                 {
@@ -353,12 +354,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 }
 
                 string currency = x.Price.Currency;
+                DateOnly? bestPriceExpirationDateOnly = x.Price.BestPriceExpiration == null ? null : DateOnly.FromDateTime((DateTime)x.Price.BestPriceExpiration);
                 product.Price = new PriceModel
                 {
                     ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable, currency),
                     BasePrice = canViewPrice && x.Price.BasePrice.HasValue ? x.Price.BasePrice.Value.Format(currency) : null,
                     BestPrice = canViewPrice && x.Price.BestPrice.HasValue ? x.Price.BestPrice.Value.Format(currency) : null,
-                    BestPriceExpiration = canViewPrice ? x.Price.BestPriceExpiration.Format() : null,
+                    BestPriceExpiration = canViewPrice ? bestPriceExpirationDateOnly.Format() : null,
                     BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
                     PromoAmount = FormatHelper.FormatSubtraction(x.Price.BasePrice, x.Price.BestPrice, currency),
                     VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel

@@ -119,7 +119,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             {
                                 BasePrice=10,
                                 BestPrice=1,
-                                BestPriceExpiration=new DateOnly(2100,1,1),
+                                BestPriceExpiration=new DateTime(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -228,7 +228,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             {
                                 BasePrice=10,
                                 BestPrice=1,
-                                BestPriceExpiration=new DateOnly(2100,1,1),
+                                BestPriceExpiration=new DateTime(2100,1,1),
                                 ListPrice= 2,
                                 VolumePricing = new List<VolumePricingDto>
                                 {
@@ -452,7 +452,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 {
                     BestPrice = 75.55m,
                     BasePrice = 89.99m,
-                    BestPriceExpiration = DateOnly.MaxValue,
+                    BestPriceExpiration = DateTime.MaxValue,
                     BestPriceIncludesWebDiscount = true,
                     ListPrice = 44.44m,
                     Currency = "USD"
@@ -474,7 +474,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 },
             };
 
-            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.NonPublic | BindingFlags.Static);
             var handler = GetHandler();
             const string naLabel = "n/a";
 

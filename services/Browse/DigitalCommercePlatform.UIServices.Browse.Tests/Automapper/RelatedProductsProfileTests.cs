@@ -1,12 +1,18 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct.Internal;
+using DigitalCommercePlatform.UIServices.Browse.Services;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using static DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings.RelatedProductsProfile;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Tests.Automapper
 {
@@ -17,6 +23,27 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Automapper
         {
             var config = new MapperConfiguration(cfg => cfg.AddProfile<RelatedProductsProfile>());
             config.AssertConfigurationIsValid();
+        }
+
+        [Fact]
+        public void RelatedProductsProfileTestPriceDto()
+        {
+            //arrange
+            var services = new ServiceCollection().AddLogging();
+            services.AddSingleton<PriceAfterMapAction>();
+            services.AddSingleton(Mock.Of<ITranslationService>());
+            services.AddAutoMapper(cfg => cfg.AddProfile<RelatedProductsProfile>());
+            var serviceProvider = services.BuildServiceProvider();
+            var mapper = serviceProvider.GetService<IMapper>();
+
+            var priceDto = new PriceDto()
+            {
+                BestPriceExpiration = DateTime.MaxValue,
+            };
+            //act
+            var result = mapper.Map<PriceModel>(priceDto);
+            //assert
+            result.BestPriceExpiration.Should().Be(DateOnly.MaxValue.ToString());
         }
 
         [Fact]

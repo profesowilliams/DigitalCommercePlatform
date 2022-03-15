@@ -37,7 +37,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Infrastructure.Mappings
 
             CreateMap<SourceDto, SourceModel>();
             CreateMap<PriceDto, PriceModel>()
-                .ForMember(dest => dest.BestPriceExpiration, opt => opt.MapFrom(src => src.BestPriceExpiration.Format()))
+                .ForMember(dest => dest.BestPriceExpiration, opt => opt.MapFrom(src => src.BestPriceExpiration == null ? null :
+                                                                                DateOnly.FromDateTime((DateTime)src.BestPriceExpiration).ToString()))
                 .ForMember(dest => dest.PromoAmount, opt => opt.Ignore())
                 .ForMember(dest => dest.BasePrice, opt => opt.Ignore())
                 .ForMember(dest => dest.BestPrice, opt => opt.Ignore())
