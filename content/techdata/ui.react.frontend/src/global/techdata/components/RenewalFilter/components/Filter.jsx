@@ -5,7 +5,7 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import FilterDatePicker from "./FilterDatepicker";
 import SubFilter from "./SubFilter";
 import Count from "./Count";
-import { pushEvent } from "../../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 
 function Filter({ id }) {  
   const filterList = useRenewalGridState((state) => state.filterList);
