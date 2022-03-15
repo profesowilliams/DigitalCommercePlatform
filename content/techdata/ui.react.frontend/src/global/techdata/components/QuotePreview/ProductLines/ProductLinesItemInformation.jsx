@@ -51,6 +51,16 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
           src={line.urlProductImage ? line.urlProductImage : emptyImageUrl}
         />
   );
+  const getAttributeInformation = (attributes, name) =>
+  attributes?.find((attribute) => attribute.name.toUpperCase() === name);
+
+  const annuity = {
+    startDate: getAttributeInformation(line.attributes, "REQUESTEDSTARTDATE")?.value,
+    autoRenewal: getAttributeInformation(line.attributes, "AUTORENEWALTERM")?.value,
+    duration: getAttributeInformation(line.attributes, "DEALDURATION")?.value,
+    billingFrequency: getAttributeInformation(line.attributes, "BILLINGTERM")?.value
+  };
+
   return (
     <section>
       <div onClick={handleClick} className="cmp-product-lines-grid__item-information">
@@ -77,23 +87,23 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
             {line.mfrNumber || " N/A "} | <b>TD#:</b>
             {line.tdNumber || " N/A "}
             {
-              line.annuity &&
+              annuity.startDate &&
                 <div className="cmp-product-lines-grid__subscription-terms">
                   <p>
                     <b>Start Date:</b>
-                    <span>{ dateToString(line.annuity.startDate, "MM/dd/yy") }</span>
+                    <span>{ dateToString(annuity.startDate, "MM/dd/yy") }</span>
                   </p>
                   <p>
                     <b>Auto Renew:</b>
-                    <span>{ line.annuity.autoRenewal ? "Yes" : "No"}</span>
+                    <span>{ annuity.autoRenewal ? "Yes" : "No"}</span>
                   </p>
                   <p>
                     <b>Duration:</b>
-                    <span>{ "{duration} months".replace("{duration}", line.annuity.duration) }</span>
+                    <span>{ "{duration} months".replace("{duration}", annuity.duration) }</span>
                   </p>
                   <p>
                     <b>Billing:</b>
-                    <span>{ line.annuity.billingFrequency }</span>
+                    <span>{ annuity.billingFrequency }</span>
                   </p>
                 </div>
             }
