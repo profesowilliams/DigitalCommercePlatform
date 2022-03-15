@@ -81,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private void MapEndUserName(QuoteModel response)
         {
-            if ((response?.EndUser!=null) && (bool)response?.EndUser?.Contact?.Any())
+            if ((response?.EndUser != null) && (bool)response?.EndUser?.Contact?.Any())
             {
                 response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name ?? "";
                 response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.EndUser.Contact.FirstOrDefault().Name;
@@ -96,7 +96,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
         }
 
-            private QuoteModel MapAnnuity(QuoteModel input)
+        private QuoteModel MapAnnuity(QuoteModel input)
         {
             if (input.Items.Any())
             {
@@ -326,19 +326,36 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             createModelFrom.CustomerPo = "";
             createModelFrom.EndUserPo = "";
             createModelFrom.Agreements = null;
-
-            if (input.QuoteDetails.Source != null)
-            {
-                createModelFrom.VendorReference = new VendorReferenceModel
-                {
-                    Type = input.QuoteDetails.Source.Type ?? string.Empty,  // Expected Values : Estimate / Renewal / VendorQuote / ""
-                    Value = input.QuoteDetails.Source.Value ?? string.Empty // 
-                };
-                var vendorAtribue = BuildAttribute(createModelFrom.VendorReference.Value, "ORIGINALESTIMATEID");
-                createModelFrom.Attributes = new List<AttributeDto> { vendorAtribue };
-            }
+            QuoteGeneralInformation(input, createModelFrom);
 
             return createModelFrom;
+        }
+
+        private void QuoteGeneralInformation(QuotePreviewModel input, CreateQuoteModel createModelFrom)
+        {
+            if (input.QuoteDetails.Source != null)
+            {
+                AttributeDto vendorAtribue;
+                string sourceType = "";
+                if (input.QuoteDetails.Source.Type.ToLower().Equals("deal"))
+                {
+                    vendorAtribue = BuildAttribute(input.QuoteDetails.Source.Value, "DEALIDENTIFIER");
+                    sourceType = "DEALIDENTIFIER";
+                }
+                else if (input.QuoteDetails.Source.Type.ToLower().Equals("estimate"))
+                {
+                    vendorAtribue = BuildAttribute(input.QuoteDetails.Source.Value, "ORIGINALESTIMATEID");
+                    sourceType = "ORIGINALESTIMATEID";
+                }
+                else
+                    vendorAtribue = new();
+                createModelFrom.VendorReference = new VendorReferenceModel
+                {
+                    Type = sourceType, // Expected Values : Estimate / Renewal / VendorQuote / ""
+                    Value = input.QuoteDetails.Source.Value ?? string.Empty //
+                };
+                createModelFrom.Attributes = new List<AttributeDto> { vendorAtribue };
+            }
         }
 
         private void MapQuoteLinesForCreatingQuote(CreateQuoteModel createModelFrom, QuotePreviewModel input)
@@ -354,7 +371,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 configId = input.QuoteDetails.ConfigurationId;
             }
-            GetQuotePreviewDetails.Request productRequest = new GetQuotePreviewDetails.Request(configId, true, "CISCO",Type);
+            GetQuotePreviewDetails.Request productRequest = new GetQuotePreviewDetails.Request(configId, true, "CISCO", Type);
 
             var configDetails = CreateResponseUsingEstimateId(productRequest);
             foreach (var item in input.QuoteDetails.Items)
@@ -587,7 +604,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (request.ConfigurationType == null)
                 request.ConfigurationType = "Deal";
-            else if(request.ConfigurationType.ToLower()=="deal")
+            else if (request.ConfigurationType.ToLower() == "deal")
                 request.ConfigurationType = "Deal";
             else if (request.ConfigurationType.ToLower() == "estimate")
                 request.ConfigurationType = "Estimate";
@@ -608,7 +625,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 IEnumerable<DetailedDto> lstDetailDto = new List<DetailedDto>() { findResponse };
 
-                FindResponse<IEnumerable<DetailedDto>> configurationFindResponse = new FindResponse<IEnumerable<DetailedDto>> { Data = lstDetailDto ,Count=lstDetailDto.Count() };
+                FindResponse<IEnumerable<DetailedDto>> configurationFindResponse = new FindResponse<IEnumerable<DetailedDto>> { Data = lstDetailDto, Count = lstDetailDto.Count() };
                 var quotePreview = _mapper.Map<QuotePreview>(configurationFindResponse?.Data?.FirstOrDefault());
                 if (quotePreview == null)
                 {
@@ -620,7 +637,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
 
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
-                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor.Name, string.Empty);
+                quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor?.Name, string.Empty);
 
                 var customerBuyMethod = _helperService.GetCustomerAccountDetails().Result.BuyMethod;
                 quotePreview.CustomerBuyMethod = customerBuyMethod;
