@@ -97,7 +97,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             var fullSearchResponse = _mapper.Map<FullSearchResponseModel>(appSearchResponse);
 
             if (fullSearchResponse != null)
-                MapFields(appSearchResponse, ref fullSearchResponse);
+                MapFields(appSearchResponse, ref fullSearchResponse, isAnonymous);
             return fullSearchResponse;
         }
 
@@ -216,7 +216,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             }
         }
 
-        private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse)
+        private void MapFields(SearchResponseDto appSearchResponse, ref FullSearchResponseModel fullSearchResponse, bool isAnonymous)
         {
             var notAvailableLabelText = _translationService.Translate(_priceLabelTranslations, TranslationsConst.NALabel);
 
@@ -228,7 +228,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
                 product.Status = appSearchProduct.Indicators?.Find(x => x.Type == DisplayStatus)?.Value;
                 var (orderable, authrequiredprice) = SearchProfile.GetFlags(appSearchProduct);
-                SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice);
+                SearchProfile.MapAuthorizations(product, appSearchProduct.IsAuthorized, orderable, authrequiredprice, isAnonymous);
                 AddIndicators(appSearchProduct, product);
                 SetVendorShipped(appSearchProduct, product);
             }

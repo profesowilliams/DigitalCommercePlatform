@@ -110,13 +110,32 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
             return (orderable, authrequiredprice);
         }
 
-        public static void MapAuthorizations(ElasticItemModel product, bool isValid, bool orderable, bool authrequiredprice)
+        public static void MapAuthorizations(
+            ElasticItemModel product, 
+            bool isAuthorized, 
+            bool orderable, 
+            bool authRequiredPrice,
+            bool isAnonymous)
         {
             product.Authorization = new AuthorizationModel
             {
-                CanOrder = isValid && orderable,
-                CanViewPrice = isValid || !authrequiredprice
+                CanOrder = isAuthorized && orderable,
             };
+
+            if (!authRequiredPrice) 
+            {
+                product.Authorization.CanViewPrice = !isAnonymous;
+            }
+
+            if (!product.Authorization.CanViewPrice) 
+            {
+                product.Price.BasePrice = null;
+                product.Price.BestPrice = null;
+                product.Price.BestPriceExpiration = null;
+                product.Price.BestPriceIncludesWebDiscount = null;
+                product.Price.PromoAmount = null;
+                product.Price.VolumePricing = null;
+            }
         }
     }
 }

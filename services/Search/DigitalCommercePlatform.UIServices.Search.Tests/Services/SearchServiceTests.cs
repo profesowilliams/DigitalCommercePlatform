@@ -143,7 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
 
             //Act
-            var result = await searchService.GetFullSearchProductData(request, true);
+            var result = await searchService.GetFullSearchProductData(request, false);
 
             //Assert
             result.Should().NotBeNull();
