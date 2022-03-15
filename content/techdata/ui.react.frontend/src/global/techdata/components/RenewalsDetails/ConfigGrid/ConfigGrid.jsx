@@ -4,12 +4,13 @@ import EndUserInfo from "./EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
 
 function ConfigGrid({ data, gridProps }) {
-  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO } = data;
+  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo } = data;
   const { quotePreview } = gridProps;
   return (
     <div className="cmp-renewals-qp__config-grid">
       <p className="cmp-renewals-qp__config-grid--title">
         {quotePreview.quotePreviewlabel}
+        <img className="vendorLogo" src={vendorLogo} alt="vendor logo"/>
       </p>
       <div className="info-container">
         <ResellerInfo
