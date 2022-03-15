@@ -73,6 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 response = MapAnnuity(response);
                 MapEndUserName(response);
+                MapResellerName(response);
             }
 
             return response;
@@ -86,8 +87,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.EndUser.Contact.FirstOrDefault().Name;
             }
         }
+        private void MapResellerName(QuoteModel response)
+        {
+            if ((response?.Reseller != null) && (response?.Reseller?.Contact.Count() != 0))
+            {
+                response.Reseller.Contact.FirstOrDefault().Name = response.Reseller.Contact.FirstOrDefault().Name ?? "";
+                response.Reseller.Contact.FirstOrDefault().Name = (bool)response.Reseller.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.Reseller.Contact.FirstOrDefault().Name;
+            }
+        }
 
-        private QuoteModel MapAnnuity(QuoteModel input)
+            private QuoteModel MapAnnuity(QuoteModel input)
         {
             if (input.Items.Any())
             {

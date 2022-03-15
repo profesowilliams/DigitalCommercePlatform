@@ -961,5 +961,40 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             //Assert 
             Assert.NotNull(quoteModel);
         }
+
+        [Fact]
+        public void ResellerName_Test()
+        {
+            //arrange
+            ContactModel contactModel = new ContactModel()
+            {
+                Name = "Sandy Shore",
+                Email = "sandyshore@gmail.com",
+                Phone = "000-000-0000"
+            };
+            IEnumerable<ContactModel> contact = new List<ContactModel>() { contactModel };
+            ResellerModel reseller = new ResellerModel()
+            {
+                Name = "Tom",
+                Contact = contact
+            };
+            QuoteModel quoteModel = new QuoteModel()
+            {
+                Reseller = reseller
+            };
+
+            //Act
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var response = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapResellerName" && x.IsPrivate);
+
+            var result = response.Invoke(objType, new object[] { quoteModel });
+
+            //Assert 
+            Assert.NotNull(quoteModel);
+        }
     }
 }
