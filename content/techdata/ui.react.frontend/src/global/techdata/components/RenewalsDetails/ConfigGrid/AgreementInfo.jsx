@@ -37,7 +37,7 @@ function AgreementInfo({
           {dueDate && (
             <Info boldLabel noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
           )}
-          <Info boldLabel noColon label="Quote expiry date">{formatDate(expiry)}</Info> <br />
+          <Info boldLabel noColon label={agreementInfo.quoteExpiryDateLabel}>{formatDate(expiry)}</Info> <br />
           {contract.newAgreementStartDate && (
             <Info boldLabel noColon label={agreementInfo.agreeStartDateLabel}>
               {formatDate(contract.newAgreementStartDate)}
