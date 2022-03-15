@@ -1096,49 +1096,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
             annuity: null,
             isSubLine: false,
             displayLineNumber: "100.2",
-            "attributes": [{
-            "name": "REQUESTEDSTARTDATE",
-            "value": "2022-03-11T00:51:46.000Z"
-            }, {
-            "name": "AUTORENEWALTERM",
-            "value": "P0Y36M0DT0H0M"
-            }, {
-            "name": "DEALDURATION",
-            "value": "P0Y36M0DT0H0M"
-            }, {
-            "name": "BILLINGTERM",
-            "value": "P0Y36M0DT0H0M"
-            }, {
-            "name": "LISTPRICE",
-            "value": ""
-            }, {
-            "name": "CONFIGPARENT",
-            "value": "1.0"
-            }, {
-            "name": "THIRDPARTYFREIGHT",
-            "value": "N"
-            }, {
-            "name": "DEALDURATION",
-            "value": "P0Y0M0DT0H0M"
-            }, {
-            "name": "VENDORQUOTEID",
-            "value": "53161786"
-            }, {
-            "name": "APILINENUMBER",
-            "value": "7"
-            }, {
-            "name": "CONFIGLINE",
-            "value": "1.5"
-            }, {
-            "name": "PRODUCTTYPE",
-            "value": "NON_SERVICE"
-            }, {
-            "name": "APIMANUALCOST",
-            "value": ""
-            }, {
-            "name": "MANUFACTURER",
-            "value": "CISCO"
-            }]
           },
         ],
         agreements: [
@@ -1200,22 +1157,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
             name: "TAKEOVER",
             value: "true",
           },
-          {
-              name: "REQUESTEDSTARTDATE",
-              value: "2022-03-11T00:51:46.000Z"
-          },
-          {
-              name: "AUTORENEWALTERM",
-              value: true
-          },
-          {
-              name: "DEALDURATION",
-              value: "Monthly"
-          },
-          {
-              name: "BILLINGTERM",
-              value: "Monthly"
-          }
         ],
       });
     }
