@@ -81,7 +81,7 @@ function QuotePreview(props) {
     if(quoteDetailsResponse) {
       const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
       const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
-      // setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
+      setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
       setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
       // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
       quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
@@ -185,7 +185,6 @@ function QuotePreview(props) {
         quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, name }
       }
       if (buyMethodParam !== '' ){
-        // 	SHOW system selection popup only if Reseller has SAP 6.8 account
         quoteDetails.buyMethod = buyMethodParam;
       }
 
