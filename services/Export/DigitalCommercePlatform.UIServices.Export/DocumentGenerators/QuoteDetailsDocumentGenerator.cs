@@ -304,7 +304,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
                     MapLineLevelData(line, _row, EstimateDealId);
                     _row += 1;
                     var subLines = line.Children?.OrderBy(i => i.Id);
-                    
+
                     if (subLines.Any())
                     {
                         foreach (var subLine in subLines)
@@ -382,6 +382,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         private void SubLineDataAttributes(Line line)
         {
             var startDate = line.Attributes?.FirstOrDefault(s => s.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
+            DateTime dateValue;
+            if (!string.IsNullOrEmpty(startDate))
+            {
+                if (DateTime.TryParse(startDate, out dateValue))
+                    startDate = dateValue.ToShortDateString();
+            }
             Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
             var autoRenew = line.Attributes?.FirstOrDefault(s => s.Name.Equals("AUTORENEWALTERM"))?.Value;
@@ -432,6 +438,12 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
 
             var startDate = line.Attributes?.FirstOrDefault(s => s.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
+            DateTime dateValue;
+            if (!string.IsNullOrEmpty(startDate))
+            {
+                if (DateTime.TryParse(startDate, out dateValue))
+                    startDate = dateValue.ToShortDateString();
+            }
             Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
             var autoRenew = line.Attributes?.FirstOrDefault(s => s.Name.Equals("AUTORENEWALTERM"))?.Value;
