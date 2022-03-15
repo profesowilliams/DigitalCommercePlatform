@@ -1,9 +1,9 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Account.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
-using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Providers.Settings;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
 {
@@ -74,7 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
         }
 
         [Fact]
-        public void RefreshDealData_Test()
+        public void RefreshData_Test()
         {
             //arrange
             RefreshData.Request request = new RefreshData.Request() { Type = "deal", VendorName = "Cisco" };
@@ -84,29 +83,10 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Services
             InitiatVendorServiceTests(out type, out objType);
 
             var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .First(x => x.Name == "RefreshDealData" && x.IsPrivate);
+                .First(x => x.Name == "RefreshData" && x.IsPrivate);
 
             //Act
-            var result = imageProductModel.Invoke(objType, new object[] { request,"deal" });
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public void RefreshEstimateData_Test()
-        {
-            //arrange
-            RefreshData.Request request = new RefreshData.Request() { Type = "estimate", VendorName = "Cisco" };
-
-
-            Type type;
-            object objType;
-            InitiatVendorServiceTests(out type, out objType);
-
-            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .First(x => x.Name == "RefreshEstimateData" && x.IsPrivate);
-
-            //Act
-            var result = imageProductModel.Invoke(objType, new object[] { request,"estimate" });
+            var result = imageProductModel.Invoke(objType, new object[] { request, "deal" });
             Assert.Null(result);
         }
 

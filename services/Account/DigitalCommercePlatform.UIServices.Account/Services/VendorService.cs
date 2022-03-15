@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Account.Actions.ConnectToVendor;
 using DigitalCommercePlatform.UIServices.Account.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Account.Actions.VendorAuthorizedURL;
@@ -47,10 +48,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             _appSettings = appSettings;
         }
 
-
         public static string[] GetAllowedVendorValues()
         {
-            return new string[] { "CISCO" }; // fix this in next push         
+            return new string[] { "CISCO" }; // fix this in next push
         }
 
         public async Task<SetVendorConnection.Response> SetVendorConnection(SetVendorConnection.Request request)
@@ -66,7 +66,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                       });
 
                 var vendorResponse = await _middleTierHttpClient.GetAsync<HttpResponseModel>(url).ConfigureAwait(false);
-                              
+
                 var result = vendorResponse?.StatusCode ?? HttpStatusCode.OK;
 
                 if (vendorResponse?.StatusCode == HttpStatusCode.OK)
@@ -78,8 +78,8 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                         VendorName = request.Vendor,
                         From = "lastmonth"
                     };
-                    RefreshDealData(refreshRequest, "deal"); // fire and forget 
-                    RefreshEstimateData(refreshRequest, "estimate"); // fire and forget 
+                    RefreshData(refreshRequest, "deal"); // fire and forget
+                    RefreshData(refreshRequest, "estimate"); // fire and forget
                 }
 
                 var response = new SetVendorConnection.Response();
@@ -130,11 +130,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             }
             catch (Exception ex)
             {
-                // never throw exception 
+                // never throw exception
                 _logger.LogError(ex, "Exception when getting Vendor Connection : " + nameof(VendorService));
                 var validVendors = VendorList();
                 return BuildVendorListResponse(validVendors);
-               
+
                 //throw ex;
             }
         }
@@ -231,7 +231,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
                 _logger.LogError(ex, "Exception from the Core-Security : " + nameof(VendorService));
                 throw ex;
             }
-            // return await Task.FromResult(false); // if no error and status != 200 
+            // return await Task.FromResult(false); // if no error and status != 200
         }
 
         public Task<string> VendorAutorizationURL(getVendorAuthorizeURL.Request request)
@@ -255,72 +255,42 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
         {
             if (request.Type.ToUpper() == "ALL")
             {
-                RefreshDealData(request, "deal"); // fire and forget 
-                RefreshEstimateData(request, "estimate"); // fire and forget 
+                RefreshData(request, "deal"); // fire and forget
+                RefreshData(request, "estimate"); // fire and forget
             }
             else
             {
-                RefreshDealData(request, request.Type); // fire and forget 
+                RefreshData(request, request.Type); // fire and forget
             }
 
             var response = new RefreshData.Response();
             response.Refreshed = true; // always return true
-            return Task.FromResult(response).Result;
-
+            return response;
         }
 
-        private void RefreshDealData(RefreshData.Request request, string type)
-        {           
-            var url = _appSettings.GetSetting("Integration.Configuration.Url");
-            
-            request.FromDate = request.FromDate ?? DateTime.Now.AddDays(-1).Date;
-            request.From = request.From ?? "yesterday";
-            _ = Task.Run(async () =>
-            {
-                try
-                {
-
-                    //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.From;//for Testing
-
-                    url = url.AppendPathSegments("configurations/refresh", request.VendorName, type)
-                     .SetQueryParams(new
-                     {
-                         since = request.From
-                     });
-                    await _middleTierHttpClient.PostAsync<HttpResponseModel>(url).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception to fetch data from Mongo DB: " + nameof(VendorService));
-                }
-            });
-        }
-
-        private void RefreshEstimateData(RefreshData.Request request, string type)
+        [SuppressMessage("Major Bug", "S3168:\"async\" methods should not return \"void\"", Justification = "Fire and forget within parent context")]
+        private async void RefreshData(RefreshData.Request request, string type)
         {
             var url = _appSettings.GetSetting("Integration.Configuration.Url");
 
             request.FromDate = request.FromDate ?? DateTime.Now.AddDays(-1).Date;
             request.From = request.From ?? "yesterday";
-            _ = Task.Run(async () =>
+
+            try
             {
-                try
-                {
+                //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.From;//for Testing
 
-                    //url = "https://eastus-dit-service.dc.tdebusiness.cloud/integration-configuration/v1/configurations/refresh/" + request.VendorName +"/"+ type + "?since=" + request.From;//for Testing
-
-                    url = url.AppendPathSegments("configurations/refresh", request.VendorName, type)
-                     .SetQueryParams(new
-                     {
-                         since = request.From
-                     });
-                    await _middleTierHttpClient.PostAsync<HttpResponseModel>(url).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Exception to fetch data from Mongo DB: " + nameof(VendorService));
-                }
-            });
+                url = url.AppendPathSegments("configurations/refresh", request.VendorName, type)
+                 .SetQueryParams(new
+                 {
+                     since = request.From
+                 });
+                await _middleTierHttpClient.PostAsync<HttpResponseModel>(url).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception to fetch data from Mongo DB: " + nameof(VendorService));
+            }
         }
 
         private List<string> VendorList()
@@ -337,7 +307,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
             catch (Exception)
             {
                 _validVendors = new List<string> { "cisco" }; // never throw exception
-            }            
+            }
 
             return _validVendors;
         }
