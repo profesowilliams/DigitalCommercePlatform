@@ -98,12 +98,10 @@
     display: grid;
     grid-template-columns: 75% 25%;
     width: 100%;
-    line-height: rem(60px);
 
     >ol {
       margin: 0;
       padding: 0;
-      display: flex;
 
       &.cmp-tabs__tablist li {
 
