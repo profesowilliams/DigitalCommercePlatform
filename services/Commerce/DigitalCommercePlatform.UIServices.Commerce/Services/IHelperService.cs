@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<List<Line>> PopulateLinesFor(List<Line> items, string vendorName, string source);
         Task<AccountDetails> GetCustomerAccountDetails();
         AuthorizationModel MapAutorization(AuthorizationModel authorization);
-        string GetCheckoutSystem(SourceModel source);
+        string GetCheckoutSystem(SourceModel source, List<AttributeModel> Attributes);
         Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel OrderDetail);
         Task<List<ItemModel>> PopulateQuoteRequestLinesForAsync(List<Common.Cart.Models.Cart.SavedCartLineModel> items, TypeModel type);
         List<Common.Cart.Models.Cart.SavedCartLineModel> PopulateSavedCartLinesForQuoteRequest(IReadOnlyList<Common.Cart.Models.Cart.ActiveCartLineModel> items);

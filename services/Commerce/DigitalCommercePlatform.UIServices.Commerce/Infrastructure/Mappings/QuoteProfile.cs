@@ -349,7 +349,16 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             if (source?.Source?.System?.ToUpper() == "Q" && source?.Source?.TargetSystem?.ToUpper() == "ECC")
                 return "6.8";
             else
+            {
+
+                if (source.Attributes == null || source.Attributes.Count == 0) return "4.6";
+
+                var ciscoId = source.Attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase) ||
+                                                              n.Name.Equals("ORIGINALESTIMATEID")).FirstOrDefault()?.Value;
+                if (!string.IsNullOrWhiteSpace(ciscoId)) return "4.6-checkout";
+
                 return "4.6";
+            }
         }
     }
     [ExcludeFromCodeCoverage]

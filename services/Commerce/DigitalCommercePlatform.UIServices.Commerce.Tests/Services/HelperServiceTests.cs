@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
@@ -430,15 +431,55 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 ID = "any",
                 Key = "any",
                 SalesOrg = "any",
+                System = "Q",
+                TargetSystem = "ECC"
+            };
+            //var hasDealOrEstimate = attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase) ||
+            //                                             n.Name.Equals("ORIGINALESTIMATEID")).Any();
+
+            List<AttributeModel> attributes = new List<AttributeModel> { new AttributeModel { Name = "SHIPCOMPLETETYPE", Value = "" } };
+
+            //Act
+            var result = GetHelperService().GetCheckoutSystem(source, attributes);
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public void GetCheckoutSystemSAPDeal_Test()
+        {
+            //arrange 
+            SourceModel source = new SourceModel()
+            {
+                ID = "any",
+                Key = "any",
+                SalesOrg = "any",
+                System = "any",
+                TargetSystem = "any"
+            };
+            List<AttributeModel> attributes = new List<AttributeModel> { new AttributeModel { Name = "DEALIDENTIFIER", Value = "234234" } };
+
+            //Act
+            var result = GetHelperService().GetCheckoutSystem(source, attributes);
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public void GetCheckoutSystemSAPEstimate_Test()
+        {
+            //arrange 
+            SourceModel source = new SourceModel()
+            {
+                ID = "any",
+                Key = "any",
+                SalesOrg = "any",
                 System = "any",
                 TargetSystem = "any"
             };
 
+            List<AttributeModel> attributes = new List<AttributeModel> { new AttributeModel { Name = "ORIGINALESTIMATEID", Value = "234234" } };
+
             //Act
-            var result = GetHelperService().GetCheckoutSystem(source);
+            var result = GetHelperService().GetCheckoutSystem(source, attributes);
             Assert.NotNull(result);
         }
-
         /*
          "images": {
                         "75x75": [

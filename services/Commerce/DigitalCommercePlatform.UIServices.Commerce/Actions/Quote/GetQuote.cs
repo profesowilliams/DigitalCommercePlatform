@@ -70,7 +70,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
                         var accountDetail = await _helperQueryService.GetCustomerAccountDetails();
                         getQuoteResponse.Details.BuyMethod = accountDetail.BuyMethod.Equals("TD") ? "sap46" : "tdavnet67";
                         getQuoteResponse.Details.CustomerBuyMethod = accountDetail?.BuyMethod;
-                        getQuoteResponse.Details.CheckoutSystem = _helperQueryService.GetCheckoutSystem(quoteDetails.Source);
+                        getQuoteResponse.Details.CheckoutSystem = _helperQueryService.GetCheckoutSystem(quoteDetails.Source, getQuoteResponse.Details.Attributes);
                     }
                 }
                 else

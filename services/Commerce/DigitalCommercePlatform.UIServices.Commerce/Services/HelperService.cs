@@ -1,5 +1,6 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
@@ -509,13 +510,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         }
 
 
-        public string GetCheckoutSystem(SourceModel source)
+        public string GetCheckoutSystem(SourceModel source, List<AttributeModel> attributes)
         {
 
             if (source?.System?.ToUpper() == "Q" && source?.TargetSystem?.ToUpper() == "ECC")
                 return "6.8";
             else
-                return "4.6";
+            {
+                return CheckoutSysytemSAP(attributes);
+            }
+        }
+
+        private string CheckoutSysytemSAP(List<AttributeModel> attributes)
+        {
+            if (attributes == null || attributes.Count == 0) return "4.6";
+
+            var ciscoId = attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase) ||
+                                                          n.Name.Equals("ORIGINALESTIMATEID")).FirstOrDefault()?.Value;
+            if (!string.IsNullOrWhiteSpace(ciscoId)) return "4.6-checkout";
+
+            return "4.6";
         }
 
         public Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel orderDetail)
