@@ -449,5 +449,67 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var result = queryLine.Invoke(objType, new object[] { quotePreviewModel });
             Assert.NotNull(quotePreviewModel.QuoteDetails.Items[1].DisplayLineNumber);
         }
+
+
+
+        [Fact(DisplayName = "Quotes Id are in Proper Order")]
+        public void OrderByItemId()
+        {
+            var substringService = new SubstringService();
+            var sut = new QuoteItemChildrenService(substringService);
+            var lstAttributes = new List<AttributeModel>();
+            var attrLine = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "1.0"
+            };
+
+            var attrParent = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "1.3"
+            };
+            var lstAttributes2 = new List<AttributeModel>();
+            var attrLine2 = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "2.0"
+            };
+
+            var attrParent2 = new AttributeModel
+            {
+                Name = "CONFIGLINE",
+                Value = "2.0.1"
+            };
+
+            lstAttributes.Add(attrLine2);
+            lstAttributes.Add(attrParent2);
+
+            lstAttributes.Add(attrLine);
+            lstAttributes.Add(attrParent);
+            var quotePreviewModel = new QuotePreviewModel
+            {
+
+                QuoteDetails = new QuotePreview
+                {
+                    Items = new List<Models.Line>
+                    {
+                        new Models.Line { Id = "1.0", Parent = null},
+                        new Models.Line { Id = "1.1", Parent = "3232", Attributes = lstAttributes },
+                        new Models.Line { Id = "1.2", Parent = "3232" },
+                        new Models.Line { Id = "1.0.1", Parent = "3232" },
+                        new Models.Line { Id = "2.0", Parent = null, Attributes = lstAttributes2 },
+                        new Models.Line { Id = "2.10", Parent = "5532" },
+                        new Models.Line { Id = "2.0.1", Parent = "5532" },
+                        new Models.Line { Id = "2.2", Parent = "5532" },
+                        new Models.Line { Id = "2.5", Parent = "5532" }
+                    }
+                }
+            };
+
+            var result = sut.GetQuoteLinesWithChildren(quotePreviewModel);
+
+            Assert.NotNull(result.OrderBy(i=>i.DisplayLineNumber));
+        }
     }
 }

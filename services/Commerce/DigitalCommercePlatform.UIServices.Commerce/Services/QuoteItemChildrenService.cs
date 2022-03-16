@@ -25,6 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             ApplyIdToItems(quotePreviewModel);
 
             var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
+            parents= parents?.OrderBy(i=>i.Id).ToList();
 
             var lines = new List<Line>();
 
@@ -32,6 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
 
                 var subLines = quotePreviewModel.QuoteDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
+                subLines = subLines?.OrderBy(i => i.Id).ToList();
                 var childLines = new List<Line>();
                 MapChildrenFromParents(quotePreviewModel, subLines, childLines);
 
