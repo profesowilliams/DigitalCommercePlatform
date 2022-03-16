@@ -5,6 +5,8 @@ import IsNotNullOrEmpty from "../../helpers/IsNotNullOrEmpty";
 export async function redirectToCart(checkoutSystem, quoteId, config, onErrorHandler) {
     if (checkoutSystem === '4.6') {
         system46Checkout(quoteId, config, onErrorHandler);
+    } else if(checkoutSystem === '4.6-checkout') {
+        window.location.replace(config.checkoutRedirectUrl.replace("{quote-id}", quoteId));        
     } else {
         window.location.replace(config.expressCheckoutRedirectUrl.replace("{quote-id}", quoteId));
     }

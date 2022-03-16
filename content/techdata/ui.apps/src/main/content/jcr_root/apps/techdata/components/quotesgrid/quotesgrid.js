@@ -238,6 +238,10 @@ use(function () {
     checkoutData.expressCheckoutRedirectUrl = this.shopDomain+this.expressCheckoutRedirectUrl;
   }
 
+  if (this.checkoutRedirectUrl != null) {
+    checkoutData.checkoutRedirectUrl = this.shopDomain + this.checkoutRedirectUrl;
+  }
+
   if (checkoutData != null) {
     jsonObject["checkout"] = checkoutData;
   }

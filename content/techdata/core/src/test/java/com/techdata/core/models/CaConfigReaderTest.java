@@ -95,6 +95,7 @@ class CaConfigReaderTest {
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.expressCheckoutRedirectUrl()).thenReturn("expressCheckoutRedirectUrl");
+        when(mcConfiguration.checkoutRedirectUrl()).thenReturn("checkoutRedirectUrl");
         when(mcConfiguration.tdPartSmart()).thenReturn("tdPartSmart");
         when(analyticsConfiguration.analyticsSnippet()).thenReturn("analyticsSnippet");
 
@@ -152,6 +153,7 @@ class CaConfigReaderTest {
         assertEquals("shopDomain", underTest.getShopDomain());
         assertEquals("cartURL", underTest.getCartURL());
         assertEquals("expressCheckoutRedirectUrl", underTest.getExpressCheckoutRedirectUrl());
+        assertEquals("checkoutRedirectUrl", underTest.getCheckoutRedirectUrl());
         assertEquals("tdPartSmart", underTest.getTdPartSmart());
         assertEquals("analyticsSnippet", underTest.getAnalyticsSnippet());
         assertEquals("allSearchEndpoint", underTest.getAllSearchEndpoint());
