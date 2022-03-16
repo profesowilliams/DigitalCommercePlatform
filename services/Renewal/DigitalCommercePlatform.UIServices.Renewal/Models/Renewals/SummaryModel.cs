@@ -1,9 +1,8 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Azure;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
 {
@@ -27,8 +26,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Models.Renewals
         public NameModel VendorSalesAssociate { get; set; }
         public List<AttributeModel> Attributes { get; set; }
         public string ProgramName { get; set; }
-        public DateTime FirstAvailableOrderDate { get; set; }
-        public DateTime LastOrderDate { get; set; }
         public string StatusText { get; set; }
         public decimal? AmountSaved { get; set; }
         public List<string> LinkedRenewals { get; set; }
