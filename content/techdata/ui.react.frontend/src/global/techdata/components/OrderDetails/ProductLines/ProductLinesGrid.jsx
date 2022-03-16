@@ -12,18 +12,7 @@ import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import { isNotEmptyValue, requestFileBlob } from "../../../../../utils/utils";
-import {
-  ADOBE_DATA_LAYER_BUTTON_TYPE, 
-  ADOBE_DATA_LAYER_CLICK_EVENT,
-  ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM,
-  ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
-  ADOBE_DATA_LAYER_LINK_TYPE,
-  ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM,
-  ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
-  ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION,
-  ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT
-} from "../../../../../utils/constants";
-import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 
 function ProductLinesGrid({
   gridProps,
@@ -88,7 +77,7 @@ function ProductLinesGrid({
     gridApi?.forEachNode((node) => {
       node.expanded = true;
     });
-    handlerAnalyticExpandeddAll();
+    handlerAnalyticCollapsedOrExpandAll(false);
     gridApi?.expandAll();
   }
 
@@ -96,7 +85,7 @@ function ProductLinesGrid({
     gridApi?.forEachNode((node) => {
       node.expanded = false;
     });
-    handlerAnalyticCollapsedAll();
+    handlerAnalyticCollapsedOrExpandAll(true);
     gridApi?.collapseAll();
   }
 
@@ -774,7 +763,7 @@ function ProductLinesGrid({
       searchCategory : isNotEmptyValue(analyticObjectParam.category) ? analyticObjectParam.category : "" ,
     };
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_ORDER_DETAILS_EXPORT_EVENT,
+      event: ANALYTICS_TYPES.events.orderDetailsSearch,
       orderDetails,
     }
     pushEventAnalyticsGlobal(objectToSend);
@@ -795,12 +784,12 @@ function ProductLinesGrid({
    const handlerAnalyticCollapseAction = (item) => {
     const productInfo = setProductInfoObject(item.data);
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
-      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
-      name : ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
+      type : ANALYTICS_TYPES.types.button,
+      category : ANALYTICS_TYPES.category.orderDetailTableInteraction,
+      name : ANALYTICS_TYPES.name.collapseLineItem,
     };
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      event: ANALYTICS_TYPES.events.click,
       products: productInfo,
       clickInfo,
     };
@@ -813,13 +802,13 @@ function ProductLinesGrid({
    */
    const handlerAnalyticExpandAction = (item) => {
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
-      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
-      name : ADOBE_DATA_LAYER_COLLAPSE_LINE_ITEM,
+      type : ANALYTICS_TYPES.types.button,
+      category : ANALYTICS_TYPES.category.orderDetailTableInteraction,
+      name : ANALYTICS_TYPES.name.openLineItem,
     };
     const productInfo = setProductInfoObject(item.data);
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      event: ANALYTICS_TYPES.events.click,
       products: productInfo,
       clickInfo
     };
@@ -832,44 +821,36 @@ function ProductLinesGrid({
    */
   const  handlerAnalyticInvoiceClick = (item) => {
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_BUTTON_TYPE,
-      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
-      name : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION,
+      type : ANALYTICS_TYPES.types.button,
+      category : ANALYTICS_TYPES.category.orderDetailTableInteraction,
+      name : ANALYTICS_TYPES.name.invoice,
     };
     const productInfo = setProductInfoObject(item);
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      event: ANALYTICS_TYPES.events.click,
       products: productInfo,
       clickInfo
     };
     pushEventAnalyticsGlobal(objectToSend);
   };
 
-  const handlerAnalyticCollapsedAll = () => {
+  /**
+   * action true = collapseAll
+   * action false = openAll
+   * @param {boolean} action 
+   */
+  const handlerAnalyticCollapsedOrExpandAll = (action) => {
     const clickInfo = {
-      type : ADOBE_DATA_LAYER_LINK_TYPE,
-      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
-      name : ADOBE_DATA_LAYER_COLLAPSE_ALL_LINE_ITEM,
+      type : ANALYTICS_TYPES.types.link,
+      category : ANALYTICS_TYPES.category.orderDetailTableInteraction,
+      name : action ? ANALYTICS_TYPES.name.collapseAll : ANALYTICS_TYPES.name.openAll,
     };
     const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICK_EVENT,
+      event: ANALYTICS_TYPES.events.click,
       clickInfo
     };
     pushEventAnalyticsGlobal(objectToSend);
   };
-
-  const handlerAnalyticExpandeddAll = () => {
-    const clickInfo = {
-      type : ADOBE_DATA_LAYER_LINK_TYPE,
-      category : ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
-      name : ADOBE_DATA_LAYER_OPEN_ALL_LINE_ITEM,
-    };
-    const objectToSend = {
-      event: ADOBE_DATA_LAYER_CLICK_EVENT,
-      clickInfo
-    };
-    pushEventAnalyticsGlobal(objectToSend);
-  }; 
 
   return (
     <section>

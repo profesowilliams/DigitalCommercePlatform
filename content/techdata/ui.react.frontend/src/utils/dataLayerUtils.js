@@ -38,6 +38,7 @@ export const ANALYTICS_TYPES = {
     quoteComplete: "quoteComplete",
     qpDealApply: "qpDealApply",
     qpDealSearch: "qpDealSearch",
+    orderDetailsSearch: 'orderDetailsSearch',
   },
   types: {
     button: "button",
@@ -68,6 +69,7 @@ export const ANALYTICS_TYPES = {
     openLineItem: "Open Line Item",
     collapseLineItem: "Collapse Line Item",
     endUserInformation: "End User Information",
+    invoice: 'Invoice',
   },
 };
 
