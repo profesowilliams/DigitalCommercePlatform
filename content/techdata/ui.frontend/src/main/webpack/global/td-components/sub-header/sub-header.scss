@@ -97,17 +97,13 @@
     background-color: get-color(td-dark-blue);
     display: grid;
     grid-template-columns: 75% 25%;
-    grid-auto-rows: rem(43px);
     width: 100%;
     line-height: rem(60px);
-    height: rem(43px);
 
     >ol {
       margin: 0;
       padding: 0;
-      align-self: center;
       display: flex;
-      justify-content: space-between;
 
       &.cmp-tabs__tablist li {
 
@@ -122,6 +118,7 @@
         position: relative;
         padding: 0 rem(5px) 0 rem(15px) !important;
         z-index: 10;
+        margin-right: rem(12px);
 
         a,
         span {
