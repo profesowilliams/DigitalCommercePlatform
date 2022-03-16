@@ -463,6 +463,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Name = "CONFIGPARENT",
                 Value = "1.0"
             };
+            
 
             var attrParent = new AttributeModel
             {
@@ -481,9 +482,15 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Name = "CONFIGLINE",
                 Value = "2.0.1"
             };
+            var attrLine3 = new AttributeModel
+            {
+                Name = "CONFIGPARENT",
+                Value = "1.0.1"
+            };
 
             lstAttributes.Add(attrLine2);
             lstAttributes.Add(attrParent2);
+            lstAttributes.Add(attrLine3);
 
             lstAttributes.Add(attrLine);
             lstAttributes.Add(attrParent);

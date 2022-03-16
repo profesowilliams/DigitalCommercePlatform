@@ -25,7 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             ApplyIdToItems(quotePreviewModel);
 
             var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
-            parents= parents?.OrderBy(i=>i.Id).ToList();
+            parents = parents?.OrderBy(i => i.Id).ToList();
 
             var lines = new List<Line>();
 
@@ -33,9 +33,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
 
                 var subLines = quotePreviewModel.QuoteDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
-                subLines = subLines?.OrderBy(i => i.Id).ToList();
                 var childLines = new List<Line>();
                 MapChildrenFromParents(quotePreviewModel, subLines, childLines);
+                subLines = subLines?.OrderBy(i => i.Id).ToList();
 
                 lines.Add(new Line
                 {
@@ -131,7 +131,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 {
                     item.DisplayLineNumber = item.Id ?? string.Empty;
                 }
-            }                    
+            }
         }
 
         private void DisplayIdForLinesWithoutId(QuotePreviewModel quotePreviewModel, List<Line> linesWithoutId)
