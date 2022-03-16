@@ -22,6 +22,10 @@ function RenewalsGrid(props) {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "desc",
   };
+  const secondLevelOptions = {
+    colId: 'total',
+    sort: "desc",
+  }
 
   useEffect(()=>effects.setCustomState({key:'aemConfig',value:componentProp}),[])
 
@@ -137,6 +141,7 @@ function RenewalsGrid(props) {
           }}
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
+          secondLevelOptions={secondLevelOptions}
         />
       </div>
     </section>

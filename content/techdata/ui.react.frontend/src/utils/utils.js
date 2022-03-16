@@ -296,3 +296,99 @@ export const getDayMonthYear = (date, separator = "/") => {
     2
   )}${separator}${date.getFullYear()}`;
 };
+
+export const sortRenewalObjects = (objArray, query) => {
+    query.SortBy = query.SortBy.trim().split(',').map(prop => {
+      var columnDef = prop.trim().split(' ');
+      if ((columnDef.length === 1 && query.SortDirection.toLowerCase() === 'asc') || (columnDef.length === 2 && columnDef[1].toLowerCase() === 'asc')) {
+        columnDef = [columnDef, "asc"];
+      } else {
+        columnDef = [columnDef, "desc"];
+      }
+  
+      if (columnDef[1] === "desc") {
+        columnDef[1] = -1;
+      } else {
+        columnDef[1] = 1;
+      }
+      return columnDef;
+    });
+  
+    function valueCmp(x, y) {
+      return x > y ? 1 : x < y ? -1 : 0;
+    }
+  
+    function arrayCmp(a, b) {
+      var arr1 = [],
+        arr2 = [];
+      query.SortBy.forEach(function (prop) {   
+        switch (prop[0][0].toLowerCase()) {
+          case 'id':
+            prop[0] = 'source.id';
+            break;
+          case 'type':
+            prop[0] = prop[0] = 'source';
+            break;
+          case 'vendor':
+            prop[0] = 'vendor.name';
+            break;
+          case 'name':
+            prop[0] = 'nameUpper';
+            break;
+          case 'enduser':
+            prop[0] = 'endUser.nameUpper';
+            break;
+          case 'resellername':
+            prop[0] = 'reseller.nameUpper';
+            break;
+          case 'totallistprice':
+            prop[0] = 'totalListPrice';
+            break;
+          case 'total':
+            prop[0] = 'renewal.total';
+            break;
+          case 'programname':
+            prop[0] = 'programName';
+            break;
+          case 'renewedduration':
+            prop[0] = 'renewDuration';
+            break;
+          case 'duedate':
+            prop[0] = 'dueDate';
+            break;
+          case 'duedays':
+            prop[0] = 'dueDate';
+            break;
+          case 'support':
+            prop[0] = 'items.contract.supportLevel';
+            break;
+          case 'agreementnumber':
+            prop[0] = 'items.contract.id';
+            break;
+          default:
+            break;
+        }
+        
+        var aValue = field(a, prop),
+            bValue = field(b, prop);
+        arr1.push(prop[1] * valueCmp(aValue, bValue));
+        arr2.push(prop[1] * valueCmp(bValue, aValue));
+      });
+      return arr1 < arr2 ? -1 : 1;
+    }
+
+    function field(arr, prop) {
+      const col = prop[0].toString().split(".");
+      if (!col[1]) {
+        return arr[prop[0]];
+      }
+      return field(
+        arr[prop[0].toString().split(".").splice(0, 1)],
+        prop[0].toString().split(".").splice(1)
+      );
+    }
+  
+    return objArray.sort(function (a, b) {
+      return arrayCmp(a, b);
+    });
+  }
