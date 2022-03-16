@@ -7,6 +7,13 @@
   padding-left: rem(65px);
   box-shadow: rem(1px) 0 0 0 get-color(v-divider-gray);
 
+  @include tablet {
+    border-bottom: 1px solid get-color(v-divider-gray);
+    border-left: none;
+    padding-left: 1.0625rem;
+    width: 100%;
+  }
+
   &:last-of-type {    
     box-shadow: 0 0 0 0;
   }

@@ -23,6 +23,29 @@
           }
         }
     }
+
+    @include tablet {
+      border-bottom: 1px solid get-color(v-divider-gray);
+      border-left: none;
+      padding-left: 1.0625rem;
+      width: 100%;
+    }
+  }
+
+  &--header-container {
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content:space-around;
+    }
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content:space-around;
+    }
+    
   }
 }
 

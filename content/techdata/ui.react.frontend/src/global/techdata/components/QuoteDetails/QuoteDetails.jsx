@@ -373,7 +373,7 @@ const QuoteDetails = ({ componentProp }) => {
     return whiteLabelMode
           ? ( <WhiteLabelQuoteHeader componentProp={componentProp} logoUploadHandler={handleUploadFileSelected} setWhiteLabelOptions={setWhiteLabelOptions} /> )
           : (
-            <>
+            <div className={'cmp-quote-details--header-container'}> 
               <QuoteContactInfo
                 label={
                   information?.yourCompanyHeaderLabel
@@ -394,7 +394,7 @@ const QuoteDetails = ({ componentProp }) => {
                 info={information}
                 readOnly={true}
             />
-          </>
+          </div>
         );
   }
 
