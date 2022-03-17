@@ -52,7 +52,8 @@ function Checkout({ line, checkoutConfig, onErrorHandler }) {
     redirectUrl: IsNotNullOrEmpty(checkoutConfig?.uiServiceEndPoint)
       ? checkoutConfig.redirectUrl
       : "https://shop.techdata.com/cart",
-    expressCheckoutRedirectUrl: checkoutConfig?.expressCheckoutRedirectUrl
+    expressCheckoutRedirectUrl: checkoutConfig?.expressCheckoutRedirectUrl,
+    checkoutRedirectUrl: checkoutConfig?.checkoutRedirectUrl
   };
 
   return (
