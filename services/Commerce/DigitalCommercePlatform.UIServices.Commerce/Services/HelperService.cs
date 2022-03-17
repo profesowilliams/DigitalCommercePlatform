@@ -1,9 +1,10 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Models;
-using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
@@ -46,6 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             _httpClientFactory = httpClientFactory;
         }
 
+        #region "Public Methods"
         public string GetParameterName(string parameter)
         {
             var sortBy = string.Empty;
@@ -109,40 +111,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return true;
         }
 
-        private OrderPricingCondtionMapping GetOrderPricingConditionMappings(string pricingConditionId)
-        {
-            pricingConditionId = pricingConditionId ?? "Commercial";
-            List<OrderPricingCondtionMapping> pricingDetails = new List<OrderPricingCondtionMapping>
-                {
-                    new OrderPricingCondtionMapping {Id ="Commercial",  TypeId ="000", Type="Commercial", Level="", LevelId="", SalesOrganization = "0100", Site="US", Description="Commercial"},
-                    new OrderPricingCondtionMapping { Id ="EduStudentStaff",  TypeId ="001", Type="", LevelId="EF", Level="", SalesOrganization = "0100", Site="US", Description="Education (Student & Staff)" },
-                    new OrderPricingCondtionMapping { Id ="EduHigher",  TypeId ="001", Type="Government", LevelId="EH", Level="Education (Higher)", SalesOrganization = "0100", Site="US", Description="Education (Higher)" },
-                    new OrderPricingCondtionMapping { Id ="EduK12",  TypeId ="001", Type="Government", LevelId="EL", Level="Education (K-12)", SalesOrganization = "0100", Site="US", Description="Education (K-12)" },
-                    new OrderPricingCondtionMapping { Id ="EduErate",  TypeId ="001", Type="", LevelId="ER", Level="", SalesOrganization = "0100", Site="US", Description="Education (Erate)" },
-                    new OrderPricingCondtionMapping { Id ="GovtFederal",  TypeId ="001", Type="Government", LevelId="FE", Level="Federal", SalesOrganization = "0100", Site="US", Description="Federal" },
-                    new OrderPricingCondtionMapping { Id ="GovtFederalGSA",  TypeId ="001", Type="", LevelId="FG", Level="", SalesOrganization = "0100", Site="US", Description="Federal GSA" },
-                    new OrderPricingCondtionMapping { Id ="GovtLocal",  TypeId ="001", Type="Government", LevelId="LO", Level="Local", SalesOrganization = "0100", Site="US", Description="Local" },
-                    new OrderPricingCondtionMapping { Id ="GovtState",  TypeId ="001", Type="Government", LevelId="ST", Level="State", SalesOrganization = "0100", Site="US", Description="State" },
-                    new OrderPricingCondtionMapping { Id ="Medical",  TypeId ="001", Type="Government", LevelId="MD", Level="Medical", SalesOrganization = "0100", Site="US", Description="Medical" },
-                    new OrderPricingCondtionMapping { Id ="SEWPContract", Type ="001", TypeId="Government", Level="S5", LevelId="SEWP Contract", SalesOrganization = "0100", Site="US", Description="SEWP Contract" },
-                };
-
-            //var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == _context.User.ActiveCustomer.SalesOrganization).FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
-            var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == "0100").FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
-            if (response == null)
-            {
-                response = new OrderPricingCondtionMapping();
-                response.Type = "Government";
-                response.TypeId = "001";
-                response.Level = "Education (Higher)";
-                response.LevelId = "EH";
-                response.SalesOrganization = "0100";
-                response.Site = "US";
-                response.Description = "Education (Higher)";
-            }
-            return response;
-        }
-
         /// <summary>
         /// TO DO : return out put string with details PHASE 2
         /// </summary>
@@ -176,7 +144,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             return Task.FromResult(response);
         }
-
 
         /// <summary>
         ///  Populate lines for order and Quotes
@@ -228,6 +195,224 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
 
             return items;
+        }
+
+        /// <summary>
+        /// Return Buy Type of customre 
+        /// Possible values 
+        /// Both 
+        ///TDShop46
+        ///TDAvnet67
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AccountDetails> GetCustomerAccountDetails()
+        {
+            string response = "TD";
+            try
+            {
+                var customerId = _context.User.ActiveCustomer.CustomerNumber;
+                string _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
+                var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
+                var appResponse = await _middleTierHttpClient.GetAsync<IEnumerable<AccountDetails>>(customerURL);
+                response = appResponse is null ? "TD" : appResponse.FirstOrDefault()?.BuyMethod;
+                response = string.IsNullOrWhiteSpace(response) ? "TD" : response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error while consuming App-Customer Service " + ex.Message);
+                response = "TD";
+            }
+            return new AccountDetails
+            {
+                BuyMethod = response.ToUpper()
+            };
+        }
+
+        /// <summary>
+        /// Map Order / Quote Lines 
+        /// </summary>
+        /// <param name="product"></param>
+        /// <param name="line"></param>
+        public AuthorizationModel MapAutorization(AuthorizationModel authorization)
+        {
+            AuthorizationModel auth = new AuthorizationModel();
+            if (authorization is null)
+            {
+                auth.CustomerCanView = false;
+                auth.CanOrder = false;
+                auth.CanViewPrice = false;
+            }
+            else
+            {
+                auth.CustomerCanView = authorization.CustomerCanView;
+                auth.CanOrder = authorization.CustomerCanView;
+                auth.CanViewPrice = authorization.CustomerCanView;
+            }
+            return auth;
+        }
+
+        /// <summary>
+        /// Returns Annity for deals and estimates
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="quotePreview"></param>
+        /// <returns></returns>
+        public async Task<QuotePreview> MapAnnuityForQuotePreviw(IEnumerable<DetailedDto> data, QuotePreview quotePreview)
+        {
+            Parallel.ForEach(quotePreview.Items,
+                           new ParallelOptions { MaxDegreeOfParallelism = 3 }, item =>
+                           {
+                               ItemDto responseItem = data.FirstOrDefault().Items.Where(i => i.Id == item.Id).FirstOrDefault();
+                               if (responseItem != null)
+                               {
+                                   Annuity annuity = new Annuity
+                                   {
+                                       Duration = responseItem?.Contract?.Duration ?? string.Empty,
+                                       BillingFrequency = responseItem.BillingModel ?? string.Empty,
+                                       InitialTerm = responseItem?.Contract?.Duration ?? string.Empty,
+                                       AutoRenewalTerm = responseItem?.Contract?.RenewalTerm,
+                                       StartDate = responseItem?.Contract?.StartDate
+                                   };
+
+                                   item.Annuity = annuity;
+
+                               }
+                           });
+
+            return await Task.FromResult(quotePreview);
+        }
+
+        public string GetCheckoutSystem(SourceModel source, List<AttributeModel> attributes)
+        {
+
+            if (source?.System?.ToUpper() == "Q" && source?.TargetSystem?.ToUpper() == "ECC")
+                return "6.8";
+            else
+            {
+                return CheckoutSysytemSAP(attributes);
+            }
+        }
+        
+        public double? NullableTryParseDouble(string request)
+        {
+            if (string.IsNullOrWhiteSpace(request)) return 0.00;
+
+            int index = request.IndexOf('.');
+            if (index > 0)
+                request = request.Substring(0, index);
+
+            double value;
+            return double.TryParse(request, out value) ? (double?)value : 0.00;
+        }
+
+        public List<Common.Cart.Models.Cart.SavedCartLineModel> PopulateSavedCartLinesForQuoteRequest(IReadOnlyList<Common.Cart.Models.Cart.ActiveCartLineModel> items)
+        {
+            List<Common.Cart.Models.Cart.SavedCartLineModel> lstItems = new List<Common.Cart.Models.Cart.SavedCartLineModel>();
+            foreach (var item in items)
+            {
+                Common.Cart.Models.Cart.SavedCartLineModel savedCartLine = new Common.Cart.Models.Cart.SavedCartLineModel
+                {
+                    ItemId = item.ItemId,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    ParentItemId = item.ParentItemId.ToString()
+                };
+                lstItems.Add(savedCartLine);
+            }
+            return lstItems;
+        }
+
+        [ExcludeFromCodeCoverage]
+        public string RenderErrorMessage(RemoteServerHttpException ex, string errorFor)
+        {
+            string error = "This create quote request contains obsolete products and can't be ordered";
+            if (errorFor == "quote")
+            {
+                var errorMsg = JsonConvert.DeserializeObject<ErrorDetail>(ex.Details?.GetType().GetProperty("Body")?.GetValue(ex.Details, null).ToString(),
+                   new JsonSerializerSettings
+                   {
+                       Error = HandleDeserializationError
+                   });
+                StringBuilder product = new();
+                if (errorMsg.Messages != null)
+                {
+                    error = ErrorMessageFrom(errorMsg, ref product);
+                }
+                else
+                {
+                    error = ex.Message;
+                }
+            }
+            return error;
+        }
+
+        public async Task<List<ItemModel>> PopulateQuoteRequestLinesForAsync(List<Common.Cart.Models.Cart.SavedCartLineModel> items, TypeModel type)
+        {
+            string _appProductServiceURL = BuildProductApiURL(items);
+
+            ProductData productDetails = await _middleTierHttpClient.GetAsync<ProductData>(_appProductServiceURL);
+            if (productDetails?.Data != null)
+            {
+                var invalidProducts = from item in items
+                                      where !productDetails.Data.ToList().Any(x => x.Source.ID == item.ProductId)
+                                      select item;
+
+                return GetLinesForQuoteRequestFromSavedAndActiveCart(items, productDetails, invalidProducts);
+            }
+            else
+                throw new UIServiceException("This create quote request contains obsolete products and can't be ordered.", 11000);
+
+        }
+
+
+        public Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel orderDetail)
+        {
+            if (orderDetail.Source?.System == "3") // for 6.8 orders return all lines
+                return orderDetail;
+            else
+            {
+                orderDetail = FilterOrderKitLines(orderDetail);
+                orderDetail = FilterOrderGATPLines(orderDetail);
+            }
+            return orderDetail;
+        }
+        
+        #endregion
+
+        #region "Private Methods"
+
+        private OrderPricingCondtionMapping GetOrderPricingConditionMappings(string pricingConditionId)
+        {
+            pricingConditionId = pricingConditionId ?? "Commercial";
+            List<OrderPricingCondtionMapping> pricingDetails = new List<OrderPricingCondtionMapping>
+                {
+                    new OrderPricingCondtionMapping {Id ="Commercial",  TypeId ="000", Type="Commercial", Level="", LevelId="", SalesOrganization = "0100", Site="US", Description="Commercial"},
+                    new OrderPricingCondtionMapping { Id ="EduStudentStaff",  TypeId ="001", Type="", LevelId="EF", Level="", SalesOrganization = "0100", Site="US", Description="Education (Student & Staff)" },
+                    new OrderPricingCondtionMapping { Id ="EduHigher",  TypeId ="001", Type="Government", LevelId="EH", Level="Education (Higher)", SalesOrganization = "0100", Site="US", Description="Education (Higher)" },
+                    new OrderPricingCondtionMapping { Id ="EduK12",  TypeId ="001", Type="Government", LevelId="EL", Level="Education (K-12)", SalesOrganization = "0100", Site="US", Description="Education (K-12)" },
+                    new OrderPricingCondtionMapping { Id ="EduErate",  TypeId ="001", Type="", LevelId="ER", Level="", SalesOrganization = "0100", Site="US", Description="Education (Erate)" },
+                    new OrderPricingCondtionMapping { Id ="GovtFederal",  TypeId ="001", Type="Government", LevelId="FE", Level="Federal", SalesOrganization = "0100", Site="US", Description="Federal" },
+                    new OrderPricingCondtionMapping { Id ="GovtFederalGSA",  TypeId ="001", Type="", LevelId="FG", Level="", SalesOrganization = "0100", Site="US", Description="Federal GSA" },
+                    new OrderPricingCondtionMapping { Id ="GovtLocal",  TypeId ="001", Type="Government", LevelId="LO", Level="Local", SalesOrganization = "0100", Site="US", Description="Local" },
+                    new OrderPricingCondtionMapping { Id ="GovtState",  TypeId ="001", Type="Government", LevelId="ST", Level="State", SalesOrganization = "0100", Site="US", Description="State" },
+                    new OrderPricingCondtionMapping { Id ="Medical",  TypeId ="001", Type="Government", LevelId="MD", Level="Medical", SalesOrganization = "0100", Site="US", Description="Medical" },
+                    new OrderPricingCondtionMapping { Id ="SEWPContract", Type ="001", TypeId="Government", Level="S5", LevelId="SEWP Contract", SalesOrganization = "0100", Site="US", Description="SEWP Contract" },
+                };
+
+            //var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == _context.User.ActiveCustomer.SalesOrganization).FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
+            var response = pricingDetails.Where(p => p.Id == pricingConditionId).Any() ? pricingDetails.Where(p => p.Id == pricingConditionId && p.SalesOrganization == "0100").FirstOrDefault() : pricingDetails.Where(p => p.Id == "0").FirstOrDefault();
+            if (response == null)
+            {
+                response = new OrderPricingCondtionMapping();
+                response.Type = "Government";
+                response.TypeId = "001";
+                response.Level = "Education (Higher)";
+                response.LevelId = "EH";
+                response.SalesOrganization = "0100";
+                response.Site = "US";
+                response.Description = "Education (Higher)";
+            }
+            return response;
         }
 
         private void MapDiscount(string source, Line line)
@@ -334,37 +519,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         }
 
         /// <summary>
-        /// Return Buy Type of customre 
-        /// Possible values 
-        /// Both 
-        ///TDShop46
-        ///TDAvnet67
-        /// </summary>
-        /// <returns></returns>
-        public async Task<AccountDetails> GetCustomerAccountDetails()
-        {
-            string response = "TD";
-            try
-            {
-                var customerId = _context.User.ActiveCustomer.CustomerNumber;
-                string _customerServiceURL = _appSettings.GetSetting("App.Customer.Url");
-                var customerURL = _customerServiceURL.BuildQuery("Id=" + customerId);
-                var appResponse = await _middleTierHttpClient.GetAsync<IEnumerable<AccountDetails>>(customerURL);
-                response = appResponse is null ? "TD" : appResponse.FirstOrDefault()?.BuyMethod;
-                response = string.IsNullOrWhiteSpace(response) ? "TD" : response;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation("Error while consuming App-Customer Service " + ex.Message);
-                response = "TD";
-            }
-            return new AccountDetails
-            {
-                BuyMethod = response.ToUpper()
-            };
-        }
-
-        /// <summary>
         /// returns Application product API call URL
         /// </summary>
         /// <param name="items"></param>
@@ -442,30 +596,47 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             line.MFRNumber = product?.ManufacturerPartNumber;
             line.Authorization = MapAutorization(product?.Authorization);
         }
-
-        /// <summary>
-        /// Map Order / Quote Lines 
-        /// </summary>
-        /// <param name="product"></param>
-        /// <param name="line"></param>
-        public AuthorizationModel MapAutorization(AuthorizationModel authorization)
+        private string CheckoutSysytemSAP(List<AttributeModel> attributes)
         {
-            AuthorizationModel auth = new AuthorizationModel();
-            if (authorization is null)
-            {
-                auth.CustomerCanView = false;
-                auth.CanOrder = false;
-                auth.CanViewPrice = false;
-            }
-            else
-            {
-                auth.CustomerCanView = authorization.CustomerCanView;
-                auth.CanOrder = authorization.CustomerCanView;
-                auth.CanViewPrice = authorization.CustomerCanView;
-            }
-            return auth;
+            if (attributes == null || attributes.Count == 0) return "4.6";
+
+            var ciscoId = attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase) ||
+                                                          n.Name.Equals("ORIGINALESTIMATEID")).FirstOrDefault()?.Value;
+            if (!string.IsNullOrWhiteSpace(ciscoId)) return "4.6-checkout";
+
+            return "4.6";
         }
 
+        private Models.Order.Internal.OrderModel FilterOrderGATPLines(Models.Order.Internal.OrderModel orderDetail)
+        {
+            var parents = orderDetail.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => o.ID);
+
+            Parallel.ForEach(parents,
+                new ParallelOptions { MaxDegreeOfParallelism = 3 }, line =>
+                {
+                    if (line.POSType?.ToUpper() == "AH")
+                    {
+                        var subLines = orderDetail.Items.Where(i => (i.Parent == line.ID && i.POSType?.ToUpper() == "AI"))?.ToList();
+                        if (subLines?.Count == 1)
+                        {
+                            MovePaymentInformation(line, subLines);
+                            MapShipments(line, subLines);
+                            MapSerials(line, subLines);
+                            MapInvoices(line, subLines);
+                            // remove AI line 
+                            orderDetail.Items.Remove(subLines.FirstOrDefault());
+                        }
+                        else
+                        {
+                            line.Freight = 0.00M;
+                            line.OtherFees = 0.00M;
+                            line.Tax = 0.00M;
+                        }
+                    }
+                });
+
+            return orderDetail; /// Fix this 
+        }
 
         /// <summary>
         /// Returns Image URL
@@ -507,72 +678,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             else
                 return string.Empty;
-        }
-
-
-        public string GetCheckoutSystem(SourceModel source, List<AttributeModel> attributes)
-        {
-
-            if (source?.System?.ToUpper() == "Q" && source?.TargetSystem?.ToUpper() == "ECC")
-                return "6.8";
-            else
-            {
-                return CheckoutSysytemSAP(attributes);
-            }
-        }
-
-        private string CheckoutSysytemSAP(List<AttributeModel> attributes)
-        {
-            if (attributes == null || attributes.Count == 0) return "4.6";
-
-            var ciscoId = attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase) ||
-                                                          n.Name.Equals("ORIGINALESTIMATEID")).FirstOrDefault()?.Value;
-            if (!string.IsNullOrWhiteSpace(ciscoId)) return "4.6-checkout";
-
-            return "4.6";
-        }
-
-        public Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel orderDetail)
-        {
-            if (orderDetail.Source?.System == "3") // for 6.8 orders return all lines
-                return orderDetail;
-            else
-            {
-                orderDetail = FilterOrderKitLines(orderDetail);
-                orderDetail = FilterOrderGATPLines(orderDetail);
-            }
-            return orderDetail;
-        }
-
-        private Models.Order.Internal.OrderModel FilterOrderGATPLines(Models.Order.Internal.OrderModel orderDetail)
-        {
-            var parents = orderDetail.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => o.ID);
-
-            Parallel.ForEach(parents,
-                new ParallelOptions { MaxDegreeOfParallelism = 3 }, line =>
-                {
-                    if (line.POSType?.ToUpper() == "AH")
-                    {
-                        var subLines = orderDetail.Items.Where(i => (i.Parent == line.ID && i.POSType?.ToUpper() == "AI"))?.ToList();
-                        if (subLines.Count == 1)
-                        {
-                            MovePaymentInformation(line, subLines);
-                            MapShipments(line, subLines);
-                            MapSerials(line, subLines);
-                            MapInvoices(line, subLines);
-                            // remove AI line 
-                            orderDetail.Items.Remove(subLines.FirstOrDefault());
-                        }
-                        else
-                        {
-                            line.Freight = 0.00M;
-                            line.OtherFees = 0.00M;
-                            line.Tax = 0.00M;
-                        }
-                    }
-                });
-
-            return orderDetail; /// Fix this 
         }
         private void MovePaymentInformation(Item line, List<Item> subLines)
         {
@@ -640,23 +745,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return orderDetail;
         }
 
-        public async Task<List<ItemModel>> PopulateQuoteRequestLinesForAsync(List<Common.Cart.Models.Cart.SavedCartLineModel> items, TypeModel type)
-        {
-                string _appProductServiceURL = BuildProductApiURL(items);
-
-                ProductData productDetails = await _middleTierHttpClient.GetAsync<ProductData>(_appProductServiceURL);
-                if (productDetails?.Data != null)
-                {
-                    var invalidProducts = from item in items
-                                          where !productDetails.Data.ToList().Any(x => x.Source.ID == item.ProductId)
-                                          select item;
-
-                    return GetLinesForQuoteRequestFromSavedAndActiveCart(items, productDetails, invalidProducts);
-                }
-                else
-                    throw new UIServiceException("This create quote request contains obsolete products and can't be ordered.", 11000);
-
-        }
 
         private List<ItemModel> GetLinesForQuoteRequestFromSavedAndActiveCart(List<Common.Cart.Models.Cart.SavedCartLineModel> items, ProductData productDetails, IEnumerable<Common.Cart.Models.Cart.SavedCartLineModel> invalidProducts)
         {
@@ -713,46 +801,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return _appProductServiceURL;
         }
 
-        public List<Common.Cart.Models.Cart.SavedCartLineModel> PopulateSavedCartLinesForQuoteRequest(IReadOnlyList<Common.Cart.Models.Cart.ActiveCartLineModel> items)
-        {
-            List<Common.Cart.Models.Cart.SavedCartLineModel> lstItems = new List<Common.Cart.Models.Cart.SavedCartLineModel>();
-            foreach (var item in items)
-            {
-                Common.Cart.Models.Cart.SavedCartLineModel savedCartLine = new Common.Cart.Models.Cart.SavedCartLineModel
-                {
-                    ItemId = item.ItemId,
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    ParentItemId = item.ParentItemId.ToString()
-                };
-                lstItems.Add(savedCartLine);
-            }
-            return lstItems;
-        }
 
-        [ExcludeFromCodeCoverage]
-        public string RenderErrorMessage(RemoteServerHttpException ex, string errorFor)
-        {
-            string error = "This create quote request contains obsolete products and can't be ordered";
-            if (errorFor == "quote")
-            {
-                var errorMsg = JsonConvert.DeserializeObject<ErrorDetail>(ex.Details?.GetType().GetProperty("Body")?.GetValue(ex.Details, null).ToString(),
-                   new JsonSerializerSettings
-                   {
-                       Error = HandleDeserializationError
-                   });
-                StringBuilder product = new();
-                if (errorMsg.Messages != null)
-                {
-                    error = ErrorMessageFrom(errorMsg, ref product);
-                }
-                else
-                {
-                    error = ex.Message;
-                }
-            }
-            return error;
-        }
 
         private static string ErrorMessageFrom(ErrorDetail errorMsg, ref StringBuilder product)
         {
@@ -773,5 +822,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             //var currentError = errorArgs.ErrorContext.Error.Message;
             errorArgs.ErrorContext.Handled = true;
         }
+
+        #endregion
     }
 }

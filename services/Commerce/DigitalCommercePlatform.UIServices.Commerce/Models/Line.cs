@@ -78,6 +78,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models
         public AuthorizationModel Authorization { get; set; }
         public string POSType { get; set; } = "";
         public decimal PurchaseCost { get; set; }
+        public string BillingModel { get; set; }
         public List<AttributeModel> Attributes { get; set; }
+        public string ClassificationType { get; set; }
     }
 }

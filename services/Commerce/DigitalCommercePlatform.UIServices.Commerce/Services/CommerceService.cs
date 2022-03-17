@@ -112,22 +112,22 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             try
             {
-                var attribute = line.Attributes.Where(x => x.Name.ToLower().Equals("materialtype")).FirstOrDefault();
-                if (string.Equals(attribute?.Value?.ToLower(), "service"))
+                DateTime? startDate; DateTime sdt;
+                startDate = DateTime.TryParse(DateTime.Now.ToString(), out sdt) ? sdt : null;
+
+                DateTime? endDate; DateTime edt;
+                endDate = DateTime.TryParse(DateTime.Now.ToString(), out edt) ? edt : null;
+
+                line.Annuity = new Annuity
                 {
-                    var startDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
-                    DateTimeStyles.None, out var sdt) ? sdt : null as DateTime?;
-                    var endDate = DateTime.TryParseExact(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, "MM/dd/yyyy", CultureInfo.InvariantCulture,
-                    DateTimeStyles.None, out var edt) ? edt : null as DateTime?;
-                    line.Annuity = new Annuity
-                    {
-                        BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault()?.Value ?? string.Empty,
-                        StartDate = startDate,
-                        EndDate = endDate,
-                        Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault()?.Value ?? string.Empty, // or use servicelength                             
-                        AutoRenewal = line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).Any()
-                    };
-                }
+                    BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault()?.Value ?? string.Empty,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("dealduration")).FirstOrDefault()?.Value ?? string.Empty, // or use servicelength                             
+                    InitialTerm = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault()?.Value ?? string.Empty,
+                    AutoRenewal = line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).Any(),
+                    AutoRenewalTerm = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value)
+                };
             }
             catch (Exception ex)
             {
@@ -451,13 +451,69 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var vendorAtribue = BuildAttribute(id, "vendorquoteid");
             lstAttributes.Add(vendorAtribue);
 
-            if (item?.Contract?.Duration != null)
+            if (!string.IsNullOrWhiteSpace(item.Annuity?.Duration))
             {
-                var dealDuration = BuildAttribute(item.Contract.Duration, "DEALDURATION");
+                var dealDuration = BuildAttribute(item.Annuity.Duration, "DEALDURATION");
+                var initialTerm = BuildAttribute(item.Annuity.Duration, "INITIALTERM");
                 lstAttributes.Add(dealDuration);
+                lstAttributes.Add(initialTerm);
             }
 
+            StartDateAttribute(item, lstAttributes);
+
+            EndDateAttribute(item, lstAttributes);
+
+            AutoRenewalAttribute(item, lstAttributes);
+
+            BillingAttribute(item, lstAttributes);
+
+            ClassificationAttribute(item, lstAttributes);
+
             return lstAttributes;
+        }
+
+        private void StartDateAttribute(Line item, List<AttributeDto> lstAttributes)
+        {
+            if (item?.Annuity?.StartDate != null)
+            {
+                var startDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDSTARTDATE ");
+                lstAttributes.Add(startDate);
+            }
+        }
+
+        private void EndDateAttribute(Line item, List<AttributeDto> lstAttributes)
+        {
+            if (item?.Annuity?.EndDate != null)
+            {
+                var endDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDENDDATE ");
+                lstAttributes.Add(endDate);
+            }
+        }
+
+        private void ClassificationAttribute(Line item, List<AttributeDto> lstAttributes)
+        {
+            if (item.ClassificationType?.ToUpper() == "XAAS")
+            {
+                var RenewalTerm = BuildAttribute(item.ClassificationType, "ADDITIONALITEMINFO");
+                lstAttributes.Add(RenewalTerm);
+            }
+        }
+        private void AutoRenewalAttribute(Line item, List<AttributeDto> lstAttributes)
+        {
+            if (item?.Annuity?.AutoRenewalTerm != null)
+            {
+                var RenewalTerm = BuildAttribute(item.Annuity.AutoRenewalTerm.Value.ToString(), "AUTORENEWALTERM");
+                lstAttributes.Add(RenewalTerm);
+            }
+        }
+
+        private void BillingAttribute(Line item, List<AttributeDto> lstAttributes)
+        {
+            if (!string.IsNullOrWhiteSpace(item?.Annuity?.BillingFrequency))
+            {
+                var billingTerm = BuildAttribute(item.Annuity.BillingFrequency, "BILLINGTERM");
+                lstAttributes.Add(billingTerm);
+            }
         }
 
         private AttributeDto BuildAttribute(string id, string attributeName = "vendorquoteid")
@@ -636,8 +692,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     return result;
                 }
 
+                //quotePreview = await _helperService.MapAnnuityForQuotePreviw(configurationFindResponse.Data, quotePreview);
+
                 MapEndUserAndResellerForQuotePreview(configurationFindResponse, quotePreview);
+
                 quotePreview.Items = await _helperService.PopulateLinesFor(quotePreview.Items, configurationFindResponse?.Data?.FirstOrDefault()?.Vendor?.Name, string.Empty);
+
+                quotePreview = await _helperService.MapAnnuityForQuotePreviw(configurationFindResponse.Data, quotePreview);
 
                 var customerBuyMethod = _helperService.GetCustomerAccountDetails().Result.BuyMethod;
                 quotePreview.CustomerBuyMethod = customerBuyMethod;
@@ -811,6 +872,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     return response;
             }
             return response;
+        }
+
+        private static int? ToNullableInt(string value)
+        {
+            int i;
+            if (int.TryParse(value, out i)) return i;
+            return null;
         }
 
         #endregion Private Methods

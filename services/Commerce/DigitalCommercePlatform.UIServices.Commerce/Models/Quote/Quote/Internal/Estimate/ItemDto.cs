@@ -35,7 +35,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Interna
         public string Instance { get; set; }
         public string Magickey { get; set; }
         public List<DiscountDto> Discounts { get; set; }
+        public string BillingModel { get; set; }
         public ContractDto Contract { get; set; }
+        public string ClassificationType { get; set; }
 
     }
     public class DiscountDto

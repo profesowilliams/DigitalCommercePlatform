@@ -23,17 +23,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 return new List<Line>();
             }
 
-            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => o.Id);
             var lines = new List<Line>();
             double displayNumber = 0;
             double displayChildNumber = 0.0;
+
+            var parents = orderDetails.Items.Where(i => i.Parent == "0" || i.Parent == null).ToList().OrderBy(o => _helperQueryService.NullableTryParseDouble(o.Id));
+                        
+
             foreach (var item in parents)
             {
                 displayNumber = Math.Round((displayNumber + 1), 3, MidpointRounding.AwayFromZero);
                 item.DisplayLineNumber = displayNumber.ToString();
 
                 var subLines = orderDetails.Items.Where(i => (i.Parent == item.Id))?.ToList();
-                subLines=subLines?.OrderBy(i => i.Id).ToList();
+                subLines=subLines?.OrderBy(i => _helperQueryService.NullableTryParseDouble(i.Id)).ToList();
+
                 var sublineTracking = GetSubLineTracking(subLines ?? new List<Line>());
 
                 // If there are no tracking info at the parent but there are some on the children, create an empty list to add to

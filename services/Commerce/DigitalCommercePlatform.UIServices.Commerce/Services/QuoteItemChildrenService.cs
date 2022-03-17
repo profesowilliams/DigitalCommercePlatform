@@ -11,11 +11,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
     public class QuoteItemChildrenService : IQuoteItemChildrenService
     {
         private readonly ISubstringService _substringService;
-
-        public QuoteItemChildrenService(ISubstringService substringService)
+        private readonly IHelperService _helperQueryService;
+        public QuoteItemChildrenService(ISubstringService substringService, IHelperService helperQueryService)
         {
             _substringService = substringService ?? throw new ArgumentNullException(nameof(substringService));
+            _helperQueryService = helperQueryService ?? throw new ArgumentNullException(nameof(helperQueryService));
         }
+    
         public List<Line> GetQuoteLinesWithChildren(QuotePreviewModel quotePreviewModel)
         {
             if (quotePreviewModel?.QuoteDetails?.Items == null)
@@ -25,7 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             ApplyIdToItems(quotePreviewModel);
 
             var parents = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList();
-            parents = parents?.OrderBy(i => i.Id).ToList();
+            parents = parents?.OrderBy(i => _helperQueryService.NullableTryParseDouble(i.Id)).ToList();
 
             var lines = new List<Line>();
 
@@ -33,9 +35,9 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
 
                 var subLines = quotePreviewModel.QuoteDetails.Items.Where(i => (i.Parent == item.Id)).ToList();
+                subLines = subLines?.OrderBy(i => _helperQueryService.NullableTryParseDouble(i.Id)).ToList();
                 var childLines = new List<Line>();
                 MapChildrenFromParents(quotePreviewModel, subLines, childLines);
-                subLines = subLines?.OrderBy(i => i.Id).ToList();
 
                 lines.Add(new Line
                 {
@@ -99,7 +101,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             else
             {
-                var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => NullableTryParseDouble(i.Id) == 0.00).ToList();
+                var linesWithoutId = quotePreviewModel.QuoteDetails.Items.Where(i => _helperQueryService.NullableTryParseDouble(i.Id) == 0.00).ToList();
                 if (linesWithoutId.Any())
                 {
                     DisplayIdForLinesWithoutId(quotePreviewModel, linesWithoutId);
@@ -136,7 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         private void DisplayIdForLinesWithoutId(QuotePreviewModel quotePreviewModel, List<Line> linesWithoutId)
         {
-            var maxLineNumber = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList().OrderByDescending(i => NullableTryParseDouble(i.Id)).FirstOrDefault().Id;
+            var maxLineNumber = quotePreviewModel.QuoteDetails.Items.Where(i => i.Parent == null).ToList().OrderByDescending(i => _helperQueryService.NullableTryParseDouble(i.Id)).FirstOrDefault().Id;
             double parentNumber = 0;
             double n;
             bool isNumeric = double.TryParse(maxLineNumber, out n);
@@ -161,7 +163,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                                 if (!string.IsNullOrWhiteSpace(parent))
                                 {
-                                    var id = NullableTryParseDouble(item.Id);
+                                    var id = _helperQueryService.NullableTryParseDouble(item.Id);
                                     if (id != null)
                                     {
                                         double parentNumber = 0;
@@ -181,18 +183,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                                 }
 
                             });
-        }
-
-        private double? NullableTryParseDouble(string request)
-        {
-            if (string.IsNullOrWhiteSpace(request)) return 0.00;
-
-            int index = request.IndexOf('.');
-            if (index > 0)
-                request = request.Substring(0, index);
-
-            double value;
-            return double.TryParse(request, out value) ? (double?)value : 0.00;
         }
     }
 }

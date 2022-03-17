@@ -17,6 +17,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using Xunit;
+using DigitalFoundation.Common.TestUtilities;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 {
@@ -1336,6 +1338,50 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             // Assert
             Assert.NotNull(result);
+        }
+        
+        [Fact]
+        public void MapAnnuityForQuotePreviw_Tests()
+        {
+            // Arrange 
+            IEnumerable<DetailedDto> data = new List<DetailedDto>();
+            QuotePreview quotePreview = new QuotePreview();
+           
+            // Act         
+            var result = GetHelperService().MapAnnuityForQuotePreviw(data, quotePreview);
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void NullableTryParseDouble_Test()
+        {
+            //arrange
+            string request = "2";
+            double? expected = 2;
+
+
+            // Act         
+            var result = GetHelperService().NullableTryParseDouble(request);
+
+            // Assert
+            Assert.Equal(expected, result);
+        }
+
+
+        [Fact]
+        public void NullableTryParseDoubleFail_Test()
+        {
+            //arrange
+            string request = "";
+            double? expected = 2;
+
+            // Act         
+            var result = GetHelperService().NullableTryParseDouble(request);
+
+            // Assert
+            Assert.NotEqual(expected, result);
         }
 
     }

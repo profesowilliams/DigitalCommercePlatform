@@ -120,7 +120,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
 
             // Arrange
-            GetQuotePreviewDetails.Request request = new("53761072", true, "cisco","Deal");
+            GetQuotePreviewDetails.Request request = new("53761072", true, "cisco", "Deal");
 
 
             Type type = typeof(CommerceService);
@@ -586,6 +586,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "BuildAnnuity" && x.IsPrivate);
 
+
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { input });
             Assert.Null(result);
@@ -938,18 +939,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Phone = "000-000-0000"
             };
             IEnumerable<ContactModel> contact = new List<ContactModel>() { contactModel };
-            EndUserModel endUserModel= new EndUserModel()
+            EndUserModel endUserModel = new EndUserModel()
             {
-                Name ="Tom",
-                Contact= contact
+                Name = "Tom",
+                Contact = contact
             };
             QuoteModel quoteModel = new QuoteModel()
             {
-                EndUser=endUserModel
+                EndUser = endUserModel
             };
 
-             //Act
-             Type type;
+            //Act
+            Type type;
             object objType;
             InitiateCommerceService(out type, out objType);
 
@@ -1004,12 +1005,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             //arrange
             VendorReferenceModel source = new VendorReferenceModel()
             {
-                Type= "Deal",
-                Value="513465"
+                Type = "Deal",
+                Value = "513465"
             };
             QuotePreview quotePreview = new QuotePreview()
             {
-                Source=source,
+                Source = source,
                 BuyMethod = "tdavnet69",
                 Currency = "USD",
                 Id = "123",
@@ -1017,7 +1018,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 CustomerBuyMethod = "AVT"
             };
 
-            
+
             AttributeDto attribute = new AttributeDto()
             {
                 Name = "DEALIDENTIFIER",
@@ -1033,7 +1034,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Name = "Billing",
                 Value = "4560981"
             };
-            List<AttributeDto> lstAttribute = new List<AttributeDto>() { attribute,attribute1,attribute2};
+            List<AttributeDto> lstAttribute = new List<AttributeDto>() { attribute, attribute1, attribute2 };
 
             QuotePreviewModel quotePreviewModel = new QuotePreviewModel()
             {
@@ -1042,7 +1043,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             CreateQuoteModel quoteModel = new CreateQuoteModel()
             {
-                Attributes=lstAttribute,
+                Attributes = lstAttribute,
                 SalesOrg = "0100",
                 Creator = "516514",
                 Reseller = new Models.Quote.Quote.Internal.ResellerModel { Id = "123123", Name = "Nilesh Madhavi" },
@@ -1134,5 +1135,187 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.Null(result);
 
         }
+
+        [Fact]
+        public void StartDateAttribute_Test()
+        {
+            //arrange
+            List<AttributeDto> lstattributes = ArrageListForAttributeDto();
+            DateTime date = DateTime.Now;
+            Annuity annuity = new Annuity()
+            {
+                AutoRenewal = true,
+                AutoRenewalTerm = 10,
+                BillingFrequency = "10",
+                Duration = "10",
+                EndDate = date,
+                IsAnnuity = true,
+                StartDate = date,
+            };
+            Line item = new Line()
+            {
+                Annuity=annuity
+
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "StartDateAttribute" && x.IsPrivate);
+
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { item, lstattributes });
+            Assert.Null(result);
+        }
+
+
+        [Fact]
+        public void EndDateAttribute_Test()
+        {
+            //arrange
+            List<AttributeDto> lstattributes = ArrageListForAttributeDto();
+            DateTime date = DateTime.Now;
+            Annuity annuity = new Annuity()
+            {
+                AutoRenewal = true,
+                AutoRenewalTerm = 10,
+                BillingFrequency = "10",
+                Duration = "10",
+                EndDate = date,
+                IsAnnuity = true,
+                StartDate = date,
+            };
+            Line item = new Line()
+            {
+                Annuity = annuity
+
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "EndDateAttribute" && x.IsPrivate);
+
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { item, lstattributes });
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void ClassificationAttribute_Test()
+        {
+            //arrange
+            List<AttributeDto> lstattributes = ArrageListForAttributeDto();
+            DateTime date = DateTime.Now;
+            Annuity annuity = new Annuity()
+            {
+                AutoRenewal = true,
+                AutoRenewalTerm = 10,
+                BillingFrequency = "10",
+                Duration = "10",
+                EndDate = date,
+                IsAnnuity = true,
+                StartDate = date,
+            };
+            Line item = new Line()
+            {
+                Annuity = annuity,
+                ClassificationType="XAAS"
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "ClassificationAttribute" && x.IsPrivate);
+
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { item, lstattributes });
+            Assert.Null(result);
+        }
+
+
+        [Fact]
+        public void BillingAttribute_Test()
+        {
+            //arrange
+            List<AttributeDto> lstattributes = ArrageListForAttributeDto();
+            DateTime date = DateTime.Now;
+            Annuity annuity = new Annuity()
+            {
+                AutoRenewal = true,
+                AutoRenewalTerm = 10,
+                BillingFrequency = "10",
+                Duration = "10",
+                EndDate = date,
+                IsAnnuity = true,
+                StartDate = date,
+            };
+            Line item = new Line()
+            {
+                Annuity = annuity
+
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var imageProductModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "BillingAttribute" && x.IsPrivate);
+
+
+            //Act
+            var result = imageProductModel.Invoke(objType, new object[] { item, lstattributes });
+            Assert.Null(result);
+        }
+
+        private static List<AttributeDto> ArrageListForAttributeDto()
+        {
+
+
+            List<AttributeDto> attributes = new List<AttributeDto>();
+
+            AttributeDto materialAttribute = new AttributeDto();
+            materialAttribute.Name = "materialtype";
+            materialAttribute.Value = "service";
+            attributes.Add(materialAttribute);
+
+            AttributeDto endDate = new AttributeDto();
+            endDate.Name = "requestedenddate";
+            endDate.Value = "6-13-2022";
+            attributes.Add(endDate);
+
+            AttributeDto startDate = new AttributeDto();
+            startDate.Name = "requestedstartdate";
+            startDate.Value = "6-13-2021";
+            attributes.Add(startDate);
+
+            AttributeDto billingTermAttribute = new AttributeDto();
+            billingTermAttribute.Name = "billingterm";
+            billingTermAttribute.Value = "Monthly";
+            attributes.Add(billingTermAttribute);
+
+            AttributeDto autoRenewalTermAttribute = new AttributeDto();
+            autoRenewalTermAttribute.Name = "initialterm";
+            autoRenewalTermAttribute.Value = "36";
+            attributes.Add(autoRenewalTermAttribute);
+
+            AttributeDto dealDurationAttribute = new AttributeDto();
+            dealDurationAttribute.Name = "autorenewalterm";
+            dealDurationAttribute.Value = "1";
+            attributes.Add(dealDurationAttribute);
+
+            return attributes;
+        }
+
     }
 }

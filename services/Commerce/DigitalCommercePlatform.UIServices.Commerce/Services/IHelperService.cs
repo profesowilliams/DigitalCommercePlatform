@@ -2,11 +2,12 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
+using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
+using DigitalFoundation.Common.Features.Client.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
-using DigitalFoundation.Common.Features.Client.Exceptions;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Services
 {
@@ -24,5 +25,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<List<ItemModel>> PopulateQuoteRequestLinesForAsync(List<Common.Cart.Models.Cart.SavedCartLineModel> items, TypeModel type);
         List<Common.Cart.Models.Cart.SavedCartLineModel> PopulateSavedCartLinesForQuoteRequest(IReadOnlyList<Common.Cart.Models.Cart.ActiveCartLineModel> items);
         string RenderErrorMessage(RemoteServerHttpException ex,string errorFor);
+        Task<QuotePreview> MapAnnuityForQuotePreviw(IEnumerable<DetailedDto> data, QuotePreview quotePreview);
+        double? NullableTryParseDouble(string request);
     }
 }

@@ -2,10 +2,15 @@
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using DigitalFoundation.Common.Features.Client;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
@@ -13,16 +18,33 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
     public class QuoteItemChildrenServiceTests
     {
         private readonly Mock<SubstringService> _subStringService;
+        private readonly Mock<IHelperService> _helperService;
+        private readonly Mock<IUIContext> _context;
+        private readonly Mock<ILogger<HelperService>> _logger;
+        private readonly Mock<IMiddleTierHttpClient> _middleTierHttpClient;
+        private readonly Mock<IAppSettings> _appSettings;
+        private readonly Mock<IHttpClientFactory> _httpClientFactory;
         public QuoteItemChildrenServiceTests()
         {
             _subStringService = new Mock<SubstringService>();
+            _helperService = new Mock<IHelperService>();
+            _context = new Mock<IUIContext>();
+            _logger = new Mock<ILogger<HelperService>>();
+            _middleTierHttpClient = new Mock<IMiddleTierHttpClient>();
+            _appSettings = new Mock<IAppSettings>();
+            _httpClientFactory = new Mock<IHttpClientFactory>();
         }
+
+        private QuoteItemChildrenService GetQuoteItemChildrenService()
+        {
+            return new QuoteItemChildrenService(_subStringService.Object,_helperService.Object);
+        }
+
         [Fact(DisplayName = "Lines are empty for invalid input")]
         public void LinesAreEmptyForInvalidInput()
         {
-            var substringService = new SubstringService();
-            var sut = new QuoteItemChildrenService(substringService);
-            var result = sut.GetQuoteLinesWithChildren(null);
+            QuotePreviewModel quotePreviewModel = new QuotePreviewModel();
+            var result = GetQuoteItemChildrenService().GetQuoteLinesWithChildren(quotePreviewModel);
 
             Assert.Empty(result);
         }
@@ -32,8 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         [Fact(DisplayName = "Children lines are generated")]
         public void ChildrenLinesAreGenerated()
         {
-            var substringService = new SubstringService();
-            var sut = new QuoteItemChildrenService(substringService);
             var lstAttributes = new List<AttributeModel>();
             var attrLine = new AttributeModel
             {
@@ -84,7 +104,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 }
             };
 
-            var result = sut.GetQuoteLinesWithChildren(quotePreviewModel);
+            var result = GetQuoteItemChildrenService().GetQuoteLinesWithChildren(quotePreviewModel);
 
             Assert.Equal(2, result.Count);
         }
@@ -93,7 +113,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         {
             type = typeof(QuoteItemChildrenService);
             objType = Activator.CreateInstance(type,
-                _subStringService.Object
+                _subStringService.Object,
+                _helperService.Object
                 );
         }
 
@@ -202,40 +223,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.Null(result);
         }
 
-        [Fact]
-        public void NullableTryParseDouble_Test()
-        {
-            //arrange
-            string request = "2";
-            double? expected = 2;
-            Type type;
-            object objType;
-            InitateQuoteItemChildrenService(out type, out objType);
-
-            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .First(x => x.Name == "NullableTryParseDouble" && x.IsPrivate);
-
-            var result = queryLine.Invoke(objType, new object[] { request });
-            Assert.Equal(expected, result);
-        }
-
-
-        [Fact]
-        public void NullableTryParseDoubleFail_Test()
-        {
-            //arrange
-            string request = "";
-            double? expected = 2;
-            Type type;
-            object objType;
-            InitateQuoteItemChildrenService(out type, out objType);
-
-            var queryLine = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .First(x => x.Name == "NullableTryParseDouble" && x.IsPrivate);
-
-            var result = queryLine.Invoke(objType, new object[] { request });
-            Assert.NotEqual(expected, result);
-        }
+        
 
 
 
@@ -456,7 +444,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public void OrderByItemId()
         {
             var substringService = new SubstringService();
-            var sut = new QuoteItemChildrenService(substringService);
+            
+            HelperService helperService = new HelperService(_logger.Object, _context.Object, _middleTierHttpClient.Object, _appSettings.Object, _httpClientFactory.Object);
+            var sut = new QuoteItemChildrenService(substringService, helperService);
+
             var lstAttributes = new List<AttributeModel>();
             var attrLine = new AttributeModel
             {
