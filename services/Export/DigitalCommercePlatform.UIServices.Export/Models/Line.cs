@@ -38,7 +38,10 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public string URLProductImage { get; set; }
         public string URLProductSpecs { get; set; }
         public List<Line> Children { get; set; }
+        public string BillingModel { get; set; }
         public List<AttributeModel> Attributes { get; set; }
+        public string ClassificationType { get; set; }
+        public Annuity Annuity { get; set; }
         public List<AgreementModel> Agreements { get; set; }
         public IList<string> Serials { get; set; }
         public List<TrackingDetails> Trackings { get; set; }
@@ -50,5 +53,18 @@ namespace DigitalCommercePlatform.UIServices.Export.Models
         public DateTime EndDate { get; set; }
         public string Status { get; set; }
         public string ContractNo { get; set; }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class Annuity
+    {
+        public bool IsAnnuity { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public bool AutoRenewal { get; set; }
+        public int? AutoRenewalTerm { get; set; }
+        public string Duration { get; set; }
+        public string BillingFrequency { get; set; }
+        public string InitialTerm { get; internal set; }
     }
 }

@@ -381,22 +381,16 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void SubLineDataAttributes(Line line)
         {
-            var startDate = line.Attributes?.FirstOrDefault(s => s.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
-            DateTime dateValue;
-            if (!string.IsNullOrEmpty(startDate))
-            {
-                if (DateTime.TryParse(startDate, out dateValue))
-                    startDate = dateValue.ToShortDateString();
-            }
+            var startDate = line?.Annuity?.StartDate?.ToShortDateString();
             Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
-            var autoRenew = line.Attributes?.FirstOrDefault(s => s.Name.Equals("AUTORENEWALTERM"))?.Value;
+            var autoRenew = line?.Annuity?.AutoRenewalTerm.ToString();
             Worksheet.Cells[_row, 7].Value = autoRenew ?? "";
 
-            var deal = line.Attributes?.FirstOrDefault(s => s.Name.Equals("DEALDURATION"))?.Value;
+            var deal = line?.Annuity?.Duration;
             Worksheet.Cells[_row, 8].Value = deal ?? "";
 
-            var billing = line.Attributes?.FirstOrDefault(s => s.Name.Equals("BILLINGTERM"))?.Value;
+            var billing = line?.Annuity?.BillingFrequency;
             Worksheet.Cells[_row, 9].Value = billing ?? "";
         }
 
@@ -436,23 +430,16 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
 
         private void FillLineDataAttributes(Line line)
         {
-
-            var startDate = line.Attributes?.FirstOrDefault(s => s.Name.Equals("REQUESTEDSTARTDATE"))?.Value;
-            DateTime dateValue;
-            if (!string.IsNullOrEmpty(startDate))
-            {
-                if (DateTime.TryParse(startDate, out dateValue))
-                    startDate = dateValue.ToShortDateString();
-            }
+            var startDate = line?.Annuity?.StartDate?.ToShortDateString();
             Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
-            var autoRenew = line.Attributes?.FirstOrDefault(s => s.Name.Equals("AUTORENEWALTERM"))?.Value;
+            var autoRenew = line?.Annuity?.AutoRenewalTerm.ToString();
             Worksheet.Cells[_row, 7].Value = autoRenew ?? "";
 
-            var deal = line.Attributes?.FirstOrDefault(s => s.Name.Equals("DEALDURATION"))?.Value;
+            var deal = line?.Annuity?.Duration;
             Worksheet.Cells[_row, 8].Value = deal ?? "";
 
-            var billing = line.Attributes?.FirstOrDefault(s => s.Name.Equals("BILLINGTERM"))?.Value;
+            var billing = line?.Annuity?.BillingFrequency;
             Worksheet.Cells[_row, 9].Value = billing ?? "";
         }
 
