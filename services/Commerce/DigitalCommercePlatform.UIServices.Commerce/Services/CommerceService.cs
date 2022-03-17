@@ -113,10 +113,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             try
             {
                 DateTime? startDate; DateTime sdt;
-                startDate = DateTime.TryParse(DateTime.Now.ToString(), out sdt) ? sdt : null;
+                startDate = DateTime.TryParse(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, out sdt) ? sdt : null;
 
                 DateTime? endDate; DateTime edt;
-                endDate = DateTime.TryParse(DateTime.Now.ToString(), out edt) ? edt : null;
+                endDate = DateTime.TryParse(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, out edt) ? edt : null;
 
                 line.Annuity = new Annuity
                 {

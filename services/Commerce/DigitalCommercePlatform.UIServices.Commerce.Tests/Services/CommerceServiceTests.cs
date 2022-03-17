@@ -553,27 +553,32 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             attributes.Add(materialAttribute);
 
             AttributeDto endDate = new AttributeDto();
-            endDate.Name = "requestedenddate";
+            endDate.Name = "REQUESTEDENDDATE";
             endDate.Value = "6-13-2022";
             attributes.Add(endDate);
 
             AttributeDto startDate = new AttributeDto();
-            startDate.Name = "requestedstartdate";
+            startDate.Name = "REQUESTEDSTARTDATE";
             startDate.Value = "6-13-2021";
             attributes.Add(startDate);
 
             AttributeDto billingTermAttribute = new AttributeDto();
-            billingTermAttribute.Name = "billingterm";
+            billingTermAttribute.Name = "BILLINGTERM";
             billingTermAttribute.Value = "Monthly";
             attributes.Add(billingTermAttribute);
 
+            AttributeDto dealDuration = new AttributeDto();
+            billingTermAttribute.Name = "DEALDURATION";
+            billingTermAttribute.Value = "Monthly";
+            attributes.Add(dealDuration);
+
             AttributeDto autoRenewalTermAttribute = new AttributeDto();
-            autoRenewalTermAttribute.Name = "initialterm";
+            autoRenewalTermAttribute.Name = "INITIALTERM";
             autoRenewalTermAttribute.Value = "36";
             attributes.Add(autoRenewalTermAttribute);
 
             AttributeDto dealDurationAttribute = new AttributeDto();
-            dealDurationAttribute.Name = "autorenewalterm";
+            dealDurationAttribute.Name = "AUTORENEWALTERM";
             dealDurationAttribute.Value = "1";
             attributes.Add(dealDurationAttribute);
 
