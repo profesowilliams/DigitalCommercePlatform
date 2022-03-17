@@ -27,6 +27,7 @@ const columnDefs = [
     headerName: "Unit price (USD)",
     field: "unitPrice",
     sortable: false,
+    cellStyle: { 'justify-content': 'flex-start'}
   },
   {
     headerName: "Quantity",
@@ -39,6 +40,7 @@ const columnDefs = [
     field: "totalPrice",
     sortable: false,
     width: "150px",
+    cellStyle: { 'justify-content': 'flex-start'}
   },
 ];
 
