@@ -26,6 +26,7 @@
 
 /0016 { /type "allow" /method "GET" /path "/libs/cq/personalization" }  # enable personalization
 /0017 { /type "allow" /method "POST" /path "/content/[.]*.commerce.cart.json" }  # allow POSTs to update the shopping cart
+/0018 { /type "allow" /method "GET" /url '/libs/cq/i18n/dict[.]*.json' /extension 'json' } # AEM servlet for getting dictionary keys
 
 # Deny content grabbing for greedy queries and prevent un-intended self DOS attacks
 /0100 { /type "deny" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed)' }
