@@ -380,7 +380,7 @@ export const sortRenewalObjects = (objArray, query) => {
     function field(arr, prop) {
       const col = prop[0].toString().split(".");
       if (!col[1]) {
-        return arr[prop[0]];
+        return arr ? arr[prop[0]] : 0;
       }
       return field(
         arr[prop[0].toString().split(".").splice(0, 1)],
