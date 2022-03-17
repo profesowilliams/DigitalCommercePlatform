@@ -58,7 +58,7 @@ function TodaysActionItems(props) {
                         </div>
 					</Fragment>
 				) : (
-					<Fragment> <div class="cmp-spinner"><div class="loading">Loading…</div></div> </Fragment>
+					<Fragment> <div class="cmp-spinner"><div class="cmp-loading">Loading…</div></div> </Fragment>
 				)}
 			</div>
 		</section>
