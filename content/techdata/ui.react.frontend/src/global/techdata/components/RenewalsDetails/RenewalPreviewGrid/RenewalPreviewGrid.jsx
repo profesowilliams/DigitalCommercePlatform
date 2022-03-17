@@ -67,14 +67,14 @@ function GridHeader({ gridProps, data }) {
   return (
     <div className="cmp-product-lines-grid__header">
       <span className="cmp-product-lines-grid__header__title">
-        {gridProps.label}
+        {gridProps.lineItemDetailsLabel}
       </span>
       <div className={`cmp-renewal-preview__download`}>
         <DownloadPDF />
         <button onClick={downloadXLS}>
           <span>
             <i class="fas fa-file-excel"></i>
-            {gridProps?.xls || "Download XLS"}
+            {gridProps?.xls ? `Download ${gridProps?.menuExcelExport}` : "Download XLS"}
           </span>
         </button>
       </div>
@@ -82,11 +82,11 @@ function GridHeader({ gridProps, data }) {
   );
 }
 
-function GridSubTotal({ data }) {
+function GridSubTotal({ data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
       <span className="cmp-renewal-preview__subtotal--description">
-        Quote SubTotal:
+        {gridProps.quoteSubtotal}
       </span>
       <span className="cmp-renewal-preview__subtotal--value">
         $ {thousandSeparator(data?.price)}
@@ -95,11 +95,10 @@ function GridSubTotal({ data }) {
   );
 }
 
-function Note() {
+function Note({gridProps}) {
   return (
     <p className="note">
-      <b>Note: </b>Pricing displayed is subject to vendor price changes and
-      exchange rate fluctuations.
+      <b>Note: </b>{gridProps.note}
     </p>
   );
 }
@@ -171,9 +170,9 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
           columnDefinition={columnDefs}
           config={gridConfig}
           data={mutableGridData}
-        ></Grid>
-        <GridSubTotal data={data} />
-        <Note />
+        />
+        <GridSubTotal data={data} gridProps={gridProps} />
+        <Note gridProps={gridProps} />
       </section>
       {modal && (
         <Modal

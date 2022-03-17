@@ -18,7 +18,7 @@ const columnFieldsMap = (definition, eventProps) => {
     renewedduration: <ContractColumn data={data} eventProps={eventProps} />,
     dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
-    total: <PriceColumn columnValue={data?.renewal} />,
+    total: <PriceColumn columnValue={data?.price} />,
     agreementnumber: data?.agreementNumber 
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";

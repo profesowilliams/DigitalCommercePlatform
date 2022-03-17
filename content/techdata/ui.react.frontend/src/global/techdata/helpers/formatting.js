@@ -9,7 +9,7 @@ export function removeStringDecimals(stringNumber = "") {
     return stringNumber.replace(/\s*([,.]\d*$)/gm, "");
 }
 
-export function thousandSeparator(number, decimalsQuantity = 2) {
+export function thousandSeparator(number = 0, decimalsQuantity = 2) {
     return Number(number).toFixed(decimalsQuantity).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 

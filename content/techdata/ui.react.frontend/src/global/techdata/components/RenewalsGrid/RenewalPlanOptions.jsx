@@ -13,8 +13,8 @@ function RenewalPlanOptions({ labels, data }) {
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", renewalDetailsEndpoint = "" } = aemConfig;
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
+    const isPlanSelected = option => option?.contractDuration + " " + data?.support === renewalOptionState;
     const isCurrentPlan = plan => plan.quoteCurrent;
-    const isSamePlan = option => option?.contractDuration + " " + data?.support === renewalOptionState;
     const [showPdf, setShowPdf] = useState(false);
     const PDFContainerRef = useRef(null);
     const dataToPush = (name) => ({
@@ -87,6 +87,16 @@ function RenewalPlanOptions({ labels, data }) {
         </PDFDownloadLink>
         )
     };
+    const showPlanLabels = (option) => {
+        const planLabels = {
+            selected:"Selected Plan",
+            current:"Current Plan"
+        };
+        if(isPlanSelected(option)){
+            return isCurrentPlan(option) ? planLabels.current : planLabels.selected;
+        }
+        return "";
+    } 
 
     return (
         <>
@@ -102,24 +112,24 @@ function RenewalPlanOptions({ labels, data }) {
                                     <h4>
                                         <input
                                             key={Math.random()}
-                                            value={isSamePlan(option)}
-                                            defaultChecked={isSamePlan(option)}
+                                            value={isPlanSelected(option)}
+                                            defaultChecked={isPlanSelected(option)}
                                             id={option?.id}
                                             type="radio"
                                             onClick={() => selectPlan(option?.contractDuration + " " + data?.support)}
                                         />
-                                        <label htmlFor={option?.id} style={{ fontSize: isSamePlan(option) && '18px' }}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
+                                        <label htmlFor={option?.id} style={{ fontSize: isPlanSelected(option) && '18px' }}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
                                 </div>
-                                <div className="rightHeader"><h4 htmlFor={option?.id} style={{ fontSize: isSamePlan(option) && '18px' }}>$ {thousandSeparator(option?.total)}</h4></div>
+                                <div className="rightHeader"><h4 htmlFor={option?.id} style={{ fontSize: isPlanSelected(option) && '18px' }}>$ {thousandSeparator(option?.total)}</h4></div>
                                 <div className="clear"></div>
                             </div>
                             <div className="planDetails">
-                                <span className="currentPlan">{isCurrentPlan(option) && 'Current Plan'}</span>
+                                <span className="currentPlan">{showPlanLabels(option)}</span>
                                 <p>{labels.quoteIdLabel}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
                                 <p>{labels.refNoLabel}  {option?.id}</p>
                                 <p>{labels.expiryDateLabel}  {dateToString(option?.expiryDate.replace(/[zZ]/g, ''), "MM/dd/uu")}</p>
                             </div>
-                            {isSamePlan(option) && (
+                            {isPlanSelected(option) && (
                                 <div className="footer">
                                     <button
                                         onClick={renderPDF}
