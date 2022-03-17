@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Security.Token;
 using DigitalFoundation.Common.Services.Layer.UI;
@@ -25,7 +26,7 @@ namespace DigitalCommercePlatform.UIServices.Localize
         {
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
 
-            services.AddDigitalFoundationLocalizationProvider(StartupLogger);
+            services.AddLocalizationProvider(StartupLogger);
             services.AddSingleton<ITokenManagerService, TokenManagerService>();
         }
 
