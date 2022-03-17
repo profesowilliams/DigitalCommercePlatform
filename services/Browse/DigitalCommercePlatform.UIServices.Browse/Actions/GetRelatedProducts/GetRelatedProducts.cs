@@ -24,23 +24,28 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts
             private readonly IMapper _mapper;
             private readonly IBrowseService _productRepositoryServices;
             private readonly ISiteSettings _siteSettings;
+            private readonly IOrderLevelsService _orderLevelService; 
 
-            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper, ICultureService cultureService)
+            public Handler(IBrowseService productRepositoryServices, ISiteSettings siteSettings, IMapper mapper, ICultureService cultureService, IOrderLevelsService orderLevelService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _siteSettings = siteSettings;
                 _mapper = mapper;
                 _cultureService = cultureService;
+                _orderLevelService = orderLevelService;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
+                var orderLevels = _orderLevelService.GetOrderLevels(request.OrderLevel);
+
                 RelatedProductTypes relatedProductsTypesConfig = GetRelatedProductTypesFromSiteSettings();
                 var requestModel = new RelatedProductRequestDto
                 {
                     ProductId = request.ProductId,
                     Type = relatedProductsTypesConfig.Types.Select(x => x.Type).ToArray(),
-                    SameManufacturerOnly = request.SameManufacturerOnly
+                    SameManufacturerOnly = request.SameManufacturerOnly,
+                    OrderLevel = orderLevels.selectedOrderLevel
                 };
                 var result = await _productRepositoryServices.GetRelatedProducts(requestModel).ConfigureAwait(false);
 
@@ -70,6 +75,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts
             public string Culture { get; set; }
             public string[] ProductId { get; set; }
             public bool SameManufacturerOnly { get; set; }
+            public string OrderLevel { get; set; }
         }
 
         public class Response

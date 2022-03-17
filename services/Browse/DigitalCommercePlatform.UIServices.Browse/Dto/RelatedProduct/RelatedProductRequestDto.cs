@@ -9,5 +9,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.RelatedProduct
         public string[] ProductId { get; set; }
         public string[] Type { get; set; }
         public bool SameManufacturerOnly { get; set; }
+        public string OrderLevel { get; set; }
     }
 }

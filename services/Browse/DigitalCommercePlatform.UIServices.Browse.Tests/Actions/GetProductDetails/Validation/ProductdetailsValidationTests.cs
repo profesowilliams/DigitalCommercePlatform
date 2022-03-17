@@ -22,7 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         null,
                         "0100",
                         "US",
-                        "en-US"
+                        "en-US",
+                        ""
                     ),
                     "Id"
                 },
@@ -33,7 +34,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         Array.Empty<string>(),
                         "0100",
                         "US",
-                        "en-US"
+                        "en-US",
+                        ""
                     ),
                     "Id"
                 },
@@ -44,7 +46,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         new string[]{"1" },
                         null,
                         "US",
-                        "en-US"
+                        "en-US",
+                        ""
                     ),
                     "SalesOrg"
                 },
@@ -55,7 +58,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         new string[]{"1" },
                         "",
                         "US",
-                        "en-US"
+                        "en-US",
+                        ""
                     ),
                     "SalesOrg"
                 },
@@ -65,6 +69,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     (
                         new string[]{"1" },
                         "0100",
+                        "",
                         "",
                         ""
                     ),
@@ -77,7 +82,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         new string[]{"1" },
                         "0100",
                         null,
-                        null
+                        null,
+                        ""
                     ),
                     "Site"
                 }

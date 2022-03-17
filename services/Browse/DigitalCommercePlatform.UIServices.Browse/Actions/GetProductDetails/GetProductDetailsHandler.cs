@@ -56,6 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private readonly string _onOrderArrivalDateFormat;
             private readonly IBrowseService _productRepositoryServices;
             private readonly ITranslationService _translationService;
+            private readonly IOrderLevelsService _orderLevelsService;
             private Dictionary<string, string> _translations = null;
 
             public Handler(
@@ -63,7 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 ISiteSettings siteSettings,
                 IMapper mapper,
                 ITranslationService translationService,
-                ICultureService cultureService)
+                ICultureService cultureService, IOrderLevelsService orderLevelsService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
@@ -72,10 +73,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 _translationService = translationService;
                 _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
                 _cultureService = cultureService;
+                _orderLevelsService = orderLevelsService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
+                var orderLevels = _orderLevelsService.GetOrderLevels(request.OrderLevel);
+                request.OrderLevel = orderLevels.selectedOrderLevel;
+
                 var validateDtoTask = _productRepositoryServices.ValidateProductTask(request.Id);
                 var productDetailsTask = _productRepositoryServices.GetProductDetails(request);
 
@@ -117,7 +122,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     return product;
                 });
 
-                return new Response(await Task.WhenAll(result));
+                var products = await Task.WhenAll(result);
+
+                var response = products.ToList();
+                response.ForEach(i => i.OrderLevels = orderLevels.orderLevelsOptions);
+
+                return new Response(response);
             }
 
             private static Flags ExtractFlags(IEnumerable<ValidateDto> validateDto, ProductDto productDto, string salesOrg, string site)
@@ -411,18 +421,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
         public class Request : IRequest<Response>
         {
-            public Request(IReadOnlyCollection<string> id, string salesOrg, string site, string culture)
+            public Request(IReadOnlyCollection<string> id, string salesOrg, string site, string culture,string orderLevel)
             {
                 Id = id;
                 SalesOrg = salesOrg;
                 Site = site;
                 Culture = culture;
+                OrderLevel = orderLevel;
             }
 
             public string Culture { get; set; }
             public IReadOnlyCollection<string> Id { get; set; }
             public string SalesOrg { get; set; }
             public string Site { get; set; }
+            public string OrderLevel { get; set; }
         }
 
         public class Response : ResponseBase<IEnumerable<ProductModel>>

@@ -5,12 +5,12 @@ using DigitalFoundation.Common.Services.Providers.Profile;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Services
 {
-    public interface IProfileService
+    public interface IProfileService<out T>
     {
-        public CultureDto Get(string profileName);
+        public T Get(string profileName);
     }
 
-    public class ProfileService : IProfileService
+    public class ProfileService : IProfileService<CultureDto>
     {
         private readonly IContext _context;
         private readonly IProfileProvider _profileProvider;

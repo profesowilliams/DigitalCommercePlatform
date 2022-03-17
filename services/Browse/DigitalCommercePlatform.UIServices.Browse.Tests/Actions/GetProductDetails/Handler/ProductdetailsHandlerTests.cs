@@ -35,6 +35,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly GetProductDetailsHandler.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
+        private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
+
 
         public ProductDetailsHandlerTests()
         {
@@ -52,14 +54,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
-            _cultureServiceMock = new Mock<ICultureService>();            
+            _cultureServiceMock = new Mock<ICultureService>();   
+            _orderLevelsServiceMock = new Mock<IOrderLevelsService>();
+
 
             _sut = new GetProductDetailsHandler.Handler(
                 _mockBrowseService.Object,
                 _siteSettingsMock.Object,
                 _mapper,
                 _translationServiceMock.Object,
-                _cultureServiceMock.Object
+                _cultureServiceMock.Object,
+                _orderLevelsServiceMock.Object
                 );
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -905,7 +910,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                        ))
                    .ReturnsAsync(expected);
 
-            var request = new GetProductDetailsHandler.Request(Id, "0100", "US", "pl-Pl");
+            var request = new GetProductDetailsHandler.Request(Id, "0100", "US", "pl-Pl",orderLevel:null);
 
             var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
 
@@ -984,6 +989,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _siteSettingsMock.Object,
             _mapper,
             _translationServiceMock.Object,
-            _cultureServiceMock.Object);
+            _cultureServiceMock.Object,
+            _orderLevelsServiceMock.Object);
     }
 }

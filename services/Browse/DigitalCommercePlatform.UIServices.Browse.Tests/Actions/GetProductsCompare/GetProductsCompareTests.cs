@@ -33,6 +33,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly Browse.Actions.GetProductsCompare.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
+        private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
+
 
         public GetProductsCompareTests()
         {
@@ -41,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _siteSettingsMock = new Mock<ISiteSettings>();
             _cultureServiceMock = new Mock<ICultureService>();
             _translationServiceMock = new Mock<ITranslationService>();
+            _orderLevelsServiceMock = new Mock<IOrderLevelsService>();
             _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
 
@@ -49,7 +52,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 _appSettingsMock.Object,
                 _siteSettingsMock.Object,
                 _cultureServiceMock.Object,
-                _translationServiceMock.Object);
+                _translationServiceMock.Object,
+                _orderLevelsServiceMock.Object);
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
@@ -522,6 +526,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _appSettingsMock.Object,
             _siteSettingsMock.Object,
             _cultureServiceMock.Object,
-            _translationServiceMock.Object);
+            _translationServiceMock.Object,
+            _orderLevelsServiceMock.Object);
     }
 }

@@ -12,13 +12,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
 {
     public class CultureServiceTests
     {
-        private readonly Mock<IProfileService> _profileServiceMock;
+        private readonly Mock<IProfileService<CultureDto>> _profileServiceMock;
         private readonly Mock<ISiteSettings> _siteSettingsMock;
         private readonly ICultureService _sut;
 
         public CultureServiceTests()
         {
-            _profileServiceMock = new Mock<IProfileService>();
+            _profileServiceMock = new Mock<IProfileService<CultureDto>>();
             _siteSettingsMock = new Mock<ISiteSettings>();
             _sut = new CultureService(_profileServiceMock.Object, _siteSettingsMock.Object);
         }

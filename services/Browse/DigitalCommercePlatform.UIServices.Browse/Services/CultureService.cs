@@ -1,4 +1,5 @@
 ﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Browse.Dto.Profile;
 using DigitalFoundation.Common.Providers.Settings;
 using System.Globalization;
 
@@ -13,10 +14,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
     {
         public const string DefaultCultureSiteSettingName = "UI.DefaultCulture";
         public const string ProfileName = "UI.Profile";
-        private readonly IProfileService _profile;
+        private readonly IProfileService<CultureDto> _profile;
         private readonly ISiteSettings _siteSettings;
 
-        public CultureService(IProfileService profile, ISiteSettings siteSettings)
+        public CultureService(IProfileService<CultureDto> profile, ISiteSettings siteSettings)
         {
             _profile = profile;
             _siteSettings = siteSettings;

@@ -36,24 +36,30 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             private readonly string _onOrderArrivalDateFormat;
             private readonly string _productAppUrl;
             private readonly ITranslationService _translationService;
-            private Dictionary<string, string> _translations = null;            
+            private Dictionary<string, string> _translations = null;
+            private readonly IOrderLevelsService _orderLevelsService;
 
             public Handler(
                 IMiddleTierHttpClient httpClient,
                 IAppSettings appSettings,
                 ISiteSettings siteSettings,
                 ICultureService cultureService,
-                ITranslationService translationService)
+                ITranslationService translationService,
+                IOrderLevelsService orderLevelsService)
             {
                 _httpClient = httpClient;
                 _productAppUrl = appSettings.GetSetting("Product.App.Url");
                 _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
                 _cultureService = cultureService;
                 _translationService = translationService;
+                _orderLevelsService = orderLevelsService;
             }
 
             public async Task<CompareModel> Handle(Request request, CancellationToken cancellationToken)
             {
+                var orderLevels = _orderLevelsService.GetOrderLevels(request.OrderLevel);
+                request.OrderLevel = orderLevels.selectedOrderLevel;
+
                 Task<IEnumerable<ProductDto>> productsDtoTask = ProductsDtoTask(request);
                 Task<IEnumerable<ValidateDto>> validateDtoTask = ValidateProductTask(request);
 
@@ -263,6 +269,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             {
                 var productDataUrl = _productAppUrl
                                             .SetQueryParam("id", request.Ids)
+                                            .SetQueryParam("orderLevel", request.OrderLevel)
                                             .SetQueryParam("details", true);
                 return _httpClient.GetAsync<IEnumerable<ProductDto>>(productDataUrl);
             }
@@ -280,6 +287,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             public IEnumerable<string> Ids { get; set; }
             public string SalesOrg { get; set; }
             public string Site { get; set; }
+            public string OrderLevel { get; set; }
         }
 
         public class Validator : AbstractValidator<Request>

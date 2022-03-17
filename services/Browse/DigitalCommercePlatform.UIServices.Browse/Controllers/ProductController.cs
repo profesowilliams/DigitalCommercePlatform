@@ -44,7 +44,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Details")]
-        public async Task<ActionResult> GetProduct([FromQuery] IReadOnlyList<string> id)
+        public async Task<ActionResult> GetProduct([FromQuery] IReadOnlyList<string> id, string orderLevel)
         {
             var (salesOrg, site) = ContextHelper.ExtractSiteAndSalesOrgFromContext(Context, SalesOrg);
 
@@ -53,7 +53,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
 
-            var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site, Context.Language)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetProductDetailsHandler.Request(id, salesOrg, site, Context.Language, orderLevel)).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -68,14 +68,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
 
         [HttpGet]
         [Route("RelatedProducts")]
-        public async Task<ActionResult<RelatedProductResponseModel>> RelatedProducts([FromQuery(Name = "id")] string[] ids, bool sameManufacturerOnly)
+        public async Task<ActionResult<RelatedProductResponseModel>> RelatedProducts([FromQuery(Name = "id")] string[] ids, bool sameManufacturerOnly, string orderLevel)
         {
-            var response = await Mediator.Send(new GetRelatedProductsHandler.Request { ProductId = ids, SameManufacturerOnly = sameManufacturerOnly }).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetRelatedProductsHandler.Request { ProductId = ids, SameManufacturerOnly = sameManufacturerOnly, OrderLevel = orderLevel }).ConfigureAwait(false);
             return Ok(response);
         }
 
         [HttpGet("Compare")]
-        public async Task<ActionResult> Get([FromQuery] string[] ids)
+        public async Task<ActionResult> Get([FromQuery] string[] ids, string orderLevel)
         {
             var (salesOrg, site) = ContextHelper.ExtractSiteAndSalesOrgFromContext(Context, SalesOrg);
 
@@ -83,7 +83,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             {
                 return StatusCode(StatusCodes.Status400BadRequest, "Active customer without salesorg and system");
             }
-            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site, Culture = Context.Language };
+            var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site, Culture = Context.Language, OrderLevel = orderLevel };
 
             var data = await Mediator.Send(request).ConfigureAwait(false);
 

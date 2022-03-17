@@ -78,7 +78,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                        It.IsAny<CancellationToken>()))
                    .ReturnsAsync(expected);
             var controller = GetController();
-            var result = await controller.GetProduct(data).ConfigureAwait(false);
+            var result = await controller.GetProduct(data, orderLevel:null).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -96,7 +96,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.RelatedProducts(ids, sameManufacturerOnly).ConfigureAwait(false);
+            var result = await controller.RelatedProducts(ids, sameManufacturerOnly,orderLevel:null).ConfigureAwait(false);
             result.Should().NotBeNull();
         }
 

@@ -42,5 +42,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
         public string[] KeySellingPoints { get; set; }
         public string[] WhatsInTheBox { get; set; }
         public List<DocumentModel> Documents { get; set; }
+        public IEnumerable<DropdownElementModel<string>> OrderLevels { get; set; }
     }
 }

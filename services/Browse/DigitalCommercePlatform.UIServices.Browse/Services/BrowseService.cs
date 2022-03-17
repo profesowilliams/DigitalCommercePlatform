@@ -68,9 +68,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<IEnumerable<ProductDto>> GetProductDetails(GetProductDetailsHandler.Request request)
         {
-            var ProductURL = _appProductUrl.BuildQuery(new
+            var ProductURL = _appProductUrl.BuildQuery(new   
             {
                 id = request.Id,
+                request.OrderLevel,
                 details = true
             });
             var getProductResponse = await _middleTierHttpClient.GetAsync<IEnumerable<ProductDto>>(ProductURL);
@@ -167,7 +168,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Services
 
         public async Task<RelatedProductResponseDto> GetRelatedProducts(RelatedProductRequestDto request)
         {
-            var url = _appProductUrl.AppendPathSegment("/RelatedProducts");
+            var url =  _appProductUrl.AppendPathSegment("/RelatedProducts");
             var getProductResponse = await _middleTierHttpClient.PostAsync<RelatedProductResponseDto>(url, null, request);
             return getProductResponse;
         }

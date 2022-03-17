@@ -15,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Services
     {
         private readonly Mock<IContext> _contextMock;
         private readonly Mock<IProfileProvider> _profileProviderMock;
-        private readonly IProfileService _sut;
+        private readonly IProfileService<CultureDto> _sut;
 
         public ProfileServiceTests()
         {

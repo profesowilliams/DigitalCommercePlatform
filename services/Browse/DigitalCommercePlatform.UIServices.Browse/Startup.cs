@@ -1,5 +1,6 @@
 //2022 (c) Tech Data Corporation - All Rights Reserved.
 
+using DigitalCommercePlatform.UIServices.Browse.Dto.Profile;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Security.Token;
@@ -39,8 +40,10 @@ namespace DigitalCommercePlatform.UIServices.Browse
             services.AddSingleton<IMemoryCache, MemoryCache>();
 
             services.AddProfileProvider(StartupLogger);
-            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IProfileService<CultureDto>, ProfileService>();
+            services.AddScoped<IProfileService<OrderLevelDto>, OrderLevelProfileService>();
             services.AddScoped<ICultureService, CultureService>();
+            services.AddScoped<IOrderLevelsService, OrderLevelsService>();
         }
     }
 }
