@@ -476,7 +476,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (item?.Annuity?.StartDate != null)
             {
-                var startDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDSTARTDATE ");
+                var startDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDSTARTDATE");
                 lstAttributes.Add(startDate);
             }
         }
@@ -485,7 +485,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (item?.Annuity?.EndDate != null)
             {
-                var endDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDENDDATE ");
+                var endDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDENDDATE");
                 lstAttributes.Add(endDate);
             }
         }
