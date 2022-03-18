@@ -209,6 +209,10 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["exportXLSRenewalsEndpoint"] = this.serviceData.uiServiceDomain + this.exportXLSRenewalsEndpoint;
     }
 
+    if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
+        jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
+    }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };
