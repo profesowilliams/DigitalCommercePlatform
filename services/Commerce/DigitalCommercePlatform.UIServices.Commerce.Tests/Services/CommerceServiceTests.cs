@@ -553,32 +553,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             attributes.Add(materialAttribute);
 
             AttributeDto endDate = new AttributeDto();
-            endDate.Name = "REQUESTEDENDDATE";
+            endDate.Name = "RequestedEndDate";
             endDate.Value = "6-13-2022";
             attributes.Add(endDate);
 
             AttributeDto startDate = new AttributeDto();
-            startDate.Name = "REQUESTEDSTARTDATE";
+            startDate.Name = "RequestedStartDate";
             startDate.Value = "6-13-2021";
             attributes.Add(startDate);
 
             AttributeDto billingTermAttribute = new AttributeDto();
-            billingTermAttribute.Name = "BILLINGTERM";
+            billingTermAttribute.Name = "BillingTerm";
             billingTermAttribute.Value = "Monthly";
             attributes.Add(billingTermAttribute);
 
             AttributeDto dealDuration = new AttributeDto();
-            billingTermAttribute.Name = "DEALDURATION";
+            billingTermAttribute.Name = "DealDuration";
             billingTermAttribute.Value = "Monthly";
             attributes.Add(dealDuration);
 
             AttributeDto autoRenewalTermAttribute = new AttributeDto();
-            autoRenewalTermAttribute.Name = "INITIALTERM";
+            autoRenewalTermAttribute.Name = "InitialTerm";
             autoRenewalTermAttribute.Value = "36";
             attributes.Add(autoRenewalTermAttribute);
 
             AttributeDto dealDurationAttribute = new AttributeDto();
-            dealDurationAttribute.Name = "AUTORENEWALTERM";
+            dealDurationAttribute.Name = "AutoRenewalTerm";
+            dealDurationAttribute.Value = "1";
+            attributes.Add(dealDurationAttribute);
+
+            AttributeDto AdditionalItemAttribute = new AttributeDto();
+            dealDurationAttribute.Name = "AdditionalItemInfo";
             dealDurationAttribute.Value = "1";
             attributes.Add(dealDurationAttribute);
 

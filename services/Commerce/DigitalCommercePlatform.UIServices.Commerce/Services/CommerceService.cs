@@ -125,8 +125,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     EndDate = endDate,
                     Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("dealduration")).FirstOrDefault()?.Value ?? string.Empty, // or use servicelength                             
                     InitialTerm = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault()?.Value ?? string.Empty,
-                    AutoRenewal = line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).Any(),
-                    AutoRenewalTerm = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value)
+                    AutoRenewalTerm = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value),
+                    AutoRenewal = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value) > 0 ? true : false
                 };
             }
             catch (Exception ex)
@@ -453,8 +453,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             if (!string.IsNullOrWhiteSpace(item.Annuity?.Duration))
             {
-                var dealDuration = BuildAttribute(item.Annuity.Duration, "DEALDURATION");
-                var initialTerm = BuildAttribute(item.Annuity.Duration, "INITIALTERM");
+                var dealDuration = BuildAttribute(item.Annuity.Duration, "DealDuration");
+                var initialTerm = BuildAttribute(item.Annuity.Duration, "InitialTerm");
                 lstAttributes.Add(dealDuration);
                 lstAttributes.Add(initialTerm);
             }
@@ -476,7 +476,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (item?.Annuity?.StartDate != null)
             {
-                var startDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDSTARTDATE");
+                var startDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "RequestedStartDate");
                 lstAttributes.Add(startDate);
             }
         }
@@ -485,7 +485,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (item?.Annuity?.EndDate != null)
             {
-                var endDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "REQUESTEDENDDATE");
+                var endDate = BuildAttribute(item.Annuity.StartDate.Value.ToShortDateString(), "RequestedEndDate");
                 lstAttributes.Add(endDate);
             }
         }
@@ -494,7 +494,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (item.ClassificationType?.ToUpper() == "XAAS")
             {
-                var RenewalTerm = BuildAttribute(item.ClassificationType, "ADDITIONALITEMINFO");
+                var RenewalTerm = BuildAttribute(item.ClassificationType, "AdditionalItemInfo");
                 lstAttributes.Add(RenewalTerm);
             }
         }
@@ -502,7 +502,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (item?.Annuity?.AutoRenewalTerm != null)
             {
-                var RenewalTerm = BuildAttribute(item.Annuity.AutoRenewalTerm.Value.ToString(), "AUTORENEWALTERM");
+                var RenewalTerm = BuildAttribute(item.Annuity.AutoRenewalTerm.Value.ToString(), "AutoRenewalTerm");
                 lstAttributes.Add(RenewalTerm);
             }
         }
@@ -511,7 +511,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         {
             if (!string.IsNullOrWhiteSpace(item?.Annuity?.BillingFrequency))
             {
-                var billingTerm = BuildAttribute(item.Annuity.BillingFrequency, "BILLINGTERM");
+                var billingTerm = BuildAttribute(item.Annuity.BillingFrequency, "BillingTerm");
                 lstAttributes.Add(billingTerm);
             }
         }
