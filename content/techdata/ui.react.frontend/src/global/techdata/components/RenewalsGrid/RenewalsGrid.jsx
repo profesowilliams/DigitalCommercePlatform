@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
+import { sortRenewalObjects } from "../../../../utils/utils";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
@@ -14,8 +15,11 @@ function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged, requestInterceptor } =
     useGridFiltering();
   const effects = useRenewalGridState(state => state.effects); 
+  const gridApiRef = useRef();
 
   const componentProp = JSON.parse(props.componentProp);
+  const dueDateKey = componentProp.options.defaultSortingColumnKey;
+  const dueDateDir = componentProp.options.defaultSortingDirection;
   const { searchOptionsList } = componentProp;
 
   const options = {
@@ -71,7 +75,18 @@ function RenewalsGrid(props) {
     return mappedResponse;
   }
 
-  const customRequestInterceptor = async (request) => {
+  const customRequestInterceptor = async (request) => {    
+    if (request.url.includes("SortBy=id")){
+      gridApiRef.current.columnApi.applyColumnState({
+        state: [{ ...secondLevelOptions, sort:"asc"}],defaultState: { sort: null }
+      });
+      return      
+    }       
+    const sortModel = [{colId: dueDateKey,sort: dueDateDir},{...secondLevelOptions}];    
+    const query = {
+      SortBy: `${sortModel?.[0]?.colId ?? 'id'} ${sortModel?.[0]?.sort ?? ''}${sortModel?.[1]? ',': ''} ${sortModel?.[1]?.colId ?? ''} ${sortModel?.[1]?.sort ?? ''}`,
+      SortDirection: sortModel?.[0]?.sort ?? ''
+    }
     const response = await requestInterceptor(request);
     const mappedResponse = mapServiceData(response);      
     const {pageCount, pageNumber, totalItems, refinementGroups} = mappedResponse?.data?.content;
@@ -81,9 +96,10 @@ function RenewalsGrid(props) {
       pageCount,
       pageNumber,    
     };
-
+    const multiSorting = sortRenewalObjects(mappedResponse?.data?.content?.items, query) ?? 0;
     effects.setCustomState({key:'pagination',value})
-    effects.setCustomState({key:'refinements', value: refinementGroups})
+    effects.setCustomState({key:'refinements', value: refinementGroups})    
+    mappedResponse.data.content.items = [...multiSorting];
     return mappedResponse;
   }
 
@@ -104,7 +120,19 @@ function RenewalsGrid(props) {
   const _onAfterGridInit = (config) => {    
     const value =  config.api;     
     effects.setCustomState({key:'gridApi',value});      
+    gridApiRef.current = config;  
     onAfterGridInit(config);
+    config.columnApi.applyColumnState({
+      state: [         
+        {
+          colId: dueDateKey,
+          sort: dueDateDir,
+        },
+        {...secondLevelOptions},
+                 
+      ],
+      defaultState: { sort: null },
+    })
   }
 
   return (
@@ -141,7 +169,6 @@ function RenewalsGrid(props) {
           }}
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
-          secondLevelOptions={secondLevelOptions}
         />
       </div>
     </section>

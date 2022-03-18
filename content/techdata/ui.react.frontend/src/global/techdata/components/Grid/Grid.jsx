@@ -3,7 +3,7 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formateDatePicker, normalizeErrorCode, sortRenewalObjects } from "../../../../utils/utils";
+import { formateDatePicker, normalizeErrorCode } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
 
 function Grid(props) {
@@ -25,8 +25,7 @@ function Grid(props) {
     contextMenuItems = undefined,
     customizedDetailedRender,
     onExpandAnalytics,
-    onCollapseAnalytics,
-    secondLevelOptions = {}
+    onCollapseAnalytics,   
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -272,19 +271,14 @@ function Grid(props) {
         const pageNo = params.request.endRow / config.itemsPerPage;
         const sortKey = params.request.sortModel?.[0]?.colId;
         const sortDir = params.request.sortModel?.[0]?.sort;
-
         getGridData(
           config.itemsPerPage,
           pageNo,
           sortKey,
           sortDir
         ).then((response) => {
-          var query = {
-            SortBy: `${params.request.sortModel?.[0]?.colId ?? 'id'} ${params.request.sortModel?.[0]?.sort ?? ''}${params.request.sortModel?.[1]? ',': ''} ${params.request.sortModel?.[1]?.colId ?? ''} ${params.request.sortModel?.[1]?.sort ?? ''}`,
-            SortDirection: params.request.sortModel?.[0]?.sort ?? ''
-          }
           params.success({
-            rowData: sortRenewalObjects(response?.items, query) ?? 0,
+            rowData: response?.items ?? 0,
             lastRow: response?.totalItems ?? 0,
             rowCount: response?.totalItems ?? 0,
           });
@@ -371,8 +365,7 @@ function Grid(props) {
           {
             colId: options.defaultSortingColumnKey,
             sort: options.defaultSortingDirection ?? "desc",
-          },
-          secondLevelOptions,          
+          },                  
         ],
         defaultState: { sort: null },
       });
