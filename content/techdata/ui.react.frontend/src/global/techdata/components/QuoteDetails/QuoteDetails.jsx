@@ -145,6 +145,7 @@ const QuoteDetails = ({ componentProp }) => {
       checkboxItems,
       logoPropValue,
       actualQuoteLinesData,
+      id,
     );
   }
 

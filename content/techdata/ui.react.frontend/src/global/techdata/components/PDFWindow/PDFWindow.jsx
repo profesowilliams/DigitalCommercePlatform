@@ -47,6 +47,7 @@ export const downloadClicked = (
     checkboxItems,
     logoValueProp,
     actualQuoteLinesData,
+    quoteId,
 ) => {
     const extraOptionsFormater = {
         style: 'currency',
@@ -94,6 +95,7 @@ export const downloadClicked = (
                                     <Text style={styles.resellerName}>Your Company Info</Text>
                                     <Text style={styles.resellerName}>{details.reseller.companyName}</Text>
                                     <Text style={styles.resellerAddress}>{details.reseller.line1}</Text>
+                                    <Text style={styles.resellerAddress}>Quote ID:{quoteId}</Text>
                                     {details.reseller.line2 ? <Text style={styles.resellerAddress}>{details.reseller.line2}</Text> : null}
                                     {details.reseller.line3 ? <Text style={styles.resellerAddress}>{details.reseller.line3}</Text> : null}
                                     <Text style={styles.resellerAddress}>{details.reseller.city} {details.reseller.state} {details.reseller.postalCode}</Text>
