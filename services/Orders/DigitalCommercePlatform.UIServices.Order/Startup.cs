@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using DigitalCommercePlatform.UIServices.Order.Authorization;
 using DigitalCommercePlatform.UIServices.Order.Services;
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
@@ -71,7 +72,6 @@ namespace DigitalCommercePlatform.UIServices.Order
             services.AddMiddleTierHttpClient(StartupLogger);
             services.AddUIServiceAuthentication();
             services.AddSwaggerGenConfig(StartupLogger);
-            //services.AddBasicAuthorizationPolicies(AuthenticationScheme.SessionIDHeaderScheme);
 
             base.ConfigureServices(services);
         }
@@ -97,12 +97,10 @@ namespace DigitalCommercePlatform.UIServices.Order
             services.AddScoped<IBasicAuthUserService, BasicAuthUserService>();
             services.AddNuanceAuthentication();
 
-            services.AddSingleton<IAuthorizationHandler, RoleHandler>();
-            services.AddSingleton<IAuthorizationPolicyProvider>((serviceProvider) =>
-            {
-                var options = serviceProvider.GetRequiredService<IOptions<AuthorizationOptions>>();
-                return new RolePolicyProvider(options, "NuanceAuth");
-            });
+            services.AddSingleton<IAuthorizationHandler, CanViewOrderPolicyHandler>();
+            services.AddAuthorization(opt =>
+                opt.AddPolicy("CanViewOrders",
+                    policy => policy.AddRequirements(new CanViewOrderRequirement())));
         }
 
         public override void ConfigureMiddleSection(IApplicationBuilder app, IWebHostEnvironment env)
