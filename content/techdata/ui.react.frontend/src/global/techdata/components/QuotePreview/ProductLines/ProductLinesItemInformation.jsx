@@ -51,6 +51,11 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
           src={line.urlProductImage ? line.urlProductImage : emptyImageUrl}
         />
   );
+  const showAnnuity = () => line.annuity
+                         && (line.annuity.startDate
+                         || line.annuity.autoRenewal
+                         || line.annuity.duration
+                         || line.annuity.billingFrequency)
   return (
     <section>
       <div onClick={handleClick} className="cmp-product-lines-grid__item-information">
@@ -77,24 +82,24 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
             {line.mfrNumber || " N/A "} | <b>TD#:</b>
             {line.tdNumber || " N/A "}
             {
-              line.annuity &&
+              showAnnuity() &&
                 <div className="cmp-product-lines-grid__subscription-terms">
-                  <p>
+                  {line.annuity.startDate && <p>
                     <b>Start Date:</b>
                     <span>{ dateToString(line.annuity.startDate, "MM/dd/yy") }</span>
-                  </p>
-                  <p>
+                  </p>}
+                  {line.annuity.autoRenewal && <p>
                     <b>Auto Renew:</b>
                     <span>{ line.annuity.autoRenewal ? "Yes" : "No"}</span>
-                  </p>
-                  <p>
+                  </p>}
+                  {line.annuity.duration && <p>
                     <b>Duration:</b>
                     <span>{ "{duration} months".replace("{duration}", line.annuity.duration) }</span>
-                  </p>
-                  <p>
+                  </p>}
+                  {line.annuity.billingFrequency && <p>
                     <b>Billing:</b>
                     <span>{ line.annuity.billingFrequency }</span>
-                  </p>
+                  </p>}
                 </div>
             }
           </div>

@@ -945,15 +945,26 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
     for (let i = 0; i <= amount; i++) {
       const annuity =
         i % 2 === 0
-          ? null
+          ? {
+              "isAnnuity": false,
+              "startDate": null,
+              "endDate": null,
+              "autoRenewal": false,
+              "autoRenewalTerm": null,
+              "duration": "",
+              "billingFrequency": "",
+              "initialTerm": ""
+            }
           : {
-              isAnnuity: true,
-              autoRenewal: true,
-              startDate: "11/01/2021",
-              endDate: "10/31/2022",
-              duration: 12.0,
-              billingFrequency: "Annual",
-            };
+            "isAnnuity": false,
+            "startDate": "03-09-2022",
+            "endDate": null,
+            "autoRenewal": true,
+            "autoRenewalTerm": 0,
+            "duration": "36",
+            "billingFrequency": "Annual Billing",
+            "initialTerm": "36"
+          };
 
       items.push({
         id: i,
