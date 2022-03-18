@@ -103,9 +103,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
                     MapImages(x, product);
 
-                    MapPrice(x, product, flags.CanViewPrice, naLabel);
+                    MapPrice(x, product, naLabel);
 
-                    MapAuthorizations(product, flags);
+                    MapAuthorizations(product, flags, x);
 
                     MapNotes(x, product, request.SalesOrg);
 
@@ -139,7 +139,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 var indicators = ProductMapperHelper.ExtractFinalIndicators(productDto.Indicators, salesOrg, site);
 
                 flags.PhasedOut = indicators.ContainsKey(DisplayStatus) && string.Equals(indicators[DisplayStatus].Value, PhasedOut, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.CanViewPrice = flags.IsValid || (indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, N, System.StringComparison.InvariantCultureIgnoreCase));
                 flags.CanOrder = flags.IsValid && indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.NewProduct = indicators.ContainsKey(New) && string.Equals(indicators[New].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.Returnable = indicators.ContainsKey(Returnable) && string.Equals(indicators[Returnable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
@@ -180,12 +179,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 return xml;
             }
 
-            private static void MapAuthorizations(ProductModel product, Flags flags)
+            private static void MapAuthorizations(ProductModel product, Flags flags, ProductDto productDto)
             {
                 product.Authorization = new AuthorizationModel
                 {
                     CanOrder = flags.CanOrder,
-                    CanViewPrice = flags.CanViewPrice
+                    CanViewPrice = productDto.Authorization.CanViewPrice,
                 };
             }
 
@@ -355,7 +354,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                     };
             }
 
-            private static void MapPrice(ProductDto x, ProductModel product, bool canViewPrice, string naLabel)
+            private static void MapPrice(ProductDto x, ProductModel product, string naLabel)
             {
                 if (x.Price == null)
                 {
@@ -368,10 +367,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 product.Price = new PriceModel
                 {
                     ListPrice = FormatHelper.ListPriceFormat(x.Price.ListPrice, naLabel, x.Price.ListPriceAvailable, currency),
-                    BasePrice = canViewPrice && x.Price.BasePrice.HasValue ? x.Price.BasePrice.Value.Format(currency) : null,
-                    BestPrice = canViewPrice && x.Price.BestPrice.HasValue ? x.Price.BestPrice.Value.Format(currency) : null,
-                    BestPriceExpiration = canViewPrice ? bestPriceExpirationDateOnly.Format() : null,
-                    BestPriceIncludesWebDiscount = canViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
+                    BasePrice = x.Authorization.CanViewPrice && x.Price.BasePrice.HasValue ? x.Price.BasePrice.Value.Format(currency) : null,
+                    BestPrice = x.Authorization.CanViewPrice && x.Price.BestPrice.HasValue ? x.Price.BestPrice.Value.Format(currency) : null,
+                    BestPriceExpiration = x.Authorization.CanViewPrice ? bestPriceExpirationDateOnly.Format() : null,
+                    BestPriceIncludesWebDiscount = x.Authorization.CanViewPrice ? x.Price.BestPriceIncludesWebDiscount : null,
                     PromoAmount = FormatHelper.FormatSubtraction(x.Price.BasePrice, x.Price.BestPrice, currency),
                     VolumePricing = x.Price.VolumePricing?.Select(v => new VolumePricingModel
                     {
@@ -404,7 +403,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private struct Flags
             {
                 public bool CanOrder { get; set; }
-                public bool CanViewPrice { get; set; }
                 public string DisplayStatus { get; set; }
                 public bool DropShip { get; set; }
                 public bool EndUserRequired { get; set; }

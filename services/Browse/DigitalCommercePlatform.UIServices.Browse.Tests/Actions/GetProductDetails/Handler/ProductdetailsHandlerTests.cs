@@ -255,7 +255,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     Name = "test",
                                     Url = "http://cdn.cnetcontent.com/b9/a1/b9a1f953-2ac4-4e92-9101-5210b76b2b1c.xml"
                                 }
-                            }
+                            },
+                            Authorization= new AuthorizationDto
+                            {
+                                CanViewPrice=true,
+                            },
                         }
                     },
                     new List<ValidateDto>
@@ -515,7 +519,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         }
                                     }
                                 }
-                            }
+                            },
+                            Authorization= new AuthorizationDto
+                            {
+                                CanViewPrice=true,
+                            },
                         }
                     },
                     new List<ValidateDto>
@@ -779,7 +787,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     Name = "test",
                                     Url = "http://cdn.cnetcontent.com/b9/a1/b9a1f953-2ac4-4e92-9101-5210b76b2b1c.xml"
                                 }
-                            }
+                            },
+                            Authorization= new AuthorizationDto
+                            {
+                                CanViewPrice=true,
+                            },
                         }
                     },
                     new List<ValidateDto>
@@ -958,6 +970,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     BestPriceIncludesWebDiscount = true,
                     Currency = "USD"
                 },
+                Authorization = new AuthorizationDto
+                {
+                    CanViewPrice = true,
+                },
             };
 
             var productModel = new ProductModel
@@ -970,12 +986,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     BestPriceIncludesWebDiscount = true,
                 },
             };
-            var canViewPrice = true;
             const string naLabel = "n/a";
             MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
 
             //Act
-            sut.Invoke(_sut, new object[] { productDto, productModel, canViewPrice, naLabel });
+            sut.Invoke(_sut, new object[] { productDto, productModel, naLabel });
 
             //Assert
             productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);

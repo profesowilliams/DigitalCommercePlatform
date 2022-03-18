@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Validate;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
@@ -102,7 +102,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 return specMatrix;
             }
 
-            private static (bool vendorShipped, bool orderable, bool authrequiredprice) GetFlags(Request request, ProductDto x)
+            private static (bool vendorShipped, bool orderable) GetFlags(Request request, ProductDto x)
             {
                 var indicators = ProductMapperHelper.ExtractFinalIndicators(x.Indicators, request.SalesOrg, request.Site);
 
@@ -112,16 +112,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
                 var orderable = indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, StringComparison.InvariantCultureIgnoreCase);
 
-                var authrequiredprice = indicators.ContainsKey(AuthRequiredPrice) && string.Equals(indicators[AuthRequiredPrice].Value, Y, StringComparison.InvariantCultureIgnoreCase);
-
-                return (vendorShipped, orderable, authrequiredprice);
+                return (vendorShipped, orderable);
             }
 
-            private static void MapAuthorizations(ProductModel product, bool isValid, bool orderable, bool authrequiredprice)
+            private static void MapAuthorizations(ProductModel product, bool isValid, bool orderable, ProductDto productDto)
             {
                 product.Authorization = new AuthorizationModel();
                 product.Authorization.CanOrder = isValid && orderable;
-                product.Authorization.CanViewPrice = isValid || !authrequiredprice;
+                product.Authorization.CanViewPrice = productDto.Authorization.CanViewPrice;
             }
 
             private static ProductModel MapBasedInformation(ProductDto x)
@@ -251,13 +249,13 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
 
                     var isValid = validateDto.Any(v => v.Source.Id == x.Source.Id && v.Source.System == x.Source.System && v.Restriction == ALLOW);
 
-                    var (vendorShipped, orderable, authrequiredprice) = GetFlags(request, x);
+                    var (vendorShipped, orderable) = GetFlags(request, x);
 
                     MapStock(x, product, vendorShipped);
 
                     MapPlants(x, product);
 
-                    MapAuthorizations(product, isValid, orderable, authrequiredprice);
+                    MapAuthorizations(product, isValid, orderable, x);
 
                     MapPrice(x, product, naLabel);
 

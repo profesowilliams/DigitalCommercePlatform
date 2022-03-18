@@ -135,6 +135,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                 },
                                 Currency = "USD"
                             },
+                            Authorization= new AuthorizationDto
+                            {
+                                CanViewPrice=true,
+                            },
                         }
                     },
                     new List<ValidateDto>
@@ -243,7 +247,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                                     }
                                 },
                                 Currency = "USD"
-                            }
+                            },
+                            Authorization= new AuthorizationDto
+                            {
+                                CanViewPrice=true,
+                            },
                         }
                     },
                     new List<ValidateDto>

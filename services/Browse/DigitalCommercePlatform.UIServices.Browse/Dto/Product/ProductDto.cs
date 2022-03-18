@@ -49,5 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product
         public IEnumerable<AliasDto> Aliases { get; set; }
         public PriceDto Price { get; set; }
         public IEnumerable<TaxClassificationDto> TaxClassifications { get; set; }
+
+        public AuthorizationDto Authorization { get; set; }
     }
 }
