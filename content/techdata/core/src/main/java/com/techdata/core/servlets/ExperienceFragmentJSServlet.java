@@ -39,10 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Component(
     immediate = true,
@@ -62,6 +59,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private String htmlClientLibCategoriesJQuery = "/etc.clientlibs/clientlibs/granite/jquery.js";
     private String fontAwesomeScriptLink = "https://kit.fontawesome.com/e1e12a4c06.js";
     private String[] htmlClientLibCategories = null;
+    private List<String> clientlibIgnoreList = null;
 
     @Reference
     private transient XSSAPI xssapi;
@@ -85,6 +83,8 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     private transient ExperienceFragmentJSServletConfig configData;
 
+    private transient SlingHttpServletRequest request;
+
     @Activate
     protected void activate(ExperienceFragmentJSServletConfig config) {
         if(settingsService.getRunModes().contains(Externalizer.PUBLISH)) {
@@ -92,6 +92,8 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         }
         this.htmlClientLibCategoriesJQuery = config.jqueryPath();
         this.htmlClientLibCategories = config.clientlibCategories();
+        String[] ignoresArray = config.clientlibIgnoreList();
+        clientlibIgnoreList = ignoresArray != null ? new ArrayList<>(Arrays.asList(ignoresArray)) : Collections.emptyList();
         this.configData = config;
     }
 
@@ -101,16 +103,17 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         PrintWriter out = response.getWriter();
         response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
         response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,  "*");
-
+        this.request = request;
         JsonObject xfJson = new JsonObject();
         LOG.debug("JsonObject created...");
 
-        if(isHeader(request)) {
-            xfJson.addProperty("reqJquery", getMainLibraries(request, LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}).getAsString());
+        if(isHeader()) {
+            xfJson.addProperty(REQ_JQUERY,
+                    getMainLibraries(LibraryType.JS, new String[]{htmlClientLibCategoriesJQuery}, REQ_JQUERY).getAsString());
             xfJson.add("shopJson", buildShopJSON());
             // get page clientlibs
-            xfJson.add("cssLibs", getMainLibraries(request, LibraryType.CSS, htmlClientLibCategories));
-            xfJson.add("jsLibs", getMainLibraries(request, LibraryType.JS, htmlClientLibCategories));
+            xfJson.add(REQ_CSS, getMainLibraries(LibraryType.CSS, htmlClientLibCategories, REQ_CSS));
+            xfJson.add(REQ_JS, getMainLibraries(LibraryType.JS, htmlClientLibCategories, REQ_JS));
 
             LOG.debug("Added clientlibs...");
         }
@@ -121,10 +124,10 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
             disableEncryption = true;
         }
         // get html
-        String contentHtml = getPageContentHtml(request);
+        String contentHtml = getPageContentHtml();
         String formattedString;
         if(!disableEncryption) {
-            contentHtml = contentHtml.replace("\"/content", String.format("\"%1$s", getLink(request, "/content")));
+            contentHtml = contentHtml.replace("\"/content", String.format("\"%1$s", getLink("/content")));
             formattedString = new String(Base64.getEncoder().encode(contentHtml.getBytes()));
         } else {
             formattedString = xssapi.encodeForHTML(contentHtml);
@@ -137,7 +140,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
 
     }
 
-    private boolean isHeader(SlingHttpServletRequest request) {
+    private boolean isHeader() {
         RequestPathInfo requestPathInfo = request.getRequestPathInfo();
         String[] selectors = requestPathInfo.getSelectors();
         List<String> selectorList = Arrays.asList(selectors);
@@ -622,16 +625,42 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         return authenticationStatusJsonData;
     }
 
-    private JsonElement getMainLibraries(SlingHttpServletRequest request, LibraryType libraryType, String[] categories) {
+    /**
+     * Prepares the clientlib for given categories and libType by ignoring based on ignore list.
+     *
+     * @param libraryType
+     * @param categories
+     * @param libType
+     * @return
+     */
+    private JsonElement getMainLibraries(LibraryType libraryType, String[] categories, String libType) {
         JsonArray clientLibs = new JsonArray();
-        Collection<ClientLibrary> libraries = htmlLibraryManager.getLibraries(categories, libraryType, Boolean.TRUE, Boolean.TRUE);
-        for (ClientLibrary library : libraries) {
-            clientLibs.add(new JsonPrimitive(getLink(request, sanitizeClientLibraryPath(library.getPath() + libraryType.extension))));
-        }
-        if(!Arrays.asList(categories).contains("jquery") && libraryType.contentType.equals(LibraryType.JS.contentType)) {
-            clientLibs.add(new JsonPrimitive(fontAwesomeScriptLink));
+        Collection<ClientLibrary> libraries =
+                htmlLibraryManager.getLibraries(categories, libraryType, Boolean.TRUE, Boolean.TRUE);
+        if(libType.equals(REQ_JQUERY)) {
+            populateClientlib(libraries, clientLibs, libraryType, new ArrayList<>());
+        } else {
+            populateClientlib(libraries, clientLibs, libraryType, clientlibIgnoreList);
+            if (libType.equals(REQ_JS)) {
+                clientLibs.add(new JsonPrimitive(fontAwesomeScriptLink));
+            }
         }
         return clientLibs;
+    }
+
+    private void populateClientlib(Collection<ClientLibrary> libraries, JsonArray clientLibs,
+                                   LibraryType libraryType, List<String> clientlibIgnoreList) {
+        for (ClientLibrary library : libraries) {
+            String sanitisedCLibPath = sanitizeClientLibraryPath(library.getPath() + libraryType.extension);
+
+            if (clientlibIgnoreList.isEmpty()) {
+                clientLibs.add(new JsonPrimitive(getLink(sanitisedCLibPath)));
+            } else {
+                if(!clientlibIgnoreList.contains(sanitisedCLibPath)) {
+                    clientLibs.add(new JsonPrimitive(getLink(sanitisedCLibPath)));
+                }
+            }
+        }
     }
 
     private String sanitizeClientLibraryPath(String clientLibraryPath) {
@@ -643,7 +672,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         return clientLibraryPath;
     }
 
-    private String getPageContentHtml(SlingHttpServletRequest request) throws ServletException, IOException {
+    private String getPageContentHtml() throws ServletException, IOException {
         Resource xfResource = request.getResource();
 
         String resourcePath = xfResource.getPath() + "/root.noclientlibs.atoffer.html";
@@ -659,7 +688,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
         return reqOut.toString();
     }
 
-    private String getLink(SlingHttpServletRequest request, String relativePath) {
+    private String getLink(String relativePath) {
         ResourceResolver resourceResolver = request.getResourceResolver();
         LOG.debug("Relative path is {}", relativePath);
         return isPublish() ? externalizer.publishLink(resourceResolver, resourceResolver.map(relativePath)) :
@@ -673,6 +702,9 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private static final String THIS_WINDOW = "thisWindow";
     private static final String HIGHLIGHT = "highlight";
     private static final String CHILDREN = "children";
+    private static final String REQ_JQUERY = "reqJquery";
+    private static final String REQ_JS = "jsLibs";
+    private static final String REQ_CSS = "cssLibs";
     private static final String APPS = "/apps/";
     private static final String LIBS = "/libs/";
     private static final String ETC_CLIENTLIBS = "/etc.clientlibs/";

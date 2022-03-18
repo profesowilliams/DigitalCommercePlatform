@@ -12,6 +12,11 @@ public @interface ExperienceFragmentJSServletConfig {
     @AttributeDefinition(name = "ClientLib Categories")
     String[] clientlibCategories() default {"techdata.base", "techdata.all"};
 
+    @AttributeDefinition(name = "Clientlib Ignore URL List")
+    String[] clientlibIgnoreList() default {
+        "/etc.clientlibs/clientlibs/granite/jquery.js",
+        "/etc.clientlibs/clientlibs/granite/utils.js"};
+
     @AttributeDefinition(name = "Shop Url")
     String shopUrl() default "https://shop.techdata.com";
 
