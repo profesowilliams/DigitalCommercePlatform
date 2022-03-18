@@ -384,7 +384,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             var startDate = line?.Annuity?.StartDate?.ToShortDateString();
             Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
-            var autoRenew = line?.Annuity?.AutoRenewalTerm.ToString();
+            var autoRenew = line?.Annuity?.AutoRenewal == true ? "Yes" : "No";
             Worksheet.Cells[_row, 7].Value = autoRenew ?? "";
 
             var deal = line?.Annuity?.Duration;
@@ -433,7 +433,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             var startDate = line?.Annuity?.StartDate?.ToShortDateString();
             Worksheet.Cells[_row, 6].Value = startDate ?? "";
 
-            var autoRenew = line?.Annuity?.AutoRenewalTerm.ToString();
+            var autoRenew = line?.Annuity?.AutoRenewal == true ? "Yes" : "No";
             Worksheet.Cells[_row, 7].Value = autoRenew ?? "";
 
             var deal = line?.Annuity?.Duration;
