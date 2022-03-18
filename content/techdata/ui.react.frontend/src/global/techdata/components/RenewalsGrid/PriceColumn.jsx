@@ -1,10 +1,10 @@
 import React from "react";
-import { dateToString, thousandSeparator } from "../../helpers/formatting";
+import { thousandSeparator } from "../../helpers/formatting";
 
-function PriceColumn({ value }) {
+function PriceColumn({ columnValue }) {
   return (
     <div className="cmp-price-column">       
-      {thousandSeparator(value)}
+      {thousandSeparator(columnValue) ?? ""}
     </div>
   );
 }

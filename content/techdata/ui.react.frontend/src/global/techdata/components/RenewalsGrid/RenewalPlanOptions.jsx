@@ -97,6 +97,9 @@ function RenewalPlanOptions({ labels, data }) {
         }
         return "";
     } 
+    const computeMarketingCssStyle = () => {      
+        return "card-right-border";  
+    }
 
     return (
         <>
@@ -104,6 +107,9 @@ function RenewalPlanOptions({ labels, data }) {
                 {showPdf && <DownloadPDF />}
             </div>
             <div className="cmp-renewal-plan-column">
+                <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
+                    <div className="marketing-body"></div>
+                </div>
                 {data?.options && data?.options.map((option, index) => (
                     <>
                         <div className={computeClassName(data?.options, index)} key={option?.id}>

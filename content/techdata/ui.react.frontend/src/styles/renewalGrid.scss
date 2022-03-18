@@ -121,7 +121,7 @@
       position: absolute;
       background-color: #e1e1e4;
       width: 1px;
-      height: calc(100% - 15%);
+      height: calc(100% - 13%);
       top: 0;
       bottom: 0;
       right: 0;				
@@ -130,6 +130,18 @@
 	.cmp-price-column{
 		text-align: right;
 	}
+  .cmp-card-marketing-section{
+    @include common-planoption-card;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    .marketing-body{
+      background-color: #F7F7F7;
+      width: 90%;
+      height: 90%;
+    }
+  }
   .cmp-renewal-plan-column{
 		display: grid;
 		grid-template-columns: repeat( auto-fit, minmax(380px, 1fr) );
@@ -137,7 +149,7 @@
 		padding: 20px;
 		-webkit-box-shadow: inset 5px -5px 4px -4px #E1E1E1; 
 		box-shadow: inset 5px -5px 4px -4px #E1E1E1, inset -6px 3px 4px -4px #E1E1E1;
-		@media (max-width:750px){
+  		@media (max-width:750px){
 			display: flex;
 			flex-direction: column;
 		}  
