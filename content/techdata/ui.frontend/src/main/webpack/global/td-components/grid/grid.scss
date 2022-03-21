@@ -4,11 +4,13 @@
   width: 100%;
   min-width: rem(1376px);
   overflow: auto;
-  .ag-root-wrapper {
-  }
+
+  .ag-root-wrapper {}
+
   .ag-root {
     font-size: $font-size-xsmall;
   }
+
   .ag-header {
     border-top: 2px solid get-color(brand-blue);
     border-bottom: 1px solid get-color(brand-blue);
@@ -16,40 +18,56 @@
     height: rem(34px) !important;
     min-height: rem(34px) !important;
   }
-  .ag-header-viewport {
-  }
-  .ag-header-container {
-  }
+
+  .ag-header-viewport {}
+
+  .ag-header-container {}
+
   .ag-header-row {
     height: rem(34px) !important;
     color: get-color(td-dark-blue);
     font-weight: normal;
   }
-  .ag-header-cell {
-  }
 
-  .ag-body-viewport {
-  }
-  .ag-body {
-  }
+  .ag-header-cell {}
+
+  .ag-body-viewport {}
+
+  .ag-body {}
+
   .ag-row {
     color: get-color(brand-text-gray);
     font-weight: normal;
     font-size: $font-size-xsmall;
     border-bottom-style: none;
   }
+
   .ag-cell {
     display: grid;
     align-content: center;
     line-height: rem(32px);
+
     button {
       line-height: rem(16px);
+      height: 50%;
+      width: 100%;
+      text-align: center;
+      vertical-align: middle;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      font-size: rem(16px);
+      box-sizing: border-box;
     }
   }
 
   .ag-row-odd {
     background-color: $gray-5;
   }
+
   .ag-icon-previous,
   .ag-icon-next {
     color: get-color(brand-light-blue-icon);
@@ -85,12 +103,15 @@
 
   // *** custom sorting arrows *** //
   .ag-header-cell-sortable {
+
     .ag-icon,
     .ag-header-icon {
       display: none;
     }
+
     & .ag-header-cell-text {
       margin-left: 0.5rem;
+
       &::before {
         position: absolute;
         top: 0.7rem;
@@ -100,24 +121,30 @@
         font-weight: 900;
       }
     }
+
     & .ag-header-cell-sorted-none .ag-header-cell-text::before {
       content: "\f0dc";
     }
+
     & .ag-header-cell-sorted-asc .ag-header-cell-text::before {
       content: "\f0de";
     }
+
     & .ag-header-cell-sorted-desc .ag-header-cell-text::before {
       content: "\f0dd";
     }
   }
+
   // *** horizontal scrollbar fix on column auto width *** //
   .ag-body-horizontal-scroll {
     display: none;
   }
+
   // *** custom page info *** //
   .hidden {
     display: none;
   }
+
   .page-info {
     z-index: 1;
     position: absolute;
@@ -125,10 +152,12 @@
     right: 1rem;
     color: get-color(brand-text-gray);
   }
+
   // *** custom expand/collapse/checked/unchecked for child rows *** //
 
   .ag-icon-tree-open {
     color: get-color(brand-light-blue-icon);
+
     &::before {
       padding-right: 0.3rem;
       display: block;
@@ -137,8 +166,10 @@
       content: "\f078" !important;
     }
   }
+
   .ag-icon-tree-closed {
     color: get-color(brand-light-blue-icon);
+
     &::before {
       padding-right: 0.5rem;
       display: block;
@@ -147,6 +178,7 @@
       content: "\f054" !important;
     }
   }
+
   .ag-checkbox-input-wrapper,
   .ag-checkbox-input-wrapper.ag-indeterminate {
     &::after {
@@ -158,15 +190,18 @@
       color: get-color(td-dark-blue);
     }
   }
+
   .ag-checkbox-input-wrapper.ag-indeterminate {
     &::after {
       font-family: "Font Awesome 5 Free";
       font-weight: $font-weight-semi-bold;
     }
   }
+
   .ag-theme-alpine .ag-checkbox-input-wrapper.ag-checked::after {
     font-weight: $font-weight-bold;
   }
+
   .ag-checkbox-input-wrapper.ag-checked {
     &::after {
       color: get-color(td-dark-blue);
@@ -180,6 +215,7 @@
     font-weight: $font-weight-bold;
   }
 }
+
 .ag-checkbox-input-wrapper.ag-checked {
   &::after {
     font-weight: $font-weight-bold;
@@ -188,8 +224,12 @@
 
 .ag-cell-label-container {
   .ag-header-cell-label {
+    display: inline;
+    align-self: center;
+    width: 100%;
     span.ag-header-cell-text {
       white-space: break-spaces;
     }
   }
 }
+ 
