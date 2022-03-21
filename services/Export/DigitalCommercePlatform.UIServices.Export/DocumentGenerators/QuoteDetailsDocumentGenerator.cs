@@ -22,8 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
     {
         protected override IQuoteDetailsDocumentGeneratorSettings Settings { get; set; }
 
-        private const string ORIGINAL_ESTIMATE_ID = "OriginalEstimateId";
-        private const string DEAL_IDENTIFIER = "DealIdentifier";
+       
         private const string NA = "N/A";
         private const string PRICE_FORMAT = "{0:$#,##0.00;($#,##0.00);$0.00}";
 
@@ -740,47 +739,35 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         {
             if (quoteDetails.VendorReference != null || quoteDetails.VendorReference?.Count == 0)
                 return;
-
-            SetOriginalEstimateId(quoteDetails);
-            SetQuickQuoteDealId(quoteDetails);
             SetEstimateDealId(quoteDetails);
+
         }
 
         private void SetEstimateDealId(IQuoteDetailsDocumentModel quoteDetails)
         {
             if (!string.IsNullOrEmpty(EstimateDealId)
-                            && EstimateDealId.Length == 0
-                            && quoteDetails.VendorReference != null
-                            && quoteDetails.VendorReference.Any(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase))
-                            )
+                                        && EstimateDealId.Length == 0
+                                        && quoteDetails.VendorReference != null
+                                        && quoteDetails.VendorReference.Any(s => s.Type.ToLower().Equals("dealidentifier", StringComparison.InvariantCultureIgnoreCase))
+                                        )
             {
                 EstimateDealId = quoteDetails.VendorReference
-                    .FirstOrDefault(s => s.Type.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase))
+                    .FirstOrDefault(s => s.Type.ToLower().Equals("dealidentifier", StringComparison.InvariantCultureIgnoreCase))
                     .Value;
             }
-        }
-
-        private void SetQuickQuoteDealId(IQuoteDetailsDocumentModel quoteDetails)
-        {
-            if (quoteDetails.Attributes == null)
-                return;
-            else if (quoteDetails.Attributes.Any(s => s.Name.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase)))
+            else if (quoteDetails.Attributes.Any(s => s.Name.ToLower().Equals("dealidentifier", StringComparison.InvariantCultureIgnoreCase)))
             {
                 QuickQuoteDealId = quoteDetails.Attributes
-                    .FirstOrDefault(s => s.Name.Equals(DEAL_IDENTIFIER, StringComparison.InvariantCultureIgnoreCase))
+                    .FirstOrDefault(s => s.Name.ToLower().Equals("dealidentifier", StringComparison.InvariantCultureIgnoreCase))
                     .Value;
+                EstimateDealId = QuickQuoteDealId;
             }
-        }
-
-        private void SetOriginalEstimateId(IQuoteDetailsDocumentModel quoteDetails)
-        {
-            if (quoteDetails.Attributes == null)
-                return;
-            else if (quoteDetails.Attributes.Any(s => s.Name.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase)))
+            else if (quoteDetails.Attributes.Any(s => s.Name.ToLower().Equals("originalestimateid", StringComparison.InvariantCultureIgnoreCase)))
             {
                 OriginalEstimateId = quoteDetails.Attributes
-                    .FirstOrDefault(s => s.Name.Equals(ORIGINAL_ESTIMATE_ID, StringComparison.InvariantCultureIgnoreCase))
+                    .FirstOrDefault(s => s.Name.ToLower().Equals("originalestimateid", StringComparison.InvariantCultureIgnoreCase))
                     .Value;
+                EstimateDealId = OriginalEstimateId;
             }
         }
 
