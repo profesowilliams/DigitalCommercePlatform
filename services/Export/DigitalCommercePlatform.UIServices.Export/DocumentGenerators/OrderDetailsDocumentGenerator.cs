@@ -43,7 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             GenerateOrderDetailSection(wsOrderDetail, orderDetails);
 
             GenerateEndUserShipToDetailHeader(wsOrderDetail);
-            GenerateEndUserShipToDetailSection(wsOrderDetail, orderDetails.EndUser?.First(), orderDetails.ShipTo);
+            GenerateEndUserShipToDetailSection(wsOrderDetail, orderDetails.EndUser?.Count>0?orderDetails.EndUser?.First():null, orderDetails.ShipTo);
 
             GenerateOrderDetailsHeader(wsOrderDetail);
             GenerateOrderDetailsSubHeader(wsOrderDetail, orderDetails.ExportedFields);
@@ -67,15 +67,15 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
             headerRng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
             SetCell(currentRow + 6, _col + 14, wsOrderDetail, "SubTotal");
-            SetCell(currentRow + 6, _col + 15, wsOrderDetail, paymentDetails.Subtotal.Value.ToString());
+            SetCell(currentRow + 6, _col + 15, wsOrderDetail, paymentDetails?.Subtotal?.ToString());
             SetCell(currentRow + 7, _col + 14, wsOrderDetail, "Tax");
-            SetCell(currentRow + 7, _col + 15, wsOrderDetail, paymentDetails.Tax.Value.ToString());
+            SetCell(currentRow + 7, _col + 15, wsOrderDetail, paymentDetails?.Tax?.ToString());
             SetCell(currentRow + 8, _col + 14, wsOrderDetail, "Freight");
-            SetCell(currentRow + 8, _col + 15, wsOrderDetail, paymentDetails.Freight.Value.ToString());
+            SetCell(currentRow + 8, _col + 15, wsOrderDetail, paymentDetails?.Freight?.ToString());
             SetCell(currentRow + 9, _col + 14, wsOrderDetail, "OtherFees");
-            SetCell(currentRow + 9, _col + 15, wsOrderDetail, paymentDetails.OtherFees.Value.ToString());
+            SetCell(currentRow + 9, _col + 15, wsOrderDetail, paymentDetails?.OtherFees?.ToString());
             SetCell(currentRow + 10, _col + 14, wsOrderDetail, "Total");
-            SetCell(currentRow + 10, _col + 15, wsOrderDetail, paymentDetails.Total.Value.ToString());
+            SetCell(currentRow + 10, _col + 15, wsOrderDetail, paymentDetails?.Total?.ToString());
 
             var rng = wsOrderDetail.Cells[currentRow + 4, _col + 13, currentRow + 11, _col + 18];
             rng.Style.Border.BorderAround(Settings.DefaultBorder);
@@ -200,21 +200,21 @@ namespace DigitalCommercePlatform.UIServices.Export.DocumentGenerators
         private void GenerateEndUserShipToDetailSection(ExcelWorksheet wsOrderDetail, Address endUser, Address shipTo)
         {
             SetCell(_row + 11, _col + 2, wsOrderDetail, "End Customer:");
-            SetCell(_row + 11, _col + 3, wsOrderDetail, endUser.CompanyName);
+            SetCell(_row + 11, _col + 3, wsOrderDetail, endUser?.CompanyName);
             SetCell(_row + 12, _col + 2, wsOrderDetail, "End Customer Address:");
-            SetCell(_row + 12, _col + 3, wsOrderDetail, endUser.Line1);
+            SetCell(_row + 12, _col + 3, wsOrderDetail, endUser?.Line1);
             SetCell(_row + 13, _col + 2, wsOrderDetail, "City, State, ZIP, Country:");
-            SetCell(_row + 13, _col + 3, wsOrderDetail, $"{endUser.City}, {endUser.State} {endUser.Zip}, {endUser.Country}");
+            SetCell(_row + 13, _col + 3, wsOrderDetail, $"{endUser?.City}, {endUser?.State} {endUser?.Zip}, {endUser?.Country}");
             SetCell(_row + 14, _col + 2, wsOrderDetail, "End Customer Phone:");
-            SetCell(_row + 14, _col + 3, wsOrderDetail, endUser.PhoneNumber);
+            SetCell(_row + 14, _col + 3, wsOrderDetail, endUser?.PhoneNumber);
             SetCell(_row + 11, _col + 11, wsOrderDetail, "Ship To:");
-            SetCell(_row + 11, _col + 12, wsOrderDetail, shipTo.CompanyName);
+            SetCell(_row + 11, _col + 12, wsOrderDetail, shipTo?.CompanyName);
             SetCell(_row + 12, _col + 11, wsOrderDetail, "Ship To Address:");
-            SetCell(_row + 12, _col + 12, wsOrderDetail, shipTo.Line1);
+            SetCell(_row + 12, _col + 12, wsOrderDetail, shipTo?.Line1);
             SetCell(_row + 13, _col + 11, wsOrderDetail, "City,State,ZIP,Country:");
-            SetCell(_row + 13, _col + 12, wsOrderDetail, $"{shipTo.City}, {shipTo.State} {shipTo.Zip}, {shipTo.Country}");
+            SetCell(_row + 13, _col + 12, wsOrderDetail, $"{shipTo?.City}, {shipTo?.State} {shipTo?.Zip}, {shipTo?.Country}");
             SetCell(_row + 14, _col + 11, wsOrderDetail, "Ship To Phone:");
-            SetCell(_row + 14, _col + 12, wsOrderDetail, shipTo.PhoneNumber);
+            SetCell(_row + 14, _col + 12, wsOrderDetail, shipTo?.PhoneNumber);
         }
 
         private void GenerateOrderDetailSection(ExcelWorksheet wsOrderDetail, IOrderDetailsDocumentModel orderDetails)
