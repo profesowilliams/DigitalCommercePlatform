@@ -88,14 +88,16 @@ const orderButton = (status) => {
 
   return (
       <div>
-            <div className="cmp-td-order-details__header">
+            <div className="cmp-td-order-details__header cmp-quote-details--header-container">
                 <div className="cmp-td-order-details__header__details">
-                <button onClick={()=> {window.history.go(location.href.indexOf('#') > 0 ? -2 : -1); return false}} className="cmp-td-order-details__header__details--icon">
-                    <i className="fas fa-chevron-left" />
-                </button>
-                <div className="cmp-td-order-details__header__details__order-number">{headerConfig.orderLabel} {id}</div>
-                <div>{headerConfig.orderDateLabel} {orderDetails?.created ? orderDetails?.created : "Order Date Not Found" }</div>
-                <div>{headerConfig.purchaseOrderLabel} {orderDetails?.poNumber ? orderDetails?.poNumber : "Purchase Order Not Found"}</div>
+                    <button onClick={()=> {window.history.go(location.href.indexOf('#') > 0 ? -2 : -1); return false}} className="cmp-td-order-details__header__details--icon">
+                        <i className="fas fa-chevron-left" />
+                    </button>
+                    <div className="cmp-td-order-details__header__details__order-number">{headerConfig.orderLabel} {id}</div>
+                </div>
+                <div>
+                    <div>{headerConfig.orderDateLabel} {orderDetails?.created ? orderDetails?.created : "Order Date Not Found" }</div>
+                    <div>{headerConfig.purchaseOrderLabel} {orderDetails?.poNumber ? orderDetails?.poNumber : "Purchase Order Not Found"}</div>
                 </div>
                 <div className="cmp-td-order-details__header__status">
                     <a href="#" onClick={handleClickCSV}>{headerConfig.exportCSVLabel}</a>

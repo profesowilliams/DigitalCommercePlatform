@@ -15,7 +15,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
     let endUserInfo = endUser && endUser.length > 0 ?  endUser[0] : undefined;
 
     return (
-        <div className="cmp-td-order-details__info-cards">
+        <div className="cmp-td-order-details__info-cards cmp-quote-details--header-container">
             <OrderDetailsStatusInfo
                 infoConfig={infoConfig}
                 orderDetails={orderDetails}/>
