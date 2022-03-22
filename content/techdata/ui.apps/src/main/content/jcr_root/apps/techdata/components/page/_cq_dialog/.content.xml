@@ -58,6 +58,13 @@
                                             fieldDescription="Define error code for the page."
                                             fieldLabel="Error Code"
                                             name="./errorCode"/>
+
+                                    <errorName
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldDescription="Define error Name for the page."
+                                            fieldLabel="Error Name"
+                                            name="./errorName"/>
                                     <currency
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

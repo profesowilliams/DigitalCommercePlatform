@@ -233,17 +233,22 @@ public class PageImpl implements Page {
     }
 
     public String getErrorCode() {
-        if(getError404().equals("true")) {
-            return pageProperties.get("errorCode", StringUtils.EMPTY);
+        String errorCode = null;
+        if (getError404().equals("true")) {
+            com.day.cq.wcm.api.Page localePage = currentPage.getAbsoluteParent(LOCALE_PAGE);
+            errorCode = localePage.getProperties().get("errorCode", String.class);
         }
-        return StringUtils.EMPTY;
+        return pageProperties.get("errorCode", errorCode);
     }
 
     public String getErrorName() {
+        String errorName = null;
         if(getError404().equals("true")) {
-            return currentPage.getDescription();
+            com.day.cq.wcm.api.Page localePage = currentPage.getAbsoluteParent(LOCALE_PAGE);
+            errorName = localePage.getProperties().get("errorName", String.class);
         }
-        return StringUtils.EMPTY;
+        return pageProperties.get("errorName", errorName);
     }
 
 }
+
