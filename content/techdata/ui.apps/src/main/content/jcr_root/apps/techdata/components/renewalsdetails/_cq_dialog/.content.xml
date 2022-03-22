@@ -33,6 +33,20 @@
                                                 fieldLabel="Line Item Details Label"
                                                 name="./lineItemDetailsLabel"
                                                 required="{Boolean}true"/>
+                                            <downloadPDF
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Download PDF Label"
+                                                fieldLabel="Download PDF Label"
+                                                name="./downloadPDFLabel"
+                                                required="{Boolean}true"/>
+                                            <downloadXLS
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Download XLS Label"
+                                                fieldLabel="Download XLS Label"
+                                                name="./downloadXLSLabel"
+                                                required="{Boolean}true"/>
                                             <line
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

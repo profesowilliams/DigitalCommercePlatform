@@ -15,6 +15,14 @@ use(['../common/utils.js'], function(utils) {
         productLines["lineItemDetailsLabel"] = properties["lineItemDetailsLabel"];
     }
 
+    if (properties && properties["downloadPDFLabel"]) {
+        productLines["downloadPDFLabel"] = properties["downloadPDFLabel"];
+    }
+
+    if (properties && properties["downloadXLSLabel"]) {
+        productLines["downloadXLSLabel"] = properties["downloadXLSLabel"];
+    }
+
     if (properties && properties["productfamily"]) {
         productLines["productfamily"] = properties["productfamily"];
     }
