@@ -82,6 +82,8 @@ PassEnv DISP_ID
 	ServerAlias www.mytecd.com mytecd.com
 	ServerAlias www.tdsynnex.com tdsynnex.com
 	ServerAlias www.ion.techdata.com ion.techdata.com
+	ServerAlias www.uat-tdsynnex.dc.tdebusiness.cloud uat-tdsynnex.dc.tdebusiness.cloud
+    ServerAlias www.uat-ion.dc.tdebusiness.cloud uat-ion.dc.tdebusiness.cloud
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}
 	# Add header breadcrumbs for help in troubleshooting

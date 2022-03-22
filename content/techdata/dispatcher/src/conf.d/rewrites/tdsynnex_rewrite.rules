@@ -1,6 +1,8 @@
 # robot.txt
 RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt  [PT,L]
 RewriteRule ^/sitemap.xml$ /content/techdata/americas/us/en.sitemap.xml [PT,L]
+RewriteCond %{HTTP_HOST} =uat-tdsynnex.dc.tdebusiness.cloud [NC]
+RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/americas/us/en/td-synnex.html [PT,L]
 RewriteCond %{HTTP_HOST} =tdsynnex.com [NC]
 RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/americas/us/en/td-synnex.html [PT,L]
 
