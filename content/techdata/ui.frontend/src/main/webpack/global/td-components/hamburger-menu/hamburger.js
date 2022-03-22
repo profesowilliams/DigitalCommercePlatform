@@ -21,7 +21,7 @@ export default class Hamburger {
         const figure = document.querySelector('.dp-figure');
         const navbar = document.querySelector('#cmp-techdata-header');
 
-        if (!figure && !navbar) return;
+        if (!figure || !navbar) return;
 
         const hamburgerBtn = document.createElement('button');
         hamburgerBtn.type = 'button';
