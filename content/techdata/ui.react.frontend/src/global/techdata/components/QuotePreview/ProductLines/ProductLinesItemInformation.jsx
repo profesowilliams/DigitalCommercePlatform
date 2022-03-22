@@ -55,6 +55,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
                          && (line.annuity.startDate
                          || line.annuity.autoRenewal
                          || line.annuity.duration
+                         || line.annuity.duration !== '0'
                          || line.annuity.billingFrequency)
   return (
     <section>
@@ -92,7 +93,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
                     <b>Auto Renew:</b>
                     <span>{ line.annuity.autoRenewal ? "Yes" : "No"}</span>
                   </p>}
-                  {line.annuity.duration && <p>
+                  {line.annuity.duration && line.annuity.duration !== '0' && <p>
                     <b>Duration:</b>
                     <span>{ "{duration} months".replace("{duration}", line.annuity.duration) }</span>
                   </p>}
