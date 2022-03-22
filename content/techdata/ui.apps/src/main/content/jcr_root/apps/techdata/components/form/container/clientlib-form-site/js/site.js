@@ -34,18 +34,19 @@
                         if (i.files.length > 0) {
                              var fileExtension = i.files[0].name;
                             if(fileExtension.includes(".pdf")){
-                            	newData.append(i.name, i.files[0], i.files[0].name);
-                            		if(!processFileValidations(i.files[0])) {
-                                	invalidFileStatus = true;
-                                	return;
-                                }
+                                newData.append(i.name, i.files[0], i.files[0].name);
+                                    if(!processFileValidations(i.files[0])) {
+                                    invalidFileStatus = true;
+                                    return;
+                                } 
                         }else {
-									document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
-									validateFileOnSubmit();
-									return;
-                        	}
-
+                                    document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
+                                    validateFileOnSubmit();
+                                    return;
+                            }
+                            
                         }
+                        
                     } else if (i.type.startsWith("radio") || i.type.startsWith("checkbox")) {
                         if (i.checked) {
                             newData.append(i.name, i.value);
@@ -55,12 +56,15 @@
                     }
 
                     else {
-                        if(validateAddress(i, i.value)){
-							newData.append(i.name, i.value);
-                        } else {
-                           invalidInputStatus = true;
-                            return;
-                        }
+                        // see if is neccesary to apply the validation for that input 
+                        if (i.hasAttribute('required') || i.value !== '' ){
+                           if(validateAddress(i, i.value)){
+                                newData.append(i.name, i.value);
+                            } else {
+                               invalidInputStatus = true;
+                                return;
+                            }
+                       }
                     }
                 }
             }
@@ -84,11 +88,11 @@
     }
 
     function validateFileOnSubmit(){
-		$("#formSubmit").click(function(event){
-    		event.preventDefault();
-  		});
+        $("#formSubmit").click(function(event){
+            event.preventDefault();  
+        });
     }
-
+    
     function handlerInputFile() {
             let submitButton = document.getElementById("formSubmit");
             submitButton.disabled = false;
@@ -99,22 +103,25 @@
         var originalBorderColor = element.style.borderColor;
         var parentDiv = element.closest("div");
         var errorLabel = document.createElement("label");
-		 parentDiv.appendChild(errorLabel);
+        parentDiv.appendChild(errorLabel);
         errorLabel.style.color = "red";
-    	if(!(/^[-a-zA-Z0-9.,;_@=%: \/()!$£*+{}?|#]+$/.test(value))){
+        if(!(/^[-a-zA-Z0-9.,;_@=%: \/()!$£*+{}?|#]+$/.test(value))){
             parentDiv.childNodes.forEach(child => {
             if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
-	            parentDiv.removeChild(child);
+                parentDiv.removeChild(child);
              }
+            
+            });
 
-			});
-		    errorLabel.innerText = "This field contains Invalid Characters. Please correct";
-        	return false;
+            errorLabel.innerText = "This field contains Invalid Characters. Please correct";
+            setTimeout(function() {
+                parentDiv.removeChild(errorLabel);
+                element.style.borderColor = originalBorderColor  }, 
+            10000);
+            return false;
         }
-
-            setTimeout(function() { parentDiv.removeChild(errorLabel); element.style.borderColor = originalBorderColor  }, 1000);
-            return true;
-	}
+        return true;
+    }
 
 
     function processFileValidations(fileEle) {
@@ -181,7 +188,7 @@
         setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
     }
 
-    function initValidation(form)
+    function initValidation(form) 
     {
         var inputs = form.getElementsByTagName('input');
         var selects = form.getElementsByTagName('input');
@@ -218,7 +225,6 @@
             initValidation(tdForm);
         }
 
-        /////////////////////
         if(tdForm) {
             var inputs = tdForm.getElementsByTagName('input'); // get input files in the form
             var inputsList = Array.prototype.slice.call(inputs); // creating an array
@@ -228,17 +234,16 @@
                         if (i.type.startsWith("file")) { // Founding input file
                             var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
                         } else {
-							var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+                            var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
                         }
+
+
                     }
-
-
                 }
             );
         }
-        /////////////////////
 
-        /**
+		/**
          * handler that change the attribute of the submit button when the user upload something
          * and permit validate again the file
          */
