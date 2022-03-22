@@ -21,9 +21,12 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
     )
   }
   const formatShopDomainUrl = useCallback(() => {
-    if (shopDomainPage.length > 1 && line.tdNumber) {
+    if (shopDomainPage.length > 1 && line.product) {
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
-      const tdNumber = line.tdNumber.replace(/^0+/gm, "");
+      const tdNumber = line.product.find(p => p.type === 'TECHDATA')?.id.replace(/^0+/gm, "");
+      if (!tdNumber) {
+        return null;
+      }
       if (!hasHttp) {
         const hasSlash = /^\//gm.test(shopDomainPage);
         const shopUrlFormatted = hasSlash
