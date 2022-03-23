@@ -1,4 +1,5 @@
 import React from 'react';
+import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 
 /**
  * @param {Object} props
@@ -13,6 +14,11 @@ import React from 'react';
     return (
         <div  className="cmp-search-criteria__header__button"
             onClick={() => { 
+                pushEvent(ANALYTICS_TYPES.events.click, {
+                  type: ANALYTICS_TYPES.types.button,
+                  category: ANALYTICS_TYPES.category.orderTableInteractions,
+                  name: ANALYTICS_TYPES.name.openOrderFilterApplied,
+                });
                 handleClickOptionsButton(false, handleChange, onSearch, onClear)
                 setExpanded(false);
             }}

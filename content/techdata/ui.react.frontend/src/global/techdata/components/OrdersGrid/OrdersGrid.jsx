@@ -14,7 +14,7 @@ import {
     ERROR_LOGIN_MESSAGE,
     LOCAL_STORAGE_KEY_USER_DATA
 } from '../../../../utils/constants';
-import { pushEventAnalyticsGlobal, pushEvent } from '../../../../utils/dataLayerUtils';
+import { pushEventAnalyticsGlobal, pushEvent, ANALYTICS_TYPES } from '../../../../utils/dataLayerUtils';
 import OpenFilter from '../Widgets/OpenFilter';
 import ButtonLabelFilter from '../Widgets/ButtonLabelFilter';
 
@@ -164,7 +164,7 @@ function OrdersGrid(props) {
                     },
                     modalAction: downloadAllInvoice(line.id)
                 })}>
-                    <div className='cmp-grid-url-underlined' onClick={() => addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Invoice')}>
+                    <div className='cmp-grid-url-underlined' onClick={() => addOrderGridTracking(ANALYTICS_TYPES.events.click, ANALYTICS_TYPES.types.link, ANALYTICS_TYPES.category.orderTableInteractions, ANALYTICS_TYPES.name.invoice)}>
                         {labelList.find((label) => label.labelKey === 'multiple').labelValue}
                     </div>
                 </div>
@@ -185,7 +185,7 @@ function OrdersGrid(props) {
                 }
               return (
                 <div className="cmp-grid-url-underlined" onClick={() => {
-                      addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Invoice');
+                      addOrderGridTracking(ANALYTICS_TYPES.events.click, ANALYTICS_TYPES.types.link, ANALYTICS_TYPES.category.orderTableInteractions, ANALYTICS_TYPES.name.invoice);
                       openInvoicePdf(invoiceId, line.id)
                 }}>
                     {invoiceId}
@@ -235,7 +235,7 @@ function OrdersGrid(props) {
                 return (
                     <div>
                         <a
-                            onClick={() => addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Order ID')}
+                            onClick={() => addOrderGridTracking(ANALYTICS_TYPES.events.click, ANALYTICS_TYPES.types.link, ANALYTICS_TYPES.category.orderTableInteractions, ANALYTICS_TYPES.name.orderID)}
                             className='cmp-grid-url-underlined'
                             href={`${window.location.origin + componentProp.orderDetailUrl}?id=${props.value}`}
                         >
@@ -308,7 +308,7 @@ function OrdersGrid(props) {
                 return (
                     <div 
                     onClick={() => {
-                        addOrderGridTracking('click', 'link', 'Orders Table Interactions', 'Track an Order')
+                        addOrderGridTracking(ANALYTICS_TYPES.events.click, ANALYTICS_TYPES.types.link, ANALYTICS_TYPES.category.orderTableInteractions, ANALYTICS_TYPES.name.trackAnOrder)
                         invokeModal({
                             content: ( 
                                 <TrackOrderModal 

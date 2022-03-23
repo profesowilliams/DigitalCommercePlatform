@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { handlerAnalyticsClearClickEvent } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { isNotEmptyValue } from "../../../../utils/utils";
 import Button from "../Widgets/Button";
 
@@ -28,7 +28,6 @@ function GridSearchCriteria({
   HeaderButtonOptions,
   ButtonsComponentHeader,
   uiServiceEndPoint,
-  category = '',
   handleClickOptionsButton,
   labelFilterGrid,
   flagOpenOrder,
@@ -68,7 +67,11 @@ function GridSearchCriteria({
 		analyticsData.current = null;
 		if (typeof onClearRequest === 'function') {
 			onClearRequest();
-			handlerAnalyticsClearClickEvent(category)	// Analytic event handler
+			pushEvent(ANALYTICS_TYPES.events.click, {
+				  type: ANALYTICS_TYPES.types.button,
+				  category: ANALYTICS_TYPES.category.orderTableInteractions,
+				  name: ANALYTICS_TYPES.name.openOrderFilterRemoved,
+			});
 		}
 		setReset(!reset);
 		setFilterActive(false);

@@ -38,7 +38,7 @@ export const ANALYTICS_TYPES = {
     quoteComplete: "quoteComplete",
     qpDealApply: "qpDealApply",
     qpDealSearch: "qpDealSearch",
-    orderDetailsSearch: 'orderDetailsSearch',
+    orderDetailsSearch: "orderDetailsSearch",
   },
   types: {
     button: "button",
@@ -47,11 +47,12 @@ export const ANALYTICS_TYPES = {
   category: {
     renewalsTableInteraction: "Renewals Table Interactions",
     renewalsActionColumn: "Renewals Action Column",
-    dcpSubheader: 'DCP subheader',
+    dcpSubheader: "DCP subheader",
     orderDetailTableInteraction: "Order Detail Table Interactions",
-    profileDropdown:  "profile dropdown",
+    profileDropdown: "profile dropdown",
     logOut: "Logout",
     logIn: "login",
+    orderTableInteractions: "Orders Table Interactions",
     quotePreviewTableInteractions: "Quote Preview Table Interactions",
     quoteDetailTableInteraction: "Quote Detail Table Interactions",
   },
@@ -64,12 +65,16 @@ export const ANALYTICS_TYPES = {
     downloadPDF: "download PDF",
     downloadXLS: "download XLS",
     seeDetails: "see details",
+    trackAnOrder: "Track an Order",
     logIn: "login",
     generalInformation: "General Information",
     openLineItem: "Open Line Item",
     collapseLineItem: "Collapse Line Item",
     endUserInformation: "End User Information",
-    invoice: 'Invoice',
+    invoice: "Invoice",
+    openOrderFilterApplied: "Open Orders filter applied",
+    openOrderFilterRemoved: "Open Orders filter removed",
+    orderID: "Order ID",
   },
 };
 
@@ -135,24 +140,6 @@ export const removeEventListener = (eventName, handler) => {
   if (isDataLayerEnabled()) {
     getDataLayer().removeEventListener(eventName, handler);
   }
-};
-
-/**
- * Global funtion to handler the click event into analytics
- * for the Clear All Filters button in all the grids
- * @param {string} category 
- */
-export const handlerAnalyticsClearClickEvent = (category = '') => {
-  const clickInfo = {
-      type : ADOBE_DATA_LAYER_CLICKINFO_TYPE,
-      name : ADOBE_DATA_LAYER_CLICKINFO_NAME_CLEAR_ALL_FILTERS,
-      category : category,
-    };
-  const objectToSend = {
-    event: ADOBE_DATA_LAYER_CLICKINFO_EVENT,
-    clickInfo,
-  }
-  pushEventAnalyticsGlobal(objectToSend);
 };
 
 // Changes made to this method would need to be replicated on the analytics-tracking.js method as well.
