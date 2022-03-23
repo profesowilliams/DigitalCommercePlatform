@@ -74,18 +74,15 @@ function QuotesGrid(props) {
    * information to adobeDataLayer
    * @param {string} param
    */
-  const handlerAnalyticsClickEvent = (param = "") => {
+  const handleAnalyticsClickEvent = (param = "") => {
     const clickInfo = {
       type: ADOBE_DATA_LAYER_LINK_TYPE,
       name: param,
-    };
-    const click = {
       category: ADOBE_DATA_LAYER_QUOTE_CLICKINFO_CATEGORY,
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
-      click,
     };
     pushEventAnalyticsGlobal(objectToSend);
   };
@@ -104,7 +101,7 @@ function QuotesGrid(props) {
         const enableLink = enableLinkAndCheckout(props.data);
 
         return (
-          <div onClick={() => enableLink && handlerAnalyticsClickEvent(props.value)}>
+          <div onClick={() => enableLink && handleAnalyticsClickEvent(props.value)}>
             {enableLink && <a
               className="cmp-grid-url-underlined"
               href={`${
@@ -188,7 +185,7 @@ function QuotesGrid(props) {
           enableLink && <div
             className="cmp-quotes-grid__checkout-icon"
             onClick={() =>
-              handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME)
+              handleAnalyticsClickEvent(ADOBE_DATA_LAYER_QUOTE_CHECKOUT_NAME)
             }
           >
             {props.value && (
