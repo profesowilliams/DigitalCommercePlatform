@@ -61,6 +61,24 @@ const SignIn = (props) => {
   const userData = props.data.auth.userData;
   let userDataCheck = populateLoginData();
 
+  function removeParam(key, sourceURL) {
+      var rtn = sourceURL.split("?")[0],
+          param,
+          params_arr = [],
+          queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+      if (queryString !== "") {
+          params_arr = queryString.split("&");
+          for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+              param = params_arr[i].split("=")[0];
+              if (param === key) {
+                  params_arr.splice(i, 1);
+              }
+          }
+          if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
+      }
+      return rtn;
+  }
+
   function populateLoginData() {
     let userDataCheck = Object.keys(userData).length
       ? userData
@@ -233,6 +251,9 @@ const SignIn = (props) => {
       if (!isAlreadySignedIn()) {
         dispatch(signInAsynAction(constructSignInURL()));
       }
+      const originalURL = window.location.href;
+      const alteredURL = removeParam(codeQueryParam, originalURL) + '#';
+      window.history.pushState({}, '', alteredURL);
     } else {
     }
   };
