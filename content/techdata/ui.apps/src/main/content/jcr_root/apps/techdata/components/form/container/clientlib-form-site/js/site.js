@@ -107,15 +107,14 @@
         errorLabel.style.color = "red";
         if(!(/^[-a-zA-Z0-9.,;_@=%: \/()!$£*+{}?|#]+$/.test(value))){
             parentDiv.childNodes.forEach(child => {
-            if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
-                parentDiv.removeChild(child);
-             }
-            
+                if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
+                    parentDiv.removeChild(child);
+                    parentDiv.removeChild(errorLabel);
+                }
             });
-
             errorLabel.innerText = "This field contains Invalid Characters. Please correct";
+            element.focus();
             setTimeout(function() {
-                parentDiv.removeChild(errorLabel);
                 element.style.borderColor = originalBorderColor  }, 
             10000);
             return false;
@@ -178,12 +177,13 @@
         parentDiv.appendChild(errorLabel);
         errorLabel.style.color = "red";
         const validityState = inputElement.validity;
-
         if (validityState.valueMissing)
         {
             errorLabel.innerText = (parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required");
         }else if (validityState.typeMismatch) {
             errorLabel.innerText = (parentDiv.dataset.cmpConstraintMessage ? parentDiv.dataset.cmpConstraintMessage : "This field content does not match the type of " + type);
+        } else {
+            validateAddress(inputElement, inputElement.value);
         }
         setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
     }
