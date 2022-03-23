@@ -101,6 +101,10 @@ function RenewalPlanOptions({ labels, data }) {
         return "card-right-border";  
     }
 
+    const setStylesOnSelected = (option) => {
+        return { fontSize: isPlanSelected(option) && '20px' }
+    }
+
     return (
         <>
             <div className="pdf-container" ref={PDFContainerRef}>
@@ -124,9 +128,9 @@ function RenewalPlanOptions({ labels, data }) {
                                             type="radio"
                                             onClick={() => selectPlan(option?.contractDuration + " " + data?.support)}
                                         />
-                                        <label htmlFor={option?.id} style={{ fontSize: isPlanSelected(option) && '18px' }}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
+                                        <label htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
                                 </div>
-                                <div className="rightHeader"><h4 htmlFor={option?.id} style={{ fontSize: isPlanSelected(option) && '18px' }}>$ {thousandSeparator(option?.total)}</h4></div>
+                                <div className="rightHeader"><h4 htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>$ {thousandSeparator(option?.total)}</h4></div>
                                 <div className="clear"></div>
                             </div>
                             <div className="planDetails">
@@ -141,17 +145,17 @@ function RenewalPlanOptions({ labels, data }) {
                                         onClick={renderPDF}
                                     >
                                         <i className="fas fa-file-pdf"></i>
-                                        &nbsp;&nbsp;{labels.downloadPDFLabel}
+                                        <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
                                     </button>
                                     <span className="vertical-separator"></span>
                                     <button onClick={() => exportXlsPlan(option?.id)}>
                                         <i className="fas fa-file-excel"></i>
-                                        &nbsp;&nbsp;{labels.downloadXLSLabel}
+                                        <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
                                     </button>
                                     <span className="vertical-separator"></span>
                                     <button onClick={() => redirectToRenewalDetail(option?.id)}>
                                         <i className="far fa-eye"></i>
-                                        &nbsp;&nbsp;{labels.seeDetailsLabel}
+                                        <span>&nbsp;&nbsp;{labels.seeDetailsLabel}</span>
                                     </button>
                                 </div>
                             )}

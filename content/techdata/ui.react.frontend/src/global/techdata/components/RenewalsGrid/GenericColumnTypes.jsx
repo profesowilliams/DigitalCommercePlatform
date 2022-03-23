@@ -46,12 +46,12 @@ const getDateTransformed = (dateUTC) => {
 };
 
 const columnsWidth = {
-  resellername: "223.368px",
-  endUser: "223.368px",
-  vendor: "197.632px",
+  resellername: "173.368px",
+  endUser: "123.368px",
+  vendor: "177.632px",
   agreementnumber: "120.211px",
-  renewedduration: "197.632px",
-  dueDays: "133.737px",
+  renewedduration: "177.632px",
+  dueDays: "143.737px",
   dueDate: "109.526px",
   total: "109.526px",
   actions: "100px",
