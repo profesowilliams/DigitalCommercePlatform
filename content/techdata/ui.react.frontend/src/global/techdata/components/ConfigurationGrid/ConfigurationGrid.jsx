@@ -119,7 +119,8 @@ function ConfigurationGrid(props) {
       name : param,
     };
     const quotes = {
-      options: ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS
+      options: ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS,
+      configQuoteStart: "1"
     };
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
