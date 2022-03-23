@@ -13,22 +13,6 @@
                 sling:internalRedirect="[/$1,/content/techdata/apac/$1,/content/techdata/americas/$1,/content/techdata/europe/$1]"
                 sling:match="(.+)$"/>
         </uat.dc.tdebusiness.cloud>
-        <uat-tdsynnex.dc.tdebusiness.cloud
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/americas/us/en]">
-            <redirect
-                    jcr:primaryType="sling:Mapping"
-                    sling:internalRedirect="[/$1,/content/techdata/americas/us/en/$1]"
-                    sling:match="(.+)$"/>
-        </uat-tdsynnex.dc.tdebusiness.cloud>
-        <uat-ion.dc.tdebusiness.cloud
-                jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/techdata/americas/us/en/solutions/cloud]">
-            <redirect
-                    jcr:primaryType="sling:Mapping"
-                    sling:internalRedirect="[/$1,/content/techdata/americas/us/en/solutions/cloud/$1]"
-                    sling:match="(.+)$"/>
-        </uat-ion.dc.tdebusiness.cloud>
         <uat.dc.mytecd.com
             jcr:primaryType="sling:Mapping"
             sling:internalRedirect="[/content/techdata/apac/my]">
