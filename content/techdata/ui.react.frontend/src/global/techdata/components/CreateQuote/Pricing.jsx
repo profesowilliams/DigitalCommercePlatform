@@ -38,7 +38,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
       <WidgetTitle>
         <a onClick={prev}><i className="fas fa-chevron-left"></i> Create quote from</a>
       </WidgetTitle>
-      {isLoading ? <Loader visible={true}/> : <Dropdown selected={method} setValue={setMethod} options={items} label="Select the pricing option" placeholderText="Select the pricing option"/>}
+      {isLoading ? <Loader visible={true}/> : <Dropdown selected={method} setValue={setMethod} options={items} label="Select the pricing option" placeholderText={placeholderText}/>}
       <Button btnClass="cmp-quote-button" disabled={!method || disableCreateQuoteButton} onClick={createQuote}>{buttonTitle}</Button>
     </>
   )
