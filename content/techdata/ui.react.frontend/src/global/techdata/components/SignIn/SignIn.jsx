@@ -252,8 +252,8 @@ const SignIn = (props) => {
         dispatch(signInAsynAction(constructSignInURL()));
       }
       const originalURL = window.location.href;
-      const alteredURL = removeParam(codeQueryParam, originalURL) + '#';
-      window.history.pushState({}, '', alteredURL);
+      const alteredURL = removeParam(codeQueryParam, originalURL);
+      window.location.href = alteredURL;
     } else {
     }
   };
