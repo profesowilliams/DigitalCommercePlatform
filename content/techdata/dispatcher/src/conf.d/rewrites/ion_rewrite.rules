@@ -1,9 +1,11 @@
 # robot.txt
 RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt  [PT,L]
 RewriteRule ^/sitemap.xml$ /content/techdata/americas/us/en.sitemap.xml [PT,L]
-RewriteCond %{HTTP_HOST} =ion.techdata.com [NC]
-RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/americas/us/en/solutions/cloud/td-ion.html [PT,L]
 RewriteCond %{HTTP_HOST} =uat-ion.dc.tdebusiness.cloud [NC]
+RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/americas/us/en/solutions/cloud/td-ion.html [PT,L]
+RewriteCond %{HTTP_HOST} =stage-ion.dc.tdebusiness.cloud [NC]
+RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/americas/us/en/solutions/cloud/td-ion.html [PT,L]
+RewriteCond %{HTTP_HOST} =ion.techdata.com [NC]
 RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/americas/us/en/solutions/cloud/td-ion.html [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
