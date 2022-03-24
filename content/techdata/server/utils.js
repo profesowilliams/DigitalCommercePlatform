@@ -30,294 +30,295 @@ module.exports = {
         return Math.floor(Math.random() * maxValue + 1);
     },
     getQuoteDetailsResponse() {
-        return {
-          "content": {
-            "details": {
-              "shipTo": {
-                "id": null,
-                "companyName": "TECH DATA PRODUCT MANAGEMENT INC",
-                "name": null,
-                "line1": "13472 MARLAY AVENUE",
-                "line2": null,
-                "line3": null,
-                "city": "FONTANA",
-                "state": "CA",
-                "zip": null,
-                "postalCode": "92337",
-                "country": "US",
-                "email": null,
-                "contactEmail": null,
-                "phoneNumber": null
-              },
-              "endUser": {
-                "id": null,
-                "companyName": "COLINX",
-                "name": "Jose  Caceres",
-                "line1": "1536 GENESIS ROAD",
-                "line2": null,
-                "line3": null,
-                "city": "CROSSVILLE",
-                "state": "TN",
-                "zip": null,
-                "postalCode": "38555",
-                "country": "US",
-                "email": "jcaceres@techdata.com",
-                "contactEmail": null,
-                "phoneNumber": "666666666"
-              },
-              "reseller": {
-                "id": null,
-                "companyName": "SHI INTERNATIONAL CORP",
-                "name": "XML TEST  XML TEST",
-                "line1": "290 Davidson Ave",
-                "line2": " ",
-                "line3": null,
-                "city": "Somerset",
-                "state": "NJ",
-                "zip": null,
-                "postalCode": "08873-4145",
-                "country": "US",
-                "email": "noreply@techdata.com",
-                "contactEmail": null,
-                "phoneNumber": null
-              },
-              "source": [{ "type": "Vendor Quote", "value": "261044799" }],
-              "notes": null,
-              "items": [
-                {
-                  "id": "1",
-                  "parent": null,
-                  "vendorPartNo": "CON-SNTP-2901VSCC",
-                  "manufacturer": "CISCO",
-                  "description": "SMARTNT 24X7X4 C2901 CUBE BDL PVDM3-16 U",
-                  "quantity": 1,
-                  "unitPrice": 583.66,
-                  "unitPriceFormatted": "583.66",
-                  "totalPrice": 583.66,
-                  "totalPriceFormatted": "583.66",
-                  "msrp": null,
-                  "invoice": null,
-                  "shipDates": null,
-                  "invoices": null,
-                  "trackings": null,
-                  "discounts": null,
-                  "contract": null,
-                  "shortDescription": "Cisco SMARTnet extended service agreement",
-                  "mfrNumber": "CON-SNTP-2901VSCC",
-                  "tdNumber": "10132983",
-                  "upcNumber": null,
-                  "unitListPrice": "606.0000000",
-                  "unitListPriceFormatted": "606.00",
-                  "extendedPrice": null,
-                  "extendedPriceFormatted": "",
-                  "availability": null,
-                  "rebateValue": null,
-                  "urlProductImage": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
-                  "urlProductSpecs": null,
-                  "children": [],
-                  "agreements": null,
-                  "ancillaryChargesWithTitles": null,
-                  "annuity": null,
-                  "isSubLine": false,
-                  "displayLineNumber": "1",
-                  "licenseStartDate": null,
-                  "licenseEndDate": null,
-                  "contractStartDate": null,
-                  "contractEndDate": null,
-                  "serviceContractDetails": null,
-                  "contractNo": null,
-                  "contractType": null,
-                  "license": null,
-                  "status": null,
-                  "vendorStatus": null,
-                  "customerPOLine": null,
-                  "supplierQuoteRef": null,
-                  "configID": null,
-                  "locationID": null,
-                  "serials": null,
-                  "paKs": null,
-                  "images": {
-                    "75x75": [
-                      {
-                        "id": "cd45ab63-01c6-4264-a43b-4f54b196f2d7",
-                        "url": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
-                        "type": "Product shot",
-                        "angle": "Front"
-                      }
-                    ],
-                    "400x300": [
-                      {
-                        "id": "dcc8e3b4-2d20-4877-9da2-6f2b6554edac",
-                        "url": "http://cdn.cnetcontent.com/dc/c8/dcc8e3b4-2d20-4877-9da2-6f2b6554edac.jpg",
-                        "type": "Product shot",
-                        "angle": "Front"
-                      }
-                    ],
-                    "200x150": [
-                      {
-                        "id": "c17d51e4-c044-4db8-8862-d8e34ab03e99",
-                        "url": "http://cdn.cnetcontent.com/c1/7d/c17d51e4-c044-4db8-8862-d8e34ab03e99.jpg",
-                        "type": "Product shot",
-                        "angle": "Front"
-                      }
-                    ]
-                  },
-                  "logos": {
-                    "200x150": [
-                      {
-                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
-                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
-                      }
-                    ],
-                    "400x300": [
-                      {
-                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
-                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
-                      }
-                    ],
-                    "75x75": [
-                      {
-                        "id": "c50819db-6344-452e-a701-da44b7795b61",
-                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
-                      }
-                    ]
-                  },
-                  "displayName": "Cisco SMARTnet extended service agreement"
-                },
-                {
-                  "id": "2",
-                  "parent": null,
-                  "vendorPartNo": "CON-SNT-3702EA",
-                  "manufacturer": "CISCO",
-                  "description": "SMARTNET 8X5XNBD 802.11AC CTRLR AP 4X4",
-                  "quantity": 95,
-                  "unitPrice": 56.21,
-                  "unitPriceFormatted": "56.21",
-                  "totalPrice": 5339.95,
-                  "totalPriceFormatted": "5,339.95",
-                  "msrp": null,
-                  "invoice": null,
-                  "shipDates": null,
-                  "invoices": null,
-                  "trackings": null,
-                  "discounts": null,
-                  "contract": null,
-                  "shortDescription": "Cisco SMARTnet extended service agreement",
-                  "mfrNumber": "CON-SNT-3702EA",
-                  "tdNumber": "11274805",
-                  "upcNumber": null,
-                  "unitListPrice": "73.0000000",
-                  "unitListPriceFormatted": "73.00",
-                  "extendedPrice": null,
-                  "extendedPriceFormatted": "",
-                  "availability": null,
-                  "rebateValue": null,
-                  "urlProductImage": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
-                  "urlProductSpecs": null,
-                  "children": [],
-                  "agreements": null,
-                  "ancillaryChargesWithTitles": null,
-                  "annuity": null,
-                  "isSubLine": false,
-                  "displayLineNumber": "2",
-                  "licenseStartDate": null,
-                  "licenseEndDate": null,
-                  "contractStartDate": null,
-                  "contractEndDate": null,
-                  "serviceContractDetails": null,
-                  "contractNo": null,
-                  "contractType": null,
-                  "license": null,
-                  "status": null,
-                  "vendorStatus": null,
-                  "customerPOLine": null,
-                  "supplierQuoteRef": null,
-                  "configID": null,
-                  "locationID": null,
-                  "serials": null,
-                  "paKs": null,
-                  "images": {
-                    "75x75": [
-                      {
-                        "id": "cd45ab63-01c6-4264-a43b-4f54b196f2d7",
-                        "url": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
-                        "type": "Product shot",
-                        "angle": "Front"
-                      }
-                    ],
-                    "400x300": [
-                      {
-                        "id": "dcc8e3b4-2d20-4877-9da2-6f2b6554edac",
-                        "url": "http://cdn.cnetcontent.com/dc/c8/dcc8e3b4-2d20-4877-9da2-6f2b6554edac.jpg",
-                        "type": "Product shot",
-                        "angle": "Front"
-                      }
-                    ],
-                    "200x150": [
-                      {
-                        "id": "c17d51e4-c044-4db8-8862-d8e34ab03e99",
-                        "url": "http://cdn.cnetcontent.com/c1/7d/c17d51e4-c044-4db8-8862-d8e34ab03e99.jpg",
-                        "type": "Product shot",
-                        "angle": "Front"
-                      }
-                    ]
-                  },
-                  "logos": {
-                    "200x150": [
-                      {
-                        "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
-                        "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
-                      }
-                    ],
-                    "400x300": [
-                      {
-                        "id": "d2de6a78-ca77-4d75-8508-02326319f617",
-                        "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
-                      }
-                    ],
-                    "75x75": [
-                      {
-                        "id": "c50819db-6344-452e-a701-da44b7795b61",
-                        "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
-                      }
-                    ]
-                  },
-                  "displayName": "Cisco SMARTnet extended service agreement"
-                },
-              ],
-              "id": "121778162",
-              "orders": [],
-              "customerPO": "JoseTestNov_quoteAgain-013",
-              "endUserPO": null,
-              "poDate": null,
-              "quoteReference": "CCW-R QuoteId:261044799",
-              "spaId": null,
-              "currency": "USD",
-              "currencySymbol": "$",
-              "subTotal": 50887.24,
-              "subTotalFormatted": "50,887.24",
-              "tier": "Commercial",
-              "created": "12/01/21",
-              "expires": "01/01/22",
-              "buyMethod": "TDAvnet67",
-              "deals": [],
-              "attributes": [
-                { "name": "VENDORQUOTEID", "value": "261044799" },
-                { "name": "DF_CONFIRMATION_NO", "value": "2838415538" },
-                { "name": "CustomerPoNumber", "value": "JoseTestNov_quoteAgain-013" },
-                { "name": "VENDOR", "value": "CISCO" },
-                { "name": "VENDORQUOTETYPE", "value": "CCW-R" },
-                {
-                  "name": "INTERNAL_COMMENT",
-                  "value": " Input Order has a product which is not included in Cisco API response: 3000. Additional non-0$ items found on Deal/Quote that were not submitted on order VendorPartNos:CON-ECMU-LCSR5M1Y. "
-                },
-                { "name": "ShipCompleteType", "value": "NA" },
-                { "name": "TAKEOVER", "value": "true" }
-              ]
-            }
-          },
-          "error": { "code": 0, "messages": [], "isError": false }
-        };
+        return { "content": { "details": { "status": "OPEN", "quoteSource": { "id": "121791261", "system": "Q", "salesOrg": "0100", "targetSystem": "R3", "key": "8227668392" }, "shipTo": { "id": null, "companyName": "SHI INTERNATIONAL CORP", "name": null, "line1": "290 Davidson Ave", "line2": " ", "line3": null, "city": "Somerset", "state": "NJ", "zip": null, "postalCode": "08873-4145", "country": "US", "email": null, "contactEmail": null, "phoneNumber": null }, "endUser": { "id": null, "companyName": "test_COMPANY", "name": "EndUser-name  EndUser-name", "line1": "AM STRANDE 3", "line2": "D", "line3": null, "city": "ROSTOCK-Warsaw", "state": "PL", "zip": null, "postalCode": null, "country": "DE", "email": "email@techdata.com", "contactEmail": null, "phoneNumber": "777" }, "reseller": { "id": null, "companyName": "SHI INTERNATIONAL CORP", "name": null, "line1": "290 Davidson Ave", "line2": " ", "line3": null, "city": "Somerset", "state": "NJ", "zip": null, "postalCode": "08873-4145", "country": "US", "email": null, "contactEmail": null, "phoneNumber": null }, "source": [{ "type": "Estimate Id", "value": "53848426" }], "notes": null, "items": [{ "id": "1.0", "parent": null, "vendorPartNo": "A-MST-WX", "manufacturer": "CISCO", "description": "Cisco Video Integration for Microso", "quantity": 1, "unitPrice": 0.0, "unitPriceFormatted": "0.00", "totalPrice": 0.0, "totalPriceFormatted": "0.00", "msrp": 0.0, "invoice": null, "shipDates": null, "invoices": null, "trackings": null, "discounts": [{ "type": "Quote", "value": 0.0, "formattedValue": "0.00" }], "contract": null, "shortDescription": "Cisco Video Integration for Microso", "mfrNumber": "A-MST-WX", "tdNumber": "14231446", "upcNumber": null, "unitPriceCurrency": null, "unitCost": 0.0, "unitCostCurrency": null, "unitListPrice": 0.0, "unitListPriceCurrency": null, "extendedListPrice": 0.0, "unitListPriceFormatted": "0.00", "extendedPrice": null, "extendedPriceFormatted": "", "availability": null, "rebateValue": null, "urlProductImage": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000406.png", "urlProductSpecs": null, "children": [{ "id": "1.1", "parent": "1.0", "vendorPartNo": "A-MST-WX-CVI-ROOMS", "manufacturer": "CISCO", "description": "Webex Video Int MS Teams CVI", "quantity": 20, "unitPrice": 34.6500000, "unitPriceFormatted": "34.65", "totalPrice": 693.0, "totalPriceFormatted": "693.00", "msrp": 49.5000000, "invoice": null, "shipDates": null, "invoices": null, "trackings": null, "discounts": [{ "type": "Quote", "value": 30.0, "formattedValue": "30.00" }], "contract": null, "shortDescription": null, "mfrNumber": "A-MST-WX-CVI-ROOMS", "tdNumber": "14225465", "upcNumber": null, "unitPriceCurrency": null, "unitCost": 34.6500000, "unitCostCurrency": null, "unitListPrice": 49.5000000, "unitListPriceCurrency": null, "extendedListPrice": 0.0, "unitListPriceFormatted": "49.50", "extendedPrice": null, "extendedPriceFormatted": "", "availability": null, "rebateValue": null, "urlProductImage": "https://cdn.cnetcontent.com/e1/e2/e1e25900-af02-42ab-a965-13047381d9d4.jpg", "urlProductSpecs": null, "children": null, "agreements": [], "ancillaryChargesWithTitles": null, "annuity": { "isAnnuity": false, "startDate": null, "endDate": null, "autoRenewal": false, "autoRenewalTerm": null, "duration": "", "billingFrequency": "", "initialTerm": "" }, "isSubLine": false, "displayLineNumber": "1.1", "licenseStartDate": null, "licenseEndDate": null, "contractStartDate": null, "contractEndDate": null, "serviceContractDetails": null, "contractNo": null, "contractType": null, "license": null, "status": null, "vendorStatus": null, "customerPOLine": null, "supplierQuoteRef": null, "configID": null, "locationID": null, "serials": null, "paKs": null, "images": { "200x150": [{ "id": "2df2bb37-9ed7-46a5-ae63-0d2f3364e868", "url": "https://cdn.cnetcontent.com/2d/f2/2df2bb37-9ed7-46a5-ae63-0d2f3364e868.jpg", "type": "Software logo", "angle": "Front" }], "75x75": [{ "id": "e1e25900-af02-42ab-a965-13047381d9d4", "url": "https://cdn.cnetcontent.com/e1/e2/e1e25900-af02-42ab-a965-13047381d9d4.jpg", "type": "Software logo", "angle": "Front" }], "640x480": [{ "id": "62a7601f-605c-421c-82f5-365b61a0ed6d", "url": "https://cdn.cnetcontent.com/62/a7/62a7601f-605c-421c-82f5-365b61a0ed6d.jpg", "type": "Software logo", "angle": "Front" }], "400x300": [{ "id": "23dc4236-8dfe-40bf-b7d0-71606d17aab7", "url": "https://cdn.cnetcontent.com/23/dc/23dc4236-8dfe-40bf-b7d0-71606d17aab7.jpg", "type": "Software logo", "angle": "Front" }] }, "logos": { "200x150": [{ "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f", "url": "https://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg" }], "400x300": [{ "id": "d2de6a78-ca77-4d75-8508-02326319f617", "url": "https://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg" }], "75x75": [{ "id": "c50819db-6344-452e-a701-da44b7795b61", "url": "https://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg" }] }, "displayName": "Webex Video Int MS Teams CVI", "authorization": { "canOrder": true, "canViewPrice": true, "customerCanView": true }, "posType": "", "purchaseCost": 0.0, "billingModel": null, "attributes": [{ "name": "LISTPRICE", "value": "" }, { "name": "CONFIGPARENT", "value": "1.0" }, { "name": "THIRDPARTYFREIGHT", "value": "N" }, { "name": "VENDORQUOTEID", "value": "53848426" }, { "name": "APILINENUMBER", "value": "2" }, { "name": "CONFIGLINE", "value": "1.1" }, { "name": "PRODUCTTYPE", "value": "NON_SERVICE" }, { "name": "APIMANUALCOST", "value": "" }, { "name": "MANUFACTURER", "value": "CISCO" }, { "name": "APIOVERRIDECOST", "value": "Y" }, { "name": "QUANTITY", "value": "" }, { "name": "DONOTINVOICE", "value": "N" }, { "name": "PAMF_FL", "value": "Y" }], "classificationType": null }, { "id": "1.2", "parent": "1.0", "vendorPartNo": "SVS-FLEX-SUPT-BAS", "manufacturer": "CISCO", "description": "SKU DESC: SVS-FLEX-SUPT-BAS", "quantity": 1, "unitPrice": 0.0, "unitPriceFormatted": "0.00", "totalPrice": 0.0, "totalPriceFormatted": "0.00", "msrp": 0.0, "invoice": null, "shipDates": null, "invoices": null, "trackings": null, "discounts": [{ "type": "Quote", "value": 0.0, "formattedValue": "0.00" }], "contract": null, "shortDescription": "SKU DESC: SVS-FLEX-SUPT-BAS", "mfrNumber": "SVS-FLEX-SUPT-BAS", "tdNumber": "13617722", "upcNumber": null, "unitPriceCurrency": null, "unitCost": 0.0, "unitCostCurrency": null, "unitListPrice": 0.0, "unitListPriceCurrency": null, "extendedListPrice": 0.0, "unitListPriceFormatted": "0.00", "extendedPrice": null, "extendedPriceFormatted": "", "availability": null, "rebateValue": null, "urlProductImage": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000553.png", "urlProductSpecs": null, "children": null, "agreements": [], "ancillaryChargesWithTitles": null, "annuity": { "isAnnuity": false, "startDate": null, "endDate": null, "autoRenewal": false, "autoRenewalTerm": null, "duration": "", "billingFrequency": "", "initialTerm": "" }, "isSubLine": false, "displayLineNumber": "1.2", "licenseStartDate": null, "licenseEndDate": null, "contractStartDate": null, "contractEndDate": null, "serviceContractDetails": null, "contractNo": null, "contractType": null, "license": null, "status": null, "vendorStatus": null, "customerPOLine": null, "supplierQuoteRef": null, "configID": null, "locationID": null, "serials": null, "paKs": null, "images": { "130x80": [{ "id": "80000553.png", "url": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000553.png", "type": "Category Image", "angle": "Front" }] }, "logos": {}, "displayName": "SKU DESC: SVS-FLEX-SUPT-BAS", "authorization": { "canOrder": true, "canViewPrice": true, "customerCanView": true }, "posType": "", "purchaseCost": 0.0, "billingModel": null, "attributes": [{ "name": "LISTPRICE", "value": "" }, { "name": "CONFIGPARENT", "value": "1.0" }, { "name": "THIRDPARTYFREIGHT", "value": "N" }, { "name": "VENDORQUOTEID", "value": "53848426" }, { "name": "APILINENUMBER", "value": "3" }, { "name": "CONFIGLINE", "value": "1.2" }, { "name": "PRODUCTTYPE", "value": "NON_SERVICE" }, { "name": "APIMANUALCOST", "value": "" }, { "name": "MANUFACTURER", "value": "CISCO" }, { "name": "APIOVERRIDECOST", "value": "Y" }, { "name": "QUANTITY", "value": "" }, { "name": "DONOTINVOICE", "value": "N" }, { "name": "PAMF_FL", "value": "Y" }], "classificationType": null }], "agreements": null, "ancillaryChargesWithTitles": null, "annuity": { "isAnnuity": false, "startDate": null, "endDate": null, "autoRenewal": false, "autoRenewalTerm": null, "duration": "", "billingFrequency": "", "initialTerm": "" }, "isSubLine": false, "displayLineNumber": "1.0", "licenseStartDate": null, "licenseEndDate": null, "contractStartDate": null, "contractEndDate": null, "serviceContractDetails": null, "contractNo": null, "contractType": null, "license": null, "status": null, "vendorStatus": null, "customerPOLine": null, "supplierQuoteRef": null, "configID": null, "locationID": null, "serials": null, "paKs": null, "images": { "130x80": [{ "id": "80000406.png", "url": " https://uat.dc.tdebusiness.cloud/content/dam/techdata/digital-commerce-platform/product-default-images/80000406.png", "type": "Category Image", "angle": "Front" }] }, "logos": {}, "displayName": "Cisco Video Integration for Microso", "authorization": { "canOrder": false, "canViewPrice": false, "customerCanView": false }, "posType": "", "purchaseCost": 0.0, "billingModel": null, "attributes": null, "classificationType": null }], "id": "121791261", "orders": [], "customerPO": null, "endUserPO": null, "poDate": null, "quoteReference": "CCW webapi", "spaId": null, "currency": "USD", "currencySymbol": "$", "subTotal": 693.0000000, "subTotalFormatted": "693.00", "tier": "Commercial", "created": "03/23/22", "expires": "04/23/22", "buyMethod": "sap46", "customerBuyMethod": "TD", "deals": [], "attributes": [{ "name": "CONFIRMATIONNUMBER", "value": "220324045133000335" }, { "name": "DEAL", "value": "53848426" }, { "name": "ORIGINALESTIMATEID", "value": "53848426" }, { "name": "VENDORQUOTETYPE", "value": "CCW" }, { "name": "SHIPCOMPLETETYPE", "value": "NA" }, { "name": "TAKEOVER", "value": "FALSE" }], "isExclusive": null, "checkoutSystem": "4.6-checkout", "canCheckOut": true } }, "error": { "code": 0, "messages": [], "isError": false } };
+        //return {
+        //  "content": {
+        //    "details": {
+        //      "shipTo": {
+        //        "id": null,
+        //        "companyName": "TECH DATA PRODUCT MANAGEMENT INC",
+        //        "name": null,
+        //        "line1": "13472 MARLAY AVENUE",
+        //        "line2": null,
+        //        "line3": null,
+        //        "city": "FONTANA",
+        //        "state": "CA",
+        //        "zip": null,
+        //        "postalCode": "92337",
+        //        "country": "US",
+        //        "email": null,
+        //        "contactEmail": null,
+        //        "phoneNumber": null
+        //      },
+        //      "endUser": {
+        //        "id": null,
+        //        "companyName": "COLINX",
+        //        "name": "Jose  Caceres",
+        //        "line1": "1536 GENESIS ROAD",
+        //        "line2": null,
+        //        "line3": null,
+        //        "city": "CROSSVILLE",
+        //        "state": "TN",
+        //        "zip": null,
+        //        "postalCode": "38555",
+        //        "country": "US",
+        //        "email": "jcaceres@techdata.com",
+        //        "contactEmail": null,
+        //        "phoneNumber": "666666666"
+        //      },
+        //      "reseller": {
+        //        "id": null,
+        //        "companyName": "SHI INTERNATIONAL CORP",
+        //        "name": "XML TEST  XML TEST",
+        //        "line1": "290 Davidson Ave",
+        //        "line2": " ",
+        //        "line3": null,
+        //        "city": "Somerset",
+        //        "state": "NJ",
+        //        "zip": null,
+        //        "postalCode": "08873-4145",
+        //        "country": "US",
+        //        "email": "noreply@techdata.com",
+        //        "contactEmail": null,
+        //        "phoneNumber": null
+        //      },
+        //      "source": [{ "type": "Vendor Quote", "value": "261044799" }],
+        //      "notes": null,
+        //      "items": [
+        //        {
+        //          "id": "1",
+        //          "parent": null,
+        //          "vendorPartNo": "CON-SNTP-2901VSCC",
+        //          "manufacturer": "CISCO",
+        //          "description": "SMARTNT 24X7X4 C2901 CUBE BDL PVDM3-16 U",
+        //          "quantity": 1,
+        //          "unitPrice": 583.66,
+        //          "unitPriceFormatted": "583.66",
+        //          "totalPrice": 583.66,
+        //          "totalPriceFormatted": "583.66",
+        //          "msrp": null,
+        //          "invoice": null,
+        //          "shipDates": null,
+        //          "invoices": null,
+        //          "trackings": null,
+        //          "discounts": null,
+        //          "contract": null,
+        //          "shortDescription": "Cisco SMARTnet extended service agreement",
+        //          "mfrNumber": "CON-SNTP-2901VSCC",
+        //          "tdNumber": "10132983",
+        //          "upcNumber": null,
+        //          "unitListPrice": "606.0000000",
+        //          "unitListPriceFormatted": "606.00",
+        //          "extendedPrice": null,
+        //          "extendedPriceFormatted": "",
+        //          "availability": null,
+        //          "rebateValue": null,
+        //          "urlProductImage": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
+        //          "urlProductSpecs": null,
+        //          "children": [],
+        //          "agreements": null,
+        //          "ancillaryChargesWithTitles": null,
+        //          "annuity": null,
+        //          "isSubLine": false,
+        //          "displayLineNumber": "1",
+        //          "licenseStartDate": null,
+        //          "licenseEndDate": null,
+        //          "contractStartDate": null,
+        //          "contractEndDate": null,
+        //          "serviceContractDetails": null,
+        //          "contractNo": null,
+        //          "contractType": null,
+        //          "license": null,
+        //          "status": null,
+        //          "vendorStatus": null,
+        //          "customerPOLine": null,
+        //          "supplierQuoteRef": null,
+        //          "configID": null,
+        //          "locationID": null,
+        //          "serials": null,
+        //          "paKs": null,
+        //          "images": {
+        //            "75x75": [
+        //              {
+        //                "id": "cd45ab63-01c6-4264-a43b-4f54b196f2d7",
+        //                "url": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
+        //                "type": "Product shot",
+        //                "angle": "Front"
+        //              }
+        //            ],
+        //            "400x300": [
+        //              {
+        //                "id": "dcc8e3b4-2d20-4877-9da2-6f2b6554edac",
+        //                "url": "http://cdn.cnetcontent.com/dc/c8/dcc8e3b4-2d20-4877-9da2-6f2b6554edac.jpg",
+        //                "type": "Product shot",
+        //                "angle": "Front"
+        //              }
+        //            ],
+        //            "200x150": [
+        //              {
+        //                "id": "c17d51e4-c044-4db8-8862-d8e34ab03e99",
+        //                "url": "http://cdn.cnetcontent.com/c1/7d/c17d51e4-c044-4db8-8862-d8e34ab03e99.jpg",
+        //                "type": "Product shot",
+        //                "angle": "Front"
+        //              }
+        //            ]
+        //          },
+        //          "logos": {
+        //            "200x150": [
+        //              {
+        //                "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+        //                "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+        //              }
+        //            ],
+        //            "400x300": [
+        //              {
+        //                "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+        //                "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+        //              }
+        //            ],
+        //            "75x75": [
+        //              {
+        //                "id": "c50819db-6344-452e-a701-da44b7795b61",
+        //                "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+        //              }
+        //            ]
+        //          },
+        //          "displayName": "Cisco SMARTnet extended service agreement"
+        //        },
+        //        {
+        //          "id": "2",
+        //          "parent": null,
+        //          "vendorPartNo": "CON-SNT-3702EA",
+        //          "manufacturer": "CISCO",
+        //          "description": "SMARTNET 8X5XNBD 802.11AC CTRLR AP 4X4",
+        //          "quantity": 95,
+        //          "unitPrice": 56.21,
+        //          "unitPriceFormatted": "56.21",
+        //          "totalPrice": 5339.95,
+        //          "totalPriceFormatted": "5,339.95",
+        //          "msrp": null,
+        //          "invoice": null,
+        //          "shipDates": null,
+        //          "invoices": null,
+        //          "trackings": null,
+        //          "discounts": null,
+        //          "contract": null,
+        //          "shortDescription": "Cisco SMARTnet extended service agreement",
+        //          "mfrNumber": "CON-SNT-3702EA",
+        //          "tdNumber": "11274805",
+        //          "upcNumber": null,
+        //          "unitListPrice": "73.0000000",
+        //          "unitListPriceFormatted": "73.00",
+        //          "extendedPrice": null,
+        //          "extendedPriceFormatted": "",
+        //          "availability": null,
+        //          "rebateValue": null,
+        //          "urlProductImage": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
+        //          "urlProductSpecs": null,
+        //          "children": [],
+        //          "agreements": null,
+        //          "ancillaryChargesWithTitles": null,
+        //          "annuity": null,
+        //          "isSubLine": false,
+        //          "displayLineNumber": "2",
+        //          "licenseStartDate": null,
+        //          "licenseEndDate": null,
+        //          "contractStartDate": null,
+        //          "contractEndDate": null,
+        //          "serviceContractDetails": null,
+        //          "contractNo": null,
+        //          "contractType": null,
+        //          "license": null,
+        //          "status": null,
+        //          "vendorStatus": null,
+        //          "customerPOLine": null,
+        //          "supplierQuoteRef": null,
+        //          "configID": null,
+        //          "locationID": null,
+        //          "serials": null,
+        //          "paKs": null,
+        //          "images": {
+        //            "75x75": [
+        //              {
+        //                "id": "cd45ab63-01c6-4264-a43b-4f54b196f2d7",
+        //                "url": "http://cdn.cnetcontent.com/cd/45/cd45ab63-01c6-4264-a43b-4f54b196f2d7.jpg",
+        //                "type": "Product shot",
+        //                "angle": "Front"
+        //              }
+        //            ],
+        //            "400x300": [
+        //              {
+        //                "id": "dcc8e3b4-2d20-4877-9da2-6f2b6554edac",
+        //                "url": "http://cdn.cnetcontent.com/dc/c8/dcc8e3b4-2d20-4877-9da2-6f2b6554edac.jpg",
+        //                "type": "Product shot",
+        //                "angle": "Front"
+        //              }
+        //            ],
+        //            "200x150": [
+        //              {
+        //                "id": "c17d51e4-c044-4db8-8862-d8e34ab03e99",
+        //                "url": "http://cdn.cnetcontent.com/c1/7d/c17d51e4-c044-4db8-8862-d8e34ab03e99.jpg",
+        //                "type": "Product shot",
+        //                "angle": "Front"
+        //              }
+        //            ]
+        //          },
+        //          "logos": {
+        //            "200x150": [
+        //              {
+        //                "id": "e7ea6e83-4b75-4b7f-b385-6a497622323f",
+        //                "url": "http://cdn.cnetcontent.com/e7/ea/e7ea6e83-4b75-4b7f-b385-6a497622323f.jpg"
+        //              }
+        //            ],
+        //            "400x300": [
+        //              {
+        //                "id": "d2de6a78-ca77-4d75-8508-02326319f617",
+        //                "url": "http://cdn.cnetcontent.com/d2/de/d2de6a78-ca77-4d75-8508-02326319f617.jpg"
+        //              }
+        //            ],
+        //            "75x75": [
+        //              {
+        //                "id": "c50819db-6344-452e-a701-da44b7795b61",
+        //                "url": "http://cdn.cnetcontent.com/c5/08/c50819db-6344-452e-a701-da44b7795b61.jpg"
+        //              }
+        //            ]
+        //          },
+        //          "displayName": "Cisco SMARTnet extended service agreement"
+        //        },
+        //      ],
+        //      "id": "121778162",
+        //      "orders": [],
+        //      "customerPO": "JoseTestNov_quoteAgain-013",
+        //      "endUserPO": null,
+        //      "poDate": null,
+        //      "quoteReference": "CCW-R QuoteId:261044799",
+        //      "spaId": null,
+        //      "currency": "USD",
+        //      "currencySymbol": "$",
+        //      "subTotal": 50887.24,
+        //      "subTotalFormatted": "50,887.24",
+        //      "tier": "Commercial",
+        //      "created": "12/01/21",
+        //      "expires": "01/01/22",
+        //      "buyMethod": "TDAvnet67",
+        //      "deals": [],
+        //      "attributes": [
+        //        { "name": "VENDORQUOTEID", "value": "261044799" },
+        //        { "name": "DF_CONFIRMATION_NO", "value": "2838415538" },
+        //        { "name": "CustomerPoNumber", "value": "JoseTestNov_quoteAgain-013" },
+        //        { "name": "VENDOR", "value": "CISCO" },
+        //        { "name": "VENDORQUOTETYPE", "value": "CCW-R" },
+        //        {
+        //          "name": "INTERNAL_COMMENT",
+        //          "value": " Input Order has a product which is not included in Cisco API response: 3000. Additional non-0$ items found on Deal/Quote that were not submitted on order VendorPartNos:CON-ECMU-LCSR5M1Y. "
+        //        },
+        //        { "name": "ShipCompleteType", "value": "NA" },
+        //        { "name": "TAKEOVER", "value": "true" }
+        //      ]
+        //    }
+        //  },
+        //  "error": { "code": 0, "messages": [], "isError": false }
+        //};
     },
     getOrderDetailsResponse() {
         const  getRandomNumber = (maxValue) => {
