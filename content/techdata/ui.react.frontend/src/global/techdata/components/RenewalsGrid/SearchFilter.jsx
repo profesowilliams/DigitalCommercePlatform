@@ -90,7 +90,6 @@ function SearchFilter({
         searchType: option,
       },
     });
-    onReset();
     setSwitchDropdown(false);
   }
 

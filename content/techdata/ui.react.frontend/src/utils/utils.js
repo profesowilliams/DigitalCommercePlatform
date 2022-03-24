@@ -388,7 +388,7 @@ export const sortRenewalObjects = (objArray, query) => {
       );
     }
   
-    return objArray.sort(function (a, b) {
+    return objArray && objArray.length > 0 ? objArray.sort(function (a, b) {
       return arrayCmp(a, b);
-    });
+    }) : [];
   }
