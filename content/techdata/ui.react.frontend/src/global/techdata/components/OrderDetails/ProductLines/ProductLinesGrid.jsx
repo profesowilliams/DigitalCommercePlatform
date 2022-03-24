@@ -232,7 +232,8 @@ function ProductLinesGrid({
     sortable: false,
     cellRenderer: (props) => {
       return (gridProps.shopDomainPage ?
-              <ProductLinesItemInformation 
+              <ProductLinesItemInformation
+                headerName={props?.colDef?.headerName}
                 line={props.data}
                 shopDomainPage={gridProps.shopDomainPage} 
                 emptyImageUrl={gridProps.productEmptyImageUrl}  
@@ -257,6 +258,7 @@ function ProductLinesGrid({
     cellRenderer: (props) => {
       return (gridProps.shopDomainPage ?
               <ProductLinesItemInformation 
+              headerName={props?.colDef?.headerName}
               line={props.data} 
               shopDomainPage={gridProps.shopDomainPage}
               emptyImageUrl={gridProps.productEmptyImageUrl}
@@ -395,6 +397,7 @@ function ProductLinesGrid({
     cellRenderer: (props) => {
       return (gridProps.shopDomainPage ?
               <ProductLinesItemInformation 
+                headerName={props?.colDef?.headerName}
                 line={props.data} 
                 shopDomainPage={gridProps.shopDomainPage} 
                 emptyImageUrl={gridProps.productEmptyImageUrl}
@@ -420,6 +423,7 @@ function ProductLinesGrid({
     cellRenderer: (props) => {
       return (gridProps.shopDomainPage ?
                 <ProductLinesItemInformation 
+                  headerName={props?.colDef?.headerName}
                   line={props.data}
                   shopDomainPage={gridProps.shopDomainPage} 
                   emptyImageUrl={gridProps.productEmptyImageUrl}

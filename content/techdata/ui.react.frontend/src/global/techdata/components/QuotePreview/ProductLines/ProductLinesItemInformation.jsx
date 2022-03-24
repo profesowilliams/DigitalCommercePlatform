@@ -7,7 +7,7 @@ import {
   ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
 } from "../../../../../utils/constants";
 
-function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl }) {
+function ProductLinesItemInformation({ headerName, line, shopDomainPage="", emptyImageUrl }) {
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.tdNumber ){
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -28,11 +28,11 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
    * Handler event that add the analytic click info when
    * the user click some Product Item with the information
    */
-  const handleClick = () => {
+  const handleClick = (name="") => {
     pushEvent(
       ADOBE_DATA_LAYER_CLICK_EVENT,
       {
-        name: line.displayName,
+        name: name,
         type: ADOBE_DATA_LAYER_LINK_TYPE,
         category: ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_CATEGORY,
       },
@@ -59,7 +59,7 @@ function ProductLinesItemInformation({ line, shopDomainPage="", emptyImageUrl })
                          || line.annuity.billingFrequency)
   return (
     <section>
-      <div onClick={handleClick} className="cmp-product-lines-grid__item-information">
+      <div onClick={() => handleClick(headerName)} className="cmp-product-lines-grid__item-information">
         <a
           href={formatShopDomainUrl()}
           target="_blank"

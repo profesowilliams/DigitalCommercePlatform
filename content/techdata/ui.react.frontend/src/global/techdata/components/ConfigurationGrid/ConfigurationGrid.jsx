@@ -112,21 +112,24 @@ function ConfigurationGrid(props) {
    * information to adobeDataLayer
    * @param {string} param 
    */
-  const handlerAnalyticsClickEvent = (param = '') => {
+  const handleAnalyticsClickEvent = (param = '') => {
     const clickInfo = {
       type : ADOBE_DATA_LAYER_LINK_TYPE,
       category : ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY,
       name : param,
     };
+
     const quotes = {
       options: ADOBE_DATA_LAYER_CONFIGURATION_QUOTES_OPTIONS,
       configQuoteStart: "1"
     };
+
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo,
       quotes,
     };
+    
     pushEventAnalyticsGlobal(objectToSend);
   };
 
@@ -137,7 +140,7 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div onClick={() => handlerAnalyticsClickEvent(props.value)} >
+          <div onClick={() => handleAnalyticsClickEvent(props?.colDef?.headerName)} >
             <a
               className="cmp-grid-url-underlined"
               href={getQuotePreviewUrl(props)}
@@ -198,7 +201,7 @@ function ConfigurationGrid(props) {
       sortable: false,
       cellRenderer: (props) => {
         return (
-          <div className="cmp-grid-url-underlined">
+          <div onClick={() => handleAnalyticsClickEvent(props?.colDef?.headerName)} className="cmp-grid-url-underlined">
             {getQuoteCellConfiguration(props.data)}
           </div>
         );
@@ -210,7 +213,7 @@ function ConfigurationGrid(props) {
       sortable: true,
       cellRenderer: (props) => {
         return (
-          <div onClick={() => handlerAnalyticsClickEvent(ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_NAME_ACTION)}>
+          <div onClick={() => handleAnalyticsClickEvent(props?.colDef?.headerName)}>
             <a className="cmp-grid-url-not-underlined" href={getQuotePreviewUrl(props)}>
               {componentProp.actionColumnLabel}
             </a>

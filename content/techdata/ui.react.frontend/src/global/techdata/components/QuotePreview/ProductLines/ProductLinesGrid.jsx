@@ -92,7 +92,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
    * Handler that is called when the item 
    * is collapsed
    */
-   const handlerAnalyticCollapseAction = (item) => {
+   const handleAnalyticCollapseAction = (item) => {
     const productInfo = {
       parentSKU : isNotEmptyValue(item?.data?.tdNumber) ? item?.data?.tdNumber : '',
       name: isNotEmptyValue(item?.data?.displayName) ? item?.data?.displayName : ''
@@ -114,7 +114,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
    * Handler that is called when the item 
    * is expanded
    */
-   const handlerAnalyticExpandAction = (item) => {
+   const handleAnalyticExpandAction = (item) => {
     if (item?.data?.isExpandedByDefault) {
       item.data.isExpandedByDefault = false;
       return;
@@ -253,6 +253,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       cellRenderer: (props) => {
         return <ProductLinesItemInformation
                   line={props.data}
+                  headerName={props?.colDef?.headerName}
                   emptyImageUrl={gridProps.productEmptyImageUrl}
                 />;
       },
@@ -361,8 +362,8 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
           data={mutableGridData}
           onSelectionChanged={onSelectionChanged}
           onAfterGridInit={onAfterGridInit}
-          onExpandAnalytics={handlerAnalyticExpandAction}
-          onCollapseAnalytics={handlerAnalyticCollapseAction}
+          onExpandAnalytics={handleAnalyticExpandAction}
+          onCollapseAnalytics={handleAnalyticCollapseAction}
         ></Grid>
       </div>
     </section>

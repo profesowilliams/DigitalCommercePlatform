@@ -89,7 +89,7 @@ const QuoteDetails = ({ componentProp }) => {
     setAnalyticsProduct(productsToSend);
   }
 
-  const handlerAnalyticCheckoutEvent = () => {
+  const handleAnalyticCheckoutEvent = () => {
     const objectToSend = {
       event: ADOBE_DATA_LAYER_CLICK_EVENT,
       clickInfo: {
@@ -114,7 +114,7 @@ const QuoteDetails = ({ componentProp }) => {
   }
 
   function onQuoteCheckout() {
-    handlerAnalyticCheckoutEvent()
+    handleAnalyticCheckoutEvent()
     redirectToCart(quoteDetails.checkoutSystem, id, checkout, onErrorHandler);
   }
 

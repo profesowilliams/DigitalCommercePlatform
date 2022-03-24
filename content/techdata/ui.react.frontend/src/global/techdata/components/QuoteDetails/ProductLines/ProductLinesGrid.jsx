@@ -150,6 +150,7 @@ function ProductLinesGrid({
       cellHeight: (props) => props && (props?.data?.startDate || props?.data?.annuity) ? 160 : 80, // adjust row height for subscription items
       cellRenderer: (props) => {
         return <ProductLinesItemInformation
+                  headerName={props?.colDef?.headerName}
                   line={props.data}
                   shopDomainPage={shopDomainPage}
                   emptyImageUrl={gridProps.productEmptyImageUrl}/>;

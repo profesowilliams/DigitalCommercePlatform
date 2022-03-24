@@ -101,7 +101,7 @@ function QuotesGrid(props) {
         const enableLink = enableLinkAndCheckout(props.data);
 
         return (
-          <div onClick={() => enableLink && handleAnalyticsClickEvent(props.value)}>
+          <div onClick={() => enableLink && handleAnalyticsClickEvent(props?.colDef?.headerName)}>
             {enableLink && <a
               className="cmp-grid-url-underlined"
               href={`${
