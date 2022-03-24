@@ -9,7 +9,7 @@ function RenewalDetailRenderers(props) {
     return (
         <>
             {detailRender === 'primary' && <DropdownDownloadList data={props.data} aemConfig={aemConfig} />}
-            {detailRender === 'secondary' && <RenewalPlanOptions data={props.data} labels={aemConfig.productGrid} />}
+            {detailRender === 'secondary' && <RenewalPlanOptions data={props.data} labels={aemConfig.productGrid} node={props.node} />}
         </>
     )
 }

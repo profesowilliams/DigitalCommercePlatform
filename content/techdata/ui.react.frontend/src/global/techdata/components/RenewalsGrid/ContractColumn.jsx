@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { If } from "../../helpers/If";
 import Info from "../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -8,6 +8,8 @@ function ContractColumn({ data, eventProps }) {
   const effects = useRenewalGridState(state => state.effects);
   const detailRender = useRenewalGridState(state => state.detailRender);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
+  const rowIndex = eventProps?.node?.rowIndex
+  const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
   const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
   const [togglePlanUpdated, setToggleUpdatedPlan] = React.useState(false);
   const [isToggled, setToggled] = React.useState(false);
@@ -17,9 +19,8 @@ function ContractColumn({ data, eventProps }) {
   React.useEffect(() => {
     if (!isToggled && renewalOptionState) setToggleUpdatedPlan(true)
   }, [isToggled])
-  React.useEffect(() => {
-    const currentNode = eventProps.node; 
-    rowCollapsedIndexList?.includes(currentNode.rowIndex) && setToggled(false);
+  React.useEffect(() => {  
+    rowCollapsedIndexList?.includes(rowIndex) && setToggled(false);
   }, [rowCollapsedIndexList])
 
   const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
@@ -40,20 +41,24 @@ function ContractColumn({ data, eventProps }) {
     });
     effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
   }
+  const hasRenderStateTextFromPlanOptions = () => support && rowIndex == (renewalOptionState?.rowIndex -1);
+
+  const keepDataAfterRenderTextPlanOptions = () => {
+    return (!support || support && rowIndex !== (renewalOptionState?.rowIndex -1) )
+  }
   
   return (
     <>{data ? (
       <>
         <div className="cmp-renewal-duration" onClick={toggleExpandedRow} style={{cursor: !hasOptions && 'initial' }}>
-          {!togglePlanUpdated && (
+          { keepDataAfterRenderTextPlanOptions() && (
             <Info label="Renewal">
               {renewed ? (renewed + ",") : ""} {data?.support}
             </Info>
-          )}
-
-          {togglePlanUpdated && (
+          )}           
+          { hasRenderStateTextFromPlanOptions() && (
             <Info label="Renewal">
-              {renewalOptionState}              
+              {contractDuration} , {support}              
             </Info>
           )}
 

@@ -7,29 +7,39 @@ import { openPDF } from "../PDFWindow/PDFRenewalWindow";
 import PDFRenewalPlanOption from "./PDFRenewalPlanOption";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
-function RenewalPlanOptions({ labels, data }) {
+function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
-    const renewalOptionState = useRenewalGridState(st => st.renewalOptionState);
+    //const renewalOptionState = useRenewalGridState(st => st.renewalOptionState);
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
+    const [optionIdSelected, setOptionIdSelected] = useState();
+    const optionIdSelectedRef = useRef();
+    const rowIndexRef = useRef(node?.rowIndex)
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", renewalDetailsEndpoint = "" } = aemConfig;
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
-    const isPlanSelected = option => option?.contractDuration + " " + data?.support === renewalOptionState;
+    // const isPlanSelected = option => option?.contractDuration + " " + data?.support === renewalOptionState;
+    const isPlanSelected = ({id}) => id === optionIdSelected;
     const isCurrentPlan = plan => plan.quoteCurrent;
     const [showPdf, setShowPdf] = useState(false);
-    const PDFContainerRef = useRef(null);
+    const findAndReturnCurrentPlanId = (options) => {
+        const currentPlan = options.find((plan) => isCurrentPlan(plan));
+        return currentPlan ? currentPlan?.id : 0;
+    }
+    const optionToParent = (idSelected) => {    
+        const option = data?.options.find(opt => opt.id === idSelected)
+        return {...option, rowIndex: rowIndexRef.current}
+    }
+
+    useEffect(() => {
+        setOptionIdSelected(findAndReturnCurrentPlanId(data?.options))
+        return () => selectPlan(optionToParent(optionIdSelectedRef.current))
+    }, [])
+    
     const dataToPush = (name) => ({
         type: ANALYTICS_TYPES.types.button,
         category: ANALYTICS_TYPES.category.renewalsActionColumn,
         name,
     });
 
-    useEffect(() => {
-        const currentPlan = data?.options.find((plan) => isCurrentPlan(plan));
-        if (currentPlan) {
-            const value = currentPlan?.contractDuration + " " + data?.support
-            effects.setCustomState({ key: 'renewalOptionState', value });
-        }
-    }, [])
 
     const redirectToRenewalDetail = (id = "") => {
         const renewalDetailsURL = encodeURI(
@@ -105,11 +115,19 @@ function RenewalPlanOptions({ labels, data }) {
         return { fontSize: isPlanSelected(option) && '20px' }
     }
 
+    const changeRadioButton = (event) => {
+        const id = event?.target?.value;
+        setOptionIdSelected(id);
+        optionIdSelectedRef.current = id;
+    }
+
+    const setDefaultCheckedOption = (option) => optionIdSelected === option?.id;
+
     return (
         <>
-            <div className="pdf-container" ref={PDFContainerRef}>
+            <div className="pdf-container">
                 {showPdf && <DownloadPDF />}
-            </div>
+            </div>           
             <div className="cmp-renewal-plan-column">
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
@@ -119,16 +137,16 @@ function RenewalPlanOptions({ labels, data }) {
                         <div className={computeClassName(data?.options, index)} key={option?.id}>
                             <div className="header">
                                 <div className="leftHeader">
-                                    <h4>
+                                    <h4 onChange={changeRadioButton}>
                                         <input
-                                            key={Math.random()}
-                                            value={isPlanSelected(option)}
-                                            defaultChecked={isPlanSelected(option)}
+                                            key={Math.random()}                                        
                                             id={option?.id}
-                                            type="radio"
-                                            onClick={() => selectPlan(option?.contractDuration + " " + data?.support)}
+                                            name="planOption"
+                                            type="radio"    
+                                            defaultChecked={setDefaultCheckedOption(option)}
+                                            value={option?.id}                                     
                                         />
-                                        <label htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>&nbsp;&nbsp;{option?.contractDuration}, {data?.support}</label></h4>
+                                        <label htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>&nbsp;&nbsp;{option?.contractDuration}, {option?.support}</label></h4>
                                 </div>
                                 <div className="rightHeader"><h4 htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>$ {thousandSeparator(option?.total)}</h4></div>
                                 <div className="clear"></div>
