@@ -112,7 +112,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        [RoleAuthorize(Roles = "CanViewOrders")]
         [Route("orderLevel")]
         public async Task<ActionResult> GetPricingConditions([FromQuery] bool getAll, bool isSPAFind, string Id)
         {
