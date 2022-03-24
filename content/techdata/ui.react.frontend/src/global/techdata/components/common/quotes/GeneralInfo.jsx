@@ -163,7 +163,7 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
         }
         else {
             return (
-                <div className="cmp-qp-deals-cotainer">
+                <div className="cmp-qp-deals-container">
                     {dealsFound?.length > 0 &&
                         <>
                             {info.dealsFoundLabel}
