@@ -686,3 +686,26 @@
 		}
 	}
 }
+
+
+/// CSR 3 Synnex Teasers
+
+.cmp-teaser {
+	&-csr {
+		&__card {
+			&.cmp-teaser__synnex {
+			.cmp-teaser {
+				&:hover {
+						.cmp-teaser__title-link {
+							color: get-color(brand-green-synnex) !important;
+						}
+	
+						.cmp-teaser__image img {
+							box-shadow: 0 0 0 rem(6px) get-color(brand-green-synnex);
+						}
+					}
+				}
+			}
+		}
+	}
+}
