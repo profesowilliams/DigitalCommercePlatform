@@ -211,7 +211,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     &__image-link {
-      width: 90px;
+      width: 150px;
       display: inline-block;
     }
     &__box-text {
@@ -247,3 +247,26 @@
     }
   }
 }
+
+// Adjust grid columns width to avoid annuity information from overlapping with labels.
+.cmp-quote-details, .cmp-order-details {
+  .cmp-product-lines-grid {
+    &__subscription-terms  {
+      p {
+        grid-template-columns: 20% 80%;
+      }
+    }
+  }
+}
+
+// Adjust image width to avoid cell content from wrapping on order details grid.
+.cmp-order-details {
+  .cmp-product-lines-grid {
+    &__item-information {
+      &__image-link {
+        width: 100px;
+      }
+    }
+  }
+}
+

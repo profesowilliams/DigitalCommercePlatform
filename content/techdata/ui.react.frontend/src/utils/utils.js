@@ -392,3 +392,11 @@ export const sortRenewalObjects = (objArray, query) => {
       return arrayCmp(a, b);
     }) : [];
   }
+
+export const showAnnuity = (line) => {
+  return line?.annuity &&
+  (line.annuity.startDate ||
+    line.annuity.autoRenewal ||
+    (line.annuity.duration && line.annuity.duration !== "0") ||
+    line.annuity.billingFrequency);
+};

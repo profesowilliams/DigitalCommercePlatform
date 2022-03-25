@@ -8,6 +8,7 @@ import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
 import { thousandSeparator } from "../../../helpers/formatting";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import { ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY } from "../../../../../utils/constants";
+import { showAnnuity } from "../../../../../utils/utils";
 
 function ProductLinesGrid({
   gridProps,
@@ -147,7 +148,7 @@ function ProductLinesGrid({
       field: "displayName",
       sortable: false,
       width: "600px",
-      cellHeight: (props) => props && (props?.data?.startDate || props?.data?.annuity) ? 160 : 80, // adjust row height for subscription items
+      cellHeight: (props) => props && (props?.data?.startDate || showAnnuity(props?.data)) ? 160 : 80, // adjust row height for subscription items
       cellRenderer: (props) => {
         return <ProductLinesItemInformation
                   headerName={props?.colDef?.headerName}

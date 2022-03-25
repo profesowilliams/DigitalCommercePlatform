@@ -12,7 +12,7 @@ import {
   ADOBE_DATA_LAYER_OPEN_LINE_ITEM
 } from "../../../../../utils/constants";
 import { pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
-import { isNotEmptyValue } from "../../../../../utils/utils";
+import { isNotEmptyValue, showAnnuity } from "../../../../../utils/utils";
 import { thousandSeparator } from "../../../helpers/formatting";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
@@ -249,7 +249,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
       field: "shortDescription",
       sortable: false,
       width: "600px",
-      cellHeight: () => 80,
+      cellHeight: (props) => props && (props?.data?.startDate || showAnnuity(props?.data)) ? 160 : 80,
       cellRenderer: (props) => {
         return <ProductLinesItemInformation
                   line={props.data}

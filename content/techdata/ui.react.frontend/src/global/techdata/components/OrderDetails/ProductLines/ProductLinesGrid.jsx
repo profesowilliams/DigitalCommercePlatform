@@ -11,7 +11,7 @@ import { thousandSeparator } from "../../../helpers/formatting";
 import Modal from "../../Modal/Modal";
 import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
-import { isNotEmptyValue, requestFileBlob } from "../../../../../utils/utils";
+import { isNotEmptyValue, requestFileBlob, showAnnuity } from "../../../../../utils/utils";
 import { ANALYTICS_TYPES, pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
 
 function ProductLinesGrid({
@@ -228,7 +228,7 @@ function ProductLinesGrid({
     headerName: "Description",
     field: "displayName",
     width: "600px",
-    cellHeight: () => 80,
+    cellHeight: (props) => props && (props?.data?.startDate || showAnnuity(props?.data)) ? 160 : 80, // adjust row height for subscription items
     sortable: false,
     cellRenderer: (props) => {
       return (gridProps.shopDomainPage ?

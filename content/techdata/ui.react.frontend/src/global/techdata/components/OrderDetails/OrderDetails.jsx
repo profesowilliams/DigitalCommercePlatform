@@ -62,7 +62,7 @@ const OrderDetails = ({ componentProp }) => {
   productLines.agGridLicenseKey = agGridLicenseKey;
 
   return orderDetails ? (
-    <>
+    <div className="cmp-order-details">
       <OrderSubHeader
         headerConfig={headerConfig}
         orderDetails={orderDetails}
@@ -87,7 +87,7 @@ const OrderDetails = ({ componentProp }) => {
           setQuoteWithMarkup([...quote]);
         }}
       />
-    </>
+    </div>
   ) : error ? (
       <div className="cmp-error">
         <div className="cmp-error__header">

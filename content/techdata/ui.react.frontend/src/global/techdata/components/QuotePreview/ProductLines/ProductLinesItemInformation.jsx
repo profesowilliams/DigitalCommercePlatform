@@ -1,6 +1,7 @@
 import React,{useCallback} from "react";
 import { dateToString } from "../../../helpers/formatting";
 import { pushEvent } from "../../../../../utils/dataLayerUtils";
+import { showAnnuity } from "../../../../../utils/utils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
   ADOBE_DATA_LAYER_LINK_TYPE,
@@ -51,12 +52,7 @@ function ProductLinesItemInformation({ headerName, line, shopDomainPage="", empt
           src={line.urlProductImage ? line.urlProductImage : emptyImageUrl}
         />
   );
-  const showAnnuity = () => line.annuity
-                         && (line.annuity.startDate
-                         || line.annuity.autoRenewal
-                         || line.annuity.duration
-                         || line.annuity.duration !== '0'
-                         || line.annuity.billingFrequency)
+
   return (
     <section>
       <div onClick={() => handleClick(headerName)} className="cmp-product-lines-grid__item-information">
@@ -83,7 +79,7 @@ function ProductLinesItemInformation({ headerName, line, shopDomainPage="", empt
             {line.mfrNumber || " N/A "} | <b>TD#:</b>
             {line.tdNumber || " N/A "}
             {
-              showAnnuity() &&
+              showAnnuity(line) &&
                 <div className="cmp-product-lines-grid__subscription-terms">
                   {line.annuity.startDate && <p>
                     <b>Start Date:</b>
