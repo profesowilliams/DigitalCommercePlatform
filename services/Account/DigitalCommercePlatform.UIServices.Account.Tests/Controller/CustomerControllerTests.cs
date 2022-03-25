@@ -1,18 +1,17 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 
-using DigitalCommercePlatform.UIServices.Account.Actions.RegisterCustomer;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
 using DigitalCommercePlatform.UIServices.Account.Models.Customers;
 using DigitalCommercePlatform.UIServices.Account.Models.Customers.RegisterCustomerModel;
+using DigitalCommercePlatform.UIServices.Account.Services;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
-using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +23,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
     {
         private readonly Mock<IUIContext> _context;
         private readonly Mock<IMediator> _mediator;
+        private readonly Mock<ICustomerService> _customerService;
         private readonly Mock<ILogger<CustomerController>> _logger;
         private readonly Mock<IAppSettings> _appSettingsMock;
         private readonly Mock<ISiteSettings> _siteSettings;
@@ -33,7 +33,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             _appSettingsMock = new Mock<IAppSettings>();
             _appSettingsMock.Setup(s => s.GetSetting("LocalizationList")).Returns("en-US");
 
-            _context = new Mock<IUIContext>();
+            _customerService = new Mock<ICustomerService>();
             _mediator = new Mock<IMediator>();
             _logger = new Mock<ILogger<CustomerController>>();
             _siteSettings = new Mock<ISiteSettings>();
@@ -75,10 +75,13 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
         public async Task RegisterCustomer_RequestModelValid_ReturnsNoError(RegisterCustomerRequestModel request)
         {
             //Arrange
-            _mediator.Setup(x => x.Send(
-                      It.IsAny<RegisterCustomer.Request>(),
+            _customerService.Setup(x => x.RegisterCustomerAsync(
+                      It.IsAny<RegisterCustomerRequestModel>(),
                       It.IsAny<CancellationToken>()))
-                  .ReturnsAsync(new ResponseBase<RegisterCustomer.Response>() { Content = new RegisterCustomer.Response() });
+                  .ReturnsAsync(new RegisterCustomerResponseModel()
+                  {
+                      IsError = false
+                  });
 
             //Act
             var controller = GetController();
@@ -89,19 +92,48 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             Assert.Equal((int)HttpStatusCode.OK, response.StatusCode);
         }
 
+        private object RegisterCustomerResponseModel()
+        {
+            throw new NotImplementedException();
+        }
+
         [Theory]
         [AutoDomainData]
-        public async Task RegisterCustomer_ErrorFromClient_ReturnsValidError(RegisterCustomerRequestModel request)
+        public async Task RegisterCustomer_ErrorFromClient_ReturnsHttpError(RegisterCustomerRequestModel request)
         {
             //Arrange
 
-            _mediator.Setup(x => x.Send(
-                      It.IsAny<RegisterCustomer.Request>(),
+            _customerService.Setup(x => x.RegisterCustomerAsync(
+                      It.IsAny<RegisterCustomerRequestModel>(),
                       It.IsAny<CancellationToken>()))
-                  .ReturnsAsync(new ResponseBase<RegisterCustomer.Response>()
+                  .ReturnsAsync(new RegisterCustomerResponseModel()
                   {
-                      Content = new RegisterCustomer.Response(),
-                      Error = new ErrorInformation() { IsError = true, Code = 500 }
+                      IsError = true,
+                      ErrorType = Enums.RegistrationErrorType.HttpError
+                  });
+
+            //Act
+            var controller = GetController();
+            var result = await controller.RegisterCustomerAsync(request);
+
+            //Assert
+            var response = result as ObjectResult;
+            Assert.Equal((int)HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task RegisterCustomer_ErrorFromClient_ReturnsInternalError(RegisterCustomerRequestModel request)
+        {
+            //Arrange
+
+            _customerService.Setup(x => x.RegisterCustomerAsync(
+                      It.IsAny<RegisterCustomerRequestModel>(),
+                      It.IsAny<CancellationToken>()))
+                  .ReturnsAsync(new RegisterCustomerResponseModel()
+                  {
+                      IsError = true,
+                      ErrorType = Enums.RegistrationErrorType.InternalError
                   });
 
             //Act
@@ -115,7 +147,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         private CustomerController GetController()
         {
-            return new CustomerController(_mediator.Object, _appSettingsMock.Object, _logger.Object, _context.Object, _siteSettings.Object);
+            return new CustomerController(_mediator.Object, _logger.Object, _customerService.Object);
         }
     }
 }

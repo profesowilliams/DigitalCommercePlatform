@@ -1,4 +1,5 @@
 //2022 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Account.Enums;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalCommercePlatform.UIServices.Account.Models.Customers
@@ -11,5 +12,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Customers
         public string ErrorDescription { get; set; }
 
         public bool IsError { get; set; }
+        public RegistrationErrorType ErrorType { get; set; }
     }
 }
