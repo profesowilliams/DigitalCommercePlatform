@@ -16,6 +16,14 @@
     function createFormData(form) {
         var newData = new FormData();
         var inputs = form.getElementsByTagName('input');
+        var labels = form.getElementsByTagName('label');
+        // Remove error message when submit and try again
+        Array.from(labels).forEach(function (label) {
+            if (label.innerText == 'This field contains Invalid Characters. Please correct') {
+                label.remove();
+            }
+        });
+        
         var selects = form.getElementsByTagName('input');
         var inputsList = Array.prototype.slice.call(inputs);
         var selects = form.getElementsByTagName('select');
