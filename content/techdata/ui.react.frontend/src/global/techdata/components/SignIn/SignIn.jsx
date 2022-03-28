@@ -178,6 +178,8 @@ const SignIn = (props) => {
         ) {
           return true;
         }
+      } else {
+        return true; // if sessionId does not exist then return isSessionExpired = true
       }
     } catch (e) {
       console.error("invalid login session expiration", e);
@@ -192,7 +194,7 @@ const SignIn = (props) => {
 
   useEffect(() => {
     if (isSessionExpired()) {
-      signOutForExpiredSession();
+      signOutForExpiredSession(authUrl, clientId);
     }
     redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
     localStorage.setItem("signin", constructSignInURL());

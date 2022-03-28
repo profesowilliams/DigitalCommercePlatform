@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { nanoid } from 'nanoid';
 import { usPost } from './api';
 import {skip} from "rxjs/operators";
+import { initiateAEMLogin } from "./policies";
 
 export const createSessionId = () => nanoid(16)
 
@@ -53,7 +54,7 @@ export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogou
     cleanupLocalStorage(pingLogoutUrl);
 }
 
-export const cleanupLocalStorage = (logoutRedirectUrl) => {
+export const cleanupLocalStorage = (logoutRedirectUrl, authUrl, clientId) => {
     localStorage.removeItem('sessionId');
     localStorage.removeItem('signin');
     localStorage.removeItem('signout');
@@ -63,15 +64,15 @@ export const cleanupLocalStorage = (logoutRedirectUrl) => {
     localStorage.removeItem('signInCode');
     localStorage.removeItem('redirectUrl');
     localStorage.removeItem('ActiveCart');
-    window.location.replace(logoutRedirectUrl);
+    initiateAEMLogin(authUrl, clientId, logoutRedirectUrl)
 }
 
 export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip) => {
     signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip);
 }
 
-export const signOutForExpiredSession = () => {
-    cleanupLocalStorage(window.location.href);
+export const signOutForExpiredSession = (authUrl, clientId) => {
+    cleanupLocalStorage(window.location.href, authUrl, clientId);
 }
 
 export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage) => {
