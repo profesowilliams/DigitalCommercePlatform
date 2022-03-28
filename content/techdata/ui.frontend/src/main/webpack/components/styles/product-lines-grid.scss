@@ -208,8 +208,11 @@
     grid-template-columns: 14% 86%;
 
     &__image-link {
-      width: 150px;
+      width: 100%;
       display: inline-block;
+      img {
+        max-width: 100%;
+      }
     }
 
     &__box-text {
@@ -262,14 +265,4 @@
   }
 }
 
-// Adjust image width to avoid cell content from wrapping on order details grid.
-.cmp-order-details {
-  .cmp-product-lines-grid {
-    &__item-information {
-      &__image-link {
-        width: 100px;
-      }
-    }
-  }
-}
 
