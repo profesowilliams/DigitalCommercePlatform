@@ -3,7 +3,7 @@ import React, { useRef, useState, useCallback } from "react";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import { isInternalUser } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
-
+import Capsule from "../Widgets/Capsule";
 
 function SearchFilter({
   styleProps,
@@ -24,6 +24,10 @@ function SearchFilter({
   const { dropdown, input, option } = values;
   const node = useRef();
   const inputRef = useRef();
+  const initialInputVal = inputRef?.current?.value !== undefined;
+  const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] = useState(initialInputVal);
+  const initialEditViewVal = option.length !== 0;
+  const [isEditView, setIsEditView] = useState(initialEditViewVal);
   
   const clickHandler = () => {
     callback()
@@ -32,6 +36,7 @@ function SearchFilter({
   
   const onReset = () => {
     setCallbackExecuted(false)
+    setIsSearchCapsuleVisible(false);
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
         setValues((prevSt) => {
@@ -49,6 +54,7 @@ function SearchFilter({
         ...prevSt,
         "option": value,
     }));
+    setIsEditView(true);
   };
 
   let styles;
@@ -75,14 +81,26 @@ function SearchFilter({
       setSwitchDropdown(false)
     };
   };
+
+  function handleCapsuleClose() {
+    setIsSearchCapsuleVisible(false);
+    fetchAll();
+  }
+
+  function handleCapsuleTextClick() {
+    setIsSearchCapsuleVisible(false);
+    setIsEditView(true);
+  }
   
-  function triggerSearch (){
-    const {option} = values;
+  function triggerSearch() {
+    const { option } = values;
     const inputValue = inputRef.current.value;
-    if (!inputValue) return fetchAll()
+    if (!inputValue) return fetchAll();
     const query = {
-      queryString : `&${option}=${inputValue}`
-    }
+      queryString: `&${option}=${inputValue}`,
+    };
+    setIsSearchCapsuleVisible(true);
+    setIsEditView(false);
     onQueryChanged(query);
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {
@@ -117,59 +135,92 @@ function SearchFilter({
     )
   } 
 
-  if (option.length) {    
+  function SearchCapsule() {
+    return (
+      <If condition={isSearchCapsuleVisible}>
+        <Capsule
+          closeClick={handleCapsuleClose}
+          hasCloseBtn={true}
+        >
+          <span onClick={handleCapsuleTextClick} className="td-capsule__text">
+            {`${values.option}: ${inputRef?.current?.value}`}
+          </span>
+        </Capsule>
+      </If>
+    );
+  }
+
+  if (option.length && isEditView) {
     const chosenFilter = options.find(
       ({searchKey}) => searchKey === option
     ).searchLabel;
     return (
-      <div div className="cmp-renewal-search">
-      <div className="cmp-search-select-container">
-        <div className="cmp-search-select-container__box">
-          <input className="inputStyle" autoFocus placeholder={`Enter a ${chosenFilter}`} ref={inputRef} onKeyDown={triggerSearchOnEnter} />
-          <button className="cmp-search-tooltip__button" onClick={() => triggerSearch()}>
-            <i className="fa fa-search"></i>
-          </button>
-        </div>
-        <If condition={isResetVisible}>
-          <div className="cmp-search-options" style={{padding:'5px 10px'}}>
-            <div className="cmp-search-options__reset">
-              <label>
-                {callbackExecuted && !filterCounter ? <p>Sorry, no rows to display</p> : <p>Search by {chosenFilter}</p>}
-              </label>
-              <a onClick={onReset}>Reset</a>
+      <>
+        <SearchCapsule />
+        <div div className="cmp-renewal-search">
+          <div className="cmp-search-select-container">
+            <div className="cmp-search-select-container__box">
+              <input
+                className="inputStyle"
+                autoFocus
+                placeholder={`Enter a ${chosenFilter}`}
+                ref={inputRef}
+                onKeyDown={triggerSearchOnEnter}
+              />
+              <button
+                className="cmp-search-tooltip__button"
+                onClick={() => triggerSearch()}
+              >
+                <i className="fa fa-search"></i>
+              </button>
             </div>
+            <If condition={isResetVisible}>
+              <div className="cmp-search-options" style={{ padding: "5px 10px" }}>
+                <div className="cmp-search-options__reset">
+                  <label>
+                    {callbackExecuted && !filterCounter ? (
+                      <p>Sorry, no rows to display</p>
+                    ) : (
+                      <p>Search by {chosenFilter}</p>
+                    )}
+                  </label>
+                  <a onClick={onReset}>Reset</a>
+                </div>
+              </div>
+            </If>
           </div>
-        </If>
-      </div>     
-      </div>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="cmp-renewal-search">
-    <If condition={!isDropdownVisible}>
-    <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
-      <span>search</span>
-      <i className="fa fa-search"></i>
-    </div>
-    </If>
-    <If condition={isDropdownVisible}>
-      <div className="cmp-search-select-container" ref={node}>  
-          <div className="cmp-search-select-container__box">
-            <input className="inputStyle" placeholder="Search by" disabled/>
-            <button className="cmp-search-tooltip__button">
-              <i className="fa fa-search"></i>
-            </button>
-            </div>      
-          <If condition={true}>
-          <div className="cmp-search-options">
-            {options.map((option) => renderWithPermissions(option))}  
-          </div>   
+    <>
+      <SearchCapsule />
+      <div className="cmp-renewal-search">
+        <If condition={!isDropdownVisible}>
+          <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
+            <span className="cmp-renewal-search__text">search</span>
+            <i className="fa fa-search cmp-renewal-search__icon"></i>
+          </div>
         </If>
-      </div>   
-    </If>
-    
-    </div>
+        <If condition={isDropdownVisible}>
+          <div className="cmp-search-select-container" ref={node}>
+            <div className="cmp-search-select-container__box">
+              <input className="inputStyle" placeholder="Search by" disabled />
+              <button className="cmp-search-tooltip__button">
+                <i className="fa fa-search cmp-renewal-search__icon"></i>
+              </button>
+            </div>
+            <If condition={true}>
+              <div className="cmp-search-options">
+                {options.map((option) => renderWithPermissions(option))}
+              </div>
+            </If>
+          </div>
+        </If>
+      </div>
+    </>
   );
 }
 

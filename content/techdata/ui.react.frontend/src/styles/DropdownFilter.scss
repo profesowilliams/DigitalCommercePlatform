@@ -111,10 +111,10 @@ $secondary-link-blue: #006bae;
   display: flex;
   gap: 0.7rem;
   align-items: center;
-  span {
+  &__text {
     color: #555555;
   }
-  i, svg {
+  &__icon {
     color: $secondary-link-blue;
   }
 }
