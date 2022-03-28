@@ -1,8 +1,10 @@
 //2022 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Account.Enums;
+using DigitalCommercePlatform.UIServices.Account.Actions.RegisterCustomer;
+using DigitalCommercePlatform.UIServices.Account.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Account.Models.Customers.RegisterCustomerModel;
-using DigitalCommercePlatform.UIServices.Account.Services;
-using DigitalFoundation.Common.Services.Base;
+using DigitalFoundation.Common.Features.Contexts;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,47 +15,33 @@ using System.Threading.Tasks;
 namespace DigitalCommercePlatform.UIServices.Account.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "SessionIdHeaderScheme")]
     [ApiVersion("1.0")]
     [Route("/v{apiVersion}")]
-    public class CustomerController : BaseController
+    [SetContextFromHeader]
+    public class CustomerController : BaseUIServiceController
     {
-        private readonly ILogger<CustomerController> _logger;
-        private readonly ICustomerService _customerService;
-
         public CustomerController(IMediator mediator,
-            ILogger<CustomerController> logger,
-            ICustomerService customerService
-            )
-            : base(mediator, logger)
+            IAppSettings appSettings,
+            ILogger<BaseUIServiceController> loggerFactory,
+            IUIContext context,
+            ISiteSettings siteSettings)
+            : base(mediator, loggerFactory, context, appSettings, siteSettings)
         {
-            _logger = logger;
-            _customerService = customerService;
         }
 
         [HttpPost]
         [Route("RegisterCustomer")]
         public async Task<IActionResult> RegisterCustomerAsync([FromBody, NotNull] RegisterCustomerRequestModel request)
         {
-            var response = await _customerService.RegisterCustomerAsync(request).ConfigureAwait(false);
+            var response = await Mediator.Send(new RegisterCustomer.Request(request)).ConfigureAwait(false);
 
-            if (response.IsError)
+            if (response.Error.IsError)
             {
-                return StatusCode(GetStatusCode(response.ErrorType), response);
+                return StatusCode(response.Error.Code, response);
             }
 
             return Ok(response);
-        }
-
-        private static int GetStatusCode(RegistrationErrorType errorType)
-        {
-            switch (errorType)
-            {
-                case RegistrationErrorType.AlreadyExists: return 400;
-                case RegistrationErrorType.HttpError: return 400;
-                case RegistrationErrorType.InternalError: return 500;
-                default: return 500;
-            }
         }
     }
 }

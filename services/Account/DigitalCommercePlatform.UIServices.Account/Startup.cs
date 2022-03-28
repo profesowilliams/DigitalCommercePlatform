@@ -21,8 +21,6 @@ using DigitalFoundation.Common.Features.Contexts.Models.Nuance;
 using DigitalFoundation.Common.Security.AuthenticationHandler.Nuance;
 using static DigitalCommercePlatform.UIServices.Account.Services.AccountService;
 using static DigitalCommercePlatform.UIServices.Account.Services.CustomerService;
-using DigitalFoundation.Common.Security.Token;
-using DigitalFoundation.Common.Security.AuthenticationHandler.ServiceTokenValidation;
 
 namespace DigitalCommercePlatform.UIServices.Account
 {
@@ -72,7 +70,6 @@ namespace DigitalCommercePlatform.UIServices.Account
             services.Configure<MvcOptions>(opts => opts.Filters.Add<HttpGlobalExceptionFilter>());
 
             services.AddSingleton<IKeyVaultKeysProvider, AzureKeyVaultKeysProvider>();
-            services.AddScoped<ITokenManagerService, TokenManagerService>();
             services.AddScoped<IHashingService, DefaultHashingService>();
             services.AddScoped<INuanceUserObjectBuilder, NuanceUserObjectBuilder>();
             services.AddScoped<INuanceService, NuanceService>();
