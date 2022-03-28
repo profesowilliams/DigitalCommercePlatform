@@ -42,10 +42,10 @@ function QuotePreviewContinue({
   const clickHandler = (evtName) => {
     if (evtName === eventTypes.button) {
       handleQuickQuote();
-      pushEvent(dataToPush({ quickQuote: "1" }))
+      pushEvent("quoteComplete", dataToPush({ quickQuote: "1" }))
     } else if (evtName === eventTypes.link) {
       handleQuickQuoteWithoutDeals();
-      pushEvent(dataToPush({ standardPrice: "1" }))
+      pushEvent("quoteComplete", dataToPush({ standardPrice: "1" }))
     }
   };
 
