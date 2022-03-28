@@ -207,6 +207,9 @@ $bg--marketing-card:#F7F7F7;
       }
     }
     &__actions {
+      button.border {
+        margin: 0 .4em;
+      }
       button {
         margin: 0;
         padding: 0;

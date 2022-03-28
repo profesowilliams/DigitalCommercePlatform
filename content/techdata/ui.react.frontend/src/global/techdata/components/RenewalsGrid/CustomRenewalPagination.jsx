@@ -85,10 +85,18 @@ function CustomRenewalPagination() {
 
   return (
     <div className="cmp-navigation">
-      <p className="navigation__info"> 
+      <p className="navigation__info">
         {paginationCounter.minCounter > 0 ? paginationCounter.minCounter : minPaginationCounter()}-{paginationCounter.maxCounter > 0 ? paginationCounter.maxCounter : maxPaginationCounter()} of {totalCounter} results
       </p>
       <p className="cmp-navigation__actions">
+        <button className="border"
+        disabled={getCurrentPage() === 1}
+        onClick={() => {
+          gridApi?.paginationGoToFirstPage()
+          updatePaginationCounter();
+        }}>
+          <strong>{"|<"}</strong>
+          </button>
         <button style={{cursor:getCurrentPage() !== 1 && 'pointer'}} disabled={getCurrentPage() === 1} onClick={decrementHandler}>
           <i className="fas fa-chevron-left"></i>
         </button>
@@ -99,6 +107,14 @@ function CustomRenewalPagination() {
         </div>
         <button disabled={getCurrentPage() === pageCount} onClick={incrementHandler} style={{cursor:getCurrentPage() !== pageCount && 'pointer'}}>
           <i className="fas fa-chevron-right"></i>
+        </button>
+        <button
+          disabled={getCurrentPage() === pageCount}
+          className="border" onClick={() => {
+           gridApi?.paginationGoToLastPage();
+            updatePaginationCounter();
+          }}>
+            <strong>{">|"}</strong>
         </button>
       </p>
     </div>
