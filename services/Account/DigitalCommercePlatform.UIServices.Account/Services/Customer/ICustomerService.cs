@@ -1,6 +1,6 @@
 //2022 (c) Tech Data Corporation -. All Rights Reserved.
-using DigitalCommercePlatform.UIServices.Account.Actions.RegisterCustomer;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
+using DigitalCommercePlatform.UIServices.Account.Models.Customers;
+using DigitalCommercePlatform.UIServices.Account.Models.Customers.RegisterCustomerModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +8,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Services
 {
     public interface ICustomerService
     {
-        Task<ResponseBase<RegisterCustomer.Response>> RegisterCustomerAsync(RegisterCustomer.Request request, CancellationToken cancellationToken);
+        Task<RegisterCustomerResponseModel> RegisterCustomerAsync(RegisterCustomerRequestModel request, CancellationToken cancellationToken = default);
     }
 }
