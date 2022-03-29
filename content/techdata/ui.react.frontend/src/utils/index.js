@@ -64,7 +64,7 @@ export const cleanupLocalStorage = (logoutRedirectUrl, authUrl, clientId) => {
     localStorage.removeItem('signInCode');
     localStorage.removeItem('redirectUrl');
     localStorage.removeItem('ActiveCart');
-    initiateAEMLogin(authUrl, clientId, logoutRedirectUrl)
+    authUrl ? initiateAEMLogin(authUrl, clientId, logoutRedirectUrl) : window.location.replace(logoutRedirectUrl);
 }
 
 export const signOutBasedOnParam = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip) => {
