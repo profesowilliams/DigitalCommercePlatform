@@ -423,7 +423,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                         { "Refurbished", new IndicatorValueDto{ Value="Y"} },
                                         { "Returnable", new IndicatorValueDto{ Value="Y"} },
                                         { "Virtual", new IndicatorValueDto{ Value="Y"} },
-                                        { "Warehouse", new IndicatorValueDto{ Value="Y"} },
+                                        { "Warehouse", new IndicatorValueDto{ Value="N"} },
                                         { "DisplayStatus", new IndicatorValueDto{ Value="Active"} },
                                         { "FreightPolicyException", new IndicatorValueDto{Value = "Y"} }
                                     }
@@ -545,7 +545,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             TotalAvailable="1",
                             Corporate = "1",
                             VendorDirectInventory=null,
-                            VendorShipped=false,
+                            VendorShipped=true,
                             Plants = new List<PlantModel>
                             {
                                 new PlantModel
@@ -590,7 +590,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             Returnable=true,
                             Virtual=true,
                             VirtualLabel="VIRTUAL.TRUE_TRANSLATED",
-                            Warehouse=true,
+                            Warehouse=false,
                             FreeShipping=true,
                             FreeShippingLabel="FREESHIPPING.TRUE_TRANSLATED"
                         },

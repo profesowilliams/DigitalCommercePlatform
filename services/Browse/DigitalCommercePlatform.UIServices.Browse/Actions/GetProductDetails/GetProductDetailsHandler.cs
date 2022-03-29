@@ -385,19 +385,19 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 if (x.Stock == null)
                     return;
 
-                product.Stock = new StockModel
+                var stock = new StockModel();
+                stock.TotalAvailable = x.Stock.Total.Format();
+                stock.Corporate = x.Stock.Td.Format();
+                stock.VendorDirectInventory = x.Stock.VendorDesignated.HasValue ? x.Stock.VendorDesignated.Format() : null;
+                stock.VendorShipped = flags.DropShip && !flags.Warehouse && !x.Stock.VendorDesignated.HasValue;
+                stock.Plants = x.Plants?.Select(p => new PlantModel
                 {
-                    TotalAvailable = x.Stock.Total.Format(),
-                    Corporate = x.Stock.Td.Format(),
-                    VendorDirectInventory = x.Stock.VendorDesignated.HasValue ? x.Stock.VendorDesignated.Format() : null,
-                    VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == 0,
-                    Plants = x.Plants?.Select(p => new PlantModel
-                    {
-                        Name = p.Stock?.LocationName,
-                        Quantity = p.Stock?.AvailableToPromise.Format(),
-                        OnOrder = MapOnOrder(p.Stock?.OnOrder),
-                    })
-                };
+                    Name = p.Stock?.LocationName,
+                    Quantity = p.Stock?.AvailableToPromise.Format(),
+                    OnOrder = MapOnOrder(p.Stock?.OnOrder),
+                });
+
+                product.Stock = stock;
             }
 
             private struct Flags
@@ -419,7 +419,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
         public class Request : IRequest<Response>
         {
-            public Request(IReadOnlyCollection<string> id, string salesOrg, string site, string culture,string orderLevel)
+            public Request(IReadOnlyCollection<string> id, string salesOrg, string site, string culture, string orderLevel)
             {
                 Id = id;
                 SalesOrg = salesOrg;
