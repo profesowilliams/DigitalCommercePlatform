@@ -1,4 +1,4 @@
-//2022 (c) Tech Data Corporation - All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
 
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -37,7 +37,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         private readonly Mock<ITranslationService> _translationServiceMock;
         private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
 
-
         public ProductDetailsHandlerTests()
         {
             _mockBrowseService = new();
@@ -54,9 +53,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile(new ProductProfile())));
 
-            _cultureServiceMock = new Mock<ICultureService>();   
+            _cultureServiceMock = new Mock<ICultureService>();
             _orderLevelsServiceMock = new Mock<IOrderLevelsService>();
-
 
             _sut = new GetProductDetailsHandler.Handler(
                 _mockBrowseService.Object,
@@ -450,9 +448,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             },
                             Stock = new StockDto
                             {
-                                VendorDesignated=1,
+                                VendorDesignated=null,
                                 Td=1,
-                                Total=2
+                                Total=1
                             },
                             Plants = new List<PlantDto>
                             {
@@ -544,9 +542,9 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         CNETSite = "US",
                         Stock = new StockModel
                         {
-                            TotalAvailable="2",
+                            TotalAvailable="1",
                             Corporate = "1",
-                            VendorDirectInventory="1",
+                            VendorDirectInventory=null,
                             VendorShipped=false,
                             Plants = new List<PlantModel>
                             {
@@ -922,7 +920,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                        ))
                    .ReturnsAsync(expected);
 
-            var request = new GetProductDetailsHandler.Request(Id, "0100", "US", "pl-Pl",orderLevel:null);
+            var request = new GetProductDetailsHandler.Request(Id, "0100", "US", "pl-Pl", orderLevel: null);
 
             var result = await _sut.Handle(request, It.IsAny<CancellationToken>());
 

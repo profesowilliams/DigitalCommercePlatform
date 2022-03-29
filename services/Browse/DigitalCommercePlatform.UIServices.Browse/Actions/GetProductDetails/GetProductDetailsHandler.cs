@@ -389,7 +389,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 {
                     TotalAvailable = x.Stock.Total.Format(),
                     Corporate = x.Stock.Td.Format(),
-                    VendorDirectInventory = x.Stock.VendorDesignated.Format(),
+                    VendorDirectInventory = x.Stock.VendorDesignated.HasValue ? x.Stock.VendorDesignated.Format() : null,
                     VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == 0,
                     Plants = x.Plants?.Select(p => new PlantModel
                     {
