@@ -8,4 +8,8 @@ public @interface FeatureFlagsConfiguration {
     
     @Property(label = "Http Only Enabled Flag", description = "Allow/Disallow cookies from being sent as part of requests.")
     boolean httpOnlyEnabled() default false;
+
+    @Property(label = "Extra Reload Disabled Flag", description = "Disable the extra reload that happens upon signing in to DCP.")
+    boolean extraReloadDisabled() default false;
+
 }

@@ -25,7 +25,8 @@
       id="${page.id}"
       style="${(props.privatePage) ? 'transform: scale(0);' : '' @ context='styleString'}"
       data-cmp-data-layer-enabled="${page.data ? true : false}"
-      data-signin-httponly="${caconfig['com.techdata.core.slingcaconfig.FeatureFlagsConfiguration'].httpOnlyEnabled}">
+      data-signin-httponly="${caconfig['com.techdata.core.slingcaconfig.FeatureFlagsConfiguration'].httpOnlyEnabled}"
+      data-disable-extra-reload="${caconfig['com.techdata.core.slingcaconfig.FeatureFlagsConfiguration'].extraReloadDisabled}">
 <div id="top"></div>
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];
