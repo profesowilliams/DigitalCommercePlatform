@@ -236,6 +236,22 @@ use(['../common/utils.js'], function (utils) {
     if (properties && properties["cannotCreateQuoteForDeal"]) {
         modalConfig["cannotCreateQuoteForDeal"] = properties["cannotCreateQuoteForDeal"];
     }
+
+    if (properties && properties["error404Message"]) {
+        modalConfig["error404Message"] = properties["error404Message"];
+    }
+
+    if (properties && properties["errorGenericMessage"]) {
+        modalConfig["errorGenericMessage"] = properties["errorGenericMessage"];
+    }
+
+    if (properties && properties["errorLoadingPageRedirect"]) {
+        modalConfig["errorLoadingPageRedirect"] = properties["errorLoadingPageRedirect"];
+    }
+
+    if (properties && properties["errorLoadingPageTitle"]) {
+        modalConfig["errorLoadingPageTitle"] = properties["errorLoadingPageTitle"];
+    }
     
     if (this.productEmptyImageUrl) {
         productLinesGrid["productEmptyImageUrl"] = this.productEmptyImageUrl;

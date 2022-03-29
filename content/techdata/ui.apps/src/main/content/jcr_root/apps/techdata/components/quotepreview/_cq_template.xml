@@ -19,6 +19,10 @@
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
     menuCopyLink="Copy link"
+    error404Message="The resource could not be found."
+    errorGenericMessage="An unexpected error occurred."
+    errorLoadingPageRedirect="/configuration-grid"
+    errorLoadingPageTitle="Quote Preview"
 >
 
     <columnList jcr:primaryType="nt:unstructured">

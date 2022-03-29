@@ -62,7 +62,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
    * @param {any} quoteDetailsParam 
    */
   const getPopulateProdutcsToAnalytics = (quoteDetailsParam) => {
-    const productsToSend = quoteDetailsParam.items.map(item => {
+    const productsToSend = quoteDetailsParam.items?.map(item => {
       return {
         productInfo: {
           parentSKU : item.tdNumber,

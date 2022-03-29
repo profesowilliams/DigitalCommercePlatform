@@ -518,6 +518,26 @@
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Cannot Create Quote For Deal Pop-up Message"
                                                 name="./cannotCreateQuoteForDeal"/>
+											<error404Message
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Error 404 Not Found Message"
+                                                name="./error404Message"/>
+											<errorGenericMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="An Unexpected Error Message"
+                                                name="./errorGenericMessage"/>
+											<errorLoadingPageRedirect
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Loading page error Redirect"
+                                                name="./errorLoadingPageRedirect"/>
+											<errorLoadingPageTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Loading page error Pop-up Title"
+                                                name="./errorLoadingPageTitle"/>
                                         </items>
                                     </column>
                                 </items>

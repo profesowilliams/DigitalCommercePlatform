@@ -7,9 +7,9 @@ export const isQuickQuoteButtonDisabled = (quoteDetails, didQuantitiesChange) =>
         || (isEstimate(quoteDetails.source) && (!!quoteDetails.spaId || didQuantitiesChange));
 }
 
-export const isVendorQuote = (source) => source.type === 'VendorQuote'
+export const isVendorQuote = (source) => source?.type === 'VendorQuote'
 
-export const isDealConfiguration = (source) => source.type === 'Deal'
+export const isDealConfiguration = (source) => source?.type === 'Deal';
 
 export const isTechDataDistiBuy = (distiBuyMethod) => distiBuyMethod?.toUpperCase() === QUOTE_PREVIEW_TECH_DATA.toUpperCase();
 
@@ -23,15 +23,15 @@ export const isTechDataAndAVTTechCustomerMethod = (customerMethod) => customerMe
 
 export const compareBuyMethod = (currentBuyMethod, expectedBuyMethod) => currentBuyMethod?.toUpperCase() === expectedBuyMethod?.toUpperCase();
 
-export const isEstimate = (source) => source.type === 'Estimate'
+export const isEstimate = (source) => source?.type === 'Estimate'
 
 export const isPricingOptionsRequired = (quoteDetails, quoteWithoutPricing) => quoteWithoutPricing && !quoteDetails.tier
 
-export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetails.source)
+export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetails?.source)
 
-export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails.source)
+export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails?.source)
 
-export const isDealRequired = (quoteDetails, quoteWithoutDeal) => !isDealConfiguration(quoteDetails.source) && quoteWithoutDeal && isEstimate(quoteDetails.source) && !quoteDetails.spaId
+export const isDealRequired = (quoteDetails, quoteWithoutDeal) => !isDealConfiguration(quoteDetails?.source) && quoteWithoutDeal && isEstimate(quoteDetails?.source) && !quoteDetails.spaId
 
 export const validateRequiredEnduserFields = (enduser) => {
     // This logic may be needed to validate specific scenarios in the future however

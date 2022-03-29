@@ -42,7 +42,7 @@ function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
   const URL_QUOTES_GRID = componentProp.successRedirectPage ? componentProp.successRedirectPage : '#';
   const { id, type, vendor = 'cisco', sourceIsConfigsGrid = false } = getUrlParams();
-  const [apiResponse, isLoading] = useGet(componentProp.uiServiceEndPoint.replace('{configuration-id}', id).replace('{type}', type).replace('{vendor}', vendor));
+  const [apiResponse, isLoading, error] = useGet(componentProp.uiServiceEndPoint.replace('{configuration-id}', id).replace('{type}', type).replace('{vendor}', vendor));
   const currencySymbol = apiResponse?.content?.quotePreview?.quoteDetails.currencySymbol || '$';
   const [quoteDetails, setQuoteDetails] = useState({});
   const [loadingCreateQuote, setLoadingCreateQuote] = useState(false);
@@ -76,7 +76,7 @@ function QuotePreview(props) {
   /**
    * Getting the values of the Quote
    */
-  useEffect(() => {
+  useEffect(() => { 
     const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
     if(quoteDetailsResponse) {
       const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
@@ -88,11 +88,17 @@ function QuotePreview(props) {
       setQuoteDetails(quoteDetailsResponse);
       // Show Modal When Quote Cannot Be Created.
       if (cannotCreateQuote(quoteDetailsResponse)) {
-        showCannotCreateQuoteForDeal();
+        showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
       }
       setFlagDeal(!isDealConfiguration(quoteDetailsResponse.source));
+    } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
+      showErrorModal(modalConfig?.errorLoadingPageTitle, apiResponse.error.code === 404 ? modalConfig?.error404Message : modalConfig?.errorGenericMessage, 
+        () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
+    } else if(error) {// Server error
+      showErrorModal(modalConfig?.errorLoadingPageTitle, modalConfig?.errorGenericMessage, 
+        () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
     }
-  }, [apiResponse]);
+  }, [apiResponse, error]);
 
   /**
    * In case of the distribution buy method is not AVT or TECH DATA. 
@@ -135,13 +141,8 @@ function QuotePreview(props) {
 
   const closeModal = () => setModal(null);
 
-  const showErrorModal = () => showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
-    <div>There has been an error creating your quote. Please try again later or contact your sales representative.</div>
-  ));
-
-  const showCannotCreateQuoteForDeal = () => showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
-    <div>{modalConfig?.cannotCreateQuoteForDeal}</div>
-  ));
+  const showErrorModal = (title, message, redirectPage) =>
+    showSimpleModal(title, <div>{message}</div>, redirectPage || undefined);
 
   const onGridUpdate = (data, didQuantitiesChange) => {
       let subTotal = 0.00;
@@ -196,12 +197,12 @@ function QuotePreview(props) {
         ), closeModal, "Track My Quote", () => window.location.href = URL_QUOTES_GRID);
       }
       else {
-        showErrorModal();
+        showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
       }
 
       return result.data;
     } catch( error ) {
-      showErrorModal();
+      showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
       return error;
     } finally {
       setLoadingCreateQuote(false);
@@ -262,7 +263,7 @@ function QuotePreview(props) {
 
   const tryCreateQuote = (pricingRequired, dealRequired, userMissingFields, quote) => {
     if (cannotCreateQuote(quote)) {
-      showCannotCreateQuoteForDeal();
+      showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
     } else if(pricingRequired || dealRequired || userMissingFields) {
       scrollToTopError();
 
