@@ -22,6 +22,8 @@ function RenewalsGrid(props) {
   const dueDateDir = componentProp.options.defaultSortingDirection;
   const { searchOptionsList } = componentProp;
 
+  const customPaginationRef = useRef();
+
   const options = {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "desc",
@@ -81,7 +83,11 @@ function RenewalsGrid(props) {
         state: [{ ...secondLevelOptions, sort:"asc"}],defaultState: { sort: null }
       });
       return      
-    }       
+    }     
+    const pageNumberFromCustomNavigationState = customPaginationRef.current?.pageNumber;
+    if(pageNumberFromCustomNavigationState !== 1){
+      request.url = request.url.replace(/PageNumber=\d+/,`PageNumber=${pageNumberFromCustomNavigationState}`)
+    }
     const sortModel = [{colId: dueDateKey,sort: dueDateDir},{...secondLevelOptions}];    
     const query = {
       SortBy: `${sortModel?.[0]?.colId ?? 'id'} ${sortModel?.[0]?.sort ?? ''}${sortModel?.[1]? ',': ''} ${sortModel?.[1]?.colId ?? ''} ${sortModel?.[1]?.sort ?? ''}`,
@@ -90,11 +96,11 @@ function RenewalsGrid(props) {
     const response = await requestInterceptor(request);
     const mappedResponse = mapServiceData(response);      
     const {pageCount, pageNumber, totalItems, refinementGroups} = mappedResponse?.data?.content;
-    const value = {
+    const value = {   
       currentResultsInPage: mappedResponse?.data?.content?.items?.length,
       totalCounter: totalItems,   
       pageCount,
-      pageNumber,    
+      pageNumber:parseInt(pageNumber),    
     };
     const multiSorting = sortRenewalObjects(mappedResponse?.data?.content?.items, query) ?? 0;
     effects.setCustomState({key:'pagination',value})
@@ -128,8 +134,7 @@ function RenewalsGrid(props) {
           colId: dueDateKey,
           sort: dueDateDir,
         },
-        {...secondLevelOptions},
-                 
+        {...secondLevelOptions},                 
       ],
       defaultState: { sort: null },
     })
@@ -138,7 +143,7 @@ function RenewalsGrid(props) {
   return (
     <section>     
       <div className="cmp-renewals-subheader">
-        <CustomRenewalPagination />
+        <CustomRenewalPagination onQueryChanged={onQueryChanged} ref={customPaginationRef} />
         <div className="renewal-filters">
           <SearchFilter              
             options={searchOptionsList}

@@ -9,6 +9,7 @@ import FilterTags from "./components/FilterTags";
 import { generateFilterFields } from "./filterUtils/filterUtils";
 import normaliseAPIData from "./filterUtils/normaliseAPIData";
 import normaliseState from "./filterUtils/normaliseData";
+import { useMultiFilterSelected } from "./hooks/useFilteringState";
 
 import { RenewalErrorBoundary } from "./renewalErrorBoundary";
 
@@ -17,7 +18,8 @@ const FilterDialog = ({ children }) => {
 };
 
 const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
-  const filterData = useRenewalGridState(state => state.refinements);
+  
+  const {filterList, resetFilter, effects, filterData, _generateFilterFields} = useMultiFilterSelected();
 
   let aemFilterData;
   aemData.filterType = aemData.filterType === null ? "static" : aemData.filterType;
@@ -28,11 +30,6 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     aemFilterData = normaliseState(aemData.filterListValues);
   }
 
-  const filterList = useRenewalGridState(state => state.filterList);
-  const dateSelected = useRenewalGridState(state => state.dateSelected);
-  const datePickerState = useRenewalGridState(state => state.datePickerState);
-  const resetFilter = useRenewalGridState(state => state.resetFilter);
-  const effects = useRenewalGridState(state => state.effects);
 
   const { setFilterList, toggleFilterModal } = effects;
 
@@ -46,7 +43,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   const rootIds = root ? root.childIds : [];
 
   const showResult = () => {
-    const optionFields = generateFilterFields(filterList, dateSelected, datePickerState);
+    const [optionFields] = _generateFilterFields();
     const queryString = JSON.stringify(optionFields);
     toggleFilterModal();
     if (resetFilter){

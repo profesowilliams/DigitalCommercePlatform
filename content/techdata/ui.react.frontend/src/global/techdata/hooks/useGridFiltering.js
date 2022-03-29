@@ -11,7 +11,6 @@ export default function useGridFiltering() {
 
     function onAfterGridInit(config) {
         resetCallback.current = () => {
-
             config.gridResetRequest();
         };
     }

@@ -24,6 +24,9 @@ export function generateFilterFields(
   dateSelected,
   datePickerState
 ) {
+
+  if(!filterList) return null
+
   const [startRangeDate, endRangeDate] = datePickerState || [
     new Date(),
     new Date(),
