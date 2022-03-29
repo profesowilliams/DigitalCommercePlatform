@@ -95,7 +95,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     {
                                         {"DropShip", new IndicatorValueDto{ Value="Y"} },
                                         { "AuthRequiredPrice", new IndicatorValueDto{ Value="Y"} },
-                                        { "EndUserRequired", new IndicatorValueDto{ Value="Y"} },
+                                        { "EndUserRequired", new IndicatorValueDto{ Value="X"} },
                                         { "New", new IndicatorValueDto{ Value="Y"} },
                                         { "Refurbished", new IndicatorValueDto{ Value="Y"} },
                                         { "Returnable", new IndicatorValueDto{ Value="Y"} },
@@ -322,6 +322,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             DropShip=true,
                             EndUserRequired=true,
+                            EndUserRequiredLabel="ENDUSERREQUIRED.TRUE_TRANSLATED",
                             New=true,
                             Refurbished=true,
                             Returnable=true,
@@ -418,7 +419,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     {
                                         {"DropShip", new IndicatorValueDto{ Value="Y"} },
                                         { "AuthRequiredPrice", new IndicatorValueDto{ Value="Y"} },
-                                        { "EndUserRequired", new IndicatorValueDto{ Value="Y"} },
+                                        { "EndUserRequired", new IndicatorValueDto{ Value="N"} },
                                         { "New", new IndicatorValueDto{ Value="Y"} },
                                         { "Refurbished", new IndicatorValueDto{ Value="Y"} },
                                         { "Returnable", new IndicatorValueDto{ Value="Y"} },
@@ -584,7 +585,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         IndicatorsFlags = new IndicatorFlags
                         {
                             DropShip=true,
-                            EndUserRequired=true,
+                            EndUserRequired=false,
+                            EndUserRequiredLabel="ENDUSERREQUIRED.FALSE_TRANSLATED",
                             New=true,
                             Refurbished=true,
                             Returnable=true,
@@ -656,7 +658,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                     {
                                         {"DropShip", new IndicatorValueDto{ Value="Y"} },
                                         { "AuthRequiredPrice", new IndicatorValueDto{ Value="Y"} },
-                                        { "EndUserRequired", new IndicatorValueDto{ Value="Y"} },
+                                        { "EndUserRequired", new IndicatorValueDto{ Value="X"} },
                                         { "New", new IndicatorValueDto{ Value="Y"} },
                                         { "Refurbished", new IndicatorValueDto{ Value="Y"} },
                                         { "Returnable", new IndicatorValueDto{ Value="Y"} },
@@ -853,6 +855,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         {
                             DropShip=true,
                             EndUserRequired=true,
+                            EndUserRequiredLabel="ENDUSERREQUIRED.TRUE_TRANSLATED",
                             New=true,
                             Refurbished=true,
                             Returnable=true,

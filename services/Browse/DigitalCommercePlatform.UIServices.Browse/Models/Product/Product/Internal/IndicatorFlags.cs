@@ -1,4 +1,4 @@
-//2022 (c) Tech Data Corporation - All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
 
 using System.Diagnostics.CodeAnalysis;
 
@@ -23,5 +23,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Inter
         public string VirtualLabel { get; set; }
         public bool FreeShipping { get; set; }
         public string FreeShippingLabel { get; set; }
+        public string EndUserRequiredLabel { get; set; }
     }
 }

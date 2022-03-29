@@ -49,6 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string Y = "Y";
             private const string CnetLanguage = "EN";
             private const string CnetSite = "US";
+            private const string X = "X";
             private readonly ICultureService _cultureService;
             private readonly string _imageSize;
             private readonly Dictionary<string, string> _indicatorsTranslations = null;
@@ -142,7 +143,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 flags.CanOrder = flags.IsValid && indicators.ContainsKey(Orderable) && string.Equals(indicators[Orderable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.NewProduct = indicators.ContainsKey(New) && string.Equals(indicators[New].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.Returnable = indicators.ContainsKey(Returnable) && string.Equals(indicators[Returnable].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
-                flags.EndUserRequired = indicators.ContainsKey(EndUserRequired) && string.Equals(indicators[EndUserRequired].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
+                flags.EndUserRequired = indicators.ContainsKey(EndUserRequired) && string.Equals(indicators[EndUserRequired].Value, X, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.Refurbished = indicators.ContainsKey(Refurbished) && string.Equals(indicators[Refurbished].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.DropShip = indicators.ContainsKey(DropShip) && string.Equals(indicators[DropShip].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
                 flags.Warehouse = indicators.ContainsKey(Warehouse) && string.Equals(indicators[Warehouse].Value, Y, System.StringComparison.InvariantCultureIgnoreCase);
@@ -332,6 +333,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 {
                     DropShip = flags.DropShip,
                     EndUserRequired = flags.EndUserRequired,
+                    EndUserRequiredLabel = _translationService.Translate(_indicatorsTranslations, $"{nameof(IndicatorFlags.EndUserRequired)}.{flags.EndUserRequired}".ToUpperInvariant()),
                     New = flags.NewProduct,
                     Refurbished = flags.Refurbished,
                     Returnable = flags.Returnable,
