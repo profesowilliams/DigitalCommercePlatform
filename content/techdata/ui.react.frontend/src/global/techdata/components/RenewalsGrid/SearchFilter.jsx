@@ -28,15 +28,15 @@ function SearchFilter({
   const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] = useState(initialInputVal);
   const initialEditViewVal = option.length !== 0;
   const [isEditView, setIsEditView] = useState(initialEditViewVal);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTriggered, setSearchTriggered] = useState(false);
   
   const clickHandler = () => {
     callback()
     setCallbackExecuted(true)
   };
-  
-  const onReset = () => {
-    setCallbackExecuted(false)
-    setIsSearchCapsuleVisible(false);
+
+  function clearValues() {
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
         setValues((prevSt) => {
@@ -47,6 +47,18 @@ function SearchFilter({
         });
       }
     }
+  }
+  
+  const onReset = () => {
+    setCallbackExecuted(false)
+    setIsSearchCapsuleVisible(false);
+    if (searchTerm.length !== 0 && searchTriggered) {
+      setSearchTerm('');
+      onQueryChanged();
+      setSwitchDropdown(false);
+    }
+    setSearchTerm('');
+    clearValues();
   };
 
   const changeHandler = (value) => {    
@@ -93,6 +105,7 @@ function SearchFilter({
   }
   
   function triggerSearch() {
+    if (!searchTriggered) setSearchTriggered(true);
     const { option } = values;
     const inputValue = inputRef.current.value;
     if (!inputValue) return fetchAll();
@@ -166,6 +179,8 @@ function SearchFilter({
                 placeholder={`Enter a ${chosenFilter}`}
                 ref={inputRef}
                 onKeyDown={triggerSearchOnEnter}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <button
                 className="cmp-search-tooltip__button"
