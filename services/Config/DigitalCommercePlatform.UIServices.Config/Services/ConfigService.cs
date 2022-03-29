@@ -156,13 +156,13 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 Models.Configurations.Internal.FindModel appServiceRequest;
                 Url configurationFindUrl;
                 FindConfigurationUrl(request, out appServiceRequest, out configurationFindUrl);
-                var  result = Configuration(appServiceRequest, configurationFindUrl);
+                var result = Configuration(appServiceRequest, configurationFindUrl);
                 return result;
             }
             catch (RemoteServerHttpException ex)
             {
-                    _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
-                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
+                throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
             }
             catch (Exception ex)
             {
@@ -171,7 +171,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             }
         }
 
-        private async Task<FindResponse<Configuration>> Configuration(Models.Configurations.Internal.FindModel appServiceRequest ,string configurationFindUrl)
+        private async Task<FindResponse<Configuration>> Configuration(Models.Configurations.Internal.FindModel appServiceRequest, string configurationFindUrl)
         {
             FindResponse<Configuration> result = new();
             if (appServiceRequest.Details)
@@ -260,17 +260,16 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 {
                     if (ex.Message.Contains("Reported an error: NotFound"))
                     {
-                        _logger.LogError(ex, "Exception calling quote service using config id  : " + configuration.ConfigId);
+                        _logger.LogError(ex, "Exception calling quote service using config id ignore exception : " + configuration.ConfigId);
                     }
                     else
                     {
-                        _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
+                        _logger.LogError(ex, "Exception at ignore exception : " + nameof(ConfigService));
                     }
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Exception at searching configurations : " + nameof(ConfigService));
-                    throw;
+                    _logger.LogError(ex, "Exception at searching configurations ignore exception: " + nameof(ConfigService));
                 }
 
             }
