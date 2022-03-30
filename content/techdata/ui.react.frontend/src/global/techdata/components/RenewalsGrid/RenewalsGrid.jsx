@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
@@ -12,10 +12,12 @@ import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, preserveFilterin
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
+const NUMBER_OF_SORTINGS_ON_RENDER = 2;
 
 function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged, requestInterceptor } =
     useGridFiltering();
+    const [clickCounter, setClickCounter] = useState(0)
   const effects = useRenewalGridState(state => state.effects);
 
   const gridApiRef = useRef();
@@ -77,16 +79,20 @@ function RenewalsGrid(props) {
   const onSortChanged = (evt) => {
     const sortModel = evt.api.getSortModel();
     hasSortChanged.current = sortModel.length === 1 ? { sortData: sortModel[0] } : false;
-    const clickedColumn = evt?.columnApi
-      ?.getAllGridColumns()
-      .map(({ colId, sort }) => ({ colId, sort }))
-      .filter((col) => col.sort)
-    if (clickedColumn.length) {
-      pushEvent(ANALYTICS_TYPES.events.click, {
-        type: ANALYTICS_TYPES.types.button,
-        category: ANALYTICS_TYPES.category.renewalsTableInteraction,
-        name: clickedColumn[0]?.colId,
-      });
+    setClickCounter(st => st + 1);
+    /**This is in order to prevent the analytics being sent on rendering, as there is no way to do on sort events by click other than this */
+    if(clickCounter > NUMBER_OF_SORTINGS_ON_RENDER) {
+      const clickedColumn = evt?.columnApi
+        ?.getAllGridColumns()
+        .map(({ colId, sort }) => ({ colId, sort }))
+        .filter((col) => col.sort)
+      if (clickedColumn.length) {
+        pushEvent(ANALYTICS_TYPES.events.click, {
+          type: ANALYTICS_TYPES.types.button,
+          category: ANALYTICS_TYPES.category.renewalsTableInteraction,
+          name: clickedColumn[0]?.colId,
+        });
+      }
     }
   };
 
@@ -95,7 +101,6 @@ function RenewalsGrid(props) {
     effects.setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;
     onAfterGridInit(config);
-    console.log({ dueDateKey, dueDateDir, ...secondLevelOptions })
     config.columnApi.applyColumnState({
       state: [
         {

@@ -28,7 +28,6 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   });
 
   const pageInputRef = useRef();
-  
   const {
     totalCounter,
     stepBy,
