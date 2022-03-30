@@ -48,6 +48,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations.Intern
         public int Page { get; set; }
         public int PageSize { get; set; }
         public bool EndUserSpaOnly { get; set; } = true;
+        public bool Parallel { get; set; } = true;
+        
     }
 
     public enum SortField

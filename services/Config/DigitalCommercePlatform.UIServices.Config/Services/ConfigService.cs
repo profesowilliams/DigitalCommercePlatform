@@ -404,6 +404,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
                 Details = request.Details,
                 PricingLevel = request.PricingOption.ToString(),
                 EndUserSpaOnly = request.EndUserSpaOnly,
+                Parallel = request.ParallelOnly,
                 VendorName = request.Vendor
             };
 

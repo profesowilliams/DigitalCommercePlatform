@@ -27,6 +27,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.FindDealsFor
             public PricingOption? PricingOption { get; set; }
             public string Vendor { get; set; }
             public bool EndUserSpaOnly { get; set; } = true;
+            public bool ParallelOnly { get; set; } = true;
 
             public Request()
             {
