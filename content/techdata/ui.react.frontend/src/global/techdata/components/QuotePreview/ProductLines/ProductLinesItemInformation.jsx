@@ -53,6 +53,8 @@ function ProductLinesItemInformation({ headerName, line, shopDomainPage="", empt
         />
   );
 
+  const isValidAnnuityDuration = (duration) => duration && !isNaN(duration) && Number(duration) != 0; 
+
   return (
     <section>
       <div onClick={() => handleClick(headerName)} className="cmp-product-lines-grid__item-information">
@@ -88,8 +90,8 @@ function ProductLinesItemInformation({ headerName, line, shopDomainPage="", empt
                   {line.annuity.autoRenewal && <p>
                     <b>Auto Renew:</b>
                     <span>{ line.annuity.autoRenewal ? "Yes" : "No"}</span>
-                  </p>}
-                  {line.annuity.duration && line.annuity.duration !== '0' && <p>
+                  </p>}    
+                  {isValidAnnuityDuration(line.annuity.duration) && <p>
                     <b>Duration:</b>
                     <span>{ "{duration} months".replace("{duration}", line.annuity.duration) }</span>
                   </p>}
