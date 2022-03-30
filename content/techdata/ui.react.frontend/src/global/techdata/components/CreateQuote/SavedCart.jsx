@@ -13,7 +13,9 @@ const SavedCart = ({
   methods, 
   endpoints,
   next,
-  buttonLabel
+  buttonLabel,
+  modalEventError,
+  errorMessage
  }) => {
   const { cartslistEndpoint, cartdetailsEndpoint } = endpoints;
   const cartTypes = [
@@ -78,7 +80,10 @@ const SavedCart = ({
           onClick={goToNext} inputValue={cartName} 
           setValue={setCartName}
           label={method.textPlaceholder}
-          onError={onError} />
+          onError={onError}
+          modalEventError={modalEventError}
+          errorMessage={errorMessage}
+          />
       }
       {
         step === 1 && (cartType && cartType.id==='browse') && 
@@ -89,6 +94,8 @@ const SavedCart = ({
             cartdetailsEndpoint={cartdetailsEndpoint}
             label={method.dropdownPlaceholder}
             buttonLabel={buttonLabel}
+            modalEventError={modalEventError}
+            errorMessage={errorMessage}
           />
       }
       { step === 0 && <Button btnClass="cmp-quote-button" disabled={!cartType} onClick={nextStep}>Next</Button>}

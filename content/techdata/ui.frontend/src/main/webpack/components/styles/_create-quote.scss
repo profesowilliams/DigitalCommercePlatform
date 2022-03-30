@@ -35,6 +35,14 @@
   }
 }
 
+.cmp-quote-error-modal{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  padding-top: 5vh;
+  align-items: center;
+}
+
 .cmp-widget .cmp-dropdown-custom{
   margin-bottom: rem(18px);
   position: relative;

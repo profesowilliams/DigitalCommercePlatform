@@ -3,9 +3,18 @@ import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import Loader from '../Widgets/Loader';
+import { isNotEmptyValue } from '../../../../utils/utils';
 
-const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, estimatedIddetailsEndpoint, label, buttonLabel }) => {
-// const EstimatedIdSelectItem = ({ onClick, buttonTitle }) => {
+const EstimatedIdSelectItem = ({
+  onClick,
+  buttonTitle,
+  estimatedIdListEndpoint,
+  estimatedIddetailsEndpoint,
+  label,
+  buttonLabel,
+  modalEventError,
+  errorMessage,
+}) => {
   const [selected, setSelected] = useState(false);
   const [estimatedIdList, setEstimatedIdList] = useState([]);
   const [estimatedIdListError, setEstimatedIdListError] = useState(false);
@@ -39,7 +48,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
   },[])
   const onNext = async () => {
     if( !selected )
-      return alert('Select an item to continue');
+      return modalEventError(isNotEmptyValue(errorMessage.selectItemToContinue) ? errorMessage.selectItemToContinue :  'Select an item to continue');
     try{
       const newEndpoint = estimatedIddetailsEndpoint.replace('{selected-id}', selected.id);
       setIsLoading(true);
@@ -49,7 +58,7 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
         }
       });
       setIsLoading(false);
-      if (isError) return alert('Error');
+      if (isError) return modalEventError(isNotEmptyValue(errorMessage.errorModalTitle) ? errorMessage.errorModalTitle : 'Error');
       if( isValid ){
         onClick(selected.id, {
           redirectToPreview:true,
@@ -58,10 +67,10 @@ const EstimatedIdSelectItem = ({ onClick, buttonTitle, estimatedIdListEndpoint, 
           }
         });
       }else{
-        alert('Invalid estimated ID')
+        modalEventError(isNotEmptyValue(errorMessage.invalidEstimatedId) ? errorMessage.invalidEstimatedId : 'Invalid estimated ID');
       }
     }catch(e){
-      alert('Error getting the cart')
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : 'Error getting the cart');
     }
   }
   return(

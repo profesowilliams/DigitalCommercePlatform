@@ -7,7 +7,16 @@ import ManuallyTyped from './ManuallyTyped';
 import EstimatedIdSelectItem from './EstimatedIdSelectItem';
 import { pushAnalyticsEvent } from './analytics';
 
-const EstimatedId = ({ method, setMethod, methods, endpoints, next, buttonLabel }) => {
+const EstimatedId = ({
+	method,
+	setMethod,
+	methods,
+	endpoints,
+	next,
+	buttonLabel,
+	modalEventError,
+	errorMessage
+}) => {
 	const { estimatedIdListEndpoint, estimatedIdDetailsEndpoint } = endpoints;
 	const estimatedTypes = [
 		{ id: 'manually', name: 'Enter Estimate ID' },
@@ -75,7 +84,9 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next, buttonLabel 
 						setValue={setEstimatedId}
 						label={method.textPlaceholder}
 						onClick={goToNext}
-						onError={onError} />
+						onError={onError}
+						modalEventError={modalEventError}
+						errorMessage={errorMessage} />
 				</>
 			)}
 			{step > 0 && estimatedType && estimatedType.id === 'browse' && (
@@ -86,6 +97,8 @@ const EstimatedId = ({ method, setMethod, methods, endpoints, next, buttonLabel 
 					estimatedIddetailsEndpoint={estimatedIdDetailsEndpoint}
 					label={method.dropdownPlaceholder}
 					buttonLabel={buttonLabel}
+					modalEventError={modalEventError}
+					errorMessage={errorMessage}
 				/>
 			)}
 			{step === 0 && (

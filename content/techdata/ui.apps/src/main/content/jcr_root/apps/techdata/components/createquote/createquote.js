@@ -5,6 +5,7 @@ use(function () {
     var listValues = [];
     var resourceResolver = resource.getResourceResolver();
     var node = resourceResolver.getResource(currentNode.getPath() + "/optionsList");
+    var errorMessage = {};
 
     if (node !== null) {
         var childrenList = node.getChildren();
@@ -55,6 +56,40 @@ use(function () {
         jsonObject.put("quotesGridUrl", properties.get("quotesGridUrl"));
     }
 
+    if (properties.get("errorModalTitle") != null) {
+        errorMessage.errorModalTitle = properties["errorModalTitle"];
+    }
+    if (properties.get("emptyCart") != null) {
+        errorMessage.emptyCart = properties["emptyCart"];
+    }
+    if (properties.get("notValidCart") != null) {
+        errorMessage.notValidCart = properties["notValidCart"];
+    }
+    if (properties.get("invalidCart") != null) {
+        errorMessage.invalidCart = properties["invalidCart"];
+    }
+    if (properties.get("notValidEstimateId") != null) {
+        errorMessage.notValidEstimateId = properties["notValidEstimateId"];
+    }
+    if (properties.get("errorGettingData") != null) {
+        errorMessage.errorGettingData = properties["errorGettingData"];
+    }
+    if (properties.get("noItemsInCart") != null) {
+        errorMessage.noItemsInCart = properties["noItemsInCart"];
+    }
+    if (properties.get("selectItemToContinue") != null) {
+        errorMessage.selectItemToContinue = properties["selectItemToContinue"];
+    }
+    if (properties.get("invalidEstimatedId") != null) {
+        errorMessage.invalidEstimatedId = properties["invalidEstimatedId"];
+    }
+    if (properties.get("errorGettingCart") != null) {
+        errorMessage.errorGettingCart = properties["errorGettingCart"];
+    }
+    if (properties.get("errorInPrice") != null) {
+        errorMessage.errorInPrice = properties["errorInPrice"];
+    }
+
      if (this.uiServiceDomain != null) {
         jsonObject.put("endpoint", this.uiServiceDomain+this.createQuoteEndpoint);
         jsonObject.put("cartslistEndpoint", this.uiServiceDomain+this.savedCartsEndpoint);
@@ -64,6 +99,9 @@ use(function () {
         jsonObject.put("estimatedIdDetailsEndpoint", this.uiServiceDomain+this.estimatedIdDetailsEndpoint);
         }
 
+    if (errorMessage != null) {
+        jsonObject.put("errorMessage", errorMessage);
+    }
 
     if (listValues != null) {
         jsonObject.put("optionsList", listValues);

@@ -3,8 +3,18 @@ import SearchList from '../Widgets/SearchList';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import Loader from '../Widgets/Loader';
+import { isNotEmptyValue } from '../../../../utils/utils';
 
-const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdetailsEndpoint, label="Search Cart Name", buttonLabel}) => {
+const SavedCartSelectItem = ({
+  onClick,
+  buttonTitle,
+  cartslistEndpoint,
+  cartdetailsEndpoint,
+  label="Search Cart Name",
+  buttonLabel,
+  modalEventError,
+  errorMessage,
+}) => {
   const [selected, setSelected] = useState(false);
   const [cartList, setCartList] = useState([]);
   const [cartListError, setCartListError] = useState(false);
@@ -36,7 +46,7 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
   },[])
   const onNext = async () => {
     if( !selected )
-      return alert('Select an item to continue');
+      return modalEventError(isNotEmptyValue(errorMessage.selectItemToContinue) ? errorMessage.selectItemToContinue : 'Select an item to continue');
     try{
       const params = { id: selected.id, isCartName: false }
       setIsLoading(true);
@@ -46,20 +56,20 @@ const SavedCartSelectItem = ({ onClick, buttonTitle, cartslistEndpoint, cartdeta
         }
       });
       setIsLoading(false);
-      if (isError) return alert(`Error: ${messages.join(' -- ')}`);
+      if (isError) return modalEventError(`Error: ${messages.join(' -- ')}`);
       const { data: { items } } = content;
       if( items ){
         const total = items.reduce((result, item) => ( result + item.quantity ), 0 );
         if(items && total > 0){
           onClick(selected.id);
         }else{
-          alert('No items in selected cart')
+          modalEventError(isNotEmptyValue(errorMessage.noItemsInCart) ? errorMessage.noItemsInCart : 'No items in selected cart')
         }
       }else{
-        alert('Invalid cart')
+        modalEventError(isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : 'Invalid cart')
       }
     }catch(e){
-      alert('Error getting the data')
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : 'Error getting the data')
     }
   }
   return(

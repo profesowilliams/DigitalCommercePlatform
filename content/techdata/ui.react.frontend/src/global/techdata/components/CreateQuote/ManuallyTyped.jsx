@@ -3,9 +3,18 @@ import InputText from '../Widgets/TextInput';
 import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import ErrorMessage from './ErrorMessage';
+import { isNotEmptyValue } from '../../../../utils/utils';
 
 const ManuallyTyped = ({
-  onClick, inputValue, setValue, label, validateCartEndpoint, onError, estimatedIdListEndpoint
+  onClick,
+  inputValue,
+  setValue,
+  label,
+  validateCartEndpoint,
+  onError,
+  estimatedIdListEndpoint,
+  modalEventError,
+  errorMessage,
 }) => {
   const [invalidCartName, setInvalidCartName] = useState(false);
   const { msgBeforelink, msgAfterlink, linklabel, linkFunction, errorMsg } = onError;
@@ -26,10 +35,10 @@ const ManuallyTyped = ({
       if( total > 0 && source.id ){
         onClick(source.id);
       }else{
-        alert('No items in selected cart')
+        modalEventError(isNotEmptyValue(errorMessage.noItemsInCart) ? errorMessage.noItemsInCart  : 'No items in selected cart');
       }
     }catch(e){
-      alert('Error getting data')
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingData) ? errorMessage.errorGettingData : 'Error getting data');
     }
   }
   const goToNext = async () => {
@@ -50,7 +59,7 @@ const ManuallyTyped = ({
               });
             }
             else
-              alert('Not a valid estimated ID')
+              modalEventError(isNotEmptyValue(errorMessage.notValidEstimateId) ? errorMessage.notValidEstimateId : 'Not a valid estimated ID');
           }else{
             setInvalidCartName(inputValue);
           }

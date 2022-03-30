@@ -4,8 +4,20 @@ import Button from '../Widgets/Button';
 import { get } from '../../../../utils/api';
 import WidgetTitle from '../Widgets/WidgetTitle';
 import Loader from '../Widgets/Loader';
+import { isNotEmptyValue } from '../../../../utils/utils';
 
-const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions, disableCreateQuoteButton, prev, placeholderText}) => {
+const Pricing = ({
+  createQuote,
+  buttonTitle,
+  method,
+  setMethod,
+  pricingConditions,
+  disableCreateQuoteButton,
+  prev,
+  placeholderText,
+  modalEventError,
+  errorMessage
+}) => {
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() =>{
@@ -17,7 +29,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
         }
       });
       setIsLoading(false);
-      if (isError) alert('Error in pricing conditions');
+      if (isError) modalEventError(isNotEmptyValue(errorMessage.errorInPrice) ? errorMessage.errorInPrice : 'Error in pricing conditions');
       if( items ){
         const newItems = items.map(item => ({label: item.key, key: item.value}) );
         const item = newItems.filter(item => item.label === 'Commercial(Non-Govt)');
@@ -30,7 +42,7 @@ const Pricing = ({createQuote, buttonTitle, method, setMethod, pricingConditions
     try{
       getData();
     }catch{
-      alert('error getting data');
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : 'error getting data');
     }
   },[])
   return (
