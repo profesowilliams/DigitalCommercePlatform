@@ -201,13 +201,13 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             };
 
             if (!string.IsNullOrWhiteSpace(orderParameters.Id))
-            {
                 orderParameters.Id += "*";
-            }
             else if (!string.IsNullOrWhiteSpace(orderParameters.CustomerPO))
-            {
-                orderParameters.CustomerPO += "*";
-            }
+                orderParameters.CustomerPO += "*";            
+            else if (!string.IsNullOrWhiteSpace(orderParameters.InvoiceId))
+                orderParameters.InvoiceId += "*";
+
+
             orderParameters.CreatedFrom = _helperService.GetDateParameter((DateTime)orderParameters.CreatedFrom, "from");
             orderParameters.CreatedTo = _helperService.GetDateParameter((DateTime)orderParameters.CreatedTo, "to");
 

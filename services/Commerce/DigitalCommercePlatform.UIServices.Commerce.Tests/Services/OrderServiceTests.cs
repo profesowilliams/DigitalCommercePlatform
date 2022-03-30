@@ -163,6 +163,55 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public void FindOrder_InvoiceTest()
+        {
+            SearchCriteria orderParameters = new()
+            {
+                Origin = "web",
+                PageNumber = 1,
+                PageSize = 25,
+                SortAscending = true,
+                SortBy = "Created",
+                WithPaginationInfo = true,
+                InvoiceId = "810"
+            };
+
+            Type type;
+            object objType;
+            InitiateOrderService(out type, out objType);
+
+            var findOrderQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "FindOrder" && x.IsPrivate);
+
+            var result = findOrderQuery.Invoke(objType, new object[] { orderParameters });
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public void FindOrder_CustomerPOTest()
+        {
+            SearchCriteria orderParameters = new()
+            {
+                Origin = "web",
+                PageNumber = 1,
+                PageSize = 25,
+                SortAscending = true,
+                SortBy = "Created",
+                WithPaginationInfo = true,
+                CustomerPO = "ABC"
+            };
+
+            Type type;
+            object objType;
+            InitiateOrderService(out type, out objType);
+
+            var findOrderQuery = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "FindOrder" && x.IsPrivate);
+
+            var result = findOrderQuery.Invoke(objType, new object[] { orderParameters });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
         public void CalculateFreight_Test()
         {
             //arrange
