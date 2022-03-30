@@ -200,6 +200,10 @@ export const fromExceptionToErrorObject = (error) => {
     }; // in case of error default value to show the no row message
 }
 
+export const stringifyValue = (value) => {
+  return (Array.isArray(value) && value?.length ? value.map(e => e?.id ? e.id : e[Object.keys(e)[0]]).join(',') : value) || '';
+}
+
 /**
  * Function that validate if the value is a null or undefined
  * and return true or false for this case

@@ -3,7 +3,7 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formateDatePicker, normalizeErrorCode } from "../../../../utils/utils";
+import { formateDatePicker, normalizeErrorCode, stringifyValue } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
 
 function Grid(props) {
@@ -154,7 +154,7 @@ function Grid(props) {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
         action: function () {          
-          navigator.clipboard.writeText(params.value || '');
+          navigator.clipboard.writeText(stringifyValue(params.value));
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
       },
@@ -162,7 +162,7 @@ function Grid(props) {
         name: config?.menuCopyWithHeaders,
         action: function () {
           navigator.clipboard.writeText(
-            `${params.column.colDef.headerName}\n${params.value || ''}`
+            `${params.column.colDef.headerName}\n${stringifyValue(params.value) || ''}`
           );
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
