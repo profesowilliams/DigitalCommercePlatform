@@ -21,14 +21,11 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const setPaginationData = useRenewalGridState(
     (state) => state.effects.setCustomState
   );
-  const { _generateFilterFields, filterList, dateSelected, datePickerState } =
-    useMultiFilterSelected();
+  const {optionFieldsRef, isFilterDataPopulated} = useMultiFilterSelected();
   const [paginationCounter, setPaginationCounter] = useState({
     minCounter: 0,
     maxCounter: 0,
   });
-  const optionFieldsRef = useRef();
-  const isFilterDataPopulated = useRef(false);
 
   const pageInputRef = useRef();
   const _setOptionsFileds = useCallback(
@@ -38,13 +35,6 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     },
     [filterList, dateSelected]
   );
-
-  useEffect(() => {
-    const optionFields = _generateFilterFields();
-    optionFields && _setOptionsFileds(optionFields);
-    console.log("🚀 ~ optionFields", optionFields);
-  }, [filterList, dateSelected, datePickerState]);
-  
 
   const {
     totalCounter,

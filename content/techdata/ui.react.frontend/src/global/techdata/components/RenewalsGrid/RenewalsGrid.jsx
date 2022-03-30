@@ -1,25 +1,33 @@
 import React, { useEffect, useRef } from "react";
-import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
-import { sortRenewalObjects } from "../../../../utils/utils";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
+import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
 import CustomRenewalPagination from "./CustomRenewalPagination";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 import RenewalDetailRenderers from "./RenewalDetailRenderers";
+import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, preserveFilteringOnPagination, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
+
 
 function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged, requestInterceptor } =
     useGridFiltering();
-  const effects = useRenewalGridState(state => state.effects); 
+  const effects = useRenewalGridState(state => state.effects);
+
   const gridApiRef = useRef();
 
   const componentProp = JSON.parse(props.componentProp);
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
   const dueDateDir = componentProp.options.defaultSortingDirection;
+
+  const hasSortChanged = useRef(false);
+
+  const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
+
   const { searchOptionsList } = componentProp;
 
   const customPaginationRef = useRef();
@@ -33,10 +41,10 @@ function RenewalsGrid(props) {
     sort: "desc",
   }
 
-  useEffect(()=>effects.setCustomState({key:'aemConfig',value:componentProp}),[])
+  useEffect(() => effects.setCustomState({ key: 'aemConfig', value: componentProp }), [])
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
-  
+
   const gridConfig = {
     ...componentProp,
     paginationStyle: "custom",
@@ -44,77 +52,37 @@ function RenewalsGrid(props) {
     errorGettingDataMessage: "Internal server error please refresh the page",
   };
 
-  function mapServiceData(response) {
-    const mappedResponse = {...response};
-    const items = mappedResponse?.data?.content?.items?.map(val => ({ ...val }));
-    const itemsWithActions = items ? items.map((data) => ({ ...data, actions: true })) : [];
-    const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
-    const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
-    const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
-    const refinementGroups = mappedResponse?.data?.content?.refinementGroups ?? "thomas";
-
-    if (mappedResponse.status !== 200 && !mappedResponse.data) {
-      return {
-        data: {
-          content: {
-            items: null,
-            totalItems,
-            pageCount,
-            pageNumber,
-            refinementGroups,
-          },
-        },
-      };
-    }
-
-    mappedResponse.data.content = {
-      items: itemsWithActions,
-      totalItems,
-      pageCount,
-      pageNumber,
-      refinementGroups,
-    };
-    return mappedResponse;
-  }
-
-  const customRequestInterceptor = async (request) => {    
-    if (request.url.includes("SortBy=id")){
-      gridApiRef.current.columnApi.applyColumnState({
-        state: [{ ...secondLevelOptions, sort:"asc"}],defaultState: { sort: null }
-      });
-      return      
-    }     
-    const pageNumberFromCustomNavigationState = customPaginationRef.current?.pageNumber;
-    if(pageNumberFromCustomNavigationState !== 1){
-      request.url = request.url.replace(/PageNumber=\d+/,`PageNumber=${pageNumberFromCustomNavigationState}`)
-    }
-    const sortModel = [{colId: dueDateKey,sort: dueDateDir},{...secondLevelOptions}];    
-    const query = {
-      SortBy: `${sortModel?.[0]?.colId ?? 'id'} ${sortModel?.[0]?.sort ?? ''}${sortModel?.[1]? ',': ''} ${sortModel?.[1]?.colId ?? ''} ${sortModel?.[1]?.sort ?? ''}`,
-      SortDirection: sortModel?.[0]?.sort ?? ''
-    }
-    const response = await requestInterceptor(request);
-    const mappedResponse = mapServiceData(response);      
-    const {pageCount, pageNumber, totalItems, refinementGroups} = mappedResponse?.data?.content;
-    const value = {   
-      currentResultsInPage: mappedResponse?.data?.content?.items?.length,
-      totalCounter: totalItems,   
-      pageCount,
-      pageNumber:parseInt(pageNumber),    
-    };
-    const multiSorting = sortRenewalObjects(mappedResponse?.data?.content?.items, query) ?? 0;
-    effects.setCustomState({key:'pagination',value})
-    effects.setCustomState({key:'refinements', value: refinementGroups})    
-    mappedResponse.data.content.items = [...multiSorting];
+  const customRequestInterceptor = async (request) => {
+    const sortingFields = { dueDateKey, dueDateDir, secondLevelOptions };
+    if (mapSortIdByPrice(secondLevelOptions, gridApiRef, request)) return;
+    request.url = preserveFilteringOnPagination(customPaginationRef, request);
+    let response = {};
+    if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
+      response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp});
+    } else {
+      response = await requestInterceptor(request);
+    }  
+    const mappedResponse = mapServiceData(response);
+    const { refinementGroups, ...rest } = mappedResponse?.data?.content;
+    const paginationValue = setPaginationData(rest);
+    effects.setCustomState({ key: 'pagination', value: paginationValue })
+    effects.setCustomState({ key: 'refinements', value: refinementGroups })
+    mappedResponse.data.content.items = priceDescendingByDefaultHandle(
+      sortingFields,
+      mappedResponse
+    );
     return mappedResponse;
   }
 
   const onSortChanged = (evt) => {
+    const sortModel = evt.api.getSortModel();
+    hasSortChanged.current = sortModel.length === 1 ? { sortData: sortModel[0] } : false;
+    console.log("🚀 ~ sortModel", sortModel);
     const clickedColumn = evt?.columnApi
-    ?.getAllGridColumns()
-    .map(({ colId, sort }) => ({ colId, sort }))
-    .filter((col) => col.sort)
-    if(clickedColumn.length) {
+      ?.getAllGridColumns()
+      .map(({ colId, sort }) => ({ colId, sort }))
+      .filter((col) => col.sort)
+    if (clickedColumn.length) {
       pushEvent(ANALYTICS_TYPES.events.click, {
         type: ANALYTICS_TYPES.types.button,
         category: ANALYTICS_TYPES.category.renewalsTableInteraction,
@@ -123,29 +91,30 @@ function RenewalsGrid(props) {
     }
   };
 
-  const _onAfterGridInit = (config) => {    
-    const value =  config.api;     
-    effects.setCustomState({key:'gridApi',value});      
-    gridApiRef.current = config;  
+  const _onAfterGridInit = (config) => {
+    const value = config.api;
+    effects.setCustomState({ key: 'gridApi', value });
+    gridApiRef.current = config;
     onAfterGridInit(config);
+    console.log({ dueDateKey, dueDateDir, ...secondLevelOptions })
     config.columnApi.applyColumnState({
-      state: [         
+      state: [
         {
           colId: dueDateKey,
           sort: dueDateDir,
         },
-        {...secondLevelOptions},                 
+        { ...secondLevelOptions },
       ],
       defaultState: { sort: null },
     })
   }
 
   return (
-    <section>     
+    <section>
       <div className="cmp-renewals-subheader">
         <CustomRenewalPagination onQueryChanged={onQueryChanged} ref={customPaginationRef} />
         <div className="renewal-filters">
-          <SearchFilter              
+          <SearchFilter
             options={searchOptionsList}
             onQueryChanged={onQueryChanged}
           />
@@ -158,13 +127,13 @@ function RenewalsGrid(props) {
       </div>
 
       <div className="cmp-renewals-grid">
-        <Grid         
+        <Grid
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}
           onAfterGridInit={_onAfterGridInit}
-          requestInterceptor={customRequestInterceptor}        
-          mapServiceData={mapServiceData}       
+          requestInterceptor={customRequestInterceptor}
+          mapServiceData={mapServiceData}
           isRenewals={true}
           onSortChanged={onSortChanged}
           handlerIsRowMaster={() => true}

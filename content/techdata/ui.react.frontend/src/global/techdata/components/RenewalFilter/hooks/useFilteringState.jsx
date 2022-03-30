@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { generateFilterFields } from "../filterUtils/filterUtils";
 
-//hook para reducir zustandboilerplate
-//logica comun que se reutiliza en los componentes
+
 export const useMultiFilterSelected = () => {
   const filterList = useRenewalGridState((state) => state.filterList);
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
@@ -12,20 +11,40 @@ export const useMultiFilterSelected = () => {
   const effects = useRenewalGridState((state) => state.effects);
   const filterData = useRenewalGridState((state) => state.refinements);
 
+  const optionFieldsRef = useRef();
+  const isFilterDataPopulated = useRef(false);
+
+  const _setOptionsFileds = useCallback(
+    ([optionFields, hasData]) => {
+      optionFieldsRef.current = optionFields;
+      isFilterDataPopulated.current = hasData;
+    },
+    [filterList, dateSelected]
+  );
+
+  useEffect(() => {
+    const optionFields = _generateFilterFields();
+    optionFields && _setOptionsFileds(optionFields);
+  }, [filterList, dateSelected, datePickerState]);
+
   const _generateFilterFields = () => {
-    const postJsonFields = generateFilterFields(filterList, dateSelected, datePickerState);
-    if (!postJsonFields) return [false,false];
-    if (Object.keys(postJsonFields).length > 4) return [postJsonFields, true]
+    const postJsonFields = generateFilterFields(
+      filterList,
+      dateSelected,
+      datePickerState
+    );
+    if (!postJsonFields) return [false, false];
+    if (Object.keys(postJsonFields).length > 4) return [postJsonFields, true];
     return [postJsonFields, false];
   };
 
   return {
+    optionFieldsRef,
+    isFilterDataPopulated,
     filterList,
-    dateSelected,
-    filterData,
-    datePickerState,
     resetFilter,
     effects,
-    _generateFilterFields,    
+    filterData,
+    _generateFilterFields,
   };
 };
