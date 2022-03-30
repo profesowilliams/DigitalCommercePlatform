@@ -1200,6 +1200,13 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/partials/email-templates/apac-email-template.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "search-results",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/search-results-demo.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,
