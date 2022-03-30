@@ -50,7 +50,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly ISiteSettings _siteSettings;
         private readonly ITranslationService _translationService;
         private readonly ICultureService _cultureService;        
-        private readonly string[] Indicators = { FreeShipping, Virtual };
+        private readonly string[] Indicators = { FreeShipping, Virtual, Refurbished };
 
         public SearchService(SearchServiceArgs args)
         {

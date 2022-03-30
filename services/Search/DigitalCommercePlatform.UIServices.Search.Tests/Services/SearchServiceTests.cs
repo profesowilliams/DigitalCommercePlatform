@@ -540,6 +540,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 {
                     Type = Virtual,
                     Value = "test2"
+                },
+                new Dto.FullSearch.Internal.IndicatorDto
+                {
+                    Type = Refurbished,
+                    Value = "test3"
                 }
             };
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
@@ -555,6 +560,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Products[0].Indicators.Should().NotBeNullOrEmpty();
             result.Products[0].Indicators[FreeShipping].Should().NotBeNull();
             result.Products[0].Indicators[Virtual].Should().NotBeNull();
+            result.Products[0].Indicators[Refurbished].Should().NotBeNull();
         }
 
         [Theory]
@@ -782,6 +788,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             productModel.Indicators[FreeShipping].Should().Be(expectedValues[0]);
             productModel.Indicators.Should().ContainKey(Virtual);
             productModel.Indicators[Virtual].Should().Be(expectedValues[1]);
+            productModel.Indicators.Should().ContainKey(Refurbished);
+            productModel.Indicators[Refurbished].Should().Be(expectedValues[2]);
         }
 
         public static IEnumerable<object> AddFreeShuppingIndicator_Test_Data()
@@ -797,7 +805,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     {
                         Indicators = new()
                     },
-                    new string[] {"FreeShipping.N_Translated", "Virtual.N_Translated" }
+                    new string[] {"FreeShipping.N_Translated", "Virtual.N_Translated", "Refurbished.N_Translated" }
                 },
                 new object[]
                 {
@@ -816,7 +824,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     {
                         Indicators = new()
                     },
-                    new string[] { "FreeShipping.Y_Translated", "Virtual.N_Translated" }
+                    new string[] { "FreeShipping.Y_Translated", "Virtual.N_Translated", "Refurbished.N_Translated" }
                 },
                 new object[]
                 {
@@ -833,6 +841,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                             {
                                 Type=Virtual,
                                 Value="N"
+                            },
+                             new IndicatorDto
+                            {
+                                Type=Refurbished,
+                                Value="N"
                             }
                         }
                     },
@@ -840,7 +853,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     {
                         Indicators = new()
                     },
-                    new string[] { "FreeShipping.Y_Translated", "Virtual.N_Translated" }
+                    new string[] { "FreeShipping.Y_Translated", "Virtual.N_Translated", "Refurbished.N_Translated" }
                 },
                 new object[]
                 {
@@ -857,6 +870,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                             {
                                 Type=Virtual,
                                 Value="Y"
+                            },
+                            new IndicatorDto
+                            {
+                                Type=Refurbished,
+                                Value="Y"
                             }
                         }
                     },
@@ -864,7 +882,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     {
                         Indicators = new()
                     },
-                    new string[] { "FreeShipping.Y_Translated", "Virtual.Y_Translated" }
+                    new string[] { "FreeShipping.Y_Translated", "Virtual.Y_Translated", "Refurbished.Y_Translated" }
                 }
             };
         }
