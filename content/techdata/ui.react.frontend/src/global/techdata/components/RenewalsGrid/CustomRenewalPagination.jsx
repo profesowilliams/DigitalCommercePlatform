@@ -28,14 +28,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   });
 
   const pageInputRef = useRef();
-  const _setOptionsFileds = useCallback(
-    ([optionFields, hasData]) => {
-      optionFieldsRef.current = optionFields;
-      isFilterDataPopulated.current = hasData;
-    },
-    [filterList, dateSelected]
-  );
-
+  
   const {
     totalCounter,
     stepBy,

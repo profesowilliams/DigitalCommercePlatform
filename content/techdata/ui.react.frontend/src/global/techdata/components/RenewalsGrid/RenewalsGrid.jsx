@@ -77,7 +77,6 @@ function RenewalsGrid(props) {
   const onSortChanged = (evt) => {
     const sortModel = evt.api.getSortModel();
     hasSortChanged.current = sortModel.length === 1 ? { sortData: sortModel[0] } : false;
-    console.log("🚀 ~ sortModel", sortModel);
     const clickedColumn = evt?.columnApi
       ?.getAllGridColumns()
       .map(({ colId, sort }) => ({ colId, sort }))
