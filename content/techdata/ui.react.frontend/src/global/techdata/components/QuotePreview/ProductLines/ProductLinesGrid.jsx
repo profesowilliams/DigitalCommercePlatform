@@ -29,7 +29,7 @@ import ProductLinesQuantityWidget from "./ProductLinesQuantityWidget";
  * @param {string} props.tier
  * @returns 
  */
-function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuantityIncrease, tier}) {
+function ProductLinesGrid({ gridProps, shopDomainPage, data, onQuoteLinesUpdated, isAllowedQuantityIncrease, tier}) {
   const [gridApi, setGridApi] = useState(null);
   const [analyticsProduct, setAnalyticsProduct] = useState([]);
   const [flagAnalytic, setFlagAnalytic] = useState(true);
@@ -255,6 +255,7 @@ function ProductLinesGrid({ gridProps, data, onQuoteLinesUpdated, isAllowedQuant
                   line={props.data}
                   headerName={props?.colDef?.headerName}
                   emptyImageUrl={gridProps.productEmptyImageUrl}
+                  shopDomainPage={shopDomainPage}
                 />;
       },
     },

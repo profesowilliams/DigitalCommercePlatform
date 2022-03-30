@@ -395,6 +395,7 @@ const [flagDeal, setFlagDeal] = useState(false);
             <QuotePreviewGrid
               isAllowedQuantityIncrease={isAllowedQuantityIncrease(quoteDetails)}
               gridProps={componentProp.productLines}
+              shopDomainPage={componentProp.shopDomainPage}
               data={quoteDetails}
               tier={tier}
               onQuoteLinesUpdated={onGridUpdate}
