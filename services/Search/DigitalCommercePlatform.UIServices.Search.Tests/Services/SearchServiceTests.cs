@@ -1,4 +1,5 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
@@ -99,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             bool bestPriceIncludesWebDiscount = true;
             decimal listPrice = 120;
             decimal promoAmmount = 20;
-            string culture = "pl-PL";                      
+            string culture = "pl-PL";
 
             appResponse.Products.ForEach(e =>
             {
@@ -113,7 +114,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                     BestPriceExpiration = new DateTime(2022, 02, 04),
                     BestPriceIncludesWebDiscount = true
                 };
-            });          
+            });
 
             var cultureInfo = CultureInfo.GetCultureInfo(culture);
             var formattedBasePrice = String.Format(cultureInfo, "{0:C}", basePrice);
@@ -121,7 +122,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var formattedListPrice = String.Format(cultureInfo, "{0:C}", listPrice);
             var formattedPromoAmmount = String.Format(cultureInfo, "{0:C}", promoAmmount);
             var formattedPriceExpiration = bestPriceExpiration.ToString(cultureInfo);
-
 
             request.Culture = culture;
             var fakeLogger = new FakeLogger<SearchService>();
@@ -140,7 +140,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object,
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureService));
-
 
             //Act
             var result = await searchService.GetFullSearchProductData(request, false);
@@ -191,17 +190,15 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             var translationServiceMock = new Mock<ITranslationService>();
             translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>())).Returns(NALabel);
 
-
             var profileServiceMock = new Mock<IProfileService>();
             var cultureServiceMock = new Mock<ICultureService>();
 
             var middleTierHttpClientMock = new Mock<IMiddleTierHttpClient>();
             middleTierHttpClientMock.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             var searchService = new SearchService(new(middleTierHttpClientMock.Object, fakeLogger, appSettingsMock.Object,
                 contextMock.Object, siteSettingsMock.Object, mapper, translationServiceMock.Object, cultureServiceMock.Object));
-
 
             //Act
             var result = await searchService.GetFullSearchProductData(new SearchRequestDto(), true);
@@ -218,8 +215,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             result.Products.First().Price.PromoAmount.Should().BeNull();
         }
 
-
-
         [Theory]
         [AutoDomainData]
         public async Task FullSearchProduct_VendorShippedFalseWhenIndicatorsNull(SearchRequestDto request, SearchResponseDto appResponse)
@@ -229,7 +224,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             appResponse.Products[0].Indicators = null;
 
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             //Act
             var result = await _searchService.GetFullSearchProductData(request, true);
@@ -260,7 +255,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             };
             appResponse.Products[0].Stock.VendorDesignated = 44;
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             //Act
             var result = await _searchService.GetFullSearchProductData(request, true);
@@ -291,7 +286,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             };
             appResponse.Products[0].Stock.VendorDesignated = null;
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             //Act
             var result = await _searchService.GetFullSearchProductData(request, true);
@@ -548,7 +543,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 }
             };
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
             _translationServiceMock.Setup(x => x.Translate(It.IsAny<Dictionary<string, string>>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((Dictionary<string, string> dict, string key, string fallback) => { return $"{key}_Translated"; });
 
@@ -572,7 +567,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
             appResponse.RefinementGroups.First().Group = "TopRefinements";
             appResponse.RefinementGroups.First().Refinements.First().OriginalGroupName = "InStock";
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             //Act
             var result = await _searchService.GetFullSearchProductData(request, true);
@@ -589,7 +584,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         {
             //Arrange
             _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             //Act
             var result = await _searchService.GetProductSearchPreviewData(request);
@@ -702,7 +697,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
         {
             //Arrange
             _middleTierHttpClient.Setup(x => x.GetAsync<List<TypeAheadModel>>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<IDictionary<string, object>>(), null))
-                .Returns(Task.FromResult(appResponse));
+                .ReturnsAsync(appResponse);
 
             //Act
             var result = await _searchService.GetTypeAhead(request);
@@ -894,6 +889,43 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
                 new object[] {null},
                 new object[] {0m}
             };
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public async Task GetProductReturnsCorrectTopRefinementCnetNames(SearchRequestDto request, SearchResponseDto appResponse)
+        {
+            //Arrange
+            appResponse.Products.ForEach(e => e.Price = null);
+            appResponse.RefinementGroups.First().Group = "TopRefinements";
+            appResponse.RefinementGroups.First().Refinements.First().OriginalGroupName = "CNETAttributes";
+            appResponse.RefinementGroups.First().Refinements.First().Name = "Header / Something";
+            appResponse.RefinementGroups.First().Refinements.First().Id = "1";
+            appResponse.RefinementGroups.First().Refinements[1].OriginalGroupName = "CNETAttributes";
+            appResponse.RefinementGroups.First().Refinements[1].Name = "General / Something2";
+            appResponse.RefinementGroups.First().Refinements[1].Id = "2";
+            appResponse.RefinementGroups.First().Refinements[2].OriginalGroupName = "CNETAttributes";
+            appResponse.RefinementGroups.First().Refinements[2].Name = "NotGeneral / Something2";
+            appResponse.RefinementGroups.First().Refinements[2].Id = "3";
+            appResponse.RefinementGroups.First().Refinements.Add(new RefinementDto
+            {
+                Id = "4",
+                OriginalGroupName = "CNETAttributes",
+                Name = "Without Slash"
+            });
+            _middleTierHttpClient.Setup(x => x.PostAsync<SearchResponseDto>(It.IsAny<string>(), It.IsAny<IEnumerable<object>>(), It.IsAny<object>(), null, null))
+                .Returns(Task.FromResult(appResponse));
+
+            //Act
+            var result = await _searchService.GetFullSearchProductData(request, true);
+
+            //Assert
+            result.Should().NotBeNull();
+
+            result.TopRefinements.First(x => x.Id == "1").Name.Should().Be("Something");
+            result.TopRefinements.First(x => x.Id == "2").Name.Should().Be("Something2");
+            result.TopRefinements.First(x => x.Id == "3").Name.Should().Be("NotGeneral / Something2");
+            result.TopRefinements.First(x => x.Id == "4").Name.Should().Be("Without Slash");
         }
     }
 }

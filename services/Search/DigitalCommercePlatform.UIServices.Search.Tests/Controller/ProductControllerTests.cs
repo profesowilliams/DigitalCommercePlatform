@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Controllers;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.ActionResults;
@@ -9,6 +10,7 @@ using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -44,8 +46,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Controller
 
         private ProductController GetController()
         {
-            return new ProductController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
+            var controller = new ProductController(_mockMediator.Object, _mockLoggerFactory.Object, _mockContext.Object,
                 _appSettingsMock.Object, _mockSiteSettings.Object);
+
+            controller.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            return controller;
         }
 
         [Theory]

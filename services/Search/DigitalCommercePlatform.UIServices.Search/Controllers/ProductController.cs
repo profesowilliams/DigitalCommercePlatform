@@ -1,4 +1,4 @@
-﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
 
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Infrastructure.ActionResults;
@@ -55,7 +55,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         [Route("KeywordSearch")]
         public async Task<ActionResult<FullSearchResponseModel>> KeywordSearch(string keyword, string categoryId)
         {
-            var response = await Mediator.Send(new KeywordSearch.Request(!IsLoggedIn, keyword, categoryId, new(_context.User?.ActiveCustomer?.CustomerNumber, _context.User?.ID),Context.Language)).ConfigureAwait(false);
+            var response = await Mediator.Send(new KeywordSearch.Request(!IsLoggedIn, keyword, categoryId, new(_context.User?.ActiveCustomer?.CustomerNumber, _context.User?.ID), Context.Language)).ConfigureAwait(false);
             response.Results.IsLoggedIn = IsLoggedIn;
             return Ok(response.Results);
         }
@@ -80,6 +80,8 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
                 return NotFound();
             }
 
+            Response.Headers.Add("X-MaximumResults", data.First().MaximumResults ? "true" : "false");
+            Response.Headers.Add("X-Count", data.Count().ToString());
             return request.ExportFormat switch
             {
                 ExportFormatEnum.csv => new CsvActionResult<ExportResponseModel>(data, "SearchResults"),

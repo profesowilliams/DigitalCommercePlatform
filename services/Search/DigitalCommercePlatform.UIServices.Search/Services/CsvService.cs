@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -116,7 +116,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
         private T CreateStream<T>(T stream) where T : IDisposable
         {
-            _streamToDispose.Add(stream);
+            _streamToDispose.Insert(0, stream);
             return stream;
         }
     }

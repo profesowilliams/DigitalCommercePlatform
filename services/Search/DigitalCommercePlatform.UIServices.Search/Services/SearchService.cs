@@ -1,4 +1,5 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
+
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.TypeAhead;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
@@ -36,7 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
     {
         private const string CNETAttributes = "CNETAttributes";
         private const string General = "General";
-        private const string TopRefinements = "TopRefinements";        
+        private const string TopRefinements = "TopRefinements";
         private readonly string _appProductUrl;
         private readonly string _appSearchUrl;
         private readonly IUIContext _context;
@@ -49,8 +50,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         private readonly List<string> _refinementsGroupThatShouldBeLocalized;
         private readonly ISiteSettings _siteSettings;
         private readonly ITranslationService _translationService;
-        private readonly ICultureService _cultureService;        
+        private readonly ICultureService _cultureService;
         private readonly string[] Indicators = { FreeShipping, Virtual, Refurbished };
+        private readonly string[] CnetGroupToClean = { "Header", "General" };
 
         public SearchService(SearchServiceArgs args)
         {
@@ -63,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             _mapper = args.Mapper;
 
             _translationService = args.TranslationService;
-            _cultureService = args.cultureService;            
+            _cultureService = args.cultureService;
 
             _refinementsGroupThatShouldBeLocalized = args.SiteSettings.GetSetting<List<string>>("Search.UI.RefinementsGroupThatShouldBeLocalized");
 
@@ -160,7 +162,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
             if (productModel.Indicators == null)
                 productModel.Indicators = new();
 
-            foreach(var indicator in Indicators)
+            foreach (var indicator in Indicators)
             {
                 AddIndicator(productDto, productModel, indicator);
             }
@@ -238,15 +240,44 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
             fullSearchResponse.TopRefinements.ForEach(r =>
             {
-                if (!RefinementGroupShouldBeLocalized(r.Name, r.OriginalGroupName))
-                    return;
-
-                r.Name = _translationService.Translate(_internalRefinementsTranslations, r.Name);
-                r.Options.ForEach(o =>
-                {
-                    o.Text = _translationService.Translate(_internalRefinementsTranslations, o.Text);
-                });
+                CleanupCnetGroupNames(r);
+                TranslateRefinements(r);
             });
+        }
+
+        private void TranslateRefinements(RefinementModel r)
+        {
+            if (!RefinementGroupShouldBeLocalized(r.Name, r.OriginalGroupName))
+                return;
+
+            r.Name = _translationService.Translate(_internalRefinementsTranslations, r.Name);
+            r.Options.ForEach(o =>
+            {
+                o.Text = _translationService.Translate(_internalRefinementsTranslations, o.Text);
+            });
+        }
+
+        private void CleanupCnetGroupNames(RefinementModel r)
+        {
+            if (!string.Equals(r.OriginalGroupName, CNETAttributes, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            var split = r.Name.Split('/');
+            if (split.Count() == 1)
+                return;
+
+            foreach (var clean in CnetGroupToClean)
+            {
+                if (string.Equals(split[0].Trim(), clean, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    r.Name = string.Join("/", split.Skip(1));
+                    break;
+                }
+            }
+
+            r.Name = r.Name.Trim();
         }
 
         private static PriceModel MapPrice(ElasticItemDto appSearchProduct, string notAvailableLabelText)
