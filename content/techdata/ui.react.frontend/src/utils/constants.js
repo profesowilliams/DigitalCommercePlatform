@@ -61,3 +61,4 @@ export const QUOTE_DETAILS_LOGO_LABEL_VALUE = 'logoLabel';
 export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';
 
 export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to access this information';
+export const ERROR_TITLE_DEFAULT = 'Error';

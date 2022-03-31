@@ -1,29 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { checkApiErrorMessage, get, usPost } from "../../../../utils/api";
+import { checkApiErrorMessage, usPost } from "../../../../utils/api";
 import WidgetTitle from "../Widgets/WidgetTitle";
 import InputText from "../Widgets/TextInput";
 import Button from "../Widgets/Button";
 import Loader from '../Widgets/Loader';
-import { waitFor } from "../../../../utils/utils";
-import axios from 'axios';
+import { isNotEmptyValue, waitFor } from "../../../../utils/utils";
 import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
+import Modal from "../Modal/Modal";
+import { ERROR_TITLE_DEFAULT } from "../../../../utils/constants";
 
 const EditConfig = ({ componentProp }) => {
-    // useEffect(() => {
-    //     const params = { criteria, ignoreSalesOrganization, isDefault };
-    //     const getData = async () => {
-    //         const {
-    //             data: {
-    //                 content: { items },
-    //             },
-    //         } = await get(endpoint, params);
-    //         if (items) setConfigurations(items);
-    //     };
-    //     getData();
-    // }, []);
     const [configurationId, setConfigurationId] = useState("");
-    const [configurations, setConfigurations] = useState(false);
     const [isLoadingGetUrl, setLoadingGetUrl] = useState(false);
+    const [modal, setModal] = useState(null);
     const {
         label,
         buttonTitle,
@@ -32,8 +21,38 @@ const EditConfig = ({ componentProp }) => {
         ignoreSalesOrganization,
         isDefault,
         placeholderText,
-        puchOutEndpoint
+        puchOutEndpoint,
+        errorTitle
     } = JSON.parse(componentProp);
+    /**
+     * 
+     * @param {string} title 
+     * @param {*} content 
+     * @param {*} onModalClosed 
+     * @param {string} buttonLabel 
+     * @param {() => void } modalAction 
+     * @returns 
+     */
+    const showSimpleModal = (title, content, onModalClosed=closeModal) =>
+        setModal((previousInfo) => ({
+            content: content,
+            properties: {
+                title:  title,
+            },
+            ...previousInfo,
+            onModalClosed,
+        })
+    );
+
+    const closeModal = () => setModal(null);
+  
+    /**
+     * Function that execute and set the message for the error modal
+     * @param {string} message 
+     */
+    const modalEventError = (message) =>{
+        showSimpleModal(isNotEmptyValue(errorTitle) ? errorTitle :  ERROR_TITLE_DEFAULT, (<div className="cmp-quote-error-modal">{message}</div>));
+    };
 
     const handleConfigInput = ({ target: { value } }) => {
         setConfigurationId(value);
@@ -70,11 +89,13 @@ const EditConfig = ({ componentProp }) => {
             "Action": "edit" 
         }
         setLoadingGetUrl(true);
-        waitFor(3000);
         const result = await usPost(puchOutEndpoint,body)
         const errorMessagesList = checkApiErrorMessage(result);
+        
         if (errorMessagesList){
-            window.alert(errorMessagesList[0])
+            modalEventError(errorMessagesList[0]);
+            setLoadingGetUrl(false);
+            return;
         }
         analyticsData("Cisco", configurationId, false);
         setLoadingGetUrl(false);
@@ -108,6 +129,12 @@ const EditConfig = ({ componentProp }) => {
                     {buttonTitle}
                 </Button>
             </>
+            {modal && <Modal
+                modalContent={modal.content}
+                modalProperties={modal.properties}
+                actionErrorMessage={modal.errorMessage}
+                onModalClosed={modal.onModalClosed}
+            ></Modal>}
         </div>
     );
 };

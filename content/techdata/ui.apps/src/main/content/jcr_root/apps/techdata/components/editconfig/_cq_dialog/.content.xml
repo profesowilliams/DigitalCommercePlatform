@@ -28,6 +28,11 @@
                         fieldLabel="Button Label"
                         required="{Boolean}true"
                         name="./buttonLabel"/>
+                    <errorTitle
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Error Title"
+                        name="./errorTitle"/>
                 </items>
             </column>
         </items>
