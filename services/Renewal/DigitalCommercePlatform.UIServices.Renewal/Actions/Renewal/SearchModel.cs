@@ -17,7 +17,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public DateTime? DueDateTo { get; set; }
         public string EndUser { get; set; }
         public string EndUserEmail { get; set; }
-        public string SortBy { get; set; }
+        public List<string> SortBy { get; set; }
         public string SortDirection { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 25;

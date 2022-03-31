@@ -67,20 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 });
                 var count = coreResult.Count;
 
-                switch (request.SortBy?.ToLowerInvariant())
-                {
-                    case "duedays":
-                        if (request.SortAscending)
-                        {
-                            modelList = modelList.OrderBy(x => x.DueDays).ToList();
-                        }
-                        else
-                        {
-                            modelList = modelList.OrderByDescending(x => x.DueDays).ToList();
-                        }
-                        break;
-                }
-
+                
                 return new DetailedResponseModel()
                 {
                     Count = count,
@@ -122,20 +109,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                     model.VendorLogo = _helperQueryService.GetVendorLogo(model.Vendor?.Name);
                 });
                 var count = coreResult.Count;
-
-                switch (request.SortBy?.ToLowerInvariant())
-                {
-                    case "duedays":
-                        if (request.SortAscending)
-                        {
-                            modelList = modelList.OrderBy(x => x.DueDays).ToList();
-                        }
-                        else
-                        {
-                            modelList = modelList.OrderByDescending(x => x.DueDays).ToList();
-                        }
-                        break;
-                }
 
                 return new SummaryResponseModel() { Count = count, Response = modelList };
             }

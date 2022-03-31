@@ -428,8 +428,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var request = new SearchRenewalSummary.Request()
             {
-                SortBy = "duedays",
-                SortAscending = true
+                SortBy = new List<string> { "duedays" }
             };
             var httpClient = new Mock<IMiddleTierHttpClient>();
 
@@ -440,7 +439,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsSummaryFor(request).Result;
 
-            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 2");
+            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 1");
             result.Should().NotBeNull();
             result.Count.Should().Be(3);
         }
@@ -450,8 +449,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
         {
             var request = new SearchRenewalDetailed.Request()
             {
-                SortBy = "duedays",
-                SortAscending = false
+                SortBy = new List<string> { "duedays" }
             };
             var httpClient = new Mock<IMiddleTierHttpClient>();
 
@@ -462,7 +460,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var service = new RenewalService(httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
             var result = service.GetRenewalsDetailedFor(request).Result;
 
-            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 3");
+            result.Response.FirstOrDefault().EndUserPO.Should().Be("Test 1");
             result.Should().NotBeNull();
             result.Count.Should().Be(3);
         }
