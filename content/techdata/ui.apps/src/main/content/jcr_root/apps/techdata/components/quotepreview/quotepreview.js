@@ -36,6 +36,10 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["pricingConditionsEndpoint"] = this.uiServiceDomain + this.serviceData.orderLevelsForQuotePreviewEndpoint;
     }
 
+    if (this.shopDomainPage !== null) {
+        jsonObject["shopDomainPage"] = this.shopDomainPage;
+    }
+
     if (properties && properties["headerLabel"]) {
         jsonObject["headerLabel"] = properties["headerLabel"];
     }
