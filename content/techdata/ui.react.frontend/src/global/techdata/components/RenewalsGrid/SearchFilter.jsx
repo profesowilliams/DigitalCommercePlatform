@@ -113,6 +113,7 @@ function SearchFilter({
       queryString: `&${option}=${inputValue}`,
     };
     setIsSearchCapsuleVisible(true);
+    setSearchTerm(inputValue);
     setIsEditView(false);
     onQueryChanged(query);
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
@@ -156,7 +157,7 @@ function SearchFilter({
           hasCloseBtn={true}
         >
           <span onClick={handleCapsuleTextClick} className="td-capsule__text">
-            {`${values.option}: ${inputRef?.current?.value}`}
+            {`${values.option}: ${searchTerm || inputRef?.current?.value}`}
           </span>
         </Capsule>
       </If>
