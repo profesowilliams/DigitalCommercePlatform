@@ -179,7 +179,7 @@ const SignIn = (props) => {
           return true;
         }
       } else {
-        return true; // if sessionId does not exist then return isSessionExpired = true
+        return window.location.href?.indexOf('/top-five-open-config') > 0; // if sessionId does not exist then return isSessionExpired = true for dashboard components
       }
     } catch (e) {
       console.error("invalid login session expiration", e);
