@@ -253,9 +253,6 @@ const SignIn = (props) => {
       if (!isAlreadySignedIn()) {
         dispatch(signInAsynAction(constructSignInURL()));
       }
-      const originalURL = window.location.href;
-      const alteredURL = removeParam(codeQueryParam, originalURL);
-      window.location.href = alteredURL;
     } else {
     }
   };
