@@ -57,37 +57,37 @@ use(function () {
     }
 
     if (properties.get("errorModalTitle") != null) {
-        errorMessage.errorModalTitle = properties["errorModalTitle"];
+        errorMessage.errorModalTitle = properties.get("errorModalTitle");
     }
     if (properties.get("emptyCart") != null) {
-        errorMessage.emptyCart = properties["emptyCart"];
+        errorMessage.emptyCart = properties.get("emptyCart");
     }
     if (properties.get("notValidCart") != null) {
-        errorMessage.notValidCart = properties["notValidCart"];
+        errorMessage.notValidCart = properties.get("notValidCart");
     }
     if (properties.get("invalidCart") != null) {
-        errorMessage.invalidCart = properties["invalidCart"];
+        errorMessage.invalidCart = properties.get("invalidCart");
     }
     if (properties.get("notValidEstimateId") != null) {
-        errorMessage.notValidEstimateId = properties["notValidEstimateId"];
+        errorMessage.notValidEstimateId = properties.get("notValidEstimateId");
     }
     if (properties.get("errorGettingData") != null) {
-        errorMessage.errorGettingData = properties["errorGettingData"];
+        errorMessage.errorGettingData = properties.get("errorGettingData");
     }
     if (properties.get("noItemsInCart") != null) {
-        errorMessage.noItemsInCart = properties["noItemsInCart"];
+        errorMessage.noItemsInCart = properties.get("noItemsInCart");
     }
     if (properties.get("selectItemToContinue") != null) {
-        errorMessage.selectItemToContinue = properties["selectItemToContinue"];
+        errorMessage.selectItemToContinue = properties.get("selectItemToContinue");
     }
     if (properties.get("invalidEstimatedId") != null) {
-        errorMessage.invalidEstimatedId = properties["invalidEstimatedId"];
+        errorMessage.invalidEstimatedId = properties.get("invalidEstimatedId");
     }
     if (properties.get("errorGettingCart") != null) {
-        errorMessage.errorGettingCart = properties["errorGettingCart"];
+        errorMessage.errorGettingCart = properties.get("errorGettingCart");
     }
     if (properties.get("errorInPrice") != null) {
-        errorMessage.errorInPrice = properties["errorInPrice"];
+        errorMessage.errorInPrice = properties.get("errorInPrice");
     }
 
      if (this.uiServiceDomain != null) {

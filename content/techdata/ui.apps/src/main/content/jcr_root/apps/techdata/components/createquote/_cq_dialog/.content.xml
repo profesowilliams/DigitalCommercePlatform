@@ -124,57 +124,66 @@
 							</items>
 						</field>
 					</optionsList>
-					<errorMessage
+					<inputPlaceholder
 						jcr:primaryType="nt:unstructured"
-							sling:resourceType="granite/ui/components/coral/foundation/include"
-							fieldDescription="Add Error Modal values"
-							fieldLabel="Error Messages">
-						<items jcr:primaryType="nt:unstructured">
-							<column
-								jcr:primaryType="nt:unstructured"
-								sling:resourceType="granite/ui/components/coral/foundation/container"
-							>
-								<items jcr:primaryType="nt:unstructured">
-									<inputPlaceholder
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<errorModalTitle
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<emptyCart
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<notValidCart
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<invalidCart
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<notValidEstimateId
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<errorGettingData
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<noItemsInCart
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<selectItemToContinue
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<invalidEstimatedId
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<errorGettingCart
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-									<errorInPrice
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-								</items>
-                            </column>
-                        </items>
-					</errorMessage>
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Input Placeholder"
+						name="./inputPlaceholder"/>
+					<errorModalTitle
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Error Modal Title"
+						name="./errorModalTitle"/>
+					<emptyCart
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Empty Cart"
+						name="./emptyCart"/>
+					<notValidCart
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Messag Quote Not Valid Cart"
+						name="./notValidCart"/>
+					<invalidCart
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Invalid Cart"
+						name="./invalidCart"/>
+					<notValidEstimateId
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Not Valid Estimate Id"
+						name="./notValidEstimateId"/>
+					<errorGettingData
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Error Getting Data"
+						name="./errorGettingData"/>
+					<noItemsInCart
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message No Items In Cart"
+						name="./noItemsInCart"/>
+					<selectItemToContinue
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Select Item To Continue"
+						name="./selectItemToContinue"/>
+					<invalidEstimatedId
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Invalid Estimated Id"
+						name="./invalidEstimatedId"/>
+					<errorGettingCart
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Error Getting Cart"
+						name="./errorGettingCart"/>
+					<errorInPrice
+						jcr:primaryType="nt:unstructured"
+						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldLabel="Error Message Error In Price"
+						name="./errorInPrice"/>
 				</items>
 			</column>
 		</items>
