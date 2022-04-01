@@ -1,11 +1,14 @@
-﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Browse.Actions;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductVariant;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetRelatedProducts;
+using DigitalCommercePlatform.UIServices.Browse.Actions.GetSpa;
 using DigitalCommercePlatform.UIServices.Browse.Helpers;
 using DigitalCommercePlatform.UIServices.Browse.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Browse.Models.RelatedProduct;
+using DigitalCommercePlatform.UIServices.Browse.Models.Spa;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using DigitalFoundation.Common.Services.Layer.UI;
@@ -15,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Browse.Controllers
@@ -57,7 +61,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             return Ok(response);
         }
 
-
         [HttpGet]
         [Route("Variants")]
         public async Task<ActionResult> GetProductVariant([FromQuery] string id)
@@ -86,6 +89,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Controllers
             var request = new GetProductsCompare.Request { Ids = ids, SalesOrg = salesOrg, Site = site, Culture = Context.Language, OrderLevel = orderLevel };
 
             var data = await Mediator.Send(request).ConfigureAwait(false);
+
+            return Ok(data);
+        }
+
+        [HttpGet("Spa/{id}")]
+        public async Task<ActionResult<IEnumerable<SpaResponseModel>>> GetSpa(string id)
+        {
+            var data = await Mediator.Send(new GetSpaHandler.Request { Id = id, Culture = Context.Language }).ConfigureAwait(false);
+
+            if (data == null || !data.Any())
+                return NoContent();
 
             return Ok(data);
         }
