@@ -80,12 +80,6 @@ PassEnv DISP_ID
 	ServerAlias	uat.dc.mytecd.com
 	ServerAlias stage.dc.mytecd.com
 	ServerAlias www.mytecd.com mytecd.com
-	ServerAlias www.tdsynnex.com tdsynnex.com
-	ServerAlias www.ion.techdata.com ion.techdata.com
-	ServerAlias www.uat-tdsynnex.dc.tdebusiness.cloud uat-tdsynnex.dc.tdebusiness.cloud
-    ServerAlias www.uat-ion.dc.tdebusiness.cloud uat-ion.dc.tdebusiness.cloud
-    ServerAlias www.stage-tdsynnex.dc.tdebusiness.cloud stage-tdsynnex.dc.tdebusiness.cloud
-    ServerAlias www.stage-ion.dc.tdebusiness.cloud stage-ion.dc.tdebusiness.cloud
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}
 	# Add header breadcrumbs for help in troubleshooting
@@ -142,8 +136,6 @@ PassEnv DISP_ID
 		# Global rewrite include
 		Include conf.d/rewrites/base_rewrite.rules
 		Include conf.d/rewrites/mytecd_rewrite.rules
-		Include conf.d/rewrites/tdsynnex_rewrite.rules
-		Include conf.d/rewrites/ion_rewrite.rules
 		# Update /etc/sysconfig/httpd with setting the PUBLISH_FORCE_SSL from 0 or 1 to enable or disable enforcing SSL
 		<If "${PUBLISH_FORCE_SSL} == 1">
 			Include conf.d/rewrites/xforwarded_forcessl_rewrite.rules
