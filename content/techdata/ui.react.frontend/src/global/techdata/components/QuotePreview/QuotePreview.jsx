@@ -92,13 +92,20 @@ function QuotePreview(props) {
       }
       setFlagDeal(!isDealConfiguration(quoteDetailsResponse.source));
     } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
-      showErrorModal(modalConfig?.errorLoadingPageTitle, apiResponse.error.code === 404 ? modalConfig?.error404Message : modalConfig?.errorGenericMessage, 
-        () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
-    } else if(error) {// Server error
-      showErrorModal(modalConfig?.errorLoadingPageTitle, modalConfig?.errorGenericMessage, 
+      showErrorModal(modalConfig?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code), 
         () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
     }
-  }, [apiResponse, error]);
+  }, [apiResponse]);
+
+  /**
+   * Handle unexpected useGet error
+   */
+   useEffect(() => { 
+    if(error) {
+      showErrorModal(modalConfig?.errorLoadingPageTitle, modalConfig?.errorGenericMessage, 
+        () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
+    }     
+   }, [error]);
 
   /**
    * In case of the distribution buy method is not AVT or TECH DATA. 
@@ -123,8 +130,14 @@ function QuotePreview(props) {
     
   }
     
-    
-
+  const getErrorMessage = (errorCode) => {
+    if(errorCode === 404) {
+      return modalConfig?.error404Message;
+    } else if(errorCode === 428) {
+      return modalConfig?.error428Message;
+    }
+    return modalConfig?.errorGenericMessage;
+  }
 
   const showSimpleModal = (title, content, onModalClosed=closeModal, buttonLabel, modalAction) =>
     setModal((previousInfo) => ({

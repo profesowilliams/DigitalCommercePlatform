@@ -245,6 +245,10 @@ use(['../common/utils.js'], function (utils) {
         modalConfig["error404Message"] = properties["error404Message"];
     }
 
+    if (properties && properties["error428Message"]) {
+        modalConfig["error428Message"] = properties["error428Message"];
+    }
+
     if (properties && properties["errorGenericMessage"]) {
         modalConfig["errorGenericMessage"] = properties["errorGenericMessage"];
     }
