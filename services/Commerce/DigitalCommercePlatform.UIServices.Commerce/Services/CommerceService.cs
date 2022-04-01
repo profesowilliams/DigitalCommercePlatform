@@ -709,6 +709,18 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 };
                 return response;
             }
+            catch(RemoteServerHttpException ex)
+            {
+                if(ex.Code==HttpStatusCode.PreconditionRequired)
+                {
+                    throw new UIServiceException(" - Verify your Vendor Connection.",428);
+                }
+                else
+                {
+                    _logger.LogError(ex, "Exception at searching configurations : " + nameof(CommerceService));
+                    throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception at searching configurations : " + nameof(CommerceService));

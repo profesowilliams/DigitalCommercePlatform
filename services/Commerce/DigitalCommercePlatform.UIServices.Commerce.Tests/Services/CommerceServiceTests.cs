@@ -115,6 +115,62 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         }
 
+
+
+        [Fact]
+        public void CreateResponseUsingEstimateId_NotNull()
+        {
+
+            // Arrange
+            GetQuotePreviewDetails.Request request = new("CON-SNT-CTSIX520", true, "cisco", "Deal");
+
+
+            Type type = typeof(CommerceService);
+            var objType = Activator.CreateInstance(type,
+                _middleTierHttpClient.Object,
+                _logger.Object,
+                _appSettings.Object,
+                _cartService.Object,
+                _uiContext.Object,
+                _mapper.Object,
+                 _helperService.Object
+                );
+
+            var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate);
+            //Act
+            requestToQuote.Invoke(objType, new object[] { request });
+            Assert.NotNull(request);
+
+        }
+
+        [Fact]
+        public void CreateResponseUsingEstimateId_True()
+        {
+
+            // Arrange
+            GetQuotePreviewDetails.Request request = new("CON-SNT-CTSIX520", true, "cisco", "Deal");
+
+
+            Type type = typeof(CommerceService);
+            var objType = Activator.CreateInstance(type,
+                _middleTierHttpClient.Object,
+                _logger.Object,
+                _appSettings.Object,
+                _cartService.Object,
+                _uiContext.Object,
+                _mapper.Object,
+                 _helperService.Object
+                );
+
+            var requestToQuote = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "CreateResponseUsingEstimateId" && x.IsPrivate);
+            //Act
+            requestToQuote.Invoke(objType, new object[] { request });
+            Assert.True(request.Details);
+
+        }
+
         [Fact]
         public async void CreateResponseUsingEstimateId_DistiBuyMethod()
         {
