@@ -62,6 +62,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 "quotevalue" or "formattedquotevalue" => "Price",
                 "updated" => "Updated",
                 "endusername" => "EndUserName",
+                "expires" => "QuoteExpirationDate",
                 _ => "Created",
             };
 
