@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Browse.Dto.Profile;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Security.Token;
+using DigitalFoundation.Common.Services.Features.Image;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using DigitalFoundation.Common.Services.Providers.Localization;
@@ -44,6 +45,7 @@ namespace DigitalCommercePlatform.UIServices.Browse
             services.AddScoped<IProfileService<OrderLevelDto>, OrderLevelProfileService>();
             services.AddScoped<ICultureService, CultureService>();
             services.AddScoped<IOrderLevelsService, OrderLevelsService>();
+            services.AddScoped<IImageResolutionService, ImageResolutionService>();
         }
     }
 }

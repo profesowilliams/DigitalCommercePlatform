@@ -8,6 +8,7 @@ using DigitalCommercePlatform.UIServices.Browse.Models.ProductCompare.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Features.Image;
 using FluentValidation;
 using Flurl;
 using MediatR;
@@ -24,20 +25,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
         public class Handler : IRequestHandler<Request, CompareModel>
         {
             private const string ALLOW = "ALLOW";
-            private const string AuthRequiredPrice = "AuthRequiredPrice";
             private const string DropShip = "DropShip";
             private const string Orderable = "Orderable";
             private const string ProductShot = "Product shot";
-            private const string Thumbnail = "75x75";
             private const string Warehouse = "Warehouse";
             private const string Y = "Y";
             private readonly ICultureService _cultureService;
             private readonly IMiddleTierHttpClient _httpClient;
             private readonly string _onOrderArrivalDateFormat;
             private readonly string _productAppUrl;
+            private readonly string _smallImageSize;
             private readonly ITranslationService _translationService;
             private Dictionary<string, string> _translations = null;
             private readonly IOrderLevelsService _orderLevelsService;
+            private readonly IImageResolutionService _imageResolutionService;
 
             public Handler(
                 IMiddleTierHttpClient httpClient,
@@ -45,14 +46,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 ISiteSettings siteSettings,
                 ICultureService cultureService,
                 ITranslationService translationService,
-                IOrderLevelsService orderLevelsService)
+                IOrderLevelsService orderLevelsService,
+                IImageResolutionService imageResolutionService)
             {
                 _httpClient = httpClient;
                 _productAppUrl = appSettings.GetSetting("Product.App.Url");
                 _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
+                _smallImageSize = siteSettings.GetSetting("Browse.UI.SmallImageSize");
                 _cultureService = cultureService;
                 _translationService = translationService;
                 _orderLevelsService = orderLevelsService;
+                _imageResolutionService = imageResolutionService;
             }
 
             public async Task<CompareModel> Handle(Request request, CancellationToken cancellationToken)
@@ -122,15 +126,27 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                 product.Authorization.CanViewPrice = productDto.Authorization.CanViewPrice;
             }
 
-            private static ProductModel MapBasedInformation(ProductDto x)
+            private ProductModel MapBasedInformation(ProductDto x)
             {
                 var product = new ProductModel();
                 product.Id = x.Source.Id;
                 product.ManufacturerPartNumber = x.ManufacturerPartNumber;
                 product.Description = x.Description;
                 product.DisplayName = string.IsNullOrWhiteSpace(x.ShortDescription) ? x.Name : x.ShortDescription;
-                product.ThumbnailImage = x.Images?.FirstOrDefault(i => string.Equals(i.Key, Thumbnail, StringComparison.InvariantCultureIgnoreCase)).Value?.FirstOrDefault(x => string.Equals(x.Type, ProductShot, StringComparison.InvariantCultureIgnoreCase))?.Url;
+                product.ThumbnailImage = GetThumbnail(x.Images);
                 return product;
+            }
+
+            private string GetThumbnail(IDictionary<string, IEnumerable<Dto.Product.Internal.ImageDto>> images)
+            {
+                if (images == null || !images.Any())
+                {
+                    return null;
+                }
+
+                var resolution = _imageResolutionService.GetResolution(_smallImageSize, images.Keys);
+                
+                return images[resolution].FirstOrDefault(x => string.Equals(x.Type, ProductShot, StringComparison.InvariantCultureIgnoreCase))?.Url;
             }
 
             private static void MapStock(ProductDto x, ProductModel product, bool vendorShipped)

@@ -10,6 +10,7 @@ using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Features.Image;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
@@ -34,6 +35,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         private readonly Browse.Actions.GetProductsCompare.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
         private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
+        private readonly Mock<IImageResolutionService> _imageResolutionServiceMock;
 
 
         public GetProductsCompareTests()
@@ -44,8 +46,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _cultureServiceMock = new Mock<ICultureService>();
             _translationServiceMock = new Mock<ITranslationService>();
             _orderLevelsServiceMock = new Mock<IOrderLevelsService>();
+            _imageResolutionServiceMock = new Mock<IImageResolutionService>();
             _appSettingsMock.Setup(x => x.GetSetting("Product.App.Url")).Returns("http://appproduct");
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.SmallImageSize")).Returns("200x150");
 
             _sut = new Browse.Actions.GetProductsCompare.Handler(
                 _httpClientMock.Object,
@@ -53,7 +57,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 _siteSettingsMock.Object,
                 _cultureServiceMock.Object,
                 _translationServiceMock.Object,
-                _orderLevelsServiceMock.Object);
+                _orderLevelsServiceMock.Object,
+                _imageResolutionServiceMock.Object);
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
@@ -94,7 +99,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
 
                             Images = new Dictionary<string, IEnumerable<ImageDto>>
                             {
-                                { "75x75", new List<ImageDto>{ new ImageDto { Type="Product shot", Url="url"} } }
+                                { "200x150", new List<ImageDto>{ new ImageDto { Type="Product shot", Url="url"} } }
                             },
                             Stock = new StockDto
                             {
@@ -199,6 +204,142 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         }
                     }
                 },
+                 new object[]
+                {
+                    new List<ProductDto>
+                    {
+                        new ProductDto
+                        {
+                            Source=new SourceDto{ Id =  "p1", System="2"},
+                            ManufacturerPartNumber="ManufacturerPartNumber1",
+                            Description="Description1",
+                            Indicators = new List<IndicatorDto>
+                            {
+                                new IndicatorDto
+                                {
+                                    Context = new ContextDto{ SalesOrganization="0100"},
+                                    Values = new Dictionary<string, IndicatorValueDto>
+                                    {
+                                        {"DropShip", new IndicatorValueDto{ Value="Y"} },
+                                        { "AuthRequiredPrice", new IndicatorValueDto{ Value="N"} }
+                                    }
+                                },
+                                new IndicatorDto
+                                {
+                                    Values = new Dictionary<string, IndicatorValueDto>
+                                    {
+                                        {"Orderable", new IndicatorValueDto{ Value="Y"} }
+                                    }
+                                }
+                            },
+                            ShortDescription="shortDescription1",
+
+                            Images = new Dictionary<string, IEnumerable<ImageDto>>
+                            {
+                                { "200x150", new List<ImageDto>{ new ImageDto { Type="Not Product shot", Url="url"} } }
+                            },
+                            Stock = new StockDto
+                            {
+                                VendorDesignated=0,
+                                Td=1,
+                                Total=2,
+                            },
+                            Plants = new List<PlantDto>
+                            {
+                                new PlantDto
+                                {
+                                    Id="Plant",
+                                    Stock = new LocationStockDto
+                                    {
+                                        AvailableToPromise=1,
+                                        LocationName = "Warehouse 123",
+                                        OnOrder = new OnOrderDto
+                                        {
+                                            Stock = 44,
+                                            ArrivalDate = new DateTime(2044, 12, 31),
+                                        }
+                                    }
+                                }
+                            },
+                            Price = new PriceDto
+                            {
+                                BasePrice=10,
+                                BestPrice=1,
+                                BestPriceExpiration=new DateTime(2100,1,1),
+                                ListPrice= 2,
+                                VolumePricing = new List<VolumePricingDto>
+                                {
+                                    new VolumePricingDto
+                                    {
+                                        MinQuantity=1,
+                                        Price=3
+                                    }
+                                },
+                                Currency = "USD"
+                            },
+                            Authorization= new AuthorizationDto
+                            {
+                                CanViewPrice=true,
+                            },
+                        }
+                    },
+                    new List<ValidateDto>
+                    {
+                        new ValidateDto
+                        {
+                            Source=new Source{ Id="p1", System="2"},
+                            Restriction="ALLOW"
+                        }
+                    },
+                    new ProductModel
+                    {
+                        Id="p1",
+                        ManufacturerPartNumber="ManufacturerPartNumber1",
+                        Description="Description1",
+                        DisplayName = "shortDescription1",
+                        Stock = new StockModel
+                        {
+                            TotalAvailable="2",
+                            Corporate = "1",
+                            VendorDirectInventory="0",
+                            VendorShipped=true,
+                            Plants = new List<PlantModel>
+                            {
+                                new PlantModel
+                                {
+                                    Name="Warehouse 123",
+                                    Quantity="1",
+                                    OnOrder = new OnOrderModel
+                                    {
+                                        Stock = 44,
+                                        ArrivalDate = "2044/12/31",
+                                    }
+                                }
+                            }
+                        },
+                        Authorization= new AuthorizationModel
+                        {
+                            CanOrder=true,
+                            CanViewPrice=true
+                        },
+                        Price = new PriceModel
+                        {
+                            BasePrice="$10.00",
+                            BestPrice="$1.00",
+                            BestPriceExpiration=new DateOnly(2100,1,1).ToString(new CultureInfo("en-US")),
+                            ListPrice="$2.00",
+                            VolumePricing= new List<VolumePricingModel>
+                            {
+                                new VolumePricingModel
+                                {
+                                    MinQuantity="1",
+                                    Price="$3.00"
+                                }
+                            },
+                            PromoAmount = "$9.00"
+                        }
+                    }
+                },
                 new object[]
                 {
                     new List<ProductDto>
@@ -210,10 +351,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             Description="Description1",
                             ShortDescription="shortDescription1",
 
-                            Images = new Dictionary<string, IEnumerable<ImageDto>>
-                            {
-                                { "75x75", new List<ImageDto>{ new ImageDto { Type="Product shot", Url="url"} } }
-                            },
                             Stock = new StockDto
                             {
                                 VendorDesignated=1,
@@ -268,7 +405,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "shortDescription1",
-                        ThumbnailImage="url",
                         Stock = new StockModel
                         {
                             TotalAvailable="2",
@@ -412,6 +548,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         {
             //arrange
             productDtos.ForEach(e => e.Price = null);
+            productDtos.ForEach(e => e.Images = null);
             productDtos.First().ExtendedSpecifications = null;
 
             _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ProductDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
@@ -445,12 +582,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                 .Verifiable();
             _httpClientMock.Setup(x => x.GetAsync<IEnumerable<ValidateDto>>(It.Is<string>(x => x.StartsWith("http://appproduct")), null, null, null))
                 .ReturnsAsync(validateDtos)
-                .Verifiable();            
+                .Verifiable();
+            _imageResolutionServiceMock.Setup(x => x.GetResolution(It.Is<string>(s => s == "200x150"), It.IsAny<ICollection<string>>()))
+                    .Returns("200x150")
+                    .Verifiable();
 
             //act
             var actual = await _sut.Handle(request, default).ConfigureAwait(false);
 
             //assert
+            _httpClientMock.VerifyAll();
+
             actual.Products.First().Should().BeEquivalentTo(expectedProduct);
         }
 
@@ -535,6 +677,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
             _siteSettingsMock.Object,
             _cultureServiceMock.Object,
             _translationServiceMock.Object,
-            _orderLevelsServiceMock.Object);
+            _orderLevelsServiceMock.Object,
+            _imageResolutionServiceMock.Object);
     }
 }

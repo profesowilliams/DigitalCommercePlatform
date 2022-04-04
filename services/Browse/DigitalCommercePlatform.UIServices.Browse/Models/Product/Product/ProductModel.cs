@@ -28,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Models.Product.Product
 
         public string Status { get; set; }
         public IEnumerable<ImageModel> Images { get; set; }
+        public IEnumerable<ImageModel> FullSizeImages { get; set; }
         public PriceModel Price { get; set; }
         public AuthorizationModel Authorization { get; set; }
         public IEnumerable<NoteModel> Notes { get; set; }

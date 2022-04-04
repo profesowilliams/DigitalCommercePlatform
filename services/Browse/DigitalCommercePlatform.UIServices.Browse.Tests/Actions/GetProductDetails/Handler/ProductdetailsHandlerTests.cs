@@ -12,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Features.Contexts.Models;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Features.Image;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Moq;
@@ -36,6 +37,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
         private readonly GetProductDetailsHandler.Handler _sut;
         private readonly Mock<ITranslationService> _translationServiceMock;
         private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
+        private readonly Mock<IImageResolutionService> _imageResolutionServiceMock;
 
         public ProductDetailsHandlerTests()
         {
@@ -45,6 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _siteSettingsMock = new Mock<ISiteSettings>();
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.ImageSize")).Returns("400x300");
+            _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.ImageFullSize")).Returns("1200x900");
             _siteSettingsMock.Setup(x => x.GetSetting("Browse.UI.OnOrderArrivalDateFormat")).Returns("yyyy'/'MM'/'dd");
 
             _translationServiceMock = new Mock<ITranslationService>();
@@ -55,6 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
 
             _cultureServiceMock = new Mock<ICultureService>();
             _orderLevelsServiceMock = new Mock<IOrderLevelsService>();
+            _imageResolutionServiceMock = new Mock<IImageResolutionService>();
 
             _sut = new GetProductDetailsHandler.Handler(
                 _mockBrowseService.Object,
@@ -62,7 +66,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 _mapper,
                 _translationServiceMock.Object,
                 _cultureServiceMock.Object,
-                _orderLevelsServiceMock.Object
+                _orderLevelsServiceMock.Object,
+                _imageResolutionServiceMock.Object
                 );
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -114,14 +119,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                 }
                             },
                             ShortDescription="shortDescription1",
-
                             Images = new Dictionary<string, IEnumerable<ImageDto>>
                             {
-                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } }
+                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } },
+                                { "1200x900", new List<ImageDto>{ new ImageDto { Angle="Product full shot", Url="imgfullurl"} } }
                             },
                             Logos = new Dictionary<string, IEnumerable<LogoDto>>
                             {
-                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } }
+                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } },
+                                { "1200x900", new List<LogoDto>{ new LogoDto { Id = "logoFullId", Url="logofullurl"} } }
                             },
                             Stock = new StockDto
                             {
@@ -318,6 +324,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             new ImageModel{ Angle = "Product shot", Url="imgurl"},
                             new ImageModel{ Angle = "Logo", Url="logourl"},
                         },
+                        FullSizeImages = new List<ImageModel>
+                        {
+                            new ImageModel{ Angle = "Product full shot", Url="imgfullurl"},
+                            new ImageModel{ Angle = "Logo", Url="logofullurl"},
+                        },
                         IndicatorsFlags = new IndicatorFlags
                         {
                             DropShip=true,
@@ -438,15 +449,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                 }
                             },
                             ShortDescription="shortDescription1",
-
-                            Images = new Dictionary<string, IEnumerable<ImageDto>>
-                            {
-                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } }
-                            },
-                            Logos = new Dictionary<string, IEnumerable<LogoDto>>
-                            {
-                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } }
-                            },
                             Stock = new StockDto
                             {
                                 VendorDesignated=null,
@@ -577,11 +579,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             },
                             PromoAmount="$9.00"
                         },
-                        Images = new List<ImageModel>
-                        {
-                            new ImageModel{ Angle = "Product shot", Url="imgurl"},
-                            new ImageModel{ Angle = "Logo", Url="logourl"},
-                        },
                         IndicatorsFlags = new IndicatorFlags
                         {
                             DropShip=true,
@@ -676,14 +673,15 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                                 }
                             },
                             ShortDescription="shortDescription1",
-
                             Images = new Dictionary<string, IEnumerable<ImageDto>>
                             {
-                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } }
+                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } },
+                                { "1200x900", new List<ImageDto>{ new ImageDto { Angle="Product full shot", Url="imgfullurl"} } }
                             },
                             Logos = new Dictionary<string, IEnumerable<LogoDto>>
                             {
-                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } }
+                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } },
+                                { "1200x900", new List<LogoDto>{ new LogoDto { Id = "logoFullId", Url="logofullurl"} } }
                             },
                             Stock = new StockDto
                             {
@@ -851,6 +849,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             new ImageModel{ Angle = "Product shot", Url="imgurl"},
                             new ImageModel{ Angle = "Logo", Url="logourl"},
                         },
+                        FullSizeImages = new List<ImageModel>
+                        {
+                            new ImageModel{ Angle = "Product full shot", Url="imgfullurl"},
+                            new ImageModel{ Angle = "Logo", Url="logofullurl"},
+                        },
                         IndicatorsFlags = new IndicatorFlags
                         {
                             DropShip=true,
@@ -948,11 +951,22 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _mockBrowseService.Setup(x => x.ValidateProductTask(request.Id))
                 .ReturnsAsync(validateDtos)
                 .Verifiable();
+            if (productDtos.First().Images != null)
+            {
+                _imageResolutionServiceMock.Setup(x => x.GetResolution(It.Is<string>(s => s == "400x300"), It.IsAny<ICollection<string>>()))
+                    .Returns("400x300")
+                    .Verifiable();
+                _imageResolutionServiceMock.Setup(x => x.GetResolution(It.Is<string>(s => s == "1200x900"), It.IsAny<ICollection<string>>()))
+                    .Returns("1200x900")
+                    .Verifiable();
+            }
 
             //act
             var actual = await _sut.Handle(request, default).ConfigureAwait(false);
 
             //assert
+            _mockBrowseService.VerifyAll();
+            _imageResolutionServiceMock.VerifyAll();
             actual.Should().NotBeNull();
             actual.Content.First().Should().BeEquivalentTo(expectedProduct);
         }
@@ -1006,6 +1020,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _mapper,
             _translationServiceMock.Object,
             _cultureServiceMock.Object,
-            _orderLevelsServiceMock.Object);
+            _orderLevelsServiceMock.Object,
+            _imageResolutionServiceMock.Object);
     }
 }

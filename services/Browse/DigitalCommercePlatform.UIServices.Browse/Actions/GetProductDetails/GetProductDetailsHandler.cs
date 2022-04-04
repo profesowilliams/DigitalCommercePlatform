@@ -10,6 +10,7 @@ using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product;
 using DigitalCommercePlatform.UIServices.Browse.Models.Product.Product.Internal;
 using DigitalCommercePlatform.UIServices.Browse.Services;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Features.Image;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
@@ -29,14 +30,12 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
         public class Handler : IRequestHandler<Request, Response>
         {
             private const string ALLOW = "ALLOW";
-            private const string AuthRequiredPrice = "AuthRequiredPrice";
             private const string DisplayStatus = "DisplayStatus";
             private const string DropShip = "DropShip";
             private const string EndUserRequired = "EndUserRequired";
             private const string FreightPolicyException = "FreightPolicyException";
             private const string FreightPolicyExceptionValue = "X";
             private const string Logo = "Logo";
-            private const string N = "N";
             private const string New = "New";
             private const string Orderable = "Orderable";
             private const string PhasedOut = "PhasedOut";
@@ -52,12 +51,14 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
             private const string X = "X";
             private readonly ICultureService _cultureService;
             private readonly string _imageSize;
+            private readonly string _imageFullSize;
             private readonly Dictionary<string, string> _indicatorsTranslations = null;
             private readonly IMapper _mapper;
             private readonly string _onOrderArrivalDateFormat;
             private readonly IBrowseService _productRepositoryServices;
             private readonly ITranslationService _translationService;
             private readonly IOrderLevelsService _orderLevelsService;
+            private readonly IImageResolutionService _imageResolutionService;
             private Dictionary<string, string> _translations = null;
 
             public Handler(
@@ -65,16 +66,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 ISiteSettings siteSettings,
                 IMapper mapper,
                 ITranslationService translationService,
-                ICultureService cultureService, IOrderLevelsService orderLevelsService)
+                ICultureService cultureService, 
+                IOrderLevelsService orderLevelsService,
+                IImageResolutionService imageResolutionService)
             {
                 _productRepositoryServices = productRepositoryServices;
                 _imageSize = siteSettings.GetSetting("Browse.UI.ImageSize");
+                _imageFullSize = siteSettings.GetSetting("Browse.UI.ImageFullSize");
                 _onOrderArrivalDateFormat = siteSettings.GetSetting("Browse.UI.OnOrderArrivalDateFormat");
                 _mapper = mapper;
                 _translationService = translationService;
                 _translationService.FetchTranslations("Browse.UI.Indicators", ref _indicatorsTranslations);
                 _cultureService = cultureService;
                 _orderLevelsService = orderLevelsService;
+                _imageResolutionService = imageResolutionService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -304,27 +309,64 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             private void MapImages(ProductDto x, ProductModel product)
             {
+                MapSizeImages(x, product);
+                MapFullSizeImages(x, product);
+            }
+
+            private void MapSizeImages(ProductDto x, ProductModel product)
+            {
                 var imagesModel = new List<ImageModel>();
 
-                if (x.Images != null && x.Images.ContainsKey(_imageSize))
+                AddImages(x.Images, imagesModel, _imageSize);
+                AddLogos(x.Logos, imagesModel, _imageSize);
+
+                product.Images = imagesModel.Any() ? imagesModel : null;
+            }
+            
+            private void MapFullSizeImages(ProductDto x, ProductModel product)
+            {
+                var imagesModel = new List<ImageModel>();
+
+                AddImages(x.Images, imagesModel, _imageFullSize);
+                AddLogos(x.Logos, imagesModel, _imageFullSize);
+
+                product.FullSizeImages = imagesModel.Any() ? imagesModel : null;
+            }
+
+            private void AddImages(IDictionary<string, IEnumerable<ImageDto>> images, List<ImageModel> imagesModel, string requestedResolution)
+            {
+                if (images == null || !images.Any()) 
                 {
-                    imagesModel.AddRange(x.Images[_imageSize].Select(i => new ImageModel
+                    return;
+                }
+                
+                var resolution = _imageResolutionService.GetResolution(requestedResolution, images.Keys);
+                if (resolution != null)
+                {
+                    imagesModel.AddRange(images[resolution].Select(i => new ImageModel
                     {
                         Angle = i.Angle,
                         Url = i.Url
                     }));
                 }
-
-                if (x.Logos != null && x.Logos.ContainsKey(_imageSize))
+            } 
+            
+            private void AddLogos(IDictionary<string, IEnumerable<LogoDto>> logos, List<ImageModel> imagesModel, string requestedResolution)
+            {
+                if (logos == null || !logos.Any()) 
                 {
-                    imagesModel.AddRange(x.Logos[_imageSize].Select(l => new ImageModel
+                    return;
+                }
+                
+                var resolution = _imageResolutionService.GetResolution(requestedResolution, logos.Keys);
+                if (resolution != null)
+                {
+                    imagesModel.AddRange(logos[resolution].Select(i => new ImageModel
                     {
-                        Url = l.Url,
-                        Angle = Logo
+                        Angle = Logo,
+                        Url = i.Url
                     }));
                 }
-
-                product.Images = imagesModel.Any() ? imagesModel : null;
             }
 
             private void MapIndicators(ProductModel product, Flags flags)
