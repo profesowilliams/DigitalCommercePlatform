@@ -1,6 +1,8 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
@@ -9,10 +11,10 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions.Common.Fixtu
     public class InitHandlerCommonPropertiesFixture
     {
         public readonly Mock<IMapper> MockMapper;
-        public readonly NullLoggerFactory LoggerFactory;
+        public readonly Mock<ILogger<DownloadInvoice.Handler>> LoggerFactory;
         public readonly Mock<IOrderService> MockOrderService;
 
-        public InitHandlerCommonPropertiesFixture()
+    public InitHandlerCommonPropertiesFixture()
         {
             LoggerFactory = new ();
             MockMapper = new();

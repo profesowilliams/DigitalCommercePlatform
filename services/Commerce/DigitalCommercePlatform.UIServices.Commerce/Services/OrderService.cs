@@ -73,10 +73,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 byte[] binaryContentPdf = await response.Content.ReadAsByteArrayAsync();
                 return binaryContentPdf;
             }
-            else if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                return null;
-            }
+            
             response.EnsureSuccessStatusCode();
             return null;
         }

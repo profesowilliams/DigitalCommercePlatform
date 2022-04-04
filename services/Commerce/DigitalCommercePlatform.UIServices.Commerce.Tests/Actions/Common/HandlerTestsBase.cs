@@ -1,7 +1,9 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Order;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Commerce.Tests.Actions.Common.Fixtures;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using System;
@@ -13,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions.Common
     public class HandlerTestsBase
     {
         protected readonly Mock<IMapper> _mockMapper;
-        protected readonly NullLoggerFactory _loggerFactory;
+        protected readonly Mock<ILogger<DownloadInvoice.Handler>> _loggerFactory;
         protected readonly Mock<IOrderService> _mockOrderService;
 
         public HandlerTestsBase(InitHandlerCommonPropertiesFixture fixture)

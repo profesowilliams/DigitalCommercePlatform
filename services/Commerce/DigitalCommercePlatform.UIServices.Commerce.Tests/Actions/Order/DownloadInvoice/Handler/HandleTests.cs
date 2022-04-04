@@ -3,6 +3,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Tests.Actions.Common;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -18,15 +19,17 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions.Order.Downlo
     {
         private readonly InitDownloadInvoiceHandlerFixture _fixture;
         private readonly DI.Handler _handler;
+        private readonly Mock<ILogger<DI.Handler>> _logger;
 
         public HandleTests(InitDownloadInvoiceHandlerFixture fixture)
             : base(fixture)
         {
             _fixture = fixture;
             _handler = GetHandler();
+            _logger = new Mock<ILogger<DI.Handler>>(); 
         }
 
-        private DI.Handler GetHandler() => new(_mockOrderService.Object, _mockMapper.Object);
+        private DI.Handler GetHandler() => new(_mockOrderService.Object, _loggerFactory.Object,_mockMapper.Object);
 
         [Fact]
         public async Task ShouldReturnSinglePdfFileForValidInvoiceId()

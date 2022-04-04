@@ -1237,6 +1237,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.NotNull(result);
         }
 
+
+        [Fact]
+        public void PopulateSavedCartLinesForQuoteRequest_Null()
+        {
+            // Arrange 
+
+            List<Common.Cart.Models.Cart.ActiveCartLineModel> items = new List<Common.Cart.Models.Cart.ActiveCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.ActiveCartLineModel { ItemId = null, ProductId=null, Quantity = 1,  ParentItemId = 0},
+                new Common.Cart.Models.Cart.ActiveCartLineModel { ItemId = null, ProductId=null, Quantity = 1,  ParentItemId = 0},
+
+            };
+            // Act         
+
+            var result = GetHelperService().PopulateSavedCartLinesForQuoteRequest(items.AsReadOnly());
+
+            // Assert
+            Assert.NotNull(result.Count);
+        }
+
         [Fact]
         public void PopulateQuoteRequestLinesForAsync_Tests()
         {
@@ -1250,6 +1270,25 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Act         
 
             var result = GetHelperService().PopulateQuoteRequestLinesForAsync(items,null);
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+
+        [Fact]
+        public void PopulateQuoteRequestLinesForAsync_Null()
+        {
+            // Arrange 
+
+            List<Common.Cart.Models.Cart.SavedCartLineModel> items = new List<Common.Cart.Models.Cart.SavedCartLineModel>()
+            {
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = null, ProductId=null, Quantity = 1 },
+                new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = null, ProductId=null, Quantity = 1 },
+            };
+            // Act         
+
+            var result = GetHelperService().PopulateQuoteRequestLinesForAsync(items, null);
 
             // Assert
             Assert.NotNull(result);

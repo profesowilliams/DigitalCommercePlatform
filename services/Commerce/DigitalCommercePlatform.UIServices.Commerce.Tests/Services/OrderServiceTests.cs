@@ -83,6 +83,53 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Assert.Equal(smallestPdf.Length, result.Length);
         }
 
+
+        [Fact]
+        public async Task GetPdfInvoiceAsyncTest_Null()
+        {
+            // Arrange
+            string smallestPdf = "%PDF-1.trailer\n<</Root<</Pages<</Kids[<</MediaBox[0 0 3 3]>>]>>>>>>";
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            mockHttpMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(smallestPdf),
+                });
+            var client = new HttpClient(mockHttpMessageHandler.Object);
+            _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
+            // Act
+            var result = await _orderService.GetPdfInvoiceAsync("8101544574");
+            // Assert
+            Assert.NotNull(result);
+        }
+
+
+
+
+        [Fact]
+        public async Task GetPdfInvoiceAsyncTest_Error()
+        {
+            // Arrange
+            string smallestPdf = "%PDF-1.trailer\n<</Root<</Pages<</Kids[<</MediaBox[0 0 3 3]>>]>>>>>>";
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            mockHttpMessageHandler.Protected()
+                .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent(smallestPdf),
+                });
+            var client = new HttpClient(mockHttpMessageHandler.Object);
+            _httpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
+            // Act
+            var result = await _orderService.GetPdfInvoiceAsync("8101544574");
+            // Assert
+            Assert.Equal(smallestPdf.Length, result.Length);
+        }
+        
+
         [Fact]
         public async Task GetInvoicesFromOrderIdAsyncTestNull()
         {
