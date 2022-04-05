@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4F2B30B3-0AC4-4CDE-BB0B-7684A1004A16}"
 EndProject
@@ -34,6 +34,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{5F5DF69A-A93A-4A2C-8E39-C6BC5B8964D5} = {4F2B30B3-0AC4-4CDE-BB0B-7684A1004A16}
 		{B6B58601-9227-4F2B-ADED-D20C67ECB0F2} = {4F2B30B3-0AC4-4CDE-BB0B-7684A1004A16}
 		{4F43AA92-940A-44AC-B994-ED791374A9B6} = {4F2B30B3-0AC4-4CDE-BB0B-7684A1004A16}
 	EndGlobalSection

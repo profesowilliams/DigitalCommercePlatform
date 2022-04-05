@@ -1,4 +1,4 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,19 +18,16 @@ using DigitalFoundation.Common.Services.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using DigitalFoundation.Common.Providers.IdBinders;
-using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Security.Extensions;
 using DigitalFoundation.Common.Features.Swagger;
-using DigitalFoundation.Common.Security.PolicyAuthorization.AuthorizationHandlers;
-using DigitalFoundation.Common.Security.PolicyAuthorization.Providers;
 using DigitalFoundation.Common.Services.Features.HealthChecks.Extensions;
 using Microsoft.AspNetCore.Routing;
 using DigitalFoundation.Common.Services.Features.HealthChecks.Types;
 using Microsoft.Extensions.Hosting;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
+using DigitalFoundation.Common.Features.Contexts;
 
 namespace DigitalCommercePlatform.UIServices.Order
 {
@@ -68,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Order
         {
             BinderProviders.Add(new IdBinderProvider());
             services.AddCors();
-            services.AddDigitalFoundationUIContext(StartupLogger);
+            services.AddUIContext(StartupLogger);
             services.AddMiddleTierHttpClient(StartupLogger);
             services.AddUIServiceAuthentication();
             services.AddSwaggerGenConfig(StartupLogger);
