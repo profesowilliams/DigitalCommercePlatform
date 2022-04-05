@@ -309,28 +309,28 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
 
             private void MapImages(ProductDto x, ProductModel product)
             {
-                MapSizeImages(x, product);
-                MapFullSizeImages(x, product);
+                product.Images = GetImages(x, _imageSize);
+                product.FullSizeImages = GetImages(x, _imageFullSize);
             }
 
-            private void MapSizeImages(ProductDto x, ProductModel product)
+            private List<ImageModel> GetImages(ProductDto x, string resolution)
             {
                 var imagesModel = new List<ImageModel>();
 
-                AddImages(x.Images, imagesModel, _imageSize);
-                AddLogos(x.Logos, imagesModel, _imageSize);
+                if(ImageHelper.TryGetDefaultImage(x.Images, out var defaultImageDto) && (x.Logos == null || !x.Logos.Any())) 
+                {
+                    imagesModel.Add(new ImageModel
+                    { 
+                        Angle = defaultImageDto.Angle,
+                        Url = defaultImageDto.Url
+                    });
+                    return imagesModel;
+                }
 
-                product.Images = imagesModel.Any() ? imagesModel : null;
-            }
-            
-            private void MapFullSizeImages(ProductDto x, ProductModel product)
-            {
-                var imagesModel = new List<ImageModel>();
+                AddImages(x.Images, imagesModel, resolution);
+                AddLogos(x.Logos, imagesModel, resolution);
 
-                AddImages(x.Images, imagesModel, _imageFullSize);
-                AddLogos(x.Logos, imagesModel, _imageFullSize);
-
-                product.FullSizeImages = imagesModel.Any() ? imagesModel : null;
+                return imagesModel.Any() ? imagesModel : null;
             }
 
             private void AddImages(IDictionary<string, IEnumerable<ImageDto>> images, List<ImageModel> imagesModel, string requestedResolution)

@@ -236,7 +236,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
 
                             Images = new Dictionary<string, IEnumerable<ImageDto>>
                             {
-                                { "200x150", new List<ImageDto>{ new ImageDto { Type="Not Product shot", Url="url"} } }
+                                { "200x150", new List<ImageDto>{ new ImageDto { Type="Not Product shot", Url="notProductShotUrl"} } }
                             },
                             Stock = new StockDto
                             {
@@ -297,6 +297,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "shortDescription1",
+                        ThumbnailImage="notProductShotUrl",
                         Stock = new StockModel
                         {
                             TotalAvailable="2",
@@ -351,6 +352,10 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                             Description="Description1",
                             ShortDescription="shortDescription1",
 
+                            Images = new Dictionary<string, IEnumerable<ImageDto>>
+                            {
+                                { ImageHelper.ImageDefaultResolution, new List<ImageDto>{ new ImageDto { Type= "Default Image", Url="defaultUrl"} } }
+                            },
                             Stock = new StockDto
                             {
                                 VendorDesignated=1,
@@ -405,6 +410,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                         ManufacturerPartNumber="ManufacturerPartNumber1",
                         Description="Description1",
                         DisplayName = "shortDescription1",
+                        ThumbnailImage="defaultUrl",
                         Stock = new StockModel
                         {
                             TotalAvailable="2",

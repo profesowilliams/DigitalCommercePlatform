@@ -675,13 +675,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                             ShortDescription="shortDescription1",
                             Images = new Dictionary<string, IEnumerable<ImageDto>>
                             {
-                                { "400x300", new List<ImageDto>{ new ImageDto { Angle="Product shot", Url="imgurl"} } },
-                                { "1200x900", new List<ImageDto>{ new ImageDto { Angle="Product full shot", Url="imgfullurl"} } }
-                            },
-                            Logos = new Dictionary<string, IEnumerable<LogoDto>>
-                            {
-                                { "400x300", new List<LogoDto>{ new LogoDto { Id="logoId", Url="logourl"} } },
-                                { "1200x900", new List<LogoDto>{ new LogoDto { Id = "logoFullId", Url="logofullurl"} } }
+                                { ImageHelper.ImageDefaultResolution, new List<ImageDto>{ new ImageDto { Angle="Default img", Url="defaultUrl"} } },
                             },
                             Stock = new StockDto
                             {
@@ -846,13 +840,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                         },
                         Images = new List<ImageModel>
                         {
-                            new ImageModel{ Angle = "Product shot", Url="imgurl"},
-                            new ImageModel{ Angle = "Logo", Url="logourl"},
+                            new ImageModel{ Angle = "Default img", Url="defaultUrl"},
                         },
                         FullSizeImages = new List<ImageModel>
                         {
-                            new ImageModel{ Angle = "Product full shot", Url="imgfullurl"},
-                            new ImageModel{ Angle = "Logo", Url="logofullurl"},
+                            new ImageModel{ Angle = "Default img", Url="defaultUrl"},
                         },
                         IndicatorsFlags = new IndicatorFlags
                         {
@@ -951,7 +943,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
             _mockBrowseService.Setup(x => x.ValidateProductTask(request.Id))
                 .ReturnsAsync(validateDtos)
                 .Verifiable();
-            if (productDtos.First().Images != null)
+            if (productDtos.First().Images != null && productDtos.First().Images.Count != 1)
             {
                 _imageResolutionServiceMock.Setup(x => x.GetResolution(It.Is<string>(s => s == "400x300"), It.IsAny<ICollection<string>>()))
                     .Returns("400x300")

@@ -27,7 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
             private const string ALLOW = "ALLOW";
             private const string DropShip = "DropShip";
             private const string Orderable = "Orderable";
-            private const string ProductShot = "Product shot";
             private const string Warehouse = "Warehouse";
             private const string Y = "Y";
             private readonly ICultureService _cultureService;
@@ -144,10 +143,17 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions
                     return null;
                 }
 
+                if (ImageHelper.TryGetDefaultImage(images, out var defaultImage))
+                {
+                    return defaultImage.Url;
+                }
+
                 var resolution = _imageResolutionService.GetResolution(_smallImageSize, images.Keys);
-                
-                return images[resolution].FirstOrDefault(x => string.Equals(x.Type, ProductShot, StringComparison.InvariantCultureIgnoreCase))?.Url;
+
+                return images[resolution].First().Url;
             }
+
+           
 
             private static void MapStock(ProductDto x, ProductModel product, bool vendorShipped)
             {
