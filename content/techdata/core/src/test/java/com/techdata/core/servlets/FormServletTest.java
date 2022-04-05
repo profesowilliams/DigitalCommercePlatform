@@ -163,8 +163,8 @@ class FormServletTest {
     @Test
     void testPopulateEmailAttributesFromCAConfig() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String[] arrayFromCA = new String[] {"apac|test@gmail.com,apac@apac.com", "hk|hk@hk.com"};
-        String[] defaultAddressArray = new String[]{"default@defailt.com"};
-        String[] allowedFileTypesArray = new String[]{".pdf", ".gif"};
+        String[] encodedChars = new String[]{"&==&amp;","<==&lt;",">==&gt;","\"==&quot;","'==&#x27;"};
+
         Map<String, String> emailParams = new HashMap<>();
         emailParams.put(":redirect","apac");
         Method underTestMethod;
@@ -176,6 +176,7 @@ class FormServletTest {
         when(formConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
         when(formConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
         when(formConfigurations.apacConfirmationEmailTemplatePath()).thenReturn("apacconfirmationEmailTemplatePath");
+        when(formConfigurations.charsWithEncodedValues()).thenReturn(encodedChars);
         when(formConfigurations.emailSubject()).thenReturn("emailSubject");
         when(formConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
         when(formConfigurations.confirmationHelpDesk()).thenReturn("emailSubject");
@@ -262,10 +263,11 @@ class FormServletTest {
     }
 
     @Test
-    void testDoPost() throws ServletException, IOException, NoSuchFieldException, IllegalAccessException {
+    void testDoPost() throws ServletException, Exception, NoSuchFieldException, IllegalAccessException {
 
         String[] allowedFileTypesArray = new String[]{".pdf", ".gif"};
         String[] allowedFileContentTypesMockValue = new String[]{"application/pdf"};
+        String[] encodedChars = new String[]{"&==&amp;","<==&lt;",">==&gt;","\"==&quot;","'==&#x27;"};
         String[] emails = new String[]{"test@techdata.com"};
         String[] groups = new String[]{"author"};
 
@@ -279,7 +281,7 @@ class FormServletTest {
         when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
         when(formConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
         when(formConfigurations.allowedFileContentTypes()).thenReturn(allowedFileContentTypesMockValue);
-        when(formConfigurations.textFieldRegexString()).thenReturn("textFieldRegexExpr");
+        when(formConfigurations.charsWithEncodedValues()).thenReturn(encodedChars);
         when(mockRequest.getRequestParameterMap()).thenReturn(value);
         when(formConfigurations.toEmails()).thenReturn(emails);
         when(formConfigurations.submitterEmailFieldName()).thenReturn("email");

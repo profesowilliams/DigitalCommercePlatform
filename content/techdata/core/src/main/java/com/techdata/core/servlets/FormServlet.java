@@ -7,6 +7,7 @@ import com.techdata.core.slingcaconfig.FormConfigurations;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 import com.techdata.core.util.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
@@ -28,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.*;
-import java.util.regex.Pattern;
 
 @Component(
         immediate = true,
@@ -50,6 +50,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final String INTERNAL_EMAIL_SUBJECT_PARAM_NAME = "internalEmailSubject";
         private static final int ONE_MB_IN_BYTES = 1000000;
         public static final String A_TO_Z_LOWERCASE = "a-z";
+        private static final String ENCODE_DELIMITER = "==";
         @Reference
 
         private transient EmailService emailService;
@@ -61,7 +62,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private int thresholdFileSize = 10;
         private List<String> allowedFileExtensions = new ArrayList<>();
         private List<String> allowedFileContentTypes = new ArrayList<>();
-        private String textFieldRegexExpr;
+        private Map<String,String> charsEncodedMap = new HashMap<>();
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -91,9 +92,6 @@ public class FormServlet extends SlingAllMethodsServlet {
                                         thresholdFileSize = formConfigurations.fileThresholdInMB();
                                         allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                                         allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
-                                        textFieldRegexExpr = formConfigurations.textFieldRegexString();
-                                        // adding carriage-return/new-line/backslash chars to regex
-                                        textFieldRegexExpr = textFieldRegexExpr.replace(A_TO_Z_LOWERCASE, EXTRA_REGEX_CHARS + A_TO_Z_LOWERCASE);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
                                         handleAttachmentsInEmail(formConfigurations,emailParams);
@@ -108,10 +106,9 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 }
                         }
                 }
-                catch (IOException e) {
+                catch (CustomFormException e) {
                         LOG.error("Exception occurred during form submission", e);
-                        response.sendError(403, "Cannot proceed, invalid form request.");
-
+                        response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, e.getMessage());
                 }
         }
 
@@ -157,7 +154,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         private void prepareEmailRequestFromFormData(java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params,
-                                                     Map<String, DataSource> attachments, Map<String, String> emailParams) throws IOException {
+                                                     Map<String, DataSource> attachments, Map<String, String> emailParams) throws CustomFormException {
                 for (final java.util.Map.Entry<String, org.apache.sling.api.request.RequestParameter[]> pairs : params.entrySet()) {
                         final String key = pairs.getKey();
                         final org.apache.sling.api.request.RequestParameter[] pArr = pairs.getValue();
@@ -175,39 +172,43 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         private void handleNonFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr,
                                                       String key, Map<String, String> emailParams,
-                                                      StringBuilder value) throws IOException {
-                if (pArr.length > 0)
-                {
-                        for (RequestParameter rp : pArr)
-                        {
-                                if(StringUtils.isNotEmpty(rp.toString())){
-                                        value.append(rp.toString());
+                                                      StringBuilder value) throws CustomFormException {
+                try {
+                        if (pArr.length > 0) {
+                                for (RequestParameter rp : pArr) {
+                                        if (StringUtils.isNotEmpty(rp.toString())) {
+                                                value.append(rp.toString());
+                                        }
                                 }
                         }
+                        LOG.debug("key is {}, value is {}", key, value);
+                        emailParams.put(key, validateString(value.toString()));
+                } catch (Exception e) {
+                        throw new CustomFormException("Failed when processing the field = " + key);
                 }
-                LOG.debug("key is {}, value is {}",key, value);
-                emailParams.put(key, validateString(value.toString()));
         }
 
-        public String validateString(String input) throws IOException {
-                if(StringUtils.isEmpty(input)) return input;
-                final Pattern pattern = Pattern.compile(textFieldRegexExpr);
-                if (!pattern.matcher(input).find()) {
-                        throw new IOException("Invalid form field, skipping the form and email submission.");
+        public String validateString(String input) {
+                Set<String> keyset = charsEncodedMap.keySet();
+                for (String key : keyset) {
+                        input = input.replace(key, charsEncodedMap.get(key));
                 }
                 return input;
         }
 
-        private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments, String key, Map<String, String> emailParams ) throws IOException {
-                RequestParameter fileRequestParameter = pArr[0];
-                LOG.debug("file input parameter found. Name is {} ", fileRequestParameter.getFileName());
-                if (StringUtils.isNotEmpty(fileRequestParameter.getFileName()) && fileRequestParameter.getInputStream() != null )
-                {
-                        InputStream file = fileRequestParameter.getInputStream();
-                        attachments.put(fileRequestParameter.getFileName(), new ByteArrayDataSource(file, fileRequestParameter.getContentType()));
-                        emailParams.put(key, fileRequestParameter.getFileName());
-                } else{
-                        LOG.error("Error in determining file uploaded");
+        private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments, String key, Map<String, String> emailParams ) throws CustomFormException{
+                try {
+                        RequestParameter fileRequestParameter = pArr[0];
+                        LOG.debug("file input parameter found. Name is {} ", fileRequestParameter.getFileName());
+                        if (StringUtils.isNotEmpty(fileRequestParameter.getFileName()) && fileRequestParameter.getInputStream() != null) {
+                                InputStream file = fileRequestParameter.getInputStream();
+                                attachments.put(fileRequestParameter.getFileName(), new ByteArrayDataSource(file, fileRequestParameter.getContentType()));
+                                emailParams.put(key, fileRequestParameter.getFileName());
+                        } else {
+                                LOG.error("Error in determining file uploaded");
+                        }
+                } catch (Exception e) {
+                        throw new CustomFormException("Failed when processing the field = " + key);
                 }
         }
         private void handleAttachmentsInEmail(FormConfigurations formConfigurations,Map<String, String> emailParams){
@@ -225,6 +226,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String confirmationEmailBody = formConfigurations.confirmationEmailBody();
                 emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
                 internalEmailTemplatePath = formConfigurations.internalEmailTemplatePath();
+                prepareEncodedChars(formConfigurations);
                 if(emailParams.get(":redirect")!= null && emailParams.get(":redirect").contains("apac")) {
                         confirmationEmailTemplatePath = formConfigurations.apacConfirmationEmailTemplatePath();
                 }else {
@@ -237,6 +239,16 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String confirmationEmailSubject = formConfigurations.confirmationEmailSubject();
                 formSubmissionTargetGroups = getMapOfEmailAddress(formConfigurations.formSubmissionTargetGroups());
                 emailParams.put(CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME, confirmationEmailSubject);
+        }
+
+        private void prepareEncodedChars(FormConfigurations formConfigurations) {
+                String[] charsWithEncodedValues = formConfigurations.charsWithEncodedValues();
+                for (String term : charsWithEncodedValues) {
+                        String[] splitValues = term.split(ENCODE_DELIMITER);
+                        if (splitValues.length == 2) {
+                                charsEncodedMap.put(splitValues[0], splitValues[1]);
+                        }
+                }
         }
 
         private void sendEmailWithFormData(String[] toEmailAddresses, Map<String, String> emailParams, String submitterEmailFieldName,
@@ -282,6 +294,4 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         }
 
-        // new line, carriage-returns, slashes
-        private static final String EXTRA_REGEX_CHARS = "\r\n\\\\";
 }
