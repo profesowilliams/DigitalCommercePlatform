@@ -16,7 +16,8 @@ function SearchFilter({
   const [values, setValues] = useState({
     dropdown: "",
     input: "",
-    option:""
+    option:"",
+    label:""
   });
   const [callbackExecuted, setCallbackExecuted] = useState(false)
   const [isDropdownVisible, setSwitchDropdown ] = useState(false);  
@@ -61,10 +62,12 @@ function SearchFilter({
     clearValues();
   };
 
-  const changeHandler = (value) => {    
+  const changeHandler = (option) => {   
     setValues((prevSt) => ({
         ...prevSt,
-        "option": value,
+        option: option.searchKey,
+        label:option.searchLabel
+        
     }));
     setIsEditView(true);
   };
@@ -142,7 +145,7 @@ function SearchFilter({
     if (hasNotPrivilege) return <></>; 
     return (
       <>     
-        <label key={option.searchKey} onClick={() => changeHandler(option.searchKey)}>
+        <label key={option.searchKey} onClick={() => changeHandler(option)}>
           {option.searchLabel}
         </label>
       </>
@@ -162,7 +165,7 @@ function SearchFilter({
           hasCloseBtn={true}
         >
           <span onClick={handleCapsuleTextClick} className="td-capsule__text">
-            {`${getSearchLabel(values.option)}: ${searchTerm || inputRef?.current?.value}`}
+            {`${values.label}: ${searchTerm || inputRef?.current?.value}`}
           </span>
         </Capsule>
       </If>
@@ -170,9 +173,7 @@ function SearchFilter({
   }
 
   if (option.length && isEditView) {
-    const chosenFilter = options.find(
-      ({searchKey}) => searchKey === option
-    ).searchLabel;
+    const chosenFilter = values.label
     return (
       <>
         <SearchCapsule />

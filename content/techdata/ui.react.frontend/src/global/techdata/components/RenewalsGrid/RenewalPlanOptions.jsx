@@ -112,7 +112,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     }
 
     const setStylesOnSelected = (option) => {
-        return { fontSize: isPlanSelected(option) && '20px' }
+        return { fontSize: isPlanSelected(option) && '17px' }
     }
 
     const changeRadioButton = (event) => {

@@ -8,7 +8,7 @@ $bg--marketing-card:#F7F7F7;
   padding-bottom: 2rem;  
   .rightHeader {
     float: right;
-    font-size: 18px;
+    font-size: 16px;
     color: #000c21;
     h4{
       cursor: pointer; 
@@ -20,7 +20,7 @@ $bg--marketing-card:#F7F7F7;
   }
   .leftHeader {
     float: left;
-    font-size: 18px;
+    font-size: 16px;
     color: #000c21;
     h4{
       label{
@@ -48,7 +48,7 @@ $bg--marketing-card:#F7F7F7;
   .footer{
     display: flex;
     margin-top: 1rem;
-    gap: 7px;
+    gap: 10px;
     font-size: 12px;
     button {
       width : 130px;
@@ -62,7 +62,7 @@ $bg--marketing-card:#F7F7F7;
     span.vertical-separator{
       background: #cbc9c9;
       width: 1px;
-      height: 24px;
+      height: 19px;
       }
   }	
 }
@@ -222,7 +222,7 @@ $bg--marketing-card:#F7F7F7;
         cursor: pointer;
       }
       button {
-        margin: 0;
+        margin: 0 0.5rem;
         padding: 0;
         cursor: pointer;
       }
