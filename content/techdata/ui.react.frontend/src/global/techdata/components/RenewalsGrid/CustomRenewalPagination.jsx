@@ -138,18 +138,38 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   return (
     <div className="cmp-navigation">
       <p className="navigation__info">
-        {paginationCounter.minCounter > 0 ? paginationCounter.minCounter : minPaginationCounter()}-{paginationCounter.maxCounter > 0 ? paginationCounter.maxCounter : maxPaginationCounter()} of {totalCounter} results
+        <span className="cta">
+          {paginationCounter.minCounter > 0
+            ? paginationCounter.minCounter
+            : minPaginationCounter()}
+        </span>
+        to
+        <span className="cta">
+          {paginationCounter.maxCounter > 0
+            ? paginationCounter.maxCounter
+            : maxPaginationCounter()}
+        </span>
+        of
+        <span className="cta">{totalCounter}</span>
+        results
       </p>
       <p className="cmp-navigation__actions">
-        <button className="border"
-        disabled={pageNumber === 1}
-        onClick={() => {
-          goToFirstPage()
-          updatePaginationCounter();
-        }}>
+        <button
+          className="border"
+          disabled={pageNumber === 1}
+          onClick={() => {
+            goToFirstPage();
+            updatePaginationCounter();
+          }}
+        >
           <strong>{"|<"}</strong>
-          </button>
-        <button style={{cursor:pageNumber !== 1 && 'pointer'}} disabled={pageNumber === 1} onClick={decrementHandler}>
+        </button>
+        <button
+          className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
+          style={{ cursor: pageNumber !== 1 && "pointer" }}
+          disabled={pageNumber === 1}
+          onClick={decrementHandler}
+        >
           <i className="fas fa-chevron-left"></i>
         </button>
         <div className="cmp-navigation__actions-labels">
@@ -166,6 +186,9 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           <span>{pageCount}</span>
         </div>
         <button
+          className={`move-button${
+            pageNumber === pageCount ? "__disabled" : ""
+          }`}
           disabled={pageNumber === pageCount}
           onClick={incrementHandler}
           style={{ cursor: pageNumber !== pageCount && "pointer" }}
@@ -174,11 +197,13 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
         </button>
         <button
           disabled={pageNumber === pageCount}
-          className="border" onClick={() => {
+          className="border"
+          onClick={() => {
             gotToLastPage();
             updatePaginationCounter();
-          }}>
-            <strong>{">|"}</strong>
+          }}
+        >
+          <strong>{">|"}</strong>
         </button>
       </p>
     </div>

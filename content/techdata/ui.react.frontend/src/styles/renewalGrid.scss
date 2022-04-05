@@ -197,6 +197,10 @@ $bg--marketing-card:#F7F7F7;
     display: flex;
     gap: 1rem;
     align-items: center;
+    span.cta {
+      margin: auto .2em;
+      font-weight: bold;
+    }
     p {
       margin: 0;
       color: $font-color;
@@ -207,6 +211,12 @@ $bg--marketing-card:#F7F7F7;
       }
     }
     &__actions {
+      .move-button {
+        color: lightskyblue;
+        &__disabled {
+          color: #C6C6C6;
+        }
+      }
       button.border {
         margin: 0 .4em;
         cursor: pointer;
