@@ -150,6 +150,11 @@ function SearchFilter({
   } 
 
   function SearchCapsule() {
+    const getSearchLabel = (option) => {
+      const filteredObj = options.find(({searchKey}) => searchKey === option);
+      return filteredObj?.searchLabel;
+    }
+
     return (
       <If condition={isSearchCapsuleVisible}>
         <Capsule
@@ -157,7 +162,7 @@ function SearchFilter({
           hasCloseBtn={true}
         >
           <span onClick={handleCapsuleTextClick} className="td-capsule__text">
-            {`${values.option}: ${searchTerm || inputRef?.current?.value}`}
+            {`${getSearchLabel(values.option)}: ${searchTerm || inputRef?.current?.value}`}
           </span>
         </Capsule>
       </If>
