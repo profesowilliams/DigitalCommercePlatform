@@ -54,8 +54,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly ISortService _sortService;
             private readonly IItemsPerPageService _itemsPerPageService;
             private readonly IOrderLevelsService _orderLevelsService;
+            private readonly ITranslationService _translationService;
 
-            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService, IItemsPerPageService itemsPerPageService, IOrderLevelsService orderLevelsService)
+            public Handler(ISearchService searchService, ILogger<Handler> logger, IMapper mapper, ISortService sortService, IItemsPerPageService itemsPerPageService, IOrderLevelsService orderLevelsService, ITranslationService translationService)
             {
                 _searchService = searchService;
                 _logger = logger;
@@ -63,6 +64,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _sortService = sortService;
                 _itemsPerPageService = itemsPerPageService;
                 _orderLevelsService = orderLevelsService;
+                _translationService = translationService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -111,6 +113,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 {
                     response.SortingOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort, request.ProfileId);
                     response.ItemsPerPageOptions = _itemsPerPageService.GetItemsPerPageOptionsBasedOnRequest(request.FullSearchRequestModel.PageSize);
+                    _translationService.TranslateRefinementCountries(response);
                 }
 
                 if (!request.IsAnonymous)
@@ -120,8 +123,9 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                 return new Response(response);
             }
-        }
 
+
+        } 
         public class Validator : AbstractValidator<Request>
         {
             private readonly ISortService _sortService;
@@ -134,6 +138,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 RuleFor(c => c.FullSearchRequestModel.SearchString).NotEmpty().When(w => w.FullSearchRequestModel?.RefinementGroups?.Find(x => x.Group.ToUpperInvariant() == "CATEGORIES") == null).WithMessage("Please provide SearchString or RefinementGroup Categories or both");
                 
                 RuleFor(c => c).Must(CheckValidSortTypeRequest).WithName("FullSearchRequestModel.Sort.Type").WithMessage("Sort type is invalid.");
+                RuleFor(c => c).Must(CheckAllowedRefinementByCountries).WithName("FullSearchRequestModel.RefinementGroups.Group").WithMessage("This refinement filter option is invalid.");
             }
 
             private bool CheckValidSortTypeRequest(Request request)
@@ -142,6 +147,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 var sortOptions = _sortService.GetSortingOptionsBasedOnRequest(request.FullSearchRequestModel.Sort,  request.ProfileId);
                 var isValid = sortOptions.Any(x => x.Id.StartsWith(request?.FullSearchRequestModel?.Sort?.Type, StringComparison.InvariantCultureIgnoreCase));
                 return isValid;
+            }
+
+            private bool CheckAllowedRefinementByCountries(Request request)
+            {
+                bool isAllowed = !(request.IsAnonymous && request.FullSearchRequestModel.RefinementGroups.Any(x => x.Group == "Countries"));
+                return isAllowed;
             }
         }
     }

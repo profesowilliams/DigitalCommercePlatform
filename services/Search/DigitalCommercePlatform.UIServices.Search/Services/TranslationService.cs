@@ -1,9 +1,11 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DigitalCommercePlatform.UIServices.Search.Services
 {
@@ -12,6 +14,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
         void FetchTranslations(string translationName, ref Dictionary<string, string> translationDict);
 
         string Translate(Dictionary<string, string> translationDict, string key, string fallback = null);
+        FullSearchResponseModel TranslateRefinementCountries(FullSearchResponseModel response);
     }
 
     public class TranslationService : ITranslationService
@@ -45,6 +48,20 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
                 return fallback ?? key;
 
             return translation;
+        }
+
+        public FullSearchResponseModel TranslateRefinementCountries(FullSearchResponseModel response)
+        {
+            const string CountriesRefinementGroup = "Countries";
+            if (response?.TopRefinements == null || !response.TopRefinements.Any(x => x.Id == CountriesRefinementGroup)) { return response; }
+
+            Dictionary<string, string> countriesTranslations = null;
+            this.FetchTranslations("Search.UI.InternalRefinements", ref countriesTranslations);
+            foreach (var option in response?.TopRefinements?.First(x => x.Id == CountriesRefinementGroup).Options)
+            {
+                option.Text = this.Translate(countriesTranslations, option.Id);
+            }
+            return response;
         }
     }
 }

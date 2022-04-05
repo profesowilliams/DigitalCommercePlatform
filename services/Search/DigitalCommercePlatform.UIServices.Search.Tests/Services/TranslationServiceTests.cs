@@ -1,21 +1,25 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Search.Enums;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using Microsoft.Extensions.Localization;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 {
-    public class TransaltionServiceTests
+    public class TranslationServiceTests
     {
         private readonly FakeLogger<TranslationService> _logger;
         private readonly Mock<IStringLocalizer> _stringLocalizerMock;
         private readonly TranslationService _sut;
 
-        public TransaltionServiceTests()
+        public TranslationServiceTests()
         {
             _logger = new FakeLogger<TranslationService>();
             _stringLocalizerMock = new Mock<IStringLocalizer>();
@@ -86,6 +90,49 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Services
 
             //assert
             actual.Should().Be(expectedValue);
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void TranslateRefinementCountriesTestNull(FullSearchResponseModel input)
+        {
+            //act
+            var actual = _sut.TranslateRefinementCountries(input);
+
+            //assert
+            actual.Should().NotBeNull();
+        }
+
+        [Theory]
+        [AutoDomainData]
+        public void TranslateRefinementCountriesTest(FullSearchResponseModel input)
+        {
+            //arrange
+            var translationName = "Search.UI.InternalRefinements";
+            _stringLocalizerMock.Setup(x => x[translationName]).Returns(new LocalizedString(translationName, "{'US':'United States','PR':'Puerto Rico'}")).Verifiable();
+            var refinementModel = new RefinementModel
+            {
+                Id = "Countries",
+                Name = "Countries",
+                OriginalGroupName = "Countries",
+                Type = RefinementType.MultiSelect,
+                Options = new List<RefinementOptionModel>()
+                {
+                    new RefinementOptionModel
+                    {
+                        Id = "US",
+                        Text = "Untranslated",
+                    }
+                }
+            };
+            input.TopRefinements = new List<RefinementModel> { refinementModel };
+            //act
+            var actual = _sut.TranslateRefinementCountries(input);
+
+            //assert
+            actual.Should().NotBeNull();
+            var option = actual.TopRefinements.First().Options.First();
+            option.Text.Should().NotBeEquivalentTo("US");
         }
 
         public static IEnumerable<object> Translate_ReturnExpectedValue_Data()

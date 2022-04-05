@@ -28,6 +28,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
         private readonly Mock<ISortService> _sortServiceMock;
         private readonly Mock<IItemsPerPageService> _itemsPerPageServiceMock;
         private readonly Mock<IOrderLevelsService> _orderLevelServiceMock;
+        private readonly Mock<ITranslationService> _translationServiceMock;
 
         public FullSearchTests()
         {
@@ -37,6 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             _sortServiceMock = new Mock<ISortService>();
             _itemsPerPageServiceMock = new Mock<IItemsPerPageService>();
             _orderLevelServiceMock = new Mock<IOrderLevelsService>();
+            _translationServiceMock = new Mock<ITranslationService>();
         }
 
         [Theory]
@@ -276,6 +278,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = null }, null, "en-US") },
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { SearchString = "" }, null, "en-US") },
                 new object[] { new FullSearch.Request(false, new FullSearchRequestModel { RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Test" } } }, null, "en-US") },
+                new object[] { new FullSearch.Request(true, new FullSearchRequestModel { RefinementGroups = new List<RefinementGroupRequestModel>() { new RefinementGroupRequestModel() { Group = "Countries" } } }, null, "en-US") },
             };
 
         public static List<object[]> GetWrongSortRequests =>
@@ -293,6 +296,6 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                         new DropdownElementModel<string>{ Id="Price.False", Selected=false}
             };
 
-        private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object, _itemsPerPageServiceMock.Object,_orderLevelServiceMock.Object);
+        private FullSearch.Handler GetHandler() => new(_searchServiceMock.Object, _logger, _mapper, _sortServiceMock.Object, _itemsPerPageServiceMock.Object,_orderLevelServiceMock.Object, _translationServiceMock.Object);
     }
 }

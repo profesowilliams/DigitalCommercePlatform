@@ -49,7 +49,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
         }
 
         public record KeywordSearchHandlerArgs(ISearchService SearchService, ILogger<Handler> Logger, IMapper Mapper, ISiteSettings SiteSettings, 
-            ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService,IOrderLevelsService OrderLevelsService);
+            ISortService SortService, IItemsPerPageService ItemsPerPageService, IDefaultIndicatorsService DefaultIndicatorsService, IMarketService MarketService,IOrderLevelsService OrderLevelsService,ITranslationService TranslationService);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -63,6 +63,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
             private readonly IMarketService _marketService;
             private readonly IOrderLevelsService _orderLevelsService;
             private const string _categories = "CATEGORIES";
+            private readonly ITranslationService _translationService;
 
             public Handler(KeywordSearchHandlerArgs args)
             {
@@ -75,6 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 _defaultIndicatorsService = args.DefaultIndicatorsService;
                 _marketService = args.MarketService;
                 _orderLevelsService = args.OrderLevelsService;
+                _translationService = args.TranslationService;
             }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
@@ -122,6 +124,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
                 response.SortingOptions = _sortService.GetDefaultSortingOptions(request.ProfileId);
                 response.ItemsPerPageOptions = _itemsPerPageService.GetDefaultItemsPerPageOptions();
+                _translationService.TranslateRefinementCountries(response);
 
                 if (!request.IsAnonymous)
                 {
