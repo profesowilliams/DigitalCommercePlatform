@@ -10,8 +10,8 @@ const QuoteSubtotal = ({
   quoteOption,
   quoteWithMarkup,
   onMarkupChanged,
+  whiteLabelModeParam,
 }) => {
-  const [whiteLabelMode, setWhiteLabelMode] = useState(false);
   const [markups, setMarkups] = useState(null);
 
   function onAncillaryItemsChanged(items) {
@@ -102,11 +102,6 @@ const QuoteSubtotal = ({
   }, [markups]);
 
   useEffect(() => {
-    quoteOption &&
-      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote" ? true : false);
-  }, [quoteOption]);
-
-  useEffect(() => {
     setMarkups((markup) => {
       return { ...markup, quotes: quoteWithMarkup };
     });
@@ -132,7 +127,7 @@ const QuoteSubtotal = ({
 
   return (
     <div>
-      {whiteLabelMode ? (
+      {whiteLabelModeParam ? (
         <div className="cmp-td-quote-subtotal cmp-widget">
           <section className="cmp-td-quote-subtotal__section">
             {line(markups, labels?.MSRPLabel || "MSRP", "getMSRP")}

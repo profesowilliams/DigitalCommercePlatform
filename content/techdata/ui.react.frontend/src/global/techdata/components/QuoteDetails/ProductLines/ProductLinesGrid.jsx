@@ -20,6 +20,7 @@ function ProductLinesGrid({
   onMarkupChanged,
   shopDomainPage,
   onChangeQuoteDetails,
+  whiteLabelModeParam,
 }) {
   const [gridApi, setGridApi] = useState(null);
   const gridData = data.items.map((el) => {
@@ -347,14 +348,13 @@ function ProductLinesGrid({
   };
 
   useEffect(() => {
-    quoteOption &&
-      setWhiteLabelMode(quoteOption.key === "whiteLabelQuote");
-  }, [quoteOption]);
+    whiteLabelModeParam ? setWhiteLabelMode(true) : setWhiteLabelMode(false);
+  }, [whiteLabelModeParam]);
 
   return (
     <section>
       {whiteLabelMode && (
-        <ProductLinesMarkupGlobal labels={labels} />
+        <ProductLinesMarkupGlobal labels={labels} whiteLabelModeParam={whiteLabelModeParam} />
       )}
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">

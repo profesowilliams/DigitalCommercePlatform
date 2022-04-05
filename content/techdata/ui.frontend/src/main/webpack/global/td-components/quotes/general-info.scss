@@ -1,4 +1,15 @@
 .cmp-quote-details {
+  .back-to-quote-details {
+    display: flex;
+    justify-content: end;
+    margin-right: 4vh;
+    span {
+      cursor:pointer;
+      color:blue;
+      text-decoration:underline;
+ }
+  }
+
   .cmp-qp__general-info {
     display: inline-grid;
     width: 33%;

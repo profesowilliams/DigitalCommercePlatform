@@ -24,6 +24,7 @@ import {
   ADOBE_DATA_LAYER_QUOTE_CHECKOUT_TYPE,
   ADOBE_DATA_LAYER_CLICK_EVENT,
   QUOTE_DETAILS_LOGO_LABEL_VALUE,
+  WHITE_LABEL_BACK_TO_QUOTE_DETAILS,
 } from "../../../../utils/constants";
 
 const QuoteDetails = ({ componentProp }) => {
@@ -47,7 +48,8 @@ const QuoteDetails = ({ componentProp }) => {
     whiteLabel,
     quoteNotFoundMessage,
     quoteErrorMessage,
-    shopDomainPage
+    shopDomainPage,
+    backToQuoteDetailsLabel,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
@@ -64,7 +66,7 @@ const QuoteDetails = ({ componentProp }) => {
   productLines.agGridLicenseKey = agGridLicenseKey;
   const [analyticsProduct, setAnalyticsProduct] = useState([]);
   const [flagAnalytic, setFlagAnalytic] = useState(true);
-
+  const backToQuoteDetailsLabelProp = isNotEmptyValue(backToQuoteDetailsLabel) ? backToQuoteDetailsLabel : WHITE_LABEL_BACK_TO_QUOTE_DETAILS;
   const handlerAnalyticExportEvent = (exportTypeParam) => {
     const quoteDetails = {
       quoteID : id,
@@ -368,7 +370,9 @@ const QuoteDetails = ({ componentProp }) => {
       const newQuotes = quoteDetailsTemp?.items?.map(quote => quote.id === quoteDetailToChange.id ? quoteDetailToChange : quote);
       quoteDetailsTemp.items = newQuotes;
       return quoteDetailsTemp;
-    });
+  });
+
+  const closeWhiteLabelMode = () => setWhiteLabelMode(false);
 
   const renderHeader = () => {
     return whiteLabelMode
@@ -398,7 +402,7 @@ const QuoteDetails = ({ componentProp }) => {
           </div>
         );
   }
-
+  
   const renderQuoteDetails = () => {
     return (
       <>
@@ -421,6 +425,7 @@ const QuoteDetails = ({ componentProp }) => {
             setQuoteWithMarkup([...quote]);
           }}
           onChangeQuoteDetails={onChangeQuoteDetails}
+          whiteLabelModeParam={whiteLabelMode}
         />
         <QuoteSubtotal
           labels={whiteLabel}
@@ -431,12 +436,19 @@ const QuoteDetails = ({ componentProp }) => {
           quoteWithMarkup={quoteWithMarkup}
           quoteOption={quoteOption}
           onMarkupChanged={(data) => setActualQuoteLinesData(data)}
+          whiteLabelModeParam={whiteLabelMode}
         />
+        {whiteLabelMode ? (
+          <div className={'back-to-quote-details'} onClick={() => closeWhiteLabelMode()}>
+            <span>{backToQuoteDetailsLabelProp}</span>
+          </div>
+        ) : null}
         <QuoteDetailsCheckout
           labels={quoteOptions}
           onQuoteCheckout={onQuoteCheckout}
           onQuoteOptionChanged={onOptionChanged}
           quoteDetails={quoteDetails}
+          whiteLabelModeParam={whiteLabelMode}
         />
       </>
     )

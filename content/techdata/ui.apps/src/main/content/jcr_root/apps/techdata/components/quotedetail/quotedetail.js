@@ -356,6 +356,10 @@ use(['../common/utils.js'], function (utils) {
         whiteLabelTab["subtitleLabel"] = properties["subtitleLabel"];
     }
 
+    if (properties && properties["backToQuoteDetailsLabel"]) {
+        whiteLabelTab["backToQuoteDetailsLabel"] = properties["backToQuoteDetailsLabel"];
+    }
+
     if (properties && properties["logoLabel"]) {
         whiteCheckboxItems["logoLabel"] = properties["logoLabel"];
     }

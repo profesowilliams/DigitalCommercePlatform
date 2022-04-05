@@ -625,6 +625,13 @@
                                         fieldDescription="MSRP Checkbox label"
                                         fieldLabel="MSRP Checkbox label"
                                         name="./whiteCheckboxmsrpLabel"/>
+                                    <backToQuoteDetailsLabel
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        fieldDescription="Label for Option Back to Quote Details"
+                                        fieldLabel="Back to Quote Details label"
+                                        name="./backToQuoteDetailsLabel"
+                                    />
                                     <columnList
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
