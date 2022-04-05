@@ -49,7 +49,6 @@ const QuoteDetails = ({ componentProp }) => {
     quoteNotFoundMessage,
     quoteErrorMessage,
     shopDomainPage,
-    backToQuoteDetailsLabel,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
@@ -66,7 +65,7 @@ const QuoteDetails = ({ componentProp }) => {
   productLines.agGridLicenseKey = agGridLicenseKey;
   const [analyticsProduct, setAnalyticsProduct] = useState([]);
   const [flagAnalytic, setFlagAnalytic] = useState(true);
-  const backToQuoteDetailsLabelProp = isNotEmptyValue(backToQuoteDetailsLabel) ? backToQuoteDetailsLabel : WHITE_LABEL_BACK_TO_QUOTE_DETAILS;
+  const backToQuoteDetailsLabelProp = isNotEmptyValue(whiteLabel.backToQuoteDetailsLabel) ? whiteLabel.backToQuoteDetailsLabel : WHITE_LABEL_BACK_TO_QUOTE_DETAILS;
   const handlerAnalyticExportEvent = (exportTypeParam) => {
     const quoteDetails = {
       quoteID : id,
