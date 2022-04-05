@@ -15,13 +15,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="DigitalFoundation.Common" Version="6.0.24" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.24" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.24" />
-    <PackageReference Include="Flurl" Version="3.0.2" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.56" />
+    <PackageReference Include="Flurl" Version="3.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Serilog" Version="2.10.0" />

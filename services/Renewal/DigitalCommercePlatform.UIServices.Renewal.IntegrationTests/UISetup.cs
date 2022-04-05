@@ -1,4 +1,4 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Contexts.Models;
@@ -20,7 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
 
         public UISetup()
         {
-            this.coreClient = null;
+            coreClient = null;
         }
 
         public UISetup(HttpClient coreClient)
@@ -28,8 +28,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
             this.coreClient = coreClient;
         }
 
-        public override void AddClients(ITestHttpClientFactory factory, string serviceName)
-               => factory
+        public override void AddClients(IStartupClientManager manager, string serviceName)
+               => manager
                    .AddClient<ISimpleHttpClient>(coreClient)
                        .MatchContains($"AppSetting/{serviceName}")
                            .Returns(Defaults.GetAppSettings()

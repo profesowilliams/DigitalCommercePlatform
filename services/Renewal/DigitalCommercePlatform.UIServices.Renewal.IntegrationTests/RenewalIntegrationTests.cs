@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Models;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
@@ -69,20 +69,8 @@ namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
 
         [Theory]
         [InlineDomainData("/v1/Search?Page=1&PageSize=100&details=true&withpaginationinfo=false")]
-        public async Task App_Get_ReturnsSearchDetailed(string input, IEnumerable<SummaryDto> model)
-        {
-            using var scope = PrepareGetScope(model);
-
-            var client = _fixture.CreateClient().SetDefaultHeaders();
-            client.DefaultRequestHeaders.Add("TraceId", "35345345-Browse");
-            var response = await client.GetResult<ResponseBase<PaginatedResponseModel<SummaryModel>>>(c => c.GetAsync(new Uri(input, UriKind.Relative))).ConfigureAwait(false);
-
-            response.Response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
-        [Theory]
         [InlineDomainData("/v1/Search?Page=1&PageSize=100&details=false&withpaginationinfo=false")]
-        public async Task App_Get_ReturnsSearchSummary(string input, IEnumerable<SummaryDto> model)
+        public async Task App_Get_ReturnsSearch(string input, IEnumerable<SummaryDto> model)
         {
             using var scope = PrepareGetScope(model);
 

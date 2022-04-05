@@ -1,4 +1,4 @@
-﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Features.Client;
