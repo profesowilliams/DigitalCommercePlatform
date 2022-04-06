@@ -2,20 +2,23 @@ const columnDefs = [
   {
     headerName: "Line",
     field: "id",
-    width: "100px",
+    width: "50px",
     sortable: false,
   },
   {
     headerName: "Product family",
     field: "vendorPartNo",
-    width: "120px",
+    width: "200px",
     sortable: false,
+    cellStyle: {'white-space': 'normal'},
+    autoHeight: true
   },
   {
     headerName: "Product details",
     field: "shortDescription",
     sortable: false,
     width: "300px",
+    autoHeight: true
   },
   {
     headerName: "Mfr. part №",

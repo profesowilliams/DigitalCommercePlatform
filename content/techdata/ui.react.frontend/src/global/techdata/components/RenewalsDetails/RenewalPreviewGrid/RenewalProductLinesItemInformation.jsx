@@ -10,13 +10,13 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
     if (!description) return "N/A";
     const matchFirstWords = /^(.*?\s){12}/;
     const matched = description.match(matchFirstWords);
-    if (!matched || (!matched.length)) return <p className="short-desc">{description}</p>
+    if (!matched || (!matched.length)) return <p>{description}</p>
     const firstTextRow = matched[0];
     const secondTextRow = description.substring(firstTextRow.length);
     return (
       <>
-        <p className="short-desc">{firstTextRow}</p>
-        <p className="short-desc">{secondTextRow}</p>
+        <p>{firstTextRow}</p>
+        <p>{secondTextRow}</p>
       </>
     )
   }
@@ -80,7 +80,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
 
               <span>
                 <b>Serial №: </b>
-                {line.serialNumbers && line.serialNumbers.length ? (
+                {line.serialNumbers && line.serialNumbers.length && !line.serialNumbers.every(e => e === null) ? (
                   <a
                     className="cmp-grid-url-underlined"
                     href="#"
@@ -101,7 +101,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
                       });
                     }}
                   >
-                    {line.serialCellLabel ? line.serialCellLabel : "view"}
+                    {line.serialCellLabel ? line.serialCellLabel : "view multiple"}
                   </a>
                 ) : (line.serialCellNotFoundMessage
                       ? line.serialCellNotFoundMessage
