@@ -102,12 +102,32 @@ export const generateExcelFileFromPost = async ({url, name = '', postData}) => {
 export const postFileBlob = async (url, name = '', params, options = { redirect: false }) => {
     const response = await usPost(url, params);
     generateFile(response, name, options);
-}
+};
 
-export const requestFileBlob = async (url, name = '', options = { redirect: false }) => {
+const validateBlobResponse = async (response, modalPDFErrorHandler) => {
+  try {
+    const responseData = await (response?.data)?.text();
+    const responseJson = JSON.parse(responseData); // validate if is a json to get the error message
+    const titleError = 'Error code ' + responseJson?.error?.code;
+    modalPDFErrorHandler(titleError, responseJson.error.messages[0]);
+    return false;
+  } catch (error) {
+    // Not a json so is a BLOB and sucecss response
+    return true;
+  }
+};
+
+/**
+ * 
+ * @param {string} url
+ * @param {string} name
+ * @param {{redirect: boolean}} options 
+ * @param {(title: string, message: string) => void} modalPDFErrorHandler 
+ */
+export const requestFileBlob = async (url, name = '', options = { redirect: false }, modalPDFErrorHandler) => {
     const response = await axios.get(url, { responseType: 'blob' });
-    generateFile(response, name, options);
-}
+    await validateBlobResponse(response, modalPDFErrorHandler) && generateFile(response, name, options);
+};
 
 /**
 * Add onload event for form submit to handle input text XSS validations.

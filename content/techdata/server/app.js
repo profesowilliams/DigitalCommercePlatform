@@ -3017,12 +3017,15 @@ app.get("/ui-commerce/v1/downloadInvoice", function (req, res) {
   const { orderId, downloadAll } = req.query;
 
   if (!validateSession(req, res) || orderId === "14009754975") {
-    return res.status(500).json({
-      error: {
-        code: 0,
-        message: [],
-        isError: true,
-      },
+    return res.status(200).json({
+      "content": null,
+      "error": {
+        "code": 1001,
+        "messages": [
+          "UserId : 516514 for TraceId : 35345345-Browse Record not found"
+        ],
+        "isError": true
+      }
     });
   }
   if (downloadAll) {

@@ -105,11 +105,25 @@ function OrdersGrid(props) {
         return trackingArray.length ? trackingArray.length > 0 : false;
     }
 
+    const modalPDFErrorHandler = (title = '', error = '') => {
+        setModal((previousInfo) => ({
+            content: (
+                <div className="cmp-quote-error-modal">{error}</div>
+            ),
+            properties: {
+                title:  title,
+                
+            },
+            ...previousInfo,
+          }));
+       
+    };
+
     const downloadFileBlob = async (orderId) => {
         try {
             const downloadOrderInvoicesUrl = componentProp.downloadAllInvoicesEndpoint?.replace("{order-id}", orderId);
             const name =  `order-${orderId}-invoices.zip`;
-            await requestFileBlob(downloadOrderInvoicesUrl, name);
+            await requestFileBlob(downloadOrderInvoicesUrl, name, {redirect:false}, modalPDFErrorHandler);
         } catch (error) {
             console.error('Error', error);
             setModal((previousInfo) => (
@@ -127,11 +141,11 @@ function OrdersGrid(props) {
         }
   }
 
-    function openInvoicePdf(invoiceId,orderId) {
+    async function openInvoicePdf(invoiceId,orderId) {
         const url = componentProp.downloadAllInvoicesEndpoint || 'nourl';
         const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
         const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
-        requestFileBlob(invoiceUrl,'',{redirect:true});
+        await requestFileBlob(invoiceUrl,'',{redirect:true}, modalPDFErrorHandler);
     }
     
     /**
@@ -154,7 +168,7 @@ function OrdersGrid(props) {
                             pendingInfo={invoicesModal.pendingInfo}
                             pendingLabel={labelList.find((label) => label.labelKey === 'pending').labelValue}
                             pendingValue={pendingValue}
-                            downloadInvoiceFunction={async (id, orderId)=> openInvoicePdf(id,orderId)}
+                            downloadInvoiceFunction={async (id, orderId)=> await openInvoicePdf(id,orderId)}
                         ></DetailsInfo>
                     ),
                     properties: {
@@ -184,9 +198,9 @@ function OrdersGrid(props) {
                     // not is necessary in the multiples or pending values because that overwrite the value for a string
                 }
               return (
-                <div className="cmp-grid-url-underlined" onClick={() => {
+                <div className="cmp-grid-url-underlined" onClick={async () => {
                       addOrderGridTracking(ANALYTICS_TYPES.events.click, ANALYTICS_TYPES.types.link, ANALYTICS_TYPES.category.orderTableInteractions, ANALYTICS_TYPES.name.invoice);
-                      openInvoicePdf(invoiceId, line.id)
+                      await openInvoicePdf(invoiceId, line.id)
                 }}>
                     {invoiceId}
                 </div>) ?? null;
