@@ -64,7 +64,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
       <div
         onClick={handleClick}
         className="cmp-product-lines-grid__item-information"
-        style={{width:'100%'}}
+        style={{width:'100%', gridTemplateColumns:'100% 86%'}}
       >
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-product-lines-grid__item-information__box-text__header"></div>

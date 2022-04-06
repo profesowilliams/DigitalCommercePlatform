@@ -18,6 +18,7 @@ const columnDefs = [
     field: "shortDescription",
     sortable: false,
     width: "300px",
+    cellStyle: {'white-space': 'normal'},
     autoHeight: true
   },
   {
