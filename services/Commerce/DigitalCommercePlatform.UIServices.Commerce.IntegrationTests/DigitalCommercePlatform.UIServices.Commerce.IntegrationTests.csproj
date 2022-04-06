@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="6.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="6.0.15" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.TestUtilities" Version="6.0.56" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />

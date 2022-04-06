@@ -56,7 +56,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
             var result = await controller.SetVendorConnections("72TAdk1yNvHjXBJlQoEkrLmRHvOZvSvD470AAABr", "Cisco", "https://dit.dc.tdebusiness.cloud/content/techdata/us/vendorlogin.html").ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -99,7 +101,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
             var result = await controller.VendorDisconnect("Cisco").ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -114,7 +118,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
             var controller = GetController();
             var result = await controller.VendorAuthorizeURL("Cisco").ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
     }
 }

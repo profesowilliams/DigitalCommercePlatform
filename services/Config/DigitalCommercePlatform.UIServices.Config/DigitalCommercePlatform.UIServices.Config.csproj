@@ -43,9 +43,9 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="6.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.15" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.56" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />

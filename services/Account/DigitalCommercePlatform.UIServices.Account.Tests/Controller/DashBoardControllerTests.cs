@@ -12,9 +12,10 @@ using DigitalCommercePlatform.UIServices.Account.Actions.TopDeals;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopOrders;
 using DigitalCommercePlatform.UIServices.Account.Actions.TopQuotes;
 using DigitalCommercePlatform.UIServices.Account.Controllers;
+using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Features.Contexts.Models;
-using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
@@ -27,7 +28,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static DigitalCommercePlatform.UIServices.Account.Actions.GetConfigurationsFor.GetConfigurationsFor;
-using DigitalFoundation.Common.Features.Contexts;
 
 namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 {
@@ -100,7 +100,7 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
         [Theory]
         [AutoDomainData]
-        public async Task GetDeals_BadRequest(ResponseBase<GetDealsSummary.Response> expected)
+        public async Task GetDeals_OK(ResponseBase<GetDealsSummary.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetDealsSummary.Request>(),
@@ -109,14 +109,16 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetDealsSummary(null).ConfigureAwait(false);
+            var result = await controller.GetDealsSummary(string.Empty).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
         [AutoDomainData]
-        public async Task GetConfigurationsSummary_BadRequest(ResponseBase<GetConfigurationsSummary.Response> expected)
+        public async Task GetConfigurationsSummary_OK(ResponseBase<GetConfigurationsSummary.Response> expected)
         {
             _mediator.Setup(x => x.Send(
                       It.IsAny<GetConfigurationsSummary.Request>(),
@@ -125,9 +127,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var controller = GetController();
 
-            var result = await controller.GetConfigurationsSummary(null).ConfigureAwait(false);
+            var result = await controller.GetConfigurationsSummary(string.Empty).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -143,7 +147,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetSavedCartList(false, 50).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -159,7 +165,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetConfigurationsFor(false, 50, RequestType.DealId).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -191,7 +199,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetActionItems().ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -239,7 +249,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetTopConfigurations(0, string.Empty, string.Empty).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -271,7 +283,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetTopQuotes(0, "price", "asc").ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -303,7 +317,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetRenewals().ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -319,7 +335,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetMyQuote("123").ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -335,7 +353,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetMyOrder(true).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -351,7 +371,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetAddress("ALL", false).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -383,7 +405,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetTopOrders(0, "price", "desc").ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -416,7 +440,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetMyOrdersStatus(null, null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
     }
 

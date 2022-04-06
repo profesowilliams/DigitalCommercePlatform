@@ -31,8 +31,9 @@ namespace DigitalCommercePlatform.UIServices.Config.IntegrationTests.GetDeals
                 .Returns<ResponseBase<GRD.GetDeals.Response>>();
 
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await Record.ExceptionAsync(async () => await client.RunTest<ResponseBase<GRD.GetDeals.Response>>(c =>
-                c.GetAsync(new Uri(input, UriKind.Relative)))
+            var response = await Record.ExceptionAsync(async () => await client.GetResult< ResponseBase < GRD.GetDeals.Response >> (c =>
+                     c.GetAsync(new Uri(input, UriKind.Relative)))
+
             );
 
             response.Should().BeNull();

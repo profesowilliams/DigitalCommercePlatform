@@ -39,10 +39,10 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.2.0" />
-    <PackageReference Include="DigitalFoundation.Common" Version="6.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="6.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.15" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.15" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.IntegrationTestUtilities" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.56" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.56" />
     <PackageReference Include="DigitalFoundation.Core.Models" Version="1.4.43" />
     <PackageReference Include="Flurl" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />

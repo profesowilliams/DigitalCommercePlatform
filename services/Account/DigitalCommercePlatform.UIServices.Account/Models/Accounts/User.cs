@@ -20,5 +20,6 @@ namespace DigitalCommercePlatform.UIServices.Account.Models.Accounts
         public IEnumerable<Customer> CustomersV2 { get; set; }
         public Customer ActiveCustomer { get; set; }
         public bool IsInternal { get; set; }
+        public bool IsHouseAccount { get; set; }
     }
 }

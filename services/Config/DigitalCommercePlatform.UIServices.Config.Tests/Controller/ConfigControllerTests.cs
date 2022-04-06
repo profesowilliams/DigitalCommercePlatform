@@ -113,8 +113,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             };
 
             var result = await controller.GetDeals(criteria).ConfigureAwait(false);
-
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -143,8 +143,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var controller = GetController();
             var result = await controller.GetDeal("123", "123").ConfigureAwait(false);
-
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -159,7 +159,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var controller = GetController();
 
             var result = await controller.GetDeals(null).ConfigureAwait(false);
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+            Response.StatusCode.Should().NotBe((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -189,7 +190,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var controller = GetController();
             var result = await controller.GetPunchOutUrl(new GetPunchOutUrl.Request()).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -204,7 +206,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var controller = GetController();
             var result = await controller.GetDealFor(new GetDealsFor.Request()).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Fact]
@@ -219,7 +223,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var sut = GetController();
             RefreshData.Request request = new RefreshData.Request() { Type = "Estimate", VendorName = "Cisco", Version = "1" };
             var result = await sut.Refresh(request).ConfigureAwait(false);
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Fact]
@@ -233,7 +238,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
 
             var sut = GetController();
             var result = await sut.GetSpa("2294844", "PNV602,PNR703,PNL401C", true).ConfigureAwait(false);
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Fact]
@@ -252,7 +258,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
             var result = await sut.GetProductPrice(request).ConfigureAwait(false);
 
             //assert
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         private ConfigController GetController()

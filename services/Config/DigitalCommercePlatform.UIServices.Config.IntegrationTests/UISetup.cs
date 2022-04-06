@@ -15,7 +15,7 @@ namespace DigitalCommercePlatform.UIServices.Config.IntegrationTests
 {
     public class UISetup : Setup
     {
-        public override void AddClients(ITestHttpClientFactory factory, string serviceName)
+        public override void AddClients(IStartupClientManager factory, string serviceName)
                => factory
                    .AddClient<ISimpleHttpClient>()
                        .MatchContains($"AppSetting/{serviceName}")

@@ -22,7 +22,7 @@ namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
 {
     public class UISetup : Setup
     {
-        public override void AddClients(ITestHttpClientFactory factory, string serviceName)
+        public override void AddClients(IStartupClientManager factory, string serviceName)
                => factory
                    .AddClient<ISimpleHttpClient>()
                        .MatchContains($"AppSetting/{serviceName}")
@@ -67,7 +67,7 @@ namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
                 .MatchContains(input)
                 .Returns<ResponseBase<GetSavedCartDetails.Response>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetSavedCartDetails.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            var response = await client.GetResult<ResponseBase<GetSavedCartDetails.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
 
@@ -80,7 +80,7 @@ namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
                 .MatchContains(input)
                 .Returns<ResponseBase<TypeAheadSearch.Response>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<TypeAheadSearch.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            var response = await client.GetResult<ResponseBase<TypeAheadSearch.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
 
@@ -93,7 +93,7 @@ namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
                 .MatchContains(input)
                 .Returns<ResponseBase<GetActiveCart.Request>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetActiveCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            var response = await client.GetResult<ResponseBase<GetActiveCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
 
@@ -106,8 +106,8 @@ namespace DigitalCommercePlatform.UIServices.Content.IntegrationTests
                 .MatchContains(input)
                 .Returns<ResponseBase<ReplaceCart.Request>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<ReplaceCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
-            response.Should().BeNull();
+            var response = await client.GetResult<ResponseBase<ReplaceCart.Request>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            response.Should().NotBeNull();
         }
     }
 }

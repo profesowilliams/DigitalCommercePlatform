@@ -13,6 +13,7 @@ using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Net;
@@ -116,7 +117,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                   .ReturnsAsync(expected);
             var result = await controller.Authenticate(null, null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().NotBe((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -133,7 +136,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                   .ReturnsAsync(expected);
             var result = await controller.Authenticate(null, null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -146,9 +151,11 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                       It.IsAny<LogoutUser.Request>(),
                       It.IsAny<CancellationToken>()))
                   .ReturnsAsync(expected);
-            var result = await controller.Logout(null).ConfigureAwait(false);
+            var result = await controller.Logout(string.Empty).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -165,7 +172,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
                   .ReturnsAsync(expected);
             var result = await controller.Logout(null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -182,7 +191,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetUserAsync(null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().NotBe((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -201,7 +212,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.GetUserAsync(null).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Theory]
@@ -218,7 +231,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CustomerNumber = "" }).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.BadRequest);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -237,7 +252,9 @@ namespace DigitalCommercePlatform.UIServices.Account.Tests.Controller
 
             var result = await controller.ActiveCustomer(new ActiveCustomerRequest { CustomerNumber = "" }).ConfigureAwait(false);
 
-            result.Should().Equals(HttpStatusCode.OK);
+            var Response = result as ObjectResult;
+
+            Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         //[Fact]
