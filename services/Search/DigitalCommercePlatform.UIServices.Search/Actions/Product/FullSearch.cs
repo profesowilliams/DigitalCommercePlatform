@@ -151,6 +151,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
 
             private bool CheckAllowedRefinementByCountries(Request request)
             {
+                if (request?.FullSearchRequestModel?.RefinementGroups == null) { return true; }
                 bool isAllowed = !(request.IsAnonymous && request.FullSearchRequestModel.RefinementGroups.Any(x => x.Group == "Countries"));
                 return isAllowed;
             }

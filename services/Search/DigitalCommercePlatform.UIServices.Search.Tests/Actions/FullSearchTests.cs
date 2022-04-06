@@ -15,6 +15,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -259,6 +260,19 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //assert
 
             _searchServiceMock.Verify(x => x.GetFullSearchProductData(It.Is<SearchRequestDto>(r => r.GetDetails.ContainsKey(Enums.Details.TopRefinementsAndResult) && r.GetDetails[Enums.Details.TopRefinementsAndResult]), It.IsAny<bool>()), Times.Once);
+        }
+
+        [Fact]
+        public void CheckAllowedRefinementByCountriesTestNull()
+        {
+            // Arrange
+            var request = new FullSearch.Request(true, null, null, null);
+            MethodInfo privateMethod = typeof(FullSearch.Validator).GetMethod("CheckAllowedRefinementByCountries", BindingFlags.NonPublic | BindingFlags.Instance);
+            var sut = new FullSearch.Validator(_sortServiceMock.Object);
+            //Act
+            var result = (bool)privateMethod.Invoke(sut, new object[] { request });
+            //Assert
+            result.Should().BeTrue();
         }
 
         public static List<object[]> GetRequests =>
