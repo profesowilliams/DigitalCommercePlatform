@@ -371,7 +371,7 @@ const QuoteDetails = ({ componentProp }) => {
       return quoteDetailsTemp;
   });
 
-  const closeWhiteLabelMode = () => setWhiteLabelMode(false);
+  const closeWhiteLabelMode = () => location.reload();
 
   const renderHeader = () => {
     return whiteLabelMode

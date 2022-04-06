@@ -5,8 +5,7 @@ function QuoteDetailsCheckout({
   labels,
   onQuoteCheckout,
   onQuoteOptionChanged,
-  quoteDetails,
-  whiteLabelModeParam,
+  quoteDetails
 }) {
   const checkoutLabel = labels?.checkoutLabel || "Checkout";
   const dropdownLabel = labels?.dropdownLabel || "Quote Options";
@@ -62,7 +61,7 @@ function QuoteDetailsCheckout({
             selected={selectedOption || { label: dropdownLabel }}
             setValue={setSelectedOption}
             options={
-              whiteLabelModeParam
+              isWhiteLabelMode
                 ? [...quoteOptions].filter((el) => el.key !== "whiteLabelQuote")
                 : quoteOptions
             }
