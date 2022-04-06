@@ -7,7 +7,6 @@ import { ANALYTICS_TYPES, pushData, pushEvent } from '../../../../../utils/dataL
 
 function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
-
     const source = quoteDetails.source;
     const initialGeneralInfoState = () => ({
         deal: quoteDetails.deal || {},
@@ -18,6 +17,7 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
             quoteDetails.configurationName ||
             quoteDetails.configurationId || '',
         tier: quoteDetails.tier || '',
+        vendor: quoteDetails?.vendor || ''
     });
 
     const [editMode, setEditMode] = useState(false);
@@ -242,7 +242,8 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
         return originalStr
             .replace("{end-user-name}", searchTerm)
             .replace("{manufacturer-parts-id-array}", productIds)
-            .replace("{order-level}", generalInfoState.tier);
+            .replace("{order-level}", generalInfoState.tier)
+            .replace("{vendor}", generalInfoState.vendor);
     }
 
     const loadDeals = async (searchTerm) => {
