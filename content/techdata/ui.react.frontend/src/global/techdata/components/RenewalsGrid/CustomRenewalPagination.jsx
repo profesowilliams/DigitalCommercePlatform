@@ -174,6 +174,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
         </button>
         <div className="cmp-navigation__actions-labels">
           <input
+            className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
             ref={pageInputRef}
             type="number"
             onKeyDown={triggerSearchOnEnter}

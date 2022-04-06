@@ -239,6 +239,9 @@ $bg--marketing-card:#F7F7F7;
           border-block-end: 2px groove;
           margin: 0.1em auto 0;
           text-align: center;
+          &.goSmall {
+            font-size: 12px;
+          }
         }
         /* Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
