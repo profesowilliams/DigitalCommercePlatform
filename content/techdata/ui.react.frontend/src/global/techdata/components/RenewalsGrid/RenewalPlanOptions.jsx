@@ -105,6 +105,9 @@ function RenewalPlanOptions({ labels, data, node }) {
         if(isPlanSelected(option)){
             return isCurrentPlan(option) ? planLabels.current : planLabels.selected;
         }
+        if(!isPlanSelected(option) && isCurrentPlan(option)){
+            return planLabels.current
+        }
         return "";
     } 
     const computeMarketingCssStyle = () => {      
