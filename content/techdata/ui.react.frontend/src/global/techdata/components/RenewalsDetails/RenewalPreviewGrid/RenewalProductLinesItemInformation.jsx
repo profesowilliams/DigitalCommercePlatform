@@ -77,7 +77,7 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
               >
                 {formatDescription(description)}
               </a>
-
+              <br />
               <span>
                 <b>Serial №: </b>
                 {line.serialNumbers && line.serialNumbers.length && !line.serialNumbers.every(e => e === null) ? (

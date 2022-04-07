@@ -4,6 +4,8 @@ const columnDefs = [
     field: "id",
     width: "50px",
     sortable: false,
+    cellStyle: {'white-space': 'normal'},
+    autoHeight: true
   },
   {
     headerName: "Product family",
@@ -26,25 +28,31 @@ const columnDefs = [
     field: "mfrNumber",
     sortable: false,
     width: "200px",
+    cellStyle: {'white-space': 'normal'},
+    autoHeight: true
   },
   {
     headerName: "Unit price (USD)",
     field: "unitPrice",
     sortable: false,
-    cellStyle: { 'justify-content': 'flex-start'}
+    cellStyle: { 'justify-content': 'flex-start'},
+    autoHeight: true
   },
   {
     headerName: "Quantity",
     field: "quantity",
     sortable: false,
     width: "100px",
+    cellStyle: { 'justify-content': 'flex-start'},
+    autoHeight: true
   },
   {
     headerName: "Total (USD)",
     field: "totalPrice",
     sortable: false,
     width: "150px",
-    cellStyle: { 'justify-content': 'flex-start'}
+    cellStyle: { 'justify-content': 'flex-start'},
+    autoHeight: true
   },
 ];
 
