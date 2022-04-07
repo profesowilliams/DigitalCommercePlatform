@@ -115,16 +115,23 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                     response.ItemsPerPageOptions = _itemsPerPageService.GetItemsPerPageOptionsBasedOnRequest(request.FullSearchRequestModel.PageSize);
                     _translationService.TranslateRefinementCountries(response);
                 }
-
-                if (!request.IsAnonymous)
-                {
-                    response.OrderLevels = _orderLevelsService.GetOrderLevelOptions(request.ProfileId, request.FullSearchRequestModel.OrderLevel);
-                }
+                PostProcessResponseBasedOnIsAnonymous(request, response);
 
                 return new Response(response);
             }
 
-
+            private FullSearchResponseModel PostProcessResponseBasedOnIsAnonymous(Request request, FullSearchResponseModel response)
+            {
+                if (!request.IsAnonymous)
+                {
+                    response.OrderLevels = _orderLevelsService.GetOrderLevelOptions(request.ProfileId, request.FullSearchRequestModel.OrderLevel);
+                }
+                else if (response.TopRefinements != null)
+                {
+                    response.TopRefinements.RemoveAll(x => x.Id == "Countries");
+                }
+                return response;
+            }
         } 
         public class Validator : AbstractValidator<Request>
         {

@@ -126,13 +126,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 response.ItemsPerPageOptions = _itemsPerPageService.GetDefaultItemsPerPageOptions();
                 _translationService.TranslateRefinementCountries(response);
 
+                PostProcessResponseBasedOnIsAnonymous(request, response);
+
+                return new Response(response);
+            }
+
+            private FullSearchResponseModel PostProcessResponseBasedOnIsAnonymous(Request request, FullSearchResponseModel response)
+            {
                 if (!request.IsAnonymous)
                 {
                     response.OrderLevels = _orderLevelsService.GetOrderLevelOptions(request.ProfileId);
                 }
-
-
-                return new Response(response);
+                else if (response.TopRefinements != null)
+                {
+                    response.TopRefinements.RemoveAll(x => x.Id == "Countries");
+                }
+                return response;
             }
         }
 

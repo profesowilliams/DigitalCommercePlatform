@@ -14,6 +14,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -203,6 +204,32 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             //assert
             result.ShouldHaveValidationErrorFor(r => r.Keyword);
         }
+
+        [Fact]
+        public void PostProcessResponseBasedOnIsAnonymousTest()
+        {
+            //arrange
+            MethodInfo privateMethod = typeof(KeywordSearch.Handler).GetMethod("PostProcessResponseBasedOnIsAnonymous", BindingFlags.NonPublic | BindingFlags.Instance);
+            var sut = GetHandler();
+            var isAnonymous = true;
+            var request = new KeywordSearch.Request(isAnonymous, null, null, null, null);
+            var response = new FullSearchResponseModel
+            {
+                TopRefinements = new List<Models.FullSearch.Internal.RefinementModel>
+                {
+                    new Models.FullSearch.Internal.RefinementModel
+                    {
+                        Id = "Countries"
+                    }
+                }
+            };
+            //act
+            var result = (FullSearchResponseModel)privateMethod.Invoke(sut, new object[] { request, response });
+            //assert
+            result.Should().NotBeNull();
+            bool hasRefinementsCountries = result.TopRefinements.Any(x => x.Id == "Countries");
+            hasRefinementsCountries.Should().BeFalse();
+        }      
 
         public static List<object[]> GetRequests =>
             new()
