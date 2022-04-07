@@ -19,7 +19,7 @@ const columnFieldsMap = (definition, eventProps) => {
     dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
     total: <PriceColumn columnValue={data?.renewal?.total} />,
-    agreementnumber: data?.agreementNumber 
+    agreementNumber: data?.agreementNumber
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
   return columnFields[columnKey] || defaultValue();
@@ -49,7 +49,7 @@ const columnsWidth = {
   resellername: "173.368px",
   endUser: "123.368px",
   vendor: "177.632px",
-  agreementnumber: "120.211px",
+  agreementNumber: "120.211px",
   renewedduration: "177.632px",
   dueDays: "143.737px",
   dueDate: "109.526px",
