@@ -4,6 +4,9 @@ use(function () {
     if (properties && properties["label"]) {
         jsonObject["label"] = properties["label"];
     }
+    if (properties && properties["daysLabel"]) {
+        jsonObject["daysLabel"] = properties["daysLabel"];
+    }
     if (properties && properties["labelConverted"]) {
             jsonObject["labelConverted"] = properties["labelConverted"];
         }
