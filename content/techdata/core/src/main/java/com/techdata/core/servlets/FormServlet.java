@@ -92,6 +92,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                                         thresholdFileSize = formConfigurations.fileThresholdInMB();
                                         allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                                         allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
+                                        prepareEncodedChars(formConfigurations);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
                                         handleAttachmentsInEmail(formConfigurations,emailParams);
@@ -226,7 +227,6 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String confirmationEmailBody = formConfigurations.confirmationEmailBody();
                 emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
                 internalEmailTemplatePath = formConfigurations.internalEmailTemplatePath();
-                prepareEncodedChars(formConfigurations);
                 if(emailParams.get(":redirect")!= null && emailParams.get(":redirect").contains("apac")) {
                         confirmationEmailTemplatePath = formConfigurations.apacConfirmationEmailTemplatePath();
                 }else {

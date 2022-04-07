@@ -176,7 +176,6 @@ class FormServletTest {
         when(formConfigurations.confirmationEmailBody()).thenReturn("confirmationEmailBody");
         when(formConfigurations.internalEmailTemplatePath()).thenReturn("internalEmailTemplatePath");
         when(formConfigurations.apacConfirmationEmailTemplatePath()).thenReturn("apacconfirmationEmailTemplatePath");
-        when(formConfigurations.charsWithEncodedValues()).thenReturn(encodedChars);
         when(formConfigurations.emailSubject()).thenReturn("emailSubject");
         when(formConfigurations.confirmationEmailSubject()).thenReturn("confirmationEmailSubject");
         when(formConfigurations.confirmationHelpDesk()).thenReturn("emailSubject");
