@@ -47,7 +47,7 @@ namespace DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles
                 .ForMember(dest => dest.IsExactMatch, opt => opt.Ignore())
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(x => x.LongDescription))
                 .ForMember(dest => dest.Upc, opt => opt.MapFrom(x => x.UpcEan))
-                .ForMember(dest => dest.ProductImages, opt => opt.MapFrom(x => x.ProductImages.FirstOrDefault().Value))
+                .ForMember(dest => dest.ProductImages, opt => opt.MapFrom<ImageResolutionValueResolver>())
                 .ForMember(dest => dest.Authorization, opt => opt.Ignore())
                 .ForMember(dest => dest.Indicators, opt => opt.Ignore())
                 .ForMember(dest => dest.Price, opt => opt.Ignore())

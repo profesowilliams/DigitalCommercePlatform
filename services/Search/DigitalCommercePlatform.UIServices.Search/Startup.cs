@@ -3,6 +3,7 @@
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Features.Logging;
 using DigitalFoundation.Common.Security.Token;
+using DigitalFoundation.Common.Services.Features.Image;
 using DigitalFoundation.Common.Services.Layer.UI;
 using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using DigitalFoundation.Common.Services.Providers.Localization;
@@ -51,6 +52,7 @@ namespace DigitalCommercePlatform.UIServices.Search
 
             services.AddScoped<IMarketService, MarketService>();
             services.AddScoped<ICultureService, CultureService>();
+            services.AddScoped<IImageResolutionService, ImageResolutionService>();
         }
 
         protected override IEnumerable<string> AllowedNamespaces => new[] { "DigitalCommercePlatform." };

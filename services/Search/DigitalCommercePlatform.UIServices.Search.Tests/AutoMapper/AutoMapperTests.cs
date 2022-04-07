@@ -4,8 +4,11 @@ using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
+using DigitalFoundation.Common.Providers.Settings;
+using DigitalFoundation.Common.Services.Features.Image;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
+using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -69,13 +72,22 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.AutoMapper
         [AutoDomainData]
         public void ProductPriceIgnoredInMapping(SearchResponseDto appSearchResponse)
         {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<SearchProfile>());
+            //arrange
+            var siteSettings = new Mock<ISiteSettings>();
+            var imageResolutionService = new Mock<IImageResolutionService>(); 
+
+            var config = new MapperConfiguration(cfg => 
+            {
+                cfg.AddProfile<SearchProfile>();
+                cfg.ConstructServicesUsing(s => new ImageResolutionValueResolver(siteSettings.Object, imageResolutionService.Object));
+            });
             var mapper = config.CreateMapper();
 
+            //act
             var result = mapper.Map<FullSearchResponseModel>(appSearchResponse);
 
+            //assert
             result.Products.Select(p => p.Price).Should().OnlyContain(p => p == null);
         }
-
     }
 }
