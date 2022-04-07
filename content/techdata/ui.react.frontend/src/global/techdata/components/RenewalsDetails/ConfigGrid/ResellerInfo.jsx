@@ -8,7 +8,7 @@ function ResellerInfo({ reseller, resellerLabels }) {
         <p>{reseller.name && <Info><b>{reseller.name}</b></Info>}</p> <br />
         <p>
           <Info label={resellerLabels.accountNoLabel} noColon boldLabel>{reseller.id}</Info>
-          <Info label="Reseller vendor Account No" boldLabel>{reseller?.vendorAccountNumber}</Info>
+          <Info label={resellerLabels.vendorAccountNoResLabel} noColon boldLabel>{reseller?.vendorAccountNumber}</Info>
         </p>
       </div>
     );

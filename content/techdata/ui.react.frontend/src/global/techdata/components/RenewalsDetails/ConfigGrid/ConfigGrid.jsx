@@ -6,6 +6,17 @@ import ResellerInfo from "./ResellerInfo";
 function ConfigGrid({ data, gridProps }) {
   const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo } = data;
   const { quotePreview } = gridProps;
+  Object.keys(quotePreview).forEach(key => {
+    if (typeof quotePreview[key] === 'string') {
+      quotePreview[key] = quotePreview[key].replace(/ No:/g,' \u2116:');
+    } else if (typeof  quotePreview[key] === 'object') {
+      Object.keys(quotePreview[key]).forEach(subkey => {
+          quotePreview[key][subkey] = quotePreview[key][subkey].replace(/ No:/g,' \u2116:');
+        });
+    }
+    
+  });
+  
   return (
     <div className="cmp-renewals-qp__config-grid">
       <p className="cmp-renewals-qp__config-grid--title">
