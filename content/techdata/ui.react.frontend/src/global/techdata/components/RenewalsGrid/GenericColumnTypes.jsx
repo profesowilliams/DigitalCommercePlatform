@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  isInternalUser
+  isHouseAccount
 } from "../../../../utils/user-utils";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
@@ -85,7 +85,7 @@ export const buttonListColumn = ({
 export const plainResellerColumnFn = (definition) => {
   // check if Its a reseller or techdata employee
   const { columnLabel, columnKey, sortable } = definition;
-  if (isInternalUser) {
+  if (isHouseAccount()) {
     return {
       headerName: columnLabel,
       field: columnKey,

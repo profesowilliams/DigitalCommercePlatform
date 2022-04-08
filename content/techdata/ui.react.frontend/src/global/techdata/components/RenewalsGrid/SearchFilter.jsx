@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useRef, useState, useCallback } from "react";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
-import { isInternalUser } from "../../../../utils/user-utils";
+import { isHouseAccount } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
 import Capsule from "../Widgets/Capsule";
 
@@ -141,7 +141,7 @@ function SearchFilter({
   }
 
   const renderWithPermissions = (option) => {
-    const hasNotPrivilege = (option?.showIfInternal === "true") && !isInternalUser;
+    const hasNotPrivilege = (option?.showIfIsHouseAccount) && !isHouseAccount();
     if (hasNotPrivilege) return <></>; 
     return (
       <>     

@@ -14,6 +14,8 @@ export const getSessionId = () => window.localStorage.getItem("sessionId");
 
 export const isInternalUser = getUserDataInitialState()?.isInternal ?? false;
 
+export const isHouseAccount = () => getUserDataInitialState()?.isHouseAccount ?? false;
+
 export const hasDCPAccess = (user) => {
     const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
     const {roleList} = user ? user : {undefined};

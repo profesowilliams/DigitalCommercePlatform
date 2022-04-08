@@ -395,13 +395,18 @@
                                                                             value="ResellerId"/>
                                                                     </items>
                                                                 </searchKey>
-                                                            <sortable
+                                                            <isHouseAccount
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                                name="./showIfInternal"
-                                                                text="Show if Internal"
+                                                                name="./showIfIsHouseAccount"
+                                                                text="Show if is House Account"
                                                                 uncheckedValue="false"
                                                                 value="{Boolean}true"/>
+                                                            <isHouseAccount-typehint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                                name="./showIfIsHouseAccount@TypeHint"
+                                                                value="Boolean"/>
                                                         </items>
                                                     </column>
                                                 </items>
