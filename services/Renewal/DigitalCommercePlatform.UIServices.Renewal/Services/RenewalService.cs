@@ -14,10 +14,12 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Services
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1172:Unused method parameters should be removed", Justification = "<Pending>")]
     public class RenewalService : IRenewalService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
@@ -32,26 +34,16 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             IMapper mapper,
             IHelperService helperQueryService)
         {
-            _middleTierHttpClient = middleTierHttpClient ?? throw new ArgumentNullException(nameof(middleTierHttpClient));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _middleTierHttpClient = middleTierHttpClient;
+            _logger = logger;
+            _mapper = mapper;
             _appRenewalServiceUrl = appSettings.GetSetting("App.Renewal.Url");
-            _helperQueryService = helperQueryService ?? throw new ArgumentNullException(nameof(helperQueryService));
+            _helperQueryService = helperQueryService;
         }
 
         public async Task<DetailedResponseModel> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
-            var found = AddPartialSearchReseller(request);
-
-            if (!found)
-            {
-                found = AddPartialSearchEndUser(request);
-            }
-            
-            if (!found)
-            {
-                _ = AddPartialSearchOthers(request);
-            } 
+            AppendDetailedPartialSearch(request);
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -67,7 +59,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 });
                 var count = coreResult.Count;
 
-                
+
                 return new DetailedResponseModel()
                 {
                     Count = count,
@@ -84,17 +76,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
-            var found = AddPartialSearchReseller(request);
-
-            if (!found)
-            {
-                found = AddPartialSearchEndUser(request);
-            }
-            
-            if (!found)
-            {
-                _ = AddPartialSearchOthers(request);
-            }            
+            AppendSummaryPartialSearch(request);
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -118,26 +100,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
                 return new SummaryResponseModel { Count = 0, Response = null };
             }
-        }
-
-        public async Task<int> GetRenewalsSummaryCountFor(RefinementRequest request)
-        {
-            if (!string.IsNullOrWhiteSpace(request.ResellerId) && !request.ResellerId.EndsWith("*"))
-            {
-                request.ResellerId += "*";
-            }
-            else if (!string.IsNullOrWhiteSpace(request.ResellerName) && !request.ResellerName.EndsWith("*"))
-            {
-                request.ResellerName += "*";
-            }
-
-            var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
-
-            _logger.LogInformation("GetRenewalsSummaryCountFor {Req}", req);
-
-            var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
-            
-            return coreResult.Count;
         }
 
         public async Task<List<QuoteDetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)
@@ -172,39 +134,60 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<RefinementGroupsModel> GetRefainmentGroup(RefinementRequest request)
         {
-            var refinementGroupsResult = await GetRefinementGroups(request);
+            var req = _appRenewalServiceUrl.AppendPathSegment("GetRefinementGroups")
+                .BuildQuery(request);
+
+            var refinementGroupsResult = await _middleTierHttpClient.GetAsync<RefinementGroupData>(req).ConfigureAwait(false);
 
             return _mapper.Map<RefinementGroupsModel>(refinementGroupsResult);
         }
 
-        private static void AddPartialSearchResellerId(List<string> resellerIds)
+        private static void AppendDetailedPartialSearch(SearchRenewalDetailed.Request request)
         {
-            for (var i = 0; i < resellerIds.Count; i++)
+            var hasValue = CheckPartialSearchForResellerId(request.ResellerId);
+
+            if (!hasValue)
             {
-                if (!resellerIds[i].EndsWith("*"))
+                request.ResellerName = CheckPartialSearch(request.ResellerName);
+                request.ResellerPO = CheckPartialSearch(request.ResellerPO);
+                request.EndUser = CheckPartialSearch(request.EndUser);
+                request.EndUserEmail = CheckPartialSearch(request.EndUserEmail);
+                request.ContractID = CheckPartialSearch(request.ContractID);
+                request.Instance = CheckPartialSearch(request.Instance);
+                request.SerialNumber = CheckPartialSearch(request.SerialNumber);
+            }
+        }
+
+        private static void AppendSummaryPartialSearch(SearchRenewalSummary.Request request)
+        {
+            var hasValue = CheckPartialSearchForResellerId(request.ResellerId);
+
+            if (!hasValue)
+            {
+                request.ResellerName = CheckPartialSearch(request.ResellerName);
+                request.ResellerPO = CheckPartialSearch(request.ResellerPO);
+                request.EndUser = CheckPartialSearch(request.EndUser);
+                request.EndUserEmail = CheckPartialSearch(request.EndUserEmail);
+                request.ContractID = CheckPartialSearch(request.ContractID);
+                request.Instance = CheckPartialSearch(request.Instance);
+                request.SerialNumber = CheckPartialSearch(request.SerialNumber);
+            }
+        }
+
+        private static bool CheckPartialSearchForResellerId(List<string> resellers)
+        {
+            if (resellers?.Count > 0)
+            {
+                for (var i = 0; i < resellers.Count; i++)
                 {
-                    resellerIds[i] += "*";
+                    if (!resellers[i].EndsWith("*"))
+                    {
+                        var sb = new StringBuilder(resellers[i]);
+                        sb.Append('*');
+
+                        resellers[i] = sb.ToString();
+                    }
                 }
-            }
-        }
-
-        private static bool AddPartialSearchReseller(SearchRenewalDetailed.Request request)
-        {
-            if (request.ResellerId != null && request.ResellerId.Count > 0)
-            {
-                AddPartialSearchResellerId(request.ResellerId);
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.ResellerName) && !request.ResellerName.EndsWith("*"))
-            {
-                request.ResellerName += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.ResellerPO) && !request.ResellerPO.EndsWith("*"))
-            {
-                request.ResellerPO += "*";
 
                 return true;
             }
@@ -212,118 +195,12 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             return false;
         }
 
-        private static bool AddPartialSearchEndUser(SearchRenewalDetailed.Request request)
+        private static string CheckPartialSearch(string str)
         {
-            if (!string.IsNullOrWhiteSpace(request.EndUser) && !request.EndUser.EndsWith("*"))
-            {
-                request.EndUser += "*";
+            if (!string.IsNullOrWhiteSpace(str) && !str.EndsWith('*'))
+                str += '*';
 
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.EndUserEmail) && !request.EndUserEmail.EndsWith("*"))
-            {
-                request.EndUserEmail += "*";
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool AddPartialSearchOthers(SearchRenewalDetailed.Request request)
-        {
-            if (!string.IsNullOrWhiteSpace(request.ContractID) && !request.ContractID.EndsWith("*"))
-            {
-                request.ContractID += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.Instance) && !request.Instance.EndsWith("*"))
-            {
-                request.Instance += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.SerialNumber) && !request.SerialNumber.EndsWith("*"))
-            {
-                request.SerialNumber += "*";
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool AddPartialSearchReseller(SearchRenewalSummary.Request request)
-        {
-            if (request.ResellerId != null && request.ResellerId.Count > 0)
-            {
-                AddPartialSearchResellerId(request.ResellerId);
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.ResellerName) && !request.ResellerName.EndsWith("*"))
-            {
-                request.ResellerName += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.ResellerPO) && !request.ResellerPO.EndsWith("*"))
-            {
-                request.ResellerPO += "*";
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool AddPartialSearchEndUser(SearchRenewalSummary.Request request)
-        {
-            if (!string.IsNullOrWhiteSpace(request.EndUser) && !request.EndUser.EndsWith("*"))
-            {
-                request.EndUser += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.EndUserEmail) && !request.EndUserEmail.EndsWith("*"))
-            {
-                request.EndUserEmail += "*";
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool AddPartialSearchOthers(SearchRenewalSummary.Request request)
-        {
-            if (!string.IsNullOrWhiteSpace(request.ContractID) && !request.ContractID.EndsWith("*"))
-            {
-                request.ContractID += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.Instance) && !request.Instance.EndsWith("*"))
-            {
-                request.Instance += "*";
-
-                return true;
-            }
-            else if (!string.IsNullOrWhiteSpace(request.SerialNumber) && !request.SerialNumber.EndsWith("*"))
-            {
-                request.SerialNumber += "*";
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private async Task<RefinementGroupData> GetRefinementGroups(RefinementRequest request)
-        {
-            var req = _appRenewalServiceUrl.AppendPathSegment("GetRefinementGroups").BuildQuery(request);
-            return await _middleTierHttpClient.GetAsync<RefinementGroupData>(req).ConfigureAwait(false);
+            return str;
         }
     }
 }
