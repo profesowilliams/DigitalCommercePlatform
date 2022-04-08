@@ -4,12 +4,16 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Enums;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
+using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
 using FluentValidation.TestHelper;
 using Moq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -73,7 +77,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             var sut = new GetAdvancedRefinements.Validator();
 
             //act
-            var result = sut.TestValidate(new GetAdvancedRefinements.Request(null));
+            var result = sut.TestValidate(new GetAdvancedRefinements.Request(false, null));
 
             //assert
             result.ShouldHaveValidationErrorFor(x => x.FullSearchRequestModel);
@@ -86,10 +90,39 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             var sut = new GetAdvancedRefinements.Validator();
 
             //act
-            var result = sut.TestValidate(new GetAdvancedRefinements.Request(new Models.FullSearch.FullSearchRequestModel()));
+            var result = sut.TestValidate(new GetAdvancedRefinements.Request(false, new Models.FullSearch.FullSearchRequestModel()));
 
             //assert
             result.ShouldHaveValidationErrorFor(x => x.FullSearchRequestModel.SearchString);
+        }
+
+        [Fact]
+        public void PostProcessResponseBasedOnIsAnonymousTest()
+        {
+            //arrange
+            MethodInfo privateMethod = typeof(GetAdvancedRefinements.Handler).GetMethod("PostProcessResponseBasedOnIsAnonymous", BindingFlags.NonPublic | BindingFlags.Static);
+            var isAnonymous = true;
+            var request = new GetAdvancedRefinements.Request(isAnonymous, null);
+            var response = new List<RefinementGroupResponseModel>
+            {
+                new RefinementGroupResponseModel
+                {
+                    Group = RefinementConstants.GeneralGroupName,
+                    Refinements = new List<RefinementModel>
+                    {
+                        new RefinementModel
+                        {
+                            Id = RefinementConstants.Countries
+                        }
+                    }
+                }
+            };
+            //act
+            var result = (List<RefinementGroupResponseModel>)privateMethod.Invoke(_sut, new object[] { request, response });
+            //assert
+            result.Should().NotBeNull();
+            bool hasRefinementsCountries = result.First(x => x.Group == RefinementConstants.GeneralGroupName).Refinements.Any(x => x.Id == RefinementConstants.Countries);
+            hasRefinementsCountries.Should().BeFalse();
         }
     }
 }

@@ -4,6 +4,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Actions.Product;
 using DigitalCommercePlatform.UIServices.Search.AutoMapperProfiles;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Services;
 using DigitalFoundation.Common.Providers.Settings;
@@ -219,7 +220,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
                 {
                     new Models.FullSearch.Internal.RefinementModel
                     {
-                        Id = "Countries"
+                        Id = RefinementConstants.Countries
                     }
                 }
             };
@@ -227,7 +228,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Tests.Actions
             var result = (FullSearchResponseModel)privateMethod.Invoke(sut, new object[] { request, response });
             //assert
             result.Should().NotBeNull();
-            bool hasRefinementsCountries = result.TopRefinements.Any(x => x.Id == "Countries");
+            bool hasRefinementsCountries = result.TopRefinements.Any(x => x.Id == RefinementConstants.Countries);
             hasRefinementsCountries.Should().BeFalse();
         }      
 

@@ -65,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Controllers
         [Route("GetAdvancedRefinements")]
         public async Task<ActionResult<IEnumerable<RefinementGroupResponseModel>>> GetAdvancedRefinements(FullSearchRequestModel productSearch)
         {
-            var response = await Mediator.Send(new GetAdvancedRefinements.Request(productSearch)).ConfigureAwait(false);
+            var response = await Mediator.Send(new GetAdvancedRefinements.Request(!IsLoggedIn, productSearch)).ConfigureAwait(false);
             return Ok(response.Results);
         }
 

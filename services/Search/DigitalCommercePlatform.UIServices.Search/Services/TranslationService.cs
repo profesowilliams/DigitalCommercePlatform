@@ -1,4 +1,5 @@
 ﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -52,12 +53,11 @@ namespace DigitalCommercePlatform.UIServices.Search.Services
 
         public FullSearchResponseModel TranslateRefinementCountries(FullSearchResponseModel response)
         {
-            const string CountriesRefinementGroup = "Countries";
-            if (response?.TopRefinements == null || !response.TopRefinements.Any(x => x.Id == CountriesRefinementGroup)) { return response; }
+            if (response?.TopRefinements == null || !response.TopRefinements.Any(x => x.Id == RefinementConstants.Countries)) { return response; }
 
             Dictionary<string, string> countriesTranslations = null;
             this.FetchTranslations("Search.UI.InternalRefinements", ref countriesTranslations);
-            foreach (var option in response?.TopRefinements?.First(x => x.Id == CountriesRefinementGroup).Options)
+            foreach (var option in response?.TopRefinements?.First(x => x.Id == RefinementConstants.Countries).Options)
             {
                 option.Text = this.Translate(countriesTranslations, option.Id);
             }

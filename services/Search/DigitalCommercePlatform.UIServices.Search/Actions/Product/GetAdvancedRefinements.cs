@@ -2,6 +2,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Enums;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch.Internal;
 using DigitalCommercePlatform.UIServices.Search.Services;
@@ -9,6 +10,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,10 +20,12 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
     {
         public class Request : IRequest<Response>
         {
+            public bool IsAnonymous { get; set; }
             public FullSearchRequestModel FullSearchRequestModel { get; set; }
 
-            public Request(FullSearchRequestModel fullSearchRequestModel)
+            public Request(bool isAnonymous, FullSearchRequestModel fullSearchRequestModel)
             {
+                IsAnonymous = isAnonymous;
                 FullSearchRequestModel = fullSearchRequestModel;
             }
         }
@@ -57,8 +61,19 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 appRequest.GetDetails = detailsDict;
 
                 var response = await _searchService.GetAdvancedRefinements(appRequest);
-
+                PostProcessResponseBasedOnIsAnonymous(request, response);
                 return new Response(response);
+            }
+
+            private static List<RefinementGroupResponseModel> PostProcessResponseBasedOnIsAnonymous(Request request, List<RefinementGroupResponseModel> refinementGroups)
+            {
+                if (!request.IsAnonymous || refinementGroups == null) { return refinementGroups; }
+                var generalGroup = refinementGroups.FirstOrDefault(x => x.Group == RefinementConstants.GeneralGroupName);
+                if (generalGroup != null)
+                { 
+                    generalGroup?.Refinements.RemoveAll(x => x.Id == RefinementConstants.Countries);
+                }
+                return refinementGroups;
             }
         }
 

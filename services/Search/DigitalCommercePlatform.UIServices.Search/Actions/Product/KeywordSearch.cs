@@ -3,6 +3,7 @@
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Dto.FullSearch.Internal;
+using DigitalCommercePlatform.UIServices.Search.Helpers;
 using DigitalCommercePlatform.UIServices.Search.Models.FullSearch;
 using DigitalCommercePlatform.UIServices.Search.Models.Profile;
 using DigitalCommercePlatform.UIServices.Search.Services;
@@ -139,7 +140,7 @@ namespace DigitalCommercePlatform.UIServices.Search.Actions.Product
                 }
                 else if (response.TopRefinements != null)
                 {
-                    response.TopRefinements.RemoveAll(x => x.Id == "Countries");
+                    response.TopRefinements.RemoveAll(x => x.Id == RefinementConstants.Countries);
                 }
                 return response;
             }
