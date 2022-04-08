@@ -240,12 +240,12 @@
             jcr:primaryType="nt:unstructured"
             searchKey="ResellerName"
             searchLabel="Reseller Name"
-            showIfIsHouseAccount="{Boolean}true">
+            showIfIsHouseAccount="{Boolean}true"/>
         <item6
             jcr:primaryType="nt:unstructured"
             searchKey="ResellerId"
             searchLabel="Reseller Number"
-            showIfIsHouseAccount="{Boolean}true">
+            showIfIsHouseAccount="{Boolean}true"/>
         <item7
             jcr:primaryType="nt:unstructured"
             searchKey="SerialNumber"
