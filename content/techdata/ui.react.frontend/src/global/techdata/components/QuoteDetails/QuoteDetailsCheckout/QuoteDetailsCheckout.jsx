@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../Widgets/Dropdown";
 
+/**
+ * 
+ * @param {Object} props
+ * @param {any} props.labels
+ * @param {() => void} props.onQuoteCheckout
+ * @param {(option: any) => void} props.onQuoteOptionChanged
+ * @param {any} props.quoteDetails
+ * @param {boolean} props.whiteLabelModeParam
+ * @returns 
+ */
 function QuoteDetailsCheckout({
   labels,
   onQuoteCheckout,
@@ -47,15 +57,13 @@ function QuoteDetailsCheckout({
           id="pdfDownloadLink"
           className="cmp-td-quote-checkout__pdf-download-link"
         ></div>
-        {!isWhiteLabelMode && (
-          <div className="cmp-td-quote-checkout__button cmp-widget">
-            <button className="cmp-quote-button" onClick={onCheckout} disabled={!quoteDetails.canCheckOut}>
-              <div className="cmp-td-quote-checkout__button__title">
-                {checkoutLabel}
-              </div>
-            </button>
-          </div>
-        )}
+        <div className="cmp-td-quote-checkout__button cmp-widget">
+          <button className="cmp-quote-button" onClick={onCheckout} disabled={!quoteDetails.canCheckOut}>
+            <div className="cmp-td-quote-checkout__button__title">
+              {checkoutLabel}
+            </div>
+          </button>
+        </div>
         <div className="cmp-td-quote-checkout__dropdown cmp-widget">
           <Dropdown
             selected={selectedOption || { label: dropdownLabel }}
