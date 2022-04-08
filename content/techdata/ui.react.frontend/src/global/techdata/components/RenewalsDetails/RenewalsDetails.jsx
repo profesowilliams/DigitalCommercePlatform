@@ -3,11 +3,14 @@ import ConfigGrid from "./ConfigGrid/ConfigGrid";
 import RenewalPreviewGrid from "./RenewalPreviewGrid/RenewalPreviewGrid";
 import useGet from "../../hooks/useGet";
 import Loader from "../Widgets/Loader";
+import Modal from '../Modal/Modal';
 import { getUrlParams } from "../../../../utils";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
+  const errorMessages = componentProp?.errorMessages;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
+  const [modal, setModal] = useState(null);
   const [apiResponse, isLoading] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
@@ -16,10 +19,39 @@ function RenewalsDetails(props) {
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
+
+  const getErrorMessage = (errorCode) => {
+    if(errorCode === 404) {
+      return errorMessages?.notFoundErrorMessage;
+    }
+    return errorMessages?.unexpectedErrorMessage;
+  }
+
+  const showSimpleModal = (title, content, onModalClosed=closeModal, buttonLabel, modalAction) =>
+    setModal((previousInfo) => ({
+      content: content,
+      properties: {
+          title:  title,
+          buttonLabel
+      },
+      onModalClosed,
+      ...previousInfo,
+      modalAction
+    })
+  );
+
+  const closeModal = () => setModal(null);
+
+  const showErrorModal = (title, message, redirectPage) =>
+    showSimpleModal(title, <div>{message}</div>, redirectPage || undefined);
+
   useEffect(() => {
     if (apiResponse?.content?.details) {
       setRenewalsDetails(apiResponse?.content?.details[0]);
-    }
+    } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
+        showErrorModal(errorMessages?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code),
+          () => window.location.href = errorMessages?.errorLoadingPageRedirect);
+      }
   }, [apiResponse]);
 
   return (
@@ -36,6 +68,14 @@ function RenewalsDetails(props) {
       ) : (
         <Loader visible={isLoading} />
       )}
+      {modal && <Modal
+            modalAction={modal.action}
+            modalContent={modal.content}
+            modalProperties={modal.properties}
+            modalAction={modal.modalAction}
+            actionErrorMessage={modal.errorMessage}
+            onModalClosed={modal.onModalClosed}
+        ></Modal>}
     </div>
   );
 }

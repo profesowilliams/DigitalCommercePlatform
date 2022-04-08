@@ -485,6 +485,30 @@
                                     </column>
                                 </items>
                             </agreementInfo>
+                            <errorMessages
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error Messages"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <notFoundErrorMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Error 404 Not Found Message"
+                                                name="./notFoundErrorMessage"/>
+                                            <unexpectedErrorMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="An Unexpected Error Message"
+                                                name="./unexpectedErrorMessage"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </errorMessages>
                         </items>
                     </tabs>
                 </items>

@@ -6,6 +6,7 @@ use(['../common/utils.js'], function(utils) {
     var quotePreview = {};
     var reseller = {};
     var agreementInfo = {};
+    var errorMessages = {};
     var endCustomer = {};
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
@@ -201,6 +202,13 @@ use(['../common/utils.js'], function(utils) {
         agreementInfo["usageEndDateLabel"] = properties["usageEndDateLabel"];
     }
 
+    if (properties && properties["notFoundErrorMessage"]) {
+        errorMessages["notFoundErrorMessage"] = properties["notFoundErrorMessage"];
+    }
+    if (properties && properties["unexpectedErrorMessage"]) {
+        errorMessages["unexpectedErrorMessage"] = properties["unexpectedErrorMessage"];
+    }
+
     if (agreementInfo != null) {
         quotePreview["agreementInfo"] = agreementInfo;
     }
@@ -211,6 +219,10 @@ use(['../common/utils.js'], function(utils) {
 
     if (quotePreview != null) {
         jsonObject["quotePreview"] = quotePreview;
+    }
+
+    if (errorMessages != null) {
+        jsonObject["errorMessages"] = errorMessages;
     }
 
     if (this.exportXLSRenewalsEndpoint != null && this.serviceData.uiServiceDomain) {
