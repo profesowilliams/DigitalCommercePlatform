@@ -208,6 +208,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["unexpectedErrorMessage"]) {
         errorMessages["unexpectedErrorMessage"] = properties["unexpectedErrorMessage"];
     }
+    if (properties && properties["errorLoadingPageTitle"]) {
+        errorMessages["errorLoadingPageTitle"] = properties["errorLoadingPageTitle"];
+    }
 
     if (agreementInfo != null) {
         quotePreview["agreementInfo"] = agreementInfo;
