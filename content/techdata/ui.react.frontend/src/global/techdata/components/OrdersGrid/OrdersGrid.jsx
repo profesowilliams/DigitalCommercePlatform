@@ -17,6 +17,7 @@ import {
 import { pushEventAnalyticsGlobal, pushEvent, ANALYTICS_TYPES } from '../../../../utils/dataLayerUtils';
 import OpenFilter from '../Widgets/OpenFilter';
 import ButtonLabelFilter from '../Widgets/ButtonLabelFilter';
+import ModalComponent from '../CreateQuote/ModalComponent';
 
 const Grid = React.memo(GridComponent);
 
@@ -108,7 +109,7 @@ function OrdersGrid(props) {
     const modalPDFErrorHandler = (title = '', error = '') => {
         setModal((previousInfo) => ({
             content: (
-                <div className="cmp-quote-error-modal">{error}</div>
+                ModalComponent(error)
             ),
             properties: {
                 title:  title,

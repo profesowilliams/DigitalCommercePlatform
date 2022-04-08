@@ -13,6 +13,7 @@ import OrderDetailsSerialNumbers from "../OrderDetailsSerialNumbers/OrderDetails
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
 import { isNotEmptyValue, requestFileBlob, showAnnuity } from "../../../../../utils/utils";
 import { ANALYTICS_TYPES, pushEventAnalyticsGlobal } from "../../../../../utils/dataLayerUtils";
+import ModalComponent from "../../CreateQuote/ModalComponent";
 
 function ProductLinesGrid({
   gridProps,
@@ -121,6 +122,18 @@ function ProductLinesGrid({
     return trackingArray.length ? trackingArray.length > 0 : false;
   }
 
+  const modalPDFErrorHandler = (title = '', error = '') => 
+    setModal((previousInfo) => ({
+        content: (
+          ModalComponent(error)
+        ),
+        properties: {
+            title:  title,
+            
+        },
+        ...previousInfo,
+      }));
+
   /**
    * 
    * @param {string} invoiceId 
@@ -130,11 +143,11 @@ function ProductLinesGrid({
     const url = downloadInvoicesEndpoint || 'nourl';
     const singleDownloadUrl = url?.replace("{order-id}", orderId).replace(/(.*?)&.*/g,'$1');
     const invoiceUrl = `${singleDownloadUrl}&invoiceId=${invoiceId}`;
-    requestFileBlob(invoiceUrl,'',{redirect:true});
+    requestFileBlob(invoiceUrl,'',{redirect:true}, modalPDFErrorHandler);
   }
 
   const handlerInvoiceClick = (lineData) => {
-    handlerAnalyticInvoiceClick(lineData)
+    handlerAnalyticInvoiceClick(lineData);
     openInvoicePdf(lineData.invoices[0]?.id, data?.orderNumber);
   };
 
