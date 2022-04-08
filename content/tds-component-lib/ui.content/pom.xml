@@ -21,7 +21,7 @@
     <!-- P A R E N T  P R O J E C T  D E S C R I P T I O N                      -->
     <!-- ====================================================================== -->
     <parent>
-        <groupId>com.tds.component.lib</groupId>
+        <groupId>com.tdsynnex.component.lib</groupId>
         <artifactId>tds.component.lib</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -47,7 +47,7 @@
                 <groupId>org.apache.jackrabbit</groupId>
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <configuration>
-                    <group>com.tds.component.lib</group>
+                    <group>com.tdsynnex.component.lib</group>
                     <name>tds.component.lib.ui.content</name>
                     <packageType>content</packageType>
                     <accessControlHandling>merge</accessControlHandling>
@@ -64,7 +64,7 @@
                     </validatorsSettings>
                     <dependencies>
                         <dependency>
-                            <groupId>com.tds.component.lib</groupId>
+                            <groupId>com.tdsynnex.component.lib</groupId>
                             <artifactId>tds.component.lib.ui.apps</artifactId>
                             <version>${project.version}</version>
                         </dependency>
@@ -88,7 +88,7 @@
     <!-- ====================================================================== -->
     <dependencies>
         <dependency>
-            <groupId>com.tds.component.lib</groupId>
+            <groupId>com.tdsynnex.component.lib</groupId>
             <artifactId>tds.component.lib.ui.apps</artifactId>
             <version>${project.version}</version>
             <type>zip</type>

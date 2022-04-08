@@ -57,17 +57,17 @@
                     <embeddedTarget>/apps/tds.component.lib/install</embeddedTarget>
                     <subPackages>
                         <subPackage>
-                            <groupId>com.tds.component.lib</groupId>
+                            <groupId>com.tdsynnex.component.lib</groupId>
                             <artifactId>tds.component.lib.ui.apps</artifactId>
                             <filter>true</filter>
                         </subPackage>
                         <subPackage>
-                            <groupId>com.tds.component.lib</groupId>
+                            <groupId>com.tdsynnex.component.lib</groupId>
                             <artifactId>tds.component.lib.ui.config</artifactId>
                             <filter>true</filter>
                         </subPackage>
                         <subPackage>
-                            <groupId>com.tds.component.lib</groupId>
+                            <groupId>com.tdsynnex.component.lib</groupId>
                             <artifactId>tds.component.lib.ui.content</artifactId>
                             <filter>true</filter>
                         </subPackage>
@@ -143,21 +143,21 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.tds.component.lib</groupId>
+            <groupId>com.tdsynnex.component.lib</groupId>
             <artifactId>tds.component.lib.ui.apps</artifactId>
             <type>zip</type>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.tds.component.lib</groupId>
+            <groupId>com.tdsynnex.component.lib</groupId>
             <artifactId>tds.component.lib.ui.config</artifactId>
             <type>zip</type>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.tds.component.lib</groupId>
+            <groupId>com.tdsynnex.component.lib</groupId>
             <artifactId>tds.component.lib.ui.content</artifactId>
             <type>zip</type>
             <version>${project.version}</version>

@@ -48,7 +48,7 @@
                 <groupId>org.apache.jackrabbit</groupId>
                 <artifactId>filevault-package-maven-plugin</artifactId>
                 <configuration>
-                    <group>com.tds.component.lib</group>
+                    <group>com.tdsynnex.component.lib</group>
                     <name>tds.component.lib.ui.apps</name>
                     <packageType>application</packageType>
                     <accessControlHandling>merge</accessControlHandling>
