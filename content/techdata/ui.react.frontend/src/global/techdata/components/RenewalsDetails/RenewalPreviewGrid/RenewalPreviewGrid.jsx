@@ -106,7 +106,7 @@ function Note({gridProps}) {
 function Price({value}){
   return (
     <div className="price">
-      {value}
+      {thousandSeparator(value)}
       </div>
   )
 }

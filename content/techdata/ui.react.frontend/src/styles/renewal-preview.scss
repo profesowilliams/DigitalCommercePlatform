@@ -20,6 +20,11 @@
       text-shadow: 0px 0px 0px #000c21;
     }
   }
+  .cmp-product-lines-grid__item-information__box-text {
+    a p {
+      font-weight: bold;
+    }
+  }
   .cmp-renewal-preview {
     &__download {
       button {
@@ -48,7 +53,7 @@
           i {
             margin-right: 8px;
           }
-        }
+        }        
       }
     }
     &__subtotal {
@@ -97,7 +102,7 @@
     }
     span {
       color: #555555;
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 0;
       line-height: 14px;
       display: block;

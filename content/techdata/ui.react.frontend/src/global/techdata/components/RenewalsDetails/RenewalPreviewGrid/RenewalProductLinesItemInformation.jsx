@@ -67,52 +67,49 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
         style={{width:'100%', gridTemplateColumns:'100% 86%'}}
       >
         <div className="cmp-product-lines-grid__item-information__box-text">
-          <div className="cmp-product-lines-grid__item-information__box-text__header"></div>
-          <div className="cmp-product-lines-grid__item-information__box-text__content">
-            <div className="cmp-renewal-preview__prod-details">
-              <a
-                href={formatShopDomainUrl()}
-                target="_blank"
-                className="cmp-product-lines-grid__item-information__box-text__header__link"
-              >
-                {formatDescription(description)}
-              </a>
-              <br />
-              <span>
-                <b>Serial №: </b>
-                {line.serialNumbers && line.serialNumbers.length && !line.serialNumbers.every(e => e === null) ? (
-                  <a
-                    className="cmp-grid-url-underlined"
-                    href="#"
-                    target="_blank"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      invokeModal({
-                        content: (
-                          <OrderDetailsSerialNumbers
-                            data={line.serialNumbers}
-                          ></OrderDetailsSerialNumbers>
-                        ),
-                        properties: {
-                          title: line.serialModal
-                            ? line.serialModal
-                            : "Serial Numbers",
-                        },
-                      });
-                    }}
-                  >
-                    {line.serialCellLabel ? line.serialCellLabel : "view multiple"}
-                  </a>
-                ) : (line.serialCellNotFoundMessage
-                      ? line.serialCellNotFoundMessage
-                      : "N/A"
-                )}
-              </span>
-              <span>
-                <b>Instance: </b>
-                {line.instance || " N/A "}
-              </span>
-            </div>
+          <div className="cmp-renewal-preview__prod-details">
+            <a
+              href={formatShopDomainUrl()}
+              target="_blank"
+              className="cmp-product-lines-grid__item-information__box-text__header__link"
+            >
+              {formatDescription(description)}
+            </a>
+            <br />
+            <span>
+              <b>Serial №: </b>
+              {line.serialNumbers && line.serialNumbers.length && !line.serialNumbers.every(e => e === null) ? (
+                <a
+                  className="cmp-grid-url-underlined"
+                  href="#"
+                  target="_blank"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    invokeModal({
+                      content: (
+                        <OrderDetailsSerialNumbers
+                          data={line.serialNumbers}
+                        ></OrderDetailsSerialNumbers>
+                      ),
+                      properties: {
+                        title: line.serialModal
+                          ? line.serialModal
+                          : "Serial Numbers",
+                      },
+                    });
+                  }}
+                >
+                  {line.serialCellLabel ? line.serialCellLabel : "view multiple"}
+                </a>
+              ) : (line.serialCellNotFoundMessage
+                    ? line.serialCellNotFoundMessage
+                    : "N/A"
+              )}
+            </span>
+            <span>
+              <b>Instance: </b>
+              {line.instance || " N/A "}
+            </span>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ const columnDefs = [
     field: "id",
     width: "50px",
     sortable: false,
-    cellStyle: {'white-space': 'normal'},
+    cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true
   },
   {
@@ -12,7 +12,7 @@ const columnDefs = [
     field: "vendorPartNo",
     width: "200px",
     sortable: false,
-    cellStyle: {'white-space': 'normal'},
+    cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true
   },
   {
@@ -20,7 +20,7 @@ const columnDefs = [
     field: "shortDescription",
     sortable: false,
     width: "300px",
-    cellStyle: {'white-space': 'normal'},
+    cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true
   },
   {
@@ -28,14 +28,14 @@ const columnDefs = [
     field: "mfrNumber",
     sortable: false,
     width: "200px",
-    cellStyle: {'white-space': 'normal'},
+    cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true
   },
   {
     headerName: "Unit price (USD)",
     field: "unitPrice",
     sortable: false,
-    cellStyle: { 'justify-content': 'flex-start'},
+    cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
     autoHeight: true
   },
   {
@@ -43,7 +43,7 @@ const columnDefs = [
     field: "quantity",
     sortable: false,
     width: "100px",
-    cellStyle: { 'justify-content': 'flex-start'},
+    cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
     autoHeight: true
   },
   {
@@ -51,7 +51,7 @@ const columnDefs = [
     field: "totalPrice",
     sortable: false,
     width: "150px",
-    cellStyle: { 'justify-content': 'flex-start'},
+    cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
     autoHeight: true
   },
 ];
