@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product
         public string MaterialType { get; set; }
         public string UPC { get; set; }
         public string CommodityCode { get; set; }
-        public string MaterialCountryOfOrgin { get; set; }
+        public string MaterialCountryOfOrigin { get; set; }
         public string MultiLayerSerialNumberProfile { get; set; }
         public string PurchaserPhone { get; set; }
         public string SerialNumberProfile { get; set; }
