@@ -437,11 +437,6 @@ const QuoteDetails = ({ componentProp }) => {
           onMarkupChanged={(data) => setActualQuoteLinesData(data)}
           whiteLabelModeParam={whiteLabelMode}
         />
-        {whiteLabelMode ? (
-          <div className={'back-to-quote-details'} onClick={() => closeWhiteLabelMode()}>
-            <span>{backToQuoteDetailsLabelProp}</span>
-          </div>
-        ) : null}
         <QuoteDetailsCheckout
           labels={quoteOptions}
           onQuoteCheckout={onQuoteCheckout}
@@ -449,6 +444,11 @@ const QuoteDetails = ({ componentProp }) => {
           quoteDetails={quoteDetails}
           whiteLabelModeParam={whiteLabelMode}
         />
+        {whiteLabelMode ? (
+          <div className={'back-to-quote-details'} onClick={() => closeWhiteLabelMode()}>
+            <span>{backToQuoteDetailsLabelProp}</span>
+          </div>
+        ) : null}
       </>
     )
   }
