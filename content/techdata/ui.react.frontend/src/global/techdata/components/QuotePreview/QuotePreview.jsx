@@ -81,7 +81,8 @@ function QuotePreview(props) {
     if(quoteDetailsResponse) {
       const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
       const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
-      setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
+      // Remove Choose Modal 
+      // setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
       setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
       // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
       quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
@@ -116,18 +117,17 @@ function QuotePreview(props) {
   const cannotCreateQuote = (quoteDetailsResponse) => {
     const distiBuyMethod = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
     const customerBuyMethod = isNotEmptyValue(quoteDetailsResponse.customerBuyMethod) ? quoteDetailsResponse.customerBuyMethod : '';
-   
+    
     // DistiBuyMethod = “TECH DATA” and CustomerBuyMethod = "AVT"
     const firstCondition = compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_TECH_DATA) && compareBuyMethod(customerBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD);
-
+    
     // DistiBuyMethod = “AVT Technology Solutions LLC” and CustomerBuyMethod = "TD"
     const secondCondition = compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY) && compareBuyMethod(customerBuyMethod, QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD);
-
+    
     // DistiBuyMethod value is not “TECH DATA” or  “AVT Technology Solutions LLC”
     const thirdCondition = !compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_TECH_DATA) && !compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY);
-
-    return isDealConfiguration(quoteDetailsResponse.source) && (firstCondition || secondCondition|| thirdCondition);
-    
+    const validations = (firstCondition || secondCondition || thirdCondition);
+    return isDealConfiguration(quoteDetailsResponse.source) || validations;
   }
     
   const getErrorMessage = (errorCode) => {
