@@ -31,7 +31,6 @@
         var textAreas = form.getElementsByTagName('textarea');
         var textAreasList = Array.prototype.slice.call(textAreas);
         var invalidFileStatus = false;
-        var invalidInputStatus = false;
 
         inputsList.forEach(
             function (i) {
@@ -67,8 +66,6 @@
                         // see if is neccesary to apply the validation for that input 
                         if (i.hasAttribute('required') || i.value !== '' ){
                             newData.append(i.name, i.value);
-                            invalidInputStatus = true;
-                            return;
                        }
                     }
                 }
@@ -88,7 +85,7 @@
                 newData.append(i.name, i.value);
             }
         );
-        if(invalidFileStatus || invalidInputStatus) return null;
+        if(invalidFileStatus) return null;
         return newData;
     }
 
