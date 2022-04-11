@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal;
 using DigitalCommercePlatform.UIServices.Renewal.Models;
 using DigitalCommercePlatform.UIServices.Renewal.Models.RefinementGroup;
@@ -21,11 +21,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
     [ExcludeFromCodeCoverage]
     public sealed class SearchRenewalDetailed
     {
-        public class Request : IRequest<ResponseBase<PaginatedResponseModel<DetailedModel>>>
+        public class Request : PartialSearchProps, IRequest<ResponseBase<PaginatedResponseModel<DetailedModel>>>
         {
             public string Id { get; set; }
-            public string EndUserEmail { get; set; }
-            public string EndUser { get; set; }
             public List<string> SortBy { get; set; }
             public int Page { get; set; } = 1;
             public int PageSize { get; set; } = 25;
@@ -38,21 +36,15 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
             public List<string> VendorAccountNumber { get; set; }
             public List<string> EndUserType { get; set; }
             public List<string> ProgramName { get; set; }
-            public string ResellerPO { get; set; }
-            public string ContractID { get; set; }
             public bool Details { get; set; }
             public string SessionId { get; set; }
-            public string ResellerName { get; set; }
             public List<string> Type { get; set; }
-            public List<string> ResellerId { get; set; }
             public DateTime? CreatedFrom { get; set; }
             public DateTime? CreatedTo { get; set; }
             public DateTime? ExpiresFrom { get; set; }
             public DateTime? ExpiresTo { get; set; }
             public DateTime? DueDateFrom { get; set; }
             public DateTime? DueDateTo { get; set; }
-            public string SerialNumber { get; set; }
-            public string Instance { get; set; }
         }
 
         [ExcludeFromCodeCoverage]

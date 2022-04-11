@@ -20,7 +20,6 @@ using static DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals.GetRene
 
 namespace DigitalCommercePlatform.UIServices.Renewal.IntegrationTests
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1172:Unused method parameters should be removed", Justification = "<Pending>")]
     public class RenewalIntegrationTests : IClassFixture<UIFixture>
     {
         private readonly UIFixture _fixture;

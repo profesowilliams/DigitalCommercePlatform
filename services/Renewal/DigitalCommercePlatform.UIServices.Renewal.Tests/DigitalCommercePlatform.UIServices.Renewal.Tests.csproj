@@ -34,6 +34,9 @@
     <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DigitalCommercePlatform.UIServices.Renewal\DigitalCommercePlatform.UIServices.Renewal.csproj" />
   </ItemGroup>
 </Project>

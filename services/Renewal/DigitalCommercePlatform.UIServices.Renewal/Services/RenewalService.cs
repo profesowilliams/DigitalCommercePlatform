@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Renewal.Services
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1172:Unused method parameters should be removed", Justification = "<Pending>")]
     public class RenewalService : IRenewalService
     {
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
@@ -43,7 +42,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<DetailedResponseModel> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
-            AppendDetailedPartialSearch(request);
+            AppendPartialSearch(request);
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -53,16 +52,15 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             {
                 var coreResult = await _middleTierHttpClient.GetAsync<ResponseDetailedDto>(req).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<DetailedModel>>(coreResult.Data);
+
                 modelList.ForEach(model =>
                 {
                     model.VendorLogo = _helperQueryService.GetVendorLogo(model.Vendor?.Name);
                 });
-                var count = coreResult.Count;
 
-
-                return new DetailedResponseModel()
+                return new DetailedResponseModel
                 {
-                    Count = count,
+                    Count = coreResult.Count,
                     Response = modelList
                 };
             }
@@ -76,7 +74,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
         public async Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
-            AppendSummaryPartialSearch(request);
+            AppendPartialSearch(request);
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -86,13 +84,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             {
                 var coreResult = await _middleTierHttpClient.GetAsync<ResponseSummaryDto>(req).ConfigureAwait(false);
                 var modelList = _mapper.Map<List<SummaryModel>>(coreResult.Data);
+
                 modelList.ForEach(model =>
                 {
                     model.VendorLogo = _helperQueryService.GetVendorLogo(model.Vendor?.Name);
                 });
-                var count = coreResult.Count;
 
-                return new SummaryResponseModel() { Count = count, Response = modelList };
+                return new SummaryResponseModel
+                {
+                    Count = coreResult.Count,
+                    Response = modelList
+                };
             }
             catch (Exception ex)
             {
@@ -142,23 +144,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             return _mapper.Map<RefinementGroupsModel>(refinementGroupsResult);
         }
 
-        private static void AppendDetailedPartialSearch(SearchRenewalDetailed.Request request)
-        {
-            var hasValue = CheckPartialSearchForResellerId(request.ResellerId);
-
-            if (!hasValue)
-            {
-                request.ResellerName = CheckPartialSearch(request.ResellerName);
-                request.ResellerPO = CheckPartialSearch(request.ResellerPO);
-                request.EndUser = CheckPartialSearch(request.EndUser);
-                request.EndUserEmail = CheckPartialSearch(request.EndUserEmail);
-                request.ContractID = CheckPartialSearch(request.ContractID);
-                request.Instance = CheckPartialSearch(request.Instance);
-                request.SerialNumber = CheckPartialSearch(request.SerialNumber);
-            }
-        }
-
-        private static void AppendSummaryPartialSearch(SearchRenewalSummary.Request request)
+        private static void AppendPartialSearch<T>(T request) where T : PartialSearchProps
         {
             var hasValue = CheckPartialSearchForResellerId(request.ResellerId);
 

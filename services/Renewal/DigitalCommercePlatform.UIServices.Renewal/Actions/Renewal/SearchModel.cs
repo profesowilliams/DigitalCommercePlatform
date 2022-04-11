@@ -39,4 +39,17 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewal
         public string SerialNumber { get; set; }
         public string Instance { get; set; }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class PartialSearchProps
+    {
+        public List<string> ResellerId { get; set; }
+        public string ResellerName { get; set; }
+        public string ResellerPO { get; set; }
+        public string EndUser { get; set; }
+        public string EndUserEmail { get; set; }
+        public string ContractID { get; set; }
+        public string Instance { get; set; }
+        public string SerialNumber { get; set; }
+    }
 }

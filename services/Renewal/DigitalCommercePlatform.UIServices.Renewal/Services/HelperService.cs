@@ -2,7 +2,6 @@
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal.Product;
 using DigitalFoundation.Common.Features.Client;
-using DigitalFoundation.Common.Features.Contexts;
 using DigitalFoundation.Common.Providers.Settings;
 using Flurl;
 using Microsoft.Extensions.Logging;
@@ -10,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         private readonly ILogger<HelperService> _logger;
         private readonly IMiddleTierHttpClient _middleTierHttpClient;
         private readonly IAppSettings _appSettings;
+
         public HelperService(ILogger<HelperService> logger,
                              IMiddleTierHttpClient middleTierHttpClient,
                              IAppSettings appSettings)
@@ -31,13 +30,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             _appSettings = appSettings;
         }
 
-
-        /// <summary>
-        ///  Populate lines for order and Quotes
-        /// </summary>
-        /// <param name="items"></param>
-        /// <param name="vendorName"></param>
-        /// <returns></returns>
         public async Task<List<ItemModel>> PopulateLinesFor(List<ItemModel> items, string vendorName)
         {
             ProductData productDetails;
@@ -51,6 +43,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 foreach (var line in items)
                 {
                     product = productDetails?.Data?.FirstOrDefault(p => p.ManufacturerPartNumber == line.MFRNumber);
+
                     if (product != null && line != null)
                     {
                         MapLines(product, line);
@@ -76,12 +69,13 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             {
                 var key = vendorName.ToLowerInvariant();
                 var vendorLogos = _appSettings.TryGetSetting<Dictionary<string, string>>("UI.Renewals.VendorLogos");
+
                 if (vendorLogos.ContainsKey(key))
                 {
                     vendorLogoUrl = vendorLogos[key];
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogWarning(ex, "Error Getting VendorLogo for `{VendorName}`", vendorName);
             }
@@ -96,7 +90,15 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         /// <returns></returns>
         private string BuildQueryForProductApiCall(List<ItemModel> items, string vendorName)
         {
-            string _appProductServiceURL = string.Empty;
+            string _appProductServiceURL;
+            string system = vendorName;
+            string productId;
+            int i = 0;
+
+            // use string builder as flur is encoding "=" in Manufacturer Part Number resulting in wrong response
+            StringBuilder sbManufacturer = new();
+            StringBuilder sbVendorPart = new();
+
             try
             {
                 _appProductServiceURL = _appSettings.GetSetting("App.Product.Url");
@@ -106,16 +108,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 _appProductServiceURL = _appSettings.GetSetting("Product.App.Url");
             }
 
-            string manufacturer = "";
-            string system = vendorName;            
-            string productId;
-
-            // use string builder as flur is encoding "=" in Manufacturer Part Number resulting in wrong response
-            StringBuilder sbManufacturer = new();
-            StringBuilder sbVendorPart = new();
-
-
-            int i = 0;
             foreach (var item in items)
             {
                 if (!string.IsNullOrWhiteSpace(item?.MFRNumber))
@@ -126,9 +118,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
                 {
                     productId = "";
                 }
+
                 item.VendorPartNo = productId;
-                item.Manufacturer = item.Manufacturer ?? system;
-                manufacturer = item.Manufacturer ?? system;
+                item.Manufacturer ??= system;
                 i++;
 
                 BuildQueryString(productId, ref sbManufacturer, ref sbVendorPart, item);
