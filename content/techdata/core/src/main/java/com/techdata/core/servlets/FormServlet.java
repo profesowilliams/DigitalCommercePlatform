@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Component(
         immediate = true,
@@ -63,6 +64,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private List<String> allowedFileExtensions = new ArrayList<>();
         private List<String> allowedFileContentTypes = new ArrayList<>();
         private Map<String,String> charsEncodedMap = new HashMap<>();
+        private String blacklistCharsRegexExpr;
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -92,6 +94,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                                         thresholdFileSize = formConfigurations.fileThresholdInMB();
                                         allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                                         allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
+                                        blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
                                         prepareEncodedChars(formConfigurations);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
@@ -174,22 +177,26 @@ public class FormServlet extends SlingAllMethodsServlet {
         private void handleNonFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr,
                                                       String key, Map<String, String> emailParams,
                                                       StringBuilder value) throws CustomFormException {
-                try {
-                        if (pArr.length > 0) {
-                                for (RequestParameter rp : pArr) {
-                                        if (StringUtils.isNotEmpty(rp.toString())) {
-                                                value.append(rp.toString());
-                                        }
+                if (pArr.length > 0) {
+                        for (RequestParameter rp : pArr) {
+                                if (StringUtils.isNotEmpty(rp.toString())) {
+                                        value.append(rp.toString());
                                 }
                         }
-                        LOG.debug("key is {}, value is {}", key, value);
-                        emailParams.put(key, validateString(value.toString()));
-                } catch (Exception e) {
-                        throw new CustomFormException("Failed when processing the field = " + key);
                 }
+                LOG.debug("key is {}, value is {}", key, value);
+                emailParams.put(key, validateString(value.toString()));
         }
 
-        public String validateString(String input) {
+        public String validateString(String input) throws CustomFormException {
+                if(StringUtils.isEmpty(input)) return input;
+
+                // validate for invalid characters
+                final Pattern pattern = Pattern.compile(blacklistCharsRegexExpr);
+                if (pattern.matcher(input).find()) {
+                        throw new CustomFormException("Invalid form field, skipping the form and email submission.");
+                }
+
                 Set<String> keyset = charsEncodedMap.keySet();
                 for (String key : keyset) {
                         input = input.replace(key, charsEncodedMap.get(key));
