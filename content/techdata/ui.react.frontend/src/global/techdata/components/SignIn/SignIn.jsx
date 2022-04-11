@@ -13,6 +13,7 @@ import {
   isAuthenticated,
   redirectUnauthenticatedUser,
 } from "../../../../utils/policies";
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
 import { usPost } from "../../../../utils/api";
@@ -192,7 +193,7 @@ const SignIn = (props) => {
     toggleLangNavigation(isAlreadySignedIn());
   }
 
-  useEffect(() => {
+  const handleLoginRedirection = () => {
     if (isSessionExpired()) {
       signOutForExpiredSession(authUrl, clientId);
     }
@@ -201,6 +202,16 @@ const SignIn = (props) => {
     isCodePresent();
     routeChange();
     isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+  }
+
+  useEffect(() => {
+    handleLoginRedirection();
+    const originalURL = window.location.href;
+    if (isExtraReloadDisabled() && originalURL.indexOf(codeQueryParam) > -1) {
+        const alteredURL = removeParam(codeQueryParam, originalURL);
+        window.location.href = alteredURL;
+        handleLoginRedirection();
+    }
 
     // redirecting the non-dcp logged in user to home page
     if(isPrivatePage && localStorage.getItem("sessionId") && localStorage.getItem("userData")) {
