@@ -66,12 +66,9 @@
                     else {
                         // see if is neccesary to apply the validation for that input 
                         if (i.hasAttribute('required') || i.value !== '' ){
-                           if(validateAddress(i, i.value)){
-                                newData.append(i.name, i.value);
-                            } else {
-                               invalidInputStatus = true;
-                                return;
-                            }
+                            newData.append(i.name, i.value);
+                            invalidInputStatus = true;
+                            return;
                        }
                     }
                 }
@@ -105,30 +102,6 @@
             let submitButton = document.getElementById("formSubmit");
             submitButton.disabled = false;
         }
-
-    function validateAddress(element,value){
-        handlerInputFile();
-        var originalBorderColor = element.style.borderColor;
-        var parentDiv = element.closest("div");
-        var errorLabel = document.createElement("label");
-        parentDiv.appendChild(errorLabel);
-        errorLabel.style.color = "red";
-        if(!(/^[-a-zA-Z0-9.,;_@=%: \/()!$£*+{}?|#]+$/.test(value))){
-            parentDiv.childNodes.forEach(child => {
-                if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
-                    parentDiv.removeChild(child);
-                    parentDiv.removeChild(errorLabel);
-                }
-            });
-            errorLabel.innerText = "This field contains Invalid Characters. Please correct";
-            element.focus();
-            setTimeout(function() {
-                element.style.borderColor = originalBorderColor  }, 
-            10000);
-            return false;
-        }
-        return true;
-    }
 
 
     function processFileValidations(fileEle) {
@@ -190,8 +163,6 @@
             errorLabel.innerText = (parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required");
         }else if (validityState.typeMismatch) {
             errorLabel.innerText = (parentDiv.dataset.cmpConstraintMessage ? parentDiv.dataset.cmpConstraintMessage : "This field content does not match the type of " + type);
-        } else {
-            validateAddress(inputElement, inputElement.value);
         }
         setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
     }
