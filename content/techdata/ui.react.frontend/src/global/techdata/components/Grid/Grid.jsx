@@ -492,17 +492,17 @@ function Grid(props) {
 
   function getRowClass(row) {
     if (row?.data) {
-      const classes = [];
+      let classes = "";
       const columnKeys = Object.keys(row.data);
       columnKeys.forEach((key) => {
         const columnDef = filteredColumns.find((el) => {
           return el.field === key;
         });
         if (typeof columnDef?.rowClass === "function") {
-          classes.push(columnDef?.rowClass(row));
+          classes = columnDef?.rowClass(row);
         }
       });
-      return classes.join(" ");
+      return classes.trim();
     }
   }
 

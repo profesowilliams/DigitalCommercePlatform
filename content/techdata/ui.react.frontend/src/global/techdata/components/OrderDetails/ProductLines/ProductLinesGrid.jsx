@@ -184,7 +184,7 @@ function ProductLinesGrid({
       },
       detailRenderer: ({ data }) => {
         return (
-          <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
+          <section className="cmp-product-lines-grid__row">
             <ProductLinesChildGrid
                 gridProps={gridProps}
                 license={agGridLicenseKey}

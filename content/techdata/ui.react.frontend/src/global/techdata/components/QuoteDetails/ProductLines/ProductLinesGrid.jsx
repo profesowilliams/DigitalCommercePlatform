@@ -120,15 +120,9 @@ function ProductLinesGrid({
       width: "150px",
       sortable: false,
       expandable: true,
-      rowClass: ({ node, data }) => {
-        return `cmp-product-lines-grid__row ${
-          !data?.children || data.children.length === 0
-            ? "cmp-product-lines-grid__row--notExpandable"
-            : ""
-        }`;
-      },
+      rowClass: "cmp-product-lines-grid__row",
       detailRenderer: ({ data }) => (
-        <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
+        <section className="cmp-product-lines-grid__row">
           <ProductLinesChildGrid
             gridProps={gridProps}
             license={gridProps.agGridLicenseKey}

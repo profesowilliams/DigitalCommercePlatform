@@ -232,7 +232,7 @@ function ProductLinesGrid({ gridProps, shopDomainPage, data, onQuoteLinesUpdated
       showRowGroup: true,
       detailRenderer: ({ node, api, setValue, data, value }) => {
       return (
-          <section className="cmp-product-lines-grid__row cmp-product-lines-grid__row--expanded">
+          <section className="cmp-product-lines-grid__row">
             <ProductLinesChildGrid
               gridProps={gridProps}
               license={gridProps.agGridLicenseKey}
