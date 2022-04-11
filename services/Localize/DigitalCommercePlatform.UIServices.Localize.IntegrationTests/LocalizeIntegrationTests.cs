@@ -1,4 +1,5 @@
-//2021 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.IntegrationTestUtilities;
 using DigitalFoundation.Common.IntegrationTestUtilities.Extensions;
@@ -14,8 +15,8 @@ namespace DigitalCommercePlatform.UIServices.Localize.IntegrationTests
 {
     public class UISetup : Setup
     {
-        public override void AddClients(ITestHttpClientFactory factory, string serviceName)
-               => factory
+        public override void AddClients(IStartupClientManager manager, string serviceName)
+               => manager
                    .AddClient<ISimpleHttpClient>()
                        .MatchContains($"AppSetting/{serviceName}")
                     .Returns(Defaults.GetAppSettings()

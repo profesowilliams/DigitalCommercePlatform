@@ -1,4 +1,4 @@
-//2022 (c) Tech Data Corporation - All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
 
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails;
@@ -22,8 +22,8 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
 {
     public class UISetup : Setup
     {
-        public override void AddClients(ITestHttpClientFactory factory, string serviceName)
-               => factory
+        public override void AddClients(IStartupClientManager manager, string serviceName)
+               => manager
                    .AddClient<ISimpleHttpClient>()
                        .MatchContains($"AppSetting/{serviceName}")
                     .Returns(Defaults.GetAppSettings()
@@ -68,7 +68,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
                 .MatchContains("details=true")
                 .Returns<ResponseBase<GetProductDetailsHandler.Response>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetProductDetailsHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            var response = await client.GetResult<ResponseBase<GetProductDetailsHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
 
@@ -81,7 +81,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.IntegrationTests
                 .MatchContains("IsSourceDF=false")
                 .Returns<ResponseBase<GetProductCatalogHandler.Response>>();
             var client = fixture.CreateClient().SetDefaultHeaders();
-            var response = await client.RunTest<ResponseBase<GetProductCatalogHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
+            var response = await client.GetResult<ResponseBase<GetProductCatalogHandler.Response>>(c => c.GetAsync(new Uri(input, UriKind.Relative)));
             response.Should().NotBeNull();
         }
     }
