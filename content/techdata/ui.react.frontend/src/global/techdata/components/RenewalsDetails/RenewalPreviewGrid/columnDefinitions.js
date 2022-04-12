@@ -19,7 +19,7 @@ const columnDefs = [
     headerName: "Product details",
     field: "shortDescription",
     sortable: false,
-    width: "300px",
+    width: "500px",
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true
   },
@@ -36,6 +36,12 @@ const columnDefs = [
     field: "unitPrice",
     sortable: false,
     cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
+    headerComponentParams : {
+      template:
+        '<div class="ag-cell-label-container" role="presentation">' +
+        '<span ref="eText" class="ag-header-cell-text" role="columnheader"></span>' +
+        '</div>'
+    },
     autoHeight: true
   },
   {
@@ -44,6 +50,12 @@ const columnDefs = [
     sortable: false,
     width: "100px",
     cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
+    headerComponentParams : {
+      template:
+        '<div class="ag-cell-label-container" role="presentation">' +
+        '<span ref="eText" class="ag-header-cell-text" role="columnheader"></span>' +
+        '</div>'
+    },
     autoHeight: true
   },
   {
@@ -52,6 +64,12 @@ const columnDefs = [
     sortable: false,
     width: "150px",
     cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
+    headerComponentParams : {
+      template:
+        '<div class="ag-cell-label-container" role="presentation">' +
+        '<span ref="eText" class="ag-header-cell-text" role="columnheader"></span>' +
+        '</div>'
+    },
     autoHeight: true
   },
 ];
