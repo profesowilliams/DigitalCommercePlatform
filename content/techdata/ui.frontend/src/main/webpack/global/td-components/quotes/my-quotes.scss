@@ -44,7 +44,7 @@
         width: rem(340px);
         display: flex;
         justify-content: space-between;
-        text-align: center;
+        margin: 0 auto;
         @include mobile {
             margin-bottom: rem(10px);
         }
@@ -52,7 +52,7 @@
 
     &__active-value {
         justify-content: space-between;
-        align-items: start;
+        align-items: center;
         display: flex;
         flex-wrap: wrap;
         width: auto;
