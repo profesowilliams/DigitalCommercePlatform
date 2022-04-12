@@ -393,6 +393,10 @@
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="ResellerId"
                                                                             value="ResellerId"/>
+                                                                        <distiQuoteId
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Disti Quote Id"
+                                                                            value="Id"/>
                                                                     </items>
                                                                 </searchKey>
                                                             <isHouseAccount

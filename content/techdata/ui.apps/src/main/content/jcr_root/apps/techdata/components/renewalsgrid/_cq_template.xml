@@ -254,7 +254,7 @@
         <item8
             jcr:primaryType="nt:unstructured"
             searchKey="Id"
-            searchLabel="Disti Quote Id"
+            searchLabel="Disti Quote Number"
             showIfIsHouseAccount="{Boolean}false"/>
     </searchOptionsList>
 </jcr:root>
