@@ -179,5 +179,34 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Services
             Assert.NotNull(result);
 
         }
+
+        [Fact]
+        public void SortByConfiguration_Test()
+        {
+            //arrange
+
+            Config.Models.Configurations.FindModel criteria = new Config.Models.Configurations.FindModel()
+            {
+                SortBy=new List<string>() { "Created" },
+                ResellerId="1234",
+                Manufacturer="Cisco"
+            };
+            GetConfigurations.Request request =new GetConfigurations.Request()
+            {
+                Criteria= criteria
+            };
+
+
+            Type type;
+            object objType;
+            InitiateConfigService(out type, out objType);
+
+            var SortConfig = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "SortByRequest" && x.IsPrivate);
+
+            var result = SortConfig.Invoke(objType, new object[] { request });
+            Assert.Null(result);
+
+        }
     }
 }

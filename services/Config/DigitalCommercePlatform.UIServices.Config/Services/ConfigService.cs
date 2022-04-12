@@ -197,13 +197,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
 
         private string FindConfigurationUrl(GetConfigurations.Request request, out Models.Configurations.Internal.FindModel appServiceRequest, out Url configurationFindUrl)
         {
-            request.Criteria.SortBy = request.Criteria?.SortBy?.ToLower() switch
-            {
-                "configid" => "Id",
-                "endusername" => "EndUser",
-                "expires" => "Expirydate",
-                _ => "Created",
-            };
+            SortByRequest(request);
 
             if (request.Criteria.Id != null)
             {
@@ -230,7 +224,25 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             configurationFindUrl = _appConfigurationUrl.AppendPathSegment("find").SetQueryParams(appServiceRequest);
             configurationFindUrl += type;
             return configurationFindUrl.ToString();
+
+            
         }
+
+        private void SortByRequest(GetConfigurations.Request request)
+        {
+            string sortValue = request.Criteria?.SortBy?.FirstOrDefault()?.ToLower() switch
+            {
+                "configid" => "Id",
+                "endusername" => "EndUser",
+                "expires" => "Expirydate",
+                _ => "Created",
+            };
+
+            sortValue = sortValue + ":" + request.Criteria?.SortDirection;
+            List<string> listSortby = new List<string>() { sortValue };
+            request.Criteria.SortBy = listSortby;
+        }
+
 
         private void BuildResult<T>(FindResponse<Configuration> result, FindResponse<T> configurationFindResponse) where T : class
         {

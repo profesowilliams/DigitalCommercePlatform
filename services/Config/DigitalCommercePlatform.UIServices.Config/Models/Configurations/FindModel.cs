@@ -19,8 +19,8 @@ namespace DigitalCommercePlatform.UIServices.Config.Models.Configurations
         public DateTime? CreatedFrom { get; set; }
         public DateTime? CreatedTo { get; set; }
         public string EndUser { get; set; }
-        public string SortBy { get; set; }
-        public SortDirection SortDirection { get; set; }
+        public List<string> SortBy { get; set; }
+        public SortDirection? SortDirection { get; set; }
         public string ConfigName { get; set; }
         public string ConfigId { get; set; }
         public IList<string> VendorName { get; set; }

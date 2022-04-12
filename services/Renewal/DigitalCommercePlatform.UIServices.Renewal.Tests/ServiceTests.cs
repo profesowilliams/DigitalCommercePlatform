@@ -329,5 +329,65 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 
             result.Response.FirstOrDefault().VendorLogo.Should().Be("http://testVendor/logoUrl.svg");
         }
+
+
+        private void InitiateRenewalService(out Type type, out object objType)
+        {
+
+            type = typeof(RenewalService);
+            var httpClient = new Mock<IMiddleTierHttpClient>();
+            var helperQueryService = new Mock<IHelperService>();
+            objType = Activator.CreateInstance(type, httpClient.Object, Logger.Object, AppSettings.Object, Mapper, helperQueryService.Object);
+              
+        }
+
+        [Fact]
+        public void SortByRequestSummary_Test()
+        {
+            //arrange
+
+            SearchRenewalSummary.Request request= new SearchRenewalSummary.Request()
+            {
+                SortBy = new List<string>() { "Created" },
+                Details=false,
+                EndUser="SNS"
+            };
+            
+            Type type;
+            object objType;
+            InitiateRenewalService(out type, out objType);
+
+            var SortConfig = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "SortByRequestSummary" && x.IsPrivate);
+
+            var result = SortConfig.Invoke(objType, new object[] { request });
+            Assert.NotNull(request.SortBy);
+
+        }
+
+
+        [Fact]
+        public void SortByRequestDetails_Test()
+        {
+            //arrange
+
+            SearchRenewalDetailed.Request request = new SearchRenewalDetailed.Request()
+            {
+                SortBy = new List<string>() { "Created" },
+                Details = false,
+                EndUser = "SNS"
+            };
+
+            Type type;
+            object objType;
+            InitiateRenewalService(out type, out objType);
+
+            var SortConfig = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "SortByRequestDetails" && x.IsPrivate);
+
+            var result = SortConfig.Invoke(objType, new object[] { request });
+            Assert.NotNull(request.SortBy);
+
+        }
     }
 }

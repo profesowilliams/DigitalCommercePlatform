@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -61,9 +62,10 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
+            List<string> sort= new List<string> { "createdOn","Id" };
             var criteria = new FindModel
             {
-                SortBy = "createdOn",
+                SortBy = sort,
                 SortDirection = SortDirection.asc,
                 Id = string.Empty,
             };
