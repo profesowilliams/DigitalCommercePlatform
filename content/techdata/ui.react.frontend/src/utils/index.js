@@ -102,3 +102,6 @@ export const getUrlParams = () =>
         .map((item) => item.split('='))
     )
   )
+
+export const isObject = (val) =>
+  typeof val === "object" && !Array.isArray(val) && val !== null;

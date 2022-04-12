@@ -5,6 +5,7 @@ import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
 import { formateDatePicker, normalizeErrorCode, stringifyValue } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
+import { isObject } from '../../../../utils';
 
 function Grid(props) {
   let {
@@ -153,8 +154,12 @@ function Grid(props) {
       {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
-        action: function () {          
-          navigator.clipboard.writeText(stringifyValue(params.value));
+        action: function () {
+          if (isObject(params.value)) {
+            navigator.clipboard.writeText(stringifyValue(params.value?.name));
+          } else {
+            navigator.clipboard.writeText(stringifyValue(params.value));
+          }
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
       },
@@ -162,7 +167,9 @@ function Grid(props) {
         name: config?.menuCopyWithHeaders,
         action: function () {
           navigator.clipboard.writeText(
-            `${params.column.colDef.headerName}\n${stringifyValue(params.value) || ''}`
+            `${params.column.colDef.headerName}\n${
+              stringifyValue(params.value) || ""
+            }`
           );
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
