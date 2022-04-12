@@ -19,6 +19,7 @@ const MyQuotes = ({ componentProp }) => {
         labelOpen,
         labelQuoteToOrder,
         labelActiveQuoteValue,
+        daysLabel,
         uiServiceEndPoint
     } = JSON.parse(componentProp);
     const {
@@ -40,20 +41,23 @@ const MyQuotes = ({ componentProp }) => {
     return (
         <section id="cmp-quotes">
             <div className="cmp-quotes">
-                <div className="cmp-quotes__title">{label}</div>
+                <div className="cmp-quotes__title">
+                    <span>{label}</span>
+                    <span className="cmp-quotes__label">{daysLabel}</span>
+                </div>
                 <div className="cmp-quotes__all-myQuotes">
-                <div className="cmp-quotes__sub-title">
-                        {labelConverted}
-                    <div className="cmp-quotes__sub-title--digits">{converted}</div>
-                </div>
-                <div className="cmp-quotes__sub-title">
-                        {labelOpen}
-                    <div className="cmp-quotes__sub-title--digits">{open}</div>
-                </div>
-                <div className="cmp-quotes__sub-title">
-                        {labelQuoteToOrder}
-                    <div className="cmp-quotes__sub-title--digits">{quoteToOrder}</div>
-                </div>
+                    <div className="cmp-quotes__sub-title">
+                            {labelConverted}
+                        <div className="cmp-quotes__sub-title--digits">{converted}</div>
+                    </div>
+                    <div className="cmp-quotes__sub-title">
+                            {labelOpen}
+                        <div className="cmp-quotes__sub-title--digits">{open}</div>
+                    </div>
+                    <div className="cmp-quotes__sub-title">
+                            {labelQuoteToOrder}
+                        <div className="cmp-quotes__sub-title--digits">{quoteToOrder}</div>
+                    </div>
                 </div>
             </div>
             <div className="cmp-quotes">

@@ -3,9 +3,6 @@
 
 .cmp-quotes {
     font-family: 'Open Sans', sans-serif;
-    justify-content: space-between;
-    display: flex;
-    // width: rem(553px);
     height: rem(55px);
     align-items: center;
     margin: 0;
@@ -17,12 +14,17 @@
         font-size: $font-size-small;
         text-transform: uppercase;
         color: get-color(text-mid-gray);
-        width: rem(115px);
         align-self: baseline;
+        display: flex;
+        justify-content: space-between;
         @include mobile {
             width: 100%;
             margin-bottom: rem(10px);
         }
+    }
+    &__label {
+        text-transform: none;
+        white-space: pre;
     }
     &__sub-title {
         font-size: $font-size-xxsmall;
@@ -65,4 +67,9 @@
             font-size: $font-size-custom-medium;
         }
     }
+}
+
+#cmp-quotes {
+    width: 450px;
+    margin: 0 auto;
 }
