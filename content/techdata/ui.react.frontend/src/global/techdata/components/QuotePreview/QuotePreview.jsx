@@ -126,8 +126,8 @@ function QuotePreview(props) {
     
     // DistiBuyMethod value is not “TECH DATA” or  “AVT Technology Solutions LLC”
     const thirdCondition = !compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_TECH_DATA) && !compareBuyMethod(distiBuyMethod, QUOTE_PREVIEW_AVT_TECHNOLOGY);
-    const validations = (firstCondition || secondCondition || thirdCondition);
-    return isDealConfiguration(quoteDetailsResponse.source) || validations;
+    return isDealConfiguration(quoteDetailsResponse.source) && (firstCondition || secondCondition|| thirdCondition);
+    
   }
     
   const getErrorMessage = (errorCode) => {
