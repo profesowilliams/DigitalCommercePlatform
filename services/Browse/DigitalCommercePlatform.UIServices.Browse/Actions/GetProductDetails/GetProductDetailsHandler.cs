@@ -433,7 +433,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Actions.GetProductDetails
                 stock.TotalAvailable = x.Stock.Total.Format();
                 stock.Corporate = x.Stock.Td.Format();
                 stock.VendorDirectInventory = x.Stock.VendorDesignated.HasValue ? x.Stock.VendorDesignated.Format() : null;
-                stock.VendorShipped = flags.DropShip && !flags.Warehouse && !x.Stock.VendorDesignated.HasValue;
+                stock.VendorShipped = flags.DropShip && !flags.Warehouse && x.Stock.VendorDesignated == null;
                 stock.Plants = x.Plants?.Select(p => new PlantModel
                 {
                     Name = p.Stock?.LocationName,
