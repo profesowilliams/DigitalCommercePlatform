@@ -20,6 +20,7 @@
       enctype="${container.enctype}"
       class="cmp-form ${grid.cssClass}"
       data-allowedFileTypes="${serviceData.allowedFileExtensions}"
+      data-excludedChars="${serviceData.textFieldRegexString}"
       data-thresholdFileSize="${serviceData.fileThresholdInMB}">
     <div data-sly-test="${container.errorMessages}"
          data-sly-list.item="${container.errorMessages}"

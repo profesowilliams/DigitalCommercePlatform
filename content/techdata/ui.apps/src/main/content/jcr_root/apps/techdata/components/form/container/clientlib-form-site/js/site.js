@@ -23,7 +23,7 @@
                 label.remove();
             }
         });
-        
+
         var selects = form.getElementsByTagName('input');
         var inputsList = Array.prototype.slice.call(inputs);
         var selects = form.getElementsByTagName('select');
@@ -31,6 +31,7 @@
         var textAreas = form.getElementsByTagName('textarea');
         var textAreasList = Array.prototype.slice.call(textAreas);
         var invalidFileStatus = false;
+        var invalidInputStatus = false;
 
         inputsList.forEach(
             function (i) {
@@ -45,15 +46,15 @@
                                     if(!processFileValidations(i.files[0])) {
                                     invalidFileStatus = true;
                                     return;
-                                } 
+                                }
                         }else {
                                     document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
                                     validateFileOnSubmit();
                                     return;
                             }
-                            
+
                         }
-                        
+
                     } else if (i.type.startsWith("radio") || i.type.startsWith("checkbox")) {
                         if (i.checked) {
                             newData.append(i.name, i.value);
@@ -63,9 +64,14 @@
                     }
 
                     else {
-                        // see if is neccesary to apply the validation for that input 
+                        // see if is neccesary to apply the validation for that input
                         if (i.hasAttribute('required') || i.value !== '' ){
-                            newData.append(i.name, i.value);
+                           if(validateAddress(i, i.value)){
+                                newData.append(i.name, i.value);
+                            } else {
+                               invalidInputStatus = true;
+                                return;
+                            }
                        }
                     }
                 }
@@ -85,20 +91,49 @@
                 newData.append(i.name, i.value);
             }
         );
-        if(invalidFileStatus) return null;
+        if(invalidFileStatus || invalidInputStatus) return null;
         return newData;
     }
 
     function validateFileOnSubmit(){
         $("#formSubmit").click(function(event){
-            event.preventDefault();  
+            event.preventDefault();
         });
     }
-    
+
     function handlerInputFile() {
             let submitButton = document.getElementById("formSubmit");
             submitButton.disabled = false;
         }
+
+    function validateAddress(element,value){
+        handlerInputFile();
+        var formEle = document.getElementById('tdForm');
+        var excludedChars = formEle.getAttribute('data-excludedChars');
+        var originalBorderColor = element.style.borderColor;
+        var parentDiv = element.closest("div");
+        var errorLabel = document.createElement("label");
+        parentDiv.appendChild(errorLabel);
+        errorLabel.style.color = "red";
+        //building regex based on exclude chars
+        const excludeRegex = "/[" + excludedChars + "]/g";
+        var matches = value.match(excludeRegex);
+        if(matches) {
+            parentDiv.childNodes.forEach(child => {
+                if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
+                    parentDiv.removeChild(child);
+                    parentDiv.removeChild(errorLabel);
+                }
+            });
+            errorLabel.innerText = "This field contains Invalid Characters. Please correct";
+            element.focus();
+            setTimeout(function() {
+                element.style.borderColor = originalBorderColor  },
+            10000);
+            return false;
+        }
+        return true;
+    }
 
 
     function processFileValidations(fileEle) {
@@ -160,11 +195,13 @@
             errorLabel.innerText = (parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required");
         }else if (validityState.typeMismatch) {
             errorLabel.innerText = (parentDiv.dataset.cmpConstraintMessage ? parentDiv.dataset.cmpConstraintMessage : "This field content does not match the type of " + type);
+        } else {
+            validateAddress(inputElement, inputElement.value);
         }
         setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
     }
 
-    function initValidation(form) 
+    function initValidation(form)
     {
         var inputs = form.getElementsByTagName('input');
         var selects = form.getElementsByTagName('input');
@@ -241,8 +278,8 @@
                             if (xhr.status === 200) {
                                 console.log("Successfully submitted");
                                 successFlow(redirectSuccess);
-                            } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503) {
-                                console.error("Error in submitting form")
+                            } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503 || xhr.status === 415) {
+                                console.error("Error in submitting form");
                             }
                         };
                         xhr.onreadystatechange = handlePOSTRequest;
