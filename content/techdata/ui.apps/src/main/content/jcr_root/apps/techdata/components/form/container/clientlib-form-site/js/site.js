@@ -88,7 +88,12 @@
 
         textAreasList.forEach(
             function (i) {
-                newData.append(i.name, i.value);
+                if(validateAddress(i, i.value)){
+					newData.append(i.name, i.value);
+                } else {
+                    invalidInputStatus = true;
+                    return;
+                }
             }
         );
         if(invalidFileStatus || invalidInputStatus) return null;
@@ -116,7 +121,7 @@
         parentDiv.appendChild(errorLabel);
         errorLabel.style.color = "red";
         //building regex based on exclude chars
-        const excludeRegex = "/[" + excludedChars + "]/g";
+        const excludeRegex = /[|]/g;
         var matches = value.match(excludeRegex);
         if(matches) {
             parentDiv.childNodes.forEach(child => {
