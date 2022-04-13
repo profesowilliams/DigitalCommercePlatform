@@ -4,6 +4,12 @@ import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import Loader from '../Widgets/Loader';
 import { isNotEmptyValue } from '../../../../utils/utils';
+import {
+  ERROR_CREATE_QUOTE_ERROR_GETTING_DATA,
+  ERROR_CREATE_QUOTE_INVALID_CART,
+  ERROR_CREATE_QUOTE_NO_ITEMS_CART,
+  ERROR_CREATE_QUOTE_SELECT_ITEMS_TO_CONTINUE
+} from '../../../../utils/constants';
 
 const SavedCartSelectItem = ({
   onClick,
@@ -46,7 +52,7 @@ const SavedCartSelectItem = ({
   },[])
   const onNext = async () => {
     if( !selected )
-      return modalEventError(isNotEmptyValue(errorMessage.selectItemToContinue) ? errorMessage.selectItemToContinue : 'Select an item to continue');
+      return modalEventError(isNotEmptyValue(errorMessage.selectItemToContinue) ? errorMessage.selectItemToContinue : ERROR_CREATE_QUOTE_SELECT_ITEMS_TO_CONTINUE);
     try{
       const params = { id: selected.id, isCartName: false }
       setIsLoading(true);
@@ -63,13 +69,13 @@ const SavedCartSelectItem = ({
         if(items && total > 0){
           onClick(selected.id);
         }else{
-          modalEventError(isNotEmptyValue(errorMessage.noItemsInCart) ? errorMessage.noItemsInCart : 'No items in selected cart')
+          modalEventError(isNotEmptyValue(errorMessage.noItemsInCart) ? errorMessage.noItemsInCart : ERROR_CREATE_QUOTE_NO_ITEMS_CART)
         }
       }else{
-        modalEventError(isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : 'Invalid cart')
+        modalEventError(isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : ERROR_CREATE_QUOTE_INVALID_CART)
       }
     }catch(e){
-      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : 'Error getting the data')
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : ERROR_CREATE_QUOTE_ERROR_GETTING_DATA)
     }
   }
   return(

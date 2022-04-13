@@ -12,6 +12,12 @@ import { pushAnalyticsEvent } from './analytics';
 import { getDictionaryValue, isNotEmptyValue } from '../../../../utils/utils';
 import Loader from '../Widgets/Loader';
 import ModalComponent from './ModalComponent';
+import {
+  ERROR_CREATE_QUOTE_EMPTY_CART,
+  ERROR_CREATE_QUOTE_INVALID_CART,
+  ERROR_CREATE_QUOTE_NOT_VALID_CART,
+  ERROR_TITLE_DEFAULT
+} from '../../../../utils/constants';
 
 const fixedPayload = { 
     "createFromId": "96722368",
@@ -47,7 +53,7 @@ const QuoteCreate = ({
   const [isLoading, setIsLoading] = useState(false);
   const [modal, setModal] = useState(null);
   const methods = optionsList;
-  const titleErrorModal = isNotEmptyValue(errorMessage.errorModalTitle) ? errorMessage.errorModalTitle : 'Error!!!';
+  const titleErrorModal = isNotEmptyValue(errorMessage.errorModalTitle) ? errorMessage.errorModalTitle : ERROR_TITLE_DEFAULT;
 
   /**
    * Function that execute and set the message for the error modal
@@ -66,10 +72,10 @@ const QuoteCreate = ({
         return { isError: false, message: '' };
       }else{
         setCreateQuoteButtonEnabled(false);
-        return { isError: true, message: 'The cart is empty' };
+        return { isError: true, message: isNotEmptyValue(errorMessage.emptyCart) ? errorMessage.emptyCart : ERROR_CREATE_QUOTE_EMPTY_CART };
       }
     }else{
-      return { isError: true, message: 'Not a valid cart available' };
+      return { isError: true, message: isNotEmptyValue(errorMessage.notValidCart) ? errorMessage.notValidCart : ERROR_CREATE_QUOTE_NOT_VALID_CART };
     }
   }
   const goToPricing = (id,config={}) => {
@@ -93,7 +99,7 @@ const QuoteCreate = ({
         setStep(1);
       }
     }else{
-      modalEventError(isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : 'Invalid cart, try again please')
+      modalEventError(isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : ERROR_CREATE_QUOTE_INVALID_CART)
     }
   }
   

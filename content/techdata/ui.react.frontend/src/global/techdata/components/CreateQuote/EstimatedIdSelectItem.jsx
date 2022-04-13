@@ -4,6 +4,12 @@ import Button from '../Widgets/Button';
 import { usGet } from '../../../../utils/api';
 import Loader from '../Widgets/Loader';
 import { isNotEmptyValue } from '../../../../utils/utils';
+import {
+  ERROR_CREATE_QUOTE_ERROR_GETTING_CART,
+  ERROR_CREATE_QUOTE_INVALID_ESTIMATE_ID,
+  ERROR_CREATE_QUOTE_SELECT_ITEMS_TO_CONTINUE,
+  ERROR_TITLE_DEFAULT
+} from '../../../../utils/constants';
 
 const EstimatedIdSelectItem = ({
   onClick,
@@ -48,7 +54,7 @@ const EstimatedIdSelectItem = ({
   },[])
   const onNext = async () => {
     if( !selected )
-      return modalEventError(isNotEmptyValue(errorMessage.selectItemToContinue) ? errorMessage.selectItemToContinue :  'Select an item to continue');
+      return modalEventError(isNotEmptyValue(errorMessage.selectItemToContinue) ? errorMessage.selectItemToContinue :  ERROR_CREATE_QUOTE_SELECT_ITEMS_TO_CONTINUE);
     try{
       const newEndpoint = estimatedIddetailsEndpoint.replace('{selected-id}', selected.id);
       setIsLoading(true);
@@ -58,7 +64,7 @@ const EstimatedIdSelectItem = ({
         }
       });
       setIsLoading(false);
-      if (isError) return modalEventError(isNotEmptyValue(errorMessage.errorModalTitle) ? errorMessage.errorModalTitle : 'Error');
+      if (isError) return modalEventError(isNotEmptyValue(errorMessage.errorModalTitle) ? errorMessage.errorModalTitle : ERROR_TITLE_DEFAULT);
       if( isValid ){
         onClick(selected.id, {
           redirectToPreview:true,
@@ -67,10 +73,10 @@ const EstimatedIdSelectItem = ({
           }
         });
       }else{
-        modalEventError(isNotEmptyValue(errorMessage.invalidEstimatedId) ? errorMessage.invalidEstimatedId : 'Invalid estimated ID');
+        modalEventError(isNotEmptyValue(errorMessage.invalidEstimatedId) ? errorMessage.invalidEstimatedId : ERROR_CREATE_QUOTE_INVALID_ESTIMATE_ID);
       }
     }catch(e){
-      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : 'Error getting the cart');
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : ERROR_CREATE_QUOTE_ERROR_GETTING_CART);
     }
   }
   return(

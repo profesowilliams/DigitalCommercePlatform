@@ -63,3 +63,15 @@ export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';
 
 export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to access this information';
 export const ERROR_TITLE_DEFAULT = 'Error';
+
+// Create Quote
+export const ERROR_CREATE_QUOTE_EMPTY_CART = 'The cart is empty';
+export const ERROR_CREATE_QUOTE_NOT_VALID_CART = 'Not a valid cart available';
+export const ERROR_CREATE_QUOTE_INVALID_CART = 'Invalid cart, try again please';
+export const ERROR_CREATE_QUOTE_NOT_VALID_ESTIMATE_ID = 'Not a valid estimated ID';
+export const ERROR_CREATE_QUOTE_ERROR_GETTING_DATA = 'Error getting data';
+export const ERROR_CREATE_QUOTE_NO_ITEMS_CART = 'No items in selected cart';
+export const ERROR_CREATE_QUOTE_SELECT_ITEMS_TO_CONTINUE = 'Select an item to continue';
+export const ERROR_CREATE_QUOTE_INVALID_ESTIMATE_ID = 'Invalid estimated ID';
+export const ERROR_CREATE_QUOTE_ERROR_GETTING_CART = 'Error getting the cart';
+export const ERROR_CREATE_QUOTE_ERROR_IN_PRICE = 'Error in pricing conditions';

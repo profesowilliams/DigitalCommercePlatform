@@ -5,6 +5,10 @@ import { get } from '../../../../utils/api';
 import WidgetTitle from '../Widgets/WidgetTitle';
 import Loader from '../Widgets/Loader';
 import { isNotEmptyValue } from '../../../../utils/utils';
+import {
+  ERROR_CREATE_QUOTE_ERROR_GETTING_DATA,
+  ERROR_CREATE_QUOTE_ERROR_IN_PRICE
+} from '../../../../utils/constants';
 
 const Pricing = ({
   createQuote,
@@ -29,7 +33,7 @@ const Pricing = ({
         }
       });
       setIsLoading(false);
-      if (isError) modalEventError(isNotEmptyValue(errorMessage.errorInPrice) ? errorMessage.errorInPrice : 'Error in pricing conditions');
+      if (isError) modalEventError(isNotEmptyValue(errorMessage.errorInPrice) ? errorMessage.errorInPrice : ERROR_CREATE_QUOTE_ERROR_IN_PRICE);
       if( items ){
         const newItems = items.map(item => ({label: item.key, key: item.value}) );
         const item = newItems.filter(item => item.label === 'Commercial(Non-Govt)');
@@ -42,7 +46,7 @@ const Pricing = ({
     try{
       getData();
     }catch{
-      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : 'error getting data');
+      modalEventError(isNotEmptyValue(errorMessage.errorGettingCart) ? errorMessage.errorGettingCart : ERROR_CREATE_QUOTE_ERROR_GETTING_DATA);
     }
   },[])
   return (
