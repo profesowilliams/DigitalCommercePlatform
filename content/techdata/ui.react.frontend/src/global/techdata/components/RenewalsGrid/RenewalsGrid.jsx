@@ -74,8 +74,10 @@ function RenewalsGrid(props) {
   }
 
   const onSortChanged = (evt) => {
-    const sortModel = evt.api.getSortModel();
-    hasSortChanged.current = sortModel.length === 1 ? { sortData: sortModel[0] } : false;
+    const sortModelList = evt.columnApi.getColumnState();
+    const sortWithDirectionList = sortModelList.filter(o => !!o.sort);
+    const sortedModel = sortWithDirectionList[0]; 
+    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1) {
       pushEvent(ANALYTICS_TYPES.events.click, {

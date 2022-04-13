@@ -85,7 +85,7 @@ export function isFilterPostRequest(hasSortChanged,isFilterDataPopulated){
 export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp}){
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)) {
         const { colId, sort } = hasSortChanged.current?.sortData;  
-        const params = { ...optionFieldsRef.current, sortBy: colId, sortDirection: sort };
+        const params = { ...optionFieldsRef.current, sortBy: [colId], sortDirection: sort };
         if (customPaginationRef.current?.pageNumber !== 1) {
           params.PageNumber = customPaginationRef.current?.pageNumber;
         }
