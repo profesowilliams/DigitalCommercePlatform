@@ -121,7 +121,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
             var parentNumber = 0.0;
 
-            foreach (var item in quotePreviewModel.QuoteDetails.Items)
+            foreach (var item in quotePreviewModel.QuoteDetails.Items?.OrderBy(i => _helperQueryService.NullableTryParseDouble(i.Id)).ToList())
             {
                 if (!useId)
                 {
