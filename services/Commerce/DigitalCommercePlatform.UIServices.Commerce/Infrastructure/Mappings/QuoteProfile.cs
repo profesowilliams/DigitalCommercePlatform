@@ -65,7 +65,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             .ForPath(dest => dest.Reseller.Name, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Name : string.Empty))
             .ForPath(dest => dest.Reseller.Email, opt => opt.MapFrom(src => src.Reseller.Contact != null ? src.Reseller.Contact.FirstOrDefault().Email : string.Empty))
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
-            .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom<QuoteReferenceResolver>())
             .ForMember(dest => dest.EndUserPO, opt => opt.MapFrom(src => src.EndUserPO))
             .ForMember(dest => dest.CustomerPO, opt => opt.MapFrom(src => src.CustomerPO))
             .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src.Orders))
@@ -90,7 +90,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
             CreateMap<QuoteModel, QuotesForGridModel>()
              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Source.ID))
              .ForMember(dest => dest.CheckoutSystem, opt => opt.MapFrom<CheckOutResolver>())
-             .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom(src => src.Description))
+             .ForMember(dest => dest.QuoteReference, opt => opt.MapFrom<QuoteGridReferenceResolver>())
              .ForMember(dest => dest.Vendor, opt => opt.MapFrom<VendorResolver>())
              .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created))
              .ForMember(dest => dest.Expires, opt => opt.MapFrom(src => src.Expiry))
@@ -185,9 +185,29 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Mappings
                .ForMember(dest => dest.SubTotalFormatted, opt => opt.MapFrom(src => string.Format("{0:N2}", src.TotalCost)))
                .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency == null ? "USD":src.Currency))
                .ForPath(dest => dest.Items, opt => opt.MapFrom(src => src.Items))
-               //.ForMember(dest => dest.EndUser, opt => opt.MapFrom(src => src.EndUser))
-               //.ForMember(dest => dest.Reseller, opt => opt.MapFrom(src => src.Reseller))
                ;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class QuoteReferenceResolver : IValueResolver<QuoteModel, QuoteDetails, string>
+    {
+        public string Resolve(QuoteModel source, QuoteDetails destination, string destMember, ResolutionContext context)
+        {
+            var quoteReference = source.Attributes.Where(n => n.Name.Equals("QUOTEREFERENCE", StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.Value;
+            quoteReference = string.IsNullOrWhiteSpace(quoteReference) ? source.Description : quoteReference;
+            return quoteReference;
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    public class QuoteGridReferenceResolver : IValueResolver<QuoteModel, QuotesForGridModel, string>
+    {
+        public string Resolve(QuoteModel source, QuotesForGridModel destination, string destMember, ResolutionContext context)
+        {
+            var quoteReference = source.Attributes.Where(n => n.Name.Equals("QUOTEREFERENCE", StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.Value;
+            quoteReference = string.IsNullOrWhiteSpace(quoteReference) ? source.Description : quoteReference;
+            return quoteReference;
         }
     }
 

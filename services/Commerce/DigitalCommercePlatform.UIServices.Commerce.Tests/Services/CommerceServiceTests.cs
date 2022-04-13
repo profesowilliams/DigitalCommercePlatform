@@ -1066,6 +1066,76 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         [Theory]
         [AutoDomainData]
+        public void MapQuoteReference_Test()
+        {
+            //arrange
+            VendorReferenceModel source = new VendorReferenceModel()
+            {
+                Type = "Deal",
+                Value = "513465"
+            };
+            QuotePreview quotePreview = new QuotePreview()
+            {
+                Source = source,
+                BuyMethod = "tdavnet69",
+                Currency = "USD",
+                Id = "123",
+                IsExclusive = true,
+                CustomerBuyMethod = "AVT",
+                QuoteReference = "This is Reference"
+            };
+
+
+            AttributeDto attribute = new AttributeDto()
+            {
+                Name = "DEALIDENTIFIER",
+                Value = "34891"
+            };
+            AttributeDto attribute1 = new AttributeDto()
+            {
+                Name = "ORIGINALESTIMATEID",
+                Value = "528954"
+            };
+            AttributeDto attribute2 = new AttributeDto()
+            {
+                Name = "Billing",
+                Value = "4560981"
+            };
+            List<AttributeDto> lstAttribute = new List<AttributeDto>() { attribute, attribute1, attribute2 };
+
+            QuotePreviewModel quotePreviewModel = new QuotePreviewModel()
+            {
+                QuoteDetails = quotePreview
+            };
+
+            CreateQuoteModel quoteModel = new CreateQuoteModel()
+            {
+                Attributes = lstAttribute,
+                SalesOrg = "0100",
+                Creator = "516514",
+                Reseller = new Models.Quote.Quote.Internal.ResellerModel { Id = "123123", Name = "Nilesh Madhavi" },
+                EndUser = null,
+                VendorReference = null,
+                Items = null
+            };
+
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var response = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "MapQuoteReference" && x.IsPrivate);
+
+            var result = response.Invoke(objType, new object[] { quotePreviewModel, quoteModel });
+
+            //Assert 
+            Assert.NotNull(quoteModel.Attributes.Where(n => n.Name.Equals("QUOTEREFERENCE", StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.Value);
+
+        }
+
+        [Theory]
+        [AutoDomainData]
         public void QuoteGeneralInformation_TestDeal()
         {
             //arrange
@@ -1081,7 +1151,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Currency = "USD",
                 Id = "123",
                 IsExclusive = true,
-                CustomerBuyMethod = "AVT"
+                CustomerBuyMethod = "AVT",
+                QuoteReference = "This is Reference"
             };
 
 

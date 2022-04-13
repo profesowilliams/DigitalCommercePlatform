@@ -354,7 +354,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                     Type = sourceType, // Expected Values : Estimate / Renewal / VendorQuote / ""
                     Value = input.QuoteDetails.Source.Value ?? string.Empty //
                 };
+
                 createModelFrom.Attributes = new List<AttributeDto> { vendorAtribue };
+            }
+            MapQuoteReference(input, createModelFrom);
+        }
+
+        private void MapQuoteReference(QuotePreviewModel input, CreateQuoteModel createModelFrom)
+        {
+            if (!string.IsNullOrWhiteSpace(input.QuoteDetails.QuoteReference))
+            {
+                var quoteReference = BuildAttribute(input.QuoteDetails.QuoteReference, "QUOTEREFERENCE");
+                if (createModelFrom.Attributes == null || createModelFrom.Attributes.Count == 0)
+                    createModelFrom.Attributes = new List<AttributeDto> { quoteReference };
+                else
+                    createModelFrom.Attributes.Add(quoteReference);
             }
         }
 
@@ -709,11 +723,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 };
                 return response;
             }
-            catch(RemoteServerHttpException ex)
+            catch (RemoteServerHttpException ex)
             {
-                if(ex.Code==HttpStatusCode.PreconditionRequired)
+                if (ex.Code == HttpStatusCode.PreconditionRequired)
                 {
-                    throw new UIServiceException(" - Verify your Vendor Connection.",428);
+                    throw new UIServiceException(" - Verify your Vendor Connection.", 428);
                 }
                 else
                 {
