@@ -36,6 +36,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Dto.Product
         public string PurchaserPhone { get; set; }
         public string SerialNumberProfile { get; set; }
         public string SubstituteMaterialNumber { get; set; }
+        public string GrossWeight { get; set; }
         public VendorDto Vendor { get; set; }
         public StockDto Stock { get; set; }
         public IEnumerable<PlantDto> Plants { get; set; }
