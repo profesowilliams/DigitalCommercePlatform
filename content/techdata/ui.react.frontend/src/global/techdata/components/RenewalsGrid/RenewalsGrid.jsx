@@ -8,13 +8,13 @@ import VerticalSeparator from "../Widgets/VerticalSeparator";
 import CustomRenewalPagination from "./CustomRenewalPagination";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 import RenewalDetailRenderers from "./RenewalDetailRenderers";
-import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, preserveFilteringOnPagination, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
+import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, nonFilteredOnSorting, preserveFilteringOnPagination, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
 
 function RenewalsGrid(props) {
-  const { onAfterGridInit, onQueryChanged, requestInterceptor } =
+  const { onAfterGridInit, onQueryChanged } =
     useGridFiltering();
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
@@ -59,7 +59,7 @@ function RenewalsGrid(props) {
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp});
     } else {
-      response = await requestInterceptor(request);
+      response = await nonFilteredOnSorting({request, hasSortChanged});
     }  
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;

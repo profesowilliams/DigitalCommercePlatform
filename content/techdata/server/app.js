@@ -3543,8 +3543,8 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
 
 function sortRenewalObjects(objArray, query) {
   query.SortBy = query.SortBy.trim().split(',').map(prop => {
-    var columnDef = prop.trim().split(' ');
-    if ((columnDef.length === 1 && query.SortDirection.toLowerCase() === 'asc') || (columnDef.length === 2 && columnDef[1].toLowerCase() === 'asc')) {
+    var columnDef = prop.trim().split(':');
+    if ((columnDef.length === 1) || (columnDef.length === 2 && columnDef[1].toLowerCase() === 'asc')) {
       columnDef = [columnDef, "asc"];
     } else {
       columnDef = [columnDef, "desc"];

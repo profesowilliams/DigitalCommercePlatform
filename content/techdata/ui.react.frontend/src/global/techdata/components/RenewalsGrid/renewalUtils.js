@@ -1,4 +1,4 @@
-import { usPost } from "../../../../utils/api";
+import { usGet, usPost } from "../../../../utils/api";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
 export function mapServiceData(response) {
@@ -58,9 +58,8 @@ export function priceDescendingByDefaultHandle(sortingFields, mappedResponse) {
         { ...secondLevelOptions },
     ];
     const query = {
-        SortBy: `${sortModel?.[0]?.colId ?? "id"} ${sortModel?.[0]?.sort ?? ""}${sortModel?.[1] ? "," : ""
-            } ${sortModel?.[1]?.colId ?? ""} ${sortModel?.[1]?.sort ?? ""}`,
-        SortDirection: sortModel?.[0]?.sort ?? "",
+        SortBy: `${sortModel?.[0]?.colId ?? "id"}:${sortModel?.[0]?.sort ?? ""}${sortModel?.[1] ? "," : ""
+            }${sortModel?.[1]?.colId ?? ""}:${sortModel?.[1]?.sort ?? ""}`
     };
     const multiSorting =
         sortRenewalObjects(mappedResponse?.data?.content?.items, query) ?? 0;
@@ -85,7 +84,7 @@ export function isFilterPostRequest(hasSortChanged,isFilterDataPopulated){
 export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp}){
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)) {
         const { colId, sort } = hasSortChanged.current?.sortData;  
-        const params = { ...optionFieldsRef.current, sortBy: [colId], sortDirection: sort };
+        const params = { ...optionFieldsRef.current, sortBy: [`${colId}:${sort}`] };
         if (customPaginationRef.current?.pageNumber !== 1) {
           params.PageNumber = customPaginationRef.current?.pageNumber;
         }
@@ -93,6 +92,13 @@ export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopu
         return result
       }
     return false
+}
+export async function nonFilteredOnSorting({request, hasSortChanged}){
+    var url = request.url.split('&');
+    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0),1,url.filter(e => e.indexOf('SortBy=') === 0)[0] + ':' + (hasSortChanged.current?.sortData?.sort ?? url.filter(e => e.indexOf('SortDirection=') === 0)[0].split('=')[1] ?? ''));
+    url.splice(url.findIndex(e => e.indexOf('SortDirection=') === 0),1);
+
+    return await usGet(url.join('&'));
 }
 
 export function setPaginationData(mappedResponse) {
