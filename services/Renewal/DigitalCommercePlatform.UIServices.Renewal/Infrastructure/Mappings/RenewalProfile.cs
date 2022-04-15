@@ -1,8 +1,6 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
 using AutoMapper;
-using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal;
-using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals.Internal;
 using System;
 using System.Diagnostics.CodeAnalysis;

@@ -1,4 +1,4 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals.Internal;
 using DigitalFoundation.App.Services.Renewal.Dto.CoreQuote.Internal;
 using System;
@@ -29,5 +29,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Dto.Renewals
         public bool? Incumbent { get; set; }
         public decimal? TotalReinstatementFeeCost { get; set; }
         public decimal? TotalReinstatementFeeSell { get; set; }
+        public string PreviousEndUserPO { get; set; }
+        public string PreviousResellerPO { get; set; }
     }
 }

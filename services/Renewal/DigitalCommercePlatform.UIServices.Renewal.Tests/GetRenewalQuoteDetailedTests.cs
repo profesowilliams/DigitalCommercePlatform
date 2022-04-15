@@ -1,12 +1,8 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-
-using AutoMapper;
-using DigitalCommercePlatform.UIServices.Renewal.AutoMapper;
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.TestUtilities;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -19,16 +15,13 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
 {
     public class GetRenewalQuoteDetailedTests
     {
-        private static IMapper Mapper => new MapperConfiguration(config => config.AddProfile(new RenewalsMapper())).CreateMapper();
-        private static Mock<ILogger<GetRenewalQuoteDetailedHandler>> Logger => new();
-
         [Theory]
         [AutoDomainData]
         public async Task OnHandle_ReturnsNull_NullExpected(Request request)
         {
             // arrange
             var coreQuoteClient = new Mock<IRenewalService>();
-            var handler = new GetRenewalQuoteDetailedHandler(coreQuoteClient.Object, Mapper, Logger.Object);
+            var handler = new GetRenewalQuoteDetailedHandler(coreQuoteClient.Object);
 
             // act
             var result = await handler.Handle(request, new CancellationToken());
@@ -45,7 +38,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var coreQuoteClient = new Mock<IRenewalService>();
             coreQuoteClient.Setup(x => x.GetRenewalsQuoteDetailedFor(It.IsAny<Request>()))
                 .ReturnsAsync(returnedData);
-            var handler = new GetRenewalQuoteDetailedHandler(coreQuoteClient.Object, Mapper, Logger.Object);
+            var handler = new GetRenewalQuoteDetailedHandler(coreQuoteClient.Object);
 
             // act
             var result = await handler.Handle(request, new CancellationToken());
@@ -65,7 +58,7 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Tests
             var coreQuoteClient = new Mock<IRenewalService>();
             coreQuoteClient.Setup(x => x.GetRenewalsQuoteDetailedFor(It.IsAny<Request>()))
                 .ReturnsAsync(returnedData);
-            var handler = new GetRenewalQuoteDetailedHandler(coreQuoteClient.Object, Mapper, Logger.Object);
+            var handler = new GetRenewalQuoteDetailedHandler(coreQuoteClient.Object);
 
             // act - assert
             Assert.ThrowsAsync<NullReferenceException>(() => handler.Handle(null, new CancellationToken()));

@@ -1,11 +1,9 @@
-﻿//2021 (c) Tech Data Corporation -. All Rights Reserved.
-using AutoMapper;
+﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Renewal.Models.Renewals;
 using DigitalCommercePlatform.UIServices.Renewal.Services;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -32,14 +30,10 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
         public class GetRenewalQuoteDetailedHandler : IRequestHandler<Request, ResponseBase<Response>>
         {
             private readonly IRenewalService _renewalsService;
-            private readonly IMapper _mapper;
-            private readonly ILogger<GetRenewalQuoteDetailedHandler> _logger;
 
-            public GetRenewalQuoteDetailedHandler(IRenewalService renewalsService, IMapper mapper, ILogger<GetRenewalQuoteDetailedHandler> logger)
+            public GetRenewalQuoteDetailedHandler(IRenewalService renewalsService)
             {
                 _renewalsService = renewalsService;
-                _mapper = mapper;
-                _logger = logger;
             }
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
