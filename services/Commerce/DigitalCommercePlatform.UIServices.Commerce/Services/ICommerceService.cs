@@ -25,5 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request);
         Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request);
+        Task<bool> IsValidDealForQuote(ValidateQuoteForOrder.Request request);
     }
 }

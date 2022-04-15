@@ -83,9 +83,9 @@ namespace DigitalCommercePlatform.UIServices.Config.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("deal")]
-        public async Task<ActionResult> GetDeal([FromQuery] string dealId, string vendorId)
+        public async Task<ActionResult> GetDeal([FromQuery] string id, bool details=true)
         {
-            var data = new GetDeal.Request(dealId, vendorId);
+            var data = new GetDeal.Request(id, details);
             var response = await Mediator.Send(data).ConfigureAwait(false);
             return Ok(response);
         }

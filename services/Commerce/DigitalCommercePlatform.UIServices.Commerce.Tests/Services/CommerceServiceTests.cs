@@ -673,19 +673,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         // Public methods Unit test cases
+
+        [Theory]
+        [AutoDomainData]
+        public async Task IsValidDealForQuote(ValidateQuoteForOrder.Request request)
+        {
+            // Act
+            var result = await _commerceService.IsValidDealForQuote(request);
+            // Assert
+            Assert.False(result);
+        }
+
         [Theory]
         [AutoDomainData]
         public async Task GetQuote(GetQuote.Request request)
         {
-
-
             // Act
             var result = await _commerceService.GetQuote(request);
             // Assert
             Assert.Null(result);
         }
-
-
 
         [Theory]
         [AutoDomainData]
@@ -867,6 +874,74 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
             //Act
             var result = imageProductModel.Invoke(objType, new object[] { id, attributeName });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async void ValidateRemainingQuantityOfDeal_Test()
+        {
+            //arrange
+            ItemModel item = new ItemModel
+            {
+                Product = new List<ProductModel> { new ProductModel { Type = "TECHDATA", Id = "00000011675600" } },
+                Quantity = 1,
+            };
+            QuoteModel quote = new()
+            {
+                Items = new List<ItemModel> { item },
+                Source = new SourceModel { ID = "121793216" }
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var isValidDeal = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "ValidateRemainingQuantityOfDeal" && x.IsPrivate);
+
+            //Act
+            var  task = (Task)isValidDeal.Invoke(objType, new object[] { quote, "1003174" });
+            var result = task.GetType().GetProperty("Result").GetValue(task);
+
+            Assert.True((bool)result);
+        }
+
+        [Fact]
+        public void TdPartNumber_Test()
+        {
+            //arrange
+            ItemModel item = new ItemModel
+            {
+                Product = new List<ProductModel> { new ProductModel { Type = "TECHDATA", Id = "00000011675600" } },
+                Quantity = 1,
+            };
+
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var tdPartModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "TdPartNumber" && x.IsPrivate);
+
+            //Act
+            var result = tdPartModel.Invoke(objType, new object[] { item });
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void GetQuoteDetailsForDeal_Test()
+        {
+            //arrange
+            ValidateQuoteForOrder.Request request = new ValidateQuoteForOrder.Request("1234344", true);
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var tdPartModel = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetQuoteDetailsForDeal" && x.IsPrivate);
+
+            //Act
+            var result = tdPartModel.Invoke(objType, new object[] { request });
             Assert.NotNull(result);
         }
 
@@ -1291,7 +1366,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             };
             Line item = new Line()
             {
-                Annuity=annuity
+                Annuity = annuity
 
             };
 
@@ -1363,7 +1438,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Line item = new Line()
             {
                 Annuity = annuity,
-                ClassificationType="XAAS"
+                ClassificationType = "XAAS"
             };
 
             Type type;

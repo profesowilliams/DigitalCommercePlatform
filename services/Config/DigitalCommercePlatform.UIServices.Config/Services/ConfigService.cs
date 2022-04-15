@@ -12,6 +12,7 @@ using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations.Internal;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.SPA;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
@@ -111,37 +112,28 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<DealsDetailModel> GetDealDetails(GetDeal.Request request)
+        public async Task<SpaDetailModel> GetDealDetails(GetDeal.Request request)
         {
-            var lstMaterials = new List<MaterialInformation>();
-            for (int i = 1; i < 16; i++)
+            try
             {
-                MaterialInformation material = new();
-                material.Allowance = i % 2 == 0 ? GetRandomNumber(50, 10000).ToString() + ".65" : GetRandomNumber(10, 40).ToString() + ".36";
-                material.AllowanceType = i % 2 == 0 ? "% OFF LIST PRICE" : i % 5 == 0 ? "$ OFF LIST PRICE" : "";
-                material.MaximumQuantityPerCustomer = GetRandomNumber(50, 1000);
-                material.RemainingQuantity = material.MaximumQuantityPerCustomer - GetRandomNumber(0, 25);
-                material.HasErrors = false;
-                material.MinimumQuantity = GetRandomNumber(0, 5).ToString();
-                material.MaximumQuantity = 2000;
-                material.Description = "ransition Networks Stand-Alone 10...";
-                material.VendorPartNumber = "SBFTF1011-105-NA";
-                material.TDPartNumber = "1227948" + i;
-                lstMaterials.Add(material);
+                var requestUrl = _appSpaUrl.BuildQuery(request);
+                SpaDetails.Response response = new();
+                var spaResponse = await _middleTierHttpClient.GetAsync<List<Models.SPA.SpaDetailModel>>(requestUrl).ConfigureAwait(false);
+                if (spaResponse != null && spaResponse.Count > 0)
+                    return spaResponse.FirstOrDefault();
+                else
+                    throw new UIServiceException("SPA / Deal not Found Id " + request.Id, 404);
             }
-            var objResponse = new DealsDetailModel
+            catch (RemoteServerHttpException ex)
             {
-                EndUserName = "OPEN TO ALL END USERS",
-                Vendor = "ERGOTRON INC",
-                VendorBidNumber = "3072898",
-                Reference = "0002989968",
-                ReferenceNumber = "028",
-                TotalResultCount = lstMaterials.Count(),
-                Prodcuts = lstMaterials,
-                InvalidTDPartNumbers = null
-            };
-
-            return await Task.FromResult(objResponse);
+                _logger.LogError(ex, "Exception at : " + nameof(ConfigService));
+                throw new UIServiceException(ex.Message + " - requested spa / deal Id : " + request.Id , (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at Getting Deal details : " + nameof(ConfigService));
+                throw ex;
+            }
         }
 
         public static int GetRandomNumber(int min, int max)
@@ -225,7 +217,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
             configurationFindUrl += type;
             return configurationFindUrl.ToString();
 
-            
+
         }
 
         private void SortByRequest(GetConfigurations.Request request)

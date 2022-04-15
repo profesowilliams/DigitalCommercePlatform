@@ -4,6 +4,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
+using DigitalCommercePlatform.UIServices.Commerce.Models.SPA;
 using DigitalFoundation.Common.Features.Client.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -27,5 +28,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         string RenderErrorMessage(RemoteServerHttpException ex,string errorFor);
         Task<QuotePreview> MapAnnuityForQuotePreviw(IEnumerable<DetailedDto> data, QuotePreview quotePreview);
         double? NullableTryParseDouble(string request);
+        Task<SpaDetailModel> GetDealDetails(SpaFindModel request);
     }
 }

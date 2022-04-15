@@ -54,9 +54,6 @@ namespace DigitalCommercePlatform.UIServices.Config.Infrastructure.Mappings.Deal
             CreateMap<AppServiceDeal, Deal>()
                 .ForMember(d => d.Quotes, o => o.Ignore());
 
-            CreateMap<DealsDetailModel, GetDeal.Response>()
-                .ForMember(dest => dest.Deals, opt => opt.MapFrom(src => src));
-
             CreateMap<DealsBase, Deal>()
                 .ForPath(d => d.DealId, o => o.MapFrom(s => s.Source.Id))
                 .ForMember(d => d.Description, o => o.MapFrom(s => s.Description))

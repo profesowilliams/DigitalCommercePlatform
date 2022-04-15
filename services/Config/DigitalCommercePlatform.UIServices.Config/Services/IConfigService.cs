@@ -9,7 +9,9 @@ using DigitalCommercePlatform.UIServices.Config.Actions.Refresh;
 using DigitalCommercePlatform.UIServices.Config.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Config.Models.Configurations;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.SPA;
 using DigitalFoundation.Common.Features.Contexts.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DigitalCommercePlatform.UIServices.Config.Services
@@ -19,7 +21,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Services
         Task<FindResponse<Configuration>> FindConfigurations(GetConfigurations.Request request);
         Task<FindResponse<Deal>> GetDeals(GetDeals.Request request);
         Task<FindResponse<DealsBase>> GetDealsFor(GetDealsFor.Request request);
-        Task<DealsDetailModel> GetDealDetails(GetDeal.Request request);
+        Task<SpaDetailModel> GetDealDetails(GetDeal.Request request);
         Task<bool> EstimationValidate(EstimationValidate.Request request);
         Task<string> GetPunchOutUrlAsync(PunchInModel request);
         Task<RefreshData.Response> RefreshVendor(RefreshData.Request request);

@@ -10,6 +10,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Commerce.Models.SPA;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalCommercePlatform.UIServices.Common.Cart.Models.Cart;
 using DigitalFoundation.Common.Extensions;
@@ -79,67 +80,26 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return response;
         }
 
-        private void MapEndUserName(QuoteModel response)
+        public async Task<bool> IsValidDealForQuote(ValidateQuoteForOrder.Request request)
         {
-            if ((response?.EndUser != null) && (bool)response?.EndUser?.Contact?.Any())
+            QuoteModel quoteDetail = await GetQuoteDetailsForDeal(request);
+            if (quoteDetail == null || quoteDetail.Source == null) return false;
+
+            var dealId = quoteDetail.Attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.Value; // need to verify
+            if (string.IsNullOrWhiteSpace(dealId))
+                return true;
+            else
             {
-                response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name ?? "";
-                response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.EndUser.Contact.FirstOrDefault().Name;
-            }
-        }
-        private void MapResellerName(QuoteModel response)
-        {
-            if ((response?.Reseller != null) && (response?.Reseller?.Contact.Count() != 0))
-            {
-                response.Reseller.Contact.FirstOrDefault().Name = response.Reseller.Contact.FirstOrDefault().Name ?? "";
-                response.Reseller.Contact.FirstOrDefault().Name = (bool)response.Reseller.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.Reseller.Contact.FirstOrDefault().Name;
+                return await ValidateRemainingQuantityOfDeal(quoteDetail, dealId);
             }
         }
 
-        private QuoteModel MapAnnuity(QuoteModel input)
-        {
-            if (input.Items.Any())
-            {
-                foreach (var line in input.Items)
-                {
-                    BuildAnnuity(line);
-                }
-            }
-            return input;
-        }
-
-        private void BuildAnnuity(ItemModel line)
-        {
-            try
-            {
-                DateTime? startDate; DateTime sdt;
-                startDate = DateTime.TryParse(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, out sdt) ? sdt : null;
-
-                DateTime? endDate; DateTime edt;
-                endDate = DateTime.TryParse(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, out edt) ? edt : null;
-
-                line.Annuity = new Annuity
-                {
-                    BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault()?.Value ?? string.Empty,
-                    StartDate = startDate,
-                    EndDate = endDate,
-                    Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("dealduration")).FirstOrDefault()?.Value ?? string.Empty, // or use servicelength                             
-                    InitialTerm = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault()?.Value ?? string.Empty,
-                    AutoRenewalTerm = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value),
-                    AutoRenewal = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value) > 0 ? true : false
-                };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation("Error ocuured at BuildAnnuity" + ex, ex.Message);
-            }
-        }
+        
 
         public Task<string> GetQuotes(string Id)
         {
             throw new NotImplementedException();
         }
-
 
         public async Task<QuotePreviewModel> QuotePreview(GetQuotePreviewDetails.Request request)
         {
@@ -260,6 +220,136 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
                 }
             }
             return response;
+        }
+
+        public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
+        {
+            try
+            {
+                CreateQuoteRequest(request.CreateModelFrom);
+                ActiveCartModel activeCart = await _cartService.GetActiveCartAsync();
+                if (activeCart == null)
+                {
+                    throw new UIServiceException("Invalid Active Cart" + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                if (activeCart.Items != null)
+                {
+                    try
+                    {
+                        List<Common.Cart.Models.Cart.SavedCartLineModel> items = _helperService.PopulateSavedCartLinesForQuoteRequest(activeCart.Items);
+                        request.CreateModelFrom.Items = _helperService.PopulateQuoteRequestLinesForAsync(items, request.CreateModelFrom.Type).Result;
+                    }
+                    catch (UIServiceException e)
+                    {
+                        var error = e.Message ?? "";
+                        if (error.StartsWith("This create quote request contains", StringComparison.CurrentCultureIgnoreCase))
+                            throw new UIServiceException(error, 11000);
+                        else
+                            throw new UIServiceException(e.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                    }
+                }
+                request.CreateModelFrom.TargetSystem = "R3";
+                request.CreateModelFrom.System = "Q";
+                var response = await CallCreateQuote(request.CreateModelFrom);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogInformation("Error while creating Quote from Active Cart" + ex.Message);
+                throw ex;
+            }
+
+        }
+
+        public async Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
+        {
+            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetailsAsync(request.CreateModelFrom.CreateFromId);
+            if (savedCart == null)
+            {
+                throw new UIServiceException("Invalid savedCartId: " + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            CreateQuoteRequest(request.CreateModelFrom);
+            var createQuoteFrom = request.CreateModelFrom;
+
+            if (savedCart.Items != null)
+            {
+                // call product service to get product details
+                try
+                {
+                    createQuoteFrom.Items = _helperService.PopulateQuoteRequestLinesForAsync(savedCart.Items, request.CreateModelFrom.Type).Result;
+                }
+                catch (UIServiceException uiEx)
+                {
+                    if (uiEx.Message.StartsWith("This create quote request contains obsolete"))
+                        throw new UIServiceException(uiEx.Message, 11000);
+                    else
+                        throw new UIServiceException(uiEx.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            //get order LEVEL and Type
+            createQuoteFrom.TargetSystem = "R3";
+            createQuoteFrom.System = "Q";
+            var response = await CallCreateQuote(createQuoteFrom);
+            return response;
+        }
+
+        public async Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request)
+        {
+            // TO_DO: App Sercice Missing implementation, so we return dummy response for now
+            //var response = await CallCreateQuote(request.CreateModelFrom);
+            //return response;
+            // delete below code once App-Service implementation is available
+            var response = new CreateModelResponse
+            {
+                Id = "QuoteId_" + GetRandomNumber(10000, 60000),
+                Confirmation = "Confirm_" + GetRandomNumber(10000, 60000),
+            };
+            return await Task.FromResult(response);
+
+        }
+
+        public async Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request)
+        {
+            // TO_DO: 2021-04-30 the Update quote method doesn't exist yet on AppQuote side
+            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
+            var url = _appQuoteServiceUrl + "/Update";
+            var result = await _middleTierHttpClient.PostAsync<QuoteModel>(url, null, request.QuoteToUpdate);
+            var response = new UpdateQuote.Response(result);
+            return await Task.FromResult(response);
+        }
+
+        #region Private Methods
+
+        private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList, string companyName = "")
+        {
+            if (addressList.Any())
+            {
+                var requestAddress = addressList.FirstOrDefault();
+                var address = new Models.Quote.Quote.Internal.AddressModel
+                {
+                    City = requestAddress.City,
+                    Country = requestAddress.Country,
+                    Id = requestAddress.Id,
+                    Line1 = requestAddress.Line1,
+                    Line2 = requestAddress.Line2,
+                    Line3 = requestAddress.Line3,
+                    State = requestAddress.State,
+                    PostalCode = requestAddress.PostalCode,
+                    Company = companyName
+                };
+                return address;
+            }
+            else
+                return new Models.Quote.Quote.Internal.AddressModel();
         }
 
         private CreateQuoteModel CreateQuoteRequestFromQuotePreview(QuotePreviewModel input)
@@ -537,137 +627,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return new AttributeDto { Name = attributeName, Value = id };
         }
 
-
-        private Models.Quote.Quote.Internal.AddressModel MapAddress(List<Address> addressList, string companyName = "")
-        {
-            if (addressList.Any())
-            {
-                var requestAddress = addressList.FirstOrDefault();
-                var address = new Models.Quote.Quote.Internal.AddressModel
-                {
-                    City = requestAddress.City,
-                    Country = requestAddress.Country,
-                    Id = requestAddress.Id,
-                    Line1 = requestAddress.Line1,
-                    Line2 = requestAddress.Line2,
-                    Line3 = requestAddress.Line3,
-                    State = requestAddress.State,
-                    PostalCode = requestAddress.PostalCode,
-                    Company = companyName
-                };
-                return address;
-            }
-            else
-                return new Models.Quote.Quote.Internal.AddressModel();
-        }
-
-        public async Task<CreateModelResponse> CreateQuoteFromActiveCart(CreateQuoteFrom.Request request)
-        {
-            try
-            {
-                CreateQuoteRequest(request.CreateModelFrom);
-                ActiveCartModel activeCart = await _cartService.GetActiveCartAsync();
-                if (activeCart == null)
-                {
-                    throw new UIServiceException("Invalid Active Cart" + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
-                }
-                if (activeCart.Items != null)
-                {
-                    try
-                    {
-                        List<Common.Cart.Models.Cart.SavedCartLineModel> items = _helperService.PopulateSavedCartLinesForQuoteRequest(activeCart.Items);
-                        request.CreateModelFrom.Items = _helperService.PopulateQuoteRequestLinesForAsync(items, request.CreateModelFrom.Type).Result;
-                    }
-                    catch (UIServiceException e)
-                    {
-                        var error = e.Message ?? "";
-                        if (error.StartsWith("This create quote request contains", StringComparison.CurrentCultureIgnoreCase))
-                            throw new UIServiceException(error, 11000);
-                        else
-                            throw new UIServiceException(e.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new UIServiceException(ex.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
-                    }
-                }
-                request.CreateModelFrom.TargetSystem = "R3";
-                request.CreateModelFrom.System = "Q";
-                var response = await CallCreateQuote(request.CreateModelFrom);
-                return response;
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogInformation("Error while creating Quote from Active Cart" + ex.Message);
-                throw ex;
-            }
-
-        }
-
-        public async Task<CreateModelResponse> CreateQuoteFromSavedCart(CreateQuoteFrom.Request request)
-        {
-            SavedCartDetailsModel savedCart = await _cartService.GetSavedCartDetailsAsync(request.CreateModelFrom.CreateFromId);
-            if (savedCart == null)
-            {
-                throw new UIServiceException("Invalid savedCartId: " + request.CreateModelFrom.CreateFromId, (int)UIServiceExceptionCode.GenericBadRequestError);
-            }
-            CreateQuoteRequest(request.CreateModelFrom);
-            var createQuoteFrom = request.CreateModelFrom;
-
-            if (savedCart.Items != null)
-            {
-                // call product service to get product details
-                try
-                {
-                    createQuoteFrom.Items = _helperService.PopulateQuoteRequestLinesForAsync(savedCart.Items, request.CreateModelFrom.Type).Result;
-                }
-                catch (UIServiceException uiEx)
-                {
-                    if (uiEx.Message.StartsWith("This create quote request contains obsolete"))
-                        throw new UIServiceException(uiEx.Message, 11000);
-                    else
-                        throw new UIServiceException(uiEx.Message, (int)UIServiceExceptionCode.GenericBadRequestError);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-
-            }
-            //get order LEVEL and Type
-            createQuoteFrom.TargetSystem = "R3";
-            createQuoteFrom.System = "Q";
-            var response = await CallCreateQuote(createQuoteFrom);
-            return response;
-        }
-
-        public async Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request)
-        {
-            // TO_DO: App Sercice Missing implementation, so we return dummy response for now
-            //var response = await CallCreateQuote(request.CreateModelFrom);
-            //return response;
-            // delete below code once App-Service implementation is available
-            var response = new CreateModelResponse
-            {
-                Id = "QuoteId_" + GetRandomNumber(10000, 60000),
-                Confirmation = "Confirm_" + GetRandomNumber(10000, 60000),
-            };
-            return await Task.FromResult(response);
-
-        }
-
-        public async Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request)
-        {
-            // TO_DO: 2021-04-30 the Update quote method doesn't exist yet on AppQuote side
-            string _appQuoteServiceUrl = _appSettings.GetSetting("App.Quote.Url");
-            var url = _appQuoteServiceUrl + "/Update";
-            var result = await _middleTierHttpClient.PostAsync<QuoteModel>(url, null, request.QuoteToUpdate);
-            var response = new UpdateQuote.Response(result);
-            return await Task.FromResult(response);
-        }
-
-        #region Private Methods
-
         private async Task<QuotePreviewModel> CreateResponseUsingEstimateId(GetQuotePreviewDetails.Request request)
         {
             string _appConfigServiceURL = _appSettings.GetSetting("App.Configuration.Url");
@@ -907,6 +866,115 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return null;
         }
 
+        private void MapEndUserName(QuoteModel response)
+        {
+            if ((response?.EndUser != null) && (bool)response?.EndUser?.Contact?.Any())
+            {
+                response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name ?? "";
+                response.EndUser.Contact.FirstOrDefault().Name = response.EndUser.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.EndUser.Contact.FirstOrDefault().Name;
+            }
+        }
+        private void MapResellerName(QuoteModel response)
+        {
+            if ((response?.Reseller != null) && (response?.Reseller?.Contact.Count() != 0))
+            {
+                response.Reseller.Contact.FirstOrDefault().Name = response.Reseller.Contact.FirstOrDefault().Name ?? "";
+                response.Reseller.Contact.FirstOrDefault().Name = (bool)response.Reseller.Contact.FirstOrDefault().Name.Contains("..") ? "" : response.Reseller.Contact.FirstOrDefault().Name;
+            }
+        }
+
+        private QuoteModel MapAnnuity(QuoteModel input)
+        {
+            if (input.Items.Any())
+            {
+                foreach (var line in input.Items)
+                {
+                    BuildAnnuity(line);
+                }
+            }
+            return input;
+        }
+
+        private void BuildAnnuity(ItemModel line)
+        {
+            try
+            {
+                DateTime? startDate; DateTime sdt;
+                startDate = DateTime.TryParse(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedstartdate"))?.Value, out sdt) ? sdt : null;
+
+                DateTime? endDate; DateTime edt;
+                endDate = DateTime.TryParse(line.Attributes.FirstOrDefault(x => x.Name.ToLower().Equals("requestedenddate"))?.Value, out edt) ? edt : null;
+
+                line.Annuity = new Annuity
+                {
+                    BillingFrequency = line.Attributes.Where(x => x.Name.ToLower().Equals("billingterm")).FirstOrDefault()?.Value ?? string.Empty,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Duration = line.Attributes.Where(x => x.Name.ToLower().Equals("dealduration")).FirstOrDefault()?.Value ?? string.Empty, // or use servicelength                             
+                    InitialTerm = line.Attributes.Where(x => x.Name.ToLower().Equals("initialterm")).FirstOrDefault()?.Value ?? string.Empty,
+                    AutoRenewalTerm = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value),
+                    AutoRenewal = ToNullableInt(line.Attributes.Where(x => x.Name.ToLower().Equals("autorenewalterm")).FirstOrDefault()?.Value) > 0 ? true : false
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("Error ocuured at BuildAnnuity" + ex, ex.Message);
+            }
+        }
+
+
+        private string TdPartNumber(ItemModel line)
+        {
+            string tdPartNumber = line.Product.Any() ? line.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
+            tdPartNumber = tdPartNumber ?? "0";
+            tdPartNumber = tdPartNumber.TrimStart('0');
+            return tdPartNumber;
+        }
+
+        private async Task<QuoteModel> GetQuoteDetailsForDeal(ValidateQuoteForOrder.Request request)
+        {
+            try
+            {
+                GetQuote.Request quoteRequest = new GetQuote.Request(new List<string> { request.Id }, true, request.LatestRevision);
+                var quoteDetail = await GetQuote(quoteRequest);
+                return quoteDetail;
+            }
+            catch (Exception)
+            {
+                return new QuoteModel();
+            }
+            
+        }
+        private async Task<bool> ValidateRemainingQuantityOfDeal(QuoteModel quoteDetail, string dealId)
+        {
+            try
+            {
+                SpaDetailModel spaDetails = await _helperService.GetDealDetails(new SpaFindModel(dealId, true));
+
+                int? remainingQuantity = 0;
+                string manufacturerPartNumber = string.Empty;
+                string tdPartNumber = string.Empty;
+
+                foreach (var line in quoteDetail.Items)
+                {
+                    tdPartNumber = TdPartNumber(line);
+
+                    //manufacturerPartNumber = line.Product.Any() ? line.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
+                    if (!spaDetails.ProductInclusions.Where(p => p.Id.Equals(tdPartNumber, StringComparison.Ordinal)).Any())
+                        continue;
+
+                    remainingQuantity = spaDetails.Products.Where(p => p.Source.Id.Equals(tdPartNumber, StringComparison.Ordinal))?.FirstOrDefault().RemainingQuantity;
+                    if (remainingQuantity < line.Quantity)
+                        return false;
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return true; // Confirm Logic
+            }
+        }
         #endregion Private Methods
     }
 }

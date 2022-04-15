@@ -76,6 +76,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("canConvertToOrder")]
+        public async Task<IActionResult> IsValidQuote([FromQuery] string id, [FromQuery] bool latestRevision = true)
+        {
+            var response = await Mediator.Send(new ValidateQuoteForOrder.Request(id, latestRevision)).ConfigureAwait(false);
+            return Ok(response);
+        }
+
         //[HttpGet]
         //[Route("")]
         //public async Task<IActionResult> FindQuoteDetails([FromQuery] FindModel query)

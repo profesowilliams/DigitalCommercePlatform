@@ -159,6 +159,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Controller
             result.Should().NotBeNull();
         }
 
+        [Theory]
+        [AutoDomainData]
+        public async Task CanConvertToOrder(ResponseBase<ValidateQuoteForOrder.Response> expected)
+        {
+            _mediator.Setup(x => x.Send(
+                       It.IsAny<ValidateQuoteForOrder.Request>(),
+                       It.IsAny<CancellationToken>()))
+                   .ReturnsAsync(expected);
+
+            var data = "121793216";
+            var controller = GetController();
+            var result = await controller.IsValidQuote(data, true).ConfigureAwait(false);
+
+            result.Should().NotBeNull();
+        }
 
         [Theory]
         [AutoDomainData]

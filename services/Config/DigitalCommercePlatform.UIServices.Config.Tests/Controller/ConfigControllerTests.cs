@@ -129,7 +129,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.GetDeal("123", "123").ConfigureAwait(false);
+            var result = await controller.GetDeal("1003174", true).ConfigureAwait(false);
 
             result.Should().NotBeNull();
         }
@@ -144,7 +144,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Tests.Controller
                    .ReturnsAsync(expected);
 
             var controller = GetController();
-            var result = await controller.GetDeal("123", "123").ConfigureAwait(false);
+            var result = await controller.GetDeal("123", true).ConfigureAwait(false);
             var Response = result as ObjectResult;
             Response.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }

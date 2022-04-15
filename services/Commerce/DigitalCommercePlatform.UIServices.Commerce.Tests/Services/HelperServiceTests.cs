@@ -19,6 +19,7 @@ using System.Text;
 using Xunit;
 using DigitalFoundation.Common.TestUtilities;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Commerce.Models.SPA;
 
 namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 {
@@ -1269,13 +1270,38 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             };
             // Act         
 
-            var result = GetHelperService().PopulateQuoteRequestLinesForAsync(items,null);
+            var result = GetHelperService().PopulateQuoteRequestLinesForAsync(items, null);
 
             // Assert
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void GetDealDetails_Tests()
+        {
+            // Arrange 
+            SpaFindModel request = new("123456", true);
+            // Act         
 
+            var result = GetHelperService().GetDealDetails(request); // Fix this
+
+            // Assert
+            Assert.NotNull(result);
+        }
+
+        [Fact]
+        public async System.Threading.Tasks.Task GetDealDetailsError_Tests()
+        {
+            // Arrange 
+            SpaFindModel request = new(null, true);
+            
+            // Act       
+
+            var ex = await Assert.ThrowsAsync<UIServiceException>(() => GetHelperService().GetDealDetails(request));
+
+            // Assert
+            Assert.NotNull(ex.Message);
+        }
         [Fact]
         public void PopulateQuoteRequestLinesForAsync_Null()
         {
@@ -1347,7 +1373,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 new Common.Cart.Models.Cart.SavedCartLineModel {  ItemId = "200", ProductId="13303764", Quantity = 1 },
             };
             ProductData productDetails = new ProductData();
-            
+
             ProductsModel P1 = new ProductsModel
             {
                 Source = new SourceModel { ID = "11357695" },
@@ -1362,7 +1388,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 Name = "ONE DNA ADVANTAGE ONPREM LIC 100M 3YR",
                 ManufacturerPartNumber = "C1DNA-P-100M-A-3Y"
             };
-            ProductsModel[] Data = { P1, P2};
+            ProductsModel[] Data = { P1, P2 };
             productDetails.Data = Data;
 
             // Act
@@ -1378,14 +1404,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             // Assert
             Assert.NotNull(result);
         }
-        
+
         [Fact]
         public void MapAnnuityForQuotePreviw_Tests()
         {
             // Arrange 
             IEnumerable<DetailedDto> data = new List<DetailedDto>();
             QuotePreview quotePreview = new QuotePreview();
-           
+
             // Act         
             var result = GetHelperService().MapAnnuityForQuotePreviw(data, quotePreview);
 

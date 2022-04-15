@@ -6,6 +6,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Product;
+using DigitalCommercePlatform.UIServices.Commerce.Models.SPA;
 using DigitalFoundation.Common.Extensions;
 using DigitalFoundation.Common.Features.Client;
 using DigitalFoundation.Common.Features.Client.Exceptions;
@@ -365,7 +366,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
         }
 
-
         public Models.Order.Internal.OrderModel FilterOrderLines(Models.Order.Internal.OrderModel orderDetail)
         {
             if (orderDetail.Source?.System == "3") // for 6.8 orders return all lines
@@ -377,7 +377,32 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
             return orderDetail;
         }
-        
+
+        public async Task<SpaDetailModel> GetDealDetails(SpaFindModel request)
+        {
+            try
+            {
+                var _appSpaUrl = _appSettings.GetSetting("App.Spa.Url");
+                var requestUrl = _appSpaUrl.BuildQuery(request);
+
+                var spaResponse = await _middleTierHttpClient.GetAsync<List<Models.SPA.SpaDetailModel>>(requestUrl).ConfigureAwait(false);
+                if (spaResponse != null && spaResponse.Count > 0)
+                    return spaResponse.FirstOrDefault();
+                else
+                    throw new UIServiceException("SPA / Deal not Found Id " + request.Id, 404);
+            }
+            catch (RemoteServerHttpException ex)
+            {
+                _logger.LogError(ex.Message + " - requested spa / deal Id : " + request.Id, "Exception at : " + nameof(HelperService));
+                throw new UIServiceException(ex.Message + " - requested spa / deal Id : " + request.Id, (int)UIServiceExceptionCode.GenericBadRequestError);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at getting Deal Details " + nameof(HelperService));
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region "Private Methods"

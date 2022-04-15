@@ -1,12 +1,14 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using AutoMapper;
 using DigitalCommercePlatform.UIServices.Config.Models.Deals;
+using DigitalCommercePlatform.UIServices.Config.Models.SPA;
 using DigitalCommercePlatform.UIServices.Config.Services;
 using DigitalFoundation.Common.Services.Layer.UI.Actions.Abstract;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading;
@@ -19,19 +21,19 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
     {
         public class Request : IRequest<ResponseBase<Response>>
         {
-            public string DealId { get; set; }
-            public string VendorId { get; set; }
+            public string Id { get; set; }
+            public bool Details { get; set; }
 
-            public Request(string dealId, string vendorId)
+            public Request(string id, bool details)
             {
-                DealId = dealId;
-                VendorId = vendorId;
+                Id = id;
+                Details = details;
             }
         }
 
         public class Response
         {
-            public DealsDetailModel Deals { get; internal set; }
+            public SpaDetailModel Deal { get; internal set; }
         }
 
         public class Handler : HandlerBase<Handler>, IRequestHandler<Request, ResponseBase<Response>>
@@ -54,7 +56,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
             {
                 try
                 {
-                    DealsDetailModel deal = await _configService.GetDealDetails(request);
+                    var deal = await _configService.GetDealDetails(request);
                     var getDealResponse = _mapper.Map<Response>(deal);
                     return new ResponseBase<Response> { Content = getDealResponse };
                 }
@@ -70,8 +72,7 @@ namespace DigitalCommercePlatform.UIServices.Config.Actions.GetDealDetail
         {
             public Validator()
             {
-                RuleFor(x => x.DealId).NotNull();
-                RuleFor(x => x.VendorId).NotNull();
+                RuleFor(x => x.Id).NotNull();               
             }
         }
     }
