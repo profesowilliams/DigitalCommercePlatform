@@ -125,9 +125,8 @@ function RenewalPlanOptions({ labels, data, node }) {
     }
 
     const setDefaultCheckedOption = (option) => optionIdSelected === option?.id;
-
     return (
-        <>
+        <div key={rowIndexRef.current + Math.random()}>
             <div className="pdf-container">
                 {showPdf && <DownloadPDF />}
             </div>           
@@ -136,8 +135,8 @@ function RenewalPlanOptions({ labels, data, node }) {
                     <div className="marketing-body"></div>
                 </div>
                 {data?.options && data?.options.map((option, index) => (
-                    <>
-                        <div className={computeClassName(data?.options, index)} key={option?.id}>
+                    <div key={option?.id}>
+                        <div className={computeClassName(data?.options, index)}>
                             <div className="header">
                                 <div className="leftHeader">
                                     <h4 onChange={changeRadioButton}>
@@ -182,10 +181,10 @@ function RenewalPlanOptions({ labels, data, node }) {
                             )}
 
                         </div>
-                    </>
+                    </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
 

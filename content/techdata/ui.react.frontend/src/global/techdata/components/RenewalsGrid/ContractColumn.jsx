@@ -3,7 +3,7 @@ import { If } from "../../helpers/If";
 import Info from "../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
-function ContractColumn({ data, eventProps }) {
+function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
   const effects = useRenewalGridState(state => state.effects);
   const detailRender = useRenewalGridState(state => state.detailRender);
@@ -11,18 +11,15 @@ function ContractColumn({ data, eventProps }) {
   const rowIndex = eventProps?.node?.rowIndex
   const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
   const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
-  const [togglePlanUpdated, setToggleUpdatedPlan] = React.useState(false);
   const [isToggled, setToggled] = React.useState(false);
   React.useEffect(() => {
     if (detailRender === "primary") setToggled(false)
   }, [detailRender])
-  React.useEffect(() => {
-    if (!isToggled && renewalOptionState) setToggleUpdatedPlan(true)
-  }, [isToggled])
+  
   React.useEffect(() => {  
     rowCollapsedIndexList?.includes(rowIndex) && setToggled(false);
   }, [rowCollapsedIndexList])
-
+  
   const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
   const hasOptions = data?.options && data?.options?.length > 0;
   const toggleExpandedRow = () => {
@@ -30,15 +27,15 @@ function ContractColumn({ data, eventProps }) {
     effects.setCustomState({ key: 'detailRender', value: 'secondary' })
     eventProps.node.setExpanded(!isToggled);
     setToggled(!isToggled);
-    setToggleUpdatedPlan(!togglePlanUpdated)
     const rowCollapsedIndexList = [];
     eventProps.api.forEachNode(node => {
       const currentNode = eventProps.node;      
       if (node?.rowIndex !== currentNode?.rowIndex){     
-          node?.expanded && node.setExpanded(false);        
+          // node?.expanded && node.setExpanded(false);        
+          node.expanded = false;
           rowCollapsedIndexList.push(node?.rowIndex);
-      }
-    });
+        }
+      });
     effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
   }
   const hasRenderStateTextFromPlanOptions = () => support && rowIndex == (renewalOptionState?.rowIndex -1);
@@ -86,4 +83,5 @@ function ContractColumn({ data, eventProps }) {
   );
 }
 
+const ContractColumn = React.memo(_ContractColumn); 
 export default ContractColumn;
