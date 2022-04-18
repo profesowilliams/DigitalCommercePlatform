@@ -82,7 +82,7 @@ function QuotePreview(props) {
       const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
       const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
       // Remove Choose Modal 
-      // setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
+      setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod));
       setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
       // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
       quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
