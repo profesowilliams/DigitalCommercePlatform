@@ -31,6 +31,7 @@ function GridSearchCriteria({
   handleClickOptionsButton,
   labelFilterGrid,
   flagOpenOrder,
+  category
 }) {
 	const filter = useRef(null);
 	const analyticsData = useRef(null); // ref for the analytics data to adobeData layer in case of be necessary
@@ -67,11 +68,19 @@ function GridSearchCriteria({
 		analyticsData.current = null;
 		if (typeof onClearRequest === 'function') {
 			onClearRequest();
-			pushEvent(ANALYTICS_TYPES.events.click, {
-				  type: ANALYTICS_TYPES.types.button,
-				  category: ANALYTICS_TYPES.category.orderTableInteractions,
-				  name: ANALYTICS_TYPES.name.openOrderFilterRemoved,
-			});
+			if (category) {
+			     pushEvent(ANALYTICS_TYPES.events.click, {
+                      type: ANALYTICS_TYPES.types.link,
+                      category: category,
+                      name: ANALYTICS_TYPES.name.clearFilters,
+                });
+			} else {
+                pushEvent(ANALYTICS_TYPES.events.click, {
+                      type: ANALYTICS_TYPES.types.button,
+                      category: ANALYTICS_TYPES.category.orderTableInteractions,
+                      name: ANALYTICS_TYPES.name.openOrderFilterRemoved,
+                });
+			}
 		}
 		setReset(!reset);
 		setFilterActive(false);

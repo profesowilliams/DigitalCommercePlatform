@@ -72,6 +72,7 @@ export const ANALYTICS_TYPES = {
     collapseLineItem: "Collapse Line Item",
     endUserInformation: "End User Information",
     invoice: "Invoice",
+    clearFilters: 'Clear all filters',
     openOrderFilterApplied: "Open Orders filter applied",
     openOrderFilterRemoved: "Open Orders filter removed",
     orderID: "Order ID",
