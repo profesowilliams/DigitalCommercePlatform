@@ -75,10 +75,11 @@ function RenewalsGrid(props) {
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp});
     } else {
       response = await nonFilteredOnSorting({request, hasSortChanged});  
-    }  
+    } 
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
-    const paginationValue = setPaginationData(rest);
+    const pageSize = gridConfig.itemsPerPage;
+    const paginationValue = setPaginationData(rest,pageSize);
     effects.setCustomState({ key: 'pagination', value: paginationValue })
     effects.setCustomState({ key: 'refinements', value: refinementGroups })
     mappedResponse.data.content.items = priceDescendingByDefaultHandle(

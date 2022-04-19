@@ -17,6 +17,14 @@ import { useRenewalGridState } from "./store/RenewalsStore";
 
 function CustomRenewalPagination({ onQueryChanged }, ref) {
   const paginationData = useRenewalGridState((state) => state.pagination);
+  const {
+    totalCounter,
+    stepBy,
+    currentPage,
+    currentResultsInPage,
+    pageCount,
+    pageNumber,
+  } = paginationData;
   const gridApi = useRenewalGridState((state) => state.gridApi);
   const setPaginationData = useRenewalGridState(
     (state) => state.effects.setCustomState
@@ -27,15 +35,22 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     maxCounter: 0,
   });
 
+  const maxPaginationCounter = () =>
+  maxCounterCalculator(currentResultsInPage, pageNumber);
+
+  const minPaginationCounter = () =>
+    minCounterCalculator(currentResultsInPage, pageNumber);
+
+  const updatePaginationCounter = () => {
+    setPaginationCounter({
+      minCounter: minPaginationCounter(),
+      maxCounter: maxPaginationCounter(),
+    });   
+  };   
+  
   const pageInputRef = useRef();
-  const {
-    totalCounter,
-    stepBy,
-    currentPage,
-    currentResultsInPage,
-    pageCount,
-    pageNumber,
-  } = paginationData;
+
+  useEffect(()=>updatePaginationCounter(),[pageNumber]);
 
   useImperativeHandle(ref, () => ({pageNumber}), [pageNumber])
 
@@ -45,15 +60,9 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const paginationGetTotalPages = () =>
     pageCount ?? Math.ceil(currentResultsInPage / totalCounter);
 
-  const maxPaginationCounter = () =>
-    maxCounterCalculator(currentResultsInPage, pageNumber);
-
-  const minPaginationCounter = () =>
-    minCounterCalculator(pageNumber, currentResultsInPage);
-
   const sendPagingRequest = (queryString = '') => {    
     onQueryChanged({queryString}); 
-    updatePaginationCounter();
+    
   }
 
   const keepFilteringPayload = (pageNumber) => {
@@ -68,6 +77,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const incrementHandler = () => { 
     if (pageNumber > pageCount - 1) return
     const value = { ...paginationData, pageNumber:pageNumber+1 };
+    console.log('🚀value >>',value);
     setPaginationData({ key: "pagination", value });
     if (isFilterDataPopulated.current) {  
       keepFilteringPayload(pageNumber+1)
@@ -95,12 +105,6 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
       sendPagingRequest()
     }  
   }
-  const updatePaginationCounter = () => {
-    setPaginationCounter({
-      minCounter: minPaginationCounter(),
-      maxCounter: maxPaginationCounter(),
-    });   
-  };
 
   const handleInputBlur = ({ target }) => {
     const value = parseInt(target.value) - 1;
@@ -127,7 +131,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     if (event.keyCode === 13) {
       goToSpecificPage(value);
       pageInputRef.current.blur();
-      updatePaginationCounter();
+      
     }
   };
 
@@ -159,7 +163,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === 1}
           onClick={() => {
             goToFirstPage();
-            updatePaginationCounter();
+            
           }}
         >
           <strong>{"|<"}</strong>
@@ -200,8 +204,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === pageCount}
           className="border"
           onClick={() => {
-            gotToLastPage();
-            updatePaginationCounter();
+            gotToLastPage();            
           }}
         >
           <strong>{">|"}</strong>

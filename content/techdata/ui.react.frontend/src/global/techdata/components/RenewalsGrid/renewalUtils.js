@@ -23,7 +23,7 @@ export function mapServiceData(response) {
                     totalItems,
                     pageCount,
                     pageNumber,
-                    refinementGroups,
+                    refinementGroups                    
                 },
             },
         };
@@ -101,10 +101,10 @@ export async function nonFilteredOnSorting({request, hasSortChanged}){
     return await usGet(url.join('&'));
 }
 
-export function setPaginationData(mappedResponse) {
-    const { pageCount, pageNumber, totalItems, items } = mappedResponse;
+export function setPaginationData(mappedResponse,pageSize) {
+    const { pageCount, pageNumber, totalItems } = mappedResponse;
     return {
-        currentResultsInPage: items.length,
+        currentResultsInPage: pageSize,
         totalCounter: totalItems,
         pageCount,
         pageNumber: parseInt(pageNumber),
