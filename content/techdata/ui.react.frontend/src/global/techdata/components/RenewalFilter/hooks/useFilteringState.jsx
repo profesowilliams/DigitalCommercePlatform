@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useCallback } from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { generateFilterFields } from "../filterUtils/filterUtils";
 
-
 export const useMultiFilterSelected = () => {
   const filterList = useRenewalGridState((state) => state.filterList);
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
@@ -14,18 +13,20 @@ export const useMultiFilterSelected = () => {
   const optionFieldsRef = useRef();
   const isFilterDataPopulated = useRef(false);
 
-  const _setOptionsFileds = useCallback(
+  const _setOptionsFields = useCallback(
     ([optionFields, hasData]) => {
       optionFieldsRef.current = optionFields;
       isFilterDataPopulated.current = hasData;
+      if (resetFilter) {isFilterDataPopulated.current = false;effects.setCustomState({key:'resetFilter', value: false})}
     },
     [filterList, dateSelected]
   );
 
   useEffect(() => {
-    const optionFields = _generateFilterFields();
-    optionFields && _setOptionsFileds(optionFields);
-  }, [filterList, dateSelected, datePickerState]);
+    const optionFields = _generateFilterFields();       
+    optionFields && _setOptionsFields(optionFields);
+  }, [filterList, dateSelected, datePickerState, resetFilter]);
+
 
   const _generateFilterFields = () => {
     const postJsonFields = generateFilterFields(
@@ -34,7 +35,7 @@ export const useMultiFilterSelected = () => {
       datePickerState
     );
     if (!postJsonFields) return [false, false];
-    if (Object.keys(postJsonFields).length > 4) return [postJsonFields, true];
+    if (Object.keys(postJsonFields).length >= 4) return [postJsonFields, true];
     return [postJsonFields, false];
   };
 

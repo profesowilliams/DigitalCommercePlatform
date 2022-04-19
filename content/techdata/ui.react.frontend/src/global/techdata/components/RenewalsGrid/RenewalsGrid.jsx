@@ -74,7 +74,7 @@ function RenewalsGrid(props) {
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp});
     } else {
-      response = await nonFilteredOnSorting({request, hasSortChanged});
+      response = await nonFilteredOnSorting({request, hasSortChanged});  
     }  
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;

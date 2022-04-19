@@ -5,8 +5,8 @@ export const subHeader = () => {
         let isntMenu;
         const tabClassList = event.target?.parentNode?.parentNode?.classList;
         const isSubHeader = Array.isArray(tabClassList) ? tabClassList[0] === "cmp-tabs" : "";
-        const isMenu = event.target.parentNode.classList[0] === "cmp-tools";
-        const isMenuBlank = event.target.parentNode.classList[0] === "menucategorieslist";
+        const isMenu = event.target.parentNode ? event.target.parentNode.classList[0] === "cmp-tools" : false;
+        const isMenuBlank = event.target.parentNode ? event.target.parentNode.classList[0] === "menucategorieslist" : false;
         if (isSubHeader || isMenu || isMenuBlank) {
             isntMenu = false;
         } else {

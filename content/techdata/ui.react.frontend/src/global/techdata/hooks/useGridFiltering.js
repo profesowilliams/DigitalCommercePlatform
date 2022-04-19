@@ -10,9 +10,7 @@ export default function useGridFiltering() {
 
 
     function onAfterGridInit(config) {
-        resetCallback.current = () => {
-            config.gridResetRequest();
-        };
+        resetCallback.current = config.gridResetRequest;
     }
 
     function onQueryChanged(query, options = { filterStrategy: 'get' }) {
@@ -43,7 +41,7 @@ export default function useGridFiltering() {
     }
 
     async function requestInterceptor(request) {
-        try {
+        try {   
             if (willDoPostRequest.current) {
                 const postData = JSON.parse(filter.current);
                 const response = await usPost(request.url, postData);
@@ -54,7 +52,7 @@ export default function useGridFiltering() {
 
             const url = filter?.current
                 ? stripCreatedToParamDates(request.url)
-                : request.url;
+                : request.url;          
             let response = await request.get(url);
             return response;
         } catch (error) {

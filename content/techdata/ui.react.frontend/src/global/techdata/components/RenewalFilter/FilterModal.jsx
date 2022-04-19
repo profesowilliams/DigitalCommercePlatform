@@ -46,12 +46,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     const [optionFields] = _generateFilterFields();
     const queryString = JSON.stringify(optionFields);
     toggleFilterModal();
-    if (resetFilter){
-      onQueryChanged();
-      effects.setCustomState({key:'resetFilter', value: false});
-      return;
-    }
-    onQueryChanged({queryString},{filterStrategy:'post'});
+    if (resetFilter) effects.setCustomState({key:'resetFilter', value: false});
+    onQueryChanged();
   }
 
   if (!filterList) return null;
