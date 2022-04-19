@@ -27,6 +27,10 @@ use(function () {
     function getCheckoutConfigurations (serviceData, componentData) {
         var checkoutConfigurations = {};
 
+        if (serviceData.verifyUanEndpoint != null) {
+            checkoutConfigurations.verifyUanEndpoint = serviceData.verifyUanEndpoint;
+        }
+
         if (serviceData.replaceCartEndpoint != null) {
             checkoutConfigurations.uiServiceEndPoint = serviceData.uiServiceDomain+serviceData.replaceCartEndpoint;
         }

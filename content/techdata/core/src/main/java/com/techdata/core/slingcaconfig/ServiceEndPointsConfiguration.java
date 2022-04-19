@@ -50,6 +50,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Create Quote Endpoint", description = "Create Quote Endpoint")
     String createQuoteEndpoint();
 
+    @Property(label = "Verify UAN Endpoint", description = "Verify UAN Endpoint")
+    String verifyUanEndpoint();
+
     @Property(label = "Replace Cart Endpoint", description = "Replace Cart Endpoint")
     String replaceCartEndpoint();
 

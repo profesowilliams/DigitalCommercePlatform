@@ -56,6 +56,8 @@ public class CaConfigReader {
 
     private String createQuoteEndpoint;
 
+    private String verifyUanEndpoint;
+
     private String replaceCartEndpoint;
 
     private String cartDetailsEndpoint;
@@ -221,6 +223,7 @@ public class CaConfigReader {
         myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
         topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
         createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
+        verifyUanEndpoint = serviceEndPointsConfiguration.verifyUanEndpoint();
         replaceCartEndpoint = serviceEndPointsConfiguration.replaceCartEndpoint();
         cartDetailsEndpoint = serviceEndPointsConfiguration.cartDetailsEndpoint();
         pricingConditionsEndPoint = serviceEndPointsConfiguration.pricingConditionsEndPoint();

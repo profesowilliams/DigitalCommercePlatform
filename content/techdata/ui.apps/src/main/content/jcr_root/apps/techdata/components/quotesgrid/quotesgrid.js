@@ -226,6 +226,10 @@ use(function () {
     jsonObject["searchCriteria"] = searchCriteriaData;
   }
 
+  if (this.serviceData.verifyUanEndpoint) {
+    jsonObject["verifyUanEndpoint"] = verifyUanEndpoint;
+  }
+
   if (this.serviceData.replaceCartEndpoint != null) {
     checkoutData.uiServiceEndPoint = this.uiServiceDomain + this.serviceData.replaceCartEndpoint;
   }
