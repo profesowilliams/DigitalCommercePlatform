@@ -43,7 +43,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
         public async Task<DetailedResponseModel> GetRenewalsDetailedFor(SearchRenewalDetailed.Request request)
         {
             AppendPartialSearch(request);
-            SortByRequestDetails(request);
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -73,20 +72,9 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
             }
         }
 
-        private void SortByRequestDetails(SearchRenewalDetailed.Request request)
-        {
-            string sortValue = request?.SortBy?.FirstOrDefault()?.ToLower();
-            string sortDirection = request?.SortAscending == true ? "asc" : "desc";
-            sortValue = sortValue + ":" + sortDirection;
-            string sortDate = "dueDate:desc";
-            List<string> listSortby = new List<string> { sortDate, sortValue };
-            request.SortBy = listSortby;
-        }
-
         public async Task<SummaryResponseModel> GetRenewalsSummaryFor(SearchRenewalSummary.Request request)
         {
             AppendPartialSearch(request);
-            SortByRequestSummary(request);
 
             var req = _appRenewalServiceUrl.AppendPathSegment("Find").BuildQuery(request);
 
@@ -114,16 +102,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Services
 
                 return new SummaryResponseModel { Count = 0, Response = null };
             }
-        }
-
-        private void SortByRequestSummary(SearchRenewalSummary.Request request)
-        {
-            string sortValue = request?.SortBy?.FirstOrDefault()?.ToLower();
-            string sortDirection = request?.SortAscending == true ? "asc" : "desc";
-            sortValue = sortValue + ":" + sortDirection;
-            string sortDate = "dueDate:desc";
-            List<string> listSortby = new List<string> { sortDate, sortValue };
-            request.SortBy = listSortby;
         }
 
         public async Task<List<QuoteDetailedModel>> GetRenewalsQuoteDetailedFor(GetRenewalQuoteDetailed.Request request)

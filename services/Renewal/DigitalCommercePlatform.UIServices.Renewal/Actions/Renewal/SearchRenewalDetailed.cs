@@ -25,7 +25,6 @@ namespace DigitalCommercePlatform.UIServices.Renewal.Actions.Renewals
         {
             public string Id { get; set; }
             public List<string> SortBy { get; set; }
-            public bool SortAscending { get; set; }
             public int Page { get; set; } = 1;
             public int PageSize { get; set; } = 25;
             public bool WithPaginationInfo { get; set; } = true;
