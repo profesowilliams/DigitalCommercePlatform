@@ -166,7 +166,7 @@ function ProductLinesGrid({
     {
       headerName:  "Line Item",
       field:  "displayLineNumber",
-      width: "110px",
+      width: "120px",
       sortable: false,
       expandable: true,
       rowClass: ({ node, data }) => {
