@@ -236,7 +236,7 @@ function QuotePreview(props) {
    * @param {any} quoteParam 
    */
   const validateCreateQuoteSystem = (quoteParam) => {
-    if (showPopUp) {
+    if (showPopUp && flagDeal) {
       showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
         <ModalQuoteCreateModal
           createQuote={createQuote} 
