@@ -82,6 +82,9 @@ $bg--marketing-card:#F7F7F7;
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .cmp-triangle-up, .cmp-triangle-down{
+      pointer-events: none;
+    }
   }
   .cmp-grid.ag-theme-alpine .ag-row{
     background-color: white !important;

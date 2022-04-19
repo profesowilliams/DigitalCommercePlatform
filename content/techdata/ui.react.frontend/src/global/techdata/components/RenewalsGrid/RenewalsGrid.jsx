@@ -15,14 +15,14 @@ import { useRenewalGridState } from "./store/RenewalsStore";
 
 function ToolTip({ toolTipData }) {
   return (
-    toolTipData.show && (
+    toolTipData.show ? (
       <div
         style={{ top: toolTipData.y, left: toolTipData.x }}
         className="renewals-grid__custom-tooltip"
       >
         {toolTipData.value || ''}
       </div>
-    )
+    ) : <div></div>
   );
 }
 
