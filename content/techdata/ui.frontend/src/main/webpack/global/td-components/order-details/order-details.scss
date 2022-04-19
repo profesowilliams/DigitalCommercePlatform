@@ -240,6 +240,9 @@
 
   }
 }
+.cmp-order-details .ag-cell-wrapper.ag-row-group {
+	justify-content: start;
+}
 .cmp-column-checkbox-info {
   display: flex;
   justify-content: space-between;
