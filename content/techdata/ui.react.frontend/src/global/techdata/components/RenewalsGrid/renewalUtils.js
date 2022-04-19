@@ -83,8 +83,7 @@ export function isFilterPostRequest(hasSortChanged,isFilterDataPopulated){
 
 export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp}){
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)) {
-        const { colId, sort } = hasSortChanged.current?.sortData;  
-        const params = { ...optionFieldsRef.current, sortBy: [`${colId}:${sort}`] };
+        const params = { ...optionFieldsRef.current, sortBy: hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`) };
         if (customPaginationRef.current?.pageNumber !== 1) {
           params.PageNumber = customPaginationRef.current?.pageNumber;
         }
@@ -95,7 +94,7 @@ export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopu
 }
 export async function nonFilteredOnSorting({request, hasSortChanged}){
     var url = request.url.split('&');
-    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0),1,url.filter(e => e.indexOf('SortBy=') === 0)[0] + ':' + (hasSortChanged.current?.sortData?.sort ?? url.filter(e => e.indexOf('SortDirection=') === 0)[0].split('=')[1] ?? ''));
+    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, `SortBy=${hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`).join(",")}`);
     url.splice(url.findIndex(e => e.indexOf('SortDirection=') === 0),1);
 
     return await usGet(url.join('&'));

@@ -82,17 +82,12 @@ function RenewalsGrid(props) {
     const paginationValue = setPaginationData(rest,pageSize);
     effects.setCustomState({ key: 'pagination', value: paginationValue })
     effects.setCustomState({ key: 'refinements', value: refinementGroups })
-    mappedResponse.data.content.items = priceDescendingByDefaultHandle(
-      sortingFields,
-      mappedResponse
-    );
     return mappedResponse;
   }
 
   const onSortChanged = (evt) => {
     const sortModelList = evt.columnApi.getColumnState();
-    const sortWithDirectionList = sortModelList.filter(o => !!o.sort);
-    const sortedModel = sortWithDirectionList[0]; 
+    const sortedModel = sortModelList.filter(o => !!o.sort);
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1) {
