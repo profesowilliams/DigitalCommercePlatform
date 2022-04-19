@@ -13,11 +13,26 @@ import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
 
+function ToolTip({ toolTipData }) {
+  return (
+    toolTipData.show && (
+      <div
+        style={{ top: toolTipData.y, left: toolTipData.x }}
+        className="renewals-grid__custom-tooltip"
+      >
+        {toolTipData.value || ''}
+      </div>
+    )
+  );
+}
+
 function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged } =
     useGridFiltering();
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
+  const toolTipData = useRenewalGridState(state => state.toolTipData);
+  const { setToolTipData } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
@@ -105,6 +120,22 @@ function RenewalsGrid(props) {
     })
   }
 
+  /**
+   * A custom implementation to enable tooltips on hover
+   * for those columns whose values are truncated. This is
+   * enabled only for `endUser` column for now. Modify `hoverableList`
+   * in `GenericColumnTypes.jsx` to enable for more columns.
+   * @param {*} event
+   */
+  function cellMouseOver(event) {
+    setToolTipData({
+      value: event?.value?.name,
+      x: event?.event?.pageX,
+      y: event?.event?.pageY,
+      show: event?.colDef?.hoverable && event?.value?.name !== undefined,
+    });
+  }
+
   return (
     <section>
       <div className="cmp-renewals-subheader">
@@ -137,10 +168,12 @@ function RenewalsGrid(props) {
             groupExpanded: '<i></i>',
             groupContracted: '<i></i>',
           }}
+          onCellMouseOver={cellMouseOver}
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
         />
       </div>
+      <ToolTip toolTipData={toolTipData}/>
     </section>
   );
 }

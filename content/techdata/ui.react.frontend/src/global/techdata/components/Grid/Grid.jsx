@@ -26,7 +26,8 @@ function Grid(props) {
     contextMenuItems = undefined,
     customizedDetailedRender,
     onExpandAnalytics,
-    onCollapseAnalytics,   
+    onCollapseAnalytics,
+    onCellMouseOver,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -116,6 +117,7 @@ function Grid(props) {
       onRowGroupOpened={onRowGroupOpened}
       onExpandOrCollapseAll={onExpandOrCollapseAll}
       onRowSelected={onRowSelected}
+      onCellMouseOver={onCellMouseOver}
       onSelectionChanged={onSelectionChanged}
       rowSelection={"multiple"}
       getRowHeight={getRowHeight}

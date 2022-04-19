@@ -57,6 +57,12 @@ const columnsWidth = {
   actions: "100px",
 };
 
+/**
+ * Adding columnkey to this list will enable the possibility to
+ * show their value inside a tooltip on hover.
+ */
+const hoverableList = ["endUser"];
+
 export const plainTextColumn = (definition) => {
   const { columnLabel, columnKey, sortable = false } = definition;
   return {
@@ -66,6 +72,7 @@ export const plainTextColumn = (definition) => {
     cellHeight: () => 45,    
     width: columnsWidth[columnKey] || null,
     resizable: false,
+    hoverable: hoverableList.includes(columnKey),
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
   };
 };

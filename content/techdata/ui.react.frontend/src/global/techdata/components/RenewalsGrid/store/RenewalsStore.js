@@ -46,11 +46,17 @@ const INITIAL_STATE = {
   datePickerState: null,
   finalResults: [],
   pagination: {
-  totalCounter: 0,
+    totalCounter: 0,
     stepBy: 25,
     currentPage: 1,
     currentResultsInPage: 0,
     pageNumber: 1
+  },
+  toolTipData: {
+    value: '',
+    x: 0,
+    y: 0,
+    show: false,
   },
   refinements: undefined,
   customStartDate:undefined,

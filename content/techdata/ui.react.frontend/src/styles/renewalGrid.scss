@@ -366,3 +366,18 @@ span.ag-group-value {
   align-items: center;
   padding-right: 2rem;
 }
+
+.renewals-grid {
+  &__custom-tooltip {
+    position: absolute;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 2px;
+    background-color: #30343B;
+    color: #FFFFFF;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 32px;
+    text-align: center;
+  }
+}

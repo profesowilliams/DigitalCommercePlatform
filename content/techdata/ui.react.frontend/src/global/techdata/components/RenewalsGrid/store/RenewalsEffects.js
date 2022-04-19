@@ -14,6 +14,17 @@ export const renewalsEffects = (set, get) => {
     set({ finalResults: filteredList })
   }
 
+  function setToolTipData(data = {}) {
+    set({
+      toolTipData: {
+        value: data.value,
+        x: data.x,
+        y: data.y,
+        show: data.show,
+      }
+    })
+  }
+
   function closeAllSections() {
     const keepOpenList = ['date'];
     const keepOpened = ({ field }) => keepOpenList.includes(field);
@@ -74,5 +85,6 @@ export const renewalsEffects = (set, get) => {
     clearDateFilters,   
     setCustomState,
     setAppliedFilterCount,
+    setToolTipData,
   };
 };
