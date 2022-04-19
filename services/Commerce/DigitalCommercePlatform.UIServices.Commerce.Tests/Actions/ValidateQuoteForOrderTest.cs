@@ -31,7 +31,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Actions
         public bool LatestRevision { get; private set; } = true;
         [Theory]
         [AutoDomainData]
-        public async Task GetQuoteDetails(bool expected)
+        public async Task GetQuoteDetails(ValidateQuoteForOrder.Response expected)
         {
             _mockCommerceService.Setup(x => x.IsValidDealForQuote(
                       It.IsAny<ValidateQuoteForOrder.Request>()

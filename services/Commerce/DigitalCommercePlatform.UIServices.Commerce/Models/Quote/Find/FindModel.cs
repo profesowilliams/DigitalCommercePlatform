@@ -64,4 +64,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find
         public string DealId { get; set; }
         public LatestRevisionOnly? LatestRevisionOnly { get; set; }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class QuoteValidation
+    {
+        public decimal? Quantity { get; set; }
+        public string VendorPartNumber { get; set; }
+        public string TdPartNumber { get; set; }
+
+
+    }
 }

@@ -7,6 +7,7 @@ using DigitalFoundation.Common.Services.Layer.UI.ExceptionHandling;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         public class Request : IRequest<ResponseBase<Response>>
         {
             public string Id { get; set; }
+            public string CheckoutSystem { get; set; }
             public bool LatestRevision { get; set; } = true;
             public Request(string id, bool latestRevision)
             {
@@ -30,6 +32,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
         public class Response
         {
             public bool CanCheckout { get; set; }
+            public List<string> LineNumbers { get; set; }
         }
         public class Handler : IRequestHandler<Request, ResponseBase<Response>>
         {
@@ -49,8 +52,8 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Actions.Quote
 
             public async Task<ResponseBase<Response>> Handle(Request request, CancellationToken cancellationToken)
             {
-                bool isValidQuote = await _commerceRepositoryServices.IsValidDealForQuote(request).ConfigureAwait(false);
-                return new ResponseBase<Response> { Content = new Response { CanCheckout = isValidQuote } };
+                Response result = await _commerceRepositoryServices.IsValidDealForQuote(request).ConfigureAwait(false);
+                return new ResponseBase<Response> { Content = new Response { CanCheckout = result.CanCheckout, LineNumbers = result.LineNumbers } };
             }
         }
 

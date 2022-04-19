@@ -80,21 +80,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return response;
         }
 
-        public async Task<bool> IsValidDealForQuote(ValidateQuoteForOrder.Request request)
+        public async Task<ValidateQuoteForOrder.Response> IsValidDealForQuote(ValidateQuoteForOrder.Request request)
         {
             QuoteModel quoteDetail = await GetQuoteDetailsForDeal(request);
-            if (quoteDetail == null || quoteDetail.Source == null) return false;
+            if (quoteDetail == null || quoteDetail.Source == null) // Quote is invalid
+                throw new UIServiceException("Invalid Quote Id. Quote not found.", 1006);
+            
 
             var dealId = quoteDetail.Attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.Value; // need to verify
             if (string.IsNullOrWhiteSpace(dealId))
-                return true;
+                return new ValidateQuoteForOrder.Response { CanCheckout = true, LineNumbers = null };
             else
-            {
                 return await ValidateRemainingQuantityOfDeal(quoteDetail, dealId);
-            }
         }
 
-        
+
 
         public Task<string> GetQuotes(string Id)
         {
@@ -923,12 +923,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         }
 
 
-        private string TdPartNumber(ItemModel line)
-        {
-            string tdPartNumber = line.Product.Any() ? line.Product.Where(p => p.Type.ToUpper().Equals("TECHDATA", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
-            tdPartNumber = tdPartNumber ?? "0";
-            tdPartNumber = tdPartNumber.TrimStart('0');
-            return tdPartNumber;
+        private string TdPartNumber(string partNumber)
+        {            
+            partNumber = partNumber ?? "0";
+            partNumber = partNumber.TrimStart('0');
+            return partNumber;
         }
 
         private async Task<QuoteModel> GetQuoteDetailsForDeal(ValidateQuoteForOrder.Request request)
@@ -943,38 +942,94 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             {
                 return new QuoteModel();
             }
-            
+
         }
-        private async Task<bool> ValidateRemainingQuantityOfDeal(QuoteModel quoteDetail, string dealId)
+        
+        private async Task<ValidateQuoteForOrder.Response> ValidateRemainingQuantityOfDeal(QuoteModel quoteDetail, string dealId)
         {
             try
             {
-                SpaDetailModel spaDetails = await _helperService.GetDealDetails(new SpaFindModel(dealId, true));
-
-                int? remainingQuantity = 0;
-                string manufacturerPartNumber = string.Empty;
+                SpaDetailModel spaDetails = await _helperService.GetDealDetails(new SpaFindModel(dealId, true));             
                 string tdPartNumber = string.Empty;
+                List<string> lstmanufacturerPartNumber = new();
 
-                foreach (var line in quoteDetail.Items)
+                // Exclude 0 $ skus 
+
+                List<ItemModel> validLines = GetValidLines(quoteDetail, spaDetails);
+
+                // add quantity for same products 
+                var lines = validLines.GroupBy(r => r.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id)
+                      .Select(a => new QuoteValidation
+                      {
+                          Quantity = a.Sum(b => b.Quantity),
+                          VendorPartNumber = a.FirstOrDefault().Product.Where(x => x.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id,
+                          TdPartNumber = a.FirstOrDefault().Product.Where(x => x.Type.ToUpper().Equals("TECHDATA", StringComparison.Ordinal))?.FirstOrDefault()?.Id
+                      }).ToList();
+
+                List<string> lstProducts = InvalidProducts(lines, spaDetails);
+
+                return new ValidateQuoteForOrder.Response { CanCheckout = lstProducts.Any(), LineNumbers = null };
+            }
+            catch (UIServiceException uex)
+            {
+                _logger.LogError(uex, "Exception at ValidateRemainingQuantityOfDeal : " + nameof(Commerce));
+                throw new UIServiceException(uex.Message, 1006);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at ValidateRemainingQuantityOfDeal : " + nameof(Commerce));
+                throw new UIServiceException("Cannot validate Quote. Try after some time.", 1005);
+            }
+        }
+
+        private List<string> InvalidProducts(List<QuoteValidation> lines, SpaDetailModel spaDetails)
+        {
+            int? remainingQuantity = 0;
+            string tdPartNumber = string.Empty;
+            List<string> lstmanufacturerPartNumber = new();
+
+            foreach (var line in lines)
+            {
+                tdPartNumber = TdPartNumber(line.TdPartNumber);
+
+                if (string.IsNullOrWhiteSpace(tdPartNumber)) // if td partnumber is missing just go against 
                 {
-                    tdPartNumber = TdPartNumber(line);
+                    if (!spaDetails.Products.Where(p => p.ManufacturerPartNumber.Equals(line.VendorPartNumber, StringComparison.Ordinal)).Any())
+                        continue;
 
-                    //manufacturerPartNumber = line.Product.Any() ? line.Product.Where(p => p.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id : string.Empty;
+                    remainingQuantity = spaDetails.Products.Where(p => p.ManufacturerPartNumber.Equals(line.VendorPartNumber, StringComparison.Ordinal))?.FirstOrDefault().RemainingQuantity;
+                }
+                else
+                {
                     if (!spaDetails.ProductInclusions.Where(p => p.Id.Equals(tdPartNumber, StringComparison.Ordinal)).Any())
                         continue;
 
                     remainingQuantity = spaDetails.Products.Where(p => p.Source.Id.Equals(tdPartNumber, StringComparison.Ordinal))?.FirstOrDefault().RemainingQuantity;
-                    if (remainingQuantity < line.Quantity)
-                        return false;
-
                 }
-                return true;
+
+                if (remainingQuantity < line.Quantity)
+                    lstmanufacturerPartNumber.Add(line.VendorPartNumber);
             }
-            catch (Exception)
-            {
-                return true; // Confirm Logic
-            }
+            return lstmanufacturerPartNumber;
+        }
+
+        private List<ItemModel> GetValidLines(QuoteModel quoteDetail, SpaDetailModel spaDetails)
+        {
+
+            var validLines = quoteDetail.Items.Where(i => i.UnitListPrice > 0).ToList(); //  
+
+            // check if SPA has at least one valid part
+            
+            var validPartsForSPA = spaDetails.Products.IntersectBy(validLines.Select(x => x.Product.Where(x => x.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id).ToList(), x => x.ManufacturerPartNumber).ToList();
+            validPartsForSPA = validPartsForSPA ?? new List<SpaProductModel>();
+
+            if (validPartsForSPA.Count == 0)            
+                throw new UIServiceException("SPA is not valid for Quote.", 1006);
+
+            return validLines;
         }
         #endregion Private Methods
     }
+
+
 }

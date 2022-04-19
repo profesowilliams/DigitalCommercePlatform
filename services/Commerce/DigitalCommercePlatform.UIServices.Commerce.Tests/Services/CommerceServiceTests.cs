@@ -10,6 +10,7 @@ using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Find;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Quote.Internal.Estimate;
+using DigitalCommercePlatform.UIServices.Commerce.Models.SPA;
 using DigitalCommercePlatform.UIServices.Commerce.Services;
 using DigitalCommercePlatform.UIServices.Common.Cart.Contracts;
 using DigitalFoundation.Common.Features.Client;
@@ -679,9 +680,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         public async Task IsValidDealForQuote(ValidateQuoteForOrder.Request request)
         {
             // Act
-            var result = await _commerceService.IsValidDealForQuote(request);
+            //var result = await _commerceService.IsValidDealForQuote(request);
             // Assert
-            Assert.False(result);
+            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>(() => _commerceService.IsValidDealForQuote(request));
+
+            // Assert
+            Assert.Equal("Invalid Quote Id. Quote not found.", ex.Result.Message);
         }
 
         [Theory]
@@ -878,6 +882,70 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
         }
 
         [Fact]
+        public async void GetValidLines_Test()
+        {
+            //arrange
+            ItemModel item = new ItemModel
+            {
+                Product = new List<ProductModel> { new ProductModel { Type = "MANUFACTURER", Id = "CON-PSRU-SMS-1" } },
+                Quantity = 1,
+                UnitListPrice = 100
+            };
+            QuoteModel quote = new()
+            {
+                Items = new List<ItemModel> { item },
+                Source = new SourceModel { ID = "121793216" }
+            };
+
+            SpaDetailModel spaDetail = new()
+            {
+                Products = new List<SpaProductModel> { new SpaProductModel { ManufacturerPartNumber = "CON-PSRU-SMS-1" } }
+            };
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var lines = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "GetValidLines" && x.IsPrivate);
+
+            //Act
+            var  result = lines.Invoke(objType, new object[] { quote, spaDetail });            
+
+            Assert.NotNull(result);
+            
+        }
+
+        [Fact]
+        public async void InvalidProducts_Test()
+        {
+            //arrange
+            QuoteValidation item = new QuoteValidation
+            {
+                VendorPartNumber = "CON-PSRU-SMS-1",
+                Quantity = 1,
+                TdPartNumber = ""
+            };
+            List<QuoteValidation> lstLine = new List<QuoteValidation> { item };
+
+            SpaDetailModel spaDetail = new()
+            {
+                Products = new List<SpaProductModel> { new SpaProductModel { ManufacturerPartNumber = "CON-PSRU-SMS-1" } }
+            };
+            Type type;
+            object objType;
+            InitiateCommerceService(out type, out objType);
+
+            var lines = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .First(x => x.Name == "InvalidProducts" && x.IsPrivate);
+
+            //Act
+            var result = lines.Invoke(objType, new object[] { lstLine, spaDetail });
+
+            Assert.NotNull(result);
+           
+        }
+
+        [Fact]
         public async void ValidateRemainingQuantityOfDeal_Test()
         {
             //arrange
@@ -899,22 +967,21 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             var isValidDeal = type.GetMethods(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 .First(x => x.Name == "ValidateRemainingQuantityOfDeal" && x.IsPrivate);
 
-            //Act
-            var  task = (Task)isValidDeal.Invoke(objType, new object[] { quote, "1003174" });
-            var result = task.GetType().GetProperty("Result").GetValue(task);
+            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>(() => (Task)isValidDeal.Invoke(objType, new object[] { quote, "1003174" }));
 
-            Assert.True((bool)result);
+            // Assert
+            Assert.Equal("Cannot validate Quote. Try after some time.", ex.Result.Message);
         }
 
         [Fact]
         public void TdPartNumber_Test()
         {
-            //arrange
-            ItemModel item = new ItemModel
-            {
-                Product = new List<ProductModel> { new ProductModel { Type = "TECHDATA", Id = "00000011675600" } },
-                Quantity = 1,
-            };
+            ////arrange
+            //ItemModel item = new ItemModel
+            //{
+            //    Product = new List<ProductModel> { new ProductModel { Type = "TECHDATA", Id = "00000011675600" } },
+            //    Quantity = 1,
+            //};
 
             Type type;
             object objType;
@@ -924,7 +991,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
                 .First(x => x.Name == "TdPartNumber" && x.IsPrivate);
 
             //Act
-            var result = tdPartModel.Invoke(objType, new object[] { item });
+            var result = tdPartModel.Invoke(objType, new object[] { "00000011675600" });
             Assert.NotNull(result);
         }
 
