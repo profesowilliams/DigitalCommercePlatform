@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { checkApiErrorMessage, usPost } from "../../../../utils/api";
+import { usPost } from "../../../../utils/api";
 import WidgetTitle from "../Widgets/WidgetTitle";
 import InputText from "../Widgets/TextInput";
 import Button from "../Widgets/Button";
@@ -22,7 +22,10 @@ const EditConfig = ({ componentProp }) => {
         isDefault,
         placeholderText,
         puchOutEndpoint,
-        errorTitle
+        errorTitle,
+        error404Message,
+        error428Message,
+        errorGenericMessage,
     } = JSON.parse(componentProp);
     /**
      * 
@@ -58,6 +61,17 @@ const EditConfig = ({ componentProp }) => {
         setConfigurationId(value);
     };
 
+    
+    const getErrorMessage = (errorCode) => {
+        if(errorCode === 404) {
+          return error404Message;
+        } else if(errorCode === 428) {
+          return error428Message;
+        }
+        return errorGenericMessage;
+      }
+    
+
     const analyticsData = (vendorName, configID, complete) => {
       let analyticsObj = {
            event: ANALYTICS_TYPES.events.editConfigStart,
@@ -90,10 +104,10 @@ const EditConfig = ({ componentProp }) => {
         }
         setLoadingGetUrl(true);
         const result = await usPost(puchOutEndpoint,body)
-        const errorMessagesList = checkApiErrorMessage(result);
+        const errorObject = result.data?.error;
         
-        if (errorMessagesList){
-            modalEventError(errorMessagesList[0]);
+        if (errorObject) {
+            modalEventError(getErrorMessage(errorObject?.code));
             setLoadingGetUrl(false);
             return;
         }

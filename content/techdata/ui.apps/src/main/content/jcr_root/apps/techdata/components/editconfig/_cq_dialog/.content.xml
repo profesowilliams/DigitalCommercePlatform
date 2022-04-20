@@ -33,6 +33,21 @@
                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                         fieldLabel="Error Title"
                         name="./errorTitle"/>
+                    <error404Message
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Error 404 Not Found Message"
+                        name="./error404Message"/>
+                    <error428Message
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="Error 428 Not Connected to Vendor Message"
+                        name="./error428Message"/>
+                    <errorGenericMessage
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                        fieldLabel="An Unexpected Error Message"
+                        name="./errorGenericMessage"/>
                 </items>
             </column>
         </items>
