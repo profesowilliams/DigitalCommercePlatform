@@ -1,4 +1,4 @@
-/publishfarm {
+/publishfarm {  
 	# client headers which should be passed through to the render instances
 	# (feature supported since dispatcher build 2.6.3.5222)
 	/clientheaders {
@@ -17,7 +17,6 @@
 	# the glob pattern is matched against the first request line
 	/filter {
 		$include "../filters/ams_publish_filters.any"
-
 	}
 	# if the package is installed on publishers to generate a list of all content with a vanityurl attached
 	# this section will auto-allow the items to bypass the normal dispatcher filters
@@ -105,8 +104,7 @@
 		# when their path matches the /invalidate section above. This setting
 		# can be used in a setup, where a batch of activations would otherwise
 		# repeatedly invalidate the entire cache.
-		# 228744: Below is added to fix the security vulnerability issue for AMS
-		/gracePeriod "2"
+		# /gracePeriod "2"
 
 		# Enable TTL evaluates the response headers from the backend, and if they
 		# contain a Cache-Control max-age or Expires date, an auxiliary, empty file
