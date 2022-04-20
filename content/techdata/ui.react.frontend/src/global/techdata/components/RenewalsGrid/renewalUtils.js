@@ -94,7 +94,7 @@ export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopu
 }
 export async function nonFilteredOnSorting({request, hasSortChanged}){
     var url = request.url.split('&');
-    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, `SortBy=${hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`).join(",")}`);
+    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, hasSortChanged.current?.sortData.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&'));
     url.splice(url.findIndex(e => e.indexOf('SortDirection=') === 0),1);
 
     return await usGet(url.join('&'));
