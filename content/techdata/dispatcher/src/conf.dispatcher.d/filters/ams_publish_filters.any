@@ -39,3 +39,10 @@
 
 # Enable specific mime types clientlibs directories
 /0105 { /type "allow" /extension '(gltf|stl|obj|usdz|glb)' /method "GET" /path "/content/dam/*" }
+
+# 228744: Denying all suffixes by default
+# Block use of all selectors on any resource in /content
+/0160 { /type "deny" /url "/content*" /suffix "*" }
+# Individual selectors which are needed on the server side can be added in an allow list manner
+/0151 { /type "allow" /url "/content*" /selectors '(legit-selector|other-fine-selector)' /method "GET" }
+

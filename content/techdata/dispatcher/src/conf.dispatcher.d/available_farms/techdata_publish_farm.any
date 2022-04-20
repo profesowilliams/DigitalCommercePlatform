@@ -1,4 +1,4 @@
-/publishfarm {  
+/td_publishfarm {
 	# client headers which should be passed through to the render instances
 	# (feature supported since dispatcher build 2.6.3.5222)
 	/clientheaders {
@@ -78,6 +78,8 @@
 		# Ignore all URL parameters
 		/ignoreUrlParams {
 			/0001 { /glob "*" /type "allow" }
+			/0002 { /glob "fulltext" /type "deny" }
+            /0003 { /glob "resultsOffset" /type "deny" }
 		}
 
 		# Cache response headers next to a cached file. On the first request to
