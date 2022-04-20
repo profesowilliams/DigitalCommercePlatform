@@ -116,6 +116,14 @@ function RenewalsGrid(props) {
     })
   }
 
+  function tootltipVal(event) {
+    if (event?.colDef?.field === "renewedduration") {
+      return `${event.data?.source.type}: ${event.data?.support}`
+    } else {
+      return event?.value?.name;
+    }
+  }
+
   /**
    * A custom implementation to enable tooltips on hover
    * for those columns whose values are truncated. This is
@@ -125,10 +133,10 @@ function RenewalsGrid(props) {
    */
   function cellMouseOver(event) {
     setToolTipData({
-      value: event?.value?.name,
+      value: tootltipVal(event),
       x: event?.event?.pageX,
       y: event?.event?.pageY,
-      show: event?.colDef?.hoverable && event?.value?.name !== undefined,
+      show: event?.colDef?.hoverable,
     });
   }
 
