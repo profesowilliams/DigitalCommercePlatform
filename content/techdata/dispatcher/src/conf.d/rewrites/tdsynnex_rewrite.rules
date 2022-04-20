@@ -1,0 +1,28 @@
+# robot.txt
+RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt  [PT,L]
+RewriteRule ^/sitemap.xml$ /content/techdata/americas/us/en.sitemap.xml [PT,L]
+
+#tdsynnex-prod
+RewriteCond "%{HTTP_HOST}" "^www.tdsynnex.com$"
+RewriteRule "^(.*)$" "http://www.techdata.com/us/en/td-synnex.html" [R=301,L]
+
+#tdsynnex-uat
+RewriteCond "%{HTTP_HOST}" "^uat-tdsynnex.dc.tdebusiness.cloud$"
+RewriteRule "^(.*)$" "https://uat.dc.tdebusiness.cloud/us/en/td-synnex.html" [R=301,L]
+
+#tdsynnex-stage
+RewriteCond "%{HTTP_HOST}" "^stage-tdsynnex.dc.tdebusiness.cloud$"
+RewriteRule "^(.*)$" "https://stage.dc.tdebusiness.cloud/us/en/td-synnex.html" [R=301,L]
+
+RewriteCond %{REQUEST_URI} !^/apps
+RewriteCond %{REQUEST_URI} !^/bin
+RewriteCond %{REQUEST_URI} !^/content
+RewriteCond %{REQUEST_URI} !^/etc
+RewriteCond %{REQUEST_URI} !^/home
+RewriteCond %{REQUEST_URI} !^/libs
+RewriteCond %{REQUEST_URI} !^/saml_login
+RewriteCond %{REQUEST_URI} !^/system
+RewriteCond %{REQUEST_URI} !^/tmp
+RewriteCond %{REQUEST_URI} !^/var
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.txt|.xml|.cache)$
+RewriteRule ^/(.*)$ /content/${CONTENT_FOLDER_NAME}/americas/us/$1 [PT,L]
