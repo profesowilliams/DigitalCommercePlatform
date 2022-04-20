@@ -72,17 +72,22 @@
     ],
     searchOptionsList: [
       {
-        searchLabel: "Agreement number",
+        searchLabel: "Serial Nº",
+        searchKey: "SerialNumber",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Disti Quote Nº",
+        searchKey: "Id",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Agreement Nº",
         searchKey: "ContractID",
         showIfIsHouseAccount: false,
       },
       {
-        searchLabel: "Vendor Quote ID",
-        searchKey: "VendorQuoteID",
-        showIfIsHouseAccount: false,
-      },
-      {
-        searchLabel: "Instance number",
+        searchLabel: "Instance Nº",
         searchKey: "Instance",
         showIfIsHouseAccount: false,
       },
@@ -102,20 +107,15 @@
         showIfIsHouseAccount: true,
       },
       {
-        searchLabel: "Reseller Number",
+        searchLabel: "Vendor Quote ID",
+        searchKey: "VendorQuoteID",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Reseller Account",
         searchKey: "ResellerId",
         showIfIsHouseAccount: true,
-      },
-      {
-        searchLabel: "Serial Number",
-        searchKey: "SerialNumber",
-        showIfIsHouseAccount: false,
-      },
-      {
-        searchLabel: "Disti Quote Number",
-        searchKey: "Id",
-        showIfIsHouseAccount: false,
-      },
+      },      
     ],
     renewalDetailsEndpoint: "http://localhost:3000/ui-renewal/v1/Details",
     exportXLSRenewalsEndpoint: "http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",

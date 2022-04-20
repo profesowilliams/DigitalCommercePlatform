@@ -1,18 +1,19 @@
 import PropTypes from "prop-types";
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, forwardRef, useImperativeHandle } from "react";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
 import Capsule from "../Widgets/Capsule";
+import { useRenewalGridState } from "./store/RenewalsStore";
 
-function SearchFilter({
+function _SearchFilter({
   styleProps,
   options,
   callback,
   inputType,
   filterCounter,
   onQueryChanged
-}) {
+}, ref) {
   const [values, setValues] = useState({
     dropdown: "",
     input: "",
@@ -31,12 +32,11 @@ function SearchFilter({
   const [isEditView, setIsEditView] = useState(initialEditViewVal);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTriggered, setSearchTriggered] = useState(false);
-  
-  const clickHandler = () => {
-    callback()
-    setCallbackExecuted(true)
-  };
+  const effects = useRenewalGridState(state => state.effects);
+  const [inputValueState, setInputValueState] = useState(''); 
 
+  useImperativeHandle(ref, () => ({field:values.option, value: inputValueState}), [values, inputValueState])
+  
   function clearValues() {
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
@@ -118,7 +118,8 @@ function SearchFilter({
     setIsSearchCapsuleVisible(true);
     setSearchTerm(inputValue);
     setIsEditView(false);
-    onQueryChanged(query);
+    setInputValueState(inputValue);
+    onQueryChanged();
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {
         searchTerm: inputValue,
@@ -246,8 +247,10 @@ function SearchFilter({
   );
 }
 
+const SearchFilter = forwardRef(_SearchFilter);
+
 export default SearchFilter;
-SearchFilter.propTypes = {
+_SearchFilter.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       searchLabel: PropTypes.string,
@@ -259,3 +262,5 @@ SearchFilter.propTypes = {
   inputType: PropTypes.string,
   styleProps: PropTypes.object,
 };
+
+

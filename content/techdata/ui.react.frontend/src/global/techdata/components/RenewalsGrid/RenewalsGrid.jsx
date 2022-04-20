@@ -8,7 +8,7 @@ import VerticalSeparator from "../Widgets/VerticalSeparator";
 import CustomRenewalPagination from "./CustomRenewalPagination";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 import RenewalDetailRenderers from "./RenewalDetailRenderers";
-import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, nonFilteredOnSorting, preserveFilteringOnPagination, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
+import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, nonFilteredOnSorting, addCurrentPageNumber, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
@@ -32,6 +32,7 @@ function RenewalsGrid(props) {
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData);
+  
   const { setToolTipData } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
@@ -45,6 +46,8 @@ function RenewalsGrid(props) {
   const { searchOptionsList } = componentProp;
 
   const customPaginationRef = useRef();
+
+  const searchCriteria = useRef({field:'',value:''});
 
   const options = {
     defaultSortingColumnKey: "dueDate",
@@ -69,12 +72,12 @@ function RenewalsGrid(props) {
   const customRequestInterceptor = async (request) => {
     const sortingFields = { dueDateKey, dueDateDir, secondLevelOptions };
     if (mapSortIdByPrice(secondLevelOptions, gridApiRef, request)) return;
-    request.url = preserveFilteringOnPagination(customPaginationRef, request);
+    request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp});
     } else {
-      response = await nonFilteredOnSorting({request, hasSortChanged});  
+      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria});  
     } 
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
@@ -148,6 +151,7 @@ function RenewalsGrid(props) {
           <SearchFilter
             options={searchOptionsList}
             onQueryChanged={onQueryChanged}
+            ref={searchCriteria}
           />
           <VerticalSeparator />
           <RenewalFilter

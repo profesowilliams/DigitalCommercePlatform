@@ -66,7 +66,7 @@ export function priceDescendingByDefaultHandle(sortingFields, mappedResponse) {
     return [...multiSorting];
 }
 
-export function preserveFilteringOnPagination(customPaginationRef, request) {
+export function addCurrentPageNumber(customPaginationRef, request) {
     const pageNumber = customPaginationRef.current?.pageNumber;
     if (pageNumber !== 1) {
         return request.url.replace(/PageNumber=\d+/, `PageNumber=${pageNumber}`);
@@ -92,11 +92,14 @@ export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopu
       }
     return false
 }
-export async function nonFilteredOnSorting({request, hasSortChanged}){
+export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria}){
     var url = request.url.split('&');
     url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, hasSortChanged.current?.sortData.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&'));
     url.splice(url.findIndex(e => e.indexOf('SortDirection=') === 0),1);
-
+    if (searchCriteria.current?.field) {
+        const {field, value} = searchCriteria.current;
+        url.push(`${field}=${value}`);
+    }
     return await usGet(url.join('&'));
 }
 

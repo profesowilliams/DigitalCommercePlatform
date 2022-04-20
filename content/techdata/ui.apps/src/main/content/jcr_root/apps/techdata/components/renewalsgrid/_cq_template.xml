@@ -213,48 +213,48 @@
     <searchOptionsList jcr:primaryType="nt:unstructured">
         <item0
             jcr:primaryType="nt:unstructured"
-            searchKey="ContractID"
-            searchLabel="Agreement number"
-            showIfIsHouseAccount="{Boolean}false"/>
+            searchKey="SerialNumber"
+            searchLabel="Serial Nº"
+            showIfIsHouseAccount="{Boolean}false"/>  
         <item1
             jcr:primaryType="nt:unstructured"
-            searchKey="VendorQuoteID"
-            searchLabel="Vendor Quote ID"
+            searchKey="Id"
+            searchLabel="Disti Quote Nº"
             showIfIsHouseAccount="{Boolean}false"/>
         <item2
             jcr:primaryType="nt:unstructured"
-            searchKey="Instance"
-            searchLabel="Instance number"
+            searchKey="ContractID"
+            searchLabel="Agreement Nº"
             showIfIsHouseAccount="{Boolean}false"/>
         <item3
             jcr:primaryType="nt:unstructured"
-            searchKey="EndUser"
-            searchLabel="End-User Name"
+            searchKey="Instance"
+            searchLabel="Instance Nº"
             showIfIsHouseAccount="{Boolean}false"/>
         <item4
             jcr:primaryType="nt:unstructured"
-            searchKey="EndUserEmail"
-            searchLabel="End-User Email Address"
+            searchKey="EndUser"
+            searchLabel="End-User name"
             showIfIsHouseAccount="{Boolean}false"/>
         <item5
             jcr:primaryType="nt:unstructured"
-            searchKey="ResellerName"
-            searchLabel="Reseller Name"
-            showIfIsHouseAccount="{Boolean}true"/>
+            searchKey="EndUserEmail"
+            searchLabel="End-User email address"
+            showIfIsHouseAccount="{Boolean}false"/>
         <item6
             jcr:primaryType="nt:unstructured"
-            searchKey="ResellerId"
-            searchLabel="Reseller Number"
+            searchKey="ResellerName"
+            searchLabel="Reseller name"
             showIfIsHouseAccount="{Boolean}true"/>
         <item7
             jcr:primaryType="nt:unstructured"
-            searchKey="SerialNumber"
-            searchLabel="Serial Number"
-            showIfIsHouseAccount="{Boolean}false"/>
+            searchKey="ResellerId"
+            searchLabel="Reseller account number"
+            showIfIsHouseAccount="{Boolean}true"/>  
         <item8
             jcr:primaryType="nt:unstructured"
-            searchKey="Id"
-            searchLabel="Disti Quote Number"
+            searchKey="VendorQuoteID"
+            searchLabel="Vendor Quote ID"
             showIfIsHouseAccount="{Boolean}false"/>
     </searchOptionsList>
 </jcr:root>
