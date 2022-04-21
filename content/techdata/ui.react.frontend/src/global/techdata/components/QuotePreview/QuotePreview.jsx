@@ -229,14 +229,19 @@ function QuotePreview(props) {
     });
   };
 
+  const showPopUpValidation = (isStandardPrincing) => {
+    return showPopUp && flagDeal && isStandardPrincing
+  };
+
   /**
    * Function that validate if the quote have the field
    * isExclusive true and show a modal to select the
    * SAP system and keep the logic
-   * @param {any} quoteParam 
+   * @param {any} quoteParam
+   * @param {boolean} isStandardPrincing
    */
-  const validateCreateQuoteSystem = (quoteParam) => {
-    if (showPopUp && flagDeal) {
+  const validateCreateQuoteSystem = (quoteParam, isStandardPrincing) => {
+    if (showPopUpValidation(isStandardPrincing)) { 
       showSimpleModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, (
         <ModalQuoteCreateModal
           createQuote={createQuote} 
@@ -251,18 +256,21 @@ function QuotePreview(props) {
   };
 
   const handleQuickQuote = useCallback(() => {
-    const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
-          dealRequired = isDealRequired(quoteDetails, true),
-          userMissingFields = isEndUserMissing(quoteDetails, true);
-
-    tryCreateQuote(pricingRequired, dealRequired, userMissingFields, quoteDetails);
+    const requiredFields = {
+      pricingRequired : isPricingOptionsRequired(quoteDetails, true),
+      dealRequired : isDealRequired(quoteDetails, true),
+      userMissingFields : isEndUserMissing(quoteDetails, true)
+    }
+    tryCreateQuote(requiredFields, quoteDetails, false);
   }, [quoteDetails]);
 
   const handleQuickQuoteWithoutDeals = (e) => {
-    const pricingRequired = isPricingOptionsRequired(quoteDetails, true),
-          userMissingFields = isEndUserMissing(quoteDetails, true);
-
     const quoteDetailsCopy = { ...quoteDetails };
+    const requiredFields = {
+      pricingRequired: isPricingOptionsRequired(quoteDetails, true),
+      dealRequired: false,
+      userMissingFields: isEndUserMissing(quoteDetails, true),
+    }
 
     // remove deal if present
     if (!isDealConfiguration(quoteDetails.source) && quoteDetailsCopy.hasOwnProperty("deal")) {
@@ -270,21 +278,20 @@ function QuotePreview(props) {
 
       quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
     }
-    tryCreateQuote(pricingRequired, false, userMissingFields, quoteDetailsCopy);
+    tryCreateQuote(requiredFields, quoteDetailsCopy, true);
   };
   
-
-  const tryCreateQuote = (pricingRequired, dealRequired, userMissingFields, quote) => {
+  const tryCreateQuote = (requiredFields, quote, isStandardPrincing) => {
     if (cannotCreateQuote(quote)) {
       showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
-    } else if(pricingRequired || dealRequired || userMissingFields) {
+    } else if(requiredFields.pricingRequired || requiredFields.dealRequired || requiredFields.userMissingFields) {
       scrollToTopError();
 
-      setQuoteWithoutEndUser(userMissingFields);
-      setQuoteWithoutDealPricing(pricingRequired);
-      setQuoteWithoutDeal(dealRequired);
+      setQuoteWithoutEndUser(requiredFields.userMissingFields);
+      setQuoteWithoutDealPricing(requiredFields.pricingRequired);
+      setQuoteWithoutDeal(requiredFields.dealRequired);
     } else {
-        validateCreateQuoteSystem(quote);
+        validateCreateQuoteSystem(quote, isStandardPrincing);
     }
   };
 
