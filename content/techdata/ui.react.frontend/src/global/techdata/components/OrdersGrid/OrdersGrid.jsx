@@ -360,9 +360,9 @@ function OrdersGrid(props) {
      * @param {() => void} onSearch 
      * @param {() => void} onClear 
      */
-    const handleClickOptionsButton = (expanded = false, handleChange, onSearch, onClear) => {
+    const handleClickOptionsButton = (expanded = false, handleChange, onSearch, onClear, hideOpenOrdersPill = false) => {
         let value = expanded ? '' : !orderReportStatus;
-        setExpandedOpenOrderFilter(!expandedOpenOrderFilter);
+        setExpandedOpenOrderFilter(!hideOpenOrdersPill);
         
         setOrderReportStatus(value);
         filterOpenOrderReportsAction(value, handleChange, onSearch, onClear);

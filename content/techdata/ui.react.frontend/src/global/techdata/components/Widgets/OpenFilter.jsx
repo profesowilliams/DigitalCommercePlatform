@@ -19,7 +19,7 @@ import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
                   category: ANALYTICS_TYPES.category.orderTableInteractions,
                   name: ANALYTICS_TYPES.name.openOrderFilterApplied,
                 });
-                handleClickOptionsButton(false, handleChange, onSearch, onClear)
+                handleClickOptionsButton(false, handleChange, onSearch, onClear, true);
                 setExpanded(false);
             }}
         >

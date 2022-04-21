@@ -124,7 +124,9 @@ function GridSearchCriteria({
 					<HeaderButtonOptions 
 						handleChange={handleChange}
 						onSearch={onSearch}
+						onClear={onClear}
 						expanded={false}
+						setExpanded={setExpanded}
 						handleClickOptionsButton={handleClickOptionsButton}
 					/>) : null} 
 			</div>
