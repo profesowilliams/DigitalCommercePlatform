@@ -1,6 +1,7 @@
 //2021 (c) Tech Data Corporation -. All Rights Reserved.
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Commerce.Infrastructure.Filters;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
@@ -95,6 +96,20 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Controllers
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetRecentQuotes([FromQuery] GetQuotesForGrid.Request request)
+        {
+            var response = await Mediator.Send(request).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// This request is for deatils returned by SPA
+        /// </summary>
+        /// <param name="dealId"></param>
+        /// <param name="vendorId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("applySPA")]
+        public async Task<ActionResult> GetSpa([FromBody] SpaDetails.Request request)
         {
             var response = await Mediator.Send(request).ConfigureAwait(false);
             return Ok(response);

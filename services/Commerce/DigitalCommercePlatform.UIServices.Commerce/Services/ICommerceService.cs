@@ -2,6 +2,7 @@
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Order.Internal;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
@@ -26,5 +27,6 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
         Task<UpdateQuote.Response> UpdateQuote(UpdateQuote.Request request);
         Task<CreateModelResponse> CreateQuoteFromExpired(CreateQuoteFrom.Request request);
         Task<ValidateQuoteForOrder.Response> IsValidDealForQuote(ValidateQuoteForOrder.Request request);
+        Task<SpaDetails.Response> CanApplySPA(SpaDetails.Request request);
     }
 }

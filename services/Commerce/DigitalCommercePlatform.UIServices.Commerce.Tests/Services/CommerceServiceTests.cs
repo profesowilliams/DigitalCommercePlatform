@@ -3,6 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
@@ -720,6 +721,37 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
 
         [Theory]
         [AutoDomainData]
+        public async Task CanApplySPA(SpaDetails.Request request)
+        {
+            //Arrange
+
+            List<SPAProduct> lstSpaProducts = new List<SPAProduct>();
+
+            SPAProduct spaProduct = new SPAProduct()
+            {
+                UnitListPrice = 1M,
+                ManufacturerPartNo = "MNV-TST-123-o",
+                TDPartNo = "tdbv7826",
+                Quantity = 30M
+            };
+            lstSpaProducts.Add(spaProduct);
+            request = new()
+            {
+                DealId = "1234",
+                SPAProducts = lstSpaProducts
+            };
+
+
+            // Act
+            Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>(() => (Task)_commerceService.CanApplySPA(request));
+
+            // Assert
+
+            Assert.Equal("Cannot Apply SPA. Try after some time.", ex.Result.Message);
+        }
+
+        [Theory]
+        [AutoDomainData]
         public async Task CreateQuoteFrom(CreateQuote.Request request)
         {
             List<Line> lstline = new List<Line>();
@@ -970,7 +1002,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Tests.Services
             Task<UIServiceException> ex = Assert.ThrowsAsync<UIServiceException>(() => (Task)isValidDeal.Invoke(objType, new object[] { quote, "1003174" }));
 
             // Assert
-            Assert.Equal("Cannot validate Quote. Try after some time.", ex.Result.Message);
+            Assert.Equal("SPA is not valid for Quote.", ex.Result.Message);
         }
 
         [Fact]

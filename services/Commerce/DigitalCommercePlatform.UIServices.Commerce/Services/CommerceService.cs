@@ -3,6 +3,7 @@ using AutoMapper;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.GetPricingCondition;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Actions.QuotePreviewDetail;
+using DigitalCommercePlatform.UIServices.Commerce.Actions.Spa;
 using DigitalCommercePlatform.UIServices.Commerce.Models;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote;
 using DigitalCommercePlatform.UIServices.Commerce.Models.Quote.Create;
@@ -24,7 +25,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -80,12 +80,45 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             return response;
         }
 
+        public async Task<SpaDetails.Response> CanApplySPA(SpaDetails.Request request)
+        {
+            try
+            {
+                var items = new List<ItemModel>();
+                foreach (var item in request.SPAProducts)
+                {
+                    var itemModel = new ItemModel
+                    {
+                        Quantity = item?.Quantity,
+                        Product = new List<ProductModel> { new ProductModel { Type = "MANUFACTURER", Id = item?.ManufacturerPartNo }, new ProductModel { Type = "TECHDATA", Id = item?.TDPartNo } },
+                        UnitListPrice = item.UnitListPrice
+                    };
+                    items.Add(itemModel);
+                }
+                QuoteModel quoteModel = new QuoteModel { Items = items };
+                var ValidQuoteResponse = ValidateRemainingQuantityOfDeal(quoteModel, request.DealId);
+                SpaDetails.Response response = new SpaDetails.Response { SPA = ValidQuoteResponse.Result.CanCheckout, Items = ValidQuoteResponse.Result.LineNumbers };
+                return await Task.FromResult(response);
+            }
+            catch (UIServiceException uex)
+            {
+                _logger.LogError(uex, "Exception at CanApplySPA : " + nameof(Commerce));
+                throw new UIServiceException(uex.Message, 1006);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception at CanApplySPA : " + nameof(Commerce));
+                throw new UIServiceException("Cannot Apply SPA. Try after some time.", 1005);
+            }
+
+        }
+
         public async Task<ValidateQuoteForOrder.Response> IsValidDealForQuote(ValidateQuoteForOrder.Request request)
         {
             QuoteModel quoteDetail = await GetQuoteDetailsForDeal(request);
             if (quoteDetail == null || quoteDetail.Source == null) // Quote is invalid
                 throw new UIServiceException("Invalid Quote Id. Quote not found.", 1006);
-            
+
 
             var dealId = quoteDetail.Attributes.Where(n => n.Name.Equals("DEALIDENTIFIER", StringComparison.OrdinalIgnoreCase)).FirstOrDefault()?.Value; // need to verify
             if (string.IsNullOrWhiteSpace(dealId))
@@ -924,7 +957,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
 
         private string TdPartNumber(string partNumber)
-        {            
+        {
             partNumber = partNumber ?? "0";
             partNumber = partNumber.TrimStart('0');
             return partNumber;
@@ -944,12 +977,12 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             }
 
         }
-        
+
         private async Task<ValidateQuoteForOrder.Response> ValidateRemainingQuantityOfDeal(QuoteModel quoteDetail, string dealId)
         {
             try
             {
-                SpaDetailModel spaDetails = await _helperService.GetDealDetails(new SpaFindModel(dealId, true));             
+                SpaDetailModel spaDetails = await _helperService.GetDealDetails(new SpaFindModel(dealId, true));
                 string tdPartNumber = string.Empty;
                 List<string> lstmanufacturerPartNumber = new();
 
@@ -968,7 +1001,7 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
 
                 List<string> lstProducts = InvalidProducts(lines, spaDetails);
 
-                return new ValidateQuoteForOrder.Response { CanCheckout = lstProducts.Any(), LineNumbers = null };
+                return new ValidateQuoteForOrder.Response { CanCheckout = !lstProducts.Any(), LineNumbers = lstProducts };
             }
             catch (UIServiceException uex)
             {
@@ -1019,11 +1052,11 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Services
             var validLines = quoteDetail.Items.Where(i => i.UnitListPrice > 0).ToList(); //  
 
             // check if SPA has at least one valid part
-            
-            var validPartsForSPA = spaDetails.Products.IntersectBy(validLines.Select(x => x.Product.Where(x => x.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id).ToList(), x => x.ManufacturerPartNumber).ToList();
+
+            var validPartsForSPA = spaDetails?.Products.IntersectBy(validLines.Select(x => x.Product.Where(x => x.Type.ToUpper().Equals("MANUFACTURER", StringComparison.Ordinal))?.FirstOrDefault()?.Id).ToList(), x => x.ManufacturerPartNumber).ToList();
             validPartsForSPA = validPartsForSPA ?? new List<SpaProductModel>();
 
-            if (validPartsForSPA.Count == 0)            
+            if (validPartsForSPA.Count == 0)
                 throw new UIServiceException("SPA is not valid for Quote.", 1006);
 
             return validLines;

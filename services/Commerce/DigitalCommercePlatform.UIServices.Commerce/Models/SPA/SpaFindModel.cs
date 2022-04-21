@@ -15,4 +15,14 @@ namespace DigitalCommercePlatform.UIServices.Commerce.Models.SPA
             Details = details;
         }
     }
+
+    [ExcludeFromCodeCoverage]
+    public class SPAProduct
+    {
+        public string ManufacturerPartNo { get; set; }
+        public string TDPartNo { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal UnitListPrice { get; set; }
+        
+    }
 }
