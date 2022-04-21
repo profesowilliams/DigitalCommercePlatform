@@ -983,7 +983,7 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                 },
             };
 
-            var productModel = new ProductModel
+            var expectedProductModel = new ProductModel
             {
                 Price = new PriceModel
                 {
@@ -991,19 +991,20 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions
                     BasePrice = 89.99m.Format("USD"),
                     BestPriceExpiration = DateOnly.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
+                    ListPrice = "n/a",
+                    PromoAmount = 14.44m.Format("USD")
                 },
             };
+
+            ProductModel actual = new ProductModel();
             const string naLabel = "n/a";
             MethodInfo sut = typeof(GetProductDetailsHandler.Handler).GetMethod("MapPrice", BindingFlags.Static | BindingFlags.NonPublic);
 
             //Act
-            sut.Invoke(_sut, new object[] { productDto, productModel, naLabel });
+            sut.Invoke(_sut, new object[] { productDto, actual, naLabel });
 
             //Assert
-            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
-            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
-            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
-            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
+            actual.Should().BeEquivalentTo(expectedProductModel);
         }
 
         private GetProductDetailsHandler.Handler GetHandler() => new(

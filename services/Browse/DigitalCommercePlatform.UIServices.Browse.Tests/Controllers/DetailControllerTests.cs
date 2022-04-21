@@ -1,4 +1,5 @@
-//2022 (c) Tech Data Corporation -. All Rights Reserved.
+//2022 (c) TD Synnex - All Rights Reserved.
+
 using DigitalCommercePlatform.UIServices.Browse.Actions.GetCatalogDetails;
 using DigitalCommercePlatform.UIServices.Browse.Controllers;
 using DigitalCommercePlatform.UIServices.Browse.Models.Catalog;
@@ -12,7 +13,6 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -79,20 +79,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Controllers
             var controller = GetController();
             var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
             result.Should().NotBeNull();
-        }       
-
-        [Theory]
-        [AutoDomainData]
-        public async Task GetProductCatalogService_BadRequest(ResponseBase<GetProductCatalogHandler.Response> expected, ProductCatalogRequest model)
-        {
-            mockMediator.Setup(x => x.Send(
-                       It.IsAny<GetProductCatalogHandler.Request>(),
-                       It.IsAny<CancellationToken>()))
-                   .ReturnsAsync(expected);
-
-            var controller = GetController();
-            var result = await controller.GetProductCatalog(model).ConfigureAwait(false);
-            result.Should().Equals(HttpStatusCode.BadRequest);
         }
     }
 }

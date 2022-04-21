@@ -1,4 +1,4 @@
-﻿//2022 (c) Tech Data Corporation - All Rights Reserved.
+﻿//2022 (c) TD Synnex - All Rights Reserved.
 
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product;
 using DigitalCommercePlatform.UIServices.Browse.Dto.Product.Internal;
@@ -36,7 +36,6 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
         private readonly Mock<ITranslationService> _translationServiceMock;
         private readonly Mock<IOrderLevelsService> _orderLevelsServiceMock;
         private readonly Mock<IImageResolutionService> _imageResolutionServiceMock;
-
 
         public GetProductsCompareTests()
         {
@@ -615,11 +614,11 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     BestPriceExpiration = DateTime.MaxValue,
                     BestPriceIncludesWebDiscount = true,
                     ListPrice = 44.44m,
-                    Currency = "USD"
+                    Currency = "USD",
                 },
             };
 
-            var productModel = new ProductModel
+            var expectedProductModel = new ProductModel
             {
                 Price = new PriceModel
                 {
@@ -627,26 +626,25 @@ namespace DigitalCommercePlatform.UIServices.Browse.Tests.Actions.GetProductsCom
                     BasePrice = 89.99m.Format("USD"),
                     BestPriceExpiration = DateOnly.MaxValue.ToString(),
                     BestPriceIncludesWebDiscount = true,
+                    ListPrice = 44.44m.Format("USD"),
+                    PromoAmount = 14.44m.Format("USD")
                 },
                 Authorization = new AuthorizationModel
                 {
                     CanViewPrice = true,
                 },
             };
+            ProductModel actual = new ProductModel { Authorization = new AuthorizationModel { CanViewPrice = true } };
 
             MethodInfo sut = typeof(Browse.Actions.GetProductsCompare.Handler).GetMethod("MapPrice", BindingFlags.NonPublic | BindingFlags.Static);
             var handler = GetHandler();
             const string naLabel = "n/a";
 
             //Act
-            sut.Invoke(handler, new object[] { productDto, productModel, naLabel });
+            sut.Invoke(handler, new object[] { productDto, actual, naLabel });
 
             //Assert
-            productModel.Price.BestPrice.Should().Equals(productDto.Price.BestPrice);
-            productModel.Price.BasePrice.Should().Equals(productDto.Price.BasePrice);
-            productModel.Price.BestPriceExpiration.Should().Equals(productDto.Price.BestPriceExpiration);
-            productModel.Price.BestPriceIncludesWebDiscount.Should().Equals(productDto.Price.BestPriceIncludesWebDiscount);
-            productModel.Price.ListPrice.Should().Equals(naLabel);
+            actual.Should().BeEquivalentTo(expectedProductModel);
         }
 
         [Theory]

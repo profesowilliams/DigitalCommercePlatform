@@ -63,15 +63,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DigitalFoundation.Common" Version="6.0.60" />
-    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.60" />
-    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.60" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="DigitalFoundation.Common" Version="6.0.64" />
+    <PackageReference Include="DigitalFoundation.Common.Security" Version="6.0.64" />
+    <PackageReference Include="DigitalFoundation.Common.Services" Version="6.0.64" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Serilog" Version="2.10.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.9.0" />
   </ItemGroup>
