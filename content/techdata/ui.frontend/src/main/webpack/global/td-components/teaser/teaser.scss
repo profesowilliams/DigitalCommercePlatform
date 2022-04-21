@@ -402,6 +402,9 @@
     .cmp-teaser__desc-link {
         text-decoration: none;
         color: unset;
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
@@ -754,6 +757,9 @@
 .cmp-teaser__desc-link {
     text-decoration: none;
     color: #555;
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 // Teaser reverse
@@ -839,6 +845,9 @@
     .cmp-teaser__title-link {
         color: get-color(brand-white) !important;
         text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
@@ -849,6 +858,9 @@
     .cmp-teaser__title-link {
         color: get-color(text-light-gray) !important;
         text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
     }
 }
 
