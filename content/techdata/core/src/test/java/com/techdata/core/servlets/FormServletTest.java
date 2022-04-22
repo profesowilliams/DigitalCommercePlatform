@@ -265,7 +265,7 @@ class FormServletTest {
     void testDoPost() throws ServletException, Exception, NoSuchFieldException, IllegalAccessException {
 
         String[] allowedFileTypesArray = new String[]{".pdf", ".gif"};
-        String[] apacFormParameterList = new String[]{"abcTest", "defTest"};
+        String apacFormParameterList = new String("abcTest#defTest");
         String[] allowedFileContentTypesMockValue = new String[]{"application/pdf"};
         String[] encodedChars = new String[]{"&==&amp;","<==&lt;",">==&gt;","\"==&quot;","'==&#x27;"};
         String[] emails = new String[]{"test@techdata.com"};
@@ -280,7 +280,7 @@ class FormServletTest {
         when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
         when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
         when(formConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);
-        when(formConfigurations.apacFormParameterList()).thenReturn(allowedFileTypesArray);
+        when(formConfigurations.apacFormParameterList()).thenReturn(apacFormParameterList);
         when(formConfigurations.allowedFileContentTypes()).thenReturn(allowedFileContentTypesMockValue);
         when(formConfigurations.charsWithEncodedValues()).thenReturn(encodedChars);
         when(mockRequest.getRequestParameterMap()).thenReturn(value);

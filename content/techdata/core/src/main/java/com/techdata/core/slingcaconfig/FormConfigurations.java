@@ -64,17 +64,17 @@ public @interface FormConfigurations {
     String[] charsWithEncodedValues() default
             {"&==&amp;","<==&lt;",">==&gt;","\"==&quot;","'==&#x27;", "/==&#x2F;"};
 
-    @Property(label = "APAC Form Parameter List", description = "The list of parameters used on the form")
-    String[] apacFormParameterList() default 
-            {"techDataAccountRep","registerCashOrCreditAccount","creditLimit","companyStructure","subsidiaryBranch",
-             "trustee","companyName","companyWebsite","primaryBusiness","specialization","natureOfBusiness","annualTechRevGoal",
-             "vendor","businessRegistrationNumber","authorisedShareCapital","paidUpCapital","dateOfIncorporation","registeredAddress",
-             "countryBusinessInfo","stateBusinessInfo","cityBusinessInfo","postalCodeBusinessInfo","sameInfoForBillingNShipping",
-             "billToAddress","countryBillToAddress","stateBillToAddress","cityBillToAddress","postalCodeBillToAddress","shipToAddress",
-             "countryShipToAddress","stateShipToAddress","cityShipToAddress","postalCodeShipToAddress","purchasingOfficerContactName",
-             "contactPhone","faxContact","accountsPayableContactName","contactEmailAccountsPayable","contactEmailAccountsPayableSOA",
-             "contactEmailAccountsPayableInvoice","contactPhoneAccountsPayable","faxAccountsPayable","mdCeoName","emailMDCeo",
-             "telephoneMDCeo","cfoName","emailMDCeo","telephoneMDCeo","shareholders","createCloudAccount","whatPublicCloudVendors",
-             "AgreeToTerms","InfoProvidedAboveIsCorrect","signature","signatureDate","agreeTerms","agreeSOA"};
-
+    @Property(label = "APAC Form Parameter List", description = "The list of parameters used on the form",
+            property = {"widgetType=textarea"})
+    String apacFormParameterList()  default
+            "techDataAccountRep#registerCashOrCreditAccount#creditLimit#companyStructure#subsidiaryBranch#" +
+            "trustee#companyName#companyWebsite#primaryBusiness#specialization#natureOfBusiness#annualTechRevGoal#" +
+            "vendor#businessRegistrationNumber#authorisedShareCapital#paidUpCapital#dateOfIncorporation#registeredAddress#" +
+            "countryBusinessInfo#stateBusinessInfo#cityBusinessInfo#postalCodeBusinessInfo#sameInfoForBillingNShipping#" +
+            "billToAddress#countryBillToAddress#stateBillToAddress#cityBillToAddress#postalCodeBillToAddress#shipToAddress#" +
+            "countryShipToAddress#stateShipToAddress#cityShipToAddress#postalCodeShipToAddress#purchasingOfficerContactName#" +
+            "contactPhone#faxContact#accountsPayableContactName#contactEmailAccountsPayable#contactEmailAccountsPayableSOA#" +
+            "contactEmailAccountsPayableInvoice#contactPhoneAccountsPayable#faxAccountsPayable#mdCeoName#emailMDCeo#" +
+            "telephoneMDCeo#cfoName#emailMDCeo#telephoneMDCeo#shareholders#createCloudAccount#whatPublicCloudVendors#" +
+            "AgreeToTerms#InfoProvidedAboveIsCorrect#signature#signatureDate#agreeTerms#agreeSOA";
 }

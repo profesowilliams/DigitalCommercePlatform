@@ -117,9 +117,12 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
-        private void populateDefaultValuesToEmailParams(Map<String, String> emailParams, String[] apacFormParameterList) {
-                for(String param : apacFormParameterList) {
-                        emailParams.put(param, StringUtils.EMPTY);
+        private void populateDefaultValuesToEmailParams(Map<String, String> emailParams, String apacFormParameterList) {
+                if(StringUtils.isNotEmpty(apacFormParameterList)) {
+                        String[] paramList = apacFormParameterList.split("#");
+                        for (String param : paramList) {
+                                emailParams.put(param, StringUtils.EMPTY);
+                        }
                 }
         }
 
