@@ -91,6 +91,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
                                 FormConfigurations formConfigurations = getCAConfigFormEmailObject(resource);
                                 if(formConfigurations != null) {
+                                        populateDefaultValuesToEmailParams(emailParams, formConfigurations.apacFormParameterList());
                                         thresholdFileSize = formConfigurations.fileThresholdInMB();
                                         allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                                         allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
@@ -113,6 +114,12 @@ public class FormServlet extends SlingAllMethodsServlet {
                 catch (CustomFormException e) {
                         LOG.error("Exception occurred during form submission", e);
                         response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, e.getMessage());
+                }
+        }
+
+        private void populateDefaultValuesToEmailParams(Map<String, String> emailParams, String[] apacFormParameterList) {
+                for(String param : apacFormParameterList) {
+                        emailParams.put(param, StringUtils.EMPTY);
                 }
         }
 
