@@ -120,10 +120,15 @@ function RenewalsGrid(props) {
   }
 
   function tootltipVal(event) {
-    if (event?.colDef?.field === "renewedduration") {
-      return `${event.data?.source.type}: ${event.data?.support}`
-    } else {
-      return event?.value?.name;
+    switch (event.colDef.field) {
+      case "renewedduration":
+        return `${event.data.source.type}: ${event.data.support}`
+      case "resellername":
+        return event.data.reseller.name;
+      case "vendor":
+        return `${event.value.name}: ${event.data.programName}`
+      default:
+        return event.value.name;
     }
   }
 
