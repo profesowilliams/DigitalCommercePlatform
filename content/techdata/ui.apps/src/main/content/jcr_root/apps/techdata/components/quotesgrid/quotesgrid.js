@@ -226,10 +226,6 @@ use(function () {
     jsonObject["searchCriteria"] = searchCriteriaData;
   }
 
-  if (this.serviceData.verifyUanEndpoint) {
-    jsonObject["verifyUanEndpoint"] = verifyUanEndpoint;
-  }
-
   if (this.serviceData.replaceCartEndpoint != null) {
     checkoutData.uiServiceEndPoint = this.uiServiceDomain + this.serviceData.replaceCartEndpoint;
   }
@@ -244,6 +240,14 @@ use(function () {
 
   if (this.checkoutRedirectUrl != null) {
     checkoutData.checkoutRedirectUrl = this.shopDomain + this.checkoutRedirectUrl;
+  }
+
+  if (this.verifyUanEndpoint != null) {
+    checkoutData.verifyUanEndpoint = this.uiServiceDomain + this.verifyUanEndpoint;
+  }
+
+  if (this.uanErrorMessage != null) {
+    checkoutData.uanErrorMessage = this.uanErrorMessage;
   }
 
   if (checkoutData != null) {

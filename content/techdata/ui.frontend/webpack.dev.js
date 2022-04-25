@@ -703,13 +703,6 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "quote.html",
-                template: path.resolve(
-                    __dirname,
-                    SOURCE_ROOT + "/static/quote.html"
-                ),
-            }),
-            new HtmlWebpackPlugin({
                 filename: "my-quotes-react",
                 template: path.resolve(
                     __dirname,

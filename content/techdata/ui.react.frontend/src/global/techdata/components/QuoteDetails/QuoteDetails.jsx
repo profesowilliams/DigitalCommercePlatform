@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import QuotesSubHeader from "./QuoteDetailsSubHeader/QuotesSubHeader";
 import QuoteContactInfo from "./QuoteDetailsContactInfo/QuoteContactInfo";
 import QuoteSubtotal from "./QuoteDetailsSubTotal/QuoteSubtotal";
@@ -14,7 +15,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo";
 import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
-import { generateExcelFileFromPost, isNotEmptyValue } from "../../../../utils/utils";
+import { generateExcelFileFromPost, isNotEmptyValue, verifyQuote, formatUanErrorMessage } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT,
@@ -26,6 +27,7 @@ import {
   QUOTE_DETAILS_LOGO_LABEL_VALUE,
   WHITE_LABEL_BACK_TO_QUOTE_DETAILS,
 } from "../../../../utils/constants";
+import format from "date-fns/format/index";
 
 const QuoteDetails = ({ componentProp }) => {
   const {
@@ -49,6 +51,8 @@ const QuoteDetails = ({ componentProp }) => {
     quoteNotFoundMessage,
     quoteErrorMessage,
     shopDomainPage,
+    verifyUanEndpoint,
+    uanErrorMessage,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
@@ -114,9 +118,25 @@ const QuoteDetails = ({ componentProp }) => {
     pushEventAnalyticsGlobal(objectToSend)
   }
 
-  function onQuoteCheckout() {
+  async function onQuoteCheckout() {
     handleAnalyticCheckoutEvent()
-    redirectToCart(quoteDetails.checkoutSystem, id, checkout, onErrorHandler);
+    const quoteVerification = await verifyQuote(uanErrorMessage, verifyUanEndpoint, id);
+    if (!quoteVerification.hasOwnProperty(`uanErrorMessage`)) {
+      redirectToCart(quoteDetails.checkoutSystem, id, checkout, onErrorHandler);
+    } else {
+      // Display modal with detail of lines that are not valid
+      setModal((previousInfo) => (
+        {
+          content: (
+            formatUanErrorMessage(quoteVerification)
+          ),
+          properties: {
+            title: `Error`,
+          },
+          ...previousInfo,
+        }
+      ));
+    }
   }
 
   const onErrorHandler = (error) => {
@@ -244,7 +264,7 @@ const QuoteDetails = ({ componentProp }) => {
   }, [analyticsProduct])
 
   useEffect(() => {
-    const detailsResponse = response?.content?.details;
+    const detailsResponse =  response?.content?.details;
     const status = detailsResponse?.status?.toUpperCase();
     const quoteHasData = detailsResponse && status !== "IN_PIPELINE" && status !== "FAILED";
 

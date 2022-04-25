@@ -424,3 +424,23 @@ export const showAnnuity = (line) => {
     (line.annuity.duration && line.annuity.duration !== "0") ||
     line.annuity.billingFrequency);
 };
+
+export const verifyQuote = async (uanErrorMessage, verifyUanEndpoint, id) => {
+  // Call UAN Verification API
+  const verifyResponse = await axios.get(`${verifyUanEndpoint}?id=${id}&s=0`);
+  const verificationResult = {
+    uanErrorMessage: uanErrorMessage,
+    lineNumbers: []
+  };
+
+  if (verifyResponse?.data?.content?.canCheckout) {
+    return {};
+  } else {
+    if (verifyResponse?.data?.content?.lineNumbers?.length > 0) {
+      verificationResult.lineNumbers = verifyResponse?.data?.content?.lineNumbers;
+    }
+    return verificationResult;
+  }
+};
+
+export const formatUanErrorMessage = (quoteVerification) => `<div><h4>${quoteVerification.uanErrorMessage}</h4><ul>${quoteVerification.lineNumbers?.map(line => `<li>${line}</li>`).join()}</ul></div>`;

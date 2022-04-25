@@ -1178,7 +1178,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
   const quoteDetailsResponse = {
     content: {
       details: {
-        canCheckOut: false,
+        canCheckOut: true,
         status: id === "IN_PIPELINE" || id === "FAILED" ? id : "OPEN",
         shipTo: {
           id: null,
@@ -4234,4 +4234,35 @@ app.get("/ui-account/v1/refreshData", function(req, res) {
     }
   }
   res.json(response);
+});
+
+app.get("/ui-commerce/v1/quote/canConvertToOrder", function (req, res) {
+  const success = {
+    "content": {
+      "canCheckout": true,
+      "lineNumbers": []
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  };
+
+  const fail = {
+    "content": {
+      "canCheckout": false,
+      "lineNumbers": [
+        "CON-PSRU-SMS-1",
+        "DUO-MFA-FED"
+      ]
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  };
+  console.log(`Verifying UAN Qty for Quote #${req.query.id}`);
+  req.query.s === "1" ? res.json(success) : res.json(fail);
 });

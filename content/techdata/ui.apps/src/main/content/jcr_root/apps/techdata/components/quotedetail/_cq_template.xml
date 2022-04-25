@@ -72,6 +72,7 @@
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
     menuCopyLink="Copy link"
+    uanErrorMessage="You have reached your qty limit on the below products. Please contact your Cisco Sales Rep for further assistance."
 >
     <columnList jcr:primaryType="nt:unstructured">
         <item0

@@ -92,7 +92,7 @@
                                                 fieldLabel="Quote Detail Error Message"
                                                 description="Error message that will be displayed when an error occurs on creating a quote."
                                                 name="./quoteErrorMessage"/>
-                                        </items>
+										</items>
                                     </column>
                                 </items>
                             </columns>
@@ -463,6 +463,12 @@
                                         fieldDescription="Check Out Label"
                                         fieldLabel="Check Out Label"
                                         name="./checkoutLabel"/>
+									<uanErrorMessage
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        fieldLabel="UAN Qty Error Message"
+                                        description="Error message that will be displayed when a quote has a UAN with insufficient available qty."
+                                        name="./uanErrorMessage"/>
                                 </items>
                             </column>
                         </items>

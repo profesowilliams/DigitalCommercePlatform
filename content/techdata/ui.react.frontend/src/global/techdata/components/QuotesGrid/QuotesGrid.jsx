@@ -5,7 +5,7 @@ import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 import Modal from "../Modal/Modal";
-import { getSingleQueryStringParameterFromUrl, isNotEmptyValue } from "../../../../utils/utils";
+import { getSingleQueryStringParameterFromUrl } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
@@ -193,6 +193,8 @@ function QuotesGrid(props) {
                 line={props.data}
                 checkoutConfig={componentProp.checkout}
                 onErrorHandler={onErrorHandler}
+                modal={modal}
+                setModal={setModal}
               ></Checkout>
             )}
           </div>

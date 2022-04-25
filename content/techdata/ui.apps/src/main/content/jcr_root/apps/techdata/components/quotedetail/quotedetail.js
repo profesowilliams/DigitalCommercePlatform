@@ -53,7 +53,7 @@ use(['../common/utils.js'], function (utils) {
     if (properties && properties["quoteErrorMessage"]) {
         jsonObject["quoteErrorMessage"] = properties["quoteErrorMessage"];
     }
-
+    
     if (properties && properties["subTotalLabel"]) {
         jsonObject["subTotalLabel"] = properties["subTotalLabel"];
     }
@@ -256,6 +256,10 @@ use(['../common/utils.js'], function (utils) {
     }
 
     jsonObject["checkout"] = utils.getCheckoutConfigurations(this.serviceData, this);
+
+    if (properties && properties["uanErrorMessage"]) {
+        jsonObject["uanErrorMessage"] = properties["uanErrorMessage"];
+    }
 
     if (properties && properties["dropdownLabel"]) {
         quoteOptionsTab["dropdownLabel"] = properties["dropdownLabel"];

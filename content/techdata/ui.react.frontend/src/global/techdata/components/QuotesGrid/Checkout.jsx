@@ -1,5 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { usPut } from "../../../../utils/api";
+import { verifyQuote, formatUanErrorMessage } from "../../../../utils/utils";
 import IsNotNullOrEmpty from "../../helpers/IsNotNullOrEmpty";
 
 export async function redirectToCart(checkoutSystem, quoteId, config, onErrorHandler) {
@@ -44,7 +45,7 @@ const system46Checkout = async (quoteId, config, onErrorHandler) => {
   }
 }
 
-function Checkout({ line, checkoutConfig, onErrorHandler }) {
+function Checkout({ line, checkoutConfig, onErrorHandler, modal, setModal }) {
   const config = {
     uiServiceEndPoint: IsNotNullOrEmpty(checkoutConfig?.uiServiceEndPoint)
       ? checkoutConfig.uiServiceEndPoint
@@ -53,13 +54,35 @@ function Checkout({ line, checkoutConfig, onErrorHandler }) {
       ? checkoutConfig.redirectUrl
       : "https://shop.techdata.com/cart",
     expressCheckoutRedirectUrl: checkoutConfig?.expressCheckoutRedirectUrl,
-    checkoutRedirectUrl: checkoutConfig?.checkoutRedirectUrl
+    checkoutRedirectUrl: checkoutConfig?.checkoutRedirectUrl,
+    verifyUanEndpoint: checkoutConfig?.verifyUanEndpoint,
+    uanErrorMessage: checkoutConfig?.uanErrorMessage
   };
+
+  async function onQuoteCheckout(checkoutSystem, quoteId, config, onErrorHandler) {
+    const quoteVerification = await verifyQuote(config.uanErrorMessage, config.verifyUanEndpoint, quoteId);
+    if (!quoteVerification.hasOwnProperty(`uanErrorMessage`)) {
+      redirectToCart(checkoutSystem, quoteId, config, onErrorHandler);
+    } else {
+      // Display modal with detail of lines that are not valid
+      setModal((previousInfo) => (
+        {
+          content: (
+            formatUanErrorMessage(quoteVerification)
+          ),
+          properties: {
+            title: `Error`,
+          },
+          ...previousInfo,
+        }
+      ));
+    }
+  }
 
   return (
     <div
       onClick={() => {
-        line.canCheckOut && redirectToCart(line.checkoutSystem, line.id, config, onErrorHandler);
+        line.canCheckOut && onQuoteCheckout(line.checkoutSystem, line.id, config, onErrorHandler);
       }}
     >
       {line.canCheckOut && <i className="fas fa-shopping-cart"></i>}
