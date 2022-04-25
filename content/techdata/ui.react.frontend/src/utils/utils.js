@@ -427,7 +427,7 @@ export const showAnnuity = (line) => {
 
 export const verifyQuote = async (uanErrorMessage, verifyUanEndpoint, id) => {
   // Call UAN Verification API
-  const verifyResponse = await axios.get(`${verifyUanEndpoint}?id=${id}&s=0`);
+  const verifyResponse = await axios.get(`${verifyUanEndpoint}&id=${id}&s=0`);
   const verificationResult = {
     uanErrorMessage: uanErrorMessage,
     lineNumbers: []

@@ -28,9 +28,8 @@ use(function () {
         var checkoutConfigurations = {};
 
         if (serviceData.verifyUanEndpoint != null) {
-            checkoutConfigurations.verifyUanEndpoint = serviceData.verifyUanEndpoint;
+            checkoutConfigurations.verifyUanEndpoint = serviceData.uiServiceDomain + serviceData.verifyUanEndpoint;
         }
-
         if (serviceData.replaceCartEndpoint != null) {
             checkoutConfigurations.uiServiceEndPoint = serviceData.uiServiceDomain+serviceData.replaceCartEndpoint;
         }
