@@ -202,9 +202,11 @@ public class FormServlet extends SlingAllMethodsServlet {
                 if(StringUtils.isEmpty(input)) return input;
 
                 // validate for invalid characters
-                final Pattern pattern = Pattern.compile(blacklistCharsRegexExpr);
-                if (pattern.matcher(input).find()) {
-                        throw new CustomFormException("Invalid form field, skipping the form and email submission.");
+                if(StringUtils.isNotEmpty(blacklistCharsRegexExpr)) {
+                        final Pattern pattern = Pattern.compile(blacklistCharsRegexExpr);
+                        if (pattern.matcher(input).find()) {
+                                throw new CustomFormException("Invalid form field, skipping the form and email submission.");
+                        }
                 }
 
                 Set<String> keyset = charsEncodedMap.keySet();
