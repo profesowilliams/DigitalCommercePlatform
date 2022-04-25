@@ -1,0 +1,7 @@
+{
+    "scripts": [
+        "create path (sling:OrderedFolder) /content/dam/tds-core",
+        "create path (nt:unstructured) /content/dam/tds-core/jcr:content",
+        "set properties on /content/dam/tds-core/jcr:content\n  set cq:conf{String} to /conf/tds-core\n  set jcr:title{String} to \"TDS Core\"\nend"
+    ]
+}
