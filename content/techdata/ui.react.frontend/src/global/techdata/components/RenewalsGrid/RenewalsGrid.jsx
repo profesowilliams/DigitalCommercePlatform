@@ -128,7 +128,7 @@ function RenewalsGrid(props) {
       case "vendor":
         return `${event.value.name}: ${event.data.programName}`
       default:
-        return event.value.name;
+        return event.value?.name;
     }
   }
 

@@ -63,6 +63,12 @@ const columnsWidth = {
  */
 const hoverableList = ["endUser", "vendor", "resellername", "renewedduration"];
 
+function isHoverable(columnKey) {
+  return {
+    hoverable: hoverableList.includes(columnKey)
+  }
+}
+
 export const plainTextColumn = (definition) => {
   const { columnLabel, columnKey, sortable = false } = definition;
   return {
@@ -72,8 +78,8 @@ export const plainTextColumn = (definition) => {
     cellHeight: () => 45,    
     width: columnsWidth[columnKey] || null,
     resizable: false,
-    hoverable: hoverableList.includes(columnKey),
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
+    ...isHoverable(columnKey),
   };
 };
 
@@ -99,7 +105,8 @@ export const plainResellerColumnFn = (definition) => {
       sortable: sortable,
       resizable: false,
       width: columnsWidth[columnKey] || null,
-      cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps)
+      cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
+      ...isHoverable(columnKey),
     };
   } else {
     return null;
