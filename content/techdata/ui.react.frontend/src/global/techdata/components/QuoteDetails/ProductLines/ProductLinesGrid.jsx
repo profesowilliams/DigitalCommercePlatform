@@ -119,8 +119,21 @@ function ProductLinesGrid({
       field: "displayLineNumber",
       width: "150px",
       sortable: false,
-      expandable: true,
-      rowClass: "cmp-product-lines-grid__row",
+      expandable: true,      
+      rowClass: ({ node, data }) => {
+        return `${
+          !data?.children || data.children.length === 0
+              ? "`cmp-product-lines-grid__row`"
+              : ""
+        }`
+      },
+      cellClass: ({ node, data }) => {
+        return `${
+          !data?.children || data.children.length === 0
+              ? "cmp-product-lines-grid__row--notExpandable--orders"
+              : ""
+        }`
+      },
       detailRenderer: ({ data }) => (
         <section className="cmp-product-lines-grid__row">
           <ProductLinesChildGrid

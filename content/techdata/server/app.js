@@ -942,7 +942,7 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
 
   function getItems(amount) {
     let items = [];
-    for (let i = 0; i <= amount; i++) {
+    for (let i = 1; i <= amount; i++) {
       const annuity =
         i % 2 === 0
           ? {
@@ -1002,7 +1002,9 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
             ? "http://cdn.cnetcontent.com/ps/TDUS/130x80/80000404.png"
             : null,
         urlProductSpecs: null,
-        children: [
+          children:
+              i === 4 ? [] :
+              [
           {
             id: i + ".1",
             displayLineNumber: i + ".1",
@@ -1126,7 +1128,6 @@ app.get("/ui-commerce/v1/quote/details", function (req, res) {
         ancillaryChargesWithTitles: null,
         annuity,
         isSubLine: false,
-        displayLineNumber: i,
         attributes: [
           {
             name: "VENDORQUOTEID",
