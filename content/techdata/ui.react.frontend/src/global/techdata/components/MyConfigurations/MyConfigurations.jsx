@@ -57,8 +57,8 @@ const MyConfigurations = ({ componentProp }) => {
 
   const getFontSize = (textLength) => {
     const baseSize = 6;
-    if (textLength >= baseSize) {
-        textLength = baseSize - 2;
+    if (textLength >= baseSize || textLength ===5) {
+        textLength = baseSize - 1.5;
     }
     const fontSize = baseSize - textLength;
     return `${fontSize}vh`;
