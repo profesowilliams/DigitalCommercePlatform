@@ -64,13 +64,13 @@ function GridSearchCriteria({
     }
   }
 
-	function onClear() {
+	function onClear(clearFlag) {
 		analyticsData.current = null;
 		if (typeof onClearRequest === 'function') {
 			onClearRequest();
-			if (category) {
+			if (category && clearFlag) {
 			     pushEvent(ANALYTICS_TYPES.events.click, {
-                      type: ANALYTICS_TYPES.types.link,
+                      type: ANALYTICS_TYPES.types.button,
                       category: category,
                       name: ANALYTICS_TYPES.name.clearFilters,
                 });
@@ -153,7 +153,7 @@ function GridSearchCriteria({
 					<Button disabled={!filterActive && !externalFilterActive} onClick={() => onSearch()}>
 						{componentProp?.searchButtonLabel ?? 'Apply'}
 					</Button>
-					<div className='cmp-search-criteria__content__query-input__search__clear' onClick={() => onClear()}>
+					<div className='cmp-search-criteria__content__query-input__search__clear' onClick={() => onClear(true)}>
 						{componentProp?.clearButtonLabel ?? 'Clear All Filters'}
 					</div>
 					
