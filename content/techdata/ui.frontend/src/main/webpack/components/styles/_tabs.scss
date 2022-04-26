@@ -2,32 +2,32 @@
   .nav {
     border: none;
   }
+
   > .cmp-tabs > .cmp-tabs__tablist {
     .li,
     [role="tab"] {
       padding: 0 1rem;
       font-size: 0.9rem;
       border-bottom: transparent 3px solid;
-      &:active,
-      &:hover,
-      &:focus {
-        outline: none;
-      }
+
       &:hover {
         border-bottom: get-color(brand-light-blue) 3px solid;
       }
+
       min-height: 30px;
     }
 
     .cmp-tabs__tab--active {
       border-bottom: get-color(brand-light-blue) 3px solid;
     }
+
     min-height: 30px;
   }
 
   .cmp-tabs__tabpanel {
     padding: 2rem 0;
   }
+
   .cmp-tabs__tabpanel--active {
     display: block;
   }
@@ -35,6 +35,7 @@
 
 .cmp-tabs__tablist {
   margin-bottom: 4rem;
+
   //tabs with bottom tabTitle
   &.five-tabs {
     display: flex;
@@ -169,6 +170,7 @@
     align-items: flex-start;
     margin: 0;
     color: get-color(brand-white);
+
     &__tablist {
       display: flex;
       list-style-type: none;
@@ -180,22 +182,27 @@
       font-size: rem(16px);
       flex: 50%;
     }
+
     .cmp-tabs {
       &__tab {
         flex: 50%;
         padding: rem(2px 30px);
         text-align: left;
+
         &:hover {
           color: get-color(brand-light-blue);
         }
       }
+
       &__tab--active {
         color: get-color(brand-light-blue);
       }
     }
+
     &__tabpanel {
       margin: 0;
       flex: 50%;
+
       .text,
       .text p {
         font-family: $open-sans;
@@ -207,10 +214,12 @@
     }
   }
 }
+
 // Wrapped 5 tabs in a row
 
 .cmp-five-icon-tabs {
   width: unset; //test for AEM local
+
   .cmp-tabs {
     display: flex;
     flex-direction: column;
@@ -225,12 +234,16 @@
       width: 100%;
       justify-content: center;
       background-color: get-color(brand-blue);
-       svg, img {
-                width: 100%;
-              }
-              .cmp-tabs__tabpanel--text {
-                color: white;
-              }
+
+      svg,
+      img {
+        width: 100%;
+      }
+
+      .cmp-tabs__tabpanel--text {
+        color: white;
+      }
+
       &--text {
         width: 100%;
       }
@@ -252,10 +265,12 @@
       transition: border-color 0.3s;
       background-color: get-color(brand-white);
       padding: rem(10px);
+
       img {
         width: auto;
         margin: 0 auto;
       }
+
       &:hover,
       &:active,
       &:focus {
@@ -263,6 +278,7 @@
         padding: rem(10px);
       }
     }
+
     &__tabpanel--text {
       height: rem(36px);
       width: 100%;
@@ -273,18 +289,22 @@
       text-align: center;
       font-weight: 600;
     }
+
     &__tab {
       text-align: center;
       padding: 0 rem(8px);
       border-bottom: 0;
       font-size: $font-size-medium;
       width: rem(230px);
+
       &.cmp-tabs__tab--active,
       &:hover,
       &:active {
         outline: 0 none;
+
         .cmp-tabs__tab-image {
           background-color: get-color(brand-light-blue) !important;
+
           svg path g polyline ellipse line line rect {
             fill: get-color(brand-white);
           }
@@ -299,6 +319,7 @@
     display: flex;
     align-items: flex-start;
     margin: 0;
+
     &__tablist {
       display: flex;
       flex-direction: column;
@@ -310,27 +331,33 @@
       font-family: $open-sans;
       font-size: rem(16px);
       flex: 40%;
+
       li::after {
         content: " > ";
       }
     }
+
     .cmp-tabs {
       &__tab {
         flex: 50%;
         padding: rem(2px 30px);
         text-align: center;
+
         &:hover {
           color: get-color(brand-light-blue);
         }
       }
+
       &__tab--active {
         color: get-color(brand-light-blue);
       }
     }
+
     &__tabpanel {
       margin: 0;
       flex: 60%;
       padding-top: rem(10px);
+
       .text,
       .text p {
         font-family: $open-sans;

@@ -1,0 +1,23 @@
+#cmp-accessible-nav {
+	ul {
+		li {
+			ul {
+				display: none;
+			}
+		}
+		li.open {
+		  ul {
+			display: flex;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			li {
+			  width: 100%;
+			}
+		  }
+		}
+	  }
+
+	a {
+		display: block;
+	}
+}

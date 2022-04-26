@@ -2,27 +2,37 @@
     .cmp-megamenu {
         position: relative;
         z-index: 99;
+
         &__title {
             display: none;
         }
+
         &__body {
             .fa-chevron-left {
                 display: none;
             }
         }
+
         .cmp-megamenu__primary {
             margin: 0;
-            padding: 16px 0;
+            padding: 0;
+            display: flex;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            justify-content: space-around;
+
             li {
                 display: inline;
-                padding: 0 rem(16px);
+                padding: rem(16px) 0;
                 font-size: rem(15px);
                 border: 0 none;
+
                 &:active,
                 &:hover,
                 &:focus {
                     outline: none;
                 }
+
                 .cmp-megamenu__tab-text {
                     transition: border 0.3s;
                     padding: 0 rem(3px);
@@ -32,11 +42,13 @@
                     text-decoration: none;
                     color: get-color(header-links-blue);
                 }
+
                 &:hover {
                     .cmp-megamenu__tab-text {
                         border-bottom-color: get-color(brand-light-blue);
                     }
                 }
+
                 a.cmp-megamenu__tab--active {
                     border-bottom-color: get-color(brand-light-blue);
                 }
@@ -59,16 +71,19 @@
         min-height: rem(370px);
         border-top: rem(2px) solid get-color(td-dark-blue);
         background-color: get-color(brand-white);
+
         .cmp-megamenu__wrapper {
             ul {
                 min-width: 270px;
                 list-style: none;
                 padding: 0 0 rem(10px);
                 margin: 0;
+
                 li:first-child a {
                     padding-top: rem(10px);
                 }
             }
+
             a {
                 display: block;
                 color: get-color(text-mid-gray);
@@ -77,45 +92,56 @@
                 font-size: rem(13px);
                 text-decoration: none;
             }
+
             i,
             svg {
                 transition: color 0.3s;
                 height: auto;
             }
         }
+
         .cmp-megamenu__wrapper-item {
             display: none;
+
             &--active {
                 display: block;
             }
         }
+
         .cmp-megamenu__secondary {
             background-color: get-color(brand-button-blue);
+
             a {
                 color: get-color(brand-white);
+
                 i,
                 svg {
                     margin-right: rem(14px);
                 }
+
                 &.cmp-megamenu__item--active,
                 &:hover {
                     background-color: get-color(brand-white);
                     color: get-color(td-dark-blue);
                 }
             }
+
             // hide mobile navbar items for desktop
             .cmp-navigation__item--level-0 {
                 .cmp-navigation__group {
                     display: none;
                 }
             }
+
             &--title {
                 display: none;
             }
+
             &--sub-title {
                 display: none;
             }
         }
+
         .cmp-megamenu-level-title {
             color: get-color(td-dark-blue);
             margin: 0;
@@ -124,34 +150,42 @@
             padding: rem(0 10px 9px 0);
             font-weight: normal;
         }
+
         .cmp-megamenu__tertiary {
             .cmp-megamenu-level-title {
                 a {
-                    color : get-color(brand-blue)
+                    color: get-color(brand-blue)
                 }
             }
+
             padding: rem(10px 22px);
             border-right: rem(1px) solid get-color(brand-light-gray2);
+
             a {
                 padding: rem(5px 0px);
                 display: flex;
                 justify-content: space-between;
+
                 i,
                 svg {
                     color: get-color(secondary-light-grey);
                     display: none;
                 }
+
                 &.cmp-megamenu__item--active,
                 &:hover {
                     color: get-color(brand-light-blue);
                     font-weight: 600;
+
                     i,
                     svg {
                         color: get-color(brand-light-blue);
                     }
                 }
             }
+
             a[data-cmp-clickable="true"] {
+
                 i,
                 svg {
                     display: inline-block;
@@ -159,16 +193,20 @@
                 }
             }
         }
+
         .cmp-megamenu__quaternary {
             .cmp-megamenu__wrapper-item {
                 padding: rem(9px 22px);
             }
+
             a {
                 padding-left: rem(28px);
             }
+
             .cmp-megamenu-level-title {
                 padding: rem(5px 10px 4px 0px);
                 cursor: pointer;
+
                 i,
                 svg {
                     color: get-color(secondary-light-grey);
@@ -178,15 +216,17 @@
         }
     }
 }
-@media only screen and (min-width: 1024px) and (max-width: 1260px){
+
+@media only screen and (min-width: 1024px) and (max-width: 1260px) {
     .cmp-megamenu {
         .cmp-megamenu__primary {
             li {
-             padding: 0 0.1rem;
-             font-size: 0.8rem;
+                padding: 0 0.1rem;
+                font-size: 0.8rem;
             }
         }
     }
+
     #cmp-techdata-header.cmp-container .aem-Grid .search {
         width: 33% !important;
     }
@@ -204,13 +244,16 @@
                             line-height: rem(50px);
                             color: get-color(text-light-charcoal);
                             font-size: rem(14px);
+
                             &.inactive-md {
                                 display: none;
                             }
+
                             &.active-md {
                                 display: block;
                             }
                         }
+
                         &__body {
                             .fa-chevron-left {
                                 color: get-color(border-lighter-gray);
@@ -222,29 +265,37 @@
                                 opacity: 0;
                             }
                         }
+
                         &__primary {
                             padding: 0;
+
                             &.inactive-md {
                                 display: none;
                             }
+
                             &.active-md {
                                 display: block;
                             }
                         }
+
                         &__tabpanel {
                             div {
                                 display: none;
+
                                 &.active-md {
                                     display: block;
                                 }
                             }
+
                             .cmp-megamenu__secondary {
                                 &.inactive-md {
                                     display: none;
                                 }
+
                                 &.active-md {
                                     display: block;
                                 }
+
                                 &--title {
                                     display: block;
                                     text-align: center;
@@ -252,58 +303,71 @@
                                     padding: 10px 0;
                                     color: get-color(text-light-charcoal);
                                     font-size: rem(14px);
+
                                     &:first-letter {
                                         text-transform: capitalize;
                                     }
                                 }
+
                                 &--sub-title {
                                     border-bottom: 1px solid get-color(secondary-light-grey);
                                     padding: 10px 0;
                                     color: #000c21;
                                     font-size: rem(14px);
                                     display: block;
+
                                     &:first-letter {
                                         text-transform: capitalize;
                                     }
                                 }
                             }
+
                             .cmp-navigation {
                                 &__group {
                                     padding: 0;
+
                                     .cmp-navigation__group {
                                         padding-left: rem(30px);
                                         display: none;
+
                                         &.inactive-md {
                                             display: none;
                                         }
+
                                         &.active-md {
                                             display: block;
                                         }
                                     }
+
                                     li {
                                         list-style: none;
                                         position: relative;
+
                                         a {
                                             text-decoration: none;
                                             color: get-color(text-light-charcoal);
+
                                             svg,
-                                            > i {
+                                            >i {
                                                 display: none;
                                             }
                                         }
                                     }
                                 }
+
                                 &__item {
                                     color: get-color(text-light-charcoal);
                                     font-family: $open-sans;
                                     font-size: rem(14px);
                                     letter-spacing: 0;
                                     line-height: rem(40px);
+
                                     &--level-0 {
                                         &.has-child.active {
                                             border-bottom: 1px solid get-color(secondary-light-grey);
                                         }
                                     }
+
                                     &.has-child {
                                         &:before {
                                             content: "\f054";
@@ -314,10 +378,12 @@
                                             position: absolute;
                                             right: 0;
                                         }
+
                                         &.active {
-                                            > a {
+                                            >a {
                                                 color: get-color(brand-light-blue);
                                             }
+
                                             &:before {
                                                 color: get-color(brand-light-blue);
                                                 content: "\f078";

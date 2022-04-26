@@ -745,6 +745,20 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "megamenu-AA.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/megamenu-AA.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "megamenu-new.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/megamenu-new.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "adbutler",
                 template: path.resolve(
                     __dirname,

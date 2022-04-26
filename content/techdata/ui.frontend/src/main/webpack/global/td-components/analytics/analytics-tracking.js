@@ -232,6 +232,7 @@
     }
 
     function attachClickEventListener(element) {
+        console.log(element);
         element.addEventListener("click", addClickToDataLayer);
     }
 
