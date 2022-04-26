@@ -124,65 +124,71 @@
 							</items>
 						</field>
 					</optionsList>
-					<inputPlaceholder
-						jcr:primaryType="nt:unstructured"
-						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="Error Message Input Placeholder"
-						name="./inputPlaceholder"/>
 					<errorModalTitle
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Error Modal Title"
+						fieldDescription="Enter Title for the error modal"						
 						name="./errorModalTitle"/>
 					<emptyCart
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Empty Cart"
+						fieldDescription="Enter error message for a empty cart"
 						name="./emptyCart"/>
 					<notValidCart
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Messag Quote Not Valid Cart"
+						fieldDescription="Enter error message for not valid cart available"
 						name="./notValidCart"/>
 					<invalidCart
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Invalid Cart"
+						fieldDescription="Enter error message for a invalid cart items"
 						name="./invalidCart"/>
 					<notValidEstimateId
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Not Valid Estimate Id"
+						fieldDescription="Error message when user enter a no valid estimate ID"
 						name="./notValidEstimateId"/>
 					<errorGettingData
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Error Getting Data"
+						fieldDescription="Enter message error getting the data from server"
 						name="./errorGettingData"/>
 					<noItemsInCart
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message No Items In Cart"
+						fieldDescription="Enter message for a error when there no items in the cart"
 						name="./noItemsInCart"/>
 					<selectItemToContinue
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Select Item To Continue"
+						fieldDescription="Enter message for a error when no select a item to continue"
 						name="./selectItemToContinue"/>
 					<invalidEstimatedId
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Invalid Estimated Id"
+						fieldDescription="Enter error message for a invalid estimate ID"
 						name="./invalidEstimatedId"/>
 					<errorGettingCart
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+						fieldDescription="Enter message error getting the items from the cart"
 						fieldLabel="Error Message Error Getting Cart"
 						name="./errorGettingCart"/>
 					<errorInPrice
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Error In Price"
+						fieldDescription="Enter message for a error in a price for the quote"
 						name="./errorInPrice"/>
 				</items>
 			</column>
