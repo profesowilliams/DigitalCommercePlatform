@@ -317,6 +317,10 @@ public class CaConfigReader {
         return uiServiceDomain;
     }
 
+    public String getVerifyUanEndpoint() {
+        return verifyUanEndpoint;
+    }
+
     public String getCatalogEndpoint() {
         return catalogEndpoint;
     }

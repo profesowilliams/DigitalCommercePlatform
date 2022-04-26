@@ -257,6 +257,10 @@ use(['../common/utils.js'], function (utils) {
 
     jsonObject["checkout"] = utils.getCheckoutConfigurations(this.serviceData, this);
 
+    if (this.verifyUanEndpoint != null) {
+      jsonObject["verifyUanEndpoint"] = this.uiServiceDomain + this.verifyUanEndpoint;
+    }
+
     if (properties && properties["uanErrorMessage"]) {
         jsonObject["uanErrorMessage"] = properties["uanErrorMessage"];
     }
