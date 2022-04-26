@@ -121,22 +121,24 @@
         parentDiv.appendChild(errorLabel);
         errorLabel.style.color = "red";
         //building regex based on exclude chars
-        const excludeRegex = /[|]/g;
-        var matches = value.match(excludeRegex);
-        if(matches) {
-            parentDiv.childNodes.forEach(child => {
-                if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
-                    parentDiv.removeChild(child);
-                    parentDiv.removeChild(errorLabel);
-                }
-            });
-            errorLabel.innerText = "This field contains Invalid Characters. Please correct";
-            element.focus();
-            setTimeout(function() {
-                element.style.borderColor = originalBorderColor  },
-            10000);
-            return false;
-        }
+        if(excludedChars) {
+			var expression = `.*${excludedChars}.*`;
+			var re = new RegExp(expression, 'g');
+            if(re.test(value)) {
+                parentDiv.childNodes.forEach(child => {
+                    if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
+                        parentDiv.removeChild(child);
+                        parentDiv.removeChild(errorLabel);
+                    }
+                });
+                errorLabel.innerText = "This field contains Invalid Characters. Please correct";
+                element.focus();
+                setTimeout(function() {
+                    element.style.borderColor = originalBorderColor  },
+                10000);
+                return false;
+            }
+    	}
         return true;
     }
 

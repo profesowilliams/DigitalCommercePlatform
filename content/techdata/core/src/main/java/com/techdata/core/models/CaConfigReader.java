@@ -190,6 +190,8 @@ public class CaConfigReader {
 
     private String fileThresholdInMB;
 
+    private String textFieldRegexString;
+
     private String renewalsGridEndpoint;
 
     private String agGridLicenseKey;
@@ -308,6 +310,7 @@ public class CaConfigReader {
         agGridLicenseKey = commonConfigurations.agGridLicenseKey();
         allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
+        textFieldRegexString = formConfigurations.textFieldRegexString();
     }
 
     public String getUiServiceDomain() {
@@ -633,6 +636,10 @@ public class CaConfigReader {
 
     public String getFileThresholdInMB() {
         return fileThresholdInMB;
+    }
+
+    public String getTextFieldRegexString() {
+        return textFieldRegexString;
     }
 
     public boolean isEnableQualtricsCode() {
