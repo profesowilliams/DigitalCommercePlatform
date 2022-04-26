@@ -136,36 +136,18 @@
 						fieldLabel="Error Message Empty Cart"
 						fieldDescription="Enter error message for a empty cart"
 						name="./emptyCart"/>
-					<notValidCart
-						jcr:primaryType="nt:unstructured"
-						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="Error Messag Quote Not Valid Cart"
-						fieldDescription="Enter error message for not valid cart available"
-						name="./notValidCart"/>
 					<invalidCart
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Invalid Cart"
 						fieldDescription="Enter error message for a invalid cart items"
 						name="./invalidCart"/>
-					<notValidEstimateId
-						jcr:primaryType="nt:unstructured"
-						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="Error Message Not Valid Estimate Id"
-						fieldDescription="Error message when user enter a no valid estimate ID"
-						name="./notValidEstimateId"/>
 					<errorGettingData
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 						fieldLabel="Error Message Error Getting Data"
 						fieldDescription="Enter message error getting the data from server"
 						name="./errorGettingData"/>
-					<noItemsInCart
-						jcr:primaryType="nt:unstructured"
-						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-						fieldLabel="Error Message No Items In Cart"
-						fieldDescription="Enter message for a error when there no items in the cart"
-						name="./noItemsInCart"/>
 					<selectItemToContinue
 						jcr:primaryType="nt:unstructured"
 						sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

@@ -69,7 +69,7 @@ const SavedCartSelectItem = ({
         if(items && total > 0){
           onClick(selected.id);
         }else{
-          modalEventError(isNotEmptyValue(errorMessage.noItemsInCart) ? errorMessage.noItemsInCart : ERROR_CREATE_QUOTE_NO_ITEMS_CART)
+          modalEventError(isNotEmptyValue(errorMessage.emptyCart) ? errorMessage.emptyCart : ERROR_CREATE_QUOTE_NO_ITEMS_CART)
         }
       }else{
         modalEventError(isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : ERROR_CREATE_QUOTE_INVALID_CART)

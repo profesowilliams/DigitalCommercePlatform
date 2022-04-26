@@ -75,7 +75,7 @@ const QuoteCreate = ({
         return { isError: true, message: isNotEmptyValue(errorMessage.emptyCart) ? errorMessage.emptyCart : ERROR_CREATE_QUOTE_EMPTY_CART };
       }
     }else{
-      return { isError: true, message: isNotEmptyValue(errorMessage.notValidCart) ? errorMessage.notValidCart : ERROR_CREATE_QUOTE_NOT_VALID_CART };
+      return { isError: true, message: isNotEmptyValue(errorMessage.invalidCart) ? errorMessage.invalidCart : ERROR_CREATE_QUOTE_NOT_VALID_CART };
     }
   }
   const goToPricing = (id,config={}) => {

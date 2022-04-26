@@ -62,20 +62,11 @@ use(function () {
     if (properties.get("emptyCart") != null) {
         errorMessage.emptyCart = properties.get("emptyCart");
     }
-    if (properties.get("notValidCart") != null) {
-        errorMessage.notValidCart = properties.get("notValidCart");
-    }
     if (properties.get("invalidCart") != null) {
         errorMessage.invalidCart = properties.get("invalidCart");
     }
-    if (properties.get("notValidEstimateId") != null) {
-        errorMessage.notValidEstimateId = properties.get("notValidEstimateId");
-    }
     if (properties.get("errorGettingData") != null) {
         errorMessage.errorGettingData = properties.get("errorGettingData");
-    }
-    if (properties.get("noItemsInCart") != null) {
-        errorMessage.noItemsInCart = properties.get("noItemsInCart");
     }
     if (properties.get("selectItemToContinue") != null) {
         errorMessage.selectItemToContinue = properties.get("selectItemToContinue");

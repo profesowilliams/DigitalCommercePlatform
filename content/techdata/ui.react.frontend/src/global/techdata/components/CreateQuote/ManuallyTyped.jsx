@@ -40,7 +40,7 @@ const ManuallyTyped = ({
       if( total > 0 && source.id ){
         onClick(source.id);
       }else{
-        modalEventError(isNotEmptyValue(errorMessage.noItemsInCart) ? errorMessage.noItemsInCart  : ERROR_CREATE_QUOTE_NO_ITEMS_CART);
+        modalEventError(isNotEmptyValue(errorMessage.emptyCart) ? errorMessage.emptyCart  : ERROR_CREATE_QUOTE_NO_ITEMS_CART);
       }
     }catch(e){
       modalEventError(isNotEmptyValue(errorMessage.errorGettingData) ? errorMessage.errorGettingData : ERROR_CREATE_QUOTE_ERROR_GETTING_DATA);
@@ -64,7 +64,7 @@ const ManuallyTyped = ({
               });
             }
             else
-              modalEventError(isNotEmptyValue(errorMessage.notValidEstimateId) ? errorMessage.notValidEstimateId : ERROR_CREATE_QUOTE_NOT_VALID_ESTIMATE_ID);
+              modalEventError(isNotEmptyValue(errorMessage.invalidEstimatedId) ? errorMessage.invalidEstimatedId : ERROR_CREATE_QUOTE_NOT_VALID_ESTIMATE_ID);
           }else{
             setInvalidCartName(inputValue);
           }
