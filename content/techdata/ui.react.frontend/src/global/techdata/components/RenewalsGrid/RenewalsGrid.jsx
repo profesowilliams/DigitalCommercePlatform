@@ -140,11 +140,21 @@ function RenewalsGrid(props) {
    * @param {*} event
    */
   function cellMouseOver(event) {
+    const offset = 2; // offset to maintain a distance between mouse pointer & tooltip.
     setToolTipData({
       value: tootltipVal(event),
-      x: event?.event?.pageX,
-      y: event?.event?.pageY,
+      x: event?.event?.pageX + offset,
+      y: event?.event?.pageY + offset,
       show: event?.colDef?.hoverable,
+    });
+  }
+
+  function cellMouseOut() {
+    setToolTipData({
+      value: '',
+      x: 0,
+      y: 0,
+      show: false,
     });
   }
 
@@ -182,6 +192,7 @@ function RenewalsGrid(props) {
             groupContracted: '<i></i>',
           }}
           onCellMouseOver={cellMouseOver}
+          onCellMouseOut={cellMouseOut}
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
         />

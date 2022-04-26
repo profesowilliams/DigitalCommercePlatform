@@ -28,6 +28,7 @@ function Grid(props) {
     onExpandAnalytics,
     onCollapseAnalytics,
     onCellMouseOver,
+    onCellMouseOut,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -118,6 +119,7 @@ function Grid(props) {
       onExpandOrCollapseAll={onExpandOrCollapseAll}
       onRowSelected={onRowSelected}
       onCellMouseOver={onCellMouseOver}
+      onCellMouseOut={onCellMouseOut}
       onSelectionChanged={onSelectionChanged}
       rowSelection={"multiple"}
       getRowHeight={getRowHeight}
