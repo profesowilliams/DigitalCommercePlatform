@@ -49,9 +49,3 @@
 /0108 { /type "allow" /method "GET" /url "*/Quotes/GetCXML*" } # servlet allow
 # SAML filter for SSO
 /0100 { /type "allow" /method "POST" /url "*/saml_login" }
-
-# 228744: Denying all suffixes by default
-# Block use of all selectors on any resource in /content
-/0111 { /type "deny" /url "/content*" /suffix "*" }
-# Individual selectors which are needed on the server side can be added in an allow list manner
-/0112 { /type "allow" /url "/content*" /selectors '(legit-selector|other-fine-selector)' /method "GET" }
