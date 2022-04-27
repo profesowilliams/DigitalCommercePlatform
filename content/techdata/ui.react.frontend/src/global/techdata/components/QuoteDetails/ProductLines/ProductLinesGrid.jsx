@@ -60,7 +60,7 @@ function ProductLinesGrid({
       },
     );
     gridApi?.forEachNode((node) => {
-      node.expanded = true;
+      node.expanded = node?.data?.children && node.data.children.length > 0;
     });
     gridApi?.expandAll();
   }
