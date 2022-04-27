@@ -15,7 +15,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo";
 import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
-import { generateExcelFileFromPost, isNotEmptyValue, verifyQuote, formatUanErrorMessage } from "../../../../utils/utils";
+import { getDictionaryValue, generateExcelFileFromPost, isNotEmptyValue, verifyQuote, formatUanErrorMessage } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT,
@@ -52,7 +52,6 @@ const QuoteDetails = ({ componentProp }) => {
     quoteErrorMessage,
     shopDomainPage,
     verifyUanEndpoint,
-    uanErrorMessage,
   } = JSON.parse(componentProp);
   const { id } = getUrlParams();
   const [response, isLoading, error] = useGet(`${uiServiceEndPoint}?id=${id}`);
@@ -70,6 +69,7 @@ const QuoteDetails = ({ componentProp }) => {
   const [analyticsProduct, setAnalyticsProduct] = useState([]);
   const [flagAnalytic, setFlagAnalytic] = useState(true);
   const backToQuoteDetailsLabelProp = isNotEmptyValue(whiteLabel.backToQuoteDetailsLabel) ? whiteLabel.backToQuoteDetailsLabel : WHITE_LABEL_BACK_TO_QUOTE_DETAILS;
+  const uanErrorMessage = getDictionaryValue("techdata.quotes.message.uanError", "UAN Error on the following lines:");
   const handlerAnalyticExportEvent = (exportTypeParam) => {
     const quoteDetails = {
       quoteID : id,

@@ -261,10 +261,6 @@ use(['../common/utils.js'], function (utils) {
       jsonObject["verifyUanEndpoint"] = this.uiServiceDomain + this.verifyUanEndpoint;
     }
 
-    if (properties && properties["uanErrorMessage"]) {
-        jsonObject["uanErrorMessage"] = properties["uanErrorMessage"];
-    }
-
     if (properties && properties["dropdownLabel"]) {
         quoteOptionsTab["dropdownLabel"] = properties["dropdownLabel"];
     }

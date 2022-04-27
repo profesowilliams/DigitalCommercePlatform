@@ -246,10 +246,6 @@ use(function () {
     checkoutData.verifyUanEndpoint = this.uiServiceDomain + this.verifyUanEndpoint;
   }
 
-  if (this.uanErrorMessage != null) {
-    checkoutData.uanErrorMessage = this.uanErrorMessage;
-  }
-
   if (checkoutData != null) {
     jsonObject["checkout"] = checkoutData;
   }

@@ -463,12 +463,6 @@
                                         fieldDescription="Check Out Label"
                                         fieldLabel="Check Out Label"
                                         name="./checkoutLabel"/>
-									<uanErrorMessage
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        fieldLabel="UAN Qty Error Message"
-                                        description="Error message that will be displayed when a quote has a UAN with insufficient available qty."
-                                        name="./uanErrorMessage"/>
                                 </items>
                             </column>
                         </items>

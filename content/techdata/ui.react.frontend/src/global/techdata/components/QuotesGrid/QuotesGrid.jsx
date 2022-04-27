@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Grid from "../Grid/Grid";
 import GridSearchCriteria from "../Grid/GridSearchCriteria";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import QuotesGridSearch from "./QuotesGridSearch";
 import Checkout from "./Checkout";
 import Modal from "../Modal/Modal";
-import { getSingleQueryStringParameterFromUrl } from "../../../../utils/utils";
+import { getDictionaryValue, getSingleQueryStringParameterFromUrl } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_CLICK_EVENT,
@@ -22,6 +22,12 @@ function QuotesGrid(props) {
   const [queryStringIdValue, setQueryStringIdValue] = useState(getSingleQueryStringParameterFromUrl("id"));
   const { spaDealsIdLabel, statusLabelsList } = componentProp;
   const analyticModel = useRef(null);
+  const checkout = { ...componentProp.checkout };
+
+  useEffect(() => {
+    checkout.uanErrorMessage = getDictionaryValue("techdata.quotes.message.uanError", "UAN Error on the following lines:");
+  }, [checkout])
+
 
   const getDateTransformed = (dateUTC) => {
     const formatedDate = new Date(dateUTC).toLocaleDateString();
@@ -191,7 +197,7 @@ function QuotesGrid(props) {
             {props.value && (
               <Checkout
                 line={props.data}
-                checkoutConfig={componentProp.checkout}
+                checkoutConfig={checkout}
                 onErrorHandler={onErrorHandler}
                 modal={modal}
                 setModal={setModal}
