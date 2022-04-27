@@ -128,6 +128,7 @@ function GridSearchCriteria({
 						expanded={false}
 						setExpanded={setExpanded}
 						handleClickOptionsButton={handleClickOptionsButton}
+						labelFilterGrid={labelFilterGrid}
 					/>) : null} 
 			</div>
 			<div className={`cmp-search-criteria__content  ${!expanded ? 'cmp-search-criteria__content--hidden' : ''}`}>

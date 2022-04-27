@@ -10,10 +10,13 @@ import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
  * @param {() => void} props.handleClickOptionsButton
  * @returns 
  */
- const OpenFilter = ({handleChange, onSearch, onClear, setExpanded, handleClickOptionsButton}) =>{
+ const OpenFilter = ({handleChange, onSearch, onClear, setExpanded, handleClickOptionsButton, labelFilterGrid}) =>{
     return (
         <div  className="cmp-search-criteria__header__button"
             onClick={() => { 
+                if (labelFilterGrid) {
+                   return; 
+                }
                 pushEvent(ANALYTICS_TYPES.events.click, {
                   type: ANALYTICS_TYPES.types.button,
                   category: ANALYTICS_TYPES.category.orderTableInteractions,
