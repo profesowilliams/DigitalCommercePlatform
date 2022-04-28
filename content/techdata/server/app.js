@@ -124,12 +124,6 @@ app.post("/login", function (req, res) {
   let redirectUrl = req.body.RedirectUri;
   let applicationName = req.body.applicationName;
 
-  console.log("post submit");
-  console.log(req.body);
-  console.log(code);
-  console.log(redirectUrl);
-  console.log(applicationName);
-
   let resJsonSuccess = {
     content: {
       user: {
@@ -181,6 +175,10 @@ app.post("/login", function (req, res) {
           },
           {
             entitlement: "hasDCPAccess",
+            accountId: "",
+          },
+          {
+            entitlement: "hasRenewalsAccess",
             accountId: "",
           },
         ],

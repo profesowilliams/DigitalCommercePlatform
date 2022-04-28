@@ -33,6 +33,12 @@
                                                 fieldLabel="Line Item Details Label"
                                                 name="./lineItemDetailsLabel"
                                                 required="{Boolean}true"/>
+                                            <shopURL
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Shop URL"
+                                                name="./shopURL"
+                                                required="{Boolean}true"/>
                                             <downloadPDF
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

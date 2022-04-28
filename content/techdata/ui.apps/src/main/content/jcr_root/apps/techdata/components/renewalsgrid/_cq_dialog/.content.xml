@@ -37,6 +37,12 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="SPA Deals Label for Multiple items"
                                                 name="./spaDealsIdLabel"/>
+                                            <shopURL
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Shop URL"
+                                                name="./shopURL"
+                                                required="{Boolean}true"/>
                                             <paginationStyle
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"

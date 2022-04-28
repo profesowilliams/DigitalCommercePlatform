@@ -8,6 +8,7 @@
     modalQuotePreffixLabel="Quote: "
     paginationStyle="scroll"
     itemsPerPage="25"
+    shopURL="https://shop.techdata.com/renewals"
     actionColumnLabel="Create Quote"
     createQuoteUrlSuffix="?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
     defaultSortingColumnKey="dueDate"

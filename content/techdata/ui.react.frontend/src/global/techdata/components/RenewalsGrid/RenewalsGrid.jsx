@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
+import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
@@ -11,7 +13,6 @@ import RenewalDetailRenderers from "./RenewalDetailRenderers";
 import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, nonFilteredOnSorting, addCurrentPageNumber, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
-
 
 function ToolTip({ toolTipData }) {
   return (
@@ -25,6 +26,8 @@ function ToolTip({ toolTipData }) {
     ) : <div></div>
   );
 }
+
+const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged } =
@@ -43,7 +46,7 @@ function RenewalsGrid(props) {
 
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
 
-  const { searchOptionsList } = componentProp;
+  const { searchOptionsList, shopURL } = componentProp;
 
   const customPaginationRef = useRef();
 
@@ -58,7 +61,16 @@ function RenewalsGrid(props) {
     sort: "desc",
   }
 
+  const redirectToShop = () => {
+    window.location = shopURL;
+  };
+
   useEffect(() => effects.setCustomState({ key: 'aemConfig', value: componentProp }), [])
+
+  useEffect(() => {
+    // In case of don't have access redirect to shop
+    !hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS}) && redirectToShop()
+  }, [USER_DATA, ACCESS_TYPES]);
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
 

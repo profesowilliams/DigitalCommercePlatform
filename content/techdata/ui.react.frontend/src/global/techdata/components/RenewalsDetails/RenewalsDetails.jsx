@@ -5,6 +5,9 @@ import useGet from "../../hooks/useGet";
 import Loader from "../Widgets/Loader";
 import Modal from '../Modal/Modal';
 import { getUrlParams } from "../../../../utils";
+import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
+import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
+
 import { useStore } from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -17,12 +20,22 @@ function RenewalsDetails(props) {
   const [apiResponse, isLoading, error] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
+  const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
+  const shopURL = componentProp.shopURL;
   const isLoggedIn = useStore(state => state.isLoggedIn)
 
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
+  const redirectToShop = () => {
+    window.location = shopURL;
+  };
+
+  useEffect(() => {
+    // In case of don't have access redirect to shop
+    !hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS}) && redirectToShop()
+  }, [USER_DATA, ACCESS_TYPES]);
 
   const getErrorMessage = (errorCode) => {
     if(errorCode === 404) {

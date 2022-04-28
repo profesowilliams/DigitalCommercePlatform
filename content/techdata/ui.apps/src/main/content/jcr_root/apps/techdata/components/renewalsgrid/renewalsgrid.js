@@ -46,6 +46,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["itemsPerPage"]) {
         jsonObject["itemsPerPage"] = properties["itemsPerPage"];
     }
+    if (properties && properties["shopURL"]) {
+        jsonObject["shopURL"] = properties["shopURL"];
+    }
     if (properties && properties["paginationStyle"]) {
         jsonObject["paginationStyle"] = properties["paginationStyle"];
     }

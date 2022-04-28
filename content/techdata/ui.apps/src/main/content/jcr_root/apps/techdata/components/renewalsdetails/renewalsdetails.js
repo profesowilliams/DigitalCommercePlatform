@@ -24,6 +24,10 @@ use(['../common/utils.js'], function(utils) {
         productLines["downloadXLSLabel"] = properties["downloadXLSLabel"];
     }
 
+    if (properties && properties["shopURL"]) {
+        jsonObject["shopURL"] = properties["shopURL"];
+    }
+
     if (properties && properties["productfamily"]) {
         productLines["productfamily"] = properties["productfamily"];
     }
