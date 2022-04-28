@@ -11,7 +11,9 @@ import Modal from '../Modal/Modal';
 import { pushAnalyticsEvent } from './analytics';
 import { getDictionaryValue, isNotEmptyValue } from '../../../../utils/utils';
 import Loader from '../Widgets/Loader';
+import {useStore} from "../../../../utils/useStore"
 import ModalComponent from './ModalComponent';
+import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
 import {
   ERROR_CREATE_QUOTE_EMPTY_CART,
   ERROR_CREATE_QUOTE_INVALID_CART,
@@ -51,6 +53,8 @@ const QuoteCreate = ({
   const [cartID, setCartID] = useState(false);
   const [createQuoteButtonEnabled, setCreateQuoteButtonEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const isLoggedIn = useStore(state => state.isLoggedIn)
+
   const [modal, setModal] = useState(null);
   const methods = optionsList;
   const titleErrorModal = isNotEmptyValue(errorMessage.errorModalTitle) ? errorMessage.errorModalTitle : ERROR_TITLE_DEFAULT;
@@ -137,6 +141,7 @@ const QuoteCreate = ({
 
       //this condition for key equeals to cero is to give QA an opprtunity to test a failed create quote
       //this conditins needs to be removed later
+      if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
       let params = { ...fixedPayload, pricingCondition: pricing.key === '1' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };
@@ -175,6 +180,7 @@ const QuoteCreate = ({
       }
       setDisableCreateQuoteButton(false);
       setCreateQuoteTitle(buttonTitle);
+    }
   }
 
 	useEffect(() => {

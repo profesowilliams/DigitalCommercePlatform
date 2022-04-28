@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { get } from '../../../../utils/api';
+import {useStore} from "../../../../utils/useStore"
 import { removeStringDecimals } from '../../helpers/formatting';
+import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
 
 const Pill = ({type, msg}) => {
     return <span className={`pill ${type}`}>{msg}</span>
@@ -13,6 +15,7 @@ const NoData = ({type = "error", msg = 'N/A'}) => {
 
 const MyQuotes = ({ componentProp }) => {
     const [myQuotesDetails, setMyQuotes] = useState({});
+    const isLoggedIn = useStore(state => state.isLoggedIn)
     const {
         label,
         labelConverted,
@@ -33,10 +36,11 @@ const MyQuotes = ({ componentProp }) => {
         (async function(){
             const body = { code: localStorage.getItem("signInCode") };
             const { data: { content: { items } } } = await get(uiServiceEndPoint, { params: body });
-            console.log('items: ', items);
-            setMyQuotes(items)
+            if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+                setMyQuotes(items)
+            }
         })()
-    }, [])
+    }, [isExtraReloadDisabled() && isLoggedIn])
   
     return (
         <section id="cmp-quotes">

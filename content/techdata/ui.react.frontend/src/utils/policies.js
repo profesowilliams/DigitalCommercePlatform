@@ -1,4 +1,5 @@
 import { getUser } from "./index";
+import {isExtraReloadDisabled} from "./featureFlagUtils";
 
 export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
 
@@ -47,11 +48,15 @@ export const refreshPage = event => {
     let redirectUrlFromLS = localStorage.getItem(REDIRECT_URL);
     if(redirectUrlFromLS) {
         localStorage.removeItem(REDIRECT_URL);
-        window.location.href = redirectUrlFromLS;
+        if(!isExtraReloadDisabled()){
+            window.location.href = redirectUrlFromLS;
+        }
         return true;
     } else {
         const { search, origin, pathname } = window.location;
-        if (search) window.location.href = `${origin}${pathname}`;
+        if(!isExtraReloadDisabled() && search){
+            window.location.href = `${origin}${pathname}`;
+        }
     }
     return true;
 };

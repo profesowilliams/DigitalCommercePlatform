@@ -86,7 +86,8 @@ app.post("/auth", function (req, res) {
     if(isHttpOnlyEnabled){
       res.cookie(SESSION_COOKIE, "secret-session-id", {expires: new Date(Date.now() + 9999999), httpOnly: true});
     } 
-    res.redirect(redirect + "?code=" + codeValue);    
+    const queryStringAppend = redirect.indexOf("?") >= 0 ? "&" : "?";
+    res.redirect(redirect + queryStringAppend + "code=" + codeValue);
   } else {
     res.set("Content-Type", "text/html");
     res.write("<html>");
@@ -912,7 +913,9 @@ app.get("/cart", function (req, res) {
 
 function validateSession(req, res) {
   console.log(req.cookies[SESSION_COOKIE], isHttpOnlyEnabled, !req.headers["sessionid"]);
-  if((isHttpOnlyEnabled && !req.cookies[SESSION_COOKIE]) || (!isHttpOnlyEnabled && !req.headers["sessionid"])){
+  console.log(typeof(req.headers["sessionid"]))
+  console.log(req.cookies[SESSION_COOKIE])
+  if((isHttpOnlyEnabled && !req.cookies[SESSION_COOKIE]) || (!isHttpOnlyEnabled && (!req.headers["sessionid"] || req.headers["sessionid"] == 'null'))){
     res.status(401).json({
       error: {
         code: 401,

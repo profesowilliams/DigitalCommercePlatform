@@ -5,15 +5,19 @@ import useGet from "../../hooks/useGet";
 import Loader from "../Widgets/Loader";
 import Modal from '../Modal/Modal';
 import { getUrlParams } from "../../../../utils";
+import { useStore } from "../../../../utils/useStore"
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
-  const [apiResponse, isLoading] = useGet(
+  const [apiResponse, isLoading, error] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
+  const isLoggedIn = useStore(state => state.isLoggedIn)
 
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
@@ -46,13 +50,15 @@ function RenewalsDetails(props) {
     showSimpleModal(title, <div>{message}</div>, redirectPage || undefined);
 
   useEffect(() => {
-    if (apiResponse?.content?.details) {
-      setRenewalsDetails(apiResponse?.content?.details[0]);
-    } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
-        showErrorModal(errorMessages?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code),
-          () => window.location.href = errorMessages?.errorLoadingPageRedirect);
+    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+      if (apiResponse?.content?.details) {
+        setRenewalsDetails(apiResponse?.content?.details[0]);
+      } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
+          showErrorModal(errorMessages?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code),
+            () => window.location.href = errorMessages?.errorLoadingPageRedirect);
       }
-  }, [apiResponse]);
+    }
+  }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
 
   return (
     <div className="cmp-quote-preview cmp-renewal-preview">
@@ -65,9 +71,16 @@ function RenewalsDetails(props) {
             shopDomainPage={componentProp.shopDomainPage}
           />
         </section>
-      ) : (
+      ) : isLoading && (
         <Loader visible={isLoading} />
-      )}
+      )
+      }
+      {error &&       
+        <ErrorMessage
+          error={error}
+          messageObject={{"message401" : "You need to be logged in to view this"}}
+        /> 
+      }
       {modal && <Modal
             modalAction={modal.action}
             modalContent={modal.content}

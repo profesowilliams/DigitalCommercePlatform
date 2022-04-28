@@ -4,12 +4,16 @@ import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import { usPost } from "../../../../utils/api";
 import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
+import {useStore} from "../../../../utils/useStore"
 
 const CreateConfig = ({ componentProp }) => {
   const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText, nodePath }  = JSON.parse(componentProp);
   const [methodSelected, setMethodSelected] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const isLoggedIn = useStore(state => state.isLoggedIn)
   const POST_BACK_URL = "https://shop.techdata.com";
 
   const analyticsData = (vendorName, complete) => {
@@ -47,12 +51,15 @@ const CreateConfig = ({ componentProp }) => {
 
     try {
       const result = await usPost(punchOutUrl, params);
-      if (result?.data?.content?.url) {
-        analyticsData(methodSelected.label, false);
-        window.open(result.data.content.url);
+      if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+        if (result?.data?.content?.url) {
+          analyticsData(methodSelected.label, false);
+          window.open(result.data.content.url);
+        }
       }
       return result.data;
     } catch( error ) {
+      setError(true)
       return error;
     } finally {
       resetStates();

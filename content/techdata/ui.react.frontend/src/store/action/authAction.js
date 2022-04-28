@@ -2,6 +2,7 @@ import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } fr
 import axios from '../../utils/axios';
 import { createSessionId, setSessionId, createMaxTimeout } from '../../utils';
 import {refreshPage} from '../../utils/policies';
+import { isExtraReloadDisabled } from "../../utils/featureFlagUtils"
 
 export const signInRequest = () => {
 	return {
@@ -35,9 +36,11 @@ export const signInAsynAction = (apiUrl) => {
 
 	const  prepareSignInHeader = () => {
 		let code = localStorage.getItem('signInCode');
-		const sessionId = createSessionId();
+		const sessionId = !isExtraReloadDisabled() ? createSessionId() : null;
 		createMaxTimeout();
-		setSessionId(sessionId);
+		if(!isExtraReloadDisabled()){
+			setSessionId(sessionId);
+		}
 		return {
 			'TraceId': `AEM_${new Date().toISOString()}`,
 			'Site': 'NA',

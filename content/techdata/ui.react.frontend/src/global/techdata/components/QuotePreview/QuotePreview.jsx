@@ -10,6 +10,8 @@ import { getUrlParams } from "../../../../utils";
 import { usPost } from "../../../../utils/api";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import {
   isPricingOptionsRequired,
   isAllowedQuantityIncrease,
@@ -37,6 +39,7 @@ import {
   QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD,
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
+import {useStore} from "../../../../utils/useStore"
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -55,6 +58,8 @@ function QuotePreview(props) {
   const [tier, setTier] = useState('');
   const modalConfig = componentProp?.modalConfig;
   const DEAL_ATTRIBUTE_FIELDNAME = "DEALIDENTIFIER";
+
+  const isLoggedIn = useStore(state => state.isLoggedIn)
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
   
@@ -76,33 +81,36 @@ function QuotePreview(props) {
   /**
    * Getting the values of the Quote
    */
+
   useEffect(() => { 
     const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
-    if(quoteDetailsResponse) {
-      const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
-      const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
-      // Remove Choose Modal 
-      setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod));
-      setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
-      // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
-      quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
-      setQuoteDetails(quoteDetailsResponse);
-      // Show Modal When Quote Cannot Be Created.
-      if (cannotCreateQuote(quoteDetailsResponse)) {
-        showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
+    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+      if(quoteDetailsResponse) {
+        const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
+        const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
+        // Remove Choose Modal 
+        setShowPopUp(isTechDataAndAVTTechCustomerMethod(customerBuyMethod)); // Flag to know if need to show the popup
+        setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
+        // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
+        quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
+        setQuoteDetails(quoteDetailsResponse);
+        // Show Modal When Quote Cannot Be Created.
+        if (cannotCreateQuote(quoteDetailsResponse)) {
+          showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
+        }
+        setFlagDeal(!isDealConfiguration(quoteDetailsResponse.source));
+      } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
+        showErrorModal(modalConfig?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code), 
+          () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
       }
-      setFlagDeal(!isDealConfiguration(quoteDetailsResponse.source));
-    } else if(apiResponse?.error?.isError) {// 200 Ok isError=true
-      showErrorModal(modalConfig?.errorLoadingPageTitle, getErrorMessage(apiResponse.error?.code), 
-        () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
     }
-  }, [apiResponse]);
+  }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
 
   /**
    * Handle unexpected useGet error
    */
    useEffect(() => { 
-    if(error) {
+    if(!error?.code === 401) {
       showErrorModal(modalConfig?.errorLoadingPageTitle, modalConfig?.errorGenericMessage, 
         () => window.location.href = modalConfig?.errorLoadingPageRedirect); 
     }     
@@ -391,7 +399,7 @@ const [flagDeal, setFlagDeal] = useState(false);
           Please wait while Your Quote is created
         </FullScreenLoader>
       )}
-      {apiResponse && !isLoading && (
+        {apiResponse && !isLoading ? (
         <section>
           <ConfigGrid
             hideDealSelector={isDealSelectorHidden(quoteDetails)}
@@ -436,7 +444,12 @@ const [flagDeal, setFlagDeal] = useState(false);
             isConfig={sourceIsConfigsGrid}
             />
         </section>
-      )}
+      ) : error &&
+      <ErrorMessage
+        error={error}
+        messageObject={{"message401" : "You need to be logged in to view this"}}
+      /> 
+      }
       {modal && <Modal
           modalAction={modal.action}
           modalContent={modal.content}

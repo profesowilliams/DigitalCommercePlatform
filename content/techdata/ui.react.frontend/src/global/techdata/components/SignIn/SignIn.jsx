@@ -22,6 +22,8 @@ import {
   signOutForExpiredSession,
 } from "../../../../utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
+import {useStore} from "../../../../utils/useStore"
+import axios from 'axios';
 
 const FA = require("react-fontawesome");
 
@@ -41,6 +43,8 @@ const SignIn = (props) => {
   const { auth } = useSelector((state) => {
     return state;
   });
+
+  const changeLoggedInState = useStore((state) => state.changeLoggedInState)
 
   const codeQueryParam = "code";
   const {
@@ -62,22 +66,12 @@ const SignIn = (props) => {
   const userData = props.data.auth.userData;
   let userDataCheck = populateLoginData();
 
-  function removeParam(key, sourceURL) {
-      var rtn = sourceURL.split("?")[0],
-          param,
-          params_arr = [],
-          queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
-      if (queryString !== "") {
-          params_arr = queryString.split("&");
-          for (var i = params_arr.length - 1; i >= 0; i -= 1) {
-              param = params_arr[i].split("=")[0];
-              if (param === key) {
-                  params_arr.splice(i, 1);
-              }
-          }
-          if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
-      }
-      return rtn;
+  function removeParam(key) {
+    const newUrl = new URL(window.location);
+
+    newUrl.searchParams.delete(key)
+
+    window.history.pushState({}, "", newUrl);
   }
 
   function populateLoginData() {
@@ -201,16 +195,27 @@ const SignIn = (props) => {
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
     routeChange();
-    isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
   }
 
   useEffect(() => {
     handleLoginRedirection();
     const originalURL = window.location.href;
+
     if (isExtraReloadDisabled() && originalURL.indexOf(codeQueryParam) > -1) {
-        const alteredURL = removeParam(codeQueryParam, originalURL);
-        window.location.href = alteredURL;
-        handleLoginRedirection();
+      const originalURL = window.location.href;
+      handleLoginRedirection();
+
+      removeParam(codeQueryParam, originalURL);
+    }
+    
+    isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+
+    if(isExtraReloadDisabled()){
+      let sessionId = localStorage.getItem("sessionId");
+      if(sessionId){
+        axios.defaults.headers.common['SessionId'] = sessionId;
+        changeLoggedInState(true)
+      }
     }
 
     // redirecting the non-dcp logged in user to home page
@@ -264,7 +269,6 @@ const SignIn = (props) => {
       if (!isAlreadySignedIn()) {
         dispatch(signInAsynAction(constructSignInURL()));
       }
-    } else {
     }
   };
 

@@ -5,6 +5,8 @@ import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
 import { formateDatePicker, normalizeErrorCode, stringifyValue } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
+import {useStore} from "../../../../utils/useStore"
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
 import { isObject } from '../../../../utils';
 
 function Grid(props) {
@@ -41,6 +43,8 @@ function Grid(props) {
     total: null,
   });
   const [popupParent] = useState(document.querySelector('body'));
+  const isLoggedIn = useStore(state => state.isLoggedIn)
+  
   const pagination =
     config?.paginationStyle &&
     config?.paginationStyle !== "none" &&
@@ -536,21 +540,23 @@ function Grid(props) {
   }
 
   useEffect(() => {
-    !data && getGridData();
-    setAgGrid(<AgGrid />);
-    // set minimum height if height wasn't explicitly set in css
-    if (getAgGridDomLayout() !== "autoHeight") {
-      window.getComputedStyle(gridNodeRef.current).height === "0px" &&
-        (gridNodeRef.current.style.height =
-          DEFAULT_ROW_HEIGHT * config.itemsPerPage + "px");
+    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+      !data && getGridData();
+      setAgGrid(<AgGrid />);
+      // set minimum height if height wasn't explicitly set in css
+      if (getAgGridDomLayout() !== "autoHeight") {
+        window.getComputedStyle(gridNodeRef.current).height === "0px" &&
+          (gridNodeRef.current.style.height =
+            DEFAULT_ROW_HEIGHT * config.itemsPerPage + "px");
+      }
+      window.addEventListener("resize", onResize);
+      return () => {
+        gridApi?.current?.destroy();
+        delete globalThis[`$$tdGrid${gridId.current}`];
+        window.removeEventListener("resize", onResize);
+      };
     }
-    window.addEventListener("resize", onResize);
-    return () => {
-      gridApi?.current?.destroy();
-      delete globalThis[`$$tdGrid${gridId.current}`];
-      window.removeEventListener("resize", onResize);
-    };
-  }, []);
+  }, [isExtraReloadDisabled() && isLoggedIn]);
 
   return (
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>

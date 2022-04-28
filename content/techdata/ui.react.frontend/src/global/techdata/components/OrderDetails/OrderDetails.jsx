@@ -3,9 +3,12 @@ import OrderSubHeader from "./OrderDetailsSubHeader/OrderSubHeader";
 import OrderDetailsInfo from "./OrderDetailsInfo/OrderDetailsInfo";
 import Loader from "../Widgets/Loader";
 import FullScreenLoader from "../Widgets/FullScreenLoader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ProductLinesGrid from "./ProductLines/ProductLinesGrid";
 import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
+import {useStore} from "../../../../utils/useStore"
+import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
 
 const OrderDetails = ({ componentProp }) => {
   const {
@@ -26,6 +29,7 @@ const OrderDetails = ({ componentProp }) => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
+  const isLoggedIn = useStore(state => state.isLoggedIn)
   
   useEffect(() => {
     if (iconList.length === 0) {
@@ -50,14 +54,16 @@ const OrderDetails = ({ componentProp }) => {
   };
 
   useEffect(() => {
-    if (response !== null && response.content !== null) {
-      response?.content && setOrderDetails(response.content);
-    } else {
-      if (response && response.error.code != 0) {
-        setOrderDetails(defaultContentObject);
+    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+      if (response !== null && response.content !== null) {
+        response?.content && setOrderDetails(response.content);
+      } else {
+        if (response && response.error.code != 0 && !isLoading) {
+          setOrderDetails(defaultContentObject);
+        }
       }
     }
-  }, [response]);
+  }, [response, isExtraReloadDisabled(), isLoggedIn]);
 
   productLines.agGridLicenseKey = agGridLicenseKey;
 
@@ -89,18 +95,11 @@ const OrderDetails = ({ componentProp }) => {
       />
     </div>
   ) : error ? (
-      <div className="cmp-error">
-        <div className="cmp-error__header">
-          Error {error.code && error.code} {error.status && error.status}.
-        </div>
-        <div className="cmp-error__message">
-          {" "}
-          {error.code === 401 || error.status === 401
-            ? "You have to be logged in to use this feature."
-            : "Contact your site administrator."}
-        </div>
-      </div>
-  ) : (
+    <ErrorMessage
+      error={error}
+      messageObject={{"message401" : "You need to be logged in to view this"}}
+    /> 
+  ) : isLoading && (
     <FullScreenLoader>
       <Loader visible={true}></Loader>
     </FullScreenLoader>

@@ -2,6 +2,9 @@ import React, { useEffect, useState, createRef } from "react";
 import Chart from "chart.js";
 import LegendWidget from "./Legend";
 import { get } from "../../../../utils/api";
+import {useStore} from "../../../../utils/useStore"
+import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const MyConfigurations = ({ componentProp }) => {
   const { label, endpoint, orderLabels, daysLabel } = JSON.parse(componentProp);
@@ -10,7 +13,9 @@ const MyConfigurations = ({ componentProp }) => {
   const domRef3 = createRef();
   const [summary, setSummary] = useState(false);
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const refs = [domRef1, domRef2, domRef3];
+  const isLoggedIn = useStore(state => state.isLoggedIn)
 
   const getColors = (i) => {
     const elem = document.querySelector(
@@ -86,16 +91,22 @@ const MyConfigurations = ({ componentProp }) => {
   useEffect(async () => {
     try {
       const { data } = await get(endpoint);
-      if (data) {
-        setSummary(data.content.summary);
-        setError(false);
-      } else {
-        setError(true);
+      if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+        if (data) {
+          setSummary(data.content.summary);
+          setError(false);
+          setIsLoading(false)
+        } else {
+          setError(true);
+          setIsLoading(false)
+        }
       }
-    } catch (e) {
-      setError(true);
-    }
-  }, []);
+      } catch (e) {
+        setError(true);
+        setIsLoading(false)
+      }
+  }, [isExtraReloadDisabled() , isLoggedIn]);
+
   return (
     <div className="cmp-dcp-widget cmp-myconfigurations">
       {summary ? (
@@ -119,8 +130,11 @@ const MyConfigurations = ({ componentProp }) => {
           </div>
         </div>
       ) : error ? (
-        <p> Error </p>
-      ) : (
+        <ErrorMessage
+          error={error}
+          messageObject={{"message401" : "You need to be logged in to view this"}}
+        /> 
+      ) : isLoading && (
         <p>  <div class="cmp-spinner"><div class="cmp-loading">Loading…</div></div>  </p>
       )}
     </div>

@@ -6,10 +6,10 @@ const ErrorMessage = ({error, messageObject}) => {
     return (
     <div className="cmp-error">
         <div className="cmp-error__header">
-            Error {error.code && error.code} {error.status && error.status}.
+            Error {error?.code && error?.code} {error?.status && error?.status}.
         </div>
         <div className="cmp-error__message">
-            {error.code === 401 || error.status === 401
+            {error?.code === 401 || error?.status === 401
                 ? messageObject.message401
                 : messageObject.genericErrorMessage}
         </div>
