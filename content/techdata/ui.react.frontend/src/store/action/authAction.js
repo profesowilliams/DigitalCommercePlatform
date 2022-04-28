@@ -43,7 +43,7 @@ export const signInAsynAction = (apiUrl) => {
 		}
 		return {
 			'TraceId': `AEM_${new Date().toISOString()}`,
-			'Site': 'NA',
+			'Site': 'US',
 			'Accept-Language' : 'en-us',
 			'Consumer' : 'AEM',
 			'SessionId' : sessionId,

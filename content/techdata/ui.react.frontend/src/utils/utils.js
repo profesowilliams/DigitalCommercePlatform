@@ -15,7 +15,7 @@ export const getSingleQueryStringParameterFromUrl = (queryStringParameterName) =
 // Not updating the TraceId on this function as it does not appear to be used and may be a leftover from a POC
 export const prepareCommonHeader = () => ({
     "TraceId" : "NA",
-    "Site": "NA",
+    "Site": "US",
     "Accept-Language" : "en-us",
     "Consumer" : "AEM",
     "SessionId" : nanoid(16),

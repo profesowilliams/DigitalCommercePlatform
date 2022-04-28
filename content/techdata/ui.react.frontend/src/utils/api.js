@@ -22,7 +22,7 @@ axios.defaults.headers.common['Accept-Language'] = 'en-us';
 axios.defaults.headers.common['Consumer'] = 'AEM';
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
-axios.defaults.headers.common['Site'] = 'NA';
+axios.defaults.headers.common['Site'] = 'US';
 
 
 const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
