@@ -1,5 +1,6 @@
 import axios from "axios";
 import {nanoid} from "nanoid";
+import { isObject } from ".";
 import { usPost } from "./api";
 
 export function getQueryStringValue (key) {
@@ -221,7 +222,7 @@ export const fromExceptionToErrorObject = (error) => {
 }
 
 export const stringifyValue = (value) => {
-  return (Array.isArray(value) && value?.length ? value.map(e => e?.id ? e.id : e[Object.keys(e)[0]]).join(',') : value) || '';
+  return (Array.isArray(value) && value?.length ? value.map(e => e?.id ? e.id : (isObject(e) ? e[Object.keys(e)[0]] : e)).join(',') : value) || '';
 }
 
 /**

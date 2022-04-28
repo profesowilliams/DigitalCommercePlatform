@@ -12,14 +12,8 @@ module.exports = {
     getRandomArrayWithIds: (maxLength) => {
         const arrayLength = Math.floor(Math.random() * (maxLength + 1));
         let ids = [];
-        const itemDefinition = {
-            id: "123456789",
-            version: "1",
-            vendorId: "2323232",
-            selectionFlag: "flag",
-        };
         for (let i = 0; i < arrayLength; i++) {
-            ids.push(itemDefinition);
+            ids.push(Math.floor(Math.random() * 100000000).toString());
         }
         return ids;
     },
