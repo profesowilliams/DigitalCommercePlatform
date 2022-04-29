@@ -67,6 +67,7 @@ function RenewalsGrid(props) {
   }
 
   const redirectToShop = () => {
+    if(!shopURL) return;
     window.location = shopURL;
   };
 
