@@ -7,10 +7,19 @@ import DueDateColumn from "./DueDateColumn";
 import DueDateDayColumn from "./DueDateDayColumn";
 import PriceColumn from "./PriceColumn";
 import RenewalActionColumn from "./RenewalActionColumn";
+import { useRenewalGridState } from "./store/RenewalsStore";
+import Link from "../Widgets/Link";
+
 
 const columnFieldsMap = (definition, eventProps) => {
+  const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
   const { columnKey } = definition;
   const { value, data } = eventProps;
+
+  const renewalDetailsURL = encodeURI(
+    `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
+  );
+
   const columnFields = {
     resellername: data?.reseller?.name,
     endUser: value?.name,
@@ -19,7 +28,16 @@ const columnFieldsMap = (definition, eventProps) => {
     dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
     total: <PriceColumn columnValue={data?.renewal?.total} />,
-    agreementNumber: data?.agreementNumber
+    agreementNumber: data?.agreementNumber,
+    Id: (
+      <Link
+        href={renewalDetailsURL}
+        variant="renewal-links__secondary"
+        underline="always"
+      >
+        {data.source.id}
+      </Link>
+    ),
   };
   const defaultValue = () => (typeof value !== "object" && value) || "";
   return columnFields[columnKey] || defaultValue();
@@ -49,6 +67,7 @@ const columnsWidth = {
   resellername: "173.368px",
   endUser: "123.368px",
   vendor: "177.632px",
+  Id: "110px",
   agreementNumber: "120.211px",
   renewedduration: "177.632px",
   dueDays: "143.737px",

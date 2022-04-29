@@ -145,9 +145,8 @@ function RenewalsGrid(props) {
 
   /**
    * A custom implementation to enable tooltips on hover
-   * for those columns whose values are truncated. This is
-   * enabled only for `endUser` column for now. Modify `hoverableList`
-   * in `GenericColumnTypes.jsx` to enable for more columns.
+   * for those columns whose values are truncated. Modify `hoverableList`
+   * in `GenericColumnTypes.jsx` to enable hover for more columns.
    * @param {*} event
    */
   function cellMouseOver(event) {

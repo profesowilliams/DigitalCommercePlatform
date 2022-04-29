@@ -69,40 +69,47 @@
         />
         <item3
             jcr:primaryType="nt:unstructured"
+            columnLabel="Disti quote No"
+            columnKey="Id"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
             columnLabel="Agreement No"
             columnKey="agreementnumber"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item4
+        <item5
             jcr:primaryType="nt:unstructured"
             columnLabel="Renewal Plan"
             columnKey="renewedduration"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item5
+        <item6
             jcr:primaryType="nt:unstructured"
             columnLabel="Due in (days)"
             columnKey="dueDays"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item6
+        <item7
             jcr:primaryType="nt:unstructured"
             columnLabel="Due Date"
             columnKey="dueDate"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item7
+        <item8
             jcr:primaryType="nt:unstructured"
             columnLabel="Price (USD)"
             columnKey="total"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item8
+        <item9
             jcr:primaryType="nt:unstructured"
             columnLabel="Actions"
             columnKey="actions"
