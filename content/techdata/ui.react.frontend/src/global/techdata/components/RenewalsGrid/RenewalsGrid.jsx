@@ -30,13 +30,12 @@ function ToolTip({ toolTipData }) {
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function RenewalsGrid(props) {
-  const { onAfterGridInit, onQueryChanged } =
-    useGridFiltering();
+  const { onAfterGridInit, onQueryChanged } = useGridFiltering();
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData);
   
-  const { setToolTipData } = effects;
+  const { setToolTipData, setCustomState } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
@@ -65,7 +64,7 @@ function RenewalsGrid(props) {
     window.location = shopURL;
   };
 
-  useEffect(() => effects.setCustomState({ key: 'aemConfig', value: componentProp }), [])
+  useEffect(() => setCustomState({ key: 'aemConfig', value: componentProp }), [])
 
   useEffect(() => {
     // In case of don't have access redirect to shop
@@ -95,8 +94,8 @@ function RenewalsGrid(props) {
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
     const pageSize = gridConfig.itemsPerPage;
     const paginationValue = setPaginationData(rest,pageSize);
-    effects.setCustomState({ key: 'pagination', value: paginationValue })
-    effects.setCustomState({ key: 'refinements', value: refinementGroups })
+    setCustomState({ key: 'pagination', value: paginationValue })
+    setCustomState({ key: 'refinements', value: refinementGroups })
     return mappedResponse;
   }
 
@@ -116,7 +115,7 @@ function RenewalsGrid(props) {
 
   const _onAfterGridInit = (config) => {
     const value = config.api;
-    effects.setCustomState({ key: 'gridApi', value });
+    setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;
     onAfterGridInit(config);
     config.columnApi.applyColumnState({
@@ -173,7 +172,10 @@ function RenewalsGrid(props) {
   return (
     <section>
       <div className="cmp-renewals-subheader">
-        <CustomRenewalPagination onQueryChanged={onQueryChanged} ref={customPaginationRef} />
+        <CustomRenewalPagination
+          onQueryChanged={onQueryChanged}
+          ref={customPaginationRef}
+        />
         <div className="renewal-filters">
           <SearchFilter
             options={searchOptionsList}
@@ -200,16 +202,23 @@ function RenewalsGrid(props) {
           onSortChanged={onSortChanged}
           handlerIsRowMaster={() => true}
           icons={{
-            groupExpanded: '<i></i>',
-            groupContracted: '<i></i>',
+            groupExpanded: "<i></i>",
+            groupContracted: "<i></i>",
           }}
           onCellMouseOver={cellMouseOver}
           onCellMouseOut={cellMouseOut}
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
+          suppressPaginationPanel={true}
         />
       </div>
-      <ToolTip toolTipData={toolTipData}/>
+      <ToolTip toolTipData={toolTipData} />
+      <div className="cmp-renewals__pagination--bottom">
+        <CustomRenewalPagination
+            onQueryChanged={onQueryChanged}
+            ref={customPaginationRef}
+          />
+      </div>
     </section>
   );
 }

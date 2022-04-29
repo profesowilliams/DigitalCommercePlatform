@@ -31,6 +31,7 @@ function Grid(props) {
     onCollapseAnalytics,
     onCellMouseOver,
     onCellMouseOut,
+    suppressPaginationPanel = false,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -131,6 +132,7 @@ function Grid(props) {
       getRowNodeId={getRowIdCallback}
       suppressRowClickSelection={true}
       suppressPropertyNamesCheck={true}
+      suppressPaginationPanel={suppressPaginationPanel}
       onCellValueChanged={onModelUpdated}
       onModelUpdated={onModelUpdated}
       onSortChanged={onSortChanged}

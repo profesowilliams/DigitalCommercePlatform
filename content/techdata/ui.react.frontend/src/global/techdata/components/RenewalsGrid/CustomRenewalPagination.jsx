@@ -1,16 +1,13 @@
 import React, {
-  useMemo,
   useState,
   useEffect,
   useRef,
-  useCallback,
   forwardRef,
   useImperativeHandle,
 } from "react";
 import {
   maxCounterCalculator,
   minCounterCalculator,
-  pageCalculator,
 } from "../../../../utils/paginationUtil";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -74,7 +71,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     onQueryChanged({ queryString }, { filterStrategy: "post" });
   }
 
-  const incrementHandler = () => { 
+  const incrementHandler = () => {
     if (pageNumber > pageCount - 1) return
     const value = { ...paginationData, pageNumber:pageNumber+1 };
     console.log('🚀value >>',value);
@@ -83,7 +80,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
       keepFilteringPayload(pageNumber+1)
     } else {    
       sendPagingRequest()
-    }    
+    }
   };
 
   const decrementHandler = () => {    
@@ -141,7 +138,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
 
   return (
     <div className="cmp-navigation">
-      <p className="navigation__info">
+      <div className="navigation__info">
         <span className="cta">
           {paginationCounter.minCounter > 0
             ? paginationCounter.minCounter
@@ -156,8 +153,8 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
         of
         <span className="cta">{totalCounter}</span>
         results
-      </p>
-      <p className="cmp-navigation__actions">
+      </div>
+      <div className="cmp-navigation__actions">
         <button
           className="border"
           disabled={pageNumber === 1}
@@ -166,7 +163,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
             
           }}
         >
-          <strong>{"|<"}</strong>
+          <i class="fas fa-step-backward"></i>
         </button>
         <button
           className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
@@ -207,9 +204,9 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
             gotToLastPage();            
           }}
         >
-          <strong>{">|"}</strong>
+          <i class="fas fa-step-forward"></i>
         </button>
-      </p>
+      </div>
     </div>
   );
 }

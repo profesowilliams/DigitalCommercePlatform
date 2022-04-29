@@ -196,18 +196,25 @@ $bg--marketing-card:#F7F7F7;
   border-bottom: 2px solid #030f24;
   align-items: center;
   height:45px;
+  /*
+    Styles for pagination
+  */
   .cmp-navigation {
     display: flex;
     gap: 1rem;
     align-items: center;
+    .navigation__info {
+      color: #555555;
+      font-size: 12px;
+    }
     span.cta {
       margin: auto .2em;
       font-weight: bold;
     }
-    p {
+    &__info, &__actions {
       margin: 0;
       color: $font-color;
-      font-size: 0.9rem;
+      font-size: 12px;
       display: flex;
       button {
         background: none;        
@@ -215,7 +222,6 @@ $bg--marketing-card:#F7F7F7;
     }
     &__actions {
       .move-button {
-        color: lightskyblue;
         &__disabled {
           color: #C6C6C6;
         }
@@ -309,6 +315,96 @@ $bg--marketing-card:#F7F7F7;
     height: 1.3rem;
     margin: auto 0;
     display: inline;
+  }
+}
+.cmp-renewals__pagination--bottom {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+  // copied from previous impl, require refactoring
+  .cmp-navigation {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    .navigation__info {
+      color: #555555;
+      font-size: 12px;
+    }
+    span.cta {
+      margin: auto .2em;
+      font-weight: bold;
+    }
+    &__info, &__actions {
+      margin: 0;
+      color: $font-color;
+      font-size: 12px;
+      display: flex;
+      button {
+        background: none;
+      }
+    }
+    &__actions {
+      .move-button {
+        &__disabled {
+          color: #C6C6C6;
+        }
+      }
+      button.border {
+        margin: 0 .4em;
+        cursor: pointer;
+      }
+      button {
+        margin: 0 0.5rem;
+        padding: 0;
+        cursor: pointer;
+      }
+      &-labels {
+        display: flex;
+        padding: 0 4px;
+        gap: 6px;
+        input {
+          width: 27px;
+          max-width: 27px;
+          max-height: 1.3em;
+          outline: none;
+          border: none;
+          border-block-end: 2px groove;
+          margin: 0.1em auto 0;
+          text-align: center;
+          &.goSmall {
+            font-size: 12px;
+          }
+        }
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+
+        /* Firefox */
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+
+        span.selected {
+          position: relative;
+          display: block;
+          width: 13px;
+          text-align: center;
+          &::after {
+            content: "";
+            width: 13px;
+            background: #b7b7b7;
+            height: 2px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
+      }
+    }
   }
 }
 .cmp-renewals-grid {
