@@ -75,6 +75,7 @@ function RenewalsGrid(props) {
 
   useEffect(() => {
     // In case of don't have access redirect to shop
+    if(process.env.NODE_ENV === "development") return;
     !hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS}) && redirectToShop()
   }, [USER_DATA, ACCESS_TYPES]);
 
