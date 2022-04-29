@@ -226,9 +226,15 @@ $bg--marketing-card:#F7F7F7;
           color: #C6C6C6;
         }
       }
-      button.border {
-        margin: 0 .4em;
+      button.icon-box {
+        margin: 0;
         cursor: pointer;
+        svg{
+          margin: auto 0;
+          width: 22px;
+          display: block;          
+          fill: #21314d;
+        }
       }
       button {
         margin: 0 0.5rem;

@@ -12,6 +12,18 @@ import {
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
+const LastPageIcon = (props) => (
+  <svg viewBox="0 0 48 48" {...props}>
+    <path d="m13.6 36.95-3.35-3.35 9.6-9.6-9.6-9.6 3.35-3.35L26.55 24Zm18.55.25V10.8h4.7v26.4Z" />
+  </svg>
+)
+
+const FirstPageIcon = (props) => (
+  <svg viewBox="0 0 48 48" {...props}>
+    <path d="m34.35 37.05-12.9-12.9 12.9-12.9 3.35 3.35-9.55 9.55 9.55 9.55Zm-23.2.15V10.8h4.7v26.4Z" />
+  </svg>
+)
+
 function CustomRenewalPagination({ onQueryChanged }, ref) {
   const paginationData = useRenewalGridState((state) => state.pagination);
   const {
@@ -156,14 +168,11 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
       </div>
       <div className="cmp-navigation__actions">
         <button
-          className="border"
+          className="icon-box"
           disabled={pageNumber === 1}
-          onClick={() => {
-            goToFirstPage();
-            
-          }}
+          onClick={goToFirstPage }
         >
-          <i class="fas fa-step-backward"></i>
+          <FirstPageIcon/>
         </button>
         <button
           className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
@@ -199,12 +208,10 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
         </button>
         <button
           disabled={pageNumber === pageCount}
-          className="border"
-          onClick={() => {
-            gotToLastPage();            
-          }}
+          className="icon-box"
+          onClick={gotToLastPage}
         >
-          <i class="fas fa-step-forward"></i>
+          <LastPageIcon/>
         </button>
       </div>
     </div>

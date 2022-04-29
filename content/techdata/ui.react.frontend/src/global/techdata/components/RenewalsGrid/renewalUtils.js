@@ -94,7 +94,8 @@ export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopu
 }
 export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria}){
     var url = request.url.split('&');
-    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, hasSortChanged.current?.sortData.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&'));
+    const sortParam = hasSortChanged.current?.sortData.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&');
+    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, sortParam);
     url.splice(url.findIndex(e => e.indexOf('SortDirection=') === 0),1);
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
@@ -116,3 +117,22 @@ export function setPaginationData(mappedResponse,pageSize) {
 export function decideGetPostStrategy(){
 
 }
+
+export function isFirstTimeSortParameters(sortingList,{colId}){
+    if ( !sortingList ) return true;
+    const { sortData } = sortingList;    
+    //const sortData = [{colId:'dueDate',sort:'asc'}, {colId:'total',sort:'desc'}]
+    const colIdList = sortData.map(s => s.colId);
+    Object.defineProperty(colIdList, 'hasDefaultValues',{
+        writable: false,
+        value: function (compareList){
+            const validArgs = [];
+            for (const item of compareList){
+                validArgs.push(this.includes(item))
+            }
+            return validArgs.every(sort => sort);
+        }
+    })
+    return colIdList.hasDefaultValues(["dueDate",colId]);    
+}
+

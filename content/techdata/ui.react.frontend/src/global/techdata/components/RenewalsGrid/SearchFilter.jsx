@@ -178,7 +178,7 @@ function _SearchFilter({
     return (
       <>
         <SearchCapsule />
-        <div div className="cmp-renewal-search">
+        <div className="cmp-renewal-search">
           <div className="cmp-search-select-container">
             <div className="cmp-search-select-container__box">
               <input

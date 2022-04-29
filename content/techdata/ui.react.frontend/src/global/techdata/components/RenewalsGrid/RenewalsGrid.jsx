@@ -10,7 +10,13 @@ import VerticalSeparator from "../Widgets/VerticalSeparator";
 import CustomRenewalPagination from "./CustomRenewalPagination";
 import { getColumnDefinitions } from "./GenericColumnTypes";
 import RenewalDetailRenderers from "./RenewalDetailRenderers";
-import { isFilterPostRequest, mapServiceData, mapSortIdByPrice, nonFilteredOnSorting, addCurrentPageNumber, preserveFilterinOnSorting, priceDescendingByDefaultHandle, setPaginationData } from "./renewalUtils";
+import {
+  addCurrentPageNumber, isFilterPostRequest,
+  mapServiceData,
+  mapSortIdByPrice,
+  nonFilteredOnSorting, preserveFilterinOnSorting,
+  setPaginationData, isFirstTimeSortParameters
+} from "./renewalUtils";
 import SearchFilter from "./SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 
@@ -101,8 +107,9 @@ function RenewalsGrid(props) {
 
   const onSortChanged = (evt) => {
     const sortModelList = evt.columnApi.getColumnState();
-    const sortedModel = sortModelList.filter(o => !!o.sort);
-    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
+    const sortedModel = sortModelList.filter(o => !!o.sort);   
+    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;  
+    const testRef =  sortedModel ? { sortData: sortedModel } : false;
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1) {
       pushEvent(ANALYTICS_TYPES.events.click, {
@@ -117,17 +124,19 @@ function RenewalsGrid(props) {
     const value = config.api;
     setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;
-    onAfterGridInit(config);
-    config.columnApi.applyColumnState({
-      state: [
+    onAfterGridInit(config);    
+    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions)
+    const columnState =  {
+      state: isDefaultSort ? [
         {
           colId: dueDateKey,
           sort: dueDateDir,
         },
         { ...secondLevelOptions },
-      ],
+      ] : [...hasSortChanged.current.sortData],
       defaultState: { sort: null },
-    })
+    }
+    config.columnApi.applyColumnState({...columnState})
   }
 
   function tootltipVal(event) {
