@@ -3,7 +3,7 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:tags="[experience-fragments:variation/web]"
-        cq:template="/conf/tds-core/settings/wcm/templates/xf-web-variation"
+        cq:template="/conf/tds-core/settings/wcm/templates/empty-experience-fragment"
         cq:xfVariantType="web"
         jcr:primaryType="cq:PageContent"
         sling:resourceType="tds-core/components/xfpage/v1/xfpage">

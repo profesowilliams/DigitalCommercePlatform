@@ -3,20 +3,14 @@
     jcr:primaryType="cq:Page">
     <jcr:content
         cq:deviceGroups="[mobile/groups/responsive]"
-        cq:template="/conf/tds-core/settings/wcm/templates/page-content"
+        cq:template="/conf/tds-core/settings/wcm/templates/empty-experience-fragment"
         jcr:primaryType="cq:PageContent"
-        sling:resourceType="tds-core/components/page/v1/page">
+        sling:resourceType="tds-core/components/xfpage/v1/xfpage">
         <root
             jcr:primaryType="nt:unstructured"
-            sling:resourceType="tds-core/components/page/v1/page"
+            sling:resourceType="tds-core/components/container/v1/container"
             editable="{Boolean}true"
-            layout="responsiveGrid">
-            <container
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="tds-core/components/container/v1/container"
-                editable="{Boolean}true"
-                layout="responsiveGrid"/>
-        </root>
+            layout="responsiveGrid"/>
         <cq:responsive jcr:primaryType="nt:unstructured">
             <breakpoints jcr:primaryType="nt:unstructured">
                 <phone

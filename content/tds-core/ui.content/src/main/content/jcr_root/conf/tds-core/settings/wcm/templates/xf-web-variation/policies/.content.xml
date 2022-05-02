@@ -2,39 +2,36 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="cq:Page">
     <jcr:content
-        cq:lastReplicated="{Date}2021-01-14T10:51:17.592-05:00"
-        cq:lastReplicatedBy="admin"
-        cq:lastReplicationAction="Activate"
-        cq:policy="techdata/components/page/policy"
+        cq:policy="tds-core/components/page/policy"
         jcr:isCheckedOut="{Boolean}true"
         jcr:mixinTypes="[cq:ReplicationStatus,mix:versionable]"
         jcr:primaryType="nt:unstructured"
         jcr:uuid="040c73ff-166b-40d4-943c-8415186fed42"
         sling:resourceType="wcm/core/components/policies/mappings">
         <root
-            cq:policy="techdata/components/container/policy_1575040440977"
+            cq:policy="tds-core/components/container/v1/container/policy_1575040440977"
             jcr:primaryType="nt:unstructured"
             sling:resourceType="wcm/core/components/policies/mapping">
             <mysite jcr:primaryType="nt:unstructured">
                 <components jcr:primaryType="nt:unstructured">
                     <title
-                        cq:policy="techdata/components/title/policy_641528232375303"
+                        cq:policy="tds-core/components/title/v1/title/policy_641528232375303"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wcm/core/components/policies/mapping"/>
                     <text
-                        cq:policy="techdata/components/text/policy_641562756958017"
+                        cq:policy="tds-core/components/text/v1/text/policy_641562756958017"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wcm/core/components/policies/mapping"/>
                     <teaser
-                        cq:policy="techdata/components/teaser/policy_1575031387650"
+                        cq:policy="tds-core/components/teaser/v1/teaser/policy_1575031387650"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wcm/core/components/policies/mapping"/>
                     <download
-                        cq:policy="techdata/components/download/policy_1575032193319"
+                        cq:policy="tds-core/components/download/v1/download/policy_1575032193319"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wcm/core/components/policies/mapping"/>
                     <image
-                        cq:policy="techdata/components/image/policy_651483963895698"
+                        cq:policy="tds-core/components/image/v1/image/policy_651483963895698"
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="wcm/core/components/policies/mapping"/>
                 </components>
