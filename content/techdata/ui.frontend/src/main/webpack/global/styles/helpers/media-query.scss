@@ -1,12 +1,14 @@
 $desktop: 1024;
 $mobile: 767;
 $desktop-md: 1023;
+$desktop-l: 1124;
 
 @mixin desktop {
   @media only screen and (min-width: $desktop * 1px) {
     @content;
   }
 }
+
 
 @mixin tablet {
   @media only screen and (max-width: $desktop-md * 1px) {
@@ -16,6 +18,13 @@ $desktop-md: 1023;
 
 @mixin mobile {
   @media only screen and (max-width: $mobile * 1px) {
+    @content;
+  }
+}
+
+
+@mixin desktop-l {
+  @media only screen and (max-width: $desktop-l * 1px) {
     @content;
   }
 }

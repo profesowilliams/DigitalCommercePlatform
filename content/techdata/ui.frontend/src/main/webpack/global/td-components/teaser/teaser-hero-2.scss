@@ -1,0 +1,23 @@
+
+.hero-style-2 {
+    @include teaser-default();
+
+    .cmp-teaser {
+        &__pretitle {
+            color: get-color(text-light-gray);
+        }
+
+        &__title {
+            text-shadow: none;
+
+            &-link {
+                color: get-color(text-light-gray);
+            }
+        }
+
+        &__description {
+            color: get-color(text-light-gray);
+            text-shadow: none;
+        }
+    }
+}
