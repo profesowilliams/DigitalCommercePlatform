@@ -127,14 +127,13 @@
 			}
 
 			&__description {
-				padding: 0 rem(30px);
-				max-height: rem(144px);
+				padding: 0 rem(16px);
+				max-height: rem(180px);
 				word-wrap: break-word;
-				text-overflow: ellipsis;
+				text-overflow: initial !important;
 				display: -webkit-box;
 				-webkit-line-clamp: 6;
 				-webkit-box-orient: vertical;
-				overflow: hidden;
 
 				p {
 					font-size: 0.87rem;
@@ -145,7 +144,8 @@
 					-webkit-line-clamp: unset !important;
 					display: block !important;
 					overflow: unset !important;
-					width: 190px;
+					width: rem(190px);
+					height: rem(180px);
 				}
 			}
 		}
