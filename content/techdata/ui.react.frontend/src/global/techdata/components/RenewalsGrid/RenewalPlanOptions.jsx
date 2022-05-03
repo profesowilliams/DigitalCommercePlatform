@@ -19,7 +19,6 @@ function RenewalPlanOptions({ labels, data, node }) {
     // const isPlanSelected = option => option?.contractDuration + " " + data?.support === renewalOptionState;
     const isPlanSelected = ({id}) => id === optionIdSelected;
     const isCurrentPlan = plan => plan.quoteCurrent;
-    const [showPdf, setShowPdf] = useState(false);
     const findAndReturnCurrentPlanId = (options) => {
         const currentPlan = options.find((plan) => isCurrentPlan(plan));
         return currentPlan ? currentPlan?.id : 0;
@@ -74,13 +73,14 @@ function RenewalPlanOptions({ labels, data, node }) {
         return "card-full-border";
     }
 
-    const renderPDF = () => setShowPdf(true);
 
     const DownloadPDF = () => {
+        const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
+          useState(false);
+        const [renewalsDetails, setRenewalsDetails] = useState({});
         const [apiResponse, isLoading] = useGet(
             `${renewalDetailsEndpoint}?id=${data?.source?.id}&type=renewal`
         );
-        const [renewalsDetails, setRenewalsDetails] = useState({});
 
         useEffect(() => {
             if (apiResponse?.content?.details) {
@@ -88,15 +88,33 @@ function RenewalPlanOptions({ labels, data, node }) {
             }
         }, [apiResponse]);
 
-        return (Object.keys(renewalsDetails).length && <PDFDownloadLink
-            document={<PDFRenewalPlanOption renewalsDetails={renewalsDetails} />}
-            fileName={"Renewals.pdf"}>
+        return isPDFDownloadableOnDemand &&
+          Object.keys(renewalsDetails).length ? (
+          <PDFDownloadLink
+            document={
+              <PDFRenewalPlanOption renewalsDetails={renewalsDetails} />
+            }
+            fileName={"Renewals.pdf"}
+          >
             {({ blob, url, loading, error }) => {
-                loading ? "loading..." : openPDF(url);
+              loading ? "loading..." : openPDF(url);
+
+              return (
+                <button>
+                  <i className="fas fa-file-pdf"></i>
+                  <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
+                </button>
+              );
             }}
-        </PDFDownloadLink>
-        )
+          </PDFDownloadLink>
+        ) : (
+          <button onClick={() => setPDFDownloadableOnDemand(true)}>
+            <i className="fas fa-file-pdf"></i>
+            <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
+          </button>
+        );
     };
+
     const showPlanLabels = (option) => {
         const planLabels = {
             selected:"Selected Plan",
@@ -127,9 +145,6 @@ function RenewalPlanOptions({ labels, data, node }) {
     const setDefaultCheckedOption = (option) => optionIdSelected === option?.id;
     return (
         <div key={rowIndexRef.current + Math.random()}>
-            <div className="pdf-container">
-                {showPdf && <DownloadPDF />}
-            </div>           
             <div className="cmp-renewal-plan-column">
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
@@ -161,12 +176,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                             </div>
                             {isPlanSelected(option) && (
                                 <div className="footer">
-                                    <button
-                                        onClick={renderPDF}
-                                    >
-                                        <i className="fas fa-file-pdf"></i>
-                                        <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
-                                    </button>
+                                    <DownloadPDF />
                                     <span className="vertical-separator"></span>
                                     <button onClick={() => exportXlsPlan(option?.id)}>
                                         <i className="fas fa-file-excel"></i>

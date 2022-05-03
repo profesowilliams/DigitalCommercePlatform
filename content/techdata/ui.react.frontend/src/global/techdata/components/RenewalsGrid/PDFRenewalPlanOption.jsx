@@ -1,6 +1,5 @@
 import React from 'react'
-import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-import ReactPDF from '@react-pdf/renderer';
+import { Page, Text, View, Document } from '@react-pdf/renderer';
 import ReactPDFImageWrapper from '../ReactPDFImageWrapper/ReactPDFImageWrapper';
 import PDFStyles from './RenewalPDFStyles';
 import PDFTable from '../PDFTable/PDFTable';
@@ -21,9 +20,11 @@ function PDFRenewalPlanOption({ renewalsDetails }) {
             <Page size="A4" orientation="landscape" style={styles.page}>
                 <View style={styles.pageWidthSection}>
 
+                    {/* {vendorLogo && 
                     <View style={{ width: '100', margin: '0' }}>
                         <ReactPDFImageWrapper path={vendorLogo} />
                     </View>
+                    } */}
 
                     <View style={styles.headerSection}>
                         <View style={styles.addressSectionYourCompany}>
@@ -78,16 +79,6 @@ function PDFRenewalPlanOption({ renewalsDetails }) {
                             currencySymbol={"$"}
                         />
                     </View>
-{/* 
-                    <View style={styles.footerSection}>
-                        <View style={styles.subTotalSection}>
-                            <Text> </Text>
-                        </View>
-                        <View style={styles.subTotalSection}>
-                            <Text>Quote Sub-total : {renewalsDetails.currencySymbol} {totalEndPrice} </Text>
-                        </View>
-                    </View> */}
-
                 </View>
 
             </Page>
