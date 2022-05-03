@@ -25,15 +25,15 @@ export const compareBuyMethod = (currentBuyMethod, expectedBuyMethod) => current
 
 export const isEstimate = (source) => source?.type === 'Estimate'
 
-export const isPricingOptionsRequired = (quoteDetails, quoteWithoutPricing) => quoteWithoutPricing && !quoteDetails.tier
+export const isPricingOptionsRequired = (quoteDetails, quoteWithoutPricing) => quoteWithoutPricing && !quoteDetails.tier && !quoteDetails?.quickQuoteWithVendorFlag;
 
 export const isAllowedQuantityIncrease = (quoteDetails) => isEstimate(quoteDetails?.source)
 
 export const isAllowedEndUserUpdate = (quoteDetails) => isEstimate(quoteDetails?.source)
 
-export const isDealRequired = (quoteDetails, quoteWithoutDeal) => !isDealConfiguration(quoteDetails?.source) && quoteWithoutDeal && isEstimate(quoteDetails?.source) && !quoteDetails.spaId
+export const isDealRequired = (quoteDetails, quoteWithoutDeal) => !isDealConfiguration(quoteDetails?.source) && quoteWithoutDeal && isEstimate(quoteDetails?.source) && !quoteDetails?.spaId && !quoteDetails?.quickQuoteWithVendorFlag;
 
-export const validateRequiredEnduserFields = (enduser) => {
+export const validateRequiredEnduserFields = (enduser, quickQuoteWithVendorFlag) => {
     // This logic may be needed to validate specific scenarios in the future however
     // Only end user name is required for now
     // Removing line2 from this validation since is an optional Value.
@@ -45,11 +45,10 @@ export const validateRequiredEnduserFields = (enduser) => {
     //    delete enduser.id;
     //}
     // return Object.values(enduser).some(value => value === null || value === '');
-    return enduser?.companyName === null || enduser?.companyName === '';
-
+    return quickQuoteWithVendorFlag ? ['name', 'line1', 'city', 'state', 'postalCode'].every(i => enduser[i].trim()) : !(enduser?.companyName === null || enduser?.companyName === '');
 }
 
 export const isEndUserMissing = (quoteDetails, quoteWithoutEndUser) => {
     const endUser = quoteDetails.endUser && quoteDetails.endUser[0] ? quoteDetails.endUser[0] : quoteDetails.endUser;
-    return quoteWithoutEndUser && (!endUser || validateRequiredEnduserFields(endUser));
+    return quoteWithoutEndUser && (!endUser || !validateRequiredEnduserFields(endUser, quoteDetails?.quickQuoteWithVendorFlag));
 }

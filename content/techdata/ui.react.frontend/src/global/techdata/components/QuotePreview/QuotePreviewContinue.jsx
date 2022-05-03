@@ -38,6 +38,7 @@ function QuotePreviewContinue({
   
 
   const quoteDetailsSource = apiResponse?.content?.quotePreview?.quoteDetails?.source;
+  const quoteDetails = apiResponse?.content?.quotePreview?.quoteDetails;
 
   const clickHandler = (evtName) => {
     if (evtName === eventTypes.button) {
@@ -56,7 +57,7 @@ function QuotePreviewContinue({
         disabled={disableQuickQuoteButton}
         onClick={() => clickHandler(eventTypes.button)}
       >
-        {gridProps.confirmButtonLabel}
+        {quoteDetails?.quickQuoteWithVendorFlag ? gridProps.alternateConfirmButtonLabel : gridProps.confirmButtonLabel} 
       </Button>
       {/* Only render the "Continue With Standard Price" Link when the quote is not of type Deal. */}
       {!isDealConfiguration(quoteDetailsSource) && (

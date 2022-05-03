@@ -93,6 +93,7 @@ function QuotePreview(props) {
         setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
         // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
         quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
+        quoteDetailsResponse.quickQuoteWithVendorFlag = quoteDetailsResponse?.source?.type === "Estimate" && quoteDetailsResponse?.vendor.toUpperCase() === "CISCO" && !quoteDetailsResponse?.spaId;
         setQuoteDetails(quoteDetailsResponse);
         // Show Modal When Quote Cannot Be Created.
         if (cannotCreateQuote(quoteDetailsResponse)) {
@@ -314,6 +315,7 @@ const [flagDeal, setFlagDeal] = useState(false);
         spaId: generalInformation.spaId,
         quoteReference: generalInformation.quoteReference,
         deal: generalInformation.deal,
+        quickQuoteWithVendorFlag: generalInformation?.deal?.spaId ? previousQuoteDetails?.source?.type === "Estimate" && previousQuoteDetails?.vendor.toUpperCase() === "CISCO"  && !generalInformation?.deal?.spaId : previousQuoteDetails.quickQuoteWithVendorFlag,
       }
 
       newGeneralDetails.endUser = newGeneralDetails.endUser || [];

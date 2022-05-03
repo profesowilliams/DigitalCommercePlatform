@@ -4,7 +4,7 @@ import Button from '../../Widgets/Button';
 import { validateRequiredEnduserFields } from "../QuoteTools";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 
-function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal}) {
+function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal, quickQuoteWithVendorFlag}) {
     endUser = endUser && endUser[0];
     const initialState = {
         companyName: endUser?.companyName || '',
@@ -69,10 +69,10 @@ const handleEditModeChange = () => {
       }
     }, [endUser?.companyName]);
 
-    const values = validateRequiredEnduserFields(infoState);
+    const isValidEndUserInfo = validateRequiredEnduserFields(infoState, quickQuoteWithVendorFlag);
 
     const handleRequiredElements = () => {
-        if (values){
+        if (!isValidEndUserInfo){
             return (
                 <>
                     <span className='errorInput__label'>Please complete the missing fields</span> 
@@ -93,10 +93,11 @@ const handleEditModeChange = () => {
 
         {!editMode && (
           <>   
-            {flagDeal && 
+            {flagDeal && !isValidEndUserInfo ?
                 <span className="errorEndUser">
                     Please fill all fields
                 </span>
+                : ""
             }
             <p
               label={info.companyLabel}
@@ -127,7 +128,7 @@ const handleEditModeChange = () => {
                   <label htmlFor="companyName">{info.companyLabel}</label>
                   <input
                     className={
-                      infoState.companyName === ""
+                      infoState.companyName.trim() === ""
                         ? "field element errorInput"
                         : "field element"
                     }
@@ -141,7 +142,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="name">{info.nameLabel}</label>
                   <input
-                    className="field element"
+                    className={
+                      infoState.name.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.name}
                     name="name"
                     id="name"
@@ -152,7 +157,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="line1">{info.addressLabel + " 1"}</label>
                   <input
-                    className="field element"
+                    className={
+                      infoState.line1.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.line1}
                     name="line1"
                     id="line1"
@@ -174,7 +183,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="city">{info.cityLabel}</label>
                   <input
-                    className="field element"
+                    className={
+                      infoState.city.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.city}
                     name="city"
                     id="city"
@@ -185,7 +198,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="state">{info.stateLabel}</label>
                   <input
-                    className="field element"
+                    className={
+                      infoState.state.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.state}
                     name="state"
                     id="state"
@@ -196,7 +213,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="postalCode">{info.zipLabel}</label>
                   <input
-                    className="field element"
+                    className={
+                      infoState.postalCode.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.postalCode}
                     name="postalCode"
                     id="postalCode"
@@ -240,7 +261,7 @@ const handleEditModeChange = () => {
                 <div className="form-group">
                   <Button
                     btnClass="cmp-quote-button cmp-qp--save-information"
-                    disabled={values ? true : false}
+                    disabled={!isValidEndUserInfo ? true : false}
                     onClick={handleSaveChanges}
                   >
                     {info.submitLabel}

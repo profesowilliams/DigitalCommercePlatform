@@ -305,6 +305,10 @@ use(['../common/utils.js'], function (utils) {
         jsonObject["confirmButtonLabel"]  = properties["confirmButtonLabel"];
     }
 
+    if (properties && properties["alternateConfirmButtonLabel"]) {
+        jsonObject["alternateConfirmButtonLabel"]  = properties["alternateConfirmButtonLabel"];
+    }
+
 
     if (properties && properties["defaultChoiceLabel"]) {
         jsonObject["defaultChoiceLabel"]  = properties["defaultChoiceLabel"];

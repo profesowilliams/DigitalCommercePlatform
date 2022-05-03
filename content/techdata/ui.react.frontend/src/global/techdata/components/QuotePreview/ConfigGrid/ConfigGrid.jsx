@@ -33,6 +33,7 @@ function ConfigGrid({ quoteDetails,
                     info={gridProps.information}
                     onValueChange={endUserInfoChange}
                     flagDeal={flagDeal}
+                    quickQuoteWithVendorFlag={quoteDetails.quickQuoteWithVendorFlag}
                 />
                 <GeneralInfo
                     hideDealSelector={hideDealSelector}
