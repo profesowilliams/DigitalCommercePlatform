@@ -222,22 +222,22 @@
         <item0
             jcr:primaryType="nt:unstructured"
             searchKey="SerialNumber"
-            searchLabel="Serial Nº"
+            searchLabel="Serial №"
             showIfIsHouseAccount="{Boolean}false"/>  
         <item1
             jcr:primaryType="nt:unstructured"
             searchKey="Id"
-            searchLabel="Disti Quote Nº"
+            searchLabel="Disti Quote №"
             showIfIsHouseAccount="{Boolean}false"/>
         <item2
             jcr:primaryType="nt:unstructured"
             searchKey="ContractID"
-            searchLabel="Agreement Nº"
+            searchLabel="Agreement №"
             showIfIsHouseAccount="{Boolean}false"/>
         <item3
             jcr:primaryType="nt:unstructured"
             searchKey="Instance"
-            searchLabel="Instance Nº"
+            searchLabel="Instance №"
             showIfIsHouseAccount="{Boolean}false"/>
         <item4
             jcr:primaryType="nt:unstructured"
