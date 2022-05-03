@@ -302,6 +302,13 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
 
+app.get("/ui-account/v1/topConfigurations/get", function (req, res) {
+
+  const response = {"content":{"summary":{"items":[{"sequence":0,"endUserName":"TY132664080UV","amount":0.0,"currencyCode":"USD","currencySymbol":"$","formattedAmount":"0.00"},{"sequence":0,"endUserName":"XT132668957VR","amount":0.0,"currencyCode":"USD","currencySymbol":"$","formattedAmount":"0.00"},{"sequence":0,"endUserName":"UH132609355NX","amount":0.0,"currencyCode":"USD","currencySymbol":"$","formattedAmount":"0.00"},{"sequence":0,"endUserName":"OO133980169PD","amount":0.0,"currencyCode":"USD","currencySymbol":"$","formattedAmount":"0.00"},{"sequence":0,"endUserName":"GZ132668976IC","amount":0.0,"currencyCode":"USD","currencySymbol":"$","formattedAmount":"0.00"}]}},"error":{"code":0,"messages":[],"isError":false}}
+
+  res.json(response);
+
+});
 //---TOP n OPEN CONFIG MOCK API---//
 app.get("/ui-account/v1/topQuotes/get", function (req, res) {
   const param = req.query.top || 5;
@@ -503,6 +510,12 @@ app.get("/ui-account/v1/getRenewals", function (req, res) {
   res.json(response);
 });
 
+app.get("/ui-account/v1/actionItems", function(req, res) {
+
+  const response = {"content":{"summary":{"newOpportunities":2,"ordersBlocked":2085,"expiringDeals":4}},"error":{"code":0,"messages":[],"isError":false}}
+
+  res.json(response);
+});
 app.get("/dealsSummary", function (req, res) {
   if (!validateSession(req, res))
     return res.status(500).json({

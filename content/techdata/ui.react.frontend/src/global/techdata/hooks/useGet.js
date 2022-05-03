@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { get } from '../../../utils/api';
 import { useStore } from "../../../utils/useStore"
-import { isExtraReloadDisabled } from "../../../utils/featureFlagUtils";
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../utils/featureFlagUtils";
 
 // hook for getting data from API on component init, checks if component is mounted before call
 // return array of three states = [ response - actual response, 
@@ -18,7 +18,7 @@ export default function useGet(url) {
   useEffect(() => {
     let isMounted = true;
      try {
-      get(url, { withCredentials: isExtraReloadDisabled() })
+      get(url, { withCredentials: isHttpOnlyEnabled() })
         .then(result => {
           if (isMounted) {
             setResponse(result.data);
