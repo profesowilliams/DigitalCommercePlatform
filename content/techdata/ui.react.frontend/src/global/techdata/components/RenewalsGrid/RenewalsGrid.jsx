@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
+import { thousandSeparator } from "../../helpers/formatting";
 import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
@@ -40,6 +41,8 @@ function RenewalsGrid(props) {
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData);
+  const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
+
   
   const { setToolTipData, setCustomState } = effects;
 
@@ -154,6 +157,23 @@ function RenewalsGrid(props) {
     }
   }
 
+  const getDefaultCopyValue = (params) => {
+    const colId = params?.column?.colId;
+    const nodeData = params?.node?.data
+    switch (colId) {
+      case "resellername":
+        return nodeData?.reseller?.name;
+      case "Id":
+        return nodeData?.source?.id;
+      case "renewedduration":
+        return `${nodeData?.source?.type}: ${nodeData?.programName}`
+      case "total":
+        return thousandSeparator(nodeData?.renewal?.total);
+      default:
+        return "";
+    }
+  }
+
   /**
    * A custom implementation to enable tooltips on hover
    * for those columns whose values are truncated. Modify `hoverableList`
@@ -202,6 +222,7 @@ function RenewalsGrid(props) {
 
       <div className="cmp-renewals-grid">
         <Grid
+          getDefaultCopyValue={getDefaultCopyValue}
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}

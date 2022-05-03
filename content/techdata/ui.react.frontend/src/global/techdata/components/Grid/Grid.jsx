@@ -31,6 +31,7 @@ function Grid(props) {
     onCollapseAnalytics,
     onCellMouseOver,
     onCellMouseOut,
+    getDefaultCopyValue,
     suppressPaginationPanel = false,
   } = Object.assign({}, props);
   let isLicenseSet = false;
@@ -45,7 +46,6 @@ function Grid(props) {
   });
   const [popupParent] = useState(document.querySelector('body'));
   const isLoggedIn = useStore(state => state.isLoggedIn)
-  
   const pagination =
     config?.paginationStyle &&
     config?.paginationStyle !== "none" &&
@@ -165,7 +165,11 @@ function Grid(props) {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
         action: function () {
-          if (isObject(params.value)) {
+          if(!params.value) {
+            if(typeof getDefaultCopyValue === 'function') {
+              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
+            }
+          } else if (isObject(params.value)) {
             navigator.clipboard.writeText(stringifyValue(params.value?.name));
           } else {
             navigator.clipboard.writeText(stringifyValue(params.value));
