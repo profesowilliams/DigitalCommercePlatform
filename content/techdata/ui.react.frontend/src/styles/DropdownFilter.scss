@@ -104,6 +104,20 @@ $secondary-link-blue: #006bae;
   position: relative;
   &__box{
     cursor: pointer;
+    display: flex;
+    &-search-field{
+      position: relative;
+      svg{
+        cursor: pointer;
+        fill: #555555;
+        width: 16px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 5px;
+      }
+
+    }
   }
 }
 .cmp-renewal-search {

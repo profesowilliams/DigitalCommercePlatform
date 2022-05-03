@@ -1,10 +1,16 @@
 import PropTypes from "prop-types";
-import React, { useRef, useState, useCallback, forwardRef, useImperativeHandle } from "react";
-import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
+import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState } from "react";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
 import Capsule from "../Widgets/Capsule";
 import { useRenewalGridState } from "./store/RenewalsStore";
+
+const CloseIconWeighted = (props) => (
+  <svg viewBox="0 0 24 24" {...props}>
+    <path d="M6.35 20.025 4 17.65 9.625 12 4 6.35l2.35-2.4L12 9.6l5.65-5.65L20 6.35 14.375 12 20 17.65l-2.35 2.375-5.65-5.65Z" />
+  </svg>
+)
 
 function _SearchFilter({
   styleProps,
@@ -36,7 +42,7 @@ function _SearchFilter({
   const [inputValueState, setInputValueState] = useState(''); 
 
   useImperativeHandle(ref, () => ({field:values.option, value: inputValueState}), [values, inputValueState])
-  
+
   function clearValues() {
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
@@ -176,20 +182,23 @@ function _SearchFilter({
   if (option.length && isEditView) {
     const chosenFilter = values.label
     return (
-      <>
+      <>      
         <SearchCapsule />
         <div className="cmp-renewal-search">
           <div className="cmp-search-select-container">
             <div className="cmp-search-select-container__box">
-              <input
-                className="inputStyle"
-                autoFocus
-                placeholder={`Enter a ${chosenFilter}`}
-                ref={inputRef}
-                onKeyDown={triggerSearchOnEnter}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <div className="cmp-search-select-container__box-search-field">
+                <input
+                  className="inputStyle"
+                  autoFocus
+                  placeholder={`Enter a ${chosenFilter}`}
+                  ref={inputRef}
+                  onKeyDown={triggerSearchOnEnter}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <CloseIconWeighted onClick={() => inputRef.current.value = ""}/>
+              </div>            
               <button
                 className="cmp-search-tooltip__button"
                 onClick={() => triggerSearch()}
@@ -219,7 +228,7 @@ function _SearchFilter({
 
   return (
     <>
-      <SearchCapsule />
+      <SearchCapsule />     
       <div className="cmp-renewal-search">
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
