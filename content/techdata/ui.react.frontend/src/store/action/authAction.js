@@ -2,7 +2,7 @@ import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } fr
 import axios from '../../utils/axios';
 import { createSessionId, setSessionId, createMaxTimeout } from '../../utils';
 import {refreshPage} from '../../utils/policies';
-import { isExtraReloadDisabled } from "../../utils/featureFlagUtils"
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../utils/featureFlagUtils"
 
 export const signInRequest = () => {
 	return {
@@ -36,9 +36,9 @@ export const signInAsynAction = (apiUrl) => {
 
 	const  prepareSignInHeader = () => {
 		let code = localStorage.getItem('signInCode');
-		const sessionId = !isExtraReloadDisabled() ? createSessionId() : null;
+		const sessionId = !isHttpOnlyEnabled() ? createSessionId() : null;
 		createMaxTimeout();
-		if(!isExtraReloadDisabled()){
+		if(!isHttpOnlyEnabled()){
 			setSessionId(sessionId);
 		}
 		return {
