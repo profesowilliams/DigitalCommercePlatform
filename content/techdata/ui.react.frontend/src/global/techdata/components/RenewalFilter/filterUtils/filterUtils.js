@@ -38,7 +38,7 @@ export function generateFilterFields(
     60: [addDays(31), addDays(60)],
     90: [addDays(61), addDays(90)],
     91: [addDays(90)],
-    overdue: [removeDays(365)],
+    overdue: [null, addDays(-1)],
     custom: [startRangeDate, endRangeDate],
   };
 
