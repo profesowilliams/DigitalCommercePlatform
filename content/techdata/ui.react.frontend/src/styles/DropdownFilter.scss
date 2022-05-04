@@ -131,6 +131,9 @@ $secondary-link-blue: #006bae;
   &__icon {
     color: $secondary-link-blue;
   }
+  &-dnone{
+    display: none;
+  }
 }
 .cmp-search-options {
   display: flex;
@@ -150,6 +153,7 @@ $secondary-link-blue: #006bae;
     padding: 7px;
     padding-left: 1rem;
     transition: all .4s ease;
+    flex: 1;
     &:hover{
       background-color: #f2f2f2;
     }

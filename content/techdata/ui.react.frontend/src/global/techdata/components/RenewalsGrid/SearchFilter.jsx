@@ -1,5 +1,11 @@
 import PropTypes from "prop-types";
-import React, { forwardRef, useCallback, useImperativeHandle, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../utils/user-utils";
 import { If } from "../../helpers/If";
@@ -10,38 +16,39 @@ const CloseIconWeighted = (props) => (
   <svg viewBox="0 0 24 24" {...props}>
     <path d="M6.35 20.025 4 17.65 9.625 12 4 6.35l2.35-2.4L12 9.6l5.65-5.65L20 6.35 14.375 12 20 17.65l-2.35 2.375-5.65-5.65Z" />
   </svg>
-)
+);
 
-function _SearchFilter({
-  styleProps,
-  options,
-  callback,
-  inputType,
-  filterCounter,
-  onQueryChanged
-}, ref) {
+function _SearchFilter(
+  { styleProps, options, callback, inputType, filterCounter, onQueryChanged },
+  ref
+) {
   const [values, setValues] = useState({
     dropdown: "",
     input: "",
-    option:"",
-    label:""
+    option: "",
+    label: "",
   });
-  const [callbackExecuted, setCallbackExecuted] = useState(false)
-  const [isDropdownVisible, setSwitchDropdown ] = useState(false);  
+  const [callbackExecuted, setCallbackExecuted] = useState(false);
+  const [isDropdownVisible, setSwitchDropdown] = useState(false);
   const [isResetVisible, setResetVisible] = useState(true);
   const { dropdown, input, option } = values;
   const node = useRef();
   const inputRef = useRef();
   const initialInputVal = inputRef?.current?.value !== undefined;
-  const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] = useState(initialInputVal);
+  const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] =
+    useState(initialInputVal);
   const initialEditViewVal = option.length !== 0;
   const [isEditView, setIsEditView] = useState(initialEditViewVal);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchTriggered, setSearchTriggered] = useState(false);
-  const effects = useRenewalGridState(state => state.effects);
-  const [inputValueState, setInputValueState] = useState(''); 
+  const effects = useRenewalGridState((state) => state.effects);
+  const [inputValueState, setInputValueState] = useState("");
 
-  useImperativeHandle(ref, () => ({field:values.option, value: inputValueState}), [values, inputValueState])
+  useImperativeHandle(
+    ref,
+    () => ({ field: values.option, value: inputValueState }),
+    [values, inputValueState]
+  );
 
   function clearValues() {
     for (const key in values) {
@@ -55,25 +62,24 @@ function _SearchFilter({
       }
     }
   }
-  
+
   const onReset = () => {
-    setCallbackExecuted(false)
+    setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
     if (searchTerm.length !== 0 && searchTriggered) {
-      setSearchTerm('');
+      setSearchTerm("");
       onQueryChanged();
       setSwitchDropdown(false);
     }
-    setSearchTerm('');
+    setSearchTerm("");
     clearValues();
   };
 
-  const changeHandler = (option) => {   
+  const changeHandler = (option) => {
     setValues((prevSt) => ({
-        ...prevSt,
-        option: option.searchKey,
-        label:option.searchLabel
-        
+      ...prevSt,
+      option: option.searchKey,
+      label: option.searchLabel,
     }));
     setIsEditView(true);
   };
@@ -85,22 +91,29 @@ function _SearchFilter({
       tooltipWidth: "280px",
     };
   }
-  
+
   const handleDropdownSwitch = useCallback(() => {
-    setSwitchDropdown(!isDropdownVisible)
+    setSwitchDropdown(!isDropdownVisible);
     if (!isDropdownVisible) {
       document.addEventListener("click", handleOutsideClick, false);
     } else {
       document.removeEventListener("click", handleOutsideClick, false);
     }
-  }, [isDropdownVisible])
+  }, [isDropdownVisible]);
 
-  const handleOutsideClick = e => {        
-    const isComingFromSearch = e.target.parentNode.className === 'cmp-renewal-search';
-    const isComingFromReset = e.target.parentNode.className === 'cmp-search-options__reset';
-    if (node.current && !isComingFromSearch && !isComingFromReset && !node.current.contains(e.target)) {
-      setSwitchDropdown(false)
-    };
+  const handleOutsideClick = (e) => {
+    const isComingFromSearch =
+      e.target.parentNode.className === "cmp-renewal-search";
+    const isComingFromReset =
+      e.target.parentNode.className === "cmp-search-options__reset";
+    if (
+      node.current &&
+      !isComingFromSearch &&
+      !isComingFromReset &&
+      !node.current.contains(e.target)
+    ) {
+      setSwitchDropdown(false);
+    }
   };
 
   function handleCapsuleClose() {
@@ -112,7 +125,7 @@ function _SearchFilter({
     setIsSearchCapsuleVisible(false);
     setIsEditView(true);
   }
-  
+
   function triggerSearch() {
     if (!searchTriggered) setSearchTriggered(true);
     const { option } = values;
@@ -135,42 +148,39 @@ function _SearchFilter({
     setSwitchDropdown(false);
   }
 
-  function fetchAll () {
-    onQueryChanged()
+  function fetchAll() {
+    onQueryChanged();
     onReset();
     setSwitchDropdown(false);
   }
 
   const triggerSearchOnEnter = (event) => {
-    if(event.keyCode === 13){
+    if (event.keyCode === 13) {
       triggerSearch();
     }
-  }
+  };
 
   const renderWithPermissions = (option) => {
-    const hasNotPrivilege = (option?.showIfIsHouseAccount) && !isHouseAccount();
-    if (hasNotPrivilege) return <></>; 
+    const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount();
+    if (hasNotPrivilege) return <></>;
     return (
-      <>     
+      <>
         <label key={option.searchKey} onClick={() => changeHandler(option)}>
           {option.searchLabel}
         </label>
       </>
-    )
-  } 
+    );
+  };
 
   function SearchCapsule() {
     const getSearchLabel = (option) => {
-      const filteredObj = options.find(({searchKey}) => searchKey === option);
+      const filteredObj = options.find(({ searchKey }) => searchKey === option);
       return filteredObj?.searchLabel;
-    }
+    };
 
     return (
       <If condition={isSearchCapsuleVisible}>
-        <Capsule
-          closeClick={handleCapsuleClose}
-          hasCloseBtn={true}
-        >
+        <Capsule closeClick={handleCapsuleClose} hasCloseBtn={true}>
           <span onClick={handleCapsuleTextClick} className="td-capsule__text">
             {`${values.label}: ${searchTerm || inputRef?.current?.value}`}
           </span>
@@ -180,9 +190,9 @@ function _SearchFilter({
   }
 
   if (option.length && isEditView) {
-    const chosenFilter = values.label
+    const chosenFilter = values.label;
     return (
-      <>      
+      <>
         <SearchCapsule />
         <div className="cmp-renewal-search">
           <div className="cmp-search-select-container">
@@ -197,8 +207,12 @@ function _SearchFilter({
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <CloseIconWeighted onClick={() => inputRef.current.value = ""}/>
-              </div>            
+                <If condition={inputRef.current?.value}>
+                  <CloseIconWeighted
+                    onClick={() => (inputRef.current.value = "")}
+                  />
+                </If>
+              </div>
               <button
                 className="cmp-search-tooltip__button"
                 onClick={() => triggerSearch()}
@@ -207,7 +221,10 @@ function _SearchFilter({
               </button>
             </div>
             <If condition={isResetVisible}>
-              <div className="cmp-search-options" style={{ padding: "5px 10px" }}>
+              <div
+                className="cmp-search-options"
+                style={{ padding: "5px 10px" }}
+              >
                 <div className="cmp-search-options__reset">
                   <label>
                     {callbackExecuted && !filterCounter ? (
@@ -228,11 +245,13 @@ function _SearchFilter({
 
   return (
     <>
-      <SearchCapsule />     
+      <SearchCapsule />    
       <div className="cmp-renewal-search">
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
-            <span className="cmp-renewal-search__text">search</span>
+            <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
+                <span className="cmp-renewal-search__text">search</span>
+            </If>
             <i className="fa fa-search cmp-renewal-search__icon"></i>
           </div>
         </If>
@@ -271,5 +290,3 @@ _SearchFilter.propTypes = {
   inputType: PropTypes.string,
   styleProps: PropTypes.object,
 };
-
-
