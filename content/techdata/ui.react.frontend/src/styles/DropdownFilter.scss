@@ -134,10 +134,8 @@ $secondary-link-blue: #006bae;
 }
 .cmp-search-options {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  box-shadow: 0.5px 0.5px 8px #000000ad;
-  padding: 9px;
+  flex-direction: column; 
+  box-shadow: 0.5px 0.5px 8px #000000ad; 
   position: absolute;
   height: fit-content;
   z-index: 5;
@@ -146,8 +144,15 @@ $secondary-link-blue: #006bae;
   left: 50%;
   transform: translateX(-50%);
   width: 17rem;
+  padding: .5rem 0;
   label{
     cursor: pointer;
+    padding: 7px;
+    padding-left: 1rem;
+    transition: all .4s ease;
+    &:hover{
+      background-color: #f2f2f2;
+    }
   }
   &__reset{
     display: flex;
