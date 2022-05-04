@@ -1,0 +1,153 @@
+<sly data-sly-use.model="com.tdscore.core.models.MegaMenu"
+    data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
+    <div id="megamenu" class="cmp-megamenu">
+        <div id="ssoLoginRedirectUrl" data-ssoLoginRedirectUrl="${properties.ssoLoginRedirectUrl}"></div>
+        <div id="aemSSOLoginRedirectUrl" data-aemSSOLoginRedirectUrl="${properties.aemSSOLoginRedirectUrl}"></div>
+        <div id="cmp-accessible-nav" class="cmp-megamenu__body">
+            <div class="cmp-megamenu__title">Menu</div>
+            <i class="cmp-megamenu__back fas fa-chevron-left"></i>
+            <ol class="cmp-megamenu__primary" 
+                data-sly-list.nav="${model.firstLevelMenuItems}">
+                <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=nav.linkUrl}" class="cmp-has-submenu">
+                    <a href="${urlHelper.url  @ context='uri'}" aria-expanded="false" aria-haspopup="true" data-cmp-clickable="true"
+                        data-level="L1" data-hier="${nav.platformName}"
+                        data-cmp-isprivate="${nav.isPrivate ? 'true' : 'false'}" 
+                        style="display: ${nav.isprivate? 'none' : '' @context= 'styleToken'};" 
+                        data-cmp-children="${nav.platformMenuID}" title="${nav.platformName}"
+                        class="cmp-megamenu__tab-text">${nav.platformName}
+                    </a>
+                    <div class="cmp-megamenu__tabpanel" data-cmp-parent="${nav.platformMenuID}">
+                        <!-- Nvigation -->
+                        <nav id="${nav.randomID}" class="cmp-navigation" role="navigation" itemscope=""
+                            itemtype="http://schema.org/SiteNavigationElement">
+                            <div class="cmp-megamenu__wrapper cmp-megamenu__secondary">
+                                <ul class="cmp-navigation__group" 
+                                    data-sly-list.slnk="${nav.secondaryMenuItems}">
+                                    <li class="cmp-navigation__item cmp-navigation__item--level-0"  class="cmp-has-submenu"
+                                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}">
+                                        <a href="${urlHelper.url  @ context='uri'}" title="${slnk.pageTitle}"
+                                            data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
+                                            data-sly-set.hier2="${nav.mobilePlatformLevel}>${slnk.pageTitle}"
+                                            data-level="L2" data-cmp-clickable=""
+                                            data-cmp-children="menu ${slnk.menuID}"
+                                            class="cmp-megamenu__analytics-link cmp-navigation__item-link ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}">
+                                            <i data-sly-test="${slnk.enableSecondaryIcon == 'true'}"
+                                                class="${slnk.pageIcon}"></i>${slnk.pageTitle}
+                                        </a>
+                                        <ul class="cmp-navigation__group" 
+                                            data-sly-list.sec="${sec.subNavLinkslist}">
+                                            <li class="cmp-navigation__item cmp-navigation__item--level-1"
+                                                data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}">
+                                                <a href="${urlHelper.url  @ context='html'}" title="${sec.pageTitle}"
+                                                    data-hier="${hier2}>${sec.pageTitle}"
+                                                    data-sly-set.hier3="${hier2}>${sec.pageTitle}" data-level="L3"
+                                                    data-cmp-clickable=""
+                                                    class="cmp-megamenu__analytics-link cmp-navigation__item-link"
+                                                    data-cmp-children="menu ${sec.hasChildPages ? sec.menuID : ''}">
+                                                    ${sec.pageTitle}<i class="fas fa-chevron-right"></i>
+                                                </a>
+                                                <ul class="cmp-navigation__group"
+                                                    data-sly-list.subSec="${sec.subNavLinkslist}">
+                                                    <li class="cmp-navigation__item cmp-navigation__item--level-2"
+                                                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
+                                                        data-cmp-data-layer='{"${nav.randomID}-item-734f73b286":{"@type":"core/wcm/components/navigation/v1/navigation/item","repo:modifyDate":"2021-03-17T08:17:44Z","dc:title":"${subSec.pageTitle}","xdm:linkURL":"/content/core-components-examples/config.html"}}'>
+                                                        <a href="${urlHelper.url  @ context='html'}"
+                                                            title="${subSec.pageTitle}" data-cmp-clickable=""
+                                                            data-hier="${hier3}>${subSec.pageTitle}" data-mobile="true"
+                                                            data-level="L4"
+                                                            class="cmp-megamenu__analytics-link cmp-navigation__item-link">
+                                                            ${subSec.pageTitle}
+                                                        </a>
+                                                            <!-- 3rd level -->
+                                                        <div class="cmp-megamenu__wrapper cmp-megamenu__tertiary"
+                                                            data-sly-list.tlnk="${subSec.secondaryMenuItems}">
+                                                            <div class="cmp-megamenu__wrapper-item ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}"
+                                                                data-sly-set.hier="${tlnk.levels}"
+                                                                data-cmp-parent="menu ${tlnk.menuID}"
+                                                                data-sly-test="${tlnk.hasChildPages}">
+                                                                <h4 class="cmp-megamenu-level-title">
+                                                                    <a data-sly-test="${tlnk.rootParentLink}"
+                                                                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tlnk.rootParentLink}"
+                                                                        data-cmp-clickable=""
+                                                                        title="${tlnk.rootParentTitle} Home"
+                                                                        data-hier="${tlnk.rootParentTitle}"
+                                                                        data-level="L1"
+                                                                        href="${urlHelper.url  @ context='html'}"
+                                                                        title="${tlnk.rootParentTitle} Home"
+                                                                        class="cmp-megamenu__analytics-link cmp-navigation__item-link">
+                                                                        ${tlnk.rootParentTitle} Home
+                                                                    </a>
+                                                                    <span data-sly-test="${!tlnk.rootParentLink}"
+                                                                        class="cmp-megamenu__analytics-link cmp-navigation__item-link">
+                                                                        ${tlnk.rootParentTitle} Home
+                                                                    </span>
+                                                                </h4>
+                                                                <ul class="cmp-navigation__group"
+                                                                    data-sly-list.tert="${tlnk.subNavLinkslist}">
+                                                                    <li class="cmp-navigation__item cmp-navigation__item--level-1"
+                                                                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=tert.pagePath}">
+                                                                        <a href="${urlHelper.url  @ context='html'}"
+                                                                            title="${tert.pageTitle}"
+                                                                            data-hier="${hier}>${tert.pageTitle}"
+                                                                            data-level="L3" data-cmp-clickable=""
+                                                                            class="cmp-megamenu__analytics-link cmp-navigation__item-link"
+                                                                            data-cmp-children="menu ${tert.hasChildPages ? tert.menuID : ''}">
+                                                                            ${tert.pageTitle}<i
+                                                                                class="fas fa-chevron-right"></i>
+                                                                        </a>
+                                                                            <!-- 4th level -->
+                                                                        <div class="cmp-megamenu__wrapper cmp-megamenu__quaternary"
+                                                                            data-sly-list.qlnk="${nav.tertiaryMenuItems}">
+                                                                            <div class="cmp-megamenu__wrapper-item"
+                                                                                data-cmp-parent="menu ${qlnk.menuID}"
+                                                                                data-sly-set.hier2="${qlnk.levels}">
+                                                                                <h4 class="cmp-megamenu-level-title">
+                                                                                    <i class="fas fa-chevron-left"></i>
+                                                                                    ${qlnk.pageTitle}
+                                                                                </h4>
+                                                                                <ul class="cmp-navigation__group"
+                                                                                    data-sly-list.quat="${qlnk.subNavLinkslist}">
+                                                                                    <li class="cmp-navigation__item cmp-navigation__item--level-2"
+                                                                                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=quat.pagePath}"
+                                                                                        data-cmp-data-layer='{"${nav.randomID}-item-734f73b286":{"@type":"core/wcm/components/navigation/v1/navigation/item","repo:modifyDate":"2021-03-17T08:17:44Z","dc:title":"${item.pageTitle}","xdm:linkURL":"/content/core-components-examples/config.html"}}'>
+                                                                                        <a href="${urlHelper.url  @ context='html'}"
+                                                                                            title="${quat.pageTitle}"
+                                                                                            data-hier="${hier2}>${quat.pageTitle}"
+                                                                                            data-cmp-clickable=""
+                                                                                            data-level="L4"
+                                                                                            class="cmp-megamenu__analytics-link cmp-navigation__item-link">
+                                                                                            ${quat.pageTitle}
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="cmp-adbutler" data-sly-test="${nav.adbutlerJSScript}">
+                                <div class="cmp-adbutler__content">
+                                    <div class="cmp-adbutler__content-title">
+                                        ${nav.adbutlerHeading}
+                                    </div>
+                                    <div class="cmp-adbutler__content-ad">
+                                        ${nav.adbutlerJSScript @ context='unsafe'}
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <!-- Nvigation -->
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</sly>

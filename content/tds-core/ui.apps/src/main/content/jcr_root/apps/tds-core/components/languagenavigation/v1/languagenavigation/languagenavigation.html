@@ -1,0 +1,117 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+  <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<sly
+        data-sly-use.model="com.tdscore.core.models.LanguageDropDownModel">
+  <button class="cmp-dropbtn">
+    <sly data-sly-test="${model.icon}">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 86 116.09">
+        <defs>
+          <style>
+            .loc-cls-1,.loc-cls-2,.loc-cls-8{fill:none;}.loc-cls-1{clip-rule:evenodd;}.loc-cls-3{clip-path:url(#clip-path);}.loc-cls-4{clip-path:url(#clip-path-2);}.loc-cls-5{isolation:isolate;}.loc-cls-6{clip-path:url(#clip-path-3);}.loc-cls-7{clip-path:url(#clip-path-4);}.loc-cls-8{stroke:#0b1321;stroke-miterlimit:10;stroke-width:12px;}.loc-cls-9{clip-path:url(#clip-path-5);}.loc-cls-10{clip-path:url(#clip-path-7);}.loc-cls-11{clip-path:url(#clip-path-8);}
+          </style>
+          <clipPath id="clip-path" transform="translate(3 3)">
+            <path class="loc-cls-1" d="M40,0A40,40,0,0,1,73.4,62.05h.06L40,108,6.47,62.05H6.6A40,40,0,0,1,40,0Z"/>
+          </clipPath>
+          <clipPath id="clip-path-2" transform="translate(3 3)">
+            <rect class="loc-cls-2" x="-15" y="-1" width="110" height="110"/>
+          </clipPath>
+          <clipPath id="clip-path-3" transform="translate(3 3)">
+            <rect class="loc-cls-2" x="-30" y="-30" width="140" height="168"/>
+          </clipPath>
+          <clipPath id="clip-path-4" transform="translate(3 3)">
+            <rect class="loc-cls-2" width="80" height="108"/>
+          </clipPath>
+          <clipPath id="clip-path-5" transform="translate(3 3)">
+            <ellipse class="loc-cls-2" cx="40.63" cy="40.66" rx="19.05" ry="19.06"/>
+          </clipPath>
+          <clipPath id="clip-path-7" transform="translate(3 3)">
+            <rect class="loc-cls-2" x="-9" y="-9" width="99" height="99"/>
+          </clipPath>
+          <clipPath id="clip-path-8" transform="translate(3 3)">
+            <rect class="loc-cls-2" x="21" y="21" width="39" height="39"/>
+          </clipPath>
+        </defs>
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1-2" data-name="Layer 1">
+            <g class="loc-cls-3">
+              <g class="loc-cls-4">
+                <g class="loc-cls-5">
+                  <g class="loc-cls-6">
+                    <g class="loc-cls-7">
+                      <path class="loc-cls-8" d="M40,0A40,40,0,0,1,73.4,62.05h.06L40,108,6.47,62.05H6.6A40,40,0,0,1,40,0Z" transform="translate(3 3)"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+            <g class="loc-cls-9">
+              <g class="loc-cls-4">
+                <g class="loc-cls-5">
+                  <g class="loc-cls-10">
+                    <g class="loc-cls-11">
+                      <ellipse class="loc-cls-8" cx="43.63" cy="43.66" rx="19.05" ry="19.06"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </sly>
+    ${model.countryRootPageTitle}
+  </button>
+  <div id="regionSelectDropdown" class="cmp-dropdown-content">
+    <form method="POST" action="/content/core-components-examples/library/form/button.html"
+          enctype="multipart/form-data" class="cmp-languagenavigation cmp-region-select-dropdown" id="${component.id}"
+          name="${component.id}">
+      <div class="options" data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+           data-sly-use.commonsTemplates="core/wcm/components/commons/v1/templates.html"
+           data-sly-use.groupTemplate="group.html"
+           data-sly-call="${groupTemplate.group @ items=model.languageListItems}"
+           data-sly-test.hasContent="${model.items && model.items.size > 0}"
+           data-cmp-data-layer="${languageNavigation.data.json}">
+        <input type="hidden" name=":formstart"
+               value="/content/core-components-examples/library/form/button/jcr:content/root/responsivegrid/demo_881795653/component/container">
+        <input type="hidden" name="_charset_" value="utf-8">
+      </div>
+      <div class="button languageselection-button">
+        <button type="button" id="form-button-1117902125" class="cmp-button__region-select"
+                data-target="#countriesListModal" name="button">${properties.changeLocationLabel}</button>
+      </div>
+      <div id="countriesListModal" class="language-modal">
+        <!-- Modal content -->
+        <div class="language-modal__content">
+          <span class="language-modal__content__close" href="#"></span>
+          <div class="language-modal__content__row">
+            <sly data-sly-list.continentItems="${model.regionListItems}">
+              <div class="language-modal__content__column">
+                <h2 class="cmp-region-list__title">${continentItems.title}</h2>
+                <div class="language-modal__content__column__separator">
+                  <sly data-sly-list.countryItems="${continentItems.children}">
+                    <div class="cmp-region-list__countries">
+                      <div class="cmp-region-list__countries--flag">
+                        <a href="${countryItems.languagePageUrl}"> ${countryItems.svgFlag @ context = 'scriptComment'} </a>
+                      </div>
+                      <div class="cmp-region-list__countries--name">
+                        <a href="${countryItems.languagePageUrl}"> ${countryItems.title}  </a>
+                        <span class="cmp-region-list__language">
+                          <sly data-sly-list.LanguageItems="${countryItems.children}">
+                            <a href="${LanguageItems.URL}">${LanguageItems.displayLanguage}</a>${LanguageItemsList.last
+                            ? '' :
+                            ' | '}
+                          </sly>
+                        </span>
+                      </div>
+                    </div>
+                  </sly>
+                </div>
+              </div>
+            </sly>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</sly>

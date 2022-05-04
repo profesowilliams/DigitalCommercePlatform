@@ -180,7 +180,7 @@
                     </styles>
                     <analytics
                             jcr:primaryType="nt:unstructured"
-                            path="techdata/components/analytics/analytics"
+                            path="tds-core/components/analytics/analytics"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
                             margin="{Boolean}true">
                     </analytics>
