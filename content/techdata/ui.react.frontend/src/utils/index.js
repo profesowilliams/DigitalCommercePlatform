@@ -105,3 +105,17 @@ export const getUrlParams = () =>
 
 export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;
+
+// Return site and language from url segments
+export function getHeaderInfoFromUrl(pathName) {
+  const pathArray = pathName?.split("/");
+  if(pathArray.length >= 5 && pathArray[1] === 'content') {
+    const country = pathArray[4].toUpperCase();
+    const language = pathArray[5].replace('.html', '');
+     return {
+       'site': country,
+       'exceptLanguage': language + '-' + country
+     };
+  }
+  return { 'site': '', 'exceptLanguage': '' };
+}  

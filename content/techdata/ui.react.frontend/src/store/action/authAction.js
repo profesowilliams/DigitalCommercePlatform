@@ -1,6 +1,6 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
 import axios from '../../utils/axios';
-import { createSessionId, setSessionId, createMaxTimeout } from '../../utils';
+import { createSessionId, setSessionId, createMaxTimeout, getHeaderInfoFromUrl } from '../../utils';
 import {refreshPage} from '../../utils/policies';
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../utils/featureFlagUtils"
 
@@ -29,10 +29,11 @@ export const signOutRequest = () => {
 	};
 };
 
-export const signInAsynAction = (apiUrl) => {
-
+export const signInAsynAction = (apiUrl) => {	
+	
 	let code = localStorage.getItem('signInCode');
 	const signInUrl = apiUrl;
+	const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 
 	const  prepareSignInHeader = () => {
 		let code = localStorage.getItem('signInCode');
@@ -43,8 +44,8 @@ export const signInAsynAction = (apiUrl) => {
 		}
 		return {
 			'TraceId': `AEM_${new Date().toISOString()}`,
-			'Site': 'US',
-			'Accept-Language' : 'en-us',
+			'Site': headerInfo.site,
+			'Accept-Language' : headerInfo.exceptLanguage,
 			'Consumer' : 'AEM',
 			'SessionId' : sessionId,
 			'Content-Type': 'application/json'
