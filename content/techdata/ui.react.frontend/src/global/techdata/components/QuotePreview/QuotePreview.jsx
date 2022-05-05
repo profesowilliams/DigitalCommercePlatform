@@ -442,7 +442,7 @@ const [flagDeal, setFlagDeal] = useState(false);
             disableQuickQuoteButton={false}
             handleQuickQuote={handleQuickQuote}
             handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}
-            apiResponse={apiResponse}
+            apiResponse={quoteDetails}
             isConfig={sourceIsConfigsGrid}
             />
         </section>
