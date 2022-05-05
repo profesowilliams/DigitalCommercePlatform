@@ -41,6 +41,7 @@
                     border-bottom: transparent rem(3px) solid;
                     text-decoration: none;
                     color: get-color(header-links-blue);
+                    margin-top: rem(8px);
                 }
 
                 &:hover {
@@ -222,7 +223,7 @@
         .cmp-megamenu__primary {
             li {
                 padding: 0 0.1rem;
-                font-size: 0.8rem;
+                font-size: rem(14px);
             }
         }
     }
