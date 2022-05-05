@@ -1,0 +1,139 @@
+<div id="QuoteDetails" data-observe-mutation>
+  <div
+    data-component="QuoteDetails"
+    data-cmp-type="react"
+    className="cmp-td-quote-details"
+    data-config='{
+      "logoURL": "http://localhost:8080/content/techdata/language-masters/en/_jcr_content/root/container/container_943305826/teaser_copy_573990399.coreimg.png/1627657642556/security.png",
+      "agGridLicenseKey":"ThisIsAnInvalidAgGridLicenseKey",
+      "downloadLinkText": "Download PDF",
+      "fileName": "Download PDF",
+      "subheaderLabel": "Quote Details",
+      "subheaderTitle": "TD Quote",
+      "createdDateLabel": "Created",
+      "expiresDateLabel": "Expires",
+      "subTotalLabel": "Sub Total",
+      "quoteNotFoundMessage": "We are unable to find your quote. This is not necessarily a bad thing. It might be under review if it was submitted just now. Please check back after 10 minutes.",
+      "quoteErrorMessage": "There has been an error creating your order. Please try again later or contact your sales representative.",
+      "confirmButtonLabel": "Create Quote",
+      "alternateConfirmButtonLabel": "Continue with Quick Quote",
+      "makeChoiceLabel": "Make this my default choice",
+      "continueStandardPriceLabel": "Continue With Standard Price Text instead",
+      "resellerContactLabel": "Your Company Information",
+      "endUserContactLabel": "End User Information",
+      "subtotalLabel": "Subtotal",
+      "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/details",
+      "uiServiceEndPointExcel": "http://localhost:3000/ui-commerce/v1/downloadQuoteDetails",
+      "shopDomainPage": "https://shop.cstenet.com",
+      "verifyUanEndpoint": "http://localhost:3000/ui-commerce/v1/quote/canConvertToOrder?details=true&s=0",
+      "information": {
+        "yourCompanyHeaderLabel": "Your Company Information",
+        "yourLogoLabel": "Your logo",
+        "productImagesLabel": "Product images",
+        "partNoManufacturerLabel": "Part number - manufacturer",
+        "partNoTDLabel": "Part number - Tech Data",
+        "trackingNoLabel": "UPC number",
+        "MSRPLabel": "MSRP",
+        "endUserHeaderLabel": "End User Information",
+        "generalHeaderLabel": "General Information",
+        "emailLabel": "Email",
+        "phoneLabel": "Phone",
+        "sourceLabel": "Source",
+        "tierLabel": "Tier",
+        "referenceLabel": "Reference",
+        "dealLabel": "Deal"
+      },
+      "productLines": {
+        "label": "Line Item Details",
+        "applyMarkupLabel": "Apply markup as",
+        "expandAllLabel": "Expand All",
+        "collapseAllLabel": "Collapse All",
+        "startDateLabel": "Start Date",
+        "autoRenewLabel": "Auto Renew",
+        "durationLabel": "Duration",
+        "billingLabel": "Billing",
+        "yesLabel": "Yes",
+        "noLabel": "No",
+        "productEmptyImageUrl": "/content/dam/techdata/digital-commerce-platform/product-default-images/default.jpg",
+        "columnList": [
+          { "columnLabel": "Line Item", "columnKey": "displayLineNumber" },
+          { "columnLabel": "Item Information", "columnKey": "displayName" },
+          {
+            "columnLabel": "Unit List Price",
+            "columnKey": "unitListPriceFormatted"
+          },
+          { "columnLabel": "% Off List Price", "columnKey": "discounts" },
+          { "columnLabel": "Quantity", "columnKey": "quantity" },
+          { "columnLabel": "Unit Price", "columnKey": "unitPrice" },
+          { "columnLabel": "Extended Price", "columnKey": "extendedPriceFormatted" }
+        ],
+        "menuCopy":"Copy",
+        "menuCopyWithHeaders":"Copy with headers",
+        "menuExport":"Export",
+        "menuCsvExport":"CSV Export",
+        "menuExcelExport":"Excel Export",
+        "menuOpenLink":"Open link in new tab",
+        "menuCopyLink":"Copy link"
+      },
+      "checkout": {
+        "uiServiceEndPoint":"http://localhost:3000/ui-content/v1/replaceCart",
+        "redirectUrl": "https://shop.techdata.com/cart",
+        "expressCheckoutRedirectUrl": "https://shop.techdata.com/expresscheckout/{quote-id}",
+        "checkoutRedirectUrl": "https://shop.techdata.com/checkout/{quote-id}"
+      },
+      "quoteOptions": {
+        "dropdownLabel": "Quote Options",
+        "exportToCSV": "Export to XLS",
+        "exportToPDF": "Export to PDF",
+        "whiteLabelQuote": "White Label Quote",
+        "checkoutLabel": "Check Out"
+      },
+      "whiteLabel": {
+        "markubLabel": "Markup",
+        "MSRPLabel": "MSRP",
+        "description": "Description",
+        "value": "Value",
+        "addNew": "Add new",
+        "yourCostLabel": "Your cost",
+        "yourCustomerPriceLabel": "Your cusotmers price",
+        "yourMarkupLabel": "Your markup",
+        "subtotalLabel": "Subtotal",
+        "ancillaryItemsLabel": "Ancillary items",
+        "endUserTotalLabel": "End user total",
+        "savingsLabel": "Savings over MSRP",
+        "applyToAllLabel": "Apply to all",
+        "applyMarkupLabel": "Apply your markup to the line items below",
+        "previewQuoteLabel": "Preview customer quote",
+        "information": { "yourWhiteLogoLabel": "logo.png" },
+        "titleLabel": "Create a quote for your end user",
+        "subtitleLabel": "Items to include on quote:",
+        "checkboxItems": {
+          "logoLabel": "The reseller logo",
+          "imageLabel": "Product images",
+          "manufacturerLabel": "Part number - manufacturer",
+          "partNumberTDLabel": "Part number - Tech data",
+          "msrpLabel": "MSRP/List price"
+        },
+        "columnList": [
+          { "columnLabel": "Line Item", "columnKey": "displayLineNumber" },
+          { "columnLabel": "Item Information", "columnKey": "displayName" },
+          { "columnLabel": "Quantity", "columnKey": "quantity" },
+          { "columnLabel": "MSRP", "columnKey": "unitListPriceFormatted" },
+          { "columnLabel": "Unit Price", "columnKey": "unitPrice" },
+          {
+            "columnLabel": "Extended Price",
+            "columnKey": "extendedPriceFormatted"
+          },
+          { "columnLabel": "Markup", "columnKey": "appliedMarkup" },
+          { "columnLabel": "Client Unit Price", "columnKey": "clientUnitPrice" },
+          {
+            "columnLabel": "Client Extended Price",
+            "columnKey": "clientExtendedPrice"
+          }
+        ],
+        "backToQuoteDetailsLabel": "Back to Quote Details from AEM"
+      }
+    }
+    '
+  ></div>
+</div>

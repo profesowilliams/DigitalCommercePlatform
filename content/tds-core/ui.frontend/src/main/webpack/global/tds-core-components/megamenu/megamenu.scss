@@ -1,0 +1,401 @@
+@include desktop {
+    .cmp-megamenu {
+        position: relative;
+        z-index: 99;
+
+        &__title {
+            display: none;
+        }
+
+        &__body {
+            .fa-chevron-left {
+                display: none;
+            }
+        }
+
+        .cmp-megamenu__primary {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            justify-content: space-around;
+
+            li {
+                display: inline;
+                padding: rem(16px) 0;
+                font-size: rem(15px);
+                border: 0 none;
+
+                &:active,
+                &:hover,
+                &:focus {
+                    outline: none;
+                }
+
+                .cmp-megamenu__tab-text {
+                    transition: border 0.3s;
+                    padding: 0 rem(3px);
+                    // display: block;
+                    min-height: rem(30px);
+                    border-bottom: transparent rem(3px) solid;
+                    text-decoration: none;
+                    color: get-color(header-links-blue);
+                }
+
+                &:hover {
+                    .cmp-megamenu__tab-text {
+                        border-bottom-color: get-color(brand-light-blue);
+                    }
+                }
+
+                a.cmp-megamenu__tab--active {
+                    border-bottom-color: get-color(brand-light-blue);
+                }
+            }
+        }
+
+        .cmp-megamenu__tabpanel {
+            display: none;
+        }
+
+        .cmp-megamenu__tabpanel--active {
+            display: block;
+            margin-left: rem(16px);
+        }
+    }
+
+    .cmp-megamenu .cmp-navigation {
+        display: flex;
+        position: absolute;
+        min-height: rem(370px);
+        border-top: rem(2px) solid get-color(td-dark-blue);
+        background-color: get-color(brand-white);
+
+        .cmp-megamenu__wrapper {
+            ul {
+                min-width: 270px;
+                list-style: none;
+                padding: 0 0 rem(10px);
+                margin: 0;
+
+                li:first-child a {
+                    padding-top: rem(10px);
+                }
+            }
+
+            a {
+                display: block;
+                color: get-color(text-mid-gray);
+                padding: rem(5px) rem(21px);
+                transition: all 0.3s;
+                font-size: rem(13px);
+                text-decoration: none;
+            }
+
+            i,
+            svg {
+                transition: color 0.3s;
+                height: auto;
+            }
+        }
+
+        .cmp-megamenu__wrapper-item {
+            display: none;
+
+            &--active {
+                display: block;
+            }
+        }
+
+        .cmp-megamenu__secondary {
+            background-color: get-color(brand-button-blue);
+
+            a {
+                color: get-color(brand-white);
+
+                i,
+                svg {
+                    margin-right: rem(14px);
+                }
+
+                &.cmp-megamenu__item--active,
+                &:hover {
+                    background-color: get-color(brand-white);
+                    color: get-color(td-dark-blue);
+                }
+            }
+
+            // hide mobile navbar items for desktop
+            .cmp-navigation__item--level-0 {
+                .cmp-navigation__group {
+                    display: none;
+                }
+            }
+
+            &--title {
+                display: none;
+            }
+
+            &--sub-title {
+                display: none;
+            }
+        }
+
+        .cmp-megamenu-level-title {
+            color: get-color(td-dark-blue);
+            margin: 0;
+            border-bottom: rem(1px) solid get-color(secondary-light-grey);
+            font-size: rem(13px);
+            padding: rem(0 10px 9px 0);
+            font-weight: normal;
+        }
+
+        .cmp-megamenu__tertiary {
+            .cmp-megamenu-level-title {
+                a {
+                    color: get-color(brand-blue)
+                }
+            }
+
+            padding: rem(10px 22px);
+            border-right: rem(1px) solid get-color(brand-light-gray2);
+
+            a {
+                padding: rem(5px 0px);
+                display: flex;
+                justify-content: space-between;
+
+                i,
+                svg {
+                    color: get-color(secondary-light-grey);
+                    display: none;
+                }
+
+                &.cmp-megamenu__item--active,
+                &:hover {
+                    color: get-color(brand-light-blue);
+                    font-weight: 600;
+
+                    i,
+                    svg {
+                        color: get-color(brand-light-blue);
+                    }
+                }
+            }
+
+            a[data-cmp-clickable="true"] {
+
+                i,
+                svg {
+                    display: inline-block;
+                    pointer-events: none;
+                }
+            }
+        }
+
+        .cmp-megamenu__quaternary {
+            .cmp-megamenu__wrapper-item {
+                padding: rem(9px 22px);
+            }
+
+            a {
+                padding-left: rem(28px);
+            }
+
+            .cmp-megamenu-level-title {
+                padding: rem(5px 10px 4px 0px);
+                cursor: pointer;
+
+                i,
+                svg {
+                    color: get-color(secondary-light-grey);
+                    margin-right: rem(15px);
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1260px) {
+    .cmp-megamenu {
+        .cmp-megamenu__primary {
+            li {
+                padding: 0 0.1rem;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    #cmp-techdata-header.cmp-container .aem-Grid .search {
+        width: 33% !important;
+    }
+}
+
+@include tablet {
+    #cmp-techdata-header.cmp-experiencefragment--header-mobile {
+        &.cmp-container {
+            .aem-Grid {
+                .megamenu {
+                    .cmp-megamenu {
+                        &__title {
+                            text-align: center;
+                            border-bottom: 1px solid get-color(secondary-light-grey);
+                            line-height: rem(50px);
+                            color: get-color(text-light-charcoal);
+                            font-size: rem(14px);
+
+                            &.inactive-md {
+                                display: none;
+                            }
+
+                            &.active-md {
+                                display: block;
+                            }
+                        }
+
+                        &__body {
+                            .fa-chevron-left {
+                                color: get-color(border-lighter-gray);
+                                font-size: 16px;
+                                position: absolute;
+                                left: 0;
+                                top: 0;
+                                padding: 12px;
+                                opacity: 0;
+                            }
+                        }
+
+                        &__primary {
+                            padding: 0;
+
+                            &.inactive-md {
+                                display: none;
+                            }
+
+                            &.active-md {
+                                display: block;
+                            }
+                        }
+
+                        &__tabpanel {
+                            div {
+                                display: none;
+
+                                &.active-md {
+                                    display: block;
+                                }
+                            }
+
+                            .cmp-megamenu__secondary {
+                                &.inactive-md {
+                                    display: none;
+                                }
+
+                                &.active-md {
+                                    display: block;
+                                }
+
+                                &--title {
+                                    display: block;
+                                    text-align: center;
+                                    border-bottom: 1px solid get-color(secondary-light-grey);
+                                    padding: 10px 0;
+                                    color: get-color(text-light-charcoal);
+                                    font-size: rem(14px);
+
+                                    &:first-letter {
+                                        text-transform: capitalize;
+                                    }
+                                }
+
+                                &--sub-title {
+                                    border-bottom: 1px solid get-color(secondary-light-grey);
+                                    padding: 10px 0;
+                                    color: #000c21;
+                                    font-size: rem(14px);
+                                    display: block;
+
+                                    &:first-letter {
+                                        text-transform: capitalize;
+                                    }
+                                }
+                            }
+
+                            .cmp-navigation {
+                                &__group {
+                                    padding: 0;
+
+                                    .cmp-navigation__group {
+                                        padding-left: rem(30px);
+                                        display: none;
+
+                                        &.inactive-md {
+                                            display: none;
+                                        }
+
+                                        &.active-md {
+                                            display: block;
+                                        }
+                                    }
+
+                                    li {
+                                        list-style: none;
+                                        position: relative;
+
+                                        a {
+                                            text-decoration: none;
+                                            color: get-color(text-light-charcoal);
+
+                                            svg,
+                                            >i {
+                                                display: none;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                &__item {
+                                    color: get-color(text-light-charcoal);
+                                    font-family: $open-sans;
+                                    font-size: rem(14px);
+                                    letter-spacing: 0;
+                                    line-height: rem(40px);
+
+                                    &--level-0 {
+                                        &.has-child.active {
+                                            border-bottom: 1px solid get-color(secondary-light-grey);
+                                        }
+                                    }
+
+                                    &.has-child {
+                                        &:before {
+                                            content: "\f054";
+                                            font-family: "Font Awesome 5 Free";
+                                            font-size: rem(16px);
+                                            font-weight: 900;
+                                            color: get-color(border-lighter-gray);
+                                            position: absolute;
+                                            right: 0;
+                                        }
+
+                                        &.active {
+                                            >a {
+                                                color: get-color(brand-light-blue);
+                                            }
+
+                                            &:before {
+                                                color: get-color(brand-light-blue);
+                                                content: "\f078";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

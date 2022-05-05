@@ -1,0 +1,172 @@
+<div class="orderdetail aem-GridColumn aem-GridColumn--default--12">
+    <div id=OrderDetails" data-observe-mutation>
+        <div data-component="OrderDetails" data-cmp-type="react" className="cmp-td-order-details"
+             data-config='{
+              "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/order/details",
+              "downloadOrderDetailsEndpoint":"http://localhost:3000/ui-commerce/v1/downloadOrderDetails",
+              "downloadInvoicesEndpoint":"http://localhost:3000/ui-commerce/v1/downloadInvoice?orderId={order-id}",
+              "agGridLicenseKey":"ThisIsAnInvalidAgGridLicenseKey",
+              "exportColumnList":{"columnList":[{"columnLabel": "MFRNo","columnKey":"MFRNo"},{"columnLabel":"TDNo","columnKey":"TDNo"},{"columnLabel":"Quantity","columnKey":"Quantity"}]},
+              "headerConfig": {
+                "orderLabel": "Order",
+                "orderDateLabel": "Placed on",
+                "purchaseOrderLabel": "Purchase Order:",
+                "exportCSVLabel": "Export XLS"
+              },
+              "infoConfig": {
+                "orderStatusLabel": "Status",
+                "orderStatusItemsOpen": "Your order is open.",
+                "orderStatusItemsOpenDescription": "We are looking over everything and will review your order shortly.",
+                "orderStatusItemsCancelled": "Your order has been cancelled.",
+                "orderStatusItemsCancelledDescription": "For more information, call your sales representative at 800-555-1212.",
+                "orderStatusItemsShipped": "All items have been shipped.",
+                "orderStatusItemsInProcess": "Your order is open and in process.",
+                "orderStatusItemsInReview": "The order is in sales review. ",
+                "orderStatusItemsShippedDescription": "For more information, call your sales representative at 800-555-1212",
+                "orderStatusItemsInProcessDescription": "For more information, call your sales representative at 800-555-1212",
+                "orderStatusItemsInReviewDescription": "For more information, call your sales representative at 800-555-1212",
+                "endUserLabel": "End user",
+                "shipToLabel": "Ship to",
+                "blindPackagingUsed": "Blind Packaging Used",
+                "blindPackagingNotUsed": "Blind Packaging Not Used",
+                "paymentLabel": "Payment",
+                "subTotalLabel": "Subtotal",
+                "freightLabel": "Freight",
+                "taxLabel": "Tax",
+                "otherFeesLabel": "Other Fees",
+                "paymentTermsLabel": "Terms",
+                "paymentTotalLabel": "Total",
+                "currencyLabel": "Prices displayed are in "
+              },
+              "productLines": {
+                "productEmptyImageUrl": "/content/dam/techdata/tech-data-dot-com/global/site/about-us/Icon_AboutUs_IRandNews_InvestorRelations_COIN.png",
+                "shopDomainPage":"http://localhost:8080/shop",
+                "columnList": [
+                  {
+                    "columnLabel": "Line",
+                    "columnKey": "displayLineNumber",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Mfr №",
+                    "columnKey": "mfrNumber",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Description",
+                    "columnKey": "displayName",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Qty",
+                    "columnKey": "quantity",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Unit Price (USD)",
+                    "columnKey": "unitPrice",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Total Price (USD)",
+                    "columnKey": "totalPrice",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Status",
+                    "columnKey": "status",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Track",
+                    "columnKey": "trackings",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Serial №/License Key",
+                    "columnKey": "serials",
+                    "sortable": false
+                  },
+                  {
+                    "columnLabel": "Invoice",
+                    "columnKey": "invoice",
+                    "sortable": false
+                  }
+                ],
+                "iconList": [
+                  {
+                    "iconKey": "shipped",
+                    "iconValue": "fas fa-check",
+                    "iconText": "Shipped"
+                  },
+                  {
+                    "iconKey": "open",
+                    "iconValue": "fas fa-box-open",
+                    "iconText": "Open"
+                  },
+                  {
+                    "iconKey": "inProcess",
+                    "iconValue": "fas fa-dolly",
+                    "iconText": "In Process"
+                  },
+                  {
+                    "iconKey": "onHold",
+                    "iconValue": "fas fa-hand-paper",
+                    "iconText": "On Hold"
+                  },
+                  {
+                    "iconKey": "cancelled",
+                    "iconValue": "fas fa-ban",
+                    "iconText": "Cancelled"
+                  }
+                ],
+                "menuCopy":"Copy",
+                "menuCopyWithHeaders":"Copy with headers",
+                "menuExport":"Export",
+                "menuCsvExport":"CSV Export",
+                "menuExcelExport":"Excel Export",
+                "menuOpenLink":"Open link in new tab",
+                "menuCopyLink":"Copy link",
+                "serialCellLabel": "Serial №",
+                "serialModal": "Serial numbers",
+                "serialCellNotFoundMessage": "Not found",
+                "searchCriteria": {
+                  "searchButtonLabel": "Apply",
+                  "clearButtonLabel": "Clear all filters",
+                  "title": "FILTER ORDERS",
+                  "searchbyDropdown": {
+                    "items": [
+                      {
+                        "key": "allLines",
+                        "value": "All Lines"
+                      },
+                      {
+                        "key": "contractNo",
+                        "value": "Contracts"
+                      },
+                      {
+                        "key": "license",
+                        "value": "Licenses"
+                      }
+                    ]
+                  }
+                },
+                "trackingConfig": {
+                  "trackingIcons": [
+                    {
+                      "carrier": "FEDEX",
+                      "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/fedex.png"
+                    },
+                    {
+                      "carrier": "UPS",
+                      "logoPath": "/content/dam/techdata/digital-commerce-platform/tracking-logos/ups.png"
+                    }
+                  ],
+                  "modalTitle" : "Track My Order ...",
+                  "multipleOrderInformation" : "There are multiple shipments associated with this this Order.",
+                  "pendingInfo": "Invoice is pending and will appear here after shipment is processed"
+                }
+              }
+            }'></div>
+    </div>
+</div>

@@ -18,16 +18,16 @@ const path = require('path');
 
 const BUILD_DIR = path.join(__dirname, 'dist');
 const CLIENTLIB_DIR = path.join(
-  __dirname,
-  '..',
-  'ui.apps',
-  'src',
-  'main',
-  'content',
-  'jcr_root',
-  'apps',
-  'tds-core',
-  'clientlibs'
+    __dirname,
+    '..',
+    'ui.apps',
+    'src',
+    'main',
+    'content',
+    'jcr_root',
+    'apps',
+    'tds-core',
+    'clientlibs'
 );
 
 const libsBaseConfig = {
@@ -46,6 +46,7 @@ module.exports = {
       ...libsBaseConfig,
       name: 'clientlib-dependencies',
       categories: ['tds-core.dependencies'],
+      dependencies:['tds-core.grid', 'tds-core.scene7.dynamicmedia'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
@@ -70,19 +71,79 @@ module.exports = {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
         js: {
-          cwd: 'clientlib-site',
+          cwd: 'clientlib-site-site',
           files: ['**/*.js'],
           flatten: false
         },
         css: {
-          cwd: 'clientlib-site',
+          cwd: 'clientlib-site-site/css',
           files: ['**/*.css'],
           flatten: false
         },
 
         // Copy all other files into the `resources` ClientLib directory
         resources: {
-          cwd: 'clientlib-site',
+          cwd: 'clientlib-site-site/resources',
+          files: ['**/*.*'],
+          flatten: false,
+          ignore: ['**/*.js', '**/*.css']
+        }
+      }
+    },
+    {
+      ...libsBaseConfig,
+      name: 'clientlib-site-global',
+      categories: ['tds-core.site.global'],
+      dependencies: ['tds-core.dependencies'],
+      embed: ['core.wcm.components.accordion.v1','core.wcm.components.tabs.v1','core.wcm.components.carousel.v1',
+        'core.wcm.components.image.v2','core.wcm.components.breadcrumb.v2','core.wcm.components.search.v1',
+        'core.wcm.components.form.text.v2','core.wcm.components.pdfviewer.v1','core.wcm.components.commons.datalayer.v1',
+        'tds-core.grid'],
+      assets: {
+        // Copy entrypoint scripts and stylesheets into the respective ClientLib
+        // directories
+        js: {
+          cwd: 'clientlib-site-global',
+          files: ['**/*.js'],
+          flatten: false
+        },
+        css: {
+          cwd: 'clientlib-site-global/css',
+          files: ['**/*.css'],
+          flatten: false
+        },
+
+        // Copy all other files into the `resources` ClientLib directory
+        resources: {
+          cwd: 'clientlib-site-global/resources',
+          files: ['**/*.*'],
+          flatten: false,
+          ignore: ['**/*.js', '**/*.css']
+        }
+      }
+    },
+    {
+      ...libsBaseConfig,
+      name: 'clientlib-site-us',
+      categories: ['tds-core.site.us'],
+      dependencies: ['tds-core.dependencies', 'tds-core.site.global'],
+      assets: {
+        // Copy entrypoint scripts and stylesheets into the respective ClientLib
+        // directories
+        js: {
+          cwd: 'clientlib-site-us',
+          files: ['**/*.js'],
+          flatten: false
+        },
+        css: {
+          cwd: 'clientlib-site-us/css',
+          files: ['**/*.css'],
+          flatten: false
+        },
+
+        // Copy all other files into the `resources` ClientLib directory
+        resources: {
+          cwd: 'clientlib-site-us/resources',
           files: ['**/*.*'],
           flatten: false,
           ignore: ['**/*.js', '**/*.css']

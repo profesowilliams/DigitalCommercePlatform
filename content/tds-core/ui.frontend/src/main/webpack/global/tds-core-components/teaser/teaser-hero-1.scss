@@ -1,0 +1,53 @@
+.hero-style-1 {
+    @include teaser-default();
+
+    @include desktop {
+        .cmp-teaser {
+            &__pretitle {
+                font-size: rem(45px);
+            }
+
+            &__title {
+                font-size: rem(70px);
+                font-weight: 600;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+                padding-left: rem(34px);
+                order: 1;
+                margin: 0;
+            }
+
+            &__description {
+                font-size: 30px;
+                line-height: 41px;
+                padding-left: 194px;
+                margin: 0;
+            }
+        }
+    }
+
+    @include tablet {
+        .cmp-teaser {
+            &__pretitle {
+                font-size: rem(24px);
+                font-weight: bold;
+                letter-spacing: 0;
+                line-height: 30px;
+            }
+
+            &__title {
+                font-size: rem(24px);
+                font-weight: bold;
+                line-height: 30px;
+                order: 1;
+            }
+
+            &__description {
+                margin: 0;
+                font-size: rem(24px);
+                font-weight: bold;
+                line-height: 30px;
+            }
+        }
+    }
+}
+

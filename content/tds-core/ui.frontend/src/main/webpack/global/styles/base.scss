@@ -1,0 +1,37 @@
+//== Techdata Base CSS Styling
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    font-family:  $font-family !important;
+}
+
+html {
+    font-size: 16px;
+}
+body {
+    margin: 0;
+    font-family: $font-family;
+    font-size: rem(14px);
+    line-height: rem(24px);
+    color: get-color(secondary-mcd-black);
+    @include media(">=lg") {
+        font-size: rem(16px);
+    }
+}
+
+a {
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font: inherit;
+}
+img {
+    vertical-align: middle;
+}

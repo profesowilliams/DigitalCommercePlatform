@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Search Bar"
     sling:resourceSuperType="core/wcm/components/search/v1/search"
-    componentGroup="Tech Data - Content"/>
+    componentGroup="TDS Core - Content"/>

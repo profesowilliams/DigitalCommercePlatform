@@ -1,0 +1,65 @@
+/// Your Company Information
+
+.cmp-whitelabelquoteheader {
+  display: flex;
+  align-items: center;
+  padding: rem(12px);
+  width: 100%;
+
+  @include mobile {
+    flex-direction: column;
+  }
+
+  &-address-info {
+    display: inline-grid;
+    border-left: 1px solid get-color(v-divider-gray);
+    padding: 1rem 1rem 1rem 3rem;
+    flex: 1;
+    width: auto;
+
+    @include mobile {
+      border-bottom: 1px solid get-color(v-divider-gray);
+      border-left: none;
+      padding-left: 1.0625rem;
+      width: 100%;
+    }
+
+    &__title {
+      color: get-color(td-dark-blue);
+      font-family: $open-sans;
+      font-size: rem(14px);
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: rem(19px);
+      margin-bottom: rem(12px);
+    }
+
+    &__company-name {
+      color: get-color(text-light-charcoal);
+      font-family: $open-sans;
+      font-size: rem(13px);
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: rem(18px);
+      margin-bottom: rem(12px);
+    }
+
+    &__company-info {
+      color: get-color(border-light-gray);
+      font-family: $open-sans;
+      font-size: rem(13px);
+      letter-spacing: 0;
+      line-height: rem(18px);
+      
+      &--name {
+      }
+      &--street {
+      }
+      &--city-state-zip {
+      }
+      &--state {
+        margin-bottom: rem(12px);
+      }
+    }
+  }
+}

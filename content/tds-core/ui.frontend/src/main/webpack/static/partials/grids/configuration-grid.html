@@ -1,0 +1,71 @@
+<div id="ConfigurationGrid" data-observe-mutation>
+    <div
+        data-component="ConfigurationGrid"
+        data-cmp-type="react"
+        className="cmp-configuration-grid"
+        data-config='{
+        "uiServiceEndPoint":"http://localhost:3000/ui-config/v1/configurations",
+        "configDetailUrl":"/quote-preview?id={id}&type={type}&vendor={vendor}",
+        "quoteDetailUrl":"/language-masters/en/dcp/quote-details?id={id}",
+        "createQuoteUrl":"/quote-preview?id={id}&type={type}&vendor={vendor}&sourceIsConfigsGrid=true",
+        "actionColumnLabel":"Create Quote",
+        "quotesModal":{
+          "title":"Config ID",
+          "content":"There are multiple items associated with this Config ID. Please choose the item you would like to review:",
+          "quotePreffixLabel":"Quote: "
+        },
+        "statusLabelsList":[
+          {"labelKey":"Multiple","labelValue":"Multiple","labelDescription":"Multiple thingies!"},
+          {"labelKey":"Pending","labelValue":"Pending","labelDescription":"There are things still not done!"},
+          {"labelKey":"IN_PIPELINE","labelValue":"Pending","labelDescription":"There are things still not done!"},
+          {"labelKey":"Expired","labelValue":"Expired","labelDescription":"reached the expiration date without being associated to an order.  Click duplicate to create a new clone.","buttonIcon":"fas fa-download","buttonLabel":"Duplicate"},
+          {"labelKey":"Failed","labelValue":"Failed","labelDescription":"Quote creation failed for an unknown reason.","buttonIcon":"fas fa-download","buttonLabel":"Retry"}
+        ],
+        "itemsPerPage":"25", "paginationStyle": "pages",
+        "options": {"defaultSortingColumnKey": "created", "defaultSortingDirection": "desc"},
+        "columnList":[{"columnLabel":"Config ID","columnKey":"configId", "sortable": true},
+        {"columnLabel":"Type","columnKey":"configurationType", "sortable": false},
+        {"columnLabel":"Vendor","columnKey":"vendor", "sortable": false},
+        {"columnLabel":"Created","columnKey":"created", "sortable": false},
+        {"columnLabel":"Expires","columnKey":"expires", "sortable": false},
+        {"columnLabel":"Config Name","columnKey":"configName", "sortable": true},
+        {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false},
+        {"columnLabel":"TD Quote Id","columnKey":"quotes", "sortable": false},
+        {"columnLabel":"Action","columnKey":"action", "sortable": false}],
+        "searchCriteria": {
+          "title": "Filter Configurations",
+          "searchButtonLabel": "Apply",
+          "clearButtonLabel": "Clear all filters",
+          "inputPlaceholder": "Enter Your Search",
+          "fromLabel": "From:",
+          "toLabel": "To:",
+          "datePlaceholder": "MM/DD/YYYY",
+          "keywordDropdown": {
+            "label": "Search",
+            "items": [
+              { "key": "configId", "value": "Config ID" },
+              { "key": "configName", "value": "Config Name" },
+              { "key": "EndUser", "value": "End User" }
+            ]
+          },
+          "configurationTypesDropdown": {
+            "items": [
+              { "value": "All Configuration Types" },
+              { "key": "Estimate", "value": "Estimate" },
+              { "key": "Deal", "value": "Deal" }
+            ]
+          }
+        },
+        "checkout":{"uiServiceEndPoint":"https://eastus-dit-ui.dc.tdebusiness.cloud/ui-content/v1/CreateByQuote",
+        "redirectUrl": "https://shop.techdata.com/cart"},
+        "spaDealsIdLabel": "multiple",
+        "agGridLicenseKey": "ThisIsAnInvalidAgGridLicenseKey",
+        "menuCopy":"Copy",
+        "menuCopyWithHeaders":"Copy with headers",
+        "menuExport":"Export",
+        "menuCsvExport":"CSV Export",
+        "menuExcelExport":"Excel Export",
+        "menuOpenLink":"Open link in new tab",
+        "menuCopyLink":"Copy link"}'
+    ></div>
+</div>

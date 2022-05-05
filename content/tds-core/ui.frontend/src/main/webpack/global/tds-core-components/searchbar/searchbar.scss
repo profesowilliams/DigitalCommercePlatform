@@ -1,0 +1,397 @@
+//Component Mixins
+
+@mixin nav-button {
+  background-color: transparent;
+  color: get-color(brand-text-gray);
+  padding: rem(10px) rem(14px);
+  transition: all 200ms ease;
+  text-align: left;
+  width: 100%;
+
+  &:hover,
+  &:active {
+    background-color: get-color(border-light-gray);
+  }
+}
+
+@mixin reset-list-styles {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+@mixin reset-spacing-styles {
+  padding: 0;
+  margin: 0;
+}
+
+@mixin chevron-icon {
+  color: get-color(brand-nav-blue);
+  margin-left: rem(8px);
+  transition: all 200ms ease;
+  width: rem(24px);
+}
+
+//Search Bar styles
+.cmp-searchbar {
+  min-width: rem(250px);
+  position: relative;
+  width: 100%;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+    top: 0.3%;
+    min-width: 0;
+    width: auto;
+  }
+
+  &--checked {
+    background-color: get-color(brand-white);
+    margin-left: 0;
+    margin-top: 0;
+    width: 100%;
+    left: 0;
+    top: rem(45px);
+    z-index: -1;
+    max-height: 80px;
+    position: fixed;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 40px;
+    padding: 0 rem(8px);
+  }
+
+  &__input {
+    border: rem(1px) solid get-color(text-shadow);
+    border-radius: rem(6px) 0 0 rem(6px);
+    border-right: 0;
+    box-sizing: border-box;
+    outline: none;
+    padding: rem(10px) rem(14px);
+    transition: all 400ms ease;
+    width: 100%;
+    height: 100%;
+
+    &:focus {
+      border: rem(1px) solid get-color(td-dark-blue);
+    }
+
+    &::placeholder {
+      color: get-color(border-light-gray);
+      font-style: italic;
+    }
+
+    @include mobile {
+      border: rem(1px) solid get-color(border-light-gray);
+      border-radius: 0;
+      padding: 0;
+      display: none;
+      min-width: 0;
+      width: 0;
+
+      &--mobile {
+        padding: rem(6px) rem(10px);
+        visibility: visible;
+        display: flex;
+        width: 86%;
+      }
+    }
+  }
+
+  &__button {
+    background-color: get-color(brand-white);
+    border-right: rem(1px) solid get-color(text-shadow) !important;
+    border-top: rem(1px) solid get-color(text-shadow) !important;
+    border-bottom: rem(1px) solid get-color(text-shadow) !important;
+    border-left: 0 !important;
+    border-radius: 0 rem(6px) rem(6px) 0;
+    box-sizing: border-box;
+    padding: 3.8px 8px;
+    transition: all 200ms ease;
+    height: 100%;
+
+    &:hover {
+      cursor: pointer;
+
+      @include mobile {
+        background-color: transparent;
+      }
+    }
+
+    @include mobile {
+      background-color: transparent;
+      border: none !important;
+      padding: rem(8px);
+      margin: 0;
+    }
+
+    &--mobile {
+      padding: 0;
+      margin-left: rem(8px);
+      margin-right: rem(8px);
+    }
+
+    &--checked {
+      background-color: get-color(td-dark-blue);
+      border-color: get-color(td-dark-blue) !important;
+    }
+  }
+
+  &__icon {
+    stroke: get-color(td-dark-blue);
+    margin-top: 0.2rem;
+
+    @include mobile {
+      stroke: get-color(brand-light-blue);
+    }
+
+    &--checked {
+      stroke: get-color(brand-white);
+
+      @include mobile {
+        stroke: get-color(brand-light-blue);
+      }
+    }
+  }
+
+  &__context-menu {
+    box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
+    background-color: get-color(brand-white);
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+
+    @include mobile {
+      box-shadow: none;
+      position: relative;
+      margin-bottom: rem(12px);
+      min-width: rem(350px);
+    }
+  }
+}
+
+//Search Area styles
+.cmp-searcharea {
+  @include reset-list-styles;
+  @include reset-spacing-styles;
+  box-shadow: rem(1px) rem(1px) rem(5px) rgba(0, 0, 0, 0.2);
+  margin: 0 rem(10px) 0 rem(10px);
+  max-height: 0;
+  transition: all 200ms ease;
+
+  &--checked {
+    background-color: get-color(brand-white);
+    max-height: rem(350px);
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 95.5%;
+
+    @include mobile {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  &__area {
+    background-color: get-color(brand-white);
+  }
+
+  &__button {
+    @include nav-button;
+
+    &:hover {
+      background-color: map-get($color-palette, "td-lighter-gray");
+      color: get-color(brand-text-gray);
+    }
+  }
+
+  &__selectedarea {
+    border-bottom: rem(2px) solid get-color(brand-black);
+    margin-left: 0;
+    margin-right: 0;
+    transition: all 200ms ease;
+
+    &--checked {
+      margin-left: rem(10px);
+      margin-right: rem(10px);
+
+      @include mobile {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    &-button {
+      @include nav-button;
+      display: flex;
+      align-items: center;
+      padding: rem(10px) rem(14px);
+
+      @include mobile {
+        min-width: rem(350px);
+      }
+
+      &:hover,
+      &:active {
+        background-color: map-get($color-palette, "td-lighter-gray");
+        color: get-color(brand-text-gray);
+        
+        svg {
+          color: get-color(brand-nav-blue);
+        }
+      }
+    }
+
+    &-icon {
+      @include chevron-icon;
+    }
+  }
+}
+
+// Search Area scrollbar Styling
+
+/* Width */
+.cmp-searcharea::-webkit-scrollbar {
+  width: rem(8px);
+}
+/* Track */
+.cmp-searcharea::-webkit-scrollbar-track {
+  background: get-color(brand-white);
+}
+/* Handle */
+.cmp-searcharea::-webkit-scrollbar-thumb {
+  background: get-color(brand-black);
+  border-radius: rem(8px);
+  max-height: rem(4px);
+}
+/* Buttons */
+.cmp-searcharea::-webkit-scrollbar-button {
+  display: none;
+}
+
+//Search Suggestions styles
+.cmp-searchsuggestions {
+  @include reset-list-styles;
+  @include reset-spacing-styles;
+
+  &:first-child {
+    color: get-color(brand-nav-blue);
+  }
+
+  &__suggestion,
+  &__link {
+    @include reset-list-styles;
+    @include reset-spacing-styles;
+    color: get-color(brand-text-gray);
+  }
+
+  &__suggestion {
+    display: flex;
+    transition: all 200ms ease;
+    padding: rem(8px) rem(16px);
+
+    &.cmp-searchsuggestions__suggestion-withRefinement {
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 0px;
+
+      @include mobile {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cmp-searchrefinements {
+        padding-top: rem(8px);
+        padding-left: rem(5px);
+      }
+    }
+
+    &:hover {
+      background-color: map-get($color-palette, "td-lighter-gray");
+      color: get-color(brand-white);
+    }
+  }
+}
+
+//Search Bar Refinements styles
+.cmp-searchrefinements {
+  @include reset-spacing-styles;
+
+  &__link,
+  &__item,
+  &__refinement {
+    @include reset-list-styles;
+    @include reset-spacing-styles;
+    color: get-color(brand-nav-blue);
+  }
+
+  &__item {
+    padding-left: rem(4px);
+
+    &-icon {
+      @include chevron-icon;
+      @include mobile {
+        width: auto;
+      }
+    }
+  }
+}
+
+//Loading indicator Styling
+.cmp-searchbar__loading-indicator {
+  right: 0.8rem;
+  left: unset;
+}
+
+.cmp-searchbar__clear {
+  display: none;
+}
+
+.cmp-searchbar__clear-icon {
+  left: 0.5rem;
+  right: unset;
+}
+
+//AEM overriding Styling
+.experiencefragment.cmp-experiencefragment--header
+  .cmp-experiencefragment
+  > .cmp-container
+  .aem-Grid
+  .search {
+  margin-left: auto !important;
+  width: 35% !important;
+
+  @include mobile {
+    width: 100% !important;
+  }
+}
+
+//Searchbar width on UAT
+#cmp-techdata-header.cmp-container .aem-Grid .search {
+  width: 30%;
+  @include mobile {
+    width: auto !important;
+  }
+}
+
+//Separeted active class for re-use on all the component
+.activeClass {
+  background-color: get-color(brand-nav-blue);
+
+  .cmp-searcharea__button {
+    color: get-color(brand-white);
+
+    &:hover {
+      background-color: get-color(brand-nav-blue);
+    }
+  }
+}

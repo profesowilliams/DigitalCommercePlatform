@@ -1,0 +1,32 @@
+@import '../../variables';
+@import '../../../../webpack/site/variables';
+
+.cmp-header {
+  &__login-btn {
+    &__sign {
+      color: get-color(header-links-blue);
+      display: inline-flex;
+      font-family: 'Open Sans', sans-serif;
+      outline: none !important;
+      cursor: pointer;
+      svg {
+        height: rem(26px);
+        margin-right: rem(10px);
+        &.sign-in {
+          fill: get-color(header-links-blue);          
+        }
+        &.sign-out {
+          fill: transparent;
+          stroke: get-color(header-links-blue);
+          stroke-width: 4;
+        }
+      }
+    }
+    &__link {
+      font-size:$font-size-small;
+      color: get-color(header-links-blue);
+      padding-top: rem(4px);
+      outline: none !important;
+    }
+  }
+}

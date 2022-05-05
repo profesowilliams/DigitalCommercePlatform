@@ -1,0 +1,11 @@
+.cmp-td-hamburgerMenu {
+    background: transparent;
+    font-size: rem(21px);
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.active {
+        color: get-color(td-lightblue);
+    }
+}

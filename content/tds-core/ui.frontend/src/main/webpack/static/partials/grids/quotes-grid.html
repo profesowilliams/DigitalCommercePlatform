@@ -1,0 +1,45 @@
+<div id="QuotesGridBox" data-observe-mutation>
+    <div
+        data-component="QuotesGrid"
+        data-cmp-type="react"
+        className="cmp-quotes-grid"
+        data-config='{"label":"Quotes grid",
+        "uiServiceEndPoint":"http://localhost:3000/ui-commerce/v1/quote", 
+        "quoteDetailUrl":"/language-masters/en/dcp/quote-details",
+        "itemsPerPage":"25", "paginationStyle": "pages",
+        "options": {"defaultSortingColumnKey": "id", "defaultSortingDirection": "desc"},
+        "columnList":[{"columnLabel":"TD Quote ID","columnKey":"id", "sortable": true},
+        {"columnLabel":"Status","columnKey":"status", "sortable": true},
+        {"columnLabel":"Quote Reference","columnKey":"quoteReference", "sortable": false},
+        {"columnLabel":"Vendor","columnKey":"vendor", "sortable": false},
+        {"columnLabel":"End User Name","columnKey":"endUserName", "sortable": false},
+        {"columnLabel":"SPA/Deal IDs","columnKey":"deals", "sortable": false},
+        {"columnLabel":"Created","columnKey":"created", "sortable": true},
+        {"columnLabel":"Expires","columnKey":"expires", "sortable": false},
+        {"columnLabel":"Quote Value","columnKey":"quoteValue", "sortable": true},
+        {"columnLabel":"Checkout","columnKey":"canCheckOut", "sortable": false}],
+        "checkout": {
+            "uiServiceEndPoint":"http://localhost:3000/ui-content/v1/replaceCart",
+            "redirectUrl": "https://shop.techdata.com/cart",
+            "expressCheckoutRedirectUrl": "https://shop.techdata.com/expresscheckout/{quote-id}",
+            "checkoutRedirectUrl": "https://shop.techdata.com/checkout/{quote-id}",
+            "verifyUanEndpoint": "http://localhost:3000/ui-commerce/v1/quote/canConvertToOrder?details=true&s=0"
+        },
+        "spaDealsIdLabel": "multiple",
+        "agGridLicenseKey": "ThisIsAnInvalidAgGridLicenseKey",
+        "menuCopy":"Copy",
+        "menuCopyWithHeaders":"Copy with headers",
+        "menuExport":"Export",
+        "menuCsvExport":"CSV Export",
+        "menuExcelExport":"Excel Export",
+        "menuOpenLink":"Open link in new tab",
+        "gridErrorMessage": "There has been an error creating your order. Please try again later or contact your sales representative.",
+        "menuCopyLink":"Copy link",
+        "statusLabelsList":[
+            {"labelKey":"CLOSED","labelValue":"Closed"},
+            {"labelKey":"OPEN","labelValue":"Open"},
+            {"labelKey":"IN_PIPELINE","labelValue":"In Pipeline"}
+        ]}'
+        
+    ></div>
+</div>

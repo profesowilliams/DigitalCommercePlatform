@@ -1,0 +1,65 @@
+@import "../../variables";
+@import "../../../site/variables";
+
+.cmp-todays-action-items {
+  font-family: $font-family;
+  justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: rem(55px);
+
+  @include mobile {
+    flex-wrap: nowrap;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    color: get-color(text-mid-gray);
+    width: 100%;
+    text-transform: uppercase;
+    padding-bottom: rem(25px);
+  }
+
+  &__tab {
+    border-radius: rem(5px);
+    border: rem(1px) solid get-color(td-lightblue);
+    width: 49%;
+    height: rem(95px);
+    padding: rem(10px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    @include mobile {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    &__title {
+      width: 100%;
+      font-size: $font-size-xsmall;
+      font: $open-sans;
+      line-height: 17px;
+      text-transform: uppercase;
+      color: get-color(td-dark-blue);
+    }
+
+    &__items {
+      font-size: rem(36px);
+      color: get-color(td-lightblue);
+    }
+
+    &__action-icon {
+      font-size: $font-size-custom-xxxlarge;
+      color: get-color(v-divider-gray);
+      size: 39.51px; 
+      line-height: 40px;
+    }
+
+  }
+}

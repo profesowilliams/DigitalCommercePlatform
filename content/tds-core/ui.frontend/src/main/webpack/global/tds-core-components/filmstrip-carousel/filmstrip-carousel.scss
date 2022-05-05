@@ -1,0 +1,153 @@
+.cmp-filmstrip-carousel {
+    width: rem(720px);
+    padding: 0 rem(40px);
+    font-family: $font-family;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__title {
+        font-size: rem(24px);
+        color: get-color(brand-blue);
+        font-weight: normal;
+        width: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    &__cards {
+        width: 100%;
+        display: inline-flex;
+        justify-content: space-between;
+        width: 100%;
+
+        &--card {
+            width: rem(172px);
+            height: rem(270px);
+            margin-top: rem(25px);
+            margin-bottom: rem(25px);
+            background-color: get-color(brand-white);
+            box-shadow: rem(2px) rem(2px) rem(4px) 0 get-color(box-shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            &img {
+                width: 100%;
+                height: rem(170px);
+            }
+
+            &--name {
+                width: 100%;
+                height: rem(35px);
+                color: get-color(brand-white);
+                background-color: get-color(brand-blue);
+                font-size: rem(16px);
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            &--position {
+                font-size: $font-size-xsmall;
+                line-height: rem(14px);
+                text-align: center;
+                padding: rem(15px) rem(5px) rem(8px);
+                height: 65px;
+            }
+        }
+    }
+
+    ol {
+        display: inline-flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        width: 50%;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+
+.cmp-filmstrip-slider {
+    width: rem(640px);
+    height: rem(305px);
+    margin: 0 auto;
+}
+.slick-slide {
+    margin: 0 rem(20px);
+    width: auto !important;
+    a {
+      text-decoration: none !important;
+      color: unset;
+    }
+    img {
+        display: block;
+        width: 100%;
+        height: rem(170px);
+        border: 0 solid transparent;
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+.slick-track {
+    display: flex !important;
+    justify-content: space-between;
+    flex-direction: row;
+    a {
+      text-decoration: none !important;
+      img {
+          display: block;
+          width: 100%;
+          height: rem(170px);
+          border: 0 solid transparent;
+          box-shadow: 0 0 0 0 transparent;
+      }
+    }
+}
+
+.slick-dots {
+    li {
+        margin: 0 !important;
+        button {
+            &:before {
+                font-family: "Font Awesome 5 Free" !important;
+                font-size: rem(10px) !important;
+                border: solid rem(1px) get-color(text-light-charcoal) !important;
+                border-radius: 50% !important;
+                line-height: rem(10px) !important;
+                width: rem(10px) !important;
+                height: rem(10px) !important;
+                opacity: unset !important;
+                color: transparent !important;
+            }
+            &:hover::before {
+                border: solid 0 get-color(text-light-charcoal) !important;
+                line-height: rem(14px) !important;
+                opacity: unset !important;
+                color: transparent !important;
+                top: rem(-0.022px) !important;
+                box-shadow: inset 0 0 0 rem(7px) get-color(brand-blue) !important;
+                width: rem(10px) !important;
+                height: rem(10px) !important;
+            }
+        }
+        &.slick-active {
+            button {
+                &:before {
+                    border: solid 0 get-color(text-light-charcoal) !important;
+                    line-height: rem(14px) !important;
+                    opacity: unset !important;
+                    color: transparent !important;
+                    top: rem(-0.022px) !important;
+                    box-shadow: inset 0 0 0 rem(7px) get-color(brand-blue) !important;
+                    width: rem(10px) !important;
+                    height: rem(10px) !important;
+                }
+            }
+        }
+    }
+}
