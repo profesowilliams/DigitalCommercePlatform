@@ -67,7 +67,7 @@ const columnsWidth = {
   resellername: "173.368px",
   endUser: "123.368px",
   vendor: "177.632px",
-  Id: "110px",
+  Id: "140px",
   agreementNumber: "120.211px",
   renewedduration: "177.632px",
   dueDays: "143.737px",
