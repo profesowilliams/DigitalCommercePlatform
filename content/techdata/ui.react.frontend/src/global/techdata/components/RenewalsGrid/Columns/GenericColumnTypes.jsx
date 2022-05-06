@@ -1,14 +1,14 @@
 import React from "react";
 import {
   isHouseAccount
-} from "../../../../utils/user-utils";
+} from "../../../../../utils/user-utils";
 import ContractColumn from "./ContractColumn";
 import DueDateColumn from "./DueDateColumn";
 import DueDateDayColumn from "./DueDateDayColumn";
 import PriceColumn from "./PriceColumn";
 import RenewalActionColumn from "./RenewalActionColumn";
-import { useRenewalGridState } from "./store/RenewalsStore";
-import Link from "../Widgets/Link";
+import { useRenewalGridState } from "../store/RenewalsStore";
+import Link from "../../Widgets/Link";
 
 
 const columnFieldsMap = (definition, eventProps) => {

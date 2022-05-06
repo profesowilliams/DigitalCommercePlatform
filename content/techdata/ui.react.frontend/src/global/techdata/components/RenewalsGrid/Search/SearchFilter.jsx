@@ -6,13 +6,14 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
-import { isHouseAccount } from "../../../../utils/user-utils";
-import { If } from "../../helpers/If";
-import Capsule from "../Widgets/Capsule";
-import { useRenewalGridState } from "./store/RenewalsStore";
+import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
+import { isHouseAccount } from "../../../../../utils/user-utils";
+import { If } from "../../../helpers/If";
+import Capsule from "../../Widgets/Capsule";
+import { useRenewalGridState } from "../store/RenewalsStore";
+import { SearchField } from "./SearchField";
 
-const CloseIconWeighted = (props) => (
+export const CloseIconWeighted = (props) => (
   <svg viewBox="0 0 24 24" {...props}>
     <path d="M6.35 20.025 4 17.65 9.625 12 4 6.35l2.35-2.4L12 9.6l5.65-5.65L20 6.35 14.375 12 20 17.65l-2.35 2.375-5.65-5.65Z" />
   </svg>
@@ -197,7 +198,7 @@ function _SearchFilter(
         <div className="cmp-renewal-search">
           <div className="cmp-search-select-container">
             <div className="cmp-search-select-container__box">
-              <div className="cmp-search-select-container__box-search-field">
+              {/* <div className="cmp-search-select-container__box-search-field">
                 <input
                   className="inputStyle"
                   autoFocus
@@ -212,7 +213,14 @@ function _SearchFilter(
                     onClick={() => (inputRef.current.value = "")}
                   />
                 </If>
-              </div>
+              </div> */}
+              <SearchField
+               chosenFilter={values.label}
+               inputRef={inputRef}
+               searchTerm={searchTerm}
+               setSearchTerm={setSearchTerm}
+               triggerSearchOnEnter={triggerSearchOnEnter}
+              />
               <button
                 className="cmp-search-tooltip__button"
                 onClick={() => triggerSearch()}
@@ -275,9 +283,11 @@ function _SearchFilter(
   );
 }
 
-const SearchFilter = forwardRef(_SearchFilter);
+const SearchFilter = React.memo(forwardRef(_SearchFilter));
 
 export default SearchFilter;
+
+
 _SearchFilter.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({

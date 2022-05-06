@@ -1,11 +1,11 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import React, { useEffect, useRef, useState } from "react";
-import { generateExcelFileFromPost } from "../../../../utils/utils";
-import { dateToString, thousandSeparator } from "../../helpers/formatting";
-import useGet from "../../hooks/useGet";
-import { openPDF } from "../PDFWindow/PDFRenewalWindow";
+import { generateExcelFileFromPost } from "../../../../../utils/utils";
+import { dateToString, thousandSeparator } from "../../../helpers/formatting";
+import useGet from "../../../hooks/useGet";
+import { openPDF } from "../../PDFWindow/PDFRenewalWindow";
 import PDFRenewalPlanOption from "./PDFRenewalPlanOption";
-import { useRenewalGridState } from "./store/RenewalsStore";
+import { useRenewalGridState } from "../store/RenewalsStore";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);

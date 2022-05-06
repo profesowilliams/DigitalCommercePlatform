@@ -1,10 +1,9 @@
 import React from 'react'
 import { Page, Text, View, Document } from '@react-pdf/renderer';
-import ReactPDFImageWrapper from '../ReactPDFImageWrapper/ReactPDFImageWrapper';
-import PDFStyles from './RenewalPDFStyles';
-import PDFTable from '../PDFTable/PDFTable';
-import { dateToString } from '../../helpers/formatting';
-import { If } from '../../helpers/If';
+import PDFStyles from '../RenewalPDFStyles';
+import PDFTable from '../../PDFTable/PDFTable';
+import { dateToString } from '../../../helpers/formatting';
+import { If } from "../../../helpers/If";
 
 // Create styles
 const styles = PDFStyles;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { If } from "../../helpers/If";
-import Info from "../common/quotes/DisplayItemInfo";
-import { useRenewalGridState } from "./store/RenewalsStore";
+import { If } from "../../../helpers/If";
+import Info from "../../common/quotes/DisplayItemInfo";
+import { useRenewalGridState } from ".././store/RenewalsStore";
 
 function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;

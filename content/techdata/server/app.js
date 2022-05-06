@@ -3540,14 +3540,14 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
       query.endUserType.includes(formatValue(endUser.name))
     );
 
-  sortRenewalObjects(responseItemList, query);
+  // sortRenewalObjects(responseItemList, query);
 
   var pageNumber = (query.PageNumber - 1) * query.PageSize;
   var pageSize = +pageNumber + +query.PageSize;
-  response.content.items = responseItemList && responseItemList.length > 0 ? responseItemList.slice(pageNumber, pageSize) : [];
+  // response.content.items = responseItemList && responseItemList.length > 0 ? responseItemList.slice(pageNumber, pageSize) : [];
 
-  // var pageNumber = (query.PageNumber - 1) * query.PageSize;
-  // var pageSize = +pageNumber + +query.PageSize
+  var pageNumber = (query.PageNumber - 1) * query.PageSize;
+  var pageSize = +pageNumber + +query.PageSize
   // response.content.items = responseItemList.slice(pageNumber, pageSize);
   if (query.PageNumber){
     console.log("🚀 ~ file: app.js ~ line 3529 ~ query.PageNumber", query.PageNumber)

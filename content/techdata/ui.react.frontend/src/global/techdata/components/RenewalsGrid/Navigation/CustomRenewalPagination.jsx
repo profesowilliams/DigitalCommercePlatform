@@ -8,9 +8,9 @@ import React, {
 import {
   maxCounterCalculator,
   minCounterCalculator,
-} from "../../../../utils/paginationUtil";
-import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
-import { useRenewalGridState } from "./store/RenewalsStore";
+} from "../../../../../utils/paginationUtil";
+import { useMultiFilterSelected } from "../../RenewalFilter/hooks/useFilteringState";
+import { useRenewalGridState } from "../store/RenewalsStore";
 
 function CustomRenewalPagination({ onQueryChanged }, ref) {
   const paginationData = useRenewalGridState((state) => state.pagination);

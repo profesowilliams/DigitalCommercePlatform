@@ -1,5 +1,5 @@
 import React from "react";
-import { thousandSeparator } from "../../helpers/formatting";
+import { thousandSeparator } from "../../../helpers/formatting";
 
 function PriceColumn({ columnValue }) {
   return (

@@ -8,9 +8,9 @@ import Grid from "../Grid/Grid";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
-import CustomRenewalPagination from "./CustomRenewalPagination";
-import { getColumnDefinitions } from "./GenericColumnTypes";
-import RenewalDetailRenderers from "./RenewalDetailRenderers";
+import CustomRenewalPagination from "./Navigation/CustomRenewalPagination";
+import { getColumnDefinitions } from "./Columns/GenericColumnTypes";
+import RenewalDetailRenderers from "./Columns/RenewalDetailRenderers";
 import {
   addCurrentPageNumber, isFilterPostRequest,
   mapServiceData,
@@ -18,8 +18,9 @@ import {
   nonFilteredOnSorting, preserveFilterinOnSorting,
   setPaginationData, isFirstTimeSortParameters
 } from "./renewalUtils";
-import SearchFilter from "./SearchFilter";
+import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
+import shallow from 'zustand/shallow'
 
 function ToolTip({ toolTipData }) {
   return (
@@ -40,7 +41,7 @@ function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged } = useGridFiltering();
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
-  const toolTipData = useRenewalGridState(state => state.toolTipData);
+  const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
 
   

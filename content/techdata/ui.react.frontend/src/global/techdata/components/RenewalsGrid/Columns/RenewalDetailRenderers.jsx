@@ -1,7 +1,7 @@
 import React from 'react'
 import DropdownDownloadList from './DropdownDownloadList'
 import RenewalPlanOptions from './RenewalPlanOptions';
-import { useRenewalGridState } from './store/RenewalsStore';
+import { useRenewalGridState } from '../store/RenewalsStore';
 
 function RenewalDetailRenderers(props) {    
     const detailRender = useRenewalGridState(state => state.detailRender);

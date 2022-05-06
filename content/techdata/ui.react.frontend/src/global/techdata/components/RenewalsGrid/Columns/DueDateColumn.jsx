@@ -1,5 +1,5 @@
 import React from "react";
-import { dateToString } from "../../helpers/formatting";
+import { dateToString } from "../../../helpers/formatting";
 
 function DueDateColumn({ columnValue }) {
   return (
