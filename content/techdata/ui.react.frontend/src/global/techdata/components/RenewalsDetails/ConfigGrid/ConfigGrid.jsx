@@ -1,7 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
 import AgreementInfo from "./AgreementInfo";
 import EndUserInfo from "./EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
+import { generateExcelFileFromPost } from "../../../../../utils/utils";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import {
+  PDFRenewalDocument, openPDF
+} from "../../PDFWindow/PDFRenewalWindow";
+
+function GridHeader({ gridProps, data }) {
+  const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
+    useState(false);
+
+  const downloadXLS = () => {
+    try {
+      generateExcelFileFromPost({
+        url: gridProps?.excelFileUrl,
+        name: `Renewals quote ${data?.source?.id}.xlsx`,
+        postData: {
+          Id: data?.source?.id
+        },
+      });
+    } catch (error) {
+      console.error("error", error);
+    }
+  };
+
+  const DownloadPDF = () =>
+    isPDFDownloadableOnDemand ? (
+      <PDFDownloadLink
+        document={
+          <PDFRenewalDocument
+            reseller={data?.reseller}
+            endUser={data?.endUser}
+            items={data?.items}
+          />
+        }
+        fileName={"Renewals.pdf"}
+      >
+        {({ blob, url, loading, error }) => {
+          loading ? "loading..." : openPDF(url);
+
+          return (
+            <button>
+              <span>{gridProps.pdf || "Download PDF"}</span>
+            </button>
+          );
+        }}
+      </PDFDownloadLink>
+    ) : (
+      <button onClick={() => setPDFDownloadableOnDemand(true)}>
+        <span>{gridProps.pdf || "Download PDF"}</span>
+      </button>
+    );
+
+  return (
+    <div className="cmp-product-lines-grid__header">
+      <span className="cmp-product-lines-grid__header__title">
+        {gridProps.lineItemDetailsLabel}
+      </span>
+      <div className="cmp-renewal-preview__download">
+        <DownloadPDF />
+        <button onClick={downloadXLS}>
+          <span>
+            {gridProps?.xls
+              ? `Download ${gridProps?.menuExcelExport}`
+              : "Download XLS"}
+          </span>
+        </button>
+        <button>
+          <span>Copy</span>
+        </button>
+        <button>
+          <span>Share</span>
+        </button>
+      </div>
+    </div>
+  );
+}
 
 function ConfigGrid({ data, gridProps }) {
   const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo } = data;
@@ -19,10 +95,13 @@ function ConfigGrid({ data, gridProps }) {
   
   return (
     <div className="cmp-renewals-qp__config-grid">
-      <p className="cmp-renewals-qp__config-grid--title">
-        {quotePreview.quotePreviewlabel}
+      <div className="image-container">
         <img className="vendorLogo" src={vendorLogo} alt="vendor logo"/>
-      </p>
+      </div>
+      <div className="export-container">
+        <span className="quote-preview">Quote Preview</span>
+        <GridHeader data={data} gridProps={gridProps}/>
+      </div>
       <div className="info-container">
         <ResellerInfo
           resellerLabels={quotePreview.reseller}

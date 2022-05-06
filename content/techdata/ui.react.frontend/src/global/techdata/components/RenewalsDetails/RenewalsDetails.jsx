@@ -7,7 +7,6 @@ import Modal from '../Modal/Modal';
 import { getUrlParams } from "../../../../utils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
-
 import { useStore } from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -78,7 +77,7 @@ function RenewalsDetails(props) {
     <div className="cmp-quote-preview cmp-renewal-preview">
       {renewalsDetails ? (
         <section>
-          <ConfigGrid data={renewalsDetails} gridProps={componentProp} />
+          <ConfigGrid data={renewalsDetails} gridProps={{...componentProp, excelFileUrl: componentProp?.exportXLSRenewalsEndpoint}} />
           <RenewalPreviewGrid
             data={renewalsDetails}
             gridProps={{...componentProp.productLines, excelFileUrl: componentProp?.exportXLSRenewalsEndpoint}}

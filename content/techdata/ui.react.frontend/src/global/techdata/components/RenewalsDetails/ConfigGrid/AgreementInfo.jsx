@@ -17,44 +17,47 @@ function AgreementInfo({
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
           {programName && (
-            <Info boldLabel noColon label={agreementInfo.programLabel}>{programName}</Info>
+            <Info noColon label={agreementInfo.programLabel}>{programName}</Info>
           )}
           {contract.duration && (
-            <Info boldLabel noColon label={agreementInfo.durationLabel}>{contract.renewedDuration}</Info>
+            <Info noColon label={agreementInfo.durationLabel}>{contract.renewedDuration}</Info>
           )}
           {contract.serviceLevel && (
-            <Info boldLabel noColon label={agreementInfo.supportLevelLabel}>
+            <Info noColon label={agreementInfo.supportLevelLabel}>
               {contract.serviceLevel}
             </Info>
           )}
-          <Info boldLabel noColon label={agreementInfo.distiQuoteNoLabel}>{source.id}</Info>
+          <Info noColon label={agreementInfo.distiQuoteNoLabel}>{source.id}</Info>
           {contract.id && (
-            <Info boldLabel noColon label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
+            <Info noColon label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
           )}
           {source.id && (
-            <Info boldLabel noColon label={agreementInfo.distiQuoteLabel}>{customerPO}</Info>
-          )} <br/>
+            <Info noColon label={agreementInfo.distiQuoteLabel}>{customerPO}</Info>
+          )} 
+          <br />
           {dueDate && (
-            <Info boldLabel noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
+            <Info noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
           )}
-          <Info boldLabel noColon label={agreementInfo.quoteExpiryDateLabel}>{formatDate(expiry)}</Info> <br />
+          <Info noColon label={agreementInfo.quoteExpiryDateLabel}>{formatDate(expiry)}</Info> 
+          <br />
           {contract.newAgreementStartDate && (
-            <Info boldLabel noColon label={agreementInfo.agreeStartDateLabel}>
+            <Info noColon label={agreementInfo.agreeStartDateLabel}>
               {formatDate(contract.newAgreementStartDate)}
             </Info>
           )}
           {contract.newAgreementEndDate && (
-            <Info boldLabel noColon label={agreementInfo.agreeEndDateLabel}>
+            <Info noColon label={agreementInfo.agreeEndDateLabel}>
               {formatDate(contract.newAgreementEndDate)}
             </Info>
           )}
+          <br />
           {contract.newUsagePeriodStartDate && (
-            <Info boldLabel noColon label={agreementInfo.usageStartDateLabel}>
+            <Info noColon label={agreementInfo.usageStartDateLabel}>
               {formatDate(contract.newUsagePeriodStartDate)}
             </Info>
           )}
           {contract.newUsagePeriodEndDate && (
-            <Info boldLabel noColon label={agreementInfo.usageEndDateLabel}>
+            <Info noColon label={agreementInfo.usageEndDateLabel}>
               {formatDate(contract.newUsagePeriodEndDate)}
             </Info>
           )}
@@ -65,7 +68,7 @@ function AgreementInfo({
 
   return (
     <div className="cmp-renewals-qp__agreement-info">
-      <p className="cmp-renewals-qp__agreement-info--sub-title">
+      <p className="cmp-renewals-qp__agreement-info--title">
         {agreementInfo.agreementInfoLabel}
       </p>
       <AgreementInfo />

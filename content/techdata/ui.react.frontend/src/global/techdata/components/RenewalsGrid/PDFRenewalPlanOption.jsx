@@ -20,12 +20,6 @@ function PDFRenewalPlanOption({ renewalsDetails }) {
             <Page size="A4" orientation="landscape" style={styles.page}>
                 <View style={styles.pageWidthSection}>
 
-                    {/* {vendorLogo && 
-                    <View style={{ width: '100', margin: '0' }}>
-                        <ReactPDFImageWrapper path={vendorLogo} />
-                    </View>
-                    } */}
-
                     <View style={styles.headerSection}>
                         <View style={styles.addressSectionYourCompany}>
                             <Text style={styles.sectionTitle}>Reseller</Text>

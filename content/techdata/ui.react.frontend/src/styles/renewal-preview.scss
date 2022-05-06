@@ -26,36 +26,6 @@
     }
   }
   .cmp-renewal-preview {
-    &__download {
-      button {
-        background-color: inherit;
-        border: none;
-        &:first-child span {
-          padding-right: 20px;
-          border-right: 1px solid #d8d8d8;
-        }
-        span {
-          color: #555555;
-          font-size: 13px;
-          line-height: 13px;
-          display: inline-block;
-          cursor: pointer;
-          &:last-child {
-            padding-left: 8px;
-          }
-          svg {
-            color: #000c21;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 14px;
-            margin-right: 8px;
-          }
-          i {
-            margin-right: 8px;
-          }
-        }        
-      }
-    }
     &__subtotal {
       width: 100%;
       display: flex;

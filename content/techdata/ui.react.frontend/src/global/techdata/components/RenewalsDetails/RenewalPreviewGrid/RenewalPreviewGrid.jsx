@@ -1,86 +1,12 @@
 
 import React, { useState } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
-import {
-  PDFRenewalDocument, openPDF
-} from "../../PDFWindow/PDFRenewalWindow";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
 import RenewalManufacturer from "./RenewalManufacturer";
 import { thousandSeparator } from "../../../helpers/formatting";
 
-function GridHeader({ gridProps, data }) {
-  const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
-    useState(false);
-
-  const downloadXLS = () => {
-    try {
-      generateExcelFileFromPost({
-        url: gridProps?.excelFileUrl,
-        name: `Renewals quote ${data?.source?.id}.xlsx`,
-        postData: {
-          Id: data?.source?.id
-        },
-      });
-    } catch (error) {
-      console.error("error", error);
-    }
-  };
-
-  const DownloadPDF = () =>
-    isPDFDownloadableOnDemand ? (
-      <PDFDownloadLink
-        document={
-          <PDFRenewalDocument
-            reseller={data?.reseller}
-            endUser={data?.endUser}
-            items={data?.items}
-          />
-        }
-        fileName={"Renewals.pdf"}
-      >
-        {({ blob, url, loading, error }) => {
-          loading ? "loading..." : openPDF(url);
-
-          return (
-            <button>
-              <span>
-                <i className="fas fa-file-pdf"></i>
-                {gridProps.pdf || "Download PDF"}
-              </span>
-            </button>
-          );
-        }}
-      </PDFDownloadLink>
-    ) : (
-      <button onClick={() => setPDFDownloadableOnDemand(true)}>
-        <span>
-          <i className="fas fa-file-pdf"></i>
-          {gridProps.pdf || "Download PDF"}
-        </span>
-      </button>
-    );
-
-  return (
-    <div className="cmp-product-lines-grid__header">
-      <span className="cmp-product-lines-grid__header__title">
-        {gridProps.lineItemDetailsLabel}
-      </span>
-      <div className={`cmp-renewal-preview__download`}>
-        <DownloadPDF />
-        <button onClick={downloadXLS}>
-          <span>
-            <i class="fas fa-file-excel"></i>
-            {gridProps?.xls ? `Download ${gridProps?.menuExcelExport}` : "Download XLS"}
-          </span>
-        </button>
-      </div>
-    </div>
-  );
-}
 
 function GridSubTotal({ data, gridProps }) {
   return (
@@ -171,7 +97,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
   return (
     <div className="cmp-product-lines-grid">
       <section>
-        <GridHeader data={data} gridProps={gridProps} />
         <Grid
           columnDefinition={columnDefs}
           config={gridConfig}
@@ -185,7 +110,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
           modalAction={modal.action}
           modalContent={modal.content}
           modalProperties={modal.properties}
-          modalAction={modal.modalAction}
           actionErrorMessage={modal.errorMessage}
           onModalClosed={() => setModal(null)}
         ></Modal>

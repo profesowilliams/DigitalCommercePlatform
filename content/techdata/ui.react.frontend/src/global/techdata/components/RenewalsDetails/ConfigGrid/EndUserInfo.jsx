@@ -8,21 +8,23 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
 
     return (
       <div className="cmp-renewals-qp__enduser-info--address-group">
-        <p>{endUser.nameUpper && <Info><b>{endUser.nameUpper}</b></Info>}</p> <br />
         <p>
-          {endUser.name && <Info>{endUser.name}</Info>}
+          {endUser.nameUpper && <Info>{endUser.nameUpper}</Info>}
           {address?.line1 && <Info>{address?.line1}</Info>}      
           {address?.line2 && <Info>{address?.line2}</Info>}   
           <Info>{(address?.city ?? '') + (address?.state ? `, ${address?.state}` : '') + (address?.postalCode ? ` ${address?.postalCode}` : '')}</Info>      
           <Info>{address?.countryCode}</Info>
-        </p> <br />
+        </p>
+        <br/>
         <p>
-          {contact?.email && <Info label={productLines.emailLabel} noColon boldLabel>{contact?.email}</Info>}
-          {contact?.phone && <Info label={productLines.phoneLabel} noColon boldLabel>{contact?.phone}</Info>}
-        </p> <br />
+          {contact?.email && <Info label={productLines.emailLabel} noColon>{contact?.email}</Info>}
+          {contact?.phone && <Info label={productLines.phoneLabel} noColon>{contact?.phone}</Info>}
+        </p>
+        <br/>
         <p>          
-          {endUserType && <Info label={productLines.endCustomerType} noColon boldLabel>{endUserType}</Info>}
-          <Info label={productLines.vendorAccountNo} noColon boldLabel>{endUser?.vendorAccountNumber}</Info>
+          {endUserType && <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>}
+          <Info label={productLines.vendorAccountNo} noColon>{endUser?.vendorAccountNumber}</Info>
+          <Info label={"Previous purchase order №:"} noColon>1234566778</Info>
         </p>
       </div>
     );
@@ -30,7 +32,7 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
 
   return (
     <div className="cmp-renewals-qp__enduser-info">
-      <p className="cmp-renewals-qp__enduser-info--sub-title">{productLines.endCustomerLabel}</p>
+      <p className="cmp-renewals-qp__enduser-info--title">{productLines.endCustomerLabel}</p>
       <EndUserInfo endUser={endUser} />
     </div>
   );
