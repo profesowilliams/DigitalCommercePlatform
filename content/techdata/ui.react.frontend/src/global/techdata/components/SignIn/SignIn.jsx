@@ -195,19 +195,6 @@ const SignIn = (props) => {
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
     routeChange();
-  }
-
-  useEffect(() => {
-    handleLoginRedirection();
-    const originalURL = window.location.href;
-
-    if (isExtraReloadDisabled() && originalURL.indexOf(codeQueryParam) > -1) {
-      const originalURL = window.location.href;
-      handleLoginRedirection();
-
-      removeParam(codeQueryParam, originalURL);
-    }
-    
     isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
 
     if(isExtraReloadDisabled()){
@@ -225,6 +212,17 @@ const SignIn = (props) => {
         }
     }
     showHideElements();
+  }
+
+  useEffect(() => {
+    handleLoginRedirection();
+    const originalURL = window.location.href;
+
+    if (isExtraReloadDisabled() && originalURL.indexOf(codeQueryParam) > -1) {
+      const originalURL = window.location.href;
+      removeParam(codeQueryParam, originalURL);
+      handleLoginRedirection();
+    }
   }, []);
 
   const isCodePresent = () => {
