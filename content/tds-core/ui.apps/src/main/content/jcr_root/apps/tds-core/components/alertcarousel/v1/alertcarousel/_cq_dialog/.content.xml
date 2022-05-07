@@ -215,7 +215,7 @@
                     <analytics
                             jcr:primaryType="nt:unstructured"
                             jcr:title="Analytics"
-                            path="tds-core/components/analytics/analytics"
+                            path="tds-core/components/analytics/v1/analytics"
                             sling:resourceType="granite/ui/components/coral/foundation/include"
                             margin="{Boolean}true">
                     </analytics>

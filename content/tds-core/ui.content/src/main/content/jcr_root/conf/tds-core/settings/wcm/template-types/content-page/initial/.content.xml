@@ -6,6 +6,7 @@
         sling:resourceType="tds-core/components/page/v1/page">
         <root
             jcr:primaryType="nt:unstructured"
+            layout="responsiveGrid"
             sling:resourceType="tds-core/components/container/v1/container">
             <container
                 jcr:primaryType="nt:unstructured"
