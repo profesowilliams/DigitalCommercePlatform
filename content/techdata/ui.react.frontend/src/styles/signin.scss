@@ -1,7 +1,9 @@
+
 .cmp-sign-in {
   display: flex;
+
   // justify-content: center;
-  &:hover{
+  &:hover {
     .cmp-sign-in--container {
       display: block;
     }
@@ -20,36 +22,50 @@
     cursor: pointer;
     padding: 10px 0;
     color: #000;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 13px;
     border-bottom: 2px solid transparent;
+
+    @media only screen and (min-width: 1024px) and (max-width: 1260px) {
+        padding: 0 0.1rem;
+        font-size: .8rem;
+    }
+
     @include tablet {
       font-size: 0; // hide text on tablet and below
       line-height: 0; // to balance the height when hidden
-      color: #231F20;
-      >i, svg {
-        font-size: 14px;	
+      color: #231f20;
+
+      >i,
+      svg {
+        font-size: 14px;
       }
+
       &.active {
-        color: #000C21;
+        color: #000c21;
       }
+
       &.clicked {
         color: #1798d1;
       }
     }
-    &.active {
-      &:hover {
-        border-bottom: 2px solid #04b0e2;
-      }
+
+    &.active,
+    &:hover,
+    &:active {
+      box-shadow: 0 3px 0 0px #00b1e2;
     }
+
     &:focus(:not(.clicked)) {
-      outline: inset; border-radius: 5px; padding: 5px;
+      outline: inset;
+      border-radius: 5px;
+      padding: 5px;
     }
 
     svg {
-      margin-right: 10px;
+      margin-right: 5px;
 
       @include mobile {
         margin-right: 0;
@@ -57,7 +73,8 @@
     }
   }
 
-  .cmp-sign-in--container.selected, .cmp-sign-in--container.showMenu:focus {
+  .cmp-sign-in--container.selected,
+  .cmp-sign-in--container.showMenu:focus {
     display: block;
   }
 
@@ -65,86 +82,98 @@
   $offset-sm: 14px;
 
   &-list {
-        background-color: #fff;
-        z-index: 9999;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
-        box-sizing: border-box;
-        padding: 0 $offset-sm;
-        position: absolute;
-        top: 47px;
-        right: 1px;
-        white-space: nowrap;
-        min-width: 200px;
-        @include tablet {
-            position: fixed;
-            padding: 0 $offset-lg;
-            width: 100%;
-            max-width: 19.375rem;
-            max-height: 560px;
-            overflow-x: hidden;
-            overflow-y: auto;
+    background-color: #fff;
+    z-index: 9999;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
+    box-sizing: border-box;
+    padding: 0 $offset-sm;
+    position: absolute;
+    top: 47px;
+    right: 1px;
+    white-space: nowrap;
+    min-width: 200px;
+
+    @include tablet {
+      position: fixed;
+      padding: 0 $offset-lg;
+      width: 100%;
+      max-width: 19.375rem;
+      max-height: 560px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    p {
+      color: #555555;
+      font-family: "Open Sans", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 16px;
+      padding: 14px 0;
+      text-align: left;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+
+      &.ec-id {
+        border-bottom: 1px solid #d6d6d6;
+        display: block;
+      }
+
+      &.user-greet {
+        @include desktop {
+          display: none;
         }
 
-        p {
+        border-bottom: 1px solid #d6d6d6;
+      }
+    }
+
+    &-content {
+      list-style: none;
+      padding: 0;
+
+      &--item {
+        margin-bottom: 10px;
+        display: flex;
+
+        &-link {
+          cursor: pointer;
+          text-decoration: none;
+
+          @include desktop {
+            position: relative;
+          }
+
+          &--icon {
+            color: #1798d1;
+
+            @include desktop {
+              position: absolute;
+              top: 4px;
+            }
+
+            @include tablet {
+              display: none;
+
+              &.fa,
+              &.fa-user {
+                display: none;
+              }
+            }
+          }
+
+          span {
             color: #555555;
-            font-family: 'Open Sans', sans-serif;
             font-size: 13px;
-            letter-spacing: 0;
-            line-height: 16px;
-            padding: 14px 0;
-            text-align: left;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
 
-            &.ec-id {
-                border-bottom: 1px solid #d6d6d6;
-                display: block;
+            @include desktop {
+              padding-left: 23px;
             }
-            &.user-greet {
-                @include desktop {
-                    display: none;
-                }
-                border-bottom: 1px solid #d6d6d6;
-            }
+          }
         }
-
-        &-content {
-            list-style: none;
-            padding: 0;
-            &--item {
-                margin-bottom: 10px;
-                display: flex;
-                &-link {
-                  cursor: pointer;
-                    text-decoration: none;
-                    @include desktop {
-                      position: relative;
-                    }
-                 &--icon {
-                        color: #1798d1;
-                        @include desktop {
-                          position: absolute;
-                          top: 4px;
-                        }
-                        @include tablet {
-                            display: none;
-                            &.fa, &.fa-user {
-                                display: none;
-                            }
-                        }
-                    }
-
-                    span {
-                        color: #555555;
-                        font-size: 13px;
-                        @include desktop {
-                          padding-left: 23px;
-                        }
-                    }
-                }
-            }
-        }
+      }
+    }
   }
 
   &-signout {
@@ -157,12 +186,13 @@
     width: calc(100% + #{$offset-sm} * 2);
     margin-left: -#{$offset-sm};
     color: white;
-    font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     letter-spacing: 0;
     background-color: #1699d1;
+
     @include tablet {
-      background-color: #F6F6F6;
+      background-color: #f6f6f6;
       color: #555555;
       text-align: left;
       width: calc(100% + #{$offset-lg} * 2);

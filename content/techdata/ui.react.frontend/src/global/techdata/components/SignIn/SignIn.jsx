@@ -346,7 +346,7 @@ const SignIn = (props) => {
             </g>
           </svg>
         )}
-        {configDataAEM.label}
+        <span>{configDataAEM.label}</span>
       </button>
     );
   };
