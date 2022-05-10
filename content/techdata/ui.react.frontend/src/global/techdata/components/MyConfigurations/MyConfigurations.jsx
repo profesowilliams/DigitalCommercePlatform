@@ -60,22 +60,6 @@ const MyConfigurations = ({ componentProp }) => {
     });
   };
 
-  const getFontSize = (textLength) => {
-    const baseSize = 6;
-    if (textLength >= baseSize || textLength ===5) {
-        textLength = baseSize - 1.5;
-    }
-    const fontSize = baseSize - textLength;
-    return `${fontSize}vh`;
-  };
-  
-  const donuts = document.querySelectorAll('.cmp-responsive-font span');
-    
-  donuts.forEach(donut => {
-    donut.style.fontSize = getFontSize(donut.textContent.length);
-  });
-
-
   useEffect(() => {
     if (summary) {
       createChart(domRef1.current.getContext("2d"), 1, "unQuoted", "Unquoted");
