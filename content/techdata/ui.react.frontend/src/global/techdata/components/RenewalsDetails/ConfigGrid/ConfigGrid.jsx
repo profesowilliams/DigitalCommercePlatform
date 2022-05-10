@@ -43,14 +43,14 @@ function GridHeader({ gridProps, data }) {
 
           return (
             <button>
-              <span>{gridProps.pdf || "Download PDF"}</span>
+              <span className="separator">{gridProps.pdf || "Export PDF"}</span>
             </button>
           );
         }}
       </PDFDownloadLink>
     ) : (
       <button onClick={() => setPDFDownloadableOnDemand(true)}>
-        <span>{gridProps.pdf || "Download PDF"}</span>
+        <span className="separator">{gridProps.pdf || "Export PDF"}</span>
       </button>
     );
 
@@ -62,17 +62,19 @@ function GridHeader({ gridProps, data }) {
       <div className="cmp-renewal-preview__download">
         <DownloadPDF />
         <button onClick={downloadXLS}>
-          <span>
+          <span className="separator">
             {gridProps?.xls
-              ? `Download ${gridProps?.menuExcelExport}`
-              : "Download XLS"}
+              ? `Export ${gridProps?.menuExcelExport}`
+              : "Export XLS"}
           </span>
         </button>
         <button>
-          <span>Copy</span>
+          <span className="separator">Copy</span>
         </button>
         <button>
-          <span>Share</span>
+          <span>
+          Share
+          </span>
         </button>
       </div>
     </div>

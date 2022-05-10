@@ -2,25 +2,21 @@
 .cmp-renewals-qp__config-grid {
   .cmp-renewal-preview {
     &__download {
-      button {
-        background-color: inherit;
-        border: none;
-        span {
-          padding-right: 20px;
+        .separator {
           border-right: 1px solid #d8d8d8;
-          color: #555555;
-          font-size: 13px;
-          line-height: 13px;
-          display: inline-block;
+          padding-right: 20px;
           cursor: pointer;
         }
-      }
     }
   }
   .image-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    img {
+      width: 160px;
+      height: 70.5px;
+    }
   }
   .export-container {
     display: flex;
@@ -34,9 +30,11 @@
       line-height: 33px;
     }
     button {
+      background-color: inherit;
+      border: none;
       span {
         color: rgba(0, 12, 33, 1);
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         letter-spacing: 0;
         line-height: 33px;
