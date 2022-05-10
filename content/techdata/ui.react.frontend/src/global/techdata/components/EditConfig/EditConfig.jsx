@@ -106,7 +106,7 @@ const EditConfig = ({ componentProp }) => {
         const result = await usPost(puchOutEndpoint,body)
         const errorObject = result.data?.error;
         
-        if (errorObject) {
+        if (errorObject && errorObject.isError) {
             modalEventError(getErrorMessage(errorObject?.code));
             setLoadingGetUrl(false);
             return;
