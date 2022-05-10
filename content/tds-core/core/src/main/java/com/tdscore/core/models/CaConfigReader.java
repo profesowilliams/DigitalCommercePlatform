@@ -94,6 +94,8 @@ public class CaConfigReader {
 
     private String configurationsEndpoint;
 
+    private String consumerRequestHeader;
+
     private  String shopDomain;
 
     private String cartURL;
@@ -244,6 +246,7 @@ public class CaConfigReader {
         quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
         accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
+        consumerRequestHeader = serviceEndPointsConfiguration.consumerRequestHeader();
         puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
         downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
         shopDomain = mcConfiguration.shopDomain();
@@ -426,6 +429,10 @@ public class CaConfigReader {
     public String getConfigurationsEndpoint() {
         return configurationsEndpoint;
     }
+    
+    public String getConsumerRequestHeader() {
+        return consumerRequestHeader;
+    }    
 
     public String getPuchOutEndpoint(){
         return puchOutEndpoint;

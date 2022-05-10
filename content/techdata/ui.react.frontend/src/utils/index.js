@@ -106,16 +106,27 @@ export const getUrlParams = () =>
 export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;
 
-// Return site and language from url segments
+// Return request site and language from dcp url segments
 export function getHeaderInfoFromUrl(pathName) {
-  const pathArray = pathName?.split("/");
-  if(pathArray.length >= 5 && pathArray[1] === 'content') {
+  const pathArray = pathName?.split('/');
+  if (pathArray.length >= 5 && pathArray[1] === 'content') {
     const country = pathArray[4].toUpperCase();
     const language = pathArray[5].replace('.html', '');
-     return {
-       'site': country,
-       'exceptLanguage': language + '-' + country
-     };
+    return {
+      site: country,
+      acceptLanguage: language + '-' + country,
+    };
   }
-  return { 'site': '', 'exceptLanguage': '' };
-}  
+  return { site: '', acceptLanguage: '' };
+}
+
+// Return request consumer from global-config
+export function getConsumerRequestHeader() {
+  if (
+    document.body.hasAttribute('data-consumer-request-header') &&
+    document.body.getAttribute('data-consumer-request-header').length > 0
+  ) {
+    return document.body.getAttribute('data-consumer-request-header');
+  }
+  return 'AEM';
+}

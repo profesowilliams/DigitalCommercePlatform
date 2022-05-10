@@ -92,6 +92,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.quickQuoteEndpoint()).thenReturn("quickQuoteEndPoint");
         when(serviceEndPointsConfiguration.quotesPreviewPricingEndPoint()).thenReturn("quotesPreviewPricingEndPoint");
         when(serviceEndPointsConfiguration.configurationsEndpoint()).thenReturn("configurationsEndpoint");
+        when(serviceEndPointsConfiguration.consumerRequestHeader()).thenReturn("consumerRequestHeader");
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.expressCheckoutRedirectUrl()).thenReturn("expressCheckoutRedirectUrl");
@@ -150,6 +151,7 @@ class CaConfigReaderTest {
         assertEquals("quotesPreviewEndPoint", underTest.getQuotesPreviewEndPoint());
         assertEquals("quotesPreviewPricingEndPoint", underTest.getQuotesPreviewPricingEndPoint());
         assertEquals("configurationsEndpoint", underTest.getConfigurationsEndpoint());
+        assertEquals("consumerRequestHeader", underTest.getConsumerRequestHeader());
         assertEquals("shopDomain", underTest.getShopDomain());
         assertEquals("cartURL", underTest.getCartURL());
         assertEquals("expressCheckoutRedirectUrl", underTest.getExpressCheckoutRedirectUrl());
