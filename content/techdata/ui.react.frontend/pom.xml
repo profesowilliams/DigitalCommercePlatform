@@ -45,6 +45,11 @@
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.7.6</version>
+                <configuration>
+                    <environmentVariables>
+                        <NPM_CONFIG_USERCONFIG>${project.basedir}/.npmrc-pipeline</NPM_CONFIG_USERCONFIG>
+                    </environmentVariables>
+                </configuration>
 
                 <executions>
 
