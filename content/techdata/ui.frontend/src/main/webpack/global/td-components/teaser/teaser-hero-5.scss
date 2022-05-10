@@ -50,6 +50,12 @@
             align-content: flex-start;
             padding: 2rem;
             flex-wrap: wrap;
+            top: 45%;
+        }
+
+        @media (max-width: 767px) {
+            flex-wrap: wrap;
+            top: 45%;
         }
 
         @media (max-width: 813px) {

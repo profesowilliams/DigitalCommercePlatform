@@ -35,6 +35,10 @@
   color: get-color(brand-black);
   border: none;
   cursor: pointer;
+  
+  @media only screen and (min-width: 1024px) and (max-width: 1260px) {
+    font-size: .8rem;
+}
 
   &:hover {
     box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
