@@ -1,0 +1,45 @@
+{
+  "name": "techdata",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "cross-env NODE_ENV=development react-scripts build && clientlib",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "sync": "aemsync -d -w ../ui.apps/src/main/content"
+  },
+  "dependencies": {
+    "@tdsynnex/forms": "0.0.29",
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.26.1",
+    "cross-env": "^7.0.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-scripts": "5.0.0",
+    "sass": "^1.50.0",
+    "simple-zustand-devtools": "^1.0.1",
+    "web-vitals": "^2.1.4",
+    "zustand": "^3.7.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "aem-clientlib-generator": "^1.5.0",
+    "aemsync": "^4.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "sinon": "^7.5.0"
+  },
+  "proxy": "http://localhost:4502",
+  "browserslist": [
+    "defaults"
+  ],
+  "eslintConfig": {
+    "extends": "react-app"
+  }
+}

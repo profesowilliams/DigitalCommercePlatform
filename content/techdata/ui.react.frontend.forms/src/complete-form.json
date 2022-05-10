@@ -1,0 +1,1273 @@
+{
+  "name": "eu-form",
+  "formTitle": "Open Your Reseller Account",
+  "hideTitle": false,
+  "prefillEndpoint": "",
+  "submitEndpoint": "",
+  "submitReturnPage": "",
+  "serverRevalidation": "true|false",
+  "freeNavigation": false,
+  "autoSave": "true|false",
+  "hideSteps": "true|false",
+  "cssClass": "",
+  "buttonBar": {
+    "previous": {
+      "type": "button",
+      "buttonType": "previous",
+      "name": "previous",
+      "title": "Previous",
+      "iconStart": "",
+      "iconEnd": "",
+      "disabledOn": "first",
+      "hideOn": "first|all|none",
+      "cssClass": ""
+    },
+    "submit": {
+      "type": "button",
+      "buttonType": "submit",
+      "name": "submit",
+      "title": "Submit",
+      "iconStart": "",
+      "iconEnd": "",
+      "enabledOn": "all|none|last",
+      "displayedOn": "all|none|last",
+      "cssClass": "",
+      "endpoint": "https://eastus-dit-ui.dc.tdebusiness.cloud/ui-account/v1/RegisterCustomer",
+      "redirectOnsuccess": "https://uk-integration.techdata.eu/",
+      "mapper": [
+        {
+          "source": "a.b.company-name",
+          "target": "Created"
+        },
+        {
+          "source": "a.b.company-name",
+          "target": "Updated"
+        },
+
+        {
+          "source": "a.b.Intouch-details-admin-name",
+          "target": "AdminWebUser.Name"
+        },
+        {
+          "source": "a.b.Intouch-details-admin-email",
+          "target": "AdminWebUser.Email"
+        },
+
+        {
+          "source": "a.b.first-name",
+          "target": "Source.System"
+        },
+        {
+          "source": "a.b.first-name",
+          "target": "Source.Id"
+        },
+
+        {
+          "source": "a.b.first-name",
+          "target": "Contact.FirstName"
+        },
+        {
+          "source": "a.b.last-name",
+          "target": "Contact.LastName"
+        },
+        {
+          "source": "a.b.personal-work-email",
+          "target": "Contact.Email"
+        },
+
+        {
+          "source": "a.b.Company-details-address-1",
+          "target": "Address.AddressLine1"
+        },
+        {
+          "source": "a.b.Company-details-address-2",
+          "target": "Address.AddressLine2"
+        },
+        {
+          "source": "a.b.Company-details-City",
+          "target": "Address.City"
+        },
+        {
+          "source": "a.b.personal-work-email",
+          "target": "Address.State"
+        },
+        {
+          "source": "a.b.Company-details-ZIP",
+          "target": "Address.Zip"
+        },
+        {
+          "source": "a.b.Company-details-Country",
+          "target": "Address.Country"
+        },
+
+        {
+          "source": "a.b.Company-details-company-name",
+          "target": "Company.Name"
+        },
+        {
+          "source": "a.b.Company-details-company-name",
+          "target": "Company.NameUpper"
+        },
+        {
+          "source": "a.b.company-department-email",
+          "target": "Company.Email"
+        },
+        {
+          "source": "a.b.company-telephone-number",
+          "target": "Company.Phone"
+        },
+        {
+          "source": "a.b.Company-details-website",
+          "target": "Company.Website"
+        },
+        {
+          "source": "a.b.Company-details-dropdown-1",
+          "target": "Company.CompanyType"
+        },
+        {
+          "source": "a.b.Company-details-VAT",
+          "target": "Company.VATNumber"
+        },
+        {
+          "source": "a.b.Company-details-registration-number",
+          "target": "Company.RegistrationNumber"
+        },
+        {
+          "source": "a.b.Intouch-details-invoice-email",
+          "target": "Company.InvoiceEmail"
+        },
+
+        {
+          "source": "a.b.Trading-details-trading-name",
+          "target": "TradingAccount.Name"
+        },
+        {
+          "source": "a.b.Trading-details-address-1",
+          "target": "TradingAccount.AddressLine1"
+        },
+        {
+          "source": "a.b.Trading-details-address-2",
+          "target": "TradingAccount.AddressLine2"
+        },
+        {
+          "source": "a.b.Trading-details-City",
+          "target": "TradingAccount.City"
+        },
+        {
+          "source": "a.b.Trading-details-ZIP",
+          "target": "TradingAccount.Zip"
+        },
+        {
+          "source": "a.b.Trading-details-Country",
+          "target": "TradingAccount.Country"
+        },
+
+        {
+          "source": "a.b.Company-details-bank-name",
+          "target": "BankDetails.Name"
+        },
+        {
+          "source": "a.b.Company-details-branch",
+          "target": "BankDetails.BranchCode"
+        },
+        {
+          "source": "a.b.Company-details-sort-code",
+          "target": "BankDetails.SortCode"
+        },
+        {
+          "source": "a.b.Company-details-account-number",
+          "target": "BankDetails.AccountNumber"
+        },
+
+        {
+          "source": "a.b.authorized-to-agree",
+          "target": "IsTandCAccepted"
+        },
+        {
+          "source": "a.b.authorized-to-in-touch",
+          "target": "IsCommunicationsAccepted",
+          "formatter": "base64"
+        }
+      ]
+    },
+    "next": {
+      "type": "button",
+      "buttonType": "next",
+      "name": "next",
+      "title": "Next",
+      "iconStart": "",
+      "iconEnd": "",
+      "disabledOn": "last",
+      "hideOn": "last|all|none",
+      "cssClass": ""
+    }
+  },
+  "panels": [
+    {
+      "panelInfo": {
+        "panelTitle": "Intro",
+        "stepTitle": "",
+        "hideDescription": "true|false",
+        "panelValidation": "true|false",
+        "name": "intro-1",
+        "panelDescription": "",
+        "panelHelpContent": "",
+        "cssClass": ""
+      },
+      "items": [
+        {
+          "type": "title",
+          "name": "introduction-title-1",
+          "title": "Step 1: Introduction",
+          "display": true,
+          "style": "h2",
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "introduction-text-1",
+          "title": "<p>Thank you for your interest in Tech Data.</p><p>You will be required to supply the following Bank information to continue with your application.</p><ul><li>Bank Name</li><li>Branch</li><li>Sort Code</li><li>Account Number</li></ul><p>(message of the security measures we're leveraging. This will put users at ease)</p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "separator",
+          "name": "separator",
+          "display": "true|false",
+          "cssClass": ""
+        },
+        {
+          "type": "checkbox",
+          "name": "authorized-to-agree",
+          "title": "",
+          "hideTitle": false,
+          "required": true,
+          "enabled": "true|false",
+          "display": "true|false",
+          "labelPlacement": "end",
+          "lookupEndpoint": "",
+          "options": [
+            {
+              "name": "I confirm I am authorized to agree <a href='http://google.com' target='blank'>Terms & Conditions</a> of Trade on behalf of my company and I am an authorized signatory",
+              "value": true,
+              "selected": "true|false"
+            }
+          ],
+          "events": [],
+          "helpMsg": "",
+          "hideHelpMsg": true,
+          "requiredFieldMsg": "This field is required."
+        },
+        {
+          "type": "checkbox",
+          "name": "confirm-read-agree",
+          "title": "",
+          "hideTitle": false,
+          "required": true,
+          "enabled": "true|false",
+          "display": "true|false",
+          "labelPlacement": "end",
+          "lookupEndpoint": "",
+          "options": [
+            {
+              "name": "I confirm have read and agree with the <a href='http://google.com' target='blank'>TechData Onboarding Privacy Notice</a>",
+              "value": true,
+              "selected": "true|false"
+            }
+          ],
+          "events": [],
+          "helpMsg": "",
+          "hideHelpMsg": true,
+          "requiredFieldMsg": "This field is required."
+        },
+        {
+          "type": "checkbox",
+          "name": "authorized-to-in-touch",
+          "title": "",
+          "hideTitle": false,
+          "required": true,
+          "enabled": "true|false",
+          "display": "true|false",
+          "labelPlacement": "end",
+          "lookupEndpoint": "",
+          "options": [
+            {
+              "name": "I am authorized to request an online InTouch account",
+              "value": true,
+              "selected": "true|false"
+            }
+          ],
+          "events": [],
+          "helpMsg": "",
+          "hideHelpMsg": true,
+          "requiredFieldMsg": "This field is required."
+        },
+        {
+          "type": "checkbox",
+          "name": "authorized-to-receive-status",
+          "title": "",
+          "hideTitle": false,
+          "required": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "labelPlacement": "end",
+          "lookupEndpoint": "",
+          "options": [
+            {
+              "name": "I confirm I would like to receive status update of my application.",
+              "value": true,
+              "selected": "true|false"
+            }
+          ],
+          "events": [],
+          "helpMsg": "",
+          "hideHelpMsg": true,
+          "requiredFieldMsg": "This field is required."
+        }
+      ]
+    },
+    {
+      "panelInfo": {
+        "panelTitle": "Contact details",
+        "hideDescription": "true|false",
+        "panelValidation": "true|false",
+        "name": "contact-details",
+        "panelDescription": "",
+        "panelHelpContent": "",
+        "cssClass": ""
+      },
+      "items": [
+        {
+          "type": "title",
+          "name": "Contact-details-title-1",
+          "title": "Step 2: Enter contact details",
+          "display": true,
+          "style": "h2",
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "Contact-details-text-1",
+          "title": "<p></p><p>All fields below are required unless otherwise indicated</p><p><br></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "textbox",
+          "name": "first-name",
+          "title": "First name",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "Enter your First Name",
+          "requiredFieldMsg": "First name is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "30",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Include suffix if applicable",
+          "hideHelpMsg": true,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "last-name",
+          "title": "Last name",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "Enter your Last Name",
+          "requiredFieldMsg": "Last name is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "30",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Include suffix if applicable",
+          "hideHelpMsg": true,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "personal-work-email",
+          "title": "Personal work email",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "Enter your Personal work email",
+          "requiredFieldMsg": "Personal work email required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "30",
+          "minChars": "1",
+          "exactChars": false,
+          "patterns": {
+            "display": "",
+            "validation": "validation-email",
+            "invalidPatternMsg": "Entered Invalid Email."
+          },
+          "helpMsg": "Include suffix if applicable",
+          "hideHelpMsg": true,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "company-department-email",
+          "title": "Company department email (optional)",
+          "required": false,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "Enter your Company department email (optional)",
+          "requiredFieldMsg": "",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "30",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "",
+            "validation": "validation-email",
+            "invalidPatternMsg": "Entered Invalid Email."
+          },
+          "helpMsg": "Include suffix if applicable",
+          "hideHelpMsg": true,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "company-telephone-number",
+          "title": "Company telephone number",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "Enter your Company telephone number",
+          "requiredFieldMsg": "Company telephone number is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "30",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "+1 (999)-999-99-99",
+            "validation": "validation-phone",
+            "invalidPatternMsg": "Entered Invalid Phone Number."
+          },
+          "helpMsg": "Include suffix if applicable",
+          "hideHelpMsg": true,
+          "cssClass": ""
+        },
+        {
+          "type": "dropdown",
+          "name": "country",
+          "title": "Country",
+          "hideTitle": false,
+          "required": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "lookupEndpoint": "",
+          "placeholderText": "Country",
+          "options": [
+            {
+              "name": "USA",
+              "value": "0"
+            },
+            {
+              "name": "INDIA",
+              "value": "1"
+            },
+            {
+              "name": "CHINA",
+              "value": "2"
+            }
+          ],
+          "events": [],
+          "helpMsg": "",
+          "hideHelpMsg": true,
+          "requiredFieldMsg": "This field is required."
+        }
+      ]
+    },
+    {
+      "panelInfo": {
+        "panelTitle": "Company details",
+        "hideDescription": "true|false",
+        "panelValidation": "true|false",
+        "name": "company-details",
+        "panelDescription": "",
+        "panelHelpContent": "",
+        "cssClass": ""
+      },
+      "items": [
+        {
+          "type": "title",
+          "name": "Company-details-title-1",
+          "title": "Step 3: Enter company details",
+          "display": true,
+          "style": "h2",
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "Company-details-text-1",
+          "title": "<p></p><p>All fields below are required, if not stated otherwise</p><p><br></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "title",
+          "name": "Company-details-title-2",
+          "title": "Information",
+          "display": true,
+          "style": "h3",
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-company-name",
+          "title": "Company Name",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "ABC Technologies",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Type full company name to search our database or continue manually",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-website",
+          "title": "Website",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "www.abctech.com",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "patterns": {
+            "display": "",
+            "validation": "validation-website",
+            "invalidPatternMsg": "Entered Invalid Website Address."
+          },
+          "helpMsg": "Correct format: www.example.com",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "dropdown",
+          "name": "Company-details-dropdown-1",
+          "title": "Company type",
+          "hideTitle": false,
+          "required": true,
+          "enabled": "true|false",
+          "display": "true|false",
+          "lookupEndpoint": "",
+          "placeholderText": "Company type",
+          "options": [
+            {
+              "name": "Sole Trader",
+              "value": "0"
+            },
+            {
+              "name": "Partnership",
+              "value": "1"
+            },
+            {
+              "name": "Limited Company",
+              "value": "2"
+            },
+            {
+              "name": "Limited Liability Partnership",
+              "value": "3"
+            },
+            {
+              "name": "Public Limited Company",
+              "value": "4"
+            }
+          ],
+          "selected": "",
+          "helpMsg": "Select company type",
+          "requiredFieldMsg": "This field is required."
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-VAT",
+          "title": "VAT number",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "",
+            "validation": "validation-vat",
+            "invalidPatternMsg": "Entered Invalid VAT Number."
+          },
+          "helpMsg": "Insert company VAT number",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-registration-number",
+          "title": "Commercial/Company registration number",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Insert commercial or company registration number",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "Company-details-text-2",
+          "title": "<p><br></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "title",
+          "name": "Company-details-title-3",
+          "title": "Address",
+          "display": true,
+          "style": "h3",
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-address-1",
+          "title": "Address line 1",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter address line 1",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-address-2",
+          "title": "Address line 2 (optional)",
+          "required": false,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter address line 2",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-ZIP",
+          "title": "Post Code",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "Post code is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "",
+            "validation": "validation-zip",
+            "invalidPatternMsg": "Entered Invalid Zip Code."
+          },
+          "helpMsg": "Enter post code",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-City",
+          "title": "City",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "City is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter city name",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-Country",
+          "title": "Country",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "Country is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter country name",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "Company-details-text-3",
+          "title": "<p><br></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "title",
+          "name": "Company-details-title-4",
+          "title": "Bank",
+          "display": true,
+          "style": "h3",
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-bank-name",
+          "title": "Bank name",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter bank name",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-branch",
+          "title": "Branch",
+          "required": false,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter branch",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-sort-code",
+          "title": "Sort Code",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter sort code",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Company-details-account-number",
+          "title": "Account number",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter account number",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        }
+      ]
+    },
+    {
+      "panelInfo": {
+        "panelTitle": "Trading details",
+        "hideDescription": "true|false",
+        "panelValidation": "true|false",
+        "name": "trading-details",
+        "panelDescription": "",
+        "panelHelpContent": "",
+        "cssClass": ""
+      },
+      "items": [
+        {
+          "type": "title",
+          "name": "Trading-details-title-1",
+          "title": "Step 4: Enter trading details",
+          "display": true,
+          "style": "h2",
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "Trading-details-text-1",
+          "title": "<p></p><p>All fields below are required, if not stated otherwise</p><p></p><p></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "checkbox",
+          "name": "Trading-details-checkbox-1",
+          "title": "",
+          "hideTitle": false,
+          "required": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "labelPlacement": "end",
+          "lookupEndpoint": "",
+          "options": [
+            {
+              "name": "Same as Company details",
+              "value": true,
+              "selected": "true|false"
+            }
+          ],
+          "events": [
+            {
+              "type": "onChange",
+              "status": true,
+              "actions": [
+                {
+                  "action": "syncfields",
+                  "mapper": [
+                    {
+                      "source": "a.b.Company-details-company-name",
+                      "target": "a.b.Trading-details-trading-name"
+                    },
+                    {
+                      "source": "a.b.Company-details-address-1",
+                      "target": "a.b.Trading-details-address-1"
+                    },
+                    {
+                      "source": "a.b.Company-details-address-2",
+                      "target": "a.b.Trading-details-address-2"
+                    },
+                    {
+                      "source": "a.b.Company-details-ZIP",
+                      "target": "a.b.Trading-details-ZIP"
+                    },
+                    {
+                      "source": "a.b.Company-details-City",
+                      "target": "a.b.Trading-details-City"
+                    },
+                    {
+                      "source": "a.b.Company-details-Country",
+                      "target": "a.b.Trading-details-Country"
+                    }
+                  ]
+                },
+                {
+                  "action": "hide",
+                  "target": "eu-form.general.last-name"
+                },
+                {
+                  "action": "hide",
+                  "target": "eu-form.general.another-last-name"
+                }
+              ]
+            }
+          ],
+          "helpMsg": "Check to populate fields from Company details",
+          "hideHelpMsg": false,
+          "requiredFieldMsg": "This field is required."
+        },
+        {
+          "type": "textbox",
+          "name": "Trading-details-trading-name",
+          "title": "Trading Name",
+          "required": false,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "ABC Tech",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter trading name of the company",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Trading-details-address-1",
+          "title": "Address line 1",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "Address line 1 is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter address line 1",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Trading-details-address-2",
+          "title": "Address line 2 (optional)",
+          "required": false,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter address line 2",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Trading-details-ZIP",
+          "title": "Post Code",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "Post code is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "",
+            "validation": "validation-zip",
+            "invalidPatternMsg": "Entered Invalid Zip Code."
+          },
+          "helpMsg": "Enter post code",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Trading-details-City",
+          "title": "City",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "City is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter city name",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Trading-details-Country",
+          "title": "Country",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "",
+          "requiredFieldMsg": "Country is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter country name",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        }
+      ]
+    },
+    {
+      "panelInfo": {
+        "panelTitle": "Intouch details",
+        "hideDescription": "true|false",
+        "panelValidation": "true|false",
+        "name": "intouch-details",
+        "panelDescription": "",
+        "panelHelpContent": "",
+        "cssClass": ""
+      },
+      "items": [
+        {
+          "type": "title",
+          "name": "Intouch-details-title-1",
+          "title": "Step 5: Intouch details",
+          "display": true,
+          "style": "h2",
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "Intouch-details-text-1",
+          "title": "<p></p><p>All fields below are required</p><p></p><p></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "textbox",
+          "name": "Intouch-details-admin-name",
+          "title": "InTouch Administrator Name",
+          "required": true,
+          "hideTitle": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "placeholderText": "Maria Gonzales",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "helpMsg": "Enter InTouch administrator name",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Intouch-details-admin-email",
+          "title": "InTouch Administrator E-mail",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "mariagonzales@abctech.com",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "",
+            "validation": "validation-email",
+            "invalidPatternMsg": "Entered Invalid Email."
+          },
+          "helpMsg": "Enter InTouch administrator e-mail address",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        },
+        {
+          "type": "textbox",
+          "name": "Intouch-details-invoice-email",
+          "title": "Invoice e-mail",
+          "required": true,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "placeholderText": "invoices@abctech.com",
+          "requiredFieldMsg": "This field is required.",
+          "invalidCharMsg": "Forbidden character. The following characters % <> $ \\ ' and \" are not allowed.",
+          "allowMultipleLines": false,
+          "maxChars": "20",
+          "minChars": "1",
+          "exactChars": false,
+          "minCharsErrorMessage": "Invalid length. Lengthen the number of characters to at least {numberChars} characters.",
+          "patterns": {
+            "display": "",
+            "validation": "validation-email",
+            "invalidPatternMsg": "Entered Invalid Email."
+          },
+          "helpMsg": "Enter E-mail address for sending invoices",
+          "hideHelpMsg": false,
+          "cssClass": ""
+        }
+      ]
+    },
+    {
+      "panelInfo": {
+        "panelTitle": "Additional documents",
+        "hideDescription": "true|false",
+        "panelValidation": "true|false",
+        "name": "additional-documents",
+        "panelDescription": "",
+        "panelHelpContent": "",
+        "cssClass": ""
+      },
+      "items": [
+        {
+          "type": "title",
+          "name": "documents-title-1",
+          "title": "Step 6: Attach additional documents",
+          "display": true,
+          "style": "h2",
+          "cssClass": ""
+        },
+        {
+          "type": "upload",
+          "name": "upload",
+          "title": "Drag 'n' drop some files here, or click to select files",
+          "required": false,
+          "hideTitle": false,
+          "enabled": true,
+          "display": true,
+          "requiredFieldMsg": "This field is required.",
+          "helpMsg": "",
+          "hideHelpMsg": true,
+          "cssClass": ""
+        },
+        {
+          "type": "separator",
+          "name": "documents-separator-1",
+          "display": "true|false",
+          "cssClass": ""
+        },
+        {
+          "type": "text",
+          "name": "documents-text-1",
+          "title": "<p></p>",
+          "display": true,
+          "cssClass": "cmp-text--gray"
+        },
+        {
+          "type": "checkbox",
+          "name": "documents-checkbox-group-1",
+          "title": "To complete your application, please confirm you have uploaded following documents:",
+          "hideTitle": false,
+          "required": false,
+          "enabled": "true|false",
+          "display": "true|false",
+          "labelPlacement": "end",
+          "lookupEndpoint": "",
+          "options": [
+            {
+              "name": "Certificate of incorporation",
+              "value": "0",
+              "selected": "true|false"
+            },
+            {
+              "name": "VAT certificate",
+              "value": "1",
+              "selected": "true|false"
+            },
+            {
+              "name": "Utility bill",
+              "value": "2",
+              "selected": "true|false"
+            }
+          ],
+          "events": [],
+          "helpMsg": "Please indicate uploaded documents",
+          "hideHelpMsg": true,
+          "requiredFieldMsg": "At least one document must be provided"
+        }
+      ]
+    }
+  ]
+}
