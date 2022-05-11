@@ -93,6 +93,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
       sendPagingRequest()
     }       
   };
+
   const goToSpecificPage = (specificNumber) => {
     const value = { ...paginationData, pageNumber:specificNumber+1};
     setPaginationData({ key: "pagination", value });
