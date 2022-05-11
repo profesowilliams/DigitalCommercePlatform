@@ -68,14 +68,15 @@ function GridHeader({ gridProps, data }) {
               : "Export XLS"}
           </span>
         </button>
-        <button>
+        {/* These buttons are going to be added in a near future, so by now i'll left them commented */}
+        {/* <button>
           <span className="separator">Copy</span>
         </button>
         <button>
           <span>
           Share
           </span>
-        </button>
+        </button> */}
       </div>
     </div>
   );
