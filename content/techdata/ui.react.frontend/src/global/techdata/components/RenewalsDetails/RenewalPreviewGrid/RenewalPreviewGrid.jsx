@@ -11,6 +11,10 @@ import { thousandSeparator } from "../../../helpers/formatting";
 function GridSubTotal({ data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
+    <div className="cmp-renewal-preview__subtotal--note">
+      <b>Note:</b>{gridProps?.note?.replace('Note: ', ' ')}
+    </div>
+    <div className="cmp-renewal-preview__subtotal--price-note">
       <span className="cmp-renewal-preview__subtotal--description">
         {gridProps.quoteSubtotal}
       </span>
@@ -18,23 +22,12 @@ function GridSubTotal({ data, gridProps }) {
         $ {thousandSeparator(data?.price)}
       </span>
     </div>
+  </div>
   );
 }
 
-function Note({gridProps}) {
-  return (
-    <p className="note">
-      <b>Note: </b>{gridProps.note}
-    </p>
-  );
-}
-
-function Price({value}){
-  return (
-    <div className="price">
-      {thousandSeparator(value)}
-      </div>
-  )
+function Price({ value }) {
+  return <div className="price">{thousandSeparator(value)}</div>;
 }
 
 function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
@@ -103,7 +96,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
           data={mutableGridData}
         />
         <GridSubTotal data={data} gridProps={gridProps} />
-        <Note gridProps={gridProps} />
       </section>
       {modal && (
         <Modal
