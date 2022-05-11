@@ -67,8 +67,9 @@ export function priceDescendingByDefaultHandle(sortingFields, mappedResponse) {
 }
 
 export function addCurrentPageNumber(customPaginationRef, request) {
-    const pageNumber = customPaginationRef.current?.pageNumber;
-    if (pageNumber !== 1) {
+    const INITIAL_PAGE = 1;
+    const pageNumber = customPaginationRef.current?.pageNumber || INITIAL_PAGE; /** to take care of 0 value */
+    if (pageNumber !== INITIAL_PAGE) {
         return request.url.replace(/PageNumber=\d+/, `PageNumber=${pageNumber}`);
     }
     return request.url;
