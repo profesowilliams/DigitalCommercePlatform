@@ -373,13 +373,17 @@
   @include mobile {
     width: 100% !important;
   }
+  @media only screen and (max-width: 767px) {
+    margin-left: 0 !important;
+    margin-bottom: 1vh !important;
+  }
 }
 
 //Searchbar width on UAT
 #cmp-techdata-header.cmp-container .aem-Grid .search {
   width: 30%;
   @include mobile {
-    width: auto !important;
+    width: 3vh !important;
   }
 }
 
