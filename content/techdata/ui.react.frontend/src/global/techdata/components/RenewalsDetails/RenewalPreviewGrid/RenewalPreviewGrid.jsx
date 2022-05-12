@@ -15,9 +15,9 @@ function GridSubTotal({ data, gridProps }) {
       <b>Note:</b>{gridProps?.note?.replace('Note: ', ' ')}
     </div>
     <div className="cmp-renewal-preview__subtotal--price-note">
-      <span className="cmp-renewal-preview__subtotal--description">
+      <b className="cmp-renewal-preview__subtotal--description">
         {gridProps.quoteSubtotal}
-      </span>
+      </b>
       <span className="cmp-renewal-preview__subtotal--value">
         $ {thousandSeparator(data?.price)}
       </span>
