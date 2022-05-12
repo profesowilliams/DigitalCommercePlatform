@@ -1,0 +1,25 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<div class="enhanced-list" data-sly-use.listUse="com.adobe.cq.wcm.core.components.models.List">
+    <ul class="cmp-list">
+        <sly data-sly-list.item="${listUse.listItems}">
+            <li class="cmp-list__item">
+                <sly data-sly-test="${item.link}">
+                    <article data-sly-use.urlHelper="${'../common/urlHelper.js' @ destinationPage=item.link}">
+                        <a href="${urlHelper.url @ context='html'}" class="cmp-list__item-link">
+                            <span class="cmp-list__item-title">${item.title}</span>
+                        </a>
+                    </article>
+                </sly>
+                <sly data-sly-test="${!item.link}">
+                    <article>
+                        <a class="cmp-list__item-link cmp-list__item-link-inactive">
+                            <span class="cmp-list__item-title">${item.title}</span>
+                        </a>
+                    </article>
+                </sly>
+            </li>
+        </sly>
+    </ul>
+</div>

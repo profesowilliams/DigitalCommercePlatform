@@ -1,0 +1,43 @@
+<template data-sly-template.item="${@ list, item}">
+    <article>
+        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+
+            <span class="cmp-list__item-title">${item.title}</span>
+            <span data-sly-test="${list.showModificationDate}"
+                  class="cmp-list__item-date">${list.dateFormatString @format=item.lastModified}</span>
+        </a>
+        <span data-sly-test="${list.showDescription}" class="cmp-list__item-description">${item.description}</span>
+    </article>
+</template>
+<template data-sly-template.article="${@ list, item}">
+    <article data-sly-use.tmpl="${'articlelist.js' @ item=item}">
+        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+            <sly data-sly-test=${tmpl.imagePath}>
+                <figure class="cmp-image__image-figure">
+                    <img class="cmp-image__image" src=${tmpl.imagePath}>
+                </figure>
+            </sly>
+
+            <span class="cmp-list__item-title"><span>${item.title}</span></span>
+            <span data-sly-test="${list.showModificationDate}"
+                  class="cmp-list__item-date">${list.dateFormatString @format=item.lastModified}</span>
+        </a>
+        <span data-sly-test="${list.showDescription}" class="cmp-list__item-description">${item.description}</span>
+    </article>
+</template>
+<template data-sly-template.articleListView="${@ list, item}">
+    <article data-sly-use.tmpl="${'articlelist.js' @ item=item}">
+        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+            <sly data-sly-test=${tmpl.imagePath}>
+                <figure class="cmp-image__image-figure">
+                    <img class="cmp-image__image" src=${tmpl.imagePath}>
+                </figure>
+            </sly>
+            <span class="cmp-list__item-info">
+                <span class="cmp-list__item-date" data-sly-test="${list.showModificationDate}">${list.dateFormatString @format=item.lastModified}</span>
+                <span class="cmp-list__item-title">${item.title}</span>
+                <span class="cmp-list__item-description" data-sly-test="${list.showDescription}">${item.description}</span>
+            </span>
+        </a>
+    </article>
+</template>

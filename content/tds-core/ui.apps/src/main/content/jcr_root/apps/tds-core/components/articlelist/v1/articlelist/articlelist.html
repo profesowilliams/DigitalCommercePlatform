@@ -1,0 +1,55 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2016 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  <ul data-sly-use.list="com.adobe.cq.wcm.core.components.models.List"
+  data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+  data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+  data-sly-use.itemTemplate="item.html"
+  data-sly-list.item="${list.listItems}"
+  id="${component.id}"
+  data-cmp-data-layer="${list.data.json}"
+  class="cmp-list ${properties.customClassesList}">
+  <li class="cmp-list__item ${properties.customClassesItem}" data-sly-call="${itemTemplate.item @ list = list, item = item}"
+      data-cmp-data-layer="${item.data.json}"></li>
+</ul>
+<sly data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cmp-list'}"></sly>
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+
+
+
+ <div class="cmp-article-list__header" data-sly-use.urlUtil="${'urlUtil.js' @ destinationPage=properties.destinationPage}">
+     <sly data-sly-test.titleTest="${!currentStyle.disableTitle && properties.heading}">
+        <h3 class="cmp-article-list__header-title">${properties.heading}</h3>
+         <span class="cmp-article-list__header-separator"></span>
+     </sly>
+     <sly data-sly-test.viewMoreTest=${!currentStyle.disableViewMore}>
+         <a href="${urlUtil.url}" class="cmp-article-list__header-link">${properties.name} <i><svg style="width:.6rem;vertical-align:middle;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="svg-inline--fa fa-chevron-right fa-w-10 fa-2x"><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" class=""></path></svg></i></a>
+     </sly>
+
+ </div>
+
+
+
+<ul data-sly-use.list="com.adobe.cq.wcm.core.components.models.List"
+    data-sly-list.item="${list.listItems}"
+    data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+    data-sly-use.itemTemplate="item.html"
+    data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}"
+    class="cmp-list">
+    <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"></li>
+</ul>
+<sly data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cmp-list'}"></sly>
