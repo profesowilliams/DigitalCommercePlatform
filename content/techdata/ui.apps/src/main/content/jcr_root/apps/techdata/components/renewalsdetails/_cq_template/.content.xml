@@ -37,6 +37,7 @@
     agreeEndDateLabel="Agree End Date :"
     distiQuoteIDLabel="Disti Quote ID"
     usageStartDateLabel="Usage Start Date:"
+    errorLoadingPageRedirect="/content/techdata/americas/us/en/dcp/renewals"
     usageEndDateLabel="Usage End Date:"
     resellerSAPaccNoLabel="Reseller SAP account number"
     previousResellerorderNoLabel="Previous Reseller Order Number" 

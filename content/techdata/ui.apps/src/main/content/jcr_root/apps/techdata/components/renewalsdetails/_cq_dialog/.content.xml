@@ -516,6 +516,12 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Error Loading Page Modal Title"
                                                 name="./errorLoadingPageTitle"/>
+                                            <errorLoadingPageRedirect
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                fieldLabel="Loading page error Redirect"
+                                                rootPath="/content/techdata"
+                                                name="./errorLoadingPageRedirect"/>
                                         </items>
                                     </column>
                                 </items>

@@ -216,6 +216,10 @@ use(['../common/utils.js'], function(utils) {
         errorMessages["errorLoadingPageTitle"] = properties["errorLoadingPageTitle"];
     }
 
+    if (properties && properties["errorLoadingPageRedirect"]) {
+        errorMessages["errorLoadingPageRedirect"] = properties["errorLoadingPageRedirect"];
+    }
+
     if (agreementInfo != null) {
         quotePreview["agreementInfo"] = agreementInfo;
     }
