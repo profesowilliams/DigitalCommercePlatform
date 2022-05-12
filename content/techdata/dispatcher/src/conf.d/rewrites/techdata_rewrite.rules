@@ -106,6 +106,25 @@ RewriteRule ^/tr/en$ /content/${CONTENT_FOLDER_NAME}/americas/tr/en.html [PT,L]
 RewriteRule ^/uk$ /content/${CONTENT_FOLDER_NAME}/americas/uk/en.html [PT,L]
 RewriteRule ^/uk/en$ /content/${CONTENT_FOLDER_NAME}/americas/uk/en.html [PT,L]
 
+#tdsynnex uat/stage/prod when accessed with domain
+RewriteCond %{HTTP_HOST} ^(.*)tdsynnex(.*)$
+RewriteRule "^/$" /content/tds-site/americas/us/en.html [PT,L]
+
+#tdsynnex uat/stage/prod when accessed with country and locale codes
+RewriteCond %{REQUEST_URI} !^/apps
+RewriteCond %{REQUEST_URI} !^/bin
+RewriteCond %{REQUEST_URI} !^/content
+RewriteCond %{REQUEST_URI} !^/etc
+RewriteCond %{REQUEST_URI} !^/home
+RewriteCond %{REQUEST_URI} !^/libs
+RewriteCond %{REQUEST_URI} !^/saml_login
+RewriteCond %{REQUEST_URI} !^/system
+RewriteCond %{REQUEST_URI} !^/tmp
+RewriteCond %{REQUEST_URI} !^/var
+RewriteCond %{HTTP_HOST} ^(.*)tdsynnex(.*)$
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
+RewriteRule ^/(us)(.*)$ /content/tds-site/americas/$1$2 [PT,L]
+
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
 RewriteCond %{REQUEST_URI} !^/content
