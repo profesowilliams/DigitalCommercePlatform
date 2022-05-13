@@ -62,7 +62,7 @@ function GridHeader({ gridProps, data }) {
       <div className="cmp-renewal-preview__download">
         <DownloadPDF />
         <button onClick={downloadXLS}>
-          <span className="separator">
+          <span>
             {gridProps?.xls
               ? `Export ${gridProps?.menuExcelExport}`
               : "Export XLS"}
@@ -93,17 +93,18 @@ function ConfigGrid({ data, gridProps }) {
           quotePreview[key][subkey] = quotePreview[key][subkey].replace(/ No:/g,' \u2116:');
         });
     }
-    
   });
-  
+
   return (
     <div className="cmp-renewals-qp__config-grid">
-      <div className="image-container">
-        <img className="vendorLogo" src={vendorLogo} alt="vendor logo"/>
-      </div>
-      <div className="export-container">
-        <span className="quote-preview">Quote Preview</span>
-        <GridHeader data={data} gridProps={gridProps}/>
+      <div className="header-container">
+        <div className="image-container">
+          <img className="vendorLogo" src={vendorLogo} alt="vendor logo" />
+        </div>
+        <div className="export-container">
+          <span className="quote-preview">{gridProps?.quotePreview?.quotePreviewlabel}</span>
+          <GridHeader data={data} gridProps={gridProps} />
+        </div>
       </div>
       <div className="info-container">
         <ResellerInfo
@@ -113,7 +114,10 @@ function ConfigGrid({ data, gridProps }) {
         <EndUserInfo
           productLines={quotePreview.productLines}
           endUserType={endUserType}
-          endUser={{...endUser, vendorAccountNumber: reseller?.vendorAccountNumber}}
+          endUser={{
+            ...endUser,
+            vendorAccountNumber: reseller?.vendorAccountNumber,
+          }}
         />
         <AgreementInfo
           source={source}

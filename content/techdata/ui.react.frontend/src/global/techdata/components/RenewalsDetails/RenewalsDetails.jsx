@@ -77,31 +77,46 @@ function RenewalsDetails(props) {
     <div className="cmp-quote-preview cmp-renewal-preview">
       {renewalsDetails ? (
         <section>
-          <ConfigGrid data={renewalsDetails} gridProps={{...componentProp, excelFileUrl: componentProp?.exportXLSRenewalsEndpoint}} />
+          <ConfigGrid
+            data={renewalsDetails}
+            gridProps={{
+              ...componentProp,
+              excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+            }}
+          />
+          <div className="details-container">
+            <span className="details-preview">Details</span>
+          </div>
           <RenewalPreviewGrid
             data={renewalsDetails}
-            gridProps={{...componentProp.productLines, excelFileUrl: componentProp?.exportXLSRenewalsEndpoint}}
+            gridProps={{
+              ...componentProp.productLines,
+              excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
+            }}
             shopDomainPage={componentProp.shopDomainPage}
           />
         </section>
-      ) : isLoading && (
-        <Loader visible={isLoading} />
-      )
-      }
-      {error &&       
+      ) : (
+        isLoading && <Loader visible={isLoading} />
+      )}
+      {error && (
         <ErrorMessage
           error={error}
-          messageObject={{"message401" : "You need to be logged in to view this"}}
-        /> 
-      }
-      {modal && <Modal
-            modalAction={modal.action}
-            modalContent={modal.content}
-            modalProperties={modal.properties}
-            modalAction={modal.modalAction}
-            actionErrorMessage={modal.errorMessage}
-            onModalClosed={modal.onModalClosed}
-        ></Modal>}
+          messageObject={{
+            message401: "You need to be logged in to view this",
+          }}
+        />
+      )}
+      {modal && (
+        <Modal
+          modalAction={modal.action}
+          modalContent={modal.content}
+          modalProperties={modal.properties}
+          modalAction={modal.modalAction}
+          actionErrorMessage={modal.errorMessage}
+          onModalClosed={modal.onModalClosed}
+        ></Modal>
+      )}
     </div>
   );
 }

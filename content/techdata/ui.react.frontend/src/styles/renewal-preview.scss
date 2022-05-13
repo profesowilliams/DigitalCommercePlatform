@@ -9,6 +9,16 @@
 }
 
 .cmp-renewal-preview {
+  .details-container {
+    padding: 2em 0 0 2em;
+    .details-preview {
+        color: rgba(0, 12, 33, 1);
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 33px;
+    }
+  }
   .cmp-product-lines-grid__header {
     display: flex;
     justify-content: space-between;
