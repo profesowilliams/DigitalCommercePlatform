@@ -1,5 +1,5 @@
 import React, {useState, useRef} from "react";
-import { generateExcelFileFromPost } from "../../../../../utils/utils";
+import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import Modal from "../../Modal/Modal";
 import LineItemsExportXls from "../OrderDetailItemExport/LineItemsExportXls";
 import  { orderStatusValues } from "../orderStatus";

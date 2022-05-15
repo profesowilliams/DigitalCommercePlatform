@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import AgreementInfo from "./AgreementInfo";
 import EndUserInfo from "./EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
-import { generateExcelFileFromPost } from "../../../../../utils/utils";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import {
-  PDFRenewalDocument, openPDF
-} from "../../PDFWindow/PDFRenewalWindow";
+import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
+import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
+    console.log('grid props', {gridProps, data});
 
   const downloadXLS = () => {
     try {
@@ -26,33 +24,24 @@ function GridHeader({ gridProps, data }) {
     }
   };
 
-  const DownloadPDF = () =>
-    isPDFDownloadableOnDemand ? (
-      <PDFDownloadLink
-        document={
-          <PDFRenewalDocument
-            reseller={data?.reseller}
-            endUser={data?.endUser}
-            items={data?.items}
-          />
-        }
-        fileName={"Renewals.pdf"}
-      >
-        {({ blob, url, loading, error }) => {
-          loading ? "loading..." : openPDF(url);
+  const downloadPDF = () => {
+    try {      
+      generateFileFromPost({
+        url: gridProps.exportPDFRenewalsEndpoint,
+        name: `Renewals Quote ${data?.source?.id}.pdf`,
+        postData: {
+          Id: data?.source?.id
+        },
+        fileTypeExtension: fileExtensions.pdf
+      })
+    } catch (error) {
+      console.error("error", error);
+    }
+    }
 
-          return (
-            <button>
-              <span className="separator">{gridProps.pdf || "Export PDF"}</span>
-            </button>
-          );
-        }}
-      </PDFDownloadLink>
-    ) : (
-      <button onClick={() => setPDFDownloadableOnDemand(true)}>
-        <span className="separator">{gridProps.pdf || "Export PDF"}</span>
-      </button>
-    );
+    <button onClick={() => setPDFDownloadableOnDemand(true)}>
+    <span className="separator">{gridProps.pdf || "Export PDF"}</span>
+  </button>
 
   return (
     <div className="cmp-product-lines-grid__header">
@@ -60,7 +49,9 @@ function GridHeader({ gridProps, data }) {
         {gridProps.lineItemDetailsLabel}
       </span>
       <div className="cmp-renewal-preview__download">
-        <DownloadPDF />
+        <button onClick={downloadPDF}>
+          <span className="separator">{gridProps.pdf || "Export PDF"}</span>
+        </button>
         <button onClick={downloadXLS}>
           <span>
             {gridProps?.xls
@@ -68,7 +59,7 @@ function GridHeader({ gridProps, data }) {
               : "Export XLS"}
           </span>
         </button>
-        {/* These buttons are going to be added in a near future, so by now i'll left them commented */}
+        {/* These buttons are going to be added in a near future, so by now i'll left them commented, and also add the 'separator' class to the xls button */}
         {/* <button>
           <span className="separator">Copy</span>
         </button>

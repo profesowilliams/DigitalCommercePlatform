@@ -3,6 +3,11 @@ import {nanoid} from "nanoid";
 import { isObject } from ".";
 import { usPost } from "./api";
 
+export const fileExtensions = {
+  xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  pdf: 'application/pdf',
+}
+
 export function getQueryStringValue (key) {
     return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
 }
@@ -65,7 +70,7 @@ const generateFile = (response, name, options) => {
     link.remove();
 }
 
-export const generateExcelFileFromPost = async ({url, name = '', postData}) => {
+export const generateFileFromPost = async ({url, postData,  name = '', fileTypeExtension = fileExtensions.xls}) => {
     try {
         const sessionId = localStorage.getItem("sessionId");
         const params = {
@@ -75,7 +80,7 @@ export const generateExcelFileFromPost = async ({url, name = '', postData}) => {
             responseType: 'blob',
         };
         const response = await usPost(`${url}`, postData, params);
-        if (response.data.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        if (response.data.type !== fileTypeExtension) {
             alert('There was an error encountered during export.');
             return;
         }

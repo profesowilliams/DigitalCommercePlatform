@@ -15,7 +15,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import GeneralInfo from "../common/quotes/GeneralInfo";
 import { redirectToCart } from "../QuotesGrid/Checkout";
 import Modal from '../Modal/Modal';
-import { getDictionaryValue, generateExcelFileFromPost, isNotEmptyValue, verifyQuote, formatUanErrorMessage } from "../../../../utils/utils";
+import { getDictionaryValue,generateFileFromPost as generateExcelFileFromPost, isNotEmptyValue, verifyQuote, formatUanErrorMessage } from "../../../../utils/utils";
 import { pushEventAnalyticsGlobal } from "../../../../utils/dataLayerUtils";
 import {
   ADOBE_DATA_LAYER_QUOTE_EXPORT_EVENT,

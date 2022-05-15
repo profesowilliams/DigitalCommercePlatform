@@ -3188,6 +3188,27 @@ app.post("/ui-commerce/v1/downloadQuoteDetails", async function (req, res) {
   }
 });
 
+app.post("/ui-export/v1/downloadRenewalQuotePdf", async function (req, res) {
+  const { acceptLanguage, site, consumer, traceId, sessionid, contentType } =
+    req.headers;
+
+  if (!validateSession(req, res)) {
+    return res.status(500).json({
+      error: {
+        code: 0,
+        message: ["SessionId Error"],
+        isError: true,
+      },
+    });
+  }
+
+  try {
+    res.download(`exportRenewalsPDF.pdf`);
+  } catch (error) {
+    console.log("Error", error);
+  }
+});
+
 app.post("/ui-export/v1/downloadRenewalQuoteDetails", async function (req, res) {
   const { acceptLanguage, site, consumer, traceId, sessionid, contentType } =
     req.headers;

@@ -199,7 +199,6 @@ function RenewalsGrid(props) {
       show: false,
     });
   }
-
   return (
     <section>
       <div className="cmp-renewals-subheader">

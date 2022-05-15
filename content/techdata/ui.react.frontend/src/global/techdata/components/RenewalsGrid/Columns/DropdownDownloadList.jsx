@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { generateExcelFileFromPost } from "../../../../../utils/utils";
-import { PDFRenewalDocument, openPDF } from "../../PDFWindow/PDFRenewalWindow";
-import { useRenewalGridState } from ".././store/RenewalsStore";
+import React from "react";
+import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
-import useGet from "../../../hooks/useGet";
 
 function DropdownDownloadList({ data, aemConfig }) {
-  const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
-  const { exportXLSRenewalsEndpoint, renewalDetailsEndpoint } = aemConfig;
+  const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, detailUrl } = aemConfig;
 
 
   const dataToPush = (name) => ({
@@ -27,7 +22,7 @@ function DropdownDownloadList({ data, aemConfig }) {
   const downloadXLS = () => {
     try {
       pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadXLS));
-      generateExcelFileFromPost({
+      generateFileFromPost({
         url: exportXLSRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.xlsx`,
         postData: {
@@ -39,60 +34,30 @@ function DropdownDownloadList({ data, aemConfig }) {
     }
   };
 
-  const DownloadPDF = () => {
-    const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
-      useState(false);
-    const [apiResponse, isLoading] = useGet(
-      `${renewalDetailsEndpoint}?id=${data?.source?.id}&type=renewal`
-    );
-    const [renewalsDetails, setRenewalsDetails] = useState({});
-
-    useEffect(() => {
-      if (apiResponse?.content?.details) {
-        setRenewalsDetails(apiResponse?.content?.details[0]);
-      }
-    }, [apiResponse]);
-
-    return isPDFDownloadableOnDemand && Object.keys(renewalsDetails).length ? (
-      <PDFDownloadLink
-        document={
-          <PDFRenewalDocument
-            reseller={renewalsDetails?.reseller}
-            endUser={renewalsDetails?.endUser}
-            items={renewalsDetails?.items}
-          />
-        }
-        fileName={"Renewals.pdf"}
-      >
-        {({ blob, url, loading, error }) => {
-          loading ? "loading..." : openPDF(url);
-
-          return (
-            <button
-              onClick={() => pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadPDF))}
-            >
-              <i className="fas fa-file-pdf"></i>
-              Download PDF
-            </button>
-          );
-        }}
-      </PDFDownloadLink>
-    ) : (
-      <button
-        onClick={() => {
-          pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadPDF));
-          setPDFDownloadableOnDemand(true);
-        }}
-      >
-        <i className="fas fa-file-pdf"></i>
-        Download PDF
-      </button>
-    );
-  };
+  const downloadPDF = () => {
+    try {      
+      pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadPDF));
+      generateFileFromPost({
+        url: exportPDFRenewalsEndpoint,
+        name: `Renewals Quote ${data?.source?.id}.pdf`,
+        postData: {
+          Id: data?.source?.id
+        },
+        fileTypeExtension: fileExtensions.pdf
+      })
+    } catch (error) {
+      console.error("error", error);
+    }
+    }
 
   return (
     <div className="icon-container">
-      <DownloadPDF />|
+       <button
+        onClick={downloadPDF}
+      >
+        <i className="fas fa-file-pdf"></i>
+        Download PDF
+      </button>|
       <button onClick={downloadXLS}>
         <i className="fas fa-file-excel"></i>
         Download XLS

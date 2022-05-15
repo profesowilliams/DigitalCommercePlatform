@@ -1,9 +1,5 @@
 <div data-observe-mutation>
-  <div
-    data-component="RenewalsDetails"
-    data-cmp-type="react"
-    className="cmp-renewals-details"
-  ></div>
+  <div data-component="RenewalsDetails" data-cmp-type="react" className="cmp-renewals-details"></div>
 </div>
 <script>
   const renewalsDetailDom = document.querySelector(
@@ -75,6 +71,7 @@
     },
     exportXLSRenewalsEndpoint:
       "http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",
+    exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
   };
   renewalsDetailDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

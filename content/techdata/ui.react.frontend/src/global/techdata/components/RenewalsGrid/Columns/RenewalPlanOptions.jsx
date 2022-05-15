@@ -1,22 +1,16 @@
-import { PDFDownloadLink } from '@react-pdf/renderer';
 import React, { useEffect, useRef, useState } from "react";
-import { generateExcelFileFromPost } from "../../../../../utils/utils";
 import { dateToString, thousandSeparator } from "../../../helpers/formatting";
-import useGet from "../../../hooks/useGet";
-import { openPDF } from "../../PDFWindow/PDFRenewalWindow";
-import PDFRenewalPlanOption from "./PDFRenewalPlanOption";
+import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
-    //const renewalOptionState = useRenewalGridState(st => st.renewalOptionState);
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
     const [optionIdSelected, setOptionIdSelected] = useState();
     const optionIdSelectedRef = useRef();
     const rowIndexRef = useRef(node?.rowIndex)
-    const { detailUrl = "", exportXLSRenewalsEndpoint = "", renewalDetailsEndpoint = "" } = aemConfig;
+    const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
-    // const isPlanSelected = option => option?.contractDuration + " " + data?.support === renewalOptionState;
     const isPlanSelected = ({id}) => id === optionIdSelected;
     const isCurrentPlan = plan => plan.quoteCurrent;
     const findAndReturnCurrentPlanId = (options) => {
@@ -50,7 +44,7 @@ function RenewalPlanOptions({ labels, data, node }) {
         const postData = { id };
         const name = `renewal-${id}.xlsx`;
         const url = exportXLSRenewalsEndpoint;
-        generateExcelFileFromPost({ url, name, postData })
+        generateFileFromPost({ url, name, postData })
     }
     const computeClassName = (optionList, index) => {
         const mediumScreenWidth = 1160;
@@ -74,46 +68,20 @@ function RenewalPlanOptions({ labels, data, node }) {
     }
 
 
-    const DownloadPDF = () => {
-        const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
-          useState(false);
-        const [renewalsDetails, setRenewalsDetails] = useState({});
-        const [apiResponse, isLoading] = useGet(
-            `${renewalDetailsEndpoint}?id=${data?.source?.id}&type=renewal`
-        );
-
-        useEffect(() => {
-            if (apiResponse?.content?.details) {
-                setRenewalsDetails(apiResponse?.content?.details[0]);
-            }
-        }, [apiResponse]);
-
-        return isPDFDownloadableOnDemand &&
-          Object.keys(renewalsDetails).length ? (
-          <PDFDownloadLink
-            document={
-              <PDFRenewalPlanOption renewalsDetails={renewalsDetails} />
-            }
-            fileName={"Renewals.pdf"}
-          >
-            {({ blob, url, loading, error }) => {
-              loading ? "loading..." : openPDF(url);
-
-              return (
-                <button>
-                  <i className="fas fa-file-pdf"></i>
-                  <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
-                </button>
-              );
-            }}
-          </PDFDownloadLink>
-        ) : (
-          <button onClick={() => setPDFDownloadableOnDemand(true)}>
-            <i className="fas fa-file-pdf"></i>
-            <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
-          </button>
-        );
-    };
+    const downloadPDF = (Id) => {
+        try {      
+          generateFileFromPost({
+            url: exportPDFRenewalsEndpoint,
+            name: `Renewals Quote ${Id}.pdf`,
+            postData: {
+              Id
+            },
+            fileTypeExtension: fileExtensions.pdf
+          })
+        } catch (error) {
+          console.error("error", error);
+        }
+        }
 
     const showPlanLabels = (option) => {
         const planLabels = {
@@ -176,7 +144,10 @@ function RenewalPlanOptions({ labels, data, node }) {
                             </div>
                             {isPlanSelected(option) && (
                                 <div className="footer">
-                                    <DownloadPDF />
+                                    <button onClick={() => downloadPDF(option.id)}>
+                                        <i className="fas fa-file-pdf"></i>
+                                        <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
+                                    </button>
                                     <span className="vertical-separator"></span>
                                     <button onClick={() => exportXlsPlan(option?.id)}>
                                         <i className="fas fa-file-excel"></i>
