@@ -110,6 +110,11 @@ function RenewalPlanOptions({ labels, data, node }) {
         optionIdSelectedRef.current = id;
     }
 
+    const formatExpiryDateLabel = (option) => {
+        if (!option?.expiryDate) return "No date provided"
+        return dateToString(option?.expiryDate.replace(/[zZ]/g, ''), "MM/dd/uu")
+    }
+
     const setDefaultCheckedOption = (option) => optionIdSelected === option?.id;
     return (
         <div key={rowIndexRef.current + Math.random()}>
@@ -140,7 +145,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                 <span className="currentPlan">{showPlanLabels(option)}</span>
                                 <p>{labels.quoteIdLabel}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
                                 <p>{labels.refNoLabel}  {option?.id}</p>
-                                <p>{labels.expiryDateLabel}  {dateToString(option?.expiryDate.replace(/[zZ]/g, ''), "MM/dd/uu")}</p>
+                                <p>{labels.expiryDateLabel}  {formatExpiryDateLabel(option)}</p>
                             </div>
                             {isPlanSelected(option) && (
                                 <div className="footer">
