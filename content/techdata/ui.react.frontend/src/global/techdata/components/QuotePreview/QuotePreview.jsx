@@ -78,14 +78,43 @@ function QuotePreview(props) {
                 buyMethodParam;
   };
 
+  const [flagMesssageBoxRequiredFields, setflagMesssageBoxRequiredFields] = useState(false);
+
+  const validateItem = (item) => {
+    if (item.attachmentRequired || item.setupReuired) {
+      setflagMesssageBoxRequiredFields(true);
+      return true;
+    } else
+      return false
+  }
+
+  /**
+   * handler that validate if the response have one field with the specified field
+   * * attachmentRequired
+   * * setupReuired
+   * @param {any[]} quoteDetailsParam 
+   */
+  const handlerBoxShowRequiredField = (quoteDetailsParam) => {
+    const items = quoteDetailsParam?.items;
+    items.forEach(item => {
+      if (validateItem(item)) 
+        return
+      const childItems = item.children.length > 0 ? item.children : null;
+      isNotEmptyValue(childItems) && childItems.forEach(chilItem => {
+        if (validateItem(chilItem)) 
+        return
+      });
+    });
+  };
+
   /**
    * Getting the values of the Quote
    */
-
   useEffect(() => { 
     const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
     if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
       if(quoteDetailsResponse) {
+        handlerBoxShowRequiredField(quoteDetailsResponse);
         const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;
         const distiBuyMethodParam = isNotEmptyValue(quoteDetailsResponse.distiBuyMethod) ? quoteDetailsResponse.distiBuyMethod : '';
         // Remove Choose Modal 
@@ -416,7 +445,7 @@ const [flagDeal, setFlagDeal] = useState(false);
             flagDeal={flagDeal}
           />
           {
-            componentProp.note.enableNoteSection === 'true' &&
+            flagMesssageBoxRequiredFields === true &&
               (<div className="cmp-quote-preview__note">
                 <QuotePreviewNote note={componentProp.note} />
               </div>

@@ -3722,6 +3722,8 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           notes: null,
           "items": [{
             "id": "1.0",
+            "setupReuired": false,
+            "attachmentRequired": false,
             "parent": null,
             "vendorPartNo": "LIC-ENT-1YR",
             "manufacturer": "CISCO",
@@ -3757,6 +3759,8 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             "urlProductSpecs": null,
             "children": [{
               "id": "1.1",
+              "setupReuired": false,
+              "attachmentRequired": false,
               "parent": "1.0",
               "vendorPartNo": "C9200L-NW-1A-24",
               "manufacturer": "CISCO",
@@ -3850,6 +3854,8 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
               }
             }, {
               "id": "1.2",
+              "setupReuired": true,
+              "attachmentRequired": false,
               "parent": "1.0",
               "vendorPartNo": "CAB-TA-NA",
               "manufacturer": "CISCO",
@@ -4021,6 +4027,8 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             "trackings": null,
             "discounts": [],
             "contract": null,
+            "setupReuired": false,
+            "attachmentRequired": false,
             "shortDescription": "Cisco Meraki Enterprise - subscription license (1 year) + 1 Year Enterprise Support - 1 switch",
             "mfrNumber": "LIC-MS225-48FP-1YR",
             "tdNumber": "12375820",
