@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AgreementInfo from "./AgreementInfo";
 import EndUserInfo from "./EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
+import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 
@@ -90,10 +91,19 @@ function ConfigGrid({ data, gridProps }) {
     <div className="cmp-renewals-qp__config-grid">
       <div className="header-container">
         <div className="image-container">
+          <Link
+            variant="back-to-renewal"
+            href={quotePreview.renewalsUrl || "#"}
+            underline="none"
+          >
+            {quotePreview.renewalsUrlLabel || "Back to all Renewals"}
+          </Link>
           <img className="vendorLogo" src={vendorLogo} alt="vendor logo" />
         </div>
         <div className="export-container">
-          <span className="quote-preview">{gridProps?.quotePreview?.quotePreviewlabel}</span>
+          <span className="quote-preview">
+            {gridProps?.quotePreview?.quotePreviewlabel}
+          </span>
           <GridHeader data={data} gridProps={gridProps} />
         </div>
       </div>
