@@ -107,17 +107,20 @@ export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;
 
 // Return request site and language from dcp url segments
-export function getHeaderInfoFromUrl(pathName) {
+export function getHeaderInfoFromUrl(pathName) {  
+  let countryIndex = 1; // uat/stage/prod
+  let languageIndex = 2
   const pathArray = pathName?.split('/');
-  if (pathArray.length >= 5 && pathArray[1] === 'content') {
-    const country = pathArray[4].toUpperCase();
-    const language = pathArray[5].replace('.html', '');
-    return {
-      site: country,
-      acceptLanguage: language + '-' + country,
-    };
+  if (pathArray && pathArray.length >= 5 && pathArray[1] === 'content') {
+    countryIndex = 4; // dit/sit
+    languageIndex = 5; 
   }
-  return { site: '', acceptLanguage: '' };
+  const country = pathArray[countryIndex]?.toUpperCase() || '';
+  const language = pathArray[languageIndex]?.replace('.html', '') || country === 'US' ? 'en' : '';
+  return {
+    site: country,
+    acceptLanguage: language + '-' + country
+  };
 }
 
 // Return request consumer from global-config
