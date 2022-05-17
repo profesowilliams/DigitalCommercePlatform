@@ -13,7 +13,7 @@ import { getColumnDefinitions } from "./Columns/GenericColumnTypes";
 import RenewalDetailRenderers from "./Columns/RenewalDetailRenderers";
 import {
   addCurrentPageNumber, isFilterPostRequest,
-  mapServiceData,
+  mapServiceData, secondLevelOptions,
   mapSortIdByPrice,
   nonFilteredOnSorting, preserveFilterinOnSorting,
   setPaginationData, isFirstTimeSortParameters
@@ -21,6 +21,7 @@ import {
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow'
+import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 
 function ToolTip({ toolTipData }) {
   return (
@@ -38,7 +39,7 @@ function ToolTip({ toolTipData }) {
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function RenewalsGrid(props) {
-  const { onAfterGridInit, onQueryChanged } = useGridFiltering();
+  const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic } = useRenewalFiltering();
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
@@ -53,7 +54,11 @@ function RenewalsGrid(props) {
 
   const hasSortChanged = useRef(false);
 
+  const previousSortChanged = useRef(false);
+
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
+
+  const previousFilter = useRef(false);
 
   const { searchOptionsList, shopURL } = componentProp;
 
@@ -65,10 +70,7 @@ function RenewalsGrid(props) {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "desc",
   };
-  const secondLevelOptions = {
-    colId: 'total',
-    sort: "desc",
-  }
+ 
 
   const redirectToShop = () => {
     if(!shopURL) return;
@@ -93,14 +95,14 @@ function RenewalsGrid(props) {
   };
 
   const customRequestInterceptor = async (request) => {
-    const sortingFields = { dueDateKey, dueDateDir, secondLevelOptions };
+    let {initialRequest} = handleQueryFlowLogic()  
     if (mapSortIdByPrice(secondLevelOptions, gridApiRef, request)) return;
     request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
-      response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp});
-    } else {
-      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria});  
+      response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
+    } else {      
+      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest});  
     } 
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
@@ -126,7 +128,7 @@ function RenewalsGrid(props) {
     }
   };
 
-  const _onAfterGridInit = (config) => {
+  const _onAfterGridInit = (config) => {     
     const value = config.api;
     setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;

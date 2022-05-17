@@ -18,7 +18,7 @@ function FilterHeader({ onQueryChanged }) {
     setFilterList(filtersCopy);
     clearDateFilters();
     toggleFilterModal();
-    onQueryChanged();
+    onQueryChanged({reset:true});
     setAppliedFilterCount();
   };
   return (

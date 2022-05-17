@@ -19,7 +19,7 @@ function AgreementInfo({
           {programName && (
             <Info noColon label={agreementInfo.programLabel}>{programName}</Info>
           )}
-          {contract.duration && (
+          {contract.renewedDuration && (
             <Info noColon label={agreementInfo.durationLabel}>{contract.renewedDuration}</Info>
           )}
           {contract.serviceLevel && (

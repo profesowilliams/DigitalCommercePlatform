@@ -17,7 +17,9 @@ export const useMultiFilterSelected = () => {
     ([optionFields, hasData]) => {
       optionFieldsRef.current = optionFields;
       isFilterDataPopulated.current = hasData;
-      if (resetFilter) {isFilterDataPopulated.current = false;effects.setCustomState({key:'resetFilter', value: false})}
+      if (resetFilter) {      
+        isFilterDataPopulated.current = false;
+        effects.setCustomState({key:'resetFilter', value: false})}
     },
     [filterList, dateSelected]
   );

@@ -1,6 +1,32 @@
 import { usGet, usPost } from "../../../../utils/api";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
+
+
+export  const secondLevelOptions = {
+    colId: 'total',
+    sort: "desc",
+  }
+
+  let sortParamList = [];
+
+  export function isFirstTimeSortParameters(sortingList,{colId}){
+    if ( !sortingList ) return true;
+    const { sortData } = sortingList;        
+    const colIdList = sortData.map(s => s.colId);
+    Object.defineProperty(colIdList, 'hasDefaultValues',{
+        writable: false,
+        value: function (compareList){
+            const validArgs = [];
+            for (const item of compareList){
+                validArgs.push(this.includes(item))
+            }
+            return validArgs.every(sort => sort);
+        }
+    })
+    return colIdList.hasDefaultValues(["dueDate",colId]);    
+}
+
 export function mapServiceData(response) {
     const mappedResponse = { ...response };
     const items = mappedResponse?.data?.content?.items?.map((val) => ({
@@ -66,12 +92,22 @@ export function priceDescendingByDefaultHandle(sortingFields, mappedResponse) {
     return [...multiSorting];
 }
 
+function urlStrToMapStruc(urlStri = ''){
+    return new Map(urlStri.split("&").map(e => e.split("=")));
+}
+
+function mapStrucToUrlStr(urlMapStruc = new Map()){
+    return Array.from(urlMapStruc).map(e => e.join("=")).join("&")
+}
+
 export function addCurrentPageNumber(customPaginationRef, request) {
     const INITIAL_PAGE = 1;
+    const urlMap = urlStrToMapStruc(request.url);
     const pageNumber = customPaginationRef.current?.pageNumber || INITIAL_PAGE; /** to take care of 0 value */
-    if (pageNumber !== INITIAL_PAGE) {
-        return request.url.replace(/PageNumber=\d+/, `PageNumber=${pageNumber}`);
-    }
+    if (pageNumber !== INITIAL_PAGE) {    
+        urlMap.set("PageNumber",pageNumber)
+        return mapStrucToUrlStr(urlMap)              
+    }  
     return request.url;
 }
 
@@ -82,27 +118,78 @@ export function isFilterPostRequest(hasSortChanged,isFilterDataPopulated){
     return false
 }
 
-export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp}){
+function compareMaps(map1, map2) {
+    let testVal;
+    if (map1.size !== map2.size) {
+        return false;
+    }
+    for (let [key, val] of map1) {
+        testVal = map2.get(key);        
+        if (testVal !== val || (testVal === undefined && !map2.has(key))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function isSameFilterRepeated(previousFilter, newFilter){   
+
+    const prevMap = new Map(Object.entries(previousFilter));
+    prevMap.delete('sortBy');
+    prevMap.delete('PageNumber');
+    const newMap = new Map(Object.entries(newFilter));
+    newMap.delete('sortBy');
+    newMap.delete('PageNumber');
+    const isFilterEqual = compareMaps(prevMap,newMap);    
+    return isFilterEqual;
+}
+
+export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp,previousFilter}){
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)) {
         const params = { ...optionFieldsRef.current, sortBy: hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`) };
         if (customPaginationRef.current?.pageNumber !== 1) {
           params.PageNumber = customPaginationRef.current?.pageNumber;
         }
+        const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
+        if (!isSameFilter) params.PageNumber = 1;
         const result = await usPost(componentProp.uiServiceEndPoint, params);
+        previousFilter.current = {...params};
         return result
       }
     return false
 }
-export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria}){
-    var url = request.url.split('&');
-    const sortParam = hasSortChanged.current?.sortData.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&');
-    url.splice(url.findIndex(e => e.indexOf('SortBy=') === 0), 1, sortParam);
-    url.splice(url.findIndex(e => e.indexOf('SortDirection=') === 0),1);
+
+function sortListToUrlStr (sortList){
+    return sortList.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&');
+}
+
+function isRepeatedSortAction(previusSort, newSort){ 
+    if (!previusSort || !newSort) return false;
+    const previusSortList = previusSort.map(({colId, sort}) => ({colId, sort}));
+    const newSortList = newSort.map(({colId, sort}) => ({colId, sort}));
+    const isEqual = sortListToUrlStr(previusSortList) === sortListToUrlStr(newSortList);
+    return isEqual
+}
+
+export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest}){
+    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
+    const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
+    const mapUrl = urlStrToMapStruc(request.url);  
+    const sortParam = sortListToUrlStr(hasSortChanged.current?.sortData);
+    mapUrl.set('SortBy',sortParam);
+    mapUrl.delete('SortDirection')  
+    const pageNumber = customPaginationRef.current?.pageNumber;
+    if(pageNumber !== 1 && !isDefaultSort){      
+        if (!isEqual) mapUrl.set('PageNumber',1);
+    }
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
-        url.push(`${field}=${value}`);
+        mapUrl.set(field,value);  
     }
-    return await usGet(url.join('&'));
+    if (initialRequest) mapUrl.set('PageNumber', 1);
+    const finalUrl = mapStrucToUrlStr(mapUrl);
+    previousSortChanged.current = hasSortChanged.current;
+    return await usGet(finalUrl);
 }
 
 export function setPaginationData(mappedResponse,pageSize) {
@@ -115,25 +202,5 @@ export function setPaginationData(mappedResponse,pageSize) {
     };
 }
 
-export function decideGetPostStrategy(){
 
-}
-
-export function isFirstTimeSortParameters(sortingList,{colId}){
-    if ( !sortingList ) return true;
-    const { sortData } = sortingList;    
-    //const sortData = [{colId:'dueDate',sort:'asc'}, {colId:'total',sort:'desc'}]
-    const colIdList = sortData.map(s => s.colId);
-    Object.defineProperty(colIdList, 'hasDefaultValues',{
-        writable: false,
-        value: function (compareList){
-            const validArgs = [];
-            for (const item of compareList){
-                validArgs.push(this.includes(item))
-            }
-            return validArgs.every(sort => sort);
-        }
-    })
-    return colIdList.hasDefaultValues(["dueDate",colId]);    
-}
 
