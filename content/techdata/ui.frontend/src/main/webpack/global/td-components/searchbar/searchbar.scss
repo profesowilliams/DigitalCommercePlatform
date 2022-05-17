@@ -374,8 +374,9 @@
     width: 100% !important;
   }
   @media only screen and (max-width: 767px) {
-    margin-left: 0 !important;
-    margin-bottom: 1vh !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: auto !important;
   }
 }
 
@@ -383,7 +384,7 @@
 #cmp-techdata-header.cmp-container .aem-Grid .search {
   width: 30%;
   @include mobile {
-    width: 3vh !important;
+    width: auto !important;
   }
 }
 
