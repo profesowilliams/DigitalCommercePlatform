@@ -335,7 +335,7 @@ module.exports = {
             "content": {
               "shipTo": {
                 "id": null,
-                "companyName": null,
+                "companyName": "Some Company Name to Display",
                 "name": "TECH DATA PRODUCT MANAGEMENT INC",
                 "line1": "13472 MARLAY AVENUE",
                 "line2": null,

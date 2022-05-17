@@ -62,7 +62,7 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                         <h4 className="cmp-td-order-details__info-cards__card__container__label">{infoConfig.shipToLabel}</h4>
                         <div className="cmp-td-order-details__info-cards__card__container__ship-to">
                             <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-name">
-                                {shipTo.name}
+                                {shipTo.companyName}
                             </div>
                             <div className="cmp-td-order-details__info-cards__card__container__ship-to__address-lines">
                                 <p>{shipTo.line1}</p>
@@ -70,6 +70,9 @@ const OrderDetailsInfo = ({ infoConfig, orderDetails }) => {
                                 {shipTo.line3 ? <p>{shipTo.line3}</p> : ""}
                                 <p>{shipTo.city} {shipTo.state} {shipTo.postalCode}</p>
                                 <p>{shipTo.country}</p>
+                            </div>
+                            <div className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-name">
+                                {shipTo.name}
                             </div>
                             <div
                                 className="cmp-td-order-details__info-cards__card__container__ship-to__contact-info-details">
