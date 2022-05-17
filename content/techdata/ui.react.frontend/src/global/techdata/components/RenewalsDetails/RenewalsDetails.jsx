@@ -8,7 +8,7 @@ import { getUrlParams } from "../../../../utils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { useStore } from "../../../../utils/useStore"
-import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
+import { isAuthormodeAEM, isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 function RenewalsDetails(props) {
@@ -34,8 +34,15 @@ function RenewalsDetails(props) {
   useEffect(() => {
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
+    if(isAuthormodeAEM()) return; // Validation for Author ENV
     !hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS}) && redirectToShop()
-  }, [USER_DATA, ACCESS_TYPES]);
+  }, [
+    USER_DATA,
+    ACCESS_TYPES,
+    isAuthormodeAEM,
+    hasAccess,
+    redirectToShop
+  ]);
 
   const getErrorMessage = (errorCode) => {
     if(errorCode === 404) {
