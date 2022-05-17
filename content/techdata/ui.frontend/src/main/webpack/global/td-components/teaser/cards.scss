@@ -128,7 +128,7 @@
 
 			&__description {
 				padding: 0 rem(16px);
-				max-height: rem(180px);
+				max-height: none !important;
 				word-wrap: break-word;
 				text-overflow: initial !important;
 				display: -webkit-box;
@@ -145,7 +145,7 @@
 					display: block !important;
 					overflow: unset !important;
 					width: rem(190px);
-					height: rem(180px);
+					height: auto !important;
 				}
 			}
 		}
@@ -459,7 +459,7 @@
 
 				&__description { 
 					padding: 0 rem(30px) rem(30px);
-					//max-height: rem(144px);
+					max-height: none !important;
 					word-wrap: break-word;
 					text-overflow: ellipsis;
 					display: -webkit-box;
@@ -572,7 +572,6 @@
 				&.cmp-teaser__card {
 					.cmp-teaser {
 						min-height: rem(287px);
-
 						&:hover {
 							.cmp-teaser__title-link {
 								font-weight: $font-weight-bold;
