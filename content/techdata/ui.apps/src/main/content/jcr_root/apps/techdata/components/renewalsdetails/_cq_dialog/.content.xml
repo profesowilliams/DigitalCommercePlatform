@@ -339,6 +339,19 @@
                                                 fieldDescription="Previous Order Number"
                                                 fieldLabel="Previous  order Number"
                                                 name="./previousOrderNoLabel"/>
+                                                <renewalsUrlLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Renewals URL's Label"
+                                                    name="./renewalsUrlLabel"
+                                                    required="{Boolean}true"/>
+                                                <renewalsUrl
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Renewals URL"
+                                                    name="./renewalsUrl"
+                                                    required="{Boolean}true"
+                                                    rootPath="/content/techdata"/>
                                         </items>
                                     </column>
                                 </items>

@@ -6,6 +6,8 @@
     downloadXLSLabel="Download XLS"
     line="Line"
     shopURL="https://shop.techdata.com/renewals"
+    renewalsUrlLabel="Renewals"
+    renewalsUrl="/content/techdata/americas/us/en/dcp/renewal"
     note="Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations."
     productdescription="Product Description"
     productfamily="Product Family"

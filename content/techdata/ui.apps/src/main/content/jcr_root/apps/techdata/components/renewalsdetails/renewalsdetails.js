@@ -94,6 +94,13 @@ use(['../common/utils.js'], function(utils) {
         quotePreview["quotePreviewlabel"] = properties["quotePreviewlabel"];
     }
 
+    if (properties && properties["renewalsUrlLabel"]) {
+        quotePreview["renewalsUrlLabel"] = properties["renewalsUrlLabel"];
+    }
+    if (properties && properties["renewalsUrl"]) {
+        quotePreview["renewalsUrl"] = properties["renewalsUrl"];
+    }
+
     if (properties && properties["resellerLabel"]) {
         reseller["resellerLabel"] = properties["resellerLabel"];
     }
