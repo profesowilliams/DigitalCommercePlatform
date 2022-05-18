@@ -10,7 +10,7 @@ export default function useRenewalFiltering() {
 
     function onAfterGridInit(config) {
         resetCallback.current = config.gridResetRequest;
-        clearFilterResults.current= false;
+        shouldGoToFirstPage.current= false;
     }
 
     function onQueryChanged({goToFirstPage = false} = false) {
