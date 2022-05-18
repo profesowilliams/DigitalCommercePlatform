@@ -40,7 +40,7 @@
 
       >i,
       svg {
-        font-size: 14px;
+        font-size: rem(12.8px) !important;
       }
 
       &.active {
@@ -88,7 +88,7 @@
     box-sizing: border-box;
     padding: 0 $offset-sm;
     position: absolute;
-    top: 47px;
+    top: 40px !important;
     right: 1px;
     white-space: nowrap;
     min-width: 200px;
