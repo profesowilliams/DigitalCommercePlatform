@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.1327a652.css",
-    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.6e08eff7.js",
+    "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.c0626ae9.css",
+    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.31765d8c.js",
     "static/js/787.c9ff93fe.chunk.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js",
     "static/media/OpenSans_SemiBold.ttf": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/OpenSans_SemiBold.917aa0aa0ddaafd4eb54.ttf",
     "index.html": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/index.html",
     "static/media/index.cjs": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/index.cd351d7c31d0d3fccf96.cjs",
-    "main.1327a652.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.1327a652.css.map",
-    "main.6e08eff7.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.6e08eff7.js.map",
+    "main.c0626ae9.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.c0626ae9.css.map",
+    "main.31765d8c.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.31765d8c.js.map",
     "787.c9ff93fe.chunk.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1327a652.css",
-    "static/js/main.6e08eff7.js"
+    "static/css/main.c0626ae9.css",
+    "static/js/main.31765d8c.js"
   ]
 }
