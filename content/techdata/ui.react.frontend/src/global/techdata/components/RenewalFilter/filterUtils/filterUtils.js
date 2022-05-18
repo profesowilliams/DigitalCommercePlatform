@@ -1,4 +1,4 @@
-import { addDays, removeDays } from "../../../helpers/formatting";
+import { addDays, removeDays, setEndOfDayTime, setStartOfDayTime } from "../../../helpers/formatting";
 
 export function areAllFiltersUnchecked(filterList) {
   return !filterList.some((item) => item.checked);
@@ -33,7 +33,7 @@ export function generateFilterFields(
   ];
 
   const MAP_OPTIONS = {
-    today: [new Date()],
+    today: [setStartOfDayTime(new Date()), setEndOfDayTime(new Date())],
     30: [new Date(), addDays(30)],
     60: [addDays(31), addDays(60)],
     90: [addDays(61), addDays(90)],

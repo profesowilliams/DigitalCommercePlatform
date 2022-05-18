@@ -40,6 +40,14 @@ export function removeTimeStamp (date) {
     return new Date(date).toISOString().replace(deleteTimeRegex, () => 'T00:00:00.000Z');
 }
 
+export  function setStartOfDayTime(date) {
+    return new Date(date.setUTCHours(0,0,0,0));
+}
+
+export  function setEndOfDayTime(date) {
+    return new Date(date.setUTCHours(23,59,59,999));
+}
+
 export function addDays(days = 0, date = new Date(), ) {
   const dateWithDays = date.setDate(date.getDate() + days);
   return new Date(dateWithDays);
