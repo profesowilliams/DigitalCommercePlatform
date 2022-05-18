@@ -1,9 +1,9 @@
 ; begin auth token 
 //pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/registry/:username=techdatacorp 
-//pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/registry/:_password=${TD_NPM_REPO_AUTH}
+//pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/registry/:_password=$-{TD_NPM_REPO_AUTH}
 //pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/registry/:email=npm requires email to be set but doesn't use the value
 //pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/:username=techdatacorp 
-//pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/:_password=${TD_NPM_REPO_AUTH}
+//pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/:_password=$-{TD_NPM_REPO_AUTH}
 //pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/:email=npm requires email to be set but doesn't use the value
 ; end auth token 
 registry=https://pkgs.dev.azure.com/techdatacorp/0743fde1-7465-47b2-8226-0c3b84142d6e/_packaging/TD-NPM/npm/registry/ 
