@@ -108,7 +108,7 @@ function RenewalsGrid(props) {
     const pageSize = gridConfig.itemsPerPage;
     const paginationValue = setPaginationData(rest,pageSize);
 
-    if (response.data.content.pageCount === response.data.content.pageNumber)
+    if (response?.data?.content?.pageCount === response?.data?.content?.pageNumber)
       gridApiRef?.current.api.paginationSetPageSize(response.data.content.items.length);
 
     setCustomState({ key: 'pagination', value: paginationValue })
