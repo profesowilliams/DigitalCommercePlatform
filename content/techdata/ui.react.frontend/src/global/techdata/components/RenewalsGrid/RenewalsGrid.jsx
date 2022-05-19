@@ -45,7 +45,7 @@ function RenewalsGrid(props) {
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
 
-  
+
   const { setToolTipData, setCustomState } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
@@ -71,7 +71,6 @@ function RenewalsGrid(props) {
     defaultSortingDirection: "desc",
   };
  
-
   const redirectToShop = () => {
     if(!shopURL) return;
     window.location = shopURL;
@@ -108,6 +107,10 @@ function RenewalsGrid(props) {
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
     const pageSize = gridConfig.itemsPerPage;
     const paginationValue = setPaginationData(rest,pageSize);
+
+    if (response.data.content.pageCount === response.data.content.pageNumber)
+      gridApiRef?.current.api.paginationSetPageSize(response.data.content.items.length);
+
     setCustomState({ key: 'pagination', value: paginationValue })
     setCustomState({ key: 'refinements', value: refinementGroups })
     return mappedResponse;
