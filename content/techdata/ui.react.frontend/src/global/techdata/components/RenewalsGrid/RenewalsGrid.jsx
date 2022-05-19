@@ -109,7 +109,7 @@ function RenewalsGrid(props) {
     const paginationValue = setPaginationData(rest,pageSize);
 
     if (response?.data?.content?.pageCount === response?.data?.content?.pageNumber)
-      gridApiRef?.current.api.paginationSetPageSize(response.data.content.items.length);
+      gridApiRef?.current.api.paginationSetPageSize(response?.data?.content?.items?.length);
 
     setCustomState({ key: 'pagination', value: paginationValue })
     setCustomState({ key: 'refinements', value: refinementGroups })
