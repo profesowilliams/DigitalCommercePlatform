@@ -2,7 +2,7 @@ const columnDefs = [
   {
     headerName: "Line",
     field: "id",
-    width: "50px",
+    width: "100px",
     sortable: false,
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true
