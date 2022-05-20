@@ -1,0 +1,96 @@
+<div id="QuotePreviewBox" data-observe-mutation>
+  <div
+    data-component="QuotePreview"
+    data-cmp-type="react"
+    className="cmp-quotePreview"
+    data-config='{
+        "uiServiceEndPoint": "http://localhost:3000/ui-commerce/v1/quote/preview?id={configuration-id}&configurationType={type}&vendor={vendor}",
+        "successRedirectPage": "http://localhost:8080/quotes-grid",
+        "quickQuoteEndpoint": "http://localhost:3000/ui-commerce/v1/quote/create",
+        "companyInfoEndPoint": "http://localhost:3000/ui-account/v1/getAddress",
+        "dealsForEndpoint": "http://localhost:3000/ui-config/v1/getdealsFor?endUserName={end-user-name}&orderLevel={order-level}&productIds={manufacturer-parts-id-array}details=true&vendor={vendor}",
+        "pricingConditionsEndpoint": "http://localhost:3000/ui-commerce/v1/pricingConditions?getAll=true&Id=2",
+        "agGridLicenseKey":"ThisIsAnInvalidAgGridLicenseKey",
+        "headerLabel": "Quote Preview: Confirm Details to Quote",
+        "subtotalLabel": "Subtotal of items selected for quote",
+        "confirmButtonLabel": "Create Quote",
+        "alternateConfirmButtonLabel": "Continue with Quick Quote",
+        "defaultChoiceLabel": "Make this my default choice",
+        "continueWithStandardPriceLabel": "Continue with Standard Pricing Instead",
+        "shopDomainPage": "https://shop.cstenet.com",
+        "information": {
+            "yourCompanyHeaderLabel": "Your Company Information",
+            "endUserHeaderLabel": "End User Information",
+            "generalHeaderLabel": "General Information",
+            "cityLabel": "City",
+            "stateLabel": "State",
+            "countryLabel": "Country",
+            "zipLabel": "Zip",
+            "emailLabel": "Email",
+            "phoneLabel": "Phone",
+            "sourceLabel": "Source",
+            "tierLabel": "Tier",
+            "referenceLabel": "Reference",
+            "searchDealsPlaceholder": "Search End User or Leave Blank",
+            "dealsPricingNote": "Note: The pricing updates will be reflected when you create a TD quote.",
+            "dealLabel": "Deal",
+            "nameLabel": "Name",
+            "companyLabel": "Company",
+			"addressLabel": "Address ",
+			"searchingDealsLabel": "Searching Deals",
+			"noDealsFoundLabel": "No Deal(s) Found",
+			"dealsFoundLabel": "Deal(s) Found",
+			"bidLabel": "Bid:",
+			"versionLabel": "Version:",
+			"spaIdLabel": "Deal ID:",
+			"endUserNameLabel": "End User:",
+			"errorGettingDealsLabel": "There was an error trying to get the Deals, please try again.",
+			"submitLabel": "Save",
+            "cancelLabel": "Cancel"
+        },
+        "productLines": {
+            "label": "Select Line Items to Include",
+            "expandAllLabel": "Expand All",
+            "collapseAllLabel": "Collapse All",
+            "startDateLabel": "Start Date",
+            "autoRenewLabel": "Auto Renew",
+            "durationLabel": "Duration",
+            "billingLabel": "billing",
+            "yesLabel": "Yes",
+            "noLabel": "No",
+            "productEmptyImageUrl": "/content/dam/techdata/tech-data-dot-com/global/site/about-us/Icon_AboutUs_IRandNews_InvestorRelations_COIN.png",
+            "columnList":[
+                {"columnLabel":"Select All","columnKey":"id", "expandable": true, "sortable": false},
+                {"columnLabel":"Line Number","columnKey":"configID", "sortable": false},
+                {"columnLabel":"Item Information","columnKey":"shortDescription", "sortable": false},
+                {"columnLabel":"MSRP/Unit List Price","columnKey":"unitListPriceFormatted", "sortable": false},
+                {"columnLabel":"Quantity","columnKey":"quantity", "sortable": false},
+                {"columnLabel":"Extended Price","columnKey":"extendedPriceFormatted", "sortable": false}
+            ],
+            "menuCopy":"Copy",
+            "menuCopyWithHeaders":"Copy with headers",
+            "menuExport":"Export",
+            "menuCsvExport":"CSV Export",
+            "menuExcelExport":"Excel Export",
+            "menuOpenLink":"Open link in new tab",
+            "menuCopyLink":"Copy link"
+        },
+        "note":  {
+            "headerLabel":"Please note: We are able to provide your quote, however some items will require attention before entering the checkout process.",
+            "setupRequiredLabel":"Setup required",
+            "attachmentRequiredLabel": "Attachment required"
+        },
+        "modalConfig": {
+            "avtValue": "AVT",
+            "techDataValue": "Tech Data",
+            "title": "Please verify you the buy method you set in CISCOs system below",
+            "cannotCreateQuoteForDeal": "There has been an error creating your quote for your deal. Please try again later or contact your sales representative.",
+            "error404Message": "Deal / Estimate not found.",
+            "error428Message": "Not connected to the vendor. Please connect and try again.",
+            "errorGenericMessage": "An unexpected error occurred.",
+            "errorLoadingPageRedirect": "/configuration-grid",
+            "errorLoadingPageTitle": "Quote Preview"
+        }
+    }'
+  ></div>
+</div>

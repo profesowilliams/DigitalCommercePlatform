@@ -1,0 +1,30 @@
+// .dp-figure ported from ui.frontend/src/main/webpack/components/_image.scss
+// TODO: Cleanup important with proper CSS specificity, correct indentation.
+
+.dp-figure,
+.cmp-image {
+	margin: 0;
+	&--spacing-header {
+		padding: rem(17px) rem(20px) rem(16px) rem(10px);
+	}
+	&--spacing-footer {
+		padding: rem(6px) 0 rem(8px);
+	}
+}
+
+.cmp-td-logo{
+    &--header{
+      width: rem(196px) !important;
+      padding: rem(21px) rem(26px) rem(21px) rem(10px);
+  
+      @include mobile {
+        width: rem(164px) !important;
+        padding: rem(8px)
+      }
+    }
+    &--footer{
+      width: rem(128px) !important;
+      padding: rem(0px) rem(0px) rem(8px);
+    }
+  }
+  

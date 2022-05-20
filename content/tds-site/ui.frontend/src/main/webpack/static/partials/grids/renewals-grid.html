@@ -1,0 +1,183 @@
+<div data-observe-mutation>
+  <div
+    data-component="RenewalsGrid"
+    data-cmp-type="react"
+    className="cmp-renewals-grid"
+  ></div>
+</div>
+<script>
+  const renewalsGridDom = document.querySelector(
+    "[data-component='RenewalsGrid']"
+  );
+  const AEM_DATA = {
+    detailUrl:
+      "/content/techdata/americas-language-masters/en/dcp/renewals/renewal-details",
+    exportXLSRenewalsEndpoint:"http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",
+    exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
+    gokuylachota:'',
+    columnList: [
+      {
+        columnLabel: "Reseller name",
+        columnKey: "resellername",
+        sortable: true,
+        type: "plainResellerColumn",
+      },
+      {
+        columnLabel: "End user name",
+        columnKey: "endUser",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Vendor and program",
+        columnKey: "vendor",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Disti. quote Nº",
+        columnKey: "Id",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Agreement Nº",
+        columnKey: "agreementNumber",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Renewal Plan",
+        columnKey: "renewedduration",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Due in (days)",
+        columnKey: "dueDays",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Due Date",
+        columnKey: "dueDate",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Price (USD)",
+        columnKey: "total",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Actions",
+        columnKey: "actions",
+        sortable: false,
+        type: "buttonList",
+      },
+    ],
+    searchOptionsList: [
+      {
+        searchLabel: "Serial Nº",
+        searchKey: "SerialNumber",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Disti Quote Nº",
+        searchKey: "Id",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Agreement Nº",
+        searchKey: "ContractID",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Instance Nº",
+        searchKey: "Instance",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "End-User Name",
+        searchKey: "EndUser",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "End-User Email Address",
+        searchKey: "EndUserEmail",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Reseller Name",
+        searchKey: "ResellerName",
+        showIfIsHouseAccount: true,
+      },
+      {
+        searchLabel: "Vendor Quote ID",
+        searchKey: "VendorQuoteID",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Reseller Account",
+        searchKey: "ResellerId",
+        showIfIsHouseAccount: true,
+      },      
+    ],
+    renewalDetailsEndpoint: "http://localhost:3000/ui-renewal/v1/Details",
+    exportXLSRenewalsEndpoint: "http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",
+    uiServiceEndPoint:
+      "http://localhost:3000/ui-renewal/v1/Search",
+    shopURL: "https://shop.cstenet.com/renewals",
+    agGridLicenseKey:
+      "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    itemsPerPage: "25",
+    paginationStyle: "scroll",
+    options: {
+      defaultSortingColumnKey: "dueDate",
+      defaultSortingDirection: "asc",
+    },
+    showResultLabel: "Show Result",
+    filterType: "dynamic",
+    filterListValues: [
+      {
+        accordionLabel: "Vendors and Program",
+        filterField: "ProgramName",
+        filterOptionsValues: [
+          {
+            filterOptionLabel: "Veeam",
+            subFilterOptionsValues: [
+              { subFilterOptionsLabel: "Pro Partner" },
+              { subFilterOptionsLabel: "Pro Partner Subscriber" },
+            ],
+          },
+          {
+            filterOptionLabel: "VMWare",
+            subFilterOptionsValues: [
+              { subFilterOptionsLabel: "Support and Subscriber" },
+              { subFilterOptionsLabel: "Standard" },
+            ],
+          },
+        ],
+      },
+      {
+        accordionLabel: "End User Type",
+        filterField: "endUserType",
+        filterOptionsValues: [
+          { filterOptionLabel: "Academic" },
+          { filterOptionLabel: "Educational" },
+        ],
+      },
+      { accordionLabel: "Date", filterField: "date" },
+    ],
+    productGrid: {
+      quoteIdLabel: "Quote ID:",
+      refNoLabel: "Ref No:",
+      expiryDateLabel: "Expiry Date:",
+      downloadPDFLabel: "Download PDF",
+      downloadXLSLabel: "Download XLS",
+      seeDetailsLabel: "See details",
+    },
+  };
+  renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
+</script>

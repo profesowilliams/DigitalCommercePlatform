@@ -1,0 +1,116 @@
+.cmp-search-criteria {	
+	font-size: $font-size-xsmall;
+	font-family: $font-family-sans-serif;
+	z-index: 1;
+	// position: absolute;
+	margin-top: rem(6px);
+	
+	
+	.hidden{
+		display: none;
+	};
+
+	&__content-header {
+		display: flex;
+		flex-direction: row;
+	}
+	&__icon {
+		color: white;
+		margin-left: rem(10px);
+		margin-right: rem(10px);
+	}
+	&__icon-button {
+		color: black;
+		margin-left: rem(10px);
+		margin-right: rem(10px);
+	}
+	&--expanded {
+		position: relative;
+	}
+	&__header {
+		cursor: pointer;
+		display: flex;
+		margin-left: rem(8px);
+		& svg,
+		i {
+			color: get-color(td-primary-blue);
+			margin-top: rem(4px);
+			&:before {
+				display: inline-block;
+			}
+
+		}
+		&__title {
+			font-size: $font-size-small;
+			font-weight: $font-weight-semi-bold;
+			text-transform: uppercase;
+			margin-left: rem(8px);
+		}
+		&__filter {
+			display: flex;
+			align-items: center;
+			justify-items: center;
+			margin-left: rem(20px);
+			margin-right: rem(20px);
+			padding-top: rem(2px);
+			padding-left: rem(20px);
+			padding-bottom: rem(2px);
+			border-radius: 20px;
+			background-color: black;
+			color: white;
+		}
+
+		&__button {
+			display: flex;
+			align-items: center;
+			justify-items: center;
+			margin-left: 0;
+			margin-right: 0;
+			padding-top: rem(2px);
+			padding-left: 0;
+			padding-bottom: rem(2px);
+			border-radius: 20px;
+			color: black;
+			cursor: pointer;
+			.fs-16 {
+				font-size: rem(16px);
+			}
+		}
+		
+	}
+	&__content {
+		display: flex;
+		margin-top: rem(16px);
+		margin-bottom: rem(16px);
+		justify-content: space-between;
+		&--hidden {
+			display: none;
+		}
+		&__query-input {
+			display: flex;
+			margin-right: rem(16px);
+			width: 100%;
+			&__prefix {
+				margin-right: rem(5px);
+			}
+			&__search {
+				display: flex;
+				align-items: center;
+				white-space: nowrap;
+				&__clear {
+					text-decoration: underline;
+					font-size: $font-size-xsmall;
+					color: get-color(brand-button-blue);
+					margin: 0 rem(16px) 0 rem(16px);
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}
+
+.option-button-container {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}	

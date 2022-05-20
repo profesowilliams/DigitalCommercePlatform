@@ -1,0 +1,38 @@
+<div id="CreateConfig" data-observe-mutation style="padding: 30px;">
+	<div
+		data-component="CreateConfig"
+		data-cmp-type="react"
+		className="cmp-create-config"
+		data-config='{
+			"label": "CREATE A CONFIG",
+            "punchOutUrl": "http://localhost:3000/ui-config/v1/getPunchOutURL",
+			"dropdownLabel": "Select Vendor",
+			"buttonTitle": "Create Configuration", 
+			"optionsList": [
+				{ "label": "Checkpoint", "url":"http://google.com/33", "extendedOption": true,
+					"urls": [
+						{ "label": "CCW", "url": "http://google.com/1" },
+						{ "label": "Simple IT", "url": "http://google.com/2" }
+					]
+				},
+				{ "label": "Cisco", "url":"http://google.com/33", "extendedOption": false
+				},
+				{ "label": "Dell",  "extendedOption": false, "url":"http://google.com/33", "urls": [
+						{ "label": "CCW", "url": "http://google.com/5" },
+						{ "label": "Simple IT", "url": "http://google.com/6" }
+					]
+				},
+				{ "label": "HPE", "urls": [
+						{ "label": "CCW", "url": "http://google.com/7" },
+						{ "label": "Simple IT", "url": "http://google.com/8" }
+					]
+				},
+				{ "label": "Lenovo", "urls": [
+						{ "label": "CCW", "url": "http://google.com/9" },
+						{ "label": "Simple IT", "url": "http://google.com/10" }
+					] 
+				}
+			]
+		}'
+	></div>
+</div>

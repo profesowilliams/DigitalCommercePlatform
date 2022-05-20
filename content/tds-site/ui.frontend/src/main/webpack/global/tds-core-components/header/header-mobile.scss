@@ -1,0 +1,56 @@
+$header-height: 47px;
+
+#cmp-techdata-header {
+    &.cmp-experiencefragment--header-mobile {
+        // compensating for the fixed position of header
+        padding-top: $header-height;
+        &.cmp-container >div {
+            display: flex;
+            align-items: center;
+            height: $header-height;
+            width: 100%;
+            border: 1px solid get-color(brand-white);
+            background-color: get-color(brand-white);
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+
+            .cmp-header--logo-small.active {
+                display: block;
+            }
+
+            .dp-figure {
+                &.active {
+                    display: block;
+                }
+                img {
+                    height: 46px;
+                    width: 134px;
+                    object-fit: contain;
+                    max-width: fit-content;
+                }
+            }
+
+            .search {
+                display: block;
+                margin: unset;
+                margin-left: auto;
+                &.active {
+                    .cmp-search {
+                        &__input {
+                            opacity: 1;
+                            width: unset;
+                        }
+                    }
+                }
+                .cmp-search {
+                    &__input {
+                        opacity: 0;
+                        width: 0;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,109 @@
+// have the site/variables file added here as per old includes.
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import '../../../../node_modules/@fortawesome/fontawesome-free/scss/variables';
+@import '../site/variables';
+@import './mixins';
+
+//$OpenSansVersion: "1.101" !default;
+//== REM SASS Mixin
+$rem-baseline: 16px;
+
+//== Font
+$font-base-path: '../resources/fonts';
+
+$fontawesome-font-family: 'fontawesome';
+$fontawesome-font-path: '../resources/fonts/fontawesome';
+
+$font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
+	sans-serif;
+
+$font-primary-path: '../resources/fonts/OpenSans';
+$open-sans: "Open Sans", sans-serif;
+
+//== Techdata Color Palette
+$color-palette: (
+        "brand-black":  #000000,
+        "brand-primary-text":  #ffbc0d,
+        "brand-secondary-text": #d90007,
+        "brand-white": #ffffff,
+        "brand-blue": #000c21,
+        "brand-green-synnex": #003030,
+        "brand-blue-sheer": rgba(0, 11, 31, 0.549),
+        "secondary-link-blue": #006bae,
+        "secondary-dark-grey": #6f6f6f,
+        "secondary-grey": #adadad,
+        "secondary-light-grey": #d6d6d6,
+        "secondary-ivory": #f9f9f9,
+        "accessible-accent-gold": #c08b00,
+        "accessible-accent-grey": #959595,
+        "tertiary-light-green": #a9c141,
+        "tertiary-dark-blue": #103c82,
+        "tertiary-light-blue": #56afd1,
+        "tertiary-fuchsia": #9a0a4d,
+        "tertiary-beige": #b69a81,
+        "brand-light-blue": #00B1E2,
+        "brand-light-blue-shadow": rgba(0, 177, 226, 0.15),
+        "brand-button-blue": #00558C,
+        "brand-nav-blue": #048FC8,
+        'border-light-gray': #979797,
+        'border-lighter-gray': #D9D9D9,
+        'text-shadow': #919599,
+        "text-dark-grey": #5D6165,
+        'text-light-gray': #7c8388,
+        'text-lighter-gray': #f6f6f6,
+        'text-mid-gray': #53565a,
+        'text-mid-charcoal': #666666,
+        'text-light-charcoal': #555555,
+        'td-lighter-gray': #f6f6f6,
+        'td-lightblue': #00b1e2,
+        'td-primary-blue': #048fc8,
+        'td-link-hover-state': #213859,
+        'td-dim-blue': #153b51,
+        'td-dark-blue': #000c21,
+        'td-dark-blue-shade': rgba(0, 12, 33, 0.64),
+        'brand-light-gray': #eaeaea,
+        "header-links-blue": #21314D,
+        'v-divider-gray': #e6e6e6,
+        'v-divider-darkgray': #c6c6c6,
+        'brand-light-gray2': #E6E6E6,
+        'brand-light-gray3': #f6f6f6,
+        "brand-text-gray": #555555,
+        "brand-text-lightgray": #888888,
+        "brand-light-blue-icon": #009FD4,
+        "brand-success": #26A600,
+        "button-open": #38853C,
+        "brand-scrollbar": #d8d8d8,
+        "brand-red-brilliant": #FF0000,
+        "box-shadow": rgba(0,0,0,0.5),
+        "brand-box-shadow": rgba(0, 0, 0, 0.5),
+        "light-see-through-background": rgba(255, 255, 255, 0.5),
+        "input-border": #BDBDBD,
+		"brand-orange": #FFBA30,
+        "td-brand-space-light": #334B76,
+        
+);
+
+$white: #ffffff; // Default white
+$black: #000000; // description
+$space: #000c21;
+$sky: #00b1e2;
+$sky-dark: #00558c;
+$gray: #5d6165;
+$planet: #ccd814;
+$fire: #bf0000;
+$fall: #fdb71a;
+$grass: #1ba41f;
+$smoke: #53565a;
+$carbon: #1f2024;
+$gray-1: #5d6165;
+$gray-2: #979797;
+$gray-4: #d6d6d6;
+$gray-5: #f6f6f6;
+$gray-3: #c6c6c6;
+$container-max-width: 1170px;
+$container-padding: 64px;
+$breakpoints: (
+	'lg': 1024px,
+	'md': 768px,
+);
+

@@ -1,0 +1,57 @@
+  @keyframes spin {
+      to {
+          transform: rotate(1turn);
+      }
+  }
+
+  @mixin spinner($width, $height, $dot-grith, $dot-size, $color: get-color(text-light-charcoal)) {
+
+      position: relative;
+      display: inline-block;
+      width: $width;
+      height: $height;
+      margin: 0 .5rem;
+      overflow: hidden;
+      animation: spin 1s infinite steps(8);
+      text-indent: 999rem;
+      color: transparent;
+
+      &:before,
+      &:after,
+      &>.cmp-loading:before,
+      &>.cmp-loading:after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: (($width)-($dot-size))/2;
+          width: $dot-size;
+          height: $dot-grith;
+          border-radius: 50%;
+          background: lighten($color, 50%);
+          box-shadow: 0 ($height)-($dot-grith) lighten($color, 60%);
+          transform-origin: 50% $height/2;
+      }
+
+      &:before {
+          background: $color;
+      }
+
+      &:after {
+          transform: rotate(-45deg);
+          background: lighten($color, 40%);
+      }
+
+      &>.cmp-loading:before {
+          transform: rotate(-90deg);
+          background: lighten($color, 50%);
+      }
+
+      &>.cmp-loading:after {
+          transform: rotate(-135deg);
+          background: lighten($color, 60%);
+      }
+  }
+
+  .cmp-spinner {
+      @include spinner(5rem, 4rem, 0.75rem, 0.75rem);
+  }

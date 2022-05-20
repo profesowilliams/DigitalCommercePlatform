@@ -1,0 +1,94 @@
+.cmp-form-options {
+}
+.cmp-form-options__legend {
+}
+.cmp-form-options__field-label {
+}
+.cmp-form-options__field {
+}
+.cmp-form-options__field--checkbox {
+}
+.cmp-form-options__field--radio {
+}
+.cmp-form-options__field-description {
+}
+.cmp-form-options__label {
+}
+.cmp-form-options__drop-down-field {
+}
+.cmp-form-options__multi-drop-down-field {
+}
+.cmp-form-options__help-message {
+}
+
+.dp-dropdown {
+	.cmp-form-options.cmp-form-options--drop-down {
+		border: none !important;
+		padding: 0;
+	}
+
+	.cmp-form-options__label {
+		display: none;
+	}
+
+	select.cmp-form-options__field--drop-down {
+		display: block;
+		font-family: $font-family-base;
+		font-size: $font-size-small;
+		color: get-color(td-dim-blue);
+		font-weight: $font-weight-light;
+		line-height: 1.3;
+		padding: 0.5rem;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		margin: 0;
+		border: 1px solid #aaa;
+		box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+		border-radius: 0.1em;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		appearance: none;
+		background-color: #fff;
+		background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='chevron-down' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' class='svg-inline--fa fa-chevron-down fa-w-14 fa-5x'%3E%3Cpath fill='%23000c21' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z' class=''%3E%3C/path%3E%3C/svg%3E");
+		background-repeat: no-repeat, repeat;
+		background-position: right 0.7em top 50%, 0 0;
+		background-size: 1.125rem auto, 100%;
+
+		&::-ms-expand {
+			display: none;
+		}
+
+		&:hover {
+			border-color: #888;
+		}
+		&:focus {
+			border-color: #aaa;
+			box-shadow: 0 0 1px 3px rgba(59, 153, 252, 0.7);
+			box-shadow: 0 0 0 3px -moz-mac-focusring;
+			color: #222;
+			outline: none;
+		}
+		& option {
+			font-weight: normal;
+		}
+	}
+}
+
+.cmp-form-options__field--drop-down {
+	&--light-blue {
+		select.cmp-form-options__field--drop-down {
+			background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='chevron-down' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' class='svg-inline--fa fa-chevron-down fa-w-14 fa-5x'%3E%3Cpath fill='%2302B8DC' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z' class=''%3E%3C/path%3E%3C/svg%3E");
+		}
+	}
+	&--gray {
+		select.cmp-form-options__field--drop-down {
+			background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='chevron-down' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' class='svg-inline--fa fa-chevron-down fa-w-14 fa-5x'%3E%3Cpath fill='%23979797' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z' class=''%3E%3C/path%3E%3C/svg%3E");
+		}
+	}
+	&--dark-blue {
+		select.cmp-form-options__field--drop-down {
+			background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fas' data-icon='chevron-down' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' class='svg-inline--fa fa-chevron-down fa-w-14 fa-5x'%3E%3Cpath fill='%2321314D' d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z' class=''%3E%3C/path%3E%3C/svg%3E");
+		}
+	}
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        .cmp-email-template {
+            width: 612px;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding: 54px 40px 46px 40px;
+            margin: 0 auto;
+            background-color: #f6f6f6;
+        }
+
+        .cmp-email-template-header {
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding: 30px 68px 40px;
+            background-color: gray;
+            font-size: 18px;
+            background: url(https://www.techdata.com/us/en/_jcr_content/root/container_hero/alertcarousel/teaser.coreimg.png/1638563902607/image-home--carousel-1merger.png) scroll 0 0 transparent;
+            background-size: cover;
+            align-items: center;
+        }
+
+        .cmp-email-template-header img {
+            width: 128px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .cmp-email-template-header-title {
+            display: grid;
+            justify-content: space-between;
+            grid-template-columns: 10% 85%;
+            align-items: center;
+            line-height: 1.25;
+            color: #fff;
+        }
+
+        .cmp-email-template-header-title svg:not(:root) {
+            width: 40px;
+            height: 40px;
+        }
+
+        .cmp-email-template-body {
+            padding: 40px 34px;
+            background-color: #fff;
+            font-size: 12px;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .cmp-email-template-footer {
+            margin-top: 34px;
+            font-size: 12px;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cmp-email-template">
+        <div class="cmp-email-template-header">
+            <img src="https://www.techdata.com/content/experience-fragments/techdata/americas/us/en/footer/master/_jcr_content/root/container/container_1547815530/image.coreimg.png/1638564142783/footer-logo-td.png"
+                alt="" />
+            <div class="cmp-email-template-header-title">
+                <i class="far fa-check-circle"></i>
+                <span>You submitted your account information successfully! </span>
+            </div>
+        </div>
+        <div class="cmp-email-template-body">
+            <p>Hello <customerName>,</p>
+
+                <p>
+                    Thank you for creating your account. We're excited to get you started. As a first step, we need to validate your information. 
+                </p>
+    
+                <p>
+                    A representative will contact you shortly. If you have any questions before then, don't hesitate to contact our help desk at {help desk email}. 
+                </p>
+
+            <span>Sincerely,</span>
+            <span>Tech Data</span>
+        </div>
+        <div class="cmp-email-template-footer">
+            <span>www.Techdata.com</span>
+            <span><i class="far fa-copyright"></i> 2021 TechData All rights reserved</span>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+// to handle the container max-width style
+.cmp-container--max-1440 {
+    .cmp-tools {
+        max-width: rem(1440px);
+    }
+}
+
+.menucategorieslist {
+    @include tablet {
+        display: none;
+    }
+    .cmp-tools, .cmp-tools--editor {
+        margin: 0;
+        padding: rem(10px);
+        display: flex;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        min-height: 190px;
+        background: get-color(brand-white);
+        box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.5);
+        z-index: 999;
+        ul,li {
+            padding: 0;
+            margin: 0;
+        }
+        .cmp-tools__category-name {
+            min-width: 180px;
+            padding-right: rem(30px);
+            margin-right: rem(10px);
+            color: get-color(brand-blue);
+            font-size: rem(13px);
+            font-weight: 600;
+            line-height: rem(20px);
+        }
+        li {
+            list-style: none;
+            a {
+                color: get-color(brand-text-gray);
+                font-size: rem(13px);
+                font-weight: normal;
+                line-height: rem(20px);
+                text-decoration: none;
+            }
+        }
+    }
+
+    .cmp-tools {
+        position: absolute;
+    }
+
+}

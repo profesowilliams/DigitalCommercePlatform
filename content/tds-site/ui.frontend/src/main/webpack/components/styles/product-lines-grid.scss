@@ -1,0 +1,271 @@
+.cmp-product-lines-grid {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  &__your-cost {
+    background-color: get-color(td-lighter-gray);
+  }
+  &__client-cost {
+    background-color: get-color(td-lighter-gray);
+  }
+  &__row {
+    &__cell {
+      &__your-cost {
+        background-color: get-color(td-lighter-gray);
+      }
+      &__client-cost {
+        background-color: get-color(td-lighter-gray);
+      }
+    }
+    &--notExpandable {
+      .ag-cell-expandable .ag-group-contracted,
+      .ag-icon-tree-open {
+        pointer-events: none;
+        .ag-icon::before {
+          color: get-color(brand-blue);
+          pointer-events: none;
+        }
+      }
+    }
+    &--notExpandable--orders {
+      pointer-events: none;
+      .ag-cell-expandable .ag-group-contracted,
+      .ag-icon-tree-open {
+        pointer-events: none;
+        .ag-icon::before {
+          color: get-color(brand-blue);
+          pointer-events: none;
+        }
+      }
+    }
+    .ag-cell .ag-cell-wrapper {
+      .ag-group-contracted {
+        .ag-icon-tree-closed {
+          color: get-color(brand-light-blue-icon);
+        }
+      }
+      .ag-group-expanded {
+        .ag-icon-tree-open {
+          color: get-color(brand-light-blue-icon);
+        }
+      }
+    }
+  }
+  &__header {
+    color: get-color(td-dark-blue);
+    font-family: $font-family-sans-serif;
+    // z-index: 1;
+    // position: absolute;
+    &__title {
+      margin-left: rem(16px);
+      font-size: $font-size-base;
+      font-weight: $font-weight-bold;
+    }
+    &__expand-collapse {
+      margin-left: rem(16px);
+      font-size: $font-size-small;
+      color: get-color(td-primary-blue);
+      & span {
+        cursor: pointer;
+        margin: 0 rem(8px) 0 rem(8px);
+      }
+    }
+  }
+  .ag-layout-auto-height .ag-center-cols-clipper,
+  .ag-layout-auto-height .ag-center-cols-container,
+  .ag-layout-print .ag-center-cols-clipper,
+  .ag-layout-print .ag-center-cols-container {
+    min-height: rem(0px);
+  }
+  .ag-root-wrapper {
+    border: unset;
+    border-bottom: rem(1px) solid get-color(brand-scrollbar);
+  }
+  .ag-root-wrapper-body {
+    .ag-header-container {
+      background-color: get-color(td-dark-blue);
+      .ag-header-cell-text {
+        color: get-color(brand-white);
+      }
+    }
+
+    .ag-cell {
+      border-top: rem(1px) solid get-color(brand-scrollbar);
+    }
+
+    .ag-row-group-expanded {
+      + .cmp-product-lines-grid__row {
+        .ag-cell {
+          border-top: none;
+        }
+      }
+    }
+    .ag-cell-focus {
+    }
+    .ag-row-odd,
+    .ag-row-even {
+      background-color: get-color(brand-white);
+    }
+  }
+  &__child-grid {
+    .ag-root-wrapper-body {
+      border: unset;
+      margin-top: 0;
+      .ag-cell {
+        &:not([aria-expanded="false"]) {
+          &:first-child {
+            border-top: none;
+          }
+        }
+      }
+      .ag-header {
+        display: none;
+      }
+    }
+  }
+  &__markup {
+    display: flex;
+    flex-direction: column;
+    height: rem(32px);
+    justify-content: center;
+    align-items: center;
+    font-size: $font-size-small;
+    &--global {
+      padding: rem(16px);
+      display: flex;
+      width: rem(300px);
+      margin-bottom: rem(16px);
+      margin-left: auto;
+    }
+    &__label {
+      white-space: nowrap;
+      text-align: center;
+      margin-right: rem(16px);
+    }
+    &__currency {
+      margin: unset;
+    }
+    &__container {
+      display: flex;
+    }
+    &__input {
+      width: 100%;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type=number] {
+        -moz-appearance: textfield;
+      }
+    }
+    &__button {
+      padding-top: rem(3px);
+      padding-bottom: rem(3px);
+      width: rem(48px);
+      &--active {
+        color: get-color(brand-white);
+        background-color: get-color(brand-button-blue);
+      }
+    }
+  }
+  &__quantity-widget {
+    display: flex;
+    width: rem(80px);
+    height: rem(38px);
+    border: rem(1px) solid get-color(td-dark-blue);
+    margin-top: rem(5px);
+    justify-content: space-between;
+    &__buttons {
+      display: flex;
+      flex-direction: column;
+      &__button {
+        background-color: get-color(td-dark-blue);
+        color: get-color(brand-white);
+        width: rem(18px);
+        height: rem(18px);
+        border-radius: unset;
+        &--disabled {
+          background-color: get-color(secondary-grey);
+          color: get-color(brand-white);
+        }
+      }
+      .cmp-grid .ag-cell button {
+        line-height: rem(12px);
+      }
+    }
+    &__value {
+      margin-right: 5px;
+    }
+  }
+  &__item-information {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 14% 86%;
+
+    &__image-link {
+      width: 100%;
+      display: inline-block;
+      img {
+        max-width: 100%;
+      }
+    }
+
+    &__box-text {
+      font-size: 12px;
+      display: flex;
+      text-align: justify;
+      vertical-align: top;
+      line-height: initial;
+      justify-content: flex-start;
+      -ms-flex-direction: column;
+      flex-direction: column;
+
+      &__header {
+        padding-top: 5px;
+        font-weight: bold;
+        color: get-color(brand-button-blue);
+        &__link {
+          color: get-color(brand-button-blue);
+        }
+      }
+
+      &__content {
+        font-size: 10px;
+        &__more {
+          white-space: pre-wrap;
+        }
+      }
+    }
+  }
+  &__subscription-terms  {
+    margin-bottom: 0;
+    p {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      line-height: 1.6em;
+      display: grid;
+      grid-template-columns: 12% 88%;
+      span {
+        display: block;
+      }
+    }
+  }
+}
+
+// Adjust grid columns width to avoid annuity information from overlapping with labels.
+.cmp-quote-details, .cmp-order-details {
+  .cmp-product-lines-grid {
+    &__subscription-terms  {
+      p {
+        grid-template-columns: 20% 80%;
+      }
+    }
+  }
+}
+
+

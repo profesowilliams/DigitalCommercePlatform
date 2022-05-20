@@ -1,0 +1,54 @@
+.cmp-container {
+    float: unset !important;
+    &--fixed > .cmp-container {
+        margin: 0 auto;
+        max-width: rem(1170px);
+        overflow: hidden;
+        @include media("<lg") {
+            margin: rem(0 20px);
+        }
+    }
+
+    &--padding > .cmp-container {
+        @include media(">=lg") {
+            .aem-Grid {
+                margin-left: rem(-8px);
+                margin-right: rem(-8px);
+                width: auto;
+                > .aem-GridColumn {
+                    padding-left: rem(8px);
+                    padding-right: rem(8px);
+                }
+            }
+        }
+
+        @include media("<lg") {
+            .aem-Grid {
+                margin-left: rem(-4px);
+                margin-right: rem(-4px);
+                width: auto;
+                > .aem-GridColumn {
+                    padding-left: rem(4px);
+                    padding-right: rem(4px);
+                }
+            }
+        }
+    }
+
+    // ported over from ui.frontend/src/main/webpack/components/_container.scss
+    &__full-width > .cmp-container,
+    &--max-1440 {
+        max-width: rem(1440px);
+        margin: 0 auto !important;
+        float: unset !important;
+        clear: both !important;
+    }
+
+    &__full-width--max-1600 > .cmp-container,
+    &--max-1600 {
+        max-width: 1600px;
+        margin: 0 auto !important;
+        float: unset !important;
+        clear: both !important;
+    }
+}

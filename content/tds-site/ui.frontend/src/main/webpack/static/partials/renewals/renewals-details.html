@@ -1,0 +1,77 @@
+<div data-observe-mutation>
+  <div data-component="RenewalsDetails" data-cmp-type="react" className="cmp-renewals-details"></div>
+</div>
+<script>
+  const renewalsDetailDom = document.querySelector(
+    "[data-component='RenewalsDetails']"
+  );
+  const AEM_DATA = {
+    agGridLicenseKey:
+      "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    shopDomainPage: "https://shop.cstenet.com/products",
+    uiServiceEndPoint:
+      "http://localhost:3000/ui-renewal/v1/Details",
+    shopURL: "https://shop.cstenet.com/renewals",
+    productLines: {
+      line: "Line",
+      lineItemDetailsLabel: "Details",
+      productfamily: "Product Family",
+      productdescription: "Product Description",
+      vendorPartNo: "Vendor Part No",
+      unitPrice: "Unit price (USD)",
+      quantity: "Quantity",
+      quoteSubtotal: "Quote Subtotal:",
+      note: "Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations.",
+      menuCopy: "Copy",
+      menuCopyWithHeaders: "Copy with headers",
+      menuExport: "Export",
+      menuCsvExport: "CSV",
+      menuExcelExport: "XLS",
+      menuOpenLink: "Open in new tab",
+      menuCopyLink: "Copy URL",
+    },
+    quotePreview: {
+      quotePreviewlabel: "Quote Preview",
+      resellerVendorAccountNoLabel: "Reseller vendor account No:",
+      reseller: {
+        resellerLabel: "Reseller",
+        accountNoLabel: "Account No:",
+        previousPurchaseOrderNoLabel: "Previous purchase order No:",
+        resellerSAPaccNoLabel: "Reseller SAP account number",
+        previousResellerorderNoLabel: "Previous Reseller order number",
+        typeEndUserLabel: "Type of end user",
+        vendorAccountNoResLabel: "Reseller vendor account No:",
+        previousPurchaseOrderNoEndLabel: "Previous purchase order number",
+        previousOrderNoLabel: "Previous order number",
+      },
+      productLines: {
+        endCustomerLabel: "End Customer",
+        emailLabel: "Email:",
+        phoneLabel: "Phone:",
+        endCustomerType: "End customer type:",
+        vendorAccountNo: "Vendor account No:",
+        endCustpreviousPurchaseOrderNo: "Previous purchase order No:",
+      },
+      agreementInfo: {
+        agreementInfoLabel: "Agreement Information",
+        programLabel: "Program:",
+        durationLabel: "Duration:",
+        supportLevelLabel: "Support level:",
+        distiQuoteNoLabel: "Disti. quote No:",
+        distiQuoteIDLabel: "Disti quote ID",
+        agreementNoLabel: "Agreement No:",
+        distiQuoteLabel: "Vendor quote No:",
+        quotedueDateLabel: "Quote due date:",
+        quoteExpiryDateLabel: "Quote expiry date:",
+        agreeStartDateLabel: "Agreement start date:",
+        agreeEndDateLabel: "Agreement end date:",
+        usageStartDateLabel: "Usage Start Date:",
+        usageEndDateLabel: "Usage End Date:",
+      },
+    },
+    exportXLSRenewalsEndpoint:
+      "http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",
+    exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
+  };
+  renewalsDetailDom.dataset.config = JSON.stringify(AEM_DATA);
+</script>

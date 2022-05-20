@@ -1,0 +1,203 @@
+.form-style-container {
+  .cmp-form {
+    .cmp-form-text, .cmp-form-options {
+      margin-bottom: rem(20px);
+    }
+
+    fieldset {
+      border: none;
+      padding: 0;
+    }
+
+    .cmp-form-text input,
+    .cmp-form-text textarea,
+    .cmp-form-options select {
+      font-size: rem(16px);
+      line-height: rem(16px);
+      border: 0;
+      border-bottom: rem(1px) solid get-color(border-light-gray);
+      font-family: inherit;
+      border-radius: 0;
+      width: 100%;
+      outline: none;
+      padding: rem(15px) 0;
+    }
+
+    .cmp-form-text textarea {
+      border: rem(1px) solid get-color(input-grey-borde);
+      padding: rem(15px);
+      width: 100%;
+    }
+
+    ::-webkit-input-placeholder,
+    select:invalid {
+      color: get-color(text-light-charcoal);
+    }
+
+    option {
+      color: black;
+    }
+
+    label,
+    legend {
+      font-size: rem(14px);
+      line-height: rem(16px);
+      color: get-color(brand-text-gray);
+      margin-bottom: rem(10px);
+      display: inline-block;
+    }
+
+    &-options {
+      &__field-label {
+        position: relative;
+        padding-left: rem(10px);
+        margin-right: rem(15px);
+      }
+      &__field-description {
+        top: 0;
+        left: 0;
+      }
+      &__field--checkbox {
+        -webkit-appearance: none;
+        &:after {
+          content: '\f096';
+          position: absolute;
+          left: 0;
+          top: rem(2px);
+          @include font-awesome-custom-icon;
+          color: get-color(brand-text-gray);
+        }
+        &:checked {
+          &:after {
+            content: '\f14a';
+            color: get-color(brand-light-blue);
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+          }
+        }
+      }
+      &__field--radio {
+        -webkit-appearance: none;
+
+        &:after {
+          content: '\f111';
+          position: absolute;
+          left: 0;
+          top: 0;
+          @include font-awesome-custom-icon;
+          color: get-color(brand-text-gray);
+        }
+
+        &:checked {
+          &:after {
+            content: '\f192';
+            color: get-color(brand-light-blue);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .cmp-form-button {
+      font-size: rem(16px);
+      line-height: rem(19px);
+      background-color: get-color(td-dark-blue);
+      width: 100%;
+      border: none;
+      padding: rem(12px) rem(10px);
+      font-weight: bold;
+      text-align: center;
+      color: white;
+    }
+    .cmp-form-text-bold{
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    select:not([multiple]),
+    .cmp-form-options__help-message {
+      display: none;
+    }
+    fieldset {
+      margin-bottom: rem(40px);
+      position: relative;
+      padding: 0;
+      border: 0;
+      outline: none;
+    }
+
+    /*style the arrow inside the select element:*/
+    .select-selected:after {
+      position: absolute;
+      content: "";
+      top: rem(14px);
+      right: rem(10px);
+      width: 0;
+      height: 0;
+      border: solid #555555;
+      border-width: 0 rem(3px) rem(3px) 0;
+      display: inline-block;
+      padding: rem(3px);
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+    }
+
+    .select-items div,.select-selected {
+      color: black;
+      padding: rem(8px) rem(16px);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+    }
+
+    .select-selected {
+      background-color: white;
+      border-bottom:rem( 2px) solid #00558C;
+      padding: rem(8px) rem(16px) rem(8px) 0;
+    }
+
+    .select-items div {
+      cursor: pointer;
+    }
+
+    .select-items {
+      position: absolute;
+      background-color: white;
+      color: black;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      max-height: rem(246px);
+      overflow-y: scroll;
+      box-shadow: 0 rem(3px) rem(7px) 0 rgba(0,0,0,0.23);
+
+      /**** Scrollbar styles for Opera,Edge and Chrome ****/
+      &::-webkit-scrollbar {
+        width: rem(6px);
+      }
+      &::-webkit-scrollbar-track {
+        background: get-color(brand-white);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: get-color(td-dark-blue);
+        border-radius: rem(4px);
+        border: rem(2px) solid get-color(td-color-blue);
+      }
+      /********** Scrollbar Styles for FireFox *****************/
+
+      scrollbar-color: get-color(brand-scrollbar) get-color(td-dark-blue);
+      scrollbar-width: thin;
+
+      /******************************************************/
+    }
+    .select-hide {
+      display: none;
+    }
+
+    .select-items div:hover, .same-as-selected {
+      background-color: #F2F2F2;
+    }
+  }
+
+}

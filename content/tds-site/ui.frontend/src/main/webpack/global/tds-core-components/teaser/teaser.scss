@@ -1,0 +1,657 @@
+@mixin teaser-default {
+    .cmp-teaser {
+        position: relative;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+
+        &__pretitle {
+            color: get-color(brand-white);
+        }
+
+        &__content {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: rem(20px);
+            padding-top: rem(70px);
+
+            @include desktop {
+                padding-left: rem(60px);
+                padding-top: rem(78px);
+            }
+        }
+
+        &__title {
+            margin: 0;
+            font-size: rem(24px);
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: rem(30px);
+            text-shadow: 0 2px 4px get-color(brand-black);
+            margin-bottom: rem(30px);
+
+            &:after {
+                font-weight: 600;
+                padding: rem(0px 6px);
+                position: relative;
+                top: -8px;
+                text-shadow: none;
+                font-size: 15px;
+                letter-spacing: 0;
+            }
+
+            @include desktop {
+                font-size: rem(40px);
+                line-height: rem(60px);
+
+                &:after {
+                    padding: rem(1px 9px);
+                    font-size: 20px;
+                    top: -27px;
+                }
+            }
+
+            &-link {
+                color: get-color(brand-white);
+                text-decoration: none;
+            }
+        }
+
+        &__description {
+            color: get-color(brand-white);
+            font-size: 16px;
+            letter-spacing: 0;
+            line-height: 20px;
+            margin-bottom: rem(30px);
+            text-shadow: 0 2px 4px #000000;
+
+            @include desktop {
+                font-size: rem(22px);
+                line-height: rem(33px);
+                max-width: 400px;
+            }
+
+            p {
+                margin: 0;
+            }
+        }
+
+        &__image {
+            .cmp-image {
+                &__image {
+                    width: 100%;
+                    height: auto;
+
+                    @include tablet {
+                        min-height: 450px;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin teaser-synnex-color ($brand-color) {
+    .cmp-teaser {
+            &:hover {
+                outline: rem(2px) solid $brand-color !important;
+            }
+            .cmp-teaser__title {
+                background-color: $brand-color !important;
+            }
+        }
+}
+
+
+/* END OF TEMP TEASER*/
+
+.cmp-container--fixed {
+    max-width: 1440px;
+}
+
+.cmp-buttons__plus {
+    &-white {
+        .cmp-teaser__title {
+            &:after {
+                content: "+";
+                color: get-color(brand-white);
+                background: get-color(brand-light-blue);
+            }
+        }
+    }
+
+    &-blue {
+        .cmp-teaser__title {
+            &:after {
+                content: "+";
+                color: get-color(brand-light-blue);
+                background: get-color(brand-white);
+            }
+        }
+    }
+}
+
+.cmp-svg-color {
+    &__forDark-background {
+        svg {
+            path {
+                fill: get-color(brand-white);
+            }
+        }
+    }
+
+    &__forLight-background {
+        svg {
+            path {
+                fill: get-color(brand-black);
+            }
+        }
+    }
+}
+
+// Triptych Teaser
+.cmp-light-theme {
+
+    // width: 100%; this is a temporary line for  testing in AEM
+    .cmp-teaser {
+        display: flex;
+        flex-direction: column;
+        margin: rem(35px) rem(10px);
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        width: min-content;
+
+        &:hover {
+            .cmp-teaser__title {
+                background-color: get-color(brand-light-blue);
+                width: 100%;
+                height: rem(70px);
+            }
+        }
+
+        &__description {
+            display: none;
+        }
+
+        &__content {
+            width: rem(460px);
+            height: rem(70px);
+            position: relative;
+        }
+
+        &__image {
+            width: fit-content;
+
+            img {
+                object-fit: cover;
+                width: rem(460px);
+            }
+        }
+
+        &__title {
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            font-size: $font-size-custom-medium;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: rem(70px);
+            position: absolute;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        &__title-link {
+            color: get-color(brand-white);
+            text-decoration: none;
+        }
+    }
+}
+
+.cmp-dark-theme {
+    .cmp-teaser {
+        display: flex;
+        flex-direction: column;
+        margin: rem(35px) rem(10px);
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        width: min-content;
+
+        &:hover {
+            .cmp-teaser__title {
+                background-color: get-color(brand-light-blue);
+                width: 100%;
+                height: rem(70px);
+            }
+        }
+
+        &__description {
+            display: none;
+        }
+
+        &__content {
+            width: rem(460px);
+            height: rem(70px);
+            position: relative;
+        }
+
+        &__image {
+            width: fit-content;
+
+            img {
+                object-fit: fill;
+                width: rem(460px);
+            }
+        }
+
+        &__title {
+            background-color: get-color(light-see-through-background);
+            color: get-color(brand-blue);
+            font-size: $font-size-custom-medium;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: rem(70px);
+            position: absolute;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
+
+// Teaser Synnex
+.cmp-quadriptych-teaser {
+    &.cmp-quadriptych-teaser-synnex {
+        @include teaser-synnex-color(get-color(brand-green-synnex));
+    }
+}
+
+// Reverse Teaser Synnex
+.cmp-quadriptych-teaser {
+    &.cmp-quadriptych-teaser-reverse {
+        &.cmp-quadriptych-teaser-synnex {
+            @include teaser-synnex-color(get-color(brand-green-synnex));
+            .cmp-teaser {
+                &:hover {
+                    box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+
+                    .cmp-teaser__title {
+                        background-color: get-color(brand-green-synnex) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cmp-quadriptych-teaser {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: rem(32px);
+
+    .cmp-teaser {
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        background-color: get-color(brand-white);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        &:hover {
+            outline: rem(2px) solid get-color(brand-blue) !important;
+            box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+
+            .cmp-teaser__title {
+                background-color: get-color(brand-white) !important;
+                color: get-color(brand-light-blue) !important;
+
+                .cmp-teaser__title-link {
+                    color: get-color(brand-light-blue) !important;
+                }
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: fill;
+        }
+
+        .cmp-teaser__title {
+            width: 100%;
+            min-height: rem(45px);
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            text-align: center;
+            font-size: $font-size-custom-medium;
+            font-weight: $font-weight-bold;
+            padding-top: rem(5px);
+
+            .cmp-teaser__title-link {
+                text-decoration: none;
+                color: get-color(brand-white);
+            }
+        }
+
+        .cmp-teaser__content {
+            font-size: $font-size-custom-xxsmall;
+            color: get-color(brand-text-gray);
+            //   min-height: rem(390px);
+            min-height: auto;
+
+            &-title {
+                font-size: $font-size-medium;
+                font-weight: bold;
+            }
+
+            .cmp-teaser__description {
+                padding: rem(25px);
+                line-height: rem(16px);
+            }
+        }
+
+        &__image {
+            width: 100%;
+        }
+    }
+}
+
+.cmp-six-teasers {
+    position: relative;
+
+    .cmp-teaser {
+        display: flex;
+        flex-direction: column;
+        margin: rem(35px) rem(10px);
+        box-shadow: 0 0 rem(4px) rem(1px) get-color(brand-box-shadow);
+        width: rem(215px);
+        height: rem(353px);
+
+        &:hover {
+            box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+            outline: solid #000c21 !important;
+            box-sizing: content-box;
+        }
+
+        &__content {
+            height: 100%;
+            line-height: rem(14px);
+            position: relative;
+        }
+
+        &__title,
+        h2 {
+            color: get-color(brand-blue);
+            font-size: $font-size-small !important;
+            margin-bottom: rem(8px);
+            padding: rem(14px) rem(18px);
+            font-weight: 600 !important;
+            margin: 0 !important;
+
+            a {
+                font-size: $font-size-small !important;
+                color: get-color(brand-blue);
+                text-decoration: none;
+            }
+        }
+
+        &__description {
+            color: get-color(text-light-charcoal);
+            font-size: $font-size-xsmall;
+            font-weight: normal;
+            padding: 0 rem(18px);
+        }
+
+        &__action-link,
+        &__title-link {
+            text-decoration: none !important;
+            color: get-color(brand-white);
+        }
+
+        &__image {
+            img {
+                object-fit: fill;
+                width: rem(215px);
+                height: rem(134px);
+            }
+        }
+
+        &__action-container {
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            font-size: $font-size-medium;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: rem(215px);
+            height: rem(35px);
+            position: absolute;
+            bottom: 0;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+
+            &:hover {
+                background-color: get-color(brand-light-blue);
+                width: rem(215px);
+                height: rem(35px);
+            }
+        }
+    }
+}
+
+.cmp-teaser__desc-link {
+    text-decoration: none;
+    color: #555;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+// Teaser reverse
+.cmp-quadriptych-teaser-reverse {
+    &.cmp-quadriptych-teaser {
+        .cmp-teaser {
+            box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
+            border: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: rem(380px);
+
+            &:hover {
+                box-shadow: 0 rem(3px) rem(4px) rgba(0, 0, 0, 0.3);
+
+                .cmp-teaser__title {
+                    background-color: get-color(brand-blue) !important;
+                    color: get-color(brand-white) !important;
+
+                    &-link {
+                        color: get-color(brand-white) !important;
+                    }
+                }
+            }
+
+            &__content {
+                min-height: auto;
+                width: 100%;
+
+                .cmp-teaser__description {
+                    //min-height: 17rem;
+                    min-height: auto;
+                    max-height: rem(144px);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 8;
+                    -webkit-box-orient: vertical;
+                    padding-bottom: 0;
+                    margin-bottom: rem(14px);
+                }
+            }
+
+            &__title {
+                font-size: rem(22px);
+                line-height: rem(45px);
+                font-weight: normal;
+                padding: 0;
+            }
+
+            &__image {
+                order: 2;
+                width: 100%;
+                overflow: hidden;
+                height: rem(155px);
+            }
+        }
+    }
+}
+
+.teaser-max-width-1440 {
+    .cmp-teaser__content {
+        max-width: 1440px;
+        //margin: 0 auto;
+        //left: 15%;
+    }
+}
+
+.teaser-max-height-500 {
+    .cmp-teaser .cmp-image__image {
+        max-height: 500px;
+        object-fit: cover;
+        object-position: top;
+        object-position: center;
+    }
+}
+
+
+.cmp-text-color--onDark-theme {
+    color: get-color(brand-white) !important;
+
+    .cmp-teaser__desc-link,
+    .cmp-teaser__title-link {
+        color: get-color(brand-white) !important;
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.cmp-text-color--onLight-theme {
+    color: get-color(text-light-gray) !important;
+
+    .cmp-teaser__desc-link,
+    .cmp-teaser__title-link {
+        color: get-color(text-light-gray) !important;
+        text-decoration: none;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+// cmp button green styles
+
+.cmp-teaser-button-green {
+    &.cmp-teaser--button {
+        .cmp-teaser:not(:hover) svg circle {
+            fill: #003030;
+        }
+    }
+}
+
+
+// US 188398 Teaser style update "Services" for 3 teasers
+
+
+.cmp-three-teasers-apac {
+    padding: rem(32px);
+    .cmp-teaser {
+        width: rem(365px);
+        height: rem(490.37px);
+        padding: 0;
+        box-shadow: 0 0 0 rem(1px) get-color(brand-box-shadow);
+        background-color: get-color(brand-white);
+        display: grid;
+        align-content: space-between;
+        grid-template-rows: rem(188.21px) rem(302.16px);
+        transition: all .3s;
+
+        &:hover {
+            outline: rem(2px) solid get-color(brand-blue) !important;
+            box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+            transition: all .3s;
+
+            .cmp-teaser__title {
+                background-color: get-color(brand-white) !important;
+                color: get-color(brand-light-blue) !important;
+
+                .cmp-teaser__title-link {
+                    color: get-color(brand-light-blue) !important;
+                }
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: fill;
+            overflow: hidden;
+        }
+
+        .cmp-teaser__title {
+            width: 100%;
+            min-height: rem(45px);
+            background-color: get-color(brand-blue);
+            color: get-color(brand-white);
+            text-align: center;
+            font-size: $font-size-custom-medium;
+            font-weight: $font-weight-bold;
+            padding-top: rem(5px);
+            margin: 0;
+
+            .cmp-teaser__title-link {
+                text-decoration: none;
+                color: get-color(brand-white);
+            }
+        }
+
+        .cmp-teaser__content {
+            font-size: $font-size-custom-xxsmall;
+            color: get-color(brand-text-gray);
+            //   min-height: rem(390px);
+            min-height: auto;
+
+            &-title {
+                font-size: $font-size-medium;
+                font-weight: bold;
+            }
+
+            .cmp-teaser__description {
+                padding: rem(20px) rem(30px);
+                line-height: rem(16px);
+            }
+        }
+
+        &__image {
+            width: 100%;
+            height: rem(202.21px);
+            object-fit: fill;
+            overflow: hidden;
+        }
+    }
+}

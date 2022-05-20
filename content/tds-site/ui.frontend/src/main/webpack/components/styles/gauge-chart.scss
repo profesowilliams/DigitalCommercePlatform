@@ -1,0 +1,109 @@
+.cmp-gauge-chart-wrap {
+    width: rem(450px);
+    margin: 0 15px;
+
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        width: 350px !important;
+        height: auto !important;
+        margin: 0 auto;
+    }
+    .cmp-gauge-chart {
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+        margin: 0;
+
+        &__title {
+            font-size: $font-size-small;
+            text-transform: uppercase;
+            color: get-color(text-mid-gray);
+            width: rem(115px);
+            align-self: baseline;
+        }
+        &__orders-processed {
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            width: auto;
+            margin: 0 auto;
+            &--number {
+                font-size: $font-size-custom-large;
+                color: get-color(td-lightblue);
+                margin-right: rem(20px);
+            }
+            &--title {
+                font-size: $font-size-custom-midi;
+                color: get-color(brand-blue);
+            }
+        }
+    }
+    .cmp-gauge-chart-period {
+        margin-top: rem(20px);
+        display: flex;
+        justify-content: center;
+        > div {
+            display: flex;
+        }
+        .cmp-gauge-chart-period--toggle {
+            margin: 0 rem(14px);
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: rem(37px);
+                height: rem(22px);
+                > input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+            }
+
+            .dot {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: 0.4s;
+                transition: 0.4s;
+                &:before {
+                    position: absolute;
+                    content: "";
+                    height: rem(15px);
+                    width: rem(15px);
+                    left: rem(3px);
+                    bottom: rem(4px);
+                    background-color: white;
+                    -webkit-transition: 0.4s;
+                    transition: 0.4s;
+                }
+            }
+            .round {
+                border-radius: rem(34px);
+                &:before {
+                    border-radius: 50%;
+                }
+            }
+
+            input:checked + .dot {
+                background-color: #000c21;
+            }
+
+            input:focus + .dot {
+                box-shadow: 0 0 rem(1px) #000c21;
+            }
+
+            input:checked + .dot:before {
+                -webkit-transform: translateX(rem(16px));
+                -ms-transform: translateX(rem(16px));
+                transform: translateX(rem(16px));
+            }
+        }
+    }
+}
