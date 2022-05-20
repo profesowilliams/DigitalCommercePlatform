@@ -57,6 +57,12 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     ),
   };
 
+  columnDefs[5] = {
+    ...columnDefs[5],
+    valueGetter: ({ data }) =>
+    data.discounts && data.discounts[0]?.value,
+  };
+
   //refactor later as renewals-grid
   columnDefs[6] = {
     ...columnDefs[6],

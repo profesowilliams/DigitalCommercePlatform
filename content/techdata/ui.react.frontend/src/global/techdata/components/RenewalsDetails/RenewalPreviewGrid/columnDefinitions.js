@@ -32,6 +32,22 @@ const columnDefs = [
     autoHeight: true
   },
   {
+    headerName: "List Price (USD)",
+    field: "unitListPrice",
+    sortable: false,
+    width: "100px",
+    cellStyle: {'white-space': 'normal', 'padding': '10px'},
+    autoHeight: true
+  },
+  {
+    headerName: "% off list price",
+    field: "value",
+    sortable: false,
+    width: "100px",
+    cellStyle: {'white-space': 'normal', 'padding': '10px'},
+    autoHeight: true
+  },
+  {
     headerName: "Unit price (USD)",
     field: "unitPrice",
     sortable: false,
