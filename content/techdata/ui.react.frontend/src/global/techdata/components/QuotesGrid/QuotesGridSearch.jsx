@@ -8,13 +8,17 @@ import {
   validateDatePicker,
   isQueryValid, 
   isNotEmptyValue,
-  validateDatesForAnalytics } from "../../../../utils/utils";
+  validateDatesForAnalytics,
+  handleToDateFilter,
+  handleFromDateFilter
+} from "../../../../utils/utils";
 
 function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchRequest, uiServiceEndPoint}) {
   const _query = useRef({});
   const idParam = useRef();
   const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
   const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
+  const [toMinDate, setToMinDate] = useState();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -88,6 +92,7 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
     let concatedQuery = `${keyword}${manufacturer}${from}${to}`;
     if (isQueryValid(query)) {
       const analyticObject = dispatchAnalyticsChange(query);
+      setToMinDate(query.from?.value)
       onQueryChanged(concatedQuery, analyticObject);
     } else {
       onQueryChanged("");
@@ -134,14 +139,17 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
         isDateFrom={true}
         defaultValue={dateDefaultFromValue}
+        filterDate={handleFromDateFilter}
       ></SimpleDatePicker>
       <SimpleDatePicker
+        minDate={toMinDate}
         pickerKey={"to"}
         placeholder={config.datePlaceholder}
         label={config.toLabel}
         forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
         defaultValue={dateDefaultToValue}
+        filterDate={handleToDateFilter}
       ></SimpleDatePicker>
     </div>
   );

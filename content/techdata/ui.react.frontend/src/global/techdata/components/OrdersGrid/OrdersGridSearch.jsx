@@ -10,6 +10,8 @@ import {
   isQueryValid,
   isNotEmptyValue,
   validateDatesForAnalytics,
+  handleToDateFilter,
+  handleFromDateFilter
 } from "../../../../utils/utils";
 import { 
   ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY,
@@ -43,6 +45,7 @@ function OrdersGridSearch({
   const flagKeyword = useRef(false);
   const flagManufacturer = useRef(false);
   const flagMethod = useRef(false);
+  const [toMinDate, setToMinDate] = useState();
   const [dateDefaultToValue, setDateDefaultToValue] = useState(true);
   const [dateDefaultFromValue, setDateDefaultFromValue] = useState(true);
   const [defaultAllVendor, setDefaultAllVendor] = useState(null);
@@ -171,6 +174,7 @@ function OrdersGridSearch({
 
     let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${general}`;
     if (isQueryValid(query)) {
+      setToMinDate(query.from?.value)
       onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));
     } else {
       onQueryChanged("");
@@ -231,14 +235,17 @@ function OrdersGridSearch({
         onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
         isDateFrom={true}
         defaultValue={dateDefaultFromValue}
+        filterDate={handleFromDateFilter}
       ></SimpleDatePicker>
       <SimpleDatePicker
+        minDate={toMinDate}
         pickerKey={"to"}
         placeholder={config.datePlaceholder}
         label={config.toLabel}
         forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
         defaultValue={dateDefaultToValue}
+        filterDate={handleToDateFilter}
       ></SimpleDatePicker>
       <HeaderButtonOptions 
         handleChange={onQueryChanged}

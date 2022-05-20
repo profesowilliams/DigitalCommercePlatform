@@ -10,7 +10,8 @@ function SimpleDatePicker({
 	isDateFrom = false,
 	defaultValue = true,
 	minDate,
-	maxDate
+	maxDate,
+	filterDate
 }) {
 	const [pickedDate, setPickedDate] = useState(null);
 	const pickerRef = useRef(null);
@@ -66,6 +67,7 @@ function SimpleDatePicker({
 						selected={pickedDate}
 						onChange={(date) => pickerValueChanged(date)}
 						placeholderText={placeholder}
+						filterDate={filterDate}
 						ref={(c) => (pickerRef.current = c)}
 					></DatePicker>
 				</div>

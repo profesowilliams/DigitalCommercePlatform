@@ -125,6 +125,8 @@ export const requestFileBlob = async (url, name = '', options = { redirect: fals
     await validateBlobResponse(response, modalPDFErrorHandler) && generateFile(response, name, options);
 };
 
+const currentDate = new Date();
+
 /**
 * Add onload event for form submit to handle input text XSS validations.
 */
@@ -270,6 +272,10 @@ export const getDateValue = (date) => {
   const dateDay = date.getDate();
   return `${date.getFullYear()}-${zeroPad(dateMonth, 2)}-${zeroPad(dateDay, 2)}`;
 }
+
+export const handleToDateFilter = (date) => true;
+
+export const handleFromDateFilter = (date) => currentDate >= date;
 
 /**
  * reference

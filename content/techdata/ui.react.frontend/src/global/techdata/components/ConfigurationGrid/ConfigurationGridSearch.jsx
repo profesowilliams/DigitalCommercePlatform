@@ -8,7 +8,9 @@ import {
   isNotEmptyValue,
   validateDatePicker,
   isQueryValid,
-  validateDatesForAnalytics
+  validateDatesForAnalytics,
+  handleToDateFilter,
+  handleFromDateFilter
 } from "../../../../utils/utils";
 import { ORDER_GRID_SEARCH_FIELD_ALL_LINES_KEY } from "../../../../utils/constants";
 
@@ -18,8 +20,8 @@ function ConfigurationGridSearch({
   onKeyPress,
 }) {
   //Optional values to make limitations on the ranges of dates selected on datepicker//
-  const [toMinDate, setToMinDate] = useState()
-  const [fromMinDate, setFromMinDate] = useState()
+  const [toMinDate, setToMinDate] = useState();
+  const [fromMinDate, setFromMinDate] = useState();
   const currentDate = new Date();
   const [defaultConfigurationField, setDefaultConfigurationField] = useState(null);
   const defaultKeywordDropdown = {
@@ -103,8 +105,8 @@ function ConfigurationGridSearch({
 
     let concatedQuery = `${keyword}${configurations}${from}${to}`;
     if (isQueryValid(query)) {
-      setToMinDate(query.from?.value)
-      setFromMinDate(currentDate)
+      setToMinDate(query.from?.value);
+      setFromMinDate(currentDate);
       onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));
 
     } else {
@@ -144,6 +146,7 @@ function ConfigurationGridSearch({
         onSelectedDateChanged={(change) => handleFilterChange(change, "from")}
         isDateFrom={true}
         defaultValue={dateDefaultFromValue}
+        filterDate={handleFromDateFilter}
       ></SimpleDatePicker>
       <SimpleDatePicker
         minDate={toMinDate}
@@ -153,6 +156,7 @@ function ConfigurationGridSearch({
         forceZeroUTC={false}
         onSelectedDateChanged={(change) => handleFilterChange(change, "to")}
         defaultValue={dateDefaultToValue}
+        filterDate={handleToDateFilter}
       ></SimpleDatePicker>
     </div>
   );
