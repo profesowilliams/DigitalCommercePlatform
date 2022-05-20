@@ -84,7 +84,7 @@
   .info-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 30px 2em;
+    padding: 0 2em 30px;
     .cmp-loader-roller {
       display: flex;
       flex-basis: 33.33%;
@@ -100,7 +100,7 @@
 .cmp-renewals-qp__agreement-info,
 .cmp-renewals-qp__enduser-info {
   padding: 1.3em;
-  margin: 3em;
+  margin: 1em;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: -4px 4px 7px 0 rgba(0, 0, 0, 0.07);
