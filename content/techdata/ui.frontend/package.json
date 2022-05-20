@@ -45,7 +45,7 @@
     "nodemon": "^2.0.6",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.17.2",
+    "sass": "^1.51.0",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.14.1",
@@ -62,7 +62,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "babel-loader": "^8.2.2",
     "bootstrap": "^5.0.0-beta3",
     "chart.js": "^3.2.1",

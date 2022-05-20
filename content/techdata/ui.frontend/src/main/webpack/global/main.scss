@@ -3,6 +3,8 @@
 // @import '../../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
 // @import '../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import 'variables';
+@import 'variables/color-variables';
+@import 'variables/typography';
 @import 'mixins';
 @import 'include-media/dist/_include-media.scss';
 @import 'sass-rem/_rem.scss';
