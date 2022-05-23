@@ -146,6 +146,14 @@
 					overflow: unset !important;
 					width: rem(190px);
 					height: auto !important;
+
+					@media (max-width: 1235px) {
+						width: auto !important;
+					}
+
+					@include mobile {
+						width: rem(190px);
+					}
 				}
 			}
 		}
