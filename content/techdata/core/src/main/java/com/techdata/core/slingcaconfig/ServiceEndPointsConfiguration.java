@@ -148,5 +148,8 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Export XLS Renewals Grid Endpoint", description = "Export XLS Renewals Grid Endpoint")
     String exportXLSRenewalsEndpoint();
+    
+    @Property(label = "Export PDF Renewals Grid Endpoint", description = "Export PDF Renewals Grid Endpoint")
+    String exportPDFRenewalsEndpoint();
 
 }
