@@ -84,4 +84,19 @@
       display: block;
     }
   }
+
+  .ag-header-container .ag-header-row {
+    .ag-cell-label-container span.ag-header-cell-text {
+      font-size: 16px;
+    }
+  }
+
+  .cmp-grid.ag-theme-alpine {
+    .ag-header {
+      height: 60px !important;
+      &-row {
+        height: 40px !important;
+      }
+    }
+  }
 }
