@@ -51,10 +51,7 @@ const QuoteSubtotal = ({
           .reduce((previous, current) => previous + current, 0);
       case "getYourMarkup":
         return [...store.quotes]
-          .map(
-            (x) =>
-              Number(x.appliedMarkup || 0) + sum(x.children, "appliedMarkup")
-          )
+          .map((x) => getSingleIntValueByQuantity(x, "appliedMarkup") + sum(x.children, "appliedMarkup", getSingleIntValueByQuantity))
           .reduce((previous, current) => previous + current, 0);
       case "getSubtotal":
         return amount;
