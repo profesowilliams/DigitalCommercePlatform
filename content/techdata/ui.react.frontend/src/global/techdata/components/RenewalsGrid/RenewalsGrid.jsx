@@ -22,6 +22,7 @@ import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow'
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
+import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
 
 function ToolTip({ toolTipData }) {
   return (
@@ -81,8 +82,14 @@ function RenewalsGrid(props) {
   useEffect(() => {
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
+    if(isAuthormodeAEM()) return; // Validation for Author ENV
     !hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS}) && redirectToShop()
-  }, [USER_DATA, ACCESS_TYPES]);
+  }, [
+    USER_DATA,
+    ACCESS_TYPES,
+    hasAccess,
+    isAuthormodeAEM
+  ]);
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
 
