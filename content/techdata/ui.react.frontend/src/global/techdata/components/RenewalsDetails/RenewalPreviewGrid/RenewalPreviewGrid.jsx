@@ -57,24 +57,31 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     ),
   };
 
-  columnDefs[5] = {
-    ...columnDefs[5],
-    valueGetter: ({ data }) =>
-    data.discounts && data.discounts[0]?.value,
-  };
-
-  //refactor later as renewals-grid
-  columnDefs[6] = {
-    ...columnDefs[6],
+  columnDefs[4] = {
+    ...columnDefs[4],
     cellStyle: {"justify-content": "flex-end"},
     cellRenderer: (props) => Price(props)
   }
+
   columnDefs[5] = {
     ...columnDefs[5],
+    valueGetter: ({ data }) =>
+      data.discounts && data.discounts[0]?.value,
+    cellStyle: {"justify-content": "flex-end"},
+  };
+
+  //refactor later as renewals-grid
+  columnDefs[8] = {
+    ...columnDefs[8],
+    cellStyle: {"justify-content": "flex-end"},
+    cellRenderer: (props) => Price(props)
+  }
+  columnDefs[7] = {
+    ...columnDefs[7],
     cellStyle: {"justify-content": "flex-end"}
   }
-  columnDefs[4] = {
-    ...columnDefs[4],
+  columnDefs[6] = {
+    ...columnDefs[6],
     cellStyle: {"justify-content": "flex-end"},
     cellRenderer: (props) => Price(props)
   }
