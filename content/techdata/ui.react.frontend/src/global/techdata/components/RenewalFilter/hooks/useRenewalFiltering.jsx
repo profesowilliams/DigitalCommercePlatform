@@ -19,8 +19,8 @@ export default function useRenewalFiltering() {
     } 
 
     function handleQueryFlowLogic(){
-        const initialRequest = shouldGoToFirstPage.current;
-        return {initialRequest};
+        const onFiltersClear = shouldGoToFirstPage.current;
+        return {onFiltersClear};
     }
 
     return { onAfterGridInit, onQueryChanged, handleQueryFlowLogic };

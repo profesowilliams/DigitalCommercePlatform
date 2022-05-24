@@ -114,14 +114,14 @@ function RenewalsGrid(props) {
   };
 
   const customRequestInterceptor = async (request) => {
-    let {initialRequest} = handleQueryFlowLogic()  
+    let {onFiltersClear} = handleQueryFlowLogic()  
     if (mapSortIdByPrice(secondLevelOptions, gridApiRef, request)) return;
     request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
     } else {    
-      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest});  
+      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear});  
     } 
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;

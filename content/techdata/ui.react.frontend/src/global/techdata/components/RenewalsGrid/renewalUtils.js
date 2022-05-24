@@ -163,6 +163,11 @@ function sortListToUrlStr (sortList){
     return sortList.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&');
 }
 
+function extractSortColAndDirection(sortDataRef = []){
+    const [sortParam] = sortDataRef;
+    return `${sortParam?.colId}:${sortParam?.sort}`;
+}
+
 function isRepeatedSortAction(previusSort, newSort){ 
     if (!previusSort || !newSort) return false;
     const previusSortList = previusSort.map(({colId, sort}) => ({colId, sort}));
@@ -171,11 +176,11 @@ function isRepeatedSortAction(previusSort, newSort){
     return isEqual
 }
 
-export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest}){
+export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear}){
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
     const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
-    const sortParam = sortListToUrlStr(hasSortChanged.current?.sortData);
+    const sortParam = extractSortColAndDirection(hasSortChanged.current?.sortData);
     mapUrl.set('SortBy',sortParam);
     mapUrl.delete('SortDirection')  
     const pageNumber = customPaginationRef.current?.pageNumber;
@@ -187,7 +192,7 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
         mapUrl.set(field,value);  
     }
     
-    if (initialRequest) mapUrl.set('PageNumber', 1);
+    if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
     previousSortChanged.current = hasSortChanged.current;
     return await usGet(finalUrl);
