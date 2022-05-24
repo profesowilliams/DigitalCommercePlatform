@@ -1,6 +1,73 @@
-.cmp-title {}
-.cmp-title__text {}
-.cmp-title__link {}
+@import'../../site/_variables.scss';
+@import '../../global/_mixins.scss';
+@import '../../global/styles/_font-face.scss';
+
+.cmp-marketing {
+   h1 {
+        font-family: $font-family-marketing;
+        font-size: 88px;    
+        margin: 0;    
+    }
+    h2 {
+        font-family: $font-family-marketing;
+        font-size: 33px;    
+        margin: 0;        
+    }
+    h3 {
+        font-family: $font-family-digital;
+        font-size: 20px;   
+        margin: 0;         
+    }
+    h4 {
+        font-family: $font-family-digital;
+        font-size: 20px;   
+        margin: 0;         
+    }
+    h5 {
+        font-family: $font-family-marketing;
+        font-size: 15px;    
+        margin: 0;        
+    }
+    h6 {
+        font-family: $font-family-marketing;
+        font-size: 13px;  
+        margin: 0;          
+    }
+}
+
+.cmp-digital {
+    h1 {
+        font-family: $font-family-digital;
+        font-size: 88px;    
+        margin: 0;    
+    }
+    h2 {
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        font-size: 33px;    
+        margin: 0;        
+    }
+    h3 {
+        font-family: $font-family-digital;
+        font-size: 20px;   
+        margin: 0;         
+    }
+    h4 {
+        font-family: $font-family-digital;
+        font-size: 20px;   
+        margin: 0;         
+    }
+    h5 {
+        font-family: $font-family-digital;
+        font-size: 15px;    
+        margin: 0;        
+    }
+    h6 {
+        font-family: $font-family-digital;
+        font-size: 13px;  
+        margin: 0;          
+    }
+}
 
 .dp-title{
   &__text{
