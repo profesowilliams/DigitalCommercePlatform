@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { FILTER_LOCAL_STORAGE_KEY, LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
+import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
@@ -121,10 +121,6 @@ function RenewalsGrid(props) {
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
     } else {    
-      /**
-       * Remove filter data saved in localstorage before get calls.
-       */
-      localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);  
       response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest});  
     } 
     const mappedResponse = mapServiceData(response);

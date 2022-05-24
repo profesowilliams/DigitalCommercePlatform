@@ -4,7 +4,7 @@ import { renewalsComputed } from "./RenewalsComputed";
 import { renewalsEffects } from "./RenewalsEffects";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { getLocalStorageData, hasLocalStorageData } from "../renewalUtils";
-import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 const DATE_DEFAULT_OPTIONS = [
   {
@@ -41,9 +41,9 @@ const DATE_DEFAULT_OPTIONS = [
 const INITIAL_STATE = {
   filterList: null,
   isFilterModalOpen: false,
-  appliedFilterCount: typeof(getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected) === 'string' ? 1 : 0,
-  dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected })),
-  dateSelected: getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected || null,
+  appliedFilterCount: 0,
+  dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: false })),
+  dateSelected: null,
   datePickerState: null,
   finalResults: [],
   pagination: {

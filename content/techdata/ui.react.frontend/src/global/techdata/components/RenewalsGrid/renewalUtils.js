@@ -1,5 +1,4 @@
 import { usGet, usPost } from "../../../../utils/api";
-import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
 
@@ -172,16 +171,23 @@ function isRepeatedSortAction(previusSort, newSort){
     return isEqual
 }
 
-export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, previousSortChanged}){
+export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest}){
+    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
+    const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
     const sortParam = sortListToUrlStr(hasSortChanged.current?.sortData);
     mapUrl.set('SortBy',sortParam);
     mapUrl.delete('SortDirection')  
+    const pageNumber = customPaginationRef.current?.pageNumber;
+    if (pageNumber !== 1 && !isDefaultSort) {
+        if (!isEqual) mapUrl.set('PageNumber',1);
+    }
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
         mapUrl.set(field,value);  
     }
     
+    if (initialRequest) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
     previousSortChanged.current = hasSortChanged.current;
     return await usGet(finalUrl);
