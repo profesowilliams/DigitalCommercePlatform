@@ -87,6 +87,9 @@
     &::placeholder {
       color: get-color(border-light-gray);
       font-style: italic;
+      @media (max-width: 1275px) {
+        font-size: rem(12.8px) !important;
+      }
     }
 
     @include mobile {
