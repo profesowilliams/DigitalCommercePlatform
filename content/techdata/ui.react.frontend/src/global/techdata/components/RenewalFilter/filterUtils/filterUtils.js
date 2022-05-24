@@ -15,8 +15,8 @@ function mapMultipleValues(uniqueField, filteredResult) {
 function mapToObject(dateList = []) {
   const [DueDateFrom, DueDateTo] = dateList;
   if ((DueDateFrom, DueDateTo)) return { DueDateFrom, DueDateTo };
-  if (!DueDateFrom) return { DueDateTo };
-  if (!DueDateTo) return { DueDateFrom };
+  if (!DueDateFrom) return { DueDateTo: DueDateTo || null };
+  if (!DueDateTo) return { DueDateFrom: DueDateFrom || null };
 }
 
 export function generateFilterFields(

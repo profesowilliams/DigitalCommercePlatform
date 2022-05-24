@@ -1,3 +1,5 @@
+import { setLocalStorageData } from "../renewalUtils";
+
 export const renewalsEffects = (set, get) => {
   function setFilterList(newFilterList = []) {
     set({ filterList: [...newFilterList] });
@@ -71,8 +73,11 @@ export const renewalsEffects = (set, get) => {
     });
   }
 
-  function setCustomState({key='', value }){
+  function setCustomState({key='', value }, options){
     set({[key]:value})
+    if (options && options.saveToLocal === true) {
+      setLocalStorageData(options.key, value);
+    }
   }
 
   return {

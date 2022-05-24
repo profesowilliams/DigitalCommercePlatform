@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
+import { FILTER_LOCAL_STORAGE_KEY, LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
@@ -20,7 +20,9 @@ import {
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
-import shallow from 'zustand/shallow'
+import shallow from 'zustand/shallow';
+import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
+import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./renewalUtils";
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
 
@@ -45,8 +47,7 @@ function RenewalsGrid(props) {
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
-
-
+  
   const { setToolTipData, setCustomState } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
@@ -67,11 +68,23 @@ function RenewalsGrid(props) {
 
   const searchCriteria = useRef({field:'',value:''});
 
-  const options = {
+  let options = {
     defaultSortingColumnKey: "dueDate",
     defaultSortingDirection: "desc",
   };
- 
+
+  let secondLevelOptions = {
+    colId: 'total',
+    sort: "desc",
+  }
+
+  if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+    options.defaultSortingColumnKey = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).colId;
+    options.defaultSortingDirection = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).sort;
+    secondLevelOptions.colId = null;
+    secondLevelOptions.sort = null;
+  }
+
   const redirectToShop = () => {
     if(!shopURL) return;
     window.location = shopURL;
@@ -107,7 +120,11 @@ function RenewalsGrid(props) {
     let response = {};
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
-    } else {      
+    } else {    
+      /**
+       * Remove filter data saved in localstorage before get calls.
+       */
+      localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);  
       response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest});  
     } 
     const mappedResponse = mapServiceData(response);
@@ -118,15 +135,19 @@ function RenewalsGrid(props) {
     if (response?.data?.content?.pageCount === response?.data?.content?.pageNumber)
       gridApiRef?.current.api.paginationSetPageSize(response?.data?.content?.items?.length);
 
-    setCustomState({ key: 'pagination', value: paginationValue })
+    setCustomState({ key: 'pagination', value: paginationValue }, {
+      key: PAGINATION_LOCAL_STORAGE_KEY,
+      saveToLocal: true,
+    })
     setCustomState({ key: 'refinements', value: refinementGroups })
     return mappedResponse;
   }
 
   const onSortChanged = (evt) => {
     const sortModelList = evt.columnApi.getColumnState();
-    const sortedModel = sortModelList.filter(o => !!o.sort);   
-    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;  
+    const sortedModel = sortModelList.filter(o => !!o.sort);
+    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
+    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
     const testRef =  sortedModel ? { sortData: sortedModel } : false;
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1) {
@@ -138,7 +159,13 @@ function RenewalsGrid(props) {
     }
   };
 
-  const _onAfterGridInit = (config) => {     
+  useEffect(() => {
+    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+      hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+    }
+  }, [])
+
+  const _onAfterGridInit = (config) => {
     const value = config.api;
     setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;

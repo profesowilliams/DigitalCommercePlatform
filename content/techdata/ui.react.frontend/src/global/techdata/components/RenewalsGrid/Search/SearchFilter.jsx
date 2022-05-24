@@ -6,10 +6,12 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { SEARCH_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
 import { If } from "../../../helpers/If";
 import Capsule from "../../Widgets/Capsule";
+import { getLocalStorageData, hasLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { SearchField } from "./SearchField";
 
@@ -26,24 +28,56 @@ function _SearchFilter(
   const [values, setValues] = useState({
     dropdown: "",
     input: "",
-    option: "",
-    label: "",
-  });
+    option: getInitialFieldState(),
+    label: getInitialLabelState(),
+  }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setSwitchDropdown] = useState(false);
   const [isResetVisible, setResetVisible] = useState(true);
   const { dropdown, input, option } = values;
   const node = useRef();
   const inputRef = useRef();
-  const initialInputVal = inputRef?.current?.value !== undefined;
+  const _initialInputVal = inputRef?.current?.value !== undefined;
   const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] =
-    useState(initialInputVal);
-  const initialEditViewVal = option.length !== 0;
-  const [isEditView, setIsEditView] = useState(initialEditViewVal);
-  const [searchTerm, setSearchTerm] = useState("");
+    useState(hasPreviousSearchTerm());
+  const _initialEditViewVal = option.length !== 0;
+  const [isEditView, setIsEditView] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(getInitialValueState());
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
-  const [inputValueState, setInputValueState] = useState("");
+  const [inputValueState, setInputValueState] = useState(getInitialValueState());
+
+  function getInitialValueState() {
+    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
+      return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value;
+    } else {
+      return "";
+    }
+  }
+
+  function getInitialFieldState() {
+    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
+      return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.field;
+    } else {
+      return "";
+    }
+  }
+
+  function getInitialLabelState() {
+    if (!hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
+      return "";
+    }
+
+    return options.filter(item => item.searchKey === getInitialFieldState())[0]?.searchLabel || "";
+  }
+
+  function hasPreviousSearchTerm() {
+    if (!hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
+      return false;
+    }
+
+    return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value !== '';
+  }
 
   useImperativeHandle(
     ref,
@@ -74,6 +108,10 @@ function _SearchFilter(
     }
     setSearchTerm("");
     clearValues();
+    setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
+      field: '',
+      value: '',
+    });
   };
 
   const changeHandler = (option) => {
@@ -139,6 +177,10 @@ function _SearchFilter(
     setSearchTerm(inputValue);
     setIsEditView(false);
     setInputValueState(inputValue);
+    setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
+      field: option,
+      value: inputValue,
+    });
     onQueryChanged();
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {

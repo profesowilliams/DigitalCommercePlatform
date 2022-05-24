@@ -23,6 +23,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     pageNumber,
   } = paginationData;
   const gridApi = useRenewalGridState((state) => state.gridApi);
+  const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
   const setPaginationData = useRenewalGridState(
     (state) => state.effects.setCustomState
   );
@@ -75,7 +76,10 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     if (pageNumber > pageCount - 1) return
     const value = { ...paginationData, pageNumber:pageNumber+1 };
     console.log('🚀value >>',value);
-    setPaginationData({ key: "pagination", value });
+    setPaginationData({ key: "pagination", value },  {
+      key: PAGINATION_LOCAL_STORAGE_KEY,
+      saveToLocal: true,
+    });
     if (isFilterDataPopulated.current) {  
       keepFilteringPayload(pageNumber+1)
     } else {    
@@ -86,7 +90,10 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const decrementHandler = () => {    
     if (pageNumber-1 <= 0) return
     const value = { ...paginationData, pageNumber:pageNumber-1 };
-    setPaginationData({ key: "pagination", value });   
+    setPaginationData({ key: "pagination", value }, {
+      key: PAGINATION_LOCAL_STORAGE_KEY,
+      saveToLocal: true,
+    });   
     if (isFilterDataPopulated.current) {  
       keepFilteringPayload(pageNumber-1)
     } else {    
@@ -96,7 +103,10 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
 
   const goToSpecificPage = (specificNumber) => {
     const value = { ...paginationData, pageNumber:specificNumber+1};
-    setPaginationData({ key: "pagination", value });
+    setPaginationData({ key: "pagination", value }, {
+      key: PAGINATION_LOCAL_STORAGE_KEY,
+      saveToLocal: true,
+    });
     if (isFilterDataPopulated.current) {  
       keepFilteringPayload(specificNumber+1)
     } else {    

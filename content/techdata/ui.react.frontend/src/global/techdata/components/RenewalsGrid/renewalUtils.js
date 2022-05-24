@@ -1,4 +1,5 @@
 import { usGet, usPost } from "../../../../utils/api";
+import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
 
@@ -171,22 +172,16 @@ function isRepeatedSortAction(previusSort, newSort){
     return isEqual
 }
 
-export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, initialRequest}){
-    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
-    const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
+export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, previousSortChanged}){
     const mapUrl = urlStrToMapStruc(request.url);  
     const sortParam = sortListToUrlStr(hasSortChanged.current?.sortData);
     mapUrl.set('SortBy',sortParam);
     mapUrl.delete('SortDirection')  
-    const pageNumber = customPaginationRef.current?.pageNumber;
-    if(pageNumber !== 1 && !isDefaultSort){      
-        if (!isEqual) mapUrl.set('PageNumber',1);
-    }
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
         mapUrl.set(field,value);  
     }
-    if (initialRequest) mapUrl.set('PageNumber', 1);
+    
     const finalUrl = mapStrucToUrlStr(mapUrl);
     previousSortChanged.current = hasSortChanged.current;
     return await usGet(finalUrl);
@@ -204,3 +199,29 @@ export function setPaginationData(mappedResponse,pageSize) {
 
 
 
+/**
+ * Set value to the key in localstorage.
+ * @param {string} key 
+ * @param {object} value 
+ */
+export function setLocalStorageData(key, value) {
+    localStorage.setItem(key || '', JSON.stringify(value) || '');
+}
+
+/**
+ * Check if a key is present in localstorage
+ * @param {string} key 
+ * @returns boolean
+ */
+export function hasLocalStorageData(key) {
+    return localStorage.getItem(key) !== null;
+}
+
+/**
+ * Get the value of passed `key` if it is present in localstorage
+ * @param {string} key 
+ * @returns boolean
+ */
+export function getLocalStorageData(key) {
+    return hasLocalStorageData(key) && JSON.parse(localStorage.getItem(key));
+}

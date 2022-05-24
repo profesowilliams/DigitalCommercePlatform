@@ -60,6 +60,10 @@ export const WHITE_LABEL_BACK_TO_QUOTE_DETAILS = 'back to quote details';
 
 // LocalStorage
 export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';
+export const SORT_LOCAL_STORAGE_KEY = 'sortLocalStorageData';
+export const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
+export const SEARCH_LOCAL_STORAGE_KEY = 'searchLocalStorageData';
+export const FILTER_LOCAL_STORAGE_KEY = 'filterLocalStorageData';
 
 export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to access this information';
 export const ERROR_TITLE_DEFAULT = 'Error';

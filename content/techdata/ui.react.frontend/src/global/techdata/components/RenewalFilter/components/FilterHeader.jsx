@@ -1,9 +1,11 @@
 import React from "react";
+import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import Button from "../../Widgets/Button";
 
 function FilterHeader({ onQueryChanged }) {
   const filterList = useRenewalGridState(state => state.filterList);
+  const paginationData = useRenewalGridState(state => state.pagination);
   const effects = useRenewalGridState(state => state.effects);
   const {setFilterList, clearDateFilters, toggleFilterModal, setAppliedFilterCount} = effects;
   const handleClearFilter = () => {
@@ -20,6 +22,13 @@ function FilterHeader({ onQueryChanged }) {
     toggleFilterModal();
     onQueryChanged({reset:true});
     setAppliedFilterCount();
+    effects.setCustomState(
+      { key: "pagination", value: { ...paginationData, pageNumber: 1 } },
+      {
+        key: PAGINATION_LOCAL_STORAGE_KEY,
+        saveToLocal: true,
+      }
+    );
   };
   return (
     <div className="filter-modal-container__header">
