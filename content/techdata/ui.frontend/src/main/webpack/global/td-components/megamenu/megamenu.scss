@@ -15,12 +15,13 @@
 
         .cmp-megamenu__primary {
             margin: 0;
-            padding: 0;
-            display: flex;
+            //padding: 0;
+            padding: 16px 0;
+/*            display: flex;
             -ms-flex-direction: row;
             flex-direction: row;
             justify-content: space-around;
-
+*/
             li {
                 display: inline;
                 padding: rem(16px) 0;
@@ -36,7 +37,7 @@
                 .cmp-megamenu__tab-text {
                     transition: border 0.3s;
                     padding: 0 rem(3px);
-                    // display: block;
+                    display: block;
                     min-height: rem(30px);
                     border-bottom: transparent rem(3px) solid;
                     text-decoration: none;
@@ -126,7 +127,6 @@
                     color: get-color(td-dark-blue);
                 }
             }
-
             // hide mobile navbar items for desktop
             .cmp-navigation__item--level-0 {
                 .cmp-navigation__group {
