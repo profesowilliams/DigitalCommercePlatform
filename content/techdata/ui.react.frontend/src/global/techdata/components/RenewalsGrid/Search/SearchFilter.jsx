@@ -300,7 +300,7 @@ function _SearchFilter(
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
             <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
-                <span className="cmp-renewal-search__text">search</span>
+                <span className="cmp-renewal-search__text">Search</span>
             </If>
             <i className="fa fa-search cmp-renewal-search__icon"></i>
           </div>
