@@ -1,0 +1,95 @@
+package com.tdscore.core.models;
+
+import com.adobe.cq.dam.cfm.ContentFragment;
+import com.adobe.cq.wcm.core.components.models.List;
+import com.adobe.cq.wcm.core.components.models.ListItem;
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
+import org.apache.commons.lang.StringUtils;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Via;
+import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.via.ResourceSuperType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+
+
+@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = TDList.RESOURCE_TYPE)
+public class TDList implements List {
+
+    private static final Logger log = LoggerFactory.getLogger(TDList.class);
+
+    public static final String RESOURCE_TYPE = "tds-core/components/list/v1/list";
+    private static final String PAGE_PROPERTY_CF_PATH = "cfPath";
+
+
+    @Self
+    private SlingHttpServletRequest request;
+
+    @Self
+    @Via(type = ResourceSuperType.class)
+    List delegateList;
+
+    @Override
+    public boolean showDescription(){
+        return delegateList.showDescription();
+    }
+
+    @Override
+    public boolean showModificationDate() {
+        return delegateList.showModificationDate();
+    }
+
+    @Override
+    public boolean linkItems()
+    {
+        return delegateList.linkItems();
+    }
+
+    @Override
+    public String getDateFormatString(){
+        return delegateList.getDateFormatString();
+    }
+    @Override
+    public String getExportedType() {
+        return delegateList.getExportedType();
+    }
+
+
+    @Override
+    public Collection<ListItem> getListItems() {
+        Collection<ListItem> listOfVendorItems = new ArrayList<>();
+        Resource resource = request.getResource();
+        PageManager pageManager = resource.getResourceResolver().adaptTo(PageManager.class);
+        Collection<ListItem> cfListItems = delegateList.getListItems();
+        log.debug(" Content Fragment List Item Size  = {}", cfListItems.size());
+        for (ListItem cfListItem : cfListItems) {
+            log.debug("Inside CF for loop = {}",  cfListItem.getPath());
+            Page page = pageManager.getPage(cfListItem.getPath());
+            ValueMap pageMap = page.getProperties();
+            if(pageMap.containsKey(PAGE_PROPERTY_CF_PATH)){
+                String cfPath = pageMap.get(PAGE_PROPERTY_CF_PATH, StringUtils.EMPTY);
+                log.debug(" Content Fragment Path  = {}", cfPath);
+                Resource cfResource = resource.getResourceResolver().getResource(cfPath);
+                ContentFragment contentFragment = cfResource.adaptTo(ContentFragment.class);
+                if(contentFragment != null){
+                    VendorListItem vi = VendorListItem.getVendorListItem(contentFragment, resource, cfListItem, StringUtils.EMPTY);
+                    listOfVendorItems.add(vi);
+                }
+            }else{
+                log.debug("CF path not found. Build List from child pages");
+                TDListItem tdListItem = TDListItem.getTDListItem(page.getContentResource(), cfListItem);
+                listOfVendorItems.add(tdListItem);
+            }
+
+        }
+        return listOfVendorItems;
+    }
+}
