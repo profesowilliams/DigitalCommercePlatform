@@ -96,6 +96,7 @@ function ConfigGrid({ data, gridProps }) {
             href={quotePreview.renewalsUrl || "#"}
             underline="none"
           >
+            <i className="fas fa-chevron-left"></i>
             {quotePreview.renewalsUrlLabel || "Back to all Renewals"}
           </Link>
           <img className="vendorLogo" src={vendorLogo} alt="vendor logo" />

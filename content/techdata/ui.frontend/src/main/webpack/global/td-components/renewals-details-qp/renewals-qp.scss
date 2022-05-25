@@ -19,9 +19,7 @@
       .back-to-renewal {
         color: get-color(brand-text-gray);
         font-size: 14px;
-        &::before {
-          content: '\f053';
-          font-family: 'Font Awesome 5 Free';
+        .fa-chevron-left {
           font-size: 14px;
           margin-right: 5px;
         }
