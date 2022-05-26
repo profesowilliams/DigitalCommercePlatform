@@ -32,7 +32,7 @@ const columnDefs = [
     autoHeight: true
   },
   {
-    headerName: "List Price (USD)",
+    headerName: "List Price \n(USD)",
     field: "unitListPrice",
     sortable: false,
     width: "100px",
@@ -40,7 +40,7 @@ const columnDefs = [
     autoHeight: true
   },
   {
-    headerName: "% off list price",
+    headerName: "% off list \nprice",
     field: "value",
     sortable: false,
     width: "100px",

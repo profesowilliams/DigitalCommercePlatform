@@ -98,7 +98,8 @@
         height: 55px !important;
       }
       &-cell {
-        padding-right: 5px;
+        padding: 0 5px 10px 0;
+        min-width: 90px;
       }
     }
   }
