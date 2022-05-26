@@ -1,7 +1,13 @@
+// TODO: I don't think these deps are needed. Let's remove if it doesn't break anything.
+// @import "../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+// @import '../../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+// @import '../../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import 'variables';
+@import 'variables/color-variables';
 @import 'variables/typography';
 @import 'mixins';
 @import 'include-media/dist/_include-media.scss';
+@import 'sass-rem/_rem.scss';
 @import 'normalize-scss';
 @include normalize();
 @import './styles/helpers/*.scss';

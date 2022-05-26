@@ -12,14 +12,6 @@
 	src: url("#{$font-digital-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf"),
 		url("#{$font-digital-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf");
 }
-
-
-@mixin fontdef($font-awesome-path, $FontType: "Regular") {
-	src: url("#{$font-awesome-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf"),
-		url("#{$font-awesome-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf");
-}
-
-
 @mixin font-awesome-custom-icon {
   display: inline-block;
   font-style: normal;

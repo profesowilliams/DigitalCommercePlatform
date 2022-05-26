@@ -4,7 +4,7 @@
 
 
 .cmp-marketing {
-   h1 {
+    h1 {
         font-family: $font-family-marketing;
         font-size: 88px;    
         margin: 0;    
@@ -79,5 +79,69 @@
     }
     &--center {
         text-align: center;
+    }
+}
+
+.cmp-primary-palette {
+    &--teal {
+        background-color: map-get($primary-color-palette, "teal");
+        color:  map-get($primary-color-palette, "white-secondary");
+    }
+    &--deep-teal {
+        background-color: map-get($primary-color-palette, "deep-teal");
+        color:  map-get($primary-color-palette, "white-secondary");
+    }
+    &--aqua {
+        background-color: map-get($primary-color-palette, "aqua");
+        color:  map-get($primary-color-palette, "white-secondary");
+    }
+    &--chartreuse {
+        background-color: map-get($primary-color-palette, "chartreuse");
+        color:  map-get($primary-color-palette, "black");
+    }
+    &--black {
+        background-color: map-get($primary-color-palette, "black");
+        color:  map-get($primary-color-palette, "white-secondary");
+    }
+    &--cool-gray-8 {
+        background-color: map-get($primary-color-palette, "cool-gray-8");
+        color:  map-get($primary-color-palette, "white-secondary");
+    }
+    &--cool-gray-10 {
+        background-color: map-get($primary-color-palette, "cool-gray-10");
+        color:  map-get($primary-color-palette, "white-secondary");
+    }
+    &--white-secondary {
+        background-color: map-get($primary-color-palette, "white-secondary");
+        color:  map-get($primary-color-palette, "black");
+    }
+}
+
+
+
+.cmp-secondary-palette {
+    &--steel-blue {
+        background-color: map-get($secondary-color-palette, "steel-blue");
+        color:  map-get($secondary-color-palette, "white-secondary");
+    }
+    &--navy {
+        background-color: map-get($secondary-color-palette, "navy");
+        color:  map-get($secondary-color-palette, "white-secondary");
+    }
+    &--copper {
+        background-color: map-get($secondary-color-palette, "copper");
+        color:  map-get($secondary-color-palette, "white-secondary");
+    }
+    &--green {
+        background-color: map-get($secondary-color-palette, "green");
+        color:  map-get($secondary-color-palette, "white-secondary");
+    }
+    &--stone {
+        background-color: map-get($secondary-color-palette, "stone");
+        color:  map-get($secondary-color-palette, "white-secondary");
+    }
+    &--cool-gray-1 {
+        background-color: map-get($secondary-color-palette, "white-secondary");
+        color:  map-get($secondary-color-palette, "black");
     }
 }

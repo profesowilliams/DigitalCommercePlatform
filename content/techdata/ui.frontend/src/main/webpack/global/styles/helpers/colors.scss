@@ -1,4 +1,5 @@
 @function get-color($base, $shade: base) {
-  $color: map-get($color-palette, $base);
-  @return $color;
-}
+    $color: map-get($color-palette, $base);
+    @return $color;
+  }
+  

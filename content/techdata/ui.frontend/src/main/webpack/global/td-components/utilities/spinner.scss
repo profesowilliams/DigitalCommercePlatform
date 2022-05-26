@@ -4,7 +4,7 @@
       }
   }
 
-  @mixin spinner($width, $height, $dot-grith, $dot-size, $color: #555555) {
+  @mixin spinner($width, $height, $dot-grith, $dot-size, $color: get-color(text-light-charcoal)) {
 
       position: relative;
       display: inline-block;
@@ -23,13 +23,13 @@
           content: '';
           position: absolute;
           top: 0;
-          left: calc((($width) - ($dot-size)) / 2);
+          left: (($width)-($dot-size))/2;
           width: $dot-size;
           height: $dot-grith;
           border-radius: 50%;
           background: lighten($color, 50%);
           box-shadow: 0 ($height)-($dot-grith) lighten($color, 60%);
-          transform-origin: calc($height / 2);
+          transform-origin: 50% $height/2;
       }
 
       &:before {
