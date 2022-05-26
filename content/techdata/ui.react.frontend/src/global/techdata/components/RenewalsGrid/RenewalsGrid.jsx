@@ -135,7 +135,10 @@ function RenewalsGrid(props) {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,
     })
-    setCustomState({ key: 'refinements', value: refinementGroups })
+    if (refinementGroups) {
+      setCustomState({ key: 'refinements', value: refinementGroups });
+    }
+
     return mappedResponse;
   }
 

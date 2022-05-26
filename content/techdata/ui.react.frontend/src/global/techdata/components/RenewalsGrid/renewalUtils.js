@@ -39,7 +39,7 @@ export function mapServiceData(response) {
     const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
     const refinementGroups =
-        mappedResponse?.data?.content?.refinementGroups ?? "thomas";
+        mappedResponse?.data?.content?.refinementGroups;
 
     if (mappedResponse.status !== 200 && !mappedResponse.data) {
         return {
