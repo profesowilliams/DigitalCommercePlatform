@@ -5,14 +5,14 @@
     <ul class="cmp-list">
         <sly data-sly-list.item="${listUse.listItems}">
             <li class="cmp-list__item">
-                <sly data-sly-test="${item.link}">
-                    <article data-sly-use.urlHelper="${'../common/urlHelper.js' @ destinationPage=item.link}">
+                <sly data-sly-test="${item.link.url}">
+                    <article data-sly-use.urlHelper="${'../common/urlHelper.js' @ destinationPage=item.link.url}">
                         <a href="${urlHelper.url @ context='html'}" class="cmp-list__item-link">
                             <span class="cmp-list__item-title">${item.title}</span>
                         </a>
                     </article>
                 </sly>
-                <sly data-sly-test="${!item.link}">
+                <sly data-sly-test="${!item.link.url}">
                     <article>
                         <a class="cmp-list__item-link cmp-list__item-link-inactive">
                             <span class="cmp-list__item-title">${item.title}</span>
