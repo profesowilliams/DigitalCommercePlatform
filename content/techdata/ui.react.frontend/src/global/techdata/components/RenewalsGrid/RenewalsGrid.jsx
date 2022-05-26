@@ -13,7 +13,7 @@ import { getColumnDefinitions } from "./Columns/GenericColumnTypes";
 import RenewalDetailRenderers from "./Columns/RenewalDetailRenderers";
 import {
   addCurrentPageNumber, isFilterPostRequest,
-  mapServiceData, secondLevelOptions,
+  mapServiceData, 
   mapSortIdByPrice,
   nonFilteredOnSorting, preserveFilterinOnSorting,
   setPaginationData, isFirstTimeSortParameters
@@ -114,8 +114,7 @@ function RenewalsGrid(props) {
   };
 
   const customRequestInterceptor = async (request) => {
-    let {onFiltersClear} = handleQueryFlowLogic()  
-    if (mapSortIdByPrice(secondLevelOptions, gridApiRef, request)) return;
+    const {onFiltersClear} = handleQueryFlowLogic();     
     request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
@@ -169,7 +168,7 @@ function RenewalsGrid(props) {
     setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;
     onAfterGridInit(config);    
-    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions)
+    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current)
     const columnState =  {
       state: isDefaultSort ? [
         {
@@ -237,8 +236,9 @@ function RenewalsGrid(props) {
       show: false,
     });
   }
+
   return (
-    <section>
+    <section>        
       <div className="cmp-renewals-subheader">
         <CustomRenewalPagination
           onQueryChanged={onQueryChanged}
@@ -249,7 +249,7 @@ function RenewalsGrid(props) {
             options={searchOptionsList}
             onQueryChanged={onQueryChanged}
             ref={searchCriteria}
-          />
+          />        
           <VerticalSeparator />
           <RenewalFilter
             aemData={componentProp}

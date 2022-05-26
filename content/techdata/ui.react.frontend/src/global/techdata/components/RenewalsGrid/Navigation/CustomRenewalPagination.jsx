@@ -193,7 +193,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           />
           <span>of</span>
           <span>{pageCount}</span>
-        </div>
+        </div>      
         <button
           className={`move-button${
             pageNumber === pageCount ? "__disabled" : ""

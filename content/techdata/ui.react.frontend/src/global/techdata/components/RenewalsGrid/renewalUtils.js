@@ -10,7 +10,8 @@ export  const secondLevelOptions = {
 
   let sortParamList = [];
 
-  export function isFirstTimeSortParameters(sortingList,{colId}){
+  export function isFirstTimeSortParameters(sortingList){
+    const {colId} = secondLevelOptions;
     if ( !sortingList ) return true;
     const { sortData } = sortingList;        
     const colIdList = sortData.map(s => s.colId);
@@ -65,7 +66,7 @@ export function mapServiceData(response) {
     return mappedResponse;
 }
 
-export function mapSortIdByPrice(secondLevelOptions, gridApiRef, request) {
+export function mapSortIdByPrice(gridApiRef, request) {
     if (request.url.includes("SortBy=id")) {
         gridApiRef.current.columnApi.applyColumnState({
             state: [{ ...secondLevelOptions, sort: "asc" }],
@@ -164,8 +165,11 @@ function sortListToUrlStr (sortList){
 }
 
 function extractSortColAndDirection(sortDataRef = []){
-    const [sortParam] = sortDataRef;
-    return `${sortParam?.colId}:${sortParam?.sort}`;
+    const [sortParam] = sortDataRef;   
+    return {
+        isColReseted: !sortParam?.colId || !sortParam?.sort,
+        sortStrValue: `${sortParam?.colId}:${sortParam?.sort}`
+    }
 }
 
 function isRepeatedSortAction(previusSort, newSort){ 
@@ -180,8 +184,9 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
     const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
-    const sortParam = extractSortColAndDirection(hasSortChanged.current?.sortData);
-    mapUrl.set('SortBy',sortParam);
+    const {sortStrValue, isColReseted} = extractSortColAndDirection(hasSortChanged.current?.sortData);
+    mapUrl.set('SortBy',sortStrValue);
+    if (isColReseted) mapUrl.delete('SortBy');
     mapUrl.delete('SortDirection')  
     const pageNumber = customPaginationRef.current?.pageNumber;
     if (pageNumber !== 1 && !isDefaultSort) {
@@ -190,11 +195,10 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
         mapUrl.set(field,value);  
-    }
-    
+    }    
     if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
-    previousSortChanged.current = hasSortChanged.current;
+    previousSortChanged.current = hasSortChanged.current;   
     return await usGet(finalUrl);
 }
 
