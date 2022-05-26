@@ -16,7 +16,7 @@ const dueIconsMapped = (days) => {
 };
 
 function DueDateDayColumn({ columnValue }) {
-  const days = differenceInDays(new Date(columnValue), new Date());
+  const days = columnValue;
   return (
     <div className="cmp-due-date-day-column"> 
       {dueIconsMapped(parseInt(days))}

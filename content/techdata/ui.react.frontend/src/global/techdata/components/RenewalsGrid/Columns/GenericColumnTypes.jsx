@@ -25,7 +25,7 @@ const columnFieldsMap = (definition, eventProps) => {
     endUser: value?.name,
     vendor: `${value?.name} : ${data?.programName}`,
     renewedduration: <ContractColumn data={data} eventProps={eventProps} />,
-    dueDays: <DueDateDayColumn columnValue={data?.dueDate} />,
+    dueDays: <DueDateDayColumn columnValue={data?.dueDays} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
     total: <PriceColumn columnValue={data?.renewal?.total} />,
     agreementNumber: data?.agreementNumber,
