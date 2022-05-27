@@ -354,6 +354,7 @@ const SignIn = (props) => {
   return (
     <div className="cmp-sign-in">
       <div className="cmp-sign-in-option">
+      <div className="cmp-sign-in-middle-div"></div>
         {requested ? (
           "Loading..."
         ) : userDataCheck !== null ? (

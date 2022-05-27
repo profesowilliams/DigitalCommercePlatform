@@ -42,6 +42,16 @@
     }
   }
 
+  &-middle-div{
+    z-index: 9999;
+    position: absolute;
+    top: 30px;
+    right: 1px;
+    white-space: nowrap;
+    min-width: 200px;
+    min-height: 20px;
+  }
+
   &-option {
     display: inline-block;
     position: relative;
@@ -121,7 +131,7 @@
     box-sizing: border-box;
     padding: 0 $offset-sm;
     position: absolute;
-    top: 30px !important;
+    top: 47px;
     right: 1px;
     white-space: nowrap;
     min-width: 200px;
