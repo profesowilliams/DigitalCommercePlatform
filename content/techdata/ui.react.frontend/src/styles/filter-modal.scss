@@ -8,14 +8,14 @@
   z-index: 9999;
   .filter-modal-container {
     &__popup {
-      height: 100vh;
+      height: 85vh;
       width: 472px;
       border-radius: 4px 0 0 4px;
       background-color: #ffffff;
       // box-shadow: 0 2px 15px 0 rgb(0 0 0 / 26%);
       position: absolute;
       right: 0;
-      top: 0;
+      top: 143px;
       padding-top: 20px;
       overflow-y: auto;
       overflow-x: hidden;
@@ -24,7 +24,7 @@
     }
     &__close {
       position: absolute;
-      top: 0;
+      top: 150px;
       z-index: 1;
       right: 28rem;
       background-color: transparent;
