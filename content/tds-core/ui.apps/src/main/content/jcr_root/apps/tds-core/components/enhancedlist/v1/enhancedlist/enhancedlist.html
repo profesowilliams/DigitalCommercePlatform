@@ -6,7 +6,7 @@
         <sly data-sly-list.item="${listUse.listItems}">
             <li class="cmp-list__item">
                 <sly data-sly-test="${item.link.url}">
-                    <article data-sly-use.urlHelper="${'../common/urlHelper.js' @ destinationPage=item.link.url}">
+                    <article data-sly-use.urlHelper="${'/apps/tds-core/components/common/urlHelper.js' @ destinationPage=item.link.url}">
                         <a href="${urlHelper.url @ context='html'}" class="cmp-list__item-link">
                             <span class="cmp-list__item-title">${item.title}</span>
                         </a>

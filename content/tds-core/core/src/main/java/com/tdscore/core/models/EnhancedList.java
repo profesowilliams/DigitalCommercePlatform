@@ -2,7 +2,6 @@ package com.tdscore.core.models;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
-import com.adobe.cq.wcm.core.components.commons.link.Link;
 import com.adobe.cq.wcm.core.components.models.List;
 import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.day.cq.wcm.api.Page;
@@ -24,12 +23,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = EnhancedList.RESOURCE_TYPE)
+@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = {EnhancedList.RESOURCE_TYPE, EnhancedList.SITE_RESOURCE_TYPE})
 public class EnhancedList implements List {
 
     private static final Logger log = LoggerFactory.getLogger(EnhancedList.class);
 
-    public static final String RESOURCE_TYPE = "techdata/components/enhancedlist";
+    public static final String RESOURCE_TYPE = "tds-core/components/enhancedlist/v1/enhancedlist";
+    public static final String SITE_RESOURCE_TYPE = "tds-site/components/enhancedlist";
     private static final String PN_VENDOR_PRODUCT_LINK = "vendor-product-link";
     private static final String PAGE_PROPERTY_CF_PATH = "cfPath";
     @Self
@@ -54,18 +54,20 @@ public class EnhancedList implements List {
         for (ListItem brandListItem : brandListItems) {
             log.debug("Inside brandListItem for loop = {}",  brandListItem.getPath());
             Page page = pageManager.getPage(brandListItem.getPath());
-            ValueMap pageMap = page.getProperties();
-            EnhancedListItem item = new EnhancedListItem();
-            item.setTitle(page.getTitle());
-            EnhancedLink pageLinK = new EnhancedLink();
-            if("true".equals(linkItems) && "srpPage".equals(urlType)){
-                pageLinK.setUrl(srpPageLink(pageMap, resource));
-                item.setLink(pageLinK);
-            } else if (linkItems.equals("true")){
-                pageLinK.setUrl(page.getPath());
-                item.setLink(pageLinK);
+            if(null != page) {
+                ValueMap pageMap = page.getProperties();
+                EnhancedListItem item = new EnhancedListItem();
+                item.setTitle(page.getTitle());
+                EnhancedLink pageLinK = new EnhancedLink();
+                if("true".equals(linkItems) && "srpPage".equals(urlType)){
+                    pageLinK.setUrl(srpPageLink(pageMap, resource));
+                    item.setLink(pageLinK);
+                } else if (linkItems.equals("true")){
+                    pageLinK.setUrl(page.getPath());
+                    item.setLink(pageLinK);
+                }
+                listOfBrandItems.add(item);
             }
-            listOfBrandItems.add(item);
         }
         return listOfBrandItems;
     }
