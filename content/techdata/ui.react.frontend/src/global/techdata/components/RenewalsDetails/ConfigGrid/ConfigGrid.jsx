@@ -50,15 +50,13 @@ function GridHeader({ gridProps, data }) {
         {gridProps.lineItemDetailsLabel}
       </span>
       <div className="cmp-renewal-preview__download">
-        <button onClick={downloadPDF}>
-          <span className="separator">{gridProps.pdf || "Export PDF"}</span>
-        </button>
         <button onClick={downloadXLS}>
-          <span>
-            {gridProps?.xls
-              ? `Export ${gridProps?.menuExcelExport}`
-              : "Export XLS"}
+          <span className="separator">
+            {gridProps?.productLines?.downloadXLSLabel || "Export XLS"}
           </span>
+        </button>
+        <button onClick={downloadPDF}>
+          <span>{gridProps?.productLines?.downloadPDFLabel || "Export PDF"}</span>
         </button>
         {/* These buttons are going to be added in a near future, so by now i'll left them commented, and also add the 'separator' class to the xls button */}
         {/* <button>
