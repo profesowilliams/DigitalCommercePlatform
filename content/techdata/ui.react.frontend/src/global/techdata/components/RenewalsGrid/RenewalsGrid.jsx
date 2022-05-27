@@ -47,6 +47,7 @@ function RenewalsGrid(props) {
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
+  const firstAPICall = useRef(true);
   
   const { setToolTipData, setCustomState } = effects;
 
@@ -120,7 +121,7 @@ function RenewalsGrid(props) {
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
     } else {    
-      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear});  
+      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear, firstAPICall});
     } 
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;

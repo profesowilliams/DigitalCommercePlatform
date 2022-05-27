@@ -180,7 +180,7 @@ function isRepeatedSortAction(previusSort, newSort){
     return isEqual
 }
 
-export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear}){
+export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear, firstAPICall}){
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
     const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
@@ -189,7 +189,9 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     if (isColReseted) mapUrl.delete('SortBy');
     mapUrl.delete('SortDirection')  
     const pageNumber = customPaginationRef.current?.pageNumber;
-    if (pageNumber !== 1 && !isDefaultSort) {
+    const isNotFirstAPICall = firstAPICall.current === false;
+
+    if (pageNumber !== 1 && !isDefaultSort && isNotFirstAPICall) {
         if (!isEqual) mapUrl.set('PageNumber',1);
     }
     if (searchCriteria.current?.field) {
@@ -198,7 +200,8 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     }    
     if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
-    previousSortChanged.current = hasSortChanged.current;   
+    previousSortChanged.current = hasSortChanged.current;
+    firstAPICall.current = false;
     return await usGet(finalUrl);
 }
 
