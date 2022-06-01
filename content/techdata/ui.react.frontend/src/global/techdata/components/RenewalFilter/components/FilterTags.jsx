@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
-import capitalizeFirstLetter, { getDayMonthYear } from "../../../../../utils/utils";
+import capitalizeFirstLetter, {
+  getDayMonthYear,
+} from "../../../../../utils/utils";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState((state) => state.datePickerState);
@@ -25,11 +27,16 @@ function CustomDatePill({ clearDateFilters }) {
 
 function FilterTags() {
   const [showMore, setShowMore] = useState(false);
-  const filterList = useRenewalGridState(state => state.filterList);
+  const filterList = useRenewalGridState((state) => state.filterList);
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
-  const effects = useRenewalGridState(state => state.effects);
+  const effects = useRenewalGridState((state) => state.effects);
   const { setFilterList, clearDateFilters } = effects;
 
+  const hasAnyFilterSelected = () => {
+    const nochildIds = filterList.filter(filter => !filter.childIds.length);
+    return nochildIds.some((filter) => filter.checked);
+  }
+  
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
@@ -91,48 +98,50 @@ function FilterTags() {
   };
 
   return (
-    <div className={`filter-tags-container ${showMore ? "active" : ""}`}>
-      <span onClick={handleShowMore} className="filter-tags-more"></span>
-      {filterList &&
-        filterList.map((filter, index) => {
-          if (filter.childIds?.length === 0 && filter.checked) {
-            return (
-              <div className="filter-tags" key={index}>
-                <span className="filter-tags__title" key={index}>
-                  {filter.title}{" "}
-                </span>
-                <span onClick={() => handleTagsCloseClick(filter)}>
-                  <i className="fas fa-times filter-tags__close"></i>
-                </span>
-              </div>
-            );
-          } else if (filter.field === "ProgramName" && filter.checked) {
-            return (
-              <div className="filter-tags" key={index}>
-                <span className="filter-tags__title" key={index}>
-                  {filter.title}{" "}
-                </span>
-                <span onClick={() => handleTagsCloseClick(filter)}>
-                  <i className="fas fa-times filter-tags__close"></i>
-                </span>
-              </div>
-            );
-          }
-        })}
-      <If
-        condition={dateSelected && dateSelected !== "custom"}
-        Else={<CustomDatePill clearDateFilters={clearDateFilters} />}
-      >
-        <div className="filter-tags">
-          <span className="filter-tags__title">
-            {formatDatePill(dateSelected)}{" "}
-          </span>
-          <span onClick={() => clearDateFilters()}>
-            <i className="fas fa-times filter-tags__close"></i>
-          </span>
-        </div>
-      </If>
-    </div>
+    <If condition={hasAnyFilterSelected()}>
+      <div className={`filter-tags-container ${showMore ? "active" : ""}`}>
+        <span onClick={handleShowMore} className="filter-tags-more"></span>
+        {filterList &&
+          filterList.map((filter, index) => {
+            if (filter.childIds?.length === 0 && filter.checked) {
+              return (
+                <div className="filter-tags" key={index}>
+                  <span className="filter-tags__title" key={index}>
+                    {filter.title}{" "}
+                  </span>
+                  <span onClick={() => handleTagsCloseClick(filter)}>
+                    <i className="fas fa-times filter-tags__close"></i>
+                  </span>
+                </div>
+              );
+            } else if (filter.field === "ProgramName" && filter.checked) {
+              return (
+                <div className="filter-tags" key={index}>
+                  <span className="filter-tags__title" key={index}>
+                    {filter.title}{" "}
+                  </span>
+                  <span onClick={() => handleTagsCloseClick(filter)}>
+                    <i className="fas fa-times filter-tags__close"></i>
+                  </span>
+                </div>
+              );
+            }
+          })}
+        <If
+          condition={dateSelected && dateSelected !== "custom"}
+          Else={<CustomDatePill clearDateFilters={clearDateFilters} />}
+        >
+          <div className="filter-tags">
+            <span className="filter-tags__title">
+              {formatDatePill(dateSelected)}{" "}
+            </span>
+            <span onClick={() => clearDateFilters()}>
+              <i className="fas fa-times filter-tags__close"></i>
+            </span>
+          </div>
+        </If>
+      </div>
+    </If>
   );
 }
 

@@ -25,12 +25,13 @@ function _SearchFilter(
   { styleProps, options, callback, inputType, filterCounter, onQueryChanged },
   ref
 ) {
-  const [values, setValues] = useState({
+  const customSearchValues = {
     dropdown: "",
     input: "",
     option: getInitialFieldState(),
-    label: getInitialLabelState(),
-  }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
+    label: getInitialLabelState()
+  }
+  const [values, setValues] = useState({...customSearchValues}); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setSwitchDropdown] = useState(false);
   const [isResetVisible, setResetVisible] = useState(true);
@@ -43,10 +44,11 @@ function _SearchFilter(
   const _initialEditViewVal = option.length !== 0;
   const [isEditView, setIsEditView] = useState(false);
   const [searchTerm, setSearchTerm] = useState(getInitialValueState());
+  const [capsuleSearchValue, setCapsuleSearchValue] = useState(getInitialValueState());
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
-
+  const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
   function getInitialValueState() {
     if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value;
@@ -96,17 +98,18 @@ function _SearchFilter(
         });
       }
     }
+    setCapsuleValues(false)
   }
 
   const onReset = () => {
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
     if (searchTerm.length !== 0 && searchTriggered) {
-      setSearchTerm("");
-      onQueryChanged();
+      onQueryChanged();  
       setSwitchDropdown(false);
     }
     setSearchTerm("");
+    setCapsuleSearchValue("");
     clearValues();
     setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
       field: '',
@@ -175,6 +178,7 @@ function _SearchFilter(
     };
     setIsSearchCapsuleVisible(true);
     setSearchTerm(inputValue);
+    setCapsuleSearchValue(inputValue);
     setIsEditView(false);
     setInputValueState(inputValue);
     setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
@@ -189,6 +193,7 @@ function _SearchFilter(
       },
     });
     setSwitchDropdown(false);
+    setCapsuleValues({...values});
   }
 
   function fetchAll() {
@@ -225,7 +230,7 @@ function _SearchFilter(
       <If condition={isSearchCapsuleVisible}>
         <Capsule closeClick={handleCapsuleClose} hasCloseBtn={true}>
           <span onClick={handleCapsuleTextClick} className="td-capsule__text">
-            {`${values.label}: ${searchTerm || inputRef?.current?.value}`}
+            {`${capsuleValues.label}: ${capsuleSearchValue || inputRef?.current?.value}`}
           </span>
         </Capsule>
       </If>
@@ -240,22 +245,6 @@ function _SearchFilter(
         <div className="cmp-renewal-search">
           <div className="cmp-search-select-container">
             <div className="cmp-search-select-container__box">
-              {/* <div className="cmp-search-select-container__box-search-field">
-                <input
-                  className="inputStyle"
-                  autoFocus
-                  placeholder={`Enter a ${chosenFilter}`}
-                  ref={inputRef}
-                  onKeyDown={triggerSearchOnEnter}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <If condition={inputRef.current?.value}>
-                  <CloseIconWeighted
-                    onClick={() => (inputRef.current.value = "")}
-                  />
-                </If>
-              </div> */}
               <SearchField
                chosenFilter={values.label}
                inputRef={inputRef}
