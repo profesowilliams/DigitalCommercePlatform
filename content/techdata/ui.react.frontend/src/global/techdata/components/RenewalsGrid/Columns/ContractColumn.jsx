@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from ".././store/RenewalsStore";
+import { getLocalStorageData, hasLocalStorageData, setLocalStorageData } from "../renewalUtils";
 
 function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
@@ -20,8 +22,35 @@ function _ContractColumn({ data, eventProps }) {
     rowCollapsedIndexList?.includes(rowIndex) && setToggled(false);
   }, [rowCollapsedIndexList])
   
+  useEffect(() => {
+    getInitialToggleState();
+  }, []);
+
+  /**
+   * Gets the initial toggle value if it exist in local storage
+   * and set the initial toggle value to respective row.
+   * @returns void
+   */
+  function getInitialToggleState() {
+    if (hasLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
+      if (getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.detailRender !== "secondary")
+        return;
+
+      const localRowIndex = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.rowIndex;
+      if (eventProps.node.rowIndex === localRowIndex) {
+        eventProps.node.setExpanded(!isToggled);
+        setToggled(!isToggled);
+      }
+    }
+  }
+
   const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
   const hasOptions = data?.options && data?.options?.length > 0;
+
+  /**
+   * Triggered when the renewal plans option is toggled.
+   * @returns void
+   */
   const toggleExpandedRow = () => {
     if (!hasOptions) return;
     effects.setCustomState({ key: 'detailRender', value: 'secondary' })
@@ -31,12 +60,17 @@ function _ContractColumn({ data, eventProps }) {
     eventProps.api.forEachNode(node => {
       const currentNode = eventProps.node;      
       if (node?.rowIndex !== currentNode?.rowIndex){     
-          // node?.expanded && node.setExpanded(false);        
-          node.expanded = false;
-          rowCollapsedIndexList.push(node?.rowIndex);
-        }
-      });
+        // node?.expanded && node.setExpanded(false);        
+        node.expanded = false;
+        rowCollapsedIndexList.push(node?.rowIndex);
+      }
+    });
     effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
+    setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
+      detailRender: 'secondary',
+      rowCollapsedIndexList,
+      rowIndex: eventProps.node?.rowIndex,
+    });
   }
   const hasRenderStateTextFromPlanOptions = () => support && rowIndex == (renewalOptionState?.rowIndex -1);
 

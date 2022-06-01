@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import { getLocalStorageData, hasLocalStorageData, setLocalStorageData } from '../renewalUtils';
 import { useRenewalGridState } from '../store/RenewalsStore';
 
 const EllipsisIcon = (props) => (
@@ -19,6 +21,33 @@ function _RenewalActionColumn({ eventProps }) {
         const currentNode = eventProps.node; 
         rowCollapsedIndexList?.includes(currentNode.rowIndex) && setToggled(false);
       }, [rowCollapsedIndexList,eventProps.node,setToggled])
+
+  useEffect(() => {
+    getInitialToggleState();
+  }, []);
+
+  /**
+   * Gets the initial toggle value if it exist in local storage
+   * and set the initial toggle value to respective row.
+   * @returns void
+   */
+  function getInitialToggleState() {
+    if (hasLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
+      if (getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.detailRender !== "primary")
+        return;
+
+      const localRowIndex = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.rowIndex;
+      if (eventProps.node.rowIndex === localRowIndex) {
+        eventProps.node.setExpanded(!isToggled);
+        setToggled(!isToggled);
+      }
+    }
+  }
+
+    /**
+   * Triggered when the actions button is clicked.
+   * @returns void
+   */
     const toggleExpandedRow = () => {
         effects.setCustomState({ key: 'detailRender', value: 'primary' })
         eventProps.node.setExpanded(!isToggled);  
@@ -30,7 +59,12 @@ function _RenewalActionColumn({ eventProps }) {
               rowCollapsedIndexList.push(node?.rowIndex);
             }
         })        
-        effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList });    
+        effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList });
+        setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
+          detailRender: 'primary',
+          rowCollapsedIndexList,
+          rowIndex: eventProps.node?.rowIndex,
+        });
     }
     return (
         <>

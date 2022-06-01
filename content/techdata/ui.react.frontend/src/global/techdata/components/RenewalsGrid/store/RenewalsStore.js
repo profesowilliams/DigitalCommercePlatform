@@ -4,7 +4,7 @@ import { renewalsComputed } from "./RenewalsComputed";
 import { renewalsEffects } from "./RenewalsEffects";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
-import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 const DATE_DEFAULT_OPTIONS = [
   {
@@ -50,20 +50,8 @@ const INITIAL_STATE = {
     totalCounter: 0,
     stepBy: 25,
     currentPage: 1,
-    currentResultsInPage: (function() {
-      if (hasLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
-        return getLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY)?.currentResultsInPage;
-      } else {
-        return 0;
-      }
-    })(),
-    pageNumber: (function() {
-      if (hasLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
-        return getLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY)?.pageNumber;
-      } else {
-        return 1;
-      }
-    })(),
+    currentResultsInPage: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "currentResultsInPage", 0),
+    pageNumber: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "pageNumber", 1),
   },
   toolTipData: {
     value: '',
@@ -76,11 +64,28 @@ const INITIAL_STATE = {
   customEndDate:undefined,
   aemConfig:null,
   gridApi:null,
-  detailRender:'primary',
+  detailRender: getLocalValueOrDefault(PLANS_ACTIONS_LOCAL_STORAGE_KEY, "detailRender", "primary"),
   renewalOptionState:null,
   resetFilter:false,
   rowCollapsedIndexList:null
 };
+
+/**
+ * A function to check if a key exist in localstorage and return its value. If the
+ * key is not found, the default value passed as `otherwise` argument
+ * will be returned.
+ * @param {string} key LocalStorage key name
+ * @param {string} property Property that we intend to find in local storage key
+ * @param {string | number} otherwise a default return value if the check fails
+ * @returns Either the parsed Object or the value of otherwise argument.
+ */
+function getLocalValueOrDefault(key, property, otherwise) {
+  if (hasLocalStorageData(key)) {
+    return getLocalStorageData(key)[property];
+  } else {
+    return otherwise;
+  }
+}
 
 const store = (set, get, a) => ({
   ...INITIAL_STATE,
