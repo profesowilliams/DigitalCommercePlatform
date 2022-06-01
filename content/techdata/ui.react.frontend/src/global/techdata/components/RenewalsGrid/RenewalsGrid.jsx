@@ -16,7 +16,7 @@ import {
   mapServiceData, 
   mapSortIdByPrice,
   nonFilteredOnSorting, preserveFilterinOnSorting,
-  setPaginationData, isFirstTimeSortParameters
+  setPaginationData, isFirstTimeSortParameters, clearLocalStorageGridData, isFromRenewalDetailsPage
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -163,6 +163,12 @@ function RenewalsGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, [])
+
+  useEffect(() => {
+    if(!isFromRenewalDetailsPage()) {
+      clearLocalStorageGridData();
+    }
+  }, []);
 
   const _onAfterGridInit = (config) => {
     const value = config.api;

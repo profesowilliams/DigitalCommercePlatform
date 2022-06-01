@@ -3,7 +3,7 @@ import { renewalsComputed } from "./RenewalsComputed";
 // import { createTrackedSelector } from "react-tracked";
 import { renewalsEffects } from "./RenewalsEffects";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import { getLocalStorageData, hasLocalStorageData } from "../renewalUtils";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
 import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 const DATE_DEFAULT_OPTIONS = [
@@ -51,14 +51,14 @@ const INITIAL_STATE = {
     stepBy: 25,
     currentPage: 1,
     currentResultsInPage: (function() {
-      if (hasLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY)) {
+      if (hasLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
         return getLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY)?.currentResultsInPage;
       } else {
         return 0;
       }
     })(),
     pageNumber: (function() {
-      if (hasLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY)) {
+      if (hasLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
         return getLocalStorageData(PAGINATION_LOCAL_STORAGE_KEY)?.pageNumber;
       } else {
         return 1;

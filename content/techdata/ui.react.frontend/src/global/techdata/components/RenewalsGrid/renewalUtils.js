@@ -1,4 +1,5 @@
 import { usGet, usPost } from "../../../../utils/api";
+import { PAGINATION_LOCAL_STORAGE_KEY, SEARCH_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
 
@@ -242,4 +243,17 @@ export function hasLocalStorageData(key) {
  */
 export function getLocalStorageData(key) {
     return hasLocalStorageData(key) && JSON.parse(localStorage.getItem(key));
+}
+
+/**
+ * Removes the specified keys from localstorage
+ */
+export function clearLocalStorageGridData() {
+    localStorage.removeItem(SEARCH_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(PAGINATION_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(SORT_LOCAL_STORAGE_KEY);
+}
+
+export function isFromRenewalDetailsPage() {
+    return (document.referrer.split('?')[0])?.split('/')?.pop() === 'renewal-details.html';
 }
