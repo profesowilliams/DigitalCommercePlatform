@@ -80,7 +80,7 @@ const INITIAL_STATE = {
  * @returns Either the parsed Object or the value of otherwise argument.
  */
 function getLocalValueOrDefault(key, property, otherwise) {
-  if (hasLocalStorageData(key)) {
+  if (hasLocalStorageData(key) && isFromRenewalDetailsPage()) {
     return getLocalStorageData(key)[property];
   } else {
     return otherwise;
