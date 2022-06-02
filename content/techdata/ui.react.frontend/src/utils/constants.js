@@ -57,6 +57,7 @@ export const ADOBE_DATA_LAYER_ORDER_DETAILS_CLICKINFO_NAME_ACTION = 'Invoice';
 // Quote Details
 export const QUOTE_DETAILS_LOGO_LABEL_VALUE = 'logoLabel';
 export const WHITE_LABEL_BACK_TO_QUOTE_DETAILS = 'back to quote details';
+export const WHITE_LABEL_MARKUP_UNIT_PERCENTAGE = 'percentage';
 
 // LocalStorage
 export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';

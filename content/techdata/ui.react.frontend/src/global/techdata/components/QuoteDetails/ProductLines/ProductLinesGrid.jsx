@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Grid from "../../Grid/Grid";
 import ProductLinesChildGrid from "./ProductLinesChildGrid";
 import ProductLinesItemInformation from "../../QuotePreview/ProductLines/ProductLinesItemInformation";
@@ -7,7 +7,7 @@ import ProductLinesMarkupRow from "./ProductLinesMarkupRow";
 import isNotEmpty from "../../../helpers/IsNotNullOrEmpty";
 import { thousandSeparator } from "../../../helpers/formatting";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
-import { ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY } from "../../../../../utils/constants";
+import { ADOBE_DATA_LAYER_QUOTE_CHECKOUT_CATEGORY, WHITE_LABEL_MARKUP_UNIT_PERCENTAGE } from "../../../../../utils/constants";
 import { showAnnuity } from "../../../../../utils/utils";
 
 function ProductLinesGrid({
@@ -37,8 +37,7 @@ function ProductLinesGrid({
     };
   });
 
-  const mutableGridData = Object.assign([], gridData);
-
+  const [mutableGridData, setMutableGridData] = useState(Object.assign([], gridData));
   const [whiteLabelMode, setWhiteLabelMode] = useState(false);
 
   const gridConfig = (whiteLabelMode) => {
@@ -358,10 +357,34 @@ function ProductLinesGrid({
       setWhiteLabelMode(quoteOption.key === "whiteLabelQuote");
   }, [quoteOption]);
 
+  const getRowId = useCallback(function (params) {
+    return params.data.id;
+  }, []);
+
+  const onUpdateMutableGridData = useCallback(() => {
+    setMutableGridData(mutableGridData);
+  }, []);
+
+  const handleGlobalMarkupChange = (markupInfo) => {
+    mutableGridData.forEach(function (parent) {
+      parent.appliedMarkup = getComputedMarkup(parent.unitPrice, markupInfo);
+      parent.children.forEach(function (child) {
+        child.appliedMarkup = getComputedMarkup(child.unitPrice, markupInfo);
+      });
+    });  
+    onUpdateMutableGridData()    
+  }
+
+  const getComputedMarkup = (unitPrice, markupInfo) => {
+    return markupInfo.unit.key === WHITE_LABEL_MARKUP_UNIT_PERCENTAGE 
+      ? ((unitPrice * markupInfo.value) / 100)
+      : markupInfo.value;
+  }
+
   return (
     <section>
       {whiteLabelMode && (
-        <ProductLinesMarkupGlobal labels={labels} />
+        <ProductLinesMarkupGlobal onMarkupValueChanged={handleGlobalMarkupChange} labels={labels} />
       )}
       <div className="cmp-product-lines-grid">
         <section className="cmp-product-lines-grid__header">
@@ -393,6 +416,7 @@ function ProductLinesGrid({
           }}
           onExpandAnalytics={onExpandAnalytics}
           onCollapseAnalytics={onCollapseAnalytics}
+          getRowId={getRowId}
         />
       </div>
     </section>

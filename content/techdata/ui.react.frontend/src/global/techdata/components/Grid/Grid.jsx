@@ -33,6 +33,7 @@ function Grid(props) {
     onCellMouseOut,
     getDefaultCopyValue,
     suppressPaginationPanel = false,
+    getRowId,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -139,6 +140,7 @@ function Grid(props) {
       icons={icons}
       getContextMenuItems={getContextMenuItems}
       popupParent={popupParent}
+      getRowId={getRowId}
     >
       {filteredColumns.map((column) => {
         return (
