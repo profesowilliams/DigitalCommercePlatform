@@ -188,8 +188,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
         className={`cmp-sign-in-button clicked ${userId ? "active" : ""}`}
         ref={(o) => (refLogIn.current = o)}
         onClick={(e) => {
-          setIsSelected(e.type === 'click');
-          setShowMenu(true);
+          setIsSelected(e.type === 'click' && !showMenu);
+          setShowMenu(!showMenu);
         }}
         onKeyDown={(e) => {
           refCursor.current = -1;
