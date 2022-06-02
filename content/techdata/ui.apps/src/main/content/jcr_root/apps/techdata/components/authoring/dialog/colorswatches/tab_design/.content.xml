@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured">
+    <styletab
+        jcr:primaryType="nt:unstructured"
+        jcr:title="Styles"
+        sling:resourceType="granite/ui/components/coral/foundation/container"
+        margin="{Boolean}true">
+        <items jcr:primaryType="nt:unstructured">
+            <column
+                jcr:primaryType="nt:unstructured"
+                jcr:title="Styles"
+                sling:resourceType="granite/ui/components/coral/foundation/container"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <editstylealert
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/alert"
+                        size="S"
+                        text="Editing the styles can have a visual impact on existing components."
+                        variant="warning">
+                        <granite:rendercondition
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="cq/gui/components/authoring/dialog/style/renderconditions/isUsedPolicy"/>
+                    </editstylealert>
+                    <defaultcssclasses
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                        fieldDescription="Space separated CSS classes to apply when no styles are selected."
+                        fieldLabel="Default CSS Classes"
+                        name="./cq:styleDefaultClasses"/>
+                    <defaultelement
+                        granite:class="cq-DefaultElement-selection"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                        fieldDescription="Element to apply when no styles are selected."
+                        fieldLabel="Default Element"
+                        name="./cq:styleDefaultElement">
+                        <datasource
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="cq/gui/components/authoring/dialog/style/datasources/styleElements"/>
+                        <granite:rendercondition
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="cq/gui/components/authoring/dialog/style/renderconditions/hasStyleElements"/>
+                    </defaultelement>
+                    <allowedstyles
+                        granite:class="cq-AllowedStyles-multifield"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                        composite="{Boolean}true"
+                        fieldLabel="Allowed Styles">
+                        <field
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            name="./cq:styleGroups">
+                            <items jcr:primaryType="nt:unstructured">
+                                <stylegroupname
+                                    granite:class="cq-AllowedStyles-groupField"
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    emptyText="Group Name"
+                                    name="./cq:styleGroupLabel"/>
+                                <stylegroupmultiple
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                    checked="{Boolean}false"
+                                    fieldDescription="If checked, selection of multiple styles is possible for the group."
+                                    name="./cq:styleGroupMultiple"
+                                    text="Styles can be combined"
+                                    value="true"
+                                    wrapperClass="cq-AllowedStyles-groupField"/>
+                                <styles
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    composite="{Boolean}true"
+                                    fieldLabel="Styles"
+                                    wrapperClass="cq-AllowedStyles-styles">
+                                    <field
+                                        granite:class="cq-AllowedStyles-style"
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                                        name="./cq:styles">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <stylename
+                                                granite:class="cq-AllowedStyles-styleField"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                emptyText="Style Name"
+                                                name="cq:styleLabel"/>
+                                            <styleclasses
+                                                granite:class="cq-AllowedStyles-styleField"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                emptyText="CSS Classes"
+                                                name="cq:styleClasses"/>
+                                            <styleElement
+                                                granite:class="cq-AllowedStyles-styleField"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                emptyText="Element"
+                                                name="cq:styleElement">
+                                                <datasource
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="cq/gui/components/authoring/dialog/style/datasources/styleElements"/>
+                                                <granite:rendercondition
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="cq/gui/components/authoring/dialog/style/renderconditions/hasStyleElements"/>
+                                            </styleElement>
+                                            <styleID
+                                                granite:class="cq-AllowedStyles-styleId"
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                name="cq:styleId"/>
+                                        </items>
+                                    </field>
+                                </styles>
+                            </items>
+                        </field>
+                    </allowedstyles>
+                    <fontColorLabel
+                        granite:class="coral-Form-fieldlabel"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/text"
+                        text="Font Color"/>
+                    <fontColorEnabled
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                        name="./fontColorEnabled"
+                        text="Enable Font Color"
+                        value="{Boolean}true">
+                        <granite:data
+                            jcr:primaryType="nt:unstructured"
+                            cmp-dialog-policy-hook="fontColorEnabled"/>
+                    </fontColorEnabled>
+                    <fontColorSwatchesOnly
+                        granite:class="foundation-toggleable"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                        name="./fontColorSwatchesOnly"
+                        text="Swatches only"
+                        value="{Boolean}true">
+                        <granite:data
+                            jcr:primaryType="nt:unstructured"
+                            cmp-dialog-policy-hook="fontColorSwatchesOnly"/>
+                    </fontColorSwatchesOnly>
+                    <fontColorAllowedSwatches
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                        fieldDescription="The background color swatches that can be selected by an author."
+                        fieldLabel="Allowed Swatches"
+                        wrapperClass="foundation-toggleable">
+                        <field
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                            name="./allowedColorSwatches"
+                            showDefaultColors="{Boolean}false"
+                            showSwatches="{Boolean}false"/>
+                        <granite:data
+                            jcr:primaryType="nt:unstructured"
+                            cmp-dialog-policy-hook="fontColorAllowedSwatches"/>
+                    </fontColorAllowedSwatches>
+                </items>
+            </column>
+        </items>
+    </styletab>
+</jcr:root>

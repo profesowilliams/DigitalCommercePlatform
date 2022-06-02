@@ -1,5 +1,5 @@
 <!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2019 Adobe
+  ~ Copyright 2018 Adobe
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -13,19 +13,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<button
-	data-sly-use.button="com.adobe.cq.wcm.core.components.models.Button"
-	data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
-	data-sly-use.iconTemplate="icon.html"
-	data-sly-element="${button.link ? 'a' : 'button'}"
-	type="button"
-	id="${component.id}"
-	class="cmp-button"
-	href="${button.link}"
-	aria-label="${button.accessibilityLabel}"
-	data-cmp-clickable="${button.data ? true : false}"
-	data-cmp-data-layer="${button.data.json}"
->
-	<sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
-	<span data-sly-test="${button.text}" class="cmp-button__text" style="color: ${properties.fontColor @ context ='styleToken'}">${button.text}</span>
-</button>
+<div data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+     id="${component.id}"
+     class="cmp-separator">
+    <hr class="cmp-separator__horizontal-rule" style="border-top: 1px solid ${properties.fontColor @ context = 'styleToken'}"/>
+</div>
