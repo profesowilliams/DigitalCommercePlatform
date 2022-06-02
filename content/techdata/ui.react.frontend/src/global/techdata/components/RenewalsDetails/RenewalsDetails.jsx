@@ -33,8 +33,8 @@ function RenewalsDetails(props) {
 
   useEffect(() => {
     // Remove Dashboard separator(s) from only Renewal Details page
-    var separatorList = document.querySelector(".renewalsdetails").parentNode.parentNode.parentNode.parentNode.getElementsByClassName('separator dp-separator--hidden');
-    [...separatorList].forEach(div => div.style.display = "none");
+    var separatorList = document.querySelector(".renewalsdetails")?.parentNode?.parentNode?.parentNode?.parentNode?.getElementsByClassName('separator dp-separator--hidden');
+    separatorList && Object.prototype.toString.call(separatorList) === '[object HTMLCollection]' && separatorList.length && [...separatorList].forEach(div => div.style.display = "none");
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
     if(isAuthormodeAEM()) return; // Validation for Author ENV
