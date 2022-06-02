@@ -2,3 +2,67 @@
   $color: map-get($color-palette, $base);
   @return $color;
 }
+
+//text colors
+.cmp-text {
+  &__teal {
+    color: map-get($color-palette, "teal");
+  }
+  &__deep-teal {
+    color: get-color(deep-teal);
+  }
+  &__steel-blue {
+    color: get-color(steel-blue);
+  }
+  &__green {
+    color:  map-get($color-palette, "green");
+  }
+  &__stone {
+    color: get-color(stone);
+  }
+  &__aqua {
+    color:  map-get($color-palette, "aqua");
+  }
+  &__cool-gray-1 {
+    color: get-color(cool-gray-1);
+  }
+  &__black {
+    color:  map-get($color-palette, "black");
+  }
+  &__white {
+    color:  map-get($color-palette, "white");
+  }
+  
+}
+
+// background colors
+.cmp-background {
+  &__teal {
+    background-color: map-get($color-palette, "teal");
+  }
+  &__deep-teal {
+    background-color: get-color(deep-teal);
+  }
+  &__steel-blue {
+    background-color: get-color(steel-blue);
+  }
+  &__green {
+    background-color:  map-get($color-palette, "green");
+  }
+  &__stone {
+    background-color: get-color(stone);
+  }
+  &__aqua {
+    background-color:  map-get($color-palette, "aqua");
+  }
+  &__cool-gray-1 {
+    background-color: get-color(cool-gray-1);
+  }
+  &__black {
+    background-color:  map-get($color-palette, "black");
+  }
+  &__white {
+    background-color:  map-get($color-palette, "white");
+  }
+  
+}

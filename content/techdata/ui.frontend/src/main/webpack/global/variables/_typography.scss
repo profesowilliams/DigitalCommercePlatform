@@ -2,71 +2,131 @@
 @import '../_mixins.scss';
 @import '../styles/_font-face.scss';
 
+.cmp-tds-title {
+        h1 {
+            font-size: rem(40px);
+            line-height: rem(61px);
+
+            &.large {
+                font-size: rem(66px);
+            }
+        }
+
+        h2 {
+            font-size: rem(32px);
+            line-height: rem(48px);
+        }
+
+        h3 {
+            font-size: rem(28px);
+            line-height: rem(42px);
+        }
+
+        h4 {
+            font-size: rem(20px);
+            line-height: rem(30px);
+        }
+
+        h5 {
+            font-size: rem(16px);
+            line-height: rem(24px);
+        }
+
+        h6 {
+            font-size: rem(14px);
+            line-height: rem(19.92px);
+        }
+
+        p {
+            font-size: rem(16px);
+            line-height: rem(24px);
+
+            &.large {
+                font-size: rem(20px);
+                line-height: rem(30px);
+            }
+
+            &.small {
+                font-size: rem(14px);
+                line-height: rem(16.8px);
+            }
+        }
+}
 
 .cmp-marketing {
-   h1 {
+    h1 {
         font-family: $font-family-marketing;
-        font-size: 88px;    
-        margin: 0;    
+        font-size: 88px;
+        margin: 0;
     }
+
     h2 {
         font-family: $font-family-marketing;
-        font-size: 33px;    
-        margin: 0;        
+        font-size: 33px;
+        margin: 0;
     }
+
     h3 {
         font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: 20px;
+        margin: 0;
     }
+
     h4 {
         font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: 20px;
+        margin: 0;
     }
+
     h5 {
         font-family: $font-family-marketing;
-        font-size: 15px;    
-        margin: 0;        
+        font-size: 15px;
+        margin: 0;
     }
+
     h6 {
         font-family: $font-family-marketing;
-        font-size: 13px;  
-        margin: 0;          
+        font-size: 13px;
+        margin: 0;
     }
 }
 
 .cmp-digital {
     h1 {
         font-family: $font-family-digital;
-        font-size: 88px;    
-        margin: 0;    
+        font-size: 88px;
+        margin: 0;
     }
+
     h2 {
         font-family: Arial, sans-serif;
         font-weight: bold;
-        font-size: 33px;    
-        margin: 0;        
+        font-size: 33px;
+        margin: 0;
     }
+
     h3 {
         font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: 20px;
+        margin: 0;
     }
+
     h4 {
         font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: 20px;
+        margin: 0;
     }
+
     h5 {
         font-family: $font-family-digital;
-        font-size: 15px;    
-        margin: 0;        
+        font-size: 15px;
+        margin: 0;
     }
+
     h6 {
         font-family: $font-family-digital;
-        font-size: 13px;  
-        margin: 0;          
+        font-size: 13px;
+        margin: 0;
     }
 }
 
@@ -74,9 +134,11 @@
     &--left {
         text-align: left;
     }
+
     &--right {
         text-align: right;
     }
+
     &--center {
         text-align: center;
     }
