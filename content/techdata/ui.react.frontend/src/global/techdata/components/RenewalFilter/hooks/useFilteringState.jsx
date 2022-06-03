@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { isObject } from "../../../../../utils";
+import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { generateFilterFields } from "../filterUtils/filterUtils";
@@ -17,12 +18,17 @@ export const useMultiFilterSelected = () => {
 
   const _setOptionsFields = useCallback(
     ([optionFields, hasData]) => {
-      optionFieldsRef.current = optionFields;
+      optionFieldsRef.current = hasFilterLocalStorageData() ? getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.optionFields : optionFields;
       isFilterDataPopulated.current = hasData;
+
       if (resetFilter) {isFilterDataPopulated.current = false;effects.setCustomState({key:'resetFilter', value: false})}
     },
     [filterList, dateSelected]
   );
+
+  function hasFilterLocalStorageData() {
+    return isObject(getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.optionFields);
+  }
 
   useEffect(() => {
     const optionFields = _generateFilterFields();       

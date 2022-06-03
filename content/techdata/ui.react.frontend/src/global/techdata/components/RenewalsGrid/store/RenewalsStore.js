@@ -4,7 +4,7 @@ import { renewalsComputed } from "./RenewalsComputed";
 import { renewalsEffects } from "./RenewalsEffects";
 import { mountStoreDevtool } from "simple-zustand-devtools";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
-import { PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 const DATE_DEFAULT_OPTIONS = [
   {
@@ -39,11 +39,11 @@ const DATE_DEFAULT_OPTIONS = [
 ];
 
 const INITIAL_STATE = {
-  filterList: null,
+  filterList: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "filterList", null), 
   isFilterModalOpen: false,
-  appliedFilterCount: 0,
-  dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: false })),
-  dateSelected: null,
+  appliedFilterCount: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "count", 0),
+  dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected })),
+  dateSelected: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "dateSelected", null),
   datePickerState: null,
   finalResults: [],
   pagination: {
@@ -60,8 +60,8 @@ const INITIAL_STATE = {
     show: false,
   },
   refinements: undefined,
-  customStartDate:undefined,
-  customEndDate:undefined,
+  customStartDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customStartDate", undefined),
+  customEndDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customEndDate", undefined),
   aemConfig:null,
   gridApi:null,
   detailRender: getLocalValueOrDefault(PLANS_ACTIONS_LOCAL_STORAGE_KEY, "detailRender", "primary"),

@@ -1,5 +1,5 @@
 import React from "react";
-import { PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import Button from "../../Widgets/Button";
 
@@ -29,6 +29,7 @@ function FilterHeader({ onQueryChanged }) {
         saveToLocal: true,
       }
     );
+    localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
   };
   return (
     <div className="filter-modal-container__header">

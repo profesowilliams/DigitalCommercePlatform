@@ -170,7 +170,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === 1}
           onClick={goToFirstPage }
         >
-          <i class="fas fa-step-backward"></i>
+          <i className="fas fa-step-backward"></i>
         </button>
         <button
           className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
@@ -208,7 +208,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === pageCount}
           onClick={gotToLastPage}
         >
-          <i class="fas fa-step-forward"></i>
+          <i className="fas fa-step-forward"></i>
         </button>
       </div>
     </div>

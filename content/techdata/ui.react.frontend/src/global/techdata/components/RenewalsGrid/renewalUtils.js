@@ -1,5 +1,11 @@
 import { usGet, usPost } from "../../../../utils/api";
-import { PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY, SEARCH_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
+import {
+  FILTER_LOCAL_STORAGE_KEY,
+  PAGINATION_LOCAL_STORAGE_KEY,
+  PLANS_ACTIONS_LOCAL_STORAGE_KEY,
+  SEARCH_LOCAL_STORAGE_KEY,
+  SORT_LOCAL_STORAGE_KEY,
+} from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
 
@@ -253,6 +259,7 @@ export function clearLocalStorageGridData() {
     localStorage.removeItem(PAGINATION_LOCAL_STORAGE_KEY);
     localStorage.removeItem(SORT_LOCAL_STORAGE_KEY);
     localStorage.removeItem(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
 }
 
 export function isFromRenewalDetailsPage() {

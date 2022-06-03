@@ -1,4 +1,5 @@
-import { setLocalStorageData } from "../renewalUtils";
+import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import {  getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 
 export const renewalsEffects = (set, get) => {
   function setFilterList(newFilterList = []) {
@@ -69,8 +70,11 @@ export const renewalsEffects = (set, get) => {
     });
 
     set({
-      appliedFilterCount: dateSelected !== null ? count + 1 : count,
+      appliedFilterCount: dateSelected !== null ? count += 1 : count,
     });
+
+    let filterObj = { ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY), ...{count} };
+    setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, filterObj);
   }
 
   function setCustomState({key='', value }, options){

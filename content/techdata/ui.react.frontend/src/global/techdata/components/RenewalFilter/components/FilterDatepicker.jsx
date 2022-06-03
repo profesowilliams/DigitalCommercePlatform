@@ -1,9 +1,12 @@
 import React from "react";
+import moment from "moment";
 import {
   DateRangePicker
 } from "react-dates";
 import "react-dates/initialize";
+import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
+import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { DateOptionsList } from "./DateOptionsList";
 import "./datePicker.scss";
@@ -14,8 +17,17 @@ export default function FilterDatePicker({ isOpen = false }) {
   const [focusedInput, setFocusedInput] = React.useState();
   const effects = useRenewalGridState(state => state.effects);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
-  const customStartDate = useRenewalGridState(state => state.customStartDate);
-  const customEndDate = useRenewalGridState(state => state.customEndDate);
+  let customStartDate = useRenewalGridState(state => state.customStartDate);
+  let customEndDate = useRenewalGridState(state => state.customEndDate);
+
+  /**
+   * Unfortunately moment is a peer dependency of react-dates.
+   * Normal date object wouldn't work.
+   */
+  if (customStartDate)
+    customStartDate = moment(customStartDate);
+  if (customEndDate)
+    customEndDate = moment(customEndDate);
 
   return (
     <>
@@ -38,6 +50,13 @@ export default function FilterDatePicker({ isOpen = false }) {
                 effects.setCustomState({key:'customEndDate',value:endDate});
                 if (startDate, endDate ) {
                   effects.setDatePickerState(startDate?.toDate(), endDate?.toDate())
+                  setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
+                    ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
+                    ...{
+                      customStartDate: startDate,
+                      customEndDate: endDate,
+                    },
+                  });
                 }
               }}
               isOutsideRange={() => false}

@@ -9,7 +9,7 @@ const DIST_DIR = __dirname + '/dist';
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'eval-source-map',
     performance: {hints: "warning"},
     plugins: [
         new webpack.EnvironmentPlugin({
