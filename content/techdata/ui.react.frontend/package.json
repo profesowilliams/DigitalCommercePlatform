@@ -49,6 +49,7 @@
     "dependencies": {
         "@apollo/react-hooks": "3.1.4",
         "@react-pdf/renderer": "^2.0.19",
+        "@techdata/search-results": "^1.0.126",
         "ag-grid-community": "^26.2.0",
         "ag-grid-enterprise": "^26.2.0",
         "ag-grid-react": "^26.2.0",
