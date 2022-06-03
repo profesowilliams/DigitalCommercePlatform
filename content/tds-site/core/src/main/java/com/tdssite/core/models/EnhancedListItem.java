@@ -1,4 +1,4 @@
-package com.tdscore.core.models;
+package com.tdssite.core.models;
 
 import com.adobe.cq.wcm.core.components.models.ListItem;
 

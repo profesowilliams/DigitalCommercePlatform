@@ -1,4 +1,4 @@
-package com.tdscore.core.models;
+package com.tdssite.core.models;
 
 import com.adobe.cq.dam.cfm.ContentElement;
 import com.adobe.cq.dam.cfm.ContentFragment;
@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = {EnhancedList.RESOURCE_TYPE})
+@Model(adaptables = SlingHttpServletRequest.class, adapters = List.class, resourceType = EnhancedList.RESOURCE_TYPE)
 public class EnhancedList implements List {
 
     private static final Logger log = LoggerFactory.getLogger(EnhancedList.class);
 
-    public static final String RESOURCE_TYPE = "tds-core/components/enhancedlist/v1/enhancedlist";
+    public static final String RESOURCE_TYPE = "tds-site/components/enhancedlist";
     private static final String PN_VENDOR_PRODUCT_LINK = "vendor-product-link";
     private static final String PAGE_PROPERTY_CF_PATH = "cfPath";
     @Self
