@@ -23,7 +23,7 @@
 	id="${component.id}"
 	class="cmp-title"
 >
-	<h1 class="dp-title__text" data-sly-element="${title.type}">
+	<h1 class="dp-title__text" data-sly-element="${title.type}" style="color: ${properties.fontColor @ context='styleToken'} !important">
 		<a
 			data-sly-unwrap="${!title.linkURL || title.linkDisabled}"
 			class="dp-title__link"

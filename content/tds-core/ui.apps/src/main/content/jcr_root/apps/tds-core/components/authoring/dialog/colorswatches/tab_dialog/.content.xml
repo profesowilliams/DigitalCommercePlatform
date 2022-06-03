@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured">
+    <container
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <fontColor
+                granite:hide="${!cqDesign.fontColorEnabled || cqDesign.fontColorSwatchesOnly}"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                fieldLabel="Font Color"
+                name="./fontColor"
+                showDefaultColors="{Boolean}false"
+                showProperties="{Boolean}true"
+                showSwatches="{Boolean}true">
+                <datasource
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
+            </fontColor>
+            <fontColorSwatchesOnly
+                granite:hide="${!cqDesign.fontColorEnabled || !cqDesign.fontColorSwatchesOnly}"
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                fieldLabel="Font Color"
+                name="./fontColor"
+                showDefaultColors="{Boolean}false"
+                showProperties="{Boolean}false"
+                showSwatches="{Boolean}true"
+                variant="swatch">
+                <datasource
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
+                <granite:data
+                    jcr:primaryType="nt:unstructured"
+                    cmp-dialog-edit-hook="fontColorSwatchesOnly"/>
+            </fontColorSwatchesOnly>
+        </items>
+    </container>
+</jcr:root>

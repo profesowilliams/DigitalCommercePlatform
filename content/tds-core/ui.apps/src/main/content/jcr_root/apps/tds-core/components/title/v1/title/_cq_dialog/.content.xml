@@ -3,10 +3,11 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Title"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.wcm.components.title.v2.editor]"
+    extraClientlibs="[tds.authoring.components.editor.colorswatches]"
     helpPath="https://www.adobe.com/go/aem_cmp_title_v2"
     trackingFeature="core-components:title:v2">
     <content
+        granite:class="cmp-dialog-swatches__editor"
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
@@ -97,6 +98,10 @@
                                                 fieldDescription="HTML ID attribute to apply to the component."
                                                 fieldLabel="ID"
                                                 name="./id"/>
+                                            <fontcolor
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                path="/apps/tds-core/components/authoring/dialog/colorswatches/tab_dialog/container"/>
                                         </items>
                                     </column>
                                 </items>
