@@ -1,23 +1,19 @@
-@import './../variables';
-@import './../../../webpack/site/variables';
-@import './../mixins';
-
 
 // Everett Font
 @font-face {
 	font-family: "TWKEverett-Regular-web";
-	src: url($font-marketing-path + "/TWKEverett-Regular.otf") format("otf"),
-		url($font-marketing-path + "/TWKEverett-Regular-web.ttf") format("truetype"),
-		url($font-marketing-path + "/TWKEverett-Regular-web.woff") format("woff");
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Regular.otf") format("otf"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Regular-web.ttf") format("truetype"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Regular-web.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: "TWKEverett-Medium-web";
-	src: url($font-marketing-path + "/TWKEverett-Medium.otf") format("otf"),
-		url($font-marketing-path + "/TWKEverett-Medium-web.ttf") format("truetype"),
-		url($font-marketing-path + "/TWKEverett-Medium-web.woff") format("woff");
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Medium.otf") format("otf"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Medium-web.ttf") format("truetype"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Medium-web.woff") format("woff");
 	font-weight: bold;
 	font-style: normal;
 }
@@ -25,28 +21,28 @@
 //GeorgiaPro Font
 @font-face {
 	font-family: "Georgia Pro";
-	src: url($font-digital-path + "/Georgia-Pro-Regular.ttf") format("truetype");
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Regular.ttf") format("truetype");
 	font-weight: normal;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: "Georgia Pro";
-	src: url($font-digital-path + "/Georgia-Pro-Regular-Italic.ttf") format("truetype");
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Regular-Italic.ttf") format("truetype");
 	font-weight: normal;
 	font-style: italic;
 }
 
 @font-face {
 	font-family: "Georgia Pro";
-	src: url($font-digital-path + "/Georgia-Pro-Bold.ttf") format("truetype");
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Bold.ttf") format("truetype");
 	font-weight: bold;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: "Georgia Pro";
-	src: url($font-digital-path + "/Georgia-Pro-Bold-Italic.ttf") format("truetype");
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Bold-Italic.ttf") format("truetype");
 	font-weight: bold;
 	font-style: italic;
 }

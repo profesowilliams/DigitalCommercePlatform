@@ -3,9 +3,9 @@
 @import '../../global/styles/_font-face.scss';
 
 .cmp-tds-title {
-    
-    &.dp-title { 
-        
+
+    &.dp-title {
+
         h1 {
             font-size: rem(40px);
             line-height: rem(61px);
@@ -54,182 +54,219 @@
                 line-height: rem(16.8px);
             }
         }
-        
-    } 
+
+    }
 }
 
 
 .cmp-marketing {
-   h1 {
-        font-family: $font-family-marketing;
-        font-size: 88px;    
-        margin: 0;    
+    font-family: $font-family-marketing;
+
+    &-large {
+        font-size: $font-size-marketing-h1-large;
+
     }
+
+    &-card {      
+        h2 {
+            font-family: $font-family-marketing-md;
+            font-size: $font-size-marketing-h2;
+            margin: 0;
+        }
+    }
+
+    h1 {
+        font-size: $font-size-marketing-h1;
+        margin: 0;
+    }
+
     h2 {
         font-family: $font-family-marketing;
-        font-size: 33px;    
-        margin: 0;        
+        font-size: $font-size-marketing-h2;
+        margin: 0;
     }
+
     h3 {
-        font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: $font-size-marketing-h3;
+        margin: 0;
     }
+
     h4 {
-        font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: $font-size-marketing-h4;
+        margin: 0;
     }
+
     h5 {
-        font-family: $font-family-marketing;
-        font-size: 15px;    
-        margin: 0;        
+        font-size: $font-size-marketing-h5;
+        margin: 0;
     }
+
     h6 {
-        font-family: $font-family-marketing;
-        font-size: 13px;  
-        margin: 0;          
+        font-size: $font-size-marketing-h6;
+        margin: 0;
     }
 }
 
 .cmp-digital {
+
+    &-large {}
+
+    &-card {}
+
     h1 {
         font-family: $font-family-digital;
-        font-size: 88px;    
-        margin: 0;    
+        font-size: 88px;
+        margin: 0;
     }
+
     h2 {
         font-family: Arial, sans-serif;
         font-weight: bold;
-        font-size: 33px;    
-        margin: 0;        
+        font-size: 33px;
+        margin: 0;
     }
+
     h3 {
         font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: 20px;
+        margin: 0;
     }
+
     h4 {
         font-family: $font-family-digital;
-        font-size: 20px;   
-        margin: 0;         
+        font-size: 20px;
+        margin: 0;
     }
+
     h5 {
         font-family: $font-family-digital;
-        font-size: 15px;    
-        margin: 0;        
+        font-size: 15px;
+        margin: 0;
     }
+
     h6 {
         font-family: $font-family-digital;
-        font-size: 13px;  
-        margin: 0;          
+        font-size: 13px;
+        margin: 0;
     }
 }
 
-.dp-title{
-  &__text{
-      color: #000C21;
-      font-weight: 300;
-      &--gray{
-          .dp-title__text, .dp-title__link{
-              color: #5D6165 !important;
-          }
-      }
+.dp-title {
+    &__text {
+        color: #000C21;
+        font-weight: 300;
 
-      &--light-blue{
-          .dp-title__text, .dp-title__link{
-              color: #00B1E2 !important;
-          }
+        &--gray {
 
-      }
+            .dp-title__text,
+            .dp-title__link {
+                color: #5D6165 !important;
+            }
+        }
 
-      &--dark-blue{
-          .dp-title__text, .dp-title__link{
-              color: #000C21 !important;
-          }
-      }
+        &--light-blue {
 
-      &--white{
-          .dp-title__text, .dp-title__link{
-              color: #ffff !important;
-          }
-      }
+            .dp-title__text,
+            .dp-title__link {
+                color: #00B1E2 !important;
+            }
 
-      &-align{
-          &-center{
-              text-align: center;
-          }
-          &-left{
-              text-align: left;
-          }
-          &-right{
-              text-align: right;
-          }
-      }
+        }
 
-        &-font{
-            &-bold{
-                .dp-title__text{
+        &--dark-blue {
+
+            .dp-title__text,
+            .dp-title__link {
+                color: #000C21 !important;
+            }
+        }
+
+        &--white {
+
+            .dp-title__text,
+            .dp-title__link {
+                color: #ffff !important;
+            }
+        }
+
+        &-align {
+            &-center {
+                text-align: center;
+            }
+
+            &-left {
+                text-align: left;
+            }
+
+            &-right {
+                text-align: right;
+            }
+        }
+
+        &-font {
+            &-bold {
+                .dp-title__text {
                     font-weight: 700;
                 }
             }
-        }    
-  }
+        }
+    }
 
-  &__link{
-      text-decoration: none;
-  }
+    &__link {
+        text-decoration: none;
+    }
 
-  &__plus-sign{
-    position: absolute;
-    background-color: #00B1E2;
-    color: #ffff;
-    width: 1.2rem;
-    height: 1.2rem;
-    font-size: 1rem;
-    line-height: 1.2rem;
-    text-align: center;
-    margin-left: .5rem;
+    &__plus-sign {
+        position: absolute;
+        background-color: #00B1E2;
+        color: #ffff;
+        width: 1.2rem;
+        height: 1.2rem;
+        font-size: 1rem;
+        line-height: 1.2rem;
+        text-align: center;
+        margin-left: .5rem;
 
-      &-white-on-blue{
-          .dp-title__plus-sign{
-              color: #ffff !important;
-              background-color: #00B1E2;
-          }
-      }
+        &-white-on-blue {
+            .dp-title__plus-sign {
+                color: #ffff !important;
+                background-color: #00B1E2;
+            }
+        }
 
-      &-blue-on-white{
-          .dp-title__plus-sign{
-              color: #00B1E2 !important;
-              background-color: #ffff;
-          }
-      }
-  }
+        &-blue-on-white {
+            .dp-title__plus-sign {
+                color: #00B1E2 !important;
+                background-color: #ffff;
+            }
+        }
+    }
 
-  h1{
-      font-size: 2rem;
-  }
+    h1 {
+        font-size: 2rem;
+    }
 
-  h2{
-      font-size: 1.75rem;
-  }
+    h2 {
+        font-size: 1.75rem;
+    }
 
-  h3{
-      font-size: 1.25rem;
-  }
+    h3 {
+        font-size: 1.25rem;
+    }
 
-  h4{
-      font-size: 1rem;
-  }
+    h4 {
+        font-size: 1rem;
+    }
 }
-@include mobile {
-  .dp-title{
-    h1{
-      font-size: 1.375rem;
-    }
 
-    h3{
-      font-size: 0.875rem;
+@include mobile {
+    .dp-title {
+        h1 {
+            font-size: 1.375rem;
+        }
+
+        h3 {
+            font-size: 0.875rem;
+        }
     }
-  }
 }
