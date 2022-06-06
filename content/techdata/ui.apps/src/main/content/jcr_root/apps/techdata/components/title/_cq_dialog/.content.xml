@@ -3,7 +3,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Title"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[techdata.authoring.components.editor.colorswatches]"
+    extraClientlibs="[techdata.authoring.components.editor.colorswatches,core.wcm.components.title.v2.editor]"
     helpPath="https://www.adobe.com/go/aem_cmp_title_v2"
     trackingFeature="core-components:title:v2">
     <content
