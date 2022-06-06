@@ -1,11 +1,9 @@
-@import'../../site/_variables.scss';
-@import '../../global/_mixins.scss';
-@import '../../global/styles/_font-face.scss';
+@import "../../site/_variables.scss";
+@import "../../global/_mixins.scss";
+@import "../../global/styles/_font-face.scss";
 
 .cmp-tds-title {
-
     &.dp-title {
-
         h1 {
             font-size: rem(40px);
             line-height: rem(61px);
@@ -54,20 +52,18 @@
                 line-height: rem(16.8px);
             }
         }
-
     }
 }
-
 
 .cmp-marketing {
     font-family: $font-family-marketing;
 
     &-large {
+        font-family: $font-family-marketing;
         font-size: $font-size-marketing-h1-large;
-
     }
 
-    &-card {      
+    &-card {
         h2 {
             font-family: $font-family-marketing-md;
             font-size: $font-size-marketing-h2;
@@ -76,6 +72,7 @@
     }
 
     h1 {
+        font-family: $font-family-marketing;
         font-size: $font-size-marketing-h1;
         margin: 0;
     }
@@ -87,21 +84,25 @@
     }
 
     h3 {
+        font-family: $font-family-marketing;
         font-size: $font-size-marketing-h3;
         margin: 0;
     }
 
     h4 {
+        font-family: $font-family-marketing;
         font-size: $font-size-marketing-h4;
         margin: 0;
     }
 
     h5 {
+        font-family: $font-family-marketing;
         font-size: $font-size-marketing-h5;
         margin: 0;
     }
 
     h6 {
+        font-family: $font-family-marketing;
         font-size: $font-size-marketing-h6;
         margin: 0;
     }
@@ -111,7 +112,10 @@
     font-family: $font-family-digital;
 
     &-large {
+        font-family: $font-family-digital;
+
         h1 {
+            font-family: $font-family-digital;
             font-weight: normal;
             font-size: $font-size-digital-h1-large !important;
             line-height: 1.5;
@@ -119,28 +123,38 @@
     }
 
     &-card {
-        font-weight: bold;
+        font-family: $font-family-digital;
+
+        h2 {
+            font-weight: bold;
+            font-size: $font-size-digital-h2-card !important;
+            line-height: rem(42px);
+        }
     }
 
     h1 {
+        font-family: $font-family-digital;
         font-size: $font-size-digital-h1 !important;
         line-height: rem(61px);
         margin: 0;
     }
 
     h2 {
+        font-family: $font-family-digital;
         font-weight: bold;
         font-size: $font-size-digital-h2 !important;
         margin: 0;
     }
 
     h3 {
+        font-family: $font-family-digital;
         font-size: $font-size-digital-h3 !important;
         line-height: rem(42px);
         margin: 0;
     }
 
     h4 {
+        font-family: $font-family-digital;
         font-size: $font-size-digital-h4 !important;
         line-height: rem(30px);
         font-weight: bold;
@@ -148,6 +162,7 @@
     }
 
     h5 {
+        font-family: $font-family-digital;
         font-size: $font-size-digital-h5 !important;
         line-height: rem(24px);
         font-weight: bold;
@@ -155,6 +170,7 @@
     }
 
     h6 {
+        font-family: $font-family-digital;
         font-size: $font-size-digital-h6 !important;
         line-height: rem(16.8px);
         font-weight: bold;
@@ -163,37 +179,43 @@
 }
 
 .cmp-td-legacy {
-        font-family: $open-sans;
+    font-family: $open-sans;
+
     h1 {
         font-size: $font-size-digital-h2; //32px
     }
+
     h2 {
         font-size: $font-size-digital-h2-card; //28px
     }
+
     h3 {
-        font-size: $font-size-custom-midi;  //20px
+        font-size: $font-size-custom-midi; //20px
     }
+
     h4 {
-        font-size: $font-size-medium;  //16px
+        font-size: $font-size-medium; //16px
     }
+
     h5 {
-        font-size: $font-size-custom-xxsmall; //13px       
+        font-size: $font-size-custom-xxsmall; //13px
     }
+
     h6 {
-        font-size: $font-size-custom-xxsmall;  //13px
+        font-size: $font-size-custom-xxsmall; //13px
     }
 }
 
 .dp-title {
     &__text {
-        color: #000C21;
+        color: #000c21;
         font-weight: 300;
 
         &--gray {
 
             .dp-title__text,
             .dp-title__link {
-                color: #5D6165 !important;
+                color: #5d6165 !important;
             }
         }
 
@@ -201,16 +223,15 @@
 
             .dp-title__text,
             .dp-title__link {
-                color: #00B1E2 !important;
+                color: #00b1e2 !important;
             }
-
         }
 
         &--dark-blue {
 
             .dp-title__text,
             .dp-title__link {
-                color: #000C21 !important;
+                color: #000c21 !important;
             }
         }
 
@@ -251,25 +272,25 @@
 
     &__plus-sign {
         position: absolute;
-        background-color: #00B1E2;
+        background-color: #00b1e2;
         color: #ffff;
         width: 1.2rem;
         height: 1.2rem;
         font-size: 1rem;
         line-height: 1.2rem;
         text-align: center;
-        margin-left: .5rem;
+        margin-left: 0.5rem;
 
         &-white-on-blue {
             .dp-title__plus-sign {
                 color: #ffff !important;
-                background-color: #00B1E2;
+                background-color: #00b1e2;
             }
         }
 
         &-blue-on-white {
             .dp-title__plus-sign {
-                color: #00B1E2 !important;
+                color: #00b1e2 !important;
                 background-color: #ffff;
             }
         }
