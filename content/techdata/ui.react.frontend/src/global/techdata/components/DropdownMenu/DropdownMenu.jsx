@@ -5,6 +5,7 @@ import SubHeaderMenuContainer from "../ProfileMegaMenu/SubHeaderMenuContainer";
 import SecondaryMenu from "../ProfileMegaMenu/SecondaryMenu";
 import { hasDCPAccess } from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const [showSecondary, setShowSecondary] = useState(false);
@@ -18,6 +19,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const refLogOff = useRef(null);
   const refLogIn = useRef(null);
   const refBackButton = useRef(null);
+  const refContainer = useRef(null);
+  const [flagDropdown, setFlagDropdown] = useState(true);
 
   useEffect(() => {
     window.addEventListener('resize', updateWindowDimensions);
@@ -27,6 +30,14 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       window.removeEventListener('resize', updateWindowDimensions);
     }
   }, []);
+
+  useOutsideClick(refContainer, () => {
+    if (flagDropdown) {
+      setIsSelected(false);
+      setShowMenu(false);
+      setFlagDropdown(false)
+    }
+  });
 
   const updateWindowDimensions = () => {
     setScreenSize({ width: window.innerWidth, height: window.innerHeight });
@@ -182,15 +193,20 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   };
 
   return (
-    <>
+    <div>
+      <div ref={refContainer}>
       <button
         data-component="DropdownMenu"
         className={`cmp-sign-in-button clicked ${userId ? "active" : ""}`}
         ref={(o) => (refLogIn.current = o)}
         onClick={(e) => {
-          setIsSelected(e.type === 'click' && !showMenu);
-          setShowMenu(!showMenu);
+          if ( e.type === 'click' && !showMenu) {
+            setIsSelected(e.type === 'click' && !showMenu);
+            setShowMenu(!showMenu);
+            setFlagDropdown(true)
+          }
         }}
+        
         onKeyDown={(e) => {
           refCursor.current = -1;
           handleKeyDown({e})
@@ -320,7 +336,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
           />
         )}
       </div>
-    </>
+    </div>
+  </div>
   );
 };
 
