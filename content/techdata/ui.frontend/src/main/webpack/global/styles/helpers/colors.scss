@@ -29,8 +29,21 @@
   &__black {
     color:  map-get($color-palette, "black");
   }
+
   &__white {
     color:  map-get($color-palette, "white");
+  }
+
+  &__dark-blue {    
+    color: get-color(dark-blue);
+  }
+
+  &__sky-blue {    
+    color: get-color(sky-blue);
+  }
+
+  &__legacy-grey {    
+    color: get-color(legacy-grey);
   }
   
 }
@@ -63,6 +76,18 @@
   }
   &__white {
     background-color:  map-get($color-palette, "white");
+  }
+
+  &__dark-blue {    
+    background-color: get-color(dark-blue);
+  }
+
+  &__sky-blue {    
+    background-color: get-color(sky-blue);
+  }
+
+  &__legacy-grey {    
+    background-color: get-color(legacy-grey);
   }
   
 }
