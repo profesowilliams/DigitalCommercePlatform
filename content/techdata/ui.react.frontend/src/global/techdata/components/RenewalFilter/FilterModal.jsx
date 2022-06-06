@@ -39,8 +39,32 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   useEffect(() => {
     if (!filterList) {
       setFilterList(aemFilterData);
+    } 
+
+    window.addEventListener('resize', updateWindowDimensions);
+
+    const timeOutId = setTimeout(() => setFilterPanelDimensions(), 200);
+
+    return () => {
+      clearTimeout(timeOutId);
+      window.removeEventListener('resize', updateWindowDimensions);
     }
   }, []);
+
+  const setFilterPanelDimensions = () => {
+    var popup = document.querySelector(".filter-modal-container .filter-modal-container__popup");
+    var experiencefragment = document.querySelector(".experiencefragment.aem-GridColumn");
+    var subheader = document.querySelector(".cmp-new-subheader");
+    var modal = document.querySelector(".filter-modal-container");
+    var close = document.querySelector(".btn-common.filter-modal-container__close");
+    const headerMargin = 5;
+    const footerMargin = 3
+    if (popup && experiencefragment && subheader && modal && close) {
+      popup.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
+      popup.style.height = (modal.offsetHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin - footerMargin) + 'px';
+      close.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin + footerMargin) + 'px';
+    }
+  }
 
   const root = filterList ? filterList[0] : false;
   const rootIds = root ? root.childIds : [];
@@ -63,6 +87,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     if (resetFilter) effects.setCustomState({key:'resetFilter', value: false});
     onQueryChanged();
   }
+
+  const updateWindowDimensions = () => {
+     setFilterPanelDimensions();
+  };
+
 
   if (!filterList) return null;
   
