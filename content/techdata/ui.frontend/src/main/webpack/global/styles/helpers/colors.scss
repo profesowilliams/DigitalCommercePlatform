@@ -6,44 +6,44 @@
 //text colors
 .cmp-text {
   &__teal {
-    color: map-get($color-palette, "teal");
+    color: map-get($color-palette, "teal") !important;
   }
   &__deep-teal {
-    color: get-color(deep-teal);
+    color: get-color(deep-teal) !important;
   }
   &__steel-blue {
-    color: get-color(steel-blue);
+    color: get-color(steel-blue) !important;
   }
   &__green {
-    color:  map-get($color-palette, "green");
+    color:  map-get($color-palette, "green") !important;
   }
   &__stone {
-    color: get-color(stone);
+    color: get-color(stone) !important;
   }
   &__aqua {
-    color:  map-get($color-palette, "aqua");
+    color:  map-get($color-palette, "aqua") !important;
   }
   &__cool-gray-1 {
-    color: get-color(cool-gray-1);
+    color: get-color(cool-gray-1) !important;
   }
   &__black {
-    color:  map-get($color-palette, "black");
+    color:  map-get($color-palette, "black") !important;
   }
 
   &__white {
-    color:  map-get($color-palette, "white");
+    color:  map-get($color-palette, "white") !important;
   }
 
   &__dark-blue {    
-    color: get-color(dark-blue);
+    color: get-color(dark-blue) !important;
   }
 
   &__sky-blue {    
-    color: get-color(sky-blue);
+    color: get-color(sky-blue) !important;
   }
 
   &__legacy-grey {    
-    color: get-color(legacy-grey);
+    color: get-color(legacy-grey) !important;
   }
   
 }
@@ -51,43 +51,43 @@
 // background colors
 .cmp-background {
   &__teal {
-    background-color: map-get($color-palette, "teal");
+    background-color: map-get($color-palette, "teal") !important;
   }
   &__deep-teal {
-    background-color: get-color(deep-teal);
+    background-color: get-color(deep-teal) !important;
   }
   &__steel-blue {
-    background-color: get-color(steel-blue);
+    background-color: get-color(steel-blue) !important;
   }
   &__green {
-    background-color:  map-get($color-palette, "green");
+    background-color:  map-get($color-palette, "green") !important;
   }
   &__stone {
-    background-color: get-color(stone);
+    background-color: get-color(stone) !important;
   }
   &__aqua {
-    background-color:  map-get($color-palette, "aqua");
+    background-color:  map-get($color-palette, "aqua") !important;
   }
   &__cool-gray-1 {
-    background-color: get-color(cool-gray-1);
+    background-color: get-color(cool-gray-1) !important;
   }
   &__black {
-    background-color:  map-get($color-palette, "black");
+    background-color:  map-get($color-palette, "black") !important;
   }
   &__white {
-    background-color:  map-get($color-palette, "white");
+    background-color:  map-get($color-palette, "white") !important;
   }
 
   &__dark-blue {    
-    background-color: get-color(dark-blue);
+    background-color: get-color(dark-blue) !important;
   }
 
   &__sky-blue {    
-    background-color: get-color(sky-blue);
+    background-color: get-color(sky-blue) !important;
   }
 
   &__legacy-grey {    
-    background-color: get-color(legacy-grey);
+    background-color: get-color(legacy-grey) !important;
   }
   
 }
