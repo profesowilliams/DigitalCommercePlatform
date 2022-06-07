@@ -32,7 +32,7 @@ const columnDefs = [
     autoHeight: true
   },
   {
-    headerName: "List Price \n     (USD)",
+    headerName: "List price \n     (USD)",
     field: "unitListPrice",
     sortable: false,
     width: "100px",
