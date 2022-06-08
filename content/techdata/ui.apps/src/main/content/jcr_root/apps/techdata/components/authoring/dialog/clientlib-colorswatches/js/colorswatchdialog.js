@@ -50,10 +50,12 @@
      * @param {HTMLElement} containerEditor The dialog wrapper
      */
     function handleEditDialog(containerEditor) {
-        var fontColorSwatchesOnly = containerEditor.querySelector(selectors.edit.fontColorSwatchesOnly);
-        if (fontColorSwatchesOnly) {
-            fontColorSwatchesOnly.on("coral-overlay:beforeopen.cmp-container-v1-dialog-edit", function(event) {
-                fontColorSwatchesOnly.off("coral-overlay:beforeopen.cmp-container-v1-dialog-edit");
+		const fontColorSwatchesOnly = containerEditor.querySelectorAll(selectors.edit.fontColorSwatchesOnly);
+
+		for (var i = 0; i < fontColorSwatchesOnly.length; i++) {
+            const fontColorSwatchesOnlyVariable = fontColorSwatchesOnly[i];
+            fontColorSwatchesOnlyVariable.on("coral-overlay:beforeopen.cmp-dialog-edit", function(event) {
+                fontColorSwatchesOnlyVariable.off("coral-overlay:beforeopen.cmp-dialog-edit");
 
                 // ensures the swatches overlay is displayed correctly in dialog inline mode, by aligning it bottom left of the toggle button
                 var target = event.target || event.srcElement;
