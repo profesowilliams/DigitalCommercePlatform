@@ -88,18 +88,22 @@ public class FormServlet extends SlingAllMethodsServlet {
 
                         if (isMultipart) {
                                 LOG.info("Received Multi-part form data for processing");
-                                Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
+                                StringBuilder currentPagePath = getCurrentPageParamValue(request);
+                                if(StringUtils.isEmpty(currentPagePath.toString())) {
+                                        currentPagePath.append(Constants.TECHDATA_CONTENT_PAGE_ROOT);
+                                }
+                                Resource resource = resourceResolver.getResource(currentPagePath.toString());
                                 FormConfigurations formConfigurations = getCAConfigFormEmailObject(resource);
                                 if(formConfigurations != null) {
                                         populateDefaultValuesToEmailParams(emailParams, formConfigurations.apacFormParameterList());
-                                        thresholdFileSize = formConfigurations.fileThresholdInMB();
-                                        allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
-                                        allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
-                                        blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
                                         prepareEncodedChars(formConfigurations);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
                                         handleAttachmentsInEmail(formConfigurations,emailParams);
+                                        thresholdFileSize = formConfigurations.fileThresholdInMB();
+                                        allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
+                                        allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
+                                        blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
                                         if (isValidFileInEmailRequest(request)) {
                                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
                                                         internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
@@ -115,6 +119,19 @@ public class FormServlet extends SlingAllMethodsServlet {
                         LOG.error("Exception occurred during form submission", e);
                         response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, e.getMessage());
                 }
+        }
+
+        private StringBuilder getCurrentPageParamValue(SlingHttpServletRequest request) {
+                StringBuilder currentPagePath = new StringBuilder();
+                RequestParameter[] requestParameters = request.getRequestParameterMap().get("currentpage");
+                if(requestParameters != null) {
+                        for (RequestParameter rp : requestParameters) {
+                                if (StringUtils.isNotEmpty(rp.toString())) {
+                                        currentPagePath.append(rp.toString());
+                                }
+                        }
+                }
+                return currentPagePath;
         }
 
         private void populateDefaultValuesToEmailParams(Map<String, String> emailParams, String apacFormParameterList) {

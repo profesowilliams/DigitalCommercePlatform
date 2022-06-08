@@ -97,6 +97,10 @@
             }
         );
         if(invalidFileStatus || invalidInputStatus) return null;
+        var currPageName = document.getElementById("tdForm").getAttribute('currentpage-path');
+        if(currPageName) {
+            newData.append("currentpage", currPageName);
+        }
         return newData;
     }
 
