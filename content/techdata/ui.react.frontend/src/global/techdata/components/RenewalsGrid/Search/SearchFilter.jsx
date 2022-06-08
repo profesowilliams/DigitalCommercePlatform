@@ -104,7 +104,7 @@ function _SearchFilter(
   const onReset = () => {
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
-    if (searchTerm.length !== 0 && searchTriggered) {
+    if (searchTriggered) {
       onQueryChanged();  
       setSwitchDropdown(false);
     }
