@@ -112,7 +112,7 @@ function _SearchFilter(
     setIsSearchCapsuleVisible(false);
     if (searchTriggered) {
       onQueryChanged();  
-      setSwitchDropdown(false);
+      setSwitchDropdown(!searchTerm.length);
     }
     setSearchTerm("");
     setCapsuleSearchValue("");
