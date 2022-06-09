@@ -1,5 +1,4 @@
 (function() {
-
     var errorMessage = document.getElementById("errorMessage");
         var errorBlockId = "cmp-form-error-block";
         var WRONG_FILE_SIZE_STATUS = "-1";
@@ -193,22 +192,40 @@
         }
     }
 
+    function validateRepeatedLabels(parentDiv, errorLabelInnertext) {
+        const nodeList = parentDiv.querySelectorAll("label");
+        let flagErrorMessage = true; 
+        nodeList.forEach(n => {
+            if (n.innerText == errorLabelInnertext) {
+                flagErrorMessage = false;
+            }
+        });
+        return flagErrorMessage;
+    }
+
     function inputErrorMessageDisplay(type, e, inputElement) {
         var originalBorderColor = e.target.style.borderColor;
         var targetElement = e.target;
         var parentDiv = targetElement.closest("div");
         var errorLabel = document.createElement("label");
-        parentDiv.appendChild(errorLabel);
+        const errorLabelInnertext = parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required";
+        const querySelector = parentDiv.querySelector("fieldset");
+        if (querySelector) {
+            parentDiv = parentDiv.querySelector("fieldset");
+        }
         errorLabel.style.color = "red";
         const validityState = inputElement.validity;
-        if (validityState.valueMissing)
-        {
-            errorLabel.innerText = (parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required");
+        if (validityState.valueMissing) {
+            errorLabel.innerText = errorLabelInnertext;
         }else if (validityState.typeMismatch) {
             errorLabel.innerText = (parentDiv.dataset.cmpConstraintMessage ? parentDiv.dataset.cmpConstraintMessage : "This field content does not match the type of " + type);
         } else {
             validateAddress(inputElement, inputElement.value);
         }
+            const flagErrorMessage = validateRepeatedLabels(parentDiv, errorLabelInnertext)
+            if (flagErrorMessage) {
+                parentDiv.appendChild(errorLabel);
+            }
         setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
     }
 
