@@ -34,7 +34,7 @@ function FilterTags() {
 
   const hasAnyFilterSelected = () => {
     const nochildIds = filterList.filter(filter => !filter.childIds.length);
-    return nochildIds.some((filter) => filter.checked);
+    return nochildIds.some((filter) => filter.checked) || dateSelected;
   }
   
   const handleShowMore = () => {

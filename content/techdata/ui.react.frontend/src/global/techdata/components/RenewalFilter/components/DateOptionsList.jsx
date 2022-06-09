@@ -5,6 +5,10 @@ export function DateOptionsList() {
 
   const dateOptionsList = useRenewalGridState((state) => state.dateOptionsList);
   const effects = useRenewalGridState((state) => state.effects);
+  const capitalizedItems = ["overdue"]
+  function customCapitalize(dateField){
+    return capitalizedItems.includes(dateField) ? {textTransform:'capitalize'} : {}
+  }
 
   return (
     <div className="datepicker-checks">
@@ -20,7 +24,7 @@ export function DateOptionsList() {
             value={item.checked}
             defaultChecked={item.checked}
           />
-          <label htmlFor={index}>
+          <label htmlFor={index} style={customCapitalize(item.field)}>
             {item.label}
           </label>
         </li>
