@@ -3,7 +3,7 @@ import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants"
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from ".././store/RenewalsStore";
-import { getLocalStorageData, hasLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
 
 function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
@@ -32,12 +32,14 @@ function _ContractColumn({ data, eventProps }) {
    * @returns void
    */
   function getInitialToggleState() {
+    if (!isFromRenewalDetailsPage()) return;
+
     if (hasLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
       if (getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.detailRender !== "secondary")
         return;
 
       const localRowIndex = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.rowIndex;
-      if (eventProps.node.rowIndex === localRowIndex) {
+      if (eventProps.node.rowIndex === localRowIndex - 1) {
         eventProps.node.setExpanded(!isToggled);
         setToggled(!isToggled);
       }
@@ -66,11 +68,18 @@ function _ContractColumn({ data, eventProps }) {
       }
     });
     effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
-    setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
-      detailRender: 'secondary',
-      rowCollapsedIndexList,
-      rowIndex: eventProps.node?.rowIndex,
-    });
+    /**
+     * Ag-grid gives detailed-view the same index as normal grid rows. This
+     * prevents targeting the toggle state appropriately. Hence DOM query.
+     * setTimeout to excecute this last from the call stack.
+     */
+    setTimeout(() => {
+      setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
+        detailRender: 'secondary',
+        rowCollapsedIndexList,
+        rowIndex: parseFloat(document.querySelector(".ag-full-width-container")?.querySelector("[row-index]")?.getAttribute("row-index")),
+      });
+    }, 0)
   }
   const hasRenderStateTextFromPlanOptions = () => support && rowIndex == (renewalOptionState?.rowIndex -1);
 

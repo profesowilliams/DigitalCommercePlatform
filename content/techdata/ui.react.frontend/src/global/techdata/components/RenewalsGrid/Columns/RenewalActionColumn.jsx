@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
-import { getLocalStorageData, hasLocalStorageData, setLocalStorageData } from '../renewalUtils';
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from '../renewalUtils';
 import { useRenewalGridState } from '../store/RenewalsStore';
 
 const EllipsisIcon = (props) => (
@@ -32,12 +32,14 @@ function _RenewalActionColumn({ eventProps }) {
    * @returns void
    */
   function getInitialToggleState() {
+    if (!isFromRenewalDetailsPage()) return;
+
     if (hasLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
       if (getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.detailRender !== "primary")
         return;
 
       const localRowIndex = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.rowIndex;
-      if (eventProps.node.rowIndex === localRowIndex) {
+      if (eventProps.node.rowIndex === localRowIndex - 1) {
         eventProps.node.setExpanded(!isToggled);
         setToggled(!isToggled);
       }
@@ -60,11 +62,18 @@ function _RenewalActionColumn({ eventProps }) {
             }
         })        
         effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList });
-        setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
-          detailRender: 'primary',
-          rowCollapsedIndexList,
-          rowIndex: eventProps.node?.rowIndex,
-        });
+        /**
+         * Ag-grid gives detailed-view the same index as normal grid rows. This
+         * prevents targeting the toggle state appropriately. Hence DOM query.
+         * setTimeout to excecute this last from the call stack.
+         */
+        setTimeout(() => {
+          setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
+            detailRender: 'primary',
+            rowCollapsedIndexList,
+            rowIndex: parseFloat(document.querySelector(".ag-full-width-container")?.querySelector("[row-index]")?.getAttribute("row-index")),
+          });
+        }, 0)
     }
     return (
         <>

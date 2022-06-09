@@ -79,7 +79,7 @@ function RenewalsGrid(props) {
     sort: "desc",
   }
 
-  if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+  if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
     options.defaultSortingColumnKey = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).colId;
     options.defaultSortingDirection = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).sort;
     secondLevelOptions.colId = null;
@@ -159,7 +159,7 @@ function RenewalsGrid(props) {
   };
 
   useEffect(() => {
-    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, [])

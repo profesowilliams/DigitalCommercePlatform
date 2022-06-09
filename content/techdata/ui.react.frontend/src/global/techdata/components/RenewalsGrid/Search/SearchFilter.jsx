@@ -11,7 +11,7 @@ import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils"
 import { isHouseAccount } from "../../../../../utils/user-utils";
 import { If } from "../../../helpers/If";
 import Capsule from "../../Widgets/Capsule";
-import { getLocalStorageData, hasLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { SearchField } from "./SearchField";
 
@@ -50,7 +50,7 @@ function _SearchFilter(
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
   function getInitialValueState() {
-    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
+    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value;
     } else {
       return "";
@@ -58,7 +58,7 @@ function _SearchFilter(
   }
 
   function getInitialFieldState() {
-    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)) {
+    if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.field;
     } else {
       return "";
@@ -70,7 +70,10 @@ function _SearchFilter(
       return "";
     }
 
-    return options.filter(item => item.searchKey === getInitialFieldState())[0]?.searchLabel || "";
+    if (isFromRenewalDetailsPage())
+      return options.filter(item => item.searchKey === getInitialFieldState())[0]?.searchLabel || "";
+
+    return "";
   }
 
   function hasPreviousSearchTerm() {
@@ -78,7 +81,10 @@ function _SearchFilter(
       return false;
     }
 
-    return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value !== '';
+    if (isFromRenewalDetailsPage())
+      return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value !== '';
+
+    return false;
   }
 
   useImperativeHandle(
