@@ -1,7 +1,32 @@
 //== Font
 
-$font-family: "Open Sans", sans-serif, "Helvetica Neue", Helvetica, Arial,
-  sans-serif;
+$font-family: "Open Sans", sans-serif;
+$open-sans: "Open Sans", sans-serif;
+  
+$font-family-marketing: 'TWKEverett-Regular-web', 'Arial Bold', sans-serif;
+$font-family-marketing-md: 'TWKEverett-Medium-web', Arial, sans-serif;
+
+$font-size-marketing-h1: rem(40px);
+$font-size-marketing-h1-large: rem(66px);
+$font-size-marketing-h2:rem(32px);
+$font-size-marketing-h3: rem(28px);
+$font-size-marketing-h4: rem(20px);
+$font-size-marketing-h5: rem(16px);
+$font-size-marketing-h6: rem(14px);
+
+$font-family-digital: Arial, sans-serif;
+
+$font-size-digital-h1: rem(40px);
+$font-size-digital-h1-large: rem(66px);
+$font-size-digital-h2:rem(32px);
+$font-size-digital-h2-card:rem(28px);
+$font-size-digital-h3: rem(28px);
+$font-size-digital-h4: rem(20px);
+$font-size-digital-h5: rem(16px);
+$font-size-digital-h6: rem(14px);
+
+$font-family-georgia: "Georgia Pro", sans-serif;
+
 $font-size: 1rem;
 $font-height: 1.5;
 $font-size-body: 1rem;

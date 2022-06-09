@@ -17,11 +17,52 @@ $fontawesome-font-path: '../resources/fonts/fontawesome';
 $font-family: "Open Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
 	sans-serif;
 
+$font-marketing-path: '../resources/fonts/everett';
+$font-digital-path: '../resources/fonts/GeorgiaPro';
+
 $font-primary-path: '../resources/fonts/OpenSans';
+
 $open-sans: "Open Sans", sans-serif;
+
+// Teal
+// Deep Teal
+// Steel Blue
+// Green
+// Stone
+// Cool Gray 1
+// Black
+// White
+
+$primary-color-palette: ( 
+    "teal":#005758,
+    "deep-teal": #003031,
+    "steel-blue": #1F728B,
+    "green": #2D9F88,
+    "stone": #75716E,
+    "aqua": #08BED5,
+    "cool-gray-1": #D9D8D7,
+    "black": #000000,
+    "white": #FFFFFF,
+    );
 
 //== Techdata Color Palette
 $color-palette: (
+
+        // new color palette May the 24th 2022 - OP
+        "teal":#005758,
+        "deep-teal": #003031,
+        "steel-blue": #1F728B,
+        "green": #2D9F88,
+        "stone": #75716E,
+        "aqua": #08BED5,
+        "cool-gray-1": #D9D8D7,
+        "black": #000000,
+        "white": #FFFFFF,
+        
+        // old color palette
+        "dark-blue": #000c20,
+        "sky-blue": #0bb0df,
+        "legacy-gray":#676c71,
         "brand-black":  #000000,
         "brand-primary-text":  #ffbc0d,
         "brand-secondary-text": #d90007,

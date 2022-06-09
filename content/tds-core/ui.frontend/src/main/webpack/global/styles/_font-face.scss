@@ -1,84 +1,141 @@
 @import './../variables';
 @import './../../../webpack/site/variables';
-
 @import './../mixins';
 
+// Everett Font
 @font-face {
-    font-family: "Open Sans";
-    src: url($font-primary-path + "/OpenSans-Regular.ttf") format("ttf");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+	font-family: "TWKEverett-Regular-web";
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Regular.otf") format("otf"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Regular-web.ttf") format("truetype"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Regular-web.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
 }
-/* BEGIN Italic */
+
 @font-face {
-	font-family: "Open Sans";
-  src: url($font-primary-path + "/OpenSans-Italic.ttf") format("ttf");
+	font-family: "TWKEverett-Medium-web";
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Medium.otf") format("otf"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Medium-web.ttf") format("truetype"),
+		url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/everett/TWKEverett-Medium-web.woff") format("woff");
+	font-weight: bold;
+	font-style: normal;
+}
+
+//GeorgiaPro Font
+@font-face {
+	font-family: "Georgia Pro";
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Georgia Pro";
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Regular-Italic.ttf") format("truetype");
 	font-weight: normal;
 	font-style: italic;
 }
+
+@font-face {
+	font-family: "Georgia Pro";
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Bold.ttf") format("truetype");
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Georgia Pro";
+	src: url("/etc.clientlibs/techdata/clientlibs/clientlib-site-global/resources/fonts/GeorgiaPro/Georgia-Pro-Bold-Italic.ttf") format("truetype");
+	font-weight: bold;
+	font-style: italic;
+}
+
+@font-face {
+	font-family: "Open Sans";
+	src: url($font-primary-path + "/OpenSans-Regular.ttf") format("ttf");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* BEGIN Italic */
+@font-face {
+	font-family: "Open Sans";
+	src: url($font-primary-path + "/OpenSans-Italic.ttf") format("ttf");
+	font-weight: normal;
+	font-style: italic;
+}
+
 /* END Italic */
 /* BEGIN Light */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "Light");
+	@include fontdef($font-primary-path, "Light");
 	font-weight: 300;
 	font-style: normal;
 }
+
 /* END Light */
 /* BEGIN Light Italic */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "LightItalic");
+	@include fontdef($font-primary-path, "LightItalic");
 	font-weight: 300;
 	font-style: italic;
 }
+
 /* END Light Italic */
 /* BEGIN SemiBold */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "SemiBold");
+	@include fontdef($font-primary-path, "SemiBold");
 	font-weight: 600;
 	font-style: normal;
 }
+
 /* END SemiBold */
 /* BEGIN SemiBold Italic */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "SemiBoldItalic");
+	@include fontdef($font-primary-path, "SemiBoldItalic");
 	font-weight: 600;
 	font-style: italic;
 }
+
 /* END SemiBold Italic */
 /* BEGIN Bold */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "Bold");
+	@include fontdef($font-primary-path, "Bold");
 	font-weight: bold;
 	font-style: normal;
 }
+
 /* END Bold */
 /* BEGIN Bold Italic */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "BoldItalic");
+	@include fontdef($font-primary-path, "BoldItalic");
 	font-weight: bold;
 	font-style: italic;
 }
+
 /* END Bold Italic */
 /* BEGIN Extrabold */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "ExtraBold");
+	@include fontdef($font-primary-path, "ExtraBold");
 	font-weight: 800;
 	font-style: normal;
 }
+
 /* END Extrabold */
 /* BEGIN Extrabold Italic */
 @font-face {
 	font-family: "Open Sans";
-	@include fontdef($font-primary-path,  "ExtraBoldItalic");
+	@include fontdef($font-primary-path, "ExtraBoldItalic");
 	font-weight: 800;
 	font-style: italic;
 }
+
 /* END Extrabold Italic */

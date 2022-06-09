@@ -468,6 +468,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "titles.html",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/text/titles.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "edit-a-config.html",
                 template: path.resolve(
                     __dirname,

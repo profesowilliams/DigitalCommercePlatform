@@ -1,3 +1,93 @@
 .font-xxsmall {
     font-size: $font-size-xxsmall;
 }
+
+.cmp-tds-font {
+    &-everett {
+        font-family: $font-family-marketing;
+
+        &-bold {
+            font-family: $font-family-marketing-md;
+        }
+    }
+
+    &-georgia-pro-reg {
+        font-family: $font-family-georgia;
+    }
+
+    &-georgia-pro-bold {
+        font-family: $font-family-georgia;
+        font-weight: bold;
+    }
+
+    &-legacy {
+        font-family: $open-sans;
+    }
+
+    &-align {
+        &__center {
+            text-align: center;
+        }
+
+        &__left {
+            text-align: left;
+        }
+
+        &__right {
+            text-align: right;
+        }
+    }
+}
+
+.cmp-h3 {
+    font-size: rem(28px);
+    line-height: rem(42px);
+}
+
+.cmp-h4 {
+    font-size: rem(20px);
+    line-height: rem(30px);
+}
+
+.cmp-h5 {
+    font-size: rem(16px);
+    line-height: rem(24px);
+}
+
+.cmp-h6 {
+    font-size: rem(14px);
+    line-height: rem(19.92px);
+}
+
+.cmp-paragraph {
+    &-reg {
+        font-size: rem(16px);
+        line-height: rem(24px);
+    }
+
+    &-large {
+        font-size: rem(20px);
+        line-height: rem(30px);
+    }
+
+    &-small {
+        font-size: rem(14px);
+        line-height: rem(16.8px);
+    }
+}
+
+.cmp-extra-small {
+    font-size: $font-size-xxsmall;
+}
+
+.cmp-small {
+    font-size: $font-size-small;
+}
+
+.cmp-medium {
+    font-size: $font-size-medium;
+}
+
+.cmp-large {
+    font-size: $font-size-custom-midi;
+}
