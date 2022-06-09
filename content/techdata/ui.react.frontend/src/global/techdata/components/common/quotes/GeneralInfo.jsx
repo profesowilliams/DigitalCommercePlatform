@@ -4,6 +4,11 @@ import axios from "axios";
 import Button from '../../Widgets/Button';
 import Loader from '../../Widgets/Loader';
 import { ANALYTICS_TYPES, pushData, pushEvent } from '../../../../../utils/dataLayerUtils';
+import { QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE,
+         QUOTE_PREVIEW_AVT_TYPE_VALUE,
+         QUOTE_PREVIEW_AVT_GET_DEAL_PARAM,
+         QUOTE_PREVIEW_TD_GET_DEAL_PARAM
+         } from '../../../../../utils/constants';
 
 function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired, isPricingOptionsRequired, info, onValueChange, readOnly}) {
     const [pricingConditions, isLoading] = useGet(gridProps.pricingConditionsEndpoint);
@@ -16,8 +21,9 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
             quoteDetails.quoteReference ||
             quoteDetails.configurationName ||
             quoteDetails.configurationId || '',
-        tier: quoteDetails.tier || '',
-        vendor: quoteDetails?.vendor || ''
+            tier: quoteDetails.tier || '',
+            vendor: quoteDetails?.vendor || '',
+            buyMethod: () => getBuyMethodParameter(quoteDetails?.buyMethod)
     });
 
     const [editMode, setEditMode] = useState(false);
@@ -47,6 +53,15 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
         const pricingConditionsItems = pricingConditions?.content?.pricingConditions?.items;
 
         return pricingConditionsItems?.find((orderLevel) => orderLevel.value === tier)?.key;
+    }
+
+    const getBuyMethodParameter = (buyMethod) => {
+        if(buyMethod === QUOTE_PREVIEW_TECH_DATA_TYPE_VALUE) {
+            return QUOTE_PREVIEW_AVT_GET_DEAL_PARAM;
+        } else if (buyMethod === QUOTE_PREVIEW_AVT_TYPE_VALUE) {
+            return QUOTE_PREVIEW_TD_GET_DEAL_PARAM;
+        }
+        return '';
     }
 
     const clearDealsFound = () => {
@@ -243,7 +258,8 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
             .replace("{end-user-name}", searchTerm)
             .replace("{manufacturer-parts-id-array}", productIds)
             .replace("{order-level}", generalInfoState.tier)
-            .replace("{vendor}", generalInfoState.vendor);
+            .replace("{vendor}", generalInfoState.vendor)
+            .replace("{buy-method}", generalInfoState.buyMethod);
     }
 
     const loadDeals = async (searchTerm) => {
