@@ -41,13 +41,17 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       setFilterList(aemFilterData);
     } 
 
-    window.addEventListener('resize', updateWindowDimensions);
+    ['resize', 'scroll'].forEach(e => {
+      window.addEventListener(e, updateWindowDimensions);
+    });
 
     const timeOutId = setTimeout(() => setFilterPanelDimensions(), 200);
 
     return () => {
       clearTimeout(timeOutId);
-      window.removeEventListener('resize', updateWindowDimensions);
+      ['resize', 'scroll'].forEach(e => {
+        window.removeEventListener(e, updateWindowDimensions);
+      });
     }
   }, []);
 
