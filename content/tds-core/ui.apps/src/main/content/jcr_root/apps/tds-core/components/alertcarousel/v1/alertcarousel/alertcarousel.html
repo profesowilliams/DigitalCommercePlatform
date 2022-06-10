@@ -38,6 +38,7 @@
       class="cmp-carousel__indicators dp-carousel__nav dp-carousel__nav-labels">
       <sly data-sly-repeat.item="${carousel.items}">
         <a 
+          style="color: ${properties.fontColorPanelNav @ context='styleToken'} !important"
           role="tab" 
           aria-controls="${carousel.id}-item-${itemList.index}"
           aria-label="${'Slide {0}' @ format=[itemList.count], i18n}"

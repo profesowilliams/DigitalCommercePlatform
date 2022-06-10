@@ -25,7 +25,8 @@
         role="tablist"
         class="cmp-tabs__tablist"
         aria-label="${tabs.accessibilityLabel}"
-        aria-multiselectable="false">
+        aria-multiselectable="false"
+        style="color: ${properties.fontColor @ context='styleToken'}">
         <sly data-sly-test.isActive="${tab.name == tabs.activeItem}" />
         <li role="tab"
             id="${tab.id}-tab"

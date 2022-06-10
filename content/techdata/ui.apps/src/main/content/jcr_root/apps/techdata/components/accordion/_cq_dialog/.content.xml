@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Tabs"
+    jcr:title="Accordion"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.wcm.components.commons.editor.dialog.childreneditor.v1,core.wcm.components.tabs.v1.editor,tds.authoring.components.editor.colorswatches]"
-    helpPath="https://www.adobe.com/go/aem_cmp_tabs_v1"
-    trackingFeature="core-components:tabs:v1">
+    extraClientlibs="[core.wcm.components.commons.editor.dialog.childreneditor.v1,core.wcm.components.accordion.v1.editor,techdata.authoring.components.editor.colorswatches]"
+    helpPath="https://www.adobe.com/go/aem_cmp_accordion_v1"
+    trackingFeature="core-components:accordion:v1">
     <content
-        granite:class="cmp-tabs__editor cmp-dialog-swatches__editor"
+        granite:class="cmp-accordion__editor cmp-dialog-swatches__editor"
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
@@ -33,24 +33,9 @@
                                         <items jcr:primaryType="nt:unstructured">
                                             <fontcolor
                                                 jcr:primaryType="nt:unstructured"
+                                                sling:orderBefore="id"
                                                 sling:resourceType="granite/ui/components/coral/foundation/include"
-                                                path="tds-core/components/authoring/dialog/colorswatches/tab_dialog/container"/>
-                                            <tabIcon
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                fieldDescription="Select Tab Icon"
-                                                fieldLabel="Select Tab Icon"
-                                                name="./tabIcon"
-                                                text="Select Tab Icon"
-                                                value="true"/>
-                                            <iconWithLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                fieldDescription="Check to enable icon with label"
-                                                fieldLabel="Icon With Label"
-                                                name="./iconWithLabel"
-                                                text="Icon With Label"
-                                                value="true"/>
+                                                path="/apps/techdata/components/authoring/dialog/colorswatches/tab_dialog/container"/>
                                         </items>
                                     </column>
                                 </items>
