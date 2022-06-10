@@ -5,6 +5,5 @@
     <filter root="/apps/tds-core/clientlibs"/>
     <filter root="/apps/tds-core/components"/>
     <filter root="/apps/tds-core/i18n"/>
-    <filter root="/apps/sling" />
     <filter root="/apps/msm/tds-core_blueprint" mode="merge"/>
 </workspaceFilter>
