@@ -6,7 +6,7 @@ export function SearchField({ chosenFilter = '', inputRef, triggerSearchOnEnter,
   return (
     <div className="cmp-search-select-container__box-search-field">
       <input
-        className="inputStyle"
+        className={`inputStyle ${searchTerm ? "searchText" : ""}`}
         autoFocus
         placeholder={`Enter a ${chosenFilter}`}
         ref={inputRef}
