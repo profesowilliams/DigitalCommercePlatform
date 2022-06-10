@@ -12,12 +12,16 @@ import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 
+import static com.day.cq.commons.jcr.JcrConstants.*;
+import static com.day.cq.dam.api.DamConstants.DC_TITLE;
+
 @Model(adaptables = {SlingHttpServletRequest.class, Resource.class}, adapters = Image.class, resourceType = TDImage.RESOURCE_TYPE)
 public class TDImage implements Image {
 
     private static final String SVG_EXTENSTION = ".svg";
 
     public static final String RESOURCE_TYPE = "techdata/components/image";
+    public static final String JCR_CONTENT_METADATA = "jcr:content/metadata";
 
     @Self
     private SlingHttpServletRequest request;
@@ -43,16 +47,16 @@ public class TDImage implements Image {
         if(resourceName.startsWith("teaser")) {
             ValueMap baseProps =
                     request.getResourceResolver().getResource(request.getResource().getPath()).adaptTo(ValueMap.class);
-            analyticsTitle = baseProps.get("jcr:title", analyticsTitle);
+            analyticsTitle = baseProps.get(JCR_TITLE, analyticsTitle);
         } else if(resourceName.startsWith("image")) {
             analyticsTitle = getPropertyValue("alt", analyticsTitle);
             String fileRef = image.getFileReference();
             if(fileRef != null) {
                 Resource damImageResource = request.getResourceResolver().getResource(fileRef);
                 if(damImageResource != null) {
-                    Resource damImageMetadataResource = damImageResource.getChild("jcr:content/metadata");
+                    Resource damImageMetadataResource = damImageResource.getChild(JCR_CONTENT_METADATA);
                     if(damImageMetadataResource != null && damImageMetadataResource.adaptTo(ValueMap.class) != null) {
-                        analyticsTitle = damImageMetadataResource.adaptTo(ValueMap.class).get("dc:title", analyticsTitle);
+                        analyticsTitle = damImageMetadataResource.adaptTo(ValueMap.class).get(DC_TITLE, analyticsTitle);
                     }
                 }
             }
@@ -76,9 +80,9 @@ public class TDImage implements Image {
         if(fileRef != null) {
             Resource damImageResource = request.getResourceResolver().getResource(fileRef);
             if(damImageResource != null) {
-                Resource damImageMetadataResource = damImageResource.getChild("jcr:content/metadata");
+                Resource damImageMetadataResource = damImageResource.getChild(JCR_CONTENT_METADATA);
                 if(damImageMetadataResource != null && damImageMetadataResource.adaptTo(ValueMap.class) != null) {
-                    altText = damImageMetadataResource.adaptTo(ValueMap.class).get("dc:title", altText);
+                    altText = damImageMetadataResource.adaptTo(ValueMap.class).get(DC_TITLE, altText);
                 }
             }
         }

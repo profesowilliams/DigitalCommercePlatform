@@ -59,7 +59,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private String htmlClientLibCategoriesJQuery = "/etc.clientlibs/clientlibs/granite/jquery.js";
     private String fontAwesomeScriptLink = "https://kit.fontawesome.com/e1e12a4c06.js";
     private String[] htmlClientLibCategories = null;
-    private List<String> clientlibIgnoreList = null;
+    private transient List<String> clientlibIgnoreList = null;
 
     @Reference
     private transient XSSAPI xssapi;
@@ -76,6 +76,7 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     @Reference
     private transient Externalizer externalizer;
 
+    @SuppressWarnings("squid:CallToDeprecatedMethod")
     @Reference
     private transient SlingSettingsService settingsService;
 
@@ -705,7 +706,9 @@ public class ExperienceFragmentJSServlet extends SlingSafeMethodsServlet {
     private static final String REQ_JQUERY = "reqJquery";
     private static final String REQ_JS = "jsLibs";
     private static final String REQ_CSS = "cssLibs";
+    @SuppressWarnings("squid:CallToDeprecatedMethod")
     private static final String APPS = "/apps/";
+    @SuppressWarnings("squid:CallToDeprecatedMethod")
     private static final String LIBS = "/libs/";
     private static final String ETC_CLIENTLIBS = "/etc.clientlibs/";
     private static final Logger LOG = LoggerFactory.getLogger(ExperienceFragmentJSServlet.class);

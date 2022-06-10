@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static  com.day.cq.commons.jcr.JcrConstants.*;
+import static org.apache.sling.jcr.resource.api.JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY;
+
 @Model(adaptables = {SlingHttpServletRequest.class, Resource.class},
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class MultifieldToJson {
@@ -35,7 +38,7 @@ public class MultifieldToJson {
     @Inject
     private SlingHttpServletRequest request;
 
-    private List<String> propertiesToIgnore = new ArrayList<>();
+    private final List<String> propertiesToIgnore = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -45,12 +48,12 @@ public class MultifieldToJson {
     }
 
     private void setPropertiesToIgnore() {
-        propertiesToIgnore.add("jcr:primaryType");
-        propertiesToIgnore.add("sling:resourceType");
-        propertiesToIgnore.add("jcr:lastModifiedBy");
-        propertiesToIgnore.add("jcr:lastModified");
-        propertiesToIgnore.add("jcr:createdBy");
-        propertiesToIgnore.add("jcr:created");
+        propertiesToIgnore.add(JCR_PRIMARYTYPE);
+        propertiesToIgnore.add(SLING_RESOURCE_TYPE_PROPERTY);
+        propertiesToIgnore.add(JCR_LAST_MODIFIED_BY);
+        propertiesToIgnore.add(JCR_LASTMODIFIED);
+        propertiesToIgnore.add(JCR_CREATED_BY);
+        propertiesToIgnore.add(JCR_CREATED);
     }
 
     public String getJsonMulti() throws RepositoryException {

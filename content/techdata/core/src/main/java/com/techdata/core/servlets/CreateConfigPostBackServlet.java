@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
         property = {
                 "name=" + "Create Config Postback Servlet",
                 "service.description=" + "Servlet to Receive Post Request From Cisco for Configuration Creation.",
-                "sling.servlet.methods=" + "POST",
+                "sling.servlet.methods=" + HttpConstants.METHOD_POST,
                 "sling.servlet.resourceTypes=" + "techdata/components/createconfig",
                 "sling.servlet.selectors=" + "post2get",
                 "sling.servlet.extensions=" + "html"

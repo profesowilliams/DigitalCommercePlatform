@@ -244,7 +244,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                         } else {
                                 LOG.error("Error in determining file uploaded");
                         }
-                } catch (Exception e) {
+                } catch (IOException e) {
                         throw new CustomFormException("Failed when processing the field = " + key);
                 }
         }
