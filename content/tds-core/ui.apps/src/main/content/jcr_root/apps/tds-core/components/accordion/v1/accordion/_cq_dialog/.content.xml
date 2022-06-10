@@ -35,7 +35,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:orderBefore="id"
                                                 sling:resourceType="granite/ui/components/coral/foundation/include"
-                                                path="/apps/tds-core/components/authoring/dialog/colorswatches/tab_dialog/container"/>
+                                                path="tds-core/components/authoring/dialog/colorswatches/tab_dialog/container"/>
                                         </items>
                                     </column>
                                 </items>
