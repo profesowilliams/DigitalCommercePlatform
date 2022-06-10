@@ -37,6 +37,7 @@ import {
   QUOTE_PREVIEW_AVT_TECHNOLOGY,
   QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD,
   QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD,
+  QUOTE_PREVIEW_BROADCAST_CHANNEL_ID,
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 import {useStore} from "../../../../utils/useStore"
@@ -62,7 +63,8 @@ function QuotePreview(props) {
   const isLoggedIn = useStore(state => state.isLoggedIn)
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
-  
+  const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);
+  channel.postMessage(id);
   /**
    * 
    * @param {string} distiBuyMethodParam 

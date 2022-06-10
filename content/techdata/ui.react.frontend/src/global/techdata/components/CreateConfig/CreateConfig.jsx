@@ -6,6 +6,8 @@ import { usPost } from "../../../../utils/api";
 import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import {useStore} from "../../../../utils/useStore"
+import { isNotEmptyValue } from '../../../../utils/utils';
+import { QUOTE_PREVIEW_BROADCAST_CHANNEL_ID } from '../../../../utils/constants';
 
 const CreateConfig = ({ componentProp }) => {
   const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText, nodePath }  = JSON.parse(componentProp);
@@ -15,20 +17,31 @@ const CreateConfig = ({ componentProp }) => {
   const [error, setError] = useState(false);
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const POST_BACK_URL = "https://shop.techdata.com";
+  const [quoteIDAnalityc, setquoteIDAnalityc] = useState(null);
 
-  const analyticsData = (vendorName, complete) => {
+  /**
+   * Function that validate and push the information of analytics
+   * @param {string} vendorName 
+   * @param {boolean} complete 
+   * @param {string} id 
+   */
+  const analyticsData = (vendorName, complete, id = '') => {
+      const localStorageVendorName = localStorage.getItem('vendorName');
+      const vendorNameConst =  isNotEmptyValue(vendorName) ? vendorName :
+          isNotEmptyValue(localStorageVendorName) 
+          ? localStorageVendorName : '';
       let analyticsObj = {
            event: ANALYTICS_TYPES.events.configStart,
            configuration: {
-               configID: '',
-               vendorName: vendorName,
+               configID: id,
+               vendorName: vendorNameConst,
                configType: 'Estimate'
            }
       }
 
       if (complete) {
         analyticsObj.configuration.configComplete = '1';
-        analyticsObj.configuration.vendorName = localStorage.getItem('vendorName') || vendorName;
+        analyticsObj.configuration.vendorName = localStorageVendorName || vendorName;
         localStorage.removeItem('vendorName');
       } else {
         localStorage.setItem('vendorName', vendorName);
@@ -36,6 +49,15 @@ const CreateConfig = ({ componentProp }) => {
       }
       pushData(analyticsObj);
   }
+
+  const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);
+  useEffect(() =>{
+    channel.addEventListener('message', event => {
+      if (isNotEmptyValue( event.data) && !isNotEmptyValue(quoteIDAnalityc)) {
+        setquoteIDAnalityc(event.data);
+      }
+    });
+  }, [channel, quoteIDAnalityc]);
 
   const createConfig = async (e) => {
     e.preventDefault();
@@ -98,10 +120,10 @@ const CreateConfig = ({ componentProp }) => {
 
   useEffect(() => {
     if (localStorage.getItem('createConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
-        analyticsData(methodSelected.label, true);
+        analyticsData(methodSelected.label, true, quoteIDAnalityc);
         localStorage.removeItem('createConfig');
     }
-  }, [])
+  }, [methodSelected, quoteIDAnalityc]);
 
   useEffect(()=>{
     if( methodSelected && (!methodSelected.urls || methodSelected.urls.length === 0 || methodSelected.extendedOption === false ))

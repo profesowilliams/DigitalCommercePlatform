@@ -4178,8 +4178,7 @@ app.post("/ui-commerce/v1/quote/create", function (req, res) {
 
 // Punchout to vendor - CREATE CONFIG //
 app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
-  console.log(req.body);
-
+  const quotePreviewURLocal = "http://localhost:8080/quote-preview?id=53866281&type=Estimate&vendor=CISCO";
   if (!validateSession(req, res)) return res.status(401);
 
   res.json({

@@ -34,6 +34,7 @@ export const QUOTE_PREVIEW_TECH_DATA_AND_AVT_VALUE = 'TDANDAVT';
 export const QUOTE_PREVIEW_CREATE_POPUP_ACTION = 'Create Quote';
 export const QUOTE_PREVIEW_TECH_DATA_CUSTOMER_METHOD = 'TD';
 export const QUOTE_PREVIEW_AVT_TECHNOLOGY_CUSTOMER_METHOD = 'AVT';
+export const QUOTE_PREVIEW_BROADCAST_CHANNEL_ID = 'ConfigurationComponent';
 
 // Configuration
 export const ADOBE_DATA_LAYER_CONFIGURATION_CLICKINFO_CATEGORY = 'Configuration Table Interactions';
