@@ -34,7 +34,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   });
 
   const maxPaginationCounter = () =>
-  maxCounterCalculator(currentResultsInPage, pageNumber);
+  maxCounterCalculator(currentResultsInPage, pageNumber, paginationData);
 
   const minPaginationCounter = () =>
     minCounterCalculator(currentResultsInPage, pageNumber);

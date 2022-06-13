@@ -1,7 +1,13 @@
 export const pageCalculator = (totalItems, step) =>
   parseInt(Math.floor(totalItems / step), 10);
 
-export const maxCounterCalculator = (currentResultsInPage, getCurrentPage) => {
+const isTotalCounterLessThanCurrentResultsInPage = (paginationData) => {
+  const {currentResultsInPage, totalCounter} = paginationData;
+  return parseInt(currentResultsInPage) > totalCounter;
+}
+
+export const maxCounterCalculator = (currentResultsInPage, getCurrentPage, paginationData) => { 
+  if (isTotalCounterLessThanCurrentResultsInPage(paginationData)) return paginationData.totalCounter;
   return  (currentResultsInPage * getCurrentPage)
 };
 

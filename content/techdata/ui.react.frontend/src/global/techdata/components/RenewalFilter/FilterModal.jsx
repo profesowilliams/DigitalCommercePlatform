@@ -96,6 +96,10 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
      setFilterPanelDimensions();
   };
 
+  const hasAnyFilterSelected = () => {
+    const nochildIds = filterList.filter(filter => !filter.childIds.length);
+    return nochildIds.some((filter) => filter.checked) || dateSelected;
+  }
 
   if (!filterList) return null;
   
@@ -112,7 +116,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
             <FilterList rootIds={rootIds} />
           </ul>
           <FilterTags />
-          <Button btnClass="cmp-quote-button filter-modal-container__results" onClick={showResult}>
+          <Button btnClass="cmp-quote-button filter-modal-container__results" onClick={showResult} disabled={!hasAnyFilterSelected()}>
             {aemData.showResultLabel || 'Show Result'}
           </Button>
         </FilterDialog>

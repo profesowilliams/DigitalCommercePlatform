@@ -204,6 +204,7 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
         mapUrl.set(field,value);  
+        mapUrl.set('PageNumber',1);
     }    
     if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
