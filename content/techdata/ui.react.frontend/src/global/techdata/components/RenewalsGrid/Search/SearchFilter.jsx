@@ -262,7 +262,7 @@ function _SearchFilter(
                 className="cmp-search-tooltip__button"
                 onClick={() => triggerSearch()}
               >
-                <i className="fa fa-search"></i>
+                <i className="fas fa-search"></i>
               </button>
             </div>
             <If condition={isResetVisible}>
@@ -297,7 +297,7 @@ function _SearchFilter(
             <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
                 <span className="cmp-renewal-search__text">Search</span>
             </If>
-            <i className="fa fa-search cmp-renewal-search__icon"></i>
+            <i className="fas fa-search cmp-renewal-search__icon"></i>
           </div>
         </If>
         <If condition={isDropdownVisible}>
@@ -305,7 +305,7 @@ function _SearchFilter(
             <div className="cmp-search-select-container__box">
               <input className="inputStyle" placeholder="Search by" disabled />
               <button className="cmp-search-tooltip__button">
-                <i className="fa fa-search cmp-renewal-search__icon"></i>
+                <i className="fas fa-search cmp-renewal-search__icon"></i>
               </button>
             </div>
             <If condition={true}>
