@@ -52,6 +52,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       ['resize', 'scroll'].forEach(e => {
         window.removeEventListener(e, updateWindowDimensions);
       });
+      document.querySelector("body").style.overflow = 'auto';
     }
   }, []);
 
@@ -61,12 +62,13 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     var subheader = document.querySelector(".cmp-new-subheader");
     var modal = document.querySelector(".filter-modal-container");
     var close = document.querySelector(".btn-common.filter-modal-container__close");
+    var body = document.querySelector("body");
     const headerMargin = 5;
-    const footerMargin = 3
-    if (popup && experiencefragment && subheader && modal && close) {
+    if (popup && experiencefragment && subheader && modal && close && body) {
       popup.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
-      popup.style.height = (modal.offsetHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin - footerMargin + window.pageYOffset) + 'px';
-      close.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin + footerMargin) + 'px';
+      popup.style.height = (modal.offsetHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin + window.pageYOffset) + 'px';
+      close.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
+      body.style.overflow = 'hidden';
     }
   }
 
