@@ -38,6 +38,8 @@ export default function FilterDatePicker({ isOpen = false }) {
             <DateRangePicker
               startDate={customStartDate}
               startDateId="start-date"
+              startDatePlaceholderText="Start date"
+              endDatePlaceholderText="End date"
               endDate={customEndDate}
               endDateId="end-date"
               verticalHeight={468}
