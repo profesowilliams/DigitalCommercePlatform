@@ -8,7 +8,7 @@ export function SearchField({ chosenFilter = '', inputRef, triggerSearchOnEnter,
       <input
         className={`inputStyle ${searchTerm ? "searchText" : ""}`}
         autoFocus
-        placeholder={`Enter ${chosenFilter}`}
+        placeholder={`Enter ${chosenFilter?.toLowerCase()}`}
         ref={inputRef}
         onKeyDown={triggerSearchOnEnter}
         value={searchTerm}
