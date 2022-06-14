@@ -266,3 +266,18 @@ export function clearLocalStorageGridData() {
 export function isFromRenewalDetailsPage() {
     return (document.referrer.split('?')[0])?.split('/')?.pop() === 'renewal-details.html';
 }
+
+/**
+ * Updates query string if page number is not 1
+ * If page number is 1, it removes query string with default URL.
+ * @param {number} pageNumber page number
+ */
+export function updateQueryString(pageNumber) {
+    if (pageNumber === 1) {
+        if (location.href.includes('page=')) {
+            history.replaceState(null, '', location.origin + location.pathname);
+        }
+    } else {
+        history.replaceState(null, '', `?page=${pageNumber}`);
+    }
+};

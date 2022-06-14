@@ -10,6 +10,7 @@ import {
   minCounterCalculator,
 } from "../../../../../utils/paginationUtil";
 import { useMultiFilterSelected } from "../../RenewalFilter/hooks/useFilteringState";
+import { updateQueryString } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
 function CustomRenewalPagination({ onQueryChanged }, ref) {
@@ -80,6 +81,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,
     });
+    updateQueryString(value?.pageNumber);
     if (isFilterDataPopulated.current) {  
       keepFilteringPayload(pageNumber+1)
     } else {    
@@ -93,7 +95,8 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     setPaginationData({ key: "pagination", value }, {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,
-    });   
+    });
+    updateQueryString(value?.pageNumber);   
     if (isFilterDataPopulated.current) {  
       keepFilteringPayload(pageNumber-1)
     } else {    

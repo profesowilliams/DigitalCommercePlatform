@@ -16,7 +16,7 @@ import {
   mapServiceData, 
   mapSortIdByPrice,
   nonFilteredOnSorting, preserveFilterinOnSorting,
-  setPaginationData, isFirstTimeSortParameters, clearLocalStorageGridData, isFromRenewalDetailsPage
+  setPaginationData, isFirstTimeSortParameters, clearLocalStorageGridData, isFromRenewalDetailsPage, updateQueryString
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -127,9 +127,13 @@ function RenewalsGrid(props) {
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
     const pageSize = gridConfig.itemsPerPage;
     const paginationValue = setPaginationData(rest,pageSize);
+    const responseContent = response?.data?.content;
+    const pageNumber = responseContent?.pageNumber;
 
-    if (response?.data?.content?.pageCount === response?.data?.content?.pageNumber)
-      gridApiRef?.current.api.paginationSetPageSize(response?.data?.content?.items?.length);
+    if (responseContent?.pageCount === pageNumber)
+      gridApiRef?.current.api.paginationSetPageSize(responseContent?.items?.length);
+
+    updateQueryString(pageNumber);
 
     setCustomState({ key: 'pagination', value: paginationValue }, {
       key: PAGINATION_LOCAL_STORAGE_KEY,

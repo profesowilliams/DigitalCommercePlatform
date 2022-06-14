@@ -51,7 +51,7 @@ const INITIAL_STATE = {
     stepBy: 25,
     currentPage: 1,
     currentResultsInPage: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "currentResultsInPage", 0),
-    pageNumber: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "pageNumber", 1),
+    pageNumber: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "pageNumber", getFromQueryString('page=') || 1),
   },
   toolTipData: {
     value: '',
@@ -69,6 +69,20 @@ const INITIAL_STATE = {
   resetFilter:false,
   rowCollapsedIndexList:null
 };
+
+/**
+ * Returns the value of `param` if it exists in the query string
+ * or else return false.
+ * @param {string} param Query string param
+ * @returns any | false
+ */
+function getFromQueryString(param) {
+  if (location?.href?.includes(param)) {
+    return location.href.split(param).pop() === '1' ? false : location.href.split(param).pop();
+  }
+
+  return false;
+}
 
 /**
  * A function to check if a key exist in localstorage and return its value. If the
