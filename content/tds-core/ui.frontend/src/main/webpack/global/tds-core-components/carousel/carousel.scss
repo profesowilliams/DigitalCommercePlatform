@@ -179,7 +179,6 @@
     width: rem(10px);
     height: rem(10px);
     color: transparent;
-    background-color: get-color(brand-white);
     border-radius: 50%;
     box-sizing: border-box;
     margin: 0 rem(6.4px);
@@ -187,7 +186,6 @@
     &.cmp-carousel__indicator--active,
     &:hover{
       color: get-color(brand-white);
-      background-color: transparent;
       opacity: 1;
     }
   }
@@ -226,5 +224,32 @@
       max-height: 500px;
       object-fit: cover;
       object-position: center;
+  }
+}
+
+
+// New nav dots styling
+.cmp-carousel__indicators {
+  align-self: center;
+  width: auto;
+  flex-wrap: nowrap;
+
+  &--active {
+    background-color: get-color(brand-blue);
+  }
+
+  //New classes for position of carousel dots
+  &--left {
+    .cmp-carousel__indicators {
+      align-self: flex-start;
+      padding-left: 25%;
+    }
+  }
+
+  &--right {
+    .cmp-carousel__indicators {
+      align-self: flex-end;
+      padding-right: 25%;
+    }
   }
 }
