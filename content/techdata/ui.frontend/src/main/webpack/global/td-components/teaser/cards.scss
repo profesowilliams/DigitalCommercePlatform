@@ -301,7 +301,9 @@
 		}
 
 		.cmp-teaser__description {
-			text-align: center;
+			text-align: justify;
+			display: flex;
+			justify-content: center;
 		}
 
 		.cmp-teaser__image {
