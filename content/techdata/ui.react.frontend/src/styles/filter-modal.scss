@@ -99,6 +99,9 @@
     cursor: pointer;
     user-select: none;
   }
+  &__label:hover {
+    font-weight: bold;
+  }
   &__options {
     border-bottom: 1px solid #d8d8d8;
     > ul,
@@ -232,6 +235,9 @@
         line-height: 19px;
         cursor: pointer;
         user-select: none;  
+      }
+      label:hover {
+        font-weight: bold;  
       }
       input[type="radio"] {
         accent-color: black;
