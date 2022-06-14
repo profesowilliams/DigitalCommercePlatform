@@ -2,6 +2,8 @@ package com.tdscore.core.models;
 
 import com.adobe.cq.wcm.core.components.models.Image;
 import com.adobe.cq.wcm.core.components.models.ImageArea;
+import com.day.cq.commons.jcr.JcrConstants;
+import com.day.cq.dam.api.DamConstants;
 import com.drew.lang.annotations.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -43,7 +45,7 @@ public class TDImage implements Image {
         if(resourceName.startsWith("teaser")) {
             ValueMap baseProps =
                     request.getResourceResolver().getResource(request.getResource().getPath()).adaptTo(ValueMap.class);
-            analyticsTitle = baseProps.get("jcr:title", analyticsTitle);
+            analyticsTitle = baseProps.get(JcrConstants.JCR_TITLE, analyticsTitle);
         } else if(resourceName.startsWith("image")) {
             analyticsTitle = getPropertyValue("alt", analyticsTitle);
             String fileRef = image.getFileReference();
@@ -52,7 +54,7 @@ public class TDImage implements Image {
                 if(damImageResource != null) {
                     Resource damImageMetadataResource = damImageResource.getChild("jcr:content/metadata");
                     if(damImageMetadataResource != null && damImageMetadataResource.adaptTo(ValueMap.class) != null) {
-                        analyticsTitle = damImageMetadataResource.adaptTo(ValueMap.class).get("dc:title", analyticsTitle);
+                        analyticsTitle = damImageMetadataResource.adaptTo(ValueMap.class).get(DamConstants.DC_TITLE, analyticsTitle);
                     }
                 }
             }
@@ -78,7 +80,7 @@ public class TDImage implements Image {
             if(damImageResource != null) {
                 Resource damImageMetadataResource = damImageResource.getChild("jcr:content/metadata");
                 if(damImageMetadataResource != null && damImageMetadataResource.adaptTo(ValueMap.class) != null) {
-                    altText = damImageMetadataResource.adaptTo(ValueMap.class).get("dc:title", altText);
+                    altText = damImageMetadataResource.adaptTo(ValueMap.class).get(DamConstants.DC_TITLE, altText);
                 }
             }
         }

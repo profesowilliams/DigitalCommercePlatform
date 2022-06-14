@@ -1,10 +1,12 @@
 package com.tdscore.core.models;
 
+import com.day.cq.commons.jcr.JcrConstants;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.jcr.resource.api.JcrResourceConstants;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Optional;
@@ -45,12 +47,12 @@ public class MultifieldToJson {
     }
 
     private void setPropertiesToIgnore() {
-        propertiesToIgnore.add("jcr:primaryType");
-        propertiesToIgnore.add("sling:resourceType");
-        propertiesToIgnore.add("jcr:lastModifiedBy");
-        propertiesToIgnore.add("jcr:lastModified");
-        propertiesToIgnore.add("jcr:createdBy");
-        propertiesToIgnore.add("jcr:created");
+        propertiesToIgnore.add(JcrConstants.JCR_PRIMARYTYPE);
+        propertiesToIgnore.add(JcrResourceConstants.SLING_RESOURCE_TYPE_PROPERTY);
+        propertiesToIgnore.add(JcrConstants.JCR_LAST_MODIFIED_BY);
+        propertiesToIgnore.add(JcrConstants.JCR_LASTMODIFIED);
+        propertiesToIgnore.add(JcrConstants.JCR_CREATED_BY);
+        propertiesToIgnore.add(JcrConstants.JCR_CREATED);
     }
 
     public String getJsonMulti() throws RepositoryException {
