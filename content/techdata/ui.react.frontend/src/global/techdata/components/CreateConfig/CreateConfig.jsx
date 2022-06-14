@@ -53,6 +53,7 @@ const CreateConfig = ({ componentProp }) => {
   const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);
   useEffect(() =>{
     channel.addEventListener('message', event => {
+    console.log("🚀 ~ file: CreateConfig.jsx ~ line 56 ~ useEffect ~ event.data", event.data)
       if (isNotEmptyValue( event.data) && !isNotEmptyValue(quoteIDAnalityc)) {
         setquoteIDAnalityc(event.data);
       }
@@ -119,6 +120,7 @@ const CreateConfig = ({ componentProp }) => {
   }
 
   useEffect(() => {
+    console.log("🚀 ~ file: CreateConfig.jsx ~ line 124 ~ useEffect ~ quoteIDAnalityc", quoteIDAnalityc)
     if (localStorage.getItem('createConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
         analyticsData(methodSelected.label, true, quoteIDAnalityc);
         localStorage.removeItem('createConfig');
