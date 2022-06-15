@@ -110,9 +110,9 @@
     }
 
     function handlerInputFile() {
-            let submitButton = document.getElementById("formSubmit");
-            submitButton.disabled = false;
-        }
+        let submitButton = document.getElementById("formSubmit");
+        submitButton.disabled = false;
+    }
 
     function validateAddress(element,value){
         handlerInputFile();
@@ -208,16 +208,24 @@
         var targetElement = e.target;
         var parentDiv = targetElement.closest("div");
         var errorLabel = document.createElement("label");
-        const errorLabelInnertext = parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required";
+        let errorLabelInnertext = parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required";
         const querySelector = parentDiv.querySelector("fieldset");
+        const lineBreak = document.createElement('br');
+        let flagOptionBR = false;
+        let flagFileBR = parentDiv.querySelector('input[type=file]');
         if (querySelector) {
-            parentDiv = parentDiv.querySelector("fieldset");
+            parentDiv = querySelector;
+            flagOptionBR = querySelector.querySelector('input[type=checkbox]');// validate if is type checkbox
+            errorLabelInnertext = querySelector.dataset.cmpConstraintMessage ? querySelector.dataset.cmpConstraintMessage : "This field is required";
         }
         errorLabel.style.color = "red";
         const validityState = inputElement.validity;
         if (validityState.valueMissing) {
-            errorLabel.innerText = errorLabelInnertext;
+            flagOptionBR && parentDiv.appendChild(lineBreak);
+            flagFileBR && parentDiv.appendChild(lineBreak);
+            errorLabel.innerHTML = errorLabelInnertext;
         }else if (validityState.typeMismatch) {
+            
             errorLabel.innerText = (parentDiv.dataset.cmpConstraintMessage ? parentDiv.dataset.cmpConstraintMessage : "This field content does not match the type of " + type);
         } else {
             validateAddress(inputElement, inputElement.value);
