@@ -23,3 +23,8 @@ import "../global/td-components/filmstrip-carousel/filmstrip-carousel";
 import "../global/td-components/analytics/analytics-tracking";
 import "../global/td-components/authentication/authentication";
 import "../global/td-components/form-options/brand-filter/brandFilter";
+
+//include fortawesome library bundle
+import "fortawesome/js/fontawesome"
+import "fortawesome/css/all.css"
+import "fortawesome/js/all"

@@ -14,7 +14,10 @@ module.exports = {
         extensions: ['.js', '.ts'],
         plugins: [new TSConfigPathsPlugin({
             configFile: './tsconfig.json'
-        })]
+        })],
+        alias:{
+            'fortawesome':path.join(__dirname,'node_modules/@fortawesome/fontawesome-free')
+        }
     },
     entry: {
         us: SOURCE_ROOT + '/international/us/main.ts',
