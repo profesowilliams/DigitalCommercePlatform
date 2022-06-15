@@ -46,7 +46,7 @@
 			flex-direction: column;
 			min-width: 0;
 			min-height: rem(304px);
-			background-color: get-color(brand-white);
+			background-color: get-color(container-transparent) !important;
 			-webkit-background-clip: border-box;
 			background-clip: border-box;
 			color: get-color(text-dark-grey) !important;
@@ -301,9 +301,12 @@
 		}
 
 		.cmp-teaser__description {
-			text-align: justify;
+			text-align: center;
 			display: flex;
 			justify-content: center;
+			p {
+				width: auto !important;
+			}
 		}
 
 		.cmp-teaser__image {
@@ -387,7 +390,7 @@
 				flex-direction: column;
 				min-width: 0;
 				min-height: rem(304px);
-				background-color: get-color(brand-white);
+				background-color: get-color(container-transparent) !important;
 				-webkit-background-clip: border-box;
 				background-clip: border-box;
 				color: get-color(text-dark-grey) !important;
