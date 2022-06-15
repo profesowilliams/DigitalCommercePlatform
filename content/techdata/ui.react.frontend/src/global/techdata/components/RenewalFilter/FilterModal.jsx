@@ -41,17 +41,13 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       setFilterList(aemFilterData);
     } 
 
-    ['resize', 'scroll'].forEach(e => {
-      window.addEventListener(e, updateWindowDimensions);
-    });
+    window.addEventListener('resize', updateWindowDimensions);
 
     const timeOutId = setTimeout(() => setFilterPanelDimensions(), 200);
 
     return () => {
       clearTimeout(timeOutId);
-      ['resize', 'scroll'].forEach(e => {
-        window.removeEventListener(e, updateWindowDimensions);
-      });
+      window.addEventListener('resize', updateWindowDimensions);
       document.querySelector("body").style.overflow = 'auto';
     }
   }, []);
@@ -66,7 +62,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     const headerMargin = 5;
     if (popup && experiencefragment && subheader && modal && close && body) {
       popup.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
-      popup.style.height = (modal.offsetHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin + window.pageYOffset) + 'px';
+      popup.style.height = (modal.offsetHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin) + 'px';
       close.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
       body.style.overflow = 'hidden';
     }
@@ -114,9 +110,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
         ></Button>
         <FilterDialog>
           <FilterHeader onQueryChanged={onQueryChanged}/>
-          <ul className="filter-accordion">
-            <FilterList rootIds={rootIds} />
-          </ul>
+          <div className="filter-accordion">
+            <ul className="filter-accordion">
+              <FilterList rootIds={rootIds} />
+            </ul>
+          </div>          
           <FilterTags />
           <Button btnClass="cmp-quote-button filter-modal-container__results" onClick={showResult} disabled={!hasAnyFilterSelected()}>
             {aemData.showResultLabel || 'Show Result'}
