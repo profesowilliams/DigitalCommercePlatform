@@ -1,0 +1,101 @@
+// Teaser Synnex
+.cmp-tds-quadriptych-teaser {
+    &.cmp-tds-quadriptych-teaser-synnex {
+        @include teaser-synnex-color(get-color(brand-green-synnex));
+    }
+}
+
+// Reverse Teaser Synnex
+.cmp-tds-quadriptych-teaser {
+    &.cmp-tds-quadriptych-teaser-reverse {
+        &.cmp-tds-quadriptych-teaser-synnex {
+            @include teaser-synnex-color(get-color(brand-green-synnex));
+            .cmp-teaser {
+                &:hover {
+                    box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
+
+                    .cmp-teaser__title {
+                        background-color: get-color(brand-green-synnex) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cmp-tds-quadriptych-teaser {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: rem(32px);
+
+    .cmp-teaser {
+        box-shadow: 0 0 0 rem(1px) rgb(0 0 0 / 5%);
+        background-color: get-color(brand-white);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        &:hover {
+            outline: 0 solid get-color(brand-blue) !important;
+            box-shadow: rem(2px) rem(2px) rem(4px) 0 rgba(0,0,0,0.5);
+
+            .cmp-teaser__title {
+                background-color: get-color(brand-white) !important;
+                color: get-color(deep-teal) !important;
+
+                .cmp-teaser__title-link {
+                    color: get-color(deep-teal) !important;
+                }
+            }
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: fill;
+        }
+
+        .cmp-teaser__title {
+            width: 100%;
+            min-height: rem(45px);
+            background-color: map-get($color-palette, "teal");
+            color: get-color(brand-white);
+            text-align: left;
+            font-family: $font-family-marketing;
+            font-size: $font-size-custom-medium;
+            padding-top: rem(5px);
+            padding-left: rem(20px);
+            font-weight: normal;
+
+            .cmp-teaser__title-link {
+                text-decoration: none;
+                color: get-color(brand-white);
+            }
+        }
+
+        .cmp-teaser__content {
+            font-size: $font-size-custom-xxsmall;
+            color: get-color(brand-text-gray);
+            //   min-height: rem(390px);
+            min-height: auto;
+
+            &-title {
+                font-size: $font-size-medium;
+                font-weight: bold;
+            }
+
+            .cmp-teaser__description {
+                font-family: $font-family-georgia;
+                padding: rem(25px);
+                line-height: rem(16px);
+            }
+        }
+
+        &__image {
+            width: 100%;
+        }
+    }
+}
+
