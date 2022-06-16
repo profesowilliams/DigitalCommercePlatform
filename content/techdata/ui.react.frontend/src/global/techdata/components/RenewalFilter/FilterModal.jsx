@@ -62,8 +62,9 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     const headerMargin = 5;
     if (popup && experiencefragment && subheader && modal && close && body) {
       popup.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
-      popup.style.height = (modal.offsetHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin + window.pageYOffset) + 'px';
+      popup.style.height = (window.innerHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin + window.pageYOffset) + 'px';
       close.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin) + 'px';
+      modal.style.height = (window.innerHeight + window.pageYOffset) + 'px';
       body.style.overflow = 'hidden';
     }
   }
