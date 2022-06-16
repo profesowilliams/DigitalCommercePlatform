@@ -211,6 +211,7 @@
         let errorLabelInnertext = parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required";
         const querySelector = parentDiv.querySelector("fieldset");
         const lineBreak = document.createElement('br');
+        const setTimeoutTimerValue = 10000;
         let flagOptionBR = false;
         let flagFileBR = parentDiv.querySelector('input[type=file]');
         if (querySelector) {
@@ -234,7 +235,11 @@
             if (flagErrorMessage) {
                 parentDiv.appendChild(errorLabel);
             }
-        setTimeout(function() { parentDiv.removeChild(errorLabel); e.target.style.borderColor = originalBorderColor  }, 10000);
+        setTimeout(function() { 
+            parentDiv.removeChild(errorLabel);
+            e.target.style.borderColor = originalBorderColor 
+            if (flagOptionBR || flagFileBR) parentDiv.removeChild(lineBreak);
+        }, setTimeoutTimerValue);
     }
 
     function initValidation(form)
