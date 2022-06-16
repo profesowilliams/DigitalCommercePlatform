@@ -17,7 +17,7 @@ const CreateConfig = ({ componentProp }) => {
   const [error, setError] = useState(false);
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const POST_BACK_URL = "https://shop.techdata.com";
-  const [quoteIDAnalityc, setquoteIDAnalityc] = useState(null);
+  const [quoteIDAnalytic, setQuoteIDAnalytic] = useState(null);
 
   /**
    * Function that validate and push the information of analytics
@@ -53,12 +53,11 @@ const CreateConfig = ({ componentProp }) => {
   const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);
   useEffect(() =>{
     channel.addEventListener('message', event => {
-    console.log("🚀 ~ file: CreateConfig.jsx ~ line 56 ~ useEffect ~ event.data", event.data)
-      if (isNotEmptyValue( event.data) && !isNotEmptyValue(quoteIDAnalityc)) {
-        setquoteIDAnalityc(event.data);
+      if (isNotEmptyValue( event.data) && !isNotEmptyValue(quoteIDAnalytic) && event.data !== quoteIDAnalytic) {
+        setQuoteIDAnalytic(event.data);
       }
     });
-  }, [channel, quoteIDAnalityc]);
+  }, [channel, quoteIDAnalytic]);
 
   const createConfig = async (e) => {
     e.preventDefault();
@@ -120,12 +119,11 @@ const CreateConfig = ({ componentProp }) => {
   }
 
   useEffect(() => {
-    console.log("🚀 ~ file: CreateConfig.jsx ~ line 124 ~ useEffect ~ quoteIDAnalityc", quoteIDAnalityc)
-    if (localStorage.getItem('createConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1) {
-        analyticsData(methodSelected.label, true, quoteIDAnalityc);
+    if ((localStorage.getItem('createConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1)|| isNotEmptyValue(quoteIDAnalytic)) {
+        analyticsData(methodSelected.label, true, quoteIDAnalytic);
         localStorage.removeItem('createConfig');
     }
-  }, [methodSelected, quoteIDAnalityc]);
+  }, [methodSelected, quoteIDAnalytic]);
 
   useEffect(()=>{
     if( methodSelected && (!methodSelected.urls || methodSelected.urls.length === 0 || methodSelected.extendedOption === false ))
