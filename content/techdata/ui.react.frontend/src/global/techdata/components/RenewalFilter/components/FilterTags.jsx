@@ -4,6 +4,7 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import capitalizeFirstLetter, {
   getDayMonthYear,
 } from "../../../../../utils/utils";
+import useFilteringSelected from "../hooks/useIsFilteringSelected";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState((state) => state.datePickerState);
@@ -26,16 +27,11 @@ function CustomDatePill({ clearDateFilters }) {
 }
 
 function FilterTags() {
-  const [showMore, setShowMore] = useState(false);
-  const filterList = useRenewalGridState((state) => state.filterList);
-  const dateSelected = useRenewalGridState((state) => state.dateSelected);
-  const effects = useRenewalGridState((state) => state.effects);
-  const { setFilterList, clearDateFilters } = effects;
 
-  const hasAnyFilterSelected = () => {
-    const nochildIds = filterList.filter(filter => !filter.childIds.length);
-    return nochildIds.some((filter) => filter.checked) || dateSelected;
-  }
+  const [showMore, setShowMore] = useState(false); 
+  const effects = useRenewalGridState((state) => state.effects);
+  const {hasAnyFilterSelected, filterList, dateSelected} = useFilteringSelected()
+  const { setFilterList, clearDateFilters } = effects;
   
   const handleShowMore = () => {
     setShowMore(!showMore);

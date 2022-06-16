@@ -12,6 +12,7 @@ import { generateFilterFields } from "./filterUtils/filterUtils";
 import normaliseAPIData from "./filterUtils/normaliseAPIData";
 import normaliseState from "./filterUtils/normaliseData";
 import { useMultiFilterSelected } from "./hooks/useFilteringState";
+import useFilteringSelected from "./hooks/useIsFilteringSelected";
 
 import { RenewalErrorBoundary } from "./renewalErrorBoundary";
 
@@ -22,8 +23,10 @@ const FilterDialog = ({ children }) => {
 const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   
   const {filterList, resetFilter, effects, filterData, _generateFilterFields} = useMultiFilterSelected();
-  const dateSelected = useRenewalGridState((state) => state.dateSelected);
+  
   const appliedFilterCount = useRenewalGridState((state) => state.appliedFilterCount);
+  
+  const {hasAnyFilterSelected, dateSelected} = useFilteringSelected()
 
   let aemFilterData;
   aemData.filterType = aemData.filterType === null ? "static" : aemData.filterType;
@@ -94,11 +97,6 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   const updateWindowDimensions = () => {
      setFilterPanelDimensions();
   };
-
-  const hasAnyFilterSelected = () => {
-    const nochildIds = filterList.filter(filter => !filter.childIds.length);
-    return nochildIds.some((filter) => filter.checked) || dateSelected;
-  }
 
   if (!filterList) return null;
   
