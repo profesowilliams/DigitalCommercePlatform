@@ -99,7 +99,9 @@
 				margin: 0;
 				line-height: 1.5rem;
 				font-weight: $font-weight-normal;
-
+				display: flex;
+				align-items: center;
+				align-content: center;
 				&-link {
 					text-decoration: none;
 					line-height: 1.5rem;
@@ -107,6 +109,8 @@
 					font-weight: 500;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
+					word-wrap: break-word;
+					max-width: 15rem;
 				}
 			}
 
@@ -213,11 +217,11 @@
 					margin: 0;
 					line-height: 1.5rem;
 					color: #fff;
-
 					&-link {
 						text-decoration: none;
 						line-height: 1.5rem;
 						color: get-color(brand-white);
+						max-width: 15rem;
 					}
 				}
 
@@ -271,11 +275,16 @@
 					}
 
 					&__title {
+						display: flex;
+						align-items: center;
+						align-content: center;
 						&-link {
 							color: get-color(text-dark-grey);
 							font-size: $font-size-custom-medium;
 							line-height: rem(24px);
 							font-weight: $font-weight-semi-bold;
+							word-wrap: break-word;
+							width: 15rem;
 						}
 					}
 
@@ -297,7 +306,7 @@
 		padding: 8.56rem 0.56rem 1.25rem;
 
 		.cmp-teaser {
-			min-height: 25rem;
+			min-height: 0rem !important;
 		}
 
 		.cmp-teaser__description {
@@ -443,7 +452,9 @@
 					margin: 0;
 					line-height: 1.5rem;
 					font-weight: $font-weight-normal;
-
+					display: flex;
+					align-items: center;
+					align-content: center;
 					&-link {
 						text-decoration: none;
 						line-height: 1.5rem;
@@ -451,6 +462,8 @@
 						font-weight: 500;
 						-webkit-font-smoothing: antialiased;
 						-moz-osx-font-smoothing: grayscale;
+						word-wrap: break-word;
+						max-width: 15rem;
 					}
 				}
 
@@ -535,7 +548,9 @@
 						display: flex;
 						flex-grow: 1;
 						flex-direction: column;
-						justify-content: space-between;
+						align-content: center;
+						align-items: center;
+						justify-content: flex-end;
 					}
 
 					&__title {
@@ -549,11 +564,14 @@
 						margin: 0;
 						line-height: 1.5rem;
 						color: #fff;
+						min-height: 11rem;
 
 						&-link {
 							text-decoration: none;
 							line-height: 1.5rem;
 							color: get-color(brand-white);
+							word-break: break-word;
+							max-width: 15rem;
 						}
 					}
 
@@ -606,11 +624,15 @@
 						}
 
 						&__title {
+							display: flex;
+							align-items: center;
+							align-content: center;
 							&-link {
 								color: get-color(text-dark-grey);
 								font-size: $font-size-custom-medium;
 								line-height: rem(24px);
 								font-weight: $font-weight-semi-bold;
+								word-wrap: break-word
 							}
 						}
 
@@ -632,7 +654,7 @@
 			padding: 8.56rem 0.56rem 1.25rem;
 
 			.cmp-teaser {
-				min-height: 25rem;
+				min-height: 0rem !important;
 			}
 
 			.cmp-teaser__description {
