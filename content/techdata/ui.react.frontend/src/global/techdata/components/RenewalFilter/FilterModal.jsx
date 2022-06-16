@@ -47,7 +47,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
     return () => {
       clearTimeout(timeOutId);
-      window.addEventListener('resize', updateWindowDimensions);
+      window.removeEventListener('resize', updateWindowDimensions);
       document.querySelector("body").style.overflow = 'auto';
     }
   }, []);
