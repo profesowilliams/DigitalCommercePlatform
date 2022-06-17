@@ -11,7 +11,7 @@
     "sync": "aemsync -d -w ../ui.apps/src/main/content"
   },
   "dependencies": {
-    "@tdsynnex/forms": "0.0.55",
+    "@tdsynnex/forms": "0.0.56",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
