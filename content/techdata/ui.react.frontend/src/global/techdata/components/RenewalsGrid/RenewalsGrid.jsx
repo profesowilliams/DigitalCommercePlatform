@@ -107,10 +107,13 @@ function RenewalsGrid(props) {
 
   const columnDefs = getColumnDefinitions(componentProp.columnList);
 
-  columnDefs[2] = {
-    ...columnDefs[2],
-    cellStyle: {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0},
-  };
+  var distiColumnIndex = columnDefs.findIndex(c => c.field === 'Id');
+  if (distiColumnIndex > -1) {
+    columnDefs[distiColumnIndex] = {
+      ...columnDefs[distiColumnIndex],
+      cellStyle: {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0},
+    };
+  }
 
   const gridConfig = {
     ...componentProp,
