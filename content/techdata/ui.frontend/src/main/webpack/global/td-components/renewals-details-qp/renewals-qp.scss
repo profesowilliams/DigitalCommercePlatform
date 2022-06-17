@@ -11,11 +11,12 @@
     }
   }
   .header-container {
-    padding: 0 2em;
+    padding: 0 21px;
     .image-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-left: 3px;
       .back-to-renewal {
         color: get-color(brand-text-gray);
         font-size: 14px;
@@ -55,7 +56,7 @@
     }
   }
   p {
-    margin: 0;
+    margin: 14px 0;
   }
   &--title {
     border-bottom: 1px solid #000c21;
@@ -83,7 +84,6 @@
   .info-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 0 2em 30px;
     .cmp-loader-roller {
       display: flex;
       flex-basis: 33.33%;
@@ -98,8 +98,8 @@
 .cmp-renewals-qp__reseller-info,
 .cmp-renewals-qp__agreement-info,
 .cmp-renewals-qp__enduser-info {
-  padding: 1.3em;
-  margin: 1em;
+  padding: 23px 20px;
+  margin: 21px;
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 1);
   box-shadow: -4px 4px 7px 0 rgba(0, 0, 0, 0.07);

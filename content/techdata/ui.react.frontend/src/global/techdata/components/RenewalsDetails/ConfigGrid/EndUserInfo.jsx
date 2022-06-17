@@ -15,12 +15,12 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
           <Info>{(address?.city ?? '') + (address?.state ? `, ${address?.state}` : '') + (address?.postalCode ? ` ${address?.postalCode}` : '')}</Info>      
           <Info>{address?.countryCode}</Info>
         </p>
-        <br/>
+        
         <p>
           {contact?.email && <Info label={productLines.emailLabel} noColon>{contact?.email}</Info>}
           {contact?.phone && <Info label={productLines.phoneLabel} noColon>{contact?.phone}</Info>}
         </p>
-        <br/>
+        
         <p>          
           {endUserType && <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>}
           <Info label={productLines.vendorAccountNo} noColon>{endUser?.vendorAccountNumber}</Info>
@@ -32,7 +32,7 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
 
   return (
     <div className="cmp-renewals-qp__enduser-info">
-      <p className="cmp-renewals-qp__enduser-info--title">{productLines.endCustomerLabel}</p>
+      <span className="cmp-renewals-qp__enduser-info--title">{productLines.endCustomerLabel}</span>
       <EndUserInfo endUser={endUser} />
     </div>
   );

@@ -17,7 +17,7 @@ function ResellerInfo({ reseller, resellerLabels }) {
 
   return (
     <div className="cmp-renewals-qp__reseller-info">
-      <p className="cmp-renewals-qp__reseller-info--title">{resellerLabels.resellerLabel}</p>
+      <span className="cmp-renewals-qp__reseller-info--title">{resellerLabels.resellerLabel}</span>
       <ResellerInfo reseller={reseller} />
     </div>
   );

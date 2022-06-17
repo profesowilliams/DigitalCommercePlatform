@@ -34,12 +34,14 @@ function AgreementInfo({
           {source.id && (
             <Info noColon label={agreementInfo.distiQuoteLabel}>{customerPO}</Info>
           )} 
-          <br />
+        </p>
+        <p>
           {dueDate && (
             <Info noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
           )}
           <Info noColon label={agreementInfo.quoteExpiryDateLabel}>{formatDate(expiry)}</Info> 
-          <br />
+        </p>
+        <p>  
           {contract.newAgreementStartDate && (
             <Info noColon label={agreementInfo.agreeStartDateLabel}>
               {formatDate(contract.newAgreementStartDate)}
@@ -50,7 +52,7 @@ function AgreementInfo({
               {formatDate(contract.newAgreementEndDate)}
             </Info>
           )}
-          <br />
+          
           {contract.newUsagePeriodStartDate && (
             <Info noColon label={agreementInfo.usageStartDateLabel}>
               {formatDate(contract.newUsagePeriodStartDate)}
@@ -68,9 +70,9 @@ function AgreementInfo({
 
   return (
     <div className="cmp-renewals-qp__agreement-info">
-      <p className="cmp-renewals-qp__agreement-info--title">
+      <span className="cmp-renewals-qp__agreement-info--title">
         {agreementInfo.agreementInfoLabel}
-      </p>
+      </span>
       <AgreementInfo />
     </div>
   );
