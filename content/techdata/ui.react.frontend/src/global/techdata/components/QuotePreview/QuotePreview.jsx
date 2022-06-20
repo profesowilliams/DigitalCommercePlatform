@@ -250,12 +250,12 @@ function QuotePreview(props) {
         ), closeModal, "Track My Quote", () => window.location.href = URL_QUOTES_GRID);
       }
       else {
-        showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
+        showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteGenericMessage);
       }
 
       return result.data;
-    } catch( error ) {
-      showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
+    } catch( error ) {      
+      showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteGenericMessage);
       return error;
     } finally {
       setLoadingCreateQuote(false);

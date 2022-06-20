@@ -522,7 +522,12 @@
                                             <cannotCreateQuoteForDeal
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Cannot Create Quote For Deal Pop-up Message"
+                                                fieldLabel="Cannot Create Quote - Deal Distribution Method Validation Failed Message"
+                                                name="./cannotCreateQuoteForDeal"/>
+											<cannotCreateQuoteGenericMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Cannot Create Quote - An Unexpected Error Message"
                                                 name="./cannotCreateQuoteForDeal"/>
 											<error404Message
                                                 jcr:primaryType="nt:unstructured"
