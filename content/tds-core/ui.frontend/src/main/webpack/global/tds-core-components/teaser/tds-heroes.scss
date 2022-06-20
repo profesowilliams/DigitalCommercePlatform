@@ -1,0 +1,14 @@
+.tds-hero-5 {
+    &.hero-style-5 .cmp-teaser__description {
+            font-size: rem(40px) !important;
+            font-family: $font-family-everett;
+        }
+}
+
+
+.td-legacy-hero-5 {
+    &.hero-style-5 .cmp-teaser__description {
+            font-size: rem(35px) !important;
+            font-family: $open-sans;
+        }
+}

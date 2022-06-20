@@ -52,7 +52,6 @@
     .cmp-teaser__title {
         float: left;
         max-width: rem(530px);
-        font-family: "Open Sans", sans-serif;
         text-shadow: 0 0 0.063rem #919599;
         font-size: 2rem;
         letter-spacing: 0rem;
@@ -93,7 +92,6 @@
     .cmp-teaser__description {
         max-width: rem(570px);
         text-shadow: 0 0 0 #919599;
-        font-family: "Open Sans", sans-serif;
         font-weight: normal;
         font-size: rem(35px);
         letter-spacing: normal;
@@ -132,6 +130,15 @@
             width: 90%;
         }
 
+        .tds-hero-5 { 
+                font-size: rem(40px) !important;
+                font-family: $font-family-everett;
+        }
+        
+        .tdl-hero-5 {
+                font-size: rem(35px);
+                font-family: $open-sans;
+        }
 
     }
 
