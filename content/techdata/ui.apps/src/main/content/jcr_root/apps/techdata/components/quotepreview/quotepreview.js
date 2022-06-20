@@ -241,6 +241,10 @@ use(['../common/utils.js'], function (utils) {
         modalConfig["cannotCreateQuoteForDeal"] = properties["cannotCreateQuoteForDeal"];
     }
 
+    if (properties && properties["cannotCreateQuoteGenericMessage"]) {
+        modalConfig["cannotCreateQuoteGenericMessage"] = properties["cannotCreateQuoteGenericMessage"];
+    }
+
     if (properties && properties["error404Message"]) {
         modalConfig["error404Message"] = properties["error404Message"];
     }

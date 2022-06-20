@@ -528,7 +528,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Cannot Create Quote - An Unexpected Error Message"
-                                                name="./cannotCreateQuoteForDeal"/>
+                                                name="./cannotCreateQuoteGenericMessage"/>
 											<error404Message
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
