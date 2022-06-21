@@ -64,9 +64,28 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     var body = document.querySelector("body");
     const headerMargin = 5;
     if (popup && experiencefragment && subheader && modal && close && body) {
-      popup.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin + window.pageYOffset) + 'px';
-      popup.style.height = (window.innerHeight - experiencefragment.offsetHeight - subheader.offsetHeight - headerMargin) + 'px';
-      close.style.top = (experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin + window.pageYOffset) + 'px';
+      popup.style.top =
+        experiencefragment.offsetHeight +
+        subheader.offsetHeight +
+        headerMargin +
+        (window.pageYOffset -
+          (experiencefragment.offsetHeight + subheader.offsetHeight >
+          window.pageYOffset
+            ? window.pageYOffset
+            : experiencefragment.offsetHeight + subheader.offsetHeight)) +
+        "px";
+      popup.style.height =
+        window.innerHeight - (popup.offsetTop - window.pageYOffset) + "px";
+      close.style.top =
+        experiencefragment.offsetHeight +
+        subheader.offsetHeight +
+        headerMargin +
+        (window.pageYOffset -
+          (experiencefragment.offsetHeight + subheader.offsetHeight >
+          window.pageYOffset
+            ? window.pageYOffset
+            : experiencefragment.offsetHeight + subheader.offsetHeight)) +
+        "px";
       modal.style.height = (window.innerHeight + window.pageYOffset) + 'px';
       body.style.overflow = 'hidden';
     }
