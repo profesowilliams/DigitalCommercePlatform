@@ -58,6 +58,7 @@
                     -ms-flex-direction: column-reverse;
                     flex-direction: column-reverse;
                     justify-content: space-between;
+                    height: rem(300px);
                 }
 
                 &__title {
@@ -117,7 +118,8 @@
                         -webkit-line-clamp: unset !important;
                         display: block !important;
                         overflow: unset !important;
-                        width: rem(290px);
+                        width: rem(237px);
+                        padding: 0 rem(24px);
                     }
                 }
             }
