@@ -15,7 +15,7 @@
 	data-cmp-data-layer="${button.data.json}"
 >
 	<sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
-	<span data-sly-test="${button.text}" class="cmp-button__text">${button.text}</span>
+	<span data-sly-test="${button.text}" class="cmp-button__text" style="color: ${properties.fontColor @ context='styleToken'}">${button.text}</span>
 </button>
 
 <sly data-sly-use.dropdownLinks="com.tdscore.core.models.DropdownButton">

@@ -15,7 +15,7 @@
                 <sly data-sly-test="${!item.link}">
                     <article>
                         <a class="cmp-list__item-link cmp-list__item-link-inactive">
-                            <span class="cmp-list__item-title">${item.title}</span>
+                            <span class="cmp-list__item-title" style="color: ${properties.fontColor @ context='styleToken'}">${item.title}</span>
                         </a>
                     </article>
                 </sly>
