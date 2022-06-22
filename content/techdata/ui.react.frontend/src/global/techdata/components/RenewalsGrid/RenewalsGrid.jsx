@@ -115,6 +115,14 @@ function RenewalsGrid(props) {
     };
   }
 
+  var totalColumnIndex = columnDefs.findIndex(c => c.field === 'total');
+  if (totalColumnIndex > -1) {
+    columnDefs[totalColumnIndex] = {
+      ...columnDefs[totalColumnIndex],
+      cellStyle: {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0},
+    };
+  }
+
   const gridConfig = {
     ...componentProp,
     paginationStyle: "custom",
