@@ -9,7 +9,7 @@ function ResellerInfo({ reseller, resellerLabels }) {
           <Info noColon>{reseller?.name}</Info>
           <Info label={resellerLabels.accountNoLabel} noColon>{reseller.id}</Info>
           <Info label={resellerLabels.vendorAccountNoResLabel} noColon>{reseller?.vendorAccountNumber}</Info>
-          <Info label={"Previous purchase order №:"} noColon>1234566778</Info>
+          <Info label={resellerLabels.previousPurchaseOrderNoEndLabel} noColon>{reseller?.previousResellerPO ?? 'N/A'}</Info>
         </p>
       </div>
     );

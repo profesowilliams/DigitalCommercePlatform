@@ -10,7 +10,7 @@
 
 .cmp-renewal-preview {
   .details-container {
-    padding: 29px 0 0 21px;
+    padding: 27px 0 0 15px;
     .details-preview {
         color: rgba(0, 12, 33, 1);
         font-size: 24px;
@@ -22,7 +22,6 @@
   .cmp-product-lines-grid__header {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
     span {
       font-size: 22px;
       font-weight: 500;
@@ -101,6 +100,9 @@
         padding: 0 10px 10px;
         min-width: 90px;
       }
+    }
+    .ag-root-wrapper {
+      border: none;
     }
   }
 }

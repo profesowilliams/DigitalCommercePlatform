@@ -24,7 +24,7 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
         <p>          
           {endUserType && <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>}
           <Info label={productLines.vendorAccountNo} noColon>{endUser?.vendorAccountNumber}</Info>
-          <Info label={"Previous purchase order №:"} noColon>1234566778</Info>
+          <Info label={productLines.endCustpreviousPurchaseOrderNo} noColon>{endUser?.previousEndUserPO ?? 'N/A'}</Info>
         </p>
       </div>
     );
