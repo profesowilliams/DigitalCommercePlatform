@@ -204,7 +204,7 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
         mapUrl.set(field,value);  
-        mapUrl.set('PageNumber',1);
+        // mapUrl.set('PageNumber',1); // this breaks pagination. commenting so @Cristian can work on it later.
     }    
     if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
