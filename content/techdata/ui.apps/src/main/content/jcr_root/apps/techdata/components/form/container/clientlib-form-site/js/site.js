@@ -1,8 +1,9 @@
 (function() {
     var errorMessage = document.getElementById("errorMessage");
-        var errorBlockId = "cmp-form-error-block";
-        var WRONG_FILE_SIZE_STATUS = "-1";
-        var WRONG_FILE_EXTN_STATUS = "-2";
+    var errorBlockId = "cmp-form-error-block";
+    var WRONG_FILE_SIZE_STATUS = "-1";
+    var WRONG_FILE_EXTN_STATUS = "-2";
+    const errorLabelClass = 'error-label';
 
     function documentReady(fn) {
         if (document.readyState !== "loading") {
@@ -208,6 +209,7 @@
         var targetElement = e.target;
         var parentDiv = targetElement.closest("div");
         var errorLabel = document.createElement("label");
+        errorLabel.className = errorLabelClass;
         let errorLabelInnertext = parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required";
         const querySelector = parentDiv.querySelector("fieldset");
         const lineBreak = document.createElement('br');
@@ -231,15 +233,10 @@
         } else {
             validateAddress(inputElement, inputElement.value);
         }
-            const flagErrorMessage = validateRepeatedLabels(parentDiv, errorLabelInnertext)
-            if (flagErrorMessage) {
-                parentDiv.appendChild(errorLabel);
-            }
-        setTimeout(function() { 
-            parentDiv.removeChild(errorLabel);
-            e.target.style.borderColor = originalBorderColor 
-            if (flagOptionBR || flagFileBR) parentDiv.removeChild(lineBreak);
-        }, setTimeoutTimerValue);
+        const flagErrorMessage = validateRepeatedLabels(parentDiv, errorLabelInnertext)
+        if (flagErrorMessage) {
+            parentDiv.appendChild(errorLabel);
+        }
     }
 
     function initValidation(form)
@@ -254,20 +251,40 @@
 
         inputsList.forEach(
             function (i, e) {
-                var addEventListener = i.addEventListener('invalid', function(e) {
+                i.addEventListener('invalid', function(e) {
                     inputErrorMessageDisplay(i.type, e, i);
+                    // onChange handler
+                    i.addEventListener('input', function(e) {
+                        removeErrorLabelChild(i)
+                    });
                 });
+                    
             }
         );
 
         textAreasList.forEach(
             function (i, e) {
-                var addEventListener = i.addEventListener('invalid', function(e) {
+                i.addEventListener('invalid', function(e) {
                     inputErrorMessageDisplay(i.type, e, i);
+                    // onChange handler
+                    i.addEventListener('input', function(e) {
+                        removeErrorLabelChild(i)
+                    });
                 });
             }
         );
+    }
 
+    function removeErrorLabelChild(input) {
+        const inputType = input.type;
+        const flagFieldsetField = inputType === 'checkbox' || inputType === 'select' || inputType === 'radio';
+        const parentDiv = flagFieldsetField ? input.closest("fieldset") : input.closest("div");
+        const errorLabel = parentDiv.getElementsByClassName(errorLabelClass)[0];
+        if (flagFieldsetField) {
+            const br = parentDiv.querySelector('br');
+            br.remove();
+        }
+        parentDiv.removeChild(errorLabel);
     }
 
     documentReady(function() {
@@ -290,8 +307,6 @@
                         } else {
                             var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
                         }
-
-
                     }
                 }
             );
@@ -303,7 +318,6 @@
          */
 
         if (submitButton) {
-
             submitButton.addEventListener("click", (e) => {
                 if (tdForm.reportValidity())
                 {
@@ -335,5 +349,4 @@
             });
         }
     });
-
 })();
