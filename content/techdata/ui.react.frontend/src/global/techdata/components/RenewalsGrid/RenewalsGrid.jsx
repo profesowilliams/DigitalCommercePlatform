@@ -63,7 +63,7 @@ function RenewalsGrid(props) {
 
   const previousFilter = useRef(false);
 
-  const { searchOptionsList, shopURL } = componentProp;
+  const { searchOptionsList, shopURL, icons } = componentProp;
 
   const customPaginationRef = useRef();
 
@@ -92,6 +92,8 @@ function RenewalsGrid(props) {
   };
 
   useEffect(() => setCustomState({ key: 'aemConfig', value: componentProp }), [])
+
+  useEffect(() => setCustomState({ key: 'dueDaysIcons', value: icons }), [])
 
   useEffect(() => {
     // In case of don't have access redirect to shop

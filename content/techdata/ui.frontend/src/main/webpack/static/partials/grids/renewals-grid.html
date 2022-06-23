@@ -177,6 +177,28 @@
       downloadXLSLabel: "Download XLS",
       seeDetailsLabel: "See details",
     },
+    icons: {
+      overdue: {
+        overdueIcon: "fas fa-bell",
+        overdueIconColor: "#F7B500",
+        overdueDaysRange: "overdue",
+      },
+      "0-30": {
+        afterZeroIcon: "fas fa-stopwatch",
+        afterZeroIconColor: "#00B1E2",
+        afterZeroDaysRange: "0-30",
+      },
+      "31-60": {
+        afterThirtyIcon: "fas fa-alarm-clock",
+        afterThirtyIconColor: "#025F97",
+        afterThirtyDaysRange: "31-60",
+      },
+      "61+": {
+        sixtyPlusIcon: "fas fa-calendar-alt",
+        sixtyPlusIconColor: "#21314D",
+        sixtyPlusDaysRange: "61+",
+      },
+  },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

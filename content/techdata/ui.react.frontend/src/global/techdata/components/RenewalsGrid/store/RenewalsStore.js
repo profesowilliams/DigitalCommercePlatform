@@ -67,7 +67,8 @@ const INITIAL_STATE = {
   detailRender: getLocalValueOrDefault(PLANS_ACTIONS_LOCAL_STORAGE_KEY, "detailRender", "primary"),
   renewalOptionState:null,
   resetFilter:false,
-  rowCollapsedIndexList:null
+  rowCollapsedIndexList:null,
+  dueDaysIcons: null
 };
 
 /**

@@ -27,7 +27,19 @@
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
     ofTextLabel="of"
-    menuCopyLink="Copy link">
+    menuCopyLink="Copy link"
+    overdueDaysRange="overdue"
+    overdueIcon="fas fa-bell"
+    overdueIconColor="#F7B500"
+    afterZeroDaysRange="0-30"
+    afterZeroIcon="fas fa-stopwatch"
+    afterZeroIconColor="#00B1E2"
+    afterThirtyDaysRange="31-60"
+    afterThirtyIcon="fas fa-clock"
+    afterThirtyIconColor="#025F97"
+    sixtyPlusDaysRange="61+"
+    sixtyPlusIcon="fas fa-calendar-alt"
+    sixtyPlusIconColor="#21314D">
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0
             jcr:primaryType="nt:unstructured"

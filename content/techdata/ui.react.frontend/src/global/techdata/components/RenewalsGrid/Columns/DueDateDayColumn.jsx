@@ -1,25 +1,24 @@
 import React from "react";
 import differenceInDays from "date-fns/differenceInDays";
-
-const dueIconsMapped = (days) => {
-  if (days >= 0 && days <= 30) {
-    return <i style={{ color: "#00B1E2" }} className="fas fa-stopwatch" />;
-  } else if (days >= 31 && days <= 60) {
-    return <i style={{ color: "#025F97" }} className="fas fa-clock" />;
-  } else if (days >= 61) {
-    return <i style={{ color: "#21314D" }} className="fas fa-suitcase" />;
-  } else if (days < 0) {
-    return <i style={{ color: "#F7B500" }} className="fas fa-bell" />;
-  } else {
-    return " ";
-  }
-};
+import { useRenewalGridState } from "../store/RenewalsStore";
 
 function DueDateDayColumn({ columnValue }) {
+  const dueDaysIcons = useRenewalGridState((state) => state.dueDaysIcons);
   const days = columnValue;
+  const dueDaysIconsConstraints = dueDays => {
+    const mapped = {
+      [dueDays < 0] : "overdue",
+      [dueDays >= 0 && dueDays <= 30] : "0-30",
+      [dueDays >= 31 && dueDays <= 60] : "31-60",
+      [dueDays >= 61] :"61+"
+    }
+     const [_ , daysRange] = Object.entries(mapped).filter(list => list[0] === "true").flat()
+     const [fontAwesomeIcon, color] = Object.values(dueDaysIcons[daysRange]);
+     return  <i style={{ color }} className={fontAwesomeIcon} />;
+  }
   return (
-    <div className="cmp-due-date-day-column"> 
-      {dueIconsMapped(parseInt(days))}
+    <div className="cmp-due-date-day-column">
+      {dueDaysIcons && dueDaysIconsConstraints(parseInt(days))}
       <p className="cmp-due-date-days-number">{days}</p>
     </div>
   );

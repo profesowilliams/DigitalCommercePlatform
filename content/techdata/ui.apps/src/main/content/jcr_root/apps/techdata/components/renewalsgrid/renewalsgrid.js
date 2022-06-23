@@ -4,6 +4,7 @@ use(['../common/utils.js'], function(utils) {
     let resourceResolver = resource.getResourceResolver();
     let optionData = {};
     var productGrid = {};
+    let icons = {};
 
     if (properties && properties["detailUrl"]) {
         jsonObject["detailUrl"] = properties["detailUrl"];
@@ -193,7 +194,19 @@ use(['../common/utils.js'], function(utils) {
     if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
         jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
     }
+    const overdueFieldsList = ['overdueIcon','overdueIconColor','overdueDaysRange'];   
+    const thirtyDaysFieldsList = ['afterZeroIcon', 'afterZeroIconColor','afterZeroDaysRange'];
+    const sixtyOneDaysFieldsList = ['afterThirtyIcon', 'afterThirtyIconColor', 'afterThirtyDaysRange'];   
+    const sixtyOnePlusFieldsList = ['sixtyPlusIcon', 'sixtyPlusIconColor', 'sixtyPlusDaysRange'];
 
+    if (properties){     
+        utils.populateOutterProperty(icons,'overdue',overdueFieldsList);
+        utils.populateOutterProperty(icons,'0-30',thirtyDaysFieldsList);
+        utils.populateOutterProperty(icons,'31-60',sixtyOneDaysFieldsList);
+        utils.populateOutterProperty(icons,'61+',sixtyOnePlusFieldsList);  
+    }
+
+    if (!!icons) {jsonObject['icons'] = icons};
 
     return {
         configJson: JSON.stringify(jsonObject)
