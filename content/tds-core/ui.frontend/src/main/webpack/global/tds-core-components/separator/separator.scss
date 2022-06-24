@@ -1,91 +1,160 @@
-.cmp-separator {}
-.cmp-separator__horizontal-rule {}
-
 .dp-separator {
-  width: auto;
-  hr{
-    height: 1px !important;
+  width: 100%;
+  position: relative;
+  display: flex;
+
+  hr {
+    height: 2px !important;
   }
-  &--light-blue{
-    .cmp-separator__horizontal-rule{
+
+  &--light-blue {
+    .cmp-separator__horizontal-rule {
       color: get-color(brand-light-blue);
       border-color: get-color(brand-light-blue);
     }
   }
-  &--dark-blue{
-    .cmp-separator__horizontal-rule{
+
+  &--dark-blue {
+    .cmp-separator__horizontal-rule {
       color: get-color(brand-blue);
       border-color: get-color(brand-blue);
     }
   }
-  &--gray{
-    .cmp-separator__horizontal-rule{
+
+  &--gray {
+    .cmp-separator__horizontal-rule {
       color: get-color(accessible-accent-grey);
       border-color: get-color(accessible-accent-grey);
     }
   }
-  &--white{
-    .cmp-separator__horizontal-rule{
+
+  &--white {
+    .cmp-separator__horizontal-rule {
       color: get-color(brand-white);
       border-color: get-color(brand-white);
     }
   }
 
-  &--hidden{
-    .cmp-separator__horizontal-rule{
+  &--hidden {
+    .cmp-separator__horizontal-rule {
       visibility: hidden;
     }
   }
 
-  &--space{
-    &-small{
+  &--teal {
+    .cmp-separator__horizontal-rule {
+      color: map-get($color-palette, "teal") !important;
+      border-color: map-get($color-palette, "teal") !important;
+    }
+  }
+
+  &--deep-teal {
+    .cmp-separator__horizontal-rule {
+      color: get-color(deep-teal) !important;
+      border-color: get-color(deep-teal) !important;
+    }
+  }
+
+  &--steel-blue {
+    .cmp-separator__horizontal-rule {
+      color: get-color(steel-blue) !important;
+      border-color: get-color(steel-blue) !important;
+    }
+  }
+
+  &--green {
+    .cmp-separator__horizontal-rule {
+      color: map-get($color-palette, "green") !important;
+      border-color: map-get($color-palette, "green") !important;
+    }
+  }
+
+  &--stone {
+    .cmp-separator__horizontal-rule {
+      color: get-color(stone) !important;
+      border-color: get-color(stone) !important;
+    }
+  }
+
+  &--cool-gray-1 {
+    .cmp-separator__horizontal-rule {
+      color: get-color(cool-gray-1) !important;
+      border-color: get-color(cool-gray-1) !important;
+    }
+  }
+
+  &--aqua {
+    .cmp-separator__horizontal-rule {
+      color: map-get($color-palette, "aqua") !important;
+      border-color: map-get($color-palette, "aqua") !important;
+    }
+  }
+
+  &--space {
+    &-zero {
       .cmp-separator {
-        margin-top: 1em;
-        margin-bottom: 1em;
+        margin: 0;
       }
     }
 
-    &-medium{
+    &-small {
       .cmp-separator {
-        margin-top: 2em;
-        margin-bottom: 2em;
+        margin: rem(16px) 0;
       }
     }
 
-    &-large{
+    &-medium {
       .cmp-separator {
-        margin-top: 4em;
-        margin-bottom: 4em;
+        margin: rem(32px) 0;
+      }
+    }
+
+    &-large {
+      .cmp-separator {
+        margin: rem(64px) 0;
       }
     }
   }
 }
 
-.dp-general__separator{
-    border-color: get-color(brand-blue);
-    &-left{
-      border-left: 1px solid;
-    }
-    &-right{
-      border-right: 1px solid;
-    }
-    &-top{
-      border-top: 1px solid;
-    }
-    &-bottom{
-      border-bottom: 1px solid;
-    }
+.dp-general__separator {
+  border-color: get-color(brand-blue);
 
-    &--light-blue{
-      border-color: get-color(brand-light-blue);
-    }
-    &--dark-blue{
-      border-color: get-color(brand-blue);
-    }
-    &--gray{
-      border-color: get-color(accessible-accent-grey);
-    }
-    &--white{
-      border-color: get-color(brand-white);
-    }
+  &-left {
+    border-left: 1px solid;
+  }
+
+  &-right {
+    border-right: 1px solid;
+  }
+
+  &-top {
+    border-top: 1px solid;
+  }
+
+  &-bottom {
+    border-bottom: 1px solid;
+  }
+
+  &--light-blue {
+    border-color: get-color(brand-light-blue);
+  }
+
+  &--dark-blue {
+    border-color: get-color(brand-blue);
+  }
+
+  &--gray {
+    border-color: get-color(accessible-accent-grey);
+  }
+
+  &--white {
+    border-color: get-color(brand-white);
+  }
+}
+
+.tds-separator-horizontal {
+  hr {
+    border: rem(2px) solid !important;
+  }
 }

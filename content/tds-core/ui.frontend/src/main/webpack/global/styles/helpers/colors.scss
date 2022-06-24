@@ -91,3 +91,47 @@
   }
   
 }
+
+// border colors
+.cmp-border {
+  &__teal {
+    border-color: map-get($color-palette, "teal") !important;
+  }
+  &__deep-teal {
+    border-color: get-color(deep-teal) !important;
+  }
+  &__steel-blue {
+    border-color: get-color(steel-blue) !important;
+  }
+  &__green {
+    border-color:  map-get($color-palette, "green") !important;
+  }
+  &__stone {
+    border-color: get-color(stone) !important;
+  }
+  &__aqua {
+    border-color:  map-get($color-palette, "aqua") !important;
+  }
+  &__cool-gray-1 {
+    border-color: get-color(cool-gray-1) !important;
+  }
+  &__black {
+    border-color:  map-get($color-palette, "black") !important;
+  }
+  &__white {
+    border-color:  map-get($color-palette, "white") !important;
+  }
+
+  &__dark-blue {    
+    border-color: get-color(dark-blue) !important;
+  }
+
+  &__sky-blue {    
+    border-color: get-color(sky-blue) !important;
+  }
+
+  &__legacy-grey {    
+    border-color: get-color(legacy-grey) !important;
+  }
+  
+}
