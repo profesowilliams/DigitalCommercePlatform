@@ -78,6 +78,7 @@
 		# Ignore all URL parameters
 		/ignoreUrlParams {
 			/0001 { /glob "*" /type "allow" }
+            /0002 { /glob "search" /type "deny" }
 		}
 
 		# Cache response headers next to a cached file. On the first request to
@@ -100,7 +101,7 @@
 		# when their path matches the /invalidate section above. This setting
 		# can be used in a setup, where a batch of activations would otherwise
 		# repeatedly invalidate the entire cache.
-		# /gracePeriod "2"
+		/gracePeriod "2"
 
 		# Enable TTL evaluates the response headers from the backend, and if they
 		# contain a Cache-Control max-age or Expires date, an auxiliary, empty file
