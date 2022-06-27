@@ -9,6 +9,7 @@ function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
   const effects = useRenewalGridState(state => state.effects);
   const detailRender = useRenewalGridState(state => state.detailRender);
+  const { pageNumber } = useRenewalGridState(state => state.pagination);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
   const rowIndex = eventProps?.node?.rowIndex
   const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
@@ -39,7 +40,8 @@ function _ContractColumn({ data, eventProps }) {
         return;
 
       const localRowIndex = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.rowIndex;
-      if (eventProps.node.rowIndex === localRowIndex - 1) {
+      const capturedPlanPage = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["capturedPlanPage"]
+      if (eventProps.node.rowIndex === localRowIndex - 1 && capturedPlanPage === pageNumber) {
         eventProps.node.setExpanded(!isToggled);
         setToggled(!isToggled);
       }

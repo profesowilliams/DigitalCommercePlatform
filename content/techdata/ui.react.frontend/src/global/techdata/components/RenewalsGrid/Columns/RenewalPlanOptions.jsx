@@ -2,18 +2,31 @@ import React, { useEffect, useRef, useState } from "react";
 import { dateToString, thousandSeparator } from "../../../helpers/formatting";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
+import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
+    const { pageNumber } = useRenewalGridState((state) => state.pagination);
     const [optionIdSelected, setOptionIdSelected] = useState();
     const optionIdSelectedRef = useRef();
     const rowIndexRef = useRef(node?.rowIndex)
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
-    const isPlanSelected = ({id}) => id === optionIdSelected;
+
+    const isPlanSelected = ({id}) => {
+        if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
+            return (id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"]);
+        }
+        return id === optionIdSelected;
+    };
     const isCurrentPlan = plan => plan.quoteCurrent;
     const findAndReturnCurrentPlanId = (options) => {
+        if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
+            return getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"];
+        }
+
         const currentPlan = options.find((plan) => isCurrentPlan(plan));
         return currentPlan ? currentPlan?.id : 0;
     }
@@ -108,6 +121,11 @@ function RenewalPlanOptions({ labels, data, node }) {
         const id = event?.target?.value;
         setOptionIdSelected(id);
         optionIdSelectedRef.current = id;
+        setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
+          ...getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY),
+          selectedPlanId: id,
+          capturedPlanPage: pageNumber,
+        });
     }
 
     const formatExpiryDateLabel = (option) => {
@@ -115,7 +133,12 @@ function RenewalPlanOptions({ labels, data, node }) {
         return dateToString(option?.expiryDate.replace(/[zZ]/g, ''), "MM/dd/uu")
     }
 
-    const setDefaultCheckedOption = (option) => optionIdSelected === option?.id;
+    const setDefaultCheckedOption = (option) => {
+        if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
+            return option?.id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"];
+        }
+        return optionIdSelected === option?.id;
+    }
     return (
         <div key={rowIndexRef.current + Math.random()}>
             <div className="cmp-renewal-plan-column">
