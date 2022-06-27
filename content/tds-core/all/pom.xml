@@ -77,6 +77,23 @@
                             <type>zip</type>
                             <target>/apps/tds-core-packages/application/install</target>
                         </embedded>
+                        <embedded>
+                            <groupId>com.adobe.cq</groupId>
+                            <artifactId>core.wcm.components.content</artifactId>
+                            <type>zip</type>
+                            <target>/apps/tds-core-vendor-packages/application/install</target>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.cq</groupId>
+                            <artifactId>core.wcm.components.core</artifactId>
+                            <target>/apps/tds-core-vendor-packages/application/install</target>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.adobe.cq</groupId>
+                            <artifactId>core.wcm.components.config</artifactId>
+                            <type>zip</type>
+                            <target>/apps/tds-core-vendor-packages/application/install</target>
+                        </embedded>
                     </embeddeds>
                 </configuration>
             </plugin>
