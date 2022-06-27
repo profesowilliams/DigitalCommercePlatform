@@ -60,51 +60,60 @@
 
     &-large {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h1-large;
+        font-size: $font-size-marketing-h1-large !important;
+        margin: 0;
+        line-height: 1.5;
     }
 
     &-card {
         h2 {
             font-family: $font-family-marketing-md;
-            font-size: $font-size-marketing-h2;
+            font-size: $font-size-marketing-h3 !important;
             margin: 0;
+            line-height: 1.5;
         }
     }
 
     h1 {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h1;
+        font-size: $font-size-marketing-h1 !important;
         margin: 0;
+        line-height: 1.5;
     }
 
     h2 {
-        font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h2;
+        font-family: $font-family-marketing-md;
+        font-size: $font-size-marketing-h2 !important;
         margin: 0;
+        line-height: 1.5;
     }
 
     h3 {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h3;
+        font-size: $font-size-marketing-h3 !important;
         margin: 0;
+        line-height: 1.5;
     }
 
     h4 {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h4;
+        font-size: $font-size-marketing-h4 !important;
         margin: 0;
+        line-height: 1.5;
     }
 
     h5 {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h5;
+        font-size: $font-size-marketing-h5 !important;
         margin: 0;
+        line-height: 1.5;
     }
 
     h6 {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h6;
+        font-size: $font-size-marketing-h6 !important;
         margin: 0;
+        line-height: 1.5;
     }
 }
 
@@ -182,27 +191,39 @@
     font-family: $open-sans;
 
     h1 {
-        font-size: $font-size-digital-h2; //32px
+        font-size: $font-size-digital-h2 !important; //32px
+        line-height: 1.5;
+        margin: 0;
     }
 
     h2 {
-        font-size: $font-size-digital-h2-card; //28px
+        font-size: $font-size-digital-h2-card !important; //28px
+        line-height: 1.5;
+        margin: 0;
     }
 
     h3 {
-        font-size: $font-size-custom-midi; //20px
+        font-size: $font-size-custom-midi !important; //20px
+        line-height: 1.5;
+        margin: 0;
     }
 
     h4 {
-        font-size: $font-size-medium; //16px
+        font-size: $font-size-medium !important; //16px
+        line-height: 1.5;
+        margin: 0;
     }
 
     h5 {
-        font-size: $font-size-custom-xxsmall; //13px
+        font-size: $font-size-custom-xxsmall !important; //13px
+        line-height: 1.2;
+        margin: 0;
     }
 
     h6 {
-        font-size: $font-size-custom-xxsmall; //13px
+        font-size: $font-size-custom-xxsmall !important; //13px
+        line-height: 1.2;
+        margin: 0;
     }
 }
 

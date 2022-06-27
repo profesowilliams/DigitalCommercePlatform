@@ -10,27 +10,33 @@ $font-family-marketing: 'TWKEverett-Regular-web', 'Arial Bold', sans-serif;
 $font-family-marketing-md: 'TWKEverett-Medium-web', Arial, sans-serif;
   
 $font-family-arial: 'Arial', sans-serif;
-
-$font-size-marketing-h1: rem(40px);
-$font-size-marketing-h1-large: rem(66px);
-$font-size-marketing-h2:rem(32px);
-$font-size-marketing-h3: rem(28px);
-$font-size-marketing-h4: rem(20px);
-$font-size-marketing-h5: rem(16px);
-$font-size-marketing-h6: rem(14px);
-
 $font-family-digital: Arial, sans-serif;
-
-$font-size-digital-h1: rem(40px);
-$font-size-digital-h1-large: rem(66px);
-$font-size-digital-h2:rem(32px);
-$font-size-digital-h2-card:rem(28px);
-$font-size-digital-h3: rem(28px);
-$font-size-digital-h4: rem(20px);
-$font-size-digital-h5: rem(16px);
-$font-size-digital-h6: rem(14px);
-
 $font-family-georgia: "Georgia Pro", sans-serif;
+
+$font-size-marketing-h1:        rem(40px);
+$font-size-marketing-h1-large:  rem(66px);
+$font-size-marketing-h2:        rem(32px);
+$font-size-marketing-h3:        rem(28px);
+$font-size-marketing-h4:        rem(20px);
+$font-size-marketing-h5:        rem(16px);
+$font-size-marketing-h6:        rem(14px);
+
+$font-size-digital-h1:          rem(40px);
+$font-size-digital-h1-large:    rem(66px);
+$font-size-digital-h2:          rem(32px);
+$font-size-digital-h2-card:     rem(28px);
+$font-size-digital-h3:          rem(28px);
+$font-size-digital-h4:          rem(20px);
+$font-size-digital-h5:          rem(16px);
+$font-size-digital-h6:          rem(14px);
+
+$font-size-legacy-h1:           rem(32px);
+$font-size-legacy-h2:           rem(28px);
+$font-size-legacy-h3:           rem(20px);
+$font-size-legacy-h4:           rem(16px);
+$font-size-legacy-h5:           rem(13px);
+$font-size-legacy-h6:           rem(13px);
+
 
 $font-size: 1rem;
 $font-height: 1.5;
@@ -134,21 +140,21 @@ $font-size-small:          14px;
 $font-size-xsmall:		     12px;
 $font-size-xxsmall:		     11px;
 
-$font-size-h1:            40px;
-$font-size-h2:            36px;
-$font-size-h3:            24px;
-$font-size-h4:            16px;
-$font-size-h5:            14px;
-$font-size-h6:            10px;
+$font-size-h1:             40px;
+$font-size-h2:             36px;
+$font-size-h3:             24px;
+$font-size-h4:             16px;
+$font-size-h5:             14px;
+$font-size-h6:             10px;
 
 /*  FONT SIZE CUSTOM  */
 $font-size-custom-xxxlarge: rem(45px);
-$font-size-custom-xxlarge: rem(38px);
-$font-size-custom-xlarge: rem(30px);
-$font-size-custom-large:  rem(25px);
-$font-size-custom-medium: rem(22px);
-$font-size-custom-midi: rem(20px);
-$font-size-custom-xxsmall: rem(13px);
+$font-size-custom-xxlarge:  rem(38px);
+$font-size-custom-xlarge:   rem(30px);
+$font-size-custom-large:    rem(25px);
+$font-size-custom-medium:   rem(22px);
+$font-size-custom-midi:     rem(20px);
+$font-size-custom-xxsmall:  rem(13px);
 
 /*  FONT LOGO SIZE CUSTOM  */
 $font-size-custom-logo-large: rem(28px);
