@@ -59,6 +59,7 @@
                     flex-direction: column-reverse;
                     justify-content: space-between;
                     height: rem(300px);
+
                 }
 
                 &__title {
@@ -196,6 +197,12 @@
                     transform: translateX(-50%) translateY(-50%);
                 }
             }
+            
+                &.cmp-separator-vertical {
+                    .cmp-teaser__content {
+                        box-shadow: inset rem(-1px) 0 0 0 get-color(brand-white);
+                    }
+                }
         }
     }
 }
