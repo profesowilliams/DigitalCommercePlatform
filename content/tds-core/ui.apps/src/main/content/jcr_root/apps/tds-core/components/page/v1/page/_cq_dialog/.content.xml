@@ -65,6 +65,13 @@
                                             fieldDescription="Define error Name for the page."
                                             fieldLabel="Error Name"
                                             name="./errorName"/>
+                                    <embedScript
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                            fieldDescription="Build JS/CSS script based on the custom paths from DAM or elsewhere."
+                                            fieldLabel="Embed JS/CSS script"
+                                            rows="10"
+                                            name="./embedJSCSSScript"/>
                                     <currency
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
