@@ -1,8 +1,6 @@
 # deny everything and allow specific entries
 # Start with everything blocked as a safeguard and open things customers need and what's safe OOTB
 /0001 { /type "deny"  /url "*" }
-/0160 { /type "deny" /url "/content*" /suffix "*" }
-/0150 { /type "deny" /url "/content*" /selectors "*" }
 
 # Block use of all suffixes on any resource in /content
 /0160 { /type "deny" /url "/content*" /suffix "*" }
