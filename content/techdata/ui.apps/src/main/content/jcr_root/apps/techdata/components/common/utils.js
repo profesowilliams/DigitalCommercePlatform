@@ -60,6 +60,7 @@ use(function () {
         getDataFromMultifield: getDataFromMultifield,
         populateCommonConfigurations: populateCommonConfigurations,
         getCheckoutConfigurations: getCheckoutConfigurations,
-        fillFieldsDialogProperties,populateOutterProperty
+        fillFieldsDialogProperties:fillFieldsDialogProperties,
+        populateOutterProperty:populateOutterProperty
     }
 });
