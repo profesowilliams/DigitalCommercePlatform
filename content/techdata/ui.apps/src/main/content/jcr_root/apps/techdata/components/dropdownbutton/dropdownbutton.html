@@ -14,7 +14,7 @@
 	data-cmp-clickable="${button.data ? true : false}"
 	data-cmp-data-layer="${button.data.json}"
 >
-	<sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
+	<span data-sly-test="${button.icon}" class="cmp-button__icon ${button.icon}"></span>
 	<span data-sly-test="${button.text}" class="cmp-button__text" style="color: ${properties.fontColor @ context='styleToken'}">${button.text}</span>
 </button>
 
