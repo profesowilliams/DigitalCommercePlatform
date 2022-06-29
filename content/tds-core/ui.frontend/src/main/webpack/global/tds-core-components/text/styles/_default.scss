@@ -34,6 +34,7 @@
     li {
       line-height: rem(20px);
       padding-bottom: rem(5.12px);
+      display: flex;
 
       &::before {
         content: "\2022";
