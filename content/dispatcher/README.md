@@ -172,3 +172,9 @@ conf.dispatcher.d/vhosts/ams_author_vhosts.any
 conf.dispatcher.d/vhosts/ams_publish_vhosts.any
 conf.dispatcher.d/vhosts/ams_lc_vhosts.any
 ```
+## Build Dispatcher Optimizer Tool Execution
+mvn dispatcher-optimizer:analyze
+
+Reference wiki:
+https://github.com/adobe/aem-dispatcher-optimizer-tool/tree/main/plugin
+

@@ -16,6 +16,17 @@
 	# only handle the requests in the following acl. default is 'none'
 	# the glob pattern is matched against the first request line
 	/filter {
+
+	    # Block use of all suffixes on any resource in /content
+        /0160 { /type "deny" /url "/content*" /suffix "*" }
+        # Suffix patterns which are needed on the server side can be added in an allow list manner
+        /0161 { /type "allow" /url "/content/*" /suffix "/content/*" /method "GET" }
+
+        # Block use of all selectors on any resource in /content
+        /0150 { /type "deny" /url "/content*" /selectors "*" }
+        # Individual selectors which are needed on the server side can be added in an allow list manner
+        /0151 { /type "allow" /url "/content*" /selectors '(model|legit-selector|other-fine-selector)' /method "GET" }
+
 		$include "../filters/techdata_publish_filters.any"
 	}
 	# if the package is installed on publishers to generate a list of all content with a vanityurl attached
@@ -128,6 +139,16 @@
    # only handle the requests in the following acl. default is 'none'
    # the glob pattern is matched against the first request line
    /filter {
+       # Block use of all suffixes on any resource in /content
+       /0160 { /type "deny" /url "/content*" /suffix "*" }
+       # Suffix patterns which are needed on the server side can be added in an allow list manner
+       /0161 { /type "allow" /url "/content/*" /suffix "/content/*" /method "GET" }
+
+       # Block use of all selectors on any resource in /content
+       /0150 { /type "deny" /url "/content*" /selectors "*" }
+       # Individual selectors which are needed on the server side can be added in an allow list manner
+       /0151 { /type "allow" /url "/content*" /selectors '(model|legit-selector|other-fine-selector)' /method "GET" }
+
       $include "../filters/techdata_publish_filters.any"
    }
    # if the package is installed on publishers to generate a list of all content with a vanityurl attached
@@ -212,7 +233,7 @@
       # when their path matches the /invalidate section above. This setting
       # can be used in a setup, where a batch of activations would otherwise
       # repeatedly invalidate the entire cache.
-      # /gracePeriod "2"
+      /gracePeriod "2"
 
       # Enable TTL evaluates the response headers from the backend, and if they
       # contain a Cache-Control max-age or Expires date, an auxiliary, empty file

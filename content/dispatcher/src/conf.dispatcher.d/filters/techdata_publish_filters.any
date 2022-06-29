@@ -2,6 +2,17 @@
 # Start with everything blocked as a safeguard and open things customers need and what's safe OOTB
 /0001 { /type "deny"  /url "*" }
 
+# Block use of all suffixes on any resource in /content
+/0160 { /type "deny" /url "/content*" /suffix "*" }
+# Suffix patterns which are needed on the server side can be added in an allow list manner
+/0161 { /type "allow" /url "/content/*" /suffix "/content/*" /method "GET" }
+
+# Block use of all selectors on any resource in /content
+/0150 { /type "deny" /url "/content*" /selectors "*" }
+# Individual selectors which are needed on the server side can be added in an allow list manner
+/0151 { /type "allow" /url "/content*" /selectors '(model|legit-selector|other-fine-selector)' /method "GET" }
+
+
 # Open consoles if this isn't a production environment by uncommenting the next few lines
 # /002 { /type "allow" /url "/crx/*"    }  # allow content repository
 # /003 { /type "allow" /url "/system/*" }  # allow OSGi console
@@ -12,7 +23,7 @@
 
 # This rule allows content to be access
 /0010 { /type "allow" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|pdf|png|svg|swf|ttf|woff|woff2|html|txt|xml|docx|doc|xls|xlsx|ppt|pptx|csv)' /path "/content/*" }  # disable this rule to allow mapped content only
-/0011 { /type "allow" /extension "json" /selectors "model" /path "/content/*" }
+#/0011 { /type "allow" /extension "json" /selectors "model" /path "/content/*" }
 
 # Enable specific mime types clientlibs directories
 /0012 { /type "allow" /method "GET" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|png|svg|swf|ttf|woff|woff2)' /path "/etc/clientlibs/*" }
