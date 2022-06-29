@@ -141,6 +141,9 @@ function _SearchFilter(
   }
 
   const handleDropdownSwitch = useCallback(() => {
+    if (isSearchCapsuleVisible) {
+      handleCapsuleTextClick();
+    }
     setSwitchDropdown(!isDropdownVisible);
     if (!isDropdownVisible) {
       document.addEventListener("click", handleOutsideClick, false);
