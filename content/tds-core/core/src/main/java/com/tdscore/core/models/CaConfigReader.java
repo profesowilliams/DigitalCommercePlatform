@@ -1,7 +1,5 @@
-/**
- *
- */
 package com.tdscore.core.models;
+
 
 import com.day.cq.wcm.api.Page;
 import com.tdscore.core.slingcaconfig.*;
@@ -55,6 +53,8 @@ public class CaConfigReader {
     private String topItemsEndpoint;
 
     private String createQuoteEndpoint;
+
+    private String verifyUanEndpoint;
 
     private String replaceCartEndpoint;
 
@@ -125,7 +125,7 @@ public class CaConfigReader {
     private String orderSearchEndpoint;
 
     private String quoteDcpLookupEndpoint;
-    
+
     private String quoteValidateResponseEndPoint;
 
     private String quotePartialEndPoint;
@@ -190,6 +190,8 @@ public class CaConfigReader {
 
     private String fileThresholdInMB;
 
+    private String textFieldRegexString;
+
     private String renewalsGridEndpoint;
 
     private String agGridLicenseKey;
@@ -199,6 +201,8 @@ public class CaConfigReader {
     private String renewalDetailsEndpoint;
 
     private String exportXLSRenewalsEndpoint;
+
+    private String exportPDFRenewalsEndpoint;
 
     @PostConstruct
     public void init() {
@@ -223,6 +227,7 @@ public class CaConfigReader {
         myRenewalsEndpoint = serviceEndPointsConfiguration.myRenewalsEndpoint();
         topItemsEndpoint = serviceEndPointsConfiguration.topItemsEndpoint();
         createQuoteEndpoint = serviceEndPointsConfiguration.createQuoteEndpoint();
+        verifyUanEndpoint = serviceEndPointsConfiguration.verifyUanEndpoint();
         replaceCartEndpoint = serviceEndPointsConfiguration.replaceCartEndpoint();
         cartDetailsEndpoint = serviceEndPointsConfiguration.cartDetailsEndpoint();
         pricingConditionsEndPoint = serviceEndPointsConfiguration.pricingConditionsEndPoint();
@@ -254,6 +259,7 @@ public class CaConfigReader {
         renewalDetailLineItemEndpoint = serviceEndPointsConfiguration.renewalDetailLineItemEndpoint();
         renewalDetailsEndpoint = serviceEndPointsConfiguration.renewalDetailsEndpoint();
         exportXLSRenewalsEndpoint = serviceEndPointsConfiguration.exportXLSRenewalsEndpoint();
+        exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
         cartURL = mcConfiguration.cartURL();
         expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
         checkoutRedirectUrl = mcConfiguration.checkoutRedirectUrl();
@@ -308,10 +314,15 @@ public class CaConfigReader {
         agGridLicenseKey = commonConfigurations.agGridLicenseKey();
         allowedFileExtensions = String.join(",", Arrays.asList(formConfigurations.allowedFileExtensions()));
         fileThresholdInMB = String.valueOf(formConfigurations.fileThresholdInMB());
+        textFieldRegexString = formConfigurations.textFieldRegexString();
     }
 
     public String getUiServiceDomain() {
         return uiServiceDomain;
+    }
+
+    public String getVerifyUanEndpoint() {
+        return verifyUanEndpoint;
     }
 
     public String getCatalogEndpoint() {
@@ -429,10 +440,10 @@ public class CaConfigReader {
     public String getConfigurationsEndpoint() {
         return configurationsEndpoint;
     }
-    
+
     public String getConsumerRequestHeader() {
         return consumerRequestHeader;
-    }    
+    }
 
     public String getPuchOutEndpoint(){
         return puchOutEndpoint;
@@ -448,9 +459,9 @@ public class CaConfigReader {
 
     public String getExpressCheckoutRedirectUrl(){ return expressCheckoutRedirectUrl; }
 
-    
-    public String getCheckoutRedirectUrl(){ 
-        return checkoutRedirectUrl; 
+
+    public String getCheckoutRedirectUrl(){
+        return checkoutRedirectUrl;
     }
 
     public String getTdPartSmart() {
@@ -571,7 +582,7 @@ public class CaConfigReader {
 
     public String getOrderDetailPage(){return orderDetailPage;}
 
-    public String getShopDomainPage() {return shopDomainPage;}    
+    public String getShopDomainPage() {return shopDomainPage;}
 
     public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
 
@@ -614,9 +625,13 @@ public class CaConfigReader {
     public String getRenewalDetailsEndpoint(){
         return renewalDetailsEndpoint;
     }
-    
+
     public String getExportXLSRenewalsEndpoint(){
         return exportXLSRenewalsEndpoint;
+    }
+
+    public String getExportPDFRenewalsEndpoint() {
+        return exportPDFRenewalsEndpoint;
     }
 
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }
@@ -637,6 +652,10 @@ public class CaConfigReader {
 
     public String getFileThresholdInMB() {
         return fileThresholdInMB;
+    }
+
+    public String getTextFieldRegexString() {
+        return textFieldRegexString;
     }
 
     public boolean isEnableQualtricsCode() {

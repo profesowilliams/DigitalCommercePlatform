@@ -1,0 +1,25 @@
+{
+  "socialLinks": {
+    "item0": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Facebook",
+      "linkUrl": "https://www.facebook.com/TechDataCorporation",
+      "linkTarget": "true",
+      "iconUrl": "/content/dam/techdata/tech-data-dot-com/global/site/social-icons/iconfinder_facebook_834722.svg"
+    },
+    "item1": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Twitter",
+      "linkUrl": "https://twitter.com/Tech_Data",
+      "linkTarget": "true",
+      "iconUrl": "/content/dam/techdata/tech-data-dot-com/global/site/social-icons/iconfinder_twitter_circle_294709.svg"
+    },
+    "item2": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "LinkedIn",
+      "linkUrl": "https://www.linkedin.com/company/tech-data",
+      "linkTarget": "true",
+      "iconUrl": "/content/dam/techdata/tech-data-dot-com/global/site/social-icons/iconfinder_circle-linkedin_317750.svg"
+    }
+  }
+}

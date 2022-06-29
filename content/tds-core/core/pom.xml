@@ -131,6 +131,12 @@ Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.*,com.t
             <artifactId>org.osgi.resource</artifactId>
         </dependency>
         <dependency>
+            <artifactId>acs-aem-commons-bundle</artifactId>
+            <version>4.9.0</version>
+            <groupId>com.adobe.acs</groupId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.util.tracker</artifactId>
         </dependency>
@@ -192,13 +198,44 @@ Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.*,com.t
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.wcm</groupId>
             <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.sling</groupId>
+                    <artifactId>org.apache.sling.models.impl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.testing.caconfig-mock-plugin</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
             <scope>test</scope>
         </dependency>
         <!-- Required to be able to support injection with @Self and @Via -->
@@ -213,6 +250,18 @@ Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.*,com.t
             <artifactId>lombok</artifactId>
             <version>1.18.18</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.jcr.resource</artifactId>
+            <version>2.7.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.12.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

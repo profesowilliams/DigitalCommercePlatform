@@ -1,0 +1,23 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<div class="center cmp-filmstrip-slider"
+     data-sly-use.list="com.adobe.cq.wcm.core.components.models.List"
+     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+     data-sly-list="${list.profileItems}"
+>
+
+    <a href="${item.profileLink}">
+        <div class="cmp-filmstrip-carousel__cards--card">
+            <img src="${item.imagePath}">
+            <div class="cmp-filmstrip-carousel__cards--card--name">
+                ${item.name}
+            </div>
+            <div class="cmp-filmstrip-carousel__cards--card--position">
+                ${item.position}
+            </div>
+        </div>
+    </a>
+
+</div>

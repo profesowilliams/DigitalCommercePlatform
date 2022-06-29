@@ -1,0 +1,37 @@
+{
+  "links": {
+    "item0": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "©2021 Tech Data Corp.",
+      "linkTarget": "false"
+    },
+    "item1": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Privacy",
+      "linkUrl": "https://www.techdata.com/privacy/",
+      "linkTarget": "false"
+    },
+    "item2": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Terms & Conditions",
+      "linkUrl": "https://tdcontent.techdata.com/content/visitor/abouttd/conditions.aspx",
+      "linkTarget": "true"
+    },
+    "item3": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Legal",
+      "linkTarget": "false"
+    },
+    "item4": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Site Map",
+      "linkTarget": "false"
+    },
+    "item5": {
+      "jcr:primaryType": "nt:unstructured",
+      "platformName": "Change Region",
+      "linkTarget": "false",
+      "iconUrl": "/content/dam/techdata/tech-data-dot-com/global/site/header-and-footer/iconfinder_flag-usa_748050.png"
+    }
+  }
+}

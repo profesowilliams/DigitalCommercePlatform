@@ -1,5 +1,5 @@
 {
   "resource.resolver.mapping": [
-    "/content/techdata/&lt;/", "/:/"
+    "/content/techdata/&lt;/","/content/tds-core/&lt;/","/content/tds-site/&lt;/","/:/"
   ]
 }

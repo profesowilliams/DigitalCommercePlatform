@@ -1,0 +1,14 @@
+{
+  "actionItems": {
+    "item0": {
+      "jcr:primaryType": "nt:unstructured",
+      "linkUrl": "/content/tds-core/language-masters/en/about-us",
+      "linkText": "Take a {Guided Tour} of Tech Data"
+    },
+    "item1": {
+      "jcr:primaryType": "nt:unstructured",
+      "linkUrl": "https://www.techdata.com",
+      "linkText": "Sign Up Now & {Become a Reseller Today!}"
+    }
+  }
+}

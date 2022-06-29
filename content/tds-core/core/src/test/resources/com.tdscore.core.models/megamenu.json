@@ -1,0 +1,44 @@
+{
+  "sling:resourceType": "tds-core/components/megamenu/v1/megamenu",
+  "menuList": {
+    "jcr:primaryType": "nt:unstructured",
+    "item0": {
+      "jcr:primaryType": "nt:unstructured",
+      "enableSecondaryIcon": "true",
+      "navigationCatalogRoot": "/content/dam/techdata/catalog/ALT-children",
+      "platformName": "Products",
+      "navigationRoot": "/content/techdata/language-masters/en/products",
+      "linkTarget": "true",
+      "isPrivate": "false"
+    },
+    "item1": {
+      "jcr:primaryType": "nt:unstructured",
+      "enableSecondaryIcon": "true",
+      "platformName": "Solutions",
+      "navigationRoot": "/content/techdata/language-masters/en/solutions",
+      "linkUrl": "/content/techdata/language-masters/en/solutions",
+      "linkTarget": "false",
+      "isPrivate": "false"
+
+    },
+    "item2": {
+      "jcr:primaryType": "nt:unstructured",
+      "enableSecondaryIcon": "true",
+      "platformName": "Brands",
+      "navigationRoot": "/content/techdata/language-masters/en/brands",
+      "linkUrl": "/content/techdata/language-masters/en/brands",
+      "linkTarget": "false",
+      "isPrivate": "false"
+
+    },
+    "item3": {
+      "jcr:primaryType": "nt:unstructured",
+      "enableSecondaryIcon": "false",
+      "platformName": "About Us",
+      "navigationRoot": "/content/techdata/language-masters/en/about-us",
+      "linkUrl": "/content/techdata/language-masters/en/about-us",
+      "linkTarget": "false",
+      "isPrivate": "false"
+    }
+  }
+}
