@@ -146,11 +146,11 @@ function RenewalPlanOptions({ labels, data, node }) {
         paginationStyle: "none",
       };
 
-    var res = [];
+    var renewalGridOptions = [];
 
     const [columnDefs] = useState([
         { 
-          field: 'res',         
+          field: 'renewalGridOptions',         
         },
       ]);
     const _onAfterGridInit = (config) => {
@@ -164,10 +164,10 @@ function RenewalPlanOptions({ labels, data, node }) {
                     <div className="marketing-body"></div>
                 </div>
                 {data?.options && data?.options.map((option, index) => {
-                    res = [];
-                    res.push({res: `${labels.quoteIdLabel}  ${option?.quoteID ? option?.quoteID : 'No data provided'}`});
-                    res.push({res: `${labels.refNoLabel}  ${option?.id}`});
-                    res.push({res: `${labels.expiryDateLabel}  ${formatExpiryDateLabel(option)}`});
+                    let renewalGridOptions = [];
+                    renewalGridOptions.push({renewalGridOptions: `${labels.quoteIdLabel}  ${option?.quoteID ? option?.quoteID : 'No data provided'}`});
+                    renewalGridOptions.push({renewalGridOptions: `${labels.refNoLabel}  ${option?.id}`});
+                    renewalGridOptions.push({renewalGridOptions: `${labels.expiryDateLabel}  ${formatExpiryDateLabel(option)}`});
                     return (
                     <div key={option?.id}>
                         <div className={computeClassName(data?.options, index)}>
@@ -192,7 +192,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                 <Grid
                                     columnDefinition={columnDefs}
                                     config={gridConfig}
-                                    data={res}
+                                    data={renewalGridOptions}
                                     onAfterGridInit={_onAfterGridInit}
                                     />
                             </div>

@@ -166,15 +166,20 @@ function Grid(props) {
       {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
-        action: function () {
-          if(!params.value) {
-            if(typeof getDefaultCopyValue === 'function') {
+        action: () => {
+          switch (true) {
+            case !params.value && typeof getDefaultCopyValue === 'function':
               navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
-            }
-          } else if (isObject(params.value)) {
-            navigator.clipboard.writeText(stringifyValue(params.value?.name));
-          } else {
-            navigator.clipboard.writeText(stringifyValue(params.value));
+              break;
+            case isObject(params.value):
+              navigator.clipboard.writeText(stringifyValue(params.value?.name));
+              break;
+            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
+              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
+              break;
+            default:
+              navigator.clipboard.writeText(stringifyValue(params.value));
+              break;
           }
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
