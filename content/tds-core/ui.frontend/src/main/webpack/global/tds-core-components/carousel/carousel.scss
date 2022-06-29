@@ -268,7 +268,7 @@
   flex-wrap: nowrap;
 
   &--active {
-    background-color: get-color(brand-blue);
+    background-color: get-color(brand-blue) !important;
   }
 
   //New classes for position of carousel dots
