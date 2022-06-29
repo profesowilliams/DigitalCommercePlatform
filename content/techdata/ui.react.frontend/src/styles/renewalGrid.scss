@@ -44,6 +44,8 @@ $bg--marketing-card:#F7F7F7;
     text-align: left;
     font-style: italic;
     color: #0ab00a;
+    display: block;
+    margin-bottom: 10px;
   }		
   .footer{
     display: flex;
@@ -88,12 +90,27 @@ $bg--marketing-card:#F7F7F7;
   }
   .cmp-grid.ag-theme-alpine .ag-row{
     background-color: white !important;
-    border-bottom: 1.2px solid #cdcbcb61;
+    border-bottom: 1.2px solid #cdcbcb61;    
+  }
+  .ag-theme-alpine .ag-layout-auto-height .ag-center-cols-clipper, .ag-theme-alpine .ag-layout-auto-height .ag-center-cols-container, .ag-theme-alpine .ag-layout-print .ag-center-cols-clipper, .ag-theme-alpine .ag-layout-print .ag-center-cols-container{
+    min-height: auto;
+  }
+  .cmp-grid.ag-theme-alpine .planDetails{ 
+    .ag-row{
+      border-bottom: none;
+    }
+    .ag-header{
+      display: none;
+    }
+    .ag-cell{
+      padding: 0;
+      border: none;      
+    }
   }
   .cmp-grid.ag-theme-alpine .ag-header{
     height: 45px !important;
     padding-top:4px;
-  } 
+  }
   .ag-theme-alpine .ag-header-cell-resize::after{
     top: calc(50% - 24%);
     height: 52%;

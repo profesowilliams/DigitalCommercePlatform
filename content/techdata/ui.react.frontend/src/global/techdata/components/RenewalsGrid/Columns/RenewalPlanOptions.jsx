@@ -4,6 +4,7 @@ import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import Grid from "../../Grid/Grid";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
@@ -139,13 +140,35 @@ function RenewalPlanOptions({ labels, data, node }) {
         }
         return optionIdSelected === option?.id;
     }
+    const gridConfig = {
+        ...aemConfig,
+        serverSide: false,
+        paginationStyle: "none",
+      };
+
+    var res = [];
+
+    const [columnDefs] = useState([
+        { 
+          field: 'res',         
+        },
+      ]);
+    const _onAfterGridInit = (config) => {
+        config.api.gridOptionsWrapper.gridOptions.getRowHeight = () => 35;
+        config.api.gridOptionsWrapper.gridOptions.api.resetRowHeights();
+    }
     return (
         <div key={rowIndexRef.current + Math.random()}>
             <div className="cmp-renewal-plan-column">
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
                 </div>
-                {data?.options && data?.options.map((option, index) => (
+                {data?.options && data?.options.map((option, index) => {
+                    res = [];
+                    res.push({res: `${labels.quoteIdLabel}  ${option?.quoteID ? option?.quoteID : 'No data provided'}`});
+                    res.push({res: `${labels.refNoLabel}  ${option?.id}`});
+                    res.push({res: `${labels.expiryDateLabel}  ${formatExpiryDateLabel(option)}`});
+                    return (
                     <div key={option?.id}>
                         <div className={computeClassName(data?.options, index)}>
                             <div className="header">
@@ -166,9 +189,12 @@ function RenewalPlanOptions({ labels, data, node }) {
                             </div>
                             <div className="planDetails">
                                 <span className="currentPlan">{showPlanLabels(option)}</span>
-                                <p>{labels.quoteIdLabel}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
-                                <p>{labels.refNoLabel}  {option?.id}</p>
-                                <p>{labels.expiryDateLabel}  {formatExpiryDateLabel(option)}</p>
+                                <Grid
+                                    columnDefinition={columnDefs}
+                                    config={gridConfig}
+                                    data={res}
+                                    onAfterGridInit={_onAfterGridInit}
+                                    />
                             </div>
                             {isPlanSelected(option) && (
                                 <div className="footer">
@@ -191,7 +217,7 @@ function RenewalPlanOptions({ labels, data, node }) {
 
                         </div>
                     </div>
-                ))}
+                )})}
             </div>
         </div>
     );
