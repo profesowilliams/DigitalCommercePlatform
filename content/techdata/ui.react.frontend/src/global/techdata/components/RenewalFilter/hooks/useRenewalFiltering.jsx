@@ -6,6 +6,7 @@ export default function useRenewalFiltering() {
 
     const resetCallback = useRef(null);
     const shouldGoToFirstPage =useRef(false);
+    const isOnSearchAction = useRef(false);
 
 
     function onAfterGridInit(config) {
@@ -13,14 +14,17 @@ export default function useRenewalFiltering() {
         shouldGoToFirstPage.current= false;
     }
 
-    function onQueryChanged({goToFirstPage = false} = false) {
+    function onQueryChanged(config) {
+        const defaultConfig = {goToFirstPage: false, onSearchAction: false};        
+        const {goToFirstPage, onSearchAction} = config || defaultConfig;
         if (goToFirstPage) shouldGoToFirstPage.current = true; 
+        isOnSearchAction.current = onSearchAction;              
         if (resetCallback.current) resetCallback.current();        
     } 
 
     function handleQueryFlowLogic(){
-        const onFiltersClear = shouldGoToFirstPage.current;
-        return {onFiltersClear};
+        const onFiltersClear = shouldGoToFirstPage.current;       
+        return {onFiltersClear, onSearchAction:isOnSearchAction.current};
     }
 
     return { onAfterGridInit, onQueryChanged, handleQueryFlowLogic };

@@ -152,7 +152,15 @@ function isSameFilterRepeated(previousFilter, newFilter){
     return isFilterEqual;
 }
 
-export async function preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp,previousFilter}){
+export async function fetchRenewalsFilterByPost(config){
+    const {
+      hasSortChanged,
+      isFilterDataPopulated,
+      optionFieldsRef,
+      customPaginationRef,
+      componentProp,
+      previousFilter,
+    } = config;
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)) {
         const params = { ...optionFieldsRef.current, sortBy: hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`) };
         if (customPaginationRef.current?.pageNumber !== 1) {
@@ -187,7 +195,17 @@ function isRepeatedSortAction(previusSort, newSort){
     return isEqual
 }
 
-export async function nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear, firstAPICall}){
+export async function fetchRenewalsByGet(config){
+    const {
+      request,
+      hasSortChanged,
+      searchCriteria,
+      customPaginationRef,
+      previousSortChanged,
+      onFiltersClear,
+      firstAPICall,
+      onSearchAction,
+    } = config;
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
     const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
@@ -204,12 +222,16 @@ export async function nonFilteredOnSorting({request, hasSortChanged, searchCrite
     if (searchCriteria.current?.field) {
         const {field, value} = searchCriteria.current;
         mapUrl.set(field,value);  
-        // mapUrl.set('PageNumber',1); // this breaks pagination. commenting so @Cristian can work on it later.
+        if (pageNumber !== 1, onSearchAction){
+          mapUrl.set('PageNumber',1);
+        }
+    } else {
+        if (onSearchAction) mapUrl.set('PageNumber',1);
     }    
     if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
     previousSortChanged.current = hasSortChanged.current;
-    firstAPICall.current = false;
+    firstAPICall.current = false;    
     return await usGet(finalUrl);
 }
 

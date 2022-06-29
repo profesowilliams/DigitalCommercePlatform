@@ -18,7 +18,8 @@ export const useMultiFilterSelected = () => {
 
   const _setOptionsFields = useCallback(
     ([optionFields, hasData]) => {
-      optionFieldsRef.current = hasFilterLocalStorageData() ? getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.optionFields : optionFields;
+      // optionFieldsRef.current = hasFilterLocalStorageData() ? getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.optionFields : optionFields; 
+      optionFieldsRef.current = optionFields; 
       isFilterDataPopulated.current = hasData;
 
       if (resetFilter) {isFilterDataPopulated.current = false;effects.setCustomState({key:'resetFilter', value: false})}

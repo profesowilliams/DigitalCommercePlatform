@@ -178,27 +178,17 @@
       seeDetailsLabel: "See details",
     },
     icons: {
-      overdue: {
-        overdueIcon: "fas fa-bell",
-        overdueIconColor: "#F7B500",
-        overdueDaysRange: "overdue",
-      },
+      overdue: { overdueIcon: "fas fa-bell", overdueIconColor: "#CD163F" },
       "0-30": {
-        afterZeroIcon: "fas fa-stopwatch",
-        afterZeroIconColor: "#00B1E2",
-        afterZeroDaysRange: "0-30",
+        afterZeroIcon: "fas fa-alarm-clock",
+        afterZeroIconColor: "#F7B500",
       },
       "31-60": {
-        afterThirtyIcon: "fas fa-alarm-clock",
-        afterThirtyIconColor: "#025F97",
-        afterThirtyDaysRange: "31-60",
+        afterThirtyIcon: "fas fa-clock",
+        afterThirtyIconColor: "#38853C",
       },
-      "61+": {
-        sixtyPlusIcon: "fas fa-calendar-alt",
-        sixtyPlusIconColor: "#21314D",
-        sixtyPlusDaysRange: "61+",
-      },
-  },
+      "61+": { sixtyPlusIcon: "calendar", sixtyPlusIconColor: "#006FBA" },
+    },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

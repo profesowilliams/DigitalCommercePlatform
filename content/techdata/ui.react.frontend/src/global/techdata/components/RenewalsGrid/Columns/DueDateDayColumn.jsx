@@ -1,6 +1,7 @@
 import React from "react";
 import differenceInDays from "date-fns/differenceInDays";
 import { useRenewalGridState } from "../store/RenewalsStore";
+import { ClockAlarmFilled, CalendarFilled } from "../../../../../fluentIcons/fluentIcons";
 
 function DueDateDayColumn({ columnValue }) {
   const dueDaysIcons = useRenewalGridState((state) => state.dueDaysIcons);
@@ -13,9 +14,12 @@ function DueDateDayColumn({ columnValue }) {
       [dueDays >= 61] :"61+"
     }
      const [_ , daysRange] = Object.entries(mapped).filter(list => list[0] === "true").flat()
+     if (!dueDaysIcons[daysRange]) return null;
      const [fontAwesomeIcon, color] = Object.values(dueDaysIcons[daysRange]);
-     return  <i style={{ color }} className={fontAwesomeIcon} />;
-  }
+     if (fontAwesomeIcon === 'fas fa-alarm-clock') return <ClockAlarmFilled fill={color} />
+     if (fontAwesomeIcon === 'calendar') return <CalendarFilled fill={color} />
+     return  <i style={{ color }} className={fontAwesomeIcon} />;    
+  } 
   return (
     <div className="cmp-due-date-day-column">
       {dueDaysIcons && dueDaysIconsConstraints(parseInt(days))}

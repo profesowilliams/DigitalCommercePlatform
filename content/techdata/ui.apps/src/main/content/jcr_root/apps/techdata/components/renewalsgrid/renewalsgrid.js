@@ -194,16 +194,22 @@ use(['../common/utils.js'], function(utils) {
     if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
         jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
     }
-    const overdueFieldsList = ['overdueIcon','overdueIconColor','overdueDaysRange'];   
-    const thirtyDaysFieldsList = ['afterZeroIcon', 'afterZeroIconColor','afterZeroDaysRange'];
-    const sixtyOneDaysFieldsList = ['afterThirtyIcon', 'afterThirtyIconColor', 'afterThirtyDaysRange'];   
-    const sixtyOnePlusFieldsList = ['sixtyPlusIcon', 'sixtyPlusIconColor', 'sixtyPlusDaysRange'];
+    const overdueProperties = {values: ['overdueIcon','overdueIconColor'], propertyName: 'overdueDaysRange'};   
+    const thirtyDaysProperties = {values:['afterZeroIcon', 'afterZeroIconColor'], propertyName: 'afterZeroDaysRange'};
+    const sixtyOneDaysProperties = {values : ['afterThirtyIcon', 'afterThirtyIconColor'], propertyName: 'afterThirtyDaysRange'};   
+    const sixtyOnePlusProperties = {values : ['sixtyPlusIcon', 'sixtyPlusIconColor'], propertyName:'sixtyPlusDaysRange'};
 
+    function populateOutterProperty (obj, prop) {
+        const populated = utils.fillFieldsDialogProperties(prop.values);       
+        const daysPropertyName = properties[prop.propertyName]
+        if (populated && daysPropertyName) {obj[daysPropertyName] = populated};
+    }
+    
     if (properties){     
-        utils.populateOutterProperty(icons,'overdue',overdueFieldsList);
-        utils.populateOutterProperty(icons,'0-30',thirtyDaysFieldsList);
-        utils.populateOutterProperty(icons,'31-60',sixtyOneDaysFieldsList);
-        utils.populateOutterProperty(icons,'61+',sixtyOnePlusFieldsList);  
+        populateOutterProperty(icons,overdueProperties);
+        populateOutterProperty(icons,thirtyDaysProperties);
+        populateOutterProperty(icons,sixtyOneDaysProperties);
+        populateOutterProperty(icons,sixtyOnePlusProperties);  
     }
 
     if (!!icons) {jsonObject['icons'] = icons};

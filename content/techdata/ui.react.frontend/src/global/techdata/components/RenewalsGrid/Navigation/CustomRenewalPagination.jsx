@@ -60,8 +60,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     pageCount ?? Math.ceil(currentResultsInPage / totalCounter);
 
   const sendPagingRequest = (queryString = '') => {    
-    onQueryChanged({queryString}); 
-    
+    onQueryChanged();    
   }
 
   const keepFilteringPayload = (pageNumber) => {
@@ -70,7 +69,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
       PageNumber: pageNumber,     
     };
     const queryString = JSON.stringify(postQuery);
-    onQueryChanged({ queryString }, { filterStrategy: "post" });
+    onQueryChanged();
   }
 
   const incrementHandler = () => {

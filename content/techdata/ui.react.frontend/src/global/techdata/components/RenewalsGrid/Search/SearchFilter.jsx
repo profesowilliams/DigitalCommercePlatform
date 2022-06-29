@@ -111,7 +111,7 @@ function _SearchFilter(
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
     if (searchTriggered) {
-      onQueryChanged();  
+      onQueryChanged({onSearchAction:true});  
       setSwitchDropdown(!searchTerm.length);
     }
     setSearchTerm("");
@@ -191,7 +191,7 @@ function _SearchFilter(
       field: option,
       value: inputValue,
     });
-    onQueryChanged();
+    onQueryChanged({onSearchAction:true});
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {
         searchTerm: inputValue,
@@ -203,7 +203,7 @@ function _SearchFilter(
   }
 
   function fetchAll() {
-    onQueryChanged();
+    onQueryChanged({onSearchAction:true});
     onReset();
     setSwitchDropdown(false);
   }

@@ -12,11 +12,17 @@ import CustomRenewalPagination from "./Navigation/CustomRenewalPagination";
 import { getColumnDefinitions } from "./Columns/GenericColumnTypes";
 import RenewalDetailRenderers from "./Columns/RenewalDetailRenderers";
 import {
-  addCurrentPageNumber, isFilterPostRequest,
-  mapServiceData, 
+  addCurrentPageNumber,
+  isFilterPostRequest,
+  mapServiceData,
   mapSortIdByPrice,
-  nonFilteredOnSorting, preserveFilterinOnSorting,
-  setPaginationData, isFirstTimeSortParameters, clearLocalStorageGridData, isFromRenewalDetailsPage, updateQueryString
+  fetchRenewalsByGet,
+  fetchRenewalsFilterByPost,
+  setPaginationData,
+  isFirstTimeSortParameters,
+  clearLocalStorageGridData,
+  isFromRenewalDetailsPage,
+  updateQueryString,
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -133,17 +139,27 @@ function RenewalsGrid(props) {
   };
 
   const customRequestInterceptor = async (request) => {
-    const {onFiltersClear} = handleQueryFlowLogic();     
+    const { onFiltersClear, onSearchAction } = handleQueryFlowLogic();
     request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     const gridApi = gridApiRef?.current?.api;
     gridApi.showLoadingOverlay();
     
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
-      response = await preserveFilterinOnSorting({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
+      response = await fetchRenewalsFilterByPost({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
     } else {    
-      response = await nonFilteredOnSorting({request, hasSortChanged, searchCriteria, customPaginationRef, previousSortChanged, onFiltersClear, firstAPICall});
-    } 
+      const getHandleOptions = {
+        request,
+        hasSortChanged,
+        searchCriteria,
+        customPaginationRef,
+        previousSortChanged,
+        onFiltersClear,
+        firstAPICall,
+        onSearchAction,
+      };
+      response = await fetchRenewalsByGet(getHandleOptions);
+    }
 
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
@@ -272,7 +288,7 @@ function RenewalsGrid(props) {
   }
 
   return (
-    <section>        
+    <section>       
       <div className="cmp-renewals-subheader">
         <CustomRenewalPagination
           onQueryChanged={onQueryChanged}
