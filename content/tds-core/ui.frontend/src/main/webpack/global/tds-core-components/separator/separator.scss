@@ -4,7 +4,7 @@
   display: flex;
 
   hr {
-    height: 2px !important;
+    height: 1px;
   }
 
   &--light-blue {
@@ -45,6 +45,7 @@
     .cmp-separator__horizontal-rule {
       color: map-get($color-palette, "teal") !important;
       border-color: map-get($color-palette, "teal") !important;
+      background-color: map-get($color-palette, "teal") !important;
     }
   }
 
@@ -52,6 +53,7 @@
     .cmp-separator__horizontal-rule {
       color: get-color(deep-teal) !important;
       border-color: get-color(deep-teal) !important;
+      background-color: get-color(deep-teal) !important;
     }
   }
 
@@ -59,6 +61,7 @@
     .cmp-separator__horizontal-rule {
       color: get-color(steel-blue) !important;
       border-color: get-color(steel-blue) !important;
+      background-color: get-color(steel-blue) !important;
     }
   }
 
@@ -66,6 +69,7 @@
     .cmp-separator__horizontal-rule {
       color: map-get($color-palette, "green") !important;
       border-color: map-get($color-palette, "green") !important;
+      background-color: map-get($color-palette, "green") !important;
     }
   }
 
@@ -73,6 +77,7 @@
     .cmp-separator__horizontal-rule {
       color: get-color(stone) !important;
       border-color: get-color(stone) !important;
+      background-color: get-color(stone) !important;
     }
   }
 
@@ -80,6 +85,7 @@
     .cmp-separator__horizontal-rule {
       color: get-color(cool-gray-1) !important;
       border-color: get-color(cool-gray-1) !important;
+      background-color: get-color(cool-gray-1) !important;
     }
   }
 
@@ -87,6 +93,7 @@
     .cmp-separator__horizontal-rule {
       color: map-get($color-palette, "aqua") !important;
       border-color: map-get($color-palette, "aqua") !important;
+      background-color: map-get($color-palette, "aqua") !important;
     }
   }
 
@@ -155,6 +162,6 @@
 
 .tds-separator-horizontal {
   hr {
-    border: rem(2px) solid !important;
+    border-top: rem(2px) solid !important;
   }
 }
