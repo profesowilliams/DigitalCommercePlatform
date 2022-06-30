@@ -14,6 +14,7 @@ function _RenewalActionColumn({ eventProps }) {
     const [isToggled, setToggled] = React.useState(false);
     const effects = useRenewalGridState(state => state.effects);
     const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
+    const { pageNumber } = useRenewalGridState(state => state.pagination);
 
     const { value, data } = eventProps;
     const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem", width: '1.3rem' };
@@ -39,7 +40,9 @@ function _RenewalActionColumn({ eventProps }) {
         return;
 
       const localRowIndex = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.rowIndex;
-      if (eventProps.node.rowIndex === localRowIndex - 1) {
+      const capturedPlanPage = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["capturedPlanPage"]
+
+      if (eventProps.node.rowIndex === localRowIndex - 1 && capturedPlanPage === pageNumber) {
         eventProps.node.setExpanded(!isToggled);
         setToggled(!isToggled);
       }
@@ -72,6 +75,7 @@ function _RenewalActionColumn({ eventProps }) {
             detailRender: 'primary',
             rowCollapsedIndexList,
             rowIndex: parseFloat(document.querySelector(".ag-full-width-container")?.querySelector("[row-index]")?.getAttribute("row-index")),
+            capturedPlanPage: pageNumber,
           });
         }, 0)
     }

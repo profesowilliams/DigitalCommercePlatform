@@ -73,13 +73,14 @@ function _ContractColumn({ data, eventProps }) {
     /**
      * Ag-grid gives detailed-view the same index as normal grid rows. This
      * prevents targeting the toggle state appropriately. Hence DOM query.
-     * setTimeout to excecute this last from the call stack.
+     * setTimeout to execute this last from the call stack.
      */
     setTimeout(() => {
       setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
         detailRender: 'secondary',
         rowCollapsedIndexList,
         rowIndex: parseFloat(document.querySelector(".ag-full-width-container")?.querySelector("[row-index]")?.getAttribute("row-index")),
+        capturedPlanPage: pageNumber,
       });
     }, 0)
   }
