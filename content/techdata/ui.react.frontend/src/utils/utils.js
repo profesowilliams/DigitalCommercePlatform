@@ -80,7 +80,7 @@ export const generateFileFromPost = async ({url, postData,  name = '', fileTypeE
             responseType: 'blob',
         };
         const response = await usPost(`${url}`, postData, params);
-        if (response.data.type !== fileTypeExtension) {
+        if (!response?.data?.type?.startsWith(fileTypeExtension)) {
             alert('There was an error encountered during export.');
             return;
         }
