@@ -64,6 +64,12 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     var body = document.querySelector("body");
     const headerMargin = 5;
     if (popup && experiencefragment && subheader && modal && close && body) {
+      const pageHeaderHeight = experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin + (window.pageYOffset -
+        (experiencefragment.offsetHeight + subheader.offsetHeight >
+        window.pageYOffset
+          ? window.pageYOffset
+          : experiencefragment.offsetHeight + subheader.offsetHeight));
+
       popup.style.top =
         experiencefragment.offsetHeight +
         subheader.offsetHeight +
@@ -74,8 +80,9 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
             ? window.pageYOffset
             : experiencefragment.offsetHeight + subheader.offsetHeight)) +
         "px";
-      // popup.style.height = double check if disabling this will fix the issue on sit env 
-      //   window.innerHeight - (popup.offsetTop - window.pageYOffset) + "px"; 
+      //double check if disabling this will fix the issue on sit env
+      popup.style.height =  `calc(100vh - ${pageHeaderHeight}px)`;
+        // window.innerHeight - (popup.offsetTop - window.pageYOffset) + "px"; 
       close.style.top =
         experiencefragment.offsetHeight +
         subheader.offsetHeight +
