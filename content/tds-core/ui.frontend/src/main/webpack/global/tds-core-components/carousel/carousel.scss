@@ -19,6 +19,7 @@
     .dp-carousel__nav-labels {
       display: flex;
       align-items: center;
+      z-index: 1;
 
       @include tablet {
         justify-content: center;
