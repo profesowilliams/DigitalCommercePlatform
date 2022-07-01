@@ -80,9 +80,9 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
             ? window.pageYOffset
             : experiencefragment.offsetHeight + subheader.offsetHeight)) +
         "px";
-      //double check if disabling this will fix the issue on sit env
-      popup.style.height =  `calc(100vh - ${pageHeaderHeight}px)`;
-        // window.innerHeight - (popup.offsetTop - window.pageYOffset) + "px"; 
+      
+      popup.style.height = 
+        window.innerHeight - (popup.offsetTop - window.pageYOffset) + "px";
       close.style.top =
         experiencefragment.offsetHeight +
         subheader.offsetHeight +
