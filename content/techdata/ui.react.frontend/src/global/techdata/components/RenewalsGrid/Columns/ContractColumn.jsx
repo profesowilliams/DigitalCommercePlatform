@@ -81,6 +81,7 @@ function _ContractColumn({ data, eventProps }) {
         rowCollapsedIndexList,
         rowIndex: parseFloat(document.querySelector(".ag-full-width-container")?.querySelector("[row-index]")?.getAttribute("row-index")),
         capturedPlanPage: pageNumber,
+        selectedPlanId: eventProps.data.options[0]['id'],
       });
     }, 0)
   }
