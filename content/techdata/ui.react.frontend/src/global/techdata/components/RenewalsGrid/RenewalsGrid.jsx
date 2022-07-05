@@ -143,7 +143,6 @@ function RenewalsGrid(props) {
     request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     const gridApi = gridApiRef?.current?.api;
-    gridApi.showLoadingOverlay();
     
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
       response = await fetchRenewalsFilterByPost({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
@@ -180,7 +179,6 @@ function RenewalsGrid(props) {
     if (refinementGroups) {
       setCustomState({ key: 'refinements', value: refinementGroups });
     }
-    gridApi.hideOverlay();
 
     return mappedResponse;
   }
