@@ -43,7 +43,7 @@
                                                     fieldLabel="Link"
                                                     fieldDescription="Enter social media platform link"
                                                     jcr:primaryType="nt:unstructured"
-                                                    rootPath="/content/techdata"
+                                                    rootPath="/content"
                                                     name="./linkUrl" />
                                                 <iconUrl
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
