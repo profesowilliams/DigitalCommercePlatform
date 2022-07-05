@@ -3698,13 +3698,13 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           endUser: [
             {
               id: null,
-              companyName: null,
-              name: " ",
+              companyName: "MyEndUser Co",
+              name: "Joe ",
               line1: "2 BANK OF AMERICA PLZ",
               line2: "BANK OF OMNI",
               line3: null,
-              city: null,
-              state: "CHARLOTTE",
+              city: "CHARLOTTE",
+              state: "NC",
               zip: null,
               postalCode: "28280",
               country: "US",

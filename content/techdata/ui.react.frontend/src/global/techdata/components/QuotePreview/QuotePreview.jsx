@@ -60,7 +60,7 @@ function QuotePreview(props) {
   const modalConfig = componentProp?.modalConfig;
   const DEAL_ATTRIBUTE_FIELDNAME = "DEALIDENTIFIER";
 
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const isLoggedIn = useStore(state => state.isLoggedIn);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
   const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);

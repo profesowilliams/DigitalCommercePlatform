@@ -106,16 +106,16 @@ const handleEditModeChange = () => {
               {infoState.companyName}
             </p>
             <div className="cmp-qp__enduser-info--address-group">
-              <Info label={info.nameLabel}>{infoState.name}</Info>
-              <Info label={`${info.addressLabel} 1`}>{infoState.line1}</Info>
-              <Info label={`${info.addressLabel} 2`}>{infoState.line2}</Info>
-              <Info label={info.cityLabel}>{infoState.city}</Info>
-              <Info label={info.stateLabel}>{infoState.state}</Info>
-              <Info label={info.zipLabel}>{infoState.postalCode}</Info>
-              <Info label={info.countryLabel}>{infoState.country}</Info>
+              {infoState.name}<br/>
+              {infoState.line1}<br />
+              {infoState.line2}<br />
+              {infoState.city}<br />
+              {infoState.state}<br />
+              {infoState.postalCode}<br />
+              {infoState.country}<br />
               <p>
-                <Info label={info.emailLabel}>{infoState.email}</Info>
-                <Info label={info.phoneLabel}>{infoState.phoneNumber}</Info>
+                {infoState.email}<br />
+                {infoState.phoneNumber}<br />
               </p>
             </div>
           </>
