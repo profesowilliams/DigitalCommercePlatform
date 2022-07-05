@@ -51,6 +51,7 @@ function OrdersGridSearch({
   const [defaultAllVendor, setDefaultAllVendor] = useState(null);
   const [defaultAllMethod, setDefaultAllMethod] = useState(null);
   const [defaultAllLine, setDefaultAllLine] = useState(null);
+  const [openOrderActiveFlag, setOpenOrderActiveFlag] = useState(true);
 
   /**
    * Effect if there is a ID param in the URL catch and
@@ -140,6 +141,11 @@ function OrdersGridSearch({
     };
   };
 
+  const getOpenOrdersQueryString = (query) => {
+    setOpenOrderActiveFlag(!query?.open);
+    return query?.open || '';
+  }
+
   function dispatchQueryChange(query) {
     let keyword =
       query.keyword?.key && query.keyword?.value
@@ -166,13 +172,14 @@ function OrdersGridSearch({
       query.general?.key && query.general?.value
         ? `&idType=GENERAL&id=${query.general.value}`
         : "";
+    const open = getOpenOrdersQueryString(query);
 
     // From DatePicker Validation
     validateDatePicker(query.from, query.to, setDateDefaultToValue);
     // To DatePicker Validation
     validateDatePicker(query.to, query.from, setDateDefaultFromValue);
 
-    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${general}`;
+    let concatedQuery = `${keyword}${manufacturer}${method}${from}${to}${open}${general}`;
     if (isQueryValid(query)) {
       setToMinDate(query.from?.value)
       onQueryChanged(concatedQuery, dispatchAnalyticsChange(query));
@@ -247,14 +254,14 @@ function OrdersGridSearch({
         defaultValue={dateDefaultToValue}
         filterDate={handleToDateFilter}
       ></SimpleDatePicker>
-      <HeaderButtonOptions 
-        handleChange={onQueryChanged}
+      {openOrderActiveFlag && <HeaderButtonOptions 
+        handleChange={(change) => handleFilterChange(change, "open")}
         onSearch={onSearch}
         onClear={onClear}
         expanded={false}
         setExpanded={setExpanded}
         handleClickOptionsButton={handleClickOptionsButton}
-      />
+      />}
       
     </div>
   );

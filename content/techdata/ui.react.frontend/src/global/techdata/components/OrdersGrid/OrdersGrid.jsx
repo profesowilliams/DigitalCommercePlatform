@@ -428,6 +428,8 @@ function OrdersGrid(props) {
      * @param {any} options 
      */
     const handlerOnClearEvent = (query, options = { filterStrategy: 'get' }) => {
+        setExpandedOpenOrderFilter(true);
+        setOrderReportStatus(false);
         analyticModel.current = null; // forcing the null value to not enter into the analytic funtion again
         filteringExtension.onQueryChanged(query, options);
     };
