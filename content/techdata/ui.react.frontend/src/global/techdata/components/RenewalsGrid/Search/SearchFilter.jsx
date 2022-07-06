@@ -312,7 +312,7 @@ function _SearchFilter(
               </button>
             </div>
             <If condition={true}>
-              <div className="cmp-search-options">
+              <div className="cmp-search-options hide">
                 {options.map((option) => renderWithPermissions(option))}
               </div>
             </If>

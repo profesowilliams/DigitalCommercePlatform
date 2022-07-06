@@ -127,6 +127,9 @@ $secondary-link-blue: #006bae;
     }
   }
 }
+.cmp-search-select-container__box:hover + .hide {
+  display: flex;
+}
 .cmp-renewal-search {
   cursor: pointer;
   display: flex;
@@ -178,4 +181,10 @@ $secondary-link-blue: #006bae;
       text-decoration: underline;
     }
   }
+  &:hover{
+    display: flex;
+  }
+}
+.hide {
+  display: none;
 }
