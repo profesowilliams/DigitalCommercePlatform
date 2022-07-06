@@ -3,7 +3,7 @@ import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import { usPost } from "../../../../utils/api";
-import { ANALYTICS_TYPES, pushData } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, getDataLayer, pushData } from "../../../../utils/dataLayerUtils";
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import {useStore} from "../../../../utils/useStore"
 import { isNotEmptyValue } from '../../../../utils/utils';
@@ -19,6 +19,19 @@ const CreateConfig = ({ componentProp }) => {
   const POST_BACK_URL = "https://shop.techdata.com";
   const [quoteIDAnalytic, setQuoteIDAnalytic] = useState(null);
 
+  const updateDataLayer = (id) => {
+    /**@type {any[]} */
+    const dataLayer = getDataLayer();
+    dataLayer.forEach(layerElement => {
+      if (layerElement?.configuration?.configID === '') {
+        layerElement.configuration.configID = id;
+        layerElement.configuration.configComplete = '1';
+        layerElement.configuration.vendorName = localStorageVendorName || vendorName;
+        localStorage.removeItem('vendorName');
+      }
+    });
+  };
+
   /**
    * Function that validate and push the information of analytics
    * @param {string} vendorName 
@@ -27,6 +40,7 @@ const CreateConfig = ({ componentProp }) => {
    */
   const analyticsData = (vendorName, complete, id = '') => {
       const localStorageVendorName = localStorage.getItem('vendorName');
+      const flagComplete = id !== '';
       const vendorNameConst =  isNotEmptyValue(vendorName) ? vendorName :
           isNotEmptyValue(localStorageVendorName) 
           ? localStorageVendorName : '';
@@ -38,16 +52,14 @@ const CreateConfig = ({ componentProp }) => {
                configType: 'Estimate'
            }
       }
-
-      if (complete) {
-        analyticsObj.configuration.configComplete = '1';
-        analyticsObj.configuration.vendorName = localStorageVendorName || vendorName;
-        localStorage.removeItem('vendorName');
-      } else {
+      
+      flagComplete && updateDataLayer(id);
+      
+      if (!flagComplete) {
         localStorage.setItem('vendorName', vendorName);
         localStorage.setItem('createConfig', 'true');
+        pushData(analyticsObj);
       }
-      pushData(analyticsObj);
   }
 
   const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);

@@ -85,7 +85,7 @@ export const isDataLayerEnabled = () => {
   }
   return dataLayerEnabled;
 };
-const getDataLayer = () => {
+export const getDataLayer = () => {
   if (dataLayer === null) {
     dataLayer = isDataLayerEnabled() ? (window.adobeDataLayer = window.adobeDataLayer || []) : undefined;
   }

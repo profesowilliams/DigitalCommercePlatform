@@ -4178,12 +4178,17 @@ app.post("/ui-commerce/v1/quote/create", function (req, res) {
 
 // Punchout to vendor - CREATE CONFIG //
 app.post("/ui-config/v1/getPunchOutURL", function (req, res) {
-  const quotePreviewURLocal = "http://localhost:8080/quote-preview?id=53866281&type=Estimate&vendor=CISCO";
+  function getRandom(maxValue) {
+    return Math.floor(Math.random() * maxValue);
+  }
+  const randonNum = getRandom(99999999);
+  const quotePreviewURLocal = 'http://localhost:8080/quote-preview?id=' + randonNum + '&type=Estimate&vendor=CISCO';
   if (!validateSession(req, res)) return res.status(401);
 
   res.json({
     content: {
       url: "https://apps.cisco.com/eb2b/tnxshop/U2hcServlet?P1=081940553-4009d55f-17ba623a67f-c99417e13b6c4681f7d4d16d678eaa5e&P2=https%3A%2F%2Fapps.cisco.com%2Fccw%2Fcpc%2Fhome&P4=CREATE&P6=N",
+      // url: quotePreviewURLocal,
     },
     error: {
       code: 0,
