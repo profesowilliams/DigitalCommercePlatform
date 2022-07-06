@@ -36,8 +36,9 @@
       &::before {
         content: "\2022";
         font-weight: bold;
-        width: rem(20px);
+        width: auto;
         font-size: $font-size-custom-medium;
+        margin-right: rem(10px);
       }
     }
 
