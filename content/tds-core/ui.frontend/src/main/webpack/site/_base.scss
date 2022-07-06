@@ -3,16 +3,9 @@
 html,
 body {
 	margin: 0;
-	font-size: $font-size-body;
 	font-family: $font-family;
 	line-height: $font-height;
-	color: $color-foreground;
 	background: $color-background !important;
-
-	// @media (prefers-color-scheme: dark) {
-	//     color:       $color-foreground-dark;
-	//     background:  $color-background-dark;
-	// }
 }
 
 button,

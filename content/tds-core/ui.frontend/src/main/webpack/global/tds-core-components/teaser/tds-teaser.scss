@@ -16,6 +16,7 @@
 
                     .cmp-teaser__title {
                         background-color: get-color(brand-green-synnex) !important;
+                             font-family: $font-family-everett-md;
                     }
                 }
             }
@@ -27,7 +28,8 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    padding: rem(32px);
+    padding: rem(25px);
+    width: rem(300px);
 
     .cmp-teaser {
         box-shadow: 0 0 0 rem(1px) rgb(0 0 0 / 5%);
@@ -44,6 +46,7 @@
             .cmp-teaser__title {
                 background-color: get-color(brand-white) !important;
                 color: get-color(deep-teal) !important;
+                font-family: $font-family-everett-md;
 
                 .cmp-teaser__title-link {
                     color: get-color(deep-teal) !important;
@@ -64,8 +67,7 @@
             color: get-color(brand-white);
             text-align: left;
             font-family: $font-family-marketing;
-            font-size: $font-size-custom-medium;
-            padding-top: rem(5px);
+            font-size: $font-size-marketing-h3;
             padding-left: rem(20px);
             font-weight: normal;
 
@@ -76,8 +78,8 @@
         }
 
         .cmp-teaser__content {
-            font-size: $font-size-custom-xxsmall;
-            color: get-color(brand-text-gray);
+            font-size: rem(16px);
+            color: get-color(stone);
             //   min-height: rem(390px);
             min-height: auto;
 
@@ -89,7 +91,7 @@
             .cmp-teaser__description {
                 font-family: $font-family-georgia;
                 padding: rem(25px);
-                line-height: rem(16px);
+                line-height: rem(24px);
             }
         }
 

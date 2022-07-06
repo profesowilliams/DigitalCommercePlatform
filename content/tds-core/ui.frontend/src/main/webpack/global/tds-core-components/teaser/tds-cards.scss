@@ -58,7 +58,7 @@
                     -ms-flex-direction: column-reverse;
                     flex-direction: column-reverse;
                     justify-content: space-between;
-                    height: rem(300px);
+                    height: rem(335px);
 
                 }
 
@@ -73,6 +73,7 @@
                     margin: 0;
                     line-height: 1.5rem;
                     font-family: $font-family-everett;
+                    font-weight: normal;
 
                     &-link {
                         text-decoration: none;
@@ -107,7 +108,6 @@
                     text-overflow: initial !important;
                     display: -webkit-box;
                     -webkit-line-clamp: 6;
-                    -webkit-box-orient: vertical;
 
                     p {
                         font-family: $font-family-georgia;
@@ -128,6 +128,7 @@
             &--image-highlight {
                 &.cmp-teaser-tds__card {
                     .cmp-teaser {
+                        align-items: center;
                         min-height: rem(287px);
 
                         &:hover {
@@ -150,7 +151,17 @@
                             }
                         }
 
+                        &__description {
+                            padding: 0;
+
+                            p {
+                                line-height: 1.5;
+                            }
+                        }
+
                         &__title {
+                            justify-content: flex-start;
+
                             &-link {
                                 color: get-color(deep-teal);
                                 font-size: $font-size-custom-medium;
@@ -169,6 +180,12 @@
                             }
                         }
                     }
+
+                    &.cmp-separator-vertical {
+                        .cmp-teaser__content {
+                            box-shadow: inset rem(1px) 0 0 0 get-color(cool-gray-1);
+                        }
+                    }
                 }
             }
         }
@@ -178,31 +195,35 @@
 
             .cmp-teaser {
                 min-height: 25rem;
-            }
 
-            .cmp-teaser__description {
-                text-align: left;
-                display: flex;
-                justify-content: center;
-                color: get-color(brand-black);
-            }
-
-            .cmp-teaser__image {
-                margin-bottom: 9.75rem;
-
-                img {
-                    border: 0 solid get-color(border-light-gray);
-                    width: 16rem;
-                    height: 16rem;
-                    transform: translateX(-50%) translateY(-50%);
+                &__description {
+                    text-align: left;
+                    display: flex;
+                    justify-content: center;
+                    color: get-color(brand-black);
                 }
-            }
-            
-                &.cmp-separator-vertical {
-                    .cmp-teaser__content {
-                        box-shadow: inset rem(-1px) 0 0 0 get-color(brand-white);
+
+                &__title {
+                    color: get-color(deep-teal);                    
+                }
+
+                &__image {
+                    margin-bottom: 9.75rem;
+
+                    img {
+                        border: 0 solid get-color(border-light-gray);
+                        width: 16rem;
+                        height: 16rem;
+                        transform: translateX(-50%) translateY(-50%);
                     }
                 }
+            }
+
+            &.cmp-separator-vertical {
+                .cmp-teaser__content {
+                    box-shadow: inset rem(1px) 0 0 0 get-color(brand-white);
+                }
+            }
         }
     }
 }

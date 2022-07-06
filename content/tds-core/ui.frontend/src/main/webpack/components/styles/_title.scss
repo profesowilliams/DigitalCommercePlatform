@@ -57,12 +57,15 @@
 
 .cmp-marketing {
     font-family: $font-family-marketing;
+    font-weight: normal;
 
     &-large {
         font-family: $font-family-marketing;
-        font-size: $font-size-marketing-h1-large !important;
-        margin: 0;
-        line-height: 1.5;
+        h1 {
+            font-size: $font-size-marketing-h1-large !important;
+            margin: 0;
+            line-height: 1.5;
+        }
     }
 
     &-card {
