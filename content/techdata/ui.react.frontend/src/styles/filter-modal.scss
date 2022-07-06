@@ -177,9 +177,7 @@ div.filter-accordion {
   position: relative;
   bottom: 0;
   z-index: 1;
-  padding: 12px;
-  padding-top: 34px;
-  padding-bottom: 24px;
+  padding: 25px 12px 0;
   display: flex;
   flex-wrap: wrap;
   &.active {
@@ -210,6 +208,7 @@ div.filter-accordion {
     align-items: center;
     gap: 6px;
     width: max-content;
+    max-height: 17px;
     & > span:nth-child(2) {
       display: flex;
       align-items: center;
