@@ -64,11 +64,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     var body = document.querySelector("body");
     const headerMargin = 5;
     if (popup && experiencefragment && subheader && modal && close && body) {
-      const pageHeaderHeight = experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin + (window.pageYOffset -
+      const pageHeaderHeight = experiencefragment.offsetHeight + subheader.offsetHeight + headerMargin -
         (experiencefragment.offsetHeight + subheader.offsetHeight >
         window.pageYOffset
           ? window.pageYOffset
-          : experiencefragment.offsetHeight + subheader.offsetHeight));
+          : experiencefragment.offsetHeight + subheader.offsetHeight);
 
       popup.style.top =
         experiencefragment.offsetHeight +
