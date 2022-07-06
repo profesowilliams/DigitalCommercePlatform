@@ -19,7 +19,7 @@ const CreateConfig = ({ componentProp }) => {
   const POST_BACK_URL = "https://shop.techdata.com";
   const [quoteIDAnalytic, setQuoteIDAnalytic] = useState(null);
 
-  const updateDataLayer = (id) => {
+  const updateDataLayer = (id, localStorageVendorName) => {
     /**@type {any[]} */
     const dataLayer = getDataLayer();
     dataLayer.forEach(layerElement => {
@@ -51,9 +51,8 @@ const CreateConfig = ({ componentProp }) => {
                vendorName: vendorNameConst,
                configType: 'Estimate'
            }
-      }
-      
-      flagComplete && updateDataLayer(id);
+      }      
+      flagComplete && updateDataLayer(id, localStorageVendorName);
       
       if (!flagComplete) {
         localStorage.setItem('vendorName', vendorName);
