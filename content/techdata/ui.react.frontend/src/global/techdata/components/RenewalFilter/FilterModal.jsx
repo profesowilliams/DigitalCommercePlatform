@@ -81,8 +81,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
             : experiencefragment.offsetHeight + subheader.offsetHeight)) +
         "px";
       
-      popup.style.height = 
-        window.innerHeight - (popup.offsetTop - window.pageYOffset) + "px";
+      popup.style.height = `calc(100vh - ${pageHeaderHeight}px)`;
       close.style.top =
         experiencefragment.offsetHeight +
         subheader.offsetHeight +
