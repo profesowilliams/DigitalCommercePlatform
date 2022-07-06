@@ -122,7 +122,7 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{HTTP_HOST} ^(.*)tdsynnex(.*)$
-RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
 RewriteRule ^/(us)(.*)$ /content/tds-site/americas/$1$2 [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
@@ -135,7 +135,7 @@ RewriteCond %{REQUEST_URI} !^/saml_login
 RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
-RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
 RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk)(.*)$ /content/${CONTENT_FOLDER_NAME}/europe/$1$2 [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
@@ -148,7 +148,7 @@ RewriteCond %{REQUEST_URI} !^/saml_login
 RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
-RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
 RewriteRule ^/(ar|br|ca|cl|co|ec|mx|pe|us)(.*)$ /content/${CONTENT_FOLDER_NAME}/americas/$1$2 [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
@@ -161,5 +161,5 @@ RewriteCond %{REQUEST_URI} !^/saml_login
 RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
-RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg)$
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
 RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME}/apac/$1$2 [PT,L]
