@@ -10,9 +10,7 @@ import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils"
 function Filter({ id }) {  
   const filterList = useRenewalGridState((state) => state.filterList);
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
-  const { setFilterList, setAppliedFilterCount } = useRenewalGridState(
-    (state) => state.effects
-  );
+  const { setFilterList } = useRenewalGridState((state) => state.effects);
 
   if (!filterList) return null;
 
@@ -59,10 +57,6 @@ function Filter({ id }) {
     }
     return k === 0 ? null : k;
   };
-
-  useEffect(() => {
-    setAppliedFilterCount();
-  }, [filterList, dateSelected]);
 
   return (
     <>

@@ -26,6 +26,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   
   const appliedFilterCount = useRenewalGridState((state) => state.appliedFilterCount);
   
+  const { setAppliedFilterCount } = useRenewalGridState((state) => state.effects);
+
   const {hasAnyFilterSelected, dateSelected} = useFilteringSelected()
 
   let aemFilterData;
@@ -107,6 +109,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   const showResult = () => {
     const [optionFields] = _generateFilterFields();
     const queryString = JSON.stringify(optionFields);
+    setAppliedFilterCount();
     setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
       ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
       optionFields,
