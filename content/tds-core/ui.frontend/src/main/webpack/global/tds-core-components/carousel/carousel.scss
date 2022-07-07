@@ -304,11 +304,14 @@
       }
 
       .dp-carousel__alert-buttons {
-        svg {
-          path {
-            fill: get-color(deep-teal);
-            stroke-width: 8% !important;
-            stroke: get-color(deep-teal);
+        a {
+          color: get-color(deep-teal);
+          svg {
+            path {
+              fill: get-color(deep-teal);
+              stroke-width: 8% !important;
+              stroke: get-color(deep-teal);
+            }
           }
         }
       }
