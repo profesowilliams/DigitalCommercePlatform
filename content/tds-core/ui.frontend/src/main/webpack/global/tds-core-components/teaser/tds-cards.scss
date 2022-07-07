@@ -145,14 +145,11 @@
                                     }
                                 }
                             }
-
-                            .cmp-teaser__description {
-                                color: get-color(stone);
-                            }
                         }
 
                         &__description {
                             padding: 0;
+                            color: get-color(stone);
 
                             p {
                                 line-height: 1.5;
@@ -161,12 +158,12 @@
 
                         &__title {
                             justify-content: flex-start;
+                            font-size: rem(20px);
+                            font-weight: $font-weight-semi-bold;
+                            line-height: rem(26px);
 
                             &-link {
                                 color: get-color(deep-teal);
-                                font-size: $font-size-custom-medium;
-                                line-height: rem(24px);
-                                font-weight: $font-weight-semi-bold;
                             }
                         }
 
