@@ -197,6 +197,10 @@
             height: rem(60px);
             width: rem(60px);
             color: get-color(brand-blue) !important;
+
+            &:before {
+                content: auto;
+            }
         }
     }
 }

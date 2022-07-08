@@ -58,9 +58,8 @@
         left: 0;
       }
       &__field--checkbox {
-        -webkit-appearance: none;
+        -webkit-appearance: auto;
         &:after {
-          content: '\f096';
           position: absolute;
           left: 0;
           top: rem(2px);
@@ -69,7 +68,6 @@
         }
         &:checked {
           &:after {
-            content: '\f14a';
             color: get-color(brand-light-blue);
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
@@ -77,10 +75,9 @@
         }
       }
       &__field--radio {
-        -webkit-appearance: none;
-
+        -webkit-appearance: auto;
+        
         &:after {
-          content: '\f111';
           position: absolute;
           left: 0;
           top: 0;
@@ -90,7 +87,6 @@
 
         &:checked {
           &:after {
-            content: '\f192';
             color: get-color(brand-light-blue);
             font-weight: 600;
           }

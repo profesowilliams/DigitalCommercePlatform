@@ -251,6 +251,10 @@
 		text-decoration: none;
 		display: contents;
 		transition: all .25s;
+
+		&:before {
+			content: auto;
+		}
 	}
 
 	&:hover {
