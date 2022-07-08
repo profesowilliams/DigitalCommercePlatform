@@ -50,7 +50,7 @@
                                                     fieldLabel="Icon"
                                                     fieldDescription="Enter social media platform icon"
                                                     jcr:primaryType="nt:unstructured"
-                                                    rootPath="/content/dam/techdata"
+                                                    rootPath="/content/dam"
                                                     name="./iconUrl" />
                                                 <linkTarget
                                                     jcr:primaryType="nt:unstructured"
