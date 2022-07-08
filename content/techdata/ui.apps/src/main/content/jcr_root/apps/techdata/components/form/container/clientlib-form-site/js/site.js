@@ -281,8 +281,12 @@
         const parentDiv = flagFieldsetField ? input.closest("fieldset") : input.closest("div");
         const errorLabel = parentDiv.getElementsByClassName(errorLabelClass)[0];
         if (flagFieldsetField) {
-            const br = parentDiv.querySelector('br');
-            br.remove();
+            try {
+                const br = parentDiv.querySelector('br');
+                br.remove();    
+            } catch (error) {
+                console.error("try catch error", error)    
+            }
         }
         parentDiv.removeChild(errorLabel);
     }
