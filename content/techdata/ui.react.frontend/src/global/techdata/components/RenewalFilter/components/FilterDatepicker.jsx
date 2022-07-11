@@ -47,6 +47,7 @@ export default function FilterDatePicker({ isOpen = false }) {
               customInputIcon={<i className="fas fa-calendar-alt"></i>}
               showClearDates
               reopenPickerOnClearDates
+              keepOpenOnDateSelect={true}
               onDatesChange={({ startDate, endDate }) => {
                 effects.setCustomState({key:'customStartDate',value:startDate});
                 effects.setCustomState({key:'customEndDate',value:endDate});
