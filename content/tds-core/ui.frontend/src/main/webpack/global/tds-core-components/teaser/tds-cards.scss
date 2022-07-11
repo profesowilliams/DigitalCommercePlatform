@@ -58,8 +58,10 @@
                     -ms-flex-direction: column-reverse;
                     flex-direction: column-reverse;
                     justify-content: space-between;
-                    height: rem(335px);
-
+                    height: rem(352px);
+                    @media only screen and (max-width: 1386px) {                     
+                        height: rem(384px);
+                    }
                 }
 
                 &__title {
@@ -127,6 +129,8 @@
 
             &--image-highlight {
                 &.cmp-teaser-tds__card {
+                    padding: 0;
+                    margin: 0 0 rem(50px) 0;
                     .cmp-teaser {
                         align-items: center;
                         min-height: rem(287px);
@@ -153,6 +157,8 @@
 
                             p {
                                 line-height: 1.5;
+                                width: auto;
+                                height: fit-content;
                             }
                         }
 
@@ -164,6 +170,13 @@
 
                             &-link {
                                 color: get-color(deep-teal);
+                            }
+                        }
+
+                        &_content {
+                            height: rem(450px);
+                            @include desktop {
+                                height: rem(384px);
                             }
                         }
 
@@ -188,24 +201,36 @@
         }
 
         &__card-image--rounded {
-            padding: 8.56rem 0.56rem 1.25rem;
+            padding: rem(144px) 0 0 0;
 
             .cmp-teaser {
-                min-height: 25rem;
+                min-height: rem(352px);
+
+                &__content {
+                    height: auto;
+                    padding: 0;
+                }
 
                 &__description {
                     text-align: left;
                     display: flex;
                     justify-content: center;
                     color: get-color(brand-black);
+                    padding: 0 rem(30px);
+                    p {
+                        width: auto;
+                        padding: 0;
+                    }                    
                 }
 
                 &__title {
-                    color: get-color(deep-teal);                    
+                    color: get-color(deep-teal);          
+                    min-height: auto;
+                    margin-bottom: rem(16px);          
                 }
 
                 &__image {
-                    margin-bottom: 9.75rem;
+                    margin-bottom: rem(172px);
 
                     img {
                         border: 0 solid get-color(border-light-gray);
