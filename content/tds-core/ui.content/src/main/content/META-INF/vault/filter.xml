@@ -4,4 +4,8 @@
     <filter root="/content/tds-core" mode="merge"/>
     <filter root="/content/dam/tds-core/asset.jpg" mode="merge"/>
     <filter root="/content/experience-fragments/tds-core" mode="merge"/>
+    <filter root="/etc/map.publish.dev"/>
+    <filter root="/etc/map.publish.stage"/>
+    <filter root="/etc/map.publish.prod"/>
+    <filter root="/etc/languages"/>
 </workspaceFilter>

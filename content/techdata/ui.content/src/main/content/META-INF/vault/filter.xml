@@ -4,8 +4,4 @@
     <filter root="/content/techdata" mode="merge"/>
     <filter root="/content/dam/techdata" mode="merge"/>
     <filter root="/content/experience-fragments/techdata" mode="merge"/>
-    <filter root="/etc/map.publish.dev"/>
-    <filter root="/etc/map.publish.stage"/>
-    <filter root="/etc/map.publish.prod"/>
-    <filter root="/etc/languages"/>
 </workspaceFilter>
