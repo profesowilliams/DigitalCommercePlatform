@@ -25,6 +25,9 @@ function _ContractColumn({ data, eventProps }) {
   
   useEffect(() => {
     getInitialToggleState();
+    return () => {
+      localStorage.removeItem(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
+    }
   }, []);
 
   /**
