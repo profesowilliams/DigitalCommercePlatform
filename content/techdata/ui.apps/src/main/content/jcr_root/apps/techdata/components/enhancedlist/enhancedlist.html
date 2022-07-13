@@ -8,7 +8,7 @@
                 <sly data-sly-test="${item.link}">
                     <article data-sly-use.urlHelper="${'../common/urlHelper.js' @ destinationPage=item.link}">
                         <a href="${urlHelper.url @ context='html'}" class="cmp-list__item-link">
-                            <span class="cmp-list__item-title">${item.title}</span>
+                            <span class="cmp-list__item-title" style="color: ${properties.fontColor @ context='styleToken'}">${item.title}</span>
                         </a>
                     </article>
                 </sly>
