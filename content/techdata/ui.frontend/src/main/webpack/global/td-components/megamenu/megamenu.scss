@@ -81,7 +81,7 @@
             }
 
             a {
-                display: block;
+                display: flex !important;
                 color: get-color(text-mid-gray);
                 padding: rem(5px) rem(21px);
                 transition: all 0.3s;
@@ -92,7 +92,7 @@
             i,
             svg {
                 transition: color 0.3s;
-                height: auto;
+                height: 1em;
             }
         }
 
@@ -100,7 +100,7 @@
             display: none;
 
             &--active {
-                display: block;
+                display: flex !important;
             }
         }
 
