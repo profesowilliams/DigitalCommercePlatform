@@ -14,12 +14,11 @@ import "./datePicker.scss";
 
 export default function FilterDatePicker({ isOpen = false }) {
 
-  const [focusedInput, setFocusedInput] = React.useState();
+  const [focusedInput, setFocusedInput] = React.useState("startDate");
   const effects = useRenewalGridState(state => state.effects);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
   let customStartDate = useRenewalGridState(state => state.customStartDate);
   let customEndDate = useRenewalGridState(state => state.customEndDate);
-
   /**
    * Unfortunately moment is a peer dependency of react-dates.
    * Normal date object wouldn't work.
@@ -71,6 +70,7 @@ export default function FilterDatePicker({ isOpen = false }) {
               focusedInput={focusedInput}
               onFocusChange={(focusedInput) => {
                   effects.closeAllSections();
+                  if (!focusedInput) return;
                   setFocusedInput(focusedInput)}}
             />
           </If>

@@ -6,6 +6,7 @@ import { renewalsEffects } from "./RenewalsEffects";
 //import { mountStoreDevtool } from "simple-zustand-devtools";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
 import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import moment from "moment";
 
 const DATE_DEFAULT_OPTIONS = [
   {
@@ -61,7 +62,7 @@ const INITIAL_STATE = {
     show: false,
   },
   refinements: undefined,
-  customStartDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customStartDate", undefined),
+  customStartDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customStartDate", moment().toDate()),
   customEndDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customEndDate", undefined),
   aemConfig:null,
   gridApi:null,
