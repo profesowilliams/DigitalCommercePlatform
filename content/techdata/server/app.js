@@ -3059,7 +3059,7 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
     orderLevel
   );
 
-  if (endUserName == "error") {
+  if (endUserName === "error") {
     res.status(500).json({
       error: {
         code: 0,
@@ -3067,10 +3067,35 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
         isError: true,
       },
     });
-  } else if (endUserName == "empty") {
+  } else if (!endUserName) {
     res.json({
       content: {
-        items: [],
+        items: [
+          {
+            bid: "3443554545",
+            version: "001",
+            dealId: "0012",
+            endUserName: "The Bank Corp",
+            vendor: "CISCO",
+            expiryDate: "12/31/2025",
+          },
+          {
+            bid: "212121323",
+            version: "002",
+            dealId: "0013",
+            endUserName: "My EU Company",
+            vendor: "CISCO",
+            expiryDate: "12/31/2025",
+          },
+          {
+            bid: "76676767",
+            version: "004",
+            dealId: "0014",
+            endUserName: "TestCo Inc",
+            vendor: "CISCO",
+            expiryDate: "12/31/2025",
+          },
+        ],
       },
     });
   } else {
@@ -3082,7 +3107,7 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
             version: "001",
             dealId: "0012",
             endUserName: endUserName,
-            vendor: "Red Hat Inc",
+            vendor: "CISCO",
             expiryDate: "12/31/2025",
           },
           {
@@ -3090,7 +3115,7 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
             version: "002",
             dealId: "0013",
             endUserName: endUserName,
-            vendor: "Cisco",
+            vendor: "CISCO",
             expiryDate: "12/31/2025",
           },
           {
@@ -3098,7 +3123,7 @@ app.get("/ui-config/v1/getdealsFor", function (req, res) {
             version: "004",
             dealId: "0014",
             endUserName: endUserName,
-            vendor: "AMD",
+            vendor: "CISCO",
             expiryDate: "12/31/2025",
           },
         ],
@@ -3695,23 +3720,23 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
           isExclusive: configurationType === "Estimate" && vendor ==='CISCO' ? false : true,
           shipTo: null,
           buyMethod: "sap46",
-          endUser: [
-            {
-              id: null,
-              companyName: "MyEndUser Co",
-              name: "Joe ",
-              line1: "2 BANK OF AMERICA PLZ",
-              line2: "BANK OF OMNI",
-              line3: null,
-              city: "CHARLOTTE",
-              state: "NC",
-              zip: null,
-              postalCode: "28280",
-              country: "US",
-              email: null,
-              contactEmail: null,
-              phoneNumber: null,
-            },
+          endUser: [ null
+            //{
+            //  id: null,
+            //  companyName: "MyEndUser Co",
+            //  name: "Joe ",
+            //  line1: "2 BANK OF AMERICA PLZ",
+            //  line2: "BANK OF OMNI",
+            //  line3: null,
+            //  city: "CHARLOTTE",
+            //  state: "NC",
+            //  zip: null,
+            //  postalCode: "28280",
+            //  country: "US",
+            //  email: null,
+            //  contactEmail: null,
+            //  phoneNumber: null,
+            //},
           ],
           reseller: null,
           configID: "WC121011624NR",

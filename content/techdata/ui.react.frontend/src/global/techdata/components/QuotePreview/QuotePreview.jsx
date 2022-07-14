@@ -124,7 +124,6 @@ function QuotePreview(props) {
         setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
         // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
         quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
-        quoteDetailsResponse.quickQuoteWithVendorFlag = quoteDetailsResponse?.source?.type === "Estimate" && quoteDetailsResponse?.vendor.toUpperCase() === "CISCO" && !quoteDetailsResponse?.spaId;
         setQuoteDetails(quoteDetailsResponse);
         // Show Modal When Quote Cannot Be Created.
         if (cannotCreateQuote(quoteDetailsResponse)) {
@@ -301,6 +300,7 @@ function QuotePreview(props) {
       dealRequired : isDealRequired(quoteDetails, true),
       userMissingFields : isEndUserMissing(quoteDetails, true)
     }
+    quoteDetails.quickQuoteWithVendorFlag = quoteDetails?.source?.type === "Estimate" && quoteDetails?.vendor.toUpperCase() === "CISCO" && !quoteDetails?.spaId;
     tryCreateQuote(requiredFields, quoteDetails, false);
   }, [quoteDetails]);
 
@@ -318,6 +318,7 @@ function QuotePreview(props) {
 
       quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
     }
+    quoteDetails.quickQuoteWithVendorFlag = false;
     tryCreateQuote(requiredFields, quoteDetailsCopy, true);
   };
   
@@ -346,11 +347,17 @@ const [flagDeal, setFlagDeal] = useState(false);
         spaId: generalInformation.spaId,
         quoteReference: generalInformation.quoteReference,
         deal: generalInformation.deal,
-        quickQuoteWithVendorFlag: generalInformation?.deal?.spaId ? previousQuoteDetails?.source?.type === "Estimate" && previousQuoteDetails?.vendor.toUpperCase() === "CISCO"  && !generalInformation?.deal?.spaId : previousQuoteDetails.quickQuoteWithVendorFlag,
-      }
+        quickQuoteWithVendorFlag: generalInformation?.deal?.spaId ?
+          previousQuoteDetails?.source?.type === "Estimate" && previousQuoteDetails?.vendor.toUpperCase() === "CISCO" && !generalInformation?.deal?.spaId :
+          previousQuoteDetails.quickQuoteWithVendorFlag,
+      };
 
       newGeneralDetails.endUser = newGeneralDetails.endUser || [];
-      newGeneralDetails.endUser[0] = newGeneralDetails.endUser.length > 0 ? newGeneralDetails.endUser[0] : {};
+      newGeneralDetails.endUser[0] = newGeneralDetails.endUser.length > 0 ?
+        newGeneralDetails.endUser[0] ?
+          newGeneralDetails.endUser[0] :
+          {} :
+        {};
 
       if(generalInformation.deal?.endUserName
         && generalInformation.deal.endUserName.trim().length > 0) {         
