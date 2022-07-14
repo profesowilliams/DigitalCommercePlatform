@@ -92,6 +92,12 @@
                 font-family: $font-family-georgia;
                 padding: rem(25px);
                 line-height: rem(24px);
+                color: get-color(stone);
+            }
+
+            &__desc-link {
+                text-decoration: none;
+                color: get-color(stone);
             }
         }
 

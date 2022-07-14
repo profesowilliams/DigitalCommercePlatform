@@ -1,0 +1,32 @@
+.cmp-tds {
+    max-width: rem(1500px);
+    border-bottom: rem(1px) solid;
+    .cmp-tabs {
+        box-sizing: border-box;
+        line-height: rem(25px);
+
+        &__tablist {
+            display: flex;
+            list-style: none;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: rem(10.5px) rem(60px);
+            margin: 0;
+        }
+
+        &__tab {
+            padding: 0;
+            &--active {
+                text-decoration: none !important;
+                border-bottom: rem(2px) solid;
+                border-color: inherit;
+            }
+
+            &:hover {
+                text-decoration: none !important;
+                border-bottom: rem(2px) solid;
+                border-color: inherit;
+            }
+        }
+    }
+}

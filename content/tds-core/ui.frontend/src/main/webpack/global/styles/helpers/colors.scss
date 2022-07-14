@@ -3,135 +3,579 @@
   @return $color;
 }
 
+@mixin tds-tabs-hover {
+  text-decoration: none !important;
+  height: rem(27px);
+}
+
 //text colors
 .cmp-text {
+
+  // TDS Primary text colors
   &__teal {
     color: map-get($color-palette, "teal") !important;
   }
+
   &__deep-teal {
     color: get-color(deep-teal) !important;
   }
+
+  &__aqua {
+    color: map-get($color-palette, "aqua") !important;
+  }
+
+  &__cool-gray-8 {
+    color: get-color(cool-gray-8) !important;
+  }
+
+  &__cool-gray-10 {
+    color: get-color(cool-gray-10) !important;
+  }
+
+  &__green {
+    color: map-get($color-palette, "green") !important;
+  }
+
+  &__chartreuse {
+    color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  &__black {
+    color: map-get($color-palette, "black") !important;
+  }
+
+  &__white {
+    color: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary text colors
   &__steel-blue {
     color: get-color(steel-blue) !important;
   }
-  &__green {
-    color:  map-get($color-palette, "green") !important;
+
+  &__navy {
+    color: map-get($color-palette, "navy") !important;
   }
+
+  &__copper {
+    color: map-get($color-palette, "copper") !important;
+  }
+
   &__stone {
     color: get-color(stone) !important;
   }
-  &__aqua {
-    color:  map-get($color-palette, "aqua") !important;
-  }
+
   &__cool-gray-1 {
     color: get-color(cool-gray-1) !important;
   }
-  &__black {
-    color:  map-get($color-palette, "black") !important;
+
+  //TDS Digital text colors
+  &__cherry {
+    color: get-color(cherry) !important;
   }
 
-  &__white {
-    color:  map-get($color-palette, "white") !important;
+  &__amber {
+    color: get-color(amber) !important;
   }
 
-  &__dark-blue {    
+  &__cobalt {
+    color: get-color(cobalt) !important;
+  }
+
+  &__neutral-gray-1 {
+    color: get-color(neutral-gray-1) !important;
+  }
+
+  &__forest {
+    color: map-get($color-palette, "forest") !important;
+  }
+
+  &__charcoal {
+    color: map-get($color-palette, "charcoal") !important;
+  }
+
+  &__cool-gray-9 {
+    color: get-color(cool-gray-9) !important;
+  }
+
+  &__neutral-gray-2 {
+    color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy text colors
+  &__dark-blue {
     color: get-color(dark-blue) !important;
   }
 
-  &__sky-blue {    
+  &__sky-blue {
     color: get-color(sky-blue) !important;
   }
 
-  &__legacy-gray {    
+  &__legacy-gray {
     color: get-color(legacy-gray) !important;
   }
-  
 }
 
-// background colors
+//background colors
 .cmp-background {
+
+  // TDS Primary background colors
   &__teal {
     background-color: map-get($color-palette, "teal") !important;
   }
+
   &__deep-teal {
     background-color: get-color(deep-teal) !important;
   }
+
+  &__aqua {
+    background-color: map-get($color-palette, "aqua") !important;
+  }
+
+  &__chartreuse {
+    background-color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  &__cool-gray-8 {
+    background-color: get-color(cool-gray-8) !important;
+  }
+
+  &__cool-gray-10 {
+    background-color: get-color(cool-gray-10) !important;
+  }
+
+  &__green {
+    background-color: map-get($color-palette, "green") !important;
+  }
+
+  &__black {
+    background-color: map-get($color-palette, "black") !important;
+  }
+
+  &__white {
+    background-color: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary background colors
   &__steel-blue {
     background-color: get-color(steel-blue) !important;
   }
-  &__green {
-    background-color:  map-get($color-palette, "green") !important;
+
+  &__navy {
+    background-color: map-get($color-palette, "navy") !important;
   }
+
+  &__copper {
+    background-color: map-get($color-palette, "copper") !important;
+  }
+
   &__stone {
     background-color: get-color(stone) !important;
   }
-  &__aqua {
-    background-color:  map-get($color-palette, "aqua") !important;
-  }
+
   &__cool-gray-1 {
     background-color: get-color(cool-gray-1) !important;
   }
-  &__black {
-    background-color:  map-get($color-palette, "black") !important;
-  }
-  &__white {
-    background-color:  map-get($color-palette, "white") !important;
+
+  //TDS Digital background colors
+  &__cherry {
+    background-color: get-color(cherry) !important;
   }
 
-  &__dark-blue {    
+  &__amber {
+    background-color: get-color(amber) !important;
+  }
+
+  &__forest {
+    background-color: map-get($color-palette, "forest") !important;
+  }
+
+  &__charcoal {
+    background-color: map-get($color-palette, "charcoal") !important;
+  }
+
+  &__cool-gray-9 {
+    background-color: get-color(cool-gray-9) !important;
+  }
+  
+  &__cobalt {
+    background-color: get-color(cobalt) !important;
+  }
+
+  &__neutral-gray-1 {
+    background-color: get-color(neutral-gray-1) !important;
+  }
+
+  &__neutral-gray-2 {
+    background-color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy background colors
+  &__dark-blue {
     background-color: get-color(dark-blue) !important;
   }
 
-  &__sky-blue {    
+  &__sky-blue {
     background-color: get-color(sky-blue) !important;
   }
 
-  &__legacy-gray {    
+  &__legacy-gray {
     background-color: get-color(legacy-gray) !important;
   }
-  
 }
 
-// border colors
+//border colors
 .cmp-border {
+
+  // TDS Primary colors
   &__teal {
     border-color: map-get($color-palette, "teal") !important;
   }
+
   &__deep-teal {
     border-color: get-color(deep-teal) !important;
   }
+
+  &__aqua {
+    border-color: map-get($color-palette, "aqua") !important;
+  }
+
+  &__chartreuse {
+    border-color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  &__cool-gray-8 {
+    border-color: get-color(cool-gray-8) !important;
+  }
+
+  &__cool-gray-10 {
+    border-color: get-color(cool-gray-10) !important;
+  }
+
+  &__green {
+    border-color: map-get($color-palette, "green") !important;
+  }
+
+  &__black {
+    border-color: map-get($color-palette, "black") !important;
+  }
+
+  &__white {
+    border-color: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary colors
   &__steel-blue {
     border-color: get-color(steel-blue) !important;
   }
-  &__green {
-    border-color:  map-get($color-palette, "green") !important;
+
+  &__navy {
+    border-color: map-get($color-palette, "navy") !important;
   }
+
+  &__copper {
+    border-color: map-get($color-palette, "copper") !important;
+  }
+
   &__stone {
     border-color: get-color(stone) !important;
   }
-  &__aqua {
-    border-color:  map-get($color-palette, "aqua") !important;
-  }
+
   &__cool-gray-1 {
     border-color: get-color(cool-gray-1) !important;
   }
-  &__black {
-    border-color:  map-get($color-palette, "black") !important;
-  }
-  &__white {
-    border-color:  map-get($color-palette, "white") !important;
+
+  //TDS Digital colors
+  &__cherry {
+    border-color: get-color(cherry) !important;
   }
 
-  &__dark-blue {    
+  &__amber {
+    border-color: get-color(amber) !important;
+  }
+
+  &__forest {
+    border-color: map-get($color-palette, "forest") !important;
+  }
+
+  &__charcoal {
+    border-color: map-get($color-palette, "charcoal") !important;
+  }
+
+  &__cool-gray-9 {
+    border-color: get-color(cool-gray-9) !important;
+  }
+
+  &__cobalt {
+    border-color: get-color(cobalt) !important;
+  }
+
+  &__neutral-gray-1 {
+    border-color: get-color(neutral-gray-1) !important;
+  }
+
+  &__neutral-gray-2 {
+    border-color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy colors
+  &__dark-blue {
     border-color: get-color(dark-blue) !important;
   }
 
-  &__sky-blue {    
+  &__sky-blue {
     border-color: get-color(sky-blue) !important;
   }
 
-  &__legacy-gray {    
+  &__legacy-gray {
     border-color: get-color(legacy-gray) !important;
   }
-  
+}
+
+//HOVER colors
+.cmp-hover {
+
+  // TDS Primary colors
+  &__teal {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "teal") !important;
+      }
+      &--active {
+        border-bottom: rem(2px) solid map-get($color-palette, "teal") !important;
+      }
+    }
+  }
+
+  &__deep-teal {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(deep-teal) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(deep-teal) !important;
+      }
+    }
+  }
+
+  &__aqua {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "aqua") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "aqua") !important;
+      }
+    }
+  }
+
+  &__green {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "green") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "green") !important;
+      }
+    }
+  }
+
+  &__black {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "black") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "black") !important;
+      }
+    }
+  }
+
+  &__white {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "white") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "white") !important;
+      }
+    }
+  }
+
+  //TDS Secondary colors
+  &__steel-blue {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(steel-blue) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(steel-blue) !important;
+      }
+    }
+  }
+
+  &__navy {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "navy") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "navy") !important;
+      }
+    }
+  }
+
+  &__copper {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "copper") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "copper") !important;
+      }
+    }
+  }
+
+  &__stone {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(stone) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(stone) !important;
+      }
+    }
+  }
+
+  &__cool-gray-1 {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(cool-gray-1) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(cool-gray-1) !important;
+      }
+    }
+  }
+
+  //TDS Digital colors
+  &__cherry {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(cherry) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(cherry) !important;
+      }
+    }
+  }
+
+  &__amber {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(amber) !important;
+      }
+      &--active {
+        border-bottom: rem(2px) solid get-color(amber) !important;
+      }
+    }
+  }
+
+  &__forest {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "forest") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "forest") !important;
+      }
+    }
+  }
+
+  &__charcoal {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "charcoal") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "charcoal") !important;
+      }
+    }
+  }
+
+  &__cool-gray-9 {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(cool-gray-9) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(cool-gray-9) !important;
+      }
+    }
+  }
+
+  &__neutral-gray-2 {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(neutral-gray-2) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(neutral-gray-2) !important;
+      }
+    }
+  }
+
+  //Legacy colors
+  &__dark-blue {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(dark-blue) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(dark-blue) !important;
+      }
+    }
+  }
+
+  &__sky-blue {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(sky-blue) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(sky-blue) !important;
+      }
+    }
+  }
+
+  &__legacy-gray {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid get-color(legacy-gray) !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid get-color(legacy-gray) !important;
+      }
+    }
+  }
 }

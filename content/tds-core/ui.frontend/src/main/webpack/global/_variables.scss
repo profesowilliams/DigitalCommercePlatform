@@ -36,16 +36,33 @@ $open-sans: "Open Sans", sans-serif;
 //== Techdata Color Palette
 $color-palette: (
 
-        // new color palette May the 24th 2022 - OP
-        "teal":#005758,
-        "deep-teal": #003031,
-        "steel-blue": #1F728B,
-        "green": #2D9F88,
-        "stone": #75716E,
-        "aqua": #08BED5,
-        "cool-gray-1": #D9D8D7,
-        "black": #000000,
-        "white": #FFFFFF,
+        // TDS Primary colors
+        "teal":          #005758,
+        "deep-teal":     #003031,
+        "aqua":          #08BED5,
+        "cool-gray-8":   #888B8D,
+        "cool-gray-10":  #63666A,
+        "green":         #2D9F88,
+        "chartreuse":    #CCD814,
+        "black":         #000000,
+        "white":         #FFFFFF,
+
+        //TDS Secondary colors
+        "steel-blue":    #1F728B,
+        "navy":          #1D3152,
+        "copper":        #AB584D,
+        "stone":         #75716E,
+        "cool-gray-1":   #D9D8D7,
+
+        //TDS Digital colors
+        "cobalt":        #006FBA,        
+        "cherry":        #CD163F,
+        "amber":         #F7B500,
+        "forest":        #38853C,
+        "charcoal":      #262626,
+        "cool-gray-9":   #727679,
+        "neutral-gray-1":#F8F8F8,
+        "neutral-gray-2":#E4E5E6,
         
         // old color palette
         "dark-blue": #000c20,
@@ -108,8 +125,7 @@ $color-palette: (
         "light-see-through-background": rgba(255, 255, 255, 0.5),
         "input-border": #BDBDBD,
 		"brand-orange": #FFBA30,
-        "td-brand-space-light": #334B76,
-        
+        "td-brand-space-light": #334B76,        
 );
 
 $white: #ffffff; // Default white
