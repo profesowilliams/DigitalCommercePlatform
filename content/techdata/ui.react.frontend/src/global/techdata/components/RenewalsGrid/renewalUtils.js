@@ -160,11 +160,17 @@ export async function fetchRenewalsFilterByPost(config){
       customPaginationRef,
       componentProp,
       previousFilter,
+      searchCriteria,      
     } = config;
     if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)) {
-        const params = { ...optionFieldsRef.current, sortBy: hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`) };
+        const sortBy = hasSortChanged.current?.sortData.map(c => `${c.colId}:${c.sort ?? ''}`);
+        const params = { ...optionFieldsRef.current, sortBy };       
         if (customPaginationRef.current?.pageNumber !== 1) {
           params.PageNumber = customPaginationRef.current?.pageNumber;
+        }        
+        if(searchCriteria.current?.field && searchCriteria.current?.value ){
+            const {field, value} = searchCriteria.current;
+            params[field] = value;
         }
         const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
         if (!isSameFilter) params.PageNumber = 1;
@@ -302,4 +308,11 @@ export function updateQueryString(pageNumber) {
     } else {
         history.replaceState(null, '', `?page=${pageNumber}`);
     }
+};
+
+export async function handleFetchDataStrategy(renewalOperations) {
+    const { hasSortChanged, isFilterDataPopulated } = renewalOperations;
+    const shouldFetchByPost = isFilterPostRequest(hasSortChanged, isFilterDataPopulated);   
+    return shouldFetchByPost ? fetchRenewalsFilterByPost({ ...renewalOperations })
+                             : fetchRenewalsByGet({ ...renewalOperations });
 };

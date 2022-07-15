@@ -23,6 +23,7 @@ import {
   clearLocalStorageGridData,
   isFromRenewalDetailsPage,
   updateQueryString,
+  handleFetchDataStrategy,
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -143,23 +144,21 @@ function RenewalsGrid(props) {
     request.url = addCurrentPageNumber(customPaginationRef, request);
     let response = {};
     const gridApi = gridApiRef?.current?.api;
-    
-    if (isFilterPostRequest(hasSortChanged,isFilterDataPopulated)){
-      response = await fetchRenewalsFilterByPost({hasSortChanged,isFilterDataPopulated,optionFieldsRef,customPaginationRef,componentProp, previousFilter});
-    } else {    
-      const getHandleOptions = {
-        request,
-        hasSortChanged,
-        searchCriteria,
-        customPaginationRef,
-        previousSortChanged,
-        onFiltersClear,
-        firstAPICall,
-        onSearchAction,
-      };
-      response = await fetchRenewalsByGet(getHandleOptions);
+    const renewalOperations = {
+      hasSortChanged,
+      isFilterDataPopulated,
+      optionFieldsRef,
+      customPaginationRef,
+      componentProp,
+      onSearchAction,
+      searchCriteria,
+      previousFilter,
+      request,
+      previousSortChanged,
+      onFiltersClear,
+      firstAPICall
     }
-
+    response = await handleFetchDataStrategy(renewalOperations)
     const mappedResponse = mapServiceData(response);
     const { refinementGroups, ...rest } = mappedResponse?.data?.content;
     const pageSize = gridConfig.itemsPerPage;
@@ -187,8 +186,7 @@ function RenewalsGrid(props) {
     const sortModelList = evt.columnApi.getColumnState();
     const sortedModel = sortModelList.filter(o => !!o.sort);
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
-    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
-    const testRef =  sortedModel ? { sortData: sortedModel } : false;
+    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current); 
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1) {
       pushEvent(ANALYTICS_TYPES.events.click, {
