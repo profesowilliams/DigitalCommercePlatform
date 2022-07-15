@@ -1,0 +1,7 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+<div class="vendor-listing" data-sly-use.listUse="com.adobe.cq.wcm.core.components.models.List" data-sly-use.itemTemplate="vendoritem-template.html">
+    <sly data-sly-test="${!listUse.isExecutiveListing}" data-sly-call="${itemTemplate['vendors'] @ listUse = listUse}" />
+    <sly data-sly-test="${listUse.isExecutiveListing}" data-sly-call="${itemTemplate['executives'] @ listUse = listUse}" />
+</div>

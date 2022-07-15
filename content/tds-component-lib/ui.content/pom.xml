@@ -89,6 +89,11 @@
     <dependencies>
         <dependency>
             <groupId>com.tdsynnex.component.lib</groupId>
+            <artifactId>tds.component.lib.core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tdsynnex.component.lib</groupId>
             <artifactId>tds.component.lib.ui.apps</artifactId>
             <version>${project.version}</version>
             <type>zip</type>
@@ -96,6 +101,7 @@
         <dependency>
             <groupId>com.adobe.aem</groupId>
             <artifactId>uber-jar</artifactId>
+            <classifier>apis</classifier>
         </dependency>
     </dependencies>
 </project>
