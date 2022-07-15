@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    configDetailUrlSuffix="?id={id}"
+    quoteDetailUrlSuffix="?id={id}"
+    modalTitle="Config ID"
+    modalContent="There are multiple items associated with this Config ID. Please choose the item you would like to review:"
+    modalQuotePreffixLabel="Quote: "
+    paginationStyle="scroll"
+    itemsPerPage="25"
+    shopPath="/renewals"
+    actionColumnLabel="Create Quote"
+    createQuoteUrlSuffix="?id={id}&amp;isEstimateId={is-estimated-id}&amp;vendor={vendor}"
+    defaultSortingColumnKey="dueDate"
+    defaultSortingDirection="asc"
+    downloadPDFLabel="Download PDF"
+    downloadXLSLabel="Download XLS"
+    expiryDateLabel="Expiry Date:"
+    quoteIdLabel="Quote ID:"
+    refNoLabel="Ref No:"
+    seeDetailsLabel="See details"
+    showResultLabel="Show Result"
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    ofTextLabel="of"
+    menuCopyLink="Copy link"
+    overdueDaysRange="0-30"
+    overdueIcon="fas fa-bell"     
+    overdueIconColor="#CD163F"
+    afterZeroDaysRange="overdue"
+    afterZeroIcon="fas fa-alarm-clock"
+    afterZeroIconColor="#F7B500"
+    afterThirtyDaysRange="31-60"
+    afterThirtyIcon="fas fa-clock"
+    afterThirtyIconColor="#38853C"
+    sixtyPlusDaysRange="61+"
+    sixtyPlusIcon="calendar"
+    sixtyPlusIconColor="#006FBA"
+    >
+    <configurationTypesList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            configurationTypesValue="End User"
+            configurationTypesKey="EndUser"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            configurationTypesValue="Config ID"
+            configurationTypesKey="Id"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            configurationTypesValue="Config Name"
+            configurationTypesKey="ConfigName"
+        />
+    </configurationTypesList>
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Reseller name"
+            columnKey="resellername"
+            sortable="{Boolean}true"
+            columnType="plainResellerColumn"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="End user name"
+            columnKey="endUser"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Vendor and program"
+            columnKey="vendor"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Disti quote No"
+            columnKey="Id"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Agreement No"
+            columnKey="agreementnumber"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Renewal Plan"
+            columnKey="renewedduration"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Due in (days)"
+            columnKey="dueDays"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Due Date"
+            columnKey="dueDate"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Price (USD)"
+            columnKey="total"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item9
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Actions"
+            columnKey="actions"
+            sortable="{Boolean}false"
+            columnType="buttonList"
+        />
+    </columnList>
+    <statusLabelsList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            labelKey="Multiple"
+            labelValue="Multiple"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            labelKey="Pending"
+            labelValue="Pending"
+        />
+    </statusLabelsList>
+    <configurationTypesList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            configurationTypesKey="Estimate"
+            configurationTypesValue="Estimate"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            configurationTypesKey="VendorQuote"
+            configurationTypesValue="Vendor Quote"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            configurationTypesKey="Deal"
+            configurationTypesValue="Deal"
+        />
+    </configurationTypesList>
+    <keywordList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            key="EndUser"
+            value="End User"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            key="Id"
+            value="Config ID"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            key="ConfigName"
+            value="Config Name"
+        />
+    </keywordList>
+    <filterList   
+        jcr:primaryType="nt:unstructured">
+        <item0          
+            jcr:primaryType="nt:unstructured"
+            accordionLabel="Vendors and Program"
+            filterField="ProgramName">
+            <filtersOptionsList            
+                jcr:primaryType="nt:unstructured">
+                <item0            
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="Veeam">
+                    <subFilterOptionList                       
+                        jcr:primaryType="nt:unstructured">
+                        <item0                            
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Pro Partner"/>
+                        <item1               
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Pro Partner Subscriber"/>
+                    </subFilterOptionList>
+                </item0>
+                <item1                 
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="VMWare">
+                    <subFilterOptionList               
+                        jcr:primaryType="nt:unstructured">
+                        <item0             
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Support and Subscriber"/>
+                        <item1             
+                            jcr:primaryType="nt:unstructured"
+                            subFilterOptionsLabel="Standard"/>
+                    </subFilterOptionList>
+                </item1>
+            </filtersOptionsList>
+        </item0>
+        <item1      
+            jcr:primaryType="nt:unstructured"
+            accordionLabel="End User Type"
+            filterField="endUserType">
+            <filtersOptionsList             
+                jcr:primaryType="nt:unstructured">
+                <item0            
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="Academic"/>
+                <item1                  
+                    jcr:primaryType="nt:unstructured"
+                    filterOptionLabel="Educational"/>
+            </filtersOptionsList>
+        </item1>
+        <item2      
+            jcr:primaryType="nt:unstructured"
+            accordionLabel="Date"
+            filterField="date"/>
+    </filterList>
+    <searchOptionsList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            searchKey="SerialNumber"
+            searchLabel="Serial №"
+            showIfIsHouseAccount="{Boolean}false"/>  
+        <item1
+            jcr:primaryType="nt:unstructured"
+            searchKey="Id"
+            searchLabel="Disti Quote №"
+            showIfIsHouseAccount="{Boolean}false"/>
+        <item2
+            jcr:primaryType="nt:unstructured"
+            searchKey="ContractID"
+            searchLabel="Agreement №"
+            showIfIsHouseAccount="{Boolean}false"/>
+        <item3
+            jcr:primaryType="nt:unstructured"
+            searchKey="Instance"
+            searchLabel="Instance №"
+            showIfIsHouseAccount="{Boolean}false"/>
+        <item4
+            jcr:primaryType="nt:unstructured"
+            searchKey="EndUser"
+            searchLabel="End-User name"
+            showIfIsHouseAccount="{Boolean}false"/>
+        <item5
+            jcr:primaryType="nt:unstructured"
+            searchKey="EndUserEmail"
+            searchLabel="End-User email address"
+            showIfIsHouseAccount="{Boolean}false"/>
+        <item6
+            jcr:primaryType="nt:unstructured"
+            searchKey="ResellerName"
+            searchLabel="Reseller name"
+            showIfIsHouseAccount="{Boolean}true"/>
+        <item7
+            jcr:primaryType="nt:unstructured"
+            searchKey="ResellerId"
+            searchLabel="Reseller account number"
+            showIfIsHouseAccount="{Boolean}true"/>  
+        <item8
+            jcr:primaryType="nt:unstructured"
+            searchKey="VendorQuoteID"
+            searchLabel="Vendor Quote ID"
+            showIfIsHouseAccount="{Boolean}false"/>
+    </searchOptionsList>
+</jcr:root>

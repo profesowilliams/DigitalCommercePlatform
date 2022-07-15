@@ -1,0 +1,143 @@
+@import "../../../site/variables";
+.cmp-renewals-qp__config-grid {
+  background: #F6F6F6 !important;
+  .cmp-renewal-preview {
+    &__download {
+        .separator {
+          border-right: 1px solid #d8d8d8;
+          padding-right: 20px;
+          cursor: pointer;
+        }
+    }
+  }
+  .header-container {
+    padding: 0 15px;
+    .image-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 3px;
+      .back-to-renewal {
+        color: get-color(brand-text-gray);
+        font-size: 14px;
+        .fa-chevron-left {
+          font-size: 14px;
+          margin-right: 5px;
+        }
+      }
+      img {
+        width: 160px;
+        height: 70.5px;
+      }
+    }
+  }
+  .export-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .quote-preview {
+      color: rgba(0, 12, 33, 1);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0;
+      line-height: 33px;
+    }
+    button {
+      background-color: inherit;
+      border: none;
+      span {
+        color: rgba(0, 12, 33, 1);
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 33px;
+        cursor: pointer;
+      }
+    }
+  }
+  p {
+    margin: 14px 0;
+  }
+  &--title {
+    border-bottom: 1px solid #000c21;
+    padding: 18px 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    color: #000c21;
+    font-size: 20px;
+    text-shadow: none;
+    box-shadow: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+      color: get-color(brand-text-gray);
+      line-height: 30px;
+    }
+    .vendorLogo {
+      object-fit: contain;
+      height: 24px;
+      width: 160px;
+    }
+  }
+  .info-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    .cmp-loader-roller {
+      display: flex;
+      flex-basis: 33.33%;
+      flex-grow: 0;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+  }
+}
+
+.cmp-renewals-qp__reseller-info,
+.cmp-renewals-qp__agreement-info,
+.cmp-renewals-qp__enduser-info {
+  padding: 23px 20px;
+  margin: 15px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: -4px 4px 7px 0 rgba(0, 0, 0, 0.07);
+  &--title {
+    color: $brand-blue;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 22px;
+    cursor: pointer;
+    margin-bottom: 10px !important;
+  }
+  &--sub-title {
+    color: rgba(85, 85, 85, 1);
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 20px;
+  }
+  &--address-group {
+    color: #878787;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+    span {
+      display: block;
+    }
+  }
+}
+
+.cmp-renewals-grid {
+  .cmp-grid.ag-theme-alpine {
+    .ag-root-wrapper {
+      .ag-root-wrapper-body {
+        margin-top: 0;
+      }
+    }
+  }
+  .cmp-grid.ag-theme-alpine .ag-paging-panel {
+    position: relative !important;
+  }
+}
