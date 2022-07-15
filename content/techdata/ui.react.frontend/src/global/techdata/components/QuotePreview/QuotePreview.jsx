@@ -477,7 +477,7 @@ const [flagDeal, setFlagDeal] = useState(false);
           <QuotePreviewContinue
             gridProps={componentProp}
             quoteDetails={quoteDetails}
-            disableQuickQuoteButton={false}
+            disableQuickQuoteButton={didQuantitiesChange}
             handleQuickQuote={handleQuickQuote}
             handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}
             apiResponse={quoteDetails}
