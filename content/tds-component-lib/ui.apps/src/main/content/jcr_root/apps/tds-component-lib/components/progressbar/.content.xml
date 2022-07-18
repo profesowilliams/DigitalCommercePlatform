@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Progress Bar"
     sling:resourceSuperType="tds-core/components/progressbar/v1/progressbar"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

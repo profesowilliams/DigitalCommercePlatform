@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Search Bar"
     sling:resourceSuperType="tds-core/components/searchbar/v1/searchbar"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

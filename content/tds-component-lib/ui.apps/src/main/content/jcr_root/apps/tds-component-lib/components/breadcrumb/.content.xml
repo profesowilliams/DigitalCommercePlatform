@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Breadcrumb"
     sling:resourceSuperType="tds-core/components/breadcrumb/v1/breadcrumb"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

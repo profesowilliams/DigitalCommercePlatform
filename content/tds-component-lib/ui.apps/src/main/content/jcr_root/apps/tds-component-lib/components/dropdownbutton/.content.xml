@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Dropdown Button"
     sling:resourceSuperType="tds-core/components/dropdownbutton/v1/dropdownbutton"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Experience Fragment"
     sling:resourceSuperType="tds-core/components/experiencefragment/v1/experiencefragment"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Separator"
     sling:resourceSuperType="tds-core/components/separator/v1/separator"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Content Fragment List"
     sling:resourceSuperType="tds-core/components/contentfragmentlist/v1/contentfragmentlist"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

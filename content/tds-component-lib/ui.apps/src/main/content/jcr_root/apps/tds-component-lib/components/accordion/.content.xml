@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Accordion"
     sling:resourceSuperType="tds-core/components/accordion/v1/accordion"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

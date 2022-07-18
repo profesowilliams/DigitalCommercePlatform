@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Title"
     sling:resourceSuperType="tds-core/components/title/v1/title"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

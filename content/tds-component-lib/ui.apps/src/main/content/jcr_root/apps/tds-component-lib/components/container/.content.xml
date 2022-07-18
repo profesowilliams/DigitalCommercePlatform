@@ -5,4 +5,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Container"
     sling:resourceSuperType="tds-core/components/container/v1/container"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

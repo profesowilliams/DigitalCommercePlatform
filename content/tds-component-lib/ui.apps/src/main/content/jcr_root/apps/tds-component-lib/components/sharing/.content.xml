@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Social Media Sharing"
     sling:resourceSuperType="tds-core/components/sharing/v1/sharing"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>

@@ -4,4 +4,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Carousel"
     sling:resourceSuperType="tds-core/components/carousel/v1/carousel"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Comp Lib - Content"/>
