@@ -159,11 +159,11 @@
 .dp-accordion {
   &__footer {
     &.cmp-accordion__chevronFooter {
-      .cmp-accordion__button[aria-expanded="false"]::after {
+      .cmp-accordion__button[aria-expanded=false]::after {
         @include accordionIcon("true", "\f054");
       }
 
-      .cmp-accordion__button[aria-expanded="true"]::after {
+      .cmp-accordion__button[aria-expanded=true]::after {
         @include accordionIcon("true", "\f078");
       }
     }
@@ -180,11 +180,11 @@
       outline: none;
     }
 
-    .cmp-accordion__button[aria-expanded="false"]::after {
+    .cmp-accordion__button[aria-expanded=false]::after {
       @include accordionIcon("false", "\A0 \A0 \25BA");
     }
 
-    .cmp-accordion__button[aria-expanded="true"]::after {
+    .cmp-accordion__button[aria-expanded=true]::after {
       @include accordionIcon("false", "\A0 \A0 \25BC");
     }
 
