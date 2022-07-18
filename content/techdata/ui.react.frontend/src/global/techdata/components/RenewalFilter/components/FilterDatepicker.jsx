@@ -11,6 +11,14 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { DateOptionsList } from "./DateOptionsList";
 import "./datePicker.scss";
 
+function CustomStartEndText() {
+  return (
+    <div className="customStartEndLabel">
+      <div>Start</div>
+      <div>End</div>
+    </div>
+  )
+}
 
 export default function FilterDatePicker({ isOpen = false }) {
 
@@ -34,16 +42,18 @@ export default function FilterDatePicker({ isOpen = false }) {
         <If condition={isOpen}>
           <DateOptionsList/>
           <If condition={dateSelected === 'custom'}>
+            <CustomStartEndText />
             <DateRangePicker
               startDate={customStartDate}
               startDateId="start-date"
-              startDatePlaceholderText="Start date"
-              endDatePlaceholderText="End date"
+              startDatePlaceholderText="Add date"
+              endDatePlaceholderText="Add date"
               endDate={customEndDate}
               endDateId="end-date"
               verticalHeight={468}
               showDefaultInputIcon={true}
               customInputIcon={<i className="fas fa-calendar-alt"></i>}
+              customArrowIcon={<div className="customHyphen"></div>}
               showClearDates
               reopenPickerOnClearDates
               keepOpenOnDateSelect={true}
@@ -63,6 +73,7 @@ export default function FilterDatePicker({ isOpen = false }) {
               }}
               isOutsideRange={() => false}
               numberOfMonths={1}
+              displayFormat="MMM D, YYYY"
               noBorder={true}
               regular={false}
               transitionDuration={300}

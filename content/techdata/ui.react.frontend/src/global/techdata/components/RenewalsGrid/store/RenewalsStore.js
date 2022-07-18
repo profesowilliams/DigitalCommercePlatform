@@ -62,7 +62,7 @@ const INITIAL_STATE = {
     show: false,
   },
   refinements: undefined,
-  customStartDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customStartDate", moment().toDate()),
+  customStartDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customStartDate", undefined),
   customEndDate: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "customEndDate", undefined),
   aemConfig:null,
   gridApi:null,
