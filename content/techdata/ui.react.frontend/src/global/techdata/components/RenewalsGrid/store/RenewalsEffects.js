@@ -86,6 +86,12 @@ export const renewalsEffects = (set, get) => {
     }
   }
 
+  function setDateOptionList(dateOptionsList){
+    if (!dateOptionsList) return;
+    const dateOptionsWithLocalStorage = dateOptionsList.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected }));
+    set({dateOptionsList : dateOptionsWithLocalStorage });
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -97,5 +103,6 @@ export const renewalsEffects = (set, get) => {
     setCustomState,
     setAppliedFilterCount,
     setToolTipData,
+    setDateOptionList
   };
 };

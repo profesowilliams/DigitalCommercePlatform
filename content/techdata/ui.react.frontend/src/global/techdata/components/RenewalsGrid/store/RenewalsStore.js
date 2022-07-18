@@ -7,38 +7,7 @@ import { renewalsEffects } from "./RenewalsEffects";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
 import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import moment from "moment";
-
-const DATE_DEFAULT_OPTIONS = [
-  {
-    DueDateFrom: new Date(),
-    label: "overdue",
-    field: "overdue",
-  },
-  {
-    label: "Today",
-    field: "today",
-  },
-  {
-    label: "0 - 30 days",
-    field: "30",
-  },
-  {
-    label: "31 - 60 days",
-    field: "60",
-  },
-  {
-    label: "61 - 90 days",
-    field: "90",
-  },
-  {
-    label: "91+ days",
-    field: "91",
-  },
-  {
-    label: "Custom date range",
-    field: "custom",
-  },
-];
+import { DATE_DEFAULT_OPTIONS } from "./RenewalsStoreConstants";
 
 const INITIAL_STATE = {
   filterList: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "filterList", null), 

@@ -275,6 +275,71 @@
                                                                             value="dynamic"/>
                                                                         </items>
                                                                 </filterType>
+                                            <dateOptions
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                composite="{Boolean}true"
+                                                fieldDescription="Click 'Add' to add labels"
+                                                fieldLabel="Date Options">
+                                                <field
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                    name="./dateOptionsList">
+                                                    <items jcr:primaryType="nt:unstructured">
+                                                        <column
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <dateLabel
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldDescription="Enter Date Label"
+                                                                    fieldLabel="Enter Date Label"
+                                                                    name="./label"
+                                                                    required="{Boolean}true"/>
+                                                                <dateField
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                    fieldDescription="Select the date option range"
+                                                                    fieldLabel="Select Date Field"
+                                                                    name="./field"
+                                                                    required="{Boolean}true">
+                                                                    <items jcr:primaryType="nt:unstructured">
+                                                                        <overdue
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Overdue"
+                                                                            value="overdue"/>
+                                                                        <today
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Today"
+                                                                            value="today"/>
+                                                                        <zeroplus
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="0 - 30 days"
+                                                                            value="30"/>
+                                                                        <thirtyplus
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="31 - 60 days"
+                                                                            value="60"/>
+                                                                        <sixtyplus
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="61 - 90 days"
+                                                                            value="90"/>
+                                                                        <ninetyplus
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="91+ days"
+                                                                            value="91"/>
+                                                                        <custom
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            text="Custom date range"
+                                                                            value="custom"/>
+                                                                    </items>
+                                                                </dateField>
+                                                            </items>
+                                                        </column>
+                                                    </items>
+                                                </field>
+                                            </dateOptions>
                                             <actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
