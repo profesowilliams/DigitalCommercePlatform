@@ -122,6 +122,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.techdata</groupId>
+            <artifactId>techdata.core</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.core</artifactId>
         </dependency>
