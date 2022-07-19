@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useEffect } from "react";
 import moment from "moment";
 import {
   DateRangePicker
@@ -24,9 +24,12 @@ export default function FilterDatePicker({ isOpen = false }) {
 
   const [focusedInput, setFocusedInput] = React.useState("startDate");
   const effects = useRenewalGridState(state => state.effects);
+  const aemConfig = useRenewalGridState(state => state.aemConfig);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
   let customStartDate = useRenewalGridState(state => state.customStartDate);
   let customEndDate = useRenewalGridState(state => state.customEndDate);
+
+  useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues) , [aemConfig?.dateOptionValues]);
   /**
    * Unfortunately moment is a peer dependency of react-dates.
    * Normal date object wouldn't work.

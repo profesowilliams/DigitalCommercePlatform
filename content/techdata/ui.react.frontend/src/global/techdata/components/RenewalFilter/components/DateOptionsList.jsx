@@ -4,14 +4,11 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 export function DateOptionsList() {
 
   const dateOptionsList = useRenewalGridState((state) => state.dateOptionsList);
-  const aemConfig = useRenewalGridState((state) => state.aemConfig);
   const effects = useRenewalGridState((state) => state.effects);
   const capitalizedItems = ["overdue"]
   function customCapitalize(dateField){
     return capitalizedItems.includes(dateField) ? {textTransform:'capitalize'} : {}
   }
-
-  useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues) , [aemConfig?.dateOptionValues]);
 
   return (  
     <div className="datepicker-checks">
