@@ -80,8 +80,8 @@ export default function FilterDatePicker({ isOpen = false }) {
               daySize={30}
               focusedInput={focusedInput}
               onFocusChange={(focusedInput) => {
-                  effects.closeAllSections();
                   if (!focusedInput) return;
+                  effects.closeAllSections();
                   setFocusedInput(focusedInput)}}
             />
           </If>
