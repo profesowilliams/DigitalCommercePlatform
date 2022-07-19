@@ -106,7 +106,8 @@ function RenewalsGrid(props) {
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
     if(isAuthormodeAEM()) return; // Validation for Author ENV
-    !hasAccess({user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS}) && redirectToShop()
+    // Only redirect if the user has logged in and lacks the access. Otherwise wait for the login to finish before evaluating
+    !hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) && (USER_DATA && redirectToShop())
   }, [
     USER_DATA,
     ACCESS_TYPES,
