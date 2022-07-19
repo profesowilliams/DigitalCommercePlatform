@@ -1,5 +1,21 @@
 
 .hero-style-3 {
     @include teaser-default();
+    @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) {
+        .cmp-teaser {
+            &__title {
+                margin: 0 0 rem(14px);
+            }
+            &__title-link {
+                font-size: 2rem;
+            }
+            &__content {
+                padding-top: rem(46px);
+            }
+            &__description {
+                max-width: 100%;
+            }
+        }
+    }
 }
 
