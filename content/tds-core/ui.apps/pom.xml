@@ -124,7 +124,7 @@
         <dependency>
             <groupId>com.techdata</groupId>
             <artifactId>techdata.core</artifactId>
-            <version>${project.version}</version>
+            <version>[0,)</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
