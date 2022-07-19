@@ -5,7 +5,7 @@ import { validateRequiredEnduserFields } from "../QuoteTools";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 
 function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal, quickQuoteWithVendorFlag}) {
-    endUser = endUser && endUser[0];
+    endUser = endUser && endUser[0] && {};
     const initialState = {
         companyName: endUser?.companyName || '',
         name: endUser?.name || '',
@@ -34,7 +34,6 @@ const handleEditModeChange = () => {
       }
     };
 
-
     const handleEndUserAnalytics = () => {
       pushEvent(
         ANALYTICS_TYPES.events.click,
@@ -44,7 +43,7 @@ const handleEditModeChange = () => {
           category: ANALYTICS_TYPES.category.quotePreviewTableInteractions,
         },
       );
-    }
+    };
 
     const closeEditMode = () => {
         setEditMode(false);
@@ -80,7 +79,7 @@ const handleEditModeChange = () => {
         } else {
             null
         }
-    }
+    };
 
     return (
       <div className="cmp-qp__enduser-info">
@@ -128,7 +127,7 @@ const handleEditModeChange = () => {
                   <label htmlFor="companyName">{info.companyLabel}</label>
                   <input
                     className={
-                      infoState.companyName.trim() === ""
+                      !(!!infoState.companyName.trim())
                         ? "field element errorInput"
                         : "field element"
                     }
@@ -228,7 +227,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="country">{info.countryLabel}</label>
                   <input
-                    className="field element"
+                    className={
+                      infoState.country.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.country}
                     name="country"
                     id="country"
@@ -250,7 +253,11 @@ const handleEditModeChange = () => {
                 <div className="form-check">
                   <label htmlFor="phoneNumber">{info.phoneLabel}</label>
                   <input
-                    className="field element"
+                    className={
+                    infoState.phoneNumber.trim() === "" && quickQuoteWithVendorFlag
+                        ? "field element errorInput"
+                        : "field element"
+                    }
                     value={infoState.phoneNumber}
                     name="phoneNumber"
                     id="phoneNumber"

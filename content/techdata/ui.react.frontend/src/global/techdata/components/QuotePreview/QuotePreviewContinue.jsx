@@ -13,7 +13,7 @@ function QuotePreviewContinue({
   gridProps,
   disableQuickQuoteButton,
   handleQuickQuote,
-  handleQuickQuoteWithoutDeals,
+  handleStandardQuote,
   isConfig,
   apiResponse,
 }) {
@@ -44,7 +44,7 @@ function QuotePreviewContinue({
       handleQuickQuote();
       pushEvent("quoteComplete", dataToPush({ quickQuote: "1" }))
     } else if (evtName === eventTypes.link) {
-      handleQuickQuoteWithoutDeals();
+      handleStandardQuote();
       pushEvent("quoteComplete", dataToPush({ standardPrice: "1" }))
     }
   };

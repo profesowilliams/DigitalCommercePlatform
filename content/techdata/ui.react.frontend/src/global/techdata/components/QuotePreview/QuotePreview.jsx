@@ -53,7 +53,7 @@ function QuotePreview(props) {
   const [didQuantitiesChange, setDidQuantitiesChange] = useState(false);
   const [quoteWithoutPricing, setQuoteWithoutDealPricing] = useState(false);
   const [quoteWithoutDeal, setQuoteWithoutDeal] = useState(false);
-  const [quoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
+  const [isQuoteWithoutEndUser, setQuoteWithoutEndUser] = useState(true);
   const [modal, setModal] = useState(null);
   const [showPopUp, setShowPopUp] = useState(false);
   const [tier, setTier] = useState('');
@@ -124,6 +124,8 @@ function QuotePreview(props) {
         setTier(isNotEmptyValue(quoteDetailsResponse.tier) ? quoteDetailsResponse.tier : '');
         // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
         quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
+        //Set to false until quick quote is selected
+        quoteDetailsResponse.quickQuoteWithVendorFlag = false;
         setQuoteDetails(quoteDetailsResponse);
         // Show Modal When Quote Cannot Be Created.
         if (cannotCreateQuote(quoteDetailsResponse)) {
@@ -295,16 +297,17 @@ function QuotePreview(props) {
   };
 
   const handleQuickQuote = useCallback(() => {
+    quoteDetails.quickQuoteWithVendorFlag = quoteDetails?.source?.type === "Estimate" && quoteDetails?.vendor.toUpperCase() === "CISCO" && !quoteDetails?.spaId;
     const requiredFields = {
       pricingRequired : isPricingOptionsRequired(quoteDetails, true),
       dealRequired : isDealRequired(quoteDetails, true),
       userMissingFields : isEndUserMissing(quoteDetails, true)
     }
-    quoteDetails.quickQuoteWithVendorFlag = quoteDetails?.source?.type === "Estimate" && quoteDetails?.vendor.toUpperCase() === "CISCO" && !quoteDetails?.spaId;
     tryCreateQuote(requiredFields, quoteDetails, false);
   }, [quoteDetails]);
 
-  const handleQuickQuoteWithoutDeals = (e) => {
+  const handleStandardQuote = (e) => {
+    quoteDetails.quickQuoteWithVendorFlag = false;
     const quoteDetailsCopy = { ...quoteDetails };
     const requiredFields = {
       pricingRequired: isPricingOptionsRequired(quoteDetails, true),
@@ -312,16 +315,16 @@ function QuotePreview(props) {
       userMissingFields: isEndUserMissing(quoteDetails, true),
     }
 
-    // remove deal if present
-    if (!isDealConfiguration(quoteDetails.source) && quoteDetailsCopy.hasOwnProperty("deal")) {
-      delete quoteDetailsCopy.deal;
+    // remove deal if present 
+    // RFH - I don't think we need to do this. This is only called by standard pricing. A SPA can not be selected and quoted using Quick Quote nor Standard Priing with this logic in place. Leaving commented to verify before removing. However, this makes the 'standard pricing' link not quite correct because it must also be used when selecting a SPA for pricing which technically is not 'standard' pricing. I hesitate to add yet another button to the view tho.
+    //if (!isDealConfiguration(quoteDetails.source) && quoteDetailsCopy.hasOwnProperty("deal")) {
+    //  delete quoteDetailsCopy.deal;
 
-      quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
-    }
-    quoteDetails.quickQuoteWithVendorFlag = false;
+    //  quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
+    //}
     tryCreateQuote(requiredFields, quoteDetailsCopy, true);
   };
-  
+
   const tryCreateQuote = (requiredFields, quote, isStandardPrincing) => {
     if (cannotCreateQuote(quote)) {
       showErrorModal(QUOTE_PREVIEW_CREATE_POPUP_ACTION, modalConfig?.cannotCreateQuoteForDeal);
@@ -445,7 +448,7 @@ const [flagDeal, setFlagDeal] = useState(false);
             hideDealSelector={isDealSelectorHidden(quoteDetails)}
             isDealRequired={isDealRequired(quoteDetails, quoteWithoutDeal)}
             isPricingOptionsRequired={isPricingOptionsRequired(quoteDetails, quoteWithoutPricing)}
-            isEndUserMissing={isEndUserMissing(quoteDetails, quoteWithoutEndUser)}
+            isEndUserMissing={isEndUserMissing(quoteDetails, isQuoteWithoutEndUser)}
             gridProps={componentProp}
             quoteDetails={quoteDetails}
             endUserInfoChange={endUserInfoChange}
@@ -479,7 +482,7 @@ const [flagDeal, setFlagDeal] = useState(false);
             quoteDetails={quoteDetails}
             disableQuickQuoteButton={didQuantitiesChange}
             handleQuickQuote={handleQuickQuote}
-            handleQuickQuoteWithoutDeals={handleQuickQuoteWithoutDeals}
+            handleStandardQuote={handleStandardQuote}
             apiResponse={quoteDetails}
             isConfig={sourceIsConfigsGrid}
             />

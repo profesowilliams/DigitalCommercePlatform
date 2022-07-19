@@ -45,7 +45,9 @@ export const validateRequiredEnduserFields = (enduser, quickQuoteWithVendorFlag)
     //    delete enduser.id;
     //}
     // return Object.values(enduser).some(value => value === null || value === '');
-    return quickQuoteWithVendorFlag ? ['name', 'line1', 'city', 'state', 'postalCode'].every(i => enduser[i]?.trim()) : !(enduser?.companyName === null || enduser?.companyName === '');
+  return quickQuoteWithVendorFlag ?
+    ['name', 'line1', 'city', 'state', 'postalCode', 'country', 'phoneNumber'].every(i => enduser[i]?.trim()) :
+    (Array.isArray(enduser) ? !!enduser[0]?.companyName : !!enduser?.companyName);
 }
 
 export const isEndUserMissing = (quoteDetails, quoteWithoutEndUser) => {
