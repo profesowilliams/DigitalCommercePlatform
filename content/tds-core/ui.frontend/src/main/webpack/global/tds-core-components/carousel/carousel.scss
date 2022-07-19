@@ -34,6 +34,14 @@
       margin: 0 rem(16px);
       position: relative;
       text-decoration: none;
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+        margin: 0;
+        padding: 0;
+      }
 
       @include tablet {
         font-size: 0;
@@ -89,6 +97,17 @@
       left: rem(-20px);
       top: 0;
       display: inline-block;
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+        box-shadow: 8px 0 0 0 get-color(secondary-light-grey);
+        padding: 0;
+        position: absolute;
+        left: -1.25rem;
+        top: 0;
+        display: inline-block;
+        height: 100%;
+        width: 2px;
+        color: transparent;   
+    }
     }
   }
 
@@ -115,7 +134,18 @@
 
     .dp-carousel__alert-container {
       display: flex;
+      flex-direction: row;
       align-items: center;
+      max-width: 90rem;
+      margin: 0 auto;
+
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+        flex-direction: column;
+        align-items:  center;
+        text-align: center;
+        line-height: normal;   
+        align-content: center;     
+    }
 
       @include tablet {
         flex-direction: column;
@@ -164,14 +194,23 @@
       text-decoration: none;
       vertical-align: middle;
       padding: rem(4.8px) rem(12px);
+        margin-right: rem(24px);
       font-weight: bold;
       text-transform: uppercase;
-      margin-right: rem(24px);
-      margin-bottom: rem(10px);
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+
+      @include tablet {        
+        margin-top: rem(10px);
+        margin-right: 0;
+      } 
+
+      @include mobile {        
+        margin-top: rem(10px);
+        margin-right: 0;
+      }
     }
 
     .dp-carousel__alert-button-color {
@@ -228,16 +267,26 @@
   display: none;
 }
 
+@media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+  .carousel-max-1440.dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
+    max-width: 90rem;
+    left: 0 !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
 @include desktop {
   .carousel-max-1440 .cmp-carousel .cmp-teaser__content {
     max-width: 90rem;
     margin: 0 auto !important;
   }
 
-  .carousel-max-1440.dp-carousel.dp-carousel__alert--hero1 .dp-carousel__alert-container {
-    max-width: 90rem;
-    margin: 0 auto;
-  }
+  // .carousel-max-1440.dp-carousel.dp-carousel__alert--hero1 .dp-carousel__alert-container {
+  //   max-width: 90rem;
+  //   margin: 0 auto;
+  // }
 
   .carousel-max-1440.dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
     max-width: 90rem;

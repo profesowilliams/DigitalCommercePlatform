@@ -1,14 +1,96 @@
 .tds-hero-5 {
-    &.hero-style-5 .cmp-teaser__description {
+    &.hero-style-5 {
+        .cmp-teaser__description {
             font-size: rem(40px) !important;
             font-family: $font-family-everett;
-        }
-}
 
+            @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) {
+                font-size: rem(24px) !important;
+                border-color: white;
+            }
+
+            @include tablet {
+                font-size: rem(32px) !important;
+            }
+
+            @include mobile {
+                font-size: rem(32px) !important;
+            }
+        }
+
+        .cmp-teaser__content {
+            top: 43%;
+
+            @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) {
+                top: 24%;
+                svg {
+                    width: 35%;
+                }
+            }
+
+            @media screen and (min-device-width: 1024px) and (max-device-width: 1124px) {
+                top: 32%;
+                svg {
+                    width: 35%;
+                }
+            }
+
+            @include tablet {
+                top: 32%;
+            }
+        }
+    }
+
+    @include tablet {
+        &.dp-carousel {
+            &.dp-carousel__alert--hero1 {
+                .dp-carousel__alert-container {
+                    flex-direction: column;
+                    font-size: rem(20px);
+                }
+
+                .dp-carousel__alert-buttons {
+                    font-size: rem(14px);
+                }
+
+                .dp-carousel__alert-button {
+                    &:last-of-type {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    @include desktop-l {
+        .dp-carousel {
+            &.dp-carousel__alert--hero1 {
+                .dp-carousel__alert-container {
+                    flex-direction: column;
+                    font-size: rem(20px);
+                }
+
+                .dp-carousel__alert-buttons {
+                    font-size: rem(14px);
+                }
+
+                .dp-carousel__alert-button {
+                    &:last-of-type {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    &.carousel-max-1440.dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
+        left: 0;
+    }
+}
 
 .td-legacy-hero-5 {
     &.hero-style-5 .cmp-teaser__description {
-            font-size: rem(35px) !important;
-            font-family: $open-sans;
-        }
+        font-size: rem(35px) !important;
+        font-family: $open-sans;
+    }
 }
