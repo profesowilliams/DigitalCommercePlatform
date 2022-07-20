@@ -7,7 +7,6 @@
         letter-spacing: 0;
         line-height: normal;
         color: get-color(brand-white);
-        font-family: $open-sans;
         
         li:not(:last-child) {
             border-right: rem(1px) solid get-color(brand-white);
