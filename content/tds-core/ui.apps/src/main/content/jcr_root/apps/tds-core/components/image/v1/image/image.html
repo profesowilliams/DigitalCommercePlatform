@@ -49,7 +49,7 @@
 		>
 			<sly data-sly-test.usemap="${'{0}{1}' @ format=['#', resource.path]}"></sly>
 			<img
-					src="${image.src}"
+					src="${image.fileReference}"
 					class="cmp-image__image ${properties.customClasses} ${image.isSVG ? 'svg' : 'not svg'}"
 					itemprop="contentUrl"
 					data-cmp-hook-image="image"
