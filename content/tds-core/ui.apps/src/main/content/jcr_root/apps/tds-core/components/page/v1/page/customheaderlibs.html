@@ -29,7 +29,7 @@
         }});
     </script>
 </sly>
-<sly data-sly-use.serviceData="com.techdata.core.models.CaConfigReader"
+<sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
 	 data-sly-test="${serviceData.enableQualtricsCode}">
 	<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
 
@@ -64,7 +64,7 @@
 	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
 	<script src="https://kit.fontawesome.com/e1e12a4c06.js" crossorigin="anonymous"></script>
-	<sly data-sly-use.configData="com.techdata.core.models.CaConfigReader">
+	<sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
 		<sly data-sly-test="${configData.analyticsSnippet}">
 			<script src="${configData.analyticsSnippet @ context='unsafe'}" async></script>
 		</sly>
