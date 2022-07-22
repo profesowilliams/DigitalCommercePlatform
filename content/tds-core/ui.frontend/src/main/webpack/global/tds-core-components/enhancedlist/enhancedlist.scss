@@ -52,7 +52,7 @@
       cursor: pointer;
       &:hover {
         .cmp-list__item-title {
-          color: $sky-dark;
+          color: inherit;
           font-size: $font-size-medium;
           font-weight: $font-weight-bold;
         }

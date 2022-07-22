@@ -60,7 +60,7 @@
     }
 
     .cmp-list__item-link {
-      color: get-color(brand-blue);
+      color: inherit;
       font-size: rem(20px);
       font-weight: 300;
       text-decoration: none;
@@ -103,7 +103,7 @@
       }
 
       .cmp-list__item-link {
-        color: get-color(brand-blue);
+        color: inherit;
         font-size: rem(20px);
         font-weight: 300;
         text-decoration: none;
@@ -237,7 +237,7 @@
     .cmp-list__item-title {
       font-weight: $font-weight-normal;
       font-size: rem(13px);
-      color: get-color(brand-text-gray);
+      color: inherit;
     }
 
     .cmp-image__image-figure {
@@ -269,7 +269,7 @@
 
       &:hover {
         .cmp-list__item-title {
-          color: $sky-dark;
+          color: inherit;
           font-size: $font-size-medium;
           font-weight: $font-weight-bold;
         }
@@ -369,19 +369,23 @@
       }
 
       .cmp-list__item-link {
-        color: get-color(secondary-light-grey);
+        color:inherit;
         font-size: rem(20px);
         font-weight: 500;
         text-decoration: none;
         padding: rem(16px);
         transition: all 0.3s;
+        opacity: .5;
       }
 
       .cmp-list__item {
         transition: all 0.3s;
 
-        &:hover .cmp-list__item-link {
-          color: get-color(brand-blue);
+        &:hover {
+          .cmp-list__item-link {
+            color: inherit;
+            opacity: 1;
+          }
         }
 
         &:hover .cmp-image__image {
@@ -430,7 +434,7 @@
         article {
           a.cmp-list__item-link {
             span.cmp-list__item-title {
-              color: #000c21;
+              color: inherit;
               font-weight: bold;
             }
           }
@@ -458,7 +462,7 @@
             font-size: rem(13px);
             line-height: rem(15px);
             text-align: center;
-            color: get-color(text-mid-charcoal);
+            color: inherit;
             margin: 0 rem(5px);
           }
         }
