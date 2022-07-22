@@ -12,7 +12,7 @@ import Link from "../../Widgets/Link";
 
 
 const columnFieldsMap = (definition, eventProps) => {
-  const { detailUrl = "" } = useRenewalGridState((state) => state.aemConfig);
+  const { detailUrl = "", displayCurrencyName = false } = useRenewalGridState((state) => state.aemConfig);
   const { columnKey } = definition;
   const { value, data } = eventProps;
 
@@ -27,7 +27,7 @@ const columnFieldsMap = (definition, eventProps) => {
     renewedduration: <ContractColumn data={data} eventProps={eventProps} />,
     dueDays: <DueDateDayColumn columnValue={data?.dueDays} />,
     dueDate: <DueDateColumn columnValue={data?.dueDate} />,
-    total: <PriceColumn columnValue={data?.renewal?.total} />,
+    total: <PriceColumn columnValue={data?.renewal?.total} currency={data?.renewal?.currency} displayCurrencyName={displayCurrencyName} />,
     agreementNumber: data?.agreementNumber,
     Id: (
       <Link
