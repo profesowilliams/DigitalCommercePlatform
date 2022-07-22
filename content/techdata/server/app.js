@@ -4283,6 +4283,9 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
   res.json(
     {
+      "techdata.buttons.label.save": "Save",
+      "techdata.buttons.label.cancel": "Cancel",
+      "techdata.buttons.label.edit": "Edit",
       "techdata.quotes.placeholder.createfrom": "Create From",
       "techdata.quotes.placeholder.selectpricingtype": "Select pricing type",
       "techdata.grids.message.noRows": "So Lonely - No rows found From i18n",

@@ -4,6 +4,10 @@
     jcr:mixinTypes="[mix:language]"
     jcr:primaryType="nt:folder">
     
+    <techdata.buttons.label.save jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Save"/>
+    <techdata.buttons.label.cancel jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Cancel"/>
+    <techdata.buttons.label.edit jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Edit"/>
+
     <techdata.quotes.placeholder.createfrom jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Create From"/>
     <techdata.quotes.placeholder.selectpricingtype jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Select pricing type"/>
 	<techdata.quotes.message.uanError jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="You have reached your qty limit on the below products. Please contact your Cisco Sales Rep for further assistance."/>
