@@ -9,6 +9,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["detailUrl"]) {
         jsonObject["detailUrl"] = properties["detailUrl"];
     }
+    if (properties && properties["displayCurrencyName"]) {
+      jsonObject["displayCurrencyName"] = properties["displayCurrencyName"];
+    }
 
     //Column definition
 

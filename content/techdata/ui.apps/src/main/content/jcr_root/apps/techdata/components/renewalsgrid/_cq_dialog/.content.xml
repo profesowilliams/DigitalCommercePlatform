@@ -229,6 +229,18 @@
                                                 fieldLabel="Details URL Id Suffix"
                                                 name="./detailUrlSuffix"
                                                 rootPath="/content/techdata"/>
+                                            <displayCurrencyName
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Display Currency Name"
+                                                name="./displayCurrencyName"
+                                                value="true"
+                                                uncheckedValue="false"/>
+                                            <displayCurrencyNameTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                name="./displayCurrencyName@TypeHint"
+                                                value="Boolean"/>
                                         </items>
                                     </column>
                                 </items>
