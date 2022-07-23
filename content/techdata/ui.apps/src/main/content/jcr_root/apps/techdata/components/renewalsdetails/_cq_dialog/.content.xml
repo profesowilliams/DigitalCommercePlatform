@@ -80,14 +80,28 @@
                                                 fieldDescription="Enter Vendor Part No Label"
                                                 fieldLabel="Vendor Part No Label"
                                                 name="./vendorPartNo"
-                                                required="{Boolean}true"/>
+                                                required="{Boolean}true"/>											
                                             <unitPrice
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Unit price (USD) Label"
+                                                fieldDescription="Enter Unit priceLabel and optional {currency-code}"
                                                 fieldLabel="Unit price (USD) Label"
                                                 name="./unitPrice"
                                                 required="{Boolean}true"/>
+											<listPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter List price Label and optional {currency-code}"
+                                                fieldLabel="List price (USD) Label"
+                                                name="./listPrice"
+                                                required="{Boolean}true"/>
+											<totalPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Total price Label and optional {currency-code}"
+                                                fieldLabel="Total price (USD) Label"
+                                                name="./totalPrice"
+                                                required="{Boolean}true"/>	
                                             <quantity
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -102,6 +116,12 @@
                                                 fieldLabel="Quote Subtotal Label"
                                                 name="./quoteSubtotal"
                                                 required="{Boolean}true"/>
+											<quoteSubtotalCurrency
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Currency code {currency-code}"
+                                                fieldLabel="Quote Subtotal Currency Label"
+                                                name="./quoteSubtotalCurrency"/>
 											<menuCopy
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

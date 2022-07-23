@@ -40,11 +40,20 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["unitPrice"]) {
         productLines["unitPrice"] = properties["unitPrice"];
     }
+    if (properties && properties["listPrice"]) {
+        productLines["listPrice"] = properties["listPrice"];
+    }
+    if (properties && properties["totalPrice"]) {
+        productLines["totalPrice"] = properties["totalPrice"];
+    }
     if (properties && properties["quantity"]) {
         productLines["quantity"] = properties["quantity"];
     }
     if (properties && properties["quoteSubtotal"]) {
         productLines["quoteSubtotal"] = properties["quoteSubtotal"];
+    }
+    if (properties && properties["quoteSubtotalCurrency"]) {
+        productLines["quoteSubtotalCurrency"] = properties["quoteSubtotalCurrency"];
     }
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
