@@ -8,7 +8,7 @@
       text-align: left;
       margin-left: rem(-40px);
       &::before {
-        color: get-color(td-lightblue);
+        color: inherit;
         display: inline-block;
       }
     }
