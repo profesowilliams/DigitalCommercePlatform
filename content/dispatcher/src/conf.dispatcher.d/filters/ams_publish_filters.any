@@ -22,7 +22,7 @@
 # /005 { /type "allow" /url "/bin/*"    }  # allow bin path access
 
 # This rule allows content to be access
-/0010 { /type "allow" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|pdf|png|svg|swf|ttf|woff|woff2|html)' /path "/content/*" }  # disable this rule to allow mapped content only
+/0010 { /type "allow" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|pdf|png|svg|swf|ttf|woff|woff2|html|zip)' /path "/content/*" }  # disable this rule to allow mapped content only
 /0011 { /type "allow" /extension "json" /selectors "model" /path "/content/*" }
 
 # Enable specific mime types clientlibs directories
