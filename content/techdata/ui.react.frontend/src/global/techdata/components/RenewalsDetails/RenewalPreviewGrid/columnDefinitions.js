@@ -5,7 +5,8 @@ const columnDefs = [
     width: "100px",
     sortable: false,
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
-    autoHeight: true
+    autoHeight: true,
+    headerClass: 'top-aligned',
   },
   {
     headerName: "Product family",
@@ -13,7 +14,8 @@ const columnDefs = [
     width: "200px",
     sortable: false,
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
-    autoHeight: true
+    autoHeight: true,
+    headerClass: 'top-aligned',
   },
   {
     headerName: "Product details",
@@ -21,72 +23,57 @@ const columnDefs = [
     sortable: false,
     width: "500px",
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
-    autoHeight: true
+    autoHeight: true,
+    headerClass: 'top-aligned',
   },
   {
-    headerName: "Mfr. part №",
+    headerName: "Vendor part №",
     field: "mfrNumber",
     sortable: false,
     width: "200px",
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
-    autoHeight: true
+    autoHeight: true,
+    headerClass: 'top-aligned',
   },
   {
-    headerName: "List price \n     (USD)",
+    headerName: "List price",
     field: "unitListPrice",
     sortable: false,
-    width: "100px",
-    cellStyle: {'white-space': 'normal', 'padding': '10px'},
-    autoHeight: true
+    cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
+    autoHeight: true,
+    headerClass: 'right-aligned top-aligned'
   },
   {
-    headerName: "% off list \n      price",
+    headerName: "% off list price",
     field: "value",
     sortable: false,
-    width: "100px",
-    cellStyle: {'white-space': 'normal', 'padding': '10px'},
-    autoHeight: true
+    cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
+    autoHeight: true,
+    headerClass: 'right-aligned top-aligned'
   },
   {
-    headerName: "Unit price (USD)",
+    headerName: "Unit price",
     field: "unitPrice",
     sortable: false,
-    cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
-    headerComponentParams : {
-      template:
-        '<div class="ag-cell-label-container" role="presentation">' +
-        '<span ref="eText" class="ag-header-cell-text" role="columnheader"></span>' +
-        '</div>'
-    },
-    autoHeight: true
+    cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
+    autoHeight: true,
+    headerClass: 'right-aligned top-aligned'
   },
   {
     headerName: "Quantity",
     field: "quantity",
     sortable: false,
-    width: "100px",
-    cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
-    headerComponentParams : {
-      template:
-        '<div class="ag-cell-label-container" role="presentation">' +
-        '<span ref="eText" class="ag-header-cell-text" role="columnheader"></span>' +
-        '</div>'
-    },
-    autoHeight: true
+    cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
+    autoHeight: true,
+    headerClass: 'right-aligned top-aligned'
   },
   {
-    headerName: "Total (USD)",
+    headerName: "Total",
     field: "totalPrice",
     sortable: false,
-    width: "150px",
-    cellStyle: { 'justify-content': 'flex-start', 'padding': '10px'},
-    headerComponentParams : {
-      template:
-        '<div class="ag-cell-label-container" role="presentation">' +
-        '<span ref="eText" class="ag-header-cell-text" role="columnheader"></span>' +
-        '</div>'
-    },
-    autoHeight: true
+    cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
+    autoHeight: true,
+    headerClass: 'right-aligned top-aligned'
   },
 ];
 

@@ -12,7 +12,7 @@ function GridSubTotal({ data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
       <div className="cmp-renewal-preview__subtotal--note">
-        <b>Note:</b>
+        <b>Note: </b>
         {gridProps?.note?.replace('Note: ', '')}
       </div>
       <div className="cmp-renewal-preview__subtotal--price-note">
@@ -22,7 +22,7 @@ function GridSubTotal({ data, gridProps }) {
         <span className="cmp-renewal-preview__subtotal--value">
           <span>{thousandSeparator(data?.price)}</span>
           <span className="cmp-renewal-preview__subtotal--currency">
-            {gridProps.quoteSubtotalCurrency.replace(
+            {gridProps.quoteSubtotalCurrency?.replace(
               '{currency-code}',
               data?.currency || ''
             )}
@@ -46,10 +46,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     paginationStyle: "none",
   };
 
-  const replaceCurrencyLabel = (label) => {
-    return label.replace('{currency-code}', data?.currency || '');
-  }
-  
   columnDefs[1] = {
     ...columnDefs[1],
     valueGetter: ({ data }) =>
@@ -68,41 +64,36 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     ),
   };
 
-  columnDefs[4] = {
-    ...columnDefs[4],
-    cellStyle: { "justify-content": "flex-end" },
-    cellRenderer: (props) => Price(props),
-    headerValueGetter: () => replaceCurrencyLabel(gridProps.listPrice)
-  };
-
-  columnDefs[5] = {
-    ...columnDefs[5],
-    valueGetter: ({ data }) =>
-      data.discounts && data.discounts[0]?.value,
-    cellStyle: {"justify-content": "flex-end"},
-  };
-
-  //refactor later as renewals-grid
-  columnDefs[8] = {
-    ...columnDefs[8],
-    cellStyle: { "justify-content": "flex-end" },
-    cellRenderer: (props) => Price(props),
-    headerValueGetter: () => replaceCurrencyLabel(gridProps.totalPrice)
-  };
-  columnDefs[7] = {
-    ...columnDefs[7],
-    cellStyle: {"justify-content": "flex-end"}
-  }
-  columnDefs[6] = {
-    ...columnDefs[6],
-    cellStyle: { "justify-content": "flex-end" },
-    cellRenderer: (props) => Price(props),
-    headerValueGetter: () => replaceCurrencyLabel(gridProps.unitPrice)
-  };
   columnDefs[3] = {
     ...columnDefs[3],
     cellRenderer: (props) => RenewalManufacturer(props)
   }
+
+  columnDefs[4] = {
+    ...columnDefs[4],
+    headerName: gridProps.listPrice?.replace('{currency-code}', data?.currency || ''),
+    cellRenderer: (props) => Price(props)
+  };
+
+  columnDefs[5] = {
+    ...columnDefs[5],
+    headerName: "% off list \n price",
+    valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
+    cellRenderer: (props) => Price(props)
+  };
+
+  columnDefs[6] = {
+    ...columnDefs[6],    
+    headerName: gridProps.unitPrice?.replace('{currency-code}', data?.currency || ''),
+    cellRenderer: (props) => Price(props)
+  };
+
+  //refactor later as renewals-grid  
+  columnDefs[8] = {
+    ...columnDefs[8],
+    headerName: gridProps.totalPrice?.replace('{currency-code}', data?.currency || ''),
+    cellRenderer: (props) => Price(props)
+  };
 
   /*
     mutableGridData is copied version of response that can be safely mutated,

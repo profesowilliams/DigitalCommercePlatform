@@ -126,4 +126,13 @@
       border: none;
     }
   }
+  
+  .right-aligned {
+    text-align: right;
+  }
+  
+  .ag-theme-alpine .top-aligned .ag-cell-label-container {  
+    margin-top: 10px;
+    flex-direction: column-reverse;
+  }
 }
