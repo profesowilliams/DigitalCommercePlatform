@@ -78,7 +78,7 @@
       &:hover {
         color: get-color(brand-white);
         opacity: 1;
-        background-color: transparent;
+        background-color: map-get($color-palette, "black");
 
         @include tablet {
           opacity: 0.5;
