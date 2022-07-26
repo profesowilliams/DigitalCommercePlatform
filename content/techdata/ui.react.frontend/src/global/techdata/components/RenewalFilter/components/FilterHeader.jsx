@@ -32,11 +32,11 @@ function FilterHeader({ onQueryChanged }) {
     localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
   };
   return (
-    <div className="filter-modal-container__header">
+    <div className="filter-modal-content__header">
       <h3>Filters</h3>
       <Button
         onClick={handleClearFilter}
-        btnClass="filter-modal-container__header--clear-all"
+        btnClass="filter-modal-content__header--clear-all"
       >
         Clear all filters
       </Button>

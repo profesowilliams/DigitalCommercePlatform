@@ -238,7 +238,10 @@ export async function fetchRenewalsByGet(config){
     const finalUrl = mapStrucToUrlStr(mapUrl);
     previousSortChanged.current = hasSortChanged.current;
     firstAPICall.current = false;    
-    return await usGet(finalUrl);
+    let gridData =  await usGet(finalUrl);
+    if (!localStorage.getItem('sessionId'))
+        setTimeout(() => gridData = usGet(finalUrl), 0)  
+    return gridData;
 }
 
 export function setPaginationData(mappedResponse,pageSize) {

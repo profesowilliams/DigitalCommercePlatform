@@ -21,6 +21,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
       name: ANALYTICS_TYPES.name.filterIcon,
     });
     toggleFilterModal();
+    window.scrollTo(0,0);
   };
 
   const handleFilterCloseClick = () => {

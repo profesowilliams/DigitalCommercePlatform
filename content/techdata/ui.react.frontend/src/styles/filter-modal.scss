@@ -1,91 +1,105 @@
 .filter-modal-container {
   position: fixed;
-  background: rgba(0, 12, 33, 0.1);
-  height: 100%;
-  width: 100%;
+  background: rgba(0, 12, 33, .28);
+
+  // background-color: #0067ab;
+  height: 100vh;
+  width: 100vw;
   top: 0;
   left: 0;
+  z-index: 2; 
+}
+.filter-modal-content{
+  all: initial;
+  position: absolute;
+  top: 54px;
+  right: 0;
+  height: calc(100vh - 54px);
+  width: 472px;
+  border-radius: 4px 0 0 4px;
+  background-color: #ffffff;
   z-index: 9999;
-  .filter-modal-container {
-    &__popup {
-      height: 100vh;
-      width: 472px;
-      border-radius: 4px 0 0 4px;
-      background-color: #ffffff;
-      // box-shadow: 0 2px 15px 0 rgb(0 0 0 / 26%);
+  &__popup {
+    // box-shadow: 0 2px 15px 0 rgb(0 0 0 / 26%);
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-top: 20px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;   
+  }
+  .filter-modal-bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  &__close {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    right: 28rem;
+    background-color: transparent;
+    &:before {
+      content: "\f057";
+      @include font-awesome;
+      font-weight: 900;
+      font-size: 30px;
+    }
+    &:after {
+      content: "";
+      width: 2.2rem;
+      height: 2.2rem;
+      background: white;
       position: absolute;
-      right: 0;
-      top: 0;
-      padding-top: 20px;
-      overflow-y: hidden;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    &__close {
-      position: absolute;
-      top: 0;
-      z-index: 1;
-      right: 28rem;
-      background-color: transparent;
-      &:before {
-        content: "\f057";
-        @include font-awesome;
-        font-weight: 900;
-        font-size: 30px;
-      }
-      &:after {
-        content: "";
-        width: 2.2rem;
-        height: 2.2rem;
-        background: white;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        z-index: -1;
-        padding: 1px;
-      }
-    }
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 42px;
-      padding-bottom: 30px;
-      border-bottom: 2px solid #000c21;
-      h3 {
-        color: #000c21;
-        font-size: 23px;
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 32px;
-        margin: 0;
-      }
-      &--clear-all {
-        background: transparent;
-        border: 0;
-        text-decoration: underline;
-        color: #0067ab;
-        font-size: 14px;
-        cursor: pointer;
-        letter-spacing: 0;
-        line-height: 17px;
-      }
-    }
-    &__results {
-      position: relative;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      padding: 12px 0;
-      border: 1px solid #000c21;
-      border-radius: 0 0 0 4px;
-      background-color: #000c21;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: -1;
+      padding: 1px;
     }
   }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #000c21;
+    h3 {
+      color: #000c21;
+      font-size: 23px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 32px;
+      margin: 0;
+    }
+    &--clear-all {
+      background: transparent;
+      border: 0;
+      text-decoration: underline;
+      color: #0067ab;
+      font-size: 14px;
+      cursor: pointer;
+      letter-spacing: 0;
+      line-height: 17px;
+    }
+  }
+  &__results {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+    border: 1px solid #000c21;
+    border-radius: 0 0 0 4px;
+    background-color: #000c21;
+  }
 }
+
 
 .filter-option {
   &__checkbox {
@@ -103,7 +117,10 @@
     font-weight: bold;
   }
   &__options {
+    all: initial;
     border-bottom: 1px solid #d8d8d8;
+    display: block !important;
+    padding-left: 40px;
     > ul,
     > li {
       label{
@@ -112,6 +129,13 @@
       &:last-child {
         padding-bottom: 10px;
       }
+    }
+    ul.sub-filter{
+      justify-content: start;
+      padding-left: 2rem; 
+      li {
+        margin: 0.4rem 0;
+      }   
     }
   }
 }
@@ -125,17 +149,19 @@ div.filter-accordion {
   text-align: left;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
   
-  ul.filter-option__options li {
+  div.filter-option__options li {
     list-style: none;
-    padding-left: 21px;
+    padding-left: 21px !important;
   }
   
   &__item {
     list-style: none;
     &--group {
       padding: 8px 0;
-      padding-left: 42px;
+      padding-left: 42px !important;
       position: relative;
       .count {
         position: absolute;

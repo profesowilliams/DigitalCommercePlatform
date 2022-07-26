@@ -12,7 +12,7 @@ function SubFilter({ id }) {
       <>
         <FilterItem id={id} />
         {childIds.length > 0 && (
-          <ul>
+          <ul className="sub-filter">
             {childIds.map((childId, index) => {
               return <SubFilter key={index} id={childId} />;
             })}

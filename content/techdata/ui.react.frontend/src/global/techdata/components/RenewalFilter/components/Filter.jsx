@@ -60,7 +60,7 @@ function Filter({ id }) {
 
   return (
     <>
-      <li onClick={handleFilterClick} className="filter-accordion__item">
+      <div onClick={handleFilterClick} className="filter-accordion__item">
         <div className="filter-accordion__item--group">
           <h3 className={`${filter.open ? "active" : ""}`}>{filter.title}</h3>
           <Count
@@ -77,14 +77,14 @@ function Filter({ id }) {
             {checkCount(filter)}
           </Count>
         </div>
-      </li>
+      </div>
       <If condition={filter.field === "date"}>
         <FilterDatePicker isOpen={filter.open} />
       </If>
       {childIds.length > 0 && (
-        <ul className="filter-option__options">
+        <div className="filter-option__options">
           <SubFilterList />
-        </ul>
+        </div>
       )}
     </>
   );
