@@ -3717,10 +3717,10 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
     content: {
       quotePreview: {
         quoteDetails: {
-          isExclusive: configurationType === "Estimate" && vendor ==='CISCO' ? false : true,
+          isExclusive: configurationType === "Estimate" && vendor === 'CISCO' ? false : true,
           shipTo: null,
           buyMethod: "sap46",
-          endUser: [ null
+          endUser: [null
             //{
             //  id: null,
             //  companyName: "MyEndUser Co",
@@ -3738,7 +3738,22 @@ app.get("/ui-commerce/v1/quote/preview", function (req, res) {
             //  phoneNumber: null,
             //},
           ],
-          reseller: null,
+          reseller: [{
+            id: "38048612",
+            companyName: null,
+            name: null,
+            line1: null,
+            line2: null,
+            line3: null,
+            city: null,
+            state: null,
+            zip: null,
+            postalCode: null,
+            country: null,
+            email: null,
+            contactEmail: null,
+            phoneNumber: null
+          }],
           configID: "WC121011624NR",
           source: {
             type: configurationType,

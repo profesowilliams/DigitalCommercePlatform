@@ -33,7 +33,7 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
 
   useEffect(() => {
     if (localReseller === null) {
-      if (reseller){
+      if (reseller?.companyName){
         setLocalReseller(reseller)
       } else {
         if (addresses.length === 0) {
