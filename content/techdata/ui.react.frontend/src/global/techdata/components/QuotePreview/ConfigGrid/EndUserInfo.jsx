@@ -5,18 +5,19 @@ import { validateRequiredEnduserFields } from "../QuoteTools";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 
 function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal, quickQuoteWithVendorFlag}) {
-    endUser = endUser && endUser[0] && {};
+    endUser = endUser && endUser[0];
+
     const initialState = {
-        companyName: endUser?.companyName || '',
-        name: endUser?.name || '',
-        line1: endUser?.line1 || '',
-        line2: endUser?.line2 || '',
-        city: endUser?.city || '',
-        state: endUser?.state || '',
-        postalCode: endUser?.postalCode || '',
-        country: endUser?.country || '',
-        email: endUser?.email || '',
-        phoneNumber: endUser?.phoneNumber || ''
+      companyName: endUser?.companyName || '',
+      name: endUser?.name || '',
+      line1: endUser?.line1 || '',
+      line2: endUser?.line2 || '',
+      city: endUser?.city || '',
+      state: endUser?.state || '',
+      postalCode: endUser?.postalCode || '',
+      country: endUser?.country || '',
+      email: endUser?.email || '',
+      phoneNumber: endUser?.phoneNumber || ''
     };
     const [editMode, setEditMode] = useState(false);
     const [infoState, setInfoState] = useState(initialState);
@@ -26,7 +27,7 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal, 
         [e.target.name]: e.target.value,
     });
  
-const handleEditModeChange = () => {
+    const handleEditModeChange = () => {
       
       if (flagDeal) {
         handleEndUserAnalytics();
@@ -60,10 +61,19 @@ const handleEditModeChange = () => {
     };
 
     useEffect(() => {
-      if (endUser?.companyName) {
+      if (endUser) {
         setInfoState({
           ...infoState,
           companyName: endUser?.companyName,
+          name: endUser?.name,
+          line1: endUser?.line1,
+          line2: endUser?.line2,
+          city: endUser?.city,
+          state: endUser?.state,
+          postalCode: endUser?.postalCode,
+          country: endUser?.country,
+          email: endUser?.email,
+          phoneNumber: endUser?.phoneNumber
         })
       }
     }, [endUser?.companyName]);

@@ -125,7 +125,7 @@ function QuotePreview(props) {
         // set buy Method to “sap46” or set buy Method to “tdavnet67” in some specific cases
         quoteDetailsResponse.buyMethod = setQuoteDetailsEffect(distiBuyMethodParam, customerBuyMethod, quoteDetailsResponse.buyMethod);
         //Set to false until quick quote is selected
-        quoteDetailsResponse.quickQuoteWithVendorFlag = false;
+        quoteDetailsResponse.quickQuoteWithVendorFlag = quoteDetailsResponse?.source?.type === "Estimate" && quoteDetailsResponse?.vendor.toUpperCase() === "CISCO" && !quoteDetailsResponse?.spaId;;
         setQuoteDetails(quoteDetailsResponse);
         // Show Modal When Quote Cannot Be Created.
         if (cannotCreateQuote(quoteDetailsResponse)) {
@@ -297,32 +297,42 @@ function QuotePreview(props) {
   };
 
   const handleQuickQuote = useCallback(() => {
-    quoteDetails.quickQuoteWithVendorFlag = quoteDetails?.source?.type === "Estimate" && quoteDetails?.vendor.toUpperCase() === "CISCO" && !quoteDetails?.spaId;
+    setQuoteDetails({
+      ...quoteDetails,
+      quickQuoteWithVendorFlag: quoteDetails?.source?.type === "Estimate" && quoteDetails?.vendor.toUpperCase() === "CISCO" && !quoteDetails?.spaId
+    });
+    const quoteDetailsCopy = { ...quoteDetails };
+    quoteDetailsCopy.quickQuoteWithVendorFlag = quoteDetails?.source?.type === "Estimate" && quoteDetails?.vendor.toUpperCase() === "CISCO" && !quoteDetails?.spaId;
     const requiredFields = {
-      pricingRequired : isPricingOptionsRequired(quoteDetails, true),
-      dealRequired : isDealRequired(quoteDetails, true),
-      userMissingFields : isEndUserMissing(quoteDetails, true)
+      pricingRequired: isPricingOptionsRequired(quoteDetailsCopy, true),
+      dealRequired: isDealRequired(quoteDetailsCopy, true),
+      userMissingFields: isEndUserMissing(quoteDetailsCopy, true)
     }
     tryCreateQuote(requiredFields, quoteDetails, false);
   }, [quoteDetails]);
 
   const handleStandardQuote = (e) => {
-    quoteDetails.quickQuoteWithVendorFlag = false;
+    setQuoteDetails({
+      ...quoteDetails,
+      quickQuoteWithVendorFlag: false
+    });
     const quoteDetailsCopy = { ...quoteDetails };
+    quoteDetailsCopy.quickQuoteWithVendorFlag = false;
     const requiredFields = {
-      pricingRequired: isPricingOptionsRequired(quoteDetails, true),
+      pricingRequired: isPricingOptionsRequired(quoteDetailsCopy, true),
       dealRequired: false,
-      userMissingFields: isEndUserMissing(quoteDetails, true),
-    }
+      userMissingFields: isEndUserMissing(quoteDetailsCopy, true),
+    };
 
     // remove deal if present 
-    // RFH - I don't think we need to do this. This is only called by standard pricing. A SPA can not be selected and quoted using Quick Quote nor Standard Priing with this logic in place. Leaving commented to verify before removing. However, this makes the 'standard pricing' link not quite correct because it must also be used when selecting a SPA for pricing which technically is not 'standard' pricing. I hesitate to add yet another button to the view tho.
+    // RFH - I don't think we need to do this. This is only called by standard pricing. A SPA can not be selected and quoted using Quick Quote nor Standard Priing with this logic in place. Leaving commented to verify before removing. 
     //if (!isDealConfiguration(quoteDetails.source) && quoteDetailsCopy.hasOwnProperty("deal")) {
     //  delete quoteDetailsCopy.deal;
 
     //  quoteDetailsCopy.attributes = quoteDetailsCopy.attributes?.filter((attribute) => attribute.name.toUpperCase() !== DEAL_ATTRIBUTE_FIELDNAME);
     //}
     tryCreateQuote(requiredFields, quoteDetailsCopy, true);
+
   };
 
   const tryCreateQuote = (requiredFields, quote, isStandardPrincing) => {
@@ -339,11 +349,12 @@ function QuotePreview(props) {
     }
   };
 
-const [flagDeal, setFlagDeal] = useState(false);
+  const [flagDeal, setFlagDeal] = useState(false);
 
   const generalInfoChange = (generalInformation) =>{
     setQuoteDetails((previousQuoteDetails) => {
       setDealApplyAnalytics(generalInformation);
+      let originalSpaId = previousQuoteDetails.spaId;
       let newGeneralDetails = {
         ...previousQuoteDetails,
         tier: generalInformation.tier,
@@ -362,9 +373,13 @@ const [flagDeal, setFlagDeal] = useState(false);
           {} :
         {};
 
-      if(generalInformation.deal?.endUserName
-        && generalInformation.deal.endUserName.trim().length > 0) {         
+      if (generalInformation.deal?.endUserName &&
+        generalInformation.deal.endUserName.trim().length > 0) {
         newGeneralDetails.endUser[0].companyName = generalInformation.deal.endUserName;
+        newGeneralDetails.endUser[0] = clearEndUserInfo(newGeneralDetails.endUser[0]);
+      } else if (!generalInformation.endUserName && originalSpaId) {
+        newGeneralDetails.endUser[0].companyName = generalInformation.endUserName;
+        newGeneralDetails.endUser[0] = clearEndUserInfo(newGeneralDetails.endUser[0]);
       }
       
       newGeneralDetails.attributes = newGeneralDetails.attributes || [];
@@ -382,6 +397,20 @@ const [flagDeal, setFlagDeal] = useState(false);
     });
   };
 
+  const clearEndUserInfo = (endUserInfo) => {
+    const endUser = { ...endUserInfo };
+    endUser.name = "";
+    endUser.line1 = "";
+    endUser.line2 = "";
+    endUser.city = "";
+    endUser.state = "";
+    endUser.postalCode = "";
+    endUser.country = "";
+    endUser.email = "";
+    endUser.phoneNumber = "";
+    return endUser;
+  };
+
   const setDealApplyAnalytics = (generalInfo) => {
     pushEvent(
       ANALYTICS_TYPES.events.qpDealApply,
@@ -395,12 +424,12 @@ const [flagDeal, setFlagDeal] = useState(false);
     );
   };
 
-  const endUserInfoChange = (endUserlInformation) => {
+  const endUserInfoChange = (endUserInformation) => {
     setQuoteWithoutEndUser(false);
     setQuoteDetails((previousQuoteDetails) => (
       {
         ...previousQuoteDetails,
-        endUser: [endUserlInformation],
+        endUser: [endUserInformation],
       }
     ));
   };

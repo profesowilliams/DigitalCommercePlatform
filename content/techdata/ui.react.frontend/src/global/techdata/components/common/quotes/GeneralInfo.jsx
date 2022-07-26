@@ -103,7 +103,8 @@ function GeneralInfo({quoteDetails, gridProps, hideDealSelector, isDealRequired,
             {
                 ...previousInfo,
                 deal: {},
-                spaId: ''
+                spaId: '',
+                endUserName: '',
             }
         ));
     }

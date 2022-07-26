@@ -36,10 +36,21 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       if (reseller){
         setLocalReseller(reseller)
       } else {
+        if (addresses.length === 0) {
+          fetchCustomerAddress();
+        }
         setLocalReseller(defaultReseller)
       }
     }
   }, [localReseller, reseller]);
+
+  useEffect(() => {
+    if (addresses.length === 1) {
+      setSelectedAddressId(0);
+      companyInfoChange(addresses[selectedAddressId]);
+      setSavedAddressId(selectedAddressId);
+    }
+  }, [addresses]);
 
   const handleOptionChange = (e) => {
     setSelectedAddressId(+e.target.value);
@@ -68,21 +79,21 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
     setLoading(true);
     setEditView(true);
 
-    const fetchCustomerAddress = async () => {
-      try {
-        const res = await usGet(
-          `${url}?criteria=CUS&ignoreSalesOrganization=false`
-        );
-        const data = res?.data?.content?.items[0];
-        setAddresses(data["addresses"]);
-      } catch (err) {
-        throw new Error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCustomerAddress();
+  };
+
+  const fetchCustomerAddress = async () => {
+    try {
+      const res = await usGet(
+        `${url}?criteria=CUS&ignoreSalesOrganization=false`
+      );
+      const data = res?.data?.content?.items[0];
+      setAddresses(data["addresses"]);
+    } catch (err) {
+      throw new Error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCompanyInfoAnalytics = () => {
