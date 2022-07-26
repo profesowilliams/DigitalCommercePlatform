@@ -10,13 +10,31 @@
 
 .cmp-renewal-preview {
   .details-container {
-    padding: 27px 0 0 15px;
+    display: flex;
+    padding: 27px 27px 0 15px;
+    justify-content: space-between;
     .details-preview {
         color: rgba(0, 12, 33, 1);
         font-size: 24px;
         font-weight: 600;
         letter-spacing: 0;
         line-height: 33px;
+    }
+    .icon-button {
+      display: flex;
+      align-items: center;
+      &__default {
+        background-color: transparent;
+        color: #005758;
+        &:hover {
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+      }
+    }
+    .icon-button__container {
+      display: flex;
+      align-items: center;
     }
   }
   .cmp-product-lines-grid__header {

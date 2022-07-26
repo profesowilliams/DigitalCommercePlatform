@@ -10,6 +10,10 @@ import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { useStore } from "../../../../utils/useStore"
 import { isAuthormodeAEM, isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { If } from "../../helpers/If";
+import Edit from "./Edit";
+import CancelAndSave from "./CancelAndSave";
+import Saving from "./Saving";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -26,6 +30,11 @@ function RenewalsDetails(props) {
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
+
+  const { showEditButtons } = componentProp.quotePreview;
+  const [toggleEdit, setToggleEdit] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const showEdit = showEditButtons && !saving;
 
   const redirectToShop = () => {
     window.location = shopURL;
@@ -83,6 +92,23 @@ function RenewalsDetails(props) {
     }
   }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
 
+  const handleIconEditClick = () => {
+    setToggleEdit(false);
+  };
+
+  const handleIconCancelClick = () => {
+    setToggleEdit(true);
+  };
+
+  const handleIconSaveClick = () => {
+    setSaving(true);
+    // timeout will be replaced with API promise return.
+    setTimeout(() => {
+      setSaving(false)
+      setToggleEdit(true)
+    }, 5000);
+  };
+
   return (
     <div className="cmp-quote-preview cmp-renewal-preview">
       {renewalsDetails ? (
@@ -96,6 +122,19 @@ function RenewalsDetails(props) {
           />
           <div className="details-container">
             <span className="details-preview">Details</span>
+            {showEdit && (
+              <If
+                condition={toggleEdit}
+                Then={<Edit handler={handleIconEditClick} />}
+                Else={
+                  <CancelAndSave
+                    cancelHandler={handleIconCancelClick}
+                    saveHandler={handleIconSaveClick}
+                  />
+                }
+              />
+            )}
+            {saving && <Saving />}
           </div>
           <RenewalPreviewGrid
             data={renewalsDetails}
@@ -119,7 +158,7 @@ function RenewalsDetails(props) {
       )}
       {modal && (
         <Modal
-          modalAction={modal.action}
+          // modalAction={modal.action} /** Commenting as this is a duplicate prop */
           modalContent={modal.content}
           modalProperties={modal.properties}
           modalAction={modal.modalAction}
