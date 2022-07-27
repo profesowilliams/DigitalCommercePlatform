@@ -6,11 +6,11 @@ import Pipe from "../Widgets/Pipe";
 function CancelAndSave({ cancelHandler, saveHandler }) {
   return (
     <div className="icon-button__container">
-      <IconButton icon={<CloseRoundIcon fill="#005758" />} onClick={cancelHandler}>
+      <IconButton icon={<CloseRoundIcon />} onClick={cancelHandler}>
         Cancel
       </IconButton>
       <Pipe />
-      <IconButton icon={<SaveIcon fill="#005758" />} onClick={saveHandler}>
+      <IconButton icon={<SaveIcon />} onClick={saveHandler}>
         Save
       </IconButton>
     </div>

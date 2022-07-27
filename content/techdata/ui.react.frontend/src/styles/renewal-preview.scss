@@ -11,7 +11,7 @@
 .cmp-renewal-preview {
   .details-container {
     display: flex;
-    padding: 27px 27px 0 15px;
+    padding: 27px 15px 0 15px;
     justify-content: space-between;
     .details-preview {
         color: rgba(0, 12, 33, 1);
@@ -35,6 +35,14 @@
     .icon-button__container {
       display: flex;
       align-items: center;
+    }
+    .loader-rotate {
+      animation: rotate 1.5s linear infinite;
+    }
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
     }
   }
   .cmp-product-lines-grid__header {

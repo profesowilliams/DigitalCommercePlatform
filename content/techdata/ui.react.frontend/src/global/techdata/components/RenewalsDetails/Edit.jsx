@@ -4,7 +4,7 @@ import IconButton from "../Widgets/IconButton";
 
 function Edit({ handler }) {
   return (
-    <IconButton icon={<PenIcon stroke="#005758" />} onClick={handler}>
+    <IconButton icon={<PenIcon />} onClick={handler}>
       Edit
     </IconButton>
   );

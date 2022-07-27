@@ -31,10 +31,8 @@ function RenewalsDetails(props) {
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
 
-  const { showEditButtons } = componentProp.quotePreview;
   const [toggleEdit, setToggleEdit] = useState(true);
   const [saving, setSaving] = useState(false);
-  const showEdit = showEditButtons && !saving;
 
   const redirectToShop = () => {
     window.location = shopURL;
@@ -106,8 +104,25 @@ function RenewalsDetails(props) {
     setTimeout(() => {
       setSaving(false)
       setToggleEdit(true)
-    }, 5000);
+    }, 2000);
   };
+
+  const EditFlow = () => {
+    return (
+      <If
+        condition={toggleEdit}
+        Then={<Edit handler={handleIconEditClick} />}
+        Else={
+          <CancelAndSave
+            cancelHandler={handleIconCancelClick}
+            saveHandler={handleIconSaveClick}
+          />
+        }
+      />
+    )
+  };
+
+  const isEditable = ({ canEditLines }) => canEditLines && !saving;
 
   return (
     <div className="cmp-quote-preview cmp-renewal-preview">
@@ -122,18 +137,7 @@ function RenewalsDetails(props) {
           />
           <div className="details-container">
             <span className="details-preview">Details</span>
-            {showEdit && (
-              <If
-                condition={toggleEdit}
-                Then={<Edit handler={handleIconEditClick} />}
-                Else={
-                  <CancelAndSave
-                    cancelHandler={handleIconCancelClick}
-                    saveHandler={handleIconSaveClick}
-                  />
-                }
-              />
-            )}
+            {isEditable(renewalsDetails) && <EditFlow />}
             {saving && <Saving />}
           </div>
           <RenewalPreviewGrid
