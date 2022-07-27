@@ -43,6 +43,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["listPrice"]) {
         productLines["listPrice"] = properties["listPrice"];
     }
+    if (properties && properties["percentOffListPrice"]) {
+        productLines["percentOffListPrice"] = properties["percentOffListPrice"];
+    }
     if (properties && properties["totalPrice"]) {
         productLines["totalPrice"] = properties["totalPrice"];
     }

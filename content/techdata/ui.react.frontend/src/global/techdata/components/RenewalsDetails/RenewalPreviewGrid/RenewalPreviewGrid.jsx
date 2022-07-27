@@ -46,14 +46,21 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     paginationStyle: "none",
   };
 
+  columnDefs[0] = {
+    ...columnDefs[0],
+    headerName: gridProps?.line
+  };
+
   columnDefs[1] = {
     ...columnDefs[1],
+    headerName: gridProps?.productfamily,
     valueGetter: ({ data }) =>
       data.product.find((p) => p.family)?.family ?? "N/A",
   };
 
   columnDefs[2] = {
     ...columnDefs[2],
+    headerName: gridProps?.productdescription,
     cellHeight: () => 80,
     cellRenderer: ({ data }) => (
       <RenewalProductLinesItemInformation
@@ -66,6 +73,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
 
   columnDefs[3] = {
     ...columnDefs[3],
+    headerName: gridProps?.vendorPartNo,
     cellRenderer: (props) => RenewalManufacturer(props)
   }
 
@@ -77,7 +85,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
 
   columnDefs[5] = {
     ...columnDefs[5],
-    headerName: "% off list \n price",
+    headerName: gridProps?.percentOffListPrice,
     valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
     cellRenderer: (props) => Price(props)
   };
@@ -86,6 +94,11 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     ...columnDefs[6],    
     headerName: gridProps.unitPrice?.replace('{currency-code}', data?.currency || ''),
     cellRenderer: (props) => Price(props)
+  };
+
+  columnDefs[7] = {
+    ...columnDefs[7],
+    headerName: gridProps?.quantity
   };
 
   //refactor later as renewals-grid  

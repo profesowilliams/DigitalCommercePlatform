@@ -97,6 +97,14 @@
                                                 name="./listPrice"
 												rows="2"
                                                 required="{Boolean}true"/>
+											<percentOffListPrice
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                fieldDescription="Enter Percentage off List price Label"
+                                                fieldLabel="Enter 1 or 2 lines for Percent off list price Label"
+                                                name="./percentOffListPrice"
+												rows="2"
+                                                required="{Boolean}true"/>
 											<totalPrice
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
