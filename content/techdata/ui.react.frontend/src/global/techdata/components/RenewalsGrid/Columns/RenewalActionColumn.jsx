@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
+import { CartIcon } from '../../../../../fluentIcons/fluentIcons';
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import PlaceOrderDialog from '../Orders/PlaceOrderDialog';
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from '../renewalUtils';
 import { useRenewalGridState } from '../store/RenewalsStore';
 
@@ -15,8 +17,10 @@ function _RenewalActionColumn({ eventProps }) {
     const effects = useRenewalGridState(state => state.effects);
     const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
     const { pageNumber } = useRenewalGridState(state => state.pagination);
+    const { orderingFromDashboard } = useRenewalGridState(state => state.aemConfig)
 
     const { value, data } = eventProps;
+   
     const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem", width: '1.3rem' };
     React.useEffect(() => {
         const currentNode = eventProps.node; 
@@ -84,8 +88,9 @@ function _RenewalActionColumn({ eventProps }) {
     }
     return (
         <>
-            <div className="cmp-renewal-action-container" onClick={toggleExpandedRow}>
-                <EllipsisIcon style={iconStyle} />
+            <div className="cmp-renewal-action-container">
+                <PlaceOrderDialog orderingFromDashboard={orderingFromDashboard} agreementNumber={data.agreementNumber} canPlaceOrder={data.canPlaceOrder} />
+                <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />
             </div>
         </>
     )

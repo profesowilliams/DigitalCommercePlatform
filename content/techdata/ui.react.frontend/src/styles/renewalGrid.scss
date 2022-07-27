@@ -479,9 +479,13 @@ span.ag-group-value {
   display: flex;
   width: 100%;
   height: 100%;
+  gap: 3px;
   justify-content: center;
   align-items: center;
   padding-right: 2rem;
+  > * {
+    cursor: pointer;   
+  }
 }
 
 .renewals-grid {

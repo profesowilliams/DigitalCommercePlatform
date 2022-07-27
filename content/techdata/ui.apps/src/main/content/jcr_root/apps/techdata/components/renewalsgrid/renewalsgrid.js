@@ -213,6 +213,8 @@ use(['../common/utils.js'], function(utils) {
     const sixtyOneDaysProperties = {values : ['afterThirtyIcon', 'afterThirtyIconColor'], propertyName: 'afterThirtyDaysRange'};   
     const sixtyOnePlusProperties = {values : ['sixtyPlusIcon', 'sixtyPlusIconColor'], propertyName:'sixtyPlusDaysRange'};
 
+    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink"]
+
     function populateOutterProperty (obj, prop) {
         const populated = utils.fillFieldsDialogProperties(prop.values);       
         const daysPropertyName = properties[prop.propertyName]
@@ -224,6 +226,8 @@ use(['../common/utils.js'], function(utils) {
         populateOutterProperty(icons,thirtyDaysProperties);
         populateOutterProperty(icons,sixtyOneDaysProperties);
         populateOutterProperty(icons,sixtyOnePlusProperties);  
+        const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
+        if (!!orderingFromDashboard) {jsonObject['orderingFromDashboard'] = orderingFromDashboard};
     }
 
     if (!!icons) {jsonObject['icons'] = icons};

@@ -877,6 +877,63 @@
                                     </columns>
                                 </items>
                             </icons>
+                            <orders
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Orders"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <columns
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                        margin="{Boolean}true">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <column
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <orderingGroup
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <showOrderingIcon
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                                name="./showOrderingIcon"
+                                                                text="Show Ordering Icon"
+                                                                uncheckedValue="false"
+                                                                value="true"/>
+                                                            <showOrderingIconTypeHint
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                                name="./showOrderingIcon@TypeHint"
+                                                                value="Boolean"/>
+                                                            <placeOrderDialogTitle
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="Place Order Dialog Title"
+                                                                name="./placeOrderDialogTitle"
+                                                                rootPath="/content/techdata"/>
+                                                            <termsAndConditions
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="Terms and Conditions"
+                                                                name="./termsAndConditions"
+                                                                rootPath="/content/techdata"/>
+                                                            <termsAndConditionsLink
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="Terms and Conditions"
+                                                                name="./termsAndConditionsLink"
+                                                                rootPath="/content/techdata"/>
+                                                        </items>
+                                                    </orderingGroup>
+                                                </items>
+                                            </column>
+                                        </items>
+                                    </columns>
+                                </items>
+                            </orders>
                         </items>
                     </tabs>
                 </items>

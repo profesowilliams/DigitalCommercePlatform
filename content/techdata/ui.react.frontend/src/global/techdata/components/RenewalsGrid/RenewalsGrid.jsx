@@ -13,11 +13,7 @@ import { getColumnDefinitions } from "./Columns/GenericColumnTypes";
 import RenewalDetailRenderers from "./Columns/RenewalDetailRenderers";
 import {
   addCurrentPageNumber,
-  isFilterPostRequest,
   mapServiceData,
-  mapSortIdByPrice,
-  fetchRenewalsByGet,
-  fetchRenewalsFilterByPost,
   setPaginationData,
   isFirstTimeSortParameters,
   clearLocalStorageGridData,
