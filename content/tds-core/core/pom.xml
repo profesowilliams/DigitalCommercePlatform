@@ -44,9 +44,7 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
-Export-Package:com.tdscore.core.*
-Sling-Model-Packages:com.tdscore.core.slingcaconfig,com.tdscore.core.config,com.tdscore.core.models,com.tdscore.core.services,com.tdscore.core.services.impl
-Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.*,com.tdscore.core.config,com.tdscore.core.models,com.tdscore.core.models.AzureAppInsightsModel,com.tdscore.core.models.CaConfigReader,com.tdscore.core.models.ExtractSVGModel,com.tdscore.core.services,com.tdscore.core.services.impl
+Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration,com.tdscore.core.slingcaconfig.MiniCartConfiguration,com.tdscore.core.slingcaconfig.AnalyticsConfiguration,com.tdscore.core.slingcaconfig.CatalogServiceConfiguration,com.tdscore.core.slingcaconfig.SearchBarConfiguration,com.tdscore.core.slingcaconfig.RedirectConfiguration,com.tdscore.core.slingcaconfig.CommonConfigurations,com.tdscore.core.slingcaconfig.FormConfigurations,com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration
                                 ]]></bnd>
                         </configuration>
                     </execution>

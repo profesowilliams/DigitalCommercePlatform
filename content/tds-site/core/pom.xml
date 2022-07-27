@@ -44,9 +44,6 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
-Export-Package:com.tdssite.core.*
-Sling-Model-Packages:com.tdssite.core.models,com.tdssite.core.util
-Sling-ContextAware-Configuration-Classes: com.tdssite.core.models.*
                                 ]]></bnd>
                         </configuration>
                     </execution>
