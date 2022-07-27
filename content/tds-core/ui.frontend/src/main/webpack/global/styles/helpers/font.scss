@@ -5,22 +5,52 @@
 .cmp-tds-font {
     &-everett {
         font-family: $font-family-marketing;
+        span {
+            font-family: $font-family-marketing;
+        }
+        p {
+            font-family: $font-family-marketing;   
+        }
 
         &-bold {
             font-family: $font-family-marketing-md;
+            span {
+            font-family: $font-family-marketing-md;
+            }
+            p {
+            font-family: $font-family-marketing-md;
+            }
         }
     }
 
     &-georgia-pro-reg {
         font-family: $font-family-georgia;
+        span {
+            font-family: $font-family-georgia;
+        }
+        p {
+            font-family: $font-family-georgia; 
+        }
     }
 
     &-georgia-pro-bold {
         font-family: $font-family-georgia-bold;
+        span {
+            font-family: $font-family-georgia-bold;
+        }
+        p {
+            font-family: $font-family-georgia-bold;
+        }
     }
 
     &-legacy {
         font-family: $open-sans;
+        span {
+            font-family: $open-sans;
+        }
+        p {
+            font-family: $open-sans;   
+        }
     }
 
     &-align {

@@ -18,6 +18,12 @@
 
   &__deep-teal {
     color: get-color(deep-teal) !important;
+    span {
+      color: get-color(deep-teal) !important;
+    }
+    p {
+      color: get-color(deep-teal) !important;
+    }
   }
 
   &__aqua {
@@ -34,6 +40,12 @@
 
   &__green {
     color: map-get($color-palette, "green") !important;
+    span {
+      color: map-get($color-palette, "green") !important;
+    }
+    p {
+      color: map-get($color-palette, "green") !important;
+    }
   }
 
   &__chartreuse {
@@ -42,15 +54,33 @@
 
   &__black {
     color: map-get($color-palette, "black") !important;
+    span {
+      color: map-get($color-palette, "black") !important;
+    }
+    p {
+      color: map-get($color-palette, "black") !important;
+    }
   }
 
   &__white {
     color: map-get($color-palette, "white") !important;
+    span {
+      color: map-get($color-palette, "white") !important;
+    }
+    p {
+      color: map-get($color-palette, "white") !important;
+    }
   }
 
   //TDS Secondary text colors
   &__steel-blue {
     color: get-color(steel-blue) !important;
+    span {
+      color: get-color(steel-blue) !important;
+    }
+    p {
+      color: get-color(steel-blue) !important;
+    }
   }
 
   &__navy {
@@ -63,10 +93,22 @@
 
   &__stone {
     color: get-color(stone) !important;
+    span {
+      color: get-color(stone) !important;
+    }
+    p {
+      color: get-color(stone) !important;
+    }
   }
 
   &__cool-gray-1 {
     color: get-color(cool-gray-1) !important;
+    span {
+      color: get-color(cool-gray-1) !important;
+    }
+    p {
+      color: get-color(cool-gray-1) !important;
+    }
   }
 
   //TDS Digital text colors
