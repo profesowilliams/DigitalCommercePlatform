@@ -29,7 +29,7 @@
             <label class="cmp-form-options__label" for="${options.id}">${options.title}</label>
             <select class="cmp-form-options__field cmp-form-options__field--${options.type.value}" name="${options.name}" id="${options.id}"
                     data-sly-list.optionItem="${options.items}"
-                    data-sly-attribute.multiple="${options.type.value == 'multi-drop-down'}">
+                    data-sly-attribute.multiple="${options.type.value == 'multi-drop-down'}" required="${properties.required}">
                 <option value="${optionItem.value}" selected="${optionItem.selected}" disabled="${optionItem.disabled}">${optionItem.text}</option>
             </select>
         </sly>
