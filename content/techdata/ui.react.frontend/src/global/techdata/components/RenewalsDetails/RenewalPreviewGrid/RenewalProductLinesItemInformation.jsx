@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 
-function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeModal }) {
+function RenewalProductLinesItemInformation({ line, isLink=true, shopDomainPage = "", invokeModal }) {
   const {product = [false,false]} = line;
   const [techdata, manufacturer] = product;
   const description = manufacturer?.name;
@@ -69,8 +69,8 @@ function RenewalProductLinesItemInformation({ line, shopDomainPage = "", invokeM
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-renewal-preview__prod-details">
             <a
-              href={formatShopDomainUrl()}
-              target="_blank"
+              href={isLink ? formatShopDomainUrl() : "javascript:void(0);"}
+              target={isLink ? "_blank" : null}
               className="cmp-product-lines-grid__item-information__box-text__header__link"
             >
               {formatDescription(description)}
