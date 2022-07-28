@@ -10,7 +10,6 @@
 
 //text colors
 .cmp-text {
-
   // TDS Primary text colors
   &__teal {
     color: map-get($color-palette, "teal") !important;
@@ -160,7 +159,6 @@
 
 //background colors
 .cmp-background {
-
   // TDS Primary background colors
   &__teal {
     background-color: map-get($color-palette, "teal") !important;

@@ -1,5 +1,9 @@
+@import "../../_mixins.scss";
+@import "../../styles/helpers/colors.scss";
+
 .cmp-tds {
     border-bottom: rem(1px) solid;
+
     .cmp-tabs {
         box-sizing: border-box;
         line-height: rem(25px);
@@ -8,13 +12,14 @@
             display: flex;
             list-style: none;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: space-around;
             padding: rem(10.5px) rem(60px);
             margin: 0;
         }
 
         &__tab {
             padding: 0;
+
             &--active {
                 text-decoration: none !important;
                 border-bottom: rem(2px) solid;
@@ -25,6 +30,328 @@
                 text-decoration: none !important;
                 border-bottom: rem(2px) solid;
                 border-color: inherit;
+            }
+        }
+    }
+
+    &-font {
+        &--everett {
+            .cmp-tabs__tablist {
+                font-family: $font-family-everett;
+
+                &--bold {
+                    font-family: $font-family-everett-md;
+                }
+            }
+        }
+    }
+
+    &-background {
+        &--teal {
+            .cmp-tabs__tablist {
+                @include background-teal;
+            }
+        }
+
+        &--deep-teal {
+            .cmp-tabs__tablist {
+                @include background-deep-teal;
+            }
+        }
+
+        &--aqua {
+            .cmp-tabs__tablist {
+                @include background-aqua;
+            }
+        }
+
+        &--chartreuse {
+            .cmp-tabs__tablist {
+                @include background-chartreuse;
+            }
+        }
+
+        &--cool-gray-8 {
+            .cmp-tabs__tablist {
+                @include background-cool-gray-8;
+            }
+        }
+
+        &--cool-gray-10 {
+            .cmp-tabs__tablist {
+                @include background-cool-gray-10;
+            }
+        }
+
+        &--green {
+            .cmp-tabs__tablist {
+                @include background-green;
+            }
+        }
+
+        &--black {
+            .cmp-tabs__tablist {
+                @include background-black;
+            }
+        }
+
+        &--white {
+            .cmp-tabs__tablist {
+                @include background-white;
+            }
+        }
+
+        //TDS Secondary background colors
+        &--steel-blue {
+            .cmp-tabs__tablist {
+                @include background-steel-blue;
+            }
+        }
+
+        &--navy {
+            .cmp-tabs__tablist {
+                @include background-navy;
+            }
+        }
+
+        &--copper {
+            .cmp-tabs__tablist {
+                @include background-copper;
+            }
+        }
+
+        &--stone {
+            .cmp-tabs__tablist {
+                @include background-stone;
+            }
+        }
+
+        &--cool-gray-1 {
+            .cmp-tabs__tablist {
+                @include background-cool-gray-1;
+            }
+        }
+
+        //TDS Digital background colors
+        &--cherry {
+            .cmp-tabs__tablist {
+                @include background-cherry;
+            }
+        }
+
+        &--amber {
+            .cmp-tabs__tablist {
+                @include background-amber;
+            }
+        }
+
+        &--forest {
+            .cmp-tabs__tablist {
+                @include background-forest;
+            }
+        }
+
+        &--charcoal {
+            .cmp-tabs__tablist {
+                @include background-charcoal;
+            }
+        }
+
+        &--cool-gray-9 {
+            .cmp-tabs__tablist {
+                @include background-cool-gray-9;
+            }
+        }
+
+        &--cobalt {
+            .cmp-tabs__tablist {
+                @include background-cobalt;
+            }
+        }
+
+        &--neutral-gray-1 {
+            .cmp-tabs__tablist {
+                @include background-neutral-gray-1;
+            }
+        }
+
+        &--neutral-gray-2 {
+            .cmp-tabs__tablist {
+                @include background-neutral-gray-2;
+            }
+        }
+
+        //Legacy background colors
+        &--dark-blue {
+            .cmp-tabs__tablist {
+                @include background-dark-blue;
+            }
+        }
+
+        &--sky-blue {
+            .cmp-tabs__tablist {
+                @include background-sky-blue;
+            }
+        }
+
+        &--legacy-gray {
+            .cmp-tabs__tablist {
+                @include background-legacy-gray;
+            }
+        }
+    }
+
+    &-text {
+        &--teal {
+            .cmp-tabs__tablist {
+                @include text-teal;
+            }
+        }
+
+        &--deep-teal {
+            .cmp-tabs__tablist {
+                @include text-deep-teal;
+            }
+        }
+
+        &--aqua {
+            .cmp-tabs__tablist {
+                @include text-aqua;
+            }
+        }
+
+        &--chartreuse {
+            .cmp-tabs__tablist {
+                @include text-chartreuse;
+            }
+        }
+
+        &--cool-gray-8 {
+            .cmp-tabs__tablist {
+                @include text-cool-gray-8;
+            }
+        }
+
+        &--cool-gray-10 {
+            .cmp-tabs__tablist {
+                @include text-cool-gray-10;
+            }
+        }
+
+        &--green {
+            .cmp-tabs__tablist {
+                @include text-green;
+            }
+        }
+
+        &--black {
+            .cmp-tabs__tablist {
+                @include text-black;
+            }
+        }
+
+        &--white {
+            .cmp-tabs__tablist {
+                @include text-white;
+            }
+        }
+
+        //TDS Secondary background colors
+        &--steel-blue {
+            .cmp-tabs__tablist {
+                @include text-steel-blue;
+            }
+        }
+
+        &--navy {
+            .cmp-tabs__tablist {
+                @include text-navy;
+            }
+        }
+
+        &--copper {
+            .cmp-tabs__tablist {
+                @include text-copper;
+            }
+        }
+
+        &--stone {
+            .cmp-tabs__tablist {
+                @include text-stone;
+            }
+        }
+
+        &--cool-gray-1 {
+            .cmp-tabs__tablist {
+                @include text-cool-gray-1;
+            }
+        }
+
+        //TDS Digital background colors
+        &--cherry {
+            .cmp-tabs__tablist {
+                @include text-cherry;
+            }
+        }
+
+        &--amber {
+            .cmp-tabs__tablist {
+                @include text-amber;
+            }
+        }
+
+        &--forest {
+            .cmp-tabs__tablist {
+                @include text-forest;
+            }
+        }
+
+        &--charcoal {
+            .cmp-tabs__tablist {
+                @include text-charcoal;
+            }
+        }
+
+        &--cool-gray-9 {
+            .cmp-tabs__tablist {
+                @include text-cool-gray-9;
+            }
+        }
+
+        &--cobalt {
+            .cmp-tabs__tablist {
+                @include text-cobalt;
+            }
+        }
+
+        &--neutral-gray-1 {
+            .cmp-tabs__tablist {
+                @include text-neutral-gray-1;
+            }
+        }
+
+        &--neutral-gray-2 {
+            .cmp-tabs__tablist {
+                @include text-neutral-gray-2;
+            }
+        }
+
+        //Legacy background colors
+        &--dark-blue {
+            .cmp-tabs__tablist {
+                @include text-dark-blue;
+            }
+        }
+
+        &--sky-blue {
+            .cmp-tabs__tablist {
+                @include text-sky-blue;
+            }
+        }
+
+        &--legacy-gray {
+            .cmp-tabs__tablist {
+                @include text-legacy-gray;
             }
         }
     }
