@@ -40,8 +40,8 @@ function PlaceOrderDialog({ orderingFromDashboard, agreementNumber, canPlaceOrde
     },
   });
 
-  const showAgreementNumber = (text) => {   
-    if (text.includes("_")){
+  const showAgreementNumber = (text) => {       
+    if (!!text && text.includes("_")){
       const splitted = text.split("_").map(_text => _text);
       splitted.splice(1,0,(<>
         <span><b>Agreement No: {agreementNumber}</b></span>
@@ -52,6 +52,7 @@ function PlaceOrderDialog({ orderingFromDashboard, agreementNumber, canPlaceOrde
   };
 
   const constructTermsCondLink = (text) => {
+    if (!text) return null;
     const splitted = text.split(/\b(?=terms .+ conditions)/gi);  
     return splitted.map((_text, index) => 
         index === 1 ? (<a href={termsAndConditionsLink} className="cmp-place-order-link">{_text}</a>) : _text

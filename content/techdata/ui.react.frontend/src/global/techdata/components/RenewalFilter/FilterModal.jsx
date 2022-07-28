@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useRef } from "react";
 import ReactDOM from "react-dom";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { pushEvent } from "../../../../utils/dataLayerUtils";
@@ -63,6 +64,17 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   const root = filterList ? filterList[0] : false;
   const rootIds = root ? root.childIds : [];
+  const filterDom = useRef();
+
+  useEffect(() => {
+    function dynamicFilterAdjustmnet(){   
+      const {top} = filterDom.current.getBoundingClientRect();     
+      filterDom.current.style.height = `calc(100vh - ${top}px)`;
+      document.body.style.overflow = "hidden";
+    }
+    setTimeout(dynamicFilterAdjustmnet, 0);
+    return () => document.body.style.overflow = "initial";
+  },[]);
 
   /**
    * Triggerred when the "show results" button is clicked on
@@ -90,7 +102,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   return ReactDOM.createPortal(
     <>
       <div className="filter-modal-container" />
-      <div className="filter-modal-content">
+      <div className="filter-modal-content" ref={filterDom}>
         <RenewalErrorBoundary>
           <Button
             onClick={handleFilterCloseClick}
