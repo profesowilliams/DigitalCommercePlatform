@@ -213,7 +213,7 @@ use(['../common/utils.js'], function(utils) {
     const sixtyOneDaysProperties = {values : ['afterThirtyIcon', 'afterThirtyIconColor'], propertyName: 'afterThirtyDaysRange'};   
     const sixtyOnePlusProperties = {values : ['sixtyPlusIcon', 'sixtyPlusIconColor'], propertyName:'sixtyPlusDaysRange'};
 
-    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink"]
+    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink","successSubmission","failedSubmission"]
 
     function populateOutterProperty (obj, prop) {
         const populated = utils.fillFieldsDialogProperties(prop.values);       

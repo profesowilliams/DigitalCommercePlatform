@@ -40,6 +40,12 @@
     sixtyPlusDaysRange="61+"
     sixtyPlusIcon="calendar"
     sixtyPlusIconColor="#006FBA"
+    showOrderingIcon="{Boolean}false"
+    placeOrderDialogTitle="To continue placing your order for _ please provide the following information."
+    termsAndConditions="I have read and accept Terms &amp; Conditions"
+    termsAndConditionsLink="https://www.techdata.com/content/visitor/abouttd/conditions.aspx"
+    successSubmission="Changes have been successfully added."
+    failedSubmission="Please try again. If the error persists please contact us at _"
     >
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0
