@@ -1,14 +1,6 @@
-.cmp-carousel__content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
+// TODO: Remove unwanted comments and commented out styles.
 .dp-carousel {
   position: relative;
-  -webkit-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
 
   &.dp-carousel__navigation--hero1 {
     .dp-carousel__nav {
@@ -27,6 +19,7 @@
     .dp-carousel__nav-labels {
       display: flex;
       align-items: center;
+      z-index: 1;
 
       @include tablet {
         justify-content: center;
@@ -41,6 +34,14 @@
       margin: 0 rem(16px);
       position: relative;
       text-decoration: none;
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+        margin: 0;
+        padding: 0;
+      }
 
       @include tablet {
         font-size: 0;
@@ -77,7 +78,6 @@
       &:hover {
         color: get-color(brand-white);
         opacity: 1;
-        background-color: transparent;
 
         @include tablet {
           opacity: 0.5;
@@ -96,11 +96,23 @@
       left: rem(-20px);
       top: 0;
       display: inline-block;
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+        box-shadow: 8px 0 0 0 get-color(secondary-light-grey);
+        padding: 0;
+        position: absolute;
+        left: -1.25rem;
+        top: 0;
+        display: inline-block;
+        height: 100%;
+        width: 2px;
+        color: transparent;   
+    }
     }
   }
 
   &.dp-carousel__alert--hero1 {
     .dp-carousel__alert {
+      //px-4 py-3 mt-1 position-absolute w-100
       padding: rem(16px) rem(24px);
       position: absolute;
       width: 100%;
@@ -121,7 +133,18 @@
 
     .dp-carousel__alert-container {
       display: flex;
+      flex-direction: row;
       align-items: center;
+      max-width: 90rem;
+      margin: 0 auto;
+
+      @media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+        flex-direction: column;
+        align-items:  center;
+        text-align: center;
+        line-height: normal;   
+        align-content: center;     
+    }
 
       @include tablet {
         flex-direction: column;
@@ -130,6 +153,7 @@
     }
 
     .dp-carousel__alert-text {
+      //col position-relative h5 m-0 text-shadow-1
       flex: 1 0 0%;
       position: relative;
       font-size: rem(22px);
@@ -146,48 +170,44 @@
     }
 
     .dp-carousel__alert-buttons {
+      //col-md-auto d-flex align-items-end position-relative
       flex: 0 0 auto;
       position: relative;
       display: flex;
       align-items: flex-end;
-      flex-direction: raw;
 
       @include tablet {
         font-size: rem(12px);
         letter-spacing: 0;
         line-height: rem(13px);
-        flex-direction: raw;
-        align-items: flex-start;
-      }
-
-      @include mobile {
-        font-size: rem(12px);
-        letter-spacing: 0;
-        line-height: rem(13px);
         flex-direction: column;
         align-items: flex-start;
-      }
-
-      @media (max-width: 813px) {
-        flex-direction: column;
-        align-items: center;
-        margin: 0 auto;
       }
     }
 
     .dp-carousel__alert-button {
+      //text-uppercase btn btn-light rounded-0 font-weight-bold mr-4
       background-color: get-color(brand-white);
       color: get-color(brand-button-blue);
       border: 0 none;
       text-decoration: none;
       vertical-align: middle;
       padding: rem(4.8px) rem(12px);
+        margin-right: rem(24px);
       font-weight: bold;
       text-transform: uppercase;
-      margin-right: rem(24px);
-      margin-bottom: rem(10px);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
 
-      @media (max-width: 813px) {
+      @include tablet {        
+        margin-top: rem(10px);
+        margin-right: 0;
+      } 
+
+      @include mobile {        
+        margin-top: rem(10px);
         margin-right: 0;
       }
     }
@@ -203,7 +223,7 @@
             background: linear-gradient(180deg,
                 rgba(0, 12, 33, 0) 0%,
                 get-color(brand-blue) 100%);
-            height: 135px;
+            height: rem(135px);
             content: " ";
             width: 100%;
             position: absolute;
@@ -218,7 +238,7 @@
 
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav {
   display: flex;
-  padding-bottom: 10px;
+  padding: rem(10px) rem(36px);
 
   .dp-carousel__nav-label {
     &::before {
@@ -233,11 +253,13 @@
     border-radius: 50%;
     box-sizing: border-box;
     margin: 0 rem(6.4px);
+    box-shadow: inset 0 0 0 rem(1px) get-color(cool-gray-1);
 
     &.cmp-carousel__indicator--active,
     &:hover {
-      color: get-color(brand-white);     
+      color: map-get($color-palette, "black");
       opacity: 1;
+      background-color: map-get($color-palette, "black");
     }
   }
 }
@@ -246,16 +268,26 @@
   display: none;
 }
 
+@media screen and (min-device-width: 1024px) and (max-device-width: 1440px) { 
+  .carousel-max-1440.dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
+    max-width: 90rem;
+    left: 0 !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
 @include desktop {
   .carousel-max-1440 .cmp-carousel .cmp-teaser__content {
     max-width: 90rem;
     margin: 0 auto !important;
   }
 
-  .carousel-max-1440.dp-carousel.dp-carousel__alert--hero1 .dp-carousel__alert-container {
-    max-width: 90rem;
-    margin: 0 auto;
-  }
+  // .carousel-max-1440.dp-carousel.dp-carousel__alert--hero1 .dp-carousel__alert-container {
+  //   max-width: 90rem;
+  //   margin: 0 auto;
+  // }
 
   .carousel-max-1440.dp-carousel.dp-carousel__navigation--hero1 .dp-carousel__nav-labels {
     max-width: 90rem;
@@ -280,7 +312,6 @@
   }
 }
 
-
 // New nav dots styling
 .cmp-carousel__indicators {
   align-self: center;
@@ -288,7 +319,7 @@
   flex-wrap: nowrap;
 
   &--active {
-    background-color: get-color(brand-blue);
+    //background-color: get-color(brand-blue) !important;
   }
 
   //New classes for position of carousel dots
@@ -303,6 +334,37 @@
     .cmp-carousel__indicators {
       align-self: flex-end;
       padding-right: 25%;
+    }
+  }
+}
+
+.tds-alertcarousel {
+  &.dp-carousel {
+    &.dp-carousel__navigation--hero1 .dp-carousel__nav-label {
+      font-size: rem(14px);
+
+      &::before {
+        background-color: map-get($color-palette, "green") !important;
+      }
+    }
+
+    &.dp-carousel__alert--hero1 {
+      .dp-carousel__alert-button-color {
+        color: get-color(deep-teal);
+      }
+
+      .dp-carousel__alert-buttons {
+        a {
+          color: get-color(deep-teal);
+          svg {
+            path {
+              fill: get-color(deep-teal);
+              stroke-width: 8% !important;
+              stroke: get-color(deep-teal);
+            }
+          }
+        }
+      }
     }
   }
 }

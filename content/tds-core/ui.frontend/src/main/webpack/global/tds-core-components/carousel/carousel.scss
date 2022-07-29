@@ -78,7 +78,6 @@
       &:hover {
         color: get-color(brand-white);
         opacity: 1;
-        background-color: map-get($color-palette, "black");
 
         @include tablet {
           opacity: 0.5;
@@ -239,9 +238,7 @@
 
 .dp-carousel:not(.dp-carousel__navigation--hero1) .dp-carousel__nav {
   display: flex;
-  padding-bottom: rem(10px);
-  padding-left: rem(36px);
-  padding-right: rem(36px);
+  padding: rem(10px) rem(36px);
 
   .dp-carousel__nav-label {
     &::before {
@@ -262,6 +259,7 @@
     &:hover {
       color: map-get($color-palette, "black");
       opacity: 1;
+      background-color: map-get($color-palette, "black");
     }
   }
 }
@@ -338,6 +336,14 @@
       padding-right: 25%;
     }
   }
+}
+
+.cmp-carousel {
+  &__indicator {
+      &--active {
+          background-color: rgba(0,0,0,0) !important;
+      }
+    } 
 }
 
 .tds-alertcarousel {
