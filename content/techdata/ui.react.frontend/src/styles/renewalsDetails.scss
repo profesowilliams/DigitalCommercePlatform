@@ -1,0 +1,53 @@
+.cmp-renewals-details {
+    .cmp-quantity-column {
+        display: grid;
+        grid-template-columns: 19px 34px;
+        grid-template-rows: 18px 18px;
+        grid-template-areas: 
+            "add      input"
+            "subtract input";
+        
+        &__btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #005758;
+            color: #FFFFFF;
+
+            &--disabled {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #D9D8D7;
+                color: #262626;
+            }
+
+            &:hover {
+                background-color: #08BED5;
+                color: #262626;
+                cursor: pointer;
+            }
+
+            &-icon {
+                height: 11px;
+                width: 11px;
+            }
+        }
+
+        &__input {
+            grid-area: input;
+            border: 1px solid #75716E;
+            text-align: right;
+            
+            &:focus {
+                border: 1px solid #75716E;
+            }
+
+            &::-webkit-inner-spin-button,
+            &::-webkit-outer-spin-button { 
+                -webkit-appearance: none;
+            }
+            -moz-appearance: textfield;
+        }
+    }
+}

@@ -146,6 +146,7 @@ function RenewalsDetails(props) {
               ...componentProp.productLines,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
             }}
+            isEditing={!toggleEdit}
             shopDomainPage={componentProp.shopDomainPage}
           />
         </section>

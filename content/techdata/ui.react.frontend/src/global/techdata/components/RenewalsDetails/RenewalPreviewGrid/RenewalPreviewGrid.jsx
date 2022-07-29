@@ -1,12 +1,12 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
 import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
 import RenewalManufacturer from "./RenewalManufacturer";
 import { thousandSeparator } from "../../../helpers/formatting";
-
+import QuantityColumn from "../Columns/QuantityColumn.jsx";
 
 function GridSubTotal({ data, gridProps }) {
   return (
@@ -37,7 +37,7 @@ function Price({ value }) {
   return <div className="price">{thousandSeparator(value)}</div>;
 }
 
-function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
+function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
   const [modal, setModal] = useState(null);
   const gridData = data.items ?? [];
   const gridConfig = {
@@ -45,6 +45,26 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     serverSide: false,
     paginationStyle: "none",
   };
+
+  // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
+  const isEditingRef = useRef(isEditing);
+
+  // Get gridApi
+  const [gridApi, setGridApi] = useState(null);
+  function onAfterGridInit({ api }) {
+    setGridApi(api);
+  }
+
+  // On isEditing prop change, update ref and refresh the cell
+  useEffect(() => {
+    isEditingRef.current = isEditing;
+    if(gridApi) {
+      gridApi.refreshCells({
+        columns: ["quantity"],
+        force: true,
+      });
+    }
+  }, [isEditing])
 
   columnDefs[0] = {
     ...columnDefs[0],
@@ -97,9 +117,11 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
     cellRenderer: (props) => Price(props)
   };
 
+  // Pass isEditingRef value to quantity column for rendering
   columnDefs[7] = {
     ...columnDefs[7],
-    headerName: gridProps?.quantity
+    headerName: gridProps?.quantity,
+    cellRenderer: (props) => QuantityColumn({ ...props, isEditing: isEditingRef.current }),
   };
 
   //refactor later as renewals-grid  
@@ -120,9 +142,10 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage }) {
   }
 
   return (
-    <div className="cmp-product-lines-grid">
+    <div className="cmp-product-lines-grid cmp-renewals-details">
       <section>
         <Grid
+          onAfterGridInit={onAfterGridInit}
           columnDefinition={columnDefs}
           config={gridConfig}
           data={mutableGridData}
