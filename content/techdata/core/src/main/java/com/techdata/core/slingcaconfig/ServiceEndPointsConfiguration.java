@@ -151,5 +151,14 @@ public @interface ServiceEndPointsConfiguration {
     
     @Property(label = "Export PDF Renewals Grid Endpoint", description = "Export PDF Renewals Grid Endpoint")
     String exportPDFRenewalsEndpoint();
+    
+    @Property(label = "Renewal Order Endpoint", description = "Renewal Order Endpoint")
+    String renewalOrderEndpoint();
+    
+    @Property(label = "Renewal Update Endpoint", description = "Renewal Update Endpoint")
+    String renewalUpateEndpoint();
+    
+    @Property(label = "Renewal GetStatus Endpoint", description = "Renewal GetStatus Endpoint")
+    String renewalGetStatusEndpoint();
 
 }

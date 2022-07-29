@@ -204,6 +204,18 @@ use(['../common/utils.js'], function(utils) {
     if (this.exportPDFRenewalsEndpoint != null && this.serviceData.uiServiceDomain) {
         jsonObject["exportPDFRenewalsEndpoint"] = this.serviceData.uiServiceDomain + this.exportPDFRenewalsEndpoint;
     }
+
+    if (this.updateRenewalOrderEndpoint != null && this.serviceData.uiServiceDomain) {
+        jsonObject["updateRenewalOrderEndpoint"] = this.serviceData.uiServiceDomain + this.updateRenewalOrderEndpoint;
+    }
+
+    if (this.getStatusEndpoint != null && this.serviceData.uiServiceDomain) {
+        jsonObject["getStatusEndpoint"] = this.serviceData.uiServiceDomain + this.getStatusEndpoint;
+    }
+
+    if (this.orderRenewalEndpoint != null && this.serviceData.uiServiceDomain) {
+        jsonObject["orderRenewalEndpoint"] = this.serviceData.uiServiceDomain + this.orderRenewalEndpoint;
+    }
     
     if (this.renewalDetailsEndpoint && this.serviceData.uiServiceDomain) {
         jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;

@@ -204,6 +204,12 @@ public class CaConfigReader {
 
     private String exportPDFRenewalsEndpoint;
 
+    private String renewalOrderEndpoint;
+
+    private String renewalUpateQuoteEndpoint;
+
+    private String renewalGetStatusEndpoint;    
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -258,6 +264,9 @@ public class CaConfigReader {
         renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
         renewalDetailLineItemEndpoint = serviceEndPointsConfiguration.renewalDetailLineItemEndpoint();
         renewalDetailsEndpoint = serviceEndPointsConfiguration.renewalDetailsEndpoint();
+        renewalOrderEndpoint = serviceEndPointsConfiguration.renewalOrderEndpoint();
+        renewalUpateQuoteEndpoint = serviceEndPointsConfiguration.renewalUpateEndpoint();
+        renewalGetStatusEndpoint = serviceEndPointsConfiguration.renewalGetStatusEndpoint();
         exportXLSRenewalsEndpoint = serviceEndPointsConfiguration.exportXLSRenewalsEndpoint();
         exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
         cartURL = mcConfiguration.cartURL();
@@ -662,4 +671,15 @@ public class CaConfigReader {
         return enableQualtricsCode;
     }
 
+    public String getRenewalOrderEndpoint(){
+        return renewalOrderEndpoint;
+    };
+
+    public String getRenewalUpateQuoteEndpoint(){
+        return renewalUpateQuoteEndpoint;
+    };
+
+    public String getRenewalGetStatusEndpoint(){
+        return renewalGetStatusEndpoint;
+    };
 }

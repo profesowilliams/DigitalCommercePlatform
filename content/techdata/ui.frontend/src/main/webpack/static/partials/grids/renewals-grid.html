@@ -15,6 +15,9 @@
     uiServiceEndPointExcel: "",
     exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
     exportXLSRenewalsEndpoint:"http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",
+    updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
+    getStatusEndpoint:"http://localhost:3000/ui-renewal/v1/getStatus",
+    orderRenewalEndpoint:"http://localhost:3000/ui-renewal/v1/order",
     columnList: [
       {
         columnLabel: "Reseller name",
@@ -204,7 +207,7 @@
       placeOrderDialogTitle:'To continue placing your order for _ please provide the following information.',
       termsAndConditions:"I have read and accept Terms & Conditions",
       termsAndConditionsLink:"https://www.techdata.com/content/visitor/abouttd/conditions.aspx",     
-      successSubmission:"Changes have been successfully added.",
+      successSubmission:"Your order has been successfully submitted for processing. You will receive an email once processing is complete",
       failedSubmission:"Please try again. If the error persists please contact us at _" 
     }
 

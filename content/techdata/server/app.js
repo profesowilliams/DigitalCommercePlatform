@@ -4553,3 +4553,78 @@ app.get("/ui-commerce/v1/quote/canConvertToOrder", function (req, res) {
   console.log(`Verifying UAN Qty for Quote #${req.query.id}`);
   req.query.s === "1" ? res.json(success) : res.json(fail);
 });
+
+app.put("/ui-renewal/v1/Update", function (req, res){
+  const fail = {
+    "content": {
+      "salesContentEmail":"emailFromBackend@myvendormail.com"
+    },
+    "error": {
+      "code": 400,
+      "messages": [
+        "Renewals Quote Update failed"
+      ],
+      "isError": true
+    }
+  };
+  return res.status(200).json({});
+} )
+
+app.get("/ui-renewal/v1/getStatus/:id", function (req, res){
+  const { id } = req.params;
+  const success = {
+    "content": {
+      "sattus":"Active"
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  };
+  return res.status(200).json({});
+} )
+
+app.get("/ui-renewal/v1/getStatus/:id", function (req, res){
+  const { id } = req.params;
+  const success = {
+    "content": {
+      "sattus":"Active"
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  };
+  return res.status(200).json({});
+} )
+
+
+app.post("/ui-renewal/v1/order", function (req, res){
+  const { id } = req.params;
+  const success = {
+    "content": {
+      "confirmationNumber":"1234566"
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  };
+
+  const fail = {
+    "content": {
+      "salesContentEmail":"emailFromBackend@myvendormail.com"
+    },
+    "error": {
+      "code": 400,
+      "messages": [
+        "Renewals Quote Update failed"
+      ],
+      "isError": true
+    }
+  };
+  return res.status(200).json(success);
+} )

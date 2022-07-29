@@ -13,3 +13,38 @@ p.cmp-place-order-actions {
 		cursor: pointer;
 	}
 }
+
+.cmp-place-order-terms label{	
+    cursor: pointer;
+}
+
+.toaster-modal {
+    .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
+        height: auto;
+        top: 13rem;
+        right: 2rem;
+        width: 30rem;
+        .cmp-toaster-content{
+            padding: 29px;
+            border-left: 9px solid #207c71;
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            p{
+                padding: 0;
+                margin: 0;
+                text-align: justify;
+                margin-bottom: 21px;
+            }
+            &__closeIcon{
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+                svg {
+                    width: 20px;
+                }
+            }
+        }
+    }
+}
