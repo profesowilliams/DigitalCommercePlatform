@@ -41,7 +41,6 @@ public class ExtractSVGModel {
 
   @PostConstruct
   protected void init() {
-    log.info("inside init");
 
     this.asset = Optional.ofNullable(this.resource)
             .map(imageResource -> imageResource.getValueMap().get(FILE_REFERENCE_PN, String.class))

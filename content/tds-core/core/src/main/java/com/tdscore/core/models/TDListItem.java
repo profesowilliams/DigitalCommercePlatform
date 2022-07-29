@@ -28,7 +28,6 @@ public class TDListItem extends VendorListItem  {
 
     public TDListItem(String title, String overview,String vendorIcon, String pageLink, String vendorPageLabel, String vendorProductLabel, String vendorProductLink, List<String> tags, ListItem listItem) {
         super(title, overview, vendorIcon, pageLink, vendorPageLabel, vendorProductLabel, vendorProductLink, tags, listItem);
-        log.info("TDListItem contructor");
         this.listItem = listItem;
     }
 
