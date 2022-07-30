@@ -45,9 +45,22 @@ use(function () {
 
         return checkoutConfigurations;
     }
+    function fillFieldsDialogProperties(fieldList){
+        const fieldObject = {};
+        for (let field of fieldList){
+            if (properties[field]) {fieldObject[field] = properties[field]};
+        }
+        return fieldObject;         
+    }
+    function populateOutterProperty (obj, property, fieldList) {
+        const populated = fillFieldsDialogProperties(fieldList);
+        if (populated) {obj[property] = populated};
+    }
     return {
         getDataFromMultifield: getDataFromMultifield,
         populateCommonConfigurations: populateCommonConfigurations,
-        getCheckoutConfigurations: getCheckoutConfigurations
+        getCheckoutConfigurations: getCheckoutConfigurations,
+        fillFieldsDialogProperties:fillFieldsDialogProperties,
+        populateOutterProperty:populateOutterProperty
     }
 });
