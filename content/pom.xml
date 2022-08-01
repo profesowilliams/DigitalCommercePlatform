@@ -29,6 +29,7 @@
         <module>tds-core</module>
         <module>tds-site</module>
         <module>techdata</module>
+        <module>tds-component-lib</module>
         <module>dispatcher</module>
     </modules> 
 </project>

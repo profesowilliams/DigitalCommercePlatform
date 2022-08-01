@@ -34,6 +34,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["productdescription"]) {
         productLines["productdescription"] = properties["productdescription"];
     }
+    if (properties && properties["disableProductDetailsLink"]) {
+        productLines["disableProductDetailsLink"] = properties["disableProductDetailsLink"];
+    }
     if (properties && properties["vendorPartNo"]) {
         productLines["vendorPartNo"] = properties["vendorPartNo"];
     }
