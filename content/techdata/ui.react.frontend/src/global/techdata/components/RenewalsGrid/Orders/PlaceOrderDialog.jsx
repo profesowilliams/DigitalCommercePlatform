@@ -88,8 +88,8 @@ function PlaceOrderDialog({
   };
 
   const showAgreementNumber = (text) => {
-    if (!!text && text.includes("_")) {
-      const splitted = text.split("_").map((_text) => _text);
+    if (!!text && text.includes("({agreement-number}\)")) {
+      const splitted = text.split(/\({agreement-number}\)/img).map((_text) => _text);
       splitted.splice(
         1,
         0,
@@ -101,6 +101,7 @@ function PlaceOrderDialog({
       );
       return splitted;
     }
+    console.log('⚠ ({agreement-number}) placeholder missing on textfield dialog');
     return null;
   };
 

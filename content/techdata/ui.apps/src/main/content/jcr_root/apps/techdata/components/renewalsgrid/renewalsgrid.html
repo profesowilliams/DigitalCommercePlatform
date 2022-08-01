@@ -3,7 +3,7 @@
       <div class="cq-placeholder" data-emptyText="${component.title}"></div>
   </sly>
 
-  <sly data-sly-use.model="${'renewalsgrid.js' @ multifieldName='columnList', serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,exportXLSRenewalsEndpoint=serviceData.exportXLSRenewalsEndpoint,exportPDFRenewalsEndpoint=serviceData.exportPDFRenewalsEndpoint,renewalDetailsEndpoint=serviceData.renewalDetailsEndpoint,shopDomainPage=serviceData.searchDomain,updateRenewalOrderEndpoint=serviceData.renewalOrderEndpoint,getStatusEndpoint=serviceData.renewalGetStatusEndpoint,orderRenewalEndpoint=serviceData.renewalOrderEndpoint}">
+  <sly data-sly-use.model="${'renewalsgrid.js' @ multifieldName='columnList', serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,exportXLSRenewalsEndpoint=serviceData.exportXLSRenewalsEndpoint,exportPDFRenewalsEndpoint=serviceData.exportPDFRenewalsEndpoint,renewalDetailsEndpoint=serviceData.renewalDetailsEndpoint,shopDomainPage=serviceData.searchDomain,updateRenewalOrderEndpoint=serviceData.renewalUpdateQuoteEndpoint,getStatusEndpoint=serviceData.renewalGetStatusEndpoint,orderRenewalEndpoint=serviceData.renewalOrderEndpoint}">
 
   <div data-observe-mutation>
     <div

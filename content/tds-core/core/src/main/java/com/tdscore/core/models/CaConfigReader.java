@@ -206,7 +206,7 @@ public class CaConfigReader {
 
     private String renewalOrderEndpoint;
 
-    private String renewalUpateQuoteEndpoint;
+    private String renewalUpdateQuoteEndpoint;
 
     private String renewalGetStatusEndpoint;    
 
@@ -265,7 +265,7 @@ public class CaConfigReader {
         renewalDetailLineItemEndpoint = serviceEndPointsConfiguration.renewalDetailLineItemEndpoint();
         renewalDetailsEndpoint = serviceEndPointsConfiguration.renewalDetailsEndpoint();
         renewalOrderEndpoint = serviceEndPointsConfiguration.renewalOrderEndpoint();
-        renewalUpateQuoteEndpoint = serviceEndPointsConfiguration.renewalUpateEndpoint();
+        renewalUpdateQuoteEndpoint = serviceEndPointsConfiguration.renewalUpateEndpoint();
         renewalGetStatusEndpoint = serviceEndPointsConfiguration.renewalGetStatusEndpoint();
         exportXLSRenewalsEndpoint = serviceEndPointsConfiguration.exportXLSRenewalsEndpoint();
         exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
@@ -675,8 +675,8 @@ public class CaConfigReader {
         return renewalOrderEndpoint;
     };
 
-    public String getRenewalUpateQuoteEndpoint(){
-        return renewalUpateQuoteEndpoint;
+    public String getrenewalUpdateQuoteEndpoint(){
+        return renewalUpdateQuoteEndpoint;
     };
 
     public String getRenewalGetStatusEndpoint(){
