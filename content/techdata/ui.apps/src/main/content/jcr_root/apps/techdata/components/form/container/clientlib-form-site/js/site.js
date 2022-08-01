@@ -24,7 +24,6 @@
             }
         });
 
-        var selects = form.getElementsByTagName('input');
         var inputsList = Array.prototype.slice.call(inputs);
         var selects = form.getElementsByTagName('select');
         var selectsList = Array.prototype.slice.call(selects);
@@ -213,7 +212,6 @@
         let errorLabelInnertext = parentDiv.dataset.cmpRequiredMessage ? parentDiv.dataset.cmpRequiredMessage : "This field is required";
         const querySelector = parentDiv.querySelector("fieldset");
         const lineBreak = document.createElement('br');
-        const setTimeoutTimerValue = 10000;
         let flagOptionBR = false;
         let flagFileBR = parentDiv.querySelector('input[type=file]');
         if (querySelector) {
@@ -242,7 +240,6 @@
     function initValidation(form)
     {
         var inputs = form.getElementsByTagName('input');
-        var selects = form.getElementsByTagName('input');
         var inputsList = Array.prototype.slice.call(inputs);
         var selects = form.getElementsByTagName('select');
         var selectsList = Array.prototype.slice.call(selects);
@@ -273,11 +270,21 @@
                 });
             }
         );
-    }
 
+        selectsList.forEach((i) => {
+                i.addEventListener('invalid', (e) => {
+                    inputErrorMessageDisplay(i.type, e, i);
+                    // Add CLICK event listener to parent of the element 
+                    const parentDiv = i.closest("fieldset");
+                    parentDiv.addEventListener('click', (e) => removeErrorLabelChild(i));
+                });
+            }
+        );
+    }
+    
     function removeErrorLabelChild(input) {
         const inputType = input.type;
-        const flagFieldsetField = inputType === 'checkbox' || inputType === 'select' || inputType === 'radio';
+        const flagFieldsetField = inputType === 'checkbox' || inputType === 'select' || inputType === 'radio' || inputType === 'select-one' || inputType === 'select-multiple'; ;
         const parentDiv = flagFieldsetField ? input.closest("fieldset") : input.closest("div");
         const errorLabel = parentDiv.getElementsByClassName(errorLabelClass)[0];
         if (flagFieldsetField) {
@@ -295,11 +302,9 @@
         var submitButton = document.getElementById("formSubmit");
         var tdForm = document.getElementById("tdForm");
         var redirectSuccess = document.getElementsByName(":redirect");
-
         if (tdForm) {
             initValidation(tdForm);
         }
-
         if(tdForm) {
             var inputs = tdForm.getElementsByTagName('input'); // get input files in the form
             var inputsList = Array.prototype.slice.call(inputs); // creating an array
@@ -349,7 +354,6 @@
                     e.preventDefault();
                     console.error();
                 }
-
             });
         }
     });
