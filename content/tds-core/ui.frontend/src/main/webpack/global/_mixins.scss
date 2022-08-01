@@ -299,3 +299,111 @@
   @mixin text-legacy-gray {
     color: get-color(legacy-gray) !important;
   }
+
+
+  
+  // TDS Primary border colors
+  @mixin border-teal {
+    border-color: map-get($color-palette, "teal") !important;
+  }
+
+  @mixin border-deep-teal {
+    border-color: get-color(deep-teal) !important;
+  }
+
+  @mixin border-aqua {
+    border-color: map-get($color-palette, "aqua") !important;
+  }
+
+  @mixin border-chartreuse {
+    border-color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  @mixin border-cool-gray-8 {
+    border-color: get-color(cool-gray-8) !important;
+  }
+
+  @mixin border-cool-gray-10 {
+    border-color: get-color(cool-gray-10) !important;
+  }
+
+  @mixin border-green {
+    border-color: map-get($color-palette, "green") !important;
+  }
+
+  @mixin border-black {
+    border-color: map-get($color-palette, "black") !important;
+  }
+
+  @mixin border-white {
+    border-color: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary border colors
+  @mixin border-steel-blue {
+    border-color: get-color(steel-blue) !important;
+  }
+
+  @mixin border-navy {
+    border-color: map-get($color-palette, "navy") !important;
+  }
+
+  @mixin border-copper {
+    border-color: map-get($color-palette, "copper") !important;
+  }
+
+  @mixin border-stone {
+    border-color: get-color(stone) !important;
+  }
+
+  @mixin border-cool-gray-1 {
+    border-color: get-color(cool-gray-1) !important;
+  }
+
+  //TDS Digital border colors
+  @mixin border-cherry {
+    border-color: get-color(cherry) !important;
+  }
+
+  @mixin border-amber {
+    border-color: get-color(amber) !important;
+  }
+
+  @mixin border-forest {
+    border-color: map-get($color-palette, "forest") !important;
+  }
+
+  @mixin border-charcoal {
+    border-color: map-get($color-palette, "charcoal") !important;
+  }
+
+  @mixin border-cool-gray-9 {
+    border-color: get-color(cool-gray-9) !important;
+  }
+  
+  @mixin border-cobalt {
+    border-color: get-color(cobalt) !important;
+  }
+
+  @mixin border-neutral-gray-1 {
+    border-color: get-color(neutral-gray-1) !important;
+  }
+
+  @mixin border-neutral-gray-2 {
+    border-color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy border colors
+  @mixin border-dark-blue {
+    border-color: get-color(dark-blue) !important;
+  }
+
+  @mixin border-sky-blue {
+    border-color: get-color(sky-blue) !important;
+  }
+
+  @mixin border-legacy-gray {
+    border-color: get-color(legacy-gray) !important;
+  }
+
+  

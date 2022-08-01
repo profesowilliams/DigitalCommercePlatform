@@ -355,4 +355,159 @@
             }
         }
     }
+
+    &-border {
+        &--teal {
+            .cmp-tabs__tablist {
+                @include border-teal;
+            }
+        }
+
+        &--deep-teal {
+            .cmp-tabs__tablist {
+                @include border-deep-teal;
+            }
+        }
+
+        &--aqua {
+            .cmp-tabs__tablist {
+                @include border-aqua;
+            }
+        }
+
+        &--chartreuse {
+            .cmp-tabs__tablist {
+                @include border-chartreuse;
+            }
+        }
+
+        &--cool-gray-8 {
+            .cmp-tabs__tablist {
+                @include border-cool-gray-8;
+            }
+        }
+
+        &--cool-gray-10 {
+            .cmp-tabs__tablist {
+                @include border-cool-gray-10;
+            }
+        }
+
+        &--green {
+            .cmp-tabs__tablist {
+                @include border-green;
+            }
+        }
+
+        &--black {
+            .cmp-tabs__tablist {
+                @include border-black;
+            }
+        }
+
+        &--white {
+            .cmp-tabs__tablist {
+                @include border-white;
+            }
+        }
+
+        //TDS Secondary border colors
+        &--steel-blue {
+            .cmp-tabs__tablist {
+                @include border-steel-blue;
+            }
+        }
+
+        &--navy {
+            .cmp-tabs__tablist {
+                @include border-navy;
+            }
+        }
+
+        &--copper {
+            .cmp-tabs__tablist {
+                @include border-copper;
+            }
+        }
+
+        &--stone {
+            .cmp-tabs__tablist {
+                @include border-stone;
+            }
+        }
+
+        &--cool-gray-1 {
+            .cmp-tabs__tablist {
+                @include border-cool-gray-1;
+            }
+        }
+
+        //TDS Digital border colors
+        &--cherry {
+            .cmp-tabs__tablist {
+                @include border-cherry;
+            }
+        }
+
+        &--amber {
+            .cmp-tabs__tablist {
+                @include border-amber;
+            }
+        }
+
+        &--forest {
+            .cmp-tabs__tablist {
+                @include border-forest;
+            }
+        }
+
+        &--charcoal {
+            .cmp-tabs__tablist {
+                @include border-charcoal;
+            }
+        }
+
+        &--cool-gray-9 {
+            .cmp-tabs__tablist {
+                @include border-cool-gray-9;
+            }
+        }
+
+        &--cobalt {
+            .cmp-tabs__tablist {
+                @include border-cobalt;
+            }
+        }
+
+        &--neutral-gray-1 {
+            .cmp-tabs__tablist {
+                @include border-neutral-gray-1;
+            }
+        }
+
+        &--neutral-gray-2 {
+            .cmp-tabs__tablist {
+                @include border-neutral-gray-2;
+            }
+        }
+
+        //Legacy border colors
+        &--dark-blue {
+            .cmp-tabs__tablist {
+                @include border-dark-blue;
+            }
+        }
+
+        &--sky-blue {
+            .cmp-tabs__tablist {
+                @include border-sky-blue;
+            }
+        }
+
+        &--legacy-gray {
+            .cmp-tabs__tablist {
+                @include border-legacy-gray;
+            }
+        }
+    }
 }
