@@ -58,6 +58,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["quoteSubtotalCurrency"]) {
         productLines["quoteSubtotalCurrency"] = properties["quoteSubtotalCurrency"];
     }
+    if (properties && properties["quoteSubtotalCurrencySymbol"]) {
+        productLines["quoteSubtotalCurrencySymbol"] = properties["quoteSubtotalCurrencySymbol"];
+    }
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }

@@ -82,8 +82,11 @@
         font-size: 16px;
         line-height: 27px;
       }
-      &--currency {
+      &--currency-code {
         margin-left: 7px;
+      }
+      &--currency-symbol {
+        margin-right: 2px;
       }
     }    
   }
