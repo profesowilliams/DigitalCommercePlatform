@@ -4,16 +4,16 @@
     <item_1
         jcr:primaryType="nt:unstructured"
         jcr:title="Tab 1"
-        sling:resourceType="techdata/components/container"
+        sling:resourceType="tds-core/components/container/v1/container"
         layout="responsiveGrid"/>
     <item_2
         jcr:primaryType="nt:unstructured"
         jcr:title="Tab 2"
-        sling:resourceType="techdata/components/container"
+        sling:resourceType="tds-core/components/container/v1/container"
         layout="responsiveGrid"/>
     <item_3
         jcr:primaryType="nt:unstructured"
         jcr:title="Tab 3"
-        sling:resourceType="techdata/components/container"
+        sling:resourceType="tds-core/components/container/v1/container"
         layout="responsiveGrid"/>
 </jcr:root>
