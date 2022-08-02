@@ -117,11 +117,9 @@ function EndUserInfo({endUser, info, onValueChange, isEndUserMissing, flagDeal, 
             <div className="cmp-qp__enduser-info--address-group">
               {infoState.name}<br/>
               {infoState.line1}<br />
-              {infoState.line2}{ infoState.line2 ? <br /> : "" }
-              {infoState.city}<br />
-              {infoState.state}<br />
-              {infoState.postalCode}<br />
-              {infoState.country}<br /><br />
+              {infoState.line2}{infoState.line2 ? <br /> : ""}
+              {infoState.city}, {infoState.state} {infoState.postalCode}<br />
+              {infoState.country}<br />
               <p>
                 {infoState.email}<br />
                 {infoState.phoneNumber}<br />

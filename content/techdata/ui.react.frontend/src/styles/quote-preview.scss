@@ -70,7 +70,7 @@
 .cmp-qp__config-grid {
     &--title {
         border-bottom: 1px solid $brand-blue;
-        padding: 0 15px;
+        padding: 0 15px 5px;
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 0;
@@ -122,7 +122,6 @@
 
 .cmp-qp__general-info,
 .cmp-qp__enduser-info {
-    min-width: 335px;
     .form-check, .cmp-qp__information-row--readonly {
         display: grid;
         grid-template-columns: 35% 65%;
@@ -182,6 +181,7 @@
 
 
 .cmp-qp__company-info, .cmp-qp__general-info, .cmp-qp__enduser-info {
+    min-width: 335px;
     &--title {
         color: $brand-blue;
         font-size: 14px;
@@ -225,7 +225,8 @@
     display: flex;
     flex: 1 0 auto;
     justify-content: space-between;
-    padding-left: 35px;
+    padding-left: 50px;
+    margin-top: 10px;
     .cmp-loader-roller {
         display: flex;
         flex-basis: 33.33%;

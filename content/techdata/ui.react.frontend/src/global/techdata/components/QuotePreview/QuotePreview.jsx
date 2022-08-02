@@ -237,7 +237,7 @@ function QuotePreview(props) {
       const { name, number } = activeCustomer;
       const quoteDetails = { ...quoteDetailsResponse };
       if (quoteDetails.reseller && quoteDetails.reseller.length > 0 && activeCustomer) {
-        quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, name }
+        quoteDetails.reseller[0] = { ...quoteDetails.reseller[0], id: number, companyName: name }
       }
       if (buyMethodParam !== '' ){
         quoteDetails.buyMethod = buyMethodParam;
@@ -449,6 +449,7 @@ function QuotePreview(props) {
         {
           addressNumber: selectedCompanyInfo.addressNumber,
           name: selectedCompanyInfo.name,
+          companyName: selectedCompanyInfo.companyName,
           line1: selectedCompanyInfo.addressLine1,
           city: selectedCompanyInfo.city,
           state: selectedCompanyInfo.state,

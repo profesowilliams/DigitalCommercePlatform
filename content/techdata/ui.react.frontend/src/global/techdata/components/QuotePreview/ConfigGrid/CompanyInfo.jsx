@@ -6,6 +6,8 @@ import { usGet } from "../../../../../utils/api";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
+import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../../utils/constants";
+import { getUserDataInitialState } from "../../../../../utils/user-utils";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};
@@ -30,6 +32,7 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
     "phoneNumber": "",
     "salesOrganization": "",
   };
+  const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
   useEffect(() => {
     if (localReseller === null) {
@@ -87,7 +90,13 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       const res = await usGet(
         `${url}?criteria=CUS&ignoreSalesOrganization=false`
       );
+      const userName = `${USER_DATA?.firstName} ${USER_DATA?.lastName}`
       const data = res?.data?.content?.items[0];
+      data.addresses.forEach(address => {
+        address.companyName = data.name;
+        address.name = userName;
+        address.email = USER_DATA.email;
+      });
       setAddresses(data["addresses"]);
     } catch (err) {
       throw new Error(err);
@@ -113,7 +122,7 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       <div className="cmp-qp__company-info--address-group">
         <p>
           <Info>{initialAddress.name}</Info>
-          <Info>{initialAddress.line1}</Info>          
+          <Info>{initialAddress.line1}</Info>
           <Info>{initialAddress.city}, {initialAddress.state} {initialAddress.zip}</Info>
           <Info>{initialAddress.country}</Info>
         </p>
