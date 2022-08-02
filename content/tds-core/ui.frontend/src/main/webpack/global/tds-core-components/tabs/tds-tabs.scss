@@ -2,7 +2,6 @@
 @import "../../styles/helpers/colors.scss";
 
 .cmp-tds {
-    border-bottom: rem(1px) solid;
 
     .cmp-tabs {
         box-sizing: border-box;
@@ -359,154 +358,154 @@
     &-border {
         &--teal {
             .cmp-tabs__tablist {
-                @include border-teal;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "teal") !important;
             }
         }
 
         &--deep-teal {
             .cmp-tabs__tablist {
-                @include border-deep-teal;
+                box-shadow: 0 rem(1px) 0 0 get-color(deep-teal) !important;
             }
         }
 
         &--aqua {
             .cmp-tabs__tablist {
-                @include border-aqua;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "aqua") !important; 
             }
         }
 
         &--chartreuse {
             .cmp-tabs__tablist {
-                @include border-chartreuse;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "chartreuse") !important;
             }
         }
 
         &--cool-gray-8 {
             .cmp-tabs__tablist {
-                @include border-cool-gray-8;
+                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-8) !important;
             }
         }
 
         &--cool-gray-10 {
             .cmp-tabs__tablist {
-                @include border-cool-gray-10;
+                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-10) !important;
             }
         }
 
         &--green {
             .cmp-tabs__tablist {
-                @include border-green;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "green") !important;
             }
         }
 
         &--black {
             .cmp-tabs__tablist {
-                @include border-black;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "black") !important;
             }
         }
 
         &--white {
             .cmp-tabs__tablist {
-                @include border-white;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "white") !important;
             }
         }
 
         //TDS Secondary border colors
         &--steel-blue {
             .cmp-tabs__tablist {
-                @include border-steel-blue;
+                box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
             }
         }
 
         &--navy {
             .cmp-tabs__tablist {
-                @include border-navy;
+                box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
             }
         }
 
         &--copper {
             .cmp-tabs__tablist {
-                @include border-copper;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "copper") !important;
             }
         }
 
         &--stone {
             .cmp-tabs__tablist {
-                @include border-stone;
+                box-shadow: 0 rem(1px) 0 0 get-color(stone) !important;
             }
         }
 
         &--cool-gray-1 {
             .cmp-tabs__tablist {
-                @include border-cool-gray-1;
+                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-1) !important;
             }
         }
 
         //TDS Digital border colors
         &--cherry {
             .cmp-tabs__tablist {
-                @include border-cherry;
+                box-shadow: 0 rem(1px) 0 0 get-color(cherry) !important;
             }
         }
 
         &--amber {
             .cmp-tabs__tablist {
-                @include border-amber;
+                box-shadow: 0 rem(1px) 0 0 get-color(amber) !important;
             }
         }
 
         &--forest {
             .cmp-tabs__tablist {
-                @include border-forest;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "forest") !important;
             }
         }
 
         &--charcoal {
             .cmp-tabs__tablist {
-                @include border-charcoal;
+                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "charcoal") !important;
             }
         }
 
         &--cool-gray-9 {
             .cmp-tabs__tablist {
-                @include border-cool-gray-9;
+                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-9) !important;
             }
         }
 
         &--cobalt {
             .cmp-tabs__tablist {
-                @include border-cobalt;
+                box-shadow: 0 rem(1px) 0 0 get-color(cobalt) !important;
             }
         }
 
         &--neutral-gray-1 {
             .cmp-tabs__tablist {
-                @include border-neutral-gray-1;
+                box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-1) !important;
             }
         }
 
         &--neutral-gray-2 {
             .cmp-tabs__tablist {
-                @include border-neutral-gray-2;
+                box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-2) !important;
             }
         }
 
         //Legacy border colors
         &--dark-blue {
             .cmp-tabs__tablist {
-                @include border-dark-blue;
+                box-shadow: 0 rem(1px) 0 0 get-color(dark-blue) !important;
             }
         }
 
         &--sky-blue {
             .cmp-tabs__tablist {
-                @include border-sky-blue;
+                box-shadow: 0 rem(1px) 0 0 get-color(sky-blue) !important;
             }
         }
 
         &--legacy-gray {
             .cmp-tabs__tablist {
-                @include border-legacy-gray;
+                box-shadow: 0 rem(1px) 0 0 get-color(legacy-gray) !important;
             }
         }
     }
