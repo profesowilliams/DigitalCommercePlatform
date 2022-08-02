@@ -7,7 +7,7 @@ function ResellerInfo({ reseller, resellerLabels }) {
       <div className="cmp-renewals-qp__reseller-info--address-group">
         <p>
           <Info noColon>{reseller?.name}</Info>
-          <Info label={resellerLabels.accountNoLabel} noColon>{reseller.id}</Info>
+          <Info label={resellerLabels.accountNoLabel} noColon>{reseller?.id}</Info>
           <Info label={resellerLabels.vendorAccountNoResLabel} noColon>{reseller?.vendorAccountNumber}</Info>
           <Info label={resellerLabels.previousPurchaseOrderNoEndLabel} noColon>{reseller?.previousResellerPO ?? 'N/A'}</Info>
         </p>
