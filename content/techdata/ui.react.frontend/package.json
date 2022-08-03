@@ -89,6 +89,6 @@
         "sass": "^1.54.0",
         "simple-zustand-devtools": "^1.0.1",
         "universal-cookie": "^4.0.3",
-        "zustand": "^3.6.8"
+        "zustand": "^3.7.1"
     }
 }

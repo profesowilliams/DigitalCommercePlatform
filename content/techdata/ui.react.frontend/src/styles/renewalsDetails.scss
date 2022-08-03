@@ -50,4 +50,8 @@
             -moz-appearance: textfield;
         }
     }
+    .ag-cell.ag-cell-not-inline-editing.ag-cell-auto-height.ag-cell-focus {
+        border: none !important;
+        border-top: 1px solid #d8d8d8 !important;
+    }
 }

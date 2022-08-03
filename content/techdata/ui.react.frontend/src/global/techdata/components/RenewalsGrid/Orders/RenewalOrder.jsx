@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { put, get, post } from "../../../../../utils/api";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
-function RenewalOrder({ children, CustomerPO, id, handleClose, handleToggleToaster }) {
+function RenewalOrder({ children, customerPO, renewalData, handleClose, handleToggleToaster }) {
+
+  const id = renewalData.source.id;
 
   const {
     updateRenewalOrderEndpoint = '',
@@ -17,7 +19,8 @@ function RenewalOrder({ children, CustomerPO, id, handleClose, handleToggleToast
       return;
     }
     try {
-      const payload = { CustomerPO };
+      const { source, reseller, endUser } = renewalData
+      const payload = {source, reseller, endUser, customerPO };
       const updateresponse = await put(updateRenewalOrderEndpoint, payload);
       if (updateresponse.status === 200) {
         const getStatusResponse = await get(`${getStatusEndpoint}/${id}`);

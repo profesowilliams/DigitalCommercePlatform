@@ -32,11 +32,10 @@ const HOCButton = (properties) => {
 };
 
 function PlaceOrderDialog({
-  orderingFromDashboard,
-  agreementNumber,
-  canPlaceOrder = false,
-  distiQuote,
+  orderingFromDashboard,  
+  renewalData
 }) {
+  const {agreementNumber, canPlaceOrder = false} = renewalData;  
   const {
     showOrderingIcon,
     placeOrderDialogTitle,
@@ -215,9 +214,9 @@ function PlaceOrderDialog({
             {submitted ? (
               <RenewalOrder
                 handleToggleToaster={handleToggleToaster}
-                handleClose={handleClose}
-                id={distiQuote}
-                CustomerPO={purchaseOrderNumber}
+                handleClose={handleClose}                
+                renewalData={renewalData}
+                customerPO={purchaseOrderNumber}
               >
                 {" "}
                 <OrderButton> Submitting </OrderButton>{" "}

@@ -22,6 +22,7 @@ function getTextBeforeComma(text = "") {
     return text.match(reg)[1];
 }
 export function removeCommaIfContentNull(child = []) {
+    if (typeof child === 'Object') return child?.text;
     if (!Array.isArray(child)) return child
     if (child.length > 2) {
         const afterComma = getTextContentAfterComma(child.join("").trim());

@@ -89,7 +89,7 @@ function _RenewalActionColumn({ eventProps }) {
     return (
         <>
             <div className="cmp-renewal-action-container">
-                <PlaceOrderDialog orderingFromDashboard={orderingFromDashboard} distiQuote={data.source.id} agreementNumber={data.agreementNumber} canPlaceOrder={data.canPlaceOrder} />
+                <PlaceOrderDialog orderingFromDashboard={orderingFromDashboard} renewalData={data} />
                 <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />
             </div>
         </>

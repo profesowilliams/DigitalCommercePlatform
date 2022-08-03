@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 
-function QuantityColumn({ value, setValue, isEditing }) {
+
+function QuantityColumn(props) {
+    console.log('🚀props >>',props);
+    const { value, setValue, isEditing, rowIndex, data } = props;
     const refInput = useRef(); 
     const MIN_VAL = 1;
     const MAX_VAL = 999999;
@@ -11,6 +14,7 @@ function QuantityColumn({ value, setValue, isEditing }) {
     const handleBtnClick = (addFlag = false) => {
         addFlag ? refInput.current.stepUp() : refInput.current.stepDown();
         setValue(refInput.current.valueAsNumber);
+        const total = data.totalPrice * refInput.current.valueAsNumber;    
     }
 
     const handleInputValue = (e) => {

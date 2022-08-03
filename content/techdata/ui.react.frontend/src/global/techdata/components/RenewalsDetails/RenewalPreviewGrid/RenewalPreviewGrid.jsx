@@ -1,19 +1,19 @@
-
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
-import columnDefs from "./columnDefinitions";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
 import RenewalManufacturer from "./RenewalManufacturer";
 import { thousandSeparator } from "../../../helpers/formatting";
 import QuantityColumn from "../Columns/QuantityColumn.jsx";
+import buildColumnDefinitions from "./buildColumnDefinitions";
+import UnitPriceColumn from "../Columns/UnitPriceColumn";
 
 function GridSubTotal({ data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
       <div className="cmp-renewal-preview__subtotal--note">
         <b>Note: </b>
-        {gridProps?.note?.replace('Note: ', '')}
+        {gridProps?.note?.replace("Note: ", "")}
       </div>
       <div className="cmp-renewal-preview__subtotal--price-note">
         <b className="cmp-renewal-preview__subtotal--description">
@@ -63,76 +63,83 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
     isEditingRef.current = isEditing;
     if(gridApi) {
       gridApi.refreshCells({
-        columns: ["quantity"],
+        columns: ["quantity","unitPrice"],
         force: true,
       });
     }
   }, [isEditing])
 
-  columnDefs[0] = {
-    ...columnDefs[0],
-    headerName: gridProps?.line
-  };
+  const columnDefinitionsOverride = [
+    {
+      field: "id",
+      headerName: gridProps?.line,
+    },
+    {
+      field: "vendorPartNo",
+      headerName: gridProps?.productfamily,
+      valueGetter: ({ data }) =>
+        data.product.find((p) => p.family)?.family ?? "N/A",
+    },
+    {
+      field: "shortDescription",
+      headerName: gridProps?.productdescription,
+      cellHeight: () => 80,
+      cellRenderer: ({ data }) => (
+        <RenewalProductLinesItemInformation
+          line={data}
+          isLink={gridProps.disableProductDetailsLink}
+          shopDomainPage={shopDomainPage}
+          invokeModal={invokeModal}
+        />
+      ),
+    },
+    {
+      field: "mfrNumber",
+      headerName: gridProps?.vendorPartNo,
+      cellRenderer: (props) => RenewalManufacturer(props),
+    },
+    {
+      field: "unitListPrice",
+      headerName: gridProps.listPrice?.replace(
+        "{currency-code}",
+        data?.currency || ""
+      ),
+      cellRenderer: (props) => Price(props)
+    },
+    {
+      field:'value',
+      headerName: gridProps?.percentOffListPrice,
+      valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
+      cellRenderer: (props) => Price(props),
+    },
+    {
+      field:'unitPrice',
+      headerName: gridProps.unitPrice?.replace(
+        "{currency-code}",
+        data?.currency || ""
+      ),
+      cellRenderer: (props) => UnitPriceColumn({...props, isEditing:isEditingRef.current}),
 
-  columnDefs[1] = {
-    ...columnDefs[1],
-    headerName: gridProps?.productfamily,
-    valueGetter: ({ data }) =>
-      data.product.find((p) => p.family)?.family ?? "N/A",
-  };
+    },
+    {
+      field:'quantity',
+      headerName: gridProps?.quantity,
+      cellRenderer: (props) =>
+      QuantityColumn({ ...props, isEditing: isEditingRef.current })
+    },
+    {
+      field:'totalPrice',
+      headerName: gridProps.totalPrice?.replace(
+        "{currency-code}",
+        data?.currency || ""
+      ),
+      cellRenderer: (props) => Price(props),
+      valueGetter:'data.quantity * data.unitPrice'
+    }
+  ];
 
-  columnDefs[2] = {
-    ...columnDefs[2],
-    headerName: gridProps?.productdescription,
-    cellHeight: () => 80,
-    cellRenderer: ({ data }) => (
-      <RenewalProductLinesItemInformation
-        line={data}
-        isLink={gridProps.disableProductDetailsLink}
-        shopDomainPage={shopDomainPage}
-        invokeModal={invokeModal}
-      />
-    ),
-  };
+  const columnDefs = useMemo(() => buildColumnDefinitions(columnDefinitionsOverride),[]); 
 
-  columnDefs[3] = {
-    ...columnDefs[3],
-    headerName: gridProps?.vendorPartNo,
-    cellRenderer: (props) => RenewalManufacturer(props)
-  }
-
-  columnDefs[4] = {
-    ...columnDefs[4],
-    headerName: gridProps.listPrice?.replace('{currency-code}', data?.currency || ''),
-    cellRenderer: (props) => Price(props)
-  };
-
-  columnDefs[5] = {
-    ...columnDefs[5],
-    headerName: gridProps?.percentOffListPrice,
-    valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
-    cellRenderer: (props) => Price(props)
-  };
-
-  columnDefs[6] = {
-    ...columnDefs[6],    
-    headerName: gridProps.unitPrice?.replace('{currency-code}', data?.currency || ''),
-    cellRenderer: (props) => Price(props)
-  };
-
-  // Pass isEditingRef value to quantity column for rendering
-  columnDefs[7] = {
-    ...columnDefs[7],
-    headerName: gridProps?.quantity,
-    cellRenderer: (props) => QuantityColumn({ ...props, isEditing: isEditingRef.current }),
-  };
-
-  //refactor later as renewals-grid  
-  columnDefs[8] = {
-    ...columnDefs[8],
-    headerName: gridProps.totalPrice?.replace('{currency-code}', data?.currency || ''),
-    cellRenderer: (props) => Price(props)
-  };
 
   /*
     mutableGridData is copied version of response that can be safely mutated,

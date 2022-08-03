@@ -98,6 +98,17 @@
 			}
 		  }
 	}
+	.cmp-header-price{
+		text-align: center;
+		span.ag-header-cell-text{
+			position: relative;
+			&::before{
+				left: -15px !important;
+				top: 0 !important;
+			}
+		}
+	}
+	
 }
 
 .place-cmp-order-dialog-container {
@@ -115,4 +126,5 @@ p.cmp-place-order-actions {
 		cursor: pointer;
 	}
 }
+
 
