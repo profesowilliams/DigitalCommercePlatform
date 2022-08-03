@@ -46,7 +46,7 @@
             }
 
             @include mobile {
-                top: 45%;
+                top: 50%;
             }
 
         }
@@ -57,7 +57,8 @@
             &.dp-carousel__alert--hero1 {
                 .dp-carousel__alert-container {
                     flex-direction: column;
-                    font-size: rem(20px);
+                    font-size: rem(20px);                    
+                    justify-content: flex-end;
                 }
 
                 .dp-carousel__alert-buttons {
@@ -101,7 +102,6 @@
 
 .td-legacy-hero-5 {
     &.hero-style-5 .cmp-teaser__description {
-        font-size: rem(35px) !important;
         font-family: $open-sans;
     }
 }
