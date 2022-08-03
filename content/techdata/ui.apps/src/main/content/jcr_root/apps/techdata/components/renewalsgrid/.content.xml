@@ -2,5 +2,5 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:Component"
     jcr:title="Renewals Grid"
-    sling:resourceSuperType="tds-core/components/renewalsdetails/v1/renewalsdetails"
+    sling:resourceSuperType="tds-core/components/renewalsgrid/v1/renewalsgrid"
     componentGroup="Tech Data - Commerce"/>
