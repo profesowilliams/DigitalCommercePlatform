@@ -2,7 +2,6 @@
 <workspaceFilter version="1.0">
     <filter root="/apps/techdata/clientlibs"/>
     <filter root="/apps/techdata/components"/>
-    <filter root="/apps/tds-component-lib"/>
     <filter root="/apps/techdata/templates"/>
     <filter root="/apps/techdata/i18n" mode="merge"/>
     <filter root="/apps/techdata/config"/>
