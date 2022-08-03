@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   userData: {},
   requested: false,
   showError: false,
-  loading: false
+  loading: false,
+  errorMessage: ''
 };
 
 export const authReducer = (state = INITIAL_STATE, action) => {
@@ -13,19 +14,22 @@ export const authReducer = (state = INITIAL_STATE, action) => {
       return Object.assign({}, state, {
         loading: true,
         requested: true,
-        showError: false
+        showError: false,
+        errorMessage: ''
       });
     case SIGN_IN_RESPONSE:
       return Object.assign({}, state, {
         userData: action.payload,
         requested: false,
         showError: false,
+        errorMessage: '',
         loading: false
       });
     case SIGN_IN_ERROR:
       return Object.assign({}, state, {
         requested: false,
-        showError: true
+        showError: true,
+        errorMessage: action.payload
       });
     default:
       return state;

@@ -129,6 +129,9 @@ use(function () {
     if (properties.get("welcomeLabel") != null) {
         jsonObject.put("welcomeLabel", properties.get("welcomeLabel"));
     }
+    if (properties.get("errorMessage") != null) {
+        jsonObject.put("errorMessage", properties.get("errorMessage"));
+    }
     if (properties.get("myEcId") != null) {
         jsonObject.put("myEcId", properties.get("myEcId"));
     }

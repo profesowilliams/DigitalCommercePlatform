@@ -24,6 +24,7 @@ import {
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import {useStore} from "../../../../utils/useStore"
 import axios from 'axios';
+import Modal from '../Modal/Modal';
 
 const FA = require("react-fontawesome");
 
@@ -35,6 +36,11 @@ const SignIn = (props) => {
   const REDIRECT_URL_QUERY_PARAM = "redirectUrl";
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
+  const [modelComponent, setModelComponent] = useState(null);
+  let tempProperties = {
+    title:  'Error'
+  };
+
   const configDataAEM = JSON.parse(props.componentProp);
   let dropDownData = undefined;
   if (props.aemDataSet && props.aemDataSet.dropdownlinks) {
@@ -58,6 +64,7 @@ const SignIn = (props) => {
     shopLoginRedirectUrl,
     pingLogoutURL,
     errorPageUrl,
+    errorMessage,
     shopLogoutRedirectUrl,
   } = configDataAEM;
   const requested = props.data.auth.requested;
@@ -269,6 +276,17 @@ const SignIn = (props) => {
       }
     }
   };
+  
+  const displayModel = () => {
+    setModelComponent(
+      <Modal
+        modalContent={errorMessage}
+        modalProperties={tempProperties}
+        onModalClosed={() => setModelComponent(null)}
+      >
+      </Modal>
+    )
+  }
 
   const signInButton = () => {
     return (
@@ -368,6 +386,8 @@ const SignIn = (props) => {
           signInButton()
         )}
         {isError && isLoading ? <SpinnerCode /> : null}
+        {isError && isLoading && !modelComponent ? displayModel(): null}
+        {modelComponent}
       </div>
     </div>
   );

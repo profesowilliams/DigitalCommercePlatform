@@ -17,9 +17,10 @@ export const signInResponse = userData => {
 	};
 };
 
-export const signInError = () => {
+export const signInError = (errorMessage) => {
 	return {
-		type: SIGN_IN_ERROR
+		type: SIGN_IN_ERROR,
+		payload: errorMessage
 	};
 };
 
@@ -74,7 +75,7 @@ export const signInAsynAction = (apiUrl) => {
 				refreshPage();
 			})
 			.catch(err => {
-				dispatch(signInError(err));
+				dispatch(signInError(err.message));
 			});
 	};
 };
