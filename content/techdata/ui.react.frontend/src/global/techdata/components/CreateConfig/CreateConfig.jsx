@@ -3,7 +3,7 @@ import WidgetTitle from '../Widgets/WidgetTitle';
 import Dropdown from '../Widgets/Dropdown';
 import RadioButtons from '../Widgets/RadioButtons';
 import { usPost } from "../../../../utils/api";
-import { ANALYTICS_TYPES, getDataLayer, pushData } from "../../../../utils/dataLayerUtils";
+import { ANALYTICS_TYPES, getDataLayer, pushData, deleteAndPushData } from "../../../../utils/dataLayerUtils";
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import {useStore} from "../../../../utils/useStore"
 import { isNotEmptyValue } from '../../../../utils/utils';
@@ -18,6 +18,7 @@ const CreateConfig = ({ componentProp }) => {
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const POST_BACK_URL = "https://shop.techdata.com";
   const [quoteIDAnalytic, setQuoteIDAnalytic] = useState(null);
+  const [flagUpdate, setFlagUpdate] = useState(false);
 
   const updateDataLayer = (id, localStorageVendorName) => {
     /**@type {any[]} */
@@ -28,6 +29,7 @@ const CreateConfig = ({ componentProp }) => {
         layerElement.configuration.configComplete = '1';
         layerElement.configuration.vendorName = localStorageVendorName || vendorName;
         localStorage.removeItem('vendorName');
+        deleteAndPushData(layerElement)
       }
     });
   };
@@ -87,6 +89,7 @@ const CreateConfig = ({ componentProp }) => {
       if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
         if (result?.data?.content?.url) {
           analyticsData(methodSelected.label, false);
+          setFlagUpdate(true);
           window.open(result.data.content.url);
         }
       }
@@ -130,11 +133,12 @@ const CreateConfig = ({ componentProp }) => {
   }
 
   useEffect(() => {
-    if ((localStorage.getItem('createConfig') == 'true' && document.referrer.indexOf('apps.cisco.com') > -1 && window.location.search.indexOf('RequestType') > -1)|| isNotEmptyValue(quoteIDAnalytic)) {
+    if (isNotEmptyValue(quoteIDAnalytic) && flagUpdate) {
+        setFlagUpdate(false);
         analyticsData(methodSelected.label, true, quoteIDAnalytic);
         localStorage.removeItem('createConfig');
     }
-  }, [methodSelected, quoteIDAnalytic]);
+  }, [methodSelected, quoteIDAnalytic, flagUpdate]);
 
   useEffect(()=>{
     if( methodSelected && (!methodSelected.urls || methodSelected.urls.length === 0 || methodSelected.extendedOption === false ))

@@ -100,6 +100,14 @@ export const pushData = data => {
 };
 
 // https://github.com/adobe/adobe-client-data-layer/wiki#push
+export const deleteAndPushData = data => {
+  if (isDataLayerEnabled()) {
+    getDataLayer().pop()
+    getDataLayer().push(setVisitorData(data));
+  }  
+};
+
+// https://github.com/adobe/adobe-client-data-layer/wiki#push
 export const pushEvent = (eventName, eventInfo, extraData) => {
   if (isDataLayerEnabled()) {
     getDataLayer().push(setVisitorData({
