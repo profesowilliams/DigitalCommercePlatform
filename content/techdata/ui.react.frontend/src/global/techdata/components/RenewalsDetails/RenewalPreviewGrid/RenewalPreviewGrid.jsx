@@ -87,7 +87,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
       cellRenderer: ({ data }) => (
         <RenewalProductLinesItemInformation
           line={data}
-          isLink={gridProps.disableProductDetailsLink}
+          isLinkDisabled={gridProps.disableProductDetailsLink}
           shopDomainPage={shopDomainPage}
           invokeModal={invokeModal}
         />
