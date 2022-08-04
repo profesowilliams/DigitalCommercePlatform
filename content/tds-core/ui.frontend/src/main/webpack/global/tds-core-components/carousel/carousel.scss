@@ -338,18 +338,11 @@
   }
 }
 
-.cmp-carousel {
-  &__indicator {
-      &--active {
-          background-color: rgba(0,0,0,0) !important;
-      }
-    } 
-}
-
 .tds-alertcarousel {
   &.dp-carousel {
     &.dp-carousel__navigation--hero1 .dp-carousel__nav-label {
       font-size: rem(14px);
+      background-color: rgba(0,0,0,0) !important;
 
       &::before {
         background-color: map-get($color-palette, "green") !important;
