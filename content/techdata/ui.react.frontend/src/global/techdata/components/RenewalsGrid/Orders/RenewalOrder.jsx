@@ -21,6 +21,7 @@ function RenewalOrder({ children, customerPO, renewalData, handleClose, handleTo
     try {
       const { source, reseller, endUser } = renewalData
       const payload = {source, reseller, endUser, customerPO };
+      if (renewalData?.items) payload.items = renewalData.items;
       const updateresponse = await put(updateRenewalOrderEndpoint, payload);
       if (updateresponse.status === 200) {
         const getStatusResponse = await get(`${getStatusEndpoint}/${id}`);

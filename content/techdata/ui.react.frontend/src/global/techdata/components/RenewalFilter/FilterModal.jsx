@@ -97,7 +97,15 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     onQueryChanged();
   };
 
+  
+
   if (!filterList) return null;
+
+  function getFilterParent(){
+    const newSubheader = document.querySelector("[data-component='NewSubheader']");
+    const apjHeader = document.querySelector("#cmp-techdata-header");
+    return !!newSubheader ? newSubheader : (!!apjHeader ? apjHeader : document.body );
+  }
 
   return ReactDOM.createPortal(
     <>
@@ -129,7 +137,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
         </RenewalErrorBoundary>
       </div>
     </>,
-    document.querySelector("[data-component='NewSubheader']")
+    getFilterParent()
   );
 };
 

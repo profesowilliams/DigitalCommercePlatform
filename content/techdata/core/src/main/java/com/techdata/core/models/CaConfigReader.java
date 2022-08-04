@@ -677,7 +677,7 @@ public class CaConfigReader {
         return renewalOrderEndpoint;
     };
 
-    public String getrenewalUpdateQuoteEndpoint(){
+    public String getRenewalUpdateQuoteEndpoint(){
         return renewalUpdateQuoteEndpoint;
     };
 

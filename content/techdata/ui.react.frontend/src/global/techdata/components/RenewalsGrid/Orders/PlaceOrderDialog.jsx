@@ -21,8 +21,7 @@ const HOCButton = (properties) => {
           background: teal[800],
           "&:hover": { background: teal[600] },
         }}
-        variant="contained"
-        autoFocus
+        variant="contained"        
         {...properties}
       >
         {children}
