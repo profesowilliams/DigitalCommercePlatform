@@ -227,6 +227,7 @@
     justify-content: space-between;
     padding-left: 50px;
     margin-top: 10px;
+
     .cmp-loader-roller {
         display: flex;
         flex-basis: 33.33%;
@@ -234,6 +235,10 @@
         justify-content: center;
         align-items: center;
         margin: 0;
+    }
+
+    p {
+        margin-top: 10px;
     }
 }
 
