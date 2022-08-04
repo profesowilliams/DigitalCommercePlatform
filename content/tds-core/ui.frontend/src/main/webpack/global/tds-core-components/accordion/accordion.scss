@@ -1,3 +1,6 @@
+@import "../../_mixins.scss";
+@import "../../styles/helpers/colors.scss";
+
 @mixin accordionIcon($isFontAwesome, $content) {
   content: $content;
 
@@ -15,36 +18,38 @@
 
 // The next rule its temporal because its a core component class
 .cmp-accordion__panel.cmp-accordion__panel--hidden {
-    display: none;
+  display: none;
 }
 
 .cmp-accordion,
 .dp-accordion {
-    &__footer {
-        .cmp-accordion__button {
-            color: white;
-            font-size: rem(11.2px); 
-            font-weight: 700;
-            border: none;
-            background-color: transparent;
-        }
-        .cmp-accordion__button[aria-expanded="false"]::after {
-            content: "\A0 \A0 \25BA";
-            font-size: 0.375rem;
-            vertical-align: auto;
-        }
-        .cmp-accordion__button[aria-expanded="true"]::after {
-            content: "\A0 \A0 \25BC";
-            font-size: 0.375rem;
-            vertical-align: auto;
-        }
-
-        &-padding {
-            .cmp-accordion__button {
-                padding-bottom: 1.375rem;
-            }
-        }
+  &__footer {
+    .cmp-accordion__button {
+      color: white;
+      font-size: rem(11.2px);
+      font-weight: 700;
+      border: none;
+      background-color: transparent;
     }
+
+    .cmp-accordion__button[aria-expanded="false"]::after {
+      content: "\A0 \A0 \25BA";
+      font-size: 0.375rem;
+      vertical-align: auto;
+    }
+
+    .cmp-accordion__button[aria-expanded="true"]::after {
+      content: "\A0 \A0 \25BC";
+      font-size: 0.375rem;
+      vertical-align: auto;
+    }
+
+    &-padding {
+      .cmp-accordion__button {
+        padding-bottom: 1.375rem;
+      }
+    }
+  }
 }
 
 /*
@@ -54,116 +59,125 @@
 */
 
 .dp-accordion {
-    &__footer {
-        background-color: #000c21;
-        .cmp-accordion {
-            &__button {
-                color: white;
-                font-size: 0.75rem;
-                font-weight: 700;
-                border: none;
-                background-color: transparent;
-                padding-bottom: 1.375rem;
-                outline: none;
-            }
-            &__button[aria-expanded="false"]::after {
-                content: "\A0 \A0 \25BA";
-                font-size: 0.375rem;
-                vertical-align: auto;
-            }
-            &__button[aria-expanded="true"]::after {
-                content: "\A0 \A0 \25BC";
-                font-size: 0.375rem;
-                vertical-align: auto;
-            }
-            &__button[aria-expanded="true"] {
-                padding-bottom: 0;
-            }
+  &__footer {
+    background-color: #000c21;
 
-            &__panel--expanded {
-                color: #ffffff;
-                font-family: $font-family;
-                font-size: 0.7rem;
-                letter-spacing: 0;
-                line-height: 0.875rem;
+    .cmp-accordion {
+      &__button {
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border: none;
+        background-color: transparent;
+        padding-bottom: 1.375rem;
+        outline: none;
+      }
 
-                & ul {
-                    list-style: none;
-                    padding-left: 0.375rem;
-                }
-            }
-            &__panel {
-                margin-bottom: 1.375rem;
-            }
+      &__button[aria-expanded="false"]::after {
+        content: "\A0 \A0 \25BA";
+        font-size: 0.375rem;
+        vertical-align: auto;
+      }
+
+      &__button[aria-expanded="true"]::after {
+        content: "\A0 \A0 \25BC";
+        font-size: 0.375rem;
+        vertical-align: auto;
+      }
+
+      &__button[aria-expanded="true"] {
+        padding-bottom: 0;
+      }
+
+      &__panel--expanded {
+        color: #ffffff;
+        font-family: $font-family;
+        font-size: 0.7rem;
+        letter-spacing: 0;
+        line-height: 0.875rem;
+
+        & ul {
+          list-style: none;
+          padding-left: 0.375rem;
         }
+      }
 
-        .cmp-list__item-link {
-            text-decoration: none;
-            color: #ffffff;
-        }
+      &__panel {
+        margin-bottom: 1.375rem;
+      }
     }
 
-    &__expanded {
-        .cmp-accordion {
-            &__button {
-                padding: 0 1.5rem 0 1.125rem;
-                cursor: pointer;
-            }
-            &__button[aria-expanded="false"]::after {
-                content: "+";
-                font-size: 1.25rem;
-                position: absolute;
-                right: 1.6875rem;
-            }
-            &__button[aria-expanded="true"]::after {
-                content: "-";
-                font-size: 1.25rem;
-                position: absolute;
-                right: 1.9375rem;
-            }
-        }
+    .cmp-list__item-link {
+      text-decoration: none;
+      color: #ffffff;
     }
+  }
+
+  &__expanded {
+    .cmp-accordion {
+      &__button {
+        padding: 0 1.5rem 0 1.125rem;
+        cursor: pointer;
+      }
+
+      &__button[aria-expanded="false"]::after {
+        content: "+";
+        font-size: 1.25rem;
+        position: absolute;
+        right: 1.6875rem;
+      }
+
+      &__button[aria-expanded="true"]::after {
+        content: "-";
+        font-size: 1.25rem;
+        position: absolute;
+        right: 1.9375rem;
+      }
+    }
+  }
 }
 
 .cmp-where-we-are-section {
-    padding-left: rem(12px);
+  padding-left: rem(12px);
 
-    .cmp-accordion {
-        &__button {
-            color: get-color(text-light-charcoal);
-            font-size: $font-size-custom-xxsmall;
-            padding-bottom: rem(5px);
-            background-color: transparent;
-            font-weight: normal;
-            &:hover,
-            &:focus,
-            &:active,
-            &:focus-visible,
-            &:focus-within {
-                font-weight: 600;
-                color: get-color(brand-blue);
-                outline: none !important;
-            }
-        }
+  .cmp-accordion {
+    &__button {
+      color: get-color(text-light-charcoal);
+      font-size: $font-size-custom-xxsmall;
+      padding-bottom: rem(5px);
+      background-color: transparent;
+      font-weight: normal;
+
+      &:hover,
+      &:focus,
+      &:active,
+      &:focus-visible,
+      &:focus-within {
+        font-weight: 600;
+        color: get-color(brand-blue);
+        outline: none !important;
+      }
     }
-    .cmp-accordion__panel {
-        .text {
-            color: get-color(text-light-charcoal);
-            font-size: $font-size-xsmall;
-            padding-left: rem(22px);
-        }
+  }
+
+  .cmp-accordion__panel {
+    .text {
+      color: get-color(text-light-charcoal);
+      font-size: $font-size-xsmall;
+      padding-left: rem(22px);
     }
+  }
 }
 
 .cmp-accordion,
 .dp-accordion {
   &__footer {
     &.cmp-accordion__chevronFooter {
-      .cmp-accordion__button[aria-expanded=false]::after {
+      .cmp-accordion__button[aria-expanded="false"]::after {
         @include accordionIcon("true", "\f054");
       }
 
-      .cmp-accordion__button[aria-expanded=true]::after {
+      .cmp-accordion__button[aria-expanded="true"]::after {
         @include accordionIcon("true", "\f078");
       }
     }
@@ -180,11 +194,11 @@
       outline: none;
     }
 
-    .cmp-accordion__button[aria-expanded=false]::after {
+    .cmp-accordion__button[aria-expanded="false"]::after {
       @include accordionIcon("false", "\A0 \A0 \25BA");
     }
 
-    .cmp-accordion__button[aria-expanded=true]::after {
+    .cmp-accordion__button[aria-expanded="true"]::after {
       @include accordionIcon("false", "\A0 \A0 \25BC");
     }
 
@@ -312,15 +326,15 @@
         margin-left: auto;
       }
 
-        &::after {
-          color: get-color(text-light-charcoal);
-          font-family: $fontawesome-font-family;
-          font-size: rem(14px);
-          font-weight: $font-weight-normal;
-          position: absolute;
-          right: 0;
-          width: rem(24px);
-        }
+      &::after {
+        color: get-color(text-light-charcoal);
+        font-family: $fontawesome-font-family;
+        font-size: rem(14px);
+        font-weight: $font-weight-normal;
+        position: absolute;
+        right: 0;
+        width: rem(24px);
+      }
 
       &[aria-expanded="true"] {
         .cmp-accordion__title {
@@ -335,6 +349,210 @@
       &[aria-expanded="false"]::after {
         content: fa-content($fa-var-chevron-down);
       }
+    }
+  }
+}
+
+.cmp-accordion__title-color {
+  &--teal {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-teal;
+    }
+  }
+
+  &--deep-teal {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-deep-teal;
+    }
+  }
+
+  &--aqua {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-aqua;
+    }
+  }
+
+  &--chartreuse {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-chartreuse;
+    }
+  }
+
+  &--cool-gray-8 {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-cool-gray-8;
+    }
+  }
+
+  &--cool-gray-10 {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-cool-gray-10;
+    }
+  }
+
+  &--green {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-green;
+    }
+  }
+
+  &--black {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-black;
+    }
+  }
+
+  &--white {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-white;
+    }
+  }
+
+  //TDS Secondary background colors
+  &--steel-blue {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-steel-blue;
+    }
+  }
+
+  &--navy {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-navy;
+    }
+  }
+
+  &--copper {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-copper;
+    }
+  }
+
+  &--stone {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-stone;
+    }
+  }
+
+  &--cool-gray-1 {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-cool-gray-1;
+    }
+  }
+
+  //TDS Digital background colors
+  &--cherry {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-cherry;
+    }
+  }
+
+  &--amber {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-amber;
+    }
+  }
+
+  &--forest {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-forest;
+    }
+  }
+
+  &--charcoal {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-charcoal;
+    }
+  }
+
+  &--cool-gray-9 {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-cool-gray-9;
+    }
+  }
+
+  &--cobalt {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-cobalt;
+    }
+  }
+
+  &--neutral-gray-1 {
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-neutral-gray-1;
+    }
+  }
+
+  &--neutral-gray-2 {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-neutral-gray-2;
+    }
+  }
+
+  //Legacy background colors
+  &--dark-blue {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-dark-blue;
+    }
+  }
+
+  &--sky-blue {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-sky-blue;
+    }
+  }
+
+  &--legacy-gray {
+
+    .cmp-accordion__title,
+    .cmp-accordion__icon {
+      @include text-legacy-gray;
     }
   }
 }
