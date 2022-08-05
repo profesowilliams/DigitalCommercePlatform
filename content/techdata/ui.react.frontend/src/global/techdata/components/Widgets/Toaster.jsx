@@ -1,0 +1,42 @@
+import React from "react";
+import Drawer from "@mui/material/Drawer";
+import { CheckmarkCircle, Dismiss, Warning } from "../../../../fluentIcons/FluentIcons";
+import { teal, red } from "@mui/material/colors";
+
+function Toaster({
+  isToasterOpen, 
+  onClose,
+  children,
+  MuiDrawerProps,
+  isSuccess,  
+  message
+}) {
+  return (
+    <div className="cmp-toaster-drawer">
+      <Drawer
+        anchor="right"
+        open={isToasterOpen}
+        hideBackdrop={true}
+        className="toaster-modal"
+        sx={{height: "max-content"}}
+        onClose={onClose}
+        {...MuiDrawerProps}
+      >
+        <div className={`cmp-toaster-content${!isSuccess ? '-error' : ''}`}>
+          <div className="cmp-toaster-content__icon">
+          { isSuccess ?<CheckmarkCircle fill={teal[800]} /> :  <Warning fill={red[900]} />}
+          </div>
+          <div className="cmp-toaster-content__message">
+            <p>{ isSuccess ? message?.successSubmission : message?.failedSubmission}</p>
+            {children}
+          </div>
+          <div className="cmp-toaster-content__closeIcon">
+            <Dismiss onClick={onClose} />
+          </div>
+        </div>
+      </Drawer>
+    </div>
+  );
+}
+
+export default Toaster;

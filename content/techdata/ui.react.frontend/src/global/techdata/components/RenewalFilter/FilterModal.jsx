@@ -65,16 +65,18 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   const root = filterList ? filterList[0] : false;
   const rootIds = root ? root.childIds : [];
   const filterDom = useRef();
+  const filterBodyDom = useRef();  
 
   useEffect(() => {
-    function dynamicFilterAdjustmnet(){   
-      const {top} = filterDom.current.getBoundingClientRect();     
-      filterDom.current.style.height = `calc(100vh - ${top}px)`;
+    function dynamicFilterAdjustmnet() {
+      const { top } = filterDom.current.getBoundingClientRect();
+      filterDom.current.style.height = `calc(100vh - ${top}px)`;   
+      filterBodyDom.current.style.height = `calc(100% - ${192}px)`;     
       document.body.style.overflow = "hidden";
     }
     setTimeout(dynamicFilterAdjustmnet, 0);
-    return () => document.body.style.overflow = "initial";
-  },[]);
+    return () => (document.body.style.overflow = "initial");
+  }, []);
 
   /**
    * Triggerred when the "show results" button is clicked on
@@ -118,20 +120,20 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
           />
           <FilterDialog>
             <FilterHeader onQueryChanged={onQueryChanged} />
-            <div className="filter-accordion">
-              <div className="filter-accordion">
+            <div className="filter-modal-content__body" ref={filterBodyDom}>
+              <div className="filter-accordion" >
                 <FilterList rootIds={rootIds} />
               </div>
-            </div>
-            <div className="filter-modal-bottom">
-              <FilterTags />
-              <Button
-                btnClass="cmp-quote-button filter-modal-content__results"
-                onClick={showResult}
-                disabled={!hasAnyFilterSelected()}
-              >
-                {aemData.showResultLabel || "Show Result"}
-              </Button>
+              <div className="filter-modal-bottom">
+                <FilterTags />
+                <Button
+                  btnClass="cmp-quote-button filter-modal-content__results"
+                  onClick={showResult}
+                  disabled={!hasAnyFilterSelected()}
+                >
+                  {aemData.showResultLabel || "Show Result"}
+                </Button>
+              </div>
             </div>
           </FilterDialog>
         </RenewalErrorBoundary>

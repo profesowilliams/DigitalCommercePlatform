@@ -1,5 +1,5 @@
 import React from "react";
-import { CloseRoundIcon, SaveIcon } from "../../../../fluentIcons/fluentIcons";
+import { CloseRoundIcon, SaveIcon } from "../../../../fluentIcons/FluentIcons";
 import IconButton from "../Widgets/IconButton";
 import Pipe from "../Widgets/Pipe";
 

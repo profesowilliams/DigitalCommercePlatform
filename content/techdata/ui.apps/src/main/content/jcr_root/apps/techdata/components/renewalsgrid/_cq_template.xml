@@ -41,7 +41,7 @@
     sixtyPlusIcon="calendar"
     sixtyPlusIconColor="#006FBA"
     showOrderingIcon="{Boolean}false"
-    placeOrderDialogTitle="To continue placing your order for ({agreement-number}) please provide the following information."
+    placeOrderDialogTitle="To continue placing your order for ({enduser-companyname}) please provide the following information."
     termsAndConditions="I have read and accept Terms &amp; Conditions"
     termsAndConditionsLink="https://www.techdata.com/content/visitor/abouttd/conditions.aspx"
     successSubmission="Changes have been successfully added."

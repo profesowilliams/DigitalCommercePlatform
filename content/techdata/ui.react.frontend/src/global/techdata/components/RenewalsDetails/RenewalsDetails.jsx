@@ -17,6 +17,7 @@ import Saving from "./Saving";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
+  const {placeOrderDialogTitle, termsAndConditions } = componentProp.orderingFromDashboard;
   const errorMessages = componentProp?.errorMessages;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
@@ -26,6 +27,7 @@ function RenewalsDetails(props) {
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
   const shopURL = componentProp.shopURL;
   const isLoggedIn = useStore(state => state.isLoggedIn)
+  const [toggleOpen, setToggleOrder] = useState(false);
 
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
@@ -160,7 +162,7 @@ function RenewalsDetails(props) {
             message401: "You need to be logged in to view this",
           }}
         />
-      )}
+      )}      
       {modal && (
         <Modal
           // modalAction={modal.action} /** Commenting as this is a duplicate prop */

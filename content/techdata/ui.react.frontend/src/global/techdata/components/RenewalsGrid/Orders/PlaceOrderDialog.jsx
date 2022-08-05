@@ -4,102 +4,86 @@ import Dialog from "@mui/material/Dialog";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Drawer from "@mui/material/Drawer";
-import React, { useState } from "react";
-import {
-  CartIcon,
-  CheckmarkCircle,
-  Dismiss,
-} from "../../../../../fluentIcons/fluentIcons";
+import React, { useState, Suspense } from "react";
+import { CartIcon, Dismiss } from "../../../../../fluentIcons/FluentIcons";
 import { teal } from "@mui/material/colors";
 import RenewalOrder from "./RenewalOrder";
+import Loader from "../../Widgets/Loader";
+import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
 
 const HOCButton = (properties) => {
   return function ({ children }) {
     return (
-      <Button
-        sx={{
-          background: teal[800],
-          "&:hover": { background: teal[600] },
-        }}
-        variant="contained"        
-        {...properties}
-      >
+      <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>
         {children}
       </Button>
     );
   };
 };
 
+const LazyToaster = React.lazy(() => import("../../Widgets/Toaster"));
+
 function PlaceOrderDialog({
-  orderingFromDashboard,  
-  renewalData
+  orderingFromDashboard,
+  renewalData,
+  isDialogOpen,
+  onClose,
+  closeOnBackdropClick,
+  ToasterDataVerification,
+  orderEndpoints
 }) {
-  const {agreementNumber, canPlaceOrder = false} = renewalData;  
+  const { endUser } = renewalData;
   const {
-    showOrderingIcon,
     placeOrderDialogTitle,
     termsAndConditions,
     termsAndConditionsLink,
-    successSubmission
+    successSubmission,
+    failedSubmission
   } = orderingFromDashboard;
-  const [open, setOpen] = useState(false);
+
   const [max30Characters, setMax30Characters] = useState(false);
-  const [purchaseOrderNumber, setPurchaseOrderNumber] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [purchaseOrderNumber, setPurchaseOrderNumber] = useState(""); 
   const [termsServiceChecked, setTermsServiceChecked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isToasterOpen, setIsToasterOpen] = useState(false);
   const [transactionNumber, setTransactionNumber] = useState("");
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => onClose();
 
   const handleToggleToaster = (isToggle, transactionNumber) => {
     setIsToasterOpen(isToggle);
     setTransactionNumber(transactionNumber);
   };
 
-  // const textfieldsStyles = styled(TextField)({
-  const textfieldsStyles = {
-    "& label.Mui-focused": {
-      color: "#a6aaab",
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#a6aaab",
-    },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#a6aaab",
-      },
-      "&:hover fieldset": {
-        borderColor: "#a6aaab",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#a6aaab",
-      },
-    },
+  const resetDialogStates = () => {
+    // later with time refactor with zustand
+    setIsToasterOpen(false);
+    setSubmitted(false);
+    setPurchaseOrderNumber("");
+    setMax30Characters(false);
+    onClose();
+    setTransactionNumber(false);
   };
 
-  const showAgreementNumber = (text) => {
-    if (!!text && text.includes("({agreement-number}\)")) {
-      const splitted = text.split(/\({agreement-number}\)/img).map((_text) => _text);
+  const showEnuserCompanyName = (text) => {
+    if (!!text && text.includes("({enduser-companyname})")) {
+      const splitted = text
+        .split(/\({enduser-companyname}\)/gim)
+        .map((_text) => _text);
       splitted.splice(
         1,
         0,
         <>
           <span>
-            <b>Agreement No: {agreementNumber}</b>
+            <b>{endUser?.name}</b>
           </span>
         </>
       );
       return splitted;
     }
-    console.log('⚠ ({agreement-number}) placeholder missing on textfield dialog');
+    console.log(
+      "⚠ ({enduser-companyname}) placeholder missing on textfield dialog"
+    );
     return null;
   };
 
@@ -121,8 +105,7 @@ function PlaceOrderDialog({
     if (valueLength > 30) {
       setMax30Characters(true);
     } else {
-      setMax30Characters(false);
-      setButtonDisabled(false);
+      setMax30Characters(false);     
     }
   };
 
@@ -157,65 +140,55 @@ function PlaceOrderDialog({
         onClick: () => setSubmitted((submitted) => !submitted),
       });
 
+  const handleCloseDialog = (event, reason) => {
+    if (reason === "backdropClick" && !closeOnBackdropClick) return;
+    handleClose();
+  };
+
   return (
     <>
-      {showOrderingIcon && canPlaceOrder ? (
-        <CartIcon onClick={handleOpen} />
-      ) : (
-        <CartIcon
-          fill="#c6c6c6"
-          style={{ pointerEvents: "none" }}
-          onClick={handleOpen}
-        />
-      )}
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isDialogOpen}
+        onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <div className="place-cmp-order-dialog-container">
+          <div className="place-cmp-order-dialog-container__closeIcon">
+            <Dismiss onClick={handleClose} />
+          </div>
           <p className="cmp-place-order-title">
-            {showAgreementNumber(placeOrderDialogTitle)}
+            {showEnuserCompanyName(placeOrderDialogTitle)}
           </p>
-          <p className="cmp-place-order-content">
+          <div className="cmp-place-order-content">
             <TextField
               error={max30Characters}
-              label="Purchase Order Number"
-              sx={{ width: "100%", ...textfieldsStyles }}
-              // value={purchaseOrderNumber}
-              variant="standard"
               value={purchaseOrderNumber}
               onChange={onMaxPOChange}
               helperText="Max 30 characters"
+              {...PlaceOrderMaterialUi.textfieldsStyles}
             />
-          </p>
-          <p className="cmp-place-order-terms">
+          </div>
+          <div className="cmp-place-order-terms">
             <Checkbox
               id="cmp-place-order-checkbox"
               checked={termsServiceChecked}
-              onChange={(e) => {
-                console.log(e);
-                setTermsServiceChecked(e.target.checked);
-              }}
-              sx={{
-                color: teal[800],
-                "&.Mui-checked": { color: teal[600] },
-                paddingLeft: "0px",
-              }}
+              onChange={(e) => setTermsServiceChecked(e.target.checked)}
+              sx={{ ...PlaceOrderMaterialUi.checkbox }}
             />
             {""}
             <label htmlFor="cmp-place-order-checkbox">
               {constructTermsCondLink(termsAndConditions)}
             </label>
-          </p>
-          <p className="cmp-place-order-actions">
+          </div>
+          <div className="cmp-place-order-actions">
             {submitted ? (
               <RenewalOrder
                 handleToggleToaster={handleToggleToaster}
-                handleClose={handleClose}                
+                handleClose={handleClose}
                 renewalData={renewalData}
                 customerPO={purchaseOrderNumber}
+                orderEndpoints={orderEndpoints}
               >
                 {" "}
                 <OrderButton> Submitting </OrderButton>{" "}
@@ -223,33 +196,19 @@ function PlaceOrderDialog({
             ) : (
               <OrderButton> Order </OrderButton>
             )}
-          </p>
+          </div>
         </div>
       </Dialog>
-
-      <Drawer
-        anchor="right"
-        open={isToasterOpen}
-        hideBackdrop={true}
-        className="toaster-modal"
-        sx={{ height: "max-content" }}
-        onClose={() => setIsToasterOpen(false)}
-      >
-        <div className="cmp-toaster-content">
-          <div className="cmp-toaster-content__icon">
-            <CheckmarkCircle fill={teal[800]} />
-          </div>
-          <div className="cmp-toaster-content__message">
-            <p>
-              {successSubmission}
-            </p>
-            <b>Transaction number : {transactionNumber}</b>
-          </div>
-          <div className="cmp-toaster-content__closeIcon">
-            <Dismiss onClick={() => setIsToasterOpen(false)} />
-          </div>
-        </div>
-      </Drawer>
+      <Suspense fallback={<Loader />}>
+        <LazyToaster
+          isToasterOpen={isToasterOpen}
+          onClose={resetDialogStates}
+          isSuccess={true}
+          message={{ successSubmission,failedSubmission }}
+        >          
+          <ToasterDataVerification data={transactionNumber}/>          
+        </LazyToaster>
+      </Suspense>
     </>
   );
 }

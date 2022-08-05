@@ -86,7 +86,7 @@ export default function FilterDatePicker({ isOpen = false }) {
                   if (!focusedInput) return;
                   effects.closeAllSections();
                   setFocusedInput(focusedInput)}}
-            />
+            />          
           </If>
         </If>
       </div>

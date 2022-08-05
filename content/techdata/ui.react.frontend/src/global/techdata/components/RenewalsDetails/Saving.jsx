@@ -1,5 +1,5 @@
 import React from "react";
-import { LoaderIcon } from "../../../../fluentIcons/fluentIcons";
+import { LoaderIcon } from "../../../../fluentIcons/FluentIcons";
 import IconButton from "../Widgets/IconButton";
 
 export default function Saving() {

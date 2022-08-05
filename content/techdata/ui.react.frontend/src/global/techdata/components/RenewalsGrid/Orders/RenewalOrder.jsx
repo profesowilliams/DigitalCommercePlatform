@@ -2,25 +2,36 @@ import React, { useEffect, useState } from "react";
 import { put, get, post } from "../../../../../utils/api";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
-function RenewalOrder({ children, customerPO, renewalData, handleClose, handleToggleToaster }) {
+function RenewalOrder({
+  children,
+  customerPO,
+  renewalData,
+  handleClose,
+  handleToggleToaster,
+  orderEndpoints,
+}) {
 
   const id = renewalData.source.id;
 
   const {
-    updateRenewalOrderEndpoint = '',
-    getStatusEndpoint = '',
-    orderRenewalEndpoint = '',
-  } = useRenewalGridState((state) => state.aemConfig);
+    updateRenewalOrderEndpoint = "",
+    getStatusEndpoint = "",
+    orderRenewalEndpoint = "",
+  } = orderEndpoints;
 
   const handleHttpRequest = async () => {
-    if (!updateRenewalOrderEndpoint || !getStatusEndpoint || !orderRenewalEndpoint) {
-      console.log('⚠ please author renewal order endpoints');
-      handleClose()
+    if (
+      !updateRenewalOrderEndpoint ||
+      !getStatusEndpoint ||
+      !orderRenewalEndpoint
+    ) {
+      console.log("⚠ please author renewal order endpoints");
+      handleClose();
       return;
     }
     try {
-      const { source, reseller, endUser } = renewalData
-      const payload = {source, reseller, endUser, customerPO };
+      const { source, reseller, endUser } = renewalData;
+      const payload = { source, reseller, endUser, customerPO };
       if (renewalData?.items) payload.items = renewalData.items;
       const updateresponse = await put(updateRenewalOrderEndpoint, payload);
       if (updateresponse.status === 200) {
@@ -34,7 +45,10 @@ function RenewalOrder({ children, customerPO, renewalData, handleClose, handleTo
           const orderResponse = await post(orderRenewalEndpoint, orderPayload);
           if (orderResponse.status === 200) {
             handleClose();
-            handleToggleToaster(true, orderResponse.data.content.confirmationNumber);                    
+            handleToggleToaster(
+              true,
+              orderResponse.data.content.confirmationNumber
+            );
           }
         }
       }
@@ -48,11 +62,7 @@ function RenewalOrder({ children, customerPO, renewalData, handleClose, handleTo
       clearTimeout(timer1);
     };
   }, [handleHttpRequest]);
-  return (
-    <>
-      {children}  
-    </>
-  );
+  return <>{children}</>;
 }
 
 export default RenewalOrder;

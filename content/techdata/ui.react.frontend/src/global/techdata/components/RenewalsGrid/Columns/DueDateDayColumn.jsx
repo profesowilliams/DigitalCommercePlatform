@@ -1,7 +1,7 @@
 import React from "react";
 import differenceInDays from "date-fns/differenceInDays";
 import { useRenewalGridState } from "../store/RenewalsStore";
-import { ClockAlarmFilled, CalendarFilled } from "../../../../../fluentIcons/fluentIcons";
+import { ClockAlarmFilled, CalendarFilled } from "../../../../../fluentIcons/FluentIcons";
 
 function DueDateDayColumn({ columnValue }) {
   const dueDaysIcons = useRenewalGridState((state) => state.dueDaysIcons);
