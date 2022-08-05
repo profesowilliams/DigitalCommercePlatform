@@ -8,7 +8,7 @@ import QuantityColumn from "../Columns/QuantityColumn.jsx";
 import buildColumnDefinitions from "./buildColumnDefinitions";
 import UnitPriceColumn from "../Columns/UnitPriceColumn";
 
-function GridSubTotal({ data, gridProps }) {
+function GridSubTotal({ subtotal, data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
       <div className="cmp-renewal-preview__subtotal--note">
@@ -23,7 +23,7 @@ function GridSubTotal({ data, gridProps }) {
           <span className="cmp-renewal-preview__subtotal--currency-symbol">
             {gridProps?.quoteSubtotalCurrencySymbol || ''}
           </span>
-          <span>{thousandSeparator(data?.price)}</span>
+          <span>{thousandSeparator(subtotal || data?.price)}</span>
           {gridProps?.quoteSubtotalCurrency?.length > 0 && (
             <span className="cmp-renewal-preview__subtotal--currency-code">
               {gridProps.quoteSubtotalCurrency?.replace(
@@ -44,6 +44,7 @@ function Price({ value }) {
 
 function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
   const [modal, setModal] = useState(null);
+  const [subtotal, setSubtotal] = useState(null);
   const gridData = data.items ?? [];
   const gridConfig = {
     ...gridProps,
@@ -136,7 +137,15 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
         data?.currency || ""
       ),
       cellRenderer: (props) => Price(props),
-      valueGetter:'data.quantity * data.unitPrice'
+      valueGetter:'data.quantity * data.unitPrice',
+      // Use sum aggFunc to also update subtotal value.
+      // Function is triggered on internal grid updates.
+      aggFunc: params => {
+        let total = 0;
+        params.values.forEach(value => total += value);
+        setSubtotal(total);
+        return total;
+      }
     }
   ];
 
@@ -162,7 +171,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
           config={gridConfig}
           data={mutableGridData}
         />
-        <GridSubTotal data={data} gridProps={gridProps} />
+        <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
       </section>
       {modal && (
         <Modal
