@@ -20,7 +20,7 @@ export const isHouseAccount = () => getUserDataInitialState()?.isHouseAccount ??
 export const hasDCPAccess = (user) => {
     const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
     const {roleList} = user ? user : {undefined};
-    if (isDisableChecksForDCPAccess) {
+    if (isDisableChecksForDCPAccess()) {
         console.log("Returning as disableChecksForDCPAccess is true!!!");
         return false;
     }
