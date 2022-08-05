@@ -1,4 +1,4 @@
-import { isDisableChecksForDCPAccess } from "featureFlagUtils";
+import { isDisableChecksForDCPAccess } from "./featureFlagUtils";
 export const ACCESS_TYPES = {
     DCP_ACCESS: "hasDCPAccess",
     CAN_VIEW_ORDERS: 'CanViewOrders',
