@@ -31,6 +31,39 @@
 	}
 }
 
+.cmp-button--sie {
+	&__default {
+		& .cmp-button {
+			background-color: transparent;
+			border: 1px solid get-color(td-lightblue);
+			&:hover {
+				background-color: get-color(td-lightblue);
+				& .cmp-button__text {
+					color: get-color(td-dark-blue)
+				}
+			}
+		}
+		& .cmp-button__text {
+			color: get-color(brand-white);
+			line-height: 3rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+		}
+	}
+
+	&__inactive {
+		& .cmp-button {
+			background-color: get-color(td-lightblue);
+			& .cmp-button__text {
+				color: get-color(td-dark-blue);
+				line-height: 3rem;
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+		}
+	}
+}
+
 .cmp-button__clear {
 	background-color: transparent !important;
 	cursor: pointer !important;
