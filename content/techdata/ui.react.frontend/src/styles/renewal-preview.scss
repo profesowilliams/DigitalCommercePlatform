@@ -124,7 +124,7 @@
 
   .cmp-grid.ag-theme-alpine {
     .ag-header {
-      height: 60px !important;
+      height: 65px !important;
       &-row {
         height: 55px !important;
       }
@@ -142,8 +142,7 @@
     text-align: right;
   }
   
-  .ag-theme-alpine .top-aligned .ag-cell-label-container {  
-    margin-top: 10px;
-    flex-direction: column-reverse;
+  .center-aligned {
+    text-align: center;
   }
 }

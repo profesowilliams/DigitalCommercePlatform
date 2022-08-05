@@ -6,7 +6,6 @@ const columnDefs = [
     sortable: false,
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'top-aligned',
   },
   {
     headerName: "Product family",
@@ -15,7 +14,6 @@ const columnDefs = [
     sortable: false,
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'top-aligned',
   },
   {
     headerName: "Product details",
@@ -24,16 +22,13 @@ const columnDefs = [
     width: "500px",
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'top-aligned',
   },
   {
     headerName: "Vendor part №",
     field: "mfrNumber",
     sortable: false,
-    width: "200px",
     cellStyle: {'white-space': 'normal', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'top-aligned',
   },
   {
     headerName: "List price",
@@ -41,7 +36,7 @@ const columnDefs = [
     sortable: false,
     cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'right-aligned top-aligned'
+    headerClass: 'right-aligned'
   },
   {
     headerName: "% off list price",
@@ -49,7 +44,7 @@ const columnDefs = [
     sortable: false,
     cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'right-aligned top-aligned'
+    headerClass: 'right-aligned'
   },
   {
     headerName: "Unit price",
@@ -57,23 +52,24 @@ const columnDefs = [
     sortable: false,
     cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'right-aligned top-aligned'
+    headerClass: 'right-aligned'
   },
   {
     headerName: "Quantity",
     field: "quantity",
     sortable: false,
-    cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
+    cellStyle: { 'justify-content': 'center', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'right-aligned top-aligned'
+    headerClass: 'center-aligned'
   },
   {
     headerName: "Total",
-    field: "totalPrice",
+    field: "totalPrice",    
+    width: "150px",
     sortable: false,
     cellStyle: { 'justify-content': 'flex-end', 'padding': '10px'},
     autoHeight: true,
-    headerClass: 'right-aligned top-aligned'
+    headerClass: 'right-aligned'
   },
 ];
 

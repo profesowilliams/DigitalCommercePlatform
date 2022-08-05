@@ -22,14 +22,16 @@ function GridSubTotal({ data, gridProps }) {
         <span className="cmp-renewal-preview__subtotal--value">
           <span className="cmp-renewal-preview__subtotal--currency-symbol">
             {gridProps?.quoteSubtotalCurrencySymbol || ''}
-          </span>       
-          <span>{thousandSeparator(data?.price)}</span>
-          <span className="cmp-renewal-preview__subtotal--currency-code">
-            {gridProps.quoteSubtotalCurrency?.replace(
-              '{currency-code}',
-              data?.currency || ''
-            )}
           </span>
+          <span>{thousandSeparator(data?.price)}</span>
+          {gridProps?.quoteSubtotalCurrency?.length > 0 && (
+            <span className="cmp-renewal-preview__subtotal--currency-code">
+              {gridProps.quoteSubtotalCurrency?.replace(
+                '{currency-code}',
+                data?.currency || '' 
+              )}
+            </span>
+          )}
         </span>
       </div>
     </div>
