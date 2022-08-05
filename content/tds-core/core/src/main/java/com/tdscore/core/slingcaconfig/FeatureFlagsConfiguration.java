@@ -12,4 +12,7 @@ public @interface FeatureFlagsConfiguration {
     @Property(label = "Extra Reload Disabled Flag", description = "Disable the extra reload that happens upon signing in to DCP.")
     boolean extraReloadDisabled() default false;
 
+    @Property(label = "Disable checks for DCP Access", description = "Helps to disable DCP checks for access for components, enabled by default.")
+    boolean disableChecksForDCPAccess() default false;
+
 }

@@ -1,9 +1,9 @@
+import { isDisableChecksForDCPAccess } from "featureFlagUtils";
 export const ACCESS_TYPES = {
     DCP_ACCESS: "hasDCPAccess",
     CAN_VIEW_ORDERS: 'CanViewOrders',
     RENEWALS_ACCESS: 'hasRenewalsAccess',
 }
-
 
 export const RENEWALS_TYPE = {
     resellerName: 'resellerName'
@@ -20,7 +20,10 @@ export const isHouseAccount = () => getUserDataInitialState()?.isHouseAccount ??
 export const hasDCPAccess = (user) => {
     const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
     const {roleList} = user ? user : {undefined};
-
+    if (isDisableChecksForDCPAccess) {
+        console.log("Returning as disableChecksForDCPAccess is true!!!");
+        return false;
+    }
     if (roleList && roleList.length) {
         for (let eachItem of roleList)
         {
