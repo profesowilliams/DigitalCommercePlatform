@@ -17,7 +17,6 @@ import Saving from "./Saving";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
-  const {placeOrderDialogTitle, termsAndConditions } = componentProp.orderingFromDashboard;
   const errorMessages = componentProp?.errorMessages;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
