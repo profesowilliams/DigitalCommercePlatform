@@ -138,7 +138,7 @@ function _RenewalActionColumn({ eventProps }) {
           orderingFromDashboard={orderingFromDashboard}
           renewalData={data}
           closeOnBackdropClick={false}
-          ToasterDataVerification={({data}) => <b>Transaction number : {data}</b>}
+          ToasterDataVerification={({data}) => data ? <b>Transaction number : {data}</b> : null}
           orderEndpoints={orderEndpoints}
         />
         <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />

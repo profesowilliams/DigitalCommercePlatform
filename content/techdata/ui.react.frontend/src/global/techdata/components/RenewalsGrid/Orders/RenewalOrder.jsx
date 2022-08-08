@@ -9,6 +9,7 @@ function RenewalOrder({
   handleClose,
   handleToggleToaster,
   orderEndpoints,
+  passEmailOnToastMessage
 }) {
 
   const id = renewalData.source.id;
@@ -45,15 +46,24 @@ function RenewalOrder({
           const orderResponse = await post(orderRenewalEndpoint, orderPayload);
           if (orderResponse.status === 200) {
             handleClose();
-            handleToggleToaster(
-              true,
-              orderResponse.data.content.confirmationNumber
-            );
+            const isToggle = true;
+            const transactionNumber = orderResponse.data.content.confirmationNumber;           
+            handleToggleToaster({isToggle, transactionNumber, onError:false});
           }
         }
+      } else {
+        throw updateresponse;
       }
     } catch (error) {
       console.log("🚀error >>", error);
+      const response = error?.response?.data;
+      if (response) {
+        const salesContentEmail = response?.content?.salesContentEmail;
+        passEmailOnToastMessage(salesContentEmail)
+        console.log('error.response >> ',error.response);
+      }
+      handleToggleToaster({isToggle:true, transactionNumber:'', onError:true});
+      handleClose();
     }
   };
   useEffect(() => {

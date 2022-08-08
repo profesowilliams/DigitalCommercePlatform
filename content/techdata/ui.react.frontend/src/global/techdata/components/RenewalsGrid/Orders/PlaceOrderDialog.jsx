@@ -1,25 +1,12 @@
 import { Checkbox, CircularProgress } from "@mui/material";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import Drawer from "@mui/material/Drawer";
 import React, { useState, Suspense } from "react";
-import { CartIcon, Dismiss } from "../../../../../fluentIcons/FluentIcons";
-import { teal } from "@mui/material/colors";
+import { Dismiss } from "../../../../../fluentIcons/FluentIcons";
 import RenewalOrder from "./RenewalOrder";
 import Loader from "../../Widgets/Loader";
 import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
-
-const HOCButton = (properties) => {
-  return function ({ children }) {
-    return (
-      <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>
-        {children}
-      </Button>
-    );
-  };
-};
+import usePlaceOrderDialogHook from "./usePlaceOrderDialogHook";
 
 const LazyToaster = React.lazy(() => import("../../Widgets/Toaster"));
 
@@ -30,7 +17,7 @@ function PlaceOrderDialog({
   onClose,
   closeOnBackdropClick,
   ToasterDataVerification,
-  orderEndpoints
+  orderEndpoints,
 }) {
   const { endUser } = renewalData;
   const {
@@ -38,32 +25,28 @@ function PlaceOrderDialog({
     termsAndConditions,
     termsAndConditionsLink,
     successSubmission,
-    failedSubmission
+    failedSubmission,
   } = orderingFromDashboard;
 
-  const [max30Characters, setMax30Characters] = useState(false);
-  const [purchaseOrderNumber, setPurchaseOrderNumber] = useState(""); 
-  const [termsServiceChecked, setTermsServiceChecked] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [isToasterOpen, setIsToasterOpen] = useState(false);
-  const [transactionNumber, setTransactionNumber] = useState("");
+  const {
+    max30Characters,
+    purchaseOrderNumber,
+    onMaxPOChange,
+    termsServiceChecked,
+    submitted,
+    isToasterOpen,
+    transactionNumber,
+    toasterMessage,
+    resetDialogStates,
+    setTermsServiceChecked,
+    handleToggleToaster,
+    OrderButtonComponent,
+    onRequestSuccess,
+    passEmailOnToastMessage
+  } = usePlaceOrderDialogHook({successSubmission, failedSubmission});   
 
-  const handleClose = () => onClose();
 
-  const handleToggleToaster = (isToggle, transactionNumber) => {
-    setIsToasterOpen(isToggle);
-    setTransactionNumber(transactionNumber);
-  };
-
-  const resetDialogStates = () => {
-    // later with time refactor with zustand
-    setIsToasterOpen(false);
-    setSubmitted(false);
-    setPurchaseOrderNumber("");
-    setMax30Characters(false);
-    onClose();
-    setTransactionNumber(false);
-  };
+  const handleClose = () => onClose(); 
 
   const showEnuserCompanyName = (text) => {
     if (!!text && text.includes("({enduser-companyname})")) {
@@ -100,45 +83,6 @@ function PlaceOrderDialog({
       )
     );
   };
-
-  const handleErrorOnMax = (valueLength) => {
-    if (valueLength > 30) {
-      setMax30Characters(true);
-    } else {
-      setMax30Characters(false);     
-    }
-  };
-
-  const onMaxPOChange = (event) => {
-    const value = event?.target?.value;
-    setPurchaseOrderNumber(value);
-    handleErrorOnMax(value.length);
-    if (value.length > 30) {
-      setMax30Characters(true);
-    }
-  };
-
-  const checkButtonDisabled = () => {
-    return !(
-      purchaseOrderNumber.length <= 30 &&
-      termsServiceChecked &&
-      purchaseOrderNumber
-    );
-  };
-
-  const OrderButton = submitted
-    ? HOCButton({
-        startIcon: (
-          <CircularProgress
-            size={20}
-            sx={{ color: "white", fontSize: "14px" }}
-          />
-        ),
-      })
-    : HOCButton({
-        disabled: checkButtonDisabled(),
-        onClick: () => setSubmitted((submitted) => !submitted),
-      });
 
   const handleCloseDialog = (event, reason) => {
     if (reason === "backdropClick" && !closeOnBackdropClick) return;
@@ -189,12 +133,13 @@ function PlaceOrderDialog({
                 renewalData={renewalData}
                 customerPO={purchaseOrderNumber}
                 orderEndpoints={orderEndpoints}
+                passEmailOnToastMessage={passEmailOnToastMessage}
               >
                 {" "}
-                <OrderButton> Submitting </OrderButton>{" "}
+                <OrderButtonComponent> Submitting </OrderButtonComponent>{" "}
               </RenewalOrder>
             ) : (
-              <OrderButton> Order </OrderButton>
+              <OrderButtonComponent> Order </OrderButtonComponent>
             )}
           </div>
         </div>
@@ -203,10 +148,10 @@ function PlaceOrderDialog({
         <LazyToaster
           isToasterOpen={isToasterOpen}
           onClose={resetDialogStates}
-          isSuccess={true}
-          message={{ successSubmission,failedSubmission }}
-        >          
-          <ToasterDataVerification data={transactionNumber}/>          
+          isSuccess={onRequestSuccess}
+          message={toasterMessage}
+        >
+          <ToasterDataVerification data={transactionNumber} />
         </LazyToaster>
       </Suspense>
     </>
