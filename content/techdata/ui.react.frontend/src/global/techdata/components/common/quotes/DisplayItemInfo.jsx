@@ -41,8 +41,7 @@ function DisplayItemInfo({
   const toggleBoldLabel = () => (boldLabel ? <b>{label}</b> : label);
 
   const handleObjectResponseForApj = (child) => {
-    const res = typeof child === "object" ? child?.text : child;
-    console.log('🚀res >>',res, " wtf", typeof res);
+    const res = typeof child === "object" ? child?.text : child;   
     return res;
   };
 

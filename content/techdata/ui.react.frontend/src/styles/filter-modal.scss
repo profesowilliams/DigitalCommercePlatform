@@ -102,7 +102,13 @@
     padding: 12px 0;
     border: 1px solid #000c21;
     border-radius: 0 0 0 4px;
+    background-color: #000c21;  
+  }
+  .cmp-quote-button:disabled{
+    opacity: 0.8;
     background-color: #000c21;
+    color: white;
+    cursor: none;
   }
 }
 
