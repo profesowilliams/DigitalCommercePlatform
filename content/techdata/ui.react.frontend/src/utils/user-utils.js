@@ -22,7 +22,7 @@ export const hasDCPAccess = (user) => {
     const {roleList} = user ? user : {undefined};
     if (isDisableChecksForDCPAccess()) {
         console.log("Returning as disableChecksForDCPAccess is true!!!");
-        return false;
+        return true;
     }
     if (roleList && roleList.length) {
         for (let eachItem of roleList)

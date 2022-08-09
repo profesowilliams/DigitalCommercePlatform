@@ -5,6 +5,9 @@ import {dashboardMenu} from "./dashboardMenu";
 import {getAbsolutePosition} from "../../helpers/absolutePosition";
 import {getQueryStringValue} from "../../../../utils/utils";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
+import { useStore } from "../../../../utils/useStore";
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
+import { hasDCPAccess } from "../../../../utils/user-utils";
 
 const NewSubheader = ({ componentProp }) => {
 	const dashboardMenuIndex = 0;
@@ -16,9 +19,11 @@ const NewSubheader = ({ componentProp }) => {
 	const menuItemRefs = useRef([]);
 	const loginPageCommonName = vendorConnectionsModal.loginPageCommonName;
 	const disableVendorConnectionLink = vendorConnectionsModal.disableVendorConnectionLink;
+  
+	const isLoggedIn = useStore(state => state.isLoggedIn);
 
 	useEffect(() => {
-	    var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
+        var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
         if(window.SHOP && window.SHOP.authentication && window.SHOP.authentication.isAuthenticated()) {
             if(!localStorage.getItem("userData")) {
                 var userData = prepareUserData();
@@ -33,9 +38,8 @@ const NewSubheader = ({ componentProp }) => {
         if (userDataJsonStr) {
             setUserData(userDataJsonStr);
         }
-		hasDCPAccess();
 		checkIfVendorSignedIn();
-	}, []);
+  }, [isExtraReloadDisabled(), isLoggedIn]);
 
     const prepareUserData = () => {
         // fetch user entitlement data from datalayer and populate localStorage
@@ -91,22 +95,6 @@ const NewSubheader = ({ componentProp }) => {
 		return undefined;
 	}
 
-	const hasDCPAccess = (user) => {
-		const HAS_DCP_ACCESS = "hasDCPAccess";
-		const {roleList} = user ? user : {undefined};
-
-		if (roleList && roleList.length) {
-			for (let eachItem of roleList)
-			{
-				if (eachItem?.entitlement.trim().toLowerCase() === HAS_DCP_ACCESS.toLowerCase())
-				{
-					return true;
-				}
-			}
-
-		}
-		return false;
-	}
 	const returnClickHandler = (index) => {
 		if (index==0)
 		{
@@ -161,7 +149,6 @@ const NewSubheader = ({ componentProp }) => {
 	}
 
 	const getMenuItems = (menuItems, dashboardMenuItems) => {
-
 		if (!menuItems.length) return null;
 
 		if (menuItems && menuItems.length > 0)

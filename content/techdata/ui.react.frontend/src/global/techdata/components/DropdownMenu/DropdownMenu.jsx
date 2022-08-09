@@ -6,6 +6,7 @@ import SecondaryMenu from "../ProfileMegaMenu/SecondaryMenu";
 import { hasDCPAccess } from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import { triggerEvent } from "../../../../utils/events";
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const [showSecondary, setShowSecondary] = useState(false);
@@ -186,6 +187,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       config?.aemAuthUrl ?? null,
       config?.isPrivatePage ?? null
     );
+
+    triggerEvent('user:loggedOut');
   };
 
   const setRefBackButton = () => {

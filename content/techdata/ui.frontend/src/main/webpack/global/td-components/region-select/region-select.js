@@ -1,8 +1,21 @@
+import events from '../../../common-utils/js/events';
+
 (function () {
   "use strict";
   var countriesListModal = document.getElementById("countriesListModal");
-  const userIsLoggedIn = localStorage.getItem("sessionId") ? true : false;
+  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
   if (!countriesListModal) return;
+
+  if (isExtraReloadDisabled()) {
+    const listener = (isLoggedIn) => {
+      userIsLoggedIn = isLoggedIn;
+      hideCountriesModal();
+      console.log(`language selector loggedin1`, isLoggedIn);
+    };
+
+    events.addLoginListener(listener);
+  }
 
   function showRegionSelectDropdown() {
     document.getElementById("regionSelectDropdown").classList.add("cmp-show");
@@ -11,6 +24,9 @@
   function hideRegionSelectDropdown() {
     if (userIsLoggedIn) {
       document.getElementsByClassName("languagenavigation")[0].style.display = "none";
+    }
+    else if(isExtraReloadDisabled()) {
+      document.getElementsByClassName("languagenavigation")[0].style.display = "block";
     }
     document
       .getElementById("regionSelectDropdown")

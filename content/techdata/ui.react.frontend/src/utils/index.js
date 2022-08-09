@@ -37,6 +37,8 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
             }
         }
       } catch(e){
+        //TODO: Marking possible place to fix the logout issue
+        //cleanupLocalStorage(window.location.href);
         console.error('Error occurred when trying to logout');
         console.error(e);
       }

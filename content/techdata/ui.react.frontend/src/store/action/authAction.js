@@ -30,7 +30,7 @@ export const signOutRequest = () => {
 	};
 };
 
-export const signInAsynAction = (apiUrl) => {	
+export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 	
 	let code = localStorage.getItem('signInCode');
 	const signInUrl = apiUrl;
@@ -72,6 +72,7 @@ export const signInAsynAction = (apiUrl) => {
 			.then(response => {
 				dispatch(signInResponse(response.data.content.user));
 				localStorage.setItem('userData', JSON.stringify(response.data.content.user));
+				handleLoginResponse && handleLoginResponse();
 				refreshPage();
 			})
 			.catch(err => {

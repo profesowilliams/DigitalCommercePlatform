@@ -1,10 +1,25 @@
 import bp from '../../../common-utils/js/media-match';
+import events from '../../../common-utils/js/events';
 
 (function(bp) {
   "use strict";
+  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+
+  if (isExtraReloadDisabled()) {
+    const listener = (isLoggedIn) => {
+      userIsLoggedIn = isLoggedIn;
+
+      changeShopLoginUrlPrefix();
+      prefixAEMAuthUrlForAEMLinks();
+      console.log(`meganav: loggedin1`, isLoggedIn);
+    };
+
+    events.addLoginListener(listener);
+  }
+
   function enableIfNotPrivate(navPrimaryItems=[]){
-   let sessionId = localStorage.getItem('sessionId');
-   if (!sessionId) return;
+   if (userIsLoggedIn) return;
     for (const navItem of navPrimaryItems){
       if (navItem.dataset.cmpIsprivate === "true"){
         navItem.style.display = "";
@@ -216,9 +231,8 @@ import bp from '../../../common-utils/js/media-match';
     function changeShopLoginUrlPrefix () {
         let prefixShopAuthUrl = "";
         if(window.SHOP == undefined) { // ignore if its shop
-            let sessionId = localStorage.getItem('sessionId');
             var shopHeaderContainer = document.getElementById("megamenu");
-            if(sessionId && shopHeaderContainer) {
+            if(userIsLoggedIn && shopHeaderContainer) {
                 var megamenuAnchorsLinks = shopHeaderContainer.getElementsByTagName("a");
                 let prefixURLEle = document.querySelector('#ssoLoginRedirectUrl');
                 for(var i = 0; i < megamenuAnchorsLinks.length; i += 1) {

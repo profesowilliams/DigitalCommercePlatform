@@ -237,13 +237,13 @@ app.post("/login", function (req, res) {
   }
 });
 
-app.post("/logoutservice", function (req, res) {
+app.post("/ui-account/v1/logout", function (req, res) {
   let code = req.body.code;
   let redirectUrl = req.body.RedirectUri;
   let applicationName = req.body.applicationName;
 
   console.log("post submit");
-  console.log(errorPage);
+  //console.log(errorPage);
   console.log(redirectUrl);
   let resJsonSuccess = {
     content: {
@@ -261,7 +261,9 @@ app.post("/logoutservice", function (req, res) {
     user: null,
   };
 
-  res.redirect(redirectUrl);
+  //res.redirect(redirectUrl);
+
+  res.json(resJsonSuccess);
 });
 
 app.post("/logout", function (req, res) {

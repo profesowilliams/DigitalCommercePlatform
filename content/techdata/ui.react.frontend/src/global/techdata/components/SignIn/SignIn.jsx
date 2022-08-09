@@ -22,7 +22,8 @@ import {
   signOutForExpiredSession,
 } from "../../../../utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
-import {useStore} from "../../../../utils/useStore"
+import {useStore} from "../../../../utils/useStore";
+import { triggerEvent } from "../../../../utils/events";
 import axios from 'axios';
 import Modal from '../Modal/Modal';
 
@@ -194,6 +195,12 @@ const SignIn = (props) => {
     toggleLangNavigation(isAlreadySignedIn());
   }
 
+  const handleLoginResponse = () => {
+    changeLoggedInState(true);
+
+    triggerEvent('user:loggedIn');
+  }
+
   const handleLoginRedirection = () => {
     if (isSessionExpired()) {
       signOutForExpiredSession(authUrl, clientId);
@@ -201,14 +208,14 @@ const SignIn = (props) => {
     redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
-    routeChange();
+    routeChange(handleLoginResponse);
     isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
 
     if(isExtraReloadDisabled()){
       let sessionId = localStorage.getItem("sessionId");
-      if(sessionId){
+      if(sessionId && localStorage.getItem("userData")){
         axios.defaults.headers.common['SessionId'] = sessionId;
-        changeLoggedInState(true)
+        handleLoginResponse();
       }
     }
 
@@ -267,12 +274,12 @@ const SignIn = (props) => {
     redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
   };
 
-  const routeChange = () => {
+  const routeChange = (handleLoginResponse) => {
     let params = getQueryStringValue(codeQueryParam);
     if (params) {
       localStorage.setItem("signin", constructSignInURL());
       if (!isAlreadySignedIn()) {
-        dispatch(signInAsynAction(constructSignInURL()));
+        dispatch(signInAsynAction(constructSignInURL(), handleLoginResponse));
       }
     }
   };

@@ -6,12 +6,15 @@ import SearchSuggestions from "./SearchSuggestions";
 import {getUserDataInitialState, hasDCPAccess} from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import { ADOBE_DATA_LAYER_SEARCH_BAR_EVENT } from "../../../../utils/constants";
+import { useStore } from "../../../../utils/useStore";
+import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 
-function getShopLoginUrlPrefix() {
+function getShopLoginUrlPrefix(isLoggedIn) {
   let prefixShopAuthUrl = "";
   if (window.SHOP == undefined) {
-    let sessionId = localStorage.getItem("sessionId");
-    if (sessionId) {
+    let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : isLoggedIn;
+
+    if (userIsLoggedIn) {
       let prefixURLEle = document.querySelector("#ssoLoginRedirectUrl");
       if (prefixURLEle) {
         prefixShopAuthUrl =
@@ -72,6 +75,9 @@ const SearchBar = ({ data, componentProp }) => {
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
   const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
+  
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+
   useEffect(() => {
     const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
     return () => clearTimeout(timeOutId);
@@ -150,10 +156,10 @@ const SearchBar = ({ data, componentProp }) => {
     } else { // If not so redirect to shop
       let searchTargetUrl =
           searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
-      if (getShopLoginUrlPrefix() !== "") {
+      if (getShopLoginUrlPrefix(isLoggedIn) !== "") {
         searchTargetUrl = encodeURIComponent(searchTargetUrl);
       }
-      return getShopLoginUrlPrefix() + searchTargetUrl;
+      return getShopLoginUrlPrefix(isLoggedIn) + searchTargetUrl;
     }
   };
 
@@ -191,11 +197,11 @@ const SearchBar = ({ data, componentProp }) => {
       path += `&refinements=${refinementId}`;
     }
     let searchTargetUrl = `${searchDomain}${path}`;
-    if (getShopLoginUrlPrefix() !== "") {
+    if (getShopLoginUrlPrefix(isLoggedIn) !== "") {
       // encode only if there is prefix url
       searchTargetUrl = encodeURIComponent(searchTargetUrl);
     }
-    return getShopLoginUrlPrefix() + searchTargetUrl;
+    return getShopLoginUrlPrefix(isLoggedIn) + searchTargetUrl;
   };
 
   const onSearchTermTextChange = (e) => {
