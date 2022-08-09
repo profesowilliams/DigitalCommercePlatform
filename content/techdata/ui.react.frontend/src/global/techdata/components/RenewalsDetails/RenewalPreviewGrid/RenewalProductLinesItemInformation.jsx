@@ -69,9 +69,9 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-renewal-preview__prod-details">
             <a
-              href={isLinkDisabled !== "true" ? formatShopDomainUrl() : "javascript:void(0);"}
-              target={isLinkDisabled !== "true" ? "_blank" : null}
-              className={`cmp-product-lines-grid__item-information__box-text__header__link ${isLinkDisabled !== "true" ? "" : "no-underline"}`}
+              href={!isLinkDisabled ? formatShopDomainUrl() : "javascript:void(0);"}
+              target={!isLinkDisabled ? "_blank" : null}
+              className={`cmp-product-lines-grid__item-information__box-text__header__link ${!isLinkDisabled ? "" : "no-underline"}`}
             >
               {formatDescription(description)}
             </a>

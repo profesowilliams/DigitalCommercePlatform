@@ -207,7 +207,7 @@
                                                                     text="Sortable"
                                                                     uncheckedValue="false"
                                                                     value="{Boolean}true"/>
-                                                                <sortable-typehint
+                                                                <sortableTypehint
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                                     name="./sortable@TypeHint"
@@ -512,7 +512,7 @@
                                                                     text="Show if is House Account"
                                                                     uncheckedValue="false"
                                                                     value="{Boolean}true"/>
-                                                                <isHouseAccount-typehint
+                                                                <isHouseAccountTypehint
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                                     name="./showIfIsHouseAccount@TypeHint"
@@ -925,7 +925,7 @@
                                                                 text="Show Ordering Icon"
                                                                 uncheckedValue="false"
                                                                 value="true"/>
-                                                            <showOrderingIconTypeHint
+                                                            <showOrderingIconTypehint
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                                 name="./showOrderingIcon@TypeHint"
@@ -934,32 +934,27 @@
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Place Order Dialog Title"
-                                                                name="./placeOrderDialogTitle"
-                                                                rootPath="/content/techdata"/>
+                                                                name="./placeOrderDialogTitle"/>
                                                             <termsAndConditions
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Terms and Conditions"
-                                                                name="./termsAndConditions"
-                                                                rootPath="/content/techdata"/>
+                                                                name="./termsAndConditions"/>
                                                             <termsAndConditionsLink
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Terms and Conditions Link"
-                                                                name="./termsAndConditionsLink"
-                                                                rootPath="/content/techdata"/>
+                                                                name="./termsAndConditionsLink"/>
                                                             <successSubmission
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Success Submission"
-                                                                name="./successSubmission"
-                                                                rootPath="/content/techdata"/>
+                                                                name="./successSubmission"/>
                                                             <failedSubmission
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Failed Submission"
-                                                                name="./failedSubmission"
-                                                                rootPath="/content/techdata"/>
+                                                                name="./failedSubmission"/>
                                                         </items>
                                                     </orderingGroup>
                                                 </items>

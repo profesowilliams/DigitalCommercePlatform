@@ -273,6 +273,13 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["renewalDetailsEndpoint"] = this.serviceData.uiServiceDomain + this.renewalDetailsEndpoint;
     }
 
+    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink","successSubmission","failedSubmission"]
+
+    if (properties) {
+        const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
+        if (!!orderingFromDashboard) {jsonObject['orderingFromDashboard'] = orderingFromDashboard};
+    }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };
