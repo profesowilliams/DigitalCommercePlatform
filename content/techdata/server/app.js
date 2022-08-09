@@ -4557,7 +4557,7 @@ app.get("/ui-commerce/v1/quote/canConvertToOrder", function (req, res) {
   req.query.s === "1" ? res.json(success) : res.json(fail);
 });
 
-app.put("/ui-renewal/v1/Update", function (req, res){
+app.post("/ui-renewal/v1/Update", function (req, res){
   const fail = {
     "content": {
       "salesContentEmail":"emailFromBackend@myvendormail.com"
@@ -4570,7 +4570,7 @@ app.put("/ui-renewal/v1/Update", function (req, res){
       "isError": true
     }
   };
-  return res.status(200).json({});
+  return res.status(200).json(fail);
 } )
 
 app.get("/ui-renewal/v1/getStatus/:id", function (req, res){

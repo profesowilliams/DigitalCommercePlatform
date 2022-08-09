@@ -76,6 +76,7 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
 
     function passEmailOnToastMessage(email = ''){
       const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, email);
+      if (!email) return setToasterMessage(prev => ({...prev, failedSubmission: "We are sorry, your order could not be processed, please try again later."}));
       setToasterMessage(prev => ({...prev, failedSubmission: replaceEmail(prev.failedSubmission)}))
     }
 

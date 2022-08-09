@@ -34,7 +34,7 @@ function RenewalOrder({
       const { source, reseller, endUser } = renewalData;
       const payload = { source, reseller, endUser, customerPO };
       if (renewalData?.items) payload.items = renewalData.items;
-      const updateresponse = await put(updateRenewalOrderEndpoint, payload);
+      const updateresponse = await post(updateRenewalOrderEndpoint, payload);
       if (updateresponse.status === 200) {
         const getStatusResponse = await get(`${getStatusEndpoint}/${id}`);
         if (getStatusResponse.status === 200) {
@@ -61,8 +61,10 @@ function RenewalOrder({
         const salesContentEmail = response?.content?.salesContentEmail;
         passEmailOnToastMessage(salesContentEmail)
         console.log('error.response >> ',error.response);
+      } else {
+        passEmailOnToastMessage('');
       }
-      handleToggleToaster({isToggle:true, transactionNumber:'', onError:true});
+      handleToggleToaster({isToggle:true, transactionNumber:'', onError:true});      
       handleClose();
     }
   };
