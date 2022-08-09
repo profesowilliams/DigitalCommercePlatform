@@ -143,6 +143,7 @@ function RenewalsDetails(props) {
           </div>
           <RenewalPreviewGrid
             data={renewalsDetails}
+            compProps={componentProp}
             gridProps={{
               ...componentProp.productLines,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,

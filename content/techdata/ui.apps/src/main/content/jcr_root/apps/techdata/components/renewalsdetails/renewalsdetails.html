@@ -2,7 +2,7 @@
   <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
       <div class="cq-placeholder" data-emptyText="${component.title}"></div>
   </sly>
-  <sly data-sly-use.model="${'renewalsdetails.js' @ serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,shopDomainPage=serviceData.shopDomainPage,exportXLSRenewalsEndpoint=serviceData.exportXLSRenewalsEndpoint,exportPDFRenewalsEndpoint=serviceData.exportPDFRenewalsEndpoint,renewalDetailsEndpoint=serviceData.renewalDetailsEndpoint,updateRenewalOrderEndpoint=serviceData.renewalUpdateQuoteEndpoint,getStatusEndpoint=serviceData.renewalGetStatusEndpoint,orderRenewalEndpoint=serviceData.renewalOrderEndpoint}">
+  <sly data-sly-use.model="${'renewalsdetails.js' @ serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,shopDomainPage=serviceData.shopDomainPage,exportXLSRenewalsEndpoint=serviceData.exportXLSRenewalsEndpoint,exportPDFRenewalsEndpoint=serviceData.exportPDFRenewalsEndpoint,renewalDetailsEndpoint=serviceData.renewalDetailsEndpoint,getStatusEndpoint=serviceData.renewalGetStatusEndpoint,orderRenewalEndpoint=serviceData.renewalOrderEndpoint}">
 
       <div id="RenewalsDetails" data-observe-mutation>
           <div data-component="RenewalsDetails" data-cmp-type="react" className="cmp-renewals-details" data-config="${model.configJson}">

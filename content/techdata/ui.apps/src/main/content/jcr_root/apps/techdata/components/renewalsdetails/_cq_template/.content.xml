@@ -53,4 +53,9 @@
     menuCsvExport="CSV Export"
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
-    menuCopyLink="Copy link"/>
+    menuCopyLink="Copy link"
+    placeOrderDialogTitle="To continue placing your order for ({enduser-companyname}) please provide the following information."
+    termsAndConditions="I have read and accept Terms &amp; Conditions"
+    termsAndConditionsLink="https://www.techdata.com/content/visitor/abouttd/conditions.aspx"
+    successSubmission="Changes have been successfully added."
+    failedSubmission="Please try again. If the error persists please contact us at ({email})"/>

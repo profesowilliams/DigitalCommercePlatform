@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import {Button} from "@mui/material";
+import { teal } from "@mui/material/colors";
+import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
 import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
@@ -42,8 +45,14 @@ function Price({ value }) {
   return <div className="price">{thousandSeparator(value)}</div>;
 }
 
-function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
+function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compProps }) {
   const [modal, setModal] = useState(null);
+  const [isPODialogOpen, setIsPODialogOpen] = useState(false);
+  const orderEndpoints = {
+    updateRenewalOrderEndpoint: compProps.updateRenewalOrderEndpoint,
+    getStatusEndpoint: compProps.getStatusEndpoint, 
+    orderRenewalEndpoint: compProps.orderRenewalEndpoint
+  };
   const [subtotal, setSubtotal] = useState(null);
   const gridData = data.items ?? [];
   const gridConfig = {
@@ -161,6 +170,12 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
   function invokeModal(modal) {
     setModal(modal);
   }
+  const onOrderButtonClicked = () => {
+    setIsPODialogOpen(true);
+  }
+  const onClosDialog =() => {
+    setIsPODialogOpen(false);
+  }
 
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
@@ -172,6 +187,19 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
           data={mutableGridData}
         />
         <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
+        <div className="place-cmp-order-dialog-container">
+        <p className="cmp-place-order-actions">
+            <Button
+              disabled={data.canPlaceOrder ?!data.canPlaceOrder : false}
+              sx={{background: teal[800],"&:hover": { background: teal[600] }}}
+              onClick={onOrderButtonClicked}
+              variant="contained"
+              autoFocus
+            >
+              Order
+            </Button>
+          </p>
+        </div>
       </section>
       {modal && (
         <Modal
@@ -182,6 +210,14 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing }) {
           onModalClosed={() => setModal(null)}
         ></Modal>
       )}
+      <PlaceOrderDialog
+        onClose={onClosDialog}
+        isDialogOpen={isPODialogOpen}
+        orderingFromDashboard={compProps.orderingFromDashboard}
+        orderEndpoints={orderEndpoints}
+        closeOnBackdropClick={false}
+        ToasterDataVerification={({data}) => data ? <b>Transaction number : {data}</b> : null}
+        renewalData={data} />
     </div>
   );
 }

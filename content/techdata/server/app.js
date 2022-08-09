@@ -4306,6 +4306,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
             id: "U100000000274",
           },
           published: "2022-03-14T13:52:52.921Z",
+          canPlaceOrder: true,
           reseller: {
             vendorAccountName: "The Network Support Co., LLC",
             vendorAccountNumber: "2927369",
