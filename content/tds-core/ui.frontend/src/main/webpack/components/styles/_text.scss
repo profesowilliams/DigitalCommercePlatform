@@ -21,6 +21,40 @@
     }
   }
 
+  &__green_bullet {
+    ul, ol {
+      margin-bottom: 0.0rem;
+      li {
+        &::before {
+          content: "" !important;
+          color: get-color(td-planet);
+          background-color: get-color(td-planet);
+          width: 15px !important;
+          height: 15px;
+          margin-right: 15px;
+          margin-top: 0.5vh;
+        }
+        ul, ol {
+          margin-left: -4.5vw;
+          li {
+            padding: 0.5vw;
+            padding-left: 1vw;
+            padding-bottom: 0rem;
+            padding-top: 1.5rem;
+            &::before {
+              content: "\2022" !important;
+              color: white;
+              background-color: get-color(container-transparent)!important;
+            }
+          }
+        }
+      }
+    }
+    p {
+      margin-left: 2rem
+    }
+  }
+
   ol {
     counter-reset: li;
 
