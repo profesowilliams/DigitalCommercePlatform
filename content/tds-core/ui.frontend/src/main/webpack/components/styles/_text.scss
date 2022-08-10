@@ -25,6 +25,7 @@
     ul, ol {
       margin-bottom: 0.0rem;
       li {
+        display: inline !important;
         &::before {
           content: "" !important;
           color: get-color(td-planet);
@@ -35,7 +36,13 @@
           margin-top: 0.5vh;
         }
         ul, ol {
-          margin-left: -4.5vw;
+          line-height: 0rem !important;
+          margin-left: -2rem;
+
+          display: flex;
+          flex-direction: column;
+          line-height: -10rem;
+          padding-top: 0rem !important;
           li {
             padding: 0.5vw;
             padding-left: 1vw;
@@ -51,7 +58,8 @@
       }
     }
     p {
-      margin-left: 2rem
+      margin-left: 1.5rem;
+      margin-top: 1rem;
     }
   }
 
