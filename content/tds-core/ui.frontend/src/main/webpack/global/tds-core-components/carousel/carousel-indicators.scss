@@ -1,0 +1,405 @@
+//carousel bullits colors
+.cmp-tds-carousel-indicator {
+  &__teal {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-teal;
+          }
+        }
+      }
+    }
+  }
+
+  &__deep-teal {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-deep-teal;
+          }
+        }
+      }
+    }
+  }
+
+  &__aqua {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-aqua;
+          }
+        }
+      }
+    }
+  }
+
+  &__chartreuse {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-chartreuse;
+          }
+        }
+      }
+    }
+  }
+
+  &__cool-gray-8 {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-cool-gray-8;
+          }
+        }
+      }
+    }
+  }
+
+  &__cool-gray-10 {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-cool-gray-10;
+          }
+        }
+      }
+    }
+  }
+
+  &__green {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-green;
+          }
+        }
+      }
+    }
+  }
+
+  &__black {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-black;
+          }
+        }
+      }
+    }
+  }
+
+  &__white {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-white;
+          }
+        }
+      }
+    }
+  }
+
+  //TDS Secondary background colors
+  &__steel-blue {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-steel-blue;
+          }
+        }
+      }
+    }
+  }
+
+  &__navy {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-navy;
+          }
+        }
+      }
+    }
+  }
+
+  &__copper {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-copper;
+          }
+        }
+      }
+    }
+  }
+
+  &__stone {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-stone;
+          }
+        }
+      }
+    }
+  }
+
+  &__cool-gray-1 {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-cool-gray-1;
+          }
+        }
+      }
+    }
+  }
+
+  //TDS Digital background colors
+  &__cherry {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-cherry;
+          }
+        }
+      }
+    }
+  }
+
+  &__amber {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-amber;
+          }
+        }
+      }
+    }
+  }
+
+  &__forest {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-forest;
+          }
+        }
+      }
+    }
+  }
+
+  &__charcoal {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-charcoal;
+          }
+        }
+      }
+    }
+  }
+
+  &__cool-gray-9 {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-cool-gray-9;
+          }
+        }
+      }
+    }
+  }
+
+  &__cobalt {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-cobalt;
+          }
+        }
+      }
+    }
+  }
+
+  &__neutral-gray-1 {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-neutral-gray-1;
+          }
+        }
+      }
+    }
+  }
+
+  &__neutral-gray-2 {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-neutral-gray-2;
+          }
+        }
+      }
+    }
+  }
+
+  //Legacy background colors
+  &__dark-blue {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-dark-blue;
+          }
+        }
+      }
+    }
+  }
+
+  &__sky-blue {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-sky-blue;
+          }
+        }
+      }
+    }
+  }
+
+  &__legacy-gray {
+    .dp-carousel {
+      &__nav {
+        &-label {
+          @include background-neutral-gray-2;
+          box-shadow: none !important;
+
+          &.cmp-carousel__indicator--active,
+          &:hover {
+            @include background-legacy-gray;
+          }
+        }
+      }
+    }
+  }
+}
