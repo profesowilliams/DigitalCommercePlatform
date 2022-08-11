@@ -36,13 +36,9 @@ function RenewalOrder({
       if (renewalData?.items) payload.items = renewalData.items;
       const updateresponse = await post(updateRenewalOrderEndpoint, payload);
       if (updateresponse.status === 200) {
-        const getStatusResponse = await get(`${getStatusEndpoint}/${id}`);
+        const getStatusResponse = await get(`${getStatusEndpoint}?id=${id}`);
         if (getStatusResponse.status === 200) {
-          const orderPayload = {
-            soruce: {
-              id: id,
-            },
-          };
+          const orderPayload = {id};
           const orderResponse = await post(orderRenewalEndpoint, orderPayload);
           if (orderResponse.status === 200) {
             handleClose();

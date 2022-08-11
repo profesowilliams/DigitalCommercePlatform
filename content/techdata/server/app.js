@@ -4570,11 +4570,12 @@ app.post("/ui-renewal/v1/Update", function (req, res){
       "isError": true
     }
   };
-  return res.status(200).json(fail);
+  return res.status(200).json();
 } )
 
-app.get("/ui-renewal/v1/getStatus/:id", function (req, res){
-  const { id } = req.params;
+app.get("/ui-renewal/v1/getStatus", function (req, res){
+  const { id } = req.query;
+  console.log('🚀id >>',id);
   const success = {
     "content": {
       "sattus":"Active"
