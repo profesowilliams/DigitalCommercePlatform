@@ -57,11 +57,30 @@ public @interface FormConfigurations {
     @Property(label = "Target Groups Array", description = "Target Groups Array")
     String[] formSubmissionTargetGroups() default StringUtils.EMPTY;
 
-    @Property(label = "Text field regex field", description = "Java String regex to whitelist incoming form characters.")
+    @Property(label = "Blacklist Text field regex field", description = "Java String regex to blacklist incoming form characters. Double quote char is not allowed.")
     String textFieldRegexString() default "[|]";
 
-    @Property(label = "Encoded chars", description = "Chars and their encoded values..")
+    @Property(label = "Encoded chars", description = "Chars and their encoded values. Use == as delimeter, eg: &==&amp.")
     String[] charsWithEncodedValues() default
             {"&==&amp;","<==&lt;",">==&gt;","\"==&quot;","'==&#x27;", "/==&#x2F;"};
 
+    @Property(label = "APAC Form Parameter List", description = "The list of parameters used on the form",
+            property = {"widgetType=textarea"})
+    String apacFormParameterList()  default
+            "techDataAccountRep#registerCashOrCreditAccount#creditLimit#companyStructure#subsidiaryBranch#" +
+            "trustee#companyName#companyWebsite#primaryBusiness#specialization#natureOfBusiness#annualTechRevGoal#" +
+            "vendor#businessRegistrationNumber#authorisedShareCapital#paidUpCapital#dateOfIncorporation#registeredAddress#" +
+            "countryBusinessInfo#stateBusinessInfo#cityBusinessInfo#postalCodeBusinessInfo#sameInfoForBillingNShipping#" +
+            "billToAddress#countryBillToAddress#stateBillToAddress#cityBillToAddress#postalCodeBillToAddress#shipToAddress#" +
+            "countryShipToAddress#stateShipToAddress#cityShipToAddress#postalCodeShipToAddress#purchasingOfficerContactName#" +
+            "contactPhone#faxContact#accountsPayableContactName#contactEmailAccountsPayable#contactEmailAccountsPayableSOA#" +
+            "contactEmailAccountsPayableInvoice#contactPhoneAccountsPayable#faxAccountsPayable#mdCeoName#emailMDCeo#" +
+            "telephoneMDCeo#cfoName#emailMDCeo#telephoneMDCeo#shareholders#createCloudAccount#whatPublicCloudVendors#" +
+            "AgreeToTerms#InfoProvidedAboveIsCorrect#signature#signatureDate#agreeTerms#agreeSOA";
+
+    @Property(label = "Send form submission email to the customer?", description = "Indicate whether to send an email to the customer confirming the submission")
+    boolean shouldSendCustomerSubmissionEmail() default false;
+
+    @Property(label = "Paths for Required Attachments", description = "region|/path/to/file/attachment1,/path/to/file/attachment2")
+    String[] requiredAttachmentPaths();    
 }
