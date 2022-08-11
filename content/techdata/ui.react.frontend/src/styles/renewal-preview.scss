@@ -20,29 +20,39 @@
         letter-spacing: 0;
         line-height: 33px;
     }
-    .icon-button {
-      display: flex;
-      align-items: center;
-      &__default {
-        background-color: transparent;
-        color: #005758;
-        &:hover {
-          text-decoration: underline;
-          text-underline-offset: 3px;
-        }
+  }
+  .loader-rotate {
+    animation: rotate 1.5s linear infinite;
+  }
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .saving__absolute {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+  }
+  .icon-button {
+    display: flex;
+    align-items: center;
+    &__default {
+      background-color: transparent;
+      color: #005758;
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
       }
     }
-    .icon-button__container {
-      display: flex;
-      align-items: center;
-    }
-    .loader-rotate {
-      animation: rotate 1.5s linear infinite;
-    }
-    @keyframes rotate {
-      to {
-        transform: rotate(360deg);
-      }
+  }
+  .icon-button__container {
+    display: flex;
+    align-items: center;
+    &.cancel-save__absolute {
+      position: absolute;
+      right: 20px;
+      top: 30px;
     }
   }
   .cmp-product-lines-grid__header {

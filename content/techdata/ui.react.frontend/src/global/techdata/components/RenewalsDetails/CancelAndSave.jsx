@@ -3,9 +3,9 @@ import { CloseRoundIcon, SaveIcon } from "../../../../fluentIcons/FluentIcons";
 import IconButton from "../Widgets/IconButton";
 import Pipe from "../Widgets/Pipe";
 
-function CancelAndSave({ cancelHandler, saveHandler }) {
+function CancelAndSave({ cancelHandler, saveHandler, customClass }) {
   return (
-    <div className="icon-button__container">
+    <div className={`icon-button__container ${customClass || ""}`}>
       <IconButton icon={<CloseRoundIcon />} onClick={cancelHandler}>
         Cancel
       </IconButton>

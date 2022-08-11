@@ -1,6 +1,6 @@
 import React from "react";
 import Drawer from "@mui/material/Drawer";
-import { CheckmarkCircle, Dismiss, Warning } from "../../../../fluentIcons/FluentIcons";
+import { CheckmarkCircle, Dismiss, CautionIcon } from "../../../../fluentIcons/FluentIcons";
 import { teal, red } from "@mui/material/colors";
 
 function Toaster({
@@ -24,7 +24,7 @@ function Toaster({
       >
         <div className={`cmp-toaster-content${!isSuccess ? '-error' : ''}`}>
           <div className="cmp-toaster-content__icon">
-          { isSuccess ?<CheckmarkCircle fill={teal[800]} /> :  <Warning fill={red[900]} />}
+          { isSuccess ?<CheckmarkCircle fill={teal[800]} /> :  <CautionIcon fill={red[900]} />}
           </div>
           <div className="cmp-toaster-content__message">
             <p>{ isSuccess ? message?.successSubmission : message?.failedSubmission}</p>
