@@ -3,9 +3,11 @@ package com.techdata.core.servlets;
 
 import com.adobe.acs.commons.email.EmailService;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.dam.api.Asset;
 import com.techdata.core.slingcaconfig.FormConfigurations;
 import com.techdata.core.slingcaconfig.ServiceEndPointsConfiguration;
 import com.techdata.core.util.Constants;
+import com.techdata.core.models.ExtractBinaryAsset;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -60,6 +62,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private String internalEmailTemplatePath = StringUtils.EMPTY;
         private String confirmationEmailTemplatePath = StringUtils.EMPTY;
         private Map<String, String[]> formSubmissionTargetGroups;
+        private Map<String, String[]> requiredAttachmentPaths;
         private int thresholdFileSize = 10;
         private List<String> allowedFileExtensions = new ArrayList<>();
         private List<String> allowedFileContentTypes = new ArrayList<>();
@@ -96,13 +99,15 @@ public class FormServlet extends SlingAllMethodsServlet {
                                 FormConfigurations formConfigurations = getCAConfigFormEmailObject(resource);
                                 if(formConfigurations != null) {
                                         populateDefaultValuesToEmailParams(emailParams, formConfigurations.apacFormParameterList());
+                                        requiredAttachmentPaths = getPipeSplitMap(formConfigurations.requiredAttachmentPaths());
                                         prepareEncodedChars(formConfigurations);
                                         prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                                         populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
-                                        handleAttachmentsInEmail(formConfigurations,emailParams);
+                                        handleAttachmentsInEmail(formConfigurations, emailParams);
                                         thresholdFileSize = formConfigurations.fileThresholdInMB();
                                         allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                                         allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
+                                        handleRequiredAttachments(request, emailParams, attachments);
                                         blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
                                         if (isValidFileInEmailRequest(request)) {
                                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
@@ -167,21 +172,20 @@ public class FormServlet extends SlingAllMethodsServlet {
                 return Boolean.TRUE;
         }
 
-        private Map<String, String[]> getMapOfEmailAddress(String[] groupEmailArray)
+        private Map<String, String[]> getPipeSplitMap(String[] sourceArray)
         {
-                Map<String, String[]> groupEmailMap = new HashMap<>();
-                for(String eachGroup : groupEmailArray)
+                Map<String, String[]> itemsMap = new HashMap<>();
+                for(String eachItem : sourceArray)
                 {
-                        String[] groupInfo = eachGroup.split(Constants.PIPE_REGEX_ESCAPED);
-                        if (groupInfo.length > 1)
+                        String[] itemInfo = eachItem.split(Constants.PIPE_REGEX_ESCAPED);
+                        if (itemInfo.length > 1)
                         {
-                                groupEmailMap.put(groupInfo[0], groupInfo[1].split(Constants.COMMA));
+                                itemsMap.put(itemInfo[0], itemInfo[1].split(Constants.COMMA));
                         }else{
-                                LOG.error("Error when creating Group Email for {}", eachGroup);
+                                LOG.error("Error when creating itemInfo for {}", eachItem);
                         }
                 }
-                return groupEmailMap;
-
+                return itemsMap;
         }
 
         private void prepareEmailRequestFromFormData(java.util.Map<String, org.apache.sling.api.request.RequestParameter[]> params,
@@ -199,6 +203,15 @@ public class FormServlet extends SlingAllMethodsServlet {
                         }
 
                 }
+        }
+
+        private String[] addEmailToRecipients(String[] recipientList, String emailAddress) {
+            String updatedEmailList[] = new String[recipientList.length + 1];
+            for (int index = 0; index < recipientList.length; index++) {
+                updatedEmailList[index] = recipientList[index];
+            }
+            updatedEmailList[updatedEmailList.length-1] = emailAddress;
+            return updatedEmailList;
         }
 
         private void handleNonFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr,
@@ -233,6 +246,35 @@ public class FormServlet extends SlingAllMethodsServlet {
                 return input;
         }
 
+        private void handleRequiredAttachments(SlingHttpServletRequest request, Map<String, String> emailParams, 
+                Map<String, DataSource> attachments) throws CustomFormException {
+            String groupKey = emailParams.get(Constants.FORM_GROUP_KEY_FIELD);
+
+            if (groupKey != null)
+            {
+                try {
+
+                    String[] attachmentPaths = requiredAttachmentPaths.get(groupKey);
+                    if (attachmentPaths != null)
+                    {
+                        for(String path : attachmentPaths) {
+                            InputStream file = getEmailAttachmentAsset(request, path);
+                            if (file != null) {
+                                attachments.put(getFileName(path), new ByteArrayDataSource(file, "application/pdf")); // TODO: Get this MIME type dynamically somehow
+                            }
+                        }
+                    }else{
+                            return;
+                    }
+                } catch (IOException e) {
+                    throw new CustomFormException("Failed when processing the required attachments for " + groupKey);
+                }
+            }else{
+                    LOG.error("Group Key Not found");
+                    return;
+            }
+        }
+
         private void handleFileParameterProcessing(org.apache.sling.api.request.RequestParameter[] pArr, Map<String, DataSource> attachments, String key, Map<String, String> emailParams ) throws CustomFormException{
                 try {
                         RequestParameter fileRequestParameter = pArr[0];
@@ -260,6 +302,9 @@ public class FormServlet extends SlingAllMethodsServlet {
         private void populateEmailAttributesFromCAConfig(FormConfigurations formConfigurations, Map<String, String> emailParams) {
                 toEmailAddresses = formConfigurations.toEmails();
                 submitterEmailFieldName = formConfigurations.submitterEmailFieldName();
+                if (formConfigurations.shouldSendCustomerSubmissionEmail()) {
+                    toEmailAddresses = addEmailToRecipients(toEmailAddresses, emailParams.get(submitterEmailFieldName));
+                }
                 String confirmationEmailBody = formConfigurations.confirmationEmailBody();
                 emailParams.put(CONFIRMATION_EMAIL_BODY_PARAM_NAME, confirmationEmailBody);
                 internalEmailTemplatePath = formConfigurations.internalEmailTemplatePath();
@@ -273,7 +318,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                 String emailSubject = formConfigurations.emailSubject();
                 emailParams.put(INTERNAL_EMAIL_SUBJECT_PARAM_NAME, emailSubject);
                 String confirmationEmailSubject = formConfigurations.confirmationEmailSubject();
-                formSubmissionTargetGroups = getMapOfEmailAddress(formConfigurations.formSubmissionTargetGroups());
+                formSubmissionTargetGroups = getPipeSplitMap(formConfigurations.formSubmissionTargetGroups());
                 emailParams.put(CONFIRMATION_EMAIL_SUBJECT_PARAM_NAME, confirmationEmailSubject);
         }
 
@@ -330,4 +375,15 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         }
 
+        private InputStream getEmailAttachmentAsset(SlingHttpServletRequest request, String path) {
+            Resource resource = request.getResourceResolver().getResource(path);
+            ExtractBinaryAsset binaryAsset = resource != null ? resource.adaptTo(ExtractBinaryAsset.class) : null;
+            return binaryAsset != null ? binaryAsset.getBinary() : null;
+        }
+
+        private String getFileName(String path) {
+            String[] segments = path.split("/");
+            
+            return segments != null ? segments[segments.length-1] : StringUtils.EMPTY;            
+        }
 }

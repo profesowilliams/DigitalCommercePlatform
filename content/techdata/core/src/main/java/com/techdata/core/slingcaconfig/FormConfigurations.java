@@ -77,4 +77,10 @@ public @interface FormConfigurations {
             "contactEmailAccountsPayableInvoice#contactPhoneAccountsPayable#faxAccountsPayable#mdCeoName#emailMDCeo#" +
             "telephoneMDCeo#cfoName#emailMDCeo#telephoneMDCeo#shareholders#createCloudAccount#whatPublicCloudVendors#" +
             "AgreeToTerms#InfoProvidedAboveIsCorrect#signature#signatureDate#agreeTerms#agreeSOA";
+
+    @Property(label = "Send form submission email to the customer?", description = "Indicate whether to send an email to the customer confirming the submission")
+    boolean shouldSendCustomerSubmissionEmail() default false;
+
+    @Property(label = "Paths for Required Attachments", description = "region|/path/to/file/attachment1,/path/to/file/attachment2")
+    String[] requiredAttachmentPaths();    
 }

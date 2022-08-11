@@ -145,7 +145,7 @@ class FormServletTest {
     @Test
     void testGettingGeneratingGroupMap() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method underTestMethod;
-        underTestMethod = underTest.getClass().getDeclaredMethod("getMapOfEmailAddress", String[].class);
+        underTestMethod = underTest.getClass().getDeclaredMethod("getPipeSplitMap", String[].class);
         underTestMethod.setAccessible(true);
         String[] arrayFromCA = new String[] {"apac|test@gmail.com,apac@apac.com", "hk|hk@hk.com"};
         String[] arrayFromCA2 = new String[] {"apac&test@gmail.com,apac@apac.com", "hk&hk@hk.com"};
@@ -292,6 +292,9 @@ class FormServletTest {
         when(formConfigurations.confirmationEmailSubject()).thenReturn("Test Subject");
         when(formConfigurations.emailSubject()).thenReturn("Test Subject");
         when(formConfigurations.genericConfirmationEmailTemplatePath()).thenReturn("/content/template.txt");
+        when(formConfigurations.requiredAttachmentPaths()).thenReturn(new String[]
+            {"sg|/content/dam/techdata/regional-sites/apac/singapore/attachments/Terms and Conditions - SINGAPORE.pdf",
+            "in|/content/dam/techdata/regional-sites/apac/india/attachments/Terms and Conditions - INDIA.pdf"});
         when(mockRequest.getMethod()).thenReturn("POST");
         when(mockRequest.getContentType()).thenReturn("multipart/form-data");
         Map emailMap = new HashMap<>();
