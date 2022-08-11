@@ -1,5 +1,5 @@
 import React from "react";
-import { CautionIcon } from "../../../../fluentIcons/fluentIcons";
+import { CautionIcon } from "../../../../fluentIcons/FluentIcons";
 
 export function MissingInfo({children}) {
   return (
