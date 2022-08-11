@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useImperativeHandle, forwardRef } from "react";
 import {Button} from "@mui/material";
 import { teal } from "@mui/material/colors";
 import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
@@ -45,7 +45,7 @@ function Price({ value }) {
   return <div className="price">{thousandSeparator(value)}</div>;
 }
 
-function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compProps }) {
+function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compProps }, ref) {
   const [modal, setModal] = useState(null);
   const [isPODialogOpen, setIsPODialogOpen] = useState(false);
   const orderEndpoints = {
@@ -64,10 +64,13 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
   const isEditingRef = useRef(isEditing);
 
-  // Get gridApi
+  // Get gridApi, save also as ref to be used on imperative handle
   const [gridApi, setGridApi] = useState(null);
+  const gridApiRef = useRef(null);
+
   function onAfterGridInit({ api }) {
     setGridApi(api);
+    gridApiRef.current = api;
   }
 
   // On isEditing prop change, update ref and refresh the cell
@@ -80,6 +83,21 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       });
     }
   }, [isEditing])
+
+  useImperativeHandle(ref, () => ({
+    cancelEdit () {
+      // Copy original grid data
+      const copyGridData = JSON.parse(JSON.stringify(gridData));
+
+      // Replace grid data with original
+      setMutableGridData(copyGridData);
+
+      // Api call needed to refresh grid
+      if(gridApiRef.current) {
+        gridApiRef.current.setRowData(copyGridData);
+      }
+    }
+  }), [])
 
   const columnDefinitionsOverride = [
     {
@@ -165,7 +183,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     mutableGridData is copied version of response that can be safely mutated,
     original state is preserved in gridData.
   */
-  const mutableGridData = JSON.parse(JSON.stringify(gridData));
+  const [mutableGridData, setMutableGridData] = useState(JSON.parse(JSON.stringify(gridData)));
 
   function invokeModal(modal) {
     setModal(modal);
@@ -222,4 +240,4 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   );
 }
 
-export default RenewalPreviewGrid;
+export default forwardRef(RenewalPreviewGrid);

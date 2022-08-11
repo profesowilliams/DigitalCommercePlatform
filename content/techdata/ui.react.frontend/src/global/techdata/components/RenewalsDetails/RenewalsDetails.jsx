@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
 import RenewalPreviewGrid from "./RenewalPreviewGrid/RenewalPreviewGrid";
 import useGet from "../../hooks/useGet";
@@ -14,6 +14,7 @@ import { If } from "../../helpers/If";
 import Edit from "./Edit";
 import CancelAndSave from "./CancelAndSave";
 import Saving from "./Saving";
+import CancelDialog from "./Cancel/CancelDialog";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -34,6 +35,11 @@ function RenewalsDetails(props) {
 
   const [toggleEdit, setToggleEdit] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  // Keep grid reference to cancel edit changes
+  const gridRef = useRef();
+
+  const [openCancelDialog, setOpenCancelDialog] = useState(false);
 
   const redirectToShop = () => {
     window.location = shopURL;
@@ -96,8 +102,21 @@ function RenewalsDetails(props) {
   };
 
   const handleIconCancelClick = () => {
-    setToggleEdit(true);
+    setOpenCancelDialog(true);
   };
+
+  // Close Cancel Dialog logic, reset data if necessary
+  const closeCancelDialog = (resetFlag) => {
+    // Close dialog
+    setOpenCancelDialog(false);
+
+    if (resetFlag) {
+      // Call cancel edit on grid to clean internal values
+      gridRef.current.cancelEdit();
+      // Toggle Edit mode
+      setToggleEdit(true);
+    }
+  }
 
   const handleIconSaveClick = () => {
     setSaving(true);
@@ -142,6 +161,7 @@ function RenewalsDetails(props) {
             {saving && <Saving />}
           </div>
           <RenewalPreviewGrid
+            ref={gridRef}
             data={renewalsDetails}
             compProps={componentProp}
             gridProps={{
@@ -173,6 +193,11 @@ function RenewalsDetails(props) {
           onModalClosed={modal.onModalClosed}
         ></Modal>
       )}
+      <CancelDialog
+        isDialogOpen={openCancelDialog}
+        onClose={closeCancelDialog}
+        labels={componentProp.cancelDialog}
+      />
     </div>
   );
 }
