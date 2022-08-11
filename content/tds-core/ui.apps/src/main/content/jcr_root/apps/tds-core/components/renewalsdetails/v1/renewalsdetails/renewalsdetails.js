@@ -8,6 +8,7 @@ use(['../common/utils.js'], function(utils) {
     var agreementInfo = {};
     var errorMessages = {};
     var endCustomer = {};
+    var quoteEditing = {};
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
     }
@@ -245,6 +246,13 @@ use(['../common/utils.js'], function(utils) {
         errorMessages["errorLoadingPageRedirect"] = properties["errorLoadingPageRedirect"];
     }
 
+    if (properties && properties["cancelDialogTitle"]) {
+        quoteEditing["cancelDialogTitle"] = properties["cancelDialogTitle"];
+    }
+    if (properties && properties["cancelDialogDescription"]) {
+        quoteEditing["cancelDialogDescription"] = properties["cancelDialogDescription"];
+    }
+
     if (agreementInfo != null) {
         quotePreview["agreementInfo"] = agreementInfo;
     }
@@ -259,6 +267,10 @@ use(['../common/utils.js'], function(utils) {
 
     if (errorMessages != null) {
         jsonObject["errorMessages"] = errorMessages;
+    }
+
+    if (quotePreview != null) {
+        jsonObject["quoteEditing"] = quoteEditing;
     }
 
     if (this.exportXLSRenewalsEndpoint != null && this.serviceData.uiServiceDomain) {

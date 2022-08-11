@@ -652,6 +652,32 @@
                                     </columns>
                                 </items>
                             </orders>
+                            <quoteEditing
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Quote Editing"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <cancelDialogTitle
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Title For Cancel Modal Popup"
+                                                fieldLabel="Title For Cancel Modal Popup"
+                                                name="./cancelDialogTitle"/>
+                                            <cancelDialogDescription
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Description For Cancel Modal Popup"
+                                                fieldLabel="Description For Cancel Modal Popup"
+                                                name="./cancelDialogDescription"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </quoteEditing>
                         </items>
                     </tabs>
                 </items>
