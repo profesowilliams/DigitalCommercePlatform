@@ -27,6 +27,7 @@ public class TabItem {
     protected String iconAbbreviation;
     protected String link;
     protected String linkPath;
+    protected String tabTarget;
 
     /**
      * Name of the resource property that defines a panel title
@@ -96,6 +97,8 @@ public class TabItem {
             link = Optional.ofNullable(vm.get("link", String.class))
                     .orElse(StringUtils.EMPTY);
             linkPath = Optional.ofNullable(vm.get("linkPath", String.class))
+                    .orElse(StringUtils.EMPTY);
+            tabTarget = Optional.ofNullable(vm.get("tabTarget", String.class))
                     .orElse(StringUtils.EMPTY);
         }
     }
@@ -213,5 +216,13 @@ public class TabItem {
 
     public void setLinkPath(String linkPath) {
         this.linkPath = linkPath;
+    }
+
+    public String getTabTarget() {
+        return tabTarget;
+    }
+
+    public void setTabTarget(String tabTarget) {
+        this.tabTarget = tabTarget;
     }
 }

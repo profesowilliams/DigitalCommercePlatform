@@ -1,0 +1,114 @@
+<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright 2018 Adobe
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<style>
+.coral3-Checkbox-input:checked+.coral3-Checkbox-checkmark:before {
+	background-image:none;
+}
+
+.coral3-Textfield.textfield-readonly {
+    background-color: #f0f0f0;
+    border-color: #e6e6e6;
+    color: #bebebe;
+    -webkit-text-fill-color: #bebebe;
+    -webkit-opacity: 1;
+}
+
+
+input[value="true"] + span:before { background-image: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjExNTJweCIgaGVpZ2h0PSIxMTUycHgiIHZpZXdCb3g9IjAgMCAxMTUyIDExNTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDExNTIgMTE1MiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGQ9Ik0yNzUuOSw4NjYuOUwxMC41LDYwMS41QzMuNSw1OTQuNCwwLDU4NS4yLDAsNTc2czMuNS0xOC40LDEwLjUtMjUuNWwxMDUuMS0xMDUuMWMxNC4xLTE0LjEsMzYuOS0xNC4xLDUwLjksMGwyNjUuNCwyNjUuNAoJbDU1Ny4yLTU1Ny4yYzctNywxNi4xLTkuNywyNS4zLTkuN2M5LjctMC4xLDE5LjQsMywyNi42LDEwLjdsMTAxLjIsMTA5YzYuNSw3LDkuOSwxNS40LDkuOSwyNC4yYzAsOS4yLTMuOCwxOC43LTEwLjgsMjUuNwoJTDU4Ny45LDg2Ni45TDQ1Ny40LDk5Ny41Yy03LDctMTYuMiwxMC41LTI1LjMsMTAuNXMtMTguNS0zLjUtMjUuNi0xMC41TDI3NS45LDg2Ni45eiIgZmlsbD0iIzMyNmVjOCIvPgo8L3N2Zz4=')  !important}
+input[value="false"] + span:before { background-image: none !important}
+
+</style>
+
+<coral-multifield data-sly-use.childrenEditor="com.tdscore.core.models.TabEditor"
+                  data-sly-use.iconTemplate="icon.html"
+                  data-cmp-is="childrenEditor"
+                  class="cmp-childreneditor"
+                  data-container-path = "${childrenEditor.container.path}">
+
+
+    <coral-multifield-item data-sly-repeat.item="${childrenEditor.items}" data-name="${item.name}">
+        <div class="coral-form coral-Form-aligned cmp-childreneditor__item">
+            <div class="coral-Form-fieldwrapper">
+                <sly data-sly-call="${iconTemplate.icon @ item=item}"></sly>
+                <input is="coral-textfield"
+                       class="cmp-childreneditor__item-title"
+                       data-cmp-hook-childreneditor="itemTitle"
+                       name="./${item.name}/cq:panelTitle"
+                       value="${item.value}"
+                       placeholder="${item.title}">
+
+                <coral-checkbox
+                        data-toggle-checkbox_master
+                        name="./${item.name}/link"
+                        value="${item.link}"
+                        data-foundation-validation=""
+                        data-validation=""
+                        checked
+                        class="coral-Form-field cmp-childreneditor__checkbox"
+                        aria-disabled="false"
+                        aria-invalid="false">
+                    Link
+                </coral-checkbox>
+            </div>
+            <input type="hidden" class="cmp-childreneditor__linkName" name="item-name" value="./${item.name}/linkPath">
+            <input type="hidden" class="cmp-childreneditor__linkPath" name="item-value" value="${item.linkPath}">
+
+                <foundation-autocomplete class="coral-textfield-custom hide coral-Form-field"  value="${item.linkPath}" pickersrc="/mnt/overlay/granite/ui/content/coral/foundation/form/pathfield/picker.html?_charset_=utf-8&amp;path={value}&amp;root=%2fcontent%2ftechdata&amp;filter=hierarchyNotFile&amp;selectionCount=single" data-foundation-validation="">
+                    <div class="foundation-autocomplete-inputgroupwrapper">
+                        <div class="coral-InputGroup" role="presentation">
+                        </div>
+                    </div>
+                    <coral-overlay foundation-autocomplete-suggestion="" class="foundation-picker-buttonlist coral3-Overlay" data-foundation-picker-buttonlist-src="/mnt/overlay/granite/ui/content/coral/foundation/form/pathfield/suggestion{.offset,limit}.html?_charset_=utf-8&amp;root=%2fcontent%2ftechdata&amp;filter=hierarchyNotFile{&amp;query}" aria-hidden="true" style="display: none;">
+                    </coral-overlay>
+                    <coral-taglist foundation-autocomplete-value="" class="coral3-TagList" aria-disabled="false" role="grid" aria-live="off" aria-atomic="false" aria-relevant="additions" aria-readonly="false" aria-invalid="false"><coral-tag value="" tabindex="0" class="coral3-Tag coral3-Tag--large" role="row" aria-labelledby="coral-id-658">
+                    <span handle="buttonCell" role="gridcell">
+                      <button is="coral-button" class="coral3-Button coral3-Button--minimal coral3-Tag-removeButton" size="M" variant="minimal" tracking="off" handle="button" type="button" icon="close" iconsize="XS" title="Remove" tabindex="-1" coral-close="" aria-label="Remove: ">
+                        <coral-icon class="coral3-Icon coral3-Icon--close coral3-Icon--sizeXS" icon="close" size="XS" autoarialabel="on" role="img" aria-label="close"></coral-icon>
+                        <coral-button-label></coral-button-label>
+                      </button>
+                    </span>
+                    <coral-tag-label role="rowheader" id="coral-id-658"></coral-tag-label><input handle="input" type="hidden" value=""></coral-tag><object aria-hidden="true" tabindex="-1" style="display:block; position:absolute; top:0; left:0; height:100%; width:100%; opacity:0; overflow:hidden; z-index:-100;" type="text/html" data="about:blank">&#8203;</object>
+                    </coral-taglist>
+                </foundation-autocomplete>
+
+                
+                <coral-checkbox
+                		id="coral-checkbox-tabTarget"
+                        data-toggle-checkbox_new_tab
+                        name="./${item.name}/tabTarget"
+                        value="${item.tabTarget}"
+                        data-foundation-validation=""
+                        data-validation=""
+                        class="coral-Form-field hide cmp-childreneditor__checkbox coral-textfield-custom"
+                        aria-disabled="false"
+                        aria-invalid="false">
+                            Open In New Tab
+                </coral-checkbox>
+        </div>
+    </coral-multifield-item>
+    <button data-cmp-hook-childreneditor="add" type="button" is="coral-button">Add</button>
+    <template coral-multifield-template="">
+        <div class="cmp-childreneditor__item">
+            <span class="cmp-childreneditor__item-icon"
+                  data-cmp-hook-childreneditor="itemIcon"></span>
+            <input is="coral-textfield"
+                   class="cmp-childreneditor__item-title"
+                   data-cmp-hook-childreneditor="itemTitle" required>
+            <input type="hidden" data-cmp-hook-childreneditor="itemResourceType">
+        </div>
+    </template>
+</coral-multifield>
