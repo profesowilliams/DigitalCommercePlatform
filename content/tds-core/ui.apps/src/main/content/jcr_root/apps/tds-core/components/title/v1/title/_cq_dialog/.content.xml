@@ -115,6 +115,10 @@
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         margin="{Boolean}true">
                     </analytics>
+                    <textEnhancerConfiguration
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/include"
+                        path="tds-core/components/authoring/dialog/text-enhancer-configuration/container"/>
                 </items>
             </tabs>
         </items>

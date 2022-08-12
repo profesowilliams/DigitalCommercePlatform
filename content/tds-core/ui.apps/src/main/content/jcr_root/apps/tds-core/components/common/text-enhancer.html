@@ -1,0 +1,16 @@
+<template data-sly-template.textSubElements ="${@ text}">
+	<sly
+		data-sly-use.textEnhancer="${'tds-core/components/common/textEnhancer.js' @ text=text, currentNode=currentNode}">
+
+		<sly
+			data-sly-test="${textEnhancer.hasVariables}"
+			data-sly-list="${textEnhancer.textElements}">
+			<span class="${item.animationType}" style="color: ${item.color @ context='styleToken'};">${item.text}</span>
+		</sly>
+		<sly
+			data-sly-test="${!textEnhancer.hasVariables}">
+			${text}
+		</sly>
+	</sly>
+
+</template>

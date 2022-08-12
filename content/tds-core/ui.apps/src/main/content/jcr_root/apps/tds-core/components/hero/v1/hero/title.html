@@ -1,0 +1,14 @@
+<sly data-sly-template.title="${@ teaser}">
+    <h2 class="cmp-teaser__title" style="color: ${properties.fontColorTitle @ context ='styleToken'}" data-sly-test.title="${teaser.title}" data-sly-element="${teaser.titleType}">
+        <a class="cmp-teaser__title-link" href="${teaser.linkURL}"
+           data-sly-unwrap="${!teaser.linkURL || teaser.titleLinkHidden}"
+           data-cmp-clickable="${teaser.data ? true : false}"
+           style="color: ${properties.fontColorTitle @ context ='styleToken'}">
+            <sly data-sly-use.textUtils="tds-core/components/common/text-enhancer.html" data-sly-call="${textUtils.textSubElements @ text=title, currentNode=currentNode}"></sly>
+            <span data-sly-test="${teaser.linkURL}" class="cmp-buttons__plus">
+                
+            </span>
+        </a>
+    </h2>
+</sly>
+
