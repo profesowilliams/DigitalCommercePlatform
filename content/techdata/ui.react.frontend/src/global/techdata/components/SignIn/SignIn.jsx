@@ -16,7 +16,7 @@ import {
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
-import { usPost } from "../../../../utils/api";
+import { usPost, USaxios } from "../../../../utils/api";
 import {
   signOutBasedOnParam,
   signOutForExpiredSession,
@@ -213,8 +213,11 @@ const SignIn = (props) => {
 
     if(isExtraReloadDisabled()){
       let sessionId = localStorage.getItem("sessionId");
+
+      axios.defaults.headers.common['SessionId'] = sessionId;
+      USaxios.defaults.headers.common['SessionId'] = sessionId;
+
       if(sessionId && localStorage.getItem("userData")){
-        axios.defaults.headers.common['SessionId'] = sessionId;
         handleLoginResponse();
       }
     }

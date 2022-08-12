@@ -46,6 +46,6 @@ export default function useGet(url) {
     return () => {
       isMounted = false;
     };
-  }, [isExtraReloadDisabled() && isLoggedIn]);
+  }, [isExtraReloadDisabled(), isLoggedIn]);
   return [response, isLoading, error];
 }

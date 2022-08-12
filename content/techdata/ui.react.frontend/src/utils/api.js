@@ -7,7 +7,7 @@ const traceId = `${userData.id}_${new Date().toISOString()}`;
 const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 const consumer = getConsumerRequestHeader();
 
-const USaxios = axios.create({
+export const USaxios = axios.create({
   headers:{
     common: { 
       'TraceId': traceId,
