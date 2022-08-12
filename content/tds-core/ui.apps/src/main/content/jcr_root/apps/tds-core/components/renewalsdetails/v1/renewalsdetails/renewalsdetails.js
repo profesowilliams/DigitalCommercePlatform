@@ -252,6 +252,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["cancelDialogDescription"]) {
         quoteEditing["cancelDialogDescription"] = properties["cancelDialogDescription"];
     }
+    if (properties && properties["successUpdate"]) {
+        quoteEditing["successUpdate"] = properties["successUpdate"];
+    }
 
     if (agreementInfo != null) {
         quotePreview["agreementInfo"] = agreementInfo;

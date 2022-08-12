@@ -4629,7 +4629,7 @@ app.get("/ui-renewal/v1/getStatus", function (req, res){
   console.log('🚀id >>',id);
   const success = {
     "content": {
-      "sattus":"Active"
+      "status":"Active"
     },
     "error": {
       "code": 0,
@@ -4641,10 +4641,10 @@ app.get("/ui-renewal/v1/getStatus", function (req, res){
 } )
 
 app.get("/ui-renewal/v1/getStatus/:id", function (req, res){
-  const { id } = req.params;
+  const { id } = req.query;
   const success = {
     "content": {
-      "sattus":"Active"
+      "status":"Active"
     },
     "error": {
       "code": 0,
@@ -4652,7 +4652,7 @@ app.get("/ui-renewal/v1/getStatus/:id", function (req, res){
       "isError": false
     }
   };
-  return res.status(200).json({});
+  return res.status(200).json(success);
 } )
 
 

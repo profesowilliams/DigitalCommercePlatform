@@ -17,6 +17,9 @@
       "http://localhost:3000/ui-renewal/v1/Details",
     exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
     shopURL: "https://shop.cstenet.com/renewals",
+    updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
+    getStatusEndpoint:"http://localhost:3000/ui-renewal/v1/getStatus",
+    orderRenewalEndpoint:"http://localhost:3000/ui-renewal/v1/order",
     productLines: {
       line: "Line",
       lineItemDetailsLabel: "Details",
@@ -30,8 +33,8 @@
       quantity: "Quantity",
       totalPrice: "Total\n ({currency-code})",
       quoteSubtotal: "Quote Subtotal:",
-      quoteSubtotalCurrency: "",
-      quoteSubtotalCurrencySymbol: "$",
+      quoteSubtotalCurrency: "{currency-code}",
+      quoteSubtotalCurrencySymbol: "",
       note: "Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations.",
       menuCopy: "Copy",
       menuCopyWithHeaders: "Copy with headers",
@@ -95,10 +98,11 @@
       termsAndConditions:"I have read and accept Terms & Conditions",
       termsAndConditionsLink:"https://www.techdata.com/content/visitor/abouttd/conditions.aspx",     
       successSubmission:"Your order has been successfully submitted for processing. You will receive an email once processing is complete",
-      failedSubmission:"Please try again. If the error persists please contact us at ({email})" 
+      failedSubmission:"Please try again. If the error persists please contact us at ({email})"
   },
     quoteEditing: {
       cancelDialogDescription: "Are you sure you would like to cancel? Your changes will not be saved.",
+      successUpdate: "Changes have been successfully saved."
     },
     updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
     getStatusEndpoint:"http://localhost:3000/ui-renewal/v1/getStatus",

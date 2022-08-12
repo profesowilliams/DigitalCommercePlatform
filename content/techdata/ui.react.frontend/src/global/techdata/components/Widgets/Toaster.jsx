@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import { CheckmarkCircle, Dismiss, CautionIcon } from "../../../../fluentIcons/FluentIcons";
 import { teal, red } from "@mui/material/colors";
@@ -9,8 +9,18 @@ function Toaster({
   children,
   MuiDrawerProps,
   isSuccess,  
-  message
+  message,
+  autoClose
 }) {
+  
+  useEffect(() => {
+    if (autoClose) {
+      setTimeout(() => {
+        onClose();
+      }, 6000);
+    } 
+  }, [isToasterOpen]);  
+
   return (
     <div className="cmp-toaster-drawer">
       <Drawer
@@ -30,9 +40,11 @@ function Toaster({
             <p>{ isSuccess ? message?.successSubmission : message?.failedSubmission}</p>
             {children}
           </div>
-          <div className="cmp-toaster-content__closeIcon">
-            <Dismiss onClick={onClose} />
-          </div>
+          {!autoClose && (
+            <div className="cmp-toaster-content__closeIcon">
+              <Dismiss onClick={onClose} />
+            </div>
+          )}
         </div>
       </Drawer>
     </div>

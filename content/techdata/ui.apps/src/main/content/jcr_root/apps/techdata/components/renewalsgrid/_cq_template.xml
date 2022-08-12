@@ -46,6 +46,7 @@
     termsAndConditionsLink="https://www.techdata.com/content/visitor/abouttd/conditions.aspx"
     successSubmission="Changes have been successfully added."
     failedSubmission="Please try again. If the error persists please contact us at ({email})"
+	successUpdate="Changes have been successfully saved."
     >
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0

@@ -674,6 +674,12 @@
                                                 fieldDescription="Description For Cancel Modal Popup"
                                                 fieldLabel="Description For Cancel Modal Popup"
                                                 name="./cancelDialogDescription"/>
+											<successUpdate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Description for a successful edit of record details"
+                                                fieldLabel="On Success Edit"
+                                                name="./successUpdate"/>
                                         </items>
                                     </column>
                                 </items>
