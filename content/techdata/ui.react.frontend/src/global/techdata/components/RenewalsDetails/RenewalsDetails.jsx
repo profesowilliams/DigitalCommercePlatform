@@ -196,7 +196,7 @@ function RenewalsDetails(props) {
       <CancelDialog
         isDialogOpen={openCancelDialog}
         onClose={closeCancelDialog}
-        labels={componentProp.cancelDialog}
+        labels={componentProp.quoteEditing}
       />
     </div>
   );
