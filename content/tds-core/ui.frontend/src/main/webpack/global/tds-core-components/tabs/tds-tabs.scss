@@ -2,506 +2,505 @@
 @import "../../styles/helpers/colors.scss";
 
 .cmp-tds {
+  .cmp-tabs {
+    box-sizing: border-box;
+    line-height: rem(25px);
 
-    .cmp-tabs {
-        box-sizing: border-box;
-        line-height: rem(25px);
-
-        &__tablist {
-            display: flex;
-            list-style: none;
-            flex-direction: row;
-            justify-content: space-around;
-            padding: rem(10.5px) rem(60px);
-            margin: 0;
-        }
-
-        &__tab {
-            padding: 0;
-
-            &--active {
-                text-decoration: none !important;
-                border-bottom: rem(2px) solid;
-                border-color: inherit;
-            }
-
-            &:hover {
-                text-decoration: none !important;
-                border-bottom: rem(2px) solid;
-                border-color: inherit;
-            }
-        }
+    &__tablist {
+      display: flex;
+      list-style: none;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: rem(10.5px) rem(60px);
+      margin: 0;
     }
 
-    &-font {
-        &--everett {
-            .cmp-tabs__tablist {
-                font-family: $font-family-everett;
+    &__tab {
+      padding: 0;
 
-                &--bold {
-                    font-family: $font-family-everett-md;
-                }
-            }
+      &--active {
+        text-decoration: none !important;
+        border-bottom: rem(2px) solid;
+        border-color: inherit;
+      }
+
+      &:hover {
+        text-decoration: none !important;
+        border-bottom: rem(2px) solid;
+        border-color: inherit;
+      }
+    }
+  }
+
+  &-font {
+    &--everett {
+      .cmp-tabs__tablist {
+        font-family: $font-family-everett;
+
+        &--bold {
+          font-family: $font-family-everett-md;
         }
+      }
+    }
+  }
+
+  &-background {
+    &--teal {
+      .cmp-tabs__tablist {
+        @include background-teal;
+      }
     }
 
-    &-background {
-        &--teal {
-            .cmp-tabs__tablist {
-                @include background-teal;
-            }
-        }
-
-        &--deep-teal {
-            .cmp-tabs__tablist {
-                @include background-deep-teal;
-            }
-        }
-
-        &--aqua {
-            .cmp-tabs__tablist {
-                @include background-aqua;
-            }
-        }
-
-        &--chartreuse {
-            .cmp-tabs__tablist {
-                @include background-chartreuse;
-            }
-        }
-
-        &--cool-gray-8 {
-            .cmp-tabs__tablist {
-                @include background-cool-gray-8;
-            }
-        }
-
-        &--cool-gray-10 {
-            .cmp-tabs__tablist {
-                @include background-cool-gray-10;
-            }
-        }
-
-        &--green {
-            .cmp-tabs__tablist {
-                @include background-green;
-            }
-        }
-
-        &--black {
-            .cmp-tabs__tablist {
-                @include background-black;
-            }
-        }
-
-        &--white {
-            .cmp-tabs__tablist {
-                @include background-white;
-            }
-        }
-
-        //TDS Secondary background colors
-        &--steel-blue {
-            .cmp-tabs__tablist {
-                @include background-steel-blue;
-            }
-        }
-
-        &--navy {
-            .cmp-tabs__tablist {
-                @include background-navy;
-            }
-        }
-
-        &--copper {
-            .cmp-tabs__tablist {
-                @include background-copper;
-            }
-        }
-
-        &--stone {
-            .cmp-tabs__tablist {
-                @include background-stone;
-            }
-        }
-
-        &--cool-gray-1 {
-            .cmp-tabs__tablist {
-                @include background-cool-gray-1;
-            }
-        }
-
-        //TDS Digital background colors
-        &--cherry {
-            .cmp-tabs__tablist {
-                @include background-cherry;
-            }
-        }
-
-        &--amber {
-            .cmp-tabs__tablist {
-                @include background-amber;
-            }
-        }
-
-        &--forest {
-            .cmp-tabs__tablist {
-                @include background-forest;
-            }
-        }
-
-        &--charcoal {
-            .cmp-tabs__tablist {
-                @include background-charcoal;
-            }
-        }
-
-        &--cool-gray-9 {
-            .cmp-tabs__tablist {
-                @include background-cool-gray-9;
-            }
-        }
-
-        &--cobalt {
-            .cmp-tabs__tablist {
-                @include background-cobalt;
-            }
-        }
-
-        &--neutral-gray-1 {
-            .cmp-tabs__tablist {
-                @include background-neutral-gray-1;
-            }
-        }
-
-        &--neutral-gray-2 {
-            .cmp-tabs__tablist {
-                @include background-neutral-gray-2;
-            }
-        }
-
-        //Legacy background colors
-        &--dark-blue {
-            .cmp-tabs__tablist {
-                @include background-dark-blue;
-            }
-        }
-
-        &--sky-blue {
-            .cmp-tabs__tablist {
-                @include background-sky-blue;
-            }
-        }
-
-        &--legacy-gray {
-            .cmp-tabs__tablist {
-                @include background-legacy-gray;
-            }
-        }
+    &--deep-teal {
+      .cmp-tabs__tablist {
+        @include background-deep-teal;
+      }
     }
 
-    &-text {
-        &--teal {
-            .cmp-tabs__tablist {
-                @include text-teal;
-            }
-        }
-
-        &--deep-teal {
-            .cmp-tabs__tablist {
-                @include text-deep-teal;
-            }
-        }
-
-        &--aqua {
-            .cmp-tabs__tablist {
-                @include text-aqua;
-            }
-        }
-
-        &--chartreuse {
-            .cmp-tabs__tablist {
-                @include text-chartreuse;
-            }
-        }
-
-        &--cool-gray-8 {
-            .cmp-tabs__tablist {
-                @include text-cool-gray-8;
-            }
-        }
-
-        &--cool-gray-10 {
-            .cmp-tabs__tablist {
-                @include text-cool-gray-10;
-            }
-        }
-
-        &--green {
-            .cmp-tabs__tablist {
-                @include text-green;
-            }
-        }
-
-        &--black {
-            .cmp-tabs__tablist {
-                @include text-black;
-            }
-        }
-
-        &--white {
-            .cmp-tabs__tablist {
-                @include text-white;
-            }
-        }
-
-        //TDS Secondary background colors
-        &--steel-blue {
-            .cmp-tabs__tablist {
-                @include text-steel-blue;
-            }
-        }
-
-        &--navy {
-            .cmp-tabs__tablist {
-                @include text-navy;
-            }
-        }
-
-        &--copper {
-            .cmp-tabs__tablist {
-                @include text-copper;
-            }
-        }
-
-        &--stone {
-            .cmp-tabs__tablist {
-                @include text-stone;
-            }
-        }
-
-        &--cool-gray-1 {
-            .cmp-tabs__tablist {
-                @include text-cool-gray-1;
-            }
-        }
-
-        //TDS Digital background colors
-        &--cherry {
-            .cmp-tabs__tablist {
-                @include text-cherry;
-            }
-        }
-
-        &--amber {
-            .cmp-tabs__tablist {
-                @include text-amber;
-            }
-        }
-
-        &--forest {
-            .cmp-tabs__tablist {
-                @include text-forest;
-            }
-        }
-
-        &--charcoal {
-            .cmp-tabs__tablist {
-                @include text-charcoal;
-            }
-        }
-
-        &--cool-gray-9 {
-            .cmp-tabs__tablist {
-                @include text-cool-gray-9;
-            }
-        }
-
-        &--cobalt {
-            .cmp-tabs__tablist {
-                @include text-cobalt;
-            }
-        }
-
-        &--neutral-gray-1 {
-            .cmp-tabs__tablist {
-                @include text-neutral-gray-1;
-            }
-        }
-
-        &--neutral-gray-2 {
-            .cmp-tabs__tablist {
-                @include text-neutral-gray-2;
-            }
-        }
-
-        //Legacy background colors
-        &--dark-blue {
-            .cmp-tabs__tablist {
-                @include text-dark-blue;
-            }
-        }
-
-        &--sky-blue {
-            .cmp-tabs__tablist {
-                @include text-sky-blue;
-            }
-        }
-
-        &--legacy-gray {
-            .cmp-tabs__tablist {
-                @include text-legacy-gray;
-            }
-        }
+    &--aqua {
+      .cmp-tabs__tablist {
+        @include background-aqua;
+      }
     }
 
-    &-border {
-        &--teal {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "teal") !important;
-            }
-        }
+    &--chartreuse {
+      .cmp-tabs__tablist {
+        @include background-chartreuse;
+      }
+    }
 
-        &--deep-teal {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(deep-teal) !important;
-            }
-        }
+    &--cool-gray-8 {
+      .cmp-tabs__tablist {
+        @include background-cool-gray-8;
+      }
+    }
 
-        &--aqua {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "aqua") !important; 
-            }
-        }
+    &--cool-gray-10 {
+      .cmp-tabs__tablist {
+        @include background-cool-gray-10;
+      }
+    }
 
-        &--chartreuse {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "chartreuse") !important;
-            }
-        }
+    &--green {
+      .cmp-tabs__tablist {
+        @include background-green;
+      }
+    }
 
-        &--cool-gray-8 {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-8) !important;
-            }
-        }
+    &--black {
+      .cmp-tabs__tablist {
+        @include background-black;
+      }
+    }
 
-        &--cool-gray-10 {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-10) !important;
-            }
-        }
+    &--white {
+      .cmp-tabs__tablist {
+        @include background-white;
+      }
+    }
 
-        &--green {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "green") !important;
-            }
-        }
+    //TDS Secondary background colors
+    &--steel-blue {
+      .cmp-tabs__tablist {
+        @include background-steel-blue;
+      }
+    }
 
-        &--black {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "black") !important;
-            }
-        }
+    &--navy {
+      .cmp-tabs__tablist {
+        @include background-navy;
+      }
+    }
 
-        &--white {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "white") !important;
-            }
-        }
+    &--copper {
+      .cmp-tabs__tablist {
+        @include background-copper;
+      }
+    }
 
-        //TDS Secondary border colors
-        &--steel-blue {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
-            }
-        }
+    &--stone {
+      .cmp-tabs__tablist {
+        @include background-stone;
+      }
+    }
 
-        &--navy {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
-            }
-        }
+    &--cool-gray-1 {
+      .cmp-tabs__tablist {
+        @include background-cool-gray-1;
+      }
+    }
 
-        &--copper {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "copper") !important;
-            }
-        }
+    //TDS Digital background colors
+    &--cherry {
+      .cmp-tabs__tablist {
+        @include background-cherry;
+      }
+    }
 
-        &--stone {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(stone) !important;
-            }
-        }
+    &--amber {
+      .cmp-tabs__tablist {
+        @include background-amber;
+      }
+    }
 
-        &--cool-gray-1 {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-1) !important;
-            }
-        }
+    &--forest {
+      .cmp-tabs__tablist {
+        @include background-forest;
+      }
+    }
 
-        //TDS Digital border colors
-        &--cherry {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(cherry) !important;
-            }
-        }
+    &--charcoal {
+      .cmp-tabs__tablist {
+        @include background-charcoal;
+      }
+    }
 
-        &--amber {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(amber) !important;
-            }
-        }
+    &--cool-gray-9 {
+      .cmp-tabs__tablist {
+        @include background-cool-gray-9;
+      }
+    }
 
-        &--forest {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "forest") !important;
-            }
-        }
+    &--cobalt {
+      .cmp-tabs__tablist {
+        @include background-cobalt;
+      }
+    }
 
-        &--charcoal {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "charcoal") !important;
-            }
-        }
+    &--neutral-gray-1 {
+      .cmp-tabs__tablist {
+        @include background-neutral-gray-1;
+      }
+    }
 
-        &--cool-gray-9 {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-9) !important;
-            }
-        }
+    &--neutral-gray-2 {
+      .cmp-tabs__tablist {
+        @include background-neutral-gray-2;
+      }
+    }
 
-        &--cobalt {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(cobalt) !important;
-            }
-        }
+    //Legacy background colors
+    &--dark-blue {
+      .cmp-tabs__tablist {
+        @include background-dark-blue;
+      }
+    }
 
-        &--neutral-gray-1 {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-1) !important;
-            }
-        }
+    &--sky-blue {
+      .cmp-tabs__tablist {
+        @include background-sky-blue;
+      }
+    }
 
-        &--neutral-gray-2 {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-2) !important;
-            }
-        }
+    &--legacy-gray {
+      .cmp-tabs__tablist {
+        @include background-legacy-gray;
+      }
+    }
+  }
 
-        //Legacy border colors
-        &--dark-blue {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(dark-blue) !important;
-            }
-        }
+  &-text {
+    &--teal {
+      .cmp-tabs__tablist {
+        @include text-teal;
+      }
+    }
 
-        &--sky-blue {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(sky-blue) !important;
-            }
-        }
+    &--deep-teal {
+      .cmp-tabs__tablist {
+        @include text-deep-teal;
+      }
+    }
+
+    &--aqua {
+      .cmp-tabs__tablist {
+        @include text-aqua;
+      }
+    }
+
+    &--chartreuse {
+      .cmp-tabs__tablist {
+        @include text-chartreuse;
+      }
+    }
+
+    &--cool-gray-8 {
+      .cmp-tabs__tablist {
+        @include text-cool-gray-8;
+      }
+    }
+
+    &--cool-gray-10 {
+      .cmp-tabs__tablist {
+        @include text-cool-gray-10;
+      }
+    }
+
+    &--green {
+      .cmp-tabs__tablist {
+        @include text-green;
+      }
+    }
+
+    &--black {
+      .cmp-tabs__tablist {
+        @include text-black;
+      }
+    }
+
+    &--white {
+      .cmp-tabs__tablist {
+        @include text-white;
+      }
+    }
+
+    //TDS Secondary background colors
+    &--steel-blue {
+      .cmp-tabs__tablist {
+        @include text-steel-blue;
+      }
+    }
+
+    &--navy {
+      .cmp-tabs__tablist {
+        @include text-navy;
+      }
+    }
+
+    &--copper {
+      .cmp-tabs__tablist {
+        @include text-copper;
+      }
+    }
+
+    &--stone {
+      .cmp-tabs__tablist {
+        @include text-stone;
+      }
+    }
+
+    &--cool-gray-1 {
+      .cmp-tabs__tablist {
+        @include text-cool-gray-1;
+      }
+    }
+
+    //TDS Digital background colors
+    &--cherry {
+      .cmp-tabs__tablist {
+        @include text-cherry;
+      }
+    }
+
+    &--amber {
+      .cmp-tabs__tablist {
+        @include text-amber;
+      }
+    }
+
+    &--forest {
+      .cmp-tabs__tablist {
+        @include text-forest;
+      }
+    }
+
+    &--charcoal {
+      .cmp-tabs__tablist {
+        @include text-charcoal;
+      }
+    }
+
+    &--cool-gray-9 {
+      .cmp-tabs__tablist {
+        @include text-cool-gray-9;
+      }
+    }
+
+    &--cobalt {
+      .cmp-tabs__tablist {
+        @include text-cobalt;
+      }
+    }
+
+    &--neutral-gray-1 {
+      .cmp-tabs__tablist {
+        @include text-neutral-gray-1;
+      }
+    }
+
+    &--neutral-gray-2 {
+      .cmp-tabs__tablist {
+        @include text-neutral-gray-2;
+      }
+    }
+
+    //Legacy background colors
+    &--dark-blue {
+      .cmp-tabs__tablist {
+        @include text-dark-blue;
+      }
+    }
+
+    &--sky-blue {
+      .cmp-tabs__tablist {
+        @include text-sky-blue;
+      }
+    }
+
+    &--legacy-gray {
+      .cmp-tabs__tablist {
+        @include text-legacy-gray;
+      }
+    }
+  }
+
+  &-border {
+    &--teal {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "teal") !important;
+      }
+    }
+
+    &--deep-teal {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(deep-teal) !important;
+      }
+    }
+
+    &--aqua {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "aqua") !important;
+      }
+    }
+
+    &--chartreuse {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "chartreuse") !important;
+      }
+    }
+
+    &--cool-gray-8 {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-8) !important;
+      }
+    }
+
+    &--cool-gray-10 {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-10) !important;
+      }
+    }
+
+    &--green {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "green") !important;
+      }
+    }
+
+    &--black {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "black") !important;
+      }
+    }
+
+    &--white {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "white") !important;
+      }
+    }
+
+    //TDS Secondary border colors
+    &--steel-blue {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
+      }
+    }
+
+    &--navy {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(steel-blue) !important;
+      }
+    }
+
+    &--copper {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "copper") !important;
+      }
+    }
+
+    &--stone {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(stone) !important;
+      }
+    }
+
+    &--cool-gray-1 {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-1) !important;
+      }
+    }
+
+    //TDS Digital border colors
+    &--cherry {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(cherry) !important;
+      }
+    }
+
+    &--amber {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(amber) !important;
+      }
+    }
+
+    &--forest {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "forest") !important;
+      }
+    }
+
+    &--charcoal {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "charcoal") !important;
+      }
+    }
+
+    &--cool-gray-9 {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(cool-gray-9) !important;
+      }
+    }
+
+    &--cobalt {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(cobalt) !important;
+      }
+    }
+
+    &--neutral-gray-1 {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-1) !important;
+      }
+    }
+
+    &--neutral-gray-2 {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(neutral-gray-2) !important;
+      }
+    }
+
+    //Legacy border colors
+    &--dark-blue {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(dark-blue) !important;
+      }
+    }
+
+    &--sky-blue {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(sky-blue) !important;
+      }
+    }
 
         &--legacy-gray {
             .cmp-tabs__tablist {
@@ -512,21 +511,31 @@
 
     &__stream {
         background-color: get-color(container-transparent);
-        padding-left: 4rem;
-        padding-right: 4rem;
         li {
           font-family: $font-family-everett !important;
           font-weight: 500;
           font-size: 16px;
+          &:hover,
+          &:active {
+            outline: 0 none;
+            background: white;
+            color: black;
+            border: 5px;
+            border-radius: 3em;
+            .cmp-tabs__tab-image {
+              border-color: get-color(secondary-light-grey);
+            }
+          }
         }
-        
     
-        .cmp-tabs__tablist{
-          margin-bottom: 2rem;
+        .cmp-tabs__tablist {
+            margin-bottom: 2rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }
     
         .cmp-tabs__tab {
-          padding: 1.0rem 1.75rem
+          padding: 1rem 1.75rem;
         }
     }
 }
