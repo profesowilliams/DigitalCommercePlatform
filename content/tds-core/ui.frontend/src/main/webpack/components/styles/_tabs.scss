@@ -373,20 +373,30 @@
 
 .cmp-tabs__stream {
   background-color: get-color(container-transparent);
-  padding-left: 4rem;
-  padding-right: 4rem;
   li {
     font-family: $font-family-everett !important;
     font-weight: 500;
     font-size: 16px;
+    &:hover,
+    &:active {
+      outline: 0 none;
+      background: white;
+      color: black;
+      border: 5px;
+      border-radius: 3em;
+      .cmp-tabs__tab-image {
+        border-color: get-color(secondary-light-grey);
+      }
+    }
   }
-  
 
-  .cmp-tabs__tablist{
+  .cmp-tabs__tablist {
     margin-bottom: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .cmp-tabs__tab {
-    padding: 1.0rem 1.75rem
+    padding: 1rem 1.75rem;
   }
 }
