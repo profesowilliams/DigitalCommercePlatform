@@ -120,6 +120,10 @@ function RenewalsDetails(props) {
       setToggleEdit(true);
     }
   }
+  
+  const closeToaster = () => {
+    setIsToasterOpen(false);
+  }
 
   const handleIconSaveClick = () => {
     setSaving(true);
@@ -140,7 +144,8 @@ function RenewalsDetails(props) {
             }   
             setToggleEdit(true);
           })
-          .catch((getStatusError) => {      // TODO: do i need to clearnterval on catch's  
+          .catch((getStatusError) => {
+            clearInterval(timer);  
             console.log('An unexpected error occurred getting transaction status: ', getStatusError);    
           })
           .finally(() => {
@@ -151,12 +156,10 @@ function RenewalsDetails(props) {
       })
       .catch((updateDetailsError) => {   
         console.log('An unexpected error occurred updating details: ', updateDetailsError);  
+        setSaving(false);        
+        setToggleEdit(true);
       })
   };
-
-  const resetToasterState = () => {
-    setIsToasterOpen(false);
-  }
 
   const updateDetails = async () => {
     const source = {id: renewalsDetails?.source?.id};
@@ -214,7 +217,7 @@ function RenewalsDetails(props) {
     const updateresponse = await post(componentProp.updateRenewalOrderEndpoint, payload);           
     const updateError = updateresponse?.data?.error;
 
-    if(updateError?.isError) throw new Error(`error: ${updateError?.code} ${updateError?.messages[0] || ''}`)   
+    if(updateError?.isError) throw new Error(`error: ${updateError?.code} ${updateError?.messages[0] || ''}`); 
 
     return updateresponse;
   }
@@ -222,7 +225,7 @@ function RenewalsDetails(props) {
   const getTransactionStatus = async () => {
     const getStatusResponse = await get(`${componentProp.getStatusEndpoint}/${renewalsDetails.source.id}`);               
     const statusError = getStatusResponse?.data?.error;
-    if(statusError?.isError) throw new Error(`error: ${statusError?.code} ${statusError?.messages[0] || ''}`)  
+    if(statusError?.isError) throw new Error(`error: ${statusError?.code} ${statusError?.messages[0] || ''}`);    
     return getStatusResponse.data?.content?.status === 'Active';
   }
 
@@ -294,7 +297,7 @@ function RenewalsDetails(props) {
       <Toaster
         autoClose={true}
         isToasterOpen={isToasterOpen}
-        onClose={resetToasterState}
+        onClose={closeToaster}
         isSuccess={true}
         message={{successSubmission: componentProp?.quoteEditing?.successUpdate}}
       ></Toaster>      
