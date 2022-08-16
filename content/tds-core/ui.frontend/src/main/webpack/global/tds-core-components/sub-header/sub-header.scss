@@ -182,6 +182,7 @@
 @mixin subheader-span-border-bottom {
   > ol {
     > li {
+      a,
       span {
         height: rem(40px);
         box-shadow: unset;
@@ -194,11 +195,16 @@
       }
 
       &.cmp-tabs__tab--active {
+        a,
         span {
           border-bottom-width: rem(2px);
           border-bottom-style: solid;
           border-bottom-color: inherit;
         }
+      }
+      
+      &:first-child {
+        margin-right: rem(12px);
       }
     }
   }
@@ -256,7 +262,7 @@
       &--sub-nav {
         &.new-sub {
           background-color: get-color(secondary-ivory);
-
+          a,
           span {
             color: get-color(deep-teal);
           }

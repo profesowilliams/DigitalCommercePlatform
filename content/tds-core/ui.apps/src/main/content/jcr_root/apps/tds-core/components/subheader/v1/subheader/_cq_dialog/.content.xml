@@ -65,6 +65,7 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                 fieldDescription="Adding a logo will replace any title added previously."
                                                 fieldLabel="Logo"
+                                                rootPath="/content/dam"
                                                 name="./subheaderLogo"/>
                                         </items>
                                     </column>
