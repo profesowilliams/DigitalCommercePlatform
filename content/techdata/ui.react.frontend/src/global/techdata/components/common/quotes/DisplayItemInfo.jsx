@@ -16,7 +16,8 @@ class ErrorDisplayItemBoundary extends React.PureComponent {
   }
   render() {
     if(this.state.hasError){
-      return <p>Something went wrong.</p>
+      // TODO: Make this authorable. Find a better message post demo.
+      return <p>Missing data</p>
     }
     return this.props.children;
   }
