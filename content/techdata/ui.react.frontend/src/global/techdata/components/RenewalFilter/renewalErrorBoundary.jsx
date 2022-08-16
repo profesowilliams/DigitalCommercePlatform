@@ -14,7 +14,7 @@ export class RenewalErrorBoundary extends React.Component {
   render = () =>
     this.state.hasError ? (
       <>
-        <p style={{textAlign:center,background:white}}>Something went wrong please refresh the page</p>
+        <p style={{textAlign:center,background:white}}></p>
       </>
     ) : (
       this.props.children

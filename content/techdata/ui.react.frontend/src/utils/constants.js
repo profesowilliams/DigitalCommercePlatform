@@ -83,3 +83,8 @@ export const ERROR_CREATE_QUOTE_SELECT_ITEMS_TO_CONTINUE = 'Select an item to co
 export const ERROR_CREATE_QUOTE_INVALID_ESTIMATE_ID = 'Invalid estimated ID';
 export const ERROR_CREATE_QUOTE_ERROR_GETTING_CART = 'Error getting the cart';
 export const ERROR_CREATE_QUOTE_ERROR_IN_PRICE = 'Error in pricing conditions';
+
+// Renewals
+export const GET_STATUS_FAILED = "getStatusFailed";
+export const RENEWAL_STATUS_ACTIVE = "Active"
+

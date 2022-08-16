@@ -17,16 +17,17 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
   const [transactionNumber, setTransactionNumber] = useState(false);
   const [onRequestSuccess, setOnRequestSuccess] = useState(true);
   const [toasterMessage, setToasterMessage] = useState({successSubmission, failedSubmission});
+  const [quoteStatusNotUpdated,  setQuoteStatusNotUpdated] = useState(false);
 
   function resetDialogStates() {
     // later with time refactor with zustand
+    if (quoteStatusNotUpdated) location.reload();
     setIsToasterOpen(false);
     setSubmitted(false);
     setPurchaseOrderNumber("");
     setTermsServiceChecked(false);
-    setMax30Characters(false);
-    onClose();
-    setTransactionNumber(false);
+    setMax30Characters(false);    
+    setTransactionNumber(false);    
   }
 
   function handleErrorOnMax(valueLength) {
@@ -74,9 +75,10 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
         onClick: () => setSubmitted((submitted) => !submitted),
       });
 
-    function passEmailOnToastMessage(email = ''){
-      const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, email);
-      if (!email) return setToasterMessage(prev => ({...prev, failedSubmission: "We are sorry, your order could not be processed, please try again later."}));
+    function passEmailOnToastMessage(responseBack = ''){
+      const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, responseBack);     
+      if (responseBack === 'getStatusFailed') setQuoteStatusNotUpdated(true);
+      if (!responseBack) return setToasterMessage(prev => ({...prev, failedSubmission: "We are sorry, your order could not be processed, please try again later."}));
       setToasterMessage(prev => ({...prev, failedSubmission: replaceEmail(prev.failedSubmission)}))
     }
 
@@ -95,7 +97,7 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
     handleToggleToaster,
     setTermsServiceChecked,
     OrderButtonComponent,
-    passEmailOnToastMessage
+    passEmailOnToastMessage  
   };
 }
 

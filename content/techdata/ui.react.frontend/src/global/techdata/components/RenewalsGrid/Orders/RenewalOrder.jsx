@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { put, get, post } from "../../../../../utils/api";
-import { useRenewalGridState } from "../store/RenewalsStore";
+import React, { useEffect } from "react";
+import { post } from "../../../../../utils/api";
+import { GET_STATUS_FAILED } from "../../../../../utils/constants";
+import { getStatusLoopUntilStatusIsActive } from "./orderingRequests";
 
 function RenewalOrder({
   children,
@@ -9,9 +10,8 @@ function RenewalOrder({
   handleClose,
   handleToggleToaster,
   orderEndpoints,
-  passEmailOnToastMessage
+  passEmailOnToastMessage,
 }) {
-
   const id = renewalData.source.id;
 
   const {
@@ -36,16 +36,28 @@ function RenewalOrder({
       if (renewalData?.items) payload.items = renewalData.items;
       const updateresponse = await post(updateRenewalOrderEndpoint, payload);
       if (updateresponse.status === 200) {
-        const getStatusResponse = await get(`${getStatusEndpoint}?id=${id}`);
-        if (getStatusResponse.status === 200) {
-          const orderPayload = {id};
+        const getStatusResponse = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint,
+          id,
+          delay: 1000,
+          iterations: 8,
+        });
+        if (getStatusResponse) {
+          const orderPayload = { id };
           const orderResponse = await post(orderRenewalEndpoint, orderPayload);
           if (orderResponse.status === 200) {
             handleClose();
             const isToggle = true;
-            const transactionNumber = orderResponse.data.content.confirmationNumber;           
-            handleToggleToaster({isToggle, transactionNumber, onError:false});
+            const transactionNumber =
+              orderResponse.data.content.confirmationNumber;
+            handleToggleToaster({
+              isToggle,
+              transactionNumber,
+              onError: false,
+            });
           }
+        } else {
+          throw "getStatusFailed";
         }
       } else {
         throw updateresponse;
@@ -55,12 +67,17 @@ function RenewalOrder({
       const response = error?.response?.data;
       if (response) {
         const salesContentEmail = response?.content?.salesContentEmail;
-        passEmailOnToastMessage(salesContentEmail)
-        console.log('error.response >> ',error.response);
+        passEmailOnToastMessage(salesContentEmail);
+        console.log("error.response >> ", error.response);
       } else {
-        passEmailOnToastMessage('');
+        passEmailOnToastMessage("");
       }
-      handleToggleToaster({isToggle:true, transactionNumber:'', onError:true});      
+      if (error === GET_STATUS_FAILED) passEmailOnToastMessage(error);
+      handleToggleToaster({
+        isToggle: true,
+        transactionNumber: "",
+        onError: true,
+      });
       handleClose();
     }
   };

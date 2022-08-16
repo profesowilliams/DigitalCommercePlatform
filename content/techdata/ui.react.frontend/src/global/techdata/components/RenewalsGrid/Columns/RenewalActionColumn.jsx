@@ -121,6 +121,21 @@ function _RenewalActionColumn({ eventProps }) {
     }, 0);
   };
 
+  const fixQuoteDataUponRequest = data => {
+    const mapped = {...data};
+    mapped.items = data.items.map(item => ({...item, product:{}}));
+    const resellerName = mapped?.reseller?.contact?.name; 
+    const endUserName = mapped?.endUser?.contact?.name; 
+    //temporarely fix to make update service work
+    if (!resellerName){
+      mapped.reseller.contact.name = "rs rs1";
+    }
+    if (!endUserName){
+      mapped.endUser.contact.name = "en en1";
+    }
+    return mapped;
+  };
+
   return (
     <>
       <div className="cmp-renewal-action-container">
@@ -136,7 +151,7 @@ function _RenewalActionColumn({ eventProps }) {
           isDialogOpen={toggleOrderDialog} 
           onClose={() => setToggleOrderDialog(false)}
           orderingFromDashboard={orderingFromDashboard}
-          renewalData={data}
+          renewalData={fixQuoteDataUponRequest(data)}
           closeOnBackdropClick={false}
           ToasterDataVerification={({data}) => data ? <b>Transaction number : {data}</b> : null}
           orderEndpoints={orderEndpoints}
