@@ -223,7 +223,7 @@ function RenewalsDetails(props) {
   }
 
   const getTransactionStatus = async () => {
-    const getStatusResponse = await get(`${componentProp.getStatusEndpoint}/${renewalsDetails.source.id}`);               
+    const getStatusResponse = await get(`${componentProp.getStatusEndpoint}?id=${renewalsDetails.source.id}`);             
     const statusError = getStatusResponse?.data?.error;
     if(statusError?.isError) throw new Error(`error: ${statusError?.code} ${statusError?.messages[0] || ''}`);    
     return getStatusResponse.data?.content?.status === 'Active';

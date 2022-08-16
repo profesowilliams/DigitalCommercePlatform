@@ -15,9 +15,10 @@ function Toaster({
   
   useEffect(() => {
     if (autoClose) {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         onClose();
       }, 6000);
+      return () => {clearTimeout(timeout);}
     } 
   }, [isToasterOpen]);  
 
