@@ -1,6 +1,7 @@
 @import "../../site/_variables.scss";
 @import "../../global/_mixins.scss";
 @import "../../global/styles/_font-face.scss";
+@import "../../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer.scss";
 
 .cmp-tds-title {
     &.dp-title {
@@ -231,6 +232,8 @@
 }
 
 .dp-title {
+    @include typewriter-animation;
+
     &__text {
         font-weight: 300;
 

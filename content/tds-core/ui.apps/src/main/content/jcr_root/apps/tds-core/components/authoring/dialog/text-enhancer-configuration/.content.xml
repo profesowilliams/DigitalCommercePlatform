@@ -59,6 +59,16 @@
                                             value="animation-typewriter-effect"/>
                                     </items>
                                 </animationType>
+                                <extraWords
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                    fieldLabel="Extra Words">
+                                    <field
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        required="true"
+                                        name="./extraWords"/>
+                                </extraWords>
                             </items>
                         </field>
                     </textProcessorConfiguration>

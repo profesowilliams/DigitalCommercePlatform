@@ -1,9 +1,18 @@
-use(function () {
+use(['./utils.js'], function (utils) {
     var resourceResolver = resource.getResourceResolver();
 
     var REGEX_VARIABLE_NAME = /\${[a-z-]*}/i;
     function hasVariables(text) {
         return text.search(REGEX_VARIABLE_NAME) > -1;
+    }
+
+    function getArray(crxProperty) {
+        var array = new Packages.org.json.JSONArray();
+        for (let index = 0; index < crxProperty.length; index++) {
+            var element = crxProperty[index];
+            array.put(element);
+        }
+        return array.toString();
     }
 
     function getVariableConfiguration() {
@@ -21,6 +30,9 @@ use(function () {
                 itemData.text = res.properties["text"];
                 itemData.color = res.properties["color"];
                 itemData.animationType = res.properties["animationType"];
+                if(res.properties["extraWords"] != null) {
+                    itemData.extraWords = getArray(res.properties["extraWords"]);
+                }
 
                 variableConfiguration[itemData.variableName] = itemData;
             }

@@ -5,7 +5,7 @@
 		<sly
 			data-sly-test="${textEnhancer.hasVariables}"
 			data-sly-list="${textEnhancer.textElements}">
-			<span class="${item.animationType}" style="color: ${item.color @ context='styleToken'};">${item.text}</span>
+			<span class="${item.animationType}" data-extra-words="${item.extraWords}" style="color: ${item.color @ context='styleToken'};">${item.text}</span>
 		</sly>
 		<sly
 			data-sly-test="${!textEnhancer.hasVariables}">

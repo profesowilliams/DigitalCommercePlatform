@@ -1,0 +1,12 @@
+@mixin typewriter-animation {
+  .animation-typewriter-effect {
+    border-right: 0.025em solid;
+    animation: tds-Animation-blink-caret 1s steps(1) infinite;
+  }
+
+  @keyframes tds-Animation-blink-caret {
+    50% {
+      border-color: transparent;
+    }
+  }
+}
