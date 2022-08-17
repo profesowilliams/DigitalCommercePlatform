@@ -1,0 +1,48 @@
+export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
+  const contact = endUser.contact[0];
+  const address = endUser.address;
+  if (endUserResponseAsObj) {
+    return {
+      name: endUser.name.text,
+      contact: {
+        name: contact.name.text,
+        email: contact.email.text,
+        phone: contact.phone.text,
+      },
+      address: {
+        line1: address.line1.text,
+        line2: address.line2.text,
+        line3: address.line3,
+        city: address.city.text,
+        state: address.state,
+        postalCode: address.postalCode.text,
+        country: address.country,
+        county: address.county,
+        countryCode: address.countryCode,
+      },
+    };
+  }
+
+  return {
+    name: endUser.name,
+    nameUpper: endUser.nameUpper,
+    contact: {
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+    },
+    address: {
+      line1: address.line1,
+      line2: address.line2,
+      line3: address.line3,
+      city: address.city,
+      state: address.state,
+      postalCode: address.postalCode,
+      country: address.country,
+      county: address.county,
+      countryCode: address.countryCode,
+    },
+    vendorAccountNumber: endUser.vendorAccountNumber,
+    previousEndUserPO: endUser.previousEndUserPO,
+  };
+}

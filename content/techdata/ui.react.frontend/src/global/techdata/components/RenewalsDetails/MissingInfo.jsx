@@ -1,7 +1,7 @@
 import React from "react";
 import { CautionIcon } from "../../../../fluentIcons/FluentIcons";
 
-export function MissingInfo({children}) {
+export default function MissingInfo({children}) {
   return (
     <div className="cmp-renewals-qp__missing-info">
       <CautionIcon />

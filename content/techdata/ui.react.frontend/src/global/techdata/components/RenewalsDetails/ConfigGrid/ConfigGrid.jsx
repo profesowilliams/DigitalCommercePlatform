@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AgreementInfo from "./AgreementInfo";
-import EndUserInfo from "./EndUserInfo";
+import EndUserInfo from "./EndUser/EndUserInfo";
 import ResellerInfo from "./ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
