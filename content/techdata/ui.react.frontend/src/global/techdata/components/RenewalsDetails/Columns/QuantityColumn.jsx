@@ -7,6 +7,7 @@ function QuantityColumn(props) {
     const refInput = useRef(); 
     const MIN_VAL = 1;
     const MAX_VAL = 999999;
+    const MAX_DIGITS = MAX_VAL.toString().length;
 
     // Return simple render label when edit flag is false
     if (!isEditing) return <>{value}</>;
@@ -18,7 +19,9 @@ function QuantityColumn(props) {
     }
 
     const handleInputValue = (e) => {
-        setValue(clampNumber(Number(e.target.value)));
+        const stringInput = e.target.value;
+        if (stringInput.length <= MAX_DIGITS)
+            setValue(clampNumber(Number(stringInput)));
     }
 
     const handleFocus = (e) => e.target.select();
