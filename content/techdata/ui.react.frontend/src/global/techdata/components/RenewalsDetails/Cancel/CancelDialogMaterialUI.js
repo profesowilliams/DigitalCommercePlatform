@@ -36,6 +36,7 @@ export const actionsUI = {
         "& .MuiButton-outlined": {
             border: 1,
             borderColor: "#005758",
+            py: "15px",
         }
     }
 }
@@ -62,6 +63,7 @@ export const cancelButtonUI = {
             background: "#08BED5",
             color: "#262626",
             border: 0,
+            p: "16px",
         },
     },
 }

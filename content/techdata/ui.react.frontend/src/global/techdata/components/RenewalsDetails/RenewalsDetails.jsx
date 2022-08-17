@@ -233,11 +233,12 @@ function RenewalsDetails(props) {
     return (
       <If
         condition={toggleEdit}
-        Then={<Edit handler={handleIconEditClick} />}
+        Then={<Edit btnClass="underlined_hover" handler={handleIconEditClick} />}
         Else={
           <CancelAndSave
             cancelHandler={handleIconCancelClick}
             saveHandler={handleIconSaveClick}
+            btnClass="underlined_hover"
           />
         }
       />

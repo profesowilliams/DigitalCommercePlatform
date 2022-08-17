@@ -37,6 +37,11 @@
   .icon-button {
     display: flex;
     align-items: center;
+    &.underlined_hover:hover {
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     &__default {
       background-color: transparent;
       color: #005758;
