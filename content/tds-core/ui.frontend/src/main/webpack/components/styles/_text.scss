@@ -97,6 +97,55 @@
   .dp-text-icon::before {
     padding-right: 10px;
   }
+  
+  &--default {
+    h1,h2,h3,h4,h5 { 
+      &::before { 
+        content:'\25A0'; 
+        font-size:30px;
+        color: #CCD814;
+        vertical-align: text-top;
+        margin-left: -20px;
+        line-height: 40px;
+      }
+    }
+    
+    ul {
+      padding-left: 0px;
+
+      li {
+        margin-left: 0px;
+
+        &::before {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  &--default-feature {
+      ul {
+        padding-left: 0px;
+
+        li {
+          margin-left: 20px;
+          padding-bottom: 20px;
+
+          b {
+            padding-bottom: 10px;
+            line-height: 50px;
+          }
+        }
+
+      li::before { 
+        content:'\25A0'; 
+        font-size:30px;
+        color: #CCD814;
+        vertical-align: text-top;
+        margin-left: -20px; 
+      }
+    }
+  }
 }
 
 .cmp-text__paragraph {}

@@ -655,3 +655,33 @@
         }
     }
 }
+
+// TD SYNNEX Modern Card - No Image
+
+.teaser{
+    &.cmp-teaser {
+        &-tds {
+            &__card {          
+                display: grid !important;
+                place-items: center;
+
+                .cmp-teaser {			
+                    padding: 0 10px 10px 10px;
+                    width: 471px;
+
+                    .cmp-teaser__image {
+                        display: none;
+                    }
+
+                    .cmp-teaser__content {
+                        border-top: 5px solid #00234B;
+                        box-shadow: 0px 7px 12px 0px #888888;
+                        padding: 50px;
+                        margin: 15px 0px 0px 10px;
+                        border-radius: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

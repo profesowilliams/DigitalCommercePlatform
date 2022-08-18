@@ -1,0 +1,53 @@
+@function get-color($base, $shade: base) {
+    $color: map-get($color-palette, $base);
+    @return $color;
+  }
+
+.cmp-div__three-column {
+    .cmp-contentfragmentlist {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .cmp-contentfragment__element--hero-image {
+            height: 200px;
+        }
+
+        .cmp-contentfragment__title {
+            font-size: medium;
+            border-left: solid black 4px;
+            margin-left: -10px;
+            padding-left: 10px;
+            line-height: 32px;
+            color: map-get($color-palette, "teal");
+            font-weight: bold;
+        }
+
+        .cmp-contentfragment__element--short-body {
+            color: map-get($color-palette, "teal");
+            padding-left: 5px;
+            padding-bottom: 20px;
+        }
+
+        .cmp-contentfragment__element--resource-link {
+            padding-left: 5px;
+            color: map-get($color-palette, "teal");
+            font-weight: bold;
+        }
+
+        .cmp-contentfragment {
+            width: 30%;
+            display: inline-block;
+            justify-content: center;
+            border: 1px solid darkgray;
+            border-radius: 4px;
+            justify-content: center;
+            padding: 0 10px;
+            margin: 0 10px;
+
+            .cmp-contentfragment__element-title {
+                display: none;
+            }
+        }
+    }
+}
