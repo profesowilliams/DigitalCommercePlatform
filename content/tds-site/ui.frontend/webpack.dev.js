@@ -1124,7 +1124,7 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "renewals-grid",
+                filename: "renewals-grid.html",
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/renewals-grid.html"

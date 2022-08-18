@@ -7,16 +7,34 @@ export class RenewalsGrid {
   listEndUser = 'div[aria-colindex="1"].ag-cell-value'
   btnVendorAndProgram = 'div[aria-colindex="2"] .ag-header-cell-label'
   listVendorAndProgram = 'div[aria-colindex="2"].ag-cell-value'
-  btnAgreementNumber = 'div[aria-colindex="3"] .ag-header-cell-label'
-  listAgreementNumber = 'div[aria-colindex="3"].ag-cell-value'
-  btnRenewalsPlan = 'div[aria-colindex="4"] .ag-header-cell-label'
-  listRenewalsPlan = 'div[aria-colindex="4"].ag-cell-value'
-  btnDueInDays = 'div[aria-colindex="5"] .ag-header-cell-label'
-  listDueInDays = 'div[aria-colindex="5"].ag-cell-value'
-  btnDueDate = 'div[aria-colindex="6"] .ag-header-cell-label'
-  listDueDate = 'div[aria-colindex="6"].ag-cell-value'
-  btnPrice = 'div[aria-colindex="7"] .ag-header-cell-label'
-  listPrice = 'div[aria-colindex="7"].ag-cell-value'
+  btnAgreementNumber = 'div[aria-colindex="4"] .ag-header-cell-label'
+  listAgreementNumber = 'div[aria-colindex="4"].ag-cell-value'
+  btnRenewalsPlan = 'div[aria-colindex="5"] .ag-header-cell-label'
+  listRenewalsPlan = 'div[aria-colindex="5"].ag-cell-value'
+  btnDueInDays = 'div[aria-colindex="6"] .ag-header-cell-label'
+  listDueInDays = 'div[aria-colindex="6"].ag-cell-value'
+  btnDueDate = 'div[aria-colindex="7"] .ag-header-cell-label'
+  listDueDate = 'div[aria-colindex="7"].ag-cell-value'
+  btnPrice = 'div[aria-colindex="8"] .ag-header-cell-label'
+  listPrice = 'div[aria-colindex="8"].ag-cell-value'
+  btnFilter = '.cmp-renewals-filter__button'
+  accVendor = '.filter-accordion__item:nth-child(1)'
+  accEndUser = '.filter-accordion__item:nth-child(3)'
+  accRenewalType = '.filter-accordion__item:nth-child(5)'
+  accDate = '.filter-accordion__item:nth-child(7)'
+  checkBoxVmware = 'input[name="VMWARE"]'
+  checkBoxAcademic = 'input[name="Academic"]'
+  checkBoxCommercial = 'input[name="Commercial"]'
+  checkBoxRenewal = 'input[name="Renewal"]'
+  radioOverdue = 'input[id="0"]'
+  radioToday = 'input[id="1"]'
+  radioZeroToThirty = 'input[id="2"]'
+  radioThirtyToSixty = 'input[id="3"]'
+  radioSixtyToNinety = 'input[id="4"]'
+  radioNinetyPlus = 'input[id="5"]'
+  btnShowResult = '.filter-modal-container__results'
+  msgNoRows = '.customErrorNoRows'
+
 
   navigate() {
     cy.on("uncaught:exception", (err) => {
@@ -71,5 +89,10 @@ export class RenewalsGrid {
         })
         .then(() => resolve(cellContents));
     });
+  }
+
+  getFilterPill(number) {
+    let locator = '.filter-tags:nth-child(x)'.replace('x', number);
+    return locator;
   }
 }
