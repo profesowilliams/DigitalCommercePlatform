@@ -149,14 +149,19 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         "{currency-code}",
         data?.currency || ""
       ),
-      cellRenderer: (props) => UnitPriceColumn({...props, isEditing:isEditingRef.current && isInternalUser}),
+      cellRenderer: (props) => {
+        const isEditing = isEditingRef.current && isInternalUser && data?.canEditResellerPrice;
+        return UnitPriceColumn({...props, isEditing})
+      },
 
     },
     {
       field:'quantity',
       headerName: gridProps?.quantity,
-      cellRenderer: (props) =>
-      QuantityColumn({ ...props, isEditing: isEditingRef.current })
+      cellRenderer: (props) =>{
+        const isEditing = isEditingRef.current && data?.canEditQty;
+        return QuantityColumn({ ...props, isEditing })
+      }      
     },
     {
       field:'totalPrice',
@@ -196,6 +201,63 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     setIsPODialogOpen(false);
   }
 
+  const fixQuoteDataUponRequest = data => {
+    const mapped = {...data};
+    mapped.items = data.items.map(item => {
+      const product = !item?.prouct || !item?.prouct.length ? {} : item.product[1];   
+      return {...item, product}
+    });
+    // TODO: Refactor this into renewalOrderUtils in a function
+    const endUser = {
+      name: mapped?.endUser?.name.text,
+      contact: {
+        name: mapped?.endUser?.contact[0]?.name?.text,
+        email: mapped?.endUser?.contact[0]?.email?.text,
+        phone: mapped?.endUser?.contact[0]?.phone?.text
+      },
+      address: {
+        line1: mapped?.endUser?.address?.line1?.text,
+        line2: mapped?.endUser?.address?.line2?.text,
+        line3: mapped?.endUser?.address?.line3?.text,
+        city: mapped?.endUser?.address?.city?.text,
+        state: mapped?.endUser?.address?.state?.text,
+        postalCode: mapped?.endUser?.address?.postalCode?.text,
+        country: mapped?.endUser?.address?.country?.text,
+        county: mapped?.endUser?.address?.county?.text,
+        countryCode: mapped?.endUser?.address?.countryCode?.text
+      }
+    }
+    const reseller = {
+      contact: {
+        name: mapped?.reseller?.contact[0]?.name?.text,
+        email: mapped?.reseller?.contact[0]?.email?.text,
+        phone: mapped?.reseller?.contact[0]?.phone?.text
+      },
+      address: {
+        line1: mapped?.reseller?.address?.line1?.text,
+        line2: mapped?.reseller?.address?.line2?.text,
+        line3: mapped?.reseller?.address?.line3?.text,
+        city: mapped?.reseller?.address?.city?.text,
+        state: mapped?.reseller?.address?.state?.text,
+        postalCode: mapped?.reseller?.address?.postalCode?.text,
+        country: mapped?.reseller?.address?.country?.text,
+        county: mapped?.reseller?.address?.county?.text,
+        countryCode: mapped?.reseller?.address?.countryCode?.text
+      }
+    }
+    mapped.endUser = endUser;
+    mapped.reseller = reseller;
+    const resellerName = mapped?.reseller?.contact?.name; 
+    const endUserName = mapped?.endUser?.contact?.name; 
+    //temporarely fix to make update service work
+    if (!resellerName){
+      mapped.reseller.contact.name = "rs rs1";
+    }
+    if (!endUserName){
+      mapped.endUser.contact.name = "en en1";
+    }
+    return mapped;
+  };
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
       <section>
@@ -209,11 +271,10 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         <div className="place-cmp-order-dialog-container">
         <p className="cmp-place-order-actions">
             <Button
-              disabled={data.canPlaceOrder ?!data.canPlaceOrder : false}
+              disabled={!data.canPlaceOrder}
               sx={{background: teal[800],"&:hover": { background: teal[600] }}}
               onClick={onOrderButtonClicked}
-              variant="contained"
-              autoFocus
+              variant="contained"           
             >
               Order
             </Button>
@@ -236,7 +297,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         orderEndpoints={orderEndpoints}
         closeOnBackdropClick={false}
         ToasterDataVerification={({data}) => data ? <b>Transaction number : {data}</b> : null}
-        renewalData={data} />
+        renewalData={fixQuoteDataUponRequest(data)} />
     </div>
   );
 }

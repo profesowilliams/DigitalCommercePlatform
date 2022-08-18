@@ -122,6 +122,7 @@ function _RenewalActionColumn({ eventProps }) {
   };
 
   const fixQuoteDataUponRequest = data => {
+    if (!data?.items) return data;
     const mapped = {...data};
     mapped.items = data.items.map(item => ({...item, product:{}}));
     const resellerName = mapped?.reseller?.contact?.name; 

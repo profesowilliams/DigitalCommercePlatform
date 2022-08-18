@@ -19,6 +19,7 @@ function PlaceOrderDialog({
   ToasterDataVerification,
   orderEndpoints,
 }) {
+  console.log('🚀renewalData >>',renewalData);
   const { endUser } = renewalData;
   const {
     placeOrderDialogTitle,

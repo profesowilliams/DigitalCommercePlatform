@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { post } from "../../../../../utils/api";
-import { GET_STATUS_FAILED } from "../../../../../utils/constants";
+import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED } from "../../../../../utils/constants";
 import { getStatusLoopUntilStatusIsActive } from "./orderingRequests";
 
 function RenewalOrder({
@@ -44,7 +44,7 @@ function RenewalOrder({
         });
         if (getStatusResponse) {
           const orderPayload = { id };
-          const orderResponse = await post(orderRenewalEndpoint, orderPayload);
+          const orderResponse = await post(orderRenewalEndpoint, orderPayload);         
           if (orderResponse.status === 200) {
             handleClose();
             const isToggle = true;
@@ -55,9 +55,10 @@ function RenewalOrder({
               transactionNumber,
               onError: false,
             });
-          }
+          } else
+          throw PROCESS_ORDER_FAILED
         } else {
-          throw "getStatusFailed";
+          throw GET_STATUS_FAILED;
         }
       } else {
         throw updateresponse;
@@ -65,8 +66,8 @@ function RenewalOrder({
     } catch (error) {
       console.log("🚀error >>", error);
       const response = error?.response?.data;
-      if (response) {
-        const salesContentEmail = response?.content?.salesContentEmail;
+      const salesContentEmail = response?.salesContactEmail;
+      if (salesContentEmail && PROCESS_ORDER_FAILED) {
         passEmailOnToastMessage(salesContentEmail);
         console.log("error.response >> ", error.response);
       } else {

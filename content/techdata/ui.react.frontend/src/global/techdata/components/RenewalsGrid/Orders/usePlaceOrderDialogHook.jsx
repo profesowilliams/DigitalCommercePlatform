@@ -75,7 +75,7 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
         onClick: () => setSubmitted((submitted) => !submitted),
       });
 
-    function passEmailOnToastMessage(responseBack = ''){
+    function passEmailOnToastMessage(responseBack = ''){    
       const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, responseBack);     
       if (responseBack === 'getStatusFailed') setQuoteStatusNotUpdated(true);
       if (!responseBack) return setToasterMessage(prev => ({...prev, failedSubmission: "We are sorry, your order could not be processed, please try again later."}));
