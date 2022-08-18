@@ -130,34 +130,33 @@ function RenewalsDetails(props) {
     updateDetails()
       .then(() => {
         const frequency = 2000;
-        let n = 5,
+        let n = 7,
         timer = setInterval(function() {
           getTransactionStatus()
           .then((isStatusActive) => {
-            if(isStatusActive) {
+            if(isStatusActive) {       
+              setSaving(false);    
               setIsToasterOpen(true);
               clearInterval(timer);
-            } 
-            if(n <= 1 && !isStatusActive) {     
-              console.log(`getStatus timer completed. It ran 5 times, once every ${frequency/1000} seconds and still the status is not Active`); 
-              clearInterval(timer);            
+            } else if (n == 0) {        
+              setSaving(false);    
+              clearInterval(timer);      
+              console.log(`getStatus timer completed. It ran 7 times, once every ${frequency/1000} seconds and still the status is not Active`);       
             }   
             setToggleEdit(true);
           })
-          .catch((getStatusError) => {
+          .catch((getStatusError) => {   
+            setSaving(false);
             clearInterval(timer);  
             console.log('An unexpected error occurred getting transaction status: ', getStatusError);    
           })
-          .finally(() => {
-            setSaving(false);
-          });
           n--;
-        }, frequency);
+        }, frequency);     
       })
-      .catch((updateDetailsError) => {   
-        console.log('An unexpected error occurred updating details: ', updateDetailsError);  
+      .catch((updateDetailsError) => {     
         setSaving(false);        
         setToggleEdit(true);
+        console.log('An unexpected error occurred updating details: ', updateDetailsError);
       })
   };
 

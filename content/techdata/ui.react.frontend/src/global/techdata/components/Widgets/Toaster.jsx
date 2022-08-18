@@ -18,7 +18,7 @@ function Toaster({
       const timeout = setTimeout(() => {
         onClose();
       }, 6000);
-      return () => {clearTimeout(timeout);}
+      return () => clearTimeout(timeout);
     } 
   }, [isToasterOpen]);  
 

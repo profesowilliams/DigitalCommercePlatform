@@ -32,7 +32,7 @@ export default function EndUserEdit({ endUser, _endUserEdit }) {
   };
 
   const showErrorMsg = (obj) => {
-    if (obj['text'].length === 0 && obj['isMandatory'] === true) {
+    if (obj && obj['text']?.length === 0 && obj['isMandatory'] === true) {
       return { helperText: REQUIRED_FIELD };
     }
   };
