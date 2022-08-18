@@ -29,10 +29,10 @@ function UnitPriceColumn(props) {
     },
   };
   const handleValueChange = (event) => {
-    const value = event?.target?.value;
+    const value = event?.target?.value;    
     if (isNaN(value)) return;
     if (value < 0) return;
-    setPrice(value);   
+    setPrice(parseFloat(value.toFixed(2)));   
   };
 
   return !isEditing ? (
