@@ -46,3 +46,10 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
     previousEndUserPO: endUser.previousEndUserPO,
   };
 }
+
+export const endUserConstants = {
+  INVALID_EMAIL_TEXT: 'Enter a valid email address. For example, name@email.com',
+  REQUIRED_FIELD: 'This is a required field.',
+  SIXTY: 60,
+  TWENTY: 20,
+}

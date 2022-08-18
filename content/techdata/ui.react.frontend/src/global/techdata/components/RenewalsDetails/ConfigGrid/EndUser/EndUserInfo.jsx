@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Info from "../../../common/quotes/DisplayItemInfo"
 import Edit from "../../Edit"
 import MissingInfo from "../../MissingInfo";
 import { If } from "../../../../helpers/If";
 import CancelAndSave from "../../CancelAndSave";
 import EndUserEdit from "./EndUserEdit";
+import EndUserInfoReadOnly from "./EndUserReadOnly";
 import { isObject } from "../../../../../../utils";
 import Saving from "../../Saving";
 import getModifiedEndUserData from "./utils";
@@ -53,34 +53,6 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
     )
   };
 
-  const EndUserInfo = ({ endUserData }) => {
-    const address = endUserData.address;
-    const contact = (Array.isArray(endUserData.contact) ? endUserData.contact[0] : endUserData.contact);
-
-    return (
-      <div className="cmp-renewals-qp__enduser-info--address-group">
-        <p>
-          <Info>{endUserData.nameUpper}</Info>
-          <Info>{address.line1}</Info>
-          <Info>{address.line2}</Info>
-          <Info>{(address.city ?? '') + (`, ${address.state}` || '') + (` ${address.postalCode}` || '')}</Info>      
-          <Info>{address.countryCode}</Info>
-        </p>
-        
-        <p>
-          <Info label={productLines.emailLabel} noColon>{contact.email}</Info>
-          <Info label={productLines.phoneLabel} noColon>{contact.phone}</Info>
-        </p>
-        
-        <p>          
-          <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>
-          <Info label={productLines.vendorAccountNo} noColon>{endUserData.vendorAccountNumber}</Info>
-          <Info label={productLines.endCustpreviousPurchaseOrderNo} noColon>{endUserData.previousEndUserPO ?? 'N/A'}</Info>
-        </p>
-      </div>
-    );
-  };
-
   return (
     <div
       className={`cmp-renewals-qp__enduser-info ${
@@ -96,7 +68,7 @@ function EndUserInfo({ endUser, endUserType, productLines }) {
       {editMode ? (
         <EndUserEdit endUser={endUser} endUserData={endUserData} />
       ) : (
-        <EndUserInfo endUserData={endUserData} />
+        <EndUserInfoReadOnly endUserData={endUserData} endUserType={endUserType} productLines={productLines}/>
       )}
     </div>
   );
