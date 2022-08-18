@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
+import TransactionNumber from "../Orders/TransactionNumber";
 import {
   getLocalStorageData,
   hasLocalStorageData,
@@ -154,7 +155,7 @@ function _RenewalActionColumn({ eventProps }) {
           orderingFromDashboard={orderingFromDashboard}
           renewalData={fixQuoteDataUponRequest(data)}
           closeOnBackdropClick={false}
-          ToasterDataVerification={({data}) => data ? <b>Transaction number : {data}</b> : null}
+          ToasterDataVerification={({data}) => data ? TransactionNumber(data) : null}
           orderEndpoints={orderEndpoints}
         />
         <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />

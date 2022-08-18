@@ -11,6 +11,7 @@ import QuantityColumn from "../Columns/QuantityColumn.jsx";
 import buildColumnDefinitions from "./buildColumnDefinitions";
 import UnitPriceColumn from "../Columns/UnitPriceColumn";
 import { isInternalUser } from "../../../../../utils/user-utils";
+import TransactionNumber from "../../RenewalsGrid/Orders/TransactionNumber";
 
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
@@ -296,7 +297,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         orderingFromDashboard={compProps.orderingFromDashboard}
         orderEndpoints={orderEndpoints}
         closeOnBackdropClick={false}
-        ToasterDataVerification={({data}) => data ? <b>Transaction number : {data}</b> : null}
+        ToasterDataVerification={({data}) => data ? TransactionNumber(data) : null}
         renewalData={fixQuoteDataUponRequest(data)} />
     </div>
   );
