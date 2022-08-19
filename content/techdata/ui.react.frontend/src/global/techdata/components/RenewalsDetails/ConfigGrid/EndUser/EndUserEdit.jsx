@@ -1,40 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import isEmail from 'validator/es/lib/isEmail';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
-import { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } from './utils';
+import { endUserConstants } from './utils';
 
-export default function EndUserEdit({ endUser, _endUserEdit }) {
-  let contact = endUser.contact[0];
-  let contactName = contact['name'];
-  let address = endUser.address;
-  let { line1, city, country, postalCode } = address;
+export default function EndUserEdit({
+  endUser,
+  endUserDetails,
+  isEmailValid,
+  ...props
+}) {
+  const {
+    handleAddressChange,
+    handleCityChange,
+    handleContactNameChange,
+    handleCountryChange,
+    handleEmailChange,
+    handleNameChange,
+    handlePhoneChange,
+    handlePostalCodeChange,
+  } = props;
 
-  const [isEmailValid, setIsEmailValid] = useState(
-    contact['email']['isValid'] || true
-  );
-  const [endUserEmail, setEndUserEmail] = useState(
-    contact['email']['text'] || ''
-  );
-
-  const handleChange = (e) => {
-    let email = e.target.value;
-    setEndUserEmail(email);
-    if (isEmail(email)) {
-      setIsEmailValid(true);
-    } else {
-      setIsEmailValid(false);
-    }
-  };
+  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
+    endUserConstants;
+  const { contact, address } = endUserDetails;
+  const contactName = contact[0].name;
+  const { line1, city, country, postalCode } = address;
 
   const showErrorField = (obj) => {
     return { error: obj['isValid'] === false };
   };
 
   const showErrorMsg = (obj) => {
-    if (obj && obj['text']?.length === 0 && obj['isMandatory'] === true) {
+    if (obj['text'].length === 0 && obj['isMandatory'] === true) {
       return { helperText: REQUIRED_FIELD };
     }
+  };
+
+  const handleValidation = (obj) => {
+    if (!obj) return;
+
+    return {
+      ...showErrorField(obj),
+      ...showErrorMsg(obj),
+    };
   };
 
   const formBoxStyle = {
@@ -43,6 +51,9 @@ export default function EndUserEdit({ endUser, _endUserEdit }) {
     '&.MuiBox-root': { marginTop: '20px' },
   };
 
+  const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
+  const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
+
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
@@ -50,77 +61,78 @@ export default function EndUserEdit({ endUser, _endUserEdit }) {
         id="end-user-name"
         label="End user name"
         variant="standard"
-        inputProps={{ maxlength: SIXTY }}
-        defaultValue={endUser['name']['text'] || ''}
-        {...showErrorField(endUser['name'])}
-        {...showErrorMsg(endUser['name'])}
+        inputProps={MAX_LENGTH_SIXTY}
+        value={endUserDetails.name.text || ''}
+        onChange={(e) => handleNameChange(e)}
+        {...handleValidation(endUser['name'])}
       />
       <CustomTextField
         required
         id="contact-name"
         label="Contact name"
         variant="standard"
-        inputProps={{ maxlength: SIXTY }}
-        defaultValue={contactName['text']}
-        {...showErrorField(contactName)}
-        {...showErrorMsg(contactName)}
+        inputProps={MAX_LENGTH_SIXTY}
+        value={contactName['text'] || ''}
+        onChange={(e) => handleContactNameChange(e)}
+        {...handleValidation(contactName)}
       />
       <CustomTextField
         required
         id="address"
         label="Address 1"
         variant="standard"
-        inputProps={{ maxlength: SIXTY }}
-        defaultValue={line1['text']}
-        {...showErrorField(line1)}
-        {...showErrorMsg(line1)}
+        inputProps={MAX_LENGTH_SIXTY}
+        value={line1['text'] || ''}
+        onChange={(e) => handleAddressChange(e)}
+        {...handleValidation(line1)}
       />
       <CustomTextField
         required
         id="city"
         label="City"
         variant="standard"
-        inputProps={{ maxlength: SIXTY }}
-        defaultValue={city['text']}
-        {...showErrorField(city)}
-        {...showErrorMsg(city)}
+        inputProps={MAX_LENGTH_SIXTY}
+        value={city['text'] || ''}
+        onChange={(e) => handleCityChange(e)}
+        {...handleValidation(city)}
       />
       <CustomTextField
         required
         id="country"
         label="Country"
         variant="standard"
-        inputProps={{ maxlength: SIXTY }}
-        defaultValue={country}
-        {...showErrorMsg(country)}
+        inputProps={MAX_LENGTH_SIXTY}
+        value={country || ''}
+        onChange={(e) => handleCountryChange(e)}
       />
       <CustomTextField
         required
         id="area-code"
         label="Area Code"
         variant="standard"
-        inputProps={{ maxlength: TWENTY }}
-        defaultValue={postalCode['text']}
-        {...showErrorField(postalCode)}
-        {...showErrorMsg(postalCode)}
+        inputProps={MAX_LENGTH_TWENTY}
+        value={postalCode['text'] || ''}
+        onChange={(e) => handlePostalCodeChange(e)}
+        {...handleValidation(postalCode)}
       />
       <CustomTextField
         required
         id="email"
         label="Contact email"
         variant="standard"
-        value={endUserEmail}
-        onChange={(e) => handleChange(e)}
-        inputProps={{ maxlength: SIXTY }}
+        value={contact[0].email.text || ''}
+        onChange={(e) => handleEmailChange(e)}
+        inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
         helperText={!isEmailValid ? INVALID_EMAIL_TEXT : null}
       />
       <CustomTextField
         id="phone"
         label="Contact phone number"
-        inputProps={{ maxlength: TWENTY }}
+        inputProps={MAX_LENGTH_TWENTY}
         variant="standard"
-        defaultValue={contact['phone']['text']}
+        value={contact[0]['phone']['text'] || ''}
+        onChange={(e) => handlePhoneChange(e)}
       />
     </Box>
   );

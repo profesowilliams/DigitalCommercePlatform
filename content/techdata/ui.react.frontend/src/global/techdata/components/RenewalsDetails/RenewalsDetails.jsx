@@ -160,7 +160,7 @@ function RenewalsDetails(props) {
       })
   };
 
-  const updateDetails = async () => {
+  const updateDetails = async (endUserDetails) => {
     const source = {id: renewalsDetails?.source?.id};
     const customerPO = renewalsDetails.customerPO;
     const reseller = {
@@ -181,25 +181,7 @@ function RenewalsDetails(props) {
         countryCode: renewalsDetails?.reseller?.address?.countryCode?.text
       }
     };
-    const endUser = {
-      name: renewalsDetails?.endUser?.name.text,
-      contact: {
-        name: renewalsDetails?.endUser?.contact[0]?.name?.text,
-        email: renewalsDetails?.endUser?.contact[0]?.email?.text,
-        phone: renewalsDetails?.endUser?.contact[0]?.phone?.text
-      },
-      address: {
-        line1: renewalsDetails?.endUser?.address?.line1?.text,
-        line2: renewalsDetails?.endUser?.address?.line2?.text,
-        line3: renewalsDetails?.endUser?.address?.line3?.text,
-        city: renewalsDetails?.endUser?.address?.city?.text,
-        state: renewalsDetails?.endUser?.address?.state?.text,
-        postalCode: renewalsDetails?.endUser?.address?.postalCode?.text,
-        country: renewalsDetails?.endUser?.address?.country?.text,
-        county: renewalsDetails?.endUser?.address?.county?.text,
-        countryCode: renewalsDetails?.endUser?.address?.countryCode?.text
-      }
-    };    
+    const endUser = endUserDetails;    
     const items = renewalsDetails?.items.map((item) => {
       return {
         id: item.id,
@@ -251,6 +233,7 @@ function RenewalsDetails(props) {
         <section>
           <ConfigGrid
             data={renewalsDetails}
+            updateDetails={updateDetails}
             gridProps={{
               ...componentProp,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,

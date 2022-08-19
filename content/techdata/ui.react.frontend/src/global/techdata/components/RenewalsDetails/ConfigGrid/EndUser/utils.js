@@ -4,6 +4,7 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
   if (endUserResponseAsObj) {
     return {
       name: endUser.name.text,
+      nameUpper: endUser.nameUpper,
       contact: {
         name: contact.name.text,
         email: contact.email.text,
@@ -18,7 +19,7 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
         postalCode: address.postalCode.text,
         country: address.country,
         county: address.county,
-        countryCode: address.countryCode,
+        countryCode: address.countryCode.text,
       },
     };
   }

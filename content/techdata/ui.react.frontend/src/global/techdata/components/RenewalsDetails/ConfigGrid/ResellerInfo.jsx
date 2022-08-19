@@ -5,12 +5,12 @@ function ResellerInfo({ reseller, resellerLabels }) {
   const ResellerInfo = ({ reseller }) => {
     return (
       <div className="cmp-renewals-qp__reseller-info--address-group">
-        <p>
+        <div>
           <Info noColon>{reseller?.name}</Info>
           <Info label={resellerLabels.accountNoLabel} noColon>{reseller?.id}</Info>
           <Info label={resellerLabels.vendorAccountNoResLabel} noColon>{reseller?.vendorAccountNumber}</Info>
           <Info label={resellerLabels.previousPurchaseOrderNoEndLabel} noColon>{reseller?.previousResellerPO ?? 'N/A'}</Info>
-        </p>
+        </div>
       </div>
     );
   };

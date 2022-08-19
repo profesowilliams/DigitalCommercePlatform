@@ -16805,7 +16805,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           },
           endUser: {
             id: null,
-            isValid: true,
+            isValid: false,
             canEdit: true,
             name: {
               text: "Schneider Electric Pvt. Ltd.",
@@ -16813,7 +16813,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               isMandatory: true,
               isDisplay: true,
               canEdit: true,
-            },
+            } || "Schneider Electric Pvt. Ltd.",
             nameUpper: "SCHNEIDER ELECTRIC PVT. LTD.",
             contact: [
               {
@@ -16823,21 +16823,21 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                   isMandatory: true,
                   isDisplay: true,
                   canEdit: true,
-                },
+                } || "Schneider Electric Pvt. Ltd.",
                 email: {
                   text: "deepak_tinglootest@optum.com",
                   isValid: true,
                   isMandatory: true,
                   isDisplay: true,
                   canEdit: true,
-                },
+                } || "deepak_tinglootest@optum.com",
                 phone: {
                   text: "1234",
                   isValid: true,
                   isMandatory: false,
                   isDisplay: true,
                   canEdit: true,
-                },
+                } || "1234",
               },
             ],
             address: {
@@ -16869,7 +16869,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 isMandatory: true,
                 isDisplay: true,
                 canEdit: true,
-              },
+              } || "New Delhitest03",
               state: null,
               postalCode: {
                 text: "11006111",
@@ -16877,7 +16877,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 isMandatory: true,
                 isDisplay: true,
                 canEdit: true,
-              },
+              } || "11006111",
               country: null,
               county: null,
               countryCode: {
@@ -16886,7 +16886,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 isMandatory: true,
                 isDisplay: true,
                 canEdit: true,
-              },
+              } || "INT",
             },
           },
           shipTo: null,

@@ -2,8 +2,9 @@ import React from "react";
 import Info from "../../../common/quotes/DisplayItemInfo";
 
 export default function EndUserInfoReadOnly ({ endUserData, endUserType, productLines }) {
+  console.log('enduser read only data', endUserData);
   const address = endUserData.address;
-  const contact = (Array.isArray(endUserData.contact) ? endUserData.contact[0] : endUserData.contact);
+  const contact = endUserData.contact;
 
   return (
     <div className="cmp-renewals-qp__enduser-info--address-group">
