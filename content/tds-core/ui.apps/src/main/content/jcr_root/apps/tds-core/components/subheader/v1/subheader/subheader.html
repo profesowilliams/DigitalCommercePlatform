@@ -6,7 +6,7 @@
      data-cmp-is="tabs"
      data-cmp-data-layer="${tabs.data.json}">
 
-    <div class="cmp-sub-header--sub-nav new-sub" style="background-color: ${properties.backgroundColor @ context='styleToken'}">
+    <div class="cmp-sub-header--sub-nav new-sub" style="background-color: ${properties.backgroundColor @ context='styleToken'}" data-current-page-path="${currentPage.path}">
           <div class="cmp-sub-header--sub-nav__title">
                <div class="cmp-sub-header--sub-nav__image" data-sly-test.logo="${properties.subheaderLogo}">
                    <img src="${logo}"/>

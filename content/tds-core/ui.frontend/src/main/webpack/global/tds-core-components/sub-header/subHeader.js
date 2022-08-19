@@ -44,4 +44,32 @@ export const subHeader = () => {
             toolsTab.classList.add('cmp-tabs__tabpanel--custom-active');
         }
     }
+
+
+    function removeActiveClass(tabsArray) {
+        for(const tab of tabsArray) {
+            tab.classList.remove("cmp-tabs__tab--active");
+        }
+    }
+    
+    const subheaderNav = document.querySelector(".cmp-sub-header--sub-nav.new-sub");
+
+    if (subheaderNav) {
+        const subheaderTabs = subheaderNav.getElementsByClassName("cmp-tabs__tablist");
+
+        const tabs =subheaderTabs[0]?.getElementsByClassName("cmp-tabs__tab") || [];
+    
+        const currentPagePath = subheaderNav.getAttribute("data-current-page-path") + ".html";
+    
+        for(const tab of tabs) {
+            let anchor = tab.getElementsByTagName("a")[0];
+            if(anchor) {
+                let href = anchor.getAttribute("href");
+                if(currentPagePath === href) {
+                    removeActiveClass(tabs);
+                    tab.classList.add("cmp-tabs__tab--active");
+                }
+            }
+        }
+    }
 }
