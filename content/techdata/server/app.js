@@ -16930,7 +16930,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               status: null,
               statusNotes: null,
               updated: "0001-01-01T00:00:00",
-              unitPrice: 0.0,
+              unitPrice: 14298.65,
               unitCost: 0.0,
               totalPrice: 0.0,
               unitListPrice: 0.0,

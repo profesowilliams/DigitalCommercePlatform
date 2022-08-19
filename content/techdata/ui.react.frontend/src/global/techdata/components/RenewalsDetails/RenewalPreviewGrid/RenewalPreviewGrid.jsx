@@ -10,8 +10,8 @@ import { thousandSeparator } from "../../../helpers/formatting";
 import QuantityColumn from "../Columns/QuantityColumn.jsx";
 import buildColumnDefinitions from "./buildColumnDefinitions";
 import UnitPriceColumn from "../Columns/UnitPriceColumn";
-import { isHouseAccount } from "../../../../../utils/user-utils";
 import TransactionNumber from "../../RenewalsGrid/Orders/TransactionNumber";
+import { suppressNavigation } from "./supressAgGridKeyboardEvents";
 
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
@@ -150,8 +150,9 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         "{currency-code}",
         data?.currency || ""
       ),
+      suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
-        const isEditing = isEditingRef.current && isHouseAccount && data?.canEditResellerPrice;
+        const isEditing = isEditingRef.current && data?.canEditResellerPrice;
         return UnitPriceColumn({...props, isEditing})
       },
 

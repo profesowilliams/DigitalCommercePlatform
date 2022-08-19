@@ -106,9 +106,15 @@
     }    
   }
 
-  .price{
+  .cmp-unitprice{
     width: 100%;
     margin: 0 auto;
+  }
+  .cmp-unitprice-edit{
+    #formatted-uniteprice-input{
+      text-align: right;
+      color: #555555;
+    }
   }
   &__prod-details {
     cursor: pointer;
