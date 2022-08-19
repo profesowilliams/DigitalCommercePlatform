@@ -4,5 +4,5 @@
     cq:styleElements="[div,section,article,main,aside,header,footer]"
     jcr:primaryType="cq:Component"
     jcr:title="Container"
-    sling:resourceSuperType="core/wcm/components/container/v1/container"
+    sling:resourceSuperType="tds-core/components/container/v1/container"
     componentGroup="Tech Data - Content"/>
