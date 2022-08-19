@@ -3,5 +3,5 @@
     cq:isContainer="true"
     jcr:primaryType="cq:Component"
     jcr:title="Alert Carousel"
-    sling:resourceSuperType="core/wcm/components/carousel/v1/carousel"
+    sling:resourceSuperType="tds-core/components/carousel/v1/carousel"
     componentGroup="Tech Data - Content"/>
