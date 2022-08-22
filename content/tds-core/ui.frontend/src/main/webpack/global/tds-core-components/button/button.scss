@@ -3,28 +3,31 @@
 }
 
 .button {
-    >.cmp-button {
-        border: none;
-    }
+	>.cmp-button {
+		border: none;
+	}
 }
 
 @include aem-only {
-    button {
-        border: none;
-    }
+	button {
+		border: none;
+	}
 }
 
 .cmp-button--background-enabled {
 	& .cmp-button {
 		border-radius: rem(3px);
 		background-color: get-color(header-links-blue);
+
 		&:hover {
 			background-color: get-color(td-lightblue);
 		}
 	}
+
 	.cmp-button__icon {
 		color: get-color(brand-white);
 	}
+
 	& .cmp-button__text {
 		color: get-color(brand-white);
 	}
@@ -34,10 +37,12 @@
 	background-color: transparent !important;
 	cursor: pointer !important;
 }
+
 .cmp-button__text--disabled {
 	& .cmp-button__text {
 		display: none;
 	}
+
 	& .cmp-button__icon {
 		display: unset;
 	}
@@ -47,6 +52,7 @@
 	& .cmp-button__text {
 		display: unset;
 	}
+
 	& .cmp-button__icon {
 		display: none;
 	}
@@ -93,6 +99,7 @@
 		width: rem(240px);
 		height: rem(40px);
 	}
+
 	&__outlined {
 		color: get-color(td-dark-blue);
 		background-color: get-color(brand-white);
@@ -100,6 +107,7 @@
 		height: rem(40px);
 		box-shadow: inset 0 0 0 rem(2px) get-color(td-dark-blue);
 	}
+
 	&__region-select {
 		color: get-color(brand-white);
 		background-color: get-color(td-primary-blue);
@@ -119,9 +127,11 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+
 	&:last-of-type {
 		margin-bottom: 0;
 	}
+
 	input {
 		position: absolute;
 		opacity: 0;
@@ -130,11 +140,13 @@
 		height: rem(24px);
 		left: rem(-2px);
 		top: rem(-2px);
+
 		&:checked {
 			~ {
 				.checkmark {
 					background-color: get-color(td-primary-blue);
 					box-shadow: inset 0 0 0 0;
+
 					&:after {
 						display: block;
 					}
@@ -142,6 +154,7 @@
 			}
 		}
 	}
+
 	.checkmark {
 		position: absolute;
 		top: 0;
@@ -151,8 +164,9 @@
 		background-color: get-color(brand-white);
 		border-radius: 50%;
 		box-shadow: inset 0 0 0 rem(2px) get-color(text-light-charcoal);
+
 		&:after {
-			content: "";
+			content: '';
 			position: absolute;
 			display: none;
 			top: rem(3.6px);
@@ -170,6 +184,7 @@
 }
 
 .cmp-button__text {
+
 	&--dark-blue,
 	&--light-blue,
 	&--white,
@@ -183,7 +198,7 @@
 			.cmp-button__text::after {
 				@include font-awesome-custom-icon;
 
-				content: "\f054";
+				content: '\f054';
 				padding-left: rem(10px);
 			}
 		}
@@ -194,16 +209,19 @@
 			color: get-color(td-dark-blue);
 		}
 	}
+
 	&--light-blue {
 		.cmp-button__text {
 			color: get-color(brand-light-blue);
 		}
 	}
+
 	&--white {
 		.cmp-button__text {
 			color: get-color(brand-white);
 		}
 	}
+
 	&--grey {
 		.cmp-button__text {
 			color: get-color(brand-text-gray);
@@ -237,7 +255,7 @@
 	bottom: 0;
 	right: 0;
 	z-index: 9999;
-	transition: all .25s;
+	transition: all 0.25s;
 
 	cursor: pointer;
 	align-items: center;
@@ -250,7 +268,7 @@
 		color: get-color(brand-blue) !important;
 		text-decoration: none;
 		display: contents;
-		transition: all .25s;
+		transition: all 0.25s;
 
 		&:before {
 			content: auto;
@@ -259,5 +277,137 @@
 
 	&:hover {
 		box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
+	}
+}
+
+
+.cmp-tds-button {
+	.cmp-button {
+		font-size: rem(16px);
+		padding: rem(16px) rem(57.5px);
+		gap: rem(10px);
+		border: 0;
+		font-family: $font-family-everett;
+		transition: all 0.24s;
+		text-decoration: none;
+
+		background-color: map-get($color-palette, 'teal');
+		color: map-get($color-palette, 'white');
+
+		&:hover {
+			background-color: map-get($color-palette, 'aqua') !important;
+			color: map-get($color-palette, 'charcoal') !important;
+		}
+
+		&:disabled {
+			background-color: get-color(cool-gray-1) !important;
+			color: map-get($color-palette, 'charcoal') !important;
+		}
+	}
+
+	// TDS Primary background colors
+	&.btn-teal {
+		background-color: map-get($color-palette, 'teal');
+	}
+
+	&.btn-deep-teal {
+		background-color: get-color(deep-teal);
+	}
+
+	&.btn-aqua {
+		background-color: map-get($color-palette, 'aqua');
+	}
+
+	&.btn-chartreuse {
+		.cmp-button {
+			background-color: map-get($color-palette, 'chartreuse');
+		}
+	}
+
+	&.btn-cool-gray-8 {
+		background-color: get-color(cool-gray-8);
+	}
+
+	&.btn-cool-gray-10 {
+		background-color: get-color(cool-gray-10);
+	}
+
+	&.btn-green {
+		background-color: map-get($color-palette, 'green');
+	}
+
+	&.btn-black {
+		background-color: map-get($color-palette, 'black');
+	}
+
+	&.btn-white {
+		background-color: map-get($color-palette, 'white');
+	}
+
+	//TDS Secondary background colors
+	&.btn-steel-blue {
+		background-color: get-color(steel-blue);
+	}
+
+	&.btn-navy {
+		background-color: map-get($color-palette, 'navy');
+	}
+
+	&.btn-copper {
+		background-color: map-get($color-palette, 'copper');
+	}
+
+	&.btn-stone {
+		background-color: get-color(stone);
+	}
+
+	&.btn-cool-gray-1 {
+		background-color: get-color(cool-gray-1);
+	}
+
+	//TDS Digital background colors
+	&.btn-cherry {
+		background-color: get-color(cherry);
+	}
+
+	&.btn-amber {
+		background-color: get-color(amber);
+	}
+
+	&.btn-forest {
+		background-color: map-get($color-palette, 'forest');
+	}
+
+	&.btn-charcoal {
+		background-color: map-get($color-palette, 'charcoal');
+	}
+
+	&.btn-cool-gray-9 {
+		background-color: get-color(cool-gray-9);
+	}
+
+	&.btn-cobalt {
+		background-color: get-color(cobalt);
+	}
+
+	&.btn-neutral-gray-1 {
+		background-color: get-color(neutral-gray-1);
+	}
+
+	&.btn-neutral-gray-2 {
+		background-color: get-color(neutral-gray-2);
+	}
+
+	//Legacy background colors
+	&.btn-dark-blue {
+		background-color: get-color(dark-blue);
+	}
+
+	&.btn-sky-blue {
+		background-color: get-color(sky-blue);
+	}
+
+	&.btn-legacy-gray {
+		background-color: get-color(legacy-gray);
 	}
 }

@@ -1050,6 +1050,14 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "tds-button",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/buttons/tds-button.html"
+
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "jump-to-top",
                 template: path.resolve(
                     __dirname,
