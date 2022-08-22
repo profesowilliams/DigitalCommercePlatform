@@ -10,10 +10,26 @@ import Saving from '../../Saving';
 import getModifiedEndUserData from './utils';
 import isEmail from 'validator/es/lib/isEmail';
 import produce from 'immer';
+import { Snackbar } from '@mui/material';
+import {
+  CheckmarkCircle,
+  CautionIcon,
+  CloseIcon,
+} from '../../../../../../fluentIcons/FluentIcons';
+import { teal } from '@mui/material/colors';
+import IconButton from '@mui/material/IconButton';
 
-function EndUserInfo({ endUser, endUserType, productLines, updateDetails }) {
+function EndUserInfo({
+  endUser,
+  endUserType,
+  productLines,
+  updateDetails,
+  getTransactionStatus,
+}) {
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(false);
+  const [isToastSuccess, setIsToastSucess] = useState(true);
   const { canEdit, isValid } = endUser;
 
   const endUserResponseAsObj = isObject(endUser.name);
@@ -103,18 +119,50 @@ function EndUserInfo({ endUser, endUserType, productLines, updateDetails }) {
     setEditMode(false);
   };
 
+  const queryTransactionStatus = () => {
+    const frequency = 2000;
+    let n = 7;
+    let timer = setInterval(function () {
+      getTransactionStatus()
+        .then((isStatusActive) => {
+          if (isStatusActive) {
+            setIsToastOpen(true);
+            setSaving(false);
+            clearInterval(timer);
+            setEditMode(false);
+          }
+        })
+        .catch((getStatusError) => {
+          setIsToastSucess(false);
+          setIsToastOpen(true);
+          setSaving(false);
+          clearInterval(timer);
+          console.log(
+            'An unexpected error occurred getting transaction status: ',
+            getStatusError
+          );
+        });
+      n--;
+      if (n === 0) {
+        setSaving(false);
+        clearInterval(timer);
+        console.log(
+          `getStatus timer completed. It ran 7 times, once every ${
+            frequency / 1000
+          } seconds and still the status is not Active`
+        );
+      }
+    }, frequency);
+  };
+
   const handleIconSaveClick = () => {
     setSaving(true);
     updateDetails(endUserDetails)
-      .then((res) => {
-        console.log(res);
-      })
+      .then(queryTransactionStatus)
       .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
         setSaving(false);
         setEditMode(false);
+        console.log('An unexpected error occurred updating details: ', err);
       });
   };
 
@@ -144,6 +192,77 @@ function EndUserInfo({ endUser, endUserType, productLines, updateDetails }) {
     );
   };
 
+  const handleToastClose = () => {
+    setIsToastOpen(false);
+  };
+
+  const ToastSuccess = () => {
+    return (
+      <span>
+        <CheckmarkCircle
+          fill={teal[800]}
+          style={{ verticalAlign: 'bottom', marginRight: '16px' }}
+        />
+        Changes have been succesfully saved.
+      </span>
+    );
+  };
+
+  const ToastError = () => {
+    return (
+      <div>
+        <CautionIcon
+          fill="#E02020"
+          style={{ verticalAlign: 'bottom', marginRight: '16px' }}
+        />
+        Could not save changes. <br />
+        <br />
+        Please try again. If error persist please contact us at{' '}
+        <a href="mailto:test@test.com">test@test.com</a>.
+      </div>
+    );
+  };
+
+  const closeIconStyle = {
+    '&.MuiIconButton-root': {
+      position: 'absolute',
+      top: '14px',
+      right: '14px',
+    },
+  };
+
+  const action = (
+    <IconButton
+      sx={closeIconStyle}
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={handleToastClose}
+    >
+      <CloseIcon />
+    </IconButton>
+  );
+
+  const toastError = '#CD163F';
+  const toastSuccess = '#003031';
+
+  const toastStyle = {
+    '& .MuiSnackbarContent-root': {
+      minHeight: '62px',
+      minWidth: '437px',
+      boxShadow: '0px 0px 15px rgb(0 0 0 / 5%)',
+      borderRadius: '4px',
+      background: '#ffffff',
+      color: '#003031',
+      fontFamily: 'Arial',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: '16px',
+      borderLeft: `4px solid ${isToastSuccess ? toastSuccess : toastError}`,
+      padding: '14px 18px',
+    },
+  };
+
   return (
     <div
       className={`cmp-renewals-qp__enduser-info ${
@@ -156,6 +275,18 @@ function EndUserInfo({ endUser, endUserType, productLines, updateDetails }) {
       {showError && <MissingInfo>End user missing information</MissingInfo>}
       {showEditButton && <EditFlow />}
       {saving && <Saving customClass="saving__absolute" />}
+      <Snackbar
+        sx={toastStyle}
+        open={isToastOpen}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        autoHideDuration={isToastSuccess ? 6000 : null}
+        onClose={handleToastClose}
+        message={isToastSuccess ? <ToastSuccess /> : <ToastError />}
+        action={isToastSuccess ? null : action}
+      />
       {editMode ? (
         <EndUserEdit
           endUser={endUser}

@@ -234,6 +234,7 @@ function RenewalsDetails(props) {
           <ConfigGrid
             data={renewalsDetails}
             updateDetails={updateDetails}
+            getTransactionStatus={getTransactionStatus}
             gridProps={{
               ...componentProp,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,

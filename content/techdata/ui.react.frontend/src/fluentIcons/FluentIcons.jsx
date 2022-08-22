@@ -156,3 +156,19 @@ export function CautionIcon(props) {
     </svg>
   );
 }
+
+export function CloseIcon(props) {
+  return (
+    <svg
+      width={12}
+      height={12}
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="m.589.716.057-.07A.5.5 0 0 1 1.284.59l.07.057L6 5.293 10.646.646a.5.5 0 0 1 .708.708L6.707 6l4.647 4.646a.5.5 0 0 1 .057.638l-.057.07a.5.5 0 0 1-.638.057l-.07-.057L6 6.707l-4.646 4.647a.5.5 0 0 1-.708-.708L5.293 6 .646 1.354A.5.5 0 0 1 .59.716l.057-.07-.057.07Z"
+        fill="#212121"
+      />
+    </svg>
+  );
+}
