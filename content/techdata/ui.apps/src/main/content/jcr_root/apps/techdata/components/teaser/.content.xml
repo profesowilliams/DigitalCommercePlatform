@@ -3,6 +3,6 @@
     xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:Component"
     jcr:title="Teaser"
-    sling:resourceSuperType="core/wcm/components/teaser/v1/teaser"
+    sling:resourceSuperType="tds-core/components/teaser/v1/teaser"
     componentGroup="Tech Data - Content"
-    imageDelegate="techdata/components/image"/>
+    imageDelegate="tds-core/components/image/v1/image"/>
