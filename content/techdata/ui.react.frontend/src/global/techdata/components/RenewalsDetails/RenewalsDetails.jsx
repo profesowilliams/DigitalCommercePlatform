@@ -17,6 +17,7 @@ import Saving from "./Saving";
 import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
 import Toaster from '../Widgets/Toaster';
+import { getStatusLoopUntilStatusIsActive } from '../RenewalsGrid/Orders/orderingRequests';
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -125,41 +126,37 @@ function RenewalsDetails(props) {
     setIsToasterOpen(false);
   }
 
-  const handleIconSaveClick = () => {
+  const handleIconSaveClick = async () => {
     setSaving(true);
-    updateDetails()
-      .then(() => {
-        const frequency = 2000;
-        let n = 7,
-        timer = setInterval(function() {
-          getTransactionStatus()
-          .then((isStatusActive) => {
-            if(isStatusActive) {    
-              setIsToasterOpen(true);   
-              setSaving(false);                     
-              setToggleEdit(true);
-              clearInterval(timer);
-            } else if (n == 0) {        
-              setSaving(false);    
-              clearInterval(timer);      
-              console.log(`getStatus timer completed. It ran 7 times, once every ${frequency/1000} seconds and still the status is not Active`);       
-            }   
-          })
-          .catch((getStatusError) => {   
-            setSaving(false);
-            clearInterval(timer);  
-            console.log('An unexpected error occurred getting transaction status: ', getStatusError);    
-          })
-          n--;
-        }, frequency);     
-      })
-      .catch((updateDetailsError) => {     
-        setSaving(false);      
-        console.log('An unexpected error occurred updating details: ', updateDetailsError);
-      })
-  };
+    const isSuccess = await updateDetails();
+    if(isSuccess) {    
+      setToggleEdit(true);      
+    }
+    setSaving(false);
+  }
 
   const updateDetails = async (endUserDetails) => {
+    try {
+      const updated = await updateRenewalDetails(endUserDetails);
+      if(updated) {
+        const isActiveQuote = await getStatusLoopUntilStatusIsActive({
+          getStatusEndpoint: componentProp.getStatusEndpoint,
+          id: renewalsDetails.source.id, 
+          delay: 1000,
+          iterations: 8})
+        if(isActiveQuote) {            
+          setIsToasterOpen(true);  
+          return true;        
+        }
+      }
+      return false;
+    } catch (ex) {
+      console.log('An unexpected error occurred', ex); 
+    }
+  }
+
+  // TODO: reseller component will need to pass its changes also
+  const updateRenewalDetails = async (endUserDetails) => {
     const source = {id: renewalsDetails?.source?.id};
     const customerPO = renewalsDetails.customerPO;
     const reseller = {
@@ -180,7 +177,25 @@ function RenewalsDetails(props) {
         countryCode: renewalsDetails?.reseller?.address?.countryCode?.text
       }
     };
-    const endUser = endUserDetails;    
+    const endUser = endUserDetails || {
+      name: renewalsDetails?.endUser?.name.text,
+      contact: {
+        name: renewalsDetails?.endUser?.contact[0]?.name?.text,
+        email: renewalsDetails?.endUser?.contact[0]?.email?.text,
+        phone: renewalsDetails?.endUser?.contact[0]?.phone?.text
+      },
+      address: {
+        line1: renewalsDetails?.endUser?.address?.line1?.text,
+        line2: renewalsDetails?.endUser?.address?.line2?.text,
+        line3: renewalsDetails?.endUser?.address?.line3?.text,
+        city: renewalsDetails?.endUser?.address?.city?.text,
+        state: renewalsDetails?.endUser?.address?.state?.text,
+        postalCode: renewalsDetails?.endUser?.address?.postalCode?.text,
+        country: renewalsDetails?.endUser?.address?.country?.text,
+        county: renewalsDetails?.endUser?.address?.county?.text,
+        countryCode: renewalsDetails?.endUser?.address?.countryCode?.text
+      }
+    };    
     const items = renewalsDetails?.items.map((item) => {
       return {
         id: item.id,
@@ -199,14 +214,7 @@ function RenewalsDetails(props) {
 
     if(updateError?.isError) throw new Error(`error: ${updateError?.code} ${updateError?.messages[0] || ''}`); 
 
-    return updateresponse;
-  }
-
-  const getTransactionStatus = async () => {
-    const getStatusResponse = await get(`${componentProp.getStatusEndpoint}?id=${renewalsDetails.source.id}`);             
-    const statusError = getStatusResponse?.data?.error;
-    if(statusError?.isError) throw new Error(`error: ${statusError?.code} ${statusError?.messages[0] || ''}`);    
-    return getStatusResponse.data?.content?.status === 'Active';
+    return true;
   }
 
   const EditFlow = () => {
@@ -233,7 +241,6 @@ function RenewalsDetails(props) {
           <ConfigGrid
             data={renewalsDetails}
             updateDetails={updateDetails}
-            getTransactionStatus={getTransactionStatus}
             gridProps={{
               ...componentProp,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,

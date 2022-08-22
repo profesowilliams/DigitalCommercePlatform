@@ -24,7 +24,6 @@ function EndUserInfo({
   endUserType,
   productLines,
   updateDetails,
-  getTransactionStatus,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -119,51 +118,11 @@ function EndUserInfo({
     setEditMode(false);
   };
 
-  const queryTransactionStatus = () => {
-    const frequency = 2000;
-    let n = 7;
-    let timer = setInterval(function () {
-      getTransactionStatus()
-        .then((isStatusActive) => {
-          if (isStatusActive) {
-            setIsToastOpen(true);
-            setSaving(false);
-            clearInterval(timer);
-            setEditMode(false);
-          }
-        })
-        .catch((getStatusError) => {
-          setIsToastSucess(false);
-          setIsToastOpen(true);
-          setSaving(false);
-          clearInterval(timer);
-          console.log(
-            'An unexpected error occurred getting transaction status: ',
-            getStatusError
-          );
-        });
-      n--;
-      if (n === 0) {
-        setSaving(false);
-        clearInterval(timer);
-        console.log(
-          `getStatus timer completed. It ran 7 times, once every ${
-            frequency / 1000
-          } seconds and still the status is not Active`
-        );
-      }
-    }, frequency);
-  };
-
-  const handleIconSaveClick = () => {
+  const handleIconSaveClick = async () => {
     setSaving(true);
-    updateDetails(endUserDetails)
-      .then(queryTransactionStatus)
-      .catch((err) => {
-        setSaving(false);
-        setEditMode(false);
-        console.log('An unexpected error occurred updating details: ', err);
-      });
+    await updateDetails(endUserDetails);
+    setSaving(false);
+    setEditMode(false);
   };
 
   useEffect(() => {

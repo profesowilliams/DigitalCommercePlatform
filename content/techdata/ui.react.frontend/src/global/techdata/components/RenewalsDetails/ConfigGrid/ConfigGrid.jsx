@@ -72,7 +72,7 @@ function GridHeader({ gridProps, data }) {
   );
 }
 
-function ConfigGrid({ data, gridProps, updateDetails, getTransactionStatus }) {
+function ConfigGrid({ data, gridProps, updateDetails }) {
   const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo } = data;
   const { quotePreview } = gridProps;
   Object.keys(quotePreview).forEach(key => {
@@ -119,7 +119,6 @@ function ConfigGrid({ data, gridProps, updateDetails, getTransactionStatus }) {
             vendorAccountNumber: reseller?.vendorAccountNumber,
           }}
           updateDetails={updateDetails}
-          getTransactionStatus={getTransactionStatus}
         />
         <AgreementInfo
           source={source}
