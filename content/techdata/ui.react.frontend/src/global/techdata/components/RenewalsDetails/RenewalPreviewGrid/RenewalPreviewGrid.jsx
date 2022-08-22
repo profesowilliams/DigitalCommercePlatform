@@ -56,6 +56,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     orderRenewalEndpoint: compProps.orderRenewalEndpoint
   };
   const [subtotal, setSubtotal] = useState(null);
+  const [orderButtonLabel, setOrderButtonLabel] = useState(gridProps?.orderButtonLabel);
   const gridData = data.items ?? [];
   const gridConfig = {
     ...gridProps,
@@ -84,6 +85,11 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         force: true,
       });
     }
+    setOrderButtonLabel(
+      isEditing
+        ? gridProps?.saveAndOrderButtonLabel
+        : gridProps?.orderButtonLabel
+    );
   }, [isEditing])
 
   useImperativeHandle(ref, () => ({
@@ -273,12 +279,12 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         <div className="place-cmp-order-dialog-container">
         <p className="cmp-place-order-actions">
             <Button
-              disabled={!data.canPlaceOrder}
+              disabled={!data.canOrder}
               sx={{background: teal[800],"&:hover": { background: teal[600] }}}
               onClick={onOrderButtonClicked}
               variant="contained"           
             >
-              Order
+              {orderButtonLabel}
             </Button>
           </p>
         </div>

@@ -100,8 +100,8 @@
 											<percentOffListPrice
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
-                                                fieldDescription="Enter Percentage off List price Label"
-                                                fieldLabel="Enter 1 or 2 lines for Percent off list price Label"
+                                                fieldDescription="Enter 1 or 2 lines for Percent off list price Label"
+                                                fieldLabel="Percent off List price (USD) Label"
                                                 name="./percentOffListPrice"
 												rows="2"
                                                 required="{Boolean}true"/>
@@ -680,6 +680,18 @@
                                                 fieldDescription="Description for a successful edit of record details"
                                                 fieldLabel="On Success Edit"
                                                 name="./successUpdate"/>
+											<orderButtonLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Label for the Order button"
+                                                fieldLabel="Label For Order Button"
+                                                name="./orderButtonLabel"/>
+											<saveAndOrderButtonLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Label for the Save and order button"
+                                                fieldLabel="Label For Save and Order Button"
+                                                name="./saveAndOrderButtonLabel"/>
                                         </items>
                                     </column>
                                 </items>

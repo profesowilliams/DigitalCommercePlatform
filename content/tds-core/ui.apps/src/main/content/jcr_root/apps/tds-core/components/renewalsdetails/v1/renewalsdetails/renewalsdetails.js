@@ -255,6 +255,12 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["successUpdate"]) {
         quoteEditing["successUpdate"] = properties["successUpdate"];
     }
+    if (properties && properties["orderButtonLabel"]) {
+        quoteEditing["orderButtonLabel"] = properties["orderButtonLabel"];
+    }
+    if (properties && properties["saveAndOrderButtonLabel"]) {
+        quoteEditing["saveAndOrderButtonLabel"] = properties["saveAndOrderButtonLabel"];
+    }
 
     if (agreementInfo != null) {
         quotePreview["agreementInfo"] = agreementInfo;

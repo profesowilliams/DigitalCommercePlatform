@@ -134,16 +134,16 @@ function RenewalsDetails(props) {
         timer = setInterval(function() {
           getTransactionStatus()
           .then((isStatusActive) => {
-            if(isStatusActive) {       
-              setSaving(false);    
-              setIsToasterOpen(true);
+            if(isStatusActive) {    
+              setIsToasterOpen(true);   
+              setSaving(false);                     
+              setToggleEdit(true);
               clearInterval(timer);
             } else if (n == 0) {        
               setSaving(false);    
               clearInterval(timer);      
               console.log(`getStatus timer completed. It ran 7 times, once every ${frequency/1000} seconds and still the status is not Active`);       
             }   
-            setToggleEdit(true);
           })
           .catch((getStatusError) => {   
             setSaving(false);
@@ -154,8 +154,7 @@ function RenewalsDetails(props) {
         }, frequency);     
       })
       .catch((updateDetailsError) => {     
-        setSaving(false);        
-        setToggleEdit(true);
+        setSaving(false);      
         console.log('An unexpected error occurred updating details: ', updateDetailsError);
       })
   };
@@ -251,6 +250,7 @@ function RenewalsDetails(props) {
             compProps={componentProp}
             gridProps={{
               ...componentProp.productLines,
+              ...componentProp.quoteEditing,
               excelFileUrl: componentProp?.exportXLSRenewalsEndpoint,
             }}
             isEditing={!toggleEdit}
