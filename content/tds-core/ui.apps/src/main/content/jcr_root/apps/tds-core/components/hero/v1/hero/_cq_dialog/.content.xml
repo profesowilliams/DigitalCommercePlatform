@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
     jcr:primaryType="nt:unstructured"
-    jcr:title="Teaser"
+    jcr:title="Hero"
     sling:resourceType="cq/gui/components/authoring/dialog"
     extraClientlibs="[core.wcm.components.teaser.v1.editor,tds.authoring.components.editor.colorswatches]"
     helpPath="https://www.adobe.com/go/aem_cmp_teaser_v1"
@@ -20,6 +20,35 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         path="tds-core/components/authoring/dialog/text-enhancer-configuration/container"/>
+                    <overlayColorOpacity
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Overlay Color and Opacity"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <column
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <color
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                        fieldDescription="Color"
+                                        fieldLabel="Color"
+                                        name="./color"
+                                        showDefaultColors="{Boolean}false"
+                                        showProperties="{Boolean}true"
+                                        showSwatches="{Boolean}true"/>
+                                    <opacity
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        fieldDescription="Opacity"
+                                        fieldLabel="Opacity"
+                                        name="./opacity"/>
+                                </items>
+                            </column>
+                        </items>
+                    </overlayColorOpacity>
                 </items>
             </tabs>
         </items>

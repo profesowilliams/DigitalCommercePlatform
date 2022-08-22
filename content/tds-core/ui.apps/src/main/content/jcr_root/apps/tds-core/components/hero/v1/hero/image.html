@@ -1,0 +1,22 @@
+<sly data-sly-template.image="${@ teaser}">
+  <sly 
+    data-sly-use.svgModel="com.tdscore.core.models.ExtractSVGModel"
+    data-sly-test="${teaser.imageResource}">
+    <sly data-sly-test="${svgModel.isSvg}">
+      <div class="cmp-teaser__image" style="border: 2px solid purple">
+        <a class="cmp-image__link" href="${teaser.linkURL}"
+           data-cmp-clickable
+           data-category="${properties.analyticsCategory}"
+           data-region="${properties.analyticsRegion}"
+           data-title="${teaser.title}"
+           data-cmp-hook-image="link">
+          <div class="cmp-image__image" data-cmp-hook-image="image">
+            ${svgModel.getBinary @ context='unsafe'}
+          </div>
+        </a>
+      </div>
+    </sly>
+    <div  class="cmp-image__overlay" style="width: 100%; height: 100%; position: absolute; background-color: ${properties.color @ context='styleToken'}; opacity: ${properties.opacity @ context='styleToken'}"></div>
+    <div  class="cmp-teaser__image" data-sly-test="${!svgModel.isSvg}" data-sly-resource="${teaser.imageResource}"></div>
+  </sly>
+</sly>
