@@ -40,18 +40,18 @@
                     if (i.type.startsWith("file")) {
                         if (i.files.length > 0) {
                              var fileExtension = i.files[0].name;
-                            if(fileExtension.includes(".pdf")){
+                            if(fileExtension.toLowerCase().includes(".pdf")){
                                 newData.append(i.name, i.files[0], i.files[0].name);
-                                    if(!processFileValidations(i.files[0])) {
+                                if(!processFileValidations(i.files[0])) {
                                     invalidFileStatus = true;
                                     return;
                                 }
-                        }else {
-                                    document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
-                                    validateFileOnSubmit();
-                                    return;
+                            }else {
+                                document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
+                                invalidFileStatus = true;
+                                validateFileOnSubmit();
+                                return;
                             }
-
                         }
 
                     } else if (i.type.startsWith("radio") || i.type.startsWith("checkbox")) {
