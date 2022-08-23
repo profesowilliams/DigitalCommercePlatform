@@ -57,6 +57,7 @@ export default function EndUserEdit({
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
+        disabled={endUserDetails.name['canEdit'] === false}
         required
         id="end-user-name"
         label="End user name"
@@ -67,6 +68,7 @@ export default function EndUserEdit({
         {...handleValidation(endUser['name'])}
       />
       <CustomTextField
+        disabled={contactName['canEdit'] === false}
         required
         id="contact-name"
         label="Contact name"
@@ -77,6 +79,7 @@ export default function EndUserEdit({
         {...handleValidation(contactName)}
       />
       <CustomTextField
+        disabled={line1['canEdit'] === false}
         required
         id="address"
         label="Address 1"
@@ -87,6 +90,7 @@ export default function EndUserEdit({
         {...handleValidation(line1)}
       />
       <CustomTextField
+        disabled={city['canEdit'] === false}
         required
         id="city"
         label="City"
@@ -106,6 +110,7 @@ export default function EndUserEdit({
         onChange={(e) => handleCountryChange(e)}
       />
       <CustomTextField
+        disabled={postalCode['canEdit'] === false}
         required
         id="area-code"
         label="Area Code"
@@ -116,6 +121,7 @@ export default function EndUserEdit({
         {...handleValidation(postalCode)}
       />
       <CustomTextField
+        disabled={contact[0].email['canEdit'] === false}
         required
         id="email"
         label="Contact email"
@@ -127,6 +133,7 @@ export default function EndUserEdit({
         helperText={!isEmailValid ? INVALID_EMAIL_TEXT : null}
       />
       <CustomTextField
+        disabled={contact[0].phone['canEdit'] === false}
         id="phone"
         label="Contact phone number"
         inputProps={MAX_LENGTH_TWENTY}
