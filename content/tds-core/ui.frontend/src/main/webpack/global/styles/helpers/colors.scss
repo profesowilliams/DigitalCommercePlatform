@@ -370,6 +370,18 @@
     }
   }
 
+  &__chartreuse {
+    .cmp-tabs__tab {
+      &:hover {
+        @include tds-tabs-hover;
+        border-bottom: rem(2px) solid map-get($color-palette, "chartreuse") !important;
+      }
+      &--active { 
+        border-bottom: rem(2px) solid map-get($color-palette, "chartreuse") !important;
+      }
+    }
+  }
+
   &__green {
     .cmp-tabs__tab {
       &:hover {
