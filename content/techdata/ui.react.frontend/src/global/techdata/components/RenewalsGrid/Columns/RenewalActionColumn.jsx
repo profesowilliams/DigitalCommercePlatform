@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { mapRenewalForUpdateDashboard } from "../Orders/orderingRequests";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import TransactionNumber from "../Orders/TransactionNumber";
 import {
@@ -124,18 +125,7 @@ function _RenewalActionColumn({ eventProps }) {
 
   const fixQuoteDataUponRequest = data => {
     if (!data?.items) return data;
-    const mapped = {...data};
-    mapped.items = data.items.map(item => ({...item, product:{}}));
-    const resellerName = mapped?.reseller?.contact?.name; 
-    const endUserName = mapped?.endUser?.contact?.name; 
-    //temporarely fix to make update service work
-    if (!resellerName){
-      mapped.reseller.contact.name = "rs rs1";
-    }
-    if (!endUserName){
-      mapped.endUser.contact.name = "en en1";
-    }
-    return mapped;
+    return mapRenewalForUpdateDashboard(data);
   };
 
   return (

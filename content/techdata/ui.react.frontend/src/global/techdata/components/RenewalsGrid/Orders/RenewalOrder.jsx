@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { post } from "../../../../../utils/api";
 import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED } from "../../../../../utils/constants";
-import { getStatusLoopUntilStatusIsActive } from "./orderingRequests";
+import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDashboard } from "./orderingRequests";
 
 function RenewalOrder({
   children,
@@ -33,8 +33,8 @@ function RenewalOrder({
     try {
       const { source, reseller, endUser } = renewalData;
       const payload = { source, reseller, endUser, customerPO };
-      if (renewalData?.items) payload.items = renewalData.items;
-      const updateresponse = await post(updateRenewalOrderEndpoint, payload);
+      if (renewalData?.items) payload.items = renewalData.items;      
+      const updateresponse = await post(updateRenewalOrderEndpoint, payload);      
       if (updateresponse.status === 200) {
         const getStatusResponse = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint,

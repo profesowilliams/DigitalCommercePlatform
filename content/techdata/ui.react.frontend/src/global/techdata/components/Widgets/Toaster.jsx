@@ -35,10 +35,13 @@ function Toaster({
       >
         <div className={`cmp-toaster-content${!isSuccess ? '-error' : ''}`}>
           <div className="cmp-toaster-content__icon">
-          { isSuccess ?<CheckmarkCircle fill={teal[800]} /> :  <CautionIcon fill={red[900]} />}
+            {isSuccess ? <CheckmarkCircle fill={teal[800]} /> : <CautionIcon fill={red[900]} />}
           </div>
           <div className="cmp-toaster-content__message">
-            <p>{ isSuccess ? message?.successSubmission : message?.failedSubmission}</p>
+            <p>{isSuccess ? message?.successSubmission : (<>
+              <span className="cmp-toaster-content__error-title">Your order submission has failed.</span>
+              {message?.failedSubmission}
+            </>)}</p>
             {children}
           </div>
           {!autoClose && (

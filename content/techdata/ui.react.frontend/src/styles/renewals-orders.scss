@@ -61,10 +61,22 @@
         right: 2rem;
         width: 30rem;
         .cmp-toaster-content{
-            @include toasterContent;          
+            @include toasterContent;    
+            &__message{
+                p{
+                    margin: 0;
+                }
+            }      
+            &__error-title{
+                display: block;
+                margin-bottom: 1rem;
+            }
         }
         .cmp-toaster-content-error{
-            @include toasterContent($borderColor: rgb(181 0 0));          
-        }
-    }
+            @include toasterContent($borderColor: rgb(181 0 0));         
+            p {
+                margin-bottom: 0;
+            } 
+        }       
+    }  
 }

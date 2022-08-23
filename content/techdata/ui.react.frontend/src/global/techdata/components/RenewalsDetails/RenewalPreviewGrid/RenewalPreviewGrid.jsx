@@ -12,6 +12,7 @@ import buildColumnDefinitions from "./buildColumnDefinitions";
 import UnitPriceColumn from "../Columns/UnitPriceColumn";
 import TransactionNumber from "../../RenewalsGrid/Orders/TransactionNumber";
 import { suppressNavigation } from "./supressAgGridKeyboardEvents";
+import { mapRenewalForUpdateDetails } from "../../RenewalsGrid/Orders/orderingRequests";
 
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
@@ -209,63 +210,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     setIsPODialogOpen(false);
   }
 
-  const fixQuoteDataUponRequest = data => {
-    const mapped = {...data};
-    mapped.items = data.items.map(item => {
-      const product = !item?.prouct || !item?.prouct.length ? {} : item.product[1];   
-      return {...item, product}
-    });
-    // TODO: Refactor this into renewalOrderUtils in a function
-    const endUser = {
-      name: mapped?.endUser?.name.text,
-      contact: {
-        name: mapped?.endUser?.contact[0]?.name?.text,
-        email: mapped?.endUser?.contact[0]?.email?.text,
-        phone: mapped?.endUser?.contact[0]?.phone?.text
-      },
-      address: {
-        line1: mapped?.endUser?.address?.line1?.text,
-        line2: mapped?.endUser?.address?.line2?.text,
-        line3: mapped?.endUser?.address?.line3?.text,
-        city: mapped?.endUser?.address?.city?.text,
-        state: mapped?.endUser?.address?.state?.text,
-        postalCode: mapped?.endUser?.address?.postalCode?.text,
-        country: mapped?.endUser?.address?.country?.text,
-        county: mapped?.endUser?.address?.county?.text,
-        countryCode: mapped?.endUser?.address?.countryCode?.text
-      }
-    }
-    const reseller = {
-      contact: {
-        name: mapped?.reseller?.contact[0]?.name?.text,
-        email: mapped?.reseller?.contact[0]?.email?.text,
-        phone: mapped?.reseller?.contact[0]?.phone?.text
-      },
-      address: {
-        line1: mapped?.reseller?.address?.line1?.text,
-        line2: mapped?.reseller?.address?.line2?.text,
-        line3: mapped?.reseller?.address?.line3?.text,
-        city: mapped?.reseller?.address?.city?.text,
-        state: mapped?.reseller?.address?.state?.text,
-        postalCode: mapped?.reseller?.address?.postalCode?.text,
-        country: mapped?.reseller?.address?.country?.text,
-        county: mapped?.reseller?.address?.county?.text,
-        countryCode: mapped?.reseller?.address?.countryCode?.text
-      }
-    }
-    mapped.endUser = endUser;
-    mapped.reseller = reseller;
-    const resellerName = mapped?.reseller?.contact?.name; 
-    const endUserName = mapped?.endUser?.contact?.name; 
-    //temporarely fix to make update service work
-    if (!resellerName){
-      mapped.reseller.contact.name = "rs rs1";
-    }
-    if (!endUserName){
-      mapped.endUser.contact.name = "en en1";
-    }
-    return mapped;
-  };
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
       <section>
@@ -305,7 +249,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         orderEndpoints={orderEndpoints}
         closeOnBackdropClick={false}
         ToasterDataVerification={({data}) => data ? TransactionNumber(data) : null}
-        renewalData={fixQuoteDataUponRequest(data)} />
+        renewalData={mapRenewalForUpdateDetails(data)} />
     </div>
   );
 }

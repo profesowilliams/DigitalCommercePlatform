@@ -291,7 +291,7 @@ function RenewalsDetails(props) {
         onClose={closeToaster}
         isSuccess={true}
         message={{successSubmission: componentProp?.quoteEditing?.successUpdate}}
-      ></Toaster>      
+      />      
       <CancelDialog
         isDialogOpen={openCancelDialog}
         onClose={closeCancelDialog}
