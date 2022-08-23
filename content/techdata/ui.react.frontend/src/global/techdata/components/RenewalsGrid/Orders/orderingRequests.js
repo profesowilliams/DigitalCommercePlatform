@@ -29,6 +29,7 @@ const extractRenewalData = (quote) => {
   const { contact, address } = quote;
   const { name, firstName, emailAddress, phoneNumber } = contact;
   const { city, country, county, countryCode, postalCode, line1, line2, line3, state } = address;
+  const {address1, address2, address3} = address;
   return {
     contact: {
       name: name || firstName,
@@ -36,9 +37,9 @@ const extractRenewalData = (quote) => {
       phone: phoneNumber
     },
     address: {
-      line1,
-      line2,
-      line3,
+      line1 : line1 || address1,
+      line2 : line2 || address2,
+      line3: line3 || address3,
       city,
       state,
       country,
