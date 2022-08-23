@@ -17,7 +17,7 @@ import Saving from "./Saving";
 import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
 import Toaster from '../Widgets/Toaster';
-import { getStatusLoopUntilStatusIsActive } from '../RenewalsGrid/Orders/orderingRequests';
+import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -142,11 +142,11 @@ function RenewalsDetails(props) {
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: componentProp.getStatusEndpoint,
           id: renewalsDetails.source.id, 
-          delay: 1000,
-          iterations: 8})
+          delay: 2000,
+          iterations: 7})
         if(isActiveQuote) {            
           setIsToasterOpen(true);  
-          return true;        
+          return true;          
         }
       }
       return false;
@@ -157,63 +157,11 @@ function RenewalsDetails(props) {
 
   // TODO: reseller component will need to pass its changes also
   const updateRenewalDetails = async (endUserDetails) => {
-    const source = {id: renewalsDetails?.source?.id};
-    const customerPO = renewalsDetails.customerPO;
-    const reseller = {
-      contact: {
-        name: renewalsDetails?.reseller?.contact[0]?.name?.text,
-        email: renewalsDetails?.reseller?.contact[0]?.email?.text,
-        phone: renewalsDetails?.reseller?.contact[0]?.phone?.text
-      },
-      address: {
-        line1: renewalsDetails?.reseller?.address?.line1?.text,
-        line2: renewalsDetails?.reseller?.address?.line2?.text,
-        line3: renewalsDetails?.reseller?.address?.line3?.text,
-        city: renewalsDetails?.reseller?.address?.city?.text,
-        state: renewalsDetails?.reseller?.address?.state?.text,
-        postalCode: renewalsDetails?.reseller?.address?.postalCode?.text,
-        country: renewalsDetails?.reseller?.address?.country?.text,
-        county: renewalsDetails?.reseller?.address?.county?.text,
-        countryCode: renewalsDetails?.reseller?.address?.countryCode?.text
-      }
-    };
-    const endUser = endUserDetails || {
-      name: renewalsDetails?.endUser?.name.text,
-      contact: {
-        name: renewalsDetails?.endUser?.contact[0]?.name?.text,
-        email: renewalsDetails?.endUser?.contact[0]?.email?.text,
-        phone: renewalsDetails?.endUser?.contact[0]?.phone?.text
-      },
-      address: {
-        line1: renewalsDetails?.endUser?.address?.line1?.text,
-        line2: renewalsDetails?.endUser?.address?.line2?.text,
-        line3: renewalsDetails?.endUser?.address?.line3?.text,
-        city: renewalsDetails?.endUser?.address?.city?.text,
-        state: renewalsDetails?.endUser?.address?.state?.text,
-        postalCode: renewalsDetails?.endUser?.address?.postalCode?.text,
-        country: renewalsDetails?.endUser?.address?.country?.text,
-        county: renewalsDetails?.endUser?.address?.county?.text,
-        countryCode: renewalsDetails?.endUser?.address?.countryCode?.text
-      }
-    };    
-    const items = renewalsDetails?.items.map((item) => {
-      return {
-        id: item.id,
-        product: {
-          type: item?.product[0]?.type,
-          id: item?.product[0].id
-        },
-        quantity: item.quantity,
-        unitPrice: item.unitPrice
-      }
-    });
-
-    const payload = { source, customerPO, reseller, endUser, items };    
+    renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
+    const payload = mapRenewalForUpdateDetails(renewalsDetails);
     const updateresponse = await post(componentProp.updateRenewalOrderEndpoint, payload);           
     const updateError = updateresponse?.data?.error;
-
     if(updateError?.isError) throw new Error(`error: ${updateError?.code} ${updateError?.messages[0] || ''}`); 
-
     return true;
   }
 
