@@ -70,6 +70,9 @@ $bg--marketing-card:#F7F7F7;
 }
 
 .cmp-renewals-grid {
+  .page-info.hidden{
+    display: block;
+  }
   .ag-theme-alpine .ag-root-wrapper {
     border: none;
   }

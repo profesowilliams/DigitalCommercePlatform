@@ -1,4 +1,7 @@
 .cmp-renewals-details {
+    .page-info.hidden{
+        display: block;
+      }
     .cmp-quantity-column {
         display: grid;
         grid-template-columns: 19px minmax(34px, 1fr);

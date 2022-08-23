@@ -32,7 +32,12 @@ function UnitPriceColumn(props) {
   const { value, setValue, isEditing, rowIndex, data } = props;
   const [price, setPrice] = useState(value);
 
-  const handleChange = (event) => setPrice(event.target.value);
+  const handleChange = (event) => {
+    const value = event.target.value;
+    if (value > 999999999) return; 
+    if (value < 1) return setPrice(1);
+    setPrice(value);
+  };
 
   const textfieldsStyles = {
     textAlign: "right",
@@ -58,7 +63,7 @@ function UnitPriceColumn(props) {
   const updateValue = (event) => {
     event.stopPropagation();
     if (isNaN(value)) return;
-    if (value < 0) return;
+    if (value < 1) return;
     try {
       setValue(price);
     } catch (err) {

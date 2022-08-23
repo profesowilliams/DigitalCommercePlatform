@@ -6,16 +6,14 @@ export const suppressNavigation = (params) => {
     const KEY_LEFT = 'ArrowLeft';
     const KEY_UP = 'ArrowUp';
     const KEY_RIGHT = 'ArrowRight';
-    const KEY_DOWN = 'ArrowDown';  
-    const editingKeys = [
+    const KEY_DOWN = 'ArrowDown';      
+    const keysToSuppress = [
       KEY_LEFT,
       KEY_RIGHT,
       KEY_UP,
       KEY_DOWN
-    ];    
-    if (!params.editing) {
-      keysToSuppress = keysToSuppress.concat(editingKeys);
-    }  
+    ]; 
+    const key = params.event.key;
     const suppress = keysToSuppress.some(function (suppressedKey) {
       return suppressedKey === key || key.toUpperCase() === suppressedKey;
     });
