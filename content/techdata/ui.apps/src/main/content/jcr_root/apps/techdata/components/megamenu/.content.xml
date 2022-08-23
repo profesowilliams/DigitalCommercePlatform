@@ -3,4 +3,5 @@
     cq:isContainer="true"
     jcr:primaryType="cq:Component"
     jcr:title="Mega Menu"
+    sling:resourceSuperType="tds-core/components/megamenu/v1/megamenu"
     componentGroup="Tech Data - Structure"/>

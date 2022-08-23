@@ -3,5 +3,5 @@
     cq:isContainer="true"
     jcr:primaryType="cq:Component"
     jcr:title="Tabs"
-    sling:resourceSuperType="core/wcm/components/tabs/v1/tabs"
+    sling:resourceSuperType="tds-core/components/tabs/v1/tabs"
     componentGroup="Tech Data - Content"/>
