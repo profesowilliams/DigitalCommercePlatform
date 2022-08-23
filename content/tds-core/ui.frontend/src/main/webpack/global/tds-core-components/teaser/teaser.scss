@@ -1,3 +1,5 @@
+$colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-get($color-palette,"chartreuse"), map-get($color-palette,"cherry");
+
 @mixin teaser-default {
     .cmp-teaser {
         position: relative;
@@ -658,27 +660,153 @@
 
 // TD SYNNEX Modern Card - No Image
 
-.teaser{
+.teaser {
     &.cmp-teaser {
         &-tds {
             &__card {          
+                padding: 10px 10px;
                 display: grid !important;
                 place-items: center;
 
                 .cmp-teaser {			
-                    padding: 0 10px 10px 10px;
                     width: 471px;
+                    display: block;
 
-                    .cmp-teaser__image {
+                    &__image {
                         display: none;
                     }
 
-                    .cmp-teaser__content {
-                        border-top: 5px solid #00234B;
+                    &__title {
+                        min-height: fit-content;
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: row;
+                        text-align: left;
+                        width: 100%;
+                        line-height: 50px;
+
+                        &-link {
+                            line-height: unset;
+                        }
+                    }
+
+                    &__content {
                         box-shadow: 0px 7px 12px 0px #888888;
-                        padding: 50px;
+                        padding: 10px;
                         margin: 15px 0px 0px 10px;
                         border-radius: 4px;
+                        align-items: left;
+                        display: block;
+                    }
+
+                    &__description {
+                        display: block;
+                        padding: 0;
+
+                        p {
+                            width: 100%;
+                            padding: 0;
+                        }
+                    }
+                }
+
+                &.dp-border-color {
+                    &__chartreuse {
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"chartreuse");
+                            }
+                        }
+                    }
+
+                    &__cherry {
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"cherry");
+                            }
+                        }
+                    }
+
+                    &__cobalt {
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"cobalt");
+                            }
+                        }
+                    }
+
+                    &__aqua{
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"aqua");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 991.98px) {
+    #teasers { //needs to be a class
+        div {
+            display: grid;
+
+            .teaser {
+                &.cmp-teaser {
+                    width: 100%;
+
+                    &-tds {
+                        &__card { 
+                            width: 100%;
+                            padding: 10px 10px;
+                            display: grid;
+                            place-items: center;
+                            width: fit-content;
+                            margin: 0;
+
+                            .cmp-teaser {			
+                                display: block;
+            
+                                &__image {
+                                    display: none;
+                                }
+            
+                                &__title {
+                                    min-height: fit-content;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    flex-direction: row;
+                                    text-align: left;
+                                    width: 100%;
+                                    line-height: 50px;
+            
+                                    &-link {
+                                        line-height: unset;
+                                    }
+                                }
+            
+                                &__content {
+                                    box-shadow: 0px 7px 12px 0px #888888;
+                                    padding: 10px;
+                                    margin: 15px 0px 0px 10px;
+                                    border-radius: 4px;
+                                    align-items: left;
+                                    display: block;
+                                }
+            
+                                &__description {
+                                    display: block;
+                                    padding: 0;
+            
+                                    p {
+                                        width: 100%;
+                                        padding: 0;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

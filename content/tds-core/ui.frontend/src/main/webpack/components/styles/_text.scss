@@ -101,12 +101,11 @@
   &--default {
     h1,h2,h3,h4,h5 { 
       &::before { 
-        content:'\25A0'; 
+        content:'\25A0  '; 
         font-size:30px;
         color: #CCD814;
-        vertical-align: text-top;
-        margin-left: -20px;
-        line-height: 40px;
+        vertical-align: sub;
+        margin-left: -22px;
       }
     }
     
@@ -128,8 +127,8 @@
         padding-left: 0px;
 
         li {
-          margin-left: 20px;
-          padding-bottom: 20px;
+          margin-left: 0px;
+          display: block;
 
           b {
             padding-bottom: 10px;
@@ -141,8 +140,8 @@
         content:'\25A0'; 
         font-size:30px;
         color: #CCD814;
-        vertical-align: text-top;
-        margin-left: -20px; 
+        vertical-align: sub;
+        margin-left: -26px; 
       }
     }
   }
