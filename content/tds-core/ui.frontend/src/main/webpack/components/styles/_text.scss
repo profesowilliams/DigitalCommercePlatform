@@ -50,7 +50,7 @@
             padding-top: 1.5rem;
             &::before {
               content: "\2022" !important;
-              color: white;
+              color: inherit;
               background-color: get-color(container-transparent)!important;
             }
           }
