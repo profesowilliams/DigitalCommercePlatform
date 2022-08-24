@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { bindActionCreators } from "redux";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -28,6 +28,18 @@ import axios from 'axios';
 import Modal from '../Modal/Modal';
 
 const FA = require("react-fontawesome");
+
+const ExposeSigninStatus = forwardRef((props, ref) => {
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+  useImperativeHandle(ref, () => ({
+      getLoginStatus() {
+        return isLoggedIn;
+      }
+  }));
+  return (
+      null
+  );
+});
 
 const SignIn = (props) => {
   const ACTION_QUERY_PARAM = "action";
@@ -383,6 +395,8 @@ const SignIn = (props) => {
     <div className="cmp-sign-in">
       <div className="cmp-sign-in-option">
       <div className="cmp-sign-in-middle-div"></div>
+      <ExposeSigninStatus ref={(exposeSigninStatus) => {window.exposeSigninStatus = exposeSigninStatus}}/>
+      
         {requested ? (
           "Loading..."
         ) : userDataCheck !== null ? (

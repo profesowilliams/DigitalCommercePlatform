@@ -13,12 +13,17 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-import { getSessionId, getUserDataInitialState } from './user-utils';
+import { getUserDataInitialState } from './user-utils';
 
 let dataLayerEnabled = null;
 let dataLayer = null;
 
-let sessionId = getSessionId();
+let userIsLoggedIn = () => {
+  if (isExtraReloadDisabled()) {
+      return window.exposeSigninStatus && window.exposeSigninStatus.getLoginStatus();
+  }
+  return window.localStorage.getItem("sessionId");
+};
 let userData = getUserDataInitialState();
 
 const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
@@ -157,9 +162,9 @@ const setVisitorData = (object) => {
   object.page = object.page || {};
 
   object.page.visitor = {
-    ecID: sessionId && userData?.id ? userData.id : null,
-    sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-    loginStatus: sessionId ? "Logged in" : "Logged out"
+    ecID: userIsLoggedIn() && userData?.id ? userData.id : null,
+    sapID: userIsLoggedIn() && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+    loginStatus: userIsLoggedIn() ? "Logged in" : "Logged out"
   }
 
   return object;
