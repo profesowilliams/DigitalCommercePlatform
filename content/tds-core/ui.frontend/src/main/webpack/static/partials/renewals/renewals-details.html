@@ -1,5 +1,9 @@
 <div data-observe-mutation>
-  <div data-component="RenewalsDetails" data-cmp-type="react" className="cmp-renewals-details"></div>
+  <div
+    data-component="RenewalsDetails"
+    data-cmp-type="react"
+    className="cmp-renewals-details"
+  ></div>
 </div>
 <script>
   const renewalsDetailDom = document.querySelector(
@@ -11,16 +15,26 @@
     shopDomainPage: "https://shop.cstenet.com/products",
     uiServiceEndPoint:
       "http://localhost:3000/ui-renewal/v1/Details",
+    exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
     shopURL: "https://shop.cstenet.com/renewals",
+    updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
+    getStatusEndpoint:"http://localhost:3000/ui-renewal/v1/getStatus",
+    orderRenewalEndpoint:"http://localhost:3000/ui-renewal/v1/order",
     productLines: {
       line: "Line",
       lineItemDetailsLabel: "Details",
       productfamily: "Product Family",
       productdescription: "Product Description",
+      disableProductDetailsLink: "false",
       vendorPartNo: "Vendor Part No",
-      unitPrice: "Unit price (USD)",
+      listPrice: "List price\n ({currency-code})",
+      percentOffListPrice: "% off list\n price",
+      unitPrice: "Unit price\n ({currency-code})",
       quantity: "Quantity",
+      totalPrice: "Total\n ({currency-code})",
       quoteSubtotal: "Quote Subtotal:",
+      quoteSubtotalCurrency: "{currency-code}",
+      quoteSubtotalCurrencySymbol: "",
       note: "Note: Pricing displayed is subject to vendor price changes and exchange rate fluctuations.",
       menuCopy: "Copy",
       menuCopyWithHeaders: "Copy with headers",
@@ -29,8 +43,12 @@
       menuExcelExport: "XLS",
       menuOpenLink: "Open in new tab",
       menuCopyLink: "Copy URL",
+      downloadPDFLabel: "Download PDF",
+      downloadXLSLabel: "Export XLS",
     },
     quotePreview: {
+      renewalsUrl: "http://localhost:8080/renewals-grid",
+      renewalsUrlLabel: "Back to all Renewals",
       quotePreviewlabel: "Quote Preview",
       resellerVendorAccountNoLabel: "Reseller vendor account No:",
       reseller: {
@@ -41,7 +59,7 @@
         previousResellerorderNoLabel: "Previous Reseller order number",
         typeEndUserLabel: "Type of end user",
         vendorAccountNoResLabel: "Reseller vendor account No:",
-        previousPurchaseOrderNoEndLabel: "Previous purchase order number",
+        previousPurchaseOrderNoEndLabel: "Previous purchase order No:",
         previousOrderNoLabel: "Previous order number",
       },
       productLines: {
@@ -69,9 +87,30 @@
         usageEndDateLabel: "Usage End Date:",
       },
     },
+    errorMessages: {
+      notFoundErrorMessage: "The renewal details cannot be found.",
+      unexpectedErrorMessage: "An unexpected error occurred.",
+      errorLoadingPageTitle: "Renewal details",
+      errorLoadingPageRedirect: "https://duckduckgo.com/",
+    },
+    orderingFromDashboard: {
+      placeOrderDialogTitle:'To continue placing your order for ({enduser-companyname}) please provide the following information.',
+      termsAndConditions:"I have read and accept Terms & Conditions",
+      termsAndConditionsLink:"https://www.techdata.com/content/visitor/abouttd/conditions.aspx",     
+      successSubmission:"Your order has been successfully submitted for processing. You will receive an email once processing is complete",
+      failedSubmission:"Please try again. If the error persists please contact us at ({email})"
+  },
+    quoteEditing: {
+      cancelDialogDescription: "Are you sure you would like to cancel? Your changes will not be saved.",
+      successUpdate: "Changes have been successfully saved.",
+      orderButtonLabel:"Order" ,
+      saveAndOrderButtonLabel:"Save and order"
+    },
+    updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
+    getStatusEndpoint:"http://localhost:3000/ui-renewal/v1/getStatus",
+    orderRenewalEndpoint:"http://localhost:3000/ui-renewal/v1/order",
     exportXLSRenewalsEndpoint:
       "http://localhost:3000/ui-export/v1/downloadRenewalQuoteDetails",
-    exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
   };
   renewalsDetailDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

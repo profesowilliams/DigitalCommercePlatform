@@ -6,6 +6,7 @@
         justify-content: flex-end !important;
         flex: 0;
         margin-left: auto;
+        margin-right: auto;
         flex-wrap: nowrap;
         @include reset-aemgrid;
     } 
@@ -19,6 +20,14 @@
          @media only screen and (min-width: 1024px) and (max-width: 1260px){
                     padding: 0 5px;
          }
+        @include tablet {
+            padding: 0 5px;
+            button{
+              font-size: 0;
+              line-height: 0;
+              color: #231f20;
+            }
+        }
     }
     .languagenavigation {
         position: relative;
