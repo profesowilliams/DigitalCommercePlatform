@@ -16,4 +16,6 @@
         jcr:title="Tab 3"
         sling:resourceType="tds-core/components/container/v1/container"
         layout="responsiveGrid"/>
+    <node
+        jcr:primaryType="nt:unstructured"/>
 </jcr:root>

@@ -11,7 +11,7 @@
                <div class="cmp-sub-header--sub-nav__image" data-sly-test.logo="${properties.subheaderLogo}">
                    <img src="${logo}"/>
                </div>
-        	     <span data-sly-test="${!logo}" style="color: ${properties.fontColor @ context='styleToken'}">${properties.subheaderTitle}</span>
+        	     <span class="cmp-sub-header__span" data-sly-test="${!logo}" style="color: ${properties.fontColor @ context='styleToken'}">${properties.subheaderTitle}</span>
     	     </div>
           <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
                data-sly-list.tab="${tabs.items}"
@@ -30,19 +30,19 @@
                     <sly data-sly-list.container="${resource.listChildren}">
 						<sly data-sly-test="${container.name == tab.name}">
                         	<sly data-sly-test.isLink="${container.link}">
-                            	<span data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=container.linkPath}">
+                            	<span class="cmp-sub-header__span" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=container.linkPath}">
                                     <a href="${urlHelper.url @ context='html'}" style="color: ${properties.tabsColor @ context='styleToken'}" target="${container.tabTarget ? '_blank' : '_self'}">${container.cq:panelTitle}</a>
                                 </span>
                             </sly>
                             <sly data-sly-test="${!isLink}">
-								<span style="color: ${properties.tabsColor @ context='styleToken'}">${container.cq:panelTitle}</span>
+								<span class="cmp-sub-header__span" style="color: ${properties.tabsColor @ context='styleToken'}">${container.cq:panelTitle}</span>
                             </sly>
 
                         </sly>
                     </sly>
-
                </li>
           </ol>
+          <sly data-sly-include="button.html"></sly>
     </div>
      <div data-sly-repeat.item="${tabs.items}"
           data-sly-resource="${item.name @ decorationTagName='div'}"
