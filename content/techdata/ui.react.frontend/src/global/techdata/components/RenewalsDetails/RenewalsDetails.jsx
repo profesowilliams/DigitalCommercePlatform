@@ -138,7 +138,9 @@ function RenewalsDetails(props) {
 
   const updateDetails = async (endUserDetails) => {
     try {
-      const updated = await updateRenewalDetails(endUserDetails);
+      renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
+      renewalsDetails.items = gridRef.current.getMutableGridData();
+      const updated = await updateRenewalDetails(renewalsDetails);
       if(updated) {
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({
           getStatusEndpoint: componentProp.getStatusEndpoint,
@@ -159,9 +161,8 @@ function RenewalsDetails(props) {
   }
 
   // TODO: reseller component will need to pass its changes also
-  const updateRenewalDetails = async (endUserDetails) => {
-    renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
-    const payload = mapRenewalForUpdateDetails(renewalsDetails);
+  const updateRenewalDetails = async (details) => {
+    const payload = mapRenewalForUpdateDetails(details);
     const updateresponse = await post(componentProp.updateRenewalOrderEndpoint, payload);           
     const updateError = updateresponse?.data?.error;
     if(updateError?.isError) throw new Error(`error: ${updateError?.code} ${updateError?.messages[0] || ''}`); 

@@ -105,6 +105,9 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       if(gridApiRef.current) {
         gridApiRef.current.setRowData(copyGridData);
       }
+    },
+    getMutableGridData () {
+      return mutableGridData;
     }
   }), [])
 
