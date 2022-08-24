@@ -27,7 +27,7 @@ export default function EndUserEdit({
   const { line1, city, country, postalCode } = address;
 
   const showErrorField = (obj) => {
-    return { error: obj['isValid'] === false };
+    return { error: obj['isValid'] === false || obj['text'] === '' };
   };
 
   const showErrorMsg = (obj) => {
@@ -53,6 +53,14 @@ export default function EndUserEdit({
 
   const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
   const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
+
+  const validateNumber = (e, { maxLength }, handleInputFn) => {
+    if (e.target.value.length > maxLength){
+      handleInputFn(e.target.value.slice(0, maxLength));
+    } else {
+      handleInputFn(undefined, e);
+    }
+  }
 
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
@@ -115,9 +123,9 @@ export default function EndUserEdit({
         id="area-code"
         label="Area Code"
         variant="standard"
-        inputProps={MAX_LENGTH_TWENTY}
+        type='number'
+        onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePostalCodeChange)}
         value={postalCode['text'] || ''}
-        onChange={(e) => handlePostalCodeChange(e)}
         {...handleValidation(postalCode)}
       />
       <CustomTextField
@@ -136,10 +144,10 @@ export default function EndUserEdit({
         disabled={contact[0].phone['canEdit'] === false}
         id="phone"
         label="Contact phone number"
-        inputProps={MAX_LENGTH_TWENTY}
         variant="standard"
         value={contact[0]['phone']['text'] || ''}
-        onChange={(e) => handlePhoneChange(e)}
+        type='number'
+        onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePhoneChange)}
       />
     </Box>
   );

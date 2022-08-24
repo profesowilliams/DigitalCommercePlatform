@@ -13,7 +13,8 @@ export default function useGet(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const isLoggedIn = useStore(state => state.isLoggedIn);
+  const refreshRenewalDetailApi = useStore(state => state.refreshRenewalDetailApi);
 
   useEffect(() => {
     let isMounted = true;
@@ -46,6 +47,6 @@ export default function useGet(url) {
     return () => {
       isMounted = false;
     };
-  }, [isExtraReloadDisabled(), isLoggedIn]);
+  }, [isExtraReloadDisabled(), isLoggedIn, refreshRenewalDetailApi]);
   return [response, isLoading, error];
 }

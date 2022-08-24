@@ -30,6 +30,7 @@ function RenewalsDetails(props) {
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
   const shopURL = componentProp.shopURL;
   const isLoggedIn = useStore(state => state.isLoggedIn)
+  const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)
   const [toggleOpen, setToggleOrder] = useState(false);
 
   const [renewalsDetails, setRenewalsDetails] = useState(null);
@@ -146,6 +147,8 @@ function RenewalsDetails(props) {
           iterations: 7})
         if(isActiveQuote) {            
           setIsToasterOpen(true);  
+          if (endUserDetails)
+            changeRefreshDetailApiState();
           return true;          
         }
       }

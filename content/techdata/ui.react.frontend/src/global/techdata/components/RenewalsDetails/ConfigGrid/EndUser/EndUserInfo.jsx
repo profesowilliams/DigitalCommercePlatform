@@ -78,10 +78,10 @@ function EndUserInfo({
     );
   };
 
-  const handlePostalCodeChange = (e) => {
+  const handlePostalCodeChange = (valid, e) => {
     setEndUserDetails(
       produce((draft) => {
-        draft.address.postalCode.text = e.target.value;
+        draft.address.postalCode.text = valid || e.target.value;
       })
     );
   };
@@ -94,10 +94,10 @@ function EndUserInfo({
     );
   };
 
-  const handlePhoneChange = (e) => {
+  const handlePhoneChange = (valid, e) => {
     setEndUserDetails(
       produce((draft) => {
-        draft.contact[0].phone.text = e.target.value;
+        draft.contact[0].phone.text = valid || e.target.value;
       })
     );
   };
