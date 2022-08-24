@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:primaryType="cq:Template"
+    ranking="{Long}1">
+    <jcr:content
+        jcr:description="This is Intouch Content Page Template with embedded libs and body HTML"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="TDS Site Intouch Content Page Template"/>
+</jcr:root>
