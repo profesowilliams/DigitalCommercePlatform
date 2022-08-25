@@ -34,10 +34,10 @@
 <div id="top"></div>
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];
-          
+
           let sessionId = window.localStorage.getItem("sessionId");
           let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-          
+
           adobeDataLayer.push({
               event:'page view',
               page: {
@@ -87,22 +87,19 @@
 <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
      data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
 <sly data-sly-test="${!isRedirectPage}">
-    <!-- Intouch header HTML starts here
-    <sly data-sly-include="intouchheader.html"></sly>
-    -->
+
     <!-- Intouch header HTML ends here -->
     <sly data-sly-include="body.skiptomaincontent.html"></sly>
     <sly data-sly-include="body.socialmedia_begin.html"></sly>
+    <sly data-sly-include="intouchheader.html"></sly>
     <sly data-sly-include="body.html"></sly>
-    <sly data-sly-call="${footer.footer @ page = page, pwa = pwa}"></sly>
-    <!-- Intouch footer HTML starts here
     <sly data-sly-include="intouchfooter.html"></sly>
-    -->
+    <sly data-sly-call="${footer.footer @ page = page, pwa = pwa}"></sly>
+
     <!-- Intouch footer HTML ends here -->
     <sly data-sly-include="body.socialmedia_end.html"></sly>
 </sly>
-<!-- Intouch footer HTML starts here -->
-<sly data-sly-include="intouchbody.html"></sly>
+
 <!-- Intouch footer HTML ends here -->
 </body>
 </html>
