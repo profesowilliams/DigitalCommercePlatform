@@ -12,7 +12,6 @@ describe("Test Search <SMOKE>", () => {
     cy.get(".cmp-renewal-search").first().click();
     cy.log("Start Searching!");
     cy.get(renewalsGrid.btnSearch)
-      .should("be.visible")
       .each(($el) => {
         if ($el.text() === "Agreement Nº") {
           cy.wrap($el).click();
@@ -30,6 +29,80 @@ describe("Test Search <SMOKE>", () => {
       .should("be.visible")
       .each(($el) => {
         if ($el.text() === "End-User Name") {
+          cy.wrap($el).click();
+        }
+      });
+    cy.get(".cmp-renewal-search .inputStyle").type("CT Holdings\n");
+    cy.get(renewalsGrid.listEndUser).should('have.text', 'CT Holdings')
+  });
+
+  it("Searches by Serial Number", () => {
+    renewalsGrid.waitForPageLoading();
+    cy.get(".cmp-renewal-search").first().click();
+    cy.log("Start Searching!");
+    cy.get(renewalsGrid.btnSearch)
+      .should("be.visible")
+      .each(($el) => {
+        if ($el.text() === "Serial Nº") {
+          cy.wrap($el).click();
+        }
+      });
+    cy.get(".cmp-renewal-search .inputStyle").type("356674944\n");
+    cy.get(renewalsGrid.listAgreementNumber).should('have.text', '356674944')
+  });
+
+  it("Searches by Disti Quote Number", () => {
+    renewalsGrid.waitForPageLoading();
+    cy.get(".cmp-renewal-search").first().click();
+    cy.log("Start Searching!");
+    cy.get(renewalsGrid.btnSearch)
+      .should("be.visible")
+      .each(($el) => {
+        if ($el.text() === "Disti Quote Nº") {
+          cy.wrap($el).click();
+        }
+      });
+    cy.get(".cmp-renewal-search .inputStyle").type("356674944\n");
+    cy.get(renewalsGrid.listAgreementNumber).should('have.text', '356674944')
+  });
+
+  it("Searches by Instance Number", () => {
+    renewalsGrid.waitForPageLoading();
+    cy.get(".cmp-renewal-search").first().click();
+    cy.log("Start Searching!");
+    cy.get(renewalsGrid.btnSearch)
+      .should("be.visible")
+      .each(($el) => {
+        if ($el.text() === "Instance Nº") {
+          cy.wrap($el).click();
+        }
+      });
+    cy.get(".cmp-renewal-search .inputStyle").type("356674944\n");
+    cy.get(renewalsGrid.listAgreementNumber).should('have.text', '356674944')
+  });
+
+  it("Searches by End user Email", () => {
+    renewalsGrid.waitForPageLoading();
+    cy.get(".cmp-renewal-search").first().click();
+    cy.log("Start Searching!");
+    cy.get(renewalsGrid.btnSearch)
+      .should("be.visible")
+      .each(($el) => {
+        if ($el.text() === "End-User Email Address") {
+          cy.wrap($el).click();
+        }
+      });
+    cy.get(".cmp-renewal-search .inputStyle").type("CT Holdings\n");
+    cy.get(renewalsGrid.listEndUser).should('have.text', 'CT Holdings')
+  });
+
+  it("Searches by Vendor Quote ID", () => {
+    renewalsGrid.waitForPageLoading();
+    cy.get(".cmp-renewal-search").first().click();
+    cy.log("Start Searching!");
+    cy.get(renewalsGrid.btnSearch)
+      .each(($el) => {
+        if ($el.text() === "Vendor Quote ID") {
           cy.wrap($el).click();
         }
       });
