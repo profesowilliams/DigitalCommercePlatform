@@ -17,6 +17,7 @@ import "../global/tds-core-components/form-container/form-container";
 import "../global/tds-core-components/contentfragment-bio/contentfragment-bio";
 import "../global/tds-core-components/region-select/region-select";
 import "../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer";
+import "../../../../../../tds-core/ui.frontend/src/components/popup/popup";
 import "../global/tds-core-components/button/buttons";
 import {Initializer} from "../global/initializer";
 new Initializer();

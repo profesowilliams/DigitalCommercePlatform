@@ -1,0 +1,45 @@
+.honeycomb {
+  .cmp-accordion {
+    width: 350px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .cmp-accordion__title {
+    color: white;
+    position: relative;
+    bottom: 68px;
+    left: 21px;
+  }
+  .cmp-accordion__button {
+    width: unset;
+    background-color: unset;
+  }
+  svg {
+    fill: #445533;
+  }
+  & > .cmp-accordion .cmp-accordion__button[aria-expanded='false']:after,
+  & > .cmp-accordion .cmp-accordion__button[aria-expanded='true']:after {
+    content: '' !important;
+  }
+  .cmp-accordion__item {
+    //margin: -27px 0px;
+    width: 150px;
+    margin: 0 -26px -56px;
+
+    .cmp-accordion__panel {
+      position: relative;
+      left: 150px;
+      bottom: 100px;
+      height: 0;
+    }
+  }
+
+
+  .cmp-accordion__item:nth-child(1),
+  .cmp-accordion__item:nth-child(4)  {
+    margin-left: 100px;
+  }
+  .cmp-accordion__item:nth-child(2) {
+    margin-left: 50px;
+  }
+}

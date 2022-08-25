@@ -1,0 +1,13 @@
+<div
+  data-panelcontainer="${wcmmode.edit && 'popup'}"
+  class="cmp-popup"
+  data-cmp-is="popup"
+  data-placeholder-text="${wcmmode.edit && 'Please drag Popup item components here' @ i18n}"
+>
+  <div data-opener-ids="${properties.openerIds}" class="${!wcmmode.edit && 'cmp-popup__modal'}">
+    <div class="${!wcmmode.edit && 'cmp-popup__modal__content'}">
+      <span class="cmp-popup__modal__content__close">&times;</span>
+      <sly data-sly-include="container.html" />
+    </div>
+  </div>
+</div>
