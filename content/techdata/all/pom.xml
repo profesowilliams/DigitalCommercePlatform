@@ -68,7 +68,7 @@
                             <artifactId>techdata.core</artifactId>
                             <target>/apps/techdata-packages/application/install</target>
                         </embedded>
-                        <!-- due to issues in policies getting overwritten, commenting out this module -->
+                         <!-- due to issues in policies getting overwritten, commenting out this module -->
                         <embedded>
                             <groupId>com.techdata</groupId>
                             <artifactId>techdata.ui.content</artifactId>
@@ -182,6 +182,13 @@
     <!-- D E P E N D E N C I E S                                                -->
     <!-- ====================================================================== -->
     <dependencies>
+
+        <dependency>
+            <groupId>com.tdscore</groupId>
+            <artifactId>tds-core.core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.techdata</groupId>
             <artifactId>techdata.ui.apps</artifactId>
