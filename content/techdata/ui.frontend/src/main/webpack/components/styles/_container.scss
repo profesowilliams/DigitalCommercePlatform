@@ -76,3 +76,13 @@ These style system class work for container component only. */
     @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
   }
 }
+
+.cmp-component-vendor__center {
+  .dp-title {
+    text-align: left;
+  }
+  .dp-figure {
+    text-align:center;
+    vertical-align: middle;
+  }
+}

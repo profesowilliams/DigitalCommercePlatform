@@ -47,3 +47,363 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+
+  // TDS Primary background colors
+  @mixin background-teal {
+    background-color: map-get($color-palette, "teal") !important;
+  }
+
+  @mixin background-deep-teal {
+    background-color: get-color(deep-teal) !important;
+  }
+
+  @mixin background-aqua {
+    background-color: map-get($color-palette, "aqua") !important;
+  }
+
+  @mixin background-chartreuse {
+    background-color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  @mixin background-cool-gray-8 {
+    background-color: get-color(cool-gray-8) !important;
+  }
+
+  @mixin background-cool-gray-10 {
+    background-color: get-color(cool-gray-10) !important;
+  }
+
+  @mixin background-green {
+    background-color: map-get($color-palette, "green") !important;
+  }
+
+  @mixin background-black {
+    background-color: map-get($color-palette, "black") !important;
+  }
+
+  @mixin background-white {
+    background-color: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary background colors
+  @mixin background-steel-blue {
+    background-color: get-color(steel-blue) !important;
+  }
+
+  @mixin background-navy {
+    background-color: map-get($color-palette, "navy") !important;
+  }
+
+  @mixin background-copper {
+    background-color: map-get($color-palette, "copper") !important;
+  }
+
+  @mixin background-stone {
+    background-color: get-color(stone) !important;
+  }
+
+  @mixin background-cool-gray-1 {
+    background-color: get-color(cool-gray-1) !important;
+  }
+
+  //TDS Digital background colors
+  @mixin background-cherry {
+    background-color: get-color(cherry) !important;
+  }
+
+  @mixin background-amber {
+    background-color: get-color(amber) !important;
+  }
+
+  @mixin background-forest {
+    background-color: map-get($color-palette, "forest") !important;
+  }
+
+  @mixin background-charcoal {
+    background-color: map-get($color-palette, "charcoal") !important;
+  }
+
+  @mixin background-cool-gray-9 {
+    background-color: get-color(cool-gray-9) !important;
+  }
+  
+  @mixin background-cobalt {
+    background-color: get-color(cobalt) !important;
+  }
+
+  @mixin background-neutral-gray-1 {
+    background-color: get-color(neutral-gray-1) !important;
+  }
+
+  @mixin background-neutral-gray-2 {
+    background-color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy background colors
+  @mixin background-dark-blue {
+    background-color: get-color(dark-blue) !important;
+  }
+
+  @mixin background-sky-blue {
+    background-color: get-color(sky-blue) !important;
+  }
+
+  @mixin background-legacy-gray {
+    background-color: get-color(legacy-gray) !important;
+  }
+
+  
+  // TDS Primary text colors
+  @mixin text-teal {
+    color: map-get($color-palette, "teal") !important;
+  }
+
+  @mixin text-deep-teal {
+    color: get-color(deep-teal) !important;
+    span {
+      color: get-color(deep-teal) !important;
+    }
+    p {
+      color: get-color(deep-teal) !important;
+    }
+  }
+
+  @mixin text-aqua {
+    color: map-get($color-palette, "aqua") !important;
+  }
+
+  @mixin text-cool-gray-8 {
+    color: get-color(cool-gray-8) !important;
+  }
+
+  @mixin text-cool-gray-10 {
+    color: get-color(cool-gray-10) !important;
+  }
+
+  @mixin text-green {
+    color: map-get($color-palette, "green") !important;
+    span {
+      color: map-get($color-palette, "green") !important;
+    }
+    p {
+      color: map-get($color-palette, "green") !important;
+    }
+  }
+
+  @mixin text-chartreuse {
+    color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  @mixin text-black {
+    color: map-get($color-palette, "black") !important;
+    span {
+      color: map-get($color-palette, "black") !important;
+    }
+    p {
+      color: map-get($color-palette, "black") !important;
+    }
+  }
+
+  @mixin text-white {
+    color: map-get($color-palette, "white") !important;
+    span {
+      color: map-get($color-palette, "white") !important;
+    }
+    p {
+      color: map-get($color-palette, "white") !important;
+    }
+  }
+
+  //TDS Secondary text colors
+  @mixin text-steel-blue {
+    color: get-color(steel-blue) !important;
+    span {
+      color: get-color(steel-blue) !important;
+    }
+    p {
+      color: get-color(steel-blue) !important;
+    }
+  }
+
+  @mixin text-navy {
+    color: map-get($color-palette, "navy") !important;
+  }
+
+  @mixin text-copper {
+    color: map-get($color-palette, "copper") !important;
+  }
+
+  @mixin text-stone {
+    color: get-color(stone) !important;
+    span {
+      color: get-color(stone) !important;
+    }
+    p {
+      color: get-color(stone) !important;
+    }
+  }
+
+  @mixin text-cool-gray-1 {
+    color: get-color(cool-gray-1) !important;
+    span {
+      color: get-color(cool-gray-1) !important;
+    }
+    p {
+      color: get-color(cool-gray-1) !important;
+    }
+  }
+
+  //TDS Digital text colors
+  @mixin text-cherry {
+    color: get-color(cherry) !important;
+  }
+
+  @mixin text-amber {
+    color: get-color(amber) !important;
+  }
+
+  @mixin text-cobalt {
+    color: get-color(cobalt) !important;
+  }
+
+  @mixin text-neutral-gray-1 {
+    color: get-color(neutral-gray-1) !important;
+  }
+
+  @mixin text-forest {
+    color: map-get($color-palette, "forest") !important;
+  }
+
+  @mixin text-charcoal {
+    color: map-get($color-palette, "charcoal") !important;
+  }
+
+  @mixin text-cool-gray-9 {
+    color: get-color(cool-gray-9) !important;
+  }
+
+  @mixin text-neutral-gray-2 {
+    color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy text colors
+  @mixin text-dark-blue {
+    color: get-color(dark-blue) !important;
+  }
+
+  @mixin text-sky-blue {
+    color: get-color(sky-blue) !important;
+  }
+
+  @mixin text-legacy-gray {
+    color: get-color(legacy-gray) !important;
+  }
+
+
+  
+  // TDS Primary border colors
+  @mixin border-teal {
+    border-color: map-get($color-palette, "teal") !important;
+  }
+
+  @mixin border-deep-teal {
+    border-color: get-color(deep-teal) !important;
+  }
+
+  @mixin border-aqua {
+    border-color: map-get($color-palette, "aqua") !important;
+  }
+
+  @mixin border-chartreuse {
+    border-color: map-get($color-palette, "chartreuse") !important;
+  }
+
+  @mixin border-cool-gray-8 {
+    border-color: get-color(cool-gray-8) !important;
+  }
+
+  @mixin border-cool-gray-10 {
+    border-color: get-color(cool-gray-10) !important;
+  }
+
+  @mixin border-green {
+    border-color: map-get($color-palette, "green") !important;
+  }
+
+  @mixin border-black {
+    border-color: map-get($color-palette, "black") !important;
+  }
+
+  @mixin border-white {
+    border-color: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary border colors
+  @mixin border-steel-blue {
+    border-color: get-color(steel-blue) !important;
+  }
+
+  @mixin border-navy {
+    border-color: map-get($color-palette, "navy") !important;
+  }
+
+  @mixin border-copper {
+    border-color: map-get($color-palette, "copper") !important;
+  }
+
+  @mixin border-stone {
+    border-color: get-color(stone) !important;
+  }
+
+  @mixin border-cool-gray-1 {
+    border-color: get-color(cool-gray-1) !important;
+  }
+
+  //TDS Digital border colors
+  @mixin border-cherry {
+    border-color: get-color(cherry) !important;
+  }
+
+  @mixin border-amber {
+    border-color: get-color(amber) !important;
+  }
+
+  @mixin border-forest {
+    border-color: map-get($color-palette, "forest") !important;
+  }
+
+  @mixin border-charcoal {
+    border-color: map-get($color-palette, "charcoal") !important;
+  }
+
+  @mixin border-cool-gray-9 {
+    border-color: get-color(cool-gray-9) !important;
+  }
+  
+  @mixin border-cobalt {
+    border-color: get-color(cobalt) !important;
+  }
+
+  @mixin border-neutral-gray-1 {
+    border-color: get-color(neutral-gray-1) !important;
+  }
+
+  @mixin border-neutral-gray-2 {
+    border-color: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy border colors
+  @mixin border-dark-blue {
+    border-color: get-color(dark-blue) !important;
+  }
+
+  @mixin border-sky-blue {
+    border-color: get-color(sky-blue) !important;
+  }
+
+  @mixin border-legacy-gray {
+    border-color: get-color(legacy-gray) !important;
+  }
+
+  

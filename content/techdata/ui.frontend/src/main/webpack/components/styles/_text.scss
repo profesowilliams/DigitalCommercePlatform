@@ -1,19 +1,68 @@
+@import "../../global/_mixins.scss";
+@import "../../global/styles/helpers/colors.scss";
+
+
 .cmp-text {
-  color: inherit !important;
-  ul, ol {
+
+  ul,
+  ol {
     padding-top: rem(15px);
     list-style: none;
 
     li {
-      font-size: rem($font-size-medium);
+      font-size: inherit;
       text-align: left;
       margin-left: rem(-40px);
+
       &::before {
-        color: get-color(td-lightblue);
+        color: inherit;
         display: inline-block;
       }
     }
   }
+
+  &__green_bullet {
+    ul, ol {
+      margin-bottom: 0.0rem;
+      li {
+        display: inline !important;
+        &::before {
+          content: "" !important;
+          color: get-color(td-planet);
+          background-color: get-color(td-planet);
+          width: 15px !important;
+          height: 15px;
+          margin-right: 15px;
+          margin-top: 0.5vh;
+        }
+        ul, ol {
+          line-height: 0rem !important;
+          margin-left: -2rem;
+
+          display: flex;
+          flex-direction: column;
+          line-height: -10rem;
+          padding-top: 0rem !important;
+          li {
+            padding: 0.5vw;
+            padding-left: 1vw;
+            padding-bottom: 0rem;
+            padding-top: 1.5rem;
+            &::before {
+              content: "\2022" !important;
+              color: inherit;
+              background-color: get-color(container-transparent)!important;
+            }
+          }
+        }
+      }
+    }
+    p {
+      margin-left: 1.5rem;
+      margin-top: 1rem;
+    }
+  }
+
   ol {
     counter-reset: li;
 
@@ -28,76 +77,129 @@
       }
     }
   }
+
   ul {
     li {
       line-height: rem(20px);
       padding-bottom: rem(5.12px);
+      display: flex;
 
       &::before {
         content: "\2022";
         font-weight: bold;
-        width: rem(20px);
+        width: auto;
         font-size: $font-size-custom-medium;
+        margin-right: rem(10px);
       }
     }
-
   }
 
   .dp-text-icon::before {
     padding-right: 10px;
   }
+  
+  &--default {
+    h1,h2,h3,h4,h5 { 
+      &::before { 
+        content:'\25A0  '; 
+        font-size:30px;
+        color: #CCD814;
+        vertical-align: sub;
+        margin-left: -22px;
+      }
+    }
+    
+    ul {
+      padding-left: 0px;
+
+      li {
+        margin-left: 0px;
+
+        &::before {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  &--default-feature {
+      ul {
+        padding-left: 0px;
+
+        li {
+          margin-left: 0px;
+          display: block;
+
+          b {
+            padding-bottom: 10px;
+            line-height: 50px;
+          }
+        }
+
+      li::before { 
+        content:'\25A0'; 
+        font-size:30px;
+        color: #CCD814;
+        vertical-align: sub;
+        margin-left: -26px; 
+      }
+    }
+  }
 }
+
 .cmp-text__paragraph {}
 
-
-.cmp-aem-alert{
+.cmp-aem-alert {
   border: rem(1px) solid get-color(td-primary-blue);
   padding: rem(32px);
   background-color: get-color(brand-white);
   color: get-color(text-mid-gray);
-  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue)!important;
+  box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue) !important;
 }
 
 .dp-text--white {
-
-        color: #fff;
-
+  color: #fff;
 }
 
 .dp-text--light-blue {
-
-        color: #00b1e2;
-
+  color: #00b1e2;
 }
 
 .dp-text--dark-blue {
-
-        color: #000c21;
-
+  color: #000c21;
 }
 
 .dp-text--xsmall {
-  &, .cmp-text li {
+
+  &,
+  .cmp-text li {
     font-size: rem($font-size-xxsmall);
   }
 }
 
 .dp-text--small {
-  &, .cmp-text li {
+
+  &,
+  .cmp-text li {
     font-size: rem($font-size-small);
   }
 }
 
-.dp-text--big  {
-  &, .cmp-text li {
+.dp-text--big {
+
+  &,
+  .cmp-text li {
     font-size: $font-size-custom-midi;
   }
 }
 
 .dp-text--align-center {
   text-align: center;
+
   .cmp-text {
-    ul, ol {
+
+    ul,
+    ol {
       margin: auto;
       width: 50%;
     }
@@ -106,9 +208,156 @@
 
 .dp-text--align-right {
   text-align: right;
+
   .cmp-text {
-    ul, ol {
+
+    ul,
+    ol {
       float: right;
+    }
+  }
+}
+
+.cmp-text {
+  &-tds {
+    a {
+      //text-decoration: none;
+
+      span {
+        text-decoration: underline;
+      }
+
+      .cmp-tds {
+        &-link {
+          &--teal {
+            @include text-teal;
+            text-decoration: underline;
+          }
+
+          &--deep-teal {
+            @include text-deep-teal;
+            text-decoration: underline;
+          }
+
+          &--aqua {
+            @include text-aqua;
+            text-decoration: underline;
+          }
+
+          &--chartreuse {
+            @include text-chartreuse;
+            text-decoration: underline;
+          }
+
+          &--cool-gray-8 {
+            @include text-cool-gray-8;
+            text-decoration: underline;
+          }
+
+          &--cool-gray-10 {
+            @include text-cool-gray-10;
+            text-decoration: underline;
+          }
+
+          &--green {
+            @include text-green;
+            text-decoration: underline;
+          }
+
+          &--black {
+            @include text-black;
+            text-decoration: underline;
+          }
+
+          &--white {
+            @include text-white;
+            text-decoration: underline;
+          }
+
+          //TDS Secondary background colors
+          &--steel-blue {
+            @include text-steel-blue;
+            text-decoration: underline;
+          }
+
+          &--navy {
+            @include text-navy;
+            text-decoration: underline;
+          }
+
+          &--copper {
+            @include text-copper;
+            text-decoration: underline;
+          }
+
+          &--stone {
+            @include text-stone;
+            text-decoration: underline;
+          }
+
+          &--cool-gray-1 {
+            @include text-cool-gray-1;
+            text-decoration: underline;
+          }
+
+          //TDS Digital background colors
+          &--cherry {
+            @include text-cherry;
+            text-decoration: underline;
+          }
+
+          &--amber {
+            @include text-amber;
+            text-decoration: underline;
+          }
+
+          &--forest {
+            @include text-forest;
+            text-decoration: underline;
+          }
+
+          &--charcoal {
+            @include text-charcoal;
+            text-decoration: underline;
+          }
+
+          &--cool-gray-9 {
+            @include text-cool-gray-9;
+            text-decoration: underline;
+          }
+
+          &--cobalt {
+            @include text-cobalt;
+            text-decoration: underline;
+          }
+
+          &--neutral-gray-1 {
+            @include text-neutral-gray-1;
+            text-decoration: underline;
+          }
+
+          &--neutral-gray-2 {
+            @include text-neutral-gray-2;
+            text-decoration: underline;
+          }
+
+          //Legacy background colors
+          &--dark-blue {
+            @include text-dark-blue;
+            text-decoration: underline;
+          }
+
+          &--sky-blue {
+            @include text-sky-blue;
+            text-decoration: underline;
+          }
+
+          &--legacy-gray {
+            @include text-legacy-gray;
+            text-decoration: underline;
+          }
+        }
+      }
     }
   }
 }

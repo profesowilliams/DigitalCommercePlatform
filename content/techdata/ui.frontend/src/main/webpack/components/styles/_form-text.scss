@@ -1,4 +1,32 @@
-.cmp-form-text {}
+@function get-color($base, $shade: base) {
+    $color: map-get($color-palette, $base);
+    @return $color;
+  }
+
+.cmp-form-text {
+    &__teal {
+        .cmp-form-text__text {
+            &::placeholder { 
+                color: map-get($color-palette, "teal");
+                opacity: 1; 
+            }
+        }
+    }
+
+    &__deep-teal {
+        &::placeholder { 
+            color: get-color(deep-teal) !important;
+            opacity: 1; 
+        }
+      }
+    
+      &__aqua {
+        &::placeholder { 
+            color: map-get($color-palette, "aqua") !important;
+            opacity: 1; 
+        }
+      }
+}
 .cmp-form-text__help-block {}
 .cmp-form-text__textarea {}
 .cmp-form-text__text {}

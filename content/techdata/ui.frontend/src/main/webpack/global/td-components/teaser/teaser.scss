@@ -1,3 +1,5 @@
+$colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-get($color-palette,"chartreuse"), map-get($color-palette,"cherry");
+
 @mixin teaser-default {
     .cmp-teaser {
         position: relative;
@@ -456,7 +458,6 @@
 .cmp-teaser__desc-link {
     text-decoration: none;
     color: #555;
-    min-height: 7rem;
     &:hover {
         text-decoration: none;
     }
@@ -493,7 +494,7 @@
                 .cmp-teaser__description {
                     //min-height: 17rem;
                     min-height: auto;
-                    max-height: none !important;
+                    max-height: rem(144px);
                     text-overflow: ellipsis;
                     overflow: hidden;
                     display: -webkit-box;
@@ -653,6 +654,166 @@
             height: rem(202.21px);
             object-fit: fill;
             overflow: hidden;
+        }
+    }
+}
+
+// TD SYNNEX Modern Card - No Image
+
+.teaser {
+    &.cmp-teaser {
+        &-tds {
+            &__card {          
+                padding: 10px 10px;
+                display: grid !important;
+                place-items: center;
+
+                .cmp-teaser {			
+                    width: 471px;
+                    display: block;
+
+                    &__image {
+                        display: none;
+                    }
+
+                    &__title {
+                        min-height: fit-content;
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: row;
+                        text-align: left;
+                        width: 100%;
+                        line-height: 50px;
+                        padding-top: 10px;
+
+                        &-link {
+                            line-height: unset;
+                            color: map-get($color-palette,"teal");
+                            text-decoration: none;
+                        }
+                    }
+
+                    &__content {
+                        box-shadow: 0px 7px 12px 0px map-get($color-palette,"cool-gray-8");
+                        padding: 20px;
+                        margin: 15px 0px 0px 10px;
+                        border-radius: 4px;
+                        align-items: left;
+                        display: block;
+                        height: 300px;
+                    }
+
+                    &__description {
+                        display: block;
+                        padding: 0;
+
+                        p {
+                            width: 100%;
+                            padding: 0;
+                        }
+                    }
+                }
+
+                &.dp-border-color {
+                    &__chartreuse {
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"chartreuse");
+                            }
+                        }
+                    }
+
+                    &__cherry {
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"cherry");
+                            }
+                        }
+                    }
+
+                    &__cobalt {
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"cobalt");
+                            }
+                        }
+                    }
+
+                    &__aqua{
+                        .cmp-teaser {
+                            &__content {
+                                border-top: 5px solid map-get($color-palette,"aqua");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 991.98px) {
+    #teasers { //needs to be a class
+        div {
+            display: grid;
+
+            .teaser {
+                &.cmp-teaser {
+                    width: 100%;
+
+                    &-tds {
+                        &__card { 
+                            width: 100%;
+                            padding: 10px 10px;
+                            display: grid;
+                            place-items: center;
+                            width: fit-content;
+                            margin: 0;
+
+                            .cmp-teaser {			
+                                display: block;
+            
+                                &__image {
+                                    display: none;
+                                }
+            
+                                &__title {
+                                    min-height: fit-content;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    flex-direction: row;
+                                    text-align: left;
+                                    width: 100%;
+                                    line-height: 50px;
+            
+                                    &-link {
+                                        line-height: unset;
+                                    }
+                                }
+            
+                                &__content {
+                                    box-shadow: 0px 7px 12px 0px map-get($color-palette,"charcoal");
+                                    padding: 10px;
+                                    margin: 15px 0px 0px 10px;
+                                    border-radius: 4px;
+                                    align-items: left;
+                                    display: block;
+                                }
+            
+                                &__description {
+                                    display: block;
+                                    padding: 0;
+            
+                                    p {
+                                        width: 100%;
+                                        padding: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
