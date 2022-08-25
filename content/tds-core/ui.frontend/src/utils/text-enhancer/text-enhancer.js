@@ -1,16 +1,15 @@
 document.addEventListener(
   'DOMContentLoaded',
   () => {
-    const htmlElement = document.querySelector(
+    const htmlElement = document.querySelectorAll(
       '.animation-typewriter-effect[data-extra-words]'
     );
 
-    if (htmlElement) {
-    // This replaces the HTML format with one JSON can read.
+    const animation = (htmlElement) => {
+      // This replaces the HTML format with one JSON can read.
       const firstWord = htmlElement.innerText;
       const extraWords = htmlElement.dataset.extraWords;
       const dataSet = [firstWord, ...JSON.parse(extraWords)];
-
       // type one text in the typwriter
       // keeps calling itself until the text is finished
       const typeWriter = (text, i, fnCallback) => {
@@ -52,7 +51,10 @@ document.addEventListener(
       // start the text animation
       StartTextAnimation(0);
     }
-   
+
+    if (htmlElement) {
+      Array.from(htmlElement).map(element => animation(element));
+    }
   },
   1000
 );
