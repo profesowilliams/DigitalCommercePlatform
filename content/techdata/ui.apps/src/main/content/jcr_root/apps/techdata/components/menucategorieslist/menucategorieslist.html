@@ -1,0 +1,16 @@
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<sly data-sly-use.model="com.techdata.core.models.GetMenuCategories">
+    <ul data-sly-list.category="${model.categoriesList}" class="${wcmmode.edit ? 'cmp-tools--editor' : 'cmp-tools'}"   >
+        <li class="cmp-tools__category-name">
+            ${category.categoryName}
+            <sly data-sly-list.link="${category.menuList}">
+                <ul>
+                    <li><a class="cmp-subheader__analytics-link"  data-tab-name="${link.linkLabel}" data-hier="Tools > ${category.categoryName} > ${link.linkLabel}" href="${link.linkUrl}" target="${link.linkTarget == 'true' ? '_blank':''}" data-cmp-clickable="true">${link.linkLabel}</a></li>
+                </ul>
+            </sly>
+        </li>
+    </ul>
+</sly>

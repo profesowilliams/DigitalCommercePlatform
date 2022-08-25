@@ -114,14 +114,6 @@
     <!-- D E P E N D E N C I E S                                                -->
     <!-- ====================================================================== -->
     <dependencies>
-
-        <dependency>
-            <groupId>com.tdscore</groupId>
-            <artifactId>tds-core.core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.techdata</groupId>
             <artifactId>techdata.core</artifactId>

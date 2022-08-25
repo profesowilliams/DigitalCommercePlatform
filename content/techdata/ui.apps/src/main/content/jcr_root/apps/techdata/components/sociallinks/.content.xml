@@ -3,5 +3,4 @@
     cq:isContainer="true"
     jcr:primaryType="cq:Component"
     jcr:title="Social Links"
-    sling:resourceSuperType="tds-core/components/sociallinks/v1/sociallinks"
     componentGroup="Tech Data - Content"/>
