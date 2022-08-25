@@ -14,6 +14,7 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 import { getUserDataInitialState } from './user-utils';
+import { isExtraReloadDisabled } from "./featureFlagUtils"; 
 
 let dataLayerEnabled = null;
 let dataLayer = null;
