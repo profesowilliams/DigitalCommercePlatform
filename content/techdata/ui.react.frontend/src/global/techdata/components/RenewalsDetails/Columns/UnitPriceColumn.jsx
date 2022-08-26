@@ -63,8 +63,8 @@ function UnitPriceColumn(props) {
 
   const updateValue = (event) => {
     event.stopPropagation();
-    if (isNaN(value)) return;
-    if (value < 1) return;
+    if (isNaN(price)) return;
+    if (price < 1) return;
     try {
       setValue(price);
     } catch (err) {

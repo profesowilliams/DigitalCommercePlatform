@@ -18,10 +18,12 @@ import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
 import Toaster from '../Widgets/Toaster';
 import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
+import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
+  const effects = useRenewalsDetailsStore(state => state.effects);
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
   const [apiResponse, isLoading, error] = useGet(
@@ -149,6 +151,8 @@ function RenewalsDetails(props) {
           iterations: 7})
         if(isActiveQuote) {            
           setIsToasterOpen(true);  
+          const toaster = {isOpen:true, isAutoClose:true, isSuccess: true, message:componentProp.quoteEditing.successUpdate}
+          effects.setCustomState({ key: 'toaster', value: { ...toaster } });
           if (endUserDetails)
             changeRefreshDetailApiState();
           return true;          

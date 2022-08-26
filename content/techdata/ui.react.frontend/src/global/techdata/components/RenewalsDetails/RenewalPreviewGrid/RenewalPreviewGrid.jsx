@@ -17,6 +17,7 @@ import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
+
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
@@ -213,8 +214,10 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const onOrderButtonClicked = () => {
     setIsPODialogOpen(true);
   }
-  const onCloseDialog =({isSuccess = false, toaster}) => {
+  const onCloseDialog =(options = {}) => {
+    const {isSuccess = false, toaster} = options || {isSuccess : false, toaster:false} ;
     setIsPODialogOpen(false); 
+    if (!isSuccess) return;
     if(isSuccess){
       effects.setCustomState({ key: 'toaster', value: { ...toaster } }, {key:TOASTER_LOCAL_STORAGE_KEY, saveToLocal: true});
       location.href=compProps.quotePreview.renewalsUrl

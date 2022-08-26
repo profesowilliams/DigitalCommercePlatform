@@ -44,7 +44,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
 
   function handleToggleToaster({ transactionNumber, isSuccess = false, failedReason = '', salesContentEmail }) {
     const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, salesContentEmail);
-    let toaster = {isOpen:true, isSuccess };
+    let toaster = {isOpen:true, isSuccess, isAutoClose:false };
     let message;   
     if(isSuccess) {
       const toasterChild = <TransactionNumber data={transactionNumber}/>

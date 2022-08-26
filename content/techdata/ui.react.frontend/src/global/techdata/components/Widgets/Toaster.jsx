@@ -4,25 +4,25 @@ import { CheckmarkCircle, Dismiss, CautionIcon } from "../../../../fluentIcons/F
 import { teal, red } from "@mui/material/colors";
 import shallow from "zustand/shallow";
 
+
 function Toaster({   
   onClose,
   MuiDrawerProps,  
-  autoClose,
   store
 }) {
 
   const toaster = store( state => state.toaster, shallow);
 
-  const {isOpen, Child, isSuccess, message} = toaster;
- 
+  const {isOpen, Child, isSuccess, message, isAutoClose = false } = toaster;
+
   useEffect(() => {
-    if (autoClose) {
+    if (isAutoClose) {      
       const timeout = setTimeout(() => {
         onClose();
       }, 6000);
       return () => clearTimeout(timeout);
     } 
-  }, []);  
+  }, [isAutoClose]);  
 
   return (
     <div className="cmp-toaster-drawer">
@@ -44,10 +44,10 @@ function Toaster({
               <span className="cmp-toaster-content__error-title">Your order submission has failed.</span>
               {message}
             </>)}</p>
-            {isSuccess &&  <br />}
+            {isSuccess && !!Child &&  <br />}
             {Child && Child}
           </div>
-          {!autoClose && (
+          {!isAutoClose && (
             <div className="cmp-toaster-content__closeIcon">
               <Dismiss onClick={onClose} />
             </div>

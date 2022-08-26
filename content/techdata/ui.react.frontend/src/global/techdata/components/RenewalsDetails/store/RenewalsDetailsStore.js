@@ -5,9 +5,11 @@ const INITIAL_STATE = {
   toaster:{
     isOpen:false,
     message:"",
-    origin:"dashboard",
-    isSuccess:false
-  }
+    origin:"details",
+    isSuccess:false,
+    isAutoClose:false,
+  },
+  isEditingReseller:false
 };
 
 const store = (set, get, a) => ({
