@@ -15,10 +15,12 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
 
         .cmp-contentfragment__element--hero-image {
             height: 230px;
+            width: 100%;
+            background-color: map-get($color-palette, "cool-gray-8");
         }
 
         @for $i from 1 through length($colors) {
-            .cmp-contentfragment:nth-of-type(#{$i}) {
+            .cmp-contentfragment:nth-of-type(#{$i}n) {
                 .cmp-contentfragment__title {
                     font-size: medium;
                     margin-left: -10px;
@@ -27,7 +29,8 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
                     font-weight: bold;
                     min-height: 18px;
                     margin-bottom: 10px;
-    
+                    padding-top: 20px;
+                    padding-left: 17px;
                 
                     &::before {
                         content: "";
@@ -43,9 +46,10 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
         }
 
         .cmp-contentfragment__element--short-body {
-            color: map-get($color-palette, "teal");
-            padding-left: 5px;
+            color: map-get($color-palette, "charcoal");
+            padding-left: 15px;
             padding-bottom: 20px;
+            height: 150px;
         }
 
         .cmp-contentfragment__element--resource-link {
@@ -54,6 +58,7 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
             font-weight: bold;
             text-decoration: none;
             padding-bottom: 20px;
+            padding-left: 15px;
         }
 
         .cmp-contentfragment {
@@ -62,8 +67,9 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
             border: 1px solid darkgray;
             border-radius: 4px;
             justify-content: center;
-            padding: 0 10px;
             margin: 0 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
 
             &__element-title {
                 display: none;

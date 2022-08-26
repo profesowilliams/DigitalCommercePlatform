@@ -69,6 +69,7 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
             justify-content: center;
             margin: 0 10px;
             margin-bottom: 20px;
+            padding-bottom: 10px;
 
             &__element-title {
                 display: none;

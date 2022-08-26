@@ -684,19 +684,23 @@ $colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-
                         text-align: left;
                         width: 100%;
                         line-height: 50px;
+                        padding-top: 10px;
 
                         &-link {
                             line-height: unset;
+                            color: map-get($color-palette,"teal");
+                            text-decoration: none;
                         }
                     }
 
                     &__content {
-                        box-shadow: 0px 7px 12px 0px #888888;
-                        padding: 10px;
+                        box-shadow: 0px 7px 12px 0px map-get($color-palette,"cool-gray-8");
+                        padding: 20px;
                         margin: 15px 0px 0px 10px;
                         border-radius: 4px;
                         align-items: left;
                         display: block;
+                        height: 300px;
                     }
 
                     &__description {
@@ -788,7 +792,7 @@ $colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-
                                 }
             
                                 &__content {
-                                    box-shadow: 0px 7px 12px 0px #888888;
+                                    box-shadow: 0px 7px 12px 0px map-get($color-palette,"charcoal");
                                     padding: 10px;
                                     margin: 15px 0px 0px 10px;
                                     border-radius: 4px;
