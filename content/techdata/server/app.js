@@ -21479,7 +21479,6 @@ let simulateTimingInUpdating = 0;
 app.get("/ui-renewal/v1/getStatus", function (req, res) {
   const { id } = req.query;
   simulateTimingInUpdating++;
-  console.log("🚀id >>", id, "😀 > ", simulateTimingInUpdating);
   const success = {
     content: {
       status: "Active",
@@ -21543,5 +21542,5 @@ app.post("/ui-renewal/v1/order", function (req, res) {
       isError: true,
     },
   };
-  return res.status(400).json(fail);
+  return res.status(200).json(success);
 });

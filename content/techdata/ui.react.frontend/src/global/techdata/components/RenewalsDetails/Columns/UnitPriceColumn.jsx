@@ -24,6 +24,7 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
         });
       }}
       thousandSeparator
+      decimalScale={2}
     />
   );
 });
