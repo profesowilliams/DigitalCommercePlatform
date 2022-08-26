@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { PLANS_ACTIONS_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from ".././store/RenewalsStore";
@@ -20,7 +20,7 @@ function _ContractColumn({ data, eventProps }) {
   }, [detailRender])
   
   React.useEffect(() => {  
-    rowCollapsedIndexList?.includes(rowIndex) && setToggled(false);
+    rowCollapsedIndexList?.includes && rowCollapsedIndexList?.includes(rowIndex) && setToggled(false);
   }, [rowCollapsedIndexList])
   
   useEffect(() => {
@@ -73,6 +73,8 @@ function _ContractColumn({ data, eventProps }) {
       }
     });
     effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
+    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+    effects.setCustomState({ key: 'toaster', value: {isOpen:false}},options);
     /**
      * Ag-grid gives detailed-view the same index as normal grid rows. This
      * prevents targeting the toggle state appropriately. Hence DOM query.

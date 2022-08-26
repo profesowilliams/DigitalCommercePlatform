@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { nanoid } from 'nanoid';
 import { usPost } from './api';
-import {skip} from "rxjs/operators";
 import { initiateAEMLogin } from "./policies";
 
 export const createSessionId = () => nanoid(16)

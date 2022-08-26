@@ -1,5 +1,5 @@
-import { get } from "../../../../../utils/api";
-import { RENEWAL_STATUS_ACTIVE } from "../../../../../utils/constants";
+import { get, post } from "../../../../../utils/api";
+import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, RENEWAL_STATUS_ACTIVE } from "../../../../../utils/constants";
 
 const awaitRequest = (fetch, delay) =>
   new Promise((resolve) => setTimeout(() => resolve(fetch()), delay));
@@ -110,5 +110,60 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
     customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
     items
+  }
+}
+
+export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber }) {
+  const { updateRenewalOrderEndpoint = "", getStatusEndpoint = "", orderRenewalEndpoint = "", } = orderEndpoints;
+  if (!updateRenewalOrderEndpoint || !getStatusEndpoint || !orderRenewalEndpoint) {
+    console.log("⚠ please author renewal order endpoints");
+    return {
+      onClose:false
+    };
+  }
+  try {
+    const { source, reseller, endUser } = renewalData;
+    const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber };
+    if (renewalData?.items) payload.items = renewalData.items;
+    const updateresponse = await post(updateRenewalOrderEndpoint, payload);
+    if (updateresponse.status === 200) {
+      const getStatusConf = { getStatusEndpoint, id: source.id, delay: 1000, iterations: 8 };
+      const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf);
+      if (getStatusResponse) {
+        const orderPayload = { id: source.id };
+        const orderResponse = await post(orderRenewalEndpoint, orderPayload);
+        if (orderResponse.status === 200) {
+          const transactionNumber =
+            orderResponse.data.content.confirmationNumber;
+          return {
+            onClose: true,           
+            transactionNumber,
+            isSuccess: true
+          }          
+        } else
+          throw PROCESS_ORDER_FAILED
+      } else 
+        throw GET_STATUS_FAILED;
+    }
+  } catch (error) {      
+    const response = error?.response?.data;
+    const salesContentEmail = response?.salesContactEmail;
+    if (salesContentEmail && PROCESS_ORDER_FAILED) {
+      console.log("error.response >> ", error.response);
+      return {
+        transactionNumber:'',
+        isSuccess:false,
+        failedReason:PROCESS_ORDER_FAILED,
+        salesContentEmail
+      }    
+    } 
+    if (error === GET_STATUS_FAILED) {
+      return {       
+        transactionNumber: "",
+        isSuccess: false,
+        failedReason:GET_STATUS_FAILED,
+        salesContentEmail
+      }
+    }    
   }
 }

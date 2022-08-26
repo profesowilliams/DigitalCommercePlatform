@@ -2,32 +2,27 @@ import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
+import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import TransactionNumber from "./TransactionNumber";
+import { handleOrderRequesting } from "./orderingRequests";
 
 const CustomOrderButton = (properties) => ({ children }) =>
   <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>
     {children}
   </Button>;
 
-function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
+function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store }) {
   const [max30Characters, setMax30Characters] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState("");
   const [termsServiceChecked, setTermsServiceChecked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [isToasterOpen, setIsToasterOpen] = useState(false);
-  const [transactionNumber, setTransactionNumber] = useState(false);
-  const [onRequestSuccess, setOnRequestSuccess] = useState(true);
-  const [toasterMessage, setToasterMessage] = useState({successSubmission, failedSubmission});
-  const [quoteStatusNotUpdated,  setQuoteStatusNotUpdated] = useState(false);
+  const effects = store(state => state.effects);
 
   function resetDialogStates() {
-    // later with time refactor with zustand
-    if (quoteStatusNotUpdated) location.reload();
-    setIsToasterOpen(false);
     setSubmitted(false);
     setPurchaseOrderNumber("");
     setTermsServiceChecked(false);
     setMax30Characters(false);    
-    setTransactionNumber(false);    
   }
 
   function handleErrorOnMax(valueLength) {
@@ -38,7 +33,7 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
     }
   }
 
-  function onMaxPOChange(event) {
+  function onTextFieldChange(event) {
     const value = event?.target?.value;
     setPurchaseOrderNumber(value);
     handleErrorOnMax(value.length);
@@ -47,12 +42,35 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
     }
   }
 
-  function handleToggleToaster({isToggle, transactionNumber, onError = false}) {
-    setIsToasterOpen(isToggle);
-    if (onError) return setOnRequestSuccess(false);
-    setTransactionNumber(transactionNumber);
+  function handleToggleToaster({ transactionNumber, isSuccess = false, failedReason = '', salesContentEmail }) {
+    const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, salesContentEmail);
+    let toaster = {isOpen:true, isSuccess };
+    let message;   
+    if(isSuccess) {
+      const toasterChild = <TransactionNumber data={transactionNumber}/>
+      message = successSubmission;
+      toaster = {...toaster, message, Child: toasterChild};    
+      if (isDetails) return onClose({toaster,isSuccess})   
+    }
+    if (failedReason == GET_STATUS_FAILED){
+      message = "We are sorry, your order could not be processed, please try again later.";
+    }
+    if (failedReason == PROCESS_ORDER_FAILED){
+      message = replaceEmail(failedSubmission);
+    }
+    toaster = {...toaster, isSuccess, message };
+
+    effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+    resetDialogStates();
+    onClose();
   }
 
+  async function processOrder(){
+    setSubmitted((submitted) => !submitted);
+    const operationResponse = await handleOrderRequesting({orderEndpoints,renewalData,purchaseOrderNumber});
+    handleToggleToaster({...operationResponse});
+  }
+  
   function checkButtonDisabled() {
     return !(
       purchaseOrderNumber.length <= 30 &&
@@ -60,44 +78,29 @@ function usePlaceOrderDialogHook({successSubmission, failedSubmission}) {
       purchaseOrderNumber
     );
   }
-
   const OrderButtonComponent = submitted
     ? CustomOrderButton({
-        startIcon: (
-          <CircularProgress
-            size={20}
-            sx={{ color: "white", fontSize: "14px" }}
-          />
-        ),
-      })
+      startIcon: (
+        <CircularProgress
+          size={20}
+          sx={{ color: "white", fontSize: "14px" }}
+        />
+      ),
+    })
     : CustomOrderButton({
-        disabled: checkButtonDisabled(),
-        onClick: () => setSubmitted((submitted) => !submitted),
-      });
-
-    function passEmailOnToastMessage(responseBack = ''){    
-      const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, responseBack);     
-      if (responseBack === 'getStatusFailed') setQuoteStatusNotUpdated(true);
-      if (!responseBack) return setToasterMessage(prev => ({...prev, failedSubmission: "We are sorry, your order could not be processed, please try again later."}));
-      setToasterMessage(prev => ({...prev, failedSubmission: replaceEmail(prev.failedSubmission)}))
-    }
+      disabled: checkButtonDisabled(),
+      onClick: () => processOrder(),
+    });
 
   return {
     max30Characters,
     purchaseOrderNumber,
+    onTextFieldChange,
     termsServiceChecked,
-    onRequestSuccess,
-    setOnRequestSuccess,
-    submitted,
-    isToasterOpen,
-    transactionNumber,
-    toasterMessage,
-    resetDialogStates,
-    onMaxPOChange,
-    handleToggleToaster,
+    submitted,  
     setTermsServiceChecked,
     OrderButtonComponent,
-    passEmailOnToastMessage  
+    resetDialogStates     
   };
 }
 

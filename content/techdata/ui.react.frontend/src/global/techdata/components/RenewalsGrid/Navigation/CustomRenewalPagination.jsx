@@ -5,6 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
+import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import {
   maxCounterCalculator,
   minCounterCalculator,
@@ -17,15 +18,15 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const paginationData = useRenewalGridState((state) => state.pagination);
   const {
     totalCounter,
-    stepBy,
-    currentPage,
     currentResultsInPage,
     pageCount,
     pageNumber,
   } = paginationData;
+
   const gridApi = useRenewalGridState((state) => state.gridApi);
   const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
-  const setPaginationData = useRenewalGridState(
+  
+  const setCustomState = useRenewalGridState(
     (state) => state.effects.setCustomState
   );
   const {optionFieldsRef, isFilterDataPopulated} = useMultiFilterSelected();
@@ -76,7 +77,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     if (pageNumber > pageCount - 1) return
     const value = { ...paginationData, pageNumber:pageNumber+1 };
     console.log('🚀value >>',value);
-    setPaginationData({ key: "pagination", value },  {
+    setCustomState({ key: "pagination", value },  {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,
     });
@@ -86,12 +87,14 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     } else {    
       sendPagingRequest()
     }
+    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+    setCustomState({key:'toaster', value:{isOpen:false}},options)
   };
 
   const decrementHandler = () => {    
     if (pageNumber-1 <= 0) return
     const value = { ...paginationData, pageNumber:pageNumber-1 };
-    setPaginationData({ key: "pagination", value }, {
+    setCustomState({ key: "pagination", value }, {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,
     });
@@ -101,11 +104,12 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     } else {    
       sendPagingRequest()
     }       
+    setCustomState({key:'toaster', value:{isOpen:false}})
   };
 
   const goToSpecificPage = (specificNumber) => {
     const value = { ...paginationData, pageNumber:specificNumber+1};
-    setPaginationData({ key: "pagination", value }, {
+    setCustomState({ key: "pagination", value }, {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,
     });

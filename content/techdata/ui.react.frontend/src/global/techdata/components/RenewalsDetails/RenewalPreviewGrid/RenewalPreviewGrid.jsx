@@ -13,6 +13,9 @@ import UnitPriceColumn from "../Columns/UnitPriceColumn";
 import TransactionNumber from "../../RenewalsGrid/Orders/TransactionNumber";
 import { suppressNavigation } from "./supressAgGridKeyboardEvents";
 import { mapRenewalForUpdateDetails } from "../../RenewalsGrid/Orders/orderingRequests";
+import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
+import Toaster from "../../Widgets/Toaster";
+import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
@@ -64,6 +67,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     serverSide: false,
     paginationStyle: "none",
   };
+  const effects = useRenewalsDetailsStore( state => state.effects);
 
   // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
   const isEditingRef = useRef(isEditing);
@@ -209,8 +213,12 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const onOrderButtonClicked = () => {
     setIsPODialogOpen(true);
   }
-  const onClosDialog =() => {
-    setIsPODialogOpen(false);
+  const onCloseDialog =({isSuccess = false, toaster}) => {
+    setIsPODialogOpen(false); 
+    if(isSuccess){
+      effects.setCustomState({ key: 'toaster', value: { ...toaster } }, {key:TOASTER_LOCAL_STORAGE_KEY, saveToLocal: true});
+      location.href=compProps.quotePreview.renewalsUrl
+    }
   }
 
   return (
@@ -246,13 +254,20 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         ></Modal>
       )}
       <PlaceOrderDialog
-        onClose={onClosDialog}
+        onClose={onCloseDialog}
         isDialogOpen={isPODialogOpen}
         orderingFromDashboard={compProps.orderingFromDashboard}
         orderEndpoints={orderEndpoints}
         closeOnBackdropClick={false}
         ToasterDataVerification={({data}) => data ? TransactionNumber(data) : null}
-        renewalData={mapRenewalForUpdateDetails(data)} />
+        renewalData={mapRenewalForUpdateDetails(data)}
+        store={useRenewalsDetailsStore}
+        isDetails={true}
+        />
+      <Toaster
+        onClose={() => effects.setCustomState({key:'toaster',value:{isOpen:false}})}
+        store={useRenewalsDetailsStore} 
+        message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
     </div>
   );
 }

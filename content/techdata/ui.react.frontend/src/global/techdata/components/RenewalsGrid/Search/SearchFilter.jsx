@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { SEARCH_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
 import { If } from "../../../helpers/If";
@@ -141,6 +141,8 @@ function _SearchFilter(
   }
 
   const handleDropdownSwitch = useCallback(() => {
+    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+    effects.setCustomState({key:'toaster',value:{isOpen:false}},options);
     if (isSearchCapsuleVisible) {
       handleCapsuleTextClick();
     }

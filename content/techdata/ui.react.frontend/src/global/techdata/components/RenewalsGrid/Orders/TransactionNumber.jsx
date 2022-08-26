@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Menu, MenuItem } from "@mui/material";
 
-function TransactionNumber(data) {
+function TransactionNumber({data}) {
     const [contextMenu, setContextMenu] = useState(null);
     const handleContextMenu = (e) => {
       e.preventDefault();

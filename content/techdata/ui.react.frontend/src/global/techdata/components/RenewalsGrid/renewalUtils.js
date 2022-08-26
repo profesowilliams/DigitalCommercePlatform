@@ -5,6 +5,7 @@ import {
   PLANS_ACTIONS_LOCAL_STORAGE_KEY,
   SEARCH_LOCAL_STORAGE_KEY,
   SORT_LOCAL_STORAGE_KEY,
+  TOASTER_LOCAL_STORAGE_KEY,
 } from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
 
@@ -265,6 +266,10 @@ export function setLocalStorageData(key, value) {
     localStorage.setItem(key || '', JSON.stringify(value) || '');
 }
 
+export function removeLocalStorageData(key = '') {
+    key && localStorage.removeItem(key);
+}
+
 /**
  * Check if a key is present in localstorage
  * @param {string} key 
@@ -292,10 +297,12 @@ export function clearLocalStorageGridData() {
     localStorage.removeItem(SORT_LOCAL_STORAGE_KEY);
     localStorage.removeItem(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
     localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(TOASTER_LOCAL_STORAGE_KEY);
 }
 
 export function isFromRenewalDetailsPage() {
-    return (document.referrer.split('?')[0])?.split('/')?.pop() === 'renewal-details.html';
+    const renewalsDetailsUrl = process.env.NODE_ENV === "development" ? 'td-renewals-details-react' : 'renewal-details.html';
+    return (document.referrer.split('?')[0])?.split('/')?.pop() === renewalsDetailsUrl;
 }
 
 /**

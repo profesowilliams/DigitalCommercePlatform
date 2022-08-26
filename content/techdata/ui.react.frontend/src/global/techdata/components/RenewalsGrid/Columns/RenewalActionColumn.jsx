@@ -3,7 +3,6 @@ import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { mapRenewalForUpdateDashboard } from "../Orders/orderingRequests";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
-import TransactionNumber from "../Orders/TransactionNumber";
 import {
   getLocalStorageData,
   hasLocalStorageData,
@@ -144,9 +143,9 @@ function _RenewalActionColumn({ eventProps }) {
           onClose={() => setToggleOrderDialog(false)}
           orderingFromDashboard={orderingFromDashboard}
           renewalData={fixQuoteDataUponRequest(data)}
-          closeOnBackdropClick={false}
-          ToasterDataVerification={({data}) => data ? TransactionNumber(data) : null}
+          closeOnBackdropClick={false}  
           orderEndpoints={orderEndpoints}
+          store={useRenewalGridState}
         />
         <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />
       </div>

@@ -21542,5 +21542,5 @@ app.post("/ui-renewal/v1/order", function (req, res) {
       isError: true,
     },
   };
-  return res.status(200).json(success);
+  return res.status(404).json(fail);
 });

@@ -1,12 +1,8 @@
 import Create from "zustand";
-import { renewalsComputed } from "./RenewalsComputed";
-// import { createTrackedSelector } from "react-tracked";
 import { renewalsEffects } from "./RenewalsEffects";
-//Removed temporarily to fix an issue with the pipeline
-//import { mountStoreDevtool } from "simple-zustand-devtools";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
 import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import moment from "moment";
+
 import { DATE_DEFAULT_OPTIONS } from "./RenewalsStoreConstants";
 
 const INITIAL_STATE = {
@@ -39,7 +35,13 @@ const INITIAL_STATE = {
   renewalOptionState:null,
   resetFilter:false,
   rowCollapsedIndexList:null,
-  dueDaysIcons: null
+  dueDaysIcons: null,
+  toaster:{
+    isOpen:false,
+    message:"",
+    origin:"dashboard",
+    isSuccess:false
+  }
 };
 
 /**
@@ -78,11 +80,11 @@ const store = (set, get, a) => ({
   effects: renewalsEffects(set, get),
 });
 
-const renewalStore = Create(store);
-// export const useRenewalGridState = createTrackedSelector(renewalStore);
-export const useRenewalGridState = renewalStore;
-//Removed temporarily to fix an issue with the pipeline
-/*if (process.env.NODE_ENV === "development") {
-  mountStoreDevtool("RenewalsStore", renewalStore);
+export const useRenewalGridState = Create(store);
+
+if (process.env.NODE_ENV === "development") {
+  import("simple-zustand-devtools").then(({mountStoreDevtool}) => {
+    mountStoreDevtool("RenewalsStore", useRenewalGridState);
+  });
 }
-*/
+

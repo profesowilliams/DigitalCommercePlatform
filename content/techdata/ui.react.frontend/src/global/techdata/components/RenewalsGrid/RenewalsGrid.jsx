@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
+import { LOCAL_STORAGE_KEY_USER_DATA, TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
-import useGridFiltering from "../../hooks/useGridFiltering";
 import Grid from "../Grid/Grid";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
@@ -28,6 +27,8 @@ import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../.
 import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./renewalUtils";
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
+import Toaster from "../Widgets/Toaster";
+import TransactionNumber from "./Orders/TransactionNumber";
 
 function ToolTip({ toolTipData }) {
   return (
@@ -49,7 +50,6 @@ function RenewalsGrid(props) {
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
-  const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
   const firstAPICall = useRef(true);
   
   const { setToolTipData, setCustomState } = effects;
@@ -87,6 +87,13 @@ function RenewalsGrid(props) {
     options.defaultSortingDirection = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).sort;
     secondLevelOptions.colId = null;
     secondLevelOptions.sort = null;
+  }
+
+  if (hasLocalStorageData(TOASTER_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
+    const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
+    const transactionNumber = toasterData.Child?.props?.data;
+    toasterData.Child = <TransactionNumber data={transactionNumber}/>   
+    setTimeout(() => effects.setCustomState({key:'toaster', value:toasterData}), 800);
   }
 
   const redirectToShop = () => {
@@ -280,8 +287,14 @@ function RenewalsGrid(props) {
     });
   }
 
+  function onCloseToaster() {
+    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+    const toasterUpdated = { key: 'toaster', value: { isOpen: false } };
+    setCustomState(toasterUpdated, options);
+  }
+
   return (
-    <section>       
+    <section>      
       <div className="cmp-renewals-subheader">
         <CustomRenewalPagination
           onQueryChanged={onQueryChanged}
@@ -331,6 +344,10 @@ function RenewalsGrid(props) {
             ref={customPaginationRef}
           />
       </div>
+      <Toaster
+        onClose={onCloseToaster}
+        store={useRenewalGridState} 
+        message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
     </section>
   );
 }

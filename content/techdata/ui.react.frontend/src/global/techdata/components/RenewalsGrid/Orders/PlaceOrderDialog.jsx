@@ -3,12 +3,11 @@ import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
 import React, { Suspense } from "react";
 import { Dismiss } from "../../../../../fluentIcons/FluentIcons";
-import RenewalOrder from "./RenewalOrder";
-import Loader from "../../Widgets/Loader";
 import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
 import usePlaceOrderDialogHook from "./usePlaceOrderDialogHook";
+import { useEffect } from "react";
 
-const LazyToaster = React.lazy(() => import("../../Widgets/Toaster"));
+
 
 function PlaceOrderDialog({
   orderingFromDashboard,
@@ -16,8 +15,9 @@ function PlaceOrderDialog({
   isDialogOpen,
   onClose,
   closeOnBackdropClick,
-  ToasterDataVerification,
   orderEndpoints,
+  isDetails = false,
+  store
 }) {
   const { endUser } = renewalData;
   const {
@@ -31,22 +31,17 @@ function PlaceOrderDialog({
   const {
     max30Characters,
     purchaseOrderNumber,
-    onMaxPOChange,
+    onTextFieldChange,
     termsServiceChecked,
-    submitted,
-    isToasterOpen,
-    transactionNumber,
-    toasterMessage,
-    resetDialogStates,
+    submitted,  
     setTermsServiceChecked,
-    handleToggleToaster,
     OrderButtonComponent,
-    onRequestSuccess,
-    passEmailOnToastMessage
-  } = usePlaceOrderDialogHook({successSubmission, failedSubmission});   
+    resetDialogStates   
+  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store});   
 
+  useEffect(() => console.log("🎆 rerenders placeorderdialog") , []);
 
-  const handleClose = () => onClose(); 
+  const handleClose = (isSuccess = false) => onClose(isSuccess); 
 
   const showEnuserCompanyName = (text) => {
     if (!!text && text.includes("({enduser-companyname})")) {
@@ -86,6 +81,7 @@ function PlaceOrderDialog({
 
   const handleCloseDialog = (event, reason) => {
     if (reason === "backdropClick" && !closeOnBackdropClick) return;
+    resetDialogStates();
     handleClose();
   };
 
@@ -99,7 +95,7 @@ function PlaceOrderDialog({
       >
         <div className="place-cmp-order-dialog-container">
           <div className="place-cmp-order-dialog-container__closeIcon">
-            <Dismiss onClick={handleClose} />
+            <Dismiss onClick={handleCloseDialog} />
           </div>
           <p className="cmp-place-order-title">
             {showEnuserCompanyName(placeOrderDialogTitle)}
@@ -108,7 +104,7 @@ function PlaceOrderDialog({
             <TextField
               error={max30Characters}
               value={purchaseOrderNumber}
-              onChange={onMaxPOChange}
+              onChange={onTextFieldChange}
               helperText="Max 30 characters"
               {...PlaceOrderMaterialUi.textfieldsStyles}
             />
@@ -127,33 +123,13 @@ function PlaceOrderDialog({
           </div>
           <div className="cmp-place-order-actions">
             {submitted ? (
-              <RenewalOrder
-                handleToggleToaster={handleToggleToaster}
-                handleClose={handleClose}
-                renewalData={renewalData}
-                customerPO={purchaseOrderNumber}
-                orderEndpoints={orderEndpoints}
-                passEmailOnToastMessage={passEmailOnToastMessage}
-              >
-                {" "}
-                <OrderButtonComponent> Submitting </OrderButtonComponent>{" "}
-              </RenewalOrder>
+              <OrderButtonComponent> Submitting </OrderButtonComponent>
             ) : (
               <OrderButtonComponent> Order </OrderButtonComponent>
             )}
           </div>
         </div>
       </Dialog>
-      <Suspense fallback={<Loader />}>
-        <LazyToaster
-          isToasterOpen={isToasterOpen}
-          onClose={resetDialogStates}
-          isSuccess={onRequestSuccess}
-          message={toasterMessage}
-        >
-          <ToasterDataVerification data={transactionNumber} />
-        </LazyToaster>
-      </Suspense>
     </>
   );
 }

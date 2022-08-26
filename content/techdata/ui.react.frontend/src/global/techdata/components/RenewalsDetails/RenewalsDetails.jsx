@@ -237,13 +237,6 @@ function RenewalsDetails(props) {
           onModalClosed={modal.onModalClosed}
         ></Modal>
       )}      
-      <Toaster
-        autoClose={true}
-        isToasterOpen={isToasterOpen}
-        onClose={closeToaster}
-        isSuccess={true}
-        message={{successSubmission: componentProp?.quoteEditing?.successUpdate}}
-      />      
       <CancelDialog
         isDialogOpen={openCancelDialog}
         onClose={closeCancelDialog}

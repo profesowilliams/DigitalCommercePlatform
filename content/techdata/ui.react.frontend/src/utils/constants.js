@@ -88,4 +88,5 @@ export const ERROR_CREATE_QUOTE_ERROR_IN_PRICE = 'Error in pricing conditions';
 export const GET_STATUS_FAILED = "getStatusFailed";
 export const RENEWAL_STATUS_ACTIVE = "Active"
 export const PROCESS_ORDER_FAILED = "processOrderFailed";
+export const TOASTER_LOCAL_STORAGE_KEY = "toasterData"
 

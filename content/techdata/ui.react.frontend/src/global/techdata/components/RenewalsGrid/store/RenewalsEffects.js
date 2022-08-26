@@ -1,5 +1,5 @@
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import {  getLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import {  getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../renewalUtils";
 
 export const renewalsEffects = (set, get) => {
   function setFilterList(newFilterList = []) {
@@ -80,10 +80,15 @@ export const renewalsEffects = (set, get) => {
   }
 
   function setCustomState({key='', value }, options){
-    set({[key]:value})
     if (options && options.saveToLocal === true) {
       setLocalStorageData(options.key, value);
     }
+    if (options && options.clearLocal === true){
+      removeLocalStorageData(options.key)
+    }
+    const currentState = get()[key] || value;
+    if (typeof value === "object" && !Array.isArray(value)) return set({[key]:{...currentState,...value}})
+    set({[key]:value})
   }
 
   function setDateOptionList(dateOptionsList){

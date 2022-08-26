@@ -4,6 +4,7 @@ import Button from "../Widgets/Button";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import Count from "./components/Count";
+import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 
 
 export default function RenewalFilter({ aemData, onQueryChanged }) {
@@ -22,6 +23,8 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
     });
     toggleFilterModal();
     window.scrollTo(0,0);
+    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+    effects.setCustomState({key:'toaster', value:{isOpen:false}},options);
   };
 
   const handleFilterCloseClick = () => {
