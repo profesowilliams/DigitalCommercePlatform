@@ -569,7 +569,7 @@
 		}
 	}
 	&:focus {
-		border: 3px solid get-color("aqua");
+		outline: 3px solid get-color("aqua");
 	}
 	&:disabled {
 		background-color: get-color(cool-gray-1);
