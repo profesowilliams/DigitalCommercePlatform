@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { mapRenewalForUpdateDashboard } from "../Orders/orderingRequests";
+import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from "../Orders/orderingRequests";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import {
   getLocalStorageData,
@@ -20,14 +20,16 @@ const EllipsisIcon = (props) => (
 function _RenewalActionColumn({ eventProps }) {
   const [isToggled, setToggled] = useState(false);
   const [toggleOrderDialog, setToggleOrderDialog] = useState(false);
+  const [details,setDetails] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
   const rowCollapsedIndexList = useRenewalGridState(
     (state) => state.rowCollapsedIndexList
   );
   const { pageNumber } = useRenewalGridState((state) => state.pagination);
-  const { orderingFromDashboard, updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint } = useRenewalGridState(
+  const { orderingFromDashboard, ...endpoints } = useRenewalGridState(
     (state) => state.aemConfig
   );
+  const {updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint} = endpoints;
 
   const { value, data } = eventProps;
 
@@ -122,16 +124,19 @@ function _RenewalActionColumn({ eventProps }) {
     }, 0);
   };
 
-  const fixQuoteDataUponRequest = data => {
-    if (!data?.items) return data;
-    return mapRenewalForUpdateDashboard(data);
-  };
+  const handleCartIconClick = async (_event) => {
+    const quoteDetails = await fetchQuoteRenewalDetails(renewalDetailsEndpoint, data.source.id);
+    const {content = false} = quoteDetails;
+    setToggleOrderDialog( toggle => !toggle)
+    if (content?.details[0]) return setDetails(mapRenewalForUpdateDetails(content.details[0]));
+    setDetails(mapRenewalForUpdateDashboard(data));
+  }
 
   return (
     <>
       <div className="cmp-renewal-action-container">
         {orderingFromDashboard?.showOrderingIcon && data?.canPlaceOrder ? (
-          <CartIcon onClick={() => setToggleOrderDialog( toggle => !toggle)} />
+          <CartIcon onClick={handleCartIconClick} />
         ) : (
           <CartIcon
             fill="#c6c6c6"
@@ -142,7 +147,7 @@ function _RenewalActionColumn({ eventProps }) {
           isDialogOpen={toggleOrderDialog} 
           onClose={() => setToggleOrderDialog(false)}
           orderingFromDashboard={orderingFromDashboard}
-          renewalData={fixQuoteDataUponRequest(data)}
+          renewalData={details}
           closeOnBackdropClick={false}  
           orderEndpoints={orderEndpoints}
           store={useRenewalGridState}

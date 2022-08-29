@@ -60,8 +60,17 @@ const mapRenewalItemProducts = (items = []) => {
   }));
 }
 
+export const fetchQuoteRenewalDetails = async (renewalDetailsEndpoint, id , type) => {
+  try {
+    const details = await get(`${renewalDetailsEndpoint}?id=${id}`);
+    if (!details) return false;
+    return details.data;
+  } catch (error) {
+    console.log('error >>', error);
+  }
+}
+
 export const mapRenewalForUpdateDashboard = (renewalQuote) => {
-  console.log('renewalQuote >>', renewalQuote);
   const { source, reseller, endUser, customerPO } = renewalQuote;
   const items = mapRenewalItemProducts(renewalQuote.items);
   const { id } = source;
@@ -104,6 +113,8 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const { endUser, reseller, customerPO, source } = renewalQuote;
   const resellerData = extractDetailRenewalData(reseller);
   const endUserData = extractDetailRenewalData(endUser);
+  endUserData.name = endUserData.name;
+  resellerData.vendorAccountNumber = reseller.vendorAccountNumber.text; 
   return {
     reseller: { ...resellerData },
     source: { id: source?.id },
