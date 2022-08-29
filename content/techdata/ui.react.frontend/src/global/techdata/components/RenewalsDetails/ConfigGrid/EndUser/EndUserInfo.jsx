@@ -73,7 +73,7 @@ function EndUserInfo({
   const handleCountryChange = (e) => {
     setEndUserDetails(
       produce((draft) => {
-        draft.address.country = e.target.value;
+        draft.address.country.text = e.target.value;
       })
     );
   };

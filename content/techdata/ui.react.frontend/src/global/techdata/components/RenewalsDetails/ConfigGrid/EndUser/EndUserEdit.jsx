@@ -23,7 +23,7 @@ export default function EndUserEdit({
   const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
     endUserConstants;
   const { contact, address } = endUserDetails;
-  const contactName = contact[0].name;
+  const contactName = contact[0]?.name;
   const { line1, city, country, postalCode } = address;
 
   const showErrorField = (obj) => {
@@ -31,7 +31,7 @@ export default function EndUserEdit({
   };
 
   const showErrorMsg = (obj) => {
-    if (obj['text'].length === 0 && obj['isMandatory'] === true) {
+    if (obj['text']?.length === 0 && obj['isMandatory'] === true) {
       return { helperText: REQUIRED_FIELD };
     }
   };
@@ -55,8 +55,8 @@ export default function EndUserEdit({
   const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
 
   const validateNumber = (e, { maxLength }, handleInputFn) => {
-    if (e.target.value.length > maxLength){
-      handleInputFn(e.target.value.slice(0, maxLength));
+    if (e.target.value?.length > maxLength){
+      handleInputFn(e.target.value?.slice(0, maxLength));
     } else {
       handleInputFn(undefined, e);
     }
@@ -109,13 +109,15 @@ export default function EndUserEdit({
         {...handleValidation(city)}
       />
       <CustomTextField
+        disabled={country['canEdit'] === false}
         required
         id="country"
         label="Country"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={country || ''}
+        value={country['text'] || ''}
         onChange={(e) => handleCountryChange(e)}
+        {...handleValidation(country)}
       />
       <CustomTextField
         disabled={postalCode['canEdit'] === false}
@@ -129,19 +131,19 @@ export default function EndUserEdit({
         {...handleValidation(postalCode)}
       />
       <CustomTextField
-        disabled={contact[0].email['canEdit'] === false}
+        disabled={contact[0]['email']['canEdit'] === false}
         required
         id="email"
         label="Contact email"
         variant="standard"
-        value={contact[0].email.text || ''}
+        value={contact[0]['email']['text'] || ''}
         onChange={(e) => handleEmailChange(e)}
         inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
         helperText={!isEmailValid ? INVALID_EMAIL_TEXT : null}
       />
       <CustomTextField
-        disabled={contact[0].phone['canEdit'] === false}
+        disabled={contact[0]['phone']['canEdit'] === false}
         id="phone"
         label="Contact phone number"
         variant="standard"
