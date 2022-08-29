@@ -7,4 +7,3 @@ export const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-h
 export const isAuthormodeAEM = () => document.body.hasAttribute("data-authormode");
 
 export const isDisableChecksForDCPAccess = () => document.body.hasAttribute("data-disable-check-for-dcp-access");
-export const disableEntitlementsList = () => document.body.getAttribute("data-disable-entitlements-list");

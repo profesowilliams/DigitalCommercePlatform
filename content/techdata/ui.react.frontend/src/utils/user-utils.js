@@ -1,4 +1,4 @@
-import { isDisableChecksForDCPAccess, disableEntitlementsList } from "./featureFlagUtils";
+import { isDisableChecksForDCPAccess } from "./featureFlagUtils";
 export const ACCESS_TYPES = {
     DCP_ACCESS: "hasDCPAccess",
     CAN_VIEW_ORDERS: 'CanViewOrders',
@@ -23,7 +23,8 @@ export const hasDCPAccess = (user) => {
     if (isDisableChecksForDCPAccess()) {
         console.log("Returning as disableChecksForDCPAccess is true!!!");
         return true;
-    } else if (roleList && roleList.length) {
+    }
+    if (roleList && roleList.length) {
         for (let eachItem of roleList)
         {
             if (eachItem?.entitlement.toLowerCase().trim() === HAS_DCP_ACCESS.toLowerCase())
@@ -37,29 +38,9 @@ export const hasDCPAccess = (user) => {
 }
 
 export const hasAccess = ({user, accessType})=> {
-    var entitlementFlag = isDisableEntitlementsInList();
-
-
     const _accessType = accessType ? accessType : ACCESS_TYPES.CAN_VIEW_ORDERS
     const { roleList } = user ? user : { undefined };
-    var hasRoleList = hasRoleList(roleList);
-    if(entitlementFlag) {
-        return true;
-    } else if (hasRoleList) {
-        return true;
-    }
-    return false;
-}
 
-function isDisableEntitlementsInList() {
-	var entitlementsList = disableEntitlementsList();
-    if(entitlementsList && entitlementsList.indexOf(ACCESS_TYPES.CAN_VIEW_ORDERS) >= 0) {
-        console.log("Returning as disableEntitlementsList has CanViewOrders!!!");
-        return true;
-    }
-}
-
-function hasRoleList(roleList) {
     if (roleList && roleList.length) {
         for (let eachItem of roleList)
         {
@@ -70,4 +51,5 @@ function hasRoleList(roleList) {
         }
     }
     return false;
+    // return window.location.hostname === 'localhost' ? true : false;
 }
