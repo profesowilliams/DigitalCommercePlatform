@@ -16,7 +16,6 @@ import CancelAndSave from "./CancelAndSave";
 import Saving from "./Saving";
 import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
-import Toaster from '../Widgets/Toaster';
 import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
 import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
 
@@ -33,7 +32,6 @@ function RenewalsDetails(props) {
   const shopURL = componentProp.shopURL;
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)
-  const [toggleOpen, setToggleOrder] = useState(false);
 
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
@@ -41,7 +39,6 @@ function RenewalsDetails(props) {
 
   const [toggleEdit, setToggleEdit] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [isToasterOpen, setIsToasterOpen] = useState(false);
 
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
@@ -125,10 +122,6 @@ function RenewalsDetails(props) {
     }
   }
   
-  const closeToaster = () => {
-    setIsToasterOpen(false);
-  }
-
   const handleIconSaveClick = async () => {
     setSaving(true);
     const isSuccess = await updateDetails();
@@ -138,9 +131,10 @@ function RenewalsDetails(props) {
     setSaving(false);
   }
 
-  const updateDetails = async (endUserDetails) => {
+  const updateDetails = async (endUserDetails, resellerDetails) => {
     try {
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
+      renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
       renewalsDetails.items = gridRef.current.getMutableGridData();
       const updated = await updateRenewalDetails(renewalsDetails);
       if(updated) {
@@ -150,10 +144,9 @@ function RenewalsDetails(props) {
           delay: 2000,
           iterations: 7})
         if(isActiveQuote) {            
-          setIsToasterOpen(true);  
           const toaster = {isOpen:true, isAutoClose:true, isSuccess: true, message:componentProp.quoteEditing.successUpdate}
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
-          if (endUserDetails)
+          if (endUserDetails || resellerDetails)
             changeRefreshDetailApiState();
           return true;          
         }

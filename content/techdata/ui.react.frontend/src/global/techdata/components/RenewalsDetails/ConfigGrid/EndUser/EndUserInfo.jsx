@@ -18,6 +18,8 @@ import {
 } from '../../../../../../fluentIcons/FluentIcons';
 import { teal } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
+import EditFlow from "../Common/EditFlow";
+import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
 
 function EndUserInfo({
   endUser,
@@ -30,6 +32,9 @@ function EndUserInfo({
   const [isToastOpen, setIsToastOpen] = useState(false);
   const [isToastSuccess, setIsToastSucess] = useState(true);
   const { canEdit, isValid } = endUser;
+
+  const effects = useRenewalsDetailsStore(state => state.effects);
+  const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
 
   const endUserResponseAsObj = isObject(endUser.name);
   const endUserData = getModifiedEndUserData(endUserResponseAsObj, endUser);
@@ -110,19 +115,16 @@ function EndUserInfo({
     );
   };
 
-  const handleIconEditClick = () => {
-    setEditMode(true);
+  const setLockedEdit = (flag) => {
+    setEditMode(flag);
+    effects.setCustomState({ key: 'isEditingDetails', value: flag });
   };
 
-  const handleIconCancelClick = () => {
-    setEditMode(false);
-  };
-
-  const handleIconSaveClick = async () => {
+  const saveHandler = async () => {
     setSaving(true);
     await updateDetails(endUserDetails);
     setSaving(false);
-    setEditMode(false);
+    setLockedEdit(false);
   };
 
   useEffect(() => {
@@ -132,24 +134,6 @@ function EndUserInfo({
 
   const showEditButton = canEdit && !saving,
     showError = !isValid && !saving;
-
-  const EditFlow = () => {
-    return (
-      <If
-        condition={!editMode}
-        Then={
-          <Edit btnClass="icon-button__endUser" handler={handleIconEditClick} />
-        }
-        Else={
-          <CancelAndSave
-            customClass="cancel-save__absolute"
-            cancelHandler={handleIconCancelClick}
-            saveHandler={handleIconSaveClick}
-          />
-        }
-      />
-    );
-  };
 
   const handleToastClose = () => {
     setIsToastOpen(false);
@@ -232,7 +216,14 @@ function EndUserInfo({
         {productLines.endCustomerLabel}
       </span>
       {showError && <MissingInfo>End user missing information</MissingInfo>}
-      {showEditButton && <EditFlow />}
+      {showEditButton && (
+        <EditFlow
+          disabled={!editMode && isEditingDetails}
+          editValue={editMode} 
+          setEdit={setLockedEdit} 
+          saveHandler={saveHandler} 
+        />
+      )}
       {saving && <Saving customClass="saving__absolute" />}
       <Snackbar
         sx={toastStyle}

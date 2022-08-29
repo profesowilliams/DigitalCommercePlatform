@@ -37,7 +37,7 @@
   .icon-button {
     display: flex;
     align-items: center;
-    &.underlined_hover:hover {
+    &.underlined_hover:not(.disabled):hover {
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 3px;
@@ -48,6 +48,11 @@
       &:hover {
         text-decoration: underline;
         text-underline-offset: 3px;
+      }
+      &:disabled {
+        color: #D9D8D7;
+        text-decoration: none;
+        cursor: default;
       }
     }
   }

@@ -29,51 +29,54 @@ export function CalendarFilled(props) {
 }
 
 export function CloseRoundIcon(props) {
+  const { color, ...rest } = props;
   return (
     <svg
       width={16}
       height={16}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...rest}
     >
       <path
         d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM5.81 5.114l.069.058L8 7.292l2.121-2.12a.5.5 0 0 1 .638-.058l.07.058a.5.5 0 0 1 .057.637l-.058.07L8.708 8l2.12 2.121a.5.5 0 0 1 .058.638l-.058.07a.5.5 0 0 1-.637.057l-.07-.058L8 8.708l-2.121 2.12a.5.5 0 0 1-.638.058l-.07-.058a.5.5 0 0 1-.057-.637l.058-.07L7.292 8l-2.12-2.121a.5.5 0 0 1-.058-.638l.058-.07a.5.5 0 0 1 .637-.057Z"
-        fill="#005758"
+        fill={color || "#005758"}
       />
     </svg>
   );
 }
 
 export function SaveIcon(props) {
+  const { color, ...rest } = props;
   return (
     <svg
       width={14}
       height={14}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...rest}
     >
       <path
         d="M0 2a2 2 0 0 1 2-2h8.379a2 2 0 0 1 1.414.586l1.621 1.621A2 2 0 0 1 14 3.621V12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2Zm2-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1V8.5A1.5 1.5 0 0 1 3.5 7h7A1.5 1.5 0 0 1 12 8.5V13a1 1 0 0 0 1-1V3.621a1 1 0 0 0-.293-.707l-1.621-1.621A1 1 0 0 0 10.379 1H10v2.5A1.5 1.5 0 0 1 8.5 5h-4A1.5 1.5 0 0 1 3 3.5V1H2Zm2 0v2.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V1H4Zm7 12V8.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5V13h8Z"
-        fill="#005758"
+        fill={color || "#005758"}
       />
     </svg>
   );
 }
 
 export function PenIcon(props) {
+  const { color, ...rest } = props;
   return (
     <svg
       width={18}
       height={18}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...rest}
     >
       <path
         d="M11.92 1.873a2.975 2.975 0 0 1 4.207 4.207l-.669.669-4.207-4.207.67-.669ZM10.544 3.25l-7.999 7.998a2.438 2.438 0 0 0-.655 1.195l-.878 3.95a.5.5 0 0 0 .597.597l3.926-.873a2.518 2.518 0 0 0 1.234-.678l7.982-7.982-4.207-4.207Z"
-        stroke="#005758"
+        stroke={color || "#005758"}
         strokeLinejoin="round"
       />
     </svg>

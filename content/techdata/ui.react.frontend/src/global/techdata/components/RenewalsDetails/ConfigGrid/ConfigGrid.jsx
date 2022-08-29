@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AgreementInfo from "./AgreementInfo";
 import EndUserInfo from "./EndUser/EndUserInfo";
-import ResellerInfo from "./ResellerInfo";
+import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
@@ -110,6 +110,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
         <ResellerInfo
           resellerLabels={quotePreview.reseller}
           reseller={reseller}
+          updateDetails={updateDetails}
         />
         <EndUserInfo
           productLines={quotePreview.productLines}

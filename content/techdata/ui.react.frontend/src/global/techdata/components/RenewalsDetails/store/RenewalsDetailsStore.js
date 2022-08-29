@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     isSuccess:false,
     isAutoClose:false,
   },
-  isEditingReseller:false
+  isEditingDetails: false,
 };
 
 const store = (set, get, a) => ({

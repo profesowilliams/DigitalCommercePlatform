@@ -92,10 +92,13 @@
       align-items: center;
       margin: 0;
     }
-    .icon-button__endUser {
-      position: absolute;
-      right: 20px;
-      top: 30px;
+    .icon-button {
+      &__endUser,
+      &__reseller {
+        position: absolute;
+        right: 20px;
+        top: 30px;
+      }
     }
   }
 }

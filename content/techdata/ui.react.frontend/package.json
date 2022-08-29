@@ -61,6 +61,7 @@
         "i18next": "^19.4.5",
         "i18next-http-backend": "^1.0.15",
         "immer": "^1.10.0",
+        "lodash.set": "^4.3.2",
         "moment": "^2.26.0",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",

@@ -86,7 +86,7 @@ export const mapRenewalForUpdateDashboard = (renewalQuote) => {
 }
 
 const extractDetailRenewalData = (quote) => {
-  const { contact, address } = quote;
+  const { contact, address, vendorAccountNumber } = quote;
   const [_contact] = contact;
   return {
     contact: {
@@ -104,7 +104,8 @@ const extractDetailRenewalData = (quote) => {
       country: address?.country?.text,
       county: address?.county?.text,
       countryCode: address?.countryCode?.text
-    }
+    },
+    vendorAccountNumber: vendorAccountNumber?.text,
   }
 }
 
