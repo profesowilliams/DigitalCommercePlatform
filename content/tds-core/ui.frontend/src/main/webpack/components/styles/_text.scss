@@ -48,6 +48,7 @@
             padding-left: 1vw;
             padding-bottom: 0rem;
             padding-top: 1.5rem;
+            display: flex !important;
             &::before {
               content: "\2022" !important;
               color: inherit;
