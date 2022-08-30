@@ -222,6 +222,7 @@ function EndUserInfo({
           editValue={editMode} 
           setEdit={setLockedEdit} 
           saveHandler={saveHandler} 
+          customClass={'cancel-save__absolute'}
         />
       )}
       {saving && <Saving customClass="saving__absolute" />}

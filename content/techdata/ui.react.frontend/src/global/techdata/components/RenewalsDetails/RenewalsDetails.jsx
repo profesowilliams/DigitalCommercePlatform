@@ -18,6 +18,7 @@ import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
 import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
 import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
+import EditFlow from './ConfigGrid/Common/EditFlow'; 
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -31,8 +32,10 @@ function RenewalsDetails(props) {
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
   const shopURL = componentProp.shopURL;
   const isLoggedIn = useStore(state => state.isLoggedIn)
-  const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)
+  const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)  
+  const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
 
+  const [editMode, setEditMode] = useState(false);
   const [renewalsDetails, setRenewalsDetails] = useState(null);
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
@@ -101,14 +104,6 @@ function RenewalsDetails(props) {
     }
   }, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
 
-  const handleIconEditClick = () => {
-    setToggleEdit(false);
-  };
-
-  const handleIconCancelClick = () => {
-    setOpenCancelDialog(true);
-  };
-
   // Close Cancel Dialog logic, reset data if necessary
   const closeCancelDialog = (resetFlag) => {
     // Close dialog
@@ -120,16 +115,23 @@ function RenewalsDetails(props) {
       // Toggle Edit mode
       setToggleEdit(true);
     }
-  }
+  }  
   
-  const handleIconSaveClick = async () => {
+  const handleCancel = () => {
+    setOpenCancelDialog(true);
+  };
+
+  const handleSave = async () => {
     setSaving(true);
-    const isSuccess = await updateDetails();
-    if(isSuccess) {    
-      setToggleEdit(true);      
-    }
+    await updateDetails();
     setSaving(false);
+    setLockedEdit(false);
   }
+
+  const setLockedEdit = (flag) => {
+    setEditMode(flag);
+    effects.setCustomState({ key: 'isEditingDetails', value: flag });
+  };
 
   const updateDetails = async (endUserDetails, resellerDetails) => {
     try {
@@ -166,22 +168,6 @@ function RenewalsDetails(props) {
     return true;
   }
 
-  const EditFlow = () => {
-    return (
-      <If
-        condition={toggleEdit}
-        Then={<Edit btnClass="underlined_hover" handler={handleIconEditClick} />}
-        Else={
-          <CancelAndSave
-            cancelHandler={handleIconCancelClick}
-            saveHandler={handleIconSaveClick}
-            btnClass="underlined_hover"
-          />
-        }
-      />
-    )
-  };
-
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
     <div className="cmp-quote-preview cmp-renewal-preview">
@@ -197,7 +183,15 @@ function RenewalsDetails(props) {
           />
           <div className="details-container">
             <span className="details-preview">Details</span>
-            {isEditable(renewalsDetails) && <EditFlow />}
+            {isEditable(renewalsDetails) && (
+            <EditFlow
+              disabled={!editMode && isEditingDetails} 
+              editValue={editMode} 
+              setEdit={setLockedEdit} 
+              saveHandler={handleSave} 
+              cancelHandler={handleCancel}
+            />
+            )}
             {saving && <Saving />}
           </div>
           <RenewalPreviewGrid

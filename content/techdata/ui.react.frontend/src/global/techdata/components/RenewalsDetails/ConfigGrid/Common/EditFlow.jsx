@@ -8,6 +8,8 @@ function EditFlow({
   editValue,
   setEdit,
   saveHandler,
+  cancelHandler,
+  customClass,
 }) {
   const handleIconEditClick = () => {
     setEdit(true);
@@ -15,6 +17,7 @@ function EditFlow({
 
   const handleIconCancelClick = () => {
     setEdit(false);
+    cancelHandler();
   };
 
   const handleIconSaveClick = () => {
@@ -30,7 +33,7 @@ function EditFlow({
       Else={
         <CancelAndSave
           disabled={disabled}
-          customClass="cancel-save__absolute"
+          customClass={customClass}
           cancelHandler={handleIconCancelClick}
           saveHandler={handleIconSaveClick}
           btnClass="underlined_hover"

@@ -69,6 +69,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     paginationStyle: "none",
   };
   const effects = useRenewalsDetailsStore( state => state.effects);
+  const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
 
   // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
   const isEditingRef = useRef(isEditing);
@@ -82,6 +83,14 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     gridApiRef.current = api;
   }
 
+  useEffect(() => {
+   setOrderButtonLabel(
+     isEditingDetails
+       ? gridProps?.saveAndOrderButtonLabel
+       : gridProps?.orderButtonLabel
+   );
+  }, [isEditingDetails])
+
   // On isEditing prop change, update ref and refresh the cell
   useEffect(() => {
     isEditingRef.current = isEditing;
@@ -91,11 +100,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         force: true,
       });
     }
-    setOrderButtonLabel(
-      isEditing
-        ? gridProps?.saveAndOrderButtonLabel
-        : gridProps?.orderButtonLabel
-    );
   }, [isEditing])
 
   useImperativeHandle(ref, () => ({
