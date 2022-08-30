@@ -126,9 +126,11 @@ function RenewalsDetails(props) {
     await updateDetails();
     setSaving(false);
     setLockedEdit(false);
+    setToggleEdit(true);
   }
 
   const setLockedEdit = (flag) => {
+    setToggleEdit(false);
     setEditMode(flag);
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
   };
