@@ -41,6 +41,21 @@ export class RenewalsGrid {
   radioNinetyPlus = 'input[id="5"]'
   btnShowResult = '.filter-modal-container__results'
   msgNoRows = '.customErrorNoRows'
+  btnThreeDots = '.cmp-renewal-action-container>svg:nth-child(2)'
+  btnpdf = '.icon-container button:nth-child(1)'
+  btnxls = '.icon-container button:nth-child(2)'
+  btndetails = '.icon-container button:nth-child(3)'
+  btnRenewalPlanArrow = 'div[unselectable="on"] .cmp-renewal-duration:not(div[style])'
+  lblRenewalPlanLeft = '.card-right-border .leftHeader h4'
+  lblRenewalPlanPriceLeft = '.card-right-border .rightHeader h4'
+  lblQuoteIDLeft = '.card-right-border div[row-id="0"] div[col-id="renewalGridOptions"]'
+  lblRefNoLeft = '.card-right-border div[row-id="1"] div[col-id="renewalGridOptions"]'
+  lblExpiryDateLeft = '.card-right-border div[row-id="2"] div[col-id="renewalGridOptions"]'
+  lblRenewalPlanRight = '.card-no-border .leftHeader h4'
+  lblRenewalPlanPriceRight = '.card-no-border .rightHeader h4'
+  lblQuoteIDRight = '.card-no-border div[row-id="0"] div[col-id="renewalGridOptions"]'
+  lblRefNoRight = '.card-no-border div[row-id="1"] div[col-id="renewalGridOptions"]'
+  lblExpiryDateRight = '.card-no-border div[row-id="2"] div[col-id="renewalGridOptions"]'
 
 
   navigate() {
