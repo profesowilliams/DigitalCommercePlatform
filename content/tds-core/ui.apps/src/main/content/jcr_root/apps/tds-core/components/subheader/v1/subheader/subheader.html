@@ -13,7 +13,7 @@
                </div>
         	     <span class="cmp-sub-header__span" data-sly-test="${!logo}" style="color: ${properties.fontColor @ context='styleToken'}">${properties.subheaderTitle}</span>
     	     </div>
-          <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
+          <ol data-sly-test.ol="${tabs.items && tabs.items.size > 0}"
                data-sly-list.tab="${tabs.items}"
                role="tablist"
                class="cmp-tabs__tablist"
@@ -42,6 +42,7 @@
                     </sly>
                </li>
           </ol>
+          <ol data-sly-test="${!ol}"></ol>
           <sly data-sly-include="button.html"></sly>
     </div>
      <div data-sly-repeat.item="${tabs.items}"

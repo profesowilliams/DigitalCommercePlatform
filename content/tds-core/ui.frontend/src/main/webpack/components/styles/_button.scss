@@ -587,13 +587,15 @@
 	padding-right: 20px;
 	border-radius: 0.1875rem;
 	height: 100%;
-	@include mobile {
-		margin-left: 23px;
-	}
+
 }
 
 .button {
 	height: 100%;
+	@include mobile {
+		position: absolute;
+		right: 20px;
+	}
 	&.cmp-button--color-teal {
 		& .cmp-button {
 			@include cmp_button_style("teal");
