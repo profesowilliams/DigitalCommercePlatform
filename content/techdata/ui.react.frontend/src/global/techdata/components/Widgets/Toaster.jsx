@@ -16,13 +16,13 @@ function Toaster({
   const {isOpen, Child, isSuccess, message, isAutoClose = false } = toaster;
 
   useEffect(() => {
-    if (isAutoClose) {      
+    if (isOpen && isAutoClose) {      
       const timeout = setTimeout(() => {
         onClose();
       }, 6000);
       return () => clearTimeout(timeout);
     } 
-  }, [isAutoClose]);  
+  }, [isOpen]);  
 
   return (
     <div className="cmp-toaster-drawer">
