@@ -44,4 +44,51 @@ export const subHeader = () => {
             toolsTab.classList.add('cmp-tabs__tabpanel--custom-active');
         }
     }
+
+    function removeActiveClass(tabsArray) {
+        for(const tab of tabsArray) {
+            tab.classList.remove("cmp-tabs__tab--active");
+        }
+    }
+    
+    function isURL(href) {
+        try {
+            new URL(href);
+        } catch (ex) {
+            return false;
+        }
+        return true;
+    }
+    function getHref(href) {
+        // if href contains host domain, remove it.
+        let anchorRef = href;
+        if(isURL(href)) {
+            let url = new URL(href);
+            anchorRef = url.pathname;
+        }
+        return anchorRef;
+    }
+    
+    const subheaderNav = document.querySelector(".cmp-sub-header--sub-nav.new-sub");
+
+    if (subheaderNav) {
+        const subheaderTabs = subheaderNav.getElementsByClassName("cmp-tabs__tablist");
+        
+        const tabs =subheaderTabs[0]?.getElementsByClassName("cmp-tabs__tab") || [];
+    
+        const currentPagePath = subheaderNav.getAttribute("data-current-page-path") + ".html";
+    
+        for(const tab of tabs) {
+            let anchor = tab.getElementsByTagName("a")[0];
+            if(anchor) {
+                let href = getHref(anchor.getAttribute("href"));
+
+                if(currentPagePath === href || currentPagePath.endsWith(href)) {
+                    removeActiveClass(tabs);
+                    tab.classList.add("cmp-tabs__tab--active");
+                }
+            }
+        }
+    }
+}
 }
