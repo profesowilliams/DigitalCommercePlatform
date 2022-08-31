@@ -42,7 +42,7 @@ function EndUserInfo({
 
   let { contact } = endUserDetails;
   const [isEmailValid, setIsEmailValid] = useState(
-    contact[0]['email']['isValid'] || true
+    contact[0]?.email?.isValid || true
   );
 
   const handleEmailChange = (e) => {

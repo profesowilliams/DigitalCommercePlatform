@@ -5,7 +5,7 @@ import isEmail from 'validator/es/lib/isEmail';
 export default function useResellerHandlers(detailsObj, setStateFunction) {
     const { contact } = detailsObj;
     const [isEmailValid, setIsEmailValid] = useState(
-        contact[0]['email']['isValid'] || true
+        contact[0]?.email?.isValid || true
     );
 
     const numberRegex = /^(\d)*$/;
