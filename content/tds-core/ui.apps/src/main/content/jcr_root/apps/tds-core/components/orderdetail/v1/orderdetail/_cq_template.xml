@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"
+    subTotalLabel="Subtotal"
+    subtotalLabel="Subtotal"
+    downloadLinkText="Download PDF"
+    fileName="order"
+    orderStatusLabel="Status"
+    orderStatusItemsOpen="This order is open."
+    orderStatusItemsShipped="All items have been shipped."
+    orderStatusItemsInProcess="Your order is open and in process."
+    orderStatusItemsInReview="The order is in sales review. "
+    orderStatusItemsCancelled="Your order has been canceled."
+    orderStatusItemsOpenDescription="The order has all items opened."
+    orderStatusItemsShippedDescription="For more information, call your sales representative at 800-555-1212"
+    orderStatusItemsInProcessDescription="For more information, call your sales representative at 800-555-1212"
+    orderStatusItemsInReviewDescription="For more information, call your sales representative at 800-555-1212"
+    orderStatusItemsCancelledDescription="For more information, call your sales representative at 800-555-1212"
+    endUserLabel="End user"
+    shipToLabel="Ship to"
+    blindPackagingUsed="Blind Packaging Used"
+    blindPackagingNotUsed="Blind Packaging Not Used"
+    paymentLabel="Payment"
+    freightLabel="Freight"
+    taxLabel="Tax"
+    otherFeesLabel="Other Fees"
+    paymentTermsLabel="Terms"
+    paymentTotalLabel="Total"
+    currencyLabel="Prices displayed are in "
+    searchTitle="FILTER ORDERS"
+    searchButtonLabel="Apply"
+    clearButtonLabel="Clear all filters"
+    fromLabel="From:"
+    toLabel="To:"
+    datePlaceholder="DD/MM/YY"
+    modalTitle="Track My Order"
+    multipleOrderInformation="There are multiple shipments associated with this Order.  Click an invoice number to preview with the option to print, or Download All for a zip file of all shown here."
+    orderLabel="Order"
+    orderDateLabel="Placed on"
+    purchaseOrderLabel="Purchase Order:"
+    phoneNumberLabel="Phone number: +1 (800) 237-8931"
+    exportCSVLabel="Export XLS"
+    serialCellLabel="Serial №"
+    serialModal="Serial numbers"
+>
+    <keywordList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            key="allLines"
+            value="All Lines"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            key="contracts"
+            value="Contracts"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            key="licenses"
+            value="Licenses"
+        />
+    </keywordList>
+    <trackingIcons jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            carrier="FEDEX"
+            logoPath="/content/dam/techdata/digital-commerce-platform/tracking-logos/fedex.png"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            carrier="UPS"
+            logoPath="/content/dam/techdata/digital-commerce-platform/tracking-logos/ups.png/jcr:content/renditions/cq5dam.thumbnail.48.48.png"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            carrier="PITT-OHIO"
+            logoPath="/content/dam/techdata/digital-commerce-platform/tracking-logos/pitt_ohio.png"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            carrier="TRANSPLACE"
+            logoPath="/content/dam/techdata/digital-commerce-platform/tracking-logos/Transplace_Uber-Freight-Logo.png"
+        />
+    </trackingIcons>
+    <iconList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            iconKey="onHold"
+            iconValue="fas fa-hand-paper"
+            iconText="On Hold"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            iconKey="inProcess"
+            iconValue="fas fa-dolly"
+            iconText="In Process"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            iconKey="open"
+            iconValue="fas fa-box-open"
+            iconText="Open"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            iconKey="shipped"
+            iconValue="fas fa-check"
+            iconText="Shipped"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            iconKey="cancelled"
+            iconValue="fas fa-ban"
+            iconText="Cancelled"
+        />
+    </iconList>
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Line"
+            columnKey="displayLineNumber"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Mfr №"
+            columnKey="mfrNumber"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="TD №"
+            columnKey="tdNumber"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Description"
+            columnKey="displayName"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Qty"
+            columnKey="quantity"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Unit Price (USD)"
+            columnKey="unitPrice"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Total Price (USD)"
+            columnKey="totalPrice"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Status"
+            columnKey="status"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Track"
+            columnKey="trackings"
+        />
+        <item9
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Serial № License Key"
+            columnKey="serials"
+        />
+        <item10
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Invoice"
+            columnKey="invoice"
+        />
+    </columnList>
+    <exportColumnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="MFR No"
+            columnKey="MFRNo"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="TD No"
+            columnKey="TDNo"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Quantity"
+            columnKey="Quantity"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Unit Cost"
+            columnKey="UnitCost"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Extended Cost"
+            columnKey="ExtendedCost"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Contract No"
+            columnKey="ContractNo"
+        />
+    </exportColumnList>
+</jcr:root>

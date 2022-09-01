@@ -1,0 +1,12 @@
+<sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader">
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+    <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+    <sly data-sly-use.model="${'myrenewals.js' @uiServiceDomain = serviceData.uiServiceDomain,myRenewalsEndpoint=serviceData.myRenewalsEndpoint}">
+
+    <div id="MyRenewals" data-observe-mutation>
+        <div data-component="MyRenewals" data-cmp-type="react" className="myrenewals" data-config="${model.configJson}">
+        </div>
+    </div>
+</sly>
+
