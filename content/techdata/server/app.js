@@ -12935,19 +12935,19 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "source": {
                     "salesOrg": "IN96",
                     "targetSystem": "R3",
-                    "key": "U100000000137",
+                    "key": "U100000000517",
                     "system": "RQ",
                     "type": null,
-                    "id": "U100000000137"
+                    "id": "U100000000517"
                 },
-                "published": "2022-08-29T18:52:03.368Z",
+                "published": "2022-08-30T14:41:39.901Z",
                 "reseller": {
                     "id": "2000760",
                     "isValid": true,
                     "canEdit": true,
                     "vendorAccountName": null,
                     "vendorAccountNumber": {
-                        "text": "123",
+                        "text": "2717976",
                         "isValid": true,
                         "isMandatory": true,
                         "isDisplay": true,
@@ -12958,21 +12958,21 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "contact": [
                         {
                             "name": {
-                                "text": "ffull name",
+                                "text": " Michel test  ",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true
                             },
                             "email": {
-                                "text": "asd@asd.com",
+                                "text": "michel.vanderlaan@techdata.com",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true
                             },
                             "phone": {
-                                "text": "1123123112",
+                                "text": "",
                                 "isValid": true,
                                 "isMandatory": false,
                                 "isDisplay": true,
@@ -12998,24 +12998,24 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "isValid": true,
                     "canEdit": true,
                     "name": {
-                        "text": "Ahshokraj Thangaraja nameENdUSer",
+                        "text": "Mineral Exploration Corporation Limited",
                         "isValid": true,
                         "isMandatory": true,
                         "isDisplay": true,
                         "canEdit": true
                     },
-                    "nameUpper": "AHSHOKRAJ THANGARAJA NAMEENDUSER",
+                    "nameUpper": "MINERAL EXPLORATION CORPORATION LIMITED",
                     "contact": [
                         {
                             "name": {
-                                "text": "Ahshokraj Thangaraja",
+                                "text": "ERP MECL",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true
                             },
                             "email": {
-                                "text": "ahshokraj.t@glovis.co.in",
+                                "text": "erp@mecl.gov.in",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -13033,28 +13033,28 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "address": {
                         "id": null,
                         "line1": {
-                            "text": "C/O- Schenker India Private Limited Antariksh",
+                            "text": "C/O.agility Logistics Pvt. Ltd. Globe Complex,Building",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
                             "canEdit": true
                         },
                         "line2": {
-                            "text": "C/O- Schenker India Private Limited Antariksh1",
+                            "text": null,
                             "isValid": true,
                             "isMandatory": false,
                             "isDisplay": true,
                             "canEdit": true
                         },
                         "line3": {
-                            "text": "C/O- Schenker India Private Limited Antariksh3",
+                            "text": null,
                             "isValid": true,
                             "isMandatory": false,
                             "isDisplay": false,
                             "canEdit": false
                         },
                         "city": {
-                            "text": "Mum-Nasik H.way,Bhiwandithane",
+                            "text": "Bhiwandi",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -13098,18 +13098,18 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "product": [
                             {
                                 "type": "TECHDATA",
-                                "id": "VS7-STD-P-SSS-C",
+                                "id": "VCS7-STD-G-SSS-C",
                                 "name": null,
                                 "manufacturer": null,
                                 "manufacturerId": null,
                                 "localManufacturer": null,
                                 "classification": null,
-                                "family": "VI7-VSPHERE"
+                                "family": "VI7-VCENTER"
                             },
                             {
                                 "type": "MANUFACTURER",
-                                "id": "VS7-STD-P-SSS-C",
-                                "name": "Production Support/Subscription for VMwa",
+                                "id": "VCS7-STD-G-SSS-C",
+                                "name": "Basic Support/Subscription VMware vCente",
                                 "manufacturer": "VMware",
                                 "manufacturerId": "21",
                                 "localManufacturer": null,
@@ -13117,7 +13117,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "family": null
                             }
                         ],
-                        "quantity": 2.0,
+                        "quantity": 1.0,
                         "confirmedQuantity": 0.0,
                         "contractNumber": null,
                         "contractType": null,
@@ -13126,10 +13126,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "status": null,
                         "statusNotes": null,
                         "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 62623.596525,
-                        "unitCost": 0.0,
-                        "totalPrice": 125247.193050,
-                        "unitListPrice": 852.72,
+                        "unitPrice": 242590.529025,
+                        "unitCost": 2972.93,
+                        "totalPrice": 242590.529025,
+                        "unitListPrice": 3303.26,
                         "unitPriceCurrency": null,
                         "unitCostCurrency": null,
                         "unitListPriceCurrency": "USD",
@@ -13158,7 +13158,102 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "serialNumbers": [
                             null
                         ],
-                        "instance": "186785064",
+                        "instance": "187719764",
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "-7243.97"
+                            }
+                        ],
+                        "contract": {
+                            "id": "475447435",
+                            "duration": null,
+                            "renewedDuration": "1 Year 9 Months 26 Days",
+                            "startDate": "2020-10-09T00:00:00Z",
+                            "endDate": "2021-10-08T00:00:00Z",
+                            "newAgreementStartDate": "2021-10-09T00:00:00Z",
+                            "newAgreementEndDate": "2023-08-03T00:00:00Z",
+                            "newUsagePeriodStartDate": null,
+                            "newUsagePeriodEndDate": null,
+                            "supportLevel": null,
+                            "serviceLevel": "Basic",
+                            "usagePeriod": null
+                        },
+                        "tdNumber": null,
+                        "mfrNumber": null,
+                        "shortDescription": null,
+                        "manufacturer": null,
+                        "vendorPartNo": null
+                    },
+                    {
+                        "id": "2",
+                        "group": null,
+                        "solution": null,
+                        "parent": null,
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "VS7-STD-G-SSS-C",
+                                "name": null,
+                                "manufacturer": null,
+                                "manufacturerId": null,
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": "VI7-VSPHERE"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "VS7-STD-G-SSS-C",
+                                "name": "Basic Support Coverage VMware vSphere 7",
+                                "manufacturer": "VMware",
+                                "manufacturerId": "21",
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": null
+                            }
+                        ],
+                        "quantity": 6.0,
+                        "confirmedQuantity": 0.0,
+                        "contractNumber": null,
+                        "contractType": null,
+                        "license": null,
+                        "references": [],
+                        "status": null,
+                        "statusNotes": null,
+                        "updated": "0001-01-01T00:00:00",
+                        "unitPrice": 51061.96485,
+                        "unitCost": 625.761,
+                        "totalPrice": 306371.78910,
+                        "unitListPrice": 695.29,
+                        "unitPriceCurrency": null,
+                        "unitCostCurrency": null,
+                        "unitListPriceCurrency": "USD",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "shippingCondition": null,
+                        "shippingFrom": null,
+                        "businessManager": null,
+                        "divisionManager": null,
+                        "director": null,
+                        "rejectionCode": null,
+                        "rejectionDescription": null,
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "dealRegNumber": null,
+                        "reinstatementFeeCost": null,
+                        "reinstatementFeeSell": null,
+                        "serialNumbers": [
+                            null
+                        ],
+                        "instance": "186631878",
                         "discounts": [
                             {
                                 "type": "Standard",
@@ -13166,17 +13261,112 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                             }
                         ],
                         "contract": {
-                            "id": "41679008",
+                            "id": "475447435",
                             "duration": null,
-                            "renewedDuration": "3 Years  1 Day",
-                            "startDate": "2021-08-30T00:00:00Z",
-                            "endDate": "2022-08-29T00:00:00Z",
-                            "newAgreementStartDate": "2022-08-30T00:00:00Z",
-                            "newAgreementEndDate": "2025-08-29T00:00:00Z",
+                            "renewedDuration": "1 Year 9 Months 26 Days",
+                            "startDate": "2020-10-09T00:00:00Z",
+                            "endDate": "2021-10-08T00:00:00Z",
+                            "newAgreementStartDate": "2021-10-09T00:00:00Z",
+                            "newAgreementEndDate": "2023-08-03T00:00:00Z",
                             "newUsagePeriodStartDate": null,
                             "newUsagePeriodEndDate": null,
                             "supportLevel": null,
-                            "serviceLevel": "Production",
+                            "serviceLevel": "Basic",
+                            "usagePeriod": null
+                        },
+                        "tdNumber": null,
+                        "mfrNumber": null,
+                        "shortDescription": null,
+                        "manufacturer": null,
+                        "vendorPartNo": null
+                    },
+                    {
+                        "id": "3",
+                        "group": null,
+                        "solution": null,
+                        "parent": null,
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "VS7-STD-G-SSS-C",
+                                "name": null,
+                                "manufacturer": null,
+                                "manufacturerId": null,
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": "VI7-VSPHERE"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "VS7-STD-G-SSS-C",
+                                "name": "Basic Support Coverage VMware vSphere 7",
+                                "manufacturer": "VMware",
+                                "manufacturerId": "21",
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": null
+                            }
+                        ],
+                        "quantity": 6.0,
+                        "confirmedQuantity": 0.0,
+                        "contractNumber": null,
+                        "contractType": null,
+                        "license": null,
+                        "references": [],
+                        "status": null,
+                        "statusNotes": null,
+                        "updated": "0001-01-01T00:00:00",
+                        "unitPrice": 646.62,
+                        "unitCost": 625.761,
+                        "totalPrice": 3879.72,
+                        "unitListPrice": 695.29,
+                        "unitPriceCurrency": null,
+                        "unitCostCurrency": null,
+                        "unitListPriceCurrency": "USD",
+                        "extendedListPrice": 0.0,
+                        "requested": "0001-01-01T00:00:00",
+                        "shippingCondition": null,
+                        "shippingFrom": null,
+                        "businessManager": null,
+                        "divisionManager": null,
+                        "director": null,
+                        "rejectionCode": null,
+                        "rejectionDescription": null,
+                        "femAmount": 0.0,
+                        "pomAmount": 0.0,
+                        "samAmount": 0.0,
+                        "nsmAmount": 0.0,
+                        "femPercentage": 0.0,
+                        "pomPercentage": 0.0,
+                        "samPercentage": 0.0,
+                        "nsmPercentage": 0.0,
+                        "agreements": [],
+                        "attributes": [],
+                        "dealRegNumber": null,
+                        "reinstatementFeeCost": null,
+                        "reinstatementFeeSell": null,
+                        "serialNumbers": [
+                            null
+                        ],
+                        "instance": "186631874",
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "7.00"
+                            }
+                        ],
+                        "contract": {
+                            "id": "475447435",
+                            "duration": null,
+                            "renewedDuration": "1 Year 9 Months 26 Days",
+                            "startDate": "2020-10-09T00:00:00Z",
+                            "endDate": "2021-10-08T00:00:00Z",
+                            "newAgreementStartDate": "2021-10-09T00:00:00Z",
+                            "newAgreementEndDate": "2023-08-03T00:00:00Z",
+                            "newUsagePeriodStartDate": null,
+                            "newUsagePeriodEndDate": null,
+                            "supportLevel": null,
+                            "serviceLevel": "Basic",
                             "usagePeriod": null
                         },
                         "tdNumber": null,
@@ -13189,13 +13379,13 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "attributes": [],
                 "programName": "Standard",
                 "quoteCurrent": true,
-                "firstAvailableOrderDate": "2022-08-29T00:00:00Z",
-                "lastOrderDate": "2022-09-01T00:00:00Z",
+                "firstAvailableOrderDate": "2022-08-30T00:00:00Z",
+                "lastOrderDate": "2022-09-05T00:00:00Z",
                 "statusText": null,
                 "amountSaved": 0.0,
                 "linkedRenewals": [],
                 "renewalGroupId": "null",
-                "dueDate": "2022-08-29T00:00:00Z",
+                "dueDate": "2021-10-08T00:00:00Z",
                 "incumbent": null,
                 "totalReinstatementFeeCost": null,
                 "totalReinstatementFeeSell": null,
@@ -13214,17 +13404,17 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "activeFlag": "Y",
                 "request": null,
                 "endUserPO": null,
-                "customerPO": "41679008-R:3C:29APR22 00:04:06",
-                "price": 125247.193050,
+                "customerPO": "475447435-R:03AUG22 13:13:03",
+                "price": 552842.038125,
                 "currency": "USD",
                 "documentType": null,
                 "quoteType": "Renewal",
                 "type": null,
                 "level": null,
                 "creator": null,
-                "created": "2022-08-29T18:52:03.368Z",
-                "updated": "2022-08-29T18:52:03.368Z",
-                "expiry": "2022-08-29T00:00:00Z",
+                "created": "2022-08-30T14:41:39.901Z",
+                "updated": "2022-08-30T14:41:39.901Z",
+                "expiry": "2022-09-02T00:00:00Z",
                 "status": "Active",
                 "statusNotes": null,
                 "accountOwner": null,

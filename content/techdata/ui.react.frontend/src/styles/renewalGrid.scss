@@ -489,6 +489,13 @@ span.ag-group-value {
   > * {
     cursor: pointer;   
   }
+  .cmp-renewals-cart-icon{
+    display: flex;
+    svg:hover{
+      fill: #08BED5;
+    }
+
+  }
 }
 
 .renewals-grid {

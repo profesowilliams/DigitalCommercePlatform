@@ -136,10 +136,10 @@ function _RenewalActionColumn({ eventProps }) {
     <>
       <div className="cmp-renewal-action-container">
         {orderingFromDashboard?.showOrderingIcon && data?.canPlaceOrder ? (
-          <CartIcon onClick={handleCartIconClick} />
+          <span className="cmp-renewals-cart-icon"><CartIcon onClick={handleCartIconClick} /></span>
         ) : (
           <CartIcon
-            fill="#c6c6c6"
+            fill="#c6c6c6"            
             style={{ pointerEvents: "none" }}
           />
         )}

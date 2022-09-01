@@ -70,7 +70,7 @@ function PlaceOrderDialog({
     const splitted = text.split(/\b(?=terms .+ conditions)/gi);
     return splitted.map((_text, index) =>
       index === 1 ? (
-        <a href={termsAndConditionsLink} className="cmp-place-order-link">
+        <a href={termsAndConditionsLink} target="_blank" className="cmp-place-order-link">
           {_text}
         </a>
       ) : (
@@ -104,6 +104,7 @@ function PlaceOrderDialog({
             <TextField
               error={max30Characters}
               value={purchaseOrderNumber}
+              className="cmp-order-purchase-order-number"
               onChange={onTextFieldChange}
               helperText="Max 30 characters"
               {...PlaceOrderMaterialUi.textfieldsStyles}
