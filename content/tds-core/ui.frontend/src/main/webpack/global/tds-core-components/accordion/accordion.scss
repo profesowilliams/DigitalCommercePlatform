@@ -8,6 +8,7 @@
     font-family: "Font Awesome 5 Free";
     margin-left: rem(6px);
     font-size: rem(12px);
+    margin: 0 rem(10px) 0 0;
   }
 
   @else {
@@ -26,19 +27,19 @@
   &__footer {
     .cmp-accordion__button {
       color: white;
-      font-size: rem(11.2px);
+      font-size: rem(14px);
       font-weight: 700;
       border: none;
       background-color: transparent;
     }
 
-    .cmp-accordion__button[aria-expanded="false"]::after {
+    .cmp-accordion__button[aria-expanded="false"]::before {
       content: "\A0 \A0 \25BA";
       font-size: 0.375rem;
       vertical-align: auto;
     }
 
-    .cmp-accordion__button[aria-expanded="true"]::after {
+    .cmp-accordion__button[aria-expanded="true"]::before {
       content: "\A0 \A0 \25BC";
       font-size: 0.375rem;
       vertical-align: auto;
@@ -60,7 +61,6 @@
 
 .dp-accordion {
   &__footer {
-    background-color: #000c21;
 
     .cmp-accordion {
       &__button {
@@ -73,13 +73,13 @@
         outline: none;
       }
 
-      &__button[aria-expanded="false"]::after {
+      &__button[aria-expanded="false"]::before {
         content: "\A0 \A0 \25BA";
         font-size: 0.375rem;
         vertical-align: auto;
       }
 
-      &__button[aria-expanded="true"]::after {
+      &__button[aria-expanded="true"]::before {
         content: "\A0 \A0 \25BC";
         font-size: 0.375rem;
         vertical-align: auto;
@@ -120,14 +120,14 @@
         cursor: pointer;
       }
 
-      &__button[aria-expanded="false"]::after {
+      &__button[aria-expanded="false"]::before {
         content: "+";
         font-size: 1.25rem;
         position: absolute;
         right: 1.6875rem;
       }
 
-      &__button[aria-expanded="true"]::after {
+      &__button[aria-expanded="true"]::before {
         content: "-";
         font-size: 1.25rem;
         position: absolute;
@@ -173,20 +173,18 @@
 .dp-accordion {
   &__footer {
     &.cmp-accordion__chevronFooter {
-      .cmp-accordion__button[aria-expanded="false"]::after {
+      .cmp-accordion__button[aria-expanded="false"]::before {
         @include accordionIcon("true", "\f054");
       }
 
-      .cmp-accordion__button[aria-expanded="true"]::after {
+      .cmp-accordion__button[aria-expanded="true"]::before {
         @include accordionIcon("true", "\f078");
       }
     }
 
-    background-color: #000c21;
-
     .cmp-accordion__button {
       color: white;
-      font-size: rem(11.2px);
+      font-size: rem(14px);
       font-weight: 700;
       border: none;
       background-color: transparent;
@@ -194,11 +192,11 @@
       outline: none;
     }
 
-    .cmp-accordion__button[aria-expanded="false"]::after {
+    .cmp-accordion__button[aria-expanded="false"]::before {
       @include accordionIcon("false", "\A0 \A0 \25BA");
     }
 
-    .cmp-accordion__button[aria-expanded="true"]::after {
+    .cmp-accordion__button[aria-expanded="true"]::before {
       @include accordionIcon("false", "\A0 \A0 \25BC");
     }
 
