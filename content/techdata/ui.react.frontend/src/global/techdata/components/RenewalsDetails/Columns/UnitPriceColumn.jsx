@@ -32,11 +32,10 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
 function UnitPriceColumn(props) {
   const { value, setValue, isEditing, rowIndex, data } = props;
   const [price, setPrice] = useState(value);
-
+  const MAX_PRICE_VALUE = 999999999; 
   const handleChange = (event) => {
-    const value = event.target.value;
-    if (value > 999999999) return; 
-    if (value < 1) return setPrice(1);
+    const value = event.target.value;   
+    if (value > MAX_PRICE_VALUE) return setPrice(MAX_PRICE_VALUE);     
     setPrice(value);
   };
 
@@ -64,7 +63,7 @@ function UnitPriceColumn(props) {
   const updateValue = (event) => {
     event.stopPropagation();
     if (isNaN(price)) return;
-    if (price < 1) return;
+    if (price < 1) return setPrice(1); setValue(1);
     try {
       setValue(price);
     } catch (err) {

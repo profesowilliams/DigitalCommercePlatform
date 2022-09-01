@@ -218,6 +218,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const onOrderButtonClicked = () => {
     setIsPODialogOpen(true);
   }
+
   const onCloseDialog =(options = {}) => {
     const {isSuccess = false, toaster} = options || {isSuccess : false, toaster:false} ;
     setIsPODialogOpen(false); 
@@ -227,6 +228,11 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       location.href=compProps.quotePreview.renewalsUrl
     }
   }
+  const isOrderButtonDisabled =  useMemo( () => {    
+    const isAfter = new Date(data?.firstAvailableOrderDate) > new Date();  
+    const canPlaceOrder = data?.canOrder;    
+    return compProps?.orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
+  }, [compProps?.orderingFromDashboard?.showOrderingIcon, data.canOrder, data.firstAvailableOrderDate])
 
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
@@ -241,7 +247,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         <div className="place-cmp-order-dialog-container">
         <p className="cmp-place-order-actions">
             <Button
-              disabled={!data.canOrder}
+              disabled={!isOrderButtonDisabled}
               sx={{background: teal[800],"&:hover": { background: teal[600] }}}
               onClick={onOrderButtonClicked}
               variant="contained"           

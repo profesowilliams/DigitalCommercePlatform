@@ -70,6 +70,7 @@
             &__message{
                 p{
                     margin: 0;
+                    font-family: "Open Sans", sans-serif;
                 }
             }      
             &__error-title{
@@ -84,4 +85,10 @@
             } 
         }       
     }  
+}
+
+.MuiDrawer-root .MuiDrawer-modal .toaster-modal .MuiModal-root  {
+    .MuiPaper-root .MuiPaper-elevation .MuiPaper-elevation16 .MuiDrawer-paper .MuiDrawer-paperAnchorRight {
+        top: 4.5rem !important;
+    }
 }

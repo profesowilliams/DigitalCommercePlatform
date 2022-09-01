@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from "../Orders/orderingRequests";
@@ -10,6 +10,7 @@ import {
   setLocalStorageData,
 } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
+
 
 const EllipsisIcon = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" {...props}>
@@ -132,14 +133,20 @@ function _RenewalActionColumn({ eventProps }) {
     setDetails(mapRenewalForUpdateDashboard(data));
   }
 
+  const isIconDisabled =  useMemo( () => {    
+    const isAfter = new Date(data?.firstAvailableOrderDate || new Date()) > new Date();  
+    const canPlaceOrder = data?.canPlaceOrder;    
+    return orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
+  },[orderingFromDashboard, data.canPlaceOrder, data.firstAvailableOrderDate])
+
   return (
     <>
       <div className="cmp-renewal-action-container">
-        {orderingFromDashboard?.showOrderingIcon && data?.canPlaceOrder ? (
+        {isIconDisabled ? (
           <span className="cmp-renewals-cart-icon"><CartIcon onClick={handleCartIconClick} /></span>
         ) : (
           <CartIcon
-            fill="#c6c6c6"            
+            fill="#c6c6c6"                        
             style={{ pointerEvents: "none" }}
           />
         )}
