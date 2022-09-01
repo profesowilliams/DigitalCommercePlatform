@@ -353,6 +353,104 @@
   }
 }
 
+.cmp-accordion__cvp-chevrons {
+  padding: rem(25px);
+  .text{
+    font-family: "Arial Regular" !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    color: map-get($color-palette, 'charcoal') !important;
+  }
+
+  .cmp-accordion__title{
+    font-family: $font-family-everett !important;
+    font-weight: 400 !important;
+    font-size: 28px !important;
+    line-height: 36px !important;
+    color: map-get($color-palette, 'teal') !important;
+  }
+
+  .cmp-accordion__button {
+    height: auto !important;
+  }
+
+  .cmp-accordion__title {
+    height: auto !important;
+  }
+
+  .cmp-accordion__button[aria-expanded="false"]::after{
+    content: fa-content($fa-var-arrow-right);
+    font-size: 18px !important;
+  }
+  .cmp-accordion__button[aria-expanded="true"]::after{
+    content: fa-content($fa-var-arrow-right);
+    font-size: 18px !important;
+  }
+
+  .cmp-accordion {
+
+
+    color: get-color(text-mid-charcoal);
+    font-family: $font-family;
+    font-size: rem(14px);
+    font-weight: $font-weight-normal;
+
+    .cmp-accordion__header,
+    .cmp-accordion__item {
+      margin-bottom: rem(24px);
+    }
+
+    .cmp-accordion__button {
+      position: relative;
+      align-items: center;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      display: flex;
+      flex-direction: row;
+      height: rem(24px);
+      overflow: hidden;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      cursor: pointer;
+
+      .cmp-accordion__title {
+        font-weight: $font-weight-semi-bold;
+        font-size: rem(16px);
+        height: rem(24px);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: get-color(brand-blue);
+      }
+
+      .cmp-accordion__icon {
+        width: rem(24px);
+        height: rem(24px);
+        margin-left: auto;
+      }
+
+      &::after {
+        color: get-color(text-light-charcoal);
+        font-family: $fontawesome-font-family;
+        font-size: rem(14px);
+        font-weight: $font-weight-normal;
+        position: absolute;
+        right: 0;
+        width: rem(24px);
+      }
+
+      &[aria-expanded="true"] {
+        .cmp-accordion__title {
+          font-weight: $font-weight-extra-bold;
+        }
+      }
+    }
+  }
+}
+
 .cmp-accordion__title-color {
   &--teal {
 
