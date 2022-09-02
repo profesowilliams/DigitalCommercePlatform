@@ -109,6 +109,7 @@ export const isObject = (val) =>
 
 // Return request site and language from dcp url segments
 export function getHeaderInfoFromUrl(pathName) {  
+  console.log('pathName',pathName)
   let countryIndex = 1; // uat/stage/prod
   let languageIndex = 2
   const pathArray = pathName?.split('/');
@@ -120,8 +121,13 @@ export function getHeaderInfoFromUrl(pathName) {
   const language = pathArray[languageIndex]?.replace('.html', '') || country === 'US' ? 'en' : '';
   return {
     site: country,
-    acceptLanguage: language + '-' + country
+    acceptLanguage: resolveAcceptLanguage(language, country)
   };
+}
+
+function resolveAcceptLanguage (language, country) {
+  const collectiveCountry = country === 'UK' ? 'GB' : country;
+  return language + '-' + collectiveCountry;
 }
 
 // Return request consumer from global-config
