@@ -70,6 +70,8 @@ function RenewalsGrid(props) {
 
   const customPaginationRef = useRef();
 
+  const renewalsRef = useRef();
+
   const searchCriteria = useRef({field:'',value:''});
 
   let options = {
@@ -100,6 +102,14 @@ function RenewalsGrid(props) {
     if(!shopURL) return;
     window.location = shopURL;
   };
+
+  useEffect(() => {
+    const renewalsNode = renewalsRef.current;
+    const containsTDSynnexClass = renewalsNode?.parentNode?.parentNode?.parentNode?.classList.contains("cmp-grid-td-synnex");
+    if (containsTDSynnexClass) {
+      effects.setCustomState({key:'isTDSynnex', value:true})
+    }
+  },[])
 
   useEffect(() => setCustomState({ key: 'aemConfig', value: componentProp }), [])
 
@@ -294,7 +304,7 @@ function RenewalsGrid(props) {
   }
 
   return (
-    <section>      
+    <section ref={renewalsRef}>      
       <div className="cmp-renewals-subheader">
         <CustomRenewalPagination
           onQueryChanged={onQueryChanged}

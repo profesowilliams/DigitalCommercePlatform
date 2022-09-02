@@ -4,6 +4,9 @@
 	width: 100%;
 	overflow: auto;
     margin-right: rem(10px);
+	.ag-row .ag-cell {
+		display: flex;
+	}
 	& .status {
 		display: flex;
 	}

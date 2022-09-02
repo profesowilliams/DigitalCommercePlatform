@@ -41,7 +41,8 @@ const INITIAL_STATE = {
     message:"",
     origin:"dashboard",
     isSuccess:false
-  }
+  },
+  isTDSynnex:false
 };
 
 /**

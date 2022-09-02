@@ -11,6 +11,7 @@ function _ContractColumn({ data, eventProps }) {
   const detailRender = useRenewalGridState(state => state.detailRender);
   const { pageNumber } = useRenewalGridState(state => state.pagination);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
+  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex); 
   const rowIndex = eventProps?.node?.rowIndex
   const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
   const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
