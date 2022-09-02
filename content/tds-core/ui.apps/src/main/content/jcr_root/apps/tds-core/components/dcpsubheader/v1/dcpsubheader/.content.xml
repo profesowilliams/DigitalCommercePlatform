@@ -3,5 +3,5 @@
     cq:isContainer="true"
     jcr:primaryType="cq:Component"
     jcr:title="DCP Subheader"
-    sling:resourceSuperType="tds-core/components/dcpsubheader/v1/dcpsubheader"
-    componentGroup="Tech Data - Content"/>
+    sling:resourceSuperType="core/wcm/components/tabs/v1/tabs"
+    componentGroup="TDS Core - Commerce"/>
