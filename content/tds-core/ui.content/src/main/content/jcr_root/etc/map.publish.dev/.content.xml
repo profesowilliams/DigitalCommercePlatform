@@ -7,10 +7,10 @@
     <https jcr:primaryType="sling:OrderedFolder">
         <uat-tdsynnex.dc.tdebusiness.cloud
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/content/tds-site/americas]">
+                sling:internalRedirect="[/content/tds-site/americas,/content/tds-site/apj,/content/tds-site/europe]">
             <redirect
                 jcr:primaryType="sling:Mapping"
-                sling:internalRedirect="[/$1,/content/tds-site/americas/$1]"
+                sling:internalRedirect="[/$1,/content/tds-site/americas/$1,/content/tds-site/apj/$1,/content/tds-site/europe/$1]"
                 sling:match="(.+)$"/>
         </uat-tdsynnex.dc.tdebusiness.cloud>
         <uat.dc.tdebusiness.cloud
