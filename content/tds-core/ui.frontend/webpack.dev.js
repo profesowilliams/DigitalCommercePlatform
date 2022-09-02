@@ -1066,6 +1066,14 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "button-group",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/partials/buttons/button-group.html"
+
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "spinner",
                 template: path.resolve(
                     __dirname,

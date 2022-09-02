@@ -331,3 +331,34 @@
 		background-color: get-color(legacy-gray);
 	}
 }
+
+.cmp-button-group {
+    .cmp-link-list{
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+        align-content: center;
+    }
+
+    &__color-pill {
+        background-color: get-color(deep-teal) !important;
+        border-radius: 25px;
+        .cmp-list{
+            padding-left: 4.8125rem !important;
+            padding-right: 4.8125rem !important;
+            padding-top: rem(15px) !important;
+            padding-bottom: rem(15px) !important;
+        }
+
+        span {
+            font-family: $font-family-everett;
+            font-size: 20px;
+            line-height: 26px;
+        }
+        .cmp-link-list__item{
+            padding-left: rem(77px) !important;
+            padding-right: rem(77px) !important;
+            
+        }
+    }
+}

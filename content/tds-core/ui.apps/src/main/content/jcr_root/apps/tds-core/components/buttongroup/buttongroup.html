@@ -1,0 +1,29 @@
+<sly data-sly-use.model="com.tdscore.core.models.LinkList"
+     data-sly-test.hasContent="${model.links ? model.links.size > 0 : false}">
+    <div data-sly-test=${hasContent} class="cmp-list">
+        <ul data-sly-list.item="${model.links}" class="cmp-link-list">
+
+
+            <li class="cmp-link-list__item">
+                <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
+                   title="${item.platformName}"
+                   href="${item.linkUrl}"
+                   class="${item.linkUrl ? '' : 'nolink'}"
+                   target="${item.linkTarget == 'true' ? '_blank' : '_self'}">
+                    <article>
+                        <div data-sly-test="${item.iconUrl}" class="cmp-image">
+                            <img src="${item.iconUrl}" class="cmp-image__image" alt="${item.platformName}" title="${item.platformName}">
+                        </div>
+                        <span class="cmp-link-list__item-title">${item.platformName}</span>
+                    </article>
+                </a>
+
+            </li>
+
+        </ul>
+
+
+    </div>
+</sly>
+<sly data-sly-use.placeholderTemplates="core/wcm/components/commons/v1/templates.html"
+     data-sly-call="${placeholderTemplates.placeholder @ isEmpty=!hasContent}"></sly>
