@@ -210,12 +210,17 @@ function RenewalPlanOptions({ labels, data, node }) {
                                         <i className="fas fa-file-pdf"></i>
                                         <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
                                     </button>
-                                    <span className="vertical-separator"></span>
                                     <If condition={!orderingFromDashboard.showOrderingIcon}>
-                                        <button onClick={() => exportXlsPlan(option?.id)}>
-                                            <i className="fas fa-file-excel"></i>
-                                            <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
-                                        </button>
+                                        {
+                                            !labels?.hideDownloadXLSButton && (
+                                            <>
+                                                <span className="vertical-separator"></span>
+                                                <button onClick={() => exportXlsPlan(option?.id)}>
+                                                    <i className="fas fa-file-excel"></i>
+                                                    <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
+                                                </button>
+                                            </>
+                                        )}
                                         <span className="vertical-separator"></span>
                                         <button onClick={() => redirectToRenewalDetail(option?.id)}>
                                             <i className="far fa-eye"></i>
@@ -223,6 +228,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                         </button>
                                     </If>
                                     <If condition={orderingFromDashboard.showOrderingIcon}>
+                                        <span className="vertical-separator"></span>
                                         <button onClick={handleCartIconClick}>
                                             <CartIcon/>
                                             <span>Order</span>

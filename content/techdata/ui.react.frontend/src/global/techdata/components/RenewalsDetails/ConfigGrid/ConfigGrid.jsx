@@ -50,11 +50,14 @@ function GridHeader({ gridProps, data }) {
         {gridProps.lineItemDetailsLabel}
       </span>
       <div className="cmp-renewal-preview__download">
-        <button onClick={downloadXLS}>
-          <span className="separator">
-            {gridProps?.productLines?.downloadXLSLabel || "Export XLS"}
-          </span>
-        </button>
+        {
+          !gridProps?.productLines?.hideDownloadXLSButton && (
+          <button onClick={downloadXLS}>
+            <span className="separator">
+              {gridProps?.productLines?.downloadXLSLabel || "Export XLS"}
+            </span>
+          </button>
+        )}
         <button onClick={downloadPDF}>
           <span>{gridProps?.productLines?.downloadPDFLabel || "Export PDF"}</span>
         </button>

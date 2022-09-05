@@ -3,7 +3,7 @@ import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
 
 function DropdownDownloadList({ data, aemConfig }) {
-  const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, detailUrl } = aemConfig;
+  const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, detailUrl, productGrid } = aemConfig;
 
 
   const dataToPush = (name) => ({
@@ -58,11 +58,16 @@ function DropdownDownloadList({ data, aemConfig }) {
         <i className="fas fa-file-pdf"></i>
         Download PDF
       </button>|
-      <button onClick={downloadXLS}>
-        <i className="fas fa-file-excel"></i>
-        Download XLS
-      </button>
-      |
+      {
+        !productGrid?.hideDownloadXLSButton && (
+        <>
+          <button onClick={downloadXLS}>
+            <i className="fas fa-file-excel"></i>
+            Download XLS
+          </button>
+          |
+        </>
+      )}
       <button onClick={redirectToRenewalDetail}>
         <i className="far fa-eye"></i>
         See details
