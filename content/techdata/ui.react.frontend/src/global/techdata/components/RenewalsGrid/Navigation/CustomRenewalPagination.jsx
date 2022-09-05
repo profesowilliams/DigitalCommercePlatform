@@ -5,6 +5,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
 } from "react";
+import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from "../../../../../fluentIcons/FluentIcons";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import {
   maxCounterCalculator,
@@ -15,6 +16,7 @@ import { updateQueryString } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
 function CustomRenewalPagination({ onQueryChanged }, ref) {
+  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
   const paginationData = useRenewalGridState((state) => state.pagination);
   const {
     totalCounter,
@@ -176,7 +178,11 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === 1}
           onClick={goToFirstPage }
         >
-          <i className="fas fa-step-backward"></i>
+        {isTDSynnex 
+          ? <ChevronDoubleLeftIcon/>
+          : <i className="fas fa-step-backward"></i>
+        }  
+           
         </button>
         <button
           className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
@@ -184,7 +190,11 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === 1}
           onClick={decrementHandler}
         >
-          <i className="fas fa-chevron-left"></i>
+        { isTDSynnex 
+          ? <ChevronLeftIcon/>
+          : <i className="fas fa-chevron-left"></i>
+        }
+          
         </button>
         <div className="cmp-navigation__actions-labels">
           <input
@@ -208,13 +218,20 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           onClick={incrementHandler}
           style={{ cursor: pageNumber !== pageCount && "pointer" }}
         >
-          <i className="fas fa-chevron-right"></i>
+        { isTDSynnex 
+          ? <ChevronRightIcon/>
+          : <i className="fas fa-chevron-right"></i>
+        }
+          
         </button>
         <button
           disabled={pageNumber === pageCount}
           onClick={gotToLastPage}
         >
-          <i className="fas fa-step-forward"></i>
+        {isTDSynnex
+          ? <ChevronDoubleRightIcon/>
+          : <i className="fas fa-step-forward"></i>
+        }
         </button>
       </div>
     </div>

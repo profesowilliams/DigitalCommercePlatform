@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
@@ -116,7 +117,11 @@ function _ContractColumn({ data, eventProps }) {
             <>
               <If condition={hasOptions}>
                 <div className='cmp-triangle-up' key={Math.random()}>
-                  <i className="fas fa-caret-up" style={iconStyle} />
+                  {
+                    isTDSynnex 
+                    ? <ChevronUpIcon
+                      />
+                    : <i className="fas fa-caret-up" style={iconStyle} />}
                 </div>
               </If>
 
@@ -125,7 +130,12 @@ function _ContractColumn({ data, eventProps }) {
             <>
               <If condition={hasOptions}>
                 <div className='cmp-triangle-down' key={Math.random()}>
-                  <i className="fas fa-caret-down" style={iconStyle} />
+                  {
+                    isTDSynnex 
+                    ? <ChevronDownIcon
+                      />
+                    :<i className="fas fa-caret-down" style={iconStyle} />
+                    }
                 </div>
               </If>
             </>

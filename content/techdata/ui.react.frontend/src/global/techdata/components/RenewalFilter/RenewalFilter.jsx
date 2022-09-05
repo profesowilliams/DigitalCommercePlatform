@@ -5,6 +5,7 @@ import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import Count from "./components/Count";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
+import { OptionsIcon } from "../../../../fluentIcons/FluentIcons";
 
 
 export default function RenewalFilter({ aemData, onQueryChanged }) {
@@ -13,6 +14,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   );
   const effects = useRenewalGridState((state) => state.effects);
   const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
+  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
 
   const { toggleFilterModal } = effects;
   const handleFilterClick = () => {
@@ -39,7 +41,11 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
       >
         {appliedFilterCount !== 0 && <Count>{appliedFilterCount}</Count>}
         <Button btnClass="cmp-renewals-filter__button">Filter</Button>
-        <i className="fas fa-sliders-h"></i>
+        {isTDSynnex
+          ? <OptionsIcon/>
+          : <i className="fas fa-sliders-h"></i>
+        }
+        
       </div>
       {isFilterModalOpen && (
         <FilterModal

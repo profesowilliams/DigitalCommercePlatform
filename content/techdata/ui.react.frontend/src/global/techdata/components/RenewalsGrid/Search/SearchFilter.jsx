@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { SearchIcon } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
@@ -49,6 +50,8 @@ function _SearchFilter(
   const effects = useRenewalGridState((state) => state.effects);
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
+  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
+
   function getInitialValueState() {
     if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value;
@@ -302,7 +305,11 @@ function _SearchFilter(
             <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
                 <span className="cmp-renewal-search__text">Search</span>
             </If>
-            <i className="fas fa-search cmp-renewal-search__icon"></i>
+            {isTDSynnex 
+              ? <SearchIcon/>
+              : <i className="fas fa-search cmp-renewal-search__icon"></i>
+            }
+            
           </div>
         </If>
         <If condition={isDropdownVisible}>

@@ -175,3 +175,59 @@ export function CloseIcon(props) {
     </svg>
   );
 }
+
+export function ChevronDownIcon(props) {
+  return (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M4.293 8.293a1 1 0 0 1 1.414 0L12 14.586l6.293-6.293a1 1 0 1 1 1.414 1.414l-7 7a1 1 0 0 1-1.414 0l-7-7a1 1 0 0 1 0-1.414Z"/>
+  </svg>
+  )
+}
+
+export function ChevronUpIcon(props) {
+  return (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M4.293 15.707a1 1 0 0 0 1.414 0L12 9.414l6.293 6.293a1 1 0 0 0 1.414-1.414l-7-7a1 1 0 0 0-1.414 0l-7 7a1 1 0 0 0 0 1.414Z"/>
+  </svg>
+  )
+}
+
+export function ChevronRightIcon(props) {
+  return (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M8.293 4.293a1 1 0 0 0 0 1.414L14.586 12l-6.293 6.293a1 1 0 1 0 1.414 1.414l7-7a1 1 0 0 0 0-1.414l-7-7a1 1 0 0 0-1.414 0Z"/></svg>
+  )
+}
+
+export function ChevronLeftIcon(props) {
+  return (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}><path d="M15.707 4.293a1 1 0 0 1 0 1.414L9.414 12l6.293 6.293a1 1 0 0 1-1.414 1.414l-7-7a1 1 0 0 1 0-1.414l7-7a1 1 0 0 1 1.414 0Z"/></svg>
+  )
+}
+
+export function ChevronDoubleLeftIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" class="svg_dd790ee3" focusable="false"><path d="M2048 91l-933 933 933 933-91 91L933 1024 1957 0l91 91zm-896 0l-933 933 933 933-91 91L37 1024 1061 0l91 91z"></path></svg>
+  )
+}
+
+export function ChevronDoubleRightIcon(props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" class="svg_dd790ee3" focusable="false"><path d="M91 0l1024 1024L91 2048l-91-91 933-933L0 91 91 0zm896 0l1024 1024L987 2048l-91-91 933-933L896 91l91-91z"></path></svg>
+  )
+}
+
+export function SearchIcon(props) {
+  return (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M10 2.75a7.25 7.25 0 0 1 5.63 11.819l4.9 4.9a.75.75 0 0 1-.976 1.134l-.084-.073-4.901-4.9A7.25 7.25 0 1 1 10 2.75Zm0 1.5a5.75 5.75 0 1 0 0 11.5 5.75 5.75 0 0 0 0-11.5Z"/>
+  </svg>
+  )
+}
+
+export function OptionsIcon(props) {
+  return (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path d="M8.75 13.5a3.251 3.251 0 0 1 3.163 2.498L21.25 16a.75.75 0 0 1 .102 1.493l-.102.007h-9.337a3.251 3.251 0 0 1-6.326 0H2.75a.75.75 0 0 1-.102-1.493L2.75 16h2.837a3.251 3.251 0 0 1 3.163-2.5Zm0 1.5a1.75 1.75 0 0 0-1.652 1.172l-.021.063-.039.148a1.756 1.756 0 0 0 .02.815l.04.13.025.069a1.75 1.75 0 0 0 3.28-.069l.04-.13-.018.06a1.75 1.75 0 0 0 .048-.815l-.03-.137-.02-.07-.047-.134A1.75 1.75 0 0 0 8.75 15Zm6.5-11a3.251 3.251 0 0 1 3.163 2.5h2.837a.75.75 0 0 1 .102 1.493L21.25 8h-2.837a3.251 3.251 0 0 1-6.326 0H2.75a.75.75 0 0 1-.102-1.493L2.75 6.5l9.337-.002A3.251 3.251 0 0 1 15.25 4Zm0 1.5a1.75 1.75 0 0 0-1.652 1.173l-.021.062-.038.148a1.757 1.757 0 0 0 .019.815l.04.13.025.069a1.75 1.75 0 0 0 3.28-.068l.04-.131-.018.06a1.75 1.75 0 0 0 .048-.815l-.03-.137-.02-.07-.047-.134A1.75 1.75 0 0 0 15.25 5.5Z"/>
+  </svg>
+  )
+}
