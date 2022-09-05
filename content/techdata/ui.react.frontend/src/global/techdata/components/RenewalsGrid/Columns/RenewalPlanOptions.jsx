@@ -1,21 +1,21 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { dateToString, thousandSeparator } from "../../../helpers/formatting";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import Grid from "../../Grid/Grid";
 import { If } from "../../../helpers/If";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import useTriggerOrdering from "../Orders/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
+import Link from "../../Widgets/Link";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
     const { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint } = aemConfig;
     const { pageNumber } = useRenewalGridState((state) => state.pagination);
-    const { orderingFromDashboard } = useRenewalGridState(state => state.aemConfig);    
+    const { orderingFromDashboard } = useRenewalGridState(state => state.aemConfig);
     const [optionIdSelected, setOptionIdSelected] = useState();
     const optionIdSelectedRef = useRef();
     const rowIndexRef = useRef(node?.rowIndex)
@@ -24,7 +24,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data });
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
 
-    const isPlanSelected = ({id}) => {
+    const isPlanSelected = ({ id }) => {
         if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
             return (id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"]);
         }
@@ -39,16 +39,16 @@ function RenewalPlanOptions({ labels, data, node }) {
         const currentPlan = options.find((plan) => isCurrentPlan(plan));
         return currentPlan ? currentPlan?.id : 0;
     }
-    const optionToParent = (idSelected) => {    
+    const optionToParent = (idSelected) => {
         const option = data?.options.find(opt => opt.id === idSelected)
-        return {...option, rowIndex: rowIndexRef.current}
+        return { ...option, rowIndex: rowIndexRef.current }
     }
 
     useEffect(() => {
         setOptionIdSelected(findAndReturnCurrentPlanId(data?.options))
         return () => selectPlan(optionToParent(optionIdSelectedRef.current))
     }, [])
-    
+
     const dataToPush = (name) => ({
         type: ANALYTICS_TYPES.types.button,
         category: ANALYTICS_TYPES.category.renewalsActionColumn,
@@ -91,35 +91,35 @@ function RenewalPlanOptions({ labels, data, node }) {
 
 
     const downloadPDF = (Id) => {
-        try {      
-          generateFileFromPost({
-            url: exportPDFRenewalsEndpoint,
-            name: `Renewals Quote ${Id}.pdf`,
-            postData: {
-              Id
-            },
-            fileTypeExtension: fileExtensions.pdf
-          })
+        try {
+            generateFileFromPost({
+                url: exportPDFRenewalsEndpoint,
+                name: `Renewals Quote ${Id}.pdf`,
+                postData: {
+                    Id
+                },
+                fileTypeExtension: fileExtensions.pdf
+            })
         } catch (error) {
-          console.error("error", error);
+            console.error("error", error);
         }
-        }
+    }
 
     const showPlanLabels = (option) => {
         const planLabels = {
-            selected:"Selected Plan",
-            current:"Current Plan"
+            selected: "Selected Plan",
+            current: "Current Plan"
         };
-        if(isPlanSelected(option)){
+        if (isPlanSelected(option)) {
             return isCurrentPlan(option) ? planLabels.current : planLabels.selected;
         }
-        if(!isPlanSelected(option) && isCurrentPlan(option)){
+        if (!isPlanSelected(option) && isCurrentPlan(option)) {
             return planLabels.current
         }
         return "";
-    } 
-    const computeMarketingCssStyle = () => {      
-        return "card-right-border";  
+    }
+    const computeMarketingCssStyle = () => {
+        return "card-right-border";
     }
 
     const setStylesOnSelected = (option) => {
@@ -131,9 +131,9 @@ function RenewalPlanOptions({ labels, data, node }) {
         setOptionIdSelected(id);
         optionIdSelectedRef.current = id;
         setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
-          ...getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY),
-          selectedPlanId: id,
-          capturedPlanPage: pageNumber,
+            ...getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY),
+            selectedPlanId: id,
+            capturedPlanPage: pageNumber,
         });
     }
 
@@ -152,101 +152,145 @@ function RenewalPlanOptions({ labels, data, node }) {
         ...aemConfig,
         serverSide: false,
         paginationStyle: "none",
-      };
+    };
 
-    var renewalGridOptions = [];
+    const isIconDisabled = useMemo(() => {
+        const isAfter = new Date(data?.firstAvailableOrderDate || new Date()) > new Date();
+        const canPlaceOrder = data?.canPlaceOrder;
+        return orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
+    }, [orderingFromDashboard, data.canPlaceOrder, data.firstAvailableOrderDate])
 
-    const [columnDefs] = useState([
-        { 
-          field: 'renewalGridOptions',         
-        },
-      ]);
-    const _onAfterGridInit = (config) => {
-        config.api.gridOptionsWrapper.gridOptions.getRowHeight = () => 35;
-        config.api.gridOptionsWrapper.gridOptions.api.resetRowHeights();
-    }
+    const renewalDetailsURL = encodeURI(
+        `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
+    );
+
+    const optionPlanLink = id => <Link
+        href={renewalDetailsURL}
+        variant="renewal-links__secondary"
+        underline="none"
+    >
+        {id}
+    </Link>
+
     return (
         <div key={rowIndexRef.current + Math.random()}>
             <div className="cmp-renewal-plan-column">
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
                 </div>
-                {data?.options && data?.options.map((option, index) => {
-                    let renewalGridOptions = [];
-                    renewalGridOptions.push({renewalGridOptions: `${labels.quoteIdLabel}  ${option?.quoteID ? option?.quoteID : 'No data provided'}`});
-                    renewalGridOptions.push({renewalGridOptions: `${labels.refNoLabel}  ${option?.id}`});
-                    renewalGridOptions.push({renewalGridOptions: `${labels.expiryDateLabel}  ${formatExpiryDateLabel(option)}`});
+                {data?.options && data?.options.map((option, index) => {              
                     return (
-                    <div key={option?.id}>
-                        <div className={computeClassName(data?.options, index)}>
-                            <div className="header">
-                                <div className="leftHeader">
-                                    <h4 onChange={changeRadioButton}>
-                                        <input
-                                            key={Math.random()}                                        
-                                            id={option?.id}
-                                            name="planOption"
-                                            type="radio"    
-                                            defaultChecked={setDefaultCheckedOption(option)}
-                                            value={option?.id}                                     
-                                        />
-                                        <label htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>&nbsp;&nbsp;{option?.contractDuration}, {option?.support}</label></h4>
+                        <div key={option?.id}>
+                            <div className={computeClassName(data?.options, index)}>
+                                <div className="header">
+                                    <div className="leftHeader">
+                                        <h4 onChange={changeRadioButton}>
+                                            <input
+                                                key={Math.random()}
+                                                id={option?.id}
+                                                name="planOption"
+                                                type="radio"
+                                                defaultChecked={setDefaultCheckedOption(
+                                                    option
+                                                )}
+                                                value={option?.id}
+                                            />
+                                            <label
+                                                htmlFor={option?.id}
+                                                style={{ ...setStylesOnSelected(option) }}
+                                            >
+                                                &nbsp;&nbsp;{option?.contractDuration},{' '}
+                                                {option?.support}
+                                            </label>
+                                        </h4>
+                                    </div>
+                                    <div className="rightHeader">
+                                        <h4
+                                            htmlFor={option?.id}
+                                            style={{ ...setStylesOnSelected(option) }}
+                                        >
+                                            $ {thousandSeparator(option?.total)}
+                                        </h4>
+                                    </div>
+                                    <div className="clear"></div>
                                 </div>
-                                <div className="rightHeader"><h4 htmlFor={option?.id} style={{...setStylesOnSelected(option)}}>$ {thousandSeparator(option?.total)}</h4></div>
-                                <div className="clear"></div>
-                            </div>
-                            <div className="planDetails">
-                                <span className="currentPlan">{showPlanLabels(option)}</span>
-                                <Grid
-                                    columnDefinition={columnDefs}
-                                    config={gridConfig}
-                                    data={renewalGridOptions}
-                                    onAfterGridInit={_onAfterGridInit}
-                                    />
-                            </div>
-                            {isPlanSelected(option) && (
-                                <div className="footer">
-                                    <button onClick={() => downloadPDF(option.id)}>
-                                        <i className="fas fa-file-pdf"></i>
-                                        <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
-                                    </button>
-                                    <If condition={!orderingFromDashboard.showOrderingIcon}>
-                                        {
-                                            !labels?.hideDownloadXLSButton && (
-                                            <>
-                                                <span className="vertical-separator"></span>
-                                                <button onClick={() => exportXlsPlan(option?.id)}>
-                                                    <i className="fas fa-file-excel"></i>
-                                                    <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
-                                                </button>
-                                            </>
-                                        )}
-                                        <span className="vertical-separator"></span>
-                                        <button onClick={() => redirectToRenewalDetail(option?.id)}>
-                                            <i className="far fa-eye"></i>
-                                            <span>&nbsp;&nbsp;{labels.seeDetailsLabel}</span>
+                                <div className="planDetails">
+                                    <span className="currentPlan">
+                                        {showPlanLabels(option)}
+                                    </span>
+                                    <p>{labels.quoteIdLabel}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
+                                    <p>{labels.refNoLabel} {optionPlanLink(option?.id)}</p>
+                                    <p>{labels.expiryDateLabel}  {formatExpiryDateLabel(option)}</p>
+                                </div>
+                                {isPlanSelected(option) && (
+                                    <div className="footer">
+                                        <button onClick={() => downloadPDF(option.id)}>
+                                            <i className="fas fa-file-pdf"></i>
+                                            <span>
+                                                &nbsp;&nbsp;{labels.downloadPDFLabel}
+                                            </span>
                                         </button>
-                                    </If>
-                                    <If condition={orderingFromDashboard.showOrderingIcon}>
                                         <span className="vertical-separator"></span>
-                                        <button onClick={handleCartIconClick}>
-                                            <CartIcon/>
-                                            <span>Order</span>
-                                        </button>   
-                                    </If>
-                                </div>
-                            )}
-
+                                        <If
+                                            condition={
+                                                !orderingFromDashboard.showOrderingIcon
+                                            }
+                                        >
+                                            <button
+                                                onClick={() => exportXlsPlan(option?.id)}
+                                            >
+                                                <i className="fas fa-file-excel"></i>
+                                                <span>
+                                                    &nbsp;&nbsp;{labels.downloadXLSLabel}
+                                                </span>
+                                            </button>
+                                            <span className="vertical-separator"></span>
+                                            <button
+                                                onClick={() =>
+                                                    redirectToRenewalDetail(option?.id)
+                                                }
+                                            >
+                                                <i className="far fa-eye"></i>
+                                                <span>
+                                                    &nbsp;&nbsp;{labels.seeDetailsLabel}
+                                                </span>
+                                            </button>
+                                        </If>
+                                        <If
+                                            condition={
+                                                orderingFromDashboard.showOrderingIcon
+                                            }
+                                        >
+                                            {isIconDisabled ? (
+                                                <span className="cmp-renewals-cart-icon" onClick={handleCartIconClick} >
+                                                    <CartIcon />{' '}
+                                                    Order
+                                                </span>
+                                            ) : (
+                                                <>
+                                                    <button>
+                                                        <CartIcon
+                                                            fill="#c6c6c6"
+                                                            style={{ pointerEvents: 'none' }}
+                                                        />{' '}
+                                                        <span className="cmp-order-label-disabled">Order</span>
+                                                    </button>
+                                                </>
+                                            )}
+                                        </If>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                )})}
+                    );
+                })}
             </div>
             <PlaceOrderDialog
-                isDialogOpen={toggleOrderDialog} 
+                isDialogOpen={toggleOrderDialog}
                 onClose={closeDialog}
                 orderingFromDashboard={orderingFromDashboard}
                 renewalData={details}
-                closeOnBackdropClick={false}  
+                closeOnBackdropClick={false}
                 orderEndpoints={orderEndpoints}
                 store={useRenewalGridState}
             />

@@ -73,6 +73,13 @@ $bg--marketing-card:#F7F7F7;
   }	
 }
 
+@mixin cart-icon {  
+  display: flex;
+  svg:hover{
+    fill: #08BED5;
+  }  
+} 
+
 .cmp-renewals-grid {
   .page-info.hidden{
     display: none;
@@ -482,7 +489,7 @@ span.ag-group-value {
   justify-content: center;
 }
 
-.cmp-renewal-action-container{
+.cmp-renewal-action-container {
   display: flex;
   width: 100%;
   height: 100%;
@@ -494,11 +501,21 @@ span.ag-group-value {
     cursor: pointer;   
   }
   .cmp-renewals-cart-icon{
-    display: flex;
-    svg:hover{
-      fill: #08BED5;
-    }
+    @include cart-icon;
+  }
+}
 
+.card-right-border .footer {
+  &:hover{
+    color: #08BED5;
+  }
+  .cmp-renewals-cart-icon {
+    @include cart-icon;
+    cursor: pointer;
+    align-items: center;    
+  }
+  .cmp-order-label-disabled{
+    color: #c6c6c6 !important;
   }
 }
 

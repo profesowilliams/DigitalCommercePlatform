@@ -10633,7 +10633,7 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
             },
           ],
           source: { system: "RQ", type: "Renewal", id: "U100000000355" },
-          canPlaceOrder: false,
+          canPlaceOrder: true,
           reseller: {
             vendorAccountName: "Universal Business Systems",
             vendorAccountNumber: "23782184",
