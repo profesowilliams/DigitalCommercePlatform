@@ -5,15 +5,23 @@ import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import Grid from "../../Grid/Grid";
+import { If } from "../../../helpers/If";
+import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
+import useTriggerOrdering from "../Orders/useTriggerOrdering";
+import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
+    const { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint } = aemConfig;
     const { pageNumber } = useRenewalGridState((state) => state.pagination);
+    const { orderingFromDashboard } = useRenewalGridState(state => state.aemConfig);    
     const [optionIdSelected, setOptionIdSelected] = useState();
     const optionIdSelectedRef = useRef();
     const rowIndexRef = useRef(node?.rowIndex)
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
+    const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint };
+    const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data });
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
 
     const isPlanSelected = ({id}) => {
@@ -203,15 +211,23 @@ function RenewalPlanOptions({ labels, data, node }) {
                                         <span>&nbsp;&nbsp;{labels.downloadPDFLabel}</span>
                                     </button>
                                     <span className="vertical-separator"></span>
-                                    <button onClick={() => exportXlsPlan(option?.id)}>
-                                        <i className="fas fa-file-excel"></i>
-                                        <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
-                                    </button>
-                                    <span className="vertical-separator"></span>
-                                    <button onClick={() => redirectToRenewalDetail(option?.id)}>
-                                        <i className="far fa-eye"></i>
-                                        <span>&nbsp;&nbsp;{labels.seeDetailsLabel}</span>
-                                    </button>
+                                    <If condition={!orderingFromDashboard.showOrderingIcon}>
+                                        <button onClick={() => exportXlsPlan(option?.id)}>
+                                            <i className="fas fa-file-excel"></i>
+                                            <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
+                                        </button>
+                                        <span className="vertical-separator"></span>
+                                        <button onClick={() => redirectToRenewalDetail(option?.id)}>
+                                            <i className="far fa-eye"></i>
+                                            <span>&nbsp;&nbsp;{labels.seeDetailsLabel}</span>
+                                        </button>
+                                    </If>
+                                    <If condition={orderingFromDashboard.showOrderingIcon}>
+                                        <button onClick={handleCartIconClick}>
+                                            <CartIcon/>
+                                            <span>Order</span>
+                                        </button>   
+                                    </If>
                                 </div>
                             )}
 
@@ -219,6 +235,15 @@ function RenewalPlanOptions({ labels, data, node }) {
                     </div>
                 )})}
             </div>
+            <PlaceOrderDialog
+                isDialogOpen={toggleOrderDialog} 
+                onClose={closeDialog}
+                orderingFromDashboard={orderingFromDashboard}
+                renewalData={details}
+                closeOnBackdropClick={false}  
+                orderEndpoints={orderEndpoints}
+                store={useRenewalGridState}
+            />
         </div>
     );
 }

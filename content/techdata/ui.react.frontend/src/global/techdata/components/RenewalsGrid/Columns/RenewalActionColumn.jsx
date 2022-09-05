@@ -3,6 +3,7 @@ import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from "../Orders/orderingRequests";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
+import useTriggerOrdering from "../Orders/useTriggerOrdering";
 import {
   getLocalStorageData,
   hasLocalStorageData,
@@ -20,8 +21,6 @@ const EllipsisIcon = (props) => (
 
 function _RenewalActionColumn({ eventProps }) {
   const [isToggled, setToggled] = useState(false);
-  const [toggleOrderDialog, setToggleOrderDialog] = useState(false);
-  const [details,setDetails] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
   const rowCollapsedIndexList = useRenewalGridState(
     (state) => state.rowCollapsedIndexList
@@ -33,6 +32,8 @@ function _RenewalActionColumn({ eventProps }) {
   const {updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint} = endpoints;
 
   const { value, data } = eventProps;
+
+  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data });
 
   const orderEndpoints ={updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint};
   
@@ -123,15 +124,7 @@ function _RenewalActionColumn({ eventProps }) {
         capturedPlanPage: pageNumber,
       });
     }, 0);
-  };
-
-  const handleCartIconClick = async (_event) => {
-    const quoteDetails = await fetchQuoteRenewalDetails(renewalDetailsEndpoint, data.source.id);
-    const {content = false} = quoteDetails;
-    setToggleOrderDialog( toggle => !toggle)
-    if (content?.details[0]) return setDetails(mapRenewalForUpdateDetails(content.details[0]));
-    setDetails(mapRenewalForUpdateDashboard(data));
-  }
+  }; 
 
   const isIconDisabled =  useMemo( () => {    
     const isAfter = new Date(data?.firstAvailableOrderDate || new Date()) > new Date();  
@@ -152,7 +145,7 @@ function _RenewalActionColumn({ eventProps }) {
         )}
         <PlaceOrderDialog
           isDialogOpen={toggleOrderDialog} 
-          onClose={() => setToggleOrderDialog(false)}
+          onClose={closeDialog}
           orderingFromDashboard={orderingFromDashboard}
           renewalData={details}
           closeOnBackdropClick={false}  
