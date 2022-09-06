@@ -208,7 +208,13 @@ public class CaConfigReader {
 
     private String renewalUpdateQuoteEndpoint;
 
-    private String renewalGetStatusEndpoint;    
+    private String renewalGetStatusEndpoint;
+
+    private boolean enableGoogleTagManager;
+
+    private String gtmHeadJSScript;
+
+    private String gtmBodyJSScript;
 
     @PostConstruct
     public void init() {
@@ -216,7 +222,6 @@ public class CaConfigReader {
                 page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
         MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
         AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
-        SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
         RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
 
         uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
@@ -274,6 +279,28 @@ public class CaConfigReader {
         checkoutRedirectUrl = mcConfiguration.checkoutRedirectUrl();
         tdPartSmart = mcConfiguration.tdPartSmart();
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
+        enableGoogleTagManager = analyticsConfiguration.enableGoogleTagManager();
+        gtmHeadJSScript = analyticsConfiguration.gtmHeadJSScript();
+        gtmBodyJSScript = analyticsConfiguration.gtmBodyJSScript();
+
+        buildSearchConfigurations();
+
+        dcpDashboardPage = redirectConfiguration.dcpDashboardPage();
+        quoteListingPage = redirectConfiguration.quoteListingPage();
+        quoteDetailPage = redirectConfiguration.quoteDetailPage();
+        quotePreviewPage = redirectConfiguration.quotePreviewPage();
+        orderListingPage = redirectConfiguration.orderListingPage();
+        orderDetailPage = redirectConfiguration.orderDetailPage();
+        shopDomainPage = redirectConfiguration.shopDomainPage();
+        dcpDomain = redirectConfiguration.dcpDomain();
+        actionItemsEndpoint = serviceEndPointsConfiguration.actionItemsEndpoint();
+        quoteDetailsXLSEndpoint = serviceEndPointsConfiguration.quoteDetailsXLSEndpoint();
+
+        buildComonConfigurationsConfigs();
+    }
+
+    private void buildSearchConfigurations() {
+        SearchBarConfiguration searchBarConfiguration = page.adaptTo(ConfigurationBuilder.class).as(SearchBarConfiguration.class);
         allSearchEndpoint = searchBarConfiguration.allSearchEndpoint();
         allSuggestionUrl = searchBarConfiguration.allSuggestionUrl();
         productSearchEndpoint = searchBarConfiguration.productSearchEndpoint();
@@ -290,7 +317,7 @@ public class CaConfigReader {
         quotePartialEndPoint = searchBarConfiguration.quotePartialEndPoint();
         spaSearchEndpoint = searchBarConfiguration.spaSearchEndpoint();
         typeAheadDomain = searchBarConfiguration.typeAheadDomain();
-        dcpDomain = redirectConfiguration.dcpDomain();
+
         typeAheadSearchTermSuffix = searchBarConfiguration.typeAheadSearchTermSuffix();
         typeAheadXDomainScript = searchBarConfiguration.typeAheadXDomainScript();
         typeAheadProxyScript = searchBarConfiguration.typeAheadProxyScript();
@@ -301,17 +328,6 @@ public class CaConfigReader {
         searchRefinementsParameter = searchBarConfiguration.searchRefinementsParameter();
         searchBParameter = searchBarConfiguration.searchBParameter();
         contentSearchTab = searchBarConfiguration.contentSearchTab();
-        dcpDashboardPage = redirectConfiguration.dcpDashboardPage();
-        quoteListingPage = redirectConfiguration.quoteListingPage();
-        quoteDetailPage = redirectConfiguration.quoteDetailPage();
-        quotePreviewPage = redirectConfiguration.quotePreviewPage();
-        orderListingPage = redirectConfiguration.orderListingPage();
-        orderDetailPage = redirectConfiguration.orderDetailPage();
-        shopDomainPage = redirectConfiguration.shopDomainPage();
-        actionItemsEndpoint = serviceEndPointsConfiguration.actionItemsEndpoint();
-        quoteDetailsXLSEndpoint = serviceEndPointsConfiguration.quoteDetailsXLSEndpoint();
-
-        buildComonConfigurationsConfigs();
     }
 
     private void buildComonConfigurationsConfigs() {
@@ -682,4 +698,16 @@ public class CaConfigReader {
     public String getRenewalGetStatusEndpoint(){
         return renewalGetStatusEndpoint;
     };
+
+    public boolean isEnableGoogleTagManager() {
+        return enableGoogleTagManager;
+    }
+
+    public String getGtmHeadJSScript() {
+        return gtmHeadJSScript;
+    }
+
+    public String getGtmBodyJSScript() {
+        return gtmBodyJSScript;
+    }
 }

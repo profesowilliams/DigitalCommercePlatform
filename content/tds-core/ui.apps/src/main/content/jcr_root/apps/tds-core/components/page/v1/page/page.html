@@ -31,6 +31,15 @@
       data-disable-check-for-dcp-access="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableChecksForDCPAccess}"
       data-disable-entitlements-list="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableEntitlementsList}"
       data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}">
+
+    <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
+        <sly data-sly-test="${configData.enableGoogleTagManager}">
+            <!-- Google Tag Manager in Body -->
+            ${configData.gtmBodyJSScript @ context='scriptComment'}
+            <!-- End Google Tag Manager in Body -->
+        </sly>
+    </sly>
+
 <div id="top"></div>
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];
