@@ -4,6 +4,9 @@
     var WRONG_FILE_SIZE_STATUS = "-1";
     var WRONG_FILE_EXTN_STATUS = "-2";
     const errorLabelClass = 'error-label';
+    const INVALID_CHARACTERS_MSG = 'This field contains Invalid Characters. Please correct';
+    const INVALID_FILE_MSG = 'Invalid file size or type, recheck and try again.';
+    const pdfRegex = new RegExp('^.*\.(pdf | PDF)$');
 
     function documentReady(fn) {
         if (document.readyState !== "loading") {
@@ -19,7 +22,7 @@
         var labels = form.getElementsByTagName('label');
         // Remove error message when submit and try again
         Array.from(labels).forEach(function (label) {
-            if (label.innerText == 'This field contains Invalid Characters. Please correct') {
+            if (label.innerText == INVALID_CHARACTERS_MSG) {
                 label.remove();
             }
         });
@@ -31,44 +34,45 @@
         var textAreasList = Array.prototype.slice.call(textAreas);
         var invalidFileStatus = false;
         var invalidInputStatus = false;
+        setErrorMessage('');
 
         inputsList.forEach(
-            function (i) {
-                if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
+            function (input) {
+                if (input.name.startsWith(":formstart") && !input.name.startsWith("_charset_")) {
                     let fsize = 0;
                     let file = 0;
-                    if (i.type.startsWith("file")) {
-                        if (i.files.length > 0) {
-                             var fileExtension = i.files[0].name;
-                            if(fileExtension.toLowerCase().includes(".pdf")){
-                                newData.append(i.name, i.files[0], i.files[0].name);
-                                if(!processFileValidations(i.files[0])) {
+                    if (input.type.startsWith("file")) {
+                        if (input.files.length > 0) {
+                            var fileExtension = input.files[0].name;
+                            if(pdfRegex.test(fileExtension)){
+                                newData.append(input.name, input.files[0], input.files[0].name);
+                                if(!processFileValidations(input.files[0])) {
                                     invalidFileStatus = true;
                                     return;
                                 }
                             }else {
-                                document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
+                              setErrorMessage('Invalid file size or type, recheck and try again.');
                                 invalidFileStatus = true;
                                 validateFileOnSubmit();
                                 return;
                             }
                         }
 
-                    } else if (i.type.startsWith("radio") || i.type.startsWith("checkbox")) {
-                        if (i.checked) {
-                            newData.append(i.name, i.value);
+                    } else if (input.type.startsWith("radio") || input.type.startsWith("checkbox")) {
+                        if (input.checked) {
+                            newData.append(input.name, input.value);
                         }else {
-                            newData.append(i.name, "");
+                            newData.append(input.name, "");
                        }
                     }
 
                     else {
                         // see if is neccesary to apply the validation for that input
-                        if (i.hasAttribute('required') || i.value !== '' ){
-                           if(validateAddress(i, i.value)){
-                                newData.append(i.name, i.value);
+                        if (input.hasAttribute('required') || input.value !== '' ){
+                            if (validateAddress(input, input.value)){
+                                newData.append(input.name, input.value);
                             } else {
-                               invalidInputStatus = true;
+                                invalidInputStatus = true;
                                 return;
                             }
                        }
@@ -78,17 +82,17 @@
         );
 
         selectsList.forEach(
-            function (i) {
-                if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
-                    newData.append(i.name, i.options[i.selectedIndex].value);
+            function (input) {
+                if (!input.name.startsWith(":formstart") && !input.name.startsWith("_charset_")) {
+                    newData.append(input.name, input.options[input.selectedIndex].value);
                 }
             }
         );
 
         textAreasList.forEach(
-            function (i) {
-                if(validateAddress(i, i.value)){
-					newData.append(i.name, i.value);
+            function (input) {
+                if(validateAddress(input, input.value)){
+					newData.append(input.name, input.value);
                 } else {
                     invalidInputStatus = true;
                     return;
@@ -101,6 +105,10 @@
             newData.append("currentpage", currPageName);
         }
         return newData;
+    }
+
+    function setErrorMessage(message) {
+        document.getElementById(errorBlockId).innerHTML = message;
     }
 
     function validateFileOnSubmit(){
@@ -129,12 +137,12 @@
 			var re = new RegExp(expression, 'g');
             if(re.test(value)) {
                 parentDiv.childNodes.forEach(child => {
-                    if (child.nodeName == 'LABEL' && child.innerText == 'This field contains Invalid Characters. Please correct') {
+                  if (child.nodeName == 'LABEL' && child.innerText == INVALID_CHARACTERS_MSG) {
                         parentDiv.removeChild(child);
                         parentDiv.removeChild(errorLabel);
                     }
                 });
-                errorLabel.innerText = "This field contains Invalid Characters. Please correct";
+                errorLabel.innerText = INVALID_CHARACTERS_MSG;
                 element.focus();
                 setTimeout(function() {
                     element.style.borderColor = originalBorderColor  },
@@ -150,7 +158,7 @@
         //  validate file for invalid file size and extensions
         var invalidFileStatusCode = invalidFile(fileEle);
         if(invalidFile(fileEle) == "-1" || invalidFile(fileEle) == "-2") {
-            document.getElementById(errorBlockId).innerHTML = "Invalid file size or type, recheck and try again.";
+            setErrorMessage("Invalid file size or type, recheck and try again.");
             return false;
         }
         return true;
@@ -247,12 +255,12 @@
         var textAreasList = Array.prototype.slice.call(textAreas);
 
         inputsList.forEach(
-            function (i, e) {
-                i.addEventListener('invalid', function(e) {
-                    inputErrorMessageDisplay(i.type, e, i);
+            function (input, e) {
+                input.addEventListener('invalid', function(e) {
+                    inputErrorMessageDisplay(input.type, e, input);
                     // onChange handler
-                    i.addEventListener('input', function(e) {
-                        removeErrorLabelChild(i)
+                    input.addEventListener('input', function(e) {
+                        removeErrorLabelChild(input)
                     });
                 });
                     
@@ -260,23 +268,23 @@
         );
 
         textAreasList.forEach(
-            function (i, e) {
-                i.addEventListener('invalid', function(e) {
-                    inputErrorMessageDisplay(i.type, e, i);
+            function (input, e) {
+                input.addEventListener('invalid', function(e) {
+                    inputErrorMessageDisplay(input.type, e, input);
                     // onChange handler
-                    i.addEventListener('input', function(e) {
-                        removeErrorLabelChild(i)
+                    input.addEventListener('input', function(e) {
+                        removeErrorLabelChild(input)
                     });
                 });
             }
         );
 
-        selectsList.forEach((i) => {
-                i.addEventListener('invalid', (e) => {
-                    inputErrorMessageDisplay(i.type, e, i);
+        selectsList.forEach((input) => {
+                input.addEventListener('invalid', (e) => {
+                    inputErrorMessageDisplay(input.type, e, input);
                     // Add CLICK event listener to parent of the element 
-                    const parentDiv = i.closest("fieldset");
-                    parentDiv.addEventListener('click', (e) => removeErrorLabelChild(i));
+                    const parentDiv = input.closest("fieldset");
+                    parentDiv.addEventListener('click', (e) => removeErrorLabelChild(input));
                 });
             }
         );
@@ -309,12 +317,12 @@
             var inputs = tdForm.getElementsByTagName('input'); // get input files in the form
             var inputsList = Array.prototype.slice.call(inputs); // creating an array
             inputsList.forEach( // iterating array to search the input file
-                function (i, e) {
-                    if (!i.name.startsWith(":formstart") && !i.name.startsWith("_charset_")) {
-                        if (i.type.startsWith("file")) { // Founding input file
-                            var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+              function (input, e) {
+                    if (!input.name.startsWith(":formstart") && !input.name.startsWith("_charset_")) {
+                        if (input.type.startsWith("file")) { // Founding input file
+                            var addEventListener = input.addEventListener("change", handlerInputFile, false); // Adding event listener
                         } else {
-                            var addEventListener = i.addEventListener("change", handlerInputFile, false); // Adding event listener
+                            var addEventListener = input.addEventListener("change", handlerInputFile, false); // Adding event listener
                         }
                     }
                 }
