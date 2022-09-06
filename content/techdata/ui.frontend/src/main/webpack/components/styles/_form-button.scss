@@ -1,1 +1,15 @@
-.cmp-form-button {}
+.cmp-form-button {
+    &__teal {
+        .cmp-form-button { 
+            background-color: map-get($color-palette, "teal") !important;
+            opacity: 1; 
+        }
+    }
+
+    &__deep-teal {
+        .cmp-form-button { 
+            background-color: map-get($color-palette, "deep-teal") !important;
+            opacity: 1; 
+        }
+    }
+}

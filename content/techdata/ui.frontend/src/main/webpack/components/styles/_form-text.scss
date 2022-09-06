@@ -5,27 +5,43 @@
 
 .cmp-form-text {
     &__teal {
-        .cmp-form-text__text {
-            &::placeholder { 
-                color: map-get($color-palette, "teal");
-                opacity: 1; 
+        .cmp-form-text {
+            .cmp-form-text__text {
+                color: map-get($color-palette, "teal") !important;
+
+                &::placeholder { 
+                    color: map-get($color-palette, "teal") !important;
+                    opacity: 1; 
+                }
             }
         }
     }
 
     &__deep-teal {
-        &::placeholder { 
-            color: get-color(deep-teal) !important;
-            opacity: 1; 
+        .cmp-form-text {
+            .cmp-form-text__text {
+                color: map-get($color-palette, "deep-teal") !important;
+
+                &::placeholder { 
+                    color: map-get($color-palette, "deep-teal") !important;
+                    opacity: 1; 
+                }
+            }
         }
       }
     
-      &__aqua {
-        &::placeholder { 
-            color: map-get($color-palette, "aqua") !important;
-            opacity: 1; 
+    &__aqua {
+        .cmp-form-text {
+            .cmp-form-text__text {
+                color: map-get($color-palette, "aqua") !important;
+
+                &::placeholder { 
+                    color: map-get($color-palette, "aqua") !important;
+                    opacity: 1; 
+                }
+            }
         }
-      }
+    }
 }
 .cmp-form-text__help-block {}
 .cmp-form-text__textarea {}
