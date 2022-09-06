@@ -46,7 +46,7 @@
         "webpack-merge": "^4.2.2",
         "simple-zustand-devtools": "^1.0.1"
     },
-    "dependencies": {    
+    "dependencies": {
         "@emotion/react": "^11.9.3",
         "@emotion/styled": "^11.9.3",
         "@mui/material": "^5.9.2",
@@ -78,8 +78,8 @@
         "react-scripts": "^3.4.1",
         "redux": "^4.0.5",
         "redux-thunk": "^2.3.0",
-        "regenerator-runtime": "^0.13.5",   
-        "sass": "^1.54.0",   
+        "regenerator-runtime": "^0.13.5",
+        "sass": "^1.54.0",
         "universal-cookie": "^4.0.3",
         "validator": "^13.7.0",
         "zustand": "^3.7.1"

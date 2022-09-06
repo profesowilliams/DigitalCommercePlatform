@@ -1,24 +1,7 @@
-@mixin fontdef($font-primary-path, $FontType: "Regular") {
-	src: url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf"),
-		url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf");
+@mixin fontdef($font-path, $font-type: "Regular", $font-name: "OpenSans") {
+  src: url("#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf") format("ttf"),
+  url("#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf") format("ttf");
 }
-
-@mixin fontdef($font-marketing-path, $FontType: "Regular") {
-	src: url("#{$font-marketing-path}/#{$FontType}/TWKEverett-#{$FontType}.ttf") format("ttf"),
-		url("#{$font-marketing-path}/#{$FontType}/TWKEverett-#{$FontType}.ttf") format("ttf");
-}
-
-@mixin fontdef($font-digital-path, $FontType: "Regular") {
-	src: url("#{$font-digital-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf"),
-		url("#{$font-digital-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf");
-}
-
-
-@mixin fontdef($font-awesome-path, $FontType: "Regular") {
-	src: url("#{$font-awesome-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf"),
-		url("#{$font-awesome-path}/#{$FontType}/Georgia-Pro-#{$FontType}.ttf") format("ttf");
-}
-
 
 @mixin font-awesome-custom-icon {
   display: inline-block;
@@ -406,4 +389,27 @@
     border-color: get-color(legacy-gray) !important;
   }
 
+@mixin font-everett-regular-normal($weight: 400, $size: 16px, $line-height: 20px) {
+  font-family: 'TWKEverett-Regular-web';
+  font-style: normal;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+}
+  
+@mixin font-everett-medium-bold($weight: 500, $size: 16px, $line-height: 21px) {
+  font-family: 'TWKEverett-Medium-web';
+  font-style: normal;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+}
+
+@mixin font-arial-normal($weight: 400, $size: 16px, $line-height: 18px) {
+  font-family: 'Arial';
+  font-style: normal;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line-height;
+}
   

@@ -37,6 +37,7 @@
   .icon-button {
     display: flex;
     align-items: center;
+    @include font-arial-normal();
     &.underlined_hover:not(.disabled):hover {
       cursor: pointer;
       text-decoration: underline;

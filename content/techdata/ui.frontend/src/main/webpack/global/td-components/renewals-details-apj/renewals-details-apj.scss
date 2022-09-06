@@ -1,0 +1,43 @@
+.cmp-renewals-details__apj {
+  @include font-everett-regular-normal();
+
+  .cmp-renewals-qp__config-grid {
+    .header-container {
+      .image-container {
+        .back-to-renewal {
+          @include font-everett-regular-normal($line-height: 22px);
+        }
+      }
+    }
+
+    .export-container .quote-preview {
+      @include font-everett-medium-bold($size: 20px, $line-height: 18px);
+    }
+
+    .cmp-renewals-qp__reseller-info,
+    .cmp-renewals-qp__agreement-info,
+    .cmp-renewals-qp__enduser-info {
+      @include font-everett-medium-bold();
+
+      &--title {
+        @include font-everett-medium-bold($size: 16px);
+      }
+
+      &--address-group {
+        span {
+          @include font-everett-regular-normal($line-height: 24px);
+          color: #606060;
+        }
+      }
+    }
+  }
+
+  .cmp-renewal-preview {
+    .details-container {
+      .details-preview {
+        color: $brand-green;
+        @include font-everett-medium-bold();
+      }
+    }
+  }
+}

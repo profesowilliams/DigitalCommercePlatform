@@ -148,9 +148,9 @@
       align-items: center;
       line-height: 12px;
       &--text {
+        @include font-everett-medium-bold();
         margin-left: 10px;
         color: $brand-green--dark;
-        font-weight: 600;
       }
     }
 }

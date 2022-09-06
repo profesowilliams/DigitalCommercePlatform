@@ -12,9 +12,9 @@
     }
 }
 
-@mixin fontdef($font-primary-path, $FontType: "Regular") {
-	src: url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf"),
-		url("#{$font-primary-path}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf");
+@mixin fontdef($font-path, $font-type: "Regular", $font-name: "OpenSans") {
+    src: url("#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf") format("ttf"),
+    url("#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf") format("ttf");
 }
 
 @mixin font-awesome-custom-icon {
