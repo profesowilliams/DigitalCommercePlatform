@@ -1,8 +1,9 @@
-@import "../../_mixins.scss";
-@import "../../styles/helpers/colors.scss";
+@import '../../_mixins.scss';
+@import '../../styles/helpers/colors.scss';
 
 .cmp-tds {
   .cmp-tabs {
+    @include text-cool-gray-9;
     box-sizing: border-box;
     line-height: rem(25px);
 
@@ -18,16 +19,268 @@
     &__tab {
       padding: 0;
 
-      &--active {
-        text-decoration: none !important;
-        border-bottom: rem(2px) solid;
-        border-color: inherit;
-      }
-
+      &--active,
       &:hover {
         text-decoration: none !important;
         border-bottom: rem(2px) solid;
         border-color: inherit;
+      }
+    }
+  }
+
+  &-active-tab {
+
+    // TDS Primary text colors
+    &__teal {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-teal;
+        }
+      }
+    }
+
+    &__deep-teal {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-deep-teal;
+        }
+      }
+    }
+
+    &__aqua {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-aqua;
+        }
+      }
+    }
+
+    &__cool-gray-8 {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-cool-gray-8;
+        }
+      }
+    }
+
+    &__cool-gray-10 {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-cool-gray-10;
+        }
+      }
+    }
+
+    &__green {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-green;
+        }
+      }
+    }
+
+    &__chartreuse {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-chartreuse;
+        }
+      }
+    }
+
+    &__black {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-black;
+        }
+      }
+    }
+
+    &__white {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-white;
+        }
+      }
+    }
+
+    //TDS Secondary text colors
+    &__steel-blue {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-steel-blue;
+        }
+      }
+    }
+
+    &__navy {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-navy;
+        }
+      }
+    }
+
+    &__copper {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-copper;
+        }
+      }
+    }
+
+    &__stone {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-stone;
+        }
+      }
+    }
+
+    &__cool-gray-1 {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-cool-gray-1;
+        }
+      }
+    }
+
+    //TDS Digital text colors
+    &__cherry {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-cherry;
+        }
+      }
+    }
+
+    &__amber {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-amber;
+        }
+      }
+    }
+
+    &__cobalt {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-cobalt;
+        }
+      }
+    }
+
+    &__neutral-gray-1 {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-neutral-gray-1;
+        }
+      }
+    }
+
+    &__forest {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-forest;
+        }
+      }
+    }
+
+    &__charcoal {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-charcoal;
+        }
+      }
+    }
+
+    &__cool-gray-9 {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-cool-gray-9;
+        }
+      }
+    }
+
+    &__neutral-gray-2 {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-neutral-gray-2;
+        }
+      }
+    }
+
+    //Legacy text colors
+    &__dark-blue {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-dark-blue;
+        }
+      }
+    }
+
+    &__sky-blue {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-sky-blue;
+        }
+      }
+    }
+
+    &__legacy-gray {
+      .cmp-tabs__tab {
+
+        &--active,
+        &:hover {
+          @include text-legacy-gray;
+        }
       }
     }
   }
@@ -357,7 +610,7 @@
   &-border {
     &--teal {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "teal") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'teal') !important;
       }
     }
 
@@ -369,13 +622,13 @@
 
     &--aqua {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "aqua") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'aqua') !important;
       }
     }
 
     &--chartreuse {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "chartreuse") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'chartreuse') !important;
       }
     }
 
@@ -393,19 +646,19 @@
 
     &--green {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "green") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'green') !important;
       }
     }
 
     &--black {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "black") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'black') !important;
       }
     }
 
     &--white {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "white") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'white') !important;
       }
     }
 
@@ -424,7 +677,7 @@
 
     &--copper {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "copper") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'copper') !important;
       }
     }
 
@@ -455,13 +708,13 @@
 
     &--forest {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "forest") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'forest') !important;
       }
     }
 
     &--charcoal {
       .cmp-tabs__tablist {
-        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, "charcoal") !important;
+        box-shadow: 0 rem(1px) 0 0 map-get($color-palette, 'charcoal') !important;
       }
     }
 
@@ -502,40 +755,43 @@
       }
     }
 
-        &--legacy-gray {
-            .cmp-tabs__tablist {
-                box-shadow: 0 rem(1px) 0 0 get-color(legacy-gray) !important;
-            }
+    &--legacy-gray {
+      .cmp-tabs__tablist {
+        box-shadow: 0 rem(1px) 0 0 get-color(legacy-gray) !important;
+      }
+    }
+  }
+
+  &__stream {
+    background-color: get-color(container-transparent);
+
+    li {
+      font-family: $font-family-everett !important;
+      font-weight: 500;
+      font-size: 16px;
+
+      &:hover,
+      &:active {
+        outline: 0 none;
+        background: white;
+        color: black;
+        border: 5px;
+        border-radius: 3em;
+
+        .cmp-tabs__tab-image {
+          border-color: get-color(secondary-light-grey);
         }
+      }
     }
 
-    &__stream {
-        background-color: get-color(container-transparent);
-        li {
-          font-family: $font-family-everett !important;
-          font-weight: 500;
-          font-size: 16px;
-          &:hover,
-          &:active {
-            outline: 0 none;
-            background: white;
-            color: black;
-            border: 5px;
-            border-radius: 3em;
-            .cmp-tabs__tab-image {
-              border-color: get-color(secondary-light-grey);
-            }
-          }
-        }
-    
-        .cmp-tabs__tablist {
-            margin-bottom: 2rem;
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-    
-        .cmp-tabs__tab {
-          padding: 1rem 1.75rem;
-        }
+    .cmp-tabs__tablist {
+      margin-bottom: 2rem;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
     }
+
+    .cmp-tabs__tab {
+      padding: 1rem 1.75rem;
+    }
+  }
 }
