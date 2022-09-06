@@ -164,6 +164,12 @@ function RenewalPlanOptions({ labels, data, node }) {
         `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
     );
 
+    const formatTotalValue = (option) => {
+      return aemConfig?.displayCurrencyName
+        ? `${thousandSeparator(option?.total)} ${data?.renewal?.currency}`
+        : `$ ${thousandSeparator(option?.total)}`;
+    };
+
     const optionPlanLink = id => <Link
         href={renewalDetailsURL}
         variant="renewal-links__secondary"
@@ -208,8 +214,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                         <h4
                                             htmlFor={option?.id}
                                             style={{ ...setStylesOnSelected(option) }}
-                                        >
-                                            $ {thousandSeparator(option?.total)}
+                                        > {formatTotalValue(option)}
                                         </h4>
                                     </div>
                                     <div className="clear"></div>

@@ -108,8 +108,7 @@ export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;
 
 // Return request site and language from dcp url segments
-export function getHeaderInfoFromUrl(pathName) {  
-  console.log('pathName',pathName)
+export function getHeaderInfoFromUrl(pathName) { 
   let countryIndex = 1; // uat/stage/prod
   let languageIndex = 2
   const pathArray = pathName?.split('/');
