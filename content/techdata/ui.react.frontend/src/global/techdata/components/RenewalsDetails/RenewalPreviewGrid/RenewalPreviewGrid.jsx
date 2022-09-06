@@ -69,6 +69,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     paginationStyle: "none",
   };
   const effects = useRenewalsDetailsStore( state => state.effects);
+  const { closeAndCleanToaster } = effects;
   const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
 
   // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
@@ -278,7 +279,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         isDetails={true}
         />
       <Toaster
-        onClose={() => effects.setCustomState({key:'toaster',value:{isOpen:false}})}
+        onClose={() => closeAndCleanToaster()}
         store={useRenewalsDetailsStore} 
         message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
     </div>

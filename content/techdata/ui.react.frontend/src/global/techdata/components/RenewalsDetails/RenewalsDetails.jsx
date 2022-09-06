@@ -24,6 +24,7 @@ function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
   const effects = useRenewalsDetailsStore(state => state.effects);
+  const { closeAndCleanToaster } = effects;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
   const [apiResponse, isLoading, error] = useGet(
@@ -130,6 +131,7 @@ function RenewalsDetails(props) {
   }
 
   const setLockedEdit = (flag) => {
+    closeAndCleanToaster()
     setToggleEdit(false);
     setEditMode(flag);
     effects.setCustomState({ key: 'isEditingDetails', value: flag });

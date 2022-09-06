@@ -1,4 +1,4 @@
-import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { FILTER_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import {  getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../renewalUtils";
 
 export const renewalsEffects = (set, get) => {
@@ -97,6 +97,11 @@ export const renewalsEffects = (set, get) => {
     set({dateOptionsList : dateOptionsWithLocalStorage });
   }
 
+  function closeAndCleanToaster(){
+    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+    setCustomState({key:'toaster', value:{isOpen:false}},options);
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -108,6 +113,7 @@ export const renewalsEffects = (set, get) => {
     setCustomState,
     setAppliedFilterCount,
     setToolTipData,
-    setDateOptionList
+    setDateOptionList,
+    closeAndCleanToaster
   };
 };

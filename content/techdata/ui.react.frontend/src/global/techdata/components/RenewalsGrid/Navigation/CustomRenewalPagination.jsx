@@ -25,12 +25,10 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     pageNumber,
   } = paginationData;
 
-  const gridApi = useRenewalGridState((state) => state.gridApi);
+  const gridApi = useRenewalGridState( state => state.gridApi);
   const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
-  
-  const setCustomState = useRenewalGridState(
-    (state) => state.effects.setCustomState
-  );
+  const effects = useRenewalGridState( state => state.effects);
+  const { setCustomState, closeAndCleanToaster } = effects;
   const {optionFieldsRef, isFilterDataPopulated} = useMultiFilterSelected();
   const [paginationCounter, setPaginationCounter] = useState({
     minCounter: 0,
@@ -89,8 +87,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     } else {    
       sendPagingRequest()
     }
-    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    setCustomState({key:'toaster', value:{isOpen:false}},options)
+    closeAndCleanToaster();
   };
 
   const decrementHandler = () => {    
@@ -106,7 +103,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     } else {    
       sendPagingRequest()
     }       
-    setCustomState({key:'toaster', value:{isOpen:false}})
+    closeAndCleanToaster();
   };
 
   const goToSpecificPage = (specificNumber) => {

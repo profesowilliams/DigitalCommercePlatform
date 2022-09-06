@@ -2,6 +2,7 @@ import React from "react";
 import { If } from "../../../../helpers/If";
 import Edit from "../../Edit";
 import CancelAndSave from "../../CancelAndSave";
+import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
 
 function EditFlow({
   disabled,
@@ -11,7 +12,12 @@ function EditFlow({
   cancelHandler,
   customClass,
 }) {
-  const handleIconEditClick = () => {
+
+  const effects = useRenewalsDetailsStore( state => state.effects);
+  const { closeAndCleanToaster } = effects;
+
+  const handleIconEditClick = () => {   
+    closeAndCleanToaster();
     setEdit(true);
   };
 

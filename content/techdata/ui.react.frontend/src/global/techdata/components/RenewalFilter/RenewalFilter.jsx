@@ -16,7 +16,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
   const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
 
-  const { toggleFilterModal } = effects;
+  const { toggleFilterModal, closeAndCleanToaster } = effects;
   const handleFilterClick = () => {
     pushEvent(ANALYTICS_TYPES.events.click, {
       type: ANALYTICS_TYPES.types.button,
@@ -25,8 +25,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
     });
     toggleFilterModal();
     window.scrollTo(0,0);
-    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    effects.setCustomState({key:'toaster', value:{isOpen:false}},options);
+    closeAndCleanToaster();
   };
 
   const handleFilterCloseClick = () => {

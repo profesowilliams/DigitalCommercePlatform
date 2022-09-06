@@ -9,6 +9,7 @@ import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, set
 function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
   const effects = useRenewalGridState(state => state.effects);
+  const { setCustomState, closeAndCleanToaster } = effects;
   const detailRender = useRenewalGridState(state => state.detailRender);
   const { pageNumber } = useRenewalGridState(state => state.pagination);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
@@ -17,11 +18,11 @@ function _ContractColumn({ data, eventProps }) {
   const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
   const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
   const [isToggled, setToggled] = React.useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     if (detailRender === "primary") setToggled(false)
   }, [detailRender])
   
-  React.useEffect(() => {  
+  useEffect(() => {  
     rowCollapsedIndexList?.includes && rowCollapsedIndexList?.includes(rowIndex) && setToggled(false);
   }, [rowCollapsedIndexList])
   
@@ -62,7 +63,7 @@ function _ContractColumn({ data, eventProps }) {
    */
   const toggleExpandedRow = () => {
     if (!hasOptions) return;
-    effects.setCustomState({ key: 'detailRender', value: 'secondary' })
+    setCustomState({ key: 'detailRender', value: 'secondary' })
     eventProps.node.setExpanded(!isToggled);
     setToggled(!isToggled);
     const rowCollapsedIndexList = [];
@@ -74,9 +75,8 @@ function _ContractColumn({ data, eventProps }) {
         rowCollapsedIndexList.push(node?.rowIndex);
       }
     });
-    effects.setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
-    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    effects.setCustomState({ key: 'toaster', value: {isOpen:false}},options);
+    setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
+    closeAndCleanToaster();
     /**
      * Ag-grid gives detailed-view the same index as normal grid rows. This
      * prevents targeting the toggle state appropriately. Hence DOM query.

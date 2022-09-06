@@ -52,7 +52,7 @@ function RenewalsGrid(props) {
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   const firstAPICall = useRef(true);
   
-  const { setToolTipData, setCustomState } = effects;
+  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
   const componentProp = JSON.parse(props.componentProp);
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
@@ -298,8 +298,7 @@ function RenewalsGrid(props) {
   }
 
   function onCloseToaster() {
-    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    const toasterUpdated = { key: 'toaster', value: { isOpen: false } };
+    closeAndCleanToaster();
     setCustomState(toasterUpdated, options);
   }
 

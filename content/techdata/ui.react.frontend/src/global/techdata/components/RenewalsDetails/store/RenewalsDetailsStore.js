@@ -12,9 +12,9 @@ const INITIAL_STATE = {
   isEditingDetails: false,
 };
 
-const store = (set, get, a) => ({
+const store = (set,get) => ({
   ...INITIAL_STATE,
-  effects: renewalsEffects(set, get),
+  effects: renewalsEffects(set,get),
 });
 
 export const useRenewalsDetailsStore = Create(store);

@@ -48,6 +48,7 @@ function _SearchFilter(
   const [capsuleSearchValue, setCapsuleSearchValue] = useState(getInitialValueState());
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
+  const { closeAndCleanToaster } = effects;  
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
   const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
@@ -144,8 +145,7 @@ function _SearchFilter(
   }
 
   const handleDropdownSwitch = useCallback(() => {
-    const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
-    effects.setCustomState({key:'toaster',value:{isOpen:false}},options);
+    closeAndCleanToaster();
     if (isSearchCapsuleVisible) {
       handleCapsuleTextClick();
     }

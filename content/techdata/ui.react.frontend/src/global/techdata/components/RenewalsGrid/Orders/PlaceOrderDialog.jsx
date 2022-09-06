@@ -95,7 +95,14 @@ function PlaceOrderDialog({
       >
         <div className="place-cmp-order-dialog-container">
           <div className="place-cmp-order-dialog-container__closeIcon">
-            <Dismiss onClick={handleCloseDialog} />
+            {!submitted ? (
+              <Dismiss onClick={handleCloseDialog} />
+            ) : (
+              <Dismiss
+                fill="#c6c6c6"
+                style={{ pointerEvents: "none" }}
+              />
+            )}
           </div>
           <p className="cmp-place-order-title">
             {showEnuserCompanyName(placeOrderDialogTitle)}
