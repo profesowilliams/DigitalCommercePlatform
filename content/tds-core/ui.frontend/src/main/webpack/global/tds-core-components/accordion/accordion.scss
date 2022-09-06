@@ -359,6 +359,9 @@
     font-size: 16px !important;
     line-height: 24px !important;
     color: map-get($color-palette, 'charcoal') !important;
+    padding-right: rem(56px);
+    padding-left: rem(40px);
+    padding-bottom: rem(52px);
   }
 
   .cmp-accordion__title{
@@ -382,7 +385,7 @@
     font-size: 18px !important;
   }
   .cmp-accordion__button[aria-expanded="true"]::after{
-    content: fa-content($fa-var-arrow-right);
+    content: fa-content($fa-var-arrow-up);
     font-size: 18px !important;
   }
 
@@ -394,9 +397,22 @@
     font-size: rem(14px);
     font-weight: $font-weight-normal;
 
+    .cmp-accordion__header{
+      .cmp-accordion__button {
+        padding-top: rem(50px);
+        padding-bottom: rem(50px);
+        padding-right: rem(10px);
+        padding-left: rem(40px);
+      }
+
+      .cmp-accordion__button[aria-expanded="true"]{
+        padding-bottom: 1rem;
+      }
+    }
+
     .cmp-accordion__header,
     .cmp-accordion__item {
-      margin-bottom: rem(24px);
+      background-color: white;
     }
 
     .cmp-accordion__button {
@@ -428,6 +444,8 @@
         width: rem(24px);
         height: rem(24px);
         margin-left: auto;
+        position: absolute;
+        right: 0rem;
       }
 
       &::after {
@@ -436,7 +454,7 @@
         font-size: rem(14px);
         font-weight: $font-weight-normal;
         position: absolute;
-        right: 0;
+        right: 20px;
         width: rem(24px);
       }
 
