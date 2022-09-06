@@ -71,7 +71,7 @@ const columnsWidth = {
   agreementNumber: "130px",
   renewedduration: "177.632px",
   dueDays: "143.737px",
-  dueDate: "109.526px",
+  dueDate: "129.526px",
   total: "109.526px",
   actions: "100px",
 };
