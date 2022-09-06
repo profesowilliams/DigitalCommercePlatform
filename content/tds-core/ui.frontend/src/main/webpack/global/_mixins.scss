@@ -406,4 +406,26 @@
     border-color: get-color(legacy-gray) !important;
   }
 
+  @mixin font-everett-regular-normal($weight: 400, $size: 16px, $line-height: 20px) {
+    font-family: 'TWKEverett-Regular-web';
+    font-style: normal;
+    font-weight: $weight;
+    font-size: $size;
+    line-height: $line-height;
+  }
+    
+  @mixin font-everett-medium-bold($weight: 500, $size: 16px, $line-height: 21px) {
+    font-family: 'TWKEverett-Medium-web';
+    font-style: normal;
+    font-weight: $weight;
+    font-size: $size;
+    line-height: $line-height;
+  }
   
+  @mixin font-arial-normal($weight: 400, $size: 16px, $line-height: 18px) {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: $weight;
+    font-size: $size;
+    line-height: $line-height;
+  }
