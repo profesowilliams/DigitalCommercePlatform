@@ -1,10 +1,10 @@
 <sly data-sly-use.model="com.tdscore.core.models.LinkList"
      data-sly-test.hasContent="${model.links ? model.links.size > 0 : false}">
-    <div data-sly-test=${hasContent} class="cmp-list">
-        <ul data-sly-list.item="${model.links}" class="cmp-link-list">
+    <div data-sly-test=${hasContent} class="cmp-button-group">
+        <ul data-sly-list.item="${model.links}" class="cmp-button-group-list">
 
 
-            <li class="cmp-link-list__item">
+            <li class="cmp-button-group__item">
                 <a data-sly-unwrap="${!(item.platformName || item.linkUrl)}"
                    title="${item.platformName}"
                    href="${item.linkUrl}"
@@ -14,7 +14,7 @@
                         <div data-sly-test="${item.iconUrl}" class="cmp-image">
                             <img src="${item.iconUrl}" class="cmp-image__image" alt="${item.platformName}" title="${item.platformName}">
                         </div>
-                        <span class="cmp-link-list__item-title">${item.platformName}</span>
+                        <span class="cmp-button-group-list__item-title">${item.platformName}</span>
                     </article>
                 </a>
 
