@@ -22,15 +22,10 @@
   }
 
   &__green_bullet {
-
-    ul,
-    ol {
+    ul, ol {
       margin-bottom: 0.0rem;
-
       li {
         display: inline !important;
-        margin-bottom: rem(32px);
-
         &::before {
           content: "" !important;
           color: get-color(td-planet);
@@ -40,33 +35,28 @@
           margin-right: 15px;
           margin-top: 0.5vh;
         }
+        ul, ol {
+          line-height: 0rem !important;
+          margin-left: -2rem;
 
-        ul,
-        ol {
           display: flex;
           flex-direction: column;
+          line-height: -10rem;
           padding-top: 0rem !important;
-          margin-top: rem(12px);
-          padding: 0 25px;
-
           li {
-            padding: rem(12px) rem(15px) rem(32);
-            display: flex !important;
-
-            b {
-              display: contents;
-            }
-
+            padding: 0.5vw;
+            padding-left: 1vw;
+            padding-bottom: 0rem;
+            padding-top: 1.5rem;
             &::before {
               content: "\2022" !important;
               color: inherit;
-              background-color: get-color(container-transparent) !important;
+              background-color: get-color(container-transparent)!important;
             }
           }
         }
       }
     }
-
     p {
       margin-left: 1.5rem;
       margin-top: 1rem;
@@ -107,23 +97,18 @@
   .dp-text-icon::before {
     padding-right: 10px;
   }
-
+  
   &--default {
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-      &::before {
-        content: '\25A0  ';
-        font-size: 30px;
+    h1,h2,h3,h4,h5 { 
+      &::before { 
+        content:'\25A0  '; 
+        font-size:30px;
         color: #CCD814;
         vertical-align: sub;
         margin-left: -22px;
       }
     }
-
+    
     ul {
       padding-left: 0px;
 
@@ -138,25 +123,26 @@
   }
 
   &--default-feature {
-    ul {
-      padding-left: 0px;
+      ul {
+        padding-left: 25px;
 
-      li {
-        margin-left: 0px;
-        display: block;
+        li {
+          margin-left: 0px;
+          display: block;
 
-        b {
-          padding-bottom: 10px;
-          line-height: 50px;
+          b {
+            padding-bottom: 10px;
+            line-height: 50px;
+            @include text-deep-teal;
+          }
         }
-      }
 
-      li::before {
-        content: '\25A0';
-        font-size: 30px;
+      li::before { 
+        content:'\25A0'; 
+        font-size:30px;
         color: #CCD814;
         vertical-align: sub;
-        margin-left: -26px;
+        margin-left: -26px; 
       }
     }
   }
@@ -182,6 +168,14 @@
 
 .dp-text--dark-blue {
   color: #000c21;
+}
+
+.dp-text--deep-teal {
+  @include text-deep-teal;
+}
+
+.dp-text--teal {
+  @include text-teal;
 }
 
 .dp-text--xsmall {

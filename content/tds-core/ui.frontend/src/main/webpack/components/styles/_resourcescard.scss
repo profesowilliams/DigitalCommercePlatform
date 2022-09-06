@@ -1,12 +1,7 @@
-@function get-color($base, $shade: base) {
-    $color: map-get($color-palette, $base);
-    @return $color;
-  }
-
-$colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-get($color-palette,"chartreuse"), map-get($color-palette,"forest");
-
 .cmp-div__three-column {
-
+    display: grid;
+    justify-content: center;
+    
     .cmp-contentfragmentlist {
         display: grid;
         justify-content: center;
@@ -19,37 +14,97 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
             background-color: map-get($color-palette, "cool-gray-8");
         }
 
-        @for $i from 1 through length($colors) {
-            .cmp-contentfragment:nth-of-type(#{$i}n) {
-                .cmp-contentfragment__title {
-                    font-size: medium;
-                    margin-left: -10px;
-                    padding-left: 7px;
-                    color: map-get($color-palette, "teal");
-                    font-weight: bold;
-                    min-height: 18px;
-                    margin-bottom: 10px;
-                    padding-top: 20px;
-                    padding-left: 17px;
-                
-                    &::before {
-                        content: "";
-                        margin-left: -7px;
-                        padding-left: 10px;
-                        max-height: 18px;
-                        border-left: solid nth($colors, $i) 4px;
-                        }
+        .cmp-contentfragment {
+            max-width: 356.266px;
+
+            .cmp-contentfragment__title {
+                font-size: medium;
+                margin-left: -10px;
+                padding-left: 7px;
+                min-height: 18px;
+                margin-bottom: 10px;
+                padding-top: 20px;
+                padding-left: 17px;
+                display: flex;
+                line-height: initial;
+                font-size: 20px;
+                font-weight: 500;
+                color: map-get($color-palette, "teal");
+                line-height: 30px;
+                height: 75px;
+            
+                &::before {
+                    content: "";
+                    margin-left: -7px;
+                    padding-left: 10px;
+                    max-height: 30px;
                     }
                 }
             }
 
+            .cmp-contentfragment[data-json*=release-notes] {
+                .cmp-contentfragment__title {                
+                    &::before {
+                        border-left: solid map-get($color-palette, "aqua") 4px;
+                    }
+                }
+
+                .cmp-contentfragment__element--resource-link::before {
+                    content: url(https://api.iconify.design/fluent/document-bullet-list-24-regular.svg?color=%23005758&width=24);
+                    vertical-align: sub;
+                    vertical-align: -18%;
+                    margin-right: 5px;
+                }
+            }
+
+            .cmp-contentfragment[data-json*=datasheets] {
+                .cmp-contentfragment__title {                
+                    &::before {
+                        border-left: solid map-get($color-palette, "chartreuse") 4px;
+                    }
+                }
+
+                .cmp-contentfragment__element--resource-link::before {
+                    content: url(https://api.iconify.design/fluent/document-bullet-list-24-regular.svg?color=%23005758&width=24);
+                    vertical-align: -18%;
+                    margin-right: 5px;
+                }
+            }
+
+            .cmp-contentfragment[data-json*=blog] {
+                .cmp-contentfragment__title {                
+                    &::before {
+                        border-left: solid map-get($color-palette, "forest") 4px;
+                    }
+                }
+
+                .cmp-contentfragment__element--resource-link::before {
+                    content: url(https://api.iconify.design/fluent/chart-person-24-regular.svg?color=%23005758&width=24);
+                    vertical-align: -18%;
+                    margin-right: 5px;
+                }
+            }
+
+            .cmp-contentfragment[data-json*=videos] {
+                .cmp-contentfragment__title {                
+                    &::before {
+                        border-left: solid map-get($color-palette, "cherry") 4px;
+                    }
+                }
+
+                .cmp-contentfragment__element--resource-link::before {
+                    content: url(https://api.iconify.design/fluent/play-circle-24-regular.svg?color=%23005758&width=24);
+                    vertical-align: -18%;
+                    margin-right: 5px;
+                }
+            }
         }
 
         .cmp-contentfragment__element--short-body {
             color: map-get($color-palette, "charcoal");
-            padding-left: 15px;
-            padding-bottom: 20px;
+            padding: 0 15px 15px 15px;
             height: 150px;
+            line-height: 24px;
         }
 
         .cmp-contentfragment__element--resource-link {
@@ -57,7 +112,6 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
             color: map-get($color-palette, "teal");
             font-weight: bold;
             text-decoration: none;
-            padding-bottom: 20px;
             padding-left: 15px;
         }
 
@@ -98,8 +152,6 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
                 padding-left: 7px;
                 color: map-get($color-palette, "teal");
                 font-weight: bold;
-                min-height: 18px;
-                margin-bottom: 10px;
 
                 &::before {
                     content: "";
@@ -112,8 +164,7 @@ $colors: map-get($color-palette,"cherry"), map-get($color-palette, "aqua"), map-
 
             .cmp-contentfragment__element--short-body {
                 color: map-get($color-palette, "teal");
-                padding-left: 5px;
-                padding-bottom: 20px;
+                padding: 0 5px 5px 5px;
             }
 
             .cmp-contentfragment__element--resource-link {

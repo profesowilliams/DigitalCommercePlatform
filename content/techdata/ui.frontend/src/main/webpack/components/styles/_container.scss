@@ -78,8 +78,13 @@ These style system class work for container component only. */
 }
 
 .cmp-component-vendor__center {
-  .dp-title {
-    text-align: left;
+  .cmp-text {
+    p {
+      text-align: left;
+      font-size: 22px;
+      color: map-get($color-palette, "deep-teal");
+      text-transform: uppercase;
+    }
   }
   .dp-figure {
     text-align:center;

@@ -3,28 +3,26 @@
 
 	&--default-dark {
 		& .cmp-button {
-			background-color: #005758;
+			background-color: map-get($color-palette,"teal");
+			padding: 1rem;
 
 			& .cmp-button__text {
 				color: get-color(brand-white);
-				line-height: 3rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
 			}
 
 			&:hover {
-				background-color: #08BED5;
+				background-color: map-get($color-palette,"aqua");
 
 				& .cmp-button__text {
-					color: #262626;
+					color: map-get($color-palette,"charcoal");
 				}
 			}
 
 			&:focus {
-				background-color: #005758;
+				background-color: map-get($color-palette,"teal");
 
 				& .cmp-button__text {
-					color: #FFF;
+					color: map-get($color-palette,"white");
 				}
 			}
 		}
@@ -33,20 +31,18 @@
 
 	&--default-light {
 		& .cmp-button {
-			background-color: #fff;
+			background-color: map-get($color-palette,"white");
+			padding: 1rem;
 
 			& .cmp-button__text {
-				color: #005758;
-				line-height: 3rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
+				color: map-get($color-palette,"teal");
 			}
 
 			&:hover {
-				background-color: #08BED5;
+				background-color: map-get($color-palette,"aqua");
 
 				& .cmp-button__text {
-					color: #262626;
+					color: map-get($color-palette,"charcoal");
 				}
 			}
 
@@ -54,7 +50,7 @@
 				background-color: #fff;
 
 				& .cmp-button__text {
-					color: #005758;
+					color: map-get($color-palette,"teal");
 				}
 			}
 		}
@@ -63,13 +59,11 @@
 
 	&--disabled {
 		& .cmp-button {
-			background-color: #63666A;
+			background-color: map-get($color-palette,"cool-gray-10");
+			padding: 1rem;
 
 			& .cmp-button__text {
-				color: #000;
-				line-height: 3rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
+				color: map-get($color-palette,"charcoal");
 			}
 		}
 	}
@@ -103,43 +97,6 @@
 
 	& .cmp-button__text {
 		color: get-color(brand-white);
-	}
-}
-
-.cmp-button--tdsynnex {
-	&__default {
-		& .cmp-button {
-			background-color: transparent;
-			border: 1px solid get-color(td-lightblue);
-
-			&:hover {
-				background-color: get-color(td-lightblue);
-
-				& .cmp-button__text {
-					color: get-color(td-dark-blue)
-				}
-			}
-		}
-
-		& .cmp-button__text {
-			color: get-color(brand-white);
-			line-height: 3rem;
-			padding-left: 1rem;
-			padding-right: 1rem;
-		}
-	}
-
-	&__inactive {
-		& .cmp-button {
-			background-color: get-color(td-lightblue);
-
-			& .cmp-button__text {
-				color: get-color(td-dark-blue);
-				line-height: 3rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
-			}
-		}
 	}
 }
 
@@ -331,6 +288,13 @@
 
 .cmp-button__text--align-right {
 	text-align: right;
+}
+
+.cmp-button__text--align-center {
+	.cmp-button {
+		display: table;
+		margin: auto;
+	}
 }
 
 .cmp-button__text {
@@ -556,8 +520,8 @@
 			background-color: get-color(legacy-gray);
 		}
 	}
-
 }
+
 
 @mixin practice_builder_button_action_style {
 	&:hover {
@@ -587,16 +551,12 @@
 	border-radius: 0.1875rem;
 	height: 100%;
 	@include mobile {
-		margin-left: 50px;
+		margin-left: 23px;
 	}
 }
 
 .button {
 	height: 100%;
-	@include mobile {
-		position: absolute;
-		right: 20px;
-	}
 	&.cmp-button--color-teal {
 		& .cmp-button {
 			@include cmp_button_style("teal");

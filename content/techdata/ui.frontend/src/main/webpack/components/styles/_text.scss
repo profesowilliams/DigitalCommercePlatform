@@ -124,7 +124,7 @@
 
   &--default-feature {
       ul {
-        padding-left: 0px;
+        padding-left: 25px;
 
         li {
           margin-left: 0px;
@@ -133,6 +133,7 @@
           b {
             padding-bottom: 10px;
             line-height: 50px;
+            @include text-deep-teal;
           }
         }
 
@@ -167,6 +168,14 @@
 
 .dp-text--dark-blue {
   color: #000c21;
+}
+
+.dp-text--deep-teal {
+  @include text-deep-teal;
+}
+
+.dp-text--teal {
+  @include text-teal;
 }
 
 .dp-text--xsmall {

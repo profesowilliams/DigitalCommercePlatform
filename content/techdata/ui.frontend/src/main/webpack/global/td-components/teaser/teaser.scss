@@ -669,8 +669,8 @@ $colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-
                 place-items: center;
 
                 .cmp-teaser {			
-                    width: 471px;
-                    display: block;
+                    width: fit-content;
+                    display: flex;
 
                     &__image {
                         display: none;
