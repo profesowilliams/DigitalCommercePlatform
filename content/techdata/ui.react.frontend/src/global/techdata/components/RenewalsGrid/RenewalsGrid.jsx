@@ -128,7 +128,7 @@ function RenewalsGrid(props) {
     isAuthormodeAEM
   ]);
 
-  const columnDefs = getColumnDefinitions(componentProp.columnList, onQueryChanged);
+  const columnDefs = getColumnDefinitions(componentProp.columnList);
 
   var distiColumnIndex = columnDefs.findIndex(c => c.field === 'Id');
   if (distiColumnIndex > -1) {

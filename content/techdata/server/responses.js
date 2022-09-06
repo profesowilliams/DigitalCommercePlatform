@@ -1718,7 +1718,7 @@ const renewalSearchResponse = {
                     "type": "Renewal",
                     "id": "U100000000255"
                 },
-                "canPlaceOrder": false,
+                "canPlaceOrder": true,
                 "reseller": {
                     "vendorAccountName": "CCS Computers Pvt. Ltd.",
                     "vendorAccountNumber": null,
@@ -4600,5 +4600,5 @@ const renewalSearchResponse = {
 module.exports = {
     catalogResponse : catalogServiceResponse,
     shortResponse : shortCatalogServiceResponse,
-    renewalSearchResponse
+    renewalSearchResponse    
 }

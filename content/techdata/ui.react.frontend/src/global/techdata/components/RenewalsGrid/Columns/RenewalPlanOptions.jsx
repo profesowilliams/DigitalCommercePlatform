@@ -297,7 +297,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                 renewalData={details}
                 closeOnBackdropClick={false}
                 orderEndpoints={orderEndpoints}
-                store={useRenewalGridState}
+                store={useRenewalGridState}             
             />
         </div>
     );

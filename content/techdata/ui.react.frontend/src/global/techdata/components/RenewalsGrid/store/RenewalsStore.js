@@ -42,7 +42,8 @@ const INITIAL_STATE = {
     origin:"dashboard",
     isSuccess:false
   },
-  isTDSynnex:false
+  isTDSynnex:false,
+  resetGrid:null
 };
 
 /**
