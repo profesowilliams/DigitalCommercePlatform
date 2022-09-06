@@ -88,7 +88,7 @@ function isHoverable(columnKey) {
   }
 }
 
-export const plainTextColumn = (definition) => {
+export const plainTextColumn = (definition, onQueryChanged) => {
   const { columnLabel, columnKey, sortable = false } = definition;
   return {
     headerName: columnLabel,
@@ -106,12 +106,12 @@ export const buttonListColumn = ({
   columnLabel,
   columnKey,
   sortable = false,
-}) => ({
+}, onQueryChanged) => ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
   width: columnsWidth[columnKey] || null,
-  cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} /> ,
+  cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} onQueryChanged={onQueryChanged} /> ,
 });
 
 export const plainResellerColumnFn = (definition) => {
@@ -139,9 +139,9 @@ const columnTypes = {
   plainResellerColumn: plainResellerColumnFn,
 };
 
-export const getColumnDefinitions = (originalDefinitions) => {
+export const getColumnDefinitions = (originalDefinitions, onQueryChanged) => {
   const colDefs = originalDefinitions.map((definition) => {
-    return columnTypes[definition.type](definition);
+    return columnTypes[definition.type](definition, onQueryChanged);
   });
   const res = colDefs.filter((columnDef) => columnDef !== null);
   return res;

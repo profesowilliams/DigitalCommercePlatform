@@ -11,7 +11,7 @@ const CustomOrderButton = (properties) => ({ children }) =>
     {children}
   </Button>;
 
-function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store }) {
+function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store, onQueryChanged }) {
   const [max30Characters, setMax30Characters] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState("");
   const [termsServiceChecked, setTermsServiceChecked] = useState(false);
@@ -69,6 +69,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
     setSubmitted((submitted) => !submitted);
     const operationResponse = await handleOrderRequesting({orderEndpoints,renewalData,purchaseOrderNumber});
     handleToggleToaster({...operationResponse});
+    typeof onQueryChanged === 'function' && setTimeout(() => onQueryChanged(), 1600);
   }
   
   function checkButtonDisabled() {

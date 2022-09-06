@@ -17,7 +17,8 @@ function PlaceOrderDialog({
   closeOnBackdropClick,
   orderEndpoints,
   isDetails = false,
-  store
+  store,
+  onQueryChanged
 }) {
   const { endUser } = renewalData;
   const {
@@ -37,7 +38,7 @@ function PlaceOrderDialog({
     setTermsServiceChecked,
     OrderButtonComponent,
     resetDialogStates   
-  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store});   
+  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store, onQueryChanged});   
 
   useEffect(() => console.log("🎆 rerenders placeorderdialog") , []);
 

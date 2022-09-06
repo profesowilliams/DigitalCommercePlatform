@@ -19,9 +19,9 @@ const EllipsisIcon = (props) => (
   </svg>
 );
 
-function _RenewalActionColumn({ eventProps }) {
+function _RenewalActionColumn({ eventProps, onQueryChanged }) {
   const [isToggled, setToggled] = useState(false);
-  const effects = useRenewalGridState((state) => state.effects);
+  const effects = useRenewalGridState((state) => state.effects);   
   const rowCollapsedIndexList = useRenewalGridState(
     (state) => state.rowCollapsedIndexList
   );
@@ -151,6 +151,7 @@ function _RenewalActionColumn({ eventProps }) {
           closeOnBackdropClick={false}  
           orderEndpoints={orderEndpoints}
           store={useRenewalGridState}
+          onQueryChanged={onQueryChanged}
         />
         <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />
       </div>

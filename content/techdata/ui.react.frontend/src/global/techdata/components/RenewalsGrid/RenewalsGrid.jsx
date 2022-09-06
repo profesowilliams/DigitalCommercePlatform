@@ -95,7 +95,7 @@ function RenewalsGrid(props) {
     const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
     const transactionNumber = toasterData.Child?.props?.data;
     toasterData.Child = <TransactionNumber data={transactionNumber}/>   
-    setTimeout(() => effects.setCustomState({key:'toaster', value:toasterData}), 800);
+    setTimeout(() => setCustomState({key:'toaster', value:toasterData}), 800);
   }
 
   const redirectToShop = () => {
@@ -107,8 +107,8 @@ function RenewalsGrid(props) {
     const renewalsNode = renewalsRef.current;
     const containsTDSynnexClass = renewalsNode?.parentNode?.parentNode?.parentNode?.classList.contains("cmp-grid-td-synnex");
     if (containsTDSynnexClass) {
-      effects.setCustomState({key:'isTDSynnex', value:true})
-    }
+      setCustomState({key:'isTDSynnex', value:true});
+    }   
   },[])
 
   useEffect(() => setCustomState({ key: 'aemConfig', value: componentProp }), [])
@@ -128,7 +128,7 @@ function RenewalsGrid(props) {
     isAuthormodeAEM
   ]);
 
-  const columnDefs = getColumnDefinitions(componentProp.columnList);
+  const columnDefs = getColumnDefinitions(componentProp.columnList, onQueryChanged);
 
   var distiColumnIndex = columnDefs.findIndex(c => c.field === 'Id');
   if (distiColumnIndex > -1) {
@@ -298,8 +298,7 @@ function RenewalsGrid(props) {
   }
 
   function onCloseToaster() {
-    closeAndCleanToaster();
-    setCustomState(toasterUpdated, options);
+    closeAndCleanToaster();    
   }
 
   return (

@@ -3,7 +3,7 @@ import { TOASTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { useRenewalGridState } from '../store/RenewalsStore';
 import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from './orderingRequests';
 
-function useTriggerOrdering({renewalDetailsEndpoint, data}) {
+function useTriggerOrdering({renewalDetailsEndpoint, data }) {
 
   const [toggleOrderDialog, setToggleOrderDialog] = useState(false);
   const [details,setDetails] = useState(false);
