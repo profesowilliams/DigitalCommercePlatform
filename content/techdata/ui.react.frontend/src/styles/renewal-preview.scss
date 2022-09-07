@@ -37,13 +37,13 @@
   .icon-button {
     display: flex;
     align-items: center;
-    @include font-arial-normal();
     &.underlined_hover:not(.disabled):hover {
       cursor: pointer;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
     &__default {
+      @include font-arial-normal();
       background-color: transparent;
       color: #005758;
       &:hover {

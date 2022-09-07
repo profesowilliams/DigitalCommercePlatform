@@ -69,7 +69,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
         <div className="cmp-product-lines-grid__item-information__box-text">
           <div className="cmp-renewal-preview__prod-details">
             <a
-              href={!isLinkDisabled ? formatShopDomainUrl() : "javascript:void(0);"}
+              href={!isLinkDisabled ? formatShopDomainUrl() : null}
               target={!isLinkDisabled ? "_blank" : null}
               className={`cmp-product-lines-grid__item-information__box-text__header__link ${!isLinkDisabled ? "" : "no-underline"}`}
             >

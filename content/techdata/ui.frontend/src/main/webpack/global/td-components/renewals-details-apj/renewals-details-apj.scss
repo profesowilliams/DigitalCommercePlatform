@@ -1,5 +1,7 @@
 .cmp-renewals-details__apj {
-  @include font-everett-regular-normal();
+  * {
+    @include font-everett-regular-normal();
+  }
 
   .cmp-renewals-qp__config-grid {
     .header-container {
@@ -38,6 +40,48 @@
         color: $brand-green;
         @include font-everett-medium-bold();
       }
+    }
+
+    .cmp-grid.ag-theme-alpine {
+      .ag-header-cell {
+        padding-bottom: 0;
+      }
+
+      .ag-row .cmp-renewal-preview__prod-details span {
+        color: map-get($color-palette, 'cool-gray-9');
+        font-weight: 600;
+        font-size: 14px;
+        font-family: "Open Sans", sans-serif;
+      }
+    }
+
+    .cmp-product-lines-grid__item-information__box-text a p {
+      margin-top: 0;
+    }
+  }
+
+  .cmp-product-lines-grid {
+    .ag-root-wrapper-body {
+      .ag-header-container {
+        background-color: map-get($color-palette, 'cool-gray-1');
+
+        .ag-header-cell-text {
+          color: map-get($color-palette, 'charcoal');
+          @include font-everett-regular-normal();
+        }
+      }
+    }
+  }
+
+  .cmp-grid.ag-theme-alpine {
+    .ag-row * {
+      @include font-everett-regular-normal($size: 14px);
+      color: map-get($color-palette, 'charcoal');
+      ;
+    }
+
+    .ag-header {
+      border: none;
     }
   }
 }
