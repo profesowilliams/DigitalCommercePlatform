@@ -1,11 +1,13 @@
 import produce from "immer";
 import React from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
+import useIsTDSynnexClass from "./useIsTDSynnexClass";
 
 const FilterItem = ({ id }) => {
 
   const filterList = useRenewalGridState(state => state.filterList);
   const effects = useRenewalGridState(state => state.effects);
+  const { computeClassName } = useIsTDSynnexClass();
   if (!filterList) return null;
   const { setFilterList } = effects;
   const filter = filterList[id];
@@ -18,8 +20,6 @@ const FilterItem = ({ id }) => {
 
   const handleCheckBoxClick = () => {
     const filtersCopy = produce(filterList, (filterDraft) => {
-      // toggle the checked state of filter
-      //{title: 'Support and Subscriber', field: 'vendor', id: 6, open: true, checked: false}
       filterDraft[id].checked = !filterDraft[id].checked;
       const filter = filterDraft[id];
       console.log('childIds 📛', childIds);
@@ -76,12 +76,12 @@ const FilterItem = ({ id }) => {
       <input
         name={filter.title}
         type="checkbox"
-        className="filter-option__checkbox"
+        className={computeClassName("filter-option__checkbox")}
         checked={filter.checked}
         onChange={handleCheckBoxClick}
         id={filter.title}
       />
-      <label className="filter-option__label" htmlFor={filter.title}>{filter.title}</label>
+      <label className={computeClassName("filter-option__label")} htmlFor={filter.title}>{filter.title}</label>
     </li>
   );
 };

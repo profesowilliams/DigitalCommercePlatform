@@ -1,5 +1,5 @@
 import { get, post } from "../../../../../utils/api";
-import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, RENEWAL_STATUS_ACTIVE } from "../../../../../utils/constants";
+import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, RENEWAL_STATUS_ACTIVE, UPDATE_FAILED } from "../../../../../utils/constants";
 
 const awaitRequest = (fetch, delay) =>
   new Promise((resolve) => setTimeout(() => resolve(fetch()), delay));
@@ -139,6 +139,8 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     if (renewalData?.items) payload.items = renewalData.items;
     const updateresponse = await post(updateRenewalOrderEndpoint, payload);
     if (updateresponse.status === 200) {
+      const isError = updateresponse.data?.error?.isError;
+      if (isError) throw UPDATE_FAILED
       const getStatusConf = { getStatusEndpoint, id: source.id, delay: 1000, iterations: 8 };
       const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf);
       if (getStatusResponse) {
@@ -156,6 +158,8 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
           throw PROCESS_ORDER_FAILED
       } else 
         throw GET_STATUS_FAILED;
+    } else {
+      throw UPDATE_FAILED
     }
   } catch (error) {      
     const response = error?.response?.data;
@@ -174,6 +178,14 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
         transactionNumber: "",
         isSuccess: false,
         failedReason:GET_STATUS_FAILED,
+        salesContentEmail
+      }
+    }    
+    if (error === UPDATE_FAILED) {
+      return {       
+        transactionNumber: "",
+        isSuccess: false,
+        failedReason:UPDATE_FAILED,
         salesContentEmail
       }
     }    

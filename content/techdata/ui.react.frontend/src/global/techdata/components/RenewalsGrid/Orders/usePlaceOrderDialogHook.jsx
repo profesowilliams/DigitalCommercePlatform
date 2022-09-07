@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
-import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, TOASTER_LOCAL_STORAGE_KEY, UPDATE_FAILED } from "../../../../../utils/constants";
 import TransactionNumber from "./TransactionNumber";
 import { handleOrderRequesting } from "./orderingRequests";
 
@@ -58,6 +58,9 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
     }
     if (failedReason == PROCESS_ORDER_FAILED){
       message = replaceEmail(failedSubmission);
+    }
+    if (failedReason == UPDATE_FAILED){
+      message = "We are sorry, your order could not be processed, please try again later.";
     }
     toaster = {...toaster, isSuccess, message };
 

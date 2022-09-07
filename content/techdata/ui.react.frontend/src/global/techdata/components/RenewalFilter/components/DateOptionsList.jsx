@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
+import useIsTDSynnexClass from "./useIsTDSynnexClass";
 
 export function DateOptionsList() {
 
   const dateOptionsList = useRenewalGridState((state) => state.dateOptionsList);
   const effects = useRenewalGridState((state) => state.effects);
+  const { computeClassName } = useIsTDSynnexClass();
   const capitalizedItems = ["overdue"]
   function customCapitalize(dateField){
     return capitalizedItems.includes(dateField) ? {textTransform:'capitalize'} : {}
@@ -15,7 +17,8 @@ export function DateOptionsList() {
       {dateOptionsList.map((item, index) => (
         <li key={index}>
           <input
-            type="radio"
+            type="radio"   
+            className={computeClassName("")}         
             name="date"
             key={Math.random()}
             id={index}

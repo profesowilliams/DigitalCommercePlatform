@@ -12,6 +12,7 @@ import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
 import FilterList from "./components/FilterList";
 import FilterTags from "./components/FilterTags";
+import useIsTDSynnexClass from "./components/useIsTDSynnexClass";
 
 import { generateFilterFields } from "./filterUtils/filterUtils";
 import normaliseAPIData from "./filterUtils/normaliseAPIData";
@@ -37,6 +38,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   const appliedFilterCount = useRenewalGridState(
     (state) => state.appliedFilterCount
   );
+
+  const { computeClassName, isTDSynnex } = useIsTDSynnexClass(); 
 
   const { setAppliedFilterCount } = useRenewalGridState(
     (state) => state.effects
@@ -106,6 +109,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   function getFilterParent(){
     const newSubheader = document.querySelector("[data-component='NewSubheader']");
     const apjHeader = document.querySelector("#cmp-techdata-header");
+    if (isTDSynnex) return document.querySelector(".subheader")
     return !!newSubheader ? newSubheader : (!!apjHeader ? apjHeader : document.body );
   }
 
@@ -116,7 +120,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
         <RenewalErrorBoundary>
           <Button
             onClick={handleFilterCloseClick}
-            btnClass="filter-modal-content__close"
+            btnClass={computeClassName("filter-modal-content__close")}
           />
           <FilterDialog>
             <FilterHeader onQueryChanged={onQueryChanged} />
@@ -127,11 +131,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
               <div className="filter-modal-bottom">
                 <FilterTags />
                 <Button
-                  btnClass="cmp-quote-button filter-modal-content__results"
+                  btnClass={computeClassName("cmp-quote-button filter-modal-content__results")}
                   onClick={showResult}
                   disabled={!hasAnyFilterSelected()}
                 >
-                  {aemData.showResultLabel || "Show Result"}
+                  {aemData.showResultLabel || "Show Results"}
                 </Button>
               </div>
             </div>

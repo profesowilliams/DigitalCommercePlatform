@@ -1,5 +1,6 @@
-$main-datepicker-color: #000c21;
-
+:root {
+  --main-datepicker-color: #000c21;
+}
  
 .PresetDateRangePicker_panel {
   padding: 0 22px 11px;
@@ -10,7 +11,7 @@ $main-datepicker-color: #000c21;
   text-align: center;
   background: 0 0;
   border: 2px solid ;
-  color: $main-datepicker-color;
+  color: var(--main-datepicker-color);
   padding: 4px 12px;
   margin-right: 8px;
   font: inherit;
@@ -26,7 +27,7 @@ $main-datepicker-color: #000c21;
 }
 .PresetDateRangePicker_button__selected {
   color: #fff;
-  background: $main-datepicker-color;
+  background: var(--main-datepicker-color);;
   border-radius: 50%;
   border: none;
 }
@@ -194,7 +195,7 @@ $main-datepicker-color: #000c21;
 }
 .DayPickerKeyboardShortcuts_show__bottomRight::before {
   border-top: 26px solid transparent;
-  border-right: 33px solid $main-datepicker-color;
+  border-right: 33px solid var(--main-datepicker-color);;
   bottom: 0;
   right: 0;
 }
@@ -207,7 +208,7 @@ $main-datepicker-color: #000c21;
 }
 .DayPickerKeyboardShortcuts_show__topRight::before {
   border-bottom: 26px solid transparent;
-  border-right: 33px solid $main-datepicker-color;
+  border-right: 33px solid var(--main-datepicker-color);;
   top: 0;
   right: 0;
 }
@@ -220,7 +221,7 @@ $main-datepicker-color: #000c21;
 }
 .DayPickerKeyboardShortcuts_show__topLeft::before {
   border-bottom: 26px solid transparent;
-  border-left: 33px solid $main-datepicker-color;
+  border-left: 33px solid var(--main-datepicker-color);;
   top: 0;
   left: 0;
 }
@@ -360,8 +361,8 @@ $main-datepicker-color: #000c21;
 .CalendarDay__selected,
 .CalendarDay__selected:active,
 .CalendarDay__selected:hover {
-  background: $main-datepicker-color;
-  /* border: 1px double $main-datepicker-color; */
+  background: var(--main-datepicker-color);;
+  /* border: 1px double var(--main-datepicker-color);; */
   color: #fff;
   border-radius: 50%;
   border: none;
@@ -370,14 +371,14 @@ $main-datepicker-color: #000c21;
 .CalendarDay__hovered_span:hover {
   // background: #b2f1ec;
   // border: 1px double #80e8e0;
-  color: $main-datepicker-color;
+  color: var(--main-datepicker-color);;
   background-color: #E2E7EB;
 }
 .CalendarDay__hovered_span:active {
   background: #80e8e0;
   border: 1px double #80e8e0;
   // color: #007a87;
-  color: $main-datepicker-color;
+  color: var(--main-datepicker-color);;
   // border-radius: 50%;
   background-color: #E2E7EB
 }
@@ -759,7 +760,7 @@ $main-datepicker-color: #000c21;
   background-color: #fff;
   display: inline-block;
   margin-left: 42px;
-  border-bottom: 2px solid #00558C;
+  border-bottom: 2px solid var(--main-datepicker-color);
 }
 .DateRangePickerInput__disabled {
   background: #f2f2f2;

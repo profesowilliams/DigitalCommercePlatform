@@ -4,7 +4,6 @@ import Button from "../Widgets/Button";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import Count from "./components/Count";
-import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { OptionsIcon } from "../../../../fluentIcons/FluentIcons";
 
 

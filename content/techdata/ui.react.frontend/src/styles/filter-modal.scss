@@ -1,3 +1,7 @@
+$brand-green: #005758;
+$gray-light: #ebebeb;
+$brand-green--dark: #003031;
+$brand-text-gray: #555555;
 .filter-modal-container {
   position: fixed;
   background: rgba(0, 12, 33, .28);
@@ -68,6 +72,12 @@
       padding: 1px;
     }
   }
+  &__close.td-synnex{
+    top: 15px;
+    &:before {
+     color: $brand-green;
+    }
+  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -85,7 +95,7 @@
     &--clear-all {
       background: transparent;
       border: 0;
-      text-decoration: underline;
+      text-decoration: none;
       color: #0067ab;
       font-size: 14px;
       cursor: pointer;
@@ -93,6 +103,13 @@
       line-height: 17px;
     }
   }
+  &__header.td-synnex {
+    border-bottom: 2px solid $brand-green;
+    h3 {
+      color: $brand-green;
+    }
+  }
+ 
   &__results {
     position: relative;
     bottom: 0;
@@ -104,11 +121,23 @@
     border-radius: 0 0 0 4px;
     background-color: #000c21;  
   }
+  &__results.td-synnex{
+    border: 1px solid $brand-green;
+    background-color: $brand-green; 
+  }
   .cmp-quote-button:disabled{
     opacity: 0.8;
     background-color: #000c21;
     color: white;
     cursor: none;
+  }
+  .cmp-quote-button.td-synnex {
+    background-color: $brand-green;
+  }
+  .cmp-quote-button.td-synnex:disabled {
+    background-color: $brand-green;
+    color: $brand-text-gray;
+    background: $gray-light;
   }
 }
 
@@ -119,11 +148,17 @@
     margin-right: 6px;
     vertical-align: middle;
   }
+  &__checkbox.td-synnex {
+    accent-color: $brand-green;
+  }
   &__label {
     color: #555555;
     font-size: 14px;
     cursor: pointer;
     user-select: none;
+  }
+  &__label.td-synnex {
+    color: $brand-green;
   }
   &__label:hover {
     font-weight: bold;
@@ -199,6 +234,9 @@ div.filter-accordion {
         right: 47px;
         top: 21px;
       }
+      .count.td-synnex{
+        background-color: $brand-green;
+      }
     }
   }
   h3 {
@@ -216,12 +254,24 @@ div.filter-accordion {
         content: "\f078";
       }
     }
+    &.active {
+      color: $brand-green--dark;
+    }
     &:before {
       content: "\f054";
       @include font-awesome;
       padding-right: 6px;
       font-weight: 900;
     }
+  }
+}
+
+.filter-accordion.td-synnex {
+  &::-webkit-scrollbar-thumb {
+    background: $brand-green;   
+  } 
+  &::-webkit-scrollbar-thumb:hover {
+    background: $brand-green; 
   }
 }
 
@@ -290,6 +340,9 @@ div.filter-accordion {
       cursor: pointer;
     }
   }
+  .filter-tags.td-synnex {
+    background-color: $brand-green;
+  }
 }
 
 .filter-datepicker-container {
@@ -317,6 +370,9 @@ div.filter-accordion {
         vertical-align: middle;
         margin-top: 0;
       }
+      input[type="radio"].td-synnex {
+        accent-color: $brand-green;
+      }
     }
     
   }
@@ -334,4 +390,8 @@ div.filter-accordion {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0;
+}
+
+.count.td-synnex {
+  background-color: $brand-green;
 }

@@ -5,15 +5,16 @@ import capitalizeFirstLetter, {
   getDayMonthYear,
 } from "../../../../../utils/utils";
 import useFilteringSelected from "../hooks/useIsFilteringSelected";
+import useIsTDSynnexClass from "./useIsTDSynnexClass";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState((state) => state.datePickerState);
-
+  const { computeClassName } = useIsTDSynnexClass();
   if (!datePickerState) return null;
   const [startDate, endDate] = datePickerState;
 
   return (
-    <div className="filter-tags">
+    <div className={computeClassName("filter-tags")}>
       <span className="filter-tags__title">
         {getDayMonthYear(new Date(startDate))}
         {" - "}
@@ -32,6 +33,7 @@ function FilterTags() {
   const effects = useRenewalGridState((state) => state.effects);
   const {hasAnyFilterSelected, filterList, dateSelected} = useFilteringSelected()
   const { setFilterList, clearDateFilters } = effects;
+  const { computeClassName } = useIsTDSynnexClass();
   
   const handleShowMore = () => {
     setShowMore(!showMore);
@@ -101,7 +103,7 @@ function FilterTags() {
           filterList.map((filter, index) => {
             if (filter.childIds?.length === 0 && filter.checked) {
               return (
-                <div className="filter-tags" key={index}>
+                <div className={computeClassName("filter-tags")} key={index}>
                   <span className="filter-tags__title" key={index}>
                     {filter.title}{" "}
                   </span>
@@ -112,7 +114,7 @@ function FilterTags() {
               );
             } else if (filter.field === "ProgramName" && filter.checked) {
               return (
-                <div className="filter-tags" key={index}>
+                <div className={computeClassName("filter-tags")} key={index}>
                   <span className="filter-tags__title" key={index}>
                     {filter.title}{" "}
                   </span>
@@ -127,7 +129,7 @@ function FilterTags() {
           condition={dateSelected && dateSelected !== "custom"}
           Else={<CustomDatePill clearDateFilters={clearDateFilters} />}
         >
-          <div className="filter-tags">
+          <div className={computeClassName("filter-tags")}>
             <span className="filter-tags__title">
               {formatDatePill(dateSelected)}{" "}
             </span>

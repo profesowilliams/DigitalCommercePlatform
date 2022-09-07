@@ -89,4 +89,5 @@ export const GET_STATUS_FAILED = "getStatusFailed";
 export const RENEWAL_STATUS_ACTIVE = "Active"
 export const PROCESS_ORDER_FAILED = "processOrderFailed";
 export const TOASTER_LOCAL_STORAGE_KEY = "toasterData"
+export const UPDATE_FAILED = "updatedFailed"
 

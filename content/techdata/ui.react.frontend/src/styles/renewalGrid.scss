@@ -330,6 +330,10 @@ $bg--marketing-card:#F7F7F7;
         background-color: #001d44;
         color: #fff;
       }
+      &.count.td-synnex {
+        background-color:$brand-green;
+        color: #fff;
+      }
     }
     i,
     svg {

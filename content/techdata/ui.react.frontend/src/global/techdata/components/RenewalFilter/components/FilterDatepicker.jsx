@@ -26,10 +26,13 @@ export default function FilterDatePicker({ isOpen = false }) {
   const effects = useRenewalGridState(state => state.effects);
   const aemConfig = useRenewalGridState(state => state.aemConfig);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
+  const isTDSynnex = useRenewalGridState( state => state.isTDSynnex || false);
   let customStartDate = useRenewalGridState(state => state.customStartDate);
   let customEndDate = useRenewalGridState(state => state.customEndDate);
 
-  useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues) , [aemConfig?.dateOptionValues]);
+  useEffect(() =>
+    isTDSynnex && document.documentElement.style.setProperty('--main-datepicker-color', '#005758'), [])
+  useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues), [aemConfig?.dateOptionValues]);
   /**
    * Unfortunately moment is a peer dependency of react-dates.
    * Normal date object wouldn't work.
@@ -57,7 +60,6 @@ export default function FilterDatePicker({ isOpen = false }) {
               showDefaultInputIcon={true}
               customInputIcon={<i className="fas fa-calendar-alt"></i>}
               customArrowIcon={<div className="customHyphen"></div>}
-              showClearDates
               reopenPickerOnClearDates
               keepOpenOnDateSelect={true}
               onDatesChange={({ startDate, endDate }) => {
