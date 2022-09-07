@@ -38,6 +38,7 @@ const INITIAL_STATE = {
   dueDaysIcons: null,
   toaster:{
     isOpen:false,
+    title: "",
     message:"",
     origin:"dashboard",
     isSuccess:false

@@ -47,6 +47,7 @@
     successSubmission="Changes have been successfully added."
     failedSubmission="Please try again. If the error persists please contact us at ({email})"
     successUpdate="Changes have been successfully saved."
+    failedUpdate="Please try again. If the error persists please contact us at ({email})"
     orderButtonLabel="Order"
     saveAndOrderButtonLabel="Save and order"
     >

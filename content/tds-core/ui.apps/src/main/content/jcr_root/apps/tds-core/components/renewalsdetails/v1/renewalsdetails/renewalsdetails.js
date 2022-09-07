@@ -259,6 +259,9 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["successUpdate"]) {
         quoteEditing["successUpdate"] = properties["successUpdate"];
     }
+    if (properties && properties["failedUpdate"]) {
+        quoteEditing["failedUpdate"] = properties["failedUpdate"];
+    }
     if (properties && properties["orderButtonLabel"]) {
         quoteEditing["orderButtonLabel"] = properties["orderButtonLabel"];
     }

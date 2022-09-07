@@ -692,6 +692,12 @@
                                                 fieldDescription="Description for a successful edit of record details"
                                                 fieldLabel="On Success Edit"
                                                 name="./successUpdate"/>
+											<failedUpdate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Description for a failed edit of record details"
+                                                fieldLabel="On Failed Edit"
+                                                name="./failedUpdate"/>											
 											<orderButtonLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

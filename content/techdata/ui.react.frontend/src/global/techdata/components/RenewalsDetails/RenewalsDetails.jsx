@@ -158,17 +158,23 @@ function RenewalsDetails(props) {
         }
       }
       return false;
-    } catch (ex) {
-      console.log('An unexpected error occurred', ex); 
+    } catch (ex) {      
+      const errorTitle = "Could not save changes.";
+      let errorMessage = 'We are sorry, your update could not be processed, please try again later.';
+      if(ex.status === 200 && ex?.data?.content?.salesContentEmail) {
+        errorMessage = componentProp.quoteEditing?.failedUpdate?.replace('{email}', ex.data.content.salesContentEmail)
+      }
+      const errorToaster = {isOpen:true, isSuccess: false, title: errorTitle, message: errorMessage}
+      effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
   }
 
   // TODO: reseller component will need to pass its changes also
   const updateRenewalDetails = async (details) => {
     const payload = mapRenewalForUpdateDetails(details);
-    const updateresponse = await post(componentProp.updateRenewalOrderEndpoint, payload);           
-    const updateError = updateresponse?.data?.error;
-    if(updateError?.isError) throw new Error(`error: ${updateError?.code} ${updateError?.messages[0] || ''}`); 
+    const updateResponse = await post(componentProp.updateRenewalOrderEndpoint, payload);  
+    const updateError = updateResponse?.data?.error;
+    if(updateError?.isError) throw updateResponse; 
     return true;
   }
 

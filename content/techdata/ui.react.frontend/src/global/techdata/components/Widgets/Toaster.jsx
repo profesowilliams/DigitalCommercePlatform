@@ -13,7 +13,7 @@ function Toaster({
 
   const toaster = store( state => state.toaster, shallow);
 
-  const {isOpen, Child, isSuccess, message, isAutoClose = false } = toaster;
+  const {isOpen, Child, isSuccess, title, message, isAutoClose = false } = toaster;
 
   useEffect(() => {
     if (isOpen && isAutoClose) {      
@@ -41,7 +41,7 @@ function Toaster({
           </div>
           <div className="cmp-toaster-content__message">
             <p>{isSuccess ? message : (<>
-              <span className="cmp-toaster-content__error-title">Your order submission has failed.</span>
+              <span className="cmp-toaster-content__error-title">{title}</span>
               {message}
             </>)}</p>
             {isSuccess && !!Child &&  <br />}
