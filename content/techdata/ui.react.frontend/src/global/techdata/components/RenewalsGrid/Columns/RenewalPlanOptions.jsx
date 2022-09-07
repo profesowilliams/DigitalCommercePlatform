@@ -234,21 +234,18 @@ function RenewalPlanOptions({ labels, data, node }) {
                                             <span>
                                                 &nbsp;&nbsp;{labels.downloadPDFLabel}
                                             </span>
-                                        </button>
-                                        <span className="vertical-separator"></span>
-                                        <If
-                                            condition={
-                                                !orderingFromDashboard.showOrderingIcon
-                                            }
-                                        >
-                                            <button
-                                                onClick={() => exportXlsPlan(option?.id)}
-                                            >
-                                                <i className="fas fa-file-excel"></i>
-                                                <span>
-                                                    &nbsp;&nbsp;{labels.downloadXLSLabel}
-                                                </span>
-                                            </button>
+                                        </button>                                 
+                                        <If condition={!orderingFromDashboard.showOrderingIcon}>
+                                            {
+                                                !labels?.hideDownloadXLSButton && (
+                                                <>
+                                                    <span className="vertical-separator"></span>
+                                                    <button onClick={() => exportXlsPlan(option?.id)}>
+                                                        <i className="fas fa-file-excel"></i>
+                                                        <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
+                                                    </button>
+                                                </>
+                                            )}                                       
                                             <span className="vertical-separator"></span>
                                             <button
                                                 onClick={() =>
@@ -261,11 +258,8 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                 </span>
                                             </button>
                                         </If>
-                                        <If
-                                            condition={
-                                                orderingFromDashboard.showOrderingIcon
-                                            }
-                                        >
+                                        <If condition={orderingFromDashboard.showOrderingIcon}>
+                                            <span className="vertical-separator"></span>
                                             {isIconDisabled ? (
                                                 <span className="cmp-renewals-cart-icon" onClick={handleCartIconClick} >
                                                     <CartIcon />{' '}
