@@ -118,6 +118,11 @@ function EndUserInfo({
   const setLockedEdit = (flag) => {
     setEditMode(flag);
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
+
+    if (!flag) {
+      setEndUserDetails(endUser);
+      setIsEmailValid(true);
+    }
   };
 
   const saveHandler = async () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createProducedSetter } from "../Common/utils";
 import isEmail from 'validator/es/lib/isEmail';
 
@@ -8,10 +8,21 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
         contact[0]?.email?.isValid || true
     );
 
+    useEffect(() => {
+        validateEmail(contact[0]?.email?.text);
+    }, [contact]);
+
     const numberRegex = /^(\d)*$/;
     const unicodeLetterRegex = /^(\p{L}|\s)*$/u;
 
     const producedSet = createProducedSetter(setStateFunction);
+    const validateEmail = (email) => {
+        if (isEmail(email)) {
+            setIsEmailValid(true);
+        } else {
+            setIsEmailValid(false);
+        }
+    }
 
     const handlersObj = {
         contactName: (e) => {
@@ -21,11 +32,7 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
         email: (e) => {
             let email = e.target.value;
             producedSet("contact[0].email.text", email);
-            if (isEmail(email)) {
-                setIsEmailValid(true);
-            } else {
-                setIsEmailValid(false);
-            }
+            validateEmail(email);
         },
         phone: (e) => {
             if (numberRegex.test(e.target.value))

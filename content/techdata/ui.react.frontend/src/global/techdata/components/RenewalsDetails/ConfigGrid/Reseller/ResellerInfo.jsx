@@ -35,6 +35,10 @@ function ResellerInfo({
   const setLockedEdit = (flag) => {
     setEditMode(flag);
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
+
+    if (!flag) {
+      setResellerDetails(reseller);
+    }
   };
 
   const saveHandler = async () => {
