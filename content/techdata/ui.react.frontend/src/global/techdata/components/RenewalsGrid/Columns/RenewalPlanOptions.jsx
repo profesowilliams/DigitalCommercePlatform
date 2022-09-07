@@ -160,8 +160,8 @@ function RenewalPlanOptions({ labels, data, node }) {
         return orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
     }, [orderingFromDashboard, data.canPlaceOrder, data.firstAvailableOrderDate])
 
-    const renewalDetailsURL = encodeURI(
-        `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
+    const renewalDetailsURL = id => encodeURI(
+        `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
     );
 
     const formatTotalValue = (option) => {
@@ -171,7 +171,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     };
 
     const optionPlanLink = id => <Link
-        href={renewalDetailsURL}
+        href={renewalDetailsURL(id)}
         variant="renewal-links__secondary"
         underline="none"
     >
