@@ -678,6 +678,27 @@ button.icon-box {
         }
       }
     }
+    
+    & .cmp-price-column, .cmp-renewal-action-container {
+      padding-right: unset;
+    }
+
+    & .cmp-renewal-action-container {
+      & .cmp-vertical-separator  {
+        width: 2px;
+        background: #e2e7eb;
+        height: 1.3rem;
+        margin: auto 0;
+        display: inline;
+      }
+      svg {
+        fill: #727679;
+      }
+    }
+    & .ag-react-container {
+      font-variant-numeric: tabular-nums;
+    }
+  
 
     & .ag-cell-label-container .ag-header-cell-label span.ag-header-cell-text {
       font-size: 1rem;
