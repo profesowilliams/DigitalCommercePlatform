@@ -31,6 +31,14 @@
 													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 													fieldLabel="Label"
 													name="./label"/>
+											<hideWhenNotLoggedIn
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+													fieldDescription="On selection hides when the user not logged in. Component shown by default."
+													name="./hideWhenNotLoggedIn"
+													text="Hide Component When Not Loggedin"
+													uncheckedValue="false"
+													value="true"/>
 											<authenticationURL
 													jcr:primaryType="nt:unstructured"
 													sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

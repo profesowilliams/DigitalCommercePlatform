@@ -79,6 +79,7 @@ const SignIn = (props) => {
     errorPageUrl,
     errorMessage,
     shopLogoutRedirectUrl,
+    hideWhenNotLoggedIn
   } = configDataAEM;
   const requested = props.data.auth.requested;
   const isError = props.data.auth.showError;
@@ -311,6 +312,9 @@ const SignIn = (props) => {
   }
 
   const signInButton = () => {
+    if(hideWhenNotLoggedIn && !localStorage.getItem("sessionId")) {
+        return;
+    } else
     return (
       <button className="cmp-sign-in-button" onClick={onSignIn}>
         {isAuthenticated === null ? (

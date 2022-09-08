@@ -89,7 +89,9 @@ use(function () {
         }
     }
 
-
+    if (properties.get("hideWhenNotLoggedIn") != null) {
+        jsonObject.put("hideWhenNotLoggedIn", properties.get("hideWhenNotLoggedIn"));
+    }
 
     if (properties.get("logoutURL") != null) {
 
