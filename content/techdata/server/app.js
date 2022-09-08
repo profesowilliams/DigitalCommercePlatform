@@ -4905,7 +4905,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "totalReinstatementFeeSell": null,
                 "endUserType": "Commercial",
                 "vendorLogo": null,
-                "previousEndUserPO": null,
+                "previousEndUserPO": "231564564",
                 "previousResellerPO": null,
                 "isValid": true,
                 "canOrder": true,

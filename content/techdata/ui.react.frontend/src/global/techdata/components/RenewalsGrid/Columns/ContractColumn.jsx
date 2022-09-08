@@ -97,20 +97,24 @@ function _ContractColumn({ data, eventProps }) {
   const keepDataAfterRenderTextPlanOptions = () => {
     return (!support || support && rowIndex !== (renewalOptionState?.rowIndex -1) )
   }
+
+  const formatRenewedDuration = (renewed, support) => 
+    renewed && support ?`${renewed.split(' ').slice(0,2).join(' ')}, ${support}` : "";
+  
   
   return (
     <>{data ? (
       <>
         <div className="cmp-renewal-duration" onClick={toggleExpandedRow} style={{cursor: !hasOptions && 'initial' }}>
           { keepDataAfterRenderTextPlanOptions() && (
-            <Info label="Renewal">
-              {renewed ? (renewed + ",") : ""} {data?.support}
-            </Info>
+            <>
+            Renewal : {formatRenewedDuration(renewed, data?.support)}    
+            </>
           )}           
           { hasRenderStateTextFromPlanOptions() && (
-            <Info label="Renewal">
-              {contractDuration} , {support}              
-            </Info>
+            <>          
+              Renewal : {formatRenewedDuration(contractDuration, support)}              
+            </>
           )}
 
           {isToggled ? (

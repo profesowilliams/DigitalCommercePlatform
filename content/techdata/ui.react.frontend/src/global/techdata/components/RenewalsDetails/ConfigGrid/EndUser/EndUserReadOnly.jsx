@@ -24,7 +24,7 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
       <p>          
         <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>
         <Info label={productLines.vendorAccountNo} noColon>{endUserData.vendorAccountNumber}</Info>
-        <Info label={productLines.endCustpreviousPurchaseOrderNo} noColon>{endUserData.previousEndUserPO ?? 'N/A'}</Info>
+        <Info label={productLines.endCustpreviousPurchaseOrderNo} noColon>{endUserData.previousEndUserPO}</Info>     
       </p>
     </div>
   );

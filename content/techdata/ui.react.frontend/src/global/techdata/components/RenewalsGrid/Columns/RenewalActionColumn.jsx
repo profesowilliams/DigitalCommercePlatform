@@ -140,7 +140,8 @@ function _RenewalActionColumn({ eventProps }) {
           <span className="cmp-renewals-cart-icon"><CartIcon onClick={handleCartIconClick} /></span>
         ) : (
           <CartIcon
-            fill="#c6c6c6"                        
+          className="disabled"
+            fill="#bcc0c3"                        
             style={{ pointerEvents: "none" }}
           />
         )}

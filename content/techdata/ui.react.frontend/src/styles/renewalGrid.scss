@@ -76,8 +76,11 @@ $bg--marketing-card:#F7F7F7;
 
 @mixin cart-icon {  
   display: flex;
-  svg:hover{
-    fill: #08BED5;
+  svg{
+    fill:black;
+    &:hover{
+      fill: #08BED5;
+    }
   }  
 } 
 
@@ -697,6 +700,9 @@ button.icon-box {
       }
       svg {
         fill: #727679;
+        }
+      svg.disabled {
+        opacity: 0.5;
       }
     }
     & .ag-react-container {
@@ -741,4 +747,9 @@ button.icon-box {
       color: #006fba;
     }
   }
+}
+
+*, ::before, ::after, svg {
+  animation-duration: 1.5s !important;
+  animation-iteration-count: infinite !important;
 }

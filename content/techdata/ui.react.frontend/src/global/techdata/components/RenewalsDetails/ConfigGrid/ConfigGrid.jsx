@@ -121,6 +121,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           endUser={{
             ...endUser,
             vendorAccountNumber: reseller?.vendorAccountNumber,
+            previousEndUserPO: data?.previousEndUserPO
           }}
           updateDetails={updateDetails}
         />
