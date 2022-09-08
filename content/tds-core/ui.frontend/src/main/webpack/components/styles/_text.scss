@@ -52,6 +52,12 @@
             grid-template-columns: 4% 96%;
             position: relative;
             line-height: rem(24px);
+
+            
+            b {
+              width: auto;
+              display: contents;
+            }
             
             &::before {
               content: "\2022" !important;
@@ -65,8 +71,7 @@
       }
     }
     p {
-      margin-left: 1.5rem;
-      margin-top: 1rem;
+      margin: rem(16px) rem(24px);
     }
   }
 
