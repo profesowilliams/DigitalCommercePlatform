@@ -27,11 +27,11 @@ export default function EndUserEdit({
   const { line1, city, country, postalCode } = address;
 
   const showErrorField = (obj) => {
-    return { error: obj['isValid'] === false || obj['text'] === '' };
+    return { error: obj?.isValid === false || obj?.text === '' };
   };
 
   const showErrorMsg = (obj) => {
-    if (obj['text']?.length === 0 && obj['isMandatory'] === true) {
+    if (obj?.text?.length === 0 && obj?.isMandatory === true) {
       return { helperText: REQUIRED_FIELD };
     }
   };
@@ -65,89 +65,89 @@ export default function EndUserEdit({
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
-        disabled={endUserDetails.name['canEdit'] === false}
+        disabled={endUserDetails?.name?.canEdit === false}
         required
         id="end-user-name"
         label="End user name"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={endUserDetails['name']['text'] || ''}
+        value={endUserDetails?.name?.text || ''}
         onChange={(e) => handleNameChange(e)}
-        {...handleValidation(endUserDetails['name'])}
+        {...handleValidation(endUserDetails?.name)}
       />
       <CustomTextField
-        disabled={contactName['canEdit'] === false}
+        disabled={contactName?.canEdit === false}
         required
         id="contact-name"
         label="Contact name"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={contactName['text'] || ''}
+        value={contactName?.text || ''}
         onChange={(e) => handleContactNameChange(e)}
         {...handleValidation(contactName)}
       />
       <CustomTextField
-        disabled={line1['canEdit'] === false}
+        disabled={line1?.canEdit === false}
         required
         id="address"
         label="Address 1"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={line1['text'] || ''}
+        value={line1?.text || ''}
         onChange={(e) => handleAddressChange(e)}
         {...handleValidation(line1)}
       />
       <CustomTextField
-        disabled={city['canEdit'] === false}
+        disabled={city?.canEdit === false}
         required
         id="city"
         label="City"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={city['text'] || ''}
+        value={city?.text || ''}
         onChange={(e) => handleCityChange(e)}
         {...handleValidation(city)}
       />
       <CustomTextField
-        disabled={country['canEdit'] === false}
+        disabled={country?.canEdit === false}
         required
         id="country"
         label="Country"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={country['text'] || ''}
+        value={country?.text || ''}
         onChange={(e) => handleCountryChange(e)}
         {...handleValidation(country)}
       />
       <CustomTextField
-        disabled={postalCode['canEdit'] === false}
+        disabled={postalCode?.canEdit === false}
         required
         id="area-code"
         label="Area Code"
         variant="standard"
         type='number'
         onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePostalCodeChange)}
-        value={postalCode['text'] || ''}
+        value={postalCode?.text || ''}
         {...handleValidation(postalCode)}
       />
       <CustomTextField
-        disabled={contact[0]['email']['canEdit'] === false}
+        disabled={contact[0]?.email?.canEdit === false}
         required
         id="email"
         label="Contact email"
         variant="standard"
-        value={contact[0]['email']['text'] || ''}
+        value={contact[0]?.email?.text || ''}
         onChange={(e) => handleEmailChange(e)}
         inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
         helperText={!isEmailValid ? INVALID_EMAIL_TEXT : null}
       />
       <CustomTextField
-        disabled={contact[0]['phone']['canEdit'] === false}
+        disabled={contact[0]?.phone?.canEdit === false}
         id="phone"
         label="Contact phone number"
         variant="standard"
-        value={contact[0]['phone']['text'] || ''}
+        value={contact[0]?.phone?.text || ''}
         type='number'
         onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePhoneChange)}
       />
