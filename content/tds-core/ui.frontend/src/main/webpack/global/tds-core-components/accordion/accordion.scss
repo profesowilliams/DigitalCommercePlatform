@@ -373,22 +373,22 @@
 .cmp-accordion__cvp-chevrons {
   padding: rem(25px);
   .text{
-    font-family: "Arial Regular" !important;
-    font-weight: 400 !important;
-    font-size: 16px !important;
-    line-height: 24px !important;
-    color: map-get($color-palette, 'charcoal') !important;
+    font-family: "Arial Regular";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: map-get($color-palette, 'charcoal');
     padding-right: rem(56px);
     padding-left: rem(40px);
     padding-bottom: rem(52px);
   }
 
   .cmp-accordion__title{
-    font-family: $font-family-everett !important;
-    font-weight: 400 !important;
-    font-size: 28px !important;
-    line-height: 36px !important;
-    color: map-get($color-palette, 'teal') !important;
+    font-family: $font-family-everett;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 36px;
+    color: map-get($color-palette, 'teal');
   }
 
   .cmp-accordion__button {
