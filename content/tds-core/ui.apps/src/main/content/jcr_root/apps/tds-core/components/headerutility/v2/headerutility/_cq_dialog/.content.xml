@@ -16,7 +16,7 @@
                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                             fieldDescription="On selection hides the component. Component shown by default."
                             name="./hideSiginComponent"
-                            text="Hide Sigin Component"
+                            text="Hide Sign-in Component"
                             uncheckedValue="false"
                             value="true"/>
                     <hideMiniCartComponent
