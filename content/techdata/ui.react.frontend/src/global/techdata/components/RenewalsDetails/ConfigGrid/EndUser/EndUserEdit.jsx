@@ -71,9 +71,9 @@ export default function EndUserEdit({
         label="End user name"
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
-        value={endUserDetails.name.text || ''}
+        value={endUserDetails['name']['text'] || ''}
         onChange={(e) => handleNameChange(e)}
-        {...handleValidation(endUser['name'])}
+        {...handleValidation(endUserDetails['name'])}
       />
       <CustomTextField
         disabled={contactName['canEdit'] === false}

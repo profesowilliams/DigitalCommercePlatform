@@ -31,11 +31,11 @@ export default function ResellerEdit({
   });
 
   const showErrorField = (obj) => {
-    return { error: obj['isValid'] === false };
+    return { error: obj['isValid'] === false || obj['text'] === '' };
   };
 
   const showErrorMsg = (obj) => {
-    if (obj['text'].length === 0 && obj['isMandatory'] === true) {
+    if (obj['text']?.length === 0 && obj['isMandatory'] === true) {
       return { helperText: REQUIRED_FIELD };
     }
   };
@@ -73,7 +73,8 @@ export default function ResellerEdit({
         id="reseller-email"
         label="Contact email"
         variant="standard"
-        value={contact[0].email.text || ''}
+        value={contact[0]['email']['text'] || ''}
+        disabled={contact[0]['email']['canEdit'] === false}
         onChange={handlers["email"]}
         inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
@@ -85,6 +86,7 @@ export default function ResellerEdit({
         inputProps={MAX_LENGTH_TWENTY}
         variant="standard"
         value={contact[0]['phone']['text'] || ''}
+        disabled={contact[0]['phone']['canEdit'] === false}
         onChange={handlers["phone"]}
       />
       <CustomTextField
@@ -93,6 +95,7 @@ export default function ResellerEdit({
         inputProps={MAX_LENGTH_TWENTY}
         variant="standard"
         value={vendorAccountNumber['text'] || ''}
+        disabled={vendorAccountNumber['canEdit'] === false}
         onChange={handlers["vendorAccountNumber"]}
       />
     </Box>
