@@ -43,6 +43,8 @@
       content: "\A0 \A0 \25BC";
       font-size: 0.375rem;
       vertical-align: auto;
+      color: transparent;
+      margin: 0 rem(13px) 0 0;
     }
 
     &-padding {
@@ -77,6 +79,8 @@
         content: "\A0 \A0 \25BA";
         font-size: 0.375rem;
         vertical-align: auto;
+        color: transparent;
+        margin: 0 rem(13px) 0 0;
       }
 
       &__button[aria-expanded="true"]::before {
@@ -174,11 +178,26 @@
   &__footer {
     &.cmp-accordion__chevronFooter {
       .cmp-accordion__button[aria-expanded="false"]::before {
-        @include accordionIcon("true", "\f054");
+        //@include accordionIcon("true", "\f054");
+        display: inline-block;
+        border-right:  rem(2px) solid;
+        border-bottom:  rem(2px) solid;
+        border-color: inherit; 
+        width: rem(5.5px); height: rem(5.5px);
+        transform: rotate(-45deg);    
+        top: rem(-1px);
+        position: relative;
       }
 
       .cmp-accordion__button[aria-expanded="true"]::before {
-        @include accordionIcon("true", "\f078");
+        display: inline-block;
+        border-right: rem(2px) solid;
+        border-bottom:  rem(2px) solid;
+        border-color: inherit; 
+        width: rem(5.5px); height: rem(5.5px);
+        transform: rotate(-315deg); 
+        top: rem(-1px);
+        position: relative;
       }
     }
 
