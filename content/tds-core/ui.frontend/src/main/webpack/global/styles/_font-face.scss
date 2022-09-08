@@ -21,6 +21,22 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: "TWKEverett-Regular-web";
+	src: url($font-marketing-path + "/TWKEverett-Regular-web.ttf") format("ttf"),
+		url($font-marketing-path + "/TWKEverett-Regular-web.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "TWKEverett-Medium-web";
+	src: url($font-marketing-path + "/TWKEverett-Medium-web.ttf") format("ttf"),
+		url($font-marketing-path + "/TWKEverett-Medium-web.woff") format("woff");
+	font-weight: bold;
+	font-style: normal;
+}
+
 //GeorgiaPro Font
 @font-face {
 	font-family: "Georgia Pro";
