@@ -673,9 +673,6 @@ button.icon-box {
             fill: #262626;
           }
         }
-        & .cmp-due-date-day-column {
-          width: 60%;
-        }
       }
     }
   }
@@ -690,7 +687,11 @@ button.icon-box {
         }
       }
     }
-    
+
+    & .cmp-due-date-day-column {
+      width: 65%;
+    }
+
     & .cmp-price-column, .cmp-renewal-action-container {
       padding-right: unset;
     }
