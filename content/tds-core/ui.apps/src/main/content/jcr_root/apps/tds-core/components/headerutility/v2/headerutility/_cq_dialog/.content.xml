@@ -11,6 +11,14 @@
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/container">
                 <items jcr:primaryType="nt:unstructured">
+                    <hideHubComponent
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                            fieldDescription="On selection hides the component. Component shown by default."
+                            name="./hideHubComponent"
+                            text="Hide Hub Component"
+                            uncheckedValue="false"
+                            value="true"/>
                     <hideSiginComponent
                             jcr:primaryType="nt:unstructured"
                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

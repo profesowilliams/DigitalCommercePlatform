@@ -1,6 +1,9 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
 	<div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
+<div class="hub headerutility" data-sly-test="${!properties.hideHubComponent}">
+	<sly data-sly-resource="${'hub' @ resourceType='tds-core/components/hub/v1/hub'}" />
+</div>
 <div class="signin headerutility" data-sly-test="${!properties.hideSiginComponent}">
 	<sly data-sly-resource="${'signin' @ resourceType='tds-core/components/signin/v1/signin'}" />
 </div>
