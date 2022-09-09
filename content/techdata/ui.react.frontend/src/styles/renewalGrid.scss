@@ -576,10 +576,12 @@ button.icon-box {
     .cmp-grid {
       font-family: 'TWKEverett-Regular-web';
       &.ag-theme-alpine {
+        & .ag-header {
+          background-color: white;
+        }
         & .ag-header-cell-sortable { 
             & .ag-header-cell-text::before {
               top: 10px;
-              left: 10px;
             }
             & .ag-header-cell-sorted-none {
                 & .ag-header-cell-text::before {
@@ -671,6 +673,9 @@ button.icon-box {
             fill: #262626;
           }
         }
+        & .cmp-due-date-day-column {
+          width: 60%;
+        }
       }
     }
   }
@@ -705,10 +710,6 @@ button.icon-box {
         opacity: 0.5;
       }
     }
-    & .ag-react-container {
-      font-variant-numeric: tabular-nums;
-    }
-  
 
     & .ag-cell-label-container .ag-header-cell-label span.ag-header-cell-text {
       font-size: 1rem;
@@ -718,10 +719,20 @@ button.icon-box {
       font-family: 'TWKEverett-Regular-web';
       &.ag-theme-alpine {
         border-top: 2px solid #030f24;
+        & .ag-header-cell {
+          padding-left: 9px;
+        }
+        & .ag-cell {
+          padding-left: 4px;
+          &[col-id="dueDays"] {
+            padding-left: 18px;
+          }
+        }
+       
         & .ag-header-cell-sortable {
           & .ag-header-cell-text::before {
             top: 10px;
-            left: 5px;
+            left: 1px;
           }
           & .ag-header-cell-sorted-none {
             & .ag-header-cell-text::before {

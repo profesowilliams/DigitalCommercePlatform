@@ -43,6 +43,19 @@ const columnFieldsMap = (definition, eventProps) => {
   return columnFields[columnKey] || defaultValue();
 };
 
+const columnsMinWidth = {
+  resellername: 154,
+  endUser: 151,
+  vendor: 195,
+  Id: 139,
+  agreementNumber: 148,
+  renewedduration: 186,
+  dueDays: 127,
+  dueDate: 115,
+  total: 131,
+  actions: 100
+}
+
 export const dateColumn = ({ columnLabel, columnKey, sortable = false }) => ({
   headerName: columnLabel,
   field: columnKey,
@@ -94,7 +107,8 @@ export const plainTextColumn = (definition) => {
     headerName: columnLabel,
     field: columnKey,
     sortable: sortable,
-    cellHeight: () => 45,    
+    cellHeight: () => 45,
+    minWidth: columnsMinWidth[columnKey] || null,
     width: columnsWidth[columnKey] || null,
     resizable: false,
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
@@ -110,6 +124,7 @@ export const buttonListColumn = ({
   headerName: columnLabel,
   field: columnKey,
   sortable: sortable,
+  minWidth: columnsMinWidth[columnKey] || null,
   width: columnsWidth[columnKey] || null,
   cellRenderer: (eventProps) => <RenewalActionColumn eventProps={eventProps} /> ,
 });
