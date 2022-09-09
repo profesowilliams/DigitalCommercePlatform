@@ -138,7 +138,7 @@ export const plainResellerColumnFn = (definition) => {
       field: columnKey,
       sortable: sortable,
       resizable: false,
-      minWidth: columnsWidth[columnKey] || null,
+      minWidth: columnsMinWidth[columnKey] || null,
       width: columnsWidth[columnKey] || null,
       cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
       ...isHoverable(columnKey),
