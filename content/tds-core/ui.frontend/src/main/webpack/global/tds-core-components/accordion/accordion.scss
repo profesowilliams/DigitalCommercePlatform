@@ -178,26 +178,11 @@
   &__footer {
     &.cmp-accordion__chevronFooter {
       .cmp-accordion__button[aria-expanded="false"]::before {
-        //@include accordionIcon("true", "\f054");
-        display: inline-block;
-        border-right:  rem(2px) solid;
-        border-bottom:  rem(2px) solid;
-        border-color: inherit; 
-        width: rem(5.5px); height: rem(5.5px);
-        transform: rotate(-45deg);    
-        top: rem(-1px);
-        position: relative;
+        @include accordionIcon("true", "\f054");
       }
 
       .cmp-accordion__button[aria-expanded="true"]::before {
-        display: inline-block;
-        border-right: rem(2px) solid;
-        border-bottom:  rem(2px) solid;
-        border-color: inherit; 
-        width: rem(5.5px); height: rem(5.5px);
-        transform: rotate(-315deg); 
-        top: rem(-1px);
-        position: relative;
+        @include accordionIcon("true", "\f078");
       }
     }
 
