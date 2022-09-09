@@ -96,12 +96,12 @@ $bg--marketing-card:#F7F7F7;
     align-items: center;
     gap: .6rem;
     justify-content: space-between;
-    cursor: pointer;
-    span{
+    cursor: pointer; 
+    &__info {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
+    }      
     .cmp-triangle-up, .cmp-triangle-down{
       pointer-events: none;
     }

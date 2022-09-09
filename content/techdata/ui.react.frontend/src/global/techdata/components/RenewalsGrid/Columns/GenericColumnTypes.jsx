@@ -82,10 +82,10 @@ const columnsWidth = {
   vendor: "177.632px",
   Id: "150px",
   agreementNumber: "130px",
-  renewedduration: "177.632px",
+  renewedduration: "200.632px",
   dueDays: "143.737px",
   dueDate: "139.526px",
-  total: "145.526px",
+  total: "122.526px",
   actions: "100px",
 };
 
