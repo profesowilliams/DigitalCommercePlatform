@@ -1126,10 +1126,10 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
-                filename: "new-list",
+                filename: "list-cards.html",
                 template: path.resolve(
                     __dirname,
-                    SOURCE_ROOT + "/static/list-new.html"
+                    SOURCE_ROOT + "/static/list-cards.html"
                 ),
             }),
             new HtmlWebpackPlugin({
