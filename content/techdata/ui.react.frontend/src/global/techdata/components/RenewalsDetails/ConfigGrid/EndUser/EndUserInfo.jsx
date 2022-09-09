@@ -20,6 +20,7 @@ import { teal } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import EditFlow from "../Common/EditFlow";
 import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
+import { extractDetailRenewalData } from "../../../RenewalsGrid/Orders/orderingRequests"
 
 function EndUserInfo({
   endUser,
@@ -127,14 +128,20 @@ function EndUserInfo({
 
   const saveHandler = async () => {
     setSaving(true);
+    effects.clearEndUser();
     await updateDetails(endUserDetails);
     setSaving(false);
-    setLockedEdit(false);
+    setLockedEdit(false);   
+  };
+
+  const cancelHandler = () => {
+    effects.clearEndUser()
   };
 
   useEffect(() => {
-    // TODO: Remove console log after stable implementation.
-    console.log('new data', endUserDetails);
+    if(isEditingDetails) {
+      effects.setCustomState({ key: 'endUser', value: extractDetailRenewalData(endUserDetails) });
+    }  
   }, [endUserDetails]);
 
   const showEditButton = canEdit && !saving,
@@ -226,7 +233,8 @@ function EndUserInfo({
           disabled={!editMode && isEditingDetails}
           editValue={editMode} 
           setEdit={setLockedEdit} 
-          saveHandler={saveHandler} 
+          saveHandler={saveHandler}           
+          cancelHandler={cancelHandler}
           customClass={'cancel-save__absolute'}
         />
       )}

@@ -10,6 +10,9 @@ const INITIAL_STATE = {
     isAutoClose:false,
   },
   isEditingDetails: false,
+  endUser: null,
+  reseller: null,
+  lines: null,
 };
 
 const store = (set,get) => ({

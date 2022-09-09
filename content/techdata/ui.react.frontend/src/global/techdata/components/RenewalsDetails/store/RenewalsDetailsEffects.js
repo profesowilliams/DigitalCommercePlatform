@@ -15,6 +15,10 @@ export const renewalsEffects = ( set, get ) =>  ({
     const setCustomState = get().effects.setCustomState;  
     const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
     setCustomState({key:'toaster', value:{isOpen:false}},options);
+  },
+
+  clearEndUser(){   
+    set({endUser:null})
   }
 
 })
