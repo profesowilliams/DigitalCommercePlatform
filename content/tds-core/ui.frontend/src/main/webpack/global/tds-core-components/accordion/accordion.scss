@@ -369,11 +369,11 @@
   }
 
   .cmp-accordion__title{
-    font-family: $font-family-everett;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 36px;
-    color: map-get($color-palette, 'teal');
+    font-family: $font-family-everett !important;
+    font-weight: 400 !important;
+    font-size: 28px !important;;
+    line-height: 36px !important;
+    color: map-get($color-palette, 'teal') !important;
   }
 
   .cmp-accordion__button {
@@ -410,14 +410,14 @@
       }
 
       .cmp-accordion__button[aria-expanded="true"]{
-        padding-bottom: 1rem;
+        padding-bottom: 0rem;
       }
     }
 
     .cmp-accordion__header,
     .cmp-accordion__item {
       background-color: white;
-      margin-bottom: rem(24px) !important;
+      margin-bottom: rem(32px) !important;
     }
     .cmp-accordion__button {
       position: relative;
@@ -453,7 +453,7 @@
       }
 
       &::after {
-        color: get-color(text-light-charcoal);
+        color: map-get($color-palette, 'teal');
         font-family: $fontawesome-font-family;
         font-size: rem(14px);
         font-weight: $font-weight-normal;
