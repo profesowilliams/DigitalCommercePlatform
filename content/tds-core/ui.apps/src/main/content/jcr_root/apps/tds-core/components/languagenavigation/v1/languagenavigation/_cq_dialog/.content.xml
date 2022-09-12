@@ -63,6 +63,14 @@
                                                 text="Show Icon?"
                                                 uncheckedValue="{Boolean}false"
                                                 value="{Boolean}true"/>
+                                            <showIcon
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Select whether or not to display the label."
+                                                name="./showIcon"
+                                                text="Show Label?"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
                                             <label
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
