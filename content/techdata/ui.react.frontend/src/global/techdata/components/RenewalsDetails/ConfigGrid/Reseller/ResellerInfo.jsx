@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState, useEffect } from "react";
 import ResellerEdit from "./ResellerEdit";
 import ResellerReadOnly from "./ResellerReadOnly";
 import MissingInfo from "../../MissingInfo";
@@ -8,6 +8,7 @@ import useResellerHandlers from "./useResellerHandlers";
 import { isObject } from "../../../../../../utils";
 import getModifiedResellerData from "./utils";
 import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
+import { extractDetailRenewalData } from "../../../RenewalsGrid/Orders/orderingRequests"
 
 function ResellerInfo({ 
   reseller,
@@ -47,6 +48,14 @@ function ResellerInfo({
     setSaving(false);
     setLockedEdit(false);
   };
+
+  useEffect(() => {
+    if(isEditingDetails) { 
+      effects.setCustomState({ key: 'reseller', value: extractDetailRenewalData(resellerDetails) });
+    } else {
+      effects.clearReseller();
+    }
+  }, [resellerDetails])
 
   return (
     <div className={`cmp-renewals-qp__reseller-info ${showError && `error-feedback`}`}>

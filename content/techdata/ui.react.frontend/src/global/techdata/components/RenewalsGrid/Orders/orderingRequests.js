@@ -50,7 +50,7 @@ const extractRenewalData = (quote) => {
   }
 }
 
-const mapRenewalItemProducts = (items = []) => {
+export const mapRenewalItemProducts = (items = []) => {
   const mapProduct = product => ({type:product?.type, id: product?.id });
   return items.map(item => ({
     id: item?.id,

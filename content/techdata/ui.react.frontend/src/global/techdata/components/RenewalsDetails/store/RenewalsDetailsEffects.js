@@ -19,6 +19,14 @@ export const renewalsEffects = ( set, get ) =>  ({
 
   clearEndUser(){   
     set({endUser:null})
+  },
+
+  clearReseller(){   
+    set({reseller:null})
+  },
+
+  clearItems(){   
+    set({items:null})
   }
 
 })

@@ -12,7 +12,7 @@ import buildColumnDefinitions from "./buildColumnDefinitions";
 import UnitPriceColumn from "../Columns/UnitPriceColumn";
 import TransactionNumber from "../../RenewalsGrid/Orders/TransactionNumber";
 import { suppressNavigation } from "./supressAgGridKeyboardEvents";
-import { mapRenewalForUpdateDetails } from "../../RenewalsGrid/Orders/orderingRequests";
+import { mapRenewalForUpdateDetails, mapRenewalItemProducts } from "../../RenewalsGrid/Orders/orderingRequests";
 import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
@@ -103,6 +103,14 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     }
   }, [isEditing])
 
+  useEffect(() => {
+    if(isEditing) { 
+      effects.setCustomState({ key: 'items', value: mapRenewalItemProducts(mutableGridData) });
+    } else {
+      effects.clearItems();
+    }
+  }, [subtotal])
+
   useImperativeHandle(ref, () => ({
     cancelEdit () {
       // Copy original grid data
@@ -110,6 +118,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
 
       // Replace grid data with original
       setMutableGridData(copyGridData);
+      effects.clearItems();
 
       // Api call needed to refresh grid
       if(gridApiRef.current) {

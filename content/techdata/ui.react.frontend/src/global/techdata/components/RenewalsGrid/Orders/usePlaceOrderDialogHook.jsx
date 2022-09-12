@@ -20,7 +20,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
   const resetGrid = store(state => state?.resetGrid || false );  
   const endUserState = store( state => state.endUser || false);
   const resellerState = store( state => state.reseller || false);
-  const linesState = store( state => state.lines || false);
+  const itemsState = store( state => state.items || false);
 
   function resetDialogStates() {
     setSubmitted(false);
@@ -77,8 +77,8 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
     setSubmitted((submitted) => !submitted);
     if(isDetails) {
       if(endUserState) renewalData.endUser = endUserState;
-      if(resellerState) renewalPayload.reseller = resellerState;
-      if(linesState) renewalPayload.lines = linesState;      
+      if(resellerState) renewalData.reseller = resellerState;
+      if(itemsState) renewalData.items = itemsState;  
     }
     const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber});
     handleToggleToaster({...operationResponse});   

@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   isEditingDetails: false,
   endUser: null,
   reseller: null,
-  lines: null,
+  items: null,
 };
 
 const store = (set,get) => ({
