@@ -2,11 +2,11 @@
 RewriteRule ^/robots.txt$ /content/dam/techdata/seo/apac/my/robots.txt  [PT,L]
 RewriteRule ^/sitemap.xml$ /content/techdata/apac/my/en.sitemap.xml [PT,L]
 RewriteCond %{HTTP_HOST} =mytecd.com [NC]
-RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/apac/my/en.html [PT,L]
+RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/en.html [PT,L]
 RewriteCond %{HTTP_HOST} =uat.dc.mytecd.com [NC]
-RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/apac/my/en.html [PT,L]
+RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/en.html [PT,L]
 RewriteCond %{HTTP_HOST} =stage.dc.mytecd.com [NC]
-RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME}/apac/my/en.html [PT,L]
+RewriteRule ^/$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/en.html [PT,L]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
@@ -19,4 +19,4 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.txt|.xml|.cache)$
-RewriteRule ^/(.*)$ /content/${CONTENT_FOLDER_NAME}/apac/my/$1 [PT,L]
+RewriteRule ^/(.*)$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/my/$1 [PT,L]

@@ -13,7 +13,7 @@ PassEnv DISP_ID
 	ServerAlias  dispatcher2eastus2.stage.techdata-digital.adobecqms.net   dispatcher1eastus2.stage.techdata-digital.adobecqms.net
 	#ServerAlias	uat-tdsynnex.dc.tdebusiness.cloud www.uat-tdsynnex.dc.tdebusiness.cloud
 	#ServerAlias	stage-tdsynnex.dc.tdebusiness.cloud www.stage-tdsynnex.dc.tdebusiness.cloud
-	ServerAlias	tdsynnex.com www.tdsynnex.com
+	#ServerAlias	tdsynnex.com www.tdsynnex.com
 
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}
@@ -83,6 +83,7 @@ PassEnv DISP_ID
 	# Put names of which domains are used for your published site/content here
 	ServerAlias	uat-tdsynnex.dc.tdebusiness.cloud www.uat-tdsynnex.dc.tdebusiness.cloud
     ServerAlias	stage-tdsynnex.dc.tdebusiness.cloud www.stage-tdsynnex.dc.tdebusiness.cloud
+    ServerAlias	tdsynnex.com www.tdsynnex.com
 
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}

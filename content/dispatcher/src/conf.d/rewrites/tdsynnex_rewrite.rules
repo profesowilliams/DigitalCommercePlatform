@@ -1,25 +1,111 @@
-RedirectMatch "^/$" "/in/en.html"
-
-
+# redirect root
+RedirectMatch "^/$" "/us/en.html"
 
 # robot.txt
-RewriteRule ^/robots.txt$ /content/dam/techdata/seo/robots.txt [PT,L]
-RewriteRule ^/us/sitemap.xml$  /content/techdata/americas/us/en.sitemap.xml [PT,L]
-RewriteRule ^/au/sitemap.xml$  /content/techdata/apac/au/en.sitemap.xml [PT,L]
-RewriteRule ^/hk/sitemap.xml$  /content/techdata/apac/hk/en.sitemap.xml [PT,L]
-RewriteRule ^/id/sitemap.xml$  /content/techdata/americas/id/en.sitemap.xml [PT,L]
-RewriteRule ^/in/sitemap.xml$  /content/techdata/apac/id/en.sitemap.xml [PT,L]
-RewriteRule ^/nz/sitemap.xml$  /content/techdata/apac/nz/en.sitemap.xml [PT,L]
-RewriteRule ^/th/sitemap.xml$  /content/techdata/apac/th/en.sitemap.xml [PT,L]
-RewriteRule ^/sg/sitemap.xml$  /content/techdata/apac/sg/en.sitemap.xml [PT,L]
-RewriteRule ^/vn/sitemap.xml$  /content/techdata/apac/vn/en.sitemap.xml [PT,L]
+RewriteRule ^/robots.txt$ /content/dam/${CONTENT_FOLDER_NAME_TDSYNNEX}/seo/robots.txt [PT,L]
+RewriteRule ^/us/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/us/en.sitemap.xml [PT,L]
+RewriteRule ^/au/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}}/apj/au/en.sitemap.xml [PT,L]
+RewriteRule ^/hk/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/hk/en.sitemap.xml [PT,L]
+RewriteRule ^/id/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/id/en.sitemap.xml [PT,L]
+RewriteRule ^/in/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/in/en.sitemap.xml [PT,L]
+RewriteRule ^/nz/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/nz/en.sitemap.xml [PT,L]
+RewriteRule ^/th/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/th/en.sitemap.xml [PT,L]
+RewriteRule ^/sg/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/sg/en.sitemap.xml [PT,L]
+RewriteRule ^/vn/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/vn/en.sitemap.xml [PT,L]
 RewriteCond %{REQUEST_URI} !(/|.jpe?g|.html|.svg|.json|.png|.txt|.xml|.cache)$
 
-#tdsynnex uat/stage/prod when accessed with domain
-RewriteCond %{HTTP_HOST} ^(.*)tdsynnex(.*)$
-RewriteRule "^/$" /content/tds-site/americas/us/en.html [PT,L]
+# apj
+RewriteRule ^/apj$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/apj/en.html [PT,L]
+RewriteRule ^/apj/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/apj/en.html [PT,L]
+RewriteRule ^/au$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/au/en.html [PT,L]
+RewriteRule ^/au/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/au/en.html [PT,L]
+RewriteRule ^/hk$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/hk/en.html [PT,L]
+RewriteRule ^/hk/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/hk/en.html [PT,L]
+RewriteRule ^/hk_tdcs$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/hk_tdcs/en.html [PT,L]
+RewriteRule ^/hk_tdcs/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/hk_tdcs/en.html [PT,L]
+RewriteRule ^/id$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/id/en.html [PT,L]
+RewriteRule ^/id/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/id/en.html [PT,L]
+RewriteRule ^/in$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/in/en.html [PT,L]
+RewriteRule ^/in/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/in/en.html [PT,L]
+RewriteRule ^/my$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/my/en.html [PT,L]
+RewriteRule ^/my/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/my/en.html [PT,L]
+RewriteRule ^/nz$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/nz/en.html [PT,L]
+RewriteRule ^/nz/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/nz/en.html [PT,L]
+RewriteRule ^/sg$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/sg/en.html [PT,L]
+RewriteRule ^/sg/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/sg/en.html [PT,L]
+RewriteRule ^/th$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/th/en.html [PT,L]
+RewriteRule ^/th/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/th/en.html [PT,L]
+RewriteRule ^/vn$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/vn/en.html [PT,L]
+RewriteRule ^/vn/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/vn/en.html [PT,L]
 
-# tdsynnex domain rewrite rules
+# americas
+RewriteRule ^/ar$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ar/en.html [PT,L]
+RewriteRule ^/ar/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ar/en.html [PT,L]
+RewriteRule ^/br$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/br/en.html [PT,L]
+RewriteRule ^/br/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/br/en.html [PT,L]
+RewriteRule ^/ca$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ca/en.html [PT,L]
+RewriteRule ^/ca/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ca/en.html [PT,L]
+RewriteRule ^/cl$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/cl/en.html [PT,L]
+RewriteRule ^/cl/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/cl/en.html [PT,L]
+RewriteRule ^/co$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/co/en.html [PT,L]
+RewriteRule ^/co/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/co/en.html [PT,L]
+RewriteRule ^/ec$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ec/en.html [PT,L]
+RewriteRule ^/ec/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ec/en.html [PT,L]
+RewriteRule ^/mx$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/mx/en.html [PT,L]
+RewriteRule ^/mx/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/mx/en.html [PT,L]
+RewriteRule ^/pe$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/pe/en.html [PT,L]
+RewriteRule ^/pe/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/pe/en.html [PT,L]
+RewriteRule ^/us$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/us/en.html [PT,L]
+RewriteRule ^/us/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/us/en.html [PT,L]
+
+# europe
+RewriteRule ^/at$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/at/en.html [PT,L]
+RewriteRule ^/at/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/at/en.html [PT,L]
+RewriteRule ^/be$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/be/en.html [PT,L]
+RewriteRule ^/be/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/be/en.html [PT,L]
+RewriteRule ^/ch$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ch/en.html [PT,L]
+RewriteRule ^/ch/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ch/en.html [PT,L]
+RewriteRule ^/cs$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/cs/en.html [PT,L]
+RewriteRule ^/cs/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/cs/en.html [PT,L]
+RewriteRule ^/cz$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/cz/en.html [PT,L]
+RewriteRule ^/cz/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/cz/en.html [PT,L]
+RewriteRule ^/de$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/de/en.html [PT,L]
+RewriteRule ^/de/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/de/en.html [PT,L]
+RewriteRule ^/dk$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/dk/en.html [PT,L]
+RewriteRule ^/dk/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/dk/en.html [PT,L]
+RewriteRule ^/es$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/es/en.html [PT,L]
+RewriteRule ^/es/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/es/en.html [PT,L]
+RewriteRule ^/fi$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/fi/en.html [PT,L]
+RewriteRule ^/fi/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/fi/en.html [PT,L]
+RewriteRule ^/fr$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/fr/en.html [PT,L]
+RewriteRule ^/fr/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/fr/en.html [PT,L]
+RewriteRule ^/hr$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/hr/en.html [PT,L]
+RewriteRule ^/hr/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/hr/en.html [PT,L]
+RewriteRule ^/hu$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/hu/en.html [PT,L]
+RewriteRule ^/hu/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/hu/en.html [PT,L]
+RewriteRule ^/ie$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ie/en.html [PT,L]
+RewriteRule ^/ie/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ie/en.html [PT,L]
+RewriteRule ^/it$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/it/en.html [PT,L]
+RewriteRule ^/it/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/it/en.html [PT,L]
+RewriteRule ^/nl$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/nl/en.html [PT,L]
+RewriteRule ^/nl/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/nl/en.html [PT,L]
+RewriteRule ^/no$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/no/en.html [PT,L]
+RewriteRule ^/no/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/no/en.html [PT,L]
+RewriteRule ^/pl$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/pl/en.html [PT,L]
+RewriteRule ^/pl/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/pl/en.html [PT,L]
+RewriteRule ^/pt$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/pt/en.html [PT,L]
+RewriteRule ^/pt/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/pt/en.html [PT,L]
+RewriteRule ^/ro$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ro/en.html [PT,L]
+RewriteRule ^/ro/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ro/en.html [PT,L]
+RewriteRule ^/se$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/se/en.html [PT,L]
+RewriteRule ^/se/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/se/en.html [PT,L]
+RewriteRule ^/sk$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/sk/en.html [PT,L]
+RewriteRule ^/sk/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/sk/en.html [PT,L]
+RewriteRule ^/tr$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/tr/en.html [PT,L]
+RewriteRule ^/tr/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/tr/en.html [PT,L]
+RewriteRule ^/uk$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/uk/en.html [PT,L]
+RewriteRule ^/uk/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/uk/en.html [PT,L]
+
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
 RewriteCond %{REQUEST_URI} !^/content
@@ -31,4 +117,30 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
-RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/tds-site/apj/$1$2 [PT,L]
+RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/europe/$1$2 [PT,L]
+
+RewriteCond %{REQUEST_URI} !^/apps
+RewriteCond %{REQUEST_URI} !^/bin
+RewriteCond %{REQUEST_URI} !^/content
+RewriteCond %{REQUEST_URI} !^/etc
+RewriteCond %{REQUEST_URI} !^/home
+RewriteCond %{REQUEST_URI} !^/libs
+RewriteCond %{REQUEST_URI} !^/saml_login
+RewriteCond %{REQUEST_URI} !^/system
+RewriteCond %{REQUEST_URI} !^/tmp
+RewriteCond %{REQUEST_URI} !^/var
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
+RewriteRule ^/(ar|br|ca|cl|co|ec|mx|pe|us)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1$2 [PT,L]
+
+RewriteCond %{REQUEST_URI} !^/apps
+RewriteCond %{REQUEST_URI} !^/bin
+RewriteCond %{REQUEST_URI} !^/content
+RewriteCond %{REQUEST_URI} !^/etc
+RewriteCond %{REQUEST_URI} !^/home
+RewriteCond %{REQUEST_URI} !^/libs
+RewriteCond %{REQUEST_URI} !^/saml_login
+RewriteCond %{REQUEST_URI} !^/system
+RewriteCond %{REQUEST_URI} !^/tmp
+RewriteCond %{REQUEST_URI} !^/var
+RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
+RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1$2 [PT,L]
