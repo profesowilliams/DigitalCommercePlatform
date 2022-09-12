@@ -609,6 +609,22 @@ button.icon-box {
   }
 }
 
+@mixin horizontal_scroll {
+  @media screen and (max-width: 1739px) {
+    & .ag-root-wrapper-body {
+      overflow-x: scroll;
+    }
+    & .ag-root {
+      &.ag-unselectable {
+        &.ag-layout-auto-height {
+          overflow: unset;
+          width: unset;
+        }
+      } 
+    }
+  }
+}
+
 .cmp-grid-td-synnex {
   & .cmp-renewals-subheader, .cmp-renewals__pagination--bottom {
     border-bottom: unset;
@@ -720,6 +736,8 @@ button.icon-box {
       font-family: 'TWKEverett-Regular-web';
       &.ag-theme-alpine {
         border-top: 2px solid #030f24;
+        min-width: unset;
+        @include horizontal_scroll;
         & .ag-header-cell {
           padding-left: 9px;
         }
