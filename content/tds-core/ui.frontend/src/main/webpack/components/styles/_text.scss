@@ -47,9 +47,7 @@
           line-height: -10rem;
           padding-top: 0rem !important;
           li {
-            padding: rem(24px) rem(16px) 0 rem(28px);
-            display: grid !important;
-            grid-template-columns: 4% 96%;
+            padding: rem(24px) rem(16px) 0 rem(44px);
             position: relative;
             line-height: rem(24px);
 
@@ -63,8 +61,9 @@
               content: "\2022" !important;
               color: inherit !important;
               background-color: get-color(container-transparent)!important;
-              position: relative;
-              top: rem(-4px);
+              position: absolute;    
+              left: 25px;
+              top: 20px;
             }
           }
         }
