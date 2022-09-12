@@ -23,6 +23,11 @@
         font-family: $open-sans;
     }
 
+    &-arial {
+        font-family: 'Arial';
+        font-style: normal;
+    }
+
     &-align {
         &__center {
             text-align: center;

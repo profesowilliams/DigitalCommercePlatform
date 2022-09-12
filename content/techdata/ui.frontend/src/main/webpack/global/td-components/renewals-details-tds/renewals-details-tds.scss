@@ -12,9 +12,15 @@
       }
     }
 
-    .export-container .quote-preview {
-      @include font-everett-medium-bold($size: 20px, $line-height: 18px);
-    }
+    .export-container {
+      button span {
+        color: map-get($color-palette, 'teal');
+        font-weight: 400;
+      }
+      .quote-preview {
+        @include font-everett-medium-bold($size: 20px, $line-height: 18px);
+      }
+    } 
 
     .cmp-renewals-qp__reseller-info,
     .cmp-renewals-qp__agreement-info,
@@ -83,5 +89,11 @@
     .ag-header {
       border: none;
     }
+  }
+
+  .cmp-renewal-preview__subtotal--value * {
+    @include font-everett-regular-normal();
+    font-size: 24px;
+    line-height: 32px;
   }
 }
