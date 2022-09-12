@@ -1,6 +1,8 @@
 $brand-blue: #000c21;
 $secondary-link-blue: #006bae;
 $font-family-search:"Open Sans", sans-serif;
+$brand-green: #005758;
+$brand-green-dark: #003031;
 .inputStyle {
   position: relative;
   padding: 0.25em;
@@ -14,6 +16,7 @@ $font-family-search:"Open Sans", sans-serif;
   letter-spacing: 0;
   line-height: 16px;
   width: 15rem;
+  padding-bottom: 7px;  
 }
 
 .inputStyle.searchText {
@@ -77,6 +80,10 @@ $font-family-search:"Open Sans", sans-serif;
     i, svg {
       color: white !important;
     }
+  }
+  &__button.td-synnex {
+    background-color: $brand-green;   
+    z-index: 20;
   }
 }
 .tooltipContainer {
@@ -149,6 +156,11 @@ $font-family-search:"Open Sans", sans-serif;
     background: #fff;
   }
 }
+.cmp-search-options.td-synnex {
+  box-shadow: inset 0px 5.5px 0px -4px $brand-green-dark;
+  top: 26px;
+  width: 16.75rem;
+}
 .cmp-search-options {
   display: flex;
   flex-direction: column; 
@@ -177,6 +189,19 @@ $font-family-search:"Open Sans", sans-serif;
     align-items: center;
     font-size: 12px;
     justify-content: space-between;
+    padding: 7px;
+    label {
+      padding: 0;
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+      transition: all .4s ease-out;
+      &:hover {
+        font-weight: bold;
+        transform: scale(1.065456);
+      }
+    }
     a{
       color: $secondary-link-blue;
       text-decoration: underline;

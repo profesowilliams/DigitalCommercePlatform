@@ -2,6 +2,7 @@ $brand-green: #005758;
 $gray-light: #ebebeb;
 $brand-green--dark: #003031;
 $brand-text-gray: #555555;
+$brand-charcoal: #262626;
 .filter-modal-container {
   position: fixed;
   background: rgba(0, 12, 33, .28);
@@ -152,13 +153,13 @@ $brand-text-gray: #555555;
     accent-color: $brand-green;
   }
   &__label {
-    color: #555555;
+    color: $brand-charcoal;
     font-size: 14px;
     cursor: pointer;
     user-select: none;
   }
   &__label.td-synnex {
-    color: $brand-green;
+    color: $brand-green--dark;
   }
   &__label:hover {
     font-weight: bold;
@@ -170,6 +171,7 @@ $brand-text-gray: #555555;
     padding-left: 40px;
     > ul,
     > li {
+      margin-bottom: .45rem;
       label{
         text-transform: capitalize;
         font-family: Open Sans, sans-serif;
@@ -181,6 +183,7 @@ $brand-text-gray: #555555;
     ul.sub-filter{
       justify-content: start;
       padding-left: 2rem; 
+      margin: 0;  
       li {
         margin: 0.4rem 0;
       }   
@@ -240,7 +243,7 @@ div.filter-accordion {
     }
   }
   h3 {
-    color: #555555;
+    color: $brand-charcoal;
     font-size: 14px;
     letter-spacing: 0;
     line-height: 19px;
@@ -254,13 +257,13 @@ div.filter-accordion {
         content: "\f078";
       }
     }
-    &.active {
+    &.active.td-synnex {
       color: $brand-green--dark;
     }
     &:before {
       content: "\f054";
       @include font-awesome;
-      padding-right: 6px;
+      padding-right: 11px;
       font-weight: 900;
     }
   }
@@ -352,6 +355,7 @@ div.filter-accordion {
     li {
       list-style: none;
       padding-left: 21px;
+      margin-bottom: .45rem;
       cursor: pointer;
       label {
         color: #555555;

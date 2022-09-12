@@ -108,12 +108,12 @@ function _ContractColumn({ data, eventProps }) {
         <div className="cmp-renewal-duration" onClick={toggleExpandedRow} style={{cursor: !hasOptions && 'initial' }}>
           { keepDataAfterRenderTextPlanOptions() && (
             <span className="cmp-renewal-duration__info">
-            Renewal : {formatRenewedDuration(renewed, data?.support)}    
+            Renewal, {formatRenewedDuration(renewed, data?.support)}    
             </span>
           )}           
           { hasRenderStateTextFromPlanOptions() && (
             <span className="cmp-renewal-duration__info">          
-              Renewal : {formatRenewedDuration(contractDuration, support)}              
+              Renewal, {formatRenewedDuration(contractDuration, support)}              
             </span>
           )}
 

@@ -63,7 +63,7 @@ function Filter({ id }) {
     <>
       <div onClick={handleFilterClick} className="filter-accordion__item">
         <div className="filter-accordion__item--group">
-          <h3 className={`${filter.open ? "active" : ""}`}>{filter.title}</h3>
+          <h3 className={`${filter.open ? computeClassName('active') : ""}`}>{filter.title}</h3>
           <Count
             callback={() =>
               pushEvent(ANALYTICS_TYPES.events.click, {

@@ -6,11 +6,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { SearchIcon } from "../../../../../fluentIcons/FluentIcons";
+import { ArrowClockWiseIcon, SearchIcon } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
 import { If } from "../../../helpers/If";
+import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
 import Capsule from "../../Widgets/Capsule";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
@@ -48,10 +49,10 @@ function _SearchFilter(
   const [capsuleSearchValue, setCapsuleSearchValue] = useState(getInitialValueState());
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
+  const { computeClassName, isTDSynnex } = useIsTDSynnexClass();
   const { closeAndCleanToaster } = effects;  
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
-  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex);
 
   function getInitialValueState() {
     if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
@@ -267,7 +268,7 @@ function _SearchFilter(
                triggerSearchOnEnter={triggerSearchOnEnter}
               />
               <button
-                className="cmp-search-tooltip__button"
+                className={computeClassName("cmp-search-tooltip__button")}
                 onClick={() => triggerSearch()}
               >
                 <i className="fas fa-search"></i>
@@ -286,7 +287,7 @@ function _SearchFilter(
                       <p>Search by {chosenFilter}</p>
                     )}
                   </label>
-                  <a onClick={onReset}>Reset</a>
+                  { isTDSynnex ? <ArrowClockWiseIcon onClick={onReset} /> : <a onClick={onReset}>Reset</a>}
                 </div>
               </div>
             </If>
@@ -315,13 +316,13 @@ function _SearchFilter(
         <If condition={isDropdownVisible}>
           <div className="cmp-search-select-container" ref={node}>
             <div className="cmp-search-select-container__box">
-              <input className="inputStyle" placeholder="Search by" disabled />
-              <button className="cmp-search-tooltip__button">
+              <input className={computeClassName("inputStyle")} placeholder="Search by" disabled />
+              <button className={computeClassName("cmp-search-tooltip__button")}>
                 <i className="fas fa-search cmp-renewal-search__icon"></i>
               </button>
             </div>
             <If condition={true}>
-              <div className="cmp-search-options hide">
+              <div className={computeClassName("cmp-search-options hide")}>
                 {options.map((option) => renderWithPermissions(option))}
               </div>
             </If>
