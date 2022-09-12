@@ -3,5 +3,5 @@
     jcr:primaryType="cq:Component"
     jcr:title="Renewals Detail"
           sling:resourceSuperType="tds-core/components/renewalsdetails/v1/renewalsdetails"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Site - Commerce"/>
 

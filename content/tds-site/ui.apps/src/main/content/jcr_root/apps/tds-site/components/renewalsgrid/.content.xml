@@ -3,6 +3,6 @@
     jcr:primaryType="cq:Component"
     jcr:title="Renewals Grid"
     sling:resourceSuperType="tds-core/components/renewalsgrid/v1/renewalsgrid"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Site - Commerce"/>
 
 
