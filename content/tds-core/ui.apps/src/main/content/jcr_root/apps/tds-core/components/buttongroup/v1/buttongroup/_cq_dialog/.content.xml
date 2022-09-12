@@ -46,7 +46,7 @@
                                                     fieldDescription="Enter link"
                                                     fieldLabel="Link"
                                                     name="./linkUrl"
-                                                    rootPath="/content/techdata"/>
+                                                    rootPath="/content"/>
                                                 <iconUrl
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

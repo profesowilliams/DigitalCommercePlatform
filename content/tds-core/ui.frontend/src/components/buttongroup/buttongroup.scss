@@ -13,6 +13,7 @@
     }
 
     .cmp-button-group__item {
+      padding: 0 rem(10px);
       a {
         text-decoration: none;
         color: get-color(brand-white);
@@ -54,11 +55,17 @@
     justify-items: center;
     align-content: center;
     padding-inline-start: 0px;
+    margin: 0px;
   }
 
   &__color-pill {
     background-color: get-color(deep-teal) !important;
     border-radius: 25px;
+
+    &-width {
+      width: 573px !important;
+    }
+
     .cmp-button-group {
       padding-top: rem(15px) !important;
       padding-bottom: rem(15px) !important;
