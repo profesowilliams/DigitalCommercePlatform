@@ -1,13 +1,18 @@
 import React from "react";
+import { CloseIcon } from "../../../../fluentIcons/FluentIcons";
+import { useRenewalGridState } from '../../components/RenewalsGrid/store/RenewalsStore'
 
 const DefaultCapsule = () => (
   <span className="td-capsule__text">This is a capsule</span>
 );
 
 const CloseBtn = ({ closeClick }) => {
+  const isTDSynnex = useRenewalGridState( state => state.isTDSynnex || false);
   return (
     <span onClick={closeClick}>
-      <i className="fas fa-times td-capsule__close"></i>
+      {isTDSynnex 
+        ? <CloseIcon/>
+        : <i className="fas fa-times td-capsule__close"></i>}
     </span>
   );
 };

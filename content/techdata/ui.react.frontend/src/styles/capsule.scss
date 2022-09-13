@@ -24,3 +24,20 @@
     cursor: pointer;
   }
 }
+
+.cmp-grid-td-synnex {
+  & .td-capsule {
+    display: flex;
+    align-items: center;
+    background-color: #005758;
+    height: 29px;
+    border-radius: 20px;
+    &__text {
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
+    span > svg {
+      fill: white;
+    }
+  }
+}

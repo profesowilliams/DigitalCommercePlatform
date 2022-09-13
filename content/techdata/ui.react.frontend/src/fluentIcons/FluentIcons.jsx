@@ -170,7 +170,6 @@ export function CloseIcon(props) {
     >
       <path
         d="m.589.716.057-.07A.5.5 0 0 1 1.284.59l.07.057L6 5.293 10.646.646a.5.5 0 0 1 .708.708L6.707 6l4.647 4.646a.5.5 0 0 1 .057.638l-.057.07a.5.5 0 0 1-.638.057l-.07-.057L6 6.707l-4.646 4.647a.5.5 0 0 1-.708-.708L5.293 6 .646 1.354A.5.5 0 0 1 .59.716l.057-.07-.057.07Z"
-        fill="#212121"
       />
     </svg>
   );
@@ -235,7 +234,7 @@ export function ChevronDoubleRightIcon(props) {
 
 export function SearchIcon(props) {
   return (
-  <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path d="M10 2.75a7.25 7.25 0 0 1 5.63 11.819l4.9 4.9a.75.75 0 0 1-.976 1.134l-.084-.073-4.901-4.9A7.25 7.25 0 1 1 10 2.75Zm0 1.5a5.75 5.75 0 1 0 0 11.5 5.75 5.75 0 0 0 0-11.5Z"/>
   </svg>
   )

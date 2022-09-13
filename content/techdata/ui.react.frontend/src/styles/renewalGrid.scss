@@ -627,6 +627,7 @@ button.icon-box {
 
 .cmp-grid-td-synnex {
   & .cmp-renewals-subheader, .cmp-renewals__pagination--bottom {
+    font-family: 'TWKEverett-Regular-web';
     border-bottom: unset;
     & .cmp-navigation {
       span.cta {
@@ -675,9 +676,6 @@ button.icon-box {
           color: #262626;
           font-family: 'Arial', sans-serif;
         }
-        svg {
-          fill: #262626;
-        }
       }
       & .cmp-renewal-filter {
         & .cmp-renewals-filter-container {
@@ -689,6 +687,11 @@ button.icon-box {
             fill: #262626;
           }
         }
+      }
+      & .inputStyle {
+        font-family: unset;
+        font-style: normal;
+        font-size: 1rem;
       }
     }
   }

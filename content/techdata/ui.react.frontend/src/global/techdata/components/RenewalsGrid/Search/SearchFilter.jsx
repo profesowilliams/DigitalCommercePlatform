@@ -271,13 +271,15 @@ function _SearchFilter(
                 className={computeClassName("cmp-search-tooltip__button")}
                 onClick={() => triggerSearch()}
               >
-                <i className="fas fa-search"></i>
+               {isTDSynnex 
+               ? <SearchIcon className="search-icon__light"/>
+                :<i className="fas fa-search"></i>}
               </button>
             </div>
             <If condition={isResetVisible}>
               <div
                 className="cmp-search-options"
-                style={{ padding: "5px 10px" }}
+                style={!isTDSynnex ? { padding: "5px 10px" } : {}}
               >
                 <div className="cmp-search-options__reset">
                   <label>
@@ -307,7 +309,7 @@ function _SearchFilter(
                 <span className="cmp-renewal-search__text">Search</span>
             </If>
             {isTDSynnex 
-              ? <SearchIcon/>
+              ? <SearchIcon className="search-icon__dark"/>
               : <i className="fas fa-search cmp-renewal-search__icon"></i>
             }
             
@@ -318,7 +320,9 @@ function _SearchFilter(
             <div className="cmp-search-select-container__box">
               <input className={computeClassName("inputStyle")} placeholder="Search by" disabled />
               <button className={computeClassName("cmp-search-tooltip__button")}>
-                <i className="fas fa-search cmp-renewal-search__icon"></i>
+              {isTDSynnex ? 
+              <SearchIcon className="search-icon__light"/>
+              : <i className="fas fa-search cmp-renewal-search__icon"></i>}
               </button>
             </div>
             <If condition={true}>
