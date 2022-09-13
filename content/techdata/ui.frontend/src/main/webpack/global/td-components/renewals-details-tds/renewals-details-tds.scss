@@ -8,6 +8,7 @@
       .image-container {
         .back-to-renewal {
           @include font-everett-regular-normal($line-height: 22px);
+          color: map-get($color-palette, 'charcoal');
         }
       }
     }
@@ -90,7 +91,6 @@
     .ag-row * {
       @include font-everett-regular-normal($size: 14px);
       color: map-get($color-palette, 'charcoal');
-      ;
     }
 
     .ag-header {
