@@ -64,6 +64,13 @@
     .cmp-product-lines-grid__item-information__box-text a p {
       margin-top: 0;
     }
+
+    .cmp-renewal-preview__download {
+      &--icon {
+        display: inline-block;
+        margin-right: 14px;
+      }
+    }
   }
 
   .cmp-product-lines-grid {

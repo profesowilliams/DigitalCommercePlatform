@@ -5,6 +5,7 @@ import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
+import { DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
@@ -59,7 +60,10 @@ function GridHeader({ gridProps, data }) {
           </button>
         )}
         <button onClick={downloadPDF}>
-          <span>{gridProps?.productLines?.downloadPDFLabel || "Export PDF"}</span>
+          <span>
+            <DownloadIcon className="cmp-renewal-preview__download--icon"/>
+            {gridProps?.productLines?.downloadPDFLabel || "Export PDF"}
+          </span>
         </button>
         {/* These buttons are going to be added in a near future, so by now i'll left them commented, and also add the 'separator' class to the xls button */}
         {/* <button>

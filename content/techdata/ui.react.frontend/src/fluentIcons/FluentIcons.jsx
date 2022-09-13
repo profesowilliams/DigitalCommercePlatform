@@ -176,6 +176,23 @@ export function CloseIcon(props) {
   );
 }
 
+export function DownloadIcon(props) {
+  return (
+    <svg
+      width={12}
+      height={16}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M11.5 14.999a.5.5 0 0 1 .09.992l-.09.008H.5a.5.5 0 0 1-.09-.992l.09-.008h11ZM6 0a.5.5 0 0 1 .492.41l.008.09-.004 11.794 3.645-3.648a.5.5 0 0 1 .638-.059l.07.058a.5.5 0 0 1 .058.638l-.058.07-4.492 4.5a.498.498 0 0 1-.255.136l-.106.01a.5.5 0 0 1-.395-.194L1.144 9.354a.5.5 0 0 1 .637-.766l.07.058 3.645 3.641L5.5.501A.5.5 0 0 1 6 0Z"
+        fill="#005758"
+      />
+    </svg>
+  );
+}
+
 export function ChevronDownIcon(props) {
   return (
   <svg width="24" height="24" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
