@@ -641,6 +641,7 @@ button.icon-box {
       & .cmp-navigation__actions {
         font-size: 14px;
         align-items: center;
+        color: #003031;
          button {
           display: flex;
           margin: unset;
@@ -665,6 +666,7 @@ button.icon-box {
           font-family: 'Arial', sans-serif;
           input, span {
             font-family: 'Arial', sans-serif;
+            color: #003031;
           }
         }
       }
@@ -741,10 +743,14 @@ button.icon-box {
         border-top: 2px solid #030f24;
         min-width: unset;
         @include horizontal_scroll;
+        & .ag-header-row {
+          color: #262626;
+        }
         & .ag-header-cell {
           padding-left: 9px;
         }
         & .ag-cell {
+          color: #262626;
           padding-left: 4px;
           &[col-id="dueDays"] {
             padding-left: 18px;
