@@ -1,0 +1,19 @@
+#cmp-techdata-header {
+    &.cmp-experiencefragment__header--sticky {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      background: white;
+      width: 100%;
+      left: 0;
+    }
+    &.cmp-experiencefragment__header--sticky--opaque {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      background: white;
+      opacity: 0.85;
+      width: 100%;
+      left: 0;
+    }
+  }

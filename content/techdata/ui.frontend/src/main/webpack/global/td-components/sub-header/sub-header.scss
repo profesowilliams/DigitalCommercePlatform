@@ -219,6 +219,13 @@
       @include subheader-span-border-bottom;
     }
 
+    &.cmp-experiencefragment__subheader--sticky {
+      position: fixed;
+      z-index: 9999;
+      top: 80px;
+      opacity: 1;
+    }
+
     &__title {
       font-weight: bold;
       color: get-color(brand-white);
