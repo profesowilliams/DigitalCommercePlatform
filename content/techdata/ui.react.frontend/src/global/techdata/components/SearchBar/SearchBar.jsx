@@ -70,7 +70,6 @@ const SearchBar = ({ data, componentProp }) => {
   const [originURL, setOriginURL] = useState(null);
   
   const [width] = useWindowSize();
-  const mobileState = width <= 767;
   
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
@@ -261,7 +260,6 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const mobileSearchOpener = () => {
-    if (mobileState) {
       if (searchInputFocused === false) {
         gotFocus();
         setChecked(true);
@@ -269,7 +267,6 @@ const SearchBar = ({ data, componentProp }) => {
         lostFocus();
         setChecked(false);
       }
-    }
   };
 
   const renderContextMenu = () => {
@@ -296,7 +293,6 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const renderSearch = () => {
-    if (mobileState) {
       return (
         <>
           <input
@@ -359,72 +355,9 @@ const SearchBar = ({ data, componentProp }) => {
           </button>
         </>
       );
-    } else {
-      return (
-        <>
-          <input
-            className="cmp-searchbar__input"
-            data-cmp-hook-search="input"
-            type="text"
-            name="fulltext"
-            role="combobox"
-            aria-autocomplete="list"
-            aria-haspopup="true"
-            aria-invalid="false"
-            aria-expanded={areaSelectionOpen}
-            onChange={onSearchTermTextChange}
-            onKeyPress={onSearchTermTextKeyPress}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-            value={searchTermText}
-            placeholder={placeholder}
-          />
-          <button
-            className={
-              isFocus
-                ? "cmp-searchbar__button cmp-searchbar__button--checked"
-                : "cmp-searchbar__button"
-            }
-            onClick={redirectToShop}
-          >
-            <svg
-              className={
-                isFocus
-                  ? "cmp-searchbar__icon cmp-searchbar__icon--checked"
-                  : "cmp-searchbar__icon"
-              }
-              width="26px"
-              height="26px"
-              viewBox="0 0 28 28"
-              version="1.1"
-            >
-              <g id="Symbols"  fill="none">
-                <g id="Icon---Search" >
-                  <g id="Group-5" transform="translate(1.000000, 1.000000)">
-                    <path
-                      d="M10.0000394,0 C15.5228817,0 20.0000789,4.53561095 20.0000789,10.1309296 C20.0000789,15.7259892 15.5228817,20.2616001 10.0000394,20.2616001 C4.47719715,20.2616001 0,15.7259892 0,10.1309296 C0,4.53561095 4.47719715,0 10.0000394,0 Z"
-                      id="Stroke-1"
-                    ></path>
-                    <line
-                      x1="18.9999724"
-                      y1="18.9096442"
-                      x2="26"
-                      y2="26"
-                      id="Stroke-3"
-                    ></line>
-                  </g>
-                </g>
-              </g>
-            </svg>
-          </button>
-        </>
-      );
-    }
   };
   return (
     <div
-      onMouseEnter={mobileState ? null : gotFocus}
-      onMouseLeave={lostFocus}
       id={id}
       className={`cmp-searchbar ${ isChecked === true ? "cmp-searchbar--checked" : " " }`}>
       <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">

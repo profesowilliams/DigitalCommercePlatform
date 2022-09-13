@@ -48,21 +48,23 @@
   }
 
   &--checked {
-    background-color: get-color(brand-white);
-    margin-left: 0;
-    margin-top: 0;
-    width: 100%;
-    left: 0;
-    top: rem(45px);
-    z-index: -1;
-    max-height: 80px;
-    position: fixed;
+    @include mobile {
+        background-color: get-color(brand-white);
+        margin-left: 0;
+        margin-top: 0;
+        width: 100%;
+        left: 0;
+        top: rem(45px);
+        z-index: -1;
+        max-height: 80px;
+        position: fixed;
+    }
   }
 
   &__container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     margin: 0 auto;
     width: 100%;
     height: 40px;
@@ -89,7 +91,6 @@
       font-style: italic;
     }
 
-    @include mobile {
       border: rem(1px) solid get-color(border-light-gray);
       border-radius: 0;
       padding: 0;
@@ -103,7 +104,6 @@
         display: flex;
         width: 86%;
       }
-    }
   }
 
   &__button {
@@ -126,12 +126,10 @@
       }
     }
 
-    @include mobile {
       background-color: transparent;
       border: none !important;
-      padding: rem(8px);
-      margin: 0;
-    }
+      padding: 0;
+      margin: 0 rem(8px);
 
     &--mobile {
       padding: 0;
@@ -154,7 +152,7 @@
     }
 
     &--checked {
-      stroke: get-color(brand-white);
+      stroke: get-color(td-dark-blue);
 
       @include mobile {
         stroke: get-color(brand-light-blue);
