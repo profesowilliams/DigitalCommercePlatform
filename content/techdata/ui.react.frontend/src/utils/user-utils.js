@@ -51,9 +51,9 @@ function isDisableEntitlementsInList() {
 	var entitlementsList = disableEntitlementsList();
     if(entitlementsList && entitlementsList.indexOf(ACCESS_TYPES.CAN_VIEW_ORDERS) >= 0) {
         console.log("Returning as disableEntitlementsList has CanViewOrders!!!");
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 function hasRoleList(roleList, _accessType) {
