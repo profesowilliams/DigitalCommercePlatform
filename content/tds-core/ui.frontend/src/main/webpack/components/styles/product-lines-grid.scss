@@ -231,10 +231,12 @@
         color: get-color(brand-button-blue);
         &__link {
           color: get-color(brand-button-blue);
-          &.no-underline {
-            text-decoration: none;
-          }
         }
+      }
+      
+      .no-link {
+        text-decoration: none;
+        cursor: default;
       }
 
       &__content {

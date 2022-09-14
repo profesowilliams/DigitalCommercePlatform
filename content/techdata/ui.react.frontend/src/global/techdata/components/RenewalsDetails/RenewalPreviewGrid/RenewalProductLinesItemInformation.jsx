@@ -67,11 +67,11 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
         style={{width:'100%', gridTemplateColumns:'100% 86%'}}
       >
         <div className="cmp-product-lines-grid__item-information__box-text">
-          <div className="cmp-renewal-preview__prod-details">
+          <div className={`cmp-renewal-preview__prod-details ${!isLinkDisabled ? "" : "no-link"}`}>
             <a
               href={!isLinkDisabled ? formatShopDomainUrl() : null}
               target={!isLinkDisabled ? "_blank" : null}
-              className={`cmp-product-lines-grid__item-information__box-text__header__link ${!isLinkDisabled ? "" : "no-underline"}`}
+              className={`cmp-product-lines-grid__item-information__box-text__header__link ${!isLinkDisabled ? "" : "no-link"}`}
             >
               {formatDescription(description)}
             </a>
