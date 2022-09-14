@@ -90,6 +90,7 @@ export default function ResellerEdit({
         onChange={handlers["phone"]}
       />
       <CustomTextField
+        required
         id="reseller-vendor-account"
         label="Vendor account N°"
         inputProps={MAX_LENGTH_TWENTY}
@@ -97,6 +98,7 @@ export default function ResellerEdit({
         value={vendorAccountNumber['text'] || ''}
         disabled={vendorAccountNumber['canEdit'] === false}
         onChange={handlers["vendorAccountNumber"]}
+        {...handleValidation(vendorAccountNumber)}
       />
     </Box>
   );
