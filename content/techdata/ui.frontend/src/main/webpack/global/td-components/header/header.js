@@ -21,6 +21,7 @@ export default class Header {
         this.subheader = document.getElementsByClassName('cmp-sub-header--sub-nav')[0];
         this.currentTop = this.subheader ? this.subheader.getBoundingClientRect().top : 0;
         this.isSubheaderSticky = this.subheader ? false : null;
+        this.carouselList = document.querySelectorAll(".aem-Grid .container .cmp-carousel");
 
         this.checkHeaderImage();
     }
@@ -71,21 +72,18 @@ export default class Header {
     }
 
     handleStickyHeader() {
-        if(this.header){
-            this.checkHeaderImage();
-            if(this.subheader){
-                this.checkHeaderSubheader();
-            }
+        if(this.header && this.subheader){
+            this.checkHeaderSubheader();
         }
-    }
 
-    checkHeaderSticky(){
-        this.header.classList.add('cmp-experiencefragment__header--sticky');
+        if(this.header && this.carouselList.length > 0){
+            this.checkHeaderImage();
+        }
     }
 
     checkHeaderSubheader(){
         if(this.header.getBoundingClientRect().bottom >= this.subheader.getBoundingClientRect().top){
-            if(this.isSubheaderSticky && window.pageYOffset <= this.currentTop-(this.headerHeight*2)){
+            if(this.isSubheaderSticky && window.pageYOffset <= this.currentTop-this.headerHeight){
                 this.subheader.classList.remove('cmp-experiencefragment__subheader--sticky');
                 this.isSubheaderSticky = false;
             }
@@ -94,26 +92,24 @@ export default class Header {
                 this.isSubheaderSticky = true;
             }
         }
+        else{
+            this.subheader.classList.remove('cmp-experiencefragment__subheader--sticky');
+        }
     }
 
     checkHeaderImage(){
-        const carouselList = document.querySelectorAll(".aem-Grid .container .cmp-carousel");
-        const carousel = carouselList[0];
+        const carouselArray = Array.from(this.carouselList);
+        const headerBottom = this.header.getBoundingClientRect().bottom;
 
-        if(carousel){
-            if(this.header.getBoundingClientRect().bottom >= carousel.getBoundingClientRect().top){
-                this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
-                if(carousel.getBoundingClientRect().top < 0){
-                    if(carousel.getBoundingClientRect().bottom < 0){
-                        this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
-                        this.header.classList.add('cmp-experiencefragment__header--sticky');
-                    }
-                    else{
-                        this.header.classList.remove('cmp-experiencefragment__header--sticky');
-                        this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
-                    }
-                }
-            }
+        const carousels = carouselArray.filter(function (carousel){
+            return headerBottom >= carousel.getBoundingClientRect().top && carousel.getBoundingClientRect().bottom > 0;
+        });
+
+        if (carousels.length > 0){
+            this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
+        }
+        else{
+            this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
         }
     }
 }
