@@ -47,6 +47,7 @@ module.exports = {
       name: 'clientlib-dependencies',
       categories: ['tds-site.dependencies'],
       dependencies:['tds-site.grid', 'tds-site.scene7.dynamicmedia'],
+      embed: ['tds-core.dependencies'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
@@ -67,6 +68,7 @@ module.exports = {
       name: 'clientlib-site',
       categories: ['tds-site.site'],
       dependencies: ['tds-site.dependencies'],
+      embed: ['tds-core.site'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
@@ -98,7 +100,7 @@ module.exports = {
       embed: ['core.wcm.components.accordion.v1','core.wcm.components.tabs.v1','core.wcm.components.carousel.v1',
         'core.wcm.components.image.v2','core.wcm.components.breadcrumb.v2','core.wcm.components.search.v1',
         'core.wcm.components.form.text.v2','core.wcm.components.pdfviewer.v1','core.wcm.components.commons.datalayer.v1',
-        'tds-site.grid'],
+        'tds-site.grid','tds-core.site.global'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
@@ -127,6 +129,7 @@ module.exports = {
       name: 'clientlib-site-us',
       categories: ['tds-site.site.us'],
       dependencies: ['tds-site.dependencies', 'tds-site.site.global'],
+      embed: ['tds-core.site.us'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories

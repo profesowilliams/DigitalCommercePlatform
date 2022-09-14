@@ -6,12 +6,4 @@
 @import 'mixins';
 @import 'include-media/dist/_include-media.scss';
 @import 'sass-rem/_rem.scss';
-@import 'normalize-scss';
-@include normalize();
-@import './styles/helpers/*.scss';
-@import './styles/*.scss';
-@import './core-components/**/*.scss';
-@import './tds-core-components/**/*.scss';
 @import '../../../components/**/*.scss';
-
-@import '../components/styles/button';
