@@ -126,16 +126,22 @@ function EndUserInfo({
     }
   };
 
-  const saveHandler = async () => {
+  const saveHandler = () => {
     setSaving(true);
-    effects.clearEndUser();
-    await updateDetails(endUserDetails);
-    setSaving(false);
-    setLockedEdit(false);   
+    updateDetails(endUserDetails)
+      .then((result) => {
+        if(result) {
+          setLockedEdit(false);
+          setToggleEdit(true);
+          effects.clearEndUser();
+        }
+      })
+      .finally(() => setSaving(false));
   };
 
   const cancelHandler = () => {
     effects.clearEndUser()
+    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
   };
 
   useEffect(() => {

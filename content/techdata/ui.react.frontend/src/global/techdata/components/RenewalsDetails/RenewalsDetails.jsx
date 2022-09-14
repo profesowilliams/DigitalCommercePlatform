@@ -24,7 +24,6 @@ function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
   const errorMessages = componentProp?.errorMessages;
   const effects = useRenewalsDetailsStore(state => state.effects);
-  const { closeAndCleanToaster } = effects;
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
   const [apiResponse, isLoading, error] = useGet(
@@ -111,34 +110,41 @@ function RenewalsDetails(props) {
     setOpenCancelDialog(false);
 
     if (resetFlag) {
+      effects.clearItems();
+      setLockedEdit(false);
+      setToggleEdit(true);
       // Call cancel edit on grid to clean internal values
       gridRef.current.cancelEdit();
-      // Toggle Edit mode
-      setToggleEdit(true);
     }
   }  
   
   const handleCancel = () => {
     setOpenCancelDialog(true);
+    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     setSaving(true);
-    await updateDetails();
-    setSaving(false);
-    setLockedEdit(false);
-    setToggleEdit(true);
-  }
+    updateDetails()
+      .then((result) => {
+        if(result) {
+          setLockedEdit(false);
+          setToggleEdit(true);
+          effects.clearItems();
+        }
+      })
+      .finally(() => setSaving(false));
+  };
 
   const setLockedEdit = (flag) => {
-    closeAndCleanToaster()
     setToggleEdit(false);
     setEditMode(flag);
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
   };
 
   const updateDetails = async (endUserDetails, resellerDetails) => {
-    try {
+    try {      
+      effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
       renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
       renewalsDetails.items = gridRef.current.getMutableGridData();
@@ -157,7 +163,6 @@ function RenewalsDetails(props) {
           return true;          
         }
       }
-      return false;
     } catch (ex) {      
       const errorTitle = "Could not save changes.";
       let errorMessage = 'We are sorry, your update could not be processed, please try again later.';
@@ -167,9 +172,9 @@ function RenewalsDetails(props) {
       const errorToaster = {isOpen:true, isSuccess: false, title: errorTitle, message: errorMessage}
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
+    return false;
   }
 
-  // TODO: reseller component will need to pass its changes also
   const updateRenewalDetails = async (details) => {
     const payload = mapRenewalForUpdateDetails(details);
     const updateResponse = await post(componentProp.updateRenewalOrderEndpoint, payload);  

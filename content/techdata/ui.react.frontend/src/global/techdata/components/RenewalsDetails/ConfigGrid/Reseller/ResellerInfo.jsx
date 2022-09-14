@@ -42,11 +42,22 @@ function ResellerInfo({
     }
   };
 
-  const saveHandler = async () => {
+  const saveHandler = () => {
     setSaving(true);
-    await updateDetails(null, resellerDetails);
-    setSaving(false);
-    setLockedEdit(false);
+    updateDetails(resellerDetails)
+      .then((result) => {
+        if(result) {
+          setLockedEdit(false);
+          setToggleEdit(true);
+          effects.clearReseller();
+        }
+      })
+      .finally(() => setSaving(false));
+  };
+
+  const cancelHandler = () => {
+    effects.clearEndUser()
+    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
   };
 
   useEffect(() => {
@@ -69,6 +80,7 @@ function ResellerInfo({
           editValue={editMode} 
           setEdit={setLockedEdit} 
           saveHandler={saveHandler} 
+          cancelHandler={cancelHandler}
           customClass={'cancel-save__absolute'}
         />
       )}

@@ -225,7 +225,8 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   function invokeModal(modal) {
     setModal(modal);
   }
-  const onOrderButtonClicked = () => {
+  const onOrderButtonClicked = () => {    
+    effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
     setIsPODialogOpen(true);
   }
 
