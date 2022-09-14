@@ -20,6 +20,7 @@
       }
       .quote-preview {
         @include font-everett-medium-bold($size: 20px, $line-height: 18px);
+        color: map-get($color-palette, 'deep-teal');
       }
     } 
 
@@ -71,6 +72,10 @@
         display: inline-block;
         margin-right: 14px;
       }
+    }
+
+    .cmp-renewal-preview__subtotal {
+      background-color: map-get($color-palette, neutral-gray-1);
     }
   }
 
