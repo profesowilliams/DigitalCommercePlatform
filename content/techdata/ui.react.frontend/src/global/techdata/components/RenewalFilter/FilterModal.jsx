@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import ReactDOM from "react-dom";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
@@ -47,6 +47,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   const { hasAnyFilterSelected, dateSelected } = useFilteringSelected();
 
+  const [DOMLoaded, setDOMLoaded] = useState(false);
+
   let aemFilterData;
   aemData.filterType =
     aemData.filterType === null ? "static" : aemData.filterType;
@@ -62,6 +64,16 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   useEffect(() => {
     if (!filterList) {
       setFilterList(aemFilterData);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onPageLoad = () => setDOMLoaded(true);
+    if (document.readyState === "complete") {
+      onPageLoad();
+    } else {
+      window.addEventListener("load", onPageLoad);
+      return () => window.removeEventListener("load", onPageLoad);
     }
   }, []);
 
@@ -108,13 +120,15 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   function getFilterParent(){
     const newSubheader = document.querySelector("[data-component='NewSubheader']");
     const apjHeader = document.querySelector("#cmp-techdata-header");
-    const aemAPJMainSubheader = document.querySelector(".subheader").parentNode.parentNode.parentNode.parentNode; 
-    aemAPJMainSubheader.style.position = 'relative';
-    if (isTDSynnex) return aemAPJMainSubheader;
+    const aemAPJMainSubheader = document.querySelector(".subheader")?.parentNode?.parentNode?.parentNode?.parentNode; 
+    if (isTDSynnex && aemAPJMainSubheader) {
+      aemAPJMainSubheader.style.position = 'relative';
+      return aemAPJMainSubheader;
+    } 
     return !!newSubheader ? newSubheader : (!!apjHeader ? apjHeader : document.body );
   }
 
-  return ReactDOM.createPortal(
+  return DOMLoaded ? ReactDOM.createPortal(
     <>
       <div className="filter-modal-container" />
       <div className="filter-modal-content" ref={filterDom}>
@@ -145,7 +159,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       </div>
     </>,
     getFilterParent()
-  );
+  ) : <></>;
 };
 
 export default FilterModal;
