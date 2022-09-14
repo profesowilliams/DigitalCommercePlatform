@@ -87,7 +87,6 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
    */
   const showResult = () => {
     const [optionFields] = _generateFilterFields();
-    const queryString = JSON.stringify(optionFields);
     setAppliedFilterCount();
     setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
       ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
@@ -109,7 +108,9 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   function getFilterParent(){
     const newSubheader = document.querySelector("[data-component='NewSubheader']");
     const apjHeader = document.querySelector("#cmp-techdata-header");
-    if (isTDSynnex) return document.querySelector(".subheader")
+    const aemAPJMainSubheader = document.querySelector(".subheader").parentNode.parentNode.parentNode.parentNode; 
+    aemAPJMainSubheader.style.position = 'relative';
+    if (isTDSynnex) return aemAPJMainSubheader;
     return !!newSubheader ? newSubheader : (!!apjHeader ? apjHeader : document.body );
   }
 
@@ -125,7 +126,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
           <FilterDialog>
             <FilterHeader onQueryChanged={onQueryChanged} />
             <div className="filter-modal-content__body" ref={filterBodyDom}>
-              <div className="filter-accordion" >
+              <div className={computeClassName("filter-accordion")} >
                 <FilterList rootIds={rootIds} />
               </div>
               <div className="filter-modal-bottom">
