@@ -37,11 +37,11 @@ export const hasDCPAccess = (user) => {
 }
 
 export const hasAccess = ({user, accessType})=> {
-    var entitlementFlag = isDisableEntitlementsInList();
+    if(isDisableEntitlementsInList()) return false;
     const _accessType = accessType ? accessType : ACCESS_TYPES.CAN_VIEW_ORDERS
     const { roleList } = user ? user : { undefined };
     var hasRoleListFlag = hasRoleList(roleList, _accessType);
-    if(entitlementFlag || hasRoleListFlag) {
+    if(hasRoleListFlag) {
         return true;
     }
     return false;
@@ -51,9 +51,9 @@ function isDisableEntitlementsInList() {
 	var entitlementsList = disableEntitlementsList();
     if(entitlementsList && entitlementsList.indexOf(ACCESS_TYPES.CAN_VIEW_ORDERS) >= 0) {
         console.log("Returning as disableEntitlementsList has CanViewOrders!!!");
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 function hasRoleList(roleList, _accessType) {
