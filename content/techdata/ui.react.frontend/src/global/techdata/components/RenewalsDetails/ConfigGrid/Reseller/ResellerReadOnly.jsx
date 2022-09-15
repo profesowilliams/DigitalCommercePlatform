@@ -8,7 +8,7 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
   } = resellerData;
 
   const {
-    vendorAccountNoResLabel,
+    resellerVendorAccountNoLabel,
   } = resellerLabels;
 
   return (
@@ -20,7 +20,7 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
       </p>
 
       <p>
-        <Info label={vendorAccountNoResLabel} noColon>{vendorAccountNumber}</Info>
+        <Info label={resellerVendorAccountNoLabel} noColon>{vendorAccountNumber}</Info>
       </p>
     </div>
   );

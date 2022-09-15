@@ -132,7 +132,7 @@ use(['../common/utils.js'], function(utils) {
         reseller["accountNoLabel"] = properties["accountNoLabel"];
     }
     if (properties && properties["resellerVendorAccountNoLabel"]) {
-        quotePreview["resellerVendorAccountNoLabel"] = properties["resellerVendorAccountNoLabel"];
+        reseller["resellerVendorAccountNoLabel"] = properties["resellerVendorAccountNoLabel"];
     }
 
     if (properties && properties["previousPurchaseOrderNoLabel"]) {
