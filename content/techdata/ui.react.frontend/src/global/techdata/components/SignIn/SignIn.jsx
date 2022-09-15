@@ -312,7 +312,7 @@ const SignIn = (props) => {
   }
 
   const signInButton = () => {
-    if(hideWhenNotLoggedIn && !localStorage.getItem("sessionId")) {
+    if(hideWhenNotLoggedIn == "true" && !localStorage.getItem("sessionId")) {
         return;
     } else
     return (
