@@ -60,6 +60,8 @@
         }
 
         .cmp-megamenu__tabpanel--active {
+            position: relative;
+            left: -1em;
             display: block;
             margin-left: rem(16px);
         }
