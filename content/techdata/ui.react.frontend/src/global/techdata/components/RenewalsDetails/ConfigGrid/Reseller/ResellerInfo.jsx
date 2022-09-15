@@ -44,7 +44,7 @@ function ResellerInfo({
 
   const saveHandler = () => {
     setSaving(true);
-    updateDetails(resellerDetails)
+    updateDetails(null, resellerDetails)
       .then((result) => {
         if(result) {
           setLockedEdit(false);
