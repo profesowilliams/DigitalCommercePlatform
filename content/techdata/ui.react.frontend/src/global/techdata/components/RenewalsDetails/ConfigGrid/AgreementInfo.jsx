@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { dateToString } from "../../../helpers/formatting";
 import Info from "../../common/quotes/DisplayItemInfo";
+import { getLocaleFormattedDate } from "../../../../../utils/utils";
 
 function AgreementInfo({
   source,
@@ -12,7 +12,6 @@ function AgreementInfo({
   customerPO
 }) {
   const AgreementInfo = () => {
-    const formatDate = rawDate => dateToString(rawDate.replace(/[zZ]/g,''),"MM/dd/uu");
     return (
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
@@ -37,30 +36,30 @@ function AgreementInfo({
         </p>
         <p>
           {dueDate && (
-            <Info noColon label={agreementInfo.quotedueDateLabel}>{formatDate(dueDate)}</Info>
+            <Info noColon label={agreementInfo.quotedueDateLabel}>{getLocaleFormattedDate(dueDate)}</Info>
           )}
-          <Info noColon label={agreementInfo.quoteExpiryDateLabel}>{formatDate(expiry)}</Info> 
+          <Info noColon label={agreementInfo.quoteExpiryDateLabel}>{getLocaleFormattedDate(expiry)}</Info> 
         </p>
         <p>  
           {contract.newAgreementStartDate && (
             <Info noColon label={agreementInfo.agreeStartDateLabel}>
-              {formatDate(contract.newAgreementStartDate)}
+              {getLocaleFormattedDate(contract.newAgreementStartDate)}
             </Info>
           )}
           {contract.newAgreementEndDate && (
             <Info noColon label={agreementInfo.agreeEndDateLabel}>
-              {formatDate(contract.newAgreementEndDate)}
+              {getLocaleFormattedDate(contract.newAgreementEndDate)}
             </Info>
           )}
           
           {contract.newUsagePeriodStartDate && (
             <Info noColon label={agreementInfo.usageStartDateLabel}>
-              {formatDate(contract.newUsagePeriodStartDate)}
+              {getLocaleFormattedDate(contract.newUsagePeriodStartDate)}
             </Info>
           )}
           {contract.newUsagePeriodEndDate && (
             <Info noColon label={agreementInfo.usageEndDateLabel}>
-              {formatDate(contract.newUsagePeriodEndDate)}
+              {getLocaleFormattedDate(contract.newUsagePeriodEndDate)}
             </Info>
           )}
         </p>

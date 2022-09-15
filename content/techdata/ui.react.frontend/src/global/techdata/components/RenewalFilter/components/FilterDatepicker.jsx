@@ -10,6 +10,7 @@ import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/ren
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { DateOptionsList } from "./DateOptionsList";
 import "./datePicker.scss";
+import { getClientLocale, localeByCountry } from "../../../../../utils/utils";
 
 function CustomStartEndText() {
   return (
@@ -41,6 +42,16 @@ export default function FilterDatePicker({ isOpen = false }) {
     customStartDate = moment(customStartDate);
   if (customEndDate)
     customEndDate = moment(customEndDate);
+
+  function getDisplayFormatBasedOnLocale() {
+    const locale = getClientLocale();
+
+    if (locale === localeByCountry.IN || locale === localeByCountry.HK) {
+      return "DD-MM-YYYY";
+    }
+
+    return "MM/DD/YYYY";
+  }
 
   return (
     <>
@@ -78,7 +89,7 @@ export default function FilterDatePicker({ isOpen = false }) {
               }}
               isOutsideRange={() => false}
               numberOfMonths={1}
-              displayFormat="MMM D, YYYY"
+              displayFormat={getDisplayFormatBasedOnLocale()}
               noBorder={true}
               regular={false}
               transitionDuration={300}

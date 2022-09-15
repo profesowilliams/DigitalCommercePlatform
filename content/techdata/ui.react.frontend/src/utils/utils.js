@@ -2,6 +2,7 @@ import axios from "axios";
 import {nanoid} from "nanoid";
 import { isObject } from ".";
 import { usPost } from "./api";
+import { dateToString } from "../global/techdata/helpers/formatting";
 
 export const fileExtensions = {
   xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -446,3 +447,34 @@ export const verifyQuote = async (uanErrorMessage, verifyUanEndpoint, id) => {
 };
 
 export const formatUanErrorMessage = (quoteVerification) => `<div><h4>${quoteVerification.uanErrorMessage}</h4><ul>${quoteVerification.lineNumbers?.map(line => `<li>${line}</li>`).join()}</ul></div>`;
+
+// Format date based on locale
+export const getClientLocale = () => {
+  if (navigator.languages !== undefined) return navigator.languages[0];
+
+  if (typeof Intl !== 'undefined') {
+    try {
+      return Intl.NumberFormat().resolvedOptions().locale;
+    } catch (err) {
+      console.error('Cannot get locale from Intl');
+    }
+  }
+
+  return navigator.language;
+}
+
+export const localeByCountry = Object.freeze({
+  US: 'en-US',
+  IN: 'en-IN',
+  HK: 'en-HK',
+});
+
+export const getLocaleFormattedDate = (rawDate) => {
+  const locale = getClientLocale();
+
+  if (locale === localeByCountry.IN || locale === localeByCountry.HK) {
+    return dateToString(rawDate.replace(/[zZ]/g, ''), 'dd-MM-uu');
+  }
+
+  return dateToString(rawDate.replace(/[zZ]/g, ''), 'MM/dd/uu');
+};

@@ -1,10 +1,10 @@
 import React from "react";
-import { dateToString } from "../../../helpers/formatting";
+import { getLocaleFormattedDate } from "../../../../../utils/utils";
 
 function DueDateColumn({ columnValue }) {
   return (
     <div className="cmp-due-date-column"> 
-      {dateToString(columnValue.replace(/[zZ]/g,''),"MM/dd/uu")}
+      {getLocaleFormattedDate(columnValue)}
     </div>
   );
 }

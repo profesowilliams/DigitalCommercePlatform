@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import { dateToString, thousandSeparator } from "../../../helpers/formatting";
-import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
+import { thousandSeparator } from "../../../helpers/formatting";
+import { fileExtensions, generateFileFromPost, getLocaleFormattedDate } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
@@ -139,7 +139,7 @@ function RenewalPlanOptions({ labels, data, node }) {
 
     const formatExpiryDateLabel = (option) => {
         if (!option?.expiryDate) return "No date provided"
-        return dateToString(option?.expiryDate.replace(/[zZ]/g, ''), "MM/dd/uu")
+        return getLocaleFormattedDate(option?.expiryDate)
     }
 
     const setDefaultCheckedOption = (option) => {

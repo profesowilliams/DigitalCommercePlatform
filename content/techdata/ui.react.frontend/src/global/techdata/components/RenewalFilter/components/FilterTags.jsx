@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import capitalizeFirstLetter, {
-  getDayMonthYear,
-} from "../../../../../utils/utils";
+  getLocaleFormattedDate,
+} from '../../../../../utils/utils';
 import useFilteringSelected from "../hooks/useIsFilteringSelected";
 import useIsTDSynnexClass from "./useIsTDSynnexClass";
 
@@ -16,9 +16,9 @@ function CustomDatePill({ clearDateFilters }) {
   return (
     <div className={computeClassName("filter-tags")}>
       <span className="filter-tags__title">
-        {getDayMonthYear(new Date(startDate))}
+        {getLocaleFormattedDate(startDate)}
         {" - "}
-        {getDayMonthYear(new Date(endDate))}{" "}
+        {getLocaleFormattedDate(endDate)}{" "}
       </span>
       <span onClick={() => clearDateFilters()}>
         <i className="fas fa-times filter-tags__close"></i>
