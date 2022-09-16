@@ -1,4 +1,4 @@
-import events from '../../../common-utils/js/events';
+import events from '../../utils/events';
 
 (function () {
   "use strict";
@@ -48,6 +48,17 @@ import events from '../../../common-utils/js/events';
 
   function onDocumentReady() {
     hideCountriesModal();
+
+    const languageSelectorOpeners = document.querySelectorAll(
+      '.app-open-language-selector'
+    );
+
+    for (var i = 0; i < languageSelectorOpeners.length; i++) {
+      languageSelectorOpeners[i].addEventListener('click', function(event) {
+          event.preventDefault();
+          showCountriesListPopup();
+      });
+    }
   }
   document.addEventListener("DOMContentLoaded", onDocumentReady);
 
@@ -63,6 +74,11 @@ import events from '../../../common-utils/js/events';
   }
 
   window.addEventListener("click", function (event) {
+    if (event.target.matches(".app-open-language-selector") ||
+        event.target.closest(".app-open-language-selector")) {
+      return;
+    }
+
     if (event.target.matches(".cmp-button__region-select")) {
       showCountriesListPopup();
     }
