@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
 import { endUserConstants } from './utils';
+import { handleValidation } from '../Common/utils';
 
 export default function EndUserEdit({
   endUser,
@@ -20,30 +21,11 @@ export default function EndUserEdit({
     handlePostalCodeChange,
   } = props;
 
-  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
+  const { INVALID_EMAIL_TEXT, SIXTY, TWENTY } =
     endUserConstants;
   const { contact, address } = endUserDetails;
   const contactName = contact[0]?.name;
   const { line1, city, country, postalCode } = address;
-
-  const showErrorField = (obj) => {
-    return { error: obj?.isValid === false || obj?.text === '' };
-  };
-
-  const showErrorMsg = (obj) => {
-    if (obj?.text?.length === 0 && obj?.isMandatory === true) {
-      return { helperText: REQUIRED_FIELD };
-    }
-  };
-
-  const handleValidation = (obj) => {
-    if (!obj) return;
-
-    return {
-      ...showErrorField(obj),
-      ...showErrorMsg(obj),
-    };
-  };
 
   const formBoxStyle = {
     '& > :not(style)': { width: '100%' },

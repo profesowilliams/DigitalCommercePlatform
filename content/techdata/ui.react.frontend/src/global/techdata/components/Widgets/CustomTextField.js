@@ -8,4 +8,16 @@ export const CustomTextField = styled(TextField)({
   "& .MuiInput-underline:after": {
     borderBottomColor: "#005758",
   },
+  "& .MuiInputLabel-root.Mui-error": {
+    color: "#003031",
+  },
+  "& .MuiFormLabel-asterisk.Mui-error": {
+    color: "#003031",
+  },
+  "& .MuiInputLabel-root.Mui-error.Mui-focused": {
+    color: "#727679",
+  },
+  "& .Mui-focused .MuiFormLabel-asterisk.Mui-error": {
+    color: "#727679",
+  },
 });

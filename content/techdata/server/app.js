@@ -4473,8 +4473,8 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "contact": [
                         {
                             "name": {
-                                "text": " Michel test  ",
-                                "isValid": true,
+                                "text": null,
+                                "isValid": false,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
 import { resellerConstants } from './utils';
 import { useRef } from 'react';
+import { handleValidation } from '../Common/utils';
 
 export default function ResellerEdit({
   resellerDetails,
@@ -10,7 +11,7 @@ export default function ResellerEdit({
   handlers,
 }) {
 
-  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
+  const { INVALID_EMAIL_TEXT, SIXTY, TWENTY } =
     resellerConstants;
 
   const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
@@ -29,25 +30,6 @@ export default function ResellerEdit({
       isMountedRef.current = false;
     }
   });
-
-  const showErrorField = (obj) => {
-    return { error: obj['isValid'] === false || obj['text'] === '' };
-  };
-
-  const showErrorMsg = (obj) => {
-    if (obj['text']?.length === 0 && obj['isMandatory'] === true) {
-      return { helperText: REQUIRED_FIELD };
-    }
-  };
-
-  const handleValidation = (obj) => {
-    if (!obj) return;
-
-    return {
-      ...showErrorField(obj),
-      ...showErrorMsg(obj),
-    };
-  };
 
   const formBoxStyle = {
     '& > :not(style)': { width: '100%' },
