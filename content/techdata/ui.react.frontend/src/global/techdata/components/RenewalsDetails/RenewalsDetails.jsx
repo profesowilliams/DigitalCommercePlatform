@@ -197,7 +197,7 @@ function RenewalsDetails(props) {
             }}
           />
           <div className="details-container">
-            <span className="details-preview">Details</span>
+            <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}</span>
             {isEditable(renewalsDetails) && (
             <EditFlow
               disabled={!editMode && isEditingDetails} 
