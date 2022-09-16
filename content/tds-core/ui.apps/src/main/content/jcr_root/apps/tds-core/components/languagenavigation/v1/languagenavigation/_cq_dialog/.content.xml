@@ -35,7 +35,7 @@
                                                 forceSelection="{Boolean}true"
                                                 name="./navigationRoot"
                                                 required="{Boolean}true"
-                                                rootPath="/content/tds-core"
+                                                rootPath="/content"
                                                 value="${not empty cqDesign.navigationRoot ? cqDesign.navigationRoot : ''}"/>
                                             <structureDepth
                                                 jcr:primaryType="nt:unstructured"
