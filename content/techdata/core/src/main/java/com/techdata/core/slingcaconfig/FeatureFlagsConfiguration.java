@@ -1,5 +1,6 @@
 package com.techdata.core.slingcaconfig;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
@@ -17,6 +18,5 @@ public @interface FeatureFlagsConfiguration {
     boolean disableChecksForDCPAccess() default false;
 
     @AttributeDefinition(name = "Disable Entitlements List")
-    String disableEntitlementsList() default
-            "CanViewOrders#hasDCPAccess#hasRenewalsAccess";
+    String disableEntitlementsList() default StringUtils.EMPTY;
 }
