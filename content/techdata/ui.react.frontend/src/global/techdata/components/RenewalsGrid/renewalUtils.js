@@ -16,7 +16,6 @@ export  const secondLevelOptions = {
     sort: "desc",
   }
 
-  let sortParamList = [];
 
   export function isFirstTimeSortParameters(sortingList){
     const {colId} = secondLevelOptions;
@@ -106,7 +105,7 @@ function urlStrToMapStruc(urlStri = ''){
 }
 
 function mapStrucToUrlStr(urlMapStruc = new Map()){
-    return Array.from(urlMapStruc).map(e => e.join("=")).join("&")
+    return Array.from(urlMapStruc).map(e => e.join("=")).join("&").replace('SortBySecondLevel','SortBy');
 }
 
 export function addCurrentPageNumber(customPaginationRef, request) {
@@ -194,6 +193,12 @@ function extractSortColAndDirection(sortDataRef = []){
     }
 }
 
+function calcSecondLevelSorting(sortList){
+    if (!Array.isArray(sortList) && !sortList.length == 2) return false;
+    const [_, sortParam] = sortList;
+    return `${sortParam?.colId}:${sortParam?.sort}`
+}
+
 function isRepeatedSortAction(previusSort, newSort){ 
     if (!previusSort || !newSort) return false;
     const previusSortList = previusSort.map(({colId, sort}) => ({colId, sort}));
@@ -217,6 +222,8 @@ export async function fetchRenewalsByGet(config){
     const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
     const {sortStrValue, isColReseted} = extractSortColAndDirection(hasSortChanged.current?.sortData);
+    const secondLevelSort = calcSecondLevelSorting(hasSortChanged.current?.sortData);
+    secondLevelSort && mapUrl.set('SortBySecondLevel',secondLevelSort);
     mapUrl.set('SortBy',sortStrValue);
     if (isColReseted) mapUrl.delete('SortBy');
     mapUrl.delete('SortDirection')  

@@ -76,7 +76,6 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
   const incrementHandler = () => {
     if (pageNumber > pageCount - 1) return
     const value = { ...paginationData, pageNumber:pageNumber+1 };
-    console.log('🚀value >>',value);
     setCustomState({ key: "pagination", value },  {
       key: PAGINATION_LOCAL_STORAGE_KEY,
       saveToLocal: true,

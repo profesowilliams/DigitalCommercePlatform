@@ -3672,8 +3672,7 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
   var pageSize = +pageNumber + +query.PageSize;
   // response.content.items = responseItemList.slice(pageNumber, pageSize);
   if (query.PageNumber) {
-    console.log(
-      "🚀 ~ file: app.js ~ line 3529 ~ query.PageNumber",
+    console.log(   
       query.PageNumber
     );
     response.content.pageNumber = parseInt(query.PageNumber);

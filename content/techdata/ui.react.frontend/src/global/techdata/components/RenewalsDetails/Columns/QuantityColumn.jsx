@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 
 
 function QuantityColumn(props) {
-    console.log('🚀props >>',props);
     const { value, setValue, isEditing, rowIndex, data } = props;
     const refInput = useRef(); 
     const MIN_VAL = 1;

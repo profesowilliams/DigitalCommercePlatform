@@ -39,8 +39,6 @@ function PlaceOrderDialog({
     resetDialogStates   
   } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store});   
 
-  useEffect(() => console.log("🎆 rerenders placeorderdialog") , []);
-
   const handleClose = (isSuccess = false) => onClose(isSuccess); 
 
   const showEnuserCompanyName = (text) => {

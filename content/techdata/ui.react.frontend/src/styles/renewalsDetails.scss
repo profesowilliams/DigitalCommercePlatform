@@ -32,9 +32,12 @@
             }
 
             &-icon {
-                height: 11px;
-                width: 11px;
+                svg {
+                    height: 11px;
+                    width: 11px;
+                }
             }
+          
         }
 
         &__input {

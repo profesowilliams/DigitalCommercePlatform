@@ -198,8 +198,8 @@ function RenewalsGrid(props) {
 
   const onSortChanged = (evt) => {
     const sortModelList = evt.columnApi.getColumnState();
-    const sortedModel = sortModelList.filter(o => !!o.sort);
-    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
+    const sortedModel = sortModelList.filter(o => !!o.sort).map( ({colId, sort }) => ({colId, sort}));
+    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;  
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current); 
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1) {

@@ -57,7 +57,7 @@ $bg--marketing-card:#F7F7F7;
     align-items: center;
     button {
       width : min-content;
-      background-color: white;
+      background-color: #F7F7F7;
       cursor: pointer;
       padding: 0;
       display: flex;
@@ -199,6 +199,7 @@ $bg--marketing-card:#F7F7F7;
 		grid-template-columns: repeat( auto-fit, minmax(297px, 1fr) );
 		grid-gap: 26px;
 		padding: 20px;
+    background-color: #F7F7F7;
 		-webkit-box-shadow: inset 5px -5px 4px -4px #E1E1E1; 
 		box-shadow: inset 5px -5px 4px -4px #E1E1E1, inset -6px 3px 4px -4px #E1E1E1;
   		@media (max-width:750px){
@@ -215,13 +216,23 @@ $bg--marketing-card:#F7F7F7;
     .card-right-border {
       @include common-planoption-card;  
       @include right-border;   
+      grid-row: 1/3;
+      grid-column: 1/2;
     }
 		.card-full-border {	
       @include common-planoption-card;
       @include bottom-border;
       @include right-border;
 		  }
+    &__item {
+      & > div {
+        height: 11rem;
+      }
+    }
 	}
+  .cmp-renewal-plan-column.four-columns-only {
+    grid-template-columns: repeat(4, 1fr);
+  }
   .ag-cell-label-container .ag-header-cell-label span.ag-header-cell-text {
     white-space: nowrap;
   }
@@ -688,7 +699,7 @@ button.icon-box {
         min-width: unset;
         @include horizontal_scroll;
         & .ag-header {
-          background-color: white;
+          background-color: #F7F7F7;
         }
         & .ag-header-row {
           color: #262626;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { thousandSeparator } from "../../../helpers/formatting";
 import { fileExtensions, generateFileFromPost, getLocaleFormattedDate } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
@@ -9,6 +9,7 @@ import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import useTriggerOrdering from "../Orders/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
+import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
@@ -23,6 +24,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint };
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data });
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
+    const { computeClassName: computeTDSynnexClass, isTDSynnex } = useIsTDSynnexClass();
 
     const isPlanSelected = ({ id }) => {
         if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
@@ -73,15 +75,17 @@ function RenewalPlanOptions({ labels, data, node }) {
         const largeScreenWidth = 1638;
         const availWidth = window.screen.availWidth;
         const isLastElement = ({ cols }) => (index + 1) % cols == 0;
+        if (optionList.length - 1  === index ) {
+            return "card-no-border";
+        }
+        if (index >= 3 ) {
+            return "card-right-border"
+        }
         //on 1 single row no border bottom and last element no right border
-        if (optionList.length <= 4) {
+        if (optionList.length < 4) {
             if (optionList.length - 1 === index) return "card-no-border";
             return "card-right-border";
-        }
-        //on 4 cols and multiple rows hide right border only on the last element
-        if (availWidth >= largeScreenWidth) {
-            if (isLastElement({ cols: 4 })) return "card-bottom-border";
-        }
+        }       
         //on 3 cols and multiple rows hide right border only on the last element
         if (availWidth >= mediumScreenWidth) {
             if (isLastElement({ cols: 3 })) return "card-bottom-border";
@@ -178,15 +182,28 @@ function RenewalPlanOptions({ labels, data, node }) {
         {id}
     </Link>
 
+    const formatRenewedDuration = renewed  => {
+        const matchAfterYear = /(?<=Year).*$/gm
+        return renewed.replace(matchAfterYear, ' ');
+    }        
+
+    const hasTwoRows = (options) => {
+        if (!options) return '';
+        if (options.length < 3) return '';
+        return 'four-columns-only';
+    }
+
+    const calcPlanColumnClassName = (data) => `${computeTDSynnexClass("cmp-renewal-plan-column")} ${hasTwoRows(data?.options)}`;
+
     return (
         <div key={rowIndexRef.current + Math.random()}>
-            <div className="cmp-renewal-plan-column">
+            <div className={calcPlanColumnClassName(data)}>
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
                 </div>
-                {data?.options && data?.options.map((option, index) => {              
+                {data?.options && data.options.map((option, index) => {              
                     return (
-                        <div key={option?.id}>
+                        <div className="cmp-renewal-plan-column__item" key={option?.id}>
                             <div className={computeClassName(data?.options, index)}>
                                 <div className="header">
                                     <div className="leftHeader">
@@ -205,7 +222,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                 htmlFor={option?.id}
                                                 style={{ ...setStylesOnSelected(option) }}
                                             >
-                                                &nbsp;&nbsp;{option?.contractDuration},{' '}
+                                                &nbsp;&nbsp;{formatRenewedDuration(option?.contractDuration)},{' '}
                                                 {option?.support}
                                             </label>
                                         </h4>

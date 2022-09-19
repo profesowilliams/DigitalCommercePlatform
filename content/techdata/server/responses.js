@@ -1595,7 +1595,55 @@ const renewalSearchResponse = {
                         "save": 0.0,
                         "expiryDate": "2022-09-22T00:00:00Z",
                         "quoteCurrent": true
-                    }
+                    },
+                    {
+                        "id": "U100000000082",
+                        "agreementNumber": "446796080",
+                        "quoteID": "446796080-R:23AUG22 05:10:21",
+                        "contractDuration": "2 Year 6 Months 30 Day",
+                        "support": "Premium",
+                        "total": 375522.049500,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-22T00:00:00Z",
+                        "quoteCurrent": true
+                    },
+                    {
+                        "id": "U100000000083",
+                        "agreementNumber": "446796080",
+                        "quoteID": "446796080-R:23AUG22 05:10:21",
+                        "contractDuration": "4 Year 6 Months 30 Day",
+                        "support": "Basic",
+                        "total": 375522.049500,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-22T00:00:00Z",
+                        "quoteCurrent": true
+                    },
+                    {
+                        "id": "U100000000084",
+                        "agreementNumber": "446796080",
+                        "quoteID": "446796080-R:23AUG22 05:10:21",
+                        "contractDuration": "4 Year 6 Months 30 Day",
+                        "support": "Basic",
+                        "total": 375522.049500,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-22T00:00:00Z",
+                        "quoteCurrent": true
+                    },
+                    {
+                        "id": "U100000000085",
+                        "agreementNumber": "446796080",
+                        "quoteID": "446796080-R:23AUG22 05:10:21",
+                        "contractDuration": "11 Year 6 Months 30 Day",
+                        "support": "Basic",
+                        "total": 375522.049500,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-22T00:00:00Z",
+                        "quoteCurrent": true
+                    }                    
                 ],
                 "renewal": {
                     "total": 375522.049500,
@@ -1891,6 +1939,18 @@ const renewalSearchResponse = {
                         "quoteID": "484103594-R:22AUG22 11:08:56",
                         "contractDuration": "3 Years 5 Months 4 Days",
                         "support": "Production",
+                        "total": 2029057.277700,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-21T00:00:00Z",
+                        "quoteCurrent": false
+                    },
+                    {
+                        "id": "U100000000121",
+                        "agreementNumber": "484103594",
+                        "quoteID": "484103594-R:22AUG22 11:08:56",
+                        "contractDuration": "1 Years 5 Months 4 Days",
+                        "support": "Basic",
                         "total": 2029057.277700,
                         "currency": "INR",
                         "save": 0.0,
@@ -2765,6 +2825,30 @@ const renewalSearchResponse = {
                     },
                     {
                         "id": "U100000000085",
+                        "agreementNumber": "449293010",
+                        "quoteID": "449293010-R:22AUG22 22:38:05",
+                        "contractDuration": "3 Years 4 Months 25 Days",
+                        "support": "Production",
+                        "total": 3109800.997275,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-21T00:00:00Z",
+                        "quoteCurrent": false
+                    },
+                    {
+                        "id": "U100000000086",
+                        "agreementNumber": "449293010",
+                        "quoteID": "449293010-R:22AUG22 22:37:43",
+                        "contractDuration": "1 Year 4 Months 24 Days",
+                        "support": "Production",
+                        "total": 1690476.299625,
+                        "currency": "INR",
+                        "save": 0.0,
+                        "expiryDate": "2022-09-21T00:00:00Z",
+                        "quoteCurrent": true
+                    },
+                    {
+                        "id": "U100000000087",
                         "agreementNumber": "449293010",
                         "quoteID": "449293010-R:22AUG22 22:38:05",
                         "contractDuration": "3 Years 4 Months 25 Days",
