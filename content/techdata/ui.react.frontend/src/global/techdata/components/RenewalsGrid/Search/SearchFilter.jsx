@@ -318,7 +318,7 @@ function _SearchFilter(
         <If condition={isDropdownVisible}>
           <div className="cmp-search-select-container" ref={node}>
             <div className="cmp-search-select-container__box">
-              <input className={computeClassName("inputStyle")} placeholder="Search by" disabled />
+              <input className={computeClassName("inputStyle")} placeholder={isTDSynnex ? "Search": "Search by"} disabled />
               <button className={computeClassName("cmp-search-tooltip__button")}>
               {isTDSynnex ? 
               <SearchIcon className="search-icon__light"/>
