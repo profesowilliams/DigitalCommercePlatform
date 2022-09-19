@@ -85,7 +85,8 @@ import events from '../../utils/events';
     if (!event.target.matches(".cmp-button__region-select")) {
       hideCountriesModal();
     }
-    if (event.target.matches(".cmp-dropbtn")) {
+
+    if (event.target.matches(".cmp-dropbtn") || !event.target.closest('.cmp-dropbtn')) {
       showRegionSelectDropdown();
     }
     if (
