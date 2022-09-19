@@ -9,8 +9,8 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
   return (
     <div className="cmp-renewals-qp__enduser-info--address-group">
       <p>
-        <Info>{endUserData.nameUpper}</Info>
-        <Info>{address.line1}</Info>
+        <Info hasLineBreak={true}>{endUserData.nameUpper}</Info>
+        <Info hasLineBreak={true}>{address.line1}</Info>
         <Info>{address.line2}</Info>
         <Info>{(address.city ?? '') + (`, ${address.state}` || '') + (` ${address.postalCode}` || '')}</Info>      
         <Info>{address.countryCode}</Info>

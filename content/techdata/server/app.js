@@ -4555,7 +4555,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                             "canEdit": true
                         },
                         "line2": {
-                            "text": null,
+                            "text": "This is Line 2 address",
                             "isValid": true,
                             "isMandatory": false,
                             "isDisplay": true,

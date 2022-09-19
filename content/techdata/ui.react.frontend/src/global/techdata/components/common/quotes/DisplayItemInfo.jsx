@@ -29,12 +29,14 @@ function DisplayItemInfo({
   condition = null,
   noColon = false,
   boldLabel = false,
+  hasLineBreak = false,
 }) {
 
   const SpanInfo = (
     <ErrorDisplayItemBoundary>
       <If condition={children}>
         <span>{!label && removeCommaIfContentNull(children)}</span>
+        {hasLineBreak && <br />}
       </If>
     </ErrorDisplayItemBoundary>
   );
@@ -53,6 +55,7 @@ function DisplayItemInfo({
         <span>
           {toggleBoldLabel()}
           {!noColon ? ":" : ""} {handleObjectResponseForApj(children)}
+          {hasLineBreak && <br />}
         </span>
       </If>
     </ErrorDisplayItemBoundary>
