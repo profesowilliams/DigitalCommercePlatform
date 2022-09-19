@@ -131,7 +131,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   return DOMLoaded ? ReactDOM.createPortal(
     <>
       <div className="filter-modal-container" />
-      <div className="filter-modal-content" ref={filterDom}>
+      <div className={computeClassName("filter-modal-content")} ref={filterDom}>
         <RenewalErrorBoundary>
           <Button
             onClick={handleFilterCloseClick}

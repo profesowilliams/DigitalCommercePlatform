@@ -17,6 +17,9 @@ $brand-charcoal: #262626;
     height: 100%;
    }
 }
+.filter-modal-content.td-synnex{
+  top: 46px;
+}
 .filter-modal-content{
   all: initial;
   font-family: "Open Sans", "Source Sans Pro", "Helvetica Neue";
@@ -204,6 +207,7 @@ div.filter-accordion {
   display: flex;
   flex-direction: column;
   overflow-y: scroll; 
+  font-family: 'TWKEverett-Regular-web';
 
   &::-webkit-scrollbar {
     width: 12px;
@@ -260,7 +264,7 @@ div.filter-accordion {
       }
     }
     &.active.td-synnex {
-      color: $brand-green--dark;
+      color: $brand-charcoal;     
     }
     &:before {
       content: "\f054";
