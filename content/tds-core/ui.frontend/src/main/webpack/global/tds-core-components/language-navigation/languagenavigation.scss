@@ -67,9 +67,11 @@
   min-height: 30px;
   background: none;
   color: get-color(brand-black);
-  ;
   border: none;
   cursor: pointer;
+  @include mobile {
+    margin-bottom: rem(4px);
+  }
 
   &:hover {
     box-shadow: 0 3px 0 0px get-color(brand-light-blue);

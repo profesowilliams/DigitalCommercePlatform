@@ -145,7 +145,7 @@
 
   &__icon {
     stroke: get-color(td-dark-blue);
-    margin-top: 0.2rem;
+    margin-top: rem(9.6px);
 
     @include mobile {
       stroke: get-color(brand-light-blue);
