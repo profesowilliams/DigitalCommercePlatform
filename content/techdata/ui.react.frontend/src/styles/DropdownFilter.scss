@@ -246,5 +246,26 @@ $brand-green-dark: #003031;
   }
   & .cmp-search-options label {
     padding: 6px 16px;
+    color: #262626;
+    &:hover {
+      background-color: #E4E5E6;
+    }
+  }
+
+  & .inputStyle {
+    &::placeholder {
+      color: #727679;
+    }
+    &.searchText {
+      color: #262626;
+    }
+  }
+
+  & .cmp-search-select-container {
+    &__box-search-field {
+      svg {
+        fill: #262626;
+      }
+    }
   }
 }
