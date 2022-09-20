@@ -19,6 +19,7 @@ import {
   isFromRenewalDetailsPage,
   updateQueryString,
   handleFetchDataStrategy,
+  formatRenewedDuration,
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -245,7 +246,7 @@ function RenewalsGrid(props) {
   function tootltipVal(event) {
     switch (event.colDef.field) {
       case "renewedduration":
-        return `${event.data.source.type}: ${event.data.support}`
+        return formatRenewedDuration(event.data.source.type, event.data.renewedDuration, event.data.support);
       case "resellername":
         return event.data.reseller.name;
       case "vendor":

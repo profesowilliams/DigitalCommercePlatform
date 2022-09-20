@@ -346,3 +346,9 @@ export const redirectToRenewalDetail = (detailUrl, id = "") => {
     );
     window.location.href = renewalDetailsURL;
 };
+
+export const formatRenewedDuration = (type, renewed, support) => {
+  return [type, renewed?.split(' ').slice(0, 2).join(' '), support]
+    .filter(Boolean)
+    .join(', ');
+};
