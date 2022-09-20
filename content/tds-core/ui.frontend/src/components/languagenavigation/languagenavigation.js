@@ -73,30 +73,24 @@ import events from '../../utils/events';
     }
   }
 
-  window.addEventListener("click", function (event) {
+  window.addEventListener("click", function (event) {   
     if (event.target.matches(".app-open-language-selector") ||
-        event.target.closest(".app-open-language-selector")) {
+      event.target.closest(".app-open-language-selector")) {
       return;
-    }
-
-    if (event.target.matches(".cmp-button__region-select")) {
+    } else if (event.target.matches(".cmp-button__region-select")) {
       showCountriesListPopup();
-    }
-    if (!event.target.matches(".cmp-button__region-select")) {
-      hideCountriesModal();
-    }
-
-    if (event.target.matches(".cmp-dropbtn") || !event.target.closest('.cmp-dropbtn')) {
+    } else if (event.target.matches(".cmp-dropbtn") || event.target.closest('.cmp-dropbtn')) {
       showRegionSelectDropdown();
     }
-    if (
+    else if (!event.target.matches(".cmp-button__region-select")) {
+      hideCountriesModal();
+    } else if (
       !event.target.matches(".cmp-dropbtn") &&
       !event.target.matches(".cmp-button__region-select")
     ) {
       hideCountriesModal();
       hideRegionDropdown();
     }
-
     /**
      * Logic to show popup on footer icon click when enabled via AEM.
      * The popup will be shown when the click is inside footer icon and
