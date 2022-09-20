@@ -46,7 +46,7 @@ $header-height: 47px;
           @include mobile {
             margin: 0 5.5px;
             .cmp-button__icon {
-              margin-top: rem(5px);
+              margin-top: rem(0px);
             }
           }
         }
@@ -59,7 +59,7 @@ $header-height: 47px;
           margin-right: 0rem;
           margin-left: 3rem;
           .cmp-searchbar__icon {
-            margin-top: 0px;
+            margin-top: 7px;
           }
         }
 
