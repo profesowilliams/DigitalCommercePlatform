@@ -222,8 +222,11 @@
     &.cmp-experiencefragment__subheader--sticky {
       position: fixed;
       z-index: 9998;
-      top: 80px;
       opacity: 1;
+    }
+
+    &.cmp-experiencefragment__subheader--sticky--opaque {
+      opacity: 0.85;
     }
 
     &__title {

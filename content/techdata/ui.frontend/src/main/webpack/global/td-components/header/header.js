@@ -15,15 +15,22 @@ export default class Header {
         // this.initSecondaryImage();
 
         this.header = document.getElementById('cmp-techdata-header');
-        this.headerHeight = document.body.getAttribute("data-header-height");
         this.header.classList.add('cmp-experiencefragment__header--sticky');
+        
+        const aemGrid = document.querySelector(".aem-Grid");
+        this.subheaderList = aemGrid.querySelectorAll(".subheader");
+        this.subheader = this.subheaderList[0];
+        this.container = this.subheader ? this.subheader.previousElementSibling : null;
 
-        this.subheader = document.getElementsByClassName('cmp-sub-header--sub-nav')[0];
-        this.currentTop = this.subheader ? this.subheader.getBoundingClientRect().top : 0;
+        this.subheaderNav = this.subheader.querySelector('.cmp-sub-header--sub-nav');
+        this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
         this.isSubheaderSticky = this.subheader ? false : null;
-        this.carouselList = document.querySelectorAll(".aem-Grid .container .cmp-carousel");
 
-        this.checkHeaderImage();
+        if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
+            this.isContainer = true;
+            this.checkHeaderImage();
+            this.checkSubheaderImage();  
+        }
     }
 
     headerResize() {
@@ -61,7 +68,7 @@ export default class Header {
         if (bp.desktop()) {
             return;
         }
-
+        
         if (hasSomeParentTheClass(el, this.HEADER_MOBILE)) {
             if (!el.contains(event.target)) {
                 el.classList.remove('active');
@@ -72,44 +79,40 @@ export default class Header {
     }
 
     handleStickyHeader() {
-        if(this.header && this.subheader){
-            this.checkHeaderSubheader();
-        }
-
-        if(this.header && this.carouselList.length > 0){
+        if(this.header && this.isContainer && this.subheader){
             this.checkHeaderImage();
+            this.checkHeaderSubheader();
         }
     }
 
     checkHeaderSubheader(){
-        if(this.header.getBoundingClientRect().bottom >= this.subheader.getBoundingClientRect().top){
-            if(this.isSubheaderSticky && window.pageYOffset <= this.currentTop-this.headerHeight){
-                this.subheader.classList.remove('cmp-experiencefragment__subheader--sticky');
+        if(this.header.getBoundingClientRect().bottom >= this.subheaderNav.getBoundingClientRect().top){
+            if(this.isSubheaderSticky && window.pageYOffset <= this.container.clientHeight - this.subheaderNav.clientHeight - this.header.clientHeight){
+                this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
+                this.subheaderNav.classList.remove('cmp-experiencefragment__subheader--sticky');
                 this.isSubheaderSticky = false;
             }
             else{
-                this.subheader.classList.add('cmp-experiencefragment__subheader--sticky');
+                this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky');
+                this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
+                this.subheaderNav.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
                 this.isSubheaderSticky = true;
             }
-        }
-        else{
-            this.subheader.classList.remove('cmp-experiencefragment__subheader--sticky');
         }
     }
 
     checkHeaderImage(){
-        const carouselArray = Array.from(this.carouselList);
-        const headerBottom = this.header.getBoundingClientRect().bottom;
-
-        const carousels = carouselArray.filter(function (carousel){
-            return headerBottom >= carousel.getBoundingClientRect().top && carousel.getBoundingClientRect().bottom > 0;
-        });
-
-        if (carousels.length > 0){
+        if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
             this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
         }
         else{
             this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
+        }
+    }
+
+    checkSubheaderImage(){
+        if(this.subheaderNav.getBoundingClientRect().top + parseInt(this.subheaderNav.style.marginTop,10) <= this.container.getBoundingClientRect().bottom){
+            this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
         }
     }
 }
