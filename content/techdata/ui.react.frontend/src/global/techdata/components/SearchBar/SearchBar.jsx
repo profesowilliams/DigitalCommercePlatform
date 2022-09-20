@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import SearchAreas from "./SearchAreas";
@@ -58,23 +58,27 @@ const SearchBar = ({ data, componentProp }) => {
     typeAheadDomain,
     dcpDomain,
   } = JSON.parse(componentProp);
+
+  const searchRef = useRef(null);
+  const searchContainerRef = useRef(null);
   const [userData, setUserData] = useState(getUserDataInitialState);
-  
+
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
   const [searchInputFocused, setSearchInputFocused] = useState(false);
-  
+
   const [isMobile, setMobile] = useState(false);
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [isFocus, setFocus] = useState(false);
   const [originURL, setOriginURL] = useState(null);
-  
+
   const [width] = useWindowSize();
-  
+  const mobileState = width <= 767;
+
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
   const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
-  
+
   const isLoggedIn = useStore(state => state.isLoggedIn);
 
   useEffect(() => {
@@ -85,10 +89,25 @@ const SearchBar = ({ data, componentProp }) => {
   useEffect(() => {
     const urlOrigin = window.location.origin;
     setOriginURL(urlOrigin);
+    if (window.innerWidth > 768) {
+        document.addEventListener('click', handleOutsideClick);
+    }
   }, []);
 
   const replaceSearchTerm = (originalStr, searchTerm) => {
     return originalStr.replace("{search-term}", searchTerm);
+  };
+
+  const handleOutsideClick = (event) => {
+    if (((searchContainerRef.current && !searchContainerRef.current.contains(event.target)) ||
+        (searchRef.current && searchRef.current.contains(event.target) && isChecked)) &&
+            !event.target.classList.contains('cmp-searcharea__button')) {
+        setMobile(false);
+        setSearchInputFocused(false);
+        setChecked(false);
+        setFocus(false);
+        setAreaSelectionOpen(false);
+    }
   };
 
   const loadSuggestions = async (searchTerm) => {
@@ -109,8 +128,8 @@ const SearchBar = ({ data, componentProp }) => {
 
   /**
    * Function that format the URL that will redirect the user to search
-   * @param {string} searchTerm 
-   * @returns 
+   * @param {string} searchTerm
+   * @returns
    */
   const getURLToSearchInGrid = async (searchTerm) => {
     try {
@@ -133,7 +152,7 @@ const SearchBar = ({ data, componentProp }) => {
               uiServiceDomain + selectedArea.dcpLookupEndpoint
           }): ${err}`
       );
-      // What should happen if some error happened??? 
+      // What should happen if some error happened???
       // keep in the page???
       // redirect to shop????
       // return searchDomain + replaceSearchTerm(selectedArea.endpoint, searchTerm);
@@ -143,8 +162,8 @@ const SearchBar = ({ data, componentProp }) => {
 
   /**
    * Function that validate the user attributes and get the URL for the end user
-   * @param {string} searchTerm 
-   * @returns 
+   * @param {string} searchTerm
+   * @returns
    */
   const getSearchUrl = async (searchTerm) => {
     handlerAnalyticsSearchEvent(searchTerm, selectedArea.area, 0);
@@ -165,9 +184,9 @@ const SearchBar = ({ data, componentProp }) => {
   /**
    * handler event that push a search event
    * information to adobeDataLayer
-   * @param {string} searchTerm 
-   * @param {string} searchType 
-   * @param {string} typeAhead 
+   * @param {string} searchTerm
+   * @param {string} searchType
+   * @param {string} typeAhead
    */
   const handlerAnalyticsSearchEvent = (
     searchTerm = '',
@@ -235,9 +254,14 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const gotFocus = () => {
-    setMobile(true);
-    setSearchInputFocused(true);
-    setFocus(true);
+    if (mobileState) {
+        setMobile(true);
+        setSearchInputFocused(true);
+        setFocus(true);
+    } else {
+        setMobile(true);
+        setFocus(true);
+    }
   };
 
   const lostFocus = () => {
@@ -257,15 +281,26 @@ const SearchBar = ({ data, componentProp }) => {
 
   const toggleFocusSearchStyles = () => {
     setFocus(!isFocus);
+    setSearchInputFocused(true);
   };
 
   const mobileSearchOpener = () => {
-      if (searchInputFocused === false) {
-        gotFocus();
-        setChecked(true);
+      if (mobileState) {
+          if (searchInputFocused) {
+            lostFocus();
+            setChecked(false);
+          } else {
+            gotFocus();
+            setChecked(true);
+          }
       } else {
-        lostFocus();
-        setChecked(false);
+        if (isChecked) {
+         lostFocus();
+         setChecked(false);
+        } else {
+            gotFocus();
+            setChecked(true);
+       }
       }
   };
 
@@ -321,6 +356,7 @@ const SearchBar = ({ data, componentProp }) => {
                 ? "cmp-searchbar__button cmp-searchbar__button--mobile"
                 : "cmp-searchbar__button"
             }
+            ref={searchRef}
             onClick={searchTermText === '' ? mobileSearchOpener : redirectToShop}
           >
             <svg
@@ -359,6 +395,7 @@ const SearchBar = ({ data, componentProp }) => {
   return (
     <div
       id={id}
+      ref={searchContainerRef}
       className={`cmp-searchbar ${ isChecked === true ? "cmp-searchbar--checked" : " " }`}>
       <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
         <i className="cmp-searchbar__clear-icon"></i>
