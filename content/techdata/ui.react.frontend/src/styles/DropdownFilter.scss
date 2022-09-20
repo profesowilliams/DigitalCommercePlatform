@@ -216,6 +216,13 @@ $brand-green-dark: #003031;
 }
 
 .cmp-grid-td-synnex {
+  & .cmp-renewal-search {
+    & .search-icon {
+      &__dark {
+        fill: $brand-charcoal;
+      }
+    }
+  }
   & .cmp-search-tooltip {
     &__button {
       display: flex;
@@ -223,7 +230,7 @@ $brand-green-dark: #003031;
       & .search-icon {
         height: 24px;
         &__dark {
-          fill: #262626;
+          fill: $brand-charcoal;
         }
         &__light {
           fill: white;
@@ -240,13 +247,13 @@ $brand-green-dark: #003031;
      font-size: 13px;
      svg {
       margin-right: 16px;
-      fill: #262626;
+      fill: $brand-charcoal;
      }
     }
   }
   & .cmp-search-options label {
     padding: 6px 16px;
-    color: #262626;
+    color: $brand-charcoal;
     &:hover {
       background-color: #E4E5E6;
     }
@@ -257,14 +264,14 @@ $brand-green-dark: #003031;
       color: #727679;
     }
     &.searchText {
-      color: #262626;
+      color: $brand-charcoal;
     }
   }
 
   & .cmp-search-select-container {
     &__box-search-field {
       svg {
-        fill: #262626;
+        fill: $brand-charcoal;
       }
     }
   }
