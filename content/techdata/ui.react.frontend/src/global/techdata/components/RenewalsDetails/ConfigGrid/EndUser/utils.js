@@ -54,4 +54,16 @@ export const endUserConstants = {
   REQUIRED_FIELD: 'This is a required field.',
   SIXTY: 60,
   TWENTY: 20,
-}
+};
+
+export const endUserLables = {
+  endUserName: 'Company name',
+  endUserFullName: 'Contact full name',
+  endUserEmail: 'Contact email',
+  endUserPhone: 'Contact phone number',
+  endUserAddress1: 'Address 1',
+  endUserAddress2: 'Address 2',
+  endUserCity: 'City',
+  endUserCountry: 'Country',
+  endUserAreaCode: 'Area Code',
+};

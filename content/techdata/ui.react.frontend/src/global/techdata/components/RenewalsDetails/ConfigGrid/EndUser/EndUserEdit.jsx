@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
-import { endUserConstants } from './utils';
+import { endUserConstants, endUserLables } from './utils';
 import { handleValidation } from '../Common/utils';
 
 export default function EndUserEdit({
@@ -23,6 +23,17 @@ export default function EndUserEdit({
 
   const { INVALID_EMAIL_TEXT, SIXTY, TWENTY } =
     endUserConstants;
+  const {
+    endUserName,
+    endUserFullName,
+    endUserEmail,
+    endUserPhone,
+    endUserAddress1,
+    endUserAddress2,
+    endUserCity,
+    endUserCountry,
+    endUserAreaCode,
+  } = endUserLables;
   const { contact, address } = endUserDetails;
   const contactName = contact[0]?.name;
   const { line1, city, country, postalCode } = address;
@@ -50,7 +61,7 @@ export default function EndUserEdit({
         disabled={endUserDetails?.name?.canEdit === false}
         required
         id="end-user-name"
-        label="End user name"
+        label={endUserName}
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
         value={endUserDetails?.name?.text || ''}
@@ -61,7 +72,7 @@ export default function EndUserEdit({
         disabled={contactName?.canEdit === false}
         required
         id="contact-name"
-        label="Contact name"
+        label={endUserFullName}
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
         value={contactName?.text || ''}
@@ -72,7 +83,7 @@ export default function EndUserEdit({
         disabled={line1?.canEdit === false}
         required
         id="address"
-        label="Address 1"
+        label={endUserAddress1}
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
         value={line1?.text || ''}
@@ -83,7 +94,7 @@ export default function EndUserEdit({
         disabled={city?.canEdit === false}
         required
         id="city"
-        label="City"
+        label={endUserCity}
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
         value={city?.text || ''}
@@ -94,7 +105,7 @@ export default function EndUserEdit({
         disabled={country?.canEdit === false}
         required
         id="country"
-        label="Country"
+        label={endUserCountry}
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
         value={country?.text || ''}
@@ -105,7 +116,7 @@ export default function EndUserEdit({
         disabled={postalCode?.canEdit === false}
         required
         id="area-code"
-        label="Area Code"
+        label={endUserAreaCode}
         variant="standard"
         type='number'
         onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePostalCodeChange)}
@@ -116,7 +127,7 @@ export default function EndUserEdit({
         disabled={contact[0]?.email?.canEdit === false}
         required
         id="email"
-        label="Contact email"
+        label={endUserEmail}
         variant="standard"
         value={contact[0]?.email?.text || ''}
         onChange={(e) => handleEmailChange(e)}
@@ -127,7 +138,7 @@ export default function EndUserEdit({
       <CustomTextField
         disabled={contact[0]?.phone?.canEdit === false}
         id="phone"
-        label="Contact phone number"
+        label={endUserPhone}
         variant="standard"
         value={contact[0]?.phone?.text || ''}
         type='number'
