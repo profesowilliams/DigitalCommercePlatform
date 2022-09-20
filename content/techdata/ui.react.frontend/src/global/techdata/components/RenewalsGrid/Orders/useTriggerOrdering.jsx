@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { redirectToRenewalDetail } from "../renewalUtils";
 import { TOASTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { useRenewalGridState } from '../store/RenewalsStore';
 import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from './orderingRequests';
 
-function useTriggerOrdering({renewalDetailsEndpoint, data }) {
+function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
 
   const [toggleOrderDialog, setToggleOrderDialog] = useState(false);
   const [details,setDetails] = useState(false);
@@ -11,6 +12,10 @@ function useTriggerOrdering({renewalDetailsEndpoint, data }) {
   const { closeAndCleanToaster } = effects;
 
   const handleCartIconClick = async (_event) => {
+    if (data.isValid) {
+      redirectToRenewalDetail(detailUrl, data.source.id);
+      return ;
+    }
     closeAndCleanToaster();
     const quoteDetails = await fetchQuoteRenewalDetails(
       renewalDetailsEndpoint,

@@ -498,6 +498,7 @@ const renewalSearchResponse = {
                     "id": "U100000006952"
                 },
                 "canPlaceOrder": true,
+                "isValid": true,
                 "reseller": {
                     "vendorAccountName": "Ample Technologies Pvt Ltd",
                     "vendorAccountNumber": "4596775",
@@ -798,7 +799,8 @@ const renewalSearchResponse = {
                     "type": "Renewal",
                     "id": "U100000000071"
                 },
-                "canPlaceOrder": false,
+                "canPlaceOrder": true,
+                "isValid": false,
                 "reseller": {
                     "vendorAccountName": "Esconet Technologies Private Limited",
                     "vendorAccountNumber": "2721755",
@@ -1208,7 +1210,8 @@ const renewalSearchResponse = {
                     "type": "Renewal",
                     "id": "U100000000064"
                 },
-                "canPlaceOrder": false,
+                "canPlaceOrder": true,
+                "isValid": true,
                 "reseller": {
                     "vendorAccountName": "Meridian IT India Pvt Ltd",
                     "vendorAccountNumber": "17795088",
@@ -1484,7 +1487,8 @@ const renewalSearchResponse = {
                     "type": "Renewal",
                     "id": "U100000000081"
                 },
-                "canPlaceOrder": false,
+                "canPlaceOrder": true,
+                "isValid": false,
                 "reseller": {
                     "vendorAccountName": "Frontier Business Systems Pvt. Ltd.",
                     "vendorAccountNumber": "2722076",
@@ -1833,7 +1837,8 @@ const renewalSearchResponse = {
                     "type": "Renewal",
                     "id": "U100000000119"
                 },
-                "canPlaceOrder": false,
+                "canPlaceOrder": true,
+                "isValid": true,
                 "reseller": {
                     "vendorAccountName": "VDA infosolutions Pvt. Ltd",
                     "vendorAccountNumber": "5934078",

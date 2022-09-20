@@ -1,27 +1,14 @@
 import React from "react";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
+import { redirectToRenewalDetail, analyticsColumnDataToPush } from "../renewalUtils";
 
 function DropdownDownloadList({ data, aemConfig }) {
   const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, detailUrl, productGrid } = aemConfig;
 
-
-  const dataToPush = (name) => ({
-    type: ANALYTICS_TYPES.types.button,
-    category: ANALYTICS_TYPES.category.renewalsActionColumn,
-    name,
-  });
-  const redirectToRenewalDetail = () => {
-    pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.seeDetails));
-    const renewalDetailsURL = encodeURI(
-      `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`
-    );
-    window.location.href = renewalDetailsURL;
-  };
-
   const downloadXLS = () => {
     try {
-      pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadXLS));
+      pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadXLS));
       generateFileFromPost({
         url: exportXLSRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.xlsx`,
@@ -36,7 +23,7 @@ function DropdownDownloadList({ data, aemConfig }) {
 
   const downloadPDF = () => {
     try {      
-      pushEvent(ANALYTICS_TYPES.events.click, dataToPush(ANALYTICS_TYPES.name.downloadPDF));
+      pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadPDF));
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.pdf`,
@@ -68,7 +55,7 @@ function DropdownDownloadList({ data, aemConfig }) {
           |
         </>
       )}
-      <button onClick={redirectToRenewalDetail}>
+      <button onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id)}>
         <i className="far fa-eye"></i>
         See details
       </button>

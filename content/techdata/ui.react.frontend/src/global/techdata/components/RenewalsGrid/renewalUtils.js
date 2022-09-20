@@ -8,8 +8,7 @@ import {
   TOASTER_LOCAL_STORAGE_KEY,
 } from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
-
-
+import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 
 export  const secondLevelOptions = {
     colId: 'total',
@@ -332,4 +331,18 @@ export async function handleFetchDataStrategy(renewalOperations) {
     const shouldFetchByPost = isFilterPostRequest(hasSortChanged, isFilterDataPopulated);   
     return shouldFetchByPost ? fetchRenewalsFilterByPost({ ...renewalOperations })
                              : fetchRenewalsByGet({ ...renewalOperations });
+};
+
+export const analyticsColumnDataToPush = (name) => ({
+    type: ANALYTICS_TYPES.types.button,
+    category: ANALYTICS_TYPES.category.renewalsActionColumn,
+    name,
+});
+
+export const redirectToRenewalDetail = (detailUrl, id = "") => {
+    pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.seeDetails));
+    const renewalDetailsURL = encodeURI(
+      `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
+    );
+    window.location.href = renewalDetailsURL;
 };

@@ -10,6 +10,7 @@ import useTriggerOrdering from "../Orders/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
 import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
+import { redirectToRenewalDetail } from "../renewalUtils";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
@@ -22,7 +23,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     const rowIndexRef = useRef(node?.rowIndex)
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
     const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint };
-    const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data });
+    const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
     const { computeClassName: computeTDSynnexClass, isTDSynnex } = useIsTDSynnexClass();
 
@@ -51,19 +52,6 @@ function RenewalPlanOptions({ labels, data, node }) {
         return () => selectPlan(optionToParent(optionIdSelectedRef.current))
     }, [])
 
-    const dataToPush = (name) => ({
-        type: ANALYTICS_TYPES.types.button,
-        category: ANALYTICS_TYPES.category.renewalsActionColumn,
-        name,
-    });
-
-
-    const redirectToRenewalDetail = (id = "") => {
-        const renewalDetailsURL = encodeURI(
-            `${window.location.origin}${detailUrl}.html?id=${id}`
-        );
-        window.location.href = renewalDetailsURL;
-    };
     const exportXlsPlan = (id) => {
         const postData = { id };
         const name = `renewal-${id}.xlsx`;
@@ -266,7 +254,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                             <span className="vertical-separator"></span>
                                             <button
                                                 onClick={() =>
-                                                    redirectToRenewalDetail(option?.id)
+                                                    redirectToRenewalDetail(detailUrl, option?.id)
                                                 }
                                             >
                                                 <i className="far fa-eye"></i>

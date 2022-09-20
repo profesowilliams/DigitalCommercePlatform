@@ -27,14 +27,14 @@ function _RenewalActionColumn({ eventProps }) {
     (state) => state.rowCollapsedIndexList
   );
   const { pageNumber } = useRenewalGridState((state) => state.pagination);
-  const { orderingFromDashboard, ...endpoints } = useRenewalGridState(
+  const { detailUrl = "", orderingFromDashboard, ...endpoints } = useRenewalGridState(
     (state) => state.aemConfig
   );
   const {updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint} = endpoints;
 
   const { value, data } = eventProps;
 
-  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data });
+  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
 
   const orderEndpoints ={updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint};
   
