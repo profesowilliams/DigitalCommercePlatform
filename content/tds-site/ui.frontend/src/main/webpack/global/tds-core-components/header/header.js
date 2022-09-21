@@ -22,14 +22,16 @@ export default class Header {
         this.subheader = this.subheaderList[0];
         this.container = this.subheader ? this.subheader.previousElementSibling : null;
 
-        this.subheaderNav = this.subheader.querySelector('.cmp-sub-header--sub-nav');
-        this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
-        this.isSubheaderSticky = this.subheader ? false : null;
+        if(this.header && this.subheader && this.container){
+            this.subheaderNav = this.subheader.querySelector('.cmp-sub-header--sub-nav');
+            this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
+            this.isSubheaderSticky = false;
 
-        if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
-            this.isContainer = true;
-            this.checkHeaderImage();
-            this.checkSubheaderImage();  
+            if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
+                this.isContainer = true;
+                this.checkHeaderImage();
+                this.checkSubheaderImage();  
+            }
         }
     }
 
