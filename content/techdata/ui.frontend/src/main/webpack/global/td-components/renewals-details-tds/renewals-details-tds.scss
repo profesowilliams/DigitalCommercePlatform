@@ -1,6 +1,6 @@
 .cmp-renewals-details__tds {
   * {
-    @include font-everett-regular-normal();
+    @include font-arial-normal();
   }
 
   .cmp-renewals-qp__config-grid {
@@ -35,8 +35,8 @@
 
       &--address-group {
         span {
-          @include font-everett-regular-normal($line-height: 24px);
-          color: #606060;
+          @include font-arial-normal($line-height: 24px);
+          color: map-get($color-palette, 'charcoal');
         }
       }
     }
@@ -57,7 +57,7 @@
 
       .ag-row .cmp-renewal-preview__prod-details span {
         color: map-get($color-palette, 'cool-gray-9');
-        font-weight: 600;
+        font-weight: 400;
         font-size: 14px;
         font-family: "Open Sans", sans-serif;
       }
@@ -76,17 +76,25 @@
 
     .cmp-renewal-preview__subtotal {
       background-color: map-get($color-palette, neutral-gray-1);
+      &--note, &--note >b {
+        color: map-get($color-palette, 'charcoal');
+        @include font-arial-normal($size: 14px, $line-height: 16px);
+      }
+      &--description, &--value >span {
+        color: map-get($color-palette, 'charcoal');
+        @include font-arial-normal($size: 20px, $line-height: 23px);
+      }
     }
-  }
-
-  .cmp-product-lines-grid {
-    .ag-root-wrapper-body {
-      .ag-header-container {
-        background-color: map-get($color-palette, 'cool-gray-1');
-
-        .ag-header-cell-text {
-          color: map-get($color-palette, 'charcoal');
-          @include font-everett-regular-normal();
+    
+    .cmp-product-lines-grid {
+      .ag-root-wrapper-body {
+        .ag-header-container {
+          background-color: map-get($color-palette, 'cool-gray-1');
+  
+          .ag-header-cell-text {
+            color: map-get($color-palette, 'charcoal');
+            @include font-arial-normal($weight: 700, $size: 14px);
+          }
         }
       }
     }
@@ -94,18 +102,12 @@
 
   .cmp-grid.ag-theme-alpine {
     .ag-row * {
-      @include font-everett-regular-normal($size: 14px);
+      @include font-arial-normal($size: 14px, $line-height:16px);
       color: map-get($color-palette, 'charcoal');
     }
 
     .ag-header {
       border: none;
     }
-  }
-
-  .cmp-renewal-preview__subtotal--value * {
-    @include font-everett-regular-normal();
-    font-size: 24px;
-    line-height: 32px;
   }
 }

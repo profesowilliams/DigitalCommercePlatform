@@ -20,4 +20,20 @@ export const CustomTextField = styled(TextField)({
   "& .Mui-focused .MuiFormLabel-asterisk.Mui-error": {
     color: "#727679",
   },
+  "& .MuiInput-input.css-1x51dt5-MuiInputBase-input-MuiInput-input" : {
+    fontFamily: 'Arial',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '16px',
+    lineHeight: '20px',
+    color: '#262626',
+  },
+  "& .MuiInputLabel-root.css-1c2i806-MuiFormLabel-root-MuiInputLabel-root": {
+    fontFamily: 'Arial',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: '16px',
+    lineHeight: '20px',
+    color: '#727679',
+  },
 });

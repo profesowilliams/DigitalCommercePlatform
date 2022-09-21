@@ -2,7 +2,6 @@ import React from "react";
 import Info from "../../../common/quotes/DisplayItemInfo";
 
 export default function EndUserInfoReadOnly ({ endUserData, endUserType, productLines }) {
-  console.log('enduser read only data', endUserData);
   const address = endUserData.address;
   const contact = endUserData.contact;
 
