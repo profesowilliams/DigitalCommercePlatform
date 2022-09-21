@@ -143,4 +143,4 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
-RewriteRule ^/(apac|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1$2 [PT,L]
+RewriteRule ^/(apj|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1$2 [PT,L]
