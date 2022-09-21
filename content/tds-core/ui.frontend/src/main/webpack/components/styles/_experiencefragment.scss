@@ -6,6 +6,7 @@
         .aem-Grid {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             @include desktop {
                 height: rem(80px);
             }

@@ -28,8 +28,8 @@
 #cmp-techdata-header.cmp-container .aem-Grid .search {
 	// making this desktop only as in mobile search is next to signin.
 	@include desktop {
-		margin-left: unset !important;
-		margin-right: auto;
+		margin-left: auto;
+		margin-right: 0px;
 	}
 	// this is only a temporary fix to order to meet the sprinnt deadline. I will refactore it in the next sprint. - OP 7.12.21
 }
