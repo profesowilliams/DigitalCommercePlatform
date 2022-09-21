@@ -3,5 +3,5 @@
     cq:styleElements="[div,section,article,main,aside,header,footer]"
     jcr:primaryType="cq:Component"
     jcr:title="Resource Card"
-    sling:resourceSuperType="tds-core/components/resourcecard/v1/resourcecard"
-    componentGroup="Tech Data - Content"/>
+    sling:resourceSuperType="core/wcm/components/contentfragmentlist/v1/contentfragmentlist"
+    componentGroup="TDS Core - Content"/>
