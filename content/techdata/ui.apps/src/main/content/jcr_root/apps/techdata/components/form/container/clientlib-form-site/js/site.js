@@ -38,7 +38,7 @@
 
         inputsList.forEach(
             function (input) {
-                if (input.name.startsWith(":formstart") && !input.name.startsWith("_charset_")) {
+                if (!input.name.startsWith(":formstart") && !input.name.startsWith("_charset_")) {
                     let fsize = 0;
                     let file = 0;
                     if (input.type.startsWith("file")) {
