@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   }
   res.header(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer"
+    "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer, impersonationAccount"
   );
   res.header("Consumer", "*");
   res.header("SessionId", "*");
@@ -138,7 +138,7 @@ app.post("/login", function (req, res) {
         phone: null,
         customers: ["0038048612", "0009000325", "0009000325"],
         roles: null,
-        isInternal: true,
+        isHouseAccount: true,
         roleList: [
           {
             entitlement: "CanManageOwnProfile",
@@ -5099,5 +5099,5 @@ app.post("/ui-renewal/v1/order", function (req, res) {
       isError: true,
     },
   };
-  return res.status(404).json(fail);
+  return res.status(200).json(success);
 });

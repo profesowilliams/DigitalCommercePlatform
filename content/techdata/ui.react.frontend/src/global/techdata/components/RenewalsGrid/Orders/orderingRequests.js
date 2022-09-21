@@ -1,5 +1,6 @@
 import { get, post } from "../../../../../utils/api";
 import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, RENEWAL_STATUS_ACTIVE, UPDATE_FAILED } from "../../../../../utils/constants";
+import { isHouseAccount } from "../../../../../utils/user-utils";
 
 const awaitRequest = (fetch, delay) =>
   new Promise((resolve) => setTimeout(() => resolve(fetch()), delay));
@@ -86,9 +87,10 @@ export const mapRenewalForUpdateDashboard = (renewalQuote) => {
 }
 
 export const extractDetailRenewalData = (quote) => {
-  const { contact, address, vendorAccountNumber } = quote;
+  const { id, contact, address, vendorAccountNumber } = quote;
   const [_contact] = contact;
   return {
+    id,
     contact: {
       name: _contact?.name?.text,
       email: _contact?.email?.text,
@@ -125,6 +127,10 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   }
 }
 
+const setAdditionalHeaders = (impersonationAccount) => {
+  return isHouseAccount() ? {headers: {impersonationAccount}} : {};
+}
+
 export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber }) {
   const { updateRenewalOrderEndpoint = "", getStatusEndpoint = "", orderRenewalEndpoint = "", } = orderEndpoints;
   if (!updateRenewalOrderEndpoint || !getStatusEndpoint || !orderRenewalEndpoint) {
@@ -135,6 +141,7 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
   }
   try {
     const { source, reseller, endUser } = renewalData;
+    const impersonationAccount = renewalData.reseller.id;
     const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber };
     if (renewalData?.items) payload.items = renewalData.items;
     const updateresponse = await post(updateRenewalOrderEndpoint, payload);
@@ -145,7 +152,7 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
       const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf);
       if (getStatusResponse) {
         const orderPayload = { id: source.id };
-        const orderResponse = await post(orderRenewalEndpoint, orderPayload);
+        const orderResponse = await post(orderRenewalEndpoint, orderPayload, setAdditionalHeaders(impersonationAccount));
         if (orderResponse.status === 200) {
           const transactionNumber =
             orderResponse.data.content.confirmationNumber;
