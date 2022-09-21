@@ -36,6 +36,9 @@ export const isAuthenticated = (authUrl, clientId, isPrivatePage, shopLoginRedir
         return window.location.href.includes("editor.html");
     }
 
+    // call intouch API's here
+    // check if the data attributes exist and then call API and embed the HTML into DOM
+
     const isEditMode = getIsEditMode();
 
     return user || signinCode || !isPrivatePage || isEditMode

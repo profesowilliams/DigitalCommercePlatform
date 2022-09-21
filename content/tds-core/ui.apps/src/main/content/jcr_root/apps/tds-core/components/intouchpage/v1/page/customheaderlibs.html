@@ -51,6 +51,7 @@
 
 	</script>
 	<div id='ZN_6Ee90kAFxG6pDQp'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+
 </sly>
 	<!--END WEBSITE FEEDBACK SNIPPET-->
 
@@ -73,11 +74,14 @@
 			${configData.gtmHeadJSScript @ context='scriptComment'}
 			<!-- End Google Tag Manager in Head -->
 		</sly>
+
+		<sly data-sly-test="${configData.intouchCSSScriptsData}">
+			<!-- Intouch CSS scripts in Head -->
+			${configData.intouchCSSScriptsData @ context='scriptComment'}
+			<!-- End Intouch CSS scripts in Head -->
+		</sly>
 	</sly>
 
 	<script type="text/javascript" src="${configData.typeAheadDomain}${configData.typeAheadXDomainScript}" slave="${configData.typeAheadDomain}${configData.typeAheadProxyScript}"></script>
 
 
-<!-- Intouch body HTML starts here -->
-<sly data-sly-include="intouchheaderlibs.html"></sly>
-<!-- Intouch body HTML ends here -->

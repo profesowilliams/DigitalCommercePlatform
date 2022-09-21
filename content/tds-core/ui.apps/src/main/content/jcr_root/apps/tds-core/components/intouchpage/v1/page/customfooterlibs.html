@@ -20,3 +20,11 @@
 <!-- Intouch body HTML starts here -->
 <sly data-sly-include="intouchfooterlibs.html"></sly>
 <!-- Intouch body HTML ends here -->
+
+<sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
+	<sly data-sly-test="${configData.intouchJSScriptsData}">
+		<!-- Intouch JS scripts in Head -->
+		${configData.intouchJSScriptsData @ context='scriptComment'}
+		<!-- End Intouch JS scripts in Head -->
+	</sly>
+</sly>

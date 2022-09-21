@@ -2,11 +2,15 @@ package com.tdscore.core.models;
 
 
 import com.day.cq.wcm.api.Page;
+import com.tdscore.core.services.IntouchRequest;
+import com.tdscore.core.services.IntouchRequestType;
+import com.tdscore.core.services.IntouchRetrieveDataService;
 import com.tdscore.core.slingcaconfig.*;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +21,9 @@ public class CaConfigReader {
 
     @ScriptVariable(name = "currentPage")
     private Page page;
+
+    @OSGiService
+    private IntouchRetrieveDataService intouchService;
 
     private String uiServiceDomain;
 
@@ -216,6 +223,14 @@ public class CaConfigReader {
 
     private String gtmBodyJSScript;
 
+    private String intouchCSSAPIUrl;
+
+    private String intouchJSAPIUrl;
+
+    private String intouchHeaderAPIUrl;
+
+    private String intouchFooterAPIUrl;
+
     @PostConstruct
     public void init() {
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -297,6 +312,18 @@ public class CaConfigReader {
         quoteDetailsXLSEndpoint = serviceEndPointsConfiguration.quoteDetailsXLSEndpoint();
 
         buildComonConfigurationsConfigs();
+        buildIntouchHeaderConfigurationConfigs();
+    }
+
+    private void buildIntouchHeaderConfigurationConfigs() {
+        IntouchHeaderConfiguration intouchConfiguration =
+                page.adaptTo(ConfigurationBuilder.class).as(IntouchHeaderConfiguration.class);
+        if(intouchConfiguration != null) {
+            intouchCSSAPIUrl = intouchConfiguration.cssAPIUrl();
+            intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
+            intouchHeaderAPIUrl = intouchConfiguration.headerAPIUrl();
+            intouchFooterAPIUrl = intouchConfiguration.footerAPIUrl();
+        }
     }
 
     private void buildSearchConfigurations() {
@@ -709,5 +736,25 @@ public class CaConfigReader {
 
     public String getGtmBodyJSScript() {
         return gtmBodyJSScript;
+    }
+
+    public String getIntouchCSSScriptsData() {
+        IntouchRequest intouchRequest =
+                new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl, "UK", "en-US");
+        return intouchService.fetchScriptsData(intouchRequest);
+    }
+
+    public String getIntouchJSScriptsData() {
+        IntouchRequest intouchRequest =
+                new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), intouchJSAPIUrl, "UK", "en-US");
+        return intouchService.fetchScriptsData(intouchRequest);
+    }
+
+    public String getIntouchHeaderAPIUrl() {
+        return intouchHeaderAPIUrl;
+    }
+
+    public String getIntouchFooterAPIUrl() {
+        return intouchFooterAPIUrl;
     }
 }
