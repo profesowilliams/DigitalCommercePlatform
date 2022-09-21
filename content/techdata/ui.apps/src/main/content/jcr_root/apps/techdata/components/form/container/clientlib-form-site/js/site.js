@@ -6,7 +6,7 @@
     const errorLabelClass = 'error-label';
     const INVALID_CHARACTERS_MSG = 'This field contains Invalid Characters. Please correct';
     const INVALID_FILE_MSG = 'Invalid file size or type, recheck and try again.';
-    const pdfRegex = new RegExp('^.*\.(pdf | PDF)$');
+    const pdfRegex = new RegExp(/^.*\.pdf$/i);
 
     function documentReady(fn) {
         if (document.readyState !== "loading") {
