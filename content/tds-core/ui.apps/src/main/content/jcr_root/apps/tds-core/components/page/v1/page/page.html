@@ -30,7 +30,8 @@
       data-disable-extra-reload="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].extraReloadDisabled}"
       data-disable-check-for-dcp-access="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableChecksForDCPAccess}"
       data-disable-entitlements-list="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableEntitlementsList}"
-      data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}">
+      data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}"
+      data-disable-impersonation-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableImpersonateAccountRequestHeader}">
 
     <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
         <sly data-sly-test="${configData.enableGoogleTagManager}">

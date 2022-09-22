@@ -20,4 +20,7 @@ public @interface FeatureFlagsConfiguration {
     @AttributeDefinition(name = "Disable Entitlements List")
     String disableEntitlementsList() default StringUtils.EMPTY;
 
+    @AttributeDefinition(name = "Disable Impersonate Account Request Header", description = "Disables the inclusion of the impersonateAccount header on Order Requests in Renewals APJ.")
+    boolean disableImpersonateAccountRequestHeader() default true;
+
 }

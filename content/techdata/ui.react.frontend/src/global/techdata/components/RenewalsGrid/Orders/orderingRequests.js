@@ -1,6 +1,7 @@
 import { getHeaderInfoFromUrl } from "../../../../../utils";
 import { get, post } from "../../../../../utils/api";
 import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, RENEWAL_STATUS_ACTIVE, UPDATE_FAILED } from "../../../../../utils/constants";
+import { isImpersonateAccountHeaderDisabled } from "../../../../../utils/featureFlagUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
 
 const awaitRequest = (fetch, delay) =>
@@ -147,15 +148,15 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     const impersonationAccount = renewalData.reseller.id;
     const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber };
     if (renewalData?.items) payload.items = renewalData.items;
-    const updateresponse = await post(updateRenewalOrderEndpoint, payload, setAdditionalHeaders(impersonationAccount));
+    const updateresponse = await post(updateRenewalOrderEndpoint, payload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
     if (updateresponse.status === 200) {
       const isError = updateresponse.data?.error?.isError;
       if (isError) throw UPDATE_FAILED
       const getStatusConf = { getStatusEndpoint, id: source.id, delay: 1000, iterations: 8 };
-      const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf, setAdditionalHeaders(impersonationAccount));
+      const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
       if (getStatusResponse) {
         const orderPayload = { id: source.id };
-        const orderResponse = await post(orderRenewalEndpoint, orderPayload, setAdditionalHeaders(impersonationAccount));
+        const orderResponse = await post(orderRenewalEndpoint, orderPayload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
         if (orderResponse.status === 200) {
           const transactionNumber =
             orderResponse.data.content.confirmationNumber;
