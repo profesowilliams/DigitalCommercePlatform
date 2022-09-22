@@ -69,7 +69,7 @@
   border: none;
   cursor: pointer;
   @include mobile {
-    margin-bottom: rem(4px);
+    margin-bottom: rem(0px);
   }
 
   &:hover {
