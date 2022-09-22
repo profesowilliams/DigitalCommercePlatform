@@ -38,7 +38,7 @@ function ResellerInfo({
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
 
     if (!flag) {
-      setResellerDetails(reseller);
+      setResellerDetails(resellerDetails);
     }
   };
 

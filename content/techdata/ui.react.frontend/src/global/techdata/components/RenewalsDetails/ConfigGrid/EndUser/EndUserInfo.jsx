@@ -121,7 +121,7 @@ function EndUserInfo({
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
 
     if (!flag) {
-      setEndUserDetails(endUser);
+      setEndUserDetails(endUserDetails);
       setIsEmailValid(true);
     }
   };
@@ -259,7 +259,6 @@ function EndUserInfo({
       />
       {editMode ? (
         <EndUserEdit
-          endUser={endUser}
           endUserDetails={endUserDetails}
           isEmailValid={isEmailValid}
           handleAddressChange={handleAddressChange}

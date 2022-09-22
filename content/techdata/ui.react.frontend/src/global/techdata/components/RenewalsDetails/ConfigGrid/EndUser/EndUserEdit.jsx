@@ -5,7 +5,6 @@ import { endUserConstants, endUserLables } from './utils';
 import { handleValidation } from '../Common/utils';
 
 export default function EndUserEdit({
-  endUser,
   endUserDetails,
   isEmailValid,
   ...props
