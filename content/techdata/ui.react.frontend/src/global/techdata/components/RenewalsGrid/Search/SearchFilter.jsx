@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useEffect } from "react";
 import { ArrowClockWiseIcon, SearchIcon } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
@@ -116,9 +117,9 @@ function _SearchFilter(
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
     if (searchTriggered) {
-      onQueryChanged({onSearchAction:true});  
-      setSwitchDropdown(!searchTerm.length);
+      onQueryChanged({onSearchAction:true});
     }
+    setSearchTriggered(false);
     setSearchTerm("");
     setCapsuleSearchValue("");
     clearValues();
@@ -252,6 +253,12 @@ function _SearchFilter(
     );
   }
 
+  const handleMouseLeave = (e) => {
+    if (isSearchCapsuleVisible) return 
+    setSwitchDropdown(false);
+    onReset();
+  }
+
   if (option.length && isEditView) {
     const chosenFilter = values.label;
     return (
@@ -302,7 +309,7 @@ function _SearchFilter(
   return (
     <>
       <SearchCapsule />    
-      <div className="cmp-renewal-search">
+      <div className="cmp-renewal-search" onMouseLeave={handleMouseLeave}>
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
             <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
@@ -326,7 +333,7 @@ function _SearchFilter(
               </button>
             </div>
             <If condition={true}>
-              <div className={computeClassName("cmp-search-options hide")}>
+              <div className={computeClassName("cmp-search-options")}>
                 {options.map((option) => renderWithPermissions(option))}
               </div>
             </If>
