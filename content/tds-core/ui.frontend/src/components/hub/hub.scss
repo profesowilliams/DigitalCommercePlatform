@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
   width: auto !important;
-  z-index: 999;
+  z-index: 99999;
   &.active {
     .cmp-button {
       &:after {
@@ -34,13 +34,17 @@
       display: none;
       border-top: 2px solid get-color(header-links-blue);
       position: absolute;
-      top: 56px;
+      top: 66px;
       right: 0;
       background-color: get-color(brand-white);
       min-width: 165px;
       overflow: auto;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 999;
+       @include tablet {
+          position: fixed;
+          top: 50px;
+      }
     }
     &__dropdown {
       &.show{

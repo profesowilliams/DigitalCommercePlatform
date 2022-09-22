@@ -107,6 +107,7 @@ const SearchBar = ({ data, componentProp }) => {
         setChecked(false);
         setFocus(false);
         setAreaSelectionOpen(false);
+        setSearchTermText('');
     }
   };
 
