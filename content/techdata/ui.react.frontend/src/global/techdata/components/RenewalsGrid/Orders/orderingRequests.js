@@ -128,7 +128,7 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
 }
 
 const setAdditionalHeaders = (impersonationAccount) => {
-  return isHouseAccount() ? {headers: {impersonationAccount}} : {};
+  return isHouseAccount() ? {headers: {impersonateAccount: impersonationAccount}} : {};
 }
 
 export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber }) {

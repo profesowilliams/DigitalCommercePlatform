@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
   }
   res.header(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer, impersonationAccount"
+    "Content-Type, Authorization, Content-Length, X-Requested-With, TraceId, Consumer, SessionId, Accept-Language, Site, traceparent, Request-Id, Referer, impersonateAccount"
   );
   res.header("Consumer", "*");
   res.header("SessionId", "*");
