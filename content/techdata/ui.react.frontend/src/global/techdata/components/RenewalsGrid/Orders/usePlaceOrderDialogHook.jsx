@@ -82,7 +82,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
     }
     const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber});
     handleToggleToaster({...operationResponse});   
-    typeof resetGrid === 'function' && setTimeout(() => resetGrid(), 1600);
+    typeof resetGrid === 'function' && operationResponse?.isSuccess && setTimeout(() => resetGrid(), 1600);
   }
   
   function checkButtonDisabled() {

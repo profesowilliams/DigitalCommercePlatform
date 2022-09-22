@@ -120,7 +120,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   function getFilterParent(){
     const newSubheader = document.querySelector("[data-component='NewSubheader']");
     const apjHeader = document.querySelector("#cmp-techdata-header");
-    const aemAPJMainSubheader = document.querySelector(".subheader")?.parentNode?.parentNode?.parentNode?.parentNode; 
+    const aemAPJMainSubheader = document.querySelector(".subheader")?.parentNode?.parentNode?.parentNode; 
     if (isTDSynnex && aemAPJMainSubheader) {
       aemAPJMainSubheader.style.position = 'relative';
       return aemAPJMainSubheader;

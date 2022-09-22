@@ -158,8 +158,8 @@ $bg--marketing-card:#F7F7F7;
         position: absolute;
         background-color: #e1e1e4;
         height: 1px;
-        width: calc(100% - 9%);
-        left: 9px;
+        width: 97%;
+        left: -9px;
         bottom: 0;				
       }				
     } 
@@ -170,8 +170,8 @@ $bg--marketing-card:#F7F7F7;
       position: absolute;
       background-color: #e1e1e4;
       width: 1px;
-      height: calc(100% - 13%);
-      top: 0;
+      height: 92%;
+      top: -6px;
       bottom: 0;
       right: 0;				
     }

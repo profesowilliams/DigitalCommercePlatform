@@ -173,8 +173,8 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     }
   } catch (error) {      
     const response = error?.response?.data;
-    const salesContentEmail = response?.salesContactEmail;
-    if (salesContentEmail && PROCESS_ORDER_FAILED) {
+    const salesContentEmail = response?.salesContactEmail;  
+    if (salesContentEmail && error === PROCESS_ORDER_FAILED) {
       console.log("error.response >> ", error.response);
       return {
         transactionNumber:'',
@@ -199,5 +199,11 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
         salesContentEmail
       }
     }    
+    return {       
+      transactionNumber: "",
+      isSuccess: false,
+      failedReason:PROCESS_ORDER_FAILED,
+      salesContentEmail
+    }
   }
 }
