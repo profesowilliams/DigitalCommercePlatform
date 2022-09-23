@@ -222,7 +222,8 @@ export async function fetchRenewalsByGet(config){
     const mapUrl = urlStrToMapStruc(request.url);  
     const {sortStrValue, isColReseted} = extractSortColAndDirection(hasSortChanged.current?.sortData);
     const secondLevelSort = calcSecondLevelSorting(hasSortChanged.current?.sortData);
-    secondLevelSort && mapUrl.set('SortBySecondLevel',secondLevelSort);
+   
+    secondLevelSort && !secondLevelSort.includes("undefined") && mapUrl.set('SortBySecondLevel',secondLevelSort);
     mapUrl.set('SortBy',sortStrValue);
     if (isColReseted) mapUrl.delete('SortBy');
     mapUrl.delete('SortDirection')  

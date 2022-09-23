@@ -1,6 +1,6 @@
 
 $font-color:#555555;
-$bg--marketing-card:#F7F7F7;
+$bg--marketing-card:#F8F8F8;
 @mixin common-planoption-card {
   padding: 1rem 22px 1rem 0;
   text-align: left;
@@ -199,7 +199,7 @@ $bg--marketing-card:#F7F7F7;
 		grid-template-columns: repeat( auto-fit, minmax(297px, 1fr) );
 		grid-gap: 26px;
 		padding: 20px;
-    background-color: #F7F7F7;
+    background-color: #F8F8F8;
 		-webkit-box-shadow: inset 5px -5px 4px -4px #E1E1E1; 
 		box-shadow: inset 5px -5px 4px -4px #E1E1E1, inset -6px 3px 4px -4px #E1E1E1;
   		@media (max-width:750px){
