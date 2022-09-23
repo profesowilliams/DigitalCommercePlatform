@@ -73,7 +73,7 @@ function ResellerInfo({
       <span className="cmp-renewals-qp__reseller-info--title">
         {resellerLabels.resellerLabel}
       </span>
-      {showError && <MissingInfo>Reseller missing information!</MissingInfo>}
+      {showError && <MissingInfo>Reseller missing information</MissingInfo>}
       {showEditButton && (
         <EditFlow
           disabled={!editMode && isEditingDetails}
