@@ -4670,7 +4670,8 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "reinstatementFeeCost": null,
                         "reinstatementFeeSell": null,
                         "serialNumbers": [
-                            null
+                            "thomas234h32h3",
+                            "cdf6675asd6s6s",
                         ],
                         "instance": "187719764",
                         "discounts": [

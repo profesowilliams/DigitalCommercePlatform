@@ -99,7 +99,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
                     });
                   }}
                 >
-                  {line.serialCellLabel ? line.serialCellLabel : "view multiple"}
+                  {line.serialNumbers.length > 1 ? "view multiple" : line.serialNumbers[0]}
                 </a>
               ) : (line.serialCellNotFoundMessage
                     ? line.serialCellNotFoundMessage
