@@ -15,8 +15,8 @@ RewriteRule ^/vn/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/vn/
 RewriteCond %{REQUEST_URI} !(/|.jpe?g|.html|.svg|.json|.png|.txt|.xml|.cache)$
 
 # apac
-RewriteRule ^/apj$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/apj/en.html [PT,L]
-RewriteRule ^/apac/en$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/apj/en.html [PT,L]
+RewriteRule ^/apac$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/apac/en.html [PT,L]
+RewriteRule ^/apac/en$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/apac/en.html [PT,L]
 RewriteRule ^/au$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/au/en.html [PT,L]
 RewriteRule ^/au/en$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/au/en.html [PT,L]
 RewriteRule ^/hk$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/hk/en.html [PT,L]
