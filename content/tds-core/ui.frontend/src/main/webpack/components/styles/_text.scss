@@ -3,6 +3,100 @@
 
 
 .cmp-text {
+  sup, sub {
+    font-size: initial;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: 300;
+  }
+
+  h1 {
+    font-size: rem(40px);
+    line-height: rem(61px);
+
+    &.large {
+        font-size: rem(66px);
+        line-height: rem(82px);
+    }
+}
+
+h2 {
+    font-size: rem(32px);
+    line-height: rem(48px);
+}
+
+h3 {
+    font-size: rem(28px);
+    line-height: rem(42px);
+}
+
+h4 {
+    font-size: rem(20px);
+    line-height: rem(30px);
+}
+
+h5 {
+    font-size: rem(16px);
+    line-height: rem(24px);
+}
+
+h6 {
+    font-size: rem(14px);
+    line-height: rem(19.92px);
+}
+
+p {
+    font-size: rem(16px);
+    line-height: rem(24px);
+
+    &.large {
+        font-size: rem(20px);
+        line-height: rem(30px);
+    }
+
+    &.small {
+        font-size: rem(14px);
+        line-height: rem(16.8px);
+    }
+}
+
+
+@include mobile {
+    h1  {
+        font-size: rem(32px);
+        line-height: rem(40px);
+
+        &.large {
+            font-size: rem(52px);
+            line-height: rem(68px);
+        }
+    }
+
+    h2 {
+        font-size: rem(28px);
+        line-height: rem(42px);
+    }
+
+    h3 {
+        font-size: rem(20px);
+        line-height: rem(30px);
+    }
+
+    h4 {
+        font-size: rem(16px);
+        line-height: rem(21px);
+    }
+
+    h5 {
+        font-size: rem(16px);
+        line-height: rem(21px);
+    } 
+
+    h6 {
+        font-size: rem(14px);
+        line-height: rem(21px);
+    }
+}
 
   ul,
   ol {
@@ -145,6 +239,11 @@
             padding-bottom: 10px;
             line-height: 50px;
             @include text-deep-teal;
+
+            @include mobile {
+              line-height: 25px;
+              padding-bottom: 0;
+            }
           }
         }
 
@@ -171,7 +270,11 @@
 
 .dp-text--white {
   color: #fff;
-}
+
+    @include mobile {
+      width: auto!important;
+    }
+  }
 
 .dp-text--light-blue {
   color: #00b1e2;
@@ -188,6 +291,11 @@
 .dp-text--teal {
   @include text-teal;
 }
+
+.dp-text--aqua {
+  @include text-aqua;
+}
+
 
 .dp-text--xsmall {
 
@@ -292,6 +400,7 @@
           &--white {
             @include text-white;
             text-decoration: underline;
+            width:auto;
           }
 
           //TDS Secondary background colors

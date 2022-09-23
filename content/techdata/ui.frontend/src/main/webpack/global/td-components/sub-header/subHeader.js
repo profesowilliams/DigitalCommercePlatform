@@ -17,7 +17,7 @@ export const subHeader = () => {
         if (isntMenu) {
             // Search tag menu that does have class active and removed it to close the menu 
             // when clicking outside the menu and subheader
-            
+
             // For OLD Subheader
             const oldMenu = document.getElementsByClassName('cmp-tabs__tabpanel--active cmp-tabs__tabpanel--custom-active')[0];
             if (oldMenu) {
@@ -46,7 +46,7 @@ export const subHeader = () => {
     }
 
     function removeActiveClass(tabsArray) {
-        for(const tab of tabsArray) {
+        for (const tab of tabsArray) {
             tab.classList.remove("cmp-tabs__tab--active");
         }
     }
@@ -62,32 +62,35 @@ export const subHeader = () => {
     function getHref(href) {
         // if href contains host domain, remove it.
         let anchorRef = href;
-        if(isURL(href)) {
+        if (isURL(href)) {
             let url = new URL(href);
             anchorRef = url.pathname;
         }
         return anchorRef;
     }
-    
+
     const subheaderNav = document.querySelector(".cmp-sub-header--sub-nav.new-sub");
 
     if (subheaderNav) {
         const subheaderTabs = subheaderNav.getElementsByClassName("cmp-tabs__tablist");
-        
-        const tabs =subheaderTabs[0]?.getElementsByClassName("cmp-tabs__tab") || [];
-    
+
+        const tabs = subheaderTabs[0]?.getElementsByClassName("cmp-tabs__tab") || [];
+
         const currentPagePath = subheaderNav.getAttribute("data-current-page-path") + ".html";
-    
-        for(const tab of tabs) {
+
+        for (const tab of tabs) {
             let anchor = tab.getElementsByTagName("a")[0];
-            if(anchor) {
+            if (anchor) {
                 let href = getHref(anchor.getAttribute("href"));
 
-                if(currentPagePath === href || currentPagePath.endsWith(href)) {
+                if (currentPagePath === href || currentPagePath.endsWith(href)) {
                     removeActiveClass(tabs);
                     tab.classList.add("cmp-tabs__tab--active");
                 }
             }
         }
+
+        //Centers the active menu item when scrolling horizontally
+        $('.cmp-tabs__tab--active')[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 }

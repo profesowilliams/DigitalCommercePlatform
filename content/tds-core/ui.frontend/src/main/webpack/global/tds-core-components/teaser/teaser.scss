@@ -1,5 +1,3 @@
-$colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-get($color-palette,"chartreuse"), map-get($color-palette,"cherry");
-
 @mixin teaser-default {
     .cmp-teaser {
         position: relative;
@@ -659,90 +657,112 @@ $colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-
 }
 
 // TD SYNNEX Modern Card - No Image
+#teasers {
 
-.teaser {
-    &.cmp-teaser {
-        &-tds {
-            &__card {          
-                padding: 10px 10px;
-                display: grid !important;
-                place-items: center;
+    div {
+        width: 100%;
+        margin: auto;
+        place-content: center;
+        grid-template-columns: auto auto;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 0;
+        grid-auto-flow: row;
+        grid-auto-columns: 1fr;
+        grid-auto-rows: 1fr;
+        display: grid;
 
-                .cmp-teaser {			
-                    width: fit-content;
-                    display: flex;
+        &::before {
+            content: none;
+        }
 
-                    &__image {
-                        display: none;
-                    }
+        .teaser {
+            width: 484.75px;
+            height: 335px;
 
-                    &__title {
-                        min-height: fit-content;
-                        display: flex;
-                        justify-content: space-between;
-                        flex-direction: row;
-                        text-align: left;
-                        width: 100%;
-                        line-height: 50px;
-                        padding-top: 10px;
+            &.cmp-teaser {
+                &-tds {
+                    &__card {
+                        padding: 10px 10px;
+                        display: grid !important;
+                        place-items: center;
 
-                        &-link {
-                            line-height: unset;
-                            color: map-get($color-palette,"teal");
-                            text-decoration: none;
-                        }
-                    }
-
-                    &__content {
-                        box-shadow: 0px 7px 12px 0px map-get($color-palette,"cool-gray-8");
-                        padding: 20px;
-                        margin: 15px 0px 0px 10px;
-                        border-radius: 4px;
-                        align-items: left;
-                        display: block;
-                        height: 300px;
-                    }
-
-                    &__description {
-                        display: block;
-                        padding: 0;
-
-                        p {
-                            width: 100%;
-                            padding: 0;
-                        }
-                    }
-                }
-
-                &.dp-border-color {
-                    &__chartreuse {
                         .cmp-teaser {
+                            width: fit-content;
+                            display: flex;
+
+                            &__image {
+                                display: none;
+                            }
+
+                            &__title {
+                                min-height: fit-content;
+                                display: flex;
+                                justify-content: space-between;
+                                flex-direction: row;
+                                text-align: left;
+                                width: 100%;
+                                line-height: 50px;
+                                padding-top: 10px;
+
+                                &-link {
+                                    line-height: unset;
+                                    color: map-get($color-palette, "teal");
+                                    text-decoration: none;
+                                }
+                            }
+
                             &__content {
-                                border-top: 5px solid map-get($color-palette,"chartreuse");
+                                box-shadow: 0px 7px 12px 0px map-get($color-palette, "cool-gray-8");
+                                padding: 20px;
+                                margin: 15px 0px 0px 10px;
+                                border-radius: 4px;
+                                align-items: left;
+                                display: block;
+                                height: 300px;
+                            }
+
+                            &__description {
+                                display: block;
+                                padding: 0;
+
+                                p {
+                                    width: 100%;
+                                    padding: 0;
+                                }
                             }
                         }
-                    }
 
-                    &__cherry {
-                        .cmp-teaser {
-                            &__content {
-                                border-top: 5px solid map-get($color-palette,"cherry");
+                        &.dp-border-color {
+                            &__chartreuse {
+                                .cmp-teaser {
+                                    &__content {
+                                        border-top: 5px solid map-get($color-palette, "chartreuse");
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    &__cobalt {
-                        .cmp-teaser {
-                            &__content {
-                                border-top: 5px solid map-get($color-palette,"cobalt");
+                            &__cherry {
+                                .cmp-teaser {
+                                    &__content {
+                                        border-top: 5px solid map-get($color-palette, "cherry");
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    &__aqua{
-                        .cmp-teaser {
-                            &__content {
-                                border-top: 5px solid map-get($color-palette,"aqua");
+                            &__cobalt {
+                                .cmp-teaser {
+                                    &__content {
+                                        border-top: 5px solid map-get($color-palette, "cobalt");
+                                    }
+                                }
+                            }
+
+                            &__aqua {
+                                .cmp-teaser {
+                                    &__content {
+                                        border-top: 5px solid map-get($color-palette, "aqua");
+                                    }
+                                }
                             }
                         }
                     }
@@ -753,30 +773,46 @@ $colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-
 }
 
 @media (max-width: 991.98px) {
-    #teasers { //needs to be a class
+    #teasers {
         div {
+            width: 100%;
+            margin: auto;
+            place-content: center;
+            grid-template-columns:  auto;
+            grid-gap: 0;
+            grid-auto-flow: row;
+            grid-auto-columns: 1fr;
+            grid-auto-rows: 1fr;
             display: grid;
+
+            &::before {
+                content: none;
+            }
 
             .teaser {
                 &.cmp-teaser {
                     width: 100%;
 
                     &-tds {
-                        &__card { 
-                            width: 100%;
+                        &__card {
+                            width: 100% !important;
                             padding: 10px 10px;
-                            display: grid;
+                            display: block!important;
                             place-items: center;
                             width: fit-content;
-                            margin: 0;
+                            margin: 0 !important;
+                            clear: right !important;
+                            grid-template-columns: 1fr;
+                            height: auto;
 
-                            .cmp-teaser {			
+                            .cmp-teaser {
                                 display: block;
-            
+                                width: inherit;
+
                                 &__image {
                                     display: none;
                                 }
-            
+
                                 &__title {
                                     min-height: fit-content;
                                     display: flex;
@@ -785,28 +821,31 @@ $colors: map-get($color-palette,"cobalt"), map-get($color-palette, "aqua"), map-
                                     text-align: left;
                                     width: 100%;
                                     line-height: 50px;
-            
+
                                     &-link {
                                         line-height: unset;
                                     }
                                 }
-            
+
                                 &__content {
-                                    box-shadow: 0px 7px 12px 0px map-get($color-palette,"charcoal");
+                                    box-shadow: 0px 7px 12px 0px map-get($color-palette, "charcoal");
                                     padding: 10px;
-                                    margin: 15px 0px 0px 10px;
+                                    margin: 0px;
                                     border-radius: 4px;
                                     align-items: left;
                                     display: block;
+                                    height: fit-content;
                                 }
-            
+
                                 &__description {
                                     display: block;
                                     padding: 0;
-            
+
                                     p {
                                         width: 100%;
                                         padding: 0;
+                                        font-size: 14px;
+                                        line-height: 21px;
                                     }
                                 }
                             }

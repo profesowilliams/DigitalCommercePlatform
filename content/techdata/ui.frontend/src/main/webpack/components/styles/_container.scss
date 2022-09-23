@@ -91,3 +91,34 @@ These style system class work for container component only. */
     vertical-align: middle;
   }
 }
+
+/*
+Two things: We need to get rid of the extra padding classes. This is a mobile first nightmare.
+Secondly, this is very hacky and needs to be refactored.
+*/
+@include mobile {
+  // For the time being, we're not going to show the vendor container on mobile.
+  #sie-vendor-partners {
+    display: none;
+  }
+
+  .dp-general__innerspace--left-large, 
+  .dp-general__innerspace--left-medium > .cmp-container, 
+  .dp-general__innerspace--left-large > .cmp-container {
+    padding-left: 0!important;
+  }
+
+  .dp-general__innerspace--right-large, 
+  .dp-general__innerspace--right-medium >.cmp-container, 
+  .dp-general__innerspace--right-large > .cmp-container {
+    padding-right: 0!important;
+  }
+
+  .cmp-component-vendor__center {
+    .cmp-text {
+      p {
+        font-size: 18px;
+      }
+    }
+  }
+}

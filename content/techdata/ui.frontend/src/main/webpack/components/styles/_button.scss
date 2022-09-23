@@ -2,9 +2,14 @@
 	cursor: pointer;
 
 	&--default-dark {
+		@include mobile {
+			margin-left: 0!important;
+		}
+
 		& .cmp-button {
 			background-color: map-get($color-palette,"teal");
 			padding: 1rem;
+			white-space: nowrap;
 
 			& .cmp-button__text {
 				color: get-color(brand-white);
@@ -25,14 +30,28 @@
 					color: map-get($color-palette,"white");
 				}
 			}
+
+			@include mobile { 
+				display: grid;
+				place-content: center;
+			}
+	
 		}
 
+		@include mobile { 
+			width: 100%!important;
+		}
 	}
 
 	&--default-light {
+		@include mobile {
+			margin-left: 0!important;
+		}
+
 		& .cmp-button {
 			background-color: map-get($color-palette,"white");
 			padding: 1rem;
+			white-space: nowrap;
 
 			& .cmp-button__text {
 				color: map-get($color-palette,"teal");
@@ -53,8 +72,16 @@
 					color: map-get($color-palette,"teal");
 				}
 			}
+
+			@include mobile { 
+				display: grid;
+				place-content: center;
+			}
 		}
 
+		@include mobile { 
+			width: 100%!important;
+		}
 	}
 
 	&--disabled {
@@ -64,6 +91,12 @@
 
 			& .cmp-button__text {
 				color: map-get($color-palette,"charcoal");
+			}
+
+			@include mobile { 
+				width: 100%;
+				display: grid;
+				place-content: center;
 			}
 		}
 	}

@@ -91,3 +91,14 @@ These style system class work for container component only. */
     vertical-align: middle;
   }
 }
+
+/*
+Two things: We need to get rid of the extra padding classes. This is a mobile first nightmare.
+Secondly, this is very hacky and needs to be refactored.
+*/
+@include mobile {
+  // For the time being, we're not going to show the vendor container on mobile.
+  #sie-vendor-partners {
+    display: none;
+  }
+}

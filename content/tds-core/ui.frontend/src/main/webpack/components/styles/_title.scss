@@ -3,6 +3,8 @@
 @import "../../global/styles/_font-face.scss";
 @import "../../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer.scss";
 
+
+//These sizes should be in sync with the sizes in the _variables.scss file
 .cmp-tds-title {
     &.dp-title {
         h1 {
@@ -11,6 +13,7 @@
 
             &.large {
                 font-size: rem(66px);
+                line-height: rem(82px);
             }
         }
 
@@ -53,6 +56,8 @@
                 line-height: rem(16.8px);
             }
         }
+
+
     }
 }
 
@@ -272,6 +277,12 @@
         &-align {
             &-center {
                 text-align: center;
+
+                @include mobile {
+                    margin: 0!important;
+                    width: auto!important;
+                    float: none!important;
+                }
             }
 
             &-left {
@@ -341,12 +352,41 @@
 
 @include mobile {
     .dp-title {
-        h1 {
-            font-size: 1.375rem;
-        }
+        @include mobile {
+            h1  {
+                font-size: rem(32px);
+                line-height: rem(40px);
 
-        h3 {
-            font-size: 0.875rem;
+                &.large {
+                    font-size: rem(52px);
+                    line-height: rem(68px);
+                }
+            }
+
+            h2 {
+                font-size: rem(28px);
+                line-height: rem(42px);
+            }
+
+            h3 {
+                font-size: rem(20px);
+                line-height: rem(30px);
+            }
+
+            h4 {
+                font-size: rem(16px);
+                line-height: rem(21px);
+            }
+
+            h5 {
+                font-size: rem(16px);
+                line-height: rem(21px);
+            } 
+
+            h6 {
+                font-size: rem(14px);
+                line-height: rem(21px);
+            }
         }
     }
 }

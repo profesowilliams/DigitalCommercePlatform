@@ -1,8 +1,6 @@
 @import "../../variables";
 @import "../../../site/variables";
 
-
-
 .cmp-sub-header {
   font-family: "Open Sans", sans-serif;
   font-size: $font-size-custom-xxsmall;
@@ -156,12 +154,18 @@
       }
     }
 
-    
+    //This allows the sub-menu to display on mobile
     @include mobile {
         display: flex !important;
 
       ol {
-        display: none;
+        display: contents;
+
+        li {
+          a {
+            white-space: nowrap;
+          }
+        }
       }
       .cmp-sub-header__wrapper ul li+li {
         display: none !important;
@@ -217,12 +221,16 @@
       background-color: get-color(brand-blue);
       grid-template-columns: 20% 60% 20%;
       @include subheader-span-border-bottom;
+      top: 80px;
+      position: fixed;
+      z-index: 1;
     }
 
     &.cmp-experiencefragment__subheader--sticky {
       position: fixed;
-      z-index: 9998;
+      z-index: 1;      
       opacity: 1;
+      height: 3.5em;
     }
 
     &.cmp-experiencefragment__subheader--sticky--opaque {
@@ -284,3 +292,60 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .subheader {
+    .cmp-tabs {
+      height: 60px;
+
+      .cmp-sub-header--sub-nav {
+        display: block!important;
+        white-space: nowrap;
+
+        &.new-sub {
+          top: 45px;
+          height: 4.5em;
+
+          &.cmp-experiencefragment__subheader--sticky {
+            height: 4.5em;
+          }
+
+        .cmp-sub-header--sub-nav__title {
+          height: 16px;
+          margin-top: 7px;
+
+          .cmp-sub-header--sub-nav__image {
+            width: 100%;
+            margin-left: 0px;
+            text-align: center;
+            text-align: -webkit-center;
+
+            image {
+              height: 18px;
+            }
+          }
+        }
+
+        .cmp-tabs__tablist {
+          white-space: nowrap;
+          overflow-x: auto;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+          -ms-overflow-style: -ms-autohiding-scrollbar;
+          overscroll-behavior-x: contain;
+          scroll-snap-type: x mandatory;
+          display: grid;
+          grid-auto-flow: column;
+          gap: 1rem;
+          grid-template-rows: auto;
+          overflow-y: hidden;
+
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  }
+}

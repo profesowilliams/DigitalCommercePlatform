@@ -38,6 +38,14 @@
     border: none;
   }
   > .cmp-tabs > .cmp-tabs__tablist {
+    
+    @include mobile {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      grid-gap: 10px;
+    }
+
     .li,
     [role="tab"] {
       padding: 0 1rem;
@@ -439,5 +447,68 @@
 
   .cmp-tabs__tab {
     padding: 1rem 1.75rem;
+  }
+}
+
+.cmp-tabs-streamone__resources {
+  line-height: rem(30px);
+  
+  .cmp-tabs {
+      display: flex;
+
+      &__tablist {
+          display: flex;
+          
+          @include mobile {
+            display: none!important;
+          }
+
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          width: -webkit-fill-available;
+          width: 18%;
+          margin: 0;
+          line-height: rem(50px);
+          .cmp-tabs__tab {
+              padding: 0 rem(16px);
+              position: relative;
+              top: rem(-10px);
+          }
+      }
+
+      &__tabpanel {
+          margin: 0 !important;
+          width: 82%;
+          padding-left: rem(45px);
+          border-left: rem(1px) solid get-color(brand-scrollbar);
+
+          @include mobile {
+            width: 90%;
+          }
+
+          .cmp-container {
+              padding-top: 0 !important;
+              padding-bottom: 0 !important;
+          }
+      }
+
+      &__tab {
+          i,
+          svg {
+              color: transparent;
+          }
+          &--active,
+          &:hover,
+          &:active {
+              font-weight: 600;
+              color: get-color(brand-blue) !important;
+
+              i,
+              svg {
+                  color: get-color(brand-light-blue) !important;
+              }
+          }
+      }
   }
 }

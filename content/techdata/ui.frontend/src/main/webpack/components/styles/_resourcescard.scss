@@ -32,6 +32,10 @@
                 color: map-get($color-palette, "teal");
                 line-height: 30px;
                 height: 75px;
+
+                @include mobile {
+                    height: auto;
+                }
             
                 &::before {
                     content: "";
@@ -133,8 +137,19 @@
 
 
 // RESPONSIVE
+@media screen and (max-width: 1200px ) {
+    .cmp-div__three-column {
+        .cmp-contentfragmentlist {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            grid-template-columns: 1fr 1fr;
 
-@media (max-width: 991.98px) {
+        }
+    }
+}
+
+@media screen and (max-width: 991.98px) {
     .cmp-div__three-column {
         .cmp-contentfragmentlist {
             display: grid;
@@ -152,6 +167,7 @@
                 padding-left: 7px;
                 color: map-get($color-palette, "teal");
                 font-weight: bold;
+                line-height: 23px;
 
                 &::before {
                     content: "";
@@ -164,7 +180,7 @@
 
             .cmp-contentfragment__element--short-body {
                 color: map-get($color-palette, "teal");
-                padding: 0 5px 5px 5px;
+                padding: 0 15px 5px;
             }
 
             .cmp-contentfragment__element--resource-link {
@@ -181,7 +197,6 @@
                 border: 1px solid darkgray;
                 border-radius: 4px;
                 justify-content: center;
-                padding: 0 10px;
                 margin: 0 10px 10px;
 
                 &__element-title {
@@ -191,3 +206,4 @@
         }
     }
 }
+
