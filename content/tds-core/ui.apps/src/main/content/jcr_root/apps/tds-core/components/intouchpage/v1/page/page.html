@@ -81,7 +81,7 @@
           });
         </script>
 <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
-     data-sly-test="${serviceData.enableQualtricsCode}">
+     data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
     <script type="text/javascript">
         if(typeof QSI === "undefined") {
             // QSI object populated only for logged in user

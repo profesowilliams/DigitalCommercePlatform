@@ -30,7 +30,7 @@
     </script>
 </sly>
 <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
-	 data-sly-test="${serviceData.enableQualtricsCode}">
+	 data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
 	<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
 
 	<script type='text/javascript'>
