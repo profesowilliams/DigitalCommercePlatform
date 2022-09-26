@@ -11,6 +11,7 @@ import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { DateOptionsList } from "./DateOptionsList";
 import "./datePicker.scss";
 import { getClientLocale, localeByCountry } from "../../../../../utils/utils";
+import { ChevronLeftIcon, ChevronRightIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function CustomStartEndText() {
   return (
@@ -30,9 +31,11 @@ export default function FilterDatePicker({ isOpen = false }) {
   const isTDSynnex = useRenewalGridState( state => state.isTDSynnex || false);
   let customStartDate = useRenewalGridState(state => state.customStartDate);
   let customEndDate = useRenewalGridState(state => state.customEndDate);
+  const navIcons = isTDSynnex ?
+    { navPrev: <ChevronLeftIcon fill="#003031" />, navNext: <ChevronRightIcon fill="#003031" /> } : null
 
   useEffect(() =>
-    isTDSynnex && document.documentElement.style.setProperty('--main-datepicker-color', '#005758'), [])
+    isTDSynnex && document.documentElement.style.setProperty('--main-datepicker-color', '#003031'), [])
   useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues), [aemConfig?.dateOptionValues]);
   /**
    * Unfortunately moment is a peer dependency of react-dates.
@@ -65,7 +68,8 @@ export default function FilterDatePicker({ isOpen = false }) {
               startDateId="start-date"
               startDatePlaceholderText="Add date"
               endDatePlaceholderText="Add date"
-              endDate={customEndDate}
+              endDate={customEndDate}         
+              {...navIcons}
               endDateId="end-date"
               verticalHeight={468}
               showDefaultInputIcon={true}

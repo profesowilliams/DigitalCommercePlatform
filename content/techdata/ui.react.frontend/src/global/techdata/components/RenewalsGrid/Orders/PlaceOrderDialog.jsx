@@ -90,6 +90,7 @@ function PlaceOrderDialog({
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{zIndex:'10000'}}
       >
         <div className="place-cmp-order-dialog-container">
           <div className="place-cmp-order-dialog-container__closeIcon">
