@@ -33,7 +33,7 @@ const columnFieldsMap = (definition, eventProps) => {
       <Link
         href={renewalDetailsURL}
         variant="renewal-links__secondary"
-        underline="always"
+        underline="hover"
       >
         {data.source.id}
       </Link>
