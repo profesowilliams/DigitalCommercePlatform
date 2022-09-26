@@ -1,26 +1,28 @@
 
 <template data-sly-template.contentFragment="${@ fragment='The content fragment', fragmentPath='', wcmmode='WCM mode'}">
-<article id="${fragment.id}"
-         class="cmp-contentfragment cmp-contentfragment--${fragment.name}"
-         data-cmp-contentfragment-model="${fragment.type}"
-         data-sly-attribute.data-cmp-contentfragment-path="${fragmentPath}"
-         data-json="${fragment.editorJSON}"
-         data-cmp-data-layer="${fragment.data.json}">
+        <article id="${fragment.id}"
+                class="cmp-contentfragment cmp-contentfragment--${fragment.name}"
+                data-cmp-contentfragment-model="${fragment.type}"
+                data-sly-attribute.data-cmp-contentfragment-path="${fragmentPath}"
+                data-json="${fragment.editorJSON}"
+                data-cmp-data-layer="${fragment.data.json}">
 
-    <sly data-sly-test="${fragment.elements[0].value}">
-        <img class="cmp-contentfragment__element cmp-contentfragment__element--hero-image" src="${fragment.elements[0].value}" />
-    </sly>
+            <a title="${fragment.title}" href="${fragment.elements[4].value}">
+                <sly data-sly-test="${fragment.elements[0].value}">
+                    <img class="cmp-contentfragment__element cmp-contentfragment__element--hero-image" src="${fragment.elements[0].value}" />
+                </sly>
 
-    <div class="cmp-contentfragment__title" title="${fragment.title}">${fragment.title}</div>
+                <div class="cmp-contentfragment__title" title="${fragment.title}">${fragment.title}</div>
 
-    <sly data-sly-test="${fragment.elements[3].value}">
-        <p class="cmp-contentfragment__element cmp-contentfragment__element--short-body">${fragment.elements[3].value}</p>
-    </sly>
+                <sly data-sly-test="${fragment.elements[3].value}">
+                    <p class="cmp-contentfragment__element cmp-contentfragment__element--short-body">${fragment.elements[3].value}</p>
+                </sly>
 
-    <a type="button" class="cmp-contentfragment__element cmp-contentfragment__element--resource-link" href="${fragment.elements[4].value}">
-        ${fragment.elements[5].value}
-    </a>
-</article>
+                <a type="button" class="cmp-contentfragment__element cmp-contentfragment__element--resource-link" href="${fragment.elements[4].value}">
+                    ${fragment.elements[5].value}
+                </a>
+            </a>
+        </article>
 </template>
 
 <!-- This template should not be used/called by the content fragment list component -->

@@ -17,6 +17,12 @@
         .cmp-contentfragment {
             max-width: 356.266px;
 
+            a {
+                &:visited, &:link, &:hover {
+                    text-decoration: none;
+                }
+            }
+
             .cmp-contentfragment__title {
                 font-size: medium;
                 margin-left: -10px;
