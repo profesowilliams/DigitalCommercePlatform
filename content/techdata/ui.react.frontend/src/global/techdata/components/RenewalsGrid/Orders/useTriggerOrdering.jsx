@@ -12,7 +12,7 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
   const { closeAndCleanToaster } = effects;
 
   const handleCartIconClick = async (_event) => {
-    if (data.isValid) {
+    if (!data.isValid) {
       redirectToRenewalDetail(detailUrl, data.source.id);
       return ;
     }
