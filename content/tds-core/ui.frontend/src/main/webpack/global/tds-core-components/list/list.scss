@@ -407,25 +407,26 @@
       -webkit-box-pack: center;
       justify-content: center;
       list-style-type: none;
-      width: 85%;
-
-      @include tablet {
-        width: 95%;
-      }
-
-      @include mobile {
-        width: 85% !important;
-      }
-      
       li {
         margin: 1rem;
         width: rem(410.12px);
         height: rem(483.2px);
-        background-color: get-color(neutral-gray-2);
+        background-color: white;
+        flex: 0 0 30.0%;
+
+        @include tablet {
+          width: rem(298.12px);
+          height: rem(419.2px);
+        }
+        
         article {
           background-color: get-color(neutral-gray-2);
           width: rem(410px);
           height: rem(263px);
+
+          @include tablet{
+            width: rem(298px)
+          }
         }
       }
     }
@@ -433,6 +434,7 @@
       display: flex;
       flex-direction: column;
       text-decoration: none;
+      background-color: get-color(neutral-gray-2);
       figure {
         margin: 0px;
         img {
@@ -454,6 +456,12 @@
         background-color: white;
         padding-bottom: 2.5rem;
         padding-top: rem(15px);
+
+        @include tablet {
+          width: rem(242px);
+          font-size: 13px;
+          margin-top: 3px;
+        }
       }
     }
 
@@ -476,6 +484,12 @@
       margin-right: auto;
       height: rem(195px);
       width: rem(354px);
+
+      @include tablet {
+        width: rem(242px);
+        height: rem(195px);
+        font-size: 10px;
+      }
     }
   }
 }
