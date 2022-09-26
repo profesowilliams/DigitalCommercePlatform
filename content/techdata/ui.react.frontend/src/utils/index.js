@@ -48,6 +48,10 @@ export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogou
         var logoutReturnUrl = window.location.href;
         if(isPrivatePage) {
             logoutReturnUrl = window.location.origin;
+            var returnHomePageUrl = $(".cmp-languagenavigation__item-link")[0].href;
+            if(returnHomePageUrl) {
+                logoutReturnUrl = returnHomePageUrl;
+            }
         }
         shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(logoutReturnUrl);
     }
