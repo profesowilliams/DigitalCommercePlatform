@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+import React, { useEffect, useState, useRef, Fragment, useMemo } from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
@@ -84,10 +84,29 @@ function Grid(props) {
     }
   }
 
+  const CustomLoadingCellRenderer = (props) => {
+    return (
+      <div
+        className="ag-custom-loading-cell"
+        style={{ paddingLeft: '10px', paddingTop: '50px', lineHeight: '25px' }}
+      >
+        <i className="fas fa-spinner fa-pulse"></i>{' '}
+        <span> {props.loadingMessage}</span>
+      </div>
+    );
+  };
+
+  const loadingCellRendererParams = useMemo(() => {
+    return {
+      loadingMessage: 'Loading...',
+    };
+  }, []);
+
   /*
     function that returns AG grid vnode outside main return function to keep that
     node on useState hook and set it once per component lifecycle or on demand
   */
+ 
   const AgGrid = () => (
     <AgGridReact
       masterDetail={true}
@@ -102,6 +121,10 @@ function Grid(props) {
       frameworkComponents={renderers}
       noRowsOverlayComponent={"CustomNoRowsOverlay"}
       noRowsOverlayComponentParams={noRowMsg}
+      loadingCellRenderer={"CustomLoadingCellRenderer"}
+      loadingCellRendererParams={loadingCellRendererParams}
+      loadingOverlayComponent={"CustomLoadingCellRenderer"}
+      loadingOverlayComponentParams={loadingCellRendererParams}
       pagination={pagination}
       paginationPageSize={config.itemsPerPage}
       cacheBlockSize={config.itemsPerPage}
@@ -229,6 +252,7 @@ function Grid(props) {
 
   const renderers = {
     CustomNoRowsOverlay: CustomNoRowsOverlay,
+    CustomLoadingCellRenderer
   };
   let filteredColumns = [];
 
@@ -296,6 +320,7 @@ function Grid(props) {
   function createDataSource() {
     return {
       getRows: (params) => {
+        gridApi.current.showLoadingOverlay();
         const pageNo = params.request.endRow / config.itemsPerPage;
         const sortKey = params.request.sortModel?.[0]?.colId;
         const sortDir = params.request.sortModel?.[0]?.sort;
@@ -359,10 +384,12 @@ function Grid(props) {
             return get(_url);
           },
         });
+        gridApi.current.hideOverlay();
       } else {
         try {
           globalThis[`$$tdGrid${gridId.current}`]?.onAjaxCall(apiUrl);
           response = await get(apiUrl);
+          gridApi.current.hideOverlay();
         } catch (error) {
           console.error(error);
           response = fromExceptionToErrorObject(error);

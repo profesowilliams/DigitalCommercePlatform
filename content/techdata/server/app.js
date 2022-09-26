@@ -3641,7 +3641,11 @@ app.post("/ui-renewal/v1/Search", (req, res) => {
 
 app.get("/ui-renewal/v1/Search", function (req, res) {
   const response = mockResponses.renewalSearchResponse;
-  return res.status(200).json(response);
+
+  setTimeout(() => {
+    res.status(200).json(response);
+  }, 5000);
+  return;
   // const response = [];
   const query = req.query;
   const formatValue = (name) => name.replace(/\s/g, "").toLowerCase();
