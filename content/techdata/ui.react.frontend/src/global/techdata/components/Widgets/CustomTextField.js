@@ -36,7 +36,7 @@ export const CustomTextField = styled(TextField)({
     lineHeight: '20px',
     color: '#727679',
   },
-  "& .css-wgai2y-MuiFormLabel-asterisk": {
+  "& .MuiInputLabel-asterisk.MuiFormLabel-asterisk": {
     position: 'relative',
     right: '4px',
   },
