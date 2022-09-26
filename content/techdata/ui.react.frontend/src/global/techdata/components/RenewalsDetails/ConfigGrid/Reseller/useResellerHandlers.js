@@ -17,7 +17,7 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
 
     const producedSet = createProducedSetter(setStateFunction);
     const validateEmail = (email) => {
-        if (isEmail(email)) {
+        if (isEmail(email) && email.length > 0) {
             setIsEmailValid(true);
         } else {
             setIsEmailValid(false);

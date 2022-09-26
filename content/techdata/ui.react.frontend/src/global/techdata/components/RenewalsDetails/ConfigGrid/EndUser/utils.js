@@ -60,10 +60,10 @@ export const endUserLables = {
   endUserName: 'Company name',
   endUserFullName: 'Contact full name',
   endUserEmail: 'Contact email',
-  endUserPhone: 'Contact phone number',
+  endUserPhone: 'Contact telephone number',
   endUserAddress1: 'Address 1',
   endUserAddress2: 'Address 2',
   endUserCity: 'City',
   endUserCountry: 'Country',
-  endUserAreaCode: 'Area Code',
+  endUserAreaCode: 'Area code',
 };

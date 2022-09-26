@@ -11,6 +11,7 @@ export default function EndUserEdit({
 }) {
   const {
     handleAddressChange,
+    handleAddressTwoChange,
     handleCityChange,
     handleContactNameChange,
     handleCountryChange,
@@ -20,7 +21,7 @@ export default function EndUserEdit({
     handlePostalCodeChange,
   } = props;
 
-  const { INVALID_EMAIL_TEXT, SIXTY, TWENTY } =
+  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
     endUserConstants;
   const {
     endUserName,
@@ -35,7 +36,7 @@ export default function EndUserEdit({
   } = endUserLables;
   const { contact, address } = endUserDetails;
   const contactName = contact[0]?.name;
-  const { line1, city, country, postalCode } = address;
+  const { line1, line2, city, country, postalCode } = address;
 
   const formBoxStyle = {
     '& > :not(style)': { width: '100%' },
@@ -54,11 +55,24 @@ export default function EndUserEdit({
     }
   }
 
+  const handleEmailHelperText = (text) => {
+    if (!isEmailValid && text.length !== 0) {
+      return INVALID_EMAIL_TEXT;
+    }
+
+    if (!isEmailValid && text.length === 0) {
+      return REQUIRED_FIELD;
+    }
+
+    return null;
+  };
+
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
         disabled={endUserDetails?.name?.canEdit === false}
         required
+        autoFocus={true}
         id="end-user-name"
         label={endUserName}
         variant="standard"
@@ -79,6 +93,27 @@ export default function EndUserEdit({
         {...handleValidation(contactName)}
       />
       <CustomTextField
+        disabled={contact[0]?.email?.canEdit === false}
+        required
+        id="email"
+        label={endUserEmail}
+        variant="standard"
+        value={contact[0]?.email?.text || ''}
+        onChange={(e) => handleEmailChange(e)}
+        inputProps={MAX_LENGTH_SIXTY}
+        error={!isEmailValid}
+        helperText={handleEmailHelperText(contact[0]?.email?.text)}
+      />
+      <CustomTextField
+        disabled={contact[0]?.phone?.canEdit === false}
+        id="phone"
+        label={endUserPhone}
+        variant="standard"
+        value={contact[0]?.phone?.text || ''}
+        type='number'
+        onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePhoneChange)}
+      />
+      <CustomTextField
         disabled={line1?.canEdit === false}
         required
         id="address"
@@ -88,6 +123,15 @@ export default function EndUserEdit({
         value={line1?.text || ''}
         onChange={(e) => handleAddressChange(e)}
         {...handleValidation(line1)}
+      />
+      <CustomTextField
+        disabled={line2?.canEdit === false}
+        id="addressTwo"
+        label={endUserAddress2}
+        variant="standard"
+        inputProps={MAX_LENGTH_SIXTY}
+        value={line2?.text || ''}
+        onChange={(e) => handleAddressTwoChange(e)}
       />
       <CustomTextField
         disabled={city?.canEdit === false}
@@ -121,27 +165,6 @@ export default function EndUserEdit({
         onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePostalCodeChange)}
         value={postalCode?.text || ''}
         {...handleValidation(postalCode)}
-      />
-      <CustomTextField
-        disabled={contact[0]?.email?.canEdit === false}
-        required
-        id="email"
-        label={endUserEmail}
-        variant="standard"
-        value={contact[0]?.email?.text || ''}
-        onChange={(e) => handleEmailChange(e)}
-        inputProps={MAX_LENGTH_SIXTY}
-        error={!isEmailValid}
-        helperText={!isEmailValid ? INVALID_EMAIL_TEXT : null}
-      />
-      <CustomTextField
-        disabled={contact[0]?.phone?.canEdit === false}
-        id="phone"
-        label={endUserPhone}
-        variant="standard"
-        value={contact[0]?.phone?.text || ''}
-        type='number'
-        onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePhoneChange)}
       />
     </Box>
   );

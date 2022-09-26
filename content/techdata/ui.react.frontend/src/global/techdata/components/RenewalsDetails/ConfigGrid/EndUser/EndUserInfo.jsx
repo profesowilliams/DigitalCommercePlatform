@@ -43,7 +43,7 @@ function EndUserInfo({
 
   let { contact } = endUserDetails;
   const [isEmailValid, setIsEmailValid] = useState(
-    contact[0]?.email?.isValid || true
+    contact[0]?.email?.isValid || false
   );
 
   const handleEmailChange = (e) => {
@@ -53,7 +53,7 @@ function EndUserInfo({
         draft.contact[0].email.text = email;
       })
     );
-    if (isEmail(email)) {
+    if (isEmail(email) && email.length > 0) {
       setIsEmailValid(true);
     } else {
       setIsEmailValid(false);
@@ -64,6 +64,14 @@ function EndUserInfo({
     setEndUserDetails(
       produce((draft) => {
         draft.address.line1.text = e.target.value;
+      })
+    );
+  };
+  
+  const handleAddressTwoChange = (e) => {
+    setEndUserDetails(
+      produce((draft) => {
+        draft.address.line2.text = e.target.value;
       })
     );
   };
@@ -122,7 +130,6 @@ function EndUserInfo({
 
     if (!flag) {
       setEndUserDetails(endUserDetails);
-      setIsEmailValid(true);
     }
   };
 
@@ -262,6 +269,7 @@ function EndUserInfo({
           endUserDetails={endUserDetails}
           isEmailValid={isEmailValid}
           handleAddressChange={handleAddressChange}
+          handleAddressTwoChange={handleAddressTwoChange}
           handleCityChange={handleCityChange}
           handleCountryChange={handleCountryChange}
           handleContactNameChange={handleContactNameChange}

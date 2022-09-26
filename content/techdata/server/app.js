@@ -4529,8 +4529,8 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "canEdit": true
                             },
                             "email": {
-                                "text": "erp@mecl.gov.in",
-                                "isValid": true,
+                                "text": "",
+                                "isValid": false,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true

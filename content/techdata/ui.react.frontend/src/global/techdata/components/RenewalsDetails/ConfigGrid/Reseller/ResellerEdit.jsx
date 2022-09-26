@@ -11,7 +11,7 @@ export default function ResellerEdit({
   handlers,
 }) {
 
-  const { INVALID_EMAIL_TEXT, SIXTY, TWENTY } =
+  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
     resellerConstants;
 
   const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
@@ -37,6 +37,18 @@ export default function ResellerEdit({
     '&.MuiBox-root': { marginTop: '20px' },
   };
 
+  const handleEmailHelperText = (text) => {
+    if (!isEmailValid && text.length !== 0) {
+      return INVALID_EMAIL_TEXT;
+    }
+
+    if (!isEmailValid && text.length === 0) {
+      return REQUIRED_FIELD;
+    }
+
+    return null;
+  };
+
   return (
     <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
@@ -60,7 +72,7 @@ export default function ResellerEdit({
         onChange={handlers["email"]}
         inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
-        helperText={!isEmailValid ? INVALID_EMAIL_TEXT : null}
+        helperText={handleEmailHelperText(contact[0]?.email?.text)}
       />
       <CustomTextField
         id="reseller-phone"
