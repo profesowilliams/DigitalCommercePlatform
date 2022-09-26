@@ -161,9 +161,9 @@ function _SearchFilter(
 
   const handleOutsideClick = (e) => {
     const isComingFromSearch =
-      e.target.parentNode.className === "cmp-renewal-search";
+      e.target.parentNode?.className === "cmp-renewal-search";
     const isComingFromReset =
-      e.target.parentNode.className === "cmp-search-options__reset";
+      e.target.parentNode?.className === "cmp-search-options__reset";
     if (
       node.current &&
       !isComingFromSearch &&
@@ -300,6 +300,7 @@ function _SearchFilter(
                 </div>
               </div>
             </If>
+            <div className="cmp-search-select-container__filler"></div> 
           </div>
         </div>
       </>
@@ -332,6 +333,7 @@ function _SearchFilter(
               : <i className="fas fa-search cmp-renewal-search__icon"></i>}
               </button>
             </div>
+            <div className="cmp-search-select-container__filler"></div> 
             <If condition={true}>
               <div className={computeClassName("cmp-search-options")}>
                 {options.map((option) => renderWithPermissions(option))}
