@@ -11,6 +11,7 @@ import "../common-utils/js/app.initializer";
 
 // TODO: AEM devs to include clientlib.global.js too instead of fetching dependencies from here
 import "../global/tds-core-components/megamenu/megamenu";
+import "../global/tds-core-components/megamenu/megamenu2";
 import "../global/tds-core-components/vendorlistings/vendorlistings";
 import "../global/tds-core-components/dropdownbutton/dropdownbutton";
 import "../global/tds-core-components/form-container/form-container";

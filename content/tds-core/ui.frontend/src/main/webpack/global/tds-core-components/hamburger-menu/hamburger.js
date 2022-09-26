@@ -54,10 +54,13 @@ export default class Hamburger {
 
     hideWhenOutside(event, classObj) {
         const isInsideMenu = event.target.closest('.cmp-megamenu__body');
+        const isInsideMenu2 = event.target.closest('.cmp-megamenu2__body');
         const isHamburgerBtn = event.target.closest('.cmp-td-hamburgerMenu');
         const {active, open} = classObj;
 
-        if (isInsideMenu || isHamburgerBtn) return;
-        this.hideMegaMenu(active, open);
+      if ((isInsideMenu || isInsideMenu2) || isHamburgerBtn) {
+        return;
+      }
+      this.hideMegaMenu(active, open);
     }
 }
