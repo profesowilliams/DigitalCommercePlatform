@@ -38,7 +38,7 @@
             <span class="cmp-list__item-title">${item.title}</span>
             <span data-sly-test="${list.showModificationDate}"
                   class="cmp-list__item-date">${list.dateFormatString @format=item.lastModified}</span>
+            <span data-sly-test="${list.showDescription}" class="cmp-list__item-description">${item.description}</span>
         </a>
-        <span data-sly-test="${list.showDescription}" class="cmp-list__item-description">${item.description}</span>
     </article>
 </template>

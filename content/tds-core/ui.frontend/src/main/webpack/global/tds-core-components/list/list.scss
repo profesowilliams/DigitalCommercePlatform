@@ -402,20 +402,37 @@
   &--cards-image-list {
     ul {
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
       -webkit-box-pack: center;
       justify-content: center;
       list-style-type: none;
+      width: 85%;
+
+      @include tablet {
+        width: 95%;
+      }
+
+      @include mobile {
+        width: 85% !important;
+      }
+      
       li {
         margin: 1rem;
+        width: rem(410.12px);
+        height: rem(483.2px);
+        background-color: get-color(neutral-gray-2);
+        article {
+          background-color: get-color(neutral-gray-2);
+          width: rem(410px);
+          height: rem(263px);
+        }
       }
     }
     a {
       display: flex;
       flex-direction: column;
       text-decoration: none;
-      width: rem(354px);
-      height: rem(483px);
       figure {
         margin: 0px;
         img {
@@ -424,37 +441,41 @@
           object-fit: contain;
         }
       }
-      span:first-child {
-        height: 2.5rem;
-        width: rem(304px);
-        font-family: "Arial Regular";
+      span.cmp-list__item-title {
+        height: rem(50px);
+        width: rem(354px);
+        font-family: 'Arial Regular';
         font-size: 20px;
+        font-weight: 700;
         line-height: 30px;
         text-align: center;
-        margin-left: 0.5vw !important;
+        margin: auto;
+        color: map-get($color-palette,"teal");
+        background-color: white;
+        padding-bottom: 2.5rem;
+        padding-top: rem(15px);
       }
-      span {
-        display: block;
-        padding: 1rem;
-        height: rem(224px);
-        position: relative;
-        span {
-          background-color: white;
-          padding: 1rem;
-          position: relative;
-          top: rem(-50px);
-        }
-        span:nth-child(2n) {
-          font-family: "Arial Regular";
-          font-size: 16px;
-          line-height: 24px;
-          margin-left: 0.5vw !important;
-          width: rem(304px);
-          height: rem(188px);
-        }
-        background-color: get-color(neutral-gray-2);
-        margin-left: 0px !important;
-      }
+    }
+
+    span {
+      display: block;
+      height: rem(224px);
+      position: relative;
+      background-color: white;
+      padding-bottom: rem(38px);
+      padding-top: rem(0px);
+      padding-right: rem(27px);
+      padding-left: rem(27px);
+      position: relative;
+      top: rem(-72px);
+      font-family: 'Arial Regular';
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      margin-left: auto;
+      margin-right: auto;
+      height: rem(195px);
+      width: rem(354px);
     }
   }
 }
@@ -541,7 +562,7 @@
         article {
           svg {
             path {
-              fill: map-get($color-palette, "aqua") !important;
+              fill: map-get($color-palette, 'aqua') !important;
             }
           }
         }
