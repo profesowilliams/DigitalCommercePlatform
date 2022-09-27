@@ -221,21 +221,9 @@
       background-color: get-color(brand-blue);
       grid-template-columns: 20% 60% 20%;
       @include subheader-span-border-bottom;
-      top: 80px;
-      position: fixed;
-      z-index: 1;
     }
 
-    &.cmp-experiencefragment__subheader--sticky {
-      position: fixed;
-      z-index: 1;      
-      opacity: 1;
-      height: 3.5em;
-    }
 
-    &.cmp-experiencefragment__subheader--sticky--opaque {
-      opacity: 0.85;
-    }
 
     &__title {
       font-weight: bold;
