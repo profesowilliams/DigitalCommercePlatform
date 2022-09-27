@@ -408,12 +408,13 @@
       justify-content: center;
       list-style-type: none;
       li {
-        margin: 1rem;
         width: rem(410.12px);
         height: rem(483.2px);
         background-color: white;
         flex: 0 0 30.0%;
-
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 6rem;
         @include tablet {
           width: rem(298.12px);
           height: rem(419.2px);
@@ -467,7 +468,6 @@
 
     span {
       display: block;
-      height: rem(224px);
       position: relative;
       background-color: white;
       padding-bottom: rem(38px);
@@ -475,14 +475,14 @@
       padding-right: rem(27px);
       padding-left: rem(27px);
       position: relative;
-      top: rem(-72px);
+      top: rem(-30px);
       font-family: 'Arial Regular';
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
       margin-left: auto;
       margin-right: auto;
-      height: rem(195px);
+      height: rem(186px);
       width: rem(354px);
 
       @include tablet {
