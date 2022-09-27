@@ -1,6 +1,4 @@
 
-$font-color:#555555;
-$bg--marketing-card:#F8F8F8;
 @mixin common-planoption-card {
   padding: 1rem 22px 1rem 0;
   text-align: left;
@@ -10,7 +8,7 @@ $bg--marketing-card:#F8F8F8;
     margin-left: 2px;
     float: right;
     font-size: 16px;
-    color: #000c21;
+    color: $brand-blue;
     h4{
       cursor: pointer; 
       transition: all .13s ease;     
@@ -22,7 +20,7 @@ $bg--marketing-card:#F8F8F8;
   .leftHeader {
     float: left;
     font-size: 16px;
-    color: #000c21;
+    color: $brand-blue;
     h4{
       label{
         cursor: pointer;
@@ -44,7 +42,7 @@ $bg--marketing-card:#F8F8F8;
   .currentPlan {
     text-align: left;
     font-style: italic;
-    color: #0ab00a;
+    color: $brand-success;
     display: block;
     margin-bottom: 10px;
   }		
@@ -57,13 +55,13 @@ $bg--marketing-card:#F8F8F8;
     align-items: center;
     button {
       width : min-content;
-      background-color: #F7F7F7;
+      background-color: $td-neutral-gray;
       cursor: pointer;
       padding: 0;
       display: flex;
       align-items: center;
       span{
-        color: $font-color;
+        color: $brand-text-gray;
       }
     }
     span.vertical-separator{
@@ -76,11 +74,14 @@ $bg--marketing-card:#F8F8F8;
 
 @mixin cart-icon {  
   display: flex;
-  svg{
-    fill:black;
-    &:hover{
-      fill: #08BED5;
+  &:hover{
+    color: $td-lightblue;
+    svg {
+      fill: $td-lightblue;
     }
+  }
+  svg{
+    fill:black;  
   }  
 } 
 
@@ -156,7 +157,7 @@ $bg--marketing-card:#F8F8F8;
       &::before{
         content: "";
         position: absolute;
-        background-color: #e1e1e4;
+        background-color: $td-neutral-gray-2;
         height: 1px;
         width: 97%;
         left: -9px;
@@ -168,7 +169,7 @@ $bg--marketing-card:#F8F8F8;
     &::after{
       content: "";
       position: absolute;
-      background-color: #e1e1e4;
+      background-color: $td-neutral-gray-2;
       width: 1px;
       height: 92%;
       top: -6px;
@@ -189,7 +190,7 @@ $bg--marketing-card:#F8F8F8;
     align-items: center;
     padding: 20px;
     .marketing-body{
-      background-color: $bg--marketing-card;
+      background-color: $td-neutral-gray;
       width: 90%;
       height: 90%;
     }
@@ -199,7 +200,7 @@ $bg--marketing-card:#F8F8F8;
 		grid-template-columns: repeat( auto-fit, minmax(297px, 1fr) );
 		grid-gap: 26px;
 		padding: 20px;
-    background-color: #F8F8F8;
+    background-color: $td-neutral-gray;
 		-webkit-box-shadow: inset 5px -5px 4px -4px #E1E1E1; 
 		box-shadow: inset 5px -5px 4px -4px #E1E1E1, inset -6px 3px 4px -4px #E1E1E1;
   		@media (max-width:750px){
@@ -256,12 +257,12 @@ $bg--marketing-card:#F8F8F8;
       font-size: 12px;
     }
     span.cta {
-      margin: auto .2em;
+      margin: auto 2px;
       font-weight: bold;
     }
     &__info, &__actions {
       margin: 0;
-      color: $font-color;
+      color: $brand-text-gray;
       font-size: 12px;
       display: flex;
       button {
@@ -339,7 +340,7 @@ $bg--marketing-card:#F8F8F8;
     cursor: pointer;
     button {
       background: none;
-      color: $font-color;
+      color: $brand-text-gray;
       &.count {
         background-color: #001d44;
         color: #fff;
@@ -384,7 +385,7 @@ $bg--marketing-card:#F8F8F8;
     }
     &__info, &__actions {
       margin: 0;
-      color: $font-color;
+      color: $brand-text-gray;
       font-size: 12px;
       display: flex;
       button {
@@ -524,10 +525,7 @@ span.ag-group-value {
   }
 }
 
-.card-right-border .footer {
-  &:hover{
-    color: #08BED5;
-  }
+.card-right-border .footer { 
   .cmp-renewals-cart-icon {
     @include cart-icon;
     cursor: pointer;

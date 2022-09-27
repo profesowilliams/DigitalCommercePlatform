@@ -39,6 +39,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
 
   function onTextFieldChange(event) {
     const value = event?.target?.value;
+    if (value.length > 30) return;
     setPurchaseOrderNumber(value);
     handleErrorOnMax(value.length);
     if (value.length > 30) {

@@ -159,14 +159,14 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
             ? paginationCounter.minCounter
             : minPaginationCounter()}
         </span>
-        to
+        -
         <span className="cta">
           {paginationCounter.maxCounter > 0
             ? paginationCounter.maxCounter
             : maxPaginationCounter()}
         </span>
-        of
-        <span className="cta">{totalCounter}</span>
+        {' '}of{' '}
+        <span className="cta">{' '}{totalCounter}{' '}</span>
         results
       </div>
       <div className="cmp-navigation__actions">

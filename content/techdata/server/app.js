@@ -4914,7 +4914,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "previousResellerPO": null,
                 "isValid": true,
                 "canOrder": true,
-                "canEditQty": false,
+                "canEditQty": true,
                 "canEditResellerPrice": true,
                 "canEditLines": true,
                 "revision": 1.0,
