@@ -16,8 +16,8 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
       </p>
       
       <p>
-        <Info label={productLines.emailLabel} noColon>{contact.email}</Info>
-        <Info label={productLines.phoneLabel} noColon>{contact.phone}</Info>
+        <Info>{contact.email}</Info>
+        <Info>{contact.phone}</Info>
       </p>
       
       <p>          

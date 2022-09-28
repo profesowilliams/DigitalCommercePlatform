@@ -80,7 +80,7 @@ function GridHeader({ gridProps, data }) {
 }
 
 function ConfigGrid({ data, gridProps, updateDetails }) {
-  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo } = data;
+  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo, EANumber } = data;
   const { quotePreview } = gridProps;
   Object.keys(quotePreview).forEach(key => {
     if (typeof quotePreview[key] === 'string') {
@@ -124,8 +124,8 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           endUserType={endUserType}
           endUser={{
             ...endUser,
-            vendorAccountNumber: reseller?.vendorAccountNumber,
-            previousEndUserPO: data?.previousEndUserPO
+            vendorAccountNumber: EANumber,
+            previousEndUserPO: data?.previousEndUserPO,
           }}
           updateDetails={updateDetails}
         />

@@ -21,6 +21,7 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
         county: address.county,
         countryCode: address.countryCode.text,
       },
+      vendorAccountNumber: endUser.vendorAccountNumber,
       previousEndUserPO: endUser?.previousEndUserPO
     };
   }

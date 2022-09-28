@@ -4511,6 +4511,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "countryCode": null
                     }
                 },
+                "EANumber" : "353532435354",
                 "endUser": {
                     "id": null,
                     "isValid": true,
@@ -4533,14 +4534,14 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "canEdit": true
                             },
                             "email": {
-                                "text": "",
+                                "text": "test@gmail.com",
                                 "isValid": false,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true
                             },
                             "phone": {
-                                "text": "",
+                                "text": "8823424233",
                                 "isValid": true,
                                 "isMandatory": false,
                                 "isDisplay": true,
