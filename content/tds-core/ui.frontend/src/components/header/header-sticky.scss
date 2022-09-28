@@ -3,7 +3,7 @@
       position: fixed;
       z-index: 9999;
       top: 0;
-      background: white;
+      background: rgba(255,255,255,1);
       width: 100%;
       left: 0;
     }
@@ -11,13 +11,12 @@
       position: fixed;
       z-index: 9999;
       top: 0;
-      background: white;
-      opacity: 0.85;
+      background: rgba(255,255,255,0.85);
       width: 100%;
       left: 0;
     }
 
   }
 #cmp-techdata-header:hover {
-  opacity: 1!important;
+  background: rgba(255,255,255,1);
 }
