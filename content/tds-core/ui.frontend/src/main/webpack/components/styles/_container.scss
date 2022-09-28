@@ -53,6 +53,19 @@ These style system class work for container component only. */
       #{$padding}: rem($xlg);
     }
   }
+  &-dynamic{
+    &>.cmp-container {
+      @include mobile {
+        #{$padding}: 1rem;  
+      }
+      @include tablet {
+        #{$padding}: 1.5rem;  
+      }
+      @include desktop {
+        #{$padding}: 3rem;
+      }
+    }
+  }
 }
 
 .dp-general__innerspace {
@@ -73,6 +86,10 @@ These style system class work for container component only. */
   }
 
   &--left {
+    @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
+  }
+  
+  &--dynamic {
     @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
   }
 }
@@ -100,5 +117,25 @@ Secondly, this is very hacky and needs to be refactored.
   // For the time being, we're not going to show the vendor container on mobile.
   #sie-vendor-partners {
     display: none;
+  }
+
+  .dp-general__innerspace--left-large, 
+  .dp-general__innerspace--left-medium > .cmp-container, 
+  .dp-general__innerspace--left-large > .cmp-container {
+    padding-left: 0!important;
+  }
+
+  .dp-general__innerspace--right-large, 
+  .dp-general__innerspace--right-medium >.cmp-container, 
+  .dp-general__innerspace--right-large > .cmp-container {
+    padding-right: 0!important;
+  }
+
+  .cmp-component-vendor__center {
+    .cmp-text {
+      p {
+        font-size: 18px;
+      }
+    }
   }
 }
