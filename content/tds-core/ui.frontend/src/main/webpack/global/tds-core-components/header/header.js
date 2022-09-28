@@ -95,8 +95,9 @@ export default class Header {
                 this.isSubheaderSticky = false;
             }
             else{
-                this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky');
+                this.subheaderNav.style.width = this.container.clientWidth + "px";
                 this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
+                this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky');
                 this.subheaderNav.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
                 this.isSubheaderSticky = true;
             }
