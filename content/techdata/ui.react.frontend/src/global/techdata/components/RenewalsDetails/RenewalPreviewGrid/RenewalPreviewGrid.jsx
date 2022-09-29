@@ -130,16 +130,30 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     }
   }), [])
 
+  const gridColumnWidths = Object.freeze({
+    line: "29px",
+    productFamily: "150px",
+    productDescription: "368px",
+    vendorPartNo: "220px",
+    listPrice: "100px",
+    percentageOfflist: "100px",
+    unitPrice: "100px",
+    quantity: "70px",
+    total: "100px",
+  });
+
   const columnDefinitionsOverride = [
     {
       field: "id",
       headerName: gridProps?.line,
+      width: gridColumnWidths.line,
     },
     {
       field: "vendorPartNo",
       headerName: gridProps?.productfamily,
       valueGetter: ({ data }) =>
         data.product.find((p) => p.family)?.family ?? "N/A",
+      width: gridColumnWidths.productFamily,
     },
     {
       field: "shortDescription",
@@ -153,11 +167,13 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           invokeModal={invokeModal}
         />
       ),
+      width: gridColumnWidths.productDescription,
     },
     {
       field: "mfrNumber",
       headerName: gridProps?.vendorPartNo,
       cellRenderer: (props) => RenewalManufacturer(props),
+      width: gridColumnWidths.vendorPartNo,
     },
     {
       field: "unitListPrice",
@@ -165,13 +181,15 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         "{currency-code}",
         data?.currency || ""
       ),
-      cellRenderer: (props) => Price(props)
+      cellRenderer: (props) => Price(props),
+      width: gridColumnWidths.listPrice,
     },
     {
       field:'value',
       headerName: gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
       cellRenderer: (props) => Price(props),
+      width: gridColumnWidths.percentageOfflist,
     },
     {
       field:'unitPrice',
@@ -184,7 +202,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
         return UnitPriceColumn({...props, isEditing})
       },
-
+      width: gridColumnWidths.unitPrice,
     },
     {
       field:'quantity',
@@ -192,7 +210,8 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       cellRenderer: (props) =>{
         const isEditing = isEditingRef.current && data?.canEditQty;
         return QuantityColumn({ ...props, isEditing })
-      }      
+      },
+      width: gridColumnWidths.quantity,     
     },
     {
       field:'totalPrice',
@@ -209,7 +228,8 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         params.values.forEach(value => total += value);
         setSubtotal(total);
         return total;
-      }
+      },
+      width: gridColumnWidths.total,
     }
   ];
 
