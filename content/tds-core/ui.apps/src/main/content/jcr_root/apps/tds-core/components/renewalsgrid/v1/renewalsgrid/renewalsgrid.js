@@ -189,8 +189,16 @@ use(['../common/utils.js'], function(utils) {
         productGrid["downloadXLSLabel"] = properties["downloadXLSLabel"];
     }
 
-    if (properties && properties["hideDownloadXLSButton"]) {
-        productGrid["hideDownloadXLSButton"] = properties["hideDownloadXLSButton"];
+    if (properties && properties["showDownloadPDFButton"]) {
+        productGrid["showDownloadPDFButton"] = properties["showDownloadPDFButton"];
+    }
+
+    if (properties && properties["showDownloadXLSButton"]) {
+        productGrid["showDownloadXLSButton"] = properties["showDownloadXLSButton"];
+    }
+
+    if (properties && properties["showSeeDetailsButton"]) {
+        productGrid["showSeeDetailsButton"] = properties["showSeeDetailsButton"];
     }
 
     if (properties && properties["seeDetailsLabel"]) {

@@ -146,10 +146,10 @@ function RenewalPlanOptions({ labels, data, node }) {
         paginationStyle: "none",
     };
 
-    const isIconDisabled = useMemo(() => {
+    const isIconEnabled = useMemo(() => {
         const isAfter = new Date(data?.firstAvailableOrderDate || new Date()) > new Date();
         const canPlaceOrder = data?.canPlaceOrder;
-        return orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
+        return !isAfter && canPlaceOrder;
     }, [orderingFromDashboard, data.canPlaceOrder, data.firstAvailableOrderDate])
 
     const renewalDetailsURL = id => encodeURI(
@@ -234,54 +234,69 @@ function RenewalPlanOptions({ labels, data, node }) {
                                 </div>
                                 {isPlanSelected(option) && (
                                     <div className="footer">
-                                        <button onClick={() => downloadPDF(option.id)}>
-                                            <i className="fas fa-file-pdf"></i>
-                                            <span>
-                                                &nbsp;&nbsp;{labels.downloadPDFLabel}
-                                            </span>
-                                        </button>                                 
-                                        <If condition={!orderingFromDashboard.showOrderingIcon}>
-                                            {
-                                                !labels?.hideDownloadXLSButton && (
+                                        {
+                                            labels?.showDownloadPDFButton && (
+                                                <>
+                                                <button onClick={() => downloadPDF(option.id)}>
+                                                    <i className="fas fa-file-pdf"></i>
+                                                    <span>
+                                                        &nbsp;&nbsp;{labels.downloadPDFLabel}
+                                                    </span>
+                                                </button>
+                                                </>
+                                            )
+                                        }
+                                                                         
+                                        {
+                                            labels?.showDownloadXLSButton && (
+                                            <>
+                                                <span className="vertical-separator"></span>
+                                                <button onClick={() => exportXlsPlan(option?.id)}>
+                                                    <i className="fas fa-file-excel"></i>
+                                                    <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
+                                                </button>
+                                            </>
+                                        )}  
+                                        {
+                                            labels?.showSeeDetailsButton && (
+                                            <>
+                                                <span className="vertical-separator"></span>
+                                                <button
+                                                    onClick={() =>
+                                                        redirectToRenewalDetail(detailUrl, option?.id)
+                                                    }>
+                                                    <i className="far fa-eye"></i>
+                                                    <span>
+                                                        &nbsp;&nbsp;{labels.seeDetailsLabel}
+                                                    </span>
+                                                </button>
+                                            </>
+                                            )
+                                        }                                     
+                                        
+                                        {
+                                            orderingFromDashboard?.showOrderingIcon && (
                                                 <>
                                                     <span className="vertical-separator"></span>
-                                                    <button onClick={() => exportXlsPlan(option?.id)}>
-                                                        <i className="fas fa-file-excel"></i>
-                                                        <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
-                                                    </button>
+                                                    {isIconEnabled ? (
+                                                        <span className="cmp-renewals-cart-icon" onClick={handleCartIconClick} >
+                                                            <CartIcon />{' '}
+                                                            Order
+                                                        </span>
+                                                    ) : (
+                                                        <>
+                                                            <button>
+                                                                <CartIcon
+                                                                    fill="#c6c6c6"
+                                                                    style={{ pointerEvents: 'none' }}
+                                                                />{' '}
+                                                                <span className="cmp-order-label-disabled">Order</span>
+                                                            </button>
+                                                        </>
+                                                    )}
                                                 </>
-                                            )}                                       
-                                            <span className="vertical-separator"></span>
-                                            <button
-                                                onClick={() =>
-                                                    redirectToRenewalDetail(detailUrl, option?.id)
-                                                }
-                                            >
-                                                <i className="far fa-eye"></i>
-                                                <span>
-                                                    &nbsp;&nbsp;{labels.seeDetailsLabel}
-                                                </span>
-                                            </button>
-                                        </If>
-                                        <If condition={orderingFromDashboard.showOrderingIcon}>
-                                            <span className="vertical-separator"></span>
-                                            {isIconDisabled ? (
-                                                <span className="cmp-renewals-cart-icon" onClick={handleCartIconClick} >
-                                                    <CartIcon />{' '}
-                                                    Order
-                                                </span>
-                                            ) : (
-                                                <>
-                                                    <button>
-                                                        <CartIcon
-                                                            fill="#c6c6c6"
-                                                            style={{ pointerEvents: 'none' }}
-                                                        />{' '}
-                                                        <span className="cmp-order-label-disabled">Order</span>
-                                                    </button>
-                                                </>
-                                            )}
-                                        </If>
+                                            )
+                                        }
                                     </div>
                                 )}
                             </div>
