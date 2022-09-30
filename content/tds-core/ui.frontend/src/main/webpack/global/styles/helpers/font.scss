@@ -95,3 +95,29 @@
 .cmp-large {
     font-size: $font-size-custom-midi;
 }
+
+.text.cmp-paragraph {
+    &-reg {
+        p {
+            font-size: rem(16px);
+            line-height: rem(24px);
+        }
+        
+    }
+
+    &-large {
+        p {
+            font-size: rem(20px);
+            line-height: rem(30px);
+        }
+        
+    }
+
+    &-small {
+        p {
+            font-size: rem(14px);
+            line-height: rem(16.8px);
+        }
+        
+    }
+}
