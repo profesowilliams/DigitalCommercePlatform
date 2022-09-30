@@ -40,17 +40,17 @@
                     min-height: rem(30px);
                     border-bottom: transparent rem(3px) solid;
                     text-decoration: none;
-                    color: get-color(header-links-blue);
+                    color: map-get($color-palette,"teal");
                 }
 
                 &:hover {
                     .cmp-megamenu__tab-text {
-                        border-bottom-color: get-color(brand-light-blue);
+                        font-weight: 600;
                     }
                 }
 
                 a.cmp-megamenu__tab--active {
-                    border-bottom-color: get-color(brand-light-blue);
+                    font-weight: 600;
                 }
             }
         }
@@ -111,7 +111,7 @@
         }
 
         .cmp-megamenu__secondary {
-            background-color: get-color(brand-button-blue);
+            background-color: get-color(deep-teak);
 
             a {
                 color: get-color(brand-white);
@@ -124,7 +124,7 @@
                 &.cmp-megamenu__item--active,
                 &:hover {
                     background-color: get-color(brand-white);
-                    color: get-color(td-dark-blue);
+                    color: map-get($color-palette,"teal");
                 }
             }
             // hide mobile navbar items for desktop
@@ -175,12 +175,12 @@
 
                 &.cmp-megamenu__item--active,
                 &:hover {
-                    color: get-color(brand-light-blue);
+                    color: map-get($color-palette,"teal");
                     font-weight: 600;
 
                     i,
                     svg {
-                        color: get-color(brand-light-blue);
+                        color: map-get($color-palette,"teal");
                     }
                 }
             }
@@ -258,17 +258,19 @@
                     min-height: rem(30px);
                     border-bottom: transparent rem(3px) solid;
                     text-decoration: none;
-                    color: get-color(header-links-blue);
+                    color: map-get($color-palette,"teal");
                 }
 
                 &:hover {
                     .cmp-megamenu2__tab-text {
-                        border-bottom-color: get-color(brand-light-blue);
+                        font-weight: 600;
+                        color: map-get($color-palette,"teal");
                     }
                 }
 
                 a.cmp-megamenu2__tab--active {
-                    border-bottom-color: get-color(brand-light-blue);
+                    font-weight: 600;
+                    color: map-get($color-palette,"teal");
                 }
             }
         }
@@ -329,7 +331,7 @@
         }
 
         .cmp-megamenu2__secondary {
-            background-color: get-color(brand-button-blue);
+            background-color: get-color(deep-teal);
 
             a {
                 color: get-color(brand-white);
@@ -342,7 +344,7 @@
                 &.cmp-megamenu__item--active,
                 &:hover {
                     background-color: get-color(brand-white);
-                    color: get-color(td-dark-blue);
+                    color: map-get($color-palette,"teal");
                 }
             }
             // hide mobile navbar items for desktop
@@ -393,12 +395,12 @@
 
                 &.cmp-megamenu2__item--active,
                 &:hover {
-                    color: get-color(brand-light-blue);
+                    color: map-get($color-palette,"teal");
                     font-weight: 600;
 
                     i,
                     svg {
-                        color: get-color(brand-light-blue);
+                        color: map-get($color-palette,"teal");
                     }
                 }
             }
@@ -610,11 +612,11 @@
 
                                         &.active {
                                             > a {
-                                                color: get-color(brand-light-blue);
+                                                color: map-get($color-palette,"teal");
                                             }
 
                                             &:before {
-                                                color: get-color(brand-light-blue);
+                                                color: map-get($color-palette,"teal");
                                                 content: "\f078";
                                             }
                                         }
@@ -768,11 +770,11 @@
 
                                         &.active {
                                             > a {
-                                                color: get-color(brand-light-blue);
+                                                color: map-get($color-palette,"teal");
                                             }
 
                                             &:before {
-                                                color: get-color(brand-light-blue);
+                                                color: map-get($color-palette,"teal");
                                                 content: "\f078";
                                             }
                                         }
