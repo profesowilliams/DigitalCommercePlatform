@@ -41,6 +41,10 @@ export default class Header {
         } else {
             this.headerEl?.classList.remove(this.HEADER_MOBILE);
         }
+
+        if(this.header && this.subheaderNav && this.container){
+            this.subheaderNav.style.width = this.container.clientWidth + "px";
+        }
     }
 // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
 /*     initSecondaryImage() {
