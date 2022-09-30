@@ -201,6 +201,13 @@
       width: 50%;
       padding: rem(20px);
 
+      &:nth-child(2) {
+        .language-modal__content__column__separator {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
       //column-width: rem(250px);
       @include mobile {
         float: none;

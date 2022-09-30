@@ -246,6 +246,13 @@
       width: 50%;
       padding: 0px;
 
+      &:nth-child(2) {
+        .language-modal__content__column__separator {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
       &:nth-of-type(2) {
         border-left: rem(1px) solid get-color(v-divider-darkgray);
         border-right: rem(1px) solid get-color(v-divider-darkgray);

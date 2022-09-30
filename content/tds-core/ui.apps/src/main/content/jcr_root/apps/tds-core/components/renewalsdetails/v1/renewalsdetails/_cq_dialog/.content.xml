@@ -37,8 +37,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Shop URL"
-                                                name="./shopURL"
-                                                required="{Boolean}false"/>
+                                                name="./shopURL"/>
                                             <downloadPDF
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
