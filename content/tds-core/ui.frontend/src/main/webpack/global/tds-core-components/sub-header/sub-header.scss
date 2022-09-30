@@ -25,10 +25,6 @@
 
         &+li {
           border-left: rem(1px) solid get-color(brand-white);
-
-          @include mobile {
-            display: none;
-          }
         }
 
         a,
@@ -158,9 +154,6 @@
     @include mobile {
         display: flex !important;
 
-      ol {
-        display: none;
-      }
       .cmp-sub-header__wrapper ul li+li {
         display: none !important;
         border-left: rem(0px) solid get-color(brand-white);
@@ -284,6 +277,18 @@
 
 @media (max-width: 1024px) {
   .subheader {
+      &.cmp-sub-header-no-logo {
+        .cmp-tabs {
+          .cmp-sub-header--sub-nav {
+            display: flex !important;
+          }
+
+          .cmp-tabs__tablist {
+            display: flex;
+          }
+        }
+      }
+
     .cmp-tabs {
       height: 60px;
 
@@ -293,11 +298,6 @@
 
         &.new-sub {
           top: 45px;
-          height: 4.5em;
-
-          &.cmp-experiencefragment__subheader--sticky {
-            height: 4.5em;
-          }
 
         .cmp-sub-header--sub-nav__title {
           height: 16px;
