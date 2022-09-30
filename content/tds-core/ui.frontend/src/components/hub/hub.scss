@@ -10,7 +10,7 @@
         position: absolute;
         width: 100%;
         height: 3px;
-        background: get-color(brand-light-blue);
+        background: map-get($color-palette,"cobalt");
         bottom: 6px;
         left: 0;
       }

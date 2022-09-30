@@ -59,28 +59,31 @@
 }
 
 .cmp-dropbtn {
-  display: flex;
-  align-items: center;
-  font-size: $font-size-small;
-  padding: 0;
-  min-height: 30px;
-  background: none;
-  color: get-color(brand-black);
-  border: none;
-  cursor: pointer;
-  @include mobile {
-    margin-bottom: rem(0px);
-  }
-  @media only screen and (min-width: 1024px) and (max-width: 1260px) {
-    font-size: .8rem;
-  }
-  &:hover {
-    box-shadow: 0 3px 0 0px get-color(brand-light-blue);
-  }
+    display: flex;
+    align-items: center;
+    font-size: $font-size-small;
+    padding: 0;
+    min-height: 30px;
+    background: none;
+    color: get-color(brand-black);
+    border: none;
+    cursor: pointer;
 
-  &:active {
-    box-shadow: 0 3px 0 0px get-color(brand-light-blue);
-  }
+    @include mobile {
+        margin-bottom: rem(0px);
+    }
+
+    @media only screen and (min-width: 1024px) and (max-width: 1260px) {
+        font-size: .8rem;
+    }
+
+    &:hover {
+        box-shadow: 0 3px 0 0px get-color(cobalt);
+    }
+
+    &:active {
+        box-shadow: 0 3px 0 0px map-get($color-palette,"cobalt");
+    }
 }
 
 .cmp-dropdown {

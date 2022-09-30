@@ -98,7 +98,7 @@
     &.active,
     &:hover,
     &:active {
-      box-shadow: 0 3px 0 0px #00b1e2;
+      box-shadow: 0 3px 0 0px map-get($color-palette,"cobalt");
     }
 
     &:focus(:not(.clicked)) {

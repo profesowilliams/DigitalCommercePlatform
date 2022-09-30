@@ -40,7 +40,7 @@
                     min-height: rem(30px);
                     border-bottom: transparent rem(3px) solid;
                     text-decoration: none;
-                    color: map-get($color-palette,"teal");
+                    color: get-color(header-links-blue);
                 }
 
                 &:hover {
