@@ -90,5 +90,8 @@ export const subHeader = () => {
                 }
             }
         }
+
+        //Centers the active menu item when scrolling horizontally
+        $('.cmp-tabs__tab--active')[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 }
