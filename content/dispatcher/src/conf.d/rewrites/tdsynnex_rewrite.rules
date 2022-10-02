@@ -12,6 +12,8 @@ RewriteRule ^/nz/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/nz/e
 RewriteRule ^/th/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/th/en.sitemap.xml [PT,L]
 RewriteRule ^/sg/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/sg/en.sitemap.xml [PT,L]
 RewriteRule ^/vn/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/vn/en.sitemap.xml [PT,L]
+RewriteRule ^/vn/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/jp/en.sitemap.xml [PT,L]
+RewriteRule ^/vn/sitemap.xml$  /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/jp/ja.sitemap.xml [PT,L]
 RewriteCond %{REQUEST_URI} !(/|.jpe?g|.html|.svg|.json|.png|.txt|.xml|.cache)$
 
 # apj
@@ -37,6 +39,8 @@ RewriteRule ^/th$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/th/en.html [PT,L]
 RewriteRule ^/th/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/th/en.html [PT,L]
 RewriteRule ^/vn$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/vn/en.html [PT,L]
 RewriteRule ^/vn/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/vn/en.html [PT,L]
+RewriteRule ^/vn/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/jp/en.html [PT,L]
+RewriteRule ^/vn/en$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/jp/ja.html [PT,L]
 
 # americas
 RewriteRule ^/ar$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/ar/en.html [PT,L]
@@ -143,4 +147,4 @@ RewriteCond %{REQUEST_URI} !^/system
 RewriteCond %{REQUEST_URI} !^/tmp
 RewriteCond %{REQUEST_URI} !^/var
 RewriteCond %{REQUEST_URI} (.html|.jpe?g|.png|.svg|.gif)$
-RewriteRule ^/(apj|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1$2 [PT,L]
+RewriteRule ^/(apj|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)(.*)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1$2 [PT,L]
