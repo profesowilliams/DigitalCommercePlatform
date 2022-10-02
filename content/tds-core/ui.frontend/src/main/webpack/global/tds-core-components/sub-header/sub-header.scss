@@ -87,7 +87,7 @@
     }
   }
 
-  &--sub-nav {
+  &--sub-nav, &--sub-nav>.subheader-container {
     display: flex;
     //grid-template-columns: 75% 25%;
     width: 100%;
@@ -206,6 +206,44 @@
     &.new-sub {
       height: rem(44px);
       @include subheader-span-border-bottom;
+
+
+      &>.subheader-container {
+        margin: auto !important;
+        max-width: 90rem;
+        width: 100%;
+        padding-left: rem(48px);
+
+        .cmp-tabs__tablist {
+
+          &>.cmp-tabs__tab {
+            span.cmp-sub-header__span {
+              height: 2.5rem;
+              a {
+                height: 2.5rem;
+                &:hover {
+                  box-shadow: inset 0 -3px 0 0 white;
+                }
+              }
+
+
+              &:hover {
+                box-shadow: unset;
+              }
+            }
+            &.cmp-tabs__tab--active{
+              span.cmp-sub-header__span {
+                & {
+                  box-shadow: unset;
+                }
+                a {
+                    box-shadow: inset 0 -3px 0 0 white;
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     &.cmp-experiencefragment__subheader--sticky {
