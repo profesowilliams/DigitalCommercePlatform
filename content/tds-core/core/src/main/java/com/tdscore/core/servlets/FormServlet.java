@@ -3,11 +3,10 @@ package com.tdscore.core.servlets;
 
 import com.adobe.acs.commons.email.EmailService;
 import com.day.cq.wcm.api.Page;
-import com.day.cq.dam.api.Asset;
+import com.tdscore.core.models.ExtractBinaryAsset;
 import com.tdscore.core.slingcaconfig.FormConfigurations;
 import com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration;
 import com.tdscore.core.util.Constants;
-import com.tdscore.core.models.ExtractBinaryAsset;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -40,8 +39,7 @@ import java.util.regex.Pattern;
                 "service.description=Form Submission Servlet",
                 "service.vendor=tdsynnex.com",
                 "sling.servlet.methods=" + HttpConstants.METHOD_POST,
-                "sling.servlet.resourcetypes=tds-core/components/tdpostform",
-
+                "sling.servlet.resourcetypes=tds-core/components/tdpostform"
         }
 )
 public class FormServlet extends SlingAllMethodsServlet {
