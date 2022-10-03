@@ -8,6 +8,7 @@ import { getDictionaryValue } from '../../../../utils/utils';
 import {useStore} from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
 import { isObject } from '../../../../utils';
+import { fromExceptionToErrorObject } from '../../../../utils/utils';
 
 function Grid(props) {
   let {

@@ -1,59 +1,41 @@
 document.addEventListener(
   'DOMContentLoaded',
   () => {
-    const htmlElement = document.querySelectorAll(
-      '.animation-typewriter-effect[data-extra-words]'
-    );
-
-    const animation = (htmlElement) => {
-      // This replaces the HTML format with one JSON can read.
+    const sleep = (milliseconds) => { return new Promise(resolve => setTimeout(resolve, milliseconds)) }
+    const animation = async (htmlElement) => {
       const firstWord = htmlElement.innerText;
       const extraWords = htmlElement.dataset.extraWords;
       const dataSet = [firstWord, ...JSON.parse(extraWords)];
-      // type one text in the typwriter
-      // keeps calling itself until the text is finished
-      const typeWriter = (text, i, fnCallback) => {
-        // check if text isn't finished yet
-        if (i < text.length) {
-          // add next character to htmlElement
+
+      let wordIndex = 0;
+
+      const performTypeWriterAnimation = async (text) => {
+        let index = 0;
+        while (index < text.length) {
           htmlElement.innerHTML =
-            text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+          text.substring(0, index + 1) + '<span aria-hidden="true"></span>';
+          index++;
+          await sleep(100);
+        }
+      }
 
-          // wait for a while and call this function again for next character
-          setTimeout(() => {
-            typeWriter(text, i + 1, fnCallback);
-          }, 100);
+      const cycleWords = async () => {
+        while (true) {
+          await performTypeWriterAnimation(dataSet[wordIndex]);
+          wordIndex = (wordIndex + 1) % dataSet.length;
+          await sleep(2000);
         }
-        // text finished, call callback if there is a callback function
-        else if (typeof fnCallback === 'function') {
-          // call callback after timeout
-          setTimeout(fnCallback, 2000);
-        }
-      };
-      // start a typewriter animation for a text in the dataText array
-      StartTextAnimation = (i) => {
-        if (typeof dataSet[i] === 'undefined') {
-          setTimeout(() => {
-            StartTextAnimation(0);
-          }, 2000);
-        }
+      }
 
-        // check if dataText[i] exists
-        if (i < dataSet.length) {
-          // text exists! start typewriter animation
-          typeWriter(dataSet[i], 0, () => {
-            // after callback (and whole text has been animated), start next text
-            StartTextAnimation(i + 1);
-          });
-        }
-      };
-
-      // start the text animation
-      StartTextAnimation(0);
+      cycleWords();
     }
 
-    if (htmlElement) {
-      Array.from(htmlElement).map(element => animation(element));
+    const animatedElements = document.querySelectorAll(
+      '.animation-typewriter-effect[data-extra-words]'
+    );
+
+    if (animatedElements) {
+      Array.from(animatedElements).forEach(element => animation(element));
     }
   },
   1000
