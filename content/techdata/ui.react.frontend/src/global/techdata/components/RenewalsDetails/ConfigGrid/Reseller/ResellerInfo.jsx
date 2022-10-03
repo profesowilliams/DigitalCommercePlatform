@@ -48,7 +48,6 @@ function ResellerInfo({
       .then((result) => {
         if(result) {
           setLockedEdit(false);
-          setToggleEdit(true);
           effects.clearReseller();
         }
       })

@@ -363,11 +363,11 @@
                                                 fieldDescription="Previous Purchase Order Number"
                                                 fieldLabel="Previous Purchase Order Number"
                                                 name="./previousPurchaseOrderNoLabel"/>
-                                        <resellerSAPaccountnumber
+											<resellerSAPaccountnumber
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Reseller SAP account number"
-                                                fieldLabel="Reseller SAP account number label"
+                                                fieldDescription="Our ERP Reseller Account Id"
+                                                fieldLabel="Reseller Id Label"
                                                 name="./resellerSAPaccNoLabel"/>
                                                 <previousResellerorderNo
                                                 jcr:primaryType="nt:unstructured"

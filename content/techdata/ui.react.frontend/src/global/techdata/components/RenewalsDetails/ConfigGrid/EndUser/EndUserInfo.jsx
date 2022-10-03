@@ -139,7 +139,6 @@ function EndUserInfo({
       .then((result) => {
         if(result) {
           setLockedEdit(false);
-          setToggleEdit(true);
           effects.clearEndUser();
         }
       })

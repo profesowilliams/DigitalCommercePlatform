@@ -1,11 +1,21 @@
-export default function getModifiedResellerData(resellerResponseAsObj, reseller) {
-  const contact = reseller.contact[0];
+export default function getModifiedResellerData(resellerResponseAsObj, reseller) {  
+  
+  const { contact, address } = reseller;  
   if (resellerResponseAsObj) {
     return {
+      id: reseller?.id,
+      name: reseller?.nameUpper || reseller?.name,
       contact: {
-        name: contact.name.text,
-        email: contact.email.text,
-        phone: contact.phone.text,
+        name: contact[0]?.name?.text,
+        email: contact[0]?.email?.text,
+        phone: contact[0]?.phone?.text,
+      },
+      address: {
+        line1: address?.line1,
+        line2: address?.line2,
+        city: address?.city,
+        country: address?.country,
+        postalCode: address?.postalCode,
       },
       vendorAccountNumber: reseller.vendorAccountNumber.text,
     };
@@ -19,7 +29,7 @@ export default function getModifiedResellerData(resellerResponseAsObj, reseller)
     },
     vendorAccountNumber: reseller.vendorAccountNumber,
   };
-};
+}
 
 export const resellerConstants = {
   INVALID_EMAIL_TEXT: 'Enter a valid email address. For example, name@email.com',
