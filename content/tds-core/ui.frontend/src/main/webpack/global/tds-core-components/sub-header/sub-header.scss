@@ -87,7 +87,7 @@
     }
   }
 
-  &--sub-nav, &--sub-nav>.subheader-container {
+  &--sub-nav, &--sub-nav>.cmp-sub-header--content{
     display: flex;
     //grid-template-columns: 75% 25%;
     width: 100%;
@@ -208,11 +208,19 @@
       @include subheader-span-border-bottom;
 
 
-      &>.subheader-container {
+      &>.cmp-sub-header--content {
         margin: auto !important;
         max-width: 90rem;
         width: 100%;
         padding-left: rem(48px);
+
+        @media (max-width: 1024px) {
+          padding-left: rem(40px);
+        }
+
+        @include mobile{
+          padding-left: rem(7px);
+        }
 
         .cmp-tabs__tablist {
 
