@@ -1,6 +1,24 @@
-import React, { useEffect, useState } from "react";
-import Info from "../../common/quotes/DisplayItemInfo";
+import React from "react";
 import { getLocaleFormattedDate } from "../../../../../utils/utils";
+import { If } from "../../../helpers/If";
+import Info from "../../common/quotes/DisplayItemInfo";
+
+
+function DurationDates({ startDate, endDate, label }) {
+  const checkNullEndDate = (date) => {
+    if (!date) return '';
+    return `- ${getLocaleFormattedDate(date)}`;
+  };
+  return (
+    <p>
+      <If condition={startDate}>
+        <span>
+          {label} {getLocaleFormattedDate(startDate)} {checkNullEndDate(endDate)}
+        </span>
+      </If>
+    </p>
+  );
+}
 
 function AgreementInfo({
   source,
@@ -15,54 +33,19 @@ function AgreementInfo({
     return (
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
-          {programName && (
-            <Info noColon label={agreementInfo.programLabel}>{programName}</Info>
-          )}
-          {contract.renewedDuration && (
-            <Info noColon label={agreementInfo.durationLabel}>{contract.renewedDuration}</Info>
-          )}
-          {contract.serviceLevel && (
-            <Info noColon label={agreementInfo.supportLevelLabel}>
-              {contract.serviceLevel}
-            </Info>
-          )}
-          <Info noColon label={agreementInfo.distiQuoteNoLabel}>{source.id}</Info>
-          {contract.id && (
-            <Info noColon label={agreementInfo.agreementNoLabel}>{contract.id}</Info>
-          )}
-          {source.id && (
-            <Info noColon label={agreementInfo.distiQuoteLabel}>{customerPO}</Info>
-          )} 
-        </p>
+          <Info noColon label={agreementInfo?.quoteNo}>{source?.id}</Info>
+          <Info noColon label={agreementInfo?.vendorQuoteId}>{customerPO}</Info>
+          <Info noColon label={agreementInfo?.agreementNoLabel}>{contract?.id}</Info>
+        </p>        
+        <p> <Info noColon label={agreementInfo?.quoteExpiryDateLabel}>{getLocaleFormattedDate(expiry)}</Info> </p>
+        <p> <Info noColon label={agreementInfo?.quotedueDateLabel}>{getLocaleFormattedDate(dueDate)}</Info> </p>
         <p>
-          {dueDate && (
-            <Info noColon label={agreementInfo.quotedueDateLabel}>{getLocaleFormattedDate(dueDate)}</Info>
-          )}
-          <Info noColon label={agreementInfo.quoteExpiryDateLabel}>{getLocaleFormattedDate(expiry)}</Info> 
+          <Info noColon label={agreementInfo?.programLabel}>{programName}</Info>
+          <Info noColon label={agreementInfo?.durationLabel}>{contract?.renewedDuration}</Info>      
+          <Info noColon label={agreementInfo?.supportLevelLabel}>{contract?.serviceLevel}</Info> 
         </p>
-        <p>  
-          {contract.newAgreementStartDate && (
-            <Info noColon label={agreementInfo.agreeStartDateLabel}>
-              {getLocaleFormattedDate(contract.newAgreementStartDate)}
-            </Info>
-          )}
-          {contract.newAgreementEndDate && (
-            <Info noColon label={agreementInfo.agreeEndDateLabel}>
-              {getLocaleFormattedDate(contract.newAgreementEndDate)}
-            </Info>
-          )}
-          
-          {contract.newUsagePeriodStartDate && (
-            <Info noColon label={agreementInfo.usageStartDateLabel}>
-              {getLocaleFormattedDate(contract.newUsagePeriodStartDate)}
-            </Info>
-          )}
-          {contract.newUsagePeriodEndDate && (
-            <Info noColon label={agreementInfo.usageEndDateLabel}>
-              {getLocaleFormattedDate(contract.newUsagePeriodEndDate)}
-            </Info>
-          )}
-        </p>
+        <DurationDates label={agreementInfo.agreementDuration} startDate={contract?.newAgreementStartDate} endDate={contract?.newAgreementEndDate} />
+        <DurationDates label={agreementInfo.usageDuration} startDate={contract?.newUsagePeriodStartDate} endDate={contract?.newUsagePeriodEndDate} />
       </div>
     );
   };

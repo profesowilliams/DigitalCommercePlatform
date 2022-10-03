@@ -62,6 +62,12 @@
     }
 }
 
+.cmp-toaster-renewal-details {
+    .MuiDrawer-paper{
+        top: 8.6rem !important;
+        right: 1.8rem !important;
+    }
+}
 .toaster-modal {
     .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
         height: auto;

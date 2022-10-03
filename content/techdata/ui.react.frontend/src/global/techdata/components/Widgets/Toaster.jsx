@@ -8,7 +8,8 @@ import shallow from "zustand/shallow";
 function Toaster({   
   onClose,
   MuiDrawerProps,  
-  store
+  store,
+  triggerByRenewalDetails = false
 }) {
 
   const toaster = store( state => state.toaster, shallow);
@@ -30,7 +31,7 @@ function Toaster({
         anchor="right"
         open={isOpen}
         hideBackdrop={true}
-        className="toaster-modal"
+        className={`toaster-modal ${triggerByRenewalDetails && 'cmp-toaster-renewal-details'}`}
         sx={{height: "max-content"}}
         onClose={onClose}
         {...MuiDrawerProps}

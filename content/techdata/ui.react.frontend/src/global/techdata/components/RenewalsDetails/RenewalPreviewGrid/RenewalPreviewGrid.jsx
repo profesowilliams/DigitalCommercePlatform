@@ -309,6 +309,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         isDetails={true}
         />
       <Toaster
+        triggerByRenewalDetails={true} 
         onClose={() => closeAndCleanToaster()}
         store={useRenewalsDetailsStore} 
         message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>

@@ -68,7 +68,7 @@ function PlaceOrderDialog({
     const splitted = text.split(/\b(?=terms .+ conditions)/gi);
     return splitted.map((_text, index) =>
       index === 1 ? (
-        <a href={termsAndConditionsLink} target="_blank" className="cmp-place-order-link">
+        <a href={termsAndConditionsLink} key={index} target="_blank" className="cmp-place-order-link">
           {_text}
         </a>
       ) : (

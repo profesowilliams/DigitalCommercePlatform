@@ -205,17 +205,14 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["supportLevelLabel"]) {
         agreementInfo["supportLevelLabel"] = properties["supportLevelLabel"];
     }
-    if (properties && properties["distiQuoteNoLabel"]) {
-        agreementInfo["distiQuoteNoLabel"] = properties["distiQuoteNoLabel"];
-    }
-    if (properties && properties["distiQuoteIDLabel"]) {
-        agreementInfo["distiQuoteIDLabel"] = properties["distiQuoteIDLabel"];
-    }
+    if (properties && properties["quoteNo"]) {
+        agreementInfo["quoteNo"] = properties["quoteNo"];
+    } 
     if (properties && properties["agreementNoLabel"]) {
         agreementInfo["agreementNoLabel"] = properties["agreementNoLabel"];
     }
-    if (properties && properties["distiQuoteLabel"]) {
-        agreementInfo["distiQuoteLabel"] = properties["distiQuoteLabel"];
+    if (properties && properties["vendorQuoteId"]) {
+        agreementInfo["vendorQuoteId"] = properties["vendorQuoteId"];
     }
     if (properties && properties["quotedueDateLabel"]) {
         agreementInfo["quotedueDateLabel"] = properties["quotedueDateLabel"];
@@ -223,19 +220,12 @@ use(['../common/utils.js'], function(utils) {
     if (properties && properties["quoteExpiryDateLabel"]) {
         agreementInfo["quoteExpiryDateLabel"] = properties["quoteExpiryDateLabel"];
     }
-    if (properties && properties["agreeStartDateLabel"]) {
-        agreementInfo["agreeStartDateLabel"] = properties["agreeStartDateLabel"];
+    if (properties && properties["agreementDuration"]) {
+        agreementInfo["agreementDuration"] = properties["agreementDuration"];
     }
-    if (properties && properties["agreeEndDateLabel"]) {
-        agreementInfo["agreeEndDateLabel"] = properties["agreeEndDateLabel"];
-    }
-    if (properties && properties["usageStartDateLabel"]) {
-        agreementInfo["usageStartDateLabel"] = properties["usageStartDateLabel"];
-    }
-    if (properties && properties["usageEndDateLabel"]) {
-        agreementInfo["usageEndDateLabel"] = properties["usageEndDateLabel"];
-    }
-
+    if (properties && properties["usageDuration"]) {
+        agreementInfo["usageDuration"] = properties["usageDuration"];
+    }  
     if (properties && properties["notFoundErrorMessage"]) {
         errorMessages["notFoundErrorMessage"] = properties["notFoundErrorMessage"];
     }

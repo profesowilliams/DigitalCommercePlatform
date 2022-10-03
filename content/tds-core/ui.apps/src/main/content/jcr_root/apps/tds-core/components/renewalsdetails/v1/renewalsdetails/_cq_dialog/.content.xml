@@ -503,27 +503,21 @@
                                             <distiQuoteNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Disti Quote Number Label"
-                                                fieldLabel="Disti Quote Number Label"
-                                                name="./distiQuoteNoLabel"/>
-                                             <distiQuoteID
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Disti Quote ID Label"
-                                                fieldLabel="Disti Quote ID Label"
-                                                name="./distiQuoteIDLabel"/>
+                                                fieldDescription="Quote Number Label"
+                                                fieldLabel="Quote Number Label"
+                                                name="./quoteNo"/>                                   
                                             <agreementNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Agreement Number Label"
                                                 fieldLabel="Agreement Number Label"
                                                 name="./agreementNoLabel"/>
-                                            <distiQuote
+                                            <vendorQuoteId
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Disti Quote Label"
-                                                fieldLabel="Disti Quote Label"
-                                                name="./distiQuoteLabel"/>
+                                                fieldDescription="Vendor Quote ID Label"
+                                                fieldLabel="Vendor Quote ID Label"
+                                                name="./vendorQuoteId"/>
                                             <quotedueDate
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -536,30 +530,18 @@
                                                 fieldDescription="Quote Expiry Date Label"
                                                 fieldLabel="Quote Expiry Date Label"
                                                 name="./quoteExpiryDateLabel"/>
-                                            <agreeStartDate
+                                            <agreementDuration
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Agreement Start Date Label"
-                                                fieldLabel="Agreement Start Date Label"
-                                                name="./agreeStartDateLabel"/>
-                                            <agreeEndDate
+                                                fieldDescription="Agreement Duration"
+                                                fieldLabel="Agreement Duration"
+                                                name="./agreementDuration"/>                                        
+                                            <usageDuration
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Agreement End Date Label"
-                                                fieldLabel="Agreement End Date Label"
-                                                name="./agreeEndDateLabel"/>
-                                            <usageStartDate
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Usage Start Date Label"
-                                                fieldLabel="Usage Start Date Label"
-                                                name="./usageStartDateLabel"/>
-                                            <usageEndDate
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Usage End Date Label"
-                                                fieldLabel="Usage End Date Label"
-                                                name="./usageEndDateLabel"/>
+                                                fieldDescription="Usage Duration"
+                                                fieldLabel="Usage Duration"
+                                                name="./usageDuration"/>                                  
                                         </items>
                                     </column>
                                 </items>

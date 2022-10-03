@@ -470,6 +470,7 @@ export const localeByCountry = Object.freeze({
 });
 
 export const getLocaleFormattedDate = (rawDate) => {
+  if (!rawDate) return '';
   const locale = getClientLocale();
 
   if (locale === localeByCountry.IN || locale === localeByCountry.HK) {
