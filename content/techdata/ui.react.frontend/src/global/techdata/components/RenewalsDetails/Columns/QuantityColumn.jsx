@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { AddIcon, SubtractIcon } from "../../../../../fluentIcons/FluentIcons";
 
 
 function QuantityColumn(props) {
@@ -37,7 +38,7 @@ function QuantityColumn(props) {
                 className={`cmp-quantity-column__btn${value >= MAX_VAL ? "--disabled" : "" }`}
                 onClick={() => handleBtnClick(true)}
             >
-                <i className="cmp-quantity-column__btn-icon fas fa-plus" />
+                <AddIcon className="cmp-add-icon"/>
             </div>
             <input 
                 className="cmp-quantity-column__input" 
@@ -54,7 +55,7 @@ function QuantityColumn(props) {
                 className={`cmp-quantity-column__btn${value <= MIN_VAL ? "--disabled" : "" }`}
                 onClick={() => handleBtnClick()}
             >
-                <i className="cmp-quantity-column__btn-icon fas fa-minus" />
+                <SubtractIcon className="cmp-subtract-icon" />
             </div>
         </div>
     );
