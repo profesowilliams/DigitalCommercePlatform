@@ -129,7 +129,7 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   return {
     reseller: { ...resellerData },
     source: { id: source?.id },
-    customerPO,
+    customerPO: customerPO?.text || customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
     items
   }
