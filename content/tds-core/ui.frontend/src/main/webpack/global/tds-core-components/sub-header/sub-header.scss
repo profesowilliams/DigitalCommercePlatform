@@ -214,10 +214,10 @@
         margin: auto !important;
         max-width: 90rem;
         width: 100%;
-        padding-left: rem(48px);
+        padding-left: rem(42px);
 
         @media (max-width: 1023px) {
-          padding-left: rem(40px);
+          padding-left: rem(39px);
         }
 
         @include mobile{
