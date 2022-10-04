@@ -19,6 +19,7 @@ export default function EndUserEdit({
     handleNameChange,
     handlePhoneChange,
     handlePostalCodeChange,
+    handleVendorAccChange,
   } = props;
 
   const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
@@ -33,8 +34,9 @@ export default function EndUserEdit({
     endUserCity,
     endUserCountry,
     endUserAreaCode,
+    endUserVendorAccountNumber,
   } = endUserLables;
-  const { contact, address } = endUserDetails;
+  const { contact, address, eaNumber } = endUserDetails;
   const contactName = contact[0]?.name;
   const { line1, line2, city, country, postalCode } = address;
 
@@ -46,14 +48,6 @@ export default function EndUserEdit({
 
   const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
   const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
-
-  const validateNumber = (e, { maxLength }, handleInputFn) => {
-    if (e.target.value?.length > maxLength){
-      handleInputFn(e.target.value?.slice(0, maxLength));
-    } else {
-      handleInputFn(undefined, e);
-    }
-  }
 
   const handleEmailHelperText = (text) => {
     if (!isEmailValid && text.length !== 0) {
@@ -106,12 +100,14 @@ export default function EndUserEdit({
       />
       <CustomTextField
         disabled={contact[0]?.phone?.canEdit === false}
+        required
         id="phone"
         label={endUserPhone}
         variant="standard"
         value={contact[0]?.phone?.text || ''}
-        type='number'
-        onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePhoneChange)}
+        inputProps={MAX_LENGTH_TWENTY}
+        onChange={(e) => handlePhoneChange(e)}
+        {...handleValidation(contact[0]?.phone)}
       />
       <CustomTextField
         disabled={line1?.canEdit === false}
@@ -161,10 +157,21 @@ export default function EndUserEdit({
         id="area-code"
         label={endUserAreaCode}
         variant="standard"
-        type='number'
-        onInput={(e) => validateNumber(e, MAX_LENGTH_TWENTY, handlePostalCodeChange)}
+        inputProps={MAX_LENGTH_TWENTY}
         value={postalCode?.text || ''}
+        onChange={(e) => handlePostalCodeChange(e)}
         {...handleValidation(postalCode)}
+      />
+      <CustomTextField
+        disabled={eaNumber?.canEdit === false}
+        required
+        id="vendor-acc-no"
+        label={endUserVendorAccountNumber}
+        variant="standard"
+        inputProps={MAX_LENGTH_TWENTY}
+        value={eaNumber?.text || ''}
+        onChange={(e) => handleVendorAccChange(e)}
+        {...handleValidation(eaNumber)}
       />
     </Box>
   );

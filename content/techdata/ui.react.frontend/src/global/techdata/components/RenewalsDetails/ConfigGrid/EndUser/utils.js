@@ -21,7 +21,7 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
         county: address.county,
         countryCode: address.countryCode.text,
       },
-      vendorAccountNumber: endUser.vendorAccountNumber,
+      vendorAccountNumber: endUser.eaNumber.text,
       previousEndUserPO: endUser?.previousEndUserPO
     };
   }
@@ -67,4 +67,5 @@ export const endUserLables = {
   endUserCity: 'City',
   endUserCountry: 'Country',
   endUserAreaCode: 'Area code',
+  endUserVendorAccountNumber: 'Vendor account №',
 };

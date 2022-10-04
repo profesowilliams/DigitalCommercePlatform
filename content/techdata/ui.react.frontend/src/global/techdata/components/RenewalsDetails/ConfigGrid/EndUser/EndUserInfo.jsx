@@ -40,6 +40,7 @@ function EndUserInfo({
   const endUserResponseAsObj = isObject(endUser.name);
   const endUserData = getModifiedEndUserData(endUserResponseAsObj, endUser);
   const [endUserDetails, setEndUserDetails] = useState(endUser);
+  const validTelephoneRegex = /[0-9+\-()\s]/gm;
 
   let { contact } = endUserDetails;
   const [isEmailValid, setIsEmailValid] = useState(
@@ -92,10 +93,18 @@ function EndUserInfo({
     );
   };
 
-  const handlePostalCodeChange = (valid, e) => {
+  const handlePostalCodeChange = (e) => {
     setEndUserDetails(
       produce((draft) => {
-        draft.address.postalCode.text = valid || e.target.value;
+        draft.address.postalCode.text = e.target.value;
+      })
+    );
+  };
+  
+  const handleVendorAccChange = (e) => {
+    setEndUserDetails(
+      produce((draft) => {
+        draft.eaNumber.text = e.target.value;
       })
     );
   };
@@ -108,12 +117,18 @@ function EndUserInfo({
     );
   };
 
-  const handlePhoneChange = (valid, e) => {
-    setEndUserDetails(
-      produce((draft) => {
-        draft.contact[0].phone.text = valid || e.target.value;
-      })
-    );
+  const handlePhoneChange = (e) => {
+    const { value } = e.target;
+    
+    if (value === '' || validTelephoneRegex.test(value)) {
+      const matches = value.match(validTelephoneRegex);
+      setEndUserDetails(
+        produce((draft) => {
+          draft.contact[0].phone.text =
+            value === '' ? value : matches?.join('');
+        })
+      );
+    }
   };
 
   const handleContactNameChange = (e) => {
@@ -276,6 +291,7 @@ function EndUserInfo({
           handlePhoneChange={handlePhoneChange}
           handleNameChange={handleNameChange}
           handlePostalCodeChange={handlePostalCodeChange}
+          handleVendorAccChange={handleVendorAccChange}
         />
       ) : (
         <EndUserInfoReadOnly
