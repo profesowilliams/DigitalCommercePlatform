@@ -43,6 +43,7 @@ export default class Header {
         }
 
         if(this.header && this.subheaderNav && this.container){
+            this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
             this.subheaderNav.style.width = this.container.clientWidth + "px";
         }
     }
