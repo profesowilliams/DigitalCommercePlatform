@@ -217,11 +217,11 @@
         padding-left: rem(42px);
 
         @media (max-width: 1023px) {
-          padding-left: rem(39px);
+          padding-left: rem(73px);
         }
 
         @include mobile{
-          padding-left: rem(7px);
+          padding-left: rem(39px);
         }
 
         .cmp-tabs__tablist {
