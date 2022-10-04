@@ -45,22 +45,6 @@ h6 {
     line-height: rem(19.92px);
 }
 
-p {
-    font-size: rem(16px);
-    line-height: rem(24px);
-
-    &.large {
-        font-size: rem(20px);
-        line-height: rem(30px);
-    }
-
-    &.small {
-        font-size: rem(14px);
-        line-height: rem(16.8px);
-    }
-}
-
-
 @include mobile {
     h1  {
         font-size: rem(32px);

@@ -43,81 +43,55 @@
     }
 }
 
-.cmp-h3 {
+.cmp-h3 * {
     font-size: rem(28px);
     line-height: rem(42px);
 }
 
-.cmp-h4 {
+.cmp-h4 * {
     font-size: rem(20px);
     line-height: rem(30px);
 }
 
-.cmp-h5 {
+.cmp-h5 * {
     font-size: rem(16px);
     line-height: rem(24px);
 }
 
-.cmp-h6 {
+.cmp-h6 * {
     font-size: rem(14px);
     line-height: rem(19.92px);
 }
 
 .cmp-paragraph {
-    &-reg {
+    &-reg * {
         font-size: rem(16px);
         line-height: rem(24px);
     }
 
-    &-large {
+    &-large * {
         font-size: rem(20px);
         line-height: rem(30px);
     }
 
-    &-small {
+    &-small * {
         font-size: rem(14px);
         line-height: rem(16.8px);
     }
 }
 
-.cmp-extra-small {
+.cmp-extra-small * {
     font-size: $font-size-xxsmall;
 }
 
-.cmp-small {
+.cmp-small * {
     font-size: $font-size-small;
 }
 
-.cmp-medium {
+.cmp-medium * {
     font-size: $font-size-medium;
 }
 
-.cmp-large {
+.cmp-large * {
     font-size: $font-size-custom-midi;
-}
-
-.text.cmp-paragraph {
-    &-reg {
-        p {
-            font-size: rem(16px);
-            line-height: rem(24px);
-        }
-        
-    }
-
-    &-large {
-        p {
-            font-size: rem(20px);
-            line-height: rem(30px);
-        }
-        
-    }
-
-    &-small {
-        p {
-            font-size: rem(14px);
-            line-height: rem(16.8px);
-        }
-        
-    }
 }
