@@ -17,7 +17,7 @@ export default function ResellerEdit({
   const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
   const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
 
-  const { contact, vendorAccountNumber } = resellerDetails;
+  const { contact } = resellerDetails;
   const contactName = contact[0].name;
 
   // Rendering happens everytime a value is changed on the details.
@@ -59,8 +59,7 @@ export default function ResellerEdit({
         variant="standard"
         inputProps={MAX_LENGTH_SIXTY}
         value={contactName['text'] || ''}
-        onChange={handlers["contactName"]}
-        {...handleValidation(contactName)}
+        onChange={handlers["contactName"]} 
       />
       <CustomTextField
         required
@@ -82,17 +81,8 @@ export default function ResellerEdit({
         value={contact[0]['phone']['text'] || ''}
         disabled={contact[0]['phone']['canEdit'] === false}
         onChange={handlers["phone"]}
-      />
-      <CustomTextField
-        required
-        id="reseller-vendor-account"
-        label="Vendor account N°"
-        inputProps={MAX_LENGTH_TWENTY}
-        variant="standard"
-        value={vendorAccountNumber['text'] || ''}
-        disabled={vendorAccountNumber['canEdit'] === false}
-        onChange={handlers["vendorAccountNumber"]}
-        {...handleValidation(vendorAccountNumber)}
+        error={true}
+        {...handleValidation(contact[0]?.phone)}
       />
     </Box>
   );

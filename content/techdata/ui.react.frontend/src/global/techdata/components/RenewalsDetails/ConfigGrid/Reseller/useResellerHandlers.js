@@ -12,8 +12,7 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
         validateEmail(contact[0]?.email?.text);
     }, [contact]);
 
-    const numberRegex = /^(\d)*$/;
-    const unicodeLetterRegex = /^(\p{L}|\s)*$/u;
+    const phoneRegex = /^(\d|\ |\)|\(|\+|\-)*$/;
 
     const producedSet = createProducedSetter(setStateFunction);
     const validateEmail = (email) => {
@@ -26,8 +25,7 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
 
     const handlersObj = {
         contactName: (e) => {
-            if (unicodeLetterRegex.test(e.target.value))
-                producedSet("contact[0].name.text", e.target.value);
+            producedSet("contact[0].name.text", e.target.value);
         },
         email: (e) => {
             let email = e.target.value;
@@ -35,12 +33,8 @@ export default function useResellerHandlers(detailsObj, setStateFunction) {
             validateEmail(email);
         },
         phone: (e) => {
-            if (numberRegex.test(e.target.value))
+            if (phoneRegex.test(e.target.value))
                 producedSet("contact[0].phone.text", e.target.value);
-        },
-        vendorAccountNumber: (e) => {
-            if (numberRegex.test(e.target.value))
-                producedSet("vendorAccountNumber.text", e.target.value);
         },
     };
 

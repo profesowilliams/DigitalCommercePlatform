@@ -22,15 +22,15 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
       <p>
         <Info>{resellerData.name}</Info>
       </p>
+      <p>
         <Info>{contact.name}</Info>
         <Info>{contact.email}</Info>
         <Info>{contact.phone}</Info>
+      </p>        
       <p>
-      </p>  
         <Info>{address.line1}</Info>
         <Info>{address.line2}</Info>
-        <Info>{addSeparator([address.city, address.country])}</Info>
-      <p>          
+        <Info>{addSeparator([address.city, address.country])}</Info>          
         <Info>{address.postalCode}</Info> 
       </p>
       <p>
