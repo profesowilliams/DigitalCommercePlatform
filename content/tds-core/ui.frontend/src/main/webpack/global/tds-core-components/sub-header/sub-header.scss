@@ -94,6 +94,7 @@
     //grid-template-columns: 75% 25%;
     width: 100%;
     align-items: center;
+    height: 0;
 
     >ol {
       margin: 0;
@@ -348,7 +349,6 @@
     .cmp-tabs {
       .cmp-tabs__tablist {
         .cmp-sub-header__span {
-          top: -13px;
         }
       }
     }
@@ -361,13 +361,18 @@
       .cmp-tabs {
         .cmp-sub-header--sub-nav {
           display: flex !important;
+
+          .cmp-sub-header--content {
+            height: 0;
+
+            .cmp-sub-header--sub-nav__title {
+            }        
         }
+      }
 
         .cmp-tabs__tablist {
-          display: flex;
-
           .cmp-sub-header__span {
-            top: -13px;
+            top: 0;
           }
         }
       }
@@ -382,7 +387,6 @@
 
       .cmp-sub-header--sub-nav__title {
         margin-top: 0;
-
       }
     }
   }
@@ -392,20 +396,39 @@
 
 @media (max-width: 768.98px) {
   .subheader {    
-      &.cmp-sub-header-no-logo {
+      &.cmp-sub-header-no-logo {        
+        .cmp-sub-header--content {
+          display: flex!important;
+          height: 0px!important;
+    
+          .cmp-sub-header--sub-nav__title {
+            margin-top: 0!important;
+          }
+
+          ol li {
+            top: 0;
+          }
+        }
+
         .cmp-tabs {
+
           .cmp-sub-header--sub-nav {
             display: flex !important;
           }
 
           .cmp-tabs__tablist {
             display: flex;
+            height: unset!important;
 
             .cmp-sub-header__span {
               top: 0;
             }
           }
         }
+      }
+
+      .cmp-sub-header--content {
+        height: 60px;
       }
 
     .cmp-tabs {
@@ -449,6 +472,7 @@
           gap: 1rem;
           grid-template-rows: auto;
           overflow-y: hidden;
+          height: 60px;
 
           &::-webkit-scrollbar {
             display: none;
