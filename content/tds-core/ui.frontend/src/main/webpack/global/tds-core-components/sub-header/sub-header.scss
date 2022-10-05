@@ -89,6 +89,7 @@
   }
 
   &--sub-nav, &--sub-nav>.cmp-sub-header--content{
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     //grid-template-columns: 75% 25%;
     width: 100%;
@@ -341,6 +342,8 @@
 }
 
 .subheader {
+  font-family: Arial, Helvetica, sans-serif;
+
   &.cmp-sub-header-no-logo {
     .cmp-tabs {
       .cmp-tabs__tablist {
@@ -388,7 +391,7 @@
  }
 
 @media (max-width: 768.98px) {
-  .subheader {
+  .subheader {    
       &.cmp-sub-header-no-logo {
         .cmp-tabs {
           .cmp-sub-header--sub-nav {
