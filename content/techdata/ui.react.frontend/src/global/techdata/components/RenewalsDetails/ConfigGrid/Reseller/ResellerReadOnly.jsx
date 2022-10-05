@@ -20,17 +20,20 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
   return (
     <div className="cmp-renewals-qp__reseller-info--address-group">
       <p>
-        <Info hasLineBreak={true}>{resellerData.name}</Info>
-
+        <Info>{resellerData.name}</Info>
+      </p>
         <Info>{contact.name}</Info>
         <Info>{contact.email}</Info>
-        <Info hasLineBreak={true}>{contact.phone}</Info>
-        
+        <Info>{contact.phone}</Info>
+      <p>
+      </p>  
         <Info>{address.line1}</Info>
         <Info>{address.line2}</Info>
-        <Info>{addSeparator([address.city, address.country])}</Info>          
-        <Info hasLineBreak={true}>{address.postalCode}</Info> 
-
+        <Info>{addSeparator([address.city, address.country])}</Info>
+      <p>          
+        <Info>{address.postalCode}</Info> 
+      </p>
+      <p>
         <Info label={resellerSAPaccNoLabel} noColon>{id}</Info>
         <Info label={resellerVendorAccountNoLabel} noColon>{vendorAccountNumber}</Info>
       </p>

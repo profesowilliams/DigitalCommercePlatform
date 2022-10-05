@@ -5,21 +5,24 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
   const address = endUserData.address;
   const contact = endUserData.contact;
 
+  const addSeparator = (items) => {
+    return items?.filter(Boolean)?.join(', ');
+  };
+
   return (
     <div className="cmp-renewals-qp__enduser-info--address-group">
       <p>
-        <Info hasLineBreak={true}>{endUserData.nameUpper}</Info>
-        <Info hasLineBreak={true}>{address.line1}</Info>
-        <Info>{address.line2}</Info>
-        <Info>{(address.city ?? '') + (`, ${address.state}` || '') + (` ${address.postalCode}` || '')}</Info>      
-        <Info>{address.countryCode}</Info>
+        <Info>{endUserData.nameUpper}</Info>
       </p>
-      
       <p>
+        <Info>{address.line1}</Info>
         <Info>{contact.email}</Info>
         <Info>{contact.phone}</Info>
       </p>
-      
+      <p>
+        <Info>{address.line2}</Info>
+        <Info>{addSeparator([address.city, address.state, address.postalCode])}</Info>      
+      </p>
       <p>          
         <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>
         <Info label={productLines.vendorAccountNo} noColon>{endUserData.vendorAccountNumber}</Info>
