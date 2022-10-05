@@ -16,6 +16,7 @@ import { mapRenewalForUpdateDetails, mapRenewalItemProducts } from "../../Renewa
 import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
 
 
 function GridSubTotal({ subtotal, data, gridProps }) {
@@ -78,6 +79,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   // Get gridApi, save also as ref to be used on imperative handle
   const [gridApi, setGridApi] = useState(null);
   const gridApiRef = useRef(null);
+  const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canOrder, compProps?.orderingFromDashboard?.showOrderingIcon);
 
   function onAfterGridInit({ api }) {
     setGridApi(api);
@@ -259,11 +261,8 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       location.href=compProps.quotePreview.renewalsUrl
     }
   }
-  const isOrderButtonDisabled =  useMemo( () => {    
-    const isAfter = new Date(data?.firstAvailableOrderDate) > new Date();  
-    const canPlaceOrder = data?.canOrder;    
-    return compProps?.orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
-  }, [compProps?.orderingFromDashboard?.showOrderingIcon, data.canOrder, data.firstAvailableOrderDate])
+
+
 
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
@@ -278,7 +277,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         <div className="place-cmp-order-dialog-container">
         <p className="cmp-place-order-actions">
             <Button
-              disabled={!isOrderButtonDisabled}
+              disabled={!isIconEnabled}
               sx={{background: teal[800],"&:hover": { background: teal[600] }}}
               onClick={onOrderButtonClicked}
               variant="contained"           

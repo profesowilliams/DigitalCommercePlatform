@@ -74,15 +74,15 @@
 
 @mixin cart-icon {  
   display: flex;
-  &:hover{
+  svg {
+    fill:$brand-icon-gray-color;  
+    color: $brand-icon-gray-color;
+    transition: all .5 ease;
+  }   
+  &:hover span, &:hover svg {
     color: $td-lightblue;
-    svg {
-      fill: $td-lightblue;
-    }
-  }
-  svg{
-    fill:black;  
-  }  
+    fill: $td-lightblue;
+  } 
 } 
 
 .cmp-renewals-grid {
@@ -520,13 +520,13 @@ span.ag-group-value {
   > * {
     cursor: pointer;   
   }
-  .cmp-renewals-cart-icon{
+  .cmp-renewals-cart-icon{  
     @include cart-icon;
   }
 }
 
 .card-right-border .footer { 
-  .cmp-renewals-cart-icon {
+  .cmp-renewals-cart-icon {   
     @include cart-icon;
     cursor: pointer;
     align-items: center;    
@@ -675,10 +675,7 @@ button.icon-box {
         height: 1.3rem;
         margin: auto 0;
         display: inline;
-      }
-      svg {
-        fill: #727679;
-        }
+      }     
       svg.disabled {
         opacity: 0.5;
       }

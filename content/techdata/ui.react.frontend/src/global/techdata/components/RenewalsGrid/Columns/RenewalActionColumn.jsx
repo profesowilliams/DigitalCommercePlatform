@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import VerticalSeparator from "../../Widgets/VerticalSeparator";
+import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import useTriggerOrdering from "../Orders/useTriggerOrdering";
 import {
@@ -33,10 +34,12 @@ function _RenewalActionColumn({ eventProps }) {
 
   const { value, data } = eventProps;
 
+  const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
+
   const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
 
   const orderEndpoints ={updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint};
-  
+
   const iconStyle = {
     color: "#21314D",
     cursor: "pointer",
@@ -126,16 +129,10 @@ function _RenewalActionColumn({ eventProps }) {
     }, 0);
   }; 
 
-  const isIconDisabled =  useMemo( () => {    
-    const isAfter = new Date(data?.firstAvailableOrderDate || new Date()) > new Date();  
-    const canPlaceOrder = data?.canPlaceOrder;    
-    return orderingFromDashboard?.showOrderingIcon && !isAfter && canPlaceOrder;
-  },[orderingFromDashboard, data.canPlaceOrder, data.firstAvailableOrderDate])
-
   return (
     <>
       <div className="cmp-renewal-action-container">
-        {isIconDisabled ? (
+        {isIconEnabled ? (
           <span className="cmp-renewals-cart-icon"><CartIcon onClick={handleCartIconClick} /></span>
         ) : (
           <CartIcon

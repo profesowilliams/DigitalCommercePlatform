@@ -11,6 +11,7 @@ import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
 import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
 import { redirectToRenewalDetail } from "../renewalUtils";
+import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 
 function RenewalPlanOptions({ labels, data, node }) {
     const effects = useRenewalGridState(st => st.effects);
@@ -26,6 +27,8 @@ function RenewalPlanOptions({ labels, data, node }) {
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
     const { computeClassName: computeTDSynnexClass, isTDSynnex } = useIsTDSynnexClass();
+    const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
+
 
     const isPlanSelected = ({ id }) => {
         if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
@@ -145,12 +148,6 @@ function RenewalPlanOptions({ labels, data, node }) {
         serverSide: false,
         paginationStyle: "none",
     };
-
-    const isIconEnabled = useMemo(() => {
-        const isAfter = new Date(data?.firstAvailableOrderDate || new Date()) > new Date();
-        const canPlaceOrder = data?.canPlaceOrder;
-        return !isAfter && canPlaceOrder;
-    }, [orderingFromDashboard, data.canPlaceOrder, data.firstAvailableOrderDate])
 
     const renewalDetailsURL = id => encodeURI(
         `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
@@ -281,7 +278,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                     {isIconEnabled ? (
                                                         <span className="cmp-renewals-cart-icon" onClick={handleCartIconClick} >
                                                             <CartIcon />{' '}
-                                                            Order
+                                                            <span>Order</span>
                                                         </span>
                                                     ) : (
                                                         <>
