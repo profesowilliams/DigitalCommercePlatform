@@ -55,12 +55,15 @@ These style system class work for container component only. */
   }
   &-dynamic{
     &>.cmp-container {
-      @include mobile {
+
+      @media only screen and (min-width: 5px) and (max-width: 767px) {  
         #{$padding}: 1rem;  
-      }
-      @include tablet {
+      } 
+
+      @media only screen and (min-width: 768px) and (max-width: 1023px) {  
         #{$padding}: 1.5rem;  
       }
+
       @include desktop {
         #{$padding}: 3rem;
       }
