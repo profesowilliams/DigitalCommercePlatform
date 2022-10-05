@@ -344,7 +344,7 @@
                         e.preventDefault();
                         console.warn('validation failed for form');
                     } else {
-                        let endPoint = "/content/techdata/apis/tdpostform";
+                        let endPoint = "/content/tds-core/apis/tdpostform";
                         var xhr = new XMLHttpRequest();
                         var handlePOSTRequest = function () { // Call a function when the state changes.
                             if (xhr.status === 200) {
