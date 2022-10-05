@@ -131,7 +131,8 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
     source: { id: source?.id },
     customerPO: customerPO?.text || customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
-    items
+    items,
+    POAllowedLength: customerPO?.allowedLength
   }
 }
 

@@ -11,7 +11,7 @@ const CustomOrderButton = (properties) => ({ children }) =>
     {children}
   </Button>;
 
-function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store }) {
+function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength }) {
   const [max30Characters, setMax30Characters] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState("");
   const [termsServiceChecked, setTermsServiceChecked] = useState(false);
@@ -29,22 +29,10 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
     setMax30Characters(false);    
   }
 
-  function handleErrorOnMax(valueLength) {
-    if (valueLength > 30) {
-      setMax30Characters(true);
-    } else {
-      setMax30Characters(false);
-    }
-  }
-
   function onTextFieldChange(event) {
     const value = event?.target?.value;
-    if (value.length > 30) return;
-    setPurchaseOrderNumber(value);
-    handleErrorOnMax(value.length);
-    if (value.length > 30) {
-      setMax30Characters(true);
-    }
+    if (!!POAllowedLength && value.length > POAllowedLength) return;
+    setPurchaseOrderNumber(value);   
   }
 
   function handleToggleToaster({ transactionNumber, isSuccess = false, failedReason = '', salesContentEmail }) {

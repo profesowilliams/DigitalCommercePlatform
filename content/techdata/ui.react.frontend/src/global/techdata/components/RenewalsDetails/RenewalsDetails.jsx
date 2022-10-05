@@ -176,7 +176,7 @@ function RenewalsDetails(props) {
   }
 
   const updateRenewalDetails = async (details) => {
-    const payload = mapRenewalForUpdateDetails(details);
+    const { POAllowedLength, ...payload} = mapRenewalForUpdateDetails(details);
     const updateResponse = await post(componentProp.updateRenewalOrderEndpoint, payload);  
     const updateError = updateResponse?.data?.error;
     if(updateError?.isError) throw updateResponse; 

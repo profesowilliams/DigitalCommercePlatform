@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import VerticalSeparator from "../../Widgets/VerticalSeparator";
-import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from "../Orders/orderingRequests";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import useTriggerOrdering from "../Orders/useTriggerOrdering";
 import {
   getLocalStorageData,
   hasLocalStorageData,
   isFromRenewalDetailsPage,
-  setLocalStorageData,
+  setLocalStorageData
 } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 

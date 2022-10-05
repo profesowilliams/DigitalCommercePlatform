@@ -1,11 +1,12 @@
 import { Checkbox, CircularProgress } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
-import React, { Suspense } from "react";
+import React, { useMemo } from "react";
 import { Dismiss } from "../../../../../fluentIcons/FluentIcons";
 import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
 import usePlaceOrderDialogHook from "./usePlaceOrderDialogHook";
 import { useEffect } from "react";
+import { thousandSeparator } from "../../../helpers/formatting";
 
 
 
@@ -19,7 +20,7 @@ function PlaceOrderDialog({
   isDetails = false,
   store  
 }) {
-  const { endUser } = renewalData;
+  const { endUser, POAllowedLength } = renewalData;
   const {
     placeOrderDialogTitle,
     termsAndConditions,
@@ -37,7 +38,7 @@ function PlaceOrderDialog({
     setTermsServiceChecked,
     OrderButtonComponent,
     resetDialogStates   
-  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store});   
+  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength});   
 
   const handleClose = (isSuccess = false) => onClose(isSuccess); 
 
@@ -83,6 +84,8 @@ function PlaceOrderDialog({
     handleClose();
   };
 
+  const setHelperText = useMemo(() => POAllowedLength ? `Max ${thousandSeparator(POAllowedLength, 0)} characters` : '',[POAllowedLength]);
+  
   return (
     <>
       <Dialog
@@ -112,7 +115,7 @@ function PlaceOrderDialog({
               value={purchaseOrderNumber}
               className="cmp-order-purchase-order-number"
               onChange={onTextFieldChange}
-              helperText="Max 30 characters"
+              helperText={setHelperText}
               {...PlaceOrderMaterialUi.textfieldsStyles}
             />
           </div>

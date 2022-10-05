@@ -5,7 +5,7 @@ import { useRenewalGridState } from '../store/RenewalsStore';
 import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from './orderingRequests';
 
 function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
-
+  
   const [toggleOrderDialog, setToggleOrderDialog] = useState(false);
   const [details,setDetails] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
@@ -15,7 +15,7 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
     if (!data.isValid) {
       redirectToRenewalDetail(detailUrl, data.source.id);
       return ;
-    }
+    } 
     closeAndCleanToaster();
     const quoteDetails = await fetchQuoteRenewalDetails(
       renewalDetailsEndpoint,
