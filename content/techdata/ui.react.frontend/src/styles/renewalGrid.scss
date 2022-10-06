@@ -74,6 +74,8 @@
 
 @mixin cart-icon {  
   display: flex;
+  justify-content: center;
+  align-items: center;
   svg {
     fill:$brand-icon-gray-color;  
     color: $brand-icon-gray-color;
