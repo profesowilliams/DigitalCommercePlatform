@@ -15,13 +15,15 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
         <Info>{endUserData.nameUpper}</Info>
       </p>
       <p>
-        <Info>{address.line1}</Info>
+        <Info>{endUserData.name}</Info>
         <Info>{contact.email}</Info>
         <Info>{contact.phone}</Info>
       </p>
       <p>
+        <Info>{address.line1}</Info>
         <Info>{address.line2}</Info>
-        <Info>{addSeparator([address.city, address.state, address.postalCode])}</Info>      
+        <Info>{addSeparator([address.city, address.state])}</Info>      
+        <Info>{address.postalCode ?? ''}</Info>
       </p>
       <p>          
         <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>

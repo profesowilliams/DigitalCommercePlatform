@@ -4529,7 +4529,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     },
                     "nameUpper": "TECH DATA COMPUTER SERVICE(HONG KONG)LTD",
                     "eaNumber": {
-                        "text": null,
+                        "text": 112323231,
                         "isValid": true,
                         "isMandatory": false,
                         "isDisplay": false,
@@ -4600,7 +4600,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         },
                         "state": null,
                         "postalCode": {
-                            "text": null,
+                            "text": 123221,
                             "isValid": false,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4742,7 +4742,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "totalReinstatementFeeSell": null,
                 "endUserType": "Commercial",
                 "vendorLogo": "https://sit-author.dc.tdebusiness.cloud/assetdetails.html/content/dam/techdata/shared/vendors-logos/logo-hpe.svg",
-                "previousEndUserPO": null,
+                "previousEndUserPO": 77893424235543,
                 "previousResellerPO": null,
                 "isValid": false,
                 "canOrder": true,
