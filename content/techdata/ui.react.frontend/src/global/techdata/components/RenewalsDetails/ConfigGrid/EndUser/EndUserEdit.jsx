@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
-import { endUserConstants, endUserLables } from './utils';
-import { handleValidation } from '../Common/utils';
+import { endUserLables } from './utils';
+import { handleValidation, populateFieldConfigsFromService, getFieldMessage, handleEmailHelperText } from '../Common/utils';
 
 export default function EndUserEdit({
   endUserDetails,
@@ -22,8 +22,6 @@ export default function EndUserEdit({
     handleVendorAccChange,
   } = props;
 
-  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
-    endUserConstants;
   const {
     endUserName,
     endUserFullName,
@@ -46,132 +44,97 @@ export default function EndUserEdit({
     '&.MuiBox-root': { marginTop: '20px' },
   };
 
-  const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
-  const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
-
-  const handleEmailHelperText = (text) => {
-    if (!isEmailValid && text.length !== 0) {
-      return INVALID_EMAIL_TEXT;
-    }
-
-    if (!isEmailValid && text.length === 0) {
-      return REQUIRED_FIELD;
-    }
-
-    return null;
-  };
-
   return (
-    <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
+    <Box className="cmp-renewals-qp__edit-planel" component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
-        disabled={endUserDetails?.name?.canEdit === false}
-        required
         autoFocus={true}
         id="end-user-name"
         label={endUserName}
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={endUserDetails?.name?.text || ''}
         onChange={(e) => handleNameChange(e)}
-        {...handleValidation(endUserDetails?.name)}
+        {...handleValidation(endUserDetails?.name, true)}
+        helperText={getFieldMessage(endUserDetails?.name, true)}
+        {...populateFieldConfigsFromService(endUserDetails?.name)}
       />
       <CustomTextField
-        disabled={contactName?.canEdit === false}
-        required
         id="contact-name"
         label={endUserFullName}
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={contactName?.text || ''}
         onChange={(e) => handleContactNameChange(e)}
-        {...handleValidation(contactName)}
+        {...handleValidation(contactName, true)}
+        helperText={getFieldMessage(contactName, true)}
+        {...populateFieldConfigsFromService(contactName)}
       />
       <CustomTextField
-        disabled={contact[0]?.email?.canEdit === false}
-        required
         id="email"
         label={endUserEmail}
         variant="standard"
-        value={contact[0]?.email?.text || ''}
         onChange={(e) => handleEmailChange(e)}
-        inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
-        helperText={handleEmailHelperText(contact[0]?.email?.text)}
+        helperText={handleEmailHelperText(contact[0]?.email?.text, isEmailValid)}
+        {...populateFieldConfigsFromService(contact[0]?.email)}
       />
       <CustomTextField
-        disabled={contact[0]?.phone?.canEdit === false}
-        required
         id="phone"
         label={endUserPhone}
         variant="standard"
-        value={contact[0]?.phone?.text || ''}
-        inputProps={MAX_LENGTH_TWENTY}
         onChange={(e) => handlePhoneChange(e)}
+        helperText={getFieldMessage(contact[0]?.phone)}
         {...handleValidation(contact[0]?.phone)}
+        {...populateFieldConfigsFromService(contact[0]?.phone)}
       />
       <CustomTextField
-        disabled={line1?.canEdit === false}
-        required
         id="address"
         label={endUserAddress1}
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={line1?.text || ''}
         onChange={(e) => handleAddressChange(e)}
         {...handleValidation(line1)}
+        helperText={getFieldMessage(line1)}
+        {...populateFieldConfigsFromService(line1)}
       />
       <CustomTextField
-        disabled={line2?.canEdit === false}
         id="addressTwo"
         label={endUserAddress2}
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={line2?.text || ''}
         onChange={(e) => handleAddressTwoChange(e)}
+        helperText={getFieldMessage(line2)}
+        {...populateFieldConfigsFromService(line2)}
       />
       <CustomTextField
-        disabled={city?.canEdit === false}
-        required
         id="city"
         label={endUserCity}
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={city?.text || ''}
         onChange={(e) => handleCityChange(e)}
         {...handleValidation(city)}
+        helperText={getFieldMessage(city)}
+        {...populateFieldConfigsFromService(city)}
       />
       <CustomTextField
-        disabled={country?.canEdit === false}
-        required
         id="country"
         label={endUserCountry}
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={country?.text || ''}
         onChange={(e) => handleCountryChange(e)}
         {...handleValidation(country)}
+        helperText={getFieldMessage(country)}
+        {...populateFieldConfigsFromService(country)}
       />
       <CustomTextField
-        disabled={postalCode?.canEdit === false}
-        required
         id="area-code"
         label={endUserAreaCode}
         variant="standard"
-        inputProps={MAX_LENGTH_TWENTY}
-        value={postalCode?.text || ''}
         onChange={(e) => handlePostalCodeChange(e)}
         {...handleValidation(postalCode)}
+        helperText={getFieldMessage(postalCode)}
+        {...populateFieldConfigsFromService(postalCode)}
       />
       <CustomTextField
-        disabled={eaNumber?.canEdit === false}
-        required
         id="vendor-acc-no"
         label={endUserVendorAccountNumber}
         variant="standard"
-        inputProps={MAX_LENGTH_TWENTY}
-        value={eaNumber?.text || ''}
         onChange={(e) => handleVendorAccChange(e)}
-        {...handleValidation(eaNumber)}
+        {...handleValidation(eaNumber, true)}
+        helperText={getFieldMessage(eaNumber, true)}
+        {...populateFieldConfigsFromService(eaNumber)}
       />
     </Box>
   );

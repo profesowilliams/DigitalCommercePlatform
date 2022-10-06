@@ -22,7 +22,7 @@ export const createProducedSetter = (setStateFn) => {
  * Util methods to handle input error validations in
  * enduser and reseller edit
  */
-const { REQUIRED_FIELD } = endUserConstants;
+const { REQUIRED_FIELD, REQUIRED_MAX_LENGTH_FIELD, INVALID_EMAIL_TEXT } = endUserConstants;
 const showErrorField = (obj) => {
   return { error: obj?.isValid === false && obj?.text?.length === '' };
 };
@@ -33,13 +33,30 @@ const showErrorMsg = (obj) => {
   }
 };
 
-export const handleValidation = (obj) => {
+export const handleEmailHelperText = (text, isEmailValid) => {
+  if (!isEmailValid && text.length !== 0) {
+    return INVALID_EMAIL_TEXT;
+  }
+
+  return REQUIRED_FIELD;
+};
+
+export const getFieldMessage = (obj, useRequiredMaxLengthMessage) => {
+  if (!obj?.isMandatory || !obj?.canEdit) {
+    return undefined;
+  }
+  return useRequiredMaxLengthMessage && obj.allowedLength
+    ? REQUIRED_MAX_LENGTH_FIELD.replace("{max-length}", obj.allowedLength)
+    : REQUIRED_FIELD;
+};
+
+export const handleValidation = (obj, useRequiredMaxLengthMessage) => {
   if (!obj) return;
 
-  if (!obj?.text) {
+  if (obj.isMandatory && !obj?.text) {
     return {
       error: true,
-      helperText: REQUIRED_FIELD,
+      helperText: getFieldMessage(obj, useRequiredMaxLengthMessage),
     };
   }
 
@@ -48,3 +65,18 @@ export const handleValidation = (obj) => {
     ...showErrorMsg(obj),
   };
 };
+
+export const getInputProps = (obj) => {
+  if (!obj) return;
+
+  const inputProps = { maxLength: obj.allowedLength?? undefined };
+
+  return inputProps;
+}
+
+export const populateFieldConfigsFromService = (field) => ({
+  disabled: field?.canEdit === false,
+  required: field?.isMandatory,
+  value: field?.text || '',
+  inputProps: getInputProps(field),
+});

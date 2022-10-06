@@ -53,6 +53,7 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
 export const endUserConstants = {
   INVALID_EMAIL_TEXT: 'Enter a valid email address. For example, name@email.com',
   REQUIRED_FIELD: 'This is a required field.',
+  REQUIRED_MAX_LENGTH_FIELD: 'This is a required field, max {max-length} characters.',
   SIXTY: 60,
   TWENTY: 20,
 };

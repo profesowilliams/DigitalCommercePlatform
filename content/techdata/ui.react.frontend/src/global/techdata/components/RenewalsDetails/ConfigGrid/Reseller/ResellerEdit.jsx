@@ -1,22 +1,14 @@
 import React, { useLayoutEffect, } from 'react';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
-import { resellerConstants } from './utils';
 import { useRef } from 'react';
-import { handleValidation } from '../Common/utils';
+import { handleValidation, populateFieldConfigsFromService, getFieldMessage, handleEmailHelperText } from '../Common/utils';
 
 export default function ResellerEdit({
   resellerDetails,
   isEmailValid,
   handlers,
 }) {
-
-  const { INVALID_EMAIL_TEXT, REQUIRED_FIELD, SIXTY, TWENTY } =
-    resellerConstants;
-
-  const MAX_LENGTH_SIXTY = { maxLength: SIXTY };
-  const MAX_LENGTH_TWENTY = { maxLength: TWENTY };
-
   const { contact } = resellerDetails;
   const contactName = contact[0].name;
 
@@ -37,52 +29,35 @@ export default function ResellerEdit({
     '&.MuiBox-root': { marginTop: '20px' },
   };
 
-  const handleEmailHelperText = (text) => {
-    if (!isEmailValid && text.length !== 0) {
-      return INVALID_EMAIL_TEXT;
-    }
-
-    if (!isEmailValid && text.length === 0) {
-      return REQUIRED_FIELD;
-    }
-
-    return null;
-  };
-
   return (
-    <Box component="form" sx={formBoxStyle} noValidate autoComplete="off">
+    <Box className="cmp-renewals-qp__edit-planel" component="form" sx={formBoxStyle} noValidate autoComplete="off">
       <CustomTextField
-        required
         inputRef={contactNameRef}
         id="reseller-contact-name"
         label="Contact full name"
         variant="standard"
-        inputProps={MAX_LENGTH_SIXTY}
-        value={contactName['text'] || ''}
-        onChange={handlers["contactName"]} 
+        onChange={handlers["contactName"]}
+        helperText={getFieldMessage(contactName, true)}
+        {...handleValidation(contactName, true)}
+        {...populateFieldConfigsFromService(contactName)}
       />
       <CustomTextField
-        required
         id="reseller-email"
         label="Contact email"
         variant="standard"
-        value={contact[0]['email']['text'] || ''}
-        disabled={contact[0]['email']['canEdit'] === false}
         onChange={handlers["email"]}
-        inputProps={MAX_LENGTH_SIXTY}
         error={!isEmailValid}
-        helperText={handleEmailHelperText(contact[0]?.email?.text)}
+        helperText={handleEmailHelperText(contact[0]?.email?.text, isEmailValid)}
+        {...populateFieldConfigsFromService(contact[0]['email'])}
       />
       <CustomTextField
         id="reseller-phone"
         label="Contact telephone number"
-        inputProps={MAX_LENGTH_TWENTY}
         variant="standard"
-        value={contact[0]['phone']['text'] || ''}
-        disabled={contact[0]['phone']['canEdit'] === false}
         onChange={handlers["phone"]}
-        error={true}
-        {...handleValidation(contact[0]?.phone)}
+        helperText={getFieldMessage(contact[0]['phone'])}
+        {...handleValidation(contact[0]['phone'])}
+        {...populateFieldConfigsFromService(contact[0]['phone'])}
       />
     </Box>
   );
