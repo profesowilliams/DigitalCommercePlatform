@@ -137,10 +137,10 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     productFamily: "150px",
     productDescription: "368px",
     vendorPartNo: "220px",
-    listPrice: "100px",
-    percentageOfflist: "100px",
-    unitPrice: "100px",
-    quantity: "70px",
+    listPrice: "70px",
+    percentageOfflist: "65px",
+    unitPrice: "70px",
+    quantity: "60px",
     total: "100px",
   });
 
