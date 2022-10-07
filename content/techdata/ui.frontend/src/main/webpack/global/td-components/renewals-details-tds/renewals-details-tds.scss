@@ -7,7 +7,7 @@
     .header-container {
       .image-container {
         .back-to-renewal {
-          @include font-everett-regular-normal($line-height: 22px);
+          @include font-arial-normal($line-height: 22px);
           color: map-get($color-palette, 'charcoal');
         }
       }
@@ -19,7 +19,7 @@
         font-weight: 400;
       }
       .quote-preview {
-        @include font-everett-medium-bold($size: 20px, $line-height: 18px);
+        @include font-arial-medium-bold($size: 20px, $line-height: 18px);
         color: map-get($color-palette, 'deep-teal');
       }
     } 
@@ -27,10 +27,10 @@
     .cmp-renewals-qp__reseller-info,
     .cmp-renewals-qp__agreement-info,
     .cmp-renewals-qp__enduser-info {
-      @include font-everett-medium-bold();
+      @include font-arial-medium-bold();
 
       &--title {
-        @include font-everett-medium-bold($size: 16px);
+        @include font-arial-medium-bold($size: 16px);
       }
 
       &--address-group {
@@ -46,7 +46,7 @@
     .details-container {
       .details-preview {
         color: $brand-green;
-        @include font-everett-medium-bold();
+        @include font-arial-medium-bold();
       }
     }
 
@@ -59,7 +59,7 @@
         color: map-get($color-palette, 'cool-gray-9');
         font-weight: 400;
         font-size: 14px;
-        font-family: "Open Sans", sans-serif;
+        font-family: "Arial", sans-serif;
       }
     }
 

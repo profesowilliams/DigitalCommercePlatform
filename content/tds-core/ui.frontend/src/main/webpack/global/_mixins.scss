@@ -412,3 +412,11 @@
     font-size: $size;
     line-height: $line-height;
   }
+  
+  @mixin font-arial-medium-bold($weight: 600, $size: 16px, $line-height: 21px) {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: $weight;
+    font-size: $size;
+    line-height: $line-height;
+  }

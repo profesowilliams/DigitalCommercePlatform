@@ -19,6 +19,13 @@ $brand-charcoal: #262626;
 }
 .filter-modal-content.td-synnex{
   top: 60px;
+  .filter-modal-container {
+    &__popup {
+      * {
+        font-family: Arial;
+      }
+    }
+  }
 }
 .filter-modal-content{
   all: initial;
