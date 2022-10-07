@@ -15,7 +15,7 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
         <Info>{endUserData.nameUpper}</Info>
       </p>
       <p>
-        <Info>{endUserData.name}</Info>
+        <Info>{contact.name}</Info>
         <Info>{contact.email}</Info>
         <Info>{contact.phone}</Info>
       </p>
