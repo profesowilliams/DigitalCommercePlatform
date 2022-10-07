@@ -137,6 +137,7 @@ $brand-charcoal: #262626;
   &__results.td-synnex{
     border: 1px solid $brand-green;
     background-color: $brand-green; 
+    color: white;
   }
   .cmp-quote-button:disabled{
     opacity: 0.8;

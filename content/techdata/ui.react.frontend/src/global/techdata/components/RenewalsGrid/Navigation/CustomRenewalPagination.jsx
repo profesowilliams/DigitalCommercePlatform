@@ -151,6 +151,13 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
 
   const gotToLastPage = () =>  goToSpecificPage(pageCount-1)
 
+  const getUpperLimitShownItemsNumber = () => {
+    const upperLimit = paginationCounter.maxCounter > 0
+                        ? paginationCounter.maxCounter
+                        : maxPaginationCounter();
+    return upperLimit > totalCounter ? totalCounter : upperLimit;
+  }
+
   return (
     <div className="cmp-navigation">
       <div className="navigation__info">
@@ -161,9 +168,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
         </span>
         -
         <span className="cta">
-          {paginationCounter.maxCounter > 0
-            ? paginationCounter.maxCounter
-            : maxPaginationCounter()}
+          {getUpperLimitShownItemsNumber()}
         </span>
         {' '}of{' '}
         <span className="cta">{' '}{totalCounter}{' '}</span>
