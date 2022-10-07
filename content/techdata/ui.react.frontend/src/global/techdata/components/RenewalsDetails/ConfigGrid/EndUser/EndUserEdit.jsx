@@ -46,7 +46,7 @@ export default function EndUserEdit({
 
   return (
     <Box className="cmp-renewals-qp__edit-planel" component="form" sx={formBoxStyle} noValidate autoComplete="off">
-      <CustomTextField
+      {endUserDetails?.name.canEdit && <CustomTextField
         autoFocus={true}
         id="end-user-name"
         label={endUserName}
@@ -55,8 +55,8 @@ export default function EndUserEdit({
         {...handleValidation(endUserDetails?.name, true)}
         helperText={getFieldMessage(endUserDetails?.name, true)}
         {...populateFieldConfigsFromService(endUserDetails?.name)}
-      />
-      <CustomTextField
+      />}
+      {contactName.canEdit && <CustomTextField
         id="contact-name"
         label={endUserFullName}
         variant="standard"
@@ -64,8 +64,8 @@ export default function EndUserEdit({
         {...handleValidation(contactName, true)}
         helperText={getFieldMessage(contactName, true)}
         {...populateFieldConfigsFromService(contactName)}
-      />
-      <CustomTextField
+      />}
+      {contact[0]?.email.canEdit && <CustomTextField
         id="email"
         label={endUserEmail}
         variant="standard"
@@ -73,8 +73,8 @@ export default function EndUserEdit({
         error={!isEmailValid}
         helperText={handleEmailHelperText(contact[0]?.email?.text, isEmailValid)}
         {...populateFieldConfigsFromService(contact[0]?.email)}
-      />
-      <CustomTextField
+      />}
+      {contact[0]?.phone.canEdit && <CustomTextField
         id="phone"
         label={endUserPhone}
         variant="standard"
@@ -82,8 +82,8 @@ export default function EndUserEdit({
         helperText={getFieldMessage(contact[0]?.phone)}
         {...handleValidation(contact[0]?.phone)}
         {...populateFieldConfigsFromService(contact[0]?.phone)}
-      />
-      <CustomTextField
+      />}
+      {line1.canEdit && <CustomTextField
         id="address"
         label={endUserAddress1}
         variant="standard"
@@ -91,16 +91,16 @@ export default function EndUserEdit({
         {...handleValidation(line1)}
         helperText={getFieldMessage(line1)}
         {...populateFieldConfigsFromService(line1)}
-      />
-      <CustomTextField
+      />}
+      {line2.canEdit && <CustomTextField
         id="addressTwo"
         label={endUserAddress2}
         variant="standard"
         onChange={(e) => handleAddressTwoChange(e)}
         helperText={getFieldMessage(line2)}
         {...populateFieldConfigsFromService(line2)}
-      />
-      <CustomTextField
+      />}
+      {city.canEdit && <CustomTextField
         id="city"
         label={endUserCity}
         variant="standard"
@@ -108,8 +108,8 @@ export default function EndUserEdit({
         {...handleValidation(city)}
         helperText={getFieldMessage(city)}
         {...populateFieldConfigsFromService(city)}
-      />
-      <CustomTextField
+      />}
+      {country.canEdit && <CustomTextField
         id="country"
         label={endUserCountry}
         variant="standard"
@@ -117,8 +117,8 @@ export default function EndUserEdit({
         {...handleValidation(country)}
         helperText={getFieldMessage(country)}
         {...populateFieldConfigsFromService(country)}
-      />
-      <CustomTextField
+      />}
+      {postalCode.canEdit && <CustomTextField
         id="area-code"
         label={endUserAreaCode}
         variant="standard"
@@ -126,8 +126,8 @@ export default function EndUserEdit({
         {...handleValidation(postalCode)}
         helperText={getFieldMessage(postalCode)}
         {...populateFieldConfigsFromService(postalCode)}
-      />
-      <CustomTextField
+      />}
+      {eaNumber.canEdit && <CustomTextField
         id="vendor-acc-no"
         label={endUserVendorAccountNumber}
         variant="standard"
@@ -135,7 +135,7 @@ export default function EndUserEdit({
         {...handleValidation(eaNumber, true)}
         helperText={getFieldMessage(eaNumber, true)}
         {...populateFieldConfigsFromService(eaNumber)}
-      />
+      />}
     </Box>
   );
 }

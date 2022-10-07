@@ -18,7 +18,7 @@ export default function ResellerEdit({
   const contactNameRef = useRef();
   useLayoutEffect(() => {
     if (isMountedRef.current) {
-      contactNameRef.current.focus();
+      contactNameRef.current?.focus();
       isMountedRef.current = false;
     }
   });
@@ -31,7 +31,7 @@ export default function ResellerEdit({
 
   return (
     <Box className="cmp-renewals-qp__edit-planel" component="form" sx={formBoxStyle} noValidate autoComplete="off">
-      <CustomTextField
+      {contactName.canEdit && <CustomTextField
         inputRef={contactNameRef}
         id="reseller-contact-name"
         label="Contact full name"
@@ -40,8 +40,8 @@ export default function ResellerEdit({
         helperText={getFieldMessage(contactName, true)}
         {...handleValidation(contactName, true)}
         {...populateFieldConfigsFromService(contactName)}
-      />
-      <CustomTextField
+      />}
+      {contact[0]['email'].canEdit && <CustomTextField
         id="reseller-email"
         label="Contact email"
         variant="standard"
@@ -49,8 +49,8 @@ export default function ResellerEdit({
         error={!isEmailValid}
         helperText={handleEmailHelperText(contact[0]?.email?.text, isEmailValid)}
         {...populateFieldConfigsFromService(contact[0]['email'])}
-      />
-      <CustomTextField
+      />}
+      {contact[0]['phone'].canEdit && <CustomTextField
         id="reseller-phone"
         label="Contact telephone number"
         variant="standard"
@@ -58,7 +58,7 @@ export default function ResellerEdit({
         helperText={getFieldMessage(contact[0]['phone'])}
         {...handleValidation(contact[0]['phone'])}
         {...populateFieldConfigsFromService(contact[0]['phone'])}
-      />
+      />}
     </Box>
   );
 }
