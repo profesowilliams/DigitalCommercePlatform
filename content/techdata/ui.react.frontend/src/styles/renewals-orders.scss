@@ -61,8 +61,12 @@
         }
     }
 }
-
-.toaster-modal {
+.cmp-toaster-renewal-details{
+    .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
+        top: 8.8rem !important;
+    }
+}
+.toaster-modal {    
     .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
         height: auto;
         top: 13rem;

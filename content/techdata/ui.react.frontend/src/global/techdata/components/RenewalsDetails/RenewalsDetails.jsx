@@ -161,6 +161,9 @@ function RenewalsDetails(props) {
           if (endUserDetails || resellerDetails)
             changeRefreshDetailApiState();
           return true;          
+        } else {
+          const toaster = {isOpen:true, isAutoClose:true, isSuccess: false, message:componentProp.quoteEditing?.failedUpdate}
+          effects.setCustomState({ key: 'toaster', value: { ...toaster } });
         }
       }
     } catch (ex) {      

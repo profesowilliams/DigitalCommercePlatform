@@ -53,7 +53,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
   aemData.filterType =
     aemData.filterType === null ? "static" : aemData.filterType;
 
-  if (aemData.filterType === "dynamic") {
+  if (aemData.filterType === "dynamic" && filterData?.refinements) {
     aemFilterData = normaliseAPIData(filterData.refinements);
   } else {
     aemFilterData = normaliseState(aemData.filterListValues);
@@ -69,6 +69,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   useEffect(() => {
     const onPageLoad = () => setDOMLoaded(true);
+    if (!document.querySelector('.subheader')) return;
     if (document.readyState === "complete") {
       onPageLoad();
     } else {
@@ -84,8 +85,11 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   useEffect(() => {
     function dynamicFilterAdjustmnet() {
-      const { top } = filterDom.current.getBoundingClientRect();
-      filterDom.current.style.height = `calc(100vh - ${top}px)`;   
+      const { top, height } = document.querySelector('.subheader').getBoundingClientRect();
+      const gap = 7;
+      const topCalculation = top + gap + height;
+      filterDom.current.style.top = `${topCalculation}px`;
+      filterDom.current.style.height = `calc(100vh - ${topCalculation}px)`;   
       filterBodyDom.current.style.height = `calc(100% - ${192}px)`;     
       document.body.style.overflow = "hidden";
     }
@@ -129,7 +133,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     return !!newSubheader ? newSubheader : (!!apjHeader ? apjHeader : document.body );
   }
 
-  return DOMLoaded ? ReactDOM.createPortal(
+  return DOMLoaded && 
     <>
       <div className="filter-modal-container" />
       <div className={computeClassName("filter-modal-content")} ref={filterDom}>
@@ -158,9 +162,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
           </FilterDialog>
         </RenewalErrorBoundary>
       </div>
-    </>,
-    getFilterParent()
-  ) : <></>;
+    </>
 };
 
 export default FilterModal;
