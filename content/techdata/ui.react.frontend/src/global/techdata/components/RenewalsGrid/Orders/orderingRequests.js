@@ -95,7 +95,7 @@ export const mapRenewalForUpdateDashboard = (renewalQuote) => {
 }
 
 export const extractDetailRenewalData = (quote) => {
-  const { id, contact, address, vendorAccountNumber } = quote;
+  const { id, contact, address } = quote;
   const [_contact] = contact;
   return {
     id,
@@ -114,6 +114,30 @@ export const extractDetailRenewalData = (quote) => {
       country: address?.country?.text,
       county: address?.county?.text,
       countryCode: address?.countryCode?.text
+    }
+  }
+}
+
+export const extractDetailResellerData = (quote) => {
+  const { id, contact, address, vendorAccountNumber } = quote;
+  const [_contact] = contact;
+  return {
+    id,
+    contact: {
+      name: _contact?.name?.text,
+      email: _contact?.email?.text,
+      phone: _contact?.phone?.text,
+    },
+    address: {
+      line1: address?.line1,
+      line2: address?.line2,
+      line3: address?.line3,
+      city: address?.city,
+      state: address?.state,
+      postalCode: address?.postalCode,
+      country: address?.country,
+      county: address?.county,
+      countryCode: address?.countryCode
     },
     vendorAccountNumber: vendorAccountNumber?.text,
   }
@@ -122,10 +146,8 @@ export const extractDetailRenewalData = (quote) => {
 export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const items = mapRenewalItemProducts(renewalQuote.items);
   const { endUser, reseller, customerPO, source } = renewalQuote;
-  const resellerData = extractDetailRenewalData(reseller);
+  const resellerData = extractDetailResellerData(reseller);
   const endUserData = extractDetailRenewalData(endUser);
-  endUserData.name = endUserData.name;
-  resellerData.vendorAccountNumber = reseller.vendorAccountNumber.text; 
 
   return {
     reseller: { ...resellerData },
