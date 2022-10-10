@@ -20,7 +20,7 @@
 .cmp-popup__modal__content {
   background-color: #fefefe;
   margin: auto;
-  padding: 0 40px;
+  padding: 0 15px;
   border: 1px solid #888;
   width: 50%;
 
@@ -36,5 +36,9 @@
     color: #000;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .cmp-container {
+    padding: 25px 15px 20px 15px;
   }
 }

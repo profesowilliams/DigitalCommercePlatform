@@ -22,7 +22,7 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
       <p>
         <Info>{address.line1}</Info>
         <Info>{address.line2}</Info>
-        <Info>{addSeparator([address.city, address.state])}</Info>      
+        <Info>{addSeparator([address.city, address.state, address.country?.text])}</Info>      
         <Info>{address.postalCode ?? ''}</Info>
       </p>
       <p>          

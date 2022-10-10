@@ -12,6 +12,11 @@
     >.cmp-button {
         border: none;
     }
+    &.cmp-button--full-width {
+      >button {
+        width: 100%;
+      }
+    }
 }
 
 @include aem-only {
