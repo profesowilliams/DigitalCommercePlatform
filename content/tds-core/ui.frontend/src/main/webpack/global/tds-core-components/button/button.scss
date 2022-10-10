@@ -279,8 +279,26 @@
 	}
 }
 
-
 .cmp-tds-button {
+	&-dark-mode {
+		background-color: map-get($color-palette, "navy");
+		font-size: 15px;
+	}
+	
+	&-light-mode {
+		background-color: get-color(neutral-gray-2);
+		font-size: 15px;
+
+		&:hover {
+			background-color: map-get($color-palette, 'aqua') !important;
+			color: map-get($color-palette, 'charcoal') !important;
+		}
+	}
+
+	&.primary {
+		background-color: red;
+	}
+
 	.cmp-button {
 		font-size: rem(16px);
 		padding: rem(16px) rem(57.5px);
@@ -294,8 +312,8 @@
 		color: map-get($color-palette, 'white');
 
 		&:hover {
-			background-color: map-get($color-palette, 'aqua') !important;
-			color: map-get($color-palette, 'charcoal') !important;
+			background-color: map-get($color-palette, 'aqua');
+			color: map-get($color-palette, 'charcoal');
 		}
 
 		&:disabled {
@@ -307,7 +325,14 @@
 	// TDS Primary background colors
 	&.btn-teal {
 		background-color: map-get($color-palette, 'teal');
+
+		&:hover {
+			background-color: map-get($color-palette, 'aqua');
+			color: map-get($color-palette, 'charcoal');
+		}
 	}
+
+	
 
 	&.btn-deep-teal {
 		background-color: get-color(deep-teal);

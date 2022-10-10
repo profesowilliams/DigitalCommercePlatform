@@ -1,333 +1,824 @@
-.cmp-button {}
-.cmp-button__text {}
-.cmp-button__icon {}
+$teal-color: map-get($color-palette, 'teal');
+$aqua: map-get($color-palette, 'aqua');
+$deep-teal: get-color(deep-teal);
+$cool-gray-8: get-color(cool-gray-8);
+$cool-gray-10: get-color(cool-gray-10);
+$green: map-get($color-palette, 'green');
+$black: map-get($color-palette, 'black');
+$white: map-get($color-palette, 'white');			
+$steel-blue: get-color(steel-blue);
+$navy: map-get($color-palette, 'navy');
+$copper: map-get($color-palette, 'copper');
+$cool-gray-1: get-color(cool-gray-1);
+$cherry: get-color(cherry);
+$amber: get-color(amber);
+$forest: map-get($color-palette, 'forest');
+$cool-gray-9: get-color(cool-gray-9);
+$cobalt: get-color(cobalt);
+$dark-blue: get-color(dark-blue);
+$sky-blue: get-color(sky-blue);
+$legacy-gray: get-color(legacy-gray);
+$neutral-gray-2: get-color(neutral-gray-2);
+$charcoal: map-get($color-palette, 'charcoal');
+$stone: get-color(stone);
+$neutral-gray-1: get-color(neutral-gray-1);
 
+$primary-icon-color: get-color(container-transparent);
+$primary-border-size: 0px;
+$primary-opacity: 100%;
+$primary-hover-opacity: 80%;
+$primary-pressed-opacity: 20%;
+$primary-disabled-opacity: 10%;
+$primary-active-opacity: 90%;
+$primary-active-color-opacity: rgb(255, 255, 255);
+$primary-background-disabled-color: #E4E5E6;
+
+$secondary-border-size: 2px;
+$secondary-background-color: get-color(container-transparent);
+$secondary-opacity: 20%;
+$secondary-hover-opacity: 10%;
+$secondary-pressed-opacity: 20%;
+$secondary-disabled-opacity: 10%;
+$secondary-active-opacity: 80%;
+$secondary-active-color-opacity: get-color(neutral-gray-1);
+$secondary-background-disabled-color: get-color(container-transparent);
+
+$secondary-fill-border-size: 0px;
+$secondary-fill-opacity: 10%;
+$secondary-fill-hover-opacity: 20%;
+$secondary-fill-pressed-opacity: 30%;
+$secondary-fill-disabled-opacity: 10%;
+$secondary-fill-active-opacity: 30%;
+$secondary-fill-active-color-opacity: #E4E5E6;
+$secondary-fill-background-disabled-color: #E4E5E6;
+
+
+.cmp-button {
+}
+.cmp-button__text {
+}
+.cmp-button__icon {
+}
+// EXAMPLE AND DELETE
+.aem-GridColumn--default--12 {
+  width: 80% !important;
+  display: flex !important;
+  align-content: center !important;
+  justify-content: center !important;
+}
+// EXAMPLE AND DELETE
 // Overriding core component styles.
 
 .cmp-button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .button {
-    >.cmp-button {
-        border: none;
-    }
+  > .cmp-button {
+    border: none;
+  }
 }
 
 @include aem-only {
-    button {
-        border: none;
-    }
+  button {
+    border: none;
+  }
 }
 
 .cmp-button--background-enabled {
-    & .cmp-button {
-        border-radius: rem(3px);
-        background-color: get-color(header-links-blue);
-        &:hover {
-            background-color: get-color(td-lightblue);
-        }
+  & .cmp-button {
+    border-radius: rem(3px);
+    background-color: get-color(header-links-blue);
+    &:hover {
+      background-color: get-color(td-lightblue);
     }
-    .cmp-button__icon {
-        color: get-color(brand-white);
-    }
-    & .cmp-button__text {
-        color: get-color(brand-white);
-    }
+  }
+  .cmp-button__icon {
+    color: get-color(brand-white);
+  }
+  & .cmp-button__text {
+    color: get-color(brand-white);
+  }
 }
 
 .cmp-button__clear {
-    background-color: transparent !important;
-    cursor: pointer !important;
+  background-color: transparent !important;
+  cursor: pointer !important;
 }
 .cmp-button__text--disabled {
-    & .cmp-button__text {
-        display: none;
-    }
-    & .cmp-button__icon {
-        display: unset;
-    }
+  & .cmp-button__text {
+    display: none;
+  }
+  & .cmp-button__icon {
+    display: unset;
+  }
 }
 
 .cmp-button__icon--disabled {
-    & .cmp-button__text {
-        display: unset;
-    }
-    & .cmp-button__icon {
-        display: none;
-    }
+  & .cmp-button__text {
+    display: unset;
+  }
+  & .cmp-button__icon {
+    display: none;
+  }
 }
 
 .cmp-button {
-    border: unset;
-    padding: rem(1px) rem(6px);
-    color: unset;
-    text-decoration: none;
-    background: none;
+  border: unset;
+  padding: rem(1px) rem(6px);
+  color: unset;
+  text-decoration: none;
+  background: none;
+
+  &.btn-xxsmall {
+    font-size: $font-size-custom-xxsmall;
+    width: 100%;
+    padding: rem(6px);
+    margin-top: rem(18px);
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+    border: none;
+  }
+
+  &__disabled {
+    color: get-color(text-light-charcoal);
+    background-color: get-color(td-lighter-gray);
+    width: rem(240px);
+    height: rem(40px);
+    box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
 
     &.btn-xxsmall {
-        font-size: $font-size-custom-xxsmall;
-        width: 100%;
-        padding: rem(6px);
-        margin-top: rem(18px);
+      font-size: $font-size-custom-xxsmall;
+      width: 100%;
+      padding: rem(6px);
+      margin-top: rem(18px);
     }
+  }
 
-    &:active,
-    &:focus {
-        outline: none;
-        border: none;
-    }
-
-    &__disabled {
-        color: get-color(text-light-charcoal);
-        background-color: get-color(td-lighter-gray);
-        width: rem(240px);
-        height: rem(40px);
-        box-shadow: inset 0 0 0 rem(1px) get-color(brand-light-gray2);
-
-        &.btn-xxsmall {
-            font-size: $font-size-custom-xxsmall;
-            width: 100%;
-            padding: rem(6px);
-            margin-top: rem(18px);
-        }
-    }
-
-    &__primary {
-        color: get-color(brand-white);
-        background-color: get-color(td-dark-blue);
-        width: rem(240px);
-        height: rem(40px);
-    }
-    &__outlined {
-        color: get-color(td-dark-blue);
-        background-color: get-color(brand-white);
-        width: rem(240px);
-        height: rem(40px);
-        box-shadow: inset 0 0 0 rem(2px) get-color(td-dark-blue);
-    }
-    &__region-select {
-        color: get-color(brand-white);
-        background-color: get-color(td-primary-blue);
-        font-size: $font-size-custom-xxsmall;
-        width: 100%;
-        cursor: pointer;
-    }
+  &__primary {
+    color: get-color(brand-white);
+    background-color: get-color(td-dark-blue);
+    width: rem(240px);
+    height: rem(40px);
+  }
+  &__outlined {
+    color: get-color(td-dark-blue);
+    background-color: get-color(brand-white);
+    width: rem(240px);
+    height: rem(40px);
+    box-shadow: inset 0 0 0 rem(2px) get-color(td-dark-blue);
+  }
+  &__region-select {
+    color: get-color(brand-white);
+    background-color: get-color(td-primary-blue);
+    font-size: $font-size-custom-xxsmall;
+    width: 100%;
+    cursor: pointer;
+  }
 }
 
 .cmp-radio-btn {
-    display: block;
-    position: relative;
-    padding-left: rem(22px);
+  display: block;
+  position: relative;
+  padding-left: rem(22px);
+  cursor: pointer;
+  font-size: $font-size-custom-xxsmall;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  input {
+    position: absolute;
+    opacity: 0;
     cursor: pointer;
-    font-size: $font-size-custom-xxsmall;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    &:last-of-type {
-        margin-bottom: 0;
-    }
-    input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        width: rem(24px);
-        height: rem(24px);
-        left: rem(-2px);
-        top: rem(-2px);
-        &:checked {
-            ~  {
-                .checkmark {
-                    background-color: get-color(td-primary-blue);
-                    box-shadow: inset 0 0 0 0;
-                    &:after {
-                        display: block;
-                    }
-                }
-            }
+    width: rem(24px);
+    height: rem(24px);
+    left: rem(-2px);
+    top: rem(-2px);
+    &:checked {
+      ~ {
+        .checkmark {
+          background-color: get-color(td-primary-blue);
+          box-shadow: inset 0 0 0 0;
+          &:after {
+            display: block;
+          }
         }
+      }
     }
-    .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: rem(14px);
-        width: rem(14px);
-        background-color: get-color(brand-white);
-        border-radius: 50%;
-        box-shadow: inset 0 0 0 rem(2px) get-color(text-light-charcoal);
-        &:after {
-            content: "";
-            position: absolute;
-            display: none;
-            top: rem(3.6px);
-            left: rem(3.5px);
-            width: rem(6px);
-            height: rem(6px);
-            border-radius: 50%;
-            background-color: get-color(brand-white);
-        }
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: rem(14px);
+    width: rem(14px);
+    background-color: get-color(brand-white);
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 rem(2px) get-color(text-light-charcoal);
+    &:after {
+      content: '';
+      position: absolute;
+      display: none;
+      top: rem(3.6px);
+      left: rem(3.5px);
+      width: rem(6px);
+      height: rem(6px);
+      border-radius: 50%;
+      background-color: get-color(brand-white);
     }
+  }
 }
 
 .cmp-jump-to-top-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    padding: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 16px;
 
-    .cmp-jump-to-top {
-        box-sizing: border-box;
-        height: rem(60px);
-        width: rem(60px);
-        border: rem(1px) solid get-color(brand-light-gray2);
-        background-color: get-color(brand-white);
-        box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
-        text-align: center;
-        font-size: 30px;
-        color: get-color(brand-blue);
+  .cmp-jump-to-top {
+    box-sizing: border-box;
+    height: rem(60px);
+    width: rem(60px);
+    border: rem(1px) solid get-color(brand-light-gray2);
+    background-color: get-color(brand-white);
+    box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
+    text-align: center;
+    font-size: 30px;
+    color: get-color(brand-blue);
 
-        &:hover {
-            box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
-        }
-
-        a {
-            height: rem(60px);
-            width: rem(60px);
-            color: get-color(brand-blue) !important;
-        }
+    &:hover {
+      box-shadow: 0 rem(4px) rem(4px) 0 get-color(brand-box-shadow);
     }
+
+    a {
+      height: rem(60px);
+      width: rem(60px);
+      color: get-color(brand-blue) !important;
+    }
+  }
 }
 
-
 .cmp-tds-button {
-	font-size: rem(16px);
-	padding: rem(16px) rem(57.5px);
-	gap: rem(10px);
-	border: 0;
-	font-family: $font-family-everett;
-	transition: all 0.24s;
-	text-decoration: none;
+  font-size: rem(16px);
+  padding: rem(16px) rem(57.5px);
+  gap: rem(10px);
+  border: 0;
+  font-family: $font-family-everett;
+  transition: all 0.24s;
+  text-decoration: none;
 
-	background-color: map-get($color-palette, 'teal');
-	color: map-get($color-palette, 'white');
+  background-color: map-get($color-palette, 'teal');
+  color: map-get($color-palette, 'white');
 
-	&:hover {
-		background-color: map-get($color-palette, 'aqua') !important;
-		color: map-get($color-palette, 'charcoal') !important;
+  .cmp-button {
+    font-size: rem(16px);
+    padding: rem(16px) rem(57.5px);
+    gap: rem(10px);
+    border: 0;
+    font-family: $font-family-everett;
+    transition: all 0.24s;
+    text-decoration: none;
+
+    background-color: map-get($color-palette, 'teal');
+    color: map-get($color-palette, 'white');
+
+    &:hover {
+      background-color: $aqua;
+      color: map-get($color-palette, 'charcoal');
+    }
+
+    &:disabled {
+      background-color: get-color(cool-gray-1) !important;
+      color: map-get($color-palette, 'charcoal') !important;
+    }
+  }
+
+  //////////////////////////
+  ///
+  /* moving container related style system class here to avoid confusions.
+    These style system class work for container component only. */
+
+    // $mode
+    // $default
+    // $sm
+    // $md
+    // $lg 
+    // $xlg
+
+  @mixin background-handler($bgmode) {
+    background-color: map-get($color-palette, 'navy');
+  }
+  
+  &-dark-mode {
+    background-color: map-get($color-palette, 'navy');
+    font-size: 30px;
+  }
+
+  &-light-mode {
+    background-color: get-color(neutral-gray-2);
+    font-size: 30px;
+  }
+
+  @mixin type-button-handler($color, $background-color, $box-sizing, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
+    .cmp-button {
+      color: $color;
+      box-sizing: $box-sizing;
+      border: $border-size solid $color;
+      background-color: mix($background-color,  #FFFFFFCC, $opacity);
+      font-weight: 400;
+      font-family: $font-family-everett;
+      font-size: 16px;
+
+      &:disabled {
+          background-color: $disabled-background-color !important;
+      }
+    }
+    &:hover {
+      .cmp-button {
+        color: $color;
+        background-color: mix($background-color, $degraded-color-hover, $opacity-hover);
+      }
+    }
+    &:active {
+      .cmp-button {
+        background-color: mix($background-color,  $pressed-opacity-color, $pressed-opacity-value);
+      }
+    }
+    .cmp-button__icon {
+      color: $color;
+      font-size: rem(16px);
+      padding: rem(5px);
+    }
+  }
+  //////////////////////////
+  // TDS Primary background colors
+  &.btn-teal{
+    .cmp-button {
+      background-color: $teal-color;
+    }
+  }
+
+  &.btn-teal.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $teal-color, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
-	&:disabled {
-		background-color: get-color(cool-gray-1) !important;
-		color: map-get($color-palette, 'charcoal') !important;
+  &.btn-teal.cmp-tds-button-secondary{
+    @include type-button-handler($teal-color, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
-	// TDS Primary background colors
-	&.btn-teal {
-		background-color: map-get($color-palette, 'teal');
+  &.btn-teal.cmp-tds-button-secondary-fill{
+    @include type-button-handler($teal-color, $teal-color, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
-
+// ////////////////////////
 	&.btn-deep-teal {
-		background-color: get-color(deep-teal);
+		.cmp-button {
+			background-color: $deep-teal;
+		}
+	}
+  &.btn-deep-teal.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $deep-teal, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $deep-teal, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
+  &.btn-deep-teal.cmp-tds-button-secondary{
+    // @include type-button-handler($deep-teal, $deep-teal, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFFFF, 80%);
+    @include type-button-handler($deep-teal, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-deep-teal.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($deep-teal, $deep-teal, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($deep-teal, $deep-teal, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+// ////////////////////////
 	&.btn-aqua {
-		background-color: map-get($color-palette, 'aqua');
+		.cmp-button {
+			background-color: $aqua;
+		}
+	}
+  &.btn-aqua.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $aqua, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
-	&.btn-chartreuse {
-		background-color: map-get($color-palette, 'chartreuse');
+  &.btn-aqua.cmp-tds-button-secondary{
+    @include type-button-handler($aqua, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
+  &.btn-aqua.cmp-tds-button-secondary-fill{
+    @include type-button-handler($aqua, $aqua, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+// ////////////////////////
 	&.btn-cool-gray-8 {
-		background-color: get-color(cool-gray-8);
+		.cmp-button {
+			background-color: $cool-gray-8;
+		}
+	}
+  &.btn-cool-gray-8.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $cool-gray-8, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
+  &.btn-cool-gray-8.cmp-tds-button-secondary{
+    @include type-button-handler($cool-gray-8, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-8.cmp-tds-button-secondary-fill{
+    @include type-button-handler($cool-gray-8, $cool-gray-8, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+// ////////////////////////
 	&.btn-cool-gray-10 {
-		background-color: get-color(cool-gray-10);
+		.cmp-button {
+			background-color: get-color(cool-gray-10);
+		}
+	}
+  &.btn-cool-gray-10.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $cool-gray-10, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
+  &.btn-cool-gray-10.cmp-tds-button-secondary{
+    @include type-button-handler($cool-gray-10, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-10.cmp-tds-button-secondary-fill{
+    @include type-button-handler($cool-gray-10, $cool-gray-10, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+// ////////////////////////
 	&.btn-green {
-		background-color: map-get($color-palette, 'green');
+		.cmp-button {
+			background-color: map-get($color-palette, 'green');
+		}
+	}
+  &.btn-green.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $green, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-green.cmp-tds-button-secondary{
+    @include type-button-handler($green, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-green.cmp-tds-button-secondary-fill{
+    @include type-button-handler($green, $green, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-black {
-		background-color: map-get($color-palette, 'black');
+		.cmp-button {
+			background-color: map-get($color-palette, 'black');
+		}
+	}
+  &.btn-black.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $black, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
+  &.btn-black.cmp-tds-button-secondary{
+    @include type-button-handler($black, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-black.cmp-tds-button-secondary-fill{
+    @include type-button-handler($black, $black, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+// ////////////////////////
 	&.btn-white {
-		background-color: map-get($color-palette, 'white');
-        @include text-charcoal;
+		.cmp-button {
+			background-color: map-get($color-palette, 'white');			
+            @include text-charcoal;
+		}
+	}
+  &.btn-white.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $white, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-white.cmp-tds-button-secondary{
+    @include type-button-handler($white, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-white.cmp-tds-button-secondary-fill{
+    @include type-button-handler($white, $white, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	//TDS Secondary background colors
 	&.btn-steel-blue {
-		background-color: get-color(steel-blue);
+		.cmp-button {
+			background-color: get-color(steel-blue);
+		}
+	}
+  &.btn-steel-blue.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $steel-blue, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-steel-blue.cmp-tds-button-secondary{
+    @include type-button-handler($steel-blue, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-steel-blue.cmp-tds-button-secondary-fill{
+    @include type-button-handler($steel-blue, $steel-blue, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-navy {
-		background-color: map-get($color-palette, 'navy');
+		.cmp-button {
+			background-color: map-get($color-palette, 'navy');
+		}
+	}
+  &.btn-navy.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $navy, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-navy.cmp-tds-button-secondary{
+    @include type-button-handler($navy, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-navy.cmp-tds-button-secondary-fill{
+    @include type-button-handler($navy, $navy, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-copper {
-		background-color: map-get($color-palette, 'copper');
+		.cmp-button {
+			background-color: map-get($color-palette, 'copper');
+		}
+	}
+  &.btn-copper.cmp-tds-button-primary{
+    @include type-button-handler(#FFFFFF, $copper, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-copper.cmp-tds-button-secondary{
+    @include type-button-handler($copper, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-copper.cmp-tds-button-secondary-fill{
+    @include type-button-handler($copper, $copper, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-stone {
-		background-color: get-color(stone);
+		.cmp-button {
+			background-color: get-color(stone);
+		}
+	}
+  &.btn-stone.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $stone, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $stone, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-stone.cmp-tds-button-secondary{
+    // @include type-button-handler($stone, $stone, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($stone, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-stone.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($stone, $stone, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($stone, $stone, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-cool-gray-1 {
-		background-color: get-color(cool-gray-1);
+		.cmp-button {
+			background-color: get-color(cool-gray-1);
+		}
+	}
+  &.btn-cool-gray-1.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $cool-gray-1, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $cool-gray-1, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-1.cmp-tds-button-secondary{
+    // @include type-button-handler($cool-gray-1, $cool-gray-1, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($cool-gray-1, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-1.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($cool-gray-1, $cool-gray-1, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($cool-gray-1, $cool-gray-1, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	//TDS Digital background colors
 	&.btn-cherry {
-		background-color: get-color(cherry);
+		.cmp-button {
+			background-color: get-color(cherry);
+		}
+	}
+  &.btn-cherry.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $cherry, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $cherry, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cherry.cmp-tds-button-secondary{
+    // @include type-button-handler($cherry, $cherry, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($cherry, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cherry.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($cherry, $cherry, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($cherry, $cherry, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-amber {
-		background-color: get-color(amber);
+		.cmp-button {
+			background-color: get-color(amber);
+		}
+	}
+  &.btn-amber.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $amber, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $amber, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-amber.cmp-tds-button-secondary{
+    // @include type-button-handler($amber, $amber, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($amber, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-amber.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($amber, $amber, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($amber, $amber, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-forest {
-		background-color: map-get($color-palette, 'forest');
+		.cmp-button {
+			background-color: map-get($color-palette, 'forest');
+		}
+	}
+  &.btn-forest.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $forest, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $forest, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-forest.cmp-tds-button-secondary{
+    // @include type-button-handler($forest, $forest, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($forest, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-forest.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($forest, $forest, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($forest, $forest, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-charcoal {
-		background-color: map-get($color-palette, 'charcoal');
+		.cmp-button {
+			background-color: map-get($color-palette, 'charcoal');
+		}
+	}
+  &.btn-charcoal.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $charcoal, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $charcoal, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-charcoal.cmp-tds-button-secondary{
+    // @include type-button-handler($charcoal, $charcoal, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($charcoal, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-charcoal.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($charcoal, $charcoal, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($charcoal, $charcoal, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-cool-gray-9 {
-		background-color: get-color(cool-gray-9);
+		.cmp-button {
+			background-color: get-color(cool-gray-9);
+		}
+	}
+  &.btn-cool-gray-9.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $cool-gray-9, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $cool-gray-9, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-9.cmp-tds-button-secondary{
+    // @include type-button-handler($cool-gray-9, $cool-gray-9, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($cool-gray-9, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-9.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($cool-gray-9, $cool-gray-9, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($cool-gray-9, $cool-gray-9, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-cobalt {
-		background-color: get-color(cobalt);
+		.cmp-button {
+			background-color: get-color(cobalt);
+		}
+	}
+  &.btn-cobalt.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $cobalt, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $cobalt, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cobalt.cmp-tds-button-secondary{
+    // @include type-button-handler($cobalt, $cobalt, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($cobalt, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cobalt.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($cobalt, $cobalt, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($cobalt, $cobalt, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-neutral-gray-1 {
-		background-color: get-color(neutral-gray-1);
-        @include text-charcoal;
+		.cmp-button {
+			background-color: get-color(neutral-gray-1);			
+            @include text-charcoal;
+		}
+	}
+  &.btn-neutral-gray-1.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $neutral-gray-1, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $neutral-gray-1, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-1.cmp-tds-button-secondary{
+    // @include type-button-handler($neutral-gray-1, $neutral-gray-1, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($neutral-gray-1, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-1.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($neutral-gray-1, $neutral-gray-1, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($neutral-gray-1, $neutral-gray-1, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-neutral-gray-2 {
-		background-color: get-color(neutral-gray-2);
-        @include text-charcoal;
+		.cmp-button {
+			background-color: get-color(neutral-gray-2);
+            @include text-charcoal;
+		}
+	}
+  &.btn-neutral-gray-2.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $neutral-gray-2, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $neutral-gray-2, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-2.cmp-tds-button-secondary{
+    // @include type-button-handler($neutral-gray-2, $neutral-gray-2, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($neutral-gray-2, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-2.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($neutral-gray-2, $neutral-gray-2, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($neutral-gray-2, $neutral-gray-2, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	//Legacy background colors
 	&.btn-dark-blue {
-		background-color: get-color(dark-blue);
+		.cmp-button {
+			background-color: get-color(dark-blue);
+		}
+	}
+  &.btn-dark-blue.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $dark-blue, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $dark-blue, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-dark-blue.cmp-tds-button-secondary{
+    // @include type-button-handler($dark-blue, $dark-blue, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($dark-blue, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-dark-blue.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($dark-blue, $dark-blue, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($dark-blue, $dark-blue, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-sky-blue {
-		background-color: get-color(sky-blue);
+		.cmp-button {
+			background-color: get-color(sky-blue);
+		}
+	}
+  &.btn-sky-blue.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $sky-blue, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $sky-blue, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-sky-blue.cmp-tds-button-secondary{
+    // @include type-button-handler($sky-blue, $sky-blue, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($sky-blue, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-sky-blue.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($sky-blue, $sky-blue, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($sky-blue, $sky-blue, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-legacy-gray {
-		background-color: get-color(legacy-gray);
+		.cmp-button {
+			background-color: get-color(legacy-gray);
+		}
+	}
+  &.btn-legacy-gray.cmp-tds-button-primary{
+    // @include type-button-handler(#FFFFFF, $legacy-gray, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
+    @include type-button-handler(#FFFFFF, $legacy-gray, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-legacy-gray.cmp-tds-button-secondary{
+    // @include type-button-handler($legacy-gray, $legacy-gray, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
+    @include type-button-handler($legacy-gray, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-legacy-gray.cmp-tds-button-secondary-fill{
+    // @include type-button-handler($legacy-gray, $legacy-gray, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
+    @include type-button-handler($legacy-gray, $legacy-gray, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 }
