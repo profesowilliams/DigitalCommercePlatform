@@ -116,7 +116,8 @@ function _SearchFilter(
   const onReset = () => {
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
-    if (searchTriggered) {
+    if (searchTriggered) {      
+      setSwitchDropdown(true);
       onQueryChanged({onSearchAction:true});
     }
     setSearchTriggered(false);
@@ -208,14 +209,12 @@ function _SearchFilter(
         searchType: option,
       },
     });
-    setSwitchDropdown(false);
     setCapsuleValues({...values});
   }
 
   function fetchAll() {
     onQueryChanged({onSearchAction:true});
     onReset();
-    setSwitchDropdown(false);
   }
 
   const triggerSearchOnEnter = (event) => {

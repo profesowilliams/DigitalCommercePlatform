@@ -8,7 +8,7 @@ import useResellerHandlers from "./useResellerHandlers";
 import { isObject } from "../../../../../../utils";
 import getModifiedResellerData from "./utils";
 import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
-import { extractDetailRenewalData } from "../../../RenewalsGrid/Orders/orderingRequests"
+import { extractDetailResellerData } from "../../../RenewalsGrid/Orders/orderingRequests"
 
 function ResellerInfo({ 
   reseller,
@@ -61,7 +61,7 @@ function ResellerInfo({
 
   useEffect(() => {
     if(isEditingDetails) { 
-      effects.setCustomState({ key: 'reseller', value: extractDetailRenewalData(resellerDetails) });
+      effects.setCustomState({ key: 'reseller', value: extractDetailResellerData(resellerDetails) });
     } else {
       effects.clearReseller();
     }
