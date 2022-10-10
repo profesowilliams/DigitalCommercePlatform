@@ -148,6 +148,11 @@ function RenewalsDetails(props) {
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
       renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
       renewalsDetails.items = gridRef.current.getMutableGridData();
+      
+      if (renewalsDetails.endUser?.eaNumber?.text) {
+        renewalsDetails['EANumber'] = renewalsDetails.endUser?.eaNumber?.text;
+      }
+
       const updated = await updateRenewalDetails(renewalsDetails);
       if(updated) {
         const isActiveQuote = await getStatusLoopUntilStatusIsActive({

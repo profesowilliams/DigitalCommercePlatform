@@ -127,7 +127,7 @@ export default function EndUserEdit({
         helperText={getFieldMessage(postalCode)}
         {...populateFieldConfigsFromService(postalCode)}
       />}
-      {eaNumber.canEdit && <CustomTextField
+      {eaNumber?.canEdit && <CustomTextField
         id="vendor-acc-no"
         label={endUserVendorAccountNumber}
         variant="standard"
