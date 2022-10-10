@@ -126,12 +126,14 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const endUserData = extractDetailRenewalData(endUser);
   endUserData.name = endUserData.name;
   resellerData.vendorAccountNumber = reseller.vendorAccountNumber.text; 
+
   return {
     reseller: { ...resellerData },
     source: { id: source?.id },
     customerPO: customerPO?.text || customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
     items,
+    EANumber: renewalQuote?.EANumber || null,
     POAllowedLength: customerPO?.allowedLength
   }
 }
