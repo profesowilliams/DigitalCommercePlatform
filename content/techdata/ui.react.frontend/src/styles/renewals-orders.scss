@@ -17,7 +17,7 @@
         }
     }
     .cmp-place-order-title{
-        font-family: "Open Sans", sans-serif;
+        font-family: "Arial";
     }
 
 }
@@ -75,9 +75,10 @@
         .cmp-toaster-content{
             @include toasterContent;    
             &__message{
-                font-family: "Open Sans", sans-serif;
-                p{
-                    margin: 0;                    
+                font-family: "Arial";
+                p {
+                    font-family: "Arial";
+                    margin: 0;                
                 }
             }      
             &__error-title{
