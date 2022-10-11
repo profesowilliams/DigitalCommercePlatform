@@ -29,13 +29,26 @@ $primary-opacity: 100%;
 $primary-hover-opacity: 80%;
 $primary-pressed-opacity: 20%;
 $primary-disabled-opacity: 10%;
-$primary-active-opacity: 90%;
-$primary-active-color-opacity: rgb(255, 255, 255);
+$primary-active-opacity: 80%;
+$primary-active-color-opacity: rgb(000, 000, 000);
 $primary-background-disabled-color: #E4E5E6;
 
 $secondary-border-size: 2px;
 $secondary-background-color: get-color(container-transparent);
 $secondary-opacity: 20%;
+
+
+$secondary-dark-opacity: 0%;
+$secondary-dark-hover-opacity: 10%;
+$secondary-dark-active-opacity: 20%;
+$secondary-dark-disabled-opacity: 0%;
+
+$secondary-fill-dark-opacity: 0%;
+$secondary-fill-dark-hover-opacity: 10%;
+$secondary-fill-dark-active-opacity: 20%;
+$secondary-fill-dark-disabled-opacity: 0%;
+
+
 $secondary-hover-opacity: 10%;
 $secondary-pressed-opacity: 20%;
 $secondary-disabled-opacity: 10%;
@@ -51,6 +64,9 @@ $secondary-fill-disabled-opacity: 10%;
 $secondary-fill-active-opacity: 30%;
 $secondary-fill-active-color-opacity: #E4E5E6;
 $secondary-fill-background-disabled-color: #E4E5E6;
+
+
+$dark-background-color-button: #FFFFFF;
 
 
 .cmp-button {
@@ -288,6 +304,7 @@ $secondary-fill-background-disabled-color: #E4E5E6;
     &:disabled {
       background-color: get-color(cool-gray-1) !important;
       color: map-get($color-palette, 'charcoal') !important;
+      pointer-events: none;
     }
   }
 
@@ -317,29 +334,47 @@ $secondary-fill-background-disabled-color: #E4E5E6;
     font-size: 30px;
   }
 
-  @mixin type-button-handler($color, $background-color, $box-sizing, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
+  @mixin type-button-handler($color, $background-color, $degraded-background-color, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
     .cmp-button {
       color: $color;
-      box-sizing: $box-sizing;
+      box-sizing: content-box;
       border: $border-size solid $color;
-      background-color: mix($background-color,  #FFFFFFCC, $opacity);
+      @if $background-color == 'null' {
+        background-color: rgba(255, 255, 255, $opacity)
+      }
+      @else {
+        background-color: mix($background-color, $degraded-background-color, $opacity);
+      }
       font-weight: 400;
       font-family: $font-family-everett;
       font-size: 16px;
 
       &:disabled {
           background-color: $disabled-background-color !important;
+          border-color: $cool-gray-8 !important;
+          color: $cool-gray-8 !important;
+          pointer-events: none;
       }
     }
     &:hover {
       .cmp-button {
         color: $color;
-        background-color: mix($background-color, $degraded-color-hover, $opacity-hover);
+        @if $background-color == 'null' {
+          background-color: rgba(255, 255, 255, $opacity-hover)
+        }
+        @else {
+          background-color: mix($background-color, $degraded-color-hover, $opacity-hover);
+        }
       }
     }
     &:active {
       .cmp-button {
-        background-color: mix($background-color,  $pressed-opacity-color, $pressed-opacity-value);
+        @if $background-color == 'null' {
+          background-color: rgba(255, 255, 255, $pressed-opacity-value)
+        }
+        @else {
+          background-color: mix($background-color,  $pressed-opacity-color, $pressed-opacity-value);
+        }
       }
     }
     .cmp-button__icon {
@@ -356,17 +391,32 @@ $secondary-fill-background-disabled-color: #E4E5E6;
     }
   }
 
+  .btn-teal.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-teal.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($teal-color, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-dark-opacity, #FFFFFFFF, $secondary-dark-hover-opacity, $secondary-dark-hover-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    
+	}
+
+  &.btn-teal.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($teal-color, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-dark-opacity, #FFFFFFFF, $secondary-dark-hover-opacity, $secondary-dark-hover-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    
+	}
+  
   &.btn-teal.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $teal-color, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $teal-color, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-teal.cmp-tds-button-secondary{
-    @include type-button-handler($teal-color, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($teal-color, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-teal.cmp-tds-button-secondary-fill{
-    @include type-button-handler($teal-color, $teal-color, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
-	}
+    @include type-button-handler($teal-color, $teal-color, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+  }
+  
 // ////////////////////////
 	&.btn-deep-teal {
 		.cmp-button {
@@ -374,19 +424,29 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-deep-teal.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $deep-teal, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $deep-teal, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $deep-teal, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-deep-teal.cmp-tds-button-secondary{
-    // @include type-button-handler($deep-teal, $deep-teal, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFFFF, 80%);
-    @include type-button-handler($deep-teal, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($deep-teal, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-deep-teal.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($deep-teal, $deep-teal, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($deep-teal, $deep-teal, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($deep-teal, $deep-teal, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
+
+  &.btn-deep-teal.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-deep-teal.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($deep-teal, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-deep-teal.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($deep-teal, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
 
 // ////////////////////////
 	&.btn-aqua {
@@ -395,33 +455,57 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-aqua.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $aqua, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $aqua, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-aqua.cmp-tds-button-secondary{
-    @include type-button-handler($aqua, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($aqua, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, $aqua, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-aqua.cmp-tds-button-secondary-fill{
-    @include type-button-handler($aqua, $aqua, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($aqua, $aqua, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
-// ////////////////////////
+  &.btn-aqua.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-aqua.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($aqua, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, $aqua, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-aqua.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($aqua, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+////////////////////////
 	&.btn-cool-gray-8 {
 		.cmp-button {
 			background-color: $cool-gray-8;
 		}
 	}
   &.btn-cool-gray-8.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $cool-gray-8, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $cool-gray-8, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-cool-gray-8.cmp-tds-button-secondary{
-    @include type-button-handler($cool-gray-8, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($cool-gray-8, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-cool-gray-8.cmp-tds-button-secondary-fill{
-    @include type-button-handler($cool-gray-8, $cool-gray-8, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($cool-gray-8, $cool-gray-8, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-cool-gray-8.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-8.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-8, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-8.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-8, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 // ////////////////////////
@@ -431,15 +515,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-cool-gray-10.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $cool-gray-10, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $cool-gray-10, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-cool-gray-10.cmp-tds-button-secondary{
-    @include type-button-handler($cool-gray-10, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($cool-gray-10, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-cool-gray-10.cmp-tds-button-secondary-fill{
-    @include type-button-handler($cool-gray-10, $cool-gray-10, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($cool-gray-10, $cool-gray-10, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-cool-gray-10.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-10.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-10, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-10.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-10, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 // ////////////////////////
@@ -449,15 +545,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-green.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $green, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $green, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-green.cmp-tds-button-secondary{
-    @include type-button-handler($green, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($green, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-green.cmp-tds-button-secondary-fill{
-    @include type-button-handler($green, $green, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($green, $green, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-green.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-green.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($green, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-green.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($green, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-black {
@@ -466,15 +574,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-black.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $black, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $black, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-black.cmp-tds-button-secondary{
-    @include type-button-handler($black, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($black, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-black.cmp-tds-button-secondary-fill{
-    @include type-button-handler($black, $black, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($black, $black, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-black.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-black.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($black, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-black.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($black, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 // ////////////////////////
@@ -485,15 +605,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-white.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $white, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $white, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-white.cmp-tds-button-secondary{
-    @include type-button-handler($white, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($white, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-white.cmp-tds-button-secondary-fill{
-    @include type-button-handler($white, $white, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($white, $white, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-white.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-white.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($white, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-white.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($white, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	//TDS Secondary background colors
@@ -503,15 +634,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-steel-blue.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $steel-blue, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $steel-blue, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-steel-blue.cmp-tds-button-secondary{
-    @include type-button-handler($steel-blue, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($steel-blue, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-steel-blue.cmp-tds-button-secondary-fill{
-    @include type-button-handler($steel-blue, $steel-blue, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($steel-blue, $steel-blue, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-steel-blue.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-steel-blue.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($steel-blue, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-steel-blue.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($steel-blue, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-navy {
@@ -520,15 +662,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-navy.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $navy, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $navy, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-navy.cmp-tds-button-secondary{
-    @include type-button-handler($navy, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($navy, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-navy.cmp-tds-button-secondary-fill{
-    @include type-button-handler($navy, $navy, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($navy, $navy, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-background-disabled-color);
+	}
+  &.btn-navy.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-navy.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($navy, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-navy.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($navy, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-copper {
@@ -537,15 +690,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-copper.cmp-tds-button-primary{
-    @include type-button-handler(#FFFFFF, $copper, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $copper, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-copper.cmp-tds-button-secondary{
-    @include type-button-handler($copper, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($copper, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-copper.cmp-tds-button-secondary-fill{
-    @include type-button-handler($copper, $copper, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($copper, $copper, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-copper.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-copper.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($copper, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-copper.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($copper, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-stone {
@@ -554,18 +718,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-stone.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $stone, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $stone, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $stone, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-stone.cmp-tds-button-secondary{
-    // @include type-button-handler($stone, $stone, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($stone, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($stone, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-stone.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($stone, $stone, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($stone, $stone, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($stone, $stone, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-stone.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-stone.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($stone, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-stone.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($stone, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-cool-gray-1 {
@@ -574,18 +746,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-cool-gray-1.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $cool-gray-1, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $cool-gray-1, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $cool-gray-1, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-cool-gray-1.cmp-tds-button-secondary{
-    // @include type-button-handler($cool-gray-1, $cool-gray-1, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($cool-gray-1, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($cool-gray-1, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-cool-gray-1.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($cool-gray-1, $cool-gray-1, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($cool-gray-1, $cool-gray-1, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($cool-gray-1, $cool-gray-1, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-cool-gray-1.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-1.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-1, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-1.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-1, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	//TDS Digital background colors
@@ -595,18 +776,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-cherry.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $cherry, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $cherry, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $cherry, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-cherry.cmp-tds-button-secondary{
-    // @include type-button-handler($cherry, $cherry, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($cherry, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($cherry, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-cherry.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($cherry, $cherry, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($cherry, $cherry, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($cherry, $cherry, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-cherry.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cherry.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($cherry, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cherry.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($cherry, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-amber {
@@ -615,18 +804,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-amber.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $amber, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $amber, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $amber, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-amber.cmp-tds-button-secondary{
-    // @include type-button-handler($amber, $amber, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($amber, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($amber, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-amber.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($amber, $amber, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($amber, $amber, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($amber, $amber, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-amber.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler($amber, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-amber.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($amber, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-amber.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($amber, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-forest {
@@ -635,18 +832,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-forest.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $forest, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $forest, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $forest, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-forest.cmp-tds-button-secondary{
-    // @include type-button-handler($forest, $forest, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($forest, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($forest, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-forest.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($forest, $forest, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($forest, $forest, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($forest, $forest, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+  &.btn-forest.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-forest.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($forest, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-forest.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($forest, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-charcoal {
@@ -655,18 +860,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-charcoal.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $charcoal, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $charcoal, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $charcoal, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-charcoal.cmp-tds-button-secondary{
-    // @include type-button-handler($charcoal, $charcoal, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($charcoal, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($charcoal, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-charcoal.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($charcoal, $charcoal, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($charcoal, $charcoal, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($charcoal, $charcoal, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-charcoal.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-charcoal.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($charcoal, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-charcoal.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($charcoal, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-cool-gray-9 {
@@ -675,18 +889,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-cool-gray-9.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $cool-gray-9, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $cool-gray-9, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $cool-gray-9, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-cool-gray-9.cmp-tds-button-secondary{
-    // @include type-button-handler($cool-gray-9, $cool-gray-9, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($cool-gray-9, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($cool-gray-9, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-cool-gray-9.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($cool-gray-9, $cool-gray-9, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($cool-gray-9, $cool-gray-9, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($cool-gray-9, $cool-gray-9, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-cool-gray-9.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-9.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-9, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cool-gray-9.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($cool-gray-9, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-cobalt {
@@ -695,18 +918,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-cobalt.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $cobalt, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $cobalt, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $cobalt, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-cobalt.cmp-tds-button-secondary{
-    // @include type-button-handler($cobalt, $cobalt, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($cobalt, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($cobalt, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-cobalt.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($cobalt, $cobalt, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($cobalt, $cobalt, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($cobalt, $cobalt, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-cobalt.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-cobalt.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($cobalt, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-cobalt.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($cobalt, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-neutral-gray-1 {
@@ -716,18 +948,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-neutral-gray-1.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $neutral-gray-1, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $neutral-gray-1, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $neutral-gray-1, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-neutral-gray-1.cmp-tds-button-secondary{
-    // @include type-button-handler($neutral-gray-1, $neutral-gray-1, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($neutral-gray-1, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($neutral-gray-1, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-neutral-gray-1.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($neutral-gray-1, $neutral-gray-1, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($neutral-gray-1, $neutral-gray-1, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($neutral-gray-1, $neutral-gray-1, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-1.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-1.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($neutral-gray-1, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-1.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($neutral-gray-1, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-neutral-gray-2 {
@@ -737,18 +978,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-neutral-gray-2.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $neutral-gray-2, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $neutral-gray-2, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $neutral-gray-2, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-neutral-gray-2.cmp-tds-button-secondary{
-    // @include type-button-handler($neutral-gray-2, $neutral-gray-2, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($neutral-gray-2, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($neutral-gray-2, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-neutral-gray-2.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($neutral-gray-2, $neutral-gray-2, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($neutral-gray-2, $neutral-gray-2, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($neutral-gray-2, $neutral-gray-2, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-2.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-2.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($neutral-gray-2, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-neutral-gray-2.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($neutral-gray-2, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	//Legacy background colors
@@ -758,18 +1008,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-dark-blue.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $dark-blue, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $dark-blue, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $dark-blue, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-dark-blue.cmp-tds-button-secondary{
-    // @include type-button-handler($dark-blue, $dark-blue, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($dark-blue, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($dark-blue, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-dark-blue.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($dark-blue, $dark-blue, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($dark-blue, $dark-blue, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($dark-blue, $dark-blue, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-dark-blue.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-dark-blue.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($dark-blue, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-dark-blue.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($dark-blue, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-sky-blue {
@@ -778,18 +1037,27 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-sky-blue.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $sky-blue, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $sky-blue, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $sky-blue, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-sky-blue.cmp-tds-button-secondary{
-    // @include type-button-handler($sky-blue, $sky-blue, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($sky-blue, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($sky-blue, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-sky-blue.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($sky-blue, $sky-blue, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($sky-blue, $sky-blue, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($sky-blue, $sky-blue, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-sky-blue.cmp-tds-button-primary.cmp-tds-button-dark-mode{
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-sky-blue.cmp-tds-button-secondary.cmp-tds-button-dark-mode{
+    @include type-button-handler($sky-blue, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-sky-blue.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
+    @include type-button-handler($sky-blue, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
 	&.btn-legacy-gray {
@@ -798,17 +1066,26 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 		}
 	}
   &.btn-legacy-gray.cmp-tds-button-primary{
-    // @include type-button-handler(#FFFFFF, $legacy-gray, content-box, $primary-border-size, $primary-icon-color, 100%, #FFFFFF33, 50% );
-    @include type-button-handler(#FFFFFF, $legacy-gray, content-box, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+    @include type-button-handler(#FFFFFF, $legacy-gray, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
 	}
 
   &.btn-legacy-gray.cmp-tds-button-secondary{
-    // @include type-button-handler($legacy-gray, $legacy-gray, content-box, $secondary-border-size, #FFFFFFFF, 10%, #FFFFFF, 10%);
-    @include type-button-handler($legacy-gray, $secondary-background-color, content-box, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($legacy-gray, $secondary-background-color, $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
 	}
 
   &.btn-legacy-gray.cmp-tds-button-secondary-fill{
-    // @include type-button-handler($legacy-gray, $legacy-gray, content-box, $primary-border-size, #FFFFFFE5, 50%, #FFFFFFCC, 50%);
-    @include type-button-handler($legacy-gray, $legacy-gray, content-box, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+    @include type-button-handler($legacy-gray, $legacy-gray, $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+
+  &.btn-legacy-gray.cmp-tds-button-primary.cmp-tds-button-dark-mode {
+    @include type-button-handler(#FFFFFF, 'null', $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #FFFFFF33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
+	}
+
+  &.btn-legacy-gray.cmp-tds-button-secondary.cmp-tds-button-dark-mode {
+    @include type-button-handler($legacy-gray, 'null', $secondary-background-color, $secondary-border-size, #FFFFFFFF, $secondary-opacity, #FFFFFFFF, $secondary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+	}
+
+  &.btn-legacy-gray.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode {
+    @include type-button-handler($legacy-gray, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 }
