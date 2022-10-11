@@ -293,7 +293,7 @@ $dark-background-color-button: #FFFFFF;
     padding: rem(16px) rem(57.5px);
     gap: rem(10px);
     border: 0;
-    font-family: $font-family-arial;
+    font-family: 'Arial', sans-serif;
     transition: all 0.24s;
     text-decoration: none;
 
@@ -340,7 +340,7 @@ $dark-background-color-button: #FFFFFF;
 
   &-arial-font-family {
     .cmp-button {
-      font-family: $font-family-arial !important;
+      font-family: 'Arial', sans-serif !important;
     }
   }
 
