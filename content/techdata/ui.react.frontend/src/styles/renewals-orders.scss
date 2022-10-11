@@ -61,15 +61,10 @@
         }
     }
 }
-.cmp-toaster-renewal-details{
-    .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
-        top: 8.8rem !important;
-    }
-}
 .toaster-modal {    
     .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorRight {
         height: auto;
-        top: 13rem;
+        transition: all .4s ease-out;
         right: 2rem;
         width: 30rem;
         .cmp-toaster-content{

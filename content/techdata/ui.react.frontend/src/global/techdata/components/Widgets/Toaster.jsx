@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect, memo, useCallback, useRef, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import { CheckmarkCircle, Dismiss, CautionIcon } from "../../../../fluentIcons/FluentIcons";
 import { teal, red } from "@mui/material/colors";
@@ -8,13 +8,14 @@ import shallow from "zustand/shallow";
 function Toaster({   
   onClose,
   MuiDrawerProps,  
-  store,
-  triggerByRenewalDetails = false
+  store 
 }) {
 
   const toaster = store( state => state.toaster, shallow);
-
   const {isOpen, Child, isSuccess, title, message, isAutoClose = false } = toaster;
+  const positionRef = useRef({});
+  const [, updateState] = useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
   useEffect(() => {
     if (isOpen && isAutoClose) {      
@@ -25,14 +26,33 @@ function Toaster({
     } 
   }, [isOpen]);  
 
+  const calculateSubheaderPosition = useCallback(() => {
+    const { top, height } = document.querySelector('.subheader').getBoundingClientRect();
+    if (top < 0) {
+      forceUpdate();
+      return
+    };
+    const gap = 7;
+    const topCalculation = top + gap + height;
+    return {"& .MuiPaper-root" : {top: `${topCalculation}px`}};
+  },[])
+
+  useEffect(()=>{
+    const setPositionRef = () => positionRef.current = calculateSubheaderPosition();
+    setPositionRef();
+  },[])
+
+  useEffect(() => toaster?.isOpen && window.scrollTo(0,0),[toaster.isOpen])
+  
   return (
     <div className="cmp-toaster-drawer">
       <Drawer
         anchor="right"
         open={isOpen}
         hideBackdrop={true}
-        className={`toaster-modal ${triggerByRenewalDetails && 'cmp-toaster-renewal-details'}`}
-        sx={{height: "max-content"}}
+        className="toaster-modal"
+        sx={{height: "max-content", ...positionRef.current}}
+       
         onClose={onClose}
         {...MuiDrawerProps}
       >

@@ -93,8 +93,13 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       filterBodyDom.current.style.height = `calc(100% - ${192}px)`;     
       document.body.style.overflow = "hidden";
     }
-    setTimeout(dynamicFilterAdjustmnet, 0);
-    return () => (document.body.style.overflow = "initial");
+    const timer = setTimeout(dynamicFilterAdjustmnet, 0);
+    window.addEventListener('scroll', dynamicFilterAdjustmnet);
+    return () => {
+      document.body.style.overflow = "initial";
+      clearTimeout(timer);
+      window.removeEventListener('scroll', dynamicFilterAdjustmnet);
+    };
   }, []);
 
   /**
