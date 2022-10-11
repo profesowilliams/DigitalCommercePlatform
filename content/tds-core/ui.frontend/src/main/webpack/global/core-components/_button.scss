@@ -288,7 +288,7 @@ $dark-background-color-button: #FFFFFF;
     padding: rem(16px) rem(57.5px);
     gap: rem(10px);
     border: 0;
-    font-family: $font-family-everett;
+    font-family: $font-family-arial;
     transition: all 0.24s;
     text-decoration: none;
 
@@ -350,13 +350,19 @@ $dark-background-color-button: #FFFFFF;
       width: 141px !important;
     }
   }
+
+  &-full-width {
+    .cmp-button {
+      width: 100% !important;
+    }
+  }
   
   @mixin type-button-handler($color, $background-color, $degraded-background-color, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
     display: flex;
     .cmp-button {
-      padding: 20px;
+      padding: 12px 20px;
       display: flex;
-      width: 100%;
+      width: auto;
       color: $color;
       box-sizing: content-box;
       border: $border-size solid $color;
