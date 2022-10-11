@@ -1,0 +1,110 @@
+.cmp-masthead {
+    float: unset !important;
+
+    &__full-width > .cmp-masthead,
+    &--max-1440 {
+        max-width: rem(1440px);
+        margin: 0 auto !important;
+        float: unset !important;
+        clear: both !important;
+    }
+
+    &__full-width--max-1600 > .cmp-masthead,
+    &--max-1600 {
+        max-width: 1600px;
+        margin: 0 auto !important;
+        float: unset !important;
+        clear: both !important;
+    }
+
+    &--fixed > .cmp-masthead {
+        margin: 0 auto;
+        max-width: 73.12rem;
+        overflow: hidden;
+
+        @media (min-width: 1024px) {
+            margin: 0 1.25rem;
+        }
+    }
+}
+
+/* moving container related style system class here to avoid confusions.
+These style system class work for container component only. */
+@mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
+    & > .cmp-masthead {
+        #{$padding}: rem($default);
+    }
+
+    &-small {
+        & > .cmp-masthead {
+            #{$padding}: rem($sm);
+        }
+    }
+
+    &-medium {
+        & > .cmp-masthead {
+            #{$padding}: rem($md);
+        }
+    }
+
+    &-large {
+        & > .cmp-masthead {
+            #{$padding}: rem($lg);
+        }
+    }
+
+    &-extra-large {
+        & > .cmp-masthead {
+            #{$padding}: rem($xlg);
+        }
+    }
+}
+
+.dp-general__innerspace {
+    &--all {
+        @include padding-sizes(padding, 16px, 8px, 32px, 64px, 160px);
+    }
+
+    &--top {
+        @include padding-sizes(padding-top, 16px, 8px, 32px, 64px, 160px);
+    }
+
+    &--bottom {
+        @include padding-sizes(padding-bottom, 16px, 8px, 32px, 64px, 160px);
+    }
+
+    &--right {
+        @include padding-sizes(padding-right, 16px, 8px, 32px, 64px, 160px);
+    }
+
+    &--left {
+        @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
+    }
+}
+
+.cmp-component-vendor__center {
+    .cmp-text {
+        p {
+            text-align: left;
+            font-size: 22px;
+            color: map-get($color-palette, "deep-teal");
+            text-transform: uppercase;
+        }
+    }
+
+    .dp-figure {
+        text-align: center;
+        vertical-align: middle;
+    }
+}
+
+/*
+Two things: We need to get rid of the extra padding classes. This is a mobile first nightmare.
+Secondly, this is very hacky and needs to be refactored.
+*/
+@include mobile {
+    // For the time being, we're not going to show the vendor container on mobile.
+    #sie-vendor-partners {
+        display: none;
+    }
+}
