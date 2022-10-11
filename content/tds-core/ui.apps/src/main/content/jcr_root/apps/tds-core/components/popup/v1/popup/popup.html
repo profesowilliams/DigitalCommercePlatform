@@ -4,7 +4,7 @@
   data-cmp-is="popup"
   data-placeholder-text="${wcmmode.edit && 'Please drag Popup item components here' @ i18n}"
 >
-  <div data-opener-ids="${properties.openerIds}" class="${!wcmmode.edit && 'cmp-popup__modal'}">
+  <div data-opener-ids="${properties.openerIds}" class="${!wcmmode.edit && 'cmp-popup__modal'}" style="background-color: ${properties.color @ context='styleToken'};">
     <div class="${!wcmmode.edit && 'cmp-popup__modal__content'}">
       <span class="cmp-popup__modal__content__close">&times;</span>
       <sly data-sly-include="container.html" />

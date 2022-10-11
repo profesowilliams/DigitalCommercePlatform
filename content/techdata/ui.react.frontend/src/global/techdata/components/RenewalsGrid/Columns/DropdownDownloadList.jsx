@@ -46,7 +46,7 @@ function DropdownDownloadList({ data, aemConfig }) {
         Download PDF
       </button>|
       {
-        !productGrid?.hideDownloadXLSButton && (
+        productGrid?.showDownloadXLSButton && (
         <>
           <button onClick={downloadXLS}>
             <i className="fas fa-file-excel"></i>
