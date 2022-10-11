@@ -277,7 +277,6 @@ $dark-background-color-button: #FFFFFF;
   padding: rem(16px) rem(57.5px);
   gap: rem(10px);
   border: 0;
-  font-family: $font-family-everett;
   transition: all 0.24s;
   text-decoration: none;
 
@@ -334,20 +333,44 @@ $dark-background-color-button: #FFFFFF;
     font-size: 30px;
   }
 
-  @mixin type-button-handler($color, $background-color, $degraded-background-color, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
+  &-arial-font-family {
     .cmp-button {
+      font-family: $font-family-arial !important;
+    }
+  }
+
+  &-twk-everett-font-family {
+    .cmp-button {
+      font-family: $font-family-everett !important;
+    }
+  }
+
+  &-width-static {
+    .cmp-button {
+      width: 141px !important;
+    }
+  }
+  
+  @mixin type-button-handler($color, $background-color, $degraded-background-color, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
+    display: flex;
+    .cmp-button {
+      padding: 20px;
+      display: flex;
+      width: 100%;
       color: $color;
       box-sizing: content-box;
       border: $border-size solid $color;
+      font-weight: 400;
+      font-size: 16px;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
       @if $background-color == 'null' {
         background-color: rgba(255, 255, 255, $opacity)
       }
       @else {
         background-color: mix($background-color, $degraded-background-color, $opacity);
       }
-      font-weight: 400;
-      font-family: $font-family-everett;
-      font-size: 16px;
 
       &:disabled {
           background-color: $disabled-background-color !important;
