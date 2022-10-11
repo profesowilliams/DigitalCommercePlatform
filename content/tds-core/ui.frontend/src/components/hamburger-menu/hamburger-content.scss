@@ -1,0 +1,276 @@
+#cmp-techdata-header {
+    &.cmp-container {
+        .megamenu {
+            @include tablet {
+                display: none;
+            }
+        }
+    }
+    .aem-Grid > .languagenavigation {
+        display: none;
+    }
+    &.cmp-experiencefragment--header-mobile.cmp-container {
+        .megamenu {
+            display: none;
+            height: 100vh;
+            left: 0;
+            position: fixed;
+            top: rem(44px);
+            width: 100%;
+            &--open.aem-GridColumn {
+                display: block;
+                width: 100%;
+                float: unset;
+                margin: unset;
+            }
+        }
+        .cmp-megamenu {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid #707070;
+            height: 100%;
+            overflow-y: auto;
+            padding: rem(0 15px);
+            position: relative;
+            &__body {
+                background-color: get-color(brand-white);
+                border: 1px solid #707070;
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+                max-height: 100%;
+                padding: rem(30px);
+                padding-top: 0;
+                position: absolute;
+                width: 100%;
+                max-width: rem(310px);
+                overflow-x: hidden;
+                overflow-y: auto;
+                // disable scrollbar, but retain scroll.
+                &::-webkit-scrollbar {
+                    width: 0;
+                }
+                // disable scrollbar for other browsers - not tested
+                overflow: -moz-scrollbars-none;
+                -ms-overflow-style: none;
+            }
+            &__primary {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: column;
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: rem(12px 0);
+                    &:after {
+                        content: '\f054';
+                        font-family: 'Font Awesome 5 Free';
+                        font-size: rem(16px);
+                        font-weight: 900;
+                        color: get-color(border-lighter-gray);
+                    }
+                    a {
+                        text-decoration: none;
+                        color: inherit;
+                    }
+                }
+            }
+        }
+        &.cmp-tds-site-header {
+            .aem-Grid.header-active {
+                height: 100vh;
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-color: #005758;
+                width: 100vw;
+                flex-direction: column;
+                justify-content: unset !important;
+                align-items: unset !important;
+                max-height: 100vh;
+                overflow-y: auto;
+                color: white;
+            }
+
+            .cmp-td-hamburgerMenu {
+                order: 4;
+                margin-right: 24px;
+            }
+
+            .header-active .cmp-td-hamburgerMenu {
+                position: absolute !important;
+                right: 38px;
+                top: 24px;
+                color: #fff;
+                margin: 0;
+                width: 16px;
+            }
+            .header-active.aem-Grid > .languagenavigation {
+                order: 4;
+                display: block;
+                margin: 0 1pc!important;
+                width: calc(100% - 32px);
+                border-top: 1px solid #d9d8d7!important;
+                padding: 24px 0 !important;
+                position: fixed;
+                bottom: 0;
+                right: 0 !important;
+            }
+
+            .header-active.aem-Grid > .languagenavigation svg path {
+                fill: white;
+            }
+
+            .aem-Grid > .headerutility {
+                display: none !Important;
+            }
+
+            .header-active .megamenu {
+                display: block;
+                width: 100%;
+                position: relative;
+                height: auto;
+                top: auto;
+                left: auto;
+                float: none !important;
+                order: 2;
+            }
+
+            .header-active .cmp-megamenu__body {
+                position: relative;
+                width: 100%;
+                max-width: none;
+                border: 0 !important;
+                background-color: transparent;
+                padding: 0;
+            }
+
+            .header-active .cmp-megamenu {
+                padding: 0 16px !important;
+                border: 0 !important;
+                background: transparent;
+                order: 3;
+            }
+
+            .header-active .cmp-megamenu__body {
+                border-top: 1px solid #D9D8D7 !important;
+            }
+
+            .header-active > .headerutility {
+                float: none !important;
+                width: 100% !important;
+                display: block !important;
+                order: 1;
+                padding: 24px 16px !important;
+                border-top: 1px solid #D9D9D9 !important;
+            }
+
+            &.cmp-container>div .header-active .search {
+                display: none;
+            }
+
+            .header-active .cmp-td-logo--header {
+                clear: both !important;
+                float: none !important;
+            }
+
+            .header-active .headerutility .languagenavigation {
+                display: none;
+            }
+            &.cmp-container .header-active .megamenu .cmp-megamenu__title {
+                display: none !important;
+            }
+
+            &.cmp-container>div {
+                width: 100vw !important;
+            }
+
+            .header-active .headerutility .hub button,
+            .header-active .headerutility .languagenavigation button,
+            .header-active .headerutility .minicart button,
+            .header-active .headerutility .signin button {
+                color: white;
+                font-size: 16px !important;
+            }
+
+            .dp-figure {
+                padding-left: 16px;
+            }
+
+            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--title {
+                color: white;
+            }
+
+            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--sub-title {
+                color: white;
+            }
+
+            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-navigation__group li a {
+                color: white;
+            }
+            .search {
+                margin: unset !Important;
+                margin-left: auto !important;
+            }
+
+            .hub svg g path {
+                fill: white;
+            }
+
+            .headerutility .headerutility {
+                padding: 5px 5px;
+            }
+
+            .signin svg g {
+                stroke: white;
+            }
+
+            .headerutility .signin span {
+                display: inline-block !important;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu:after,
+            &.cmp-container .cmp-td-hamburgerMenu:before {
+                content: '';
+                width: 100%;
+                position: absolute;
+                height: 1px;
+                background-color: black;
+                top: 0;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu i {
+                display: none;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu:before {
+                top: 12px;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu {
+                color: black;
+                position: relative;
+                width: 16px;
+                height: 15px;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu.active:before,
+            &.cmp-container .cmp-td-hamburgerMenu.active:after {
+                background-color: white;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu.active:before {
+                transform: rotate(45deg);
+                top: 6px;
+            }
+
+            &.cmp-container .cmp-td-hamburgerMenu.active:after {
+                transform: rotate(-45deg);
+                top: 6px;
+            }
+        }
+    }
+}
+
+

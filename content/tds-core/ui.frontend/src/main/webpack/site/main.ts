@@ -26,5 +26,5 @@ import "../global/tds-core-components/filmstrip-carousel/filmstrip-carousel";
 import "../global/tds-core-components/analytics/analytics-tracking";
 import "../global/tds-core-components/authentication/authentication";
 import "../global/tds-core-components/form-options/brand-filter/brandFilter";
-import "../../../../../../tds-core/ui.frontend/src/components/hub/hub";
+import "../../../../../../tds-core/ui.frontend/src/components/hamburger-menu/hamburger";
 

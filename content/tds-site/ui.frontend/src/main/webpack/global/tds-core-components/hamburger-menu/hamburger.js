@@ -40,6 +40,9 @@ export default class Hamburger {
         this.el?.classList.remove(active);
         this.containerEl?.classList.remove(open);
         this.open = false;
+        if (this.el?.closest('.aem-Grid')) {
+            this.el?.closest('.aem-Grid').classList.remove('header-active');
+        }
     }
 
     handleClick({active, open}) {
@@ -47,6 +50,10 @@ export default class Hamburger {
             this.el.classList.add(active);
             this.containerEl.classList.add(open);
             this.open = true;
+            if (this.el?.closest('.aem-Grid')) {
+                this.el?.closest('.aem-Grid').classList.add('header-active');
+            }
+
         } else {
             this.hideMegaMenu(active, open);
         }
@@ -55,9 +62,10 @@ export default class Hamburger {
     hideWhenOutside(event, classObj) {
         const isInsideMenu = event.target.closest('.cmp-megamenu__body');
         const isHamburgerBtn = event.target.closest('.cmp-td-hamburgerMenu');
+        const headerActive =  event.target.closest('.header-active');
         const {active, open} = classObj;
 
-        if (isInsideMenu || isHamburgerBtn) return;
+        if (isInsideMenu || isHamburgerBtn || headerActive) return;
         this.hideMegaMenu(active, open);
     }
 }
