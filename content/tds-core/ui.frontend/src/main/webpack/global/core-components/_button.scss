@@ -10,7 +10,7 @@ $steel-blue: get-color(steel-blue);
 $navy: map-get($color-palette, 'navy');
 $copper: map-get($color-palette, 'copper');
 $cool-gray-1: get-color(cool-gray-1);
-$cherry: get-color(cherry);
+$cherry: get-color(cherry); 
 $amber: get-color(amber);
 $forest: map-get($color-palette, 'forest');
 $cool-gray-9: get-color(cool-gray-9);
@@ -279,13 +279,12 @@ $dark-background-color-button: #FFFFFF;
 
 .cmp-tds-button {
   font-size: rem(16px);
-  padding: rem(16px) rem(57.5px);
+  padding: 0px;
   gap: rem(10px);
   border: 0;
   transition: all 0.24s;
   text-decoration: none;
 
-  background-color: map-get($color-palette, 'teal');
   color: map-get($color-palette, 'white');
 
   .cmp-button {
