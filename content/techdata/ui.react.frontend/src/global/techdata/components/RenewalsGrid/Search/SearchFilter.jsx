@@ -219,6 +219,7 @@ function _SearchFilter(
 
   const triggerSearchOnEnter = (event) => {
     if (event.keyCode === 13) {
+      setSwitchDropdown(false);
       triggerSearch();
     }
   };
