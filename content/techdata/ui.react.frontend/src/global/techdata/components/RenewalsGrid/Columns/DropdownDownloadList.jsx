@@ -2,6 +2,7 @@ import React from "react";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
 import { redirectToRenewalDetail, analyticsColumnDataToPush } from "../renewalUtils";
+import { DocumentExcelIcon, DocumentPdfIcon, EyeIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function DropdownDownloadList({ data, aemConfig }) {
   const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, detailUrl, productGrid } = aemConfig;
@@ -42,21 +43,21 @@ function DropdownDownloadList({ data, aemConfig }) {
        <button
         onClick={downloadPDF}
       >
-        <i className="fas fa-file-pdf"></i>
+        <DocumentPdfIcon />
         Download PDF
       </button>|
       {
         productGrid?.showDownloadXLSButton && (
         <>
           <button onClick={downloadXLS}>
-            <i className="fas fa-file-excel"></i>
+            <DocumentExcelIcon />
             Download XLS
           </button>
           |
         </>
       )}
       <button onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id)}>
-        <i className="far fa-eye"></i>
+        <EyeIcon />
         See details
       </button>
     </div>

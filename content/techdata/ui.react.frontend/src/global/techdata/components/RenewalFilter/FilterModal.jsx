@@ -85,7 +85,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   useEffect(() => {
     function dynamicFilterAdjustmnet() {
-      const { top, height } = document.querySelector('.subheader').getBoundingClientRect();
+      const { top, height } = document.querySelector('.subheader > div > div').getBoundingClientRect();
       const gap = 7;
       const topCalculation = top + gap + height;
       filterDom.current.style.top = `${topCalculation}px`;

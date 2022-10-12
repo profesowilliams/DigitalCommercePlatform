@@ -27,7 +27,7 @@ function Toaster({
   }, [isOpen]);  
 
   const calculateSubheaderPosition = useCallback(() => {
-    const subHeaderElement = document.querySelector('.subheader');
+    const subHeaderElement = document.querySelector('.subheader > div > div');
     if (!subHeaderElement) return;
 
     const { top, height } = subHeaderElement.getBoundingClientRect();
