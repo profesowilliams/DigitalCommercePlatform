@@ -10,7 +10,7 @@ const awaitRequest = (fetch, delay) =>
 const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 
 const setAdditionalHeaders = (impersonationAccount) => {
-  return (headerInfo.site?.toUpperCase() === "HK" || headerInfo.site?.toUpperCase() === "IN") && isHouseAccount() ? {headers: {impersonateAccount: impersonationAccount}} : {};
+  return (headerInfo.site?.toUpperCase() === "HK" || headerInfo.site?.toUpperCase() === "IN") && isHouseAccount() ? {headers: {impersonateAccount: impersonationAccount}, validateStatus: false } : {validateStatus: false};
 }
 
 export const getStatusLoopUntilStatusIsActive = async ({

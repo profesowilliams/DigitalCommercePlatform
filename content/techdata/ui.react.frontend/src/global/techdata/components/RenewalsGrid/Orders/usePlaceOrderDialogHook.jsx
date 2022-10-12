@@ -11,7 +11,7 @@ const CustomOrderButton = (properties) => ({ children }) =>
     {children}
   </Button>;
 
-function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength }) {
+function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noResponseMessage, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength }) {
   const [max30Characters, setMax30Characters] = useState(false);
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState("");
   const [termsServiceChecked, setTermsServiceChecked] = useState(false);
@@ -47,13 +47,13 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, orderEnd
       if (isDetails) return onClose({toaster,isSuccess})   
     }
     if (failedReason == GET_STATUS_FAILED){
-      message = "We are sorry, your order could not be processed, please try again later.";
+      message = noResponseMessage;
     }
     if (failedReason == PROCESS_ORDER_FAILED){
       message = replaceEmail(failedSubmission);
     }
     if (failedReason == UPDATE_FAILED){
-      message = "We are sorry, your order could not be processed, please try again later.";
+      message = noResponseMessage;
     }
     toaster = {...toaster, isSuccess, message };
 

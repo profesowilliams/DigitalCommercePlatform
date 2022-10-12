@@ -994,6 +994,11 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Failed Submission"
                                                                 name="./failedSubmission"/>
+                                                            <failedSubmissionNoResponse
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                fieldLabel="On Failed Submission (No Response)"
+                                                                name="./noResponseMessage"/>
                                                         </items>
                                                     </orderingGroup>
                                                 </items>

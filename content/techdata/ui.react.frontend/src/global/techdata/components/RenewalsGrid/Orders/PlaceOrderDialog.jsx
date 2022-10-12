@@ -27,6 +27,7 @@ function PlaceOrderDialog({
     termsAndConditionsLink,
     successSubmission,
     failedSubmission,
+    noResponseMessage
   } = orderingFromDashboard;
 
   const {
@@ -38,7 +39,7 @@ function PlaceOrderDialog({
     setTermsServiceChecked,
     OrderButtonComponent,
     resetDialogStates   
-  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength});   
+  } = usePlaceOrderDialogHook({successSubmission, failedSubmission, noResponseMessage, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength});   
 
   const handleClose = (isSuccess = false) => onClose(isSuccess); 
 
