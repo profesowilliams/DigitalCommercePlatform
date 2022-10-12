@@ -259,7 +259,7 @@
   }
 
   @mixin text-charcoal {
-    color: map-get($color-palette, "charcoal") !important;
+    color: map-get($color-palette, "charcoal");
   }
 
   @mixin text-cool-gray-9 {
