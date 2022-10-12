@@ -137,7 +137,9 @@ $brand-green-dark: #003031;
     }
   }  
   &__filler {
-    min-height: 3px;   
+    min-height: 4px; 
+    pointer-events: none;
+    cursor: default; 
     opacity: 0;
   }
 }
