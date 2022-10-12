@@ -303,7 +303,7 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["orderRenewalEndpoint"] = this.serviceData.uiServiceDomain + this.orderRenewalEndpoint;
     }
 
-    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink","successSubmission","failedSubmission"]
+    const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink","successSubmission","failedSubmission", "noResponseMessage"]
 
     if (properties) {
         const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
