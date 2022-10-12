@@ -16,6 +16,8 @@ function Toaster({
   const positionRef = useRef({});
   const [, updateState] = useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
+  const [DOMLoaded, setDOMLoaded] = useState(false);
+
 
   useEffect(() => {
     if (isOpen && isAutoClose) {      
@@ -41,13 +43,21 @@ function Toaster({
   },[])
 
   useEffect(()=>{
+    const onPageLoad = () => setDOMLoaded(true);
+    if (!document.querySelector('.subheader')) return;
+    if (document.readyState === "complete") {
+      onPageLoad();
+    } else {
+      window.addEventListener("load", onPageLoad);
+      return () => window.removeEventListener("load", onPageLoad);
+    }
     const setPositionRef = () => positionRef.current = calculateSubheaderPosition();
     setPositionRef();
   },[])
 
   useEffect(() => toaster?.isOpen && window.scrollTo(0,0),[toaster.isOpen])
   
-  return (
+  return DOMLoaded && (
     <div className="cmp-toaster-drawer">
       <Drawer
         anchor="right"

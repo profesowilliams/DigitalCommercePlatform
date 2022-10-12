@@ -479,3 +479,8 @@ export const getLocaleFormattedDate = (rawDate) => {
 
   return dateToString(rawDate.replace(/[zZ]/g, ''), 'MM/dd/uu');
 };
+
+export const removeDashboardSeparator = (originComponentDomStr = '') => {
+  const separatorList = document.querySelector(originComponentDomStr)?.parentNode?.parentNode?.parentNode?.parentNode?.getElementsByClassName('separator dp-separator--hidden');
+  separatorList && Object.prototype.toString.call(separatorList) === '[object HTMLCollection]' && separatorList.length && [...separatorList].forEach(div => div.style.display = "none");
+}

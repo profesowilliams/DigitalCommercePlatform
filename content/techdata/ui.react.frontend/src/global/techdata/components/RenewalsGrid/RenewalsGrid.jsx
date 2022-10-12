@@ -30,6 +30,7 @@ import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
 import Toaster from "../Widgets/Toaster";
 import TransactionNumber from "./Orders/TransactionNumber";
+import { removeDashboardSeparator } from "../../../../utils/utils";
 
 function ToolTip({ toolTipData }) {
   return (
@@ -105,6 +106,7 @@ function RenewalsGrid(props) {
   };
 
   useEffect(() => {
+    removeDashboardSeparator(".renewalsgrid")
     const renewalsNode = renewalsRef.current;
     const containsTDSynnexClass = renewalsNode?.parentNode?.parentNode?.parentNode?.classList.contains("cmp-grid-td-synnex");
     if (containsTDSynnexClass) {
