@@ -26,7 +26,7 @@ $neutral-gray-1: get-color(neutral-gray-1);
 $primary-icon-color: get-color(container-transparent);
 $primary-border-size: 0px;
 $primary-opacity: 100%;
-$primary-hover-opacity: 85%;
+$primary-hover-opacity: 75%;
 $primary-pressed-opacity: 20%;
 $primary-disabled-opacity: 10%;
 $primary-active-opacity: 80%;
@@ -59,7 +59,7 @@ $secondary-active-color-opacity: rgba(0, 87, 88, 0.2);
 $secondary-background-disabled-color: get-color(container-transparent);
 
 $secondary-fill-border-size: 0px;
-$secondary-fill-opacity: 10%;
+$secondary-fill-opacity: 00%;
 $secondary-fill-hover-opacity: 20%;
 $secondary-fill-pressed-opacity: 30%;
 $secondary-fill-disabled-opacity: 10%;
@@ -285,6 +285,18 @@ $dark-background-color-button: #FFFFFF;
       width: rem(60px);
       color: get-color(brand-blue) !important;
     }
+  }
+}
+
+.cmp-tds-font-georgia-pro-reg {
+  .cmp-button {
+    font-family: $font-family-georgia !important;
+  }
+}
+
+.cmp-tds-font-legacy {
+  .cmp-button {
+    font-family: $open-sans !important;
   }
 }
 
