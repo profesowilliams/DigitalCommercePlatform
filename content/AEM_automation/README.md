@@ -22,15 +22,16 @@ It will run all the tests and also generate an html report that can be found in 
 
 The other way to run these tests is by executing the cypress ui, for this run this command
 
+Local environment
 ```bash
 npx cypress open
 ```
+
+SIT
+```bash
+npx cypress open --config "baseUrl=https://sit.dc.tdebusiness.cloud/"
+```
 It will open the cypress ui and from there simply click the feature you want to execute
-
-## How can I run it against a different endpoint
-
-This is very simple, go to the following file `AEM_automation/cypress/e2e/page_objects/renewals_page.js`.
-Once there look for the variable `URL` and change it to the desired endpoint.
 
 ## Contributing
 If you want to create a new test, add it in the `AEM_automation/cypress/e2e/step_definitions` folder, also, the Page Objects which includes locators and methods for the given page, you can find them in `AEM_automation/cypress/e2e/page_objects/`.

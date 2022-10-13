@@ -1,0 +1,14 @@
+
+<sly data-sly-template.action="${@ action}">
+    <a
+        type="button"
+        id="${action.id}"
+        class="cmp-button cmp-teaser__action-link"
+        href="${action.URL}"
+        data-cmp-clickable="${action.data ? true : false}"
+        data-cmp-data-layer="${action.data.json}"
+        >
+        <span data-sly-test="${action.title}" class="cmp-button__text" style="color: ${properties.fontColorCtaText @ context ='styleToken'}">${action.title}</span>
+    </a>
+</sly>
+

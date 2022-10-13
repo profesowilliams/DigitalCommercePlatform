@@ -1,5 +1,5 @@
 export class RenewalsGrid {
-  URL = 'http://localhost:8080/renewals-grid.html'
+  URL = '/renewals-grid.html'
   btnSearch = '.cmp-renewal-search .cmp-search-select-container > .cmp-search-options > label'
   inputSearch = '.cmp-search-tooltip__button'
   btnRightPageArrow = '.cmp-renewals-subheader button.move-button svg.fa-chevron-right'

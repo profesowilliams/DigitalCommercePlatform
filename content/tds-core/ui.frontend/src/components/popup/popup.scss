@@ -3,7 +3,7 @@
 .cmp-popup__modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 9999999; //There are diff z-indexes in the codebase for the navbar, we might need to redefine all of them.
   padding-top: 100px;
   left: 0;
   top: 0;
@@ -22,7 +22,11 @@
   margin: auto;
   padding: 0 15px;
   border: 1px solid #888;
-  width: 50%;
+  width: 450px;
+  
+  @include mobile {
+    width: 90%;
+  }
 
  &__close {
     color: #aaaaaa;
