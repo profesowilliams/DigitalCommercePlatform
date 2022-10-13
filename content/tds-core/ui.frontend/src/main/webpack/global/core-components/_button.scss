@@ -70,13 +70,6 @@ $secondary-fill-background-disabled-color: #E4E5E6;
 
 $dark-background-color-button: #FFFFFF;
 
-
-.cmp-button {
-}
-.cmp-button__text {
-}
-.cmp-button__icon {
-}
 .cmp-button {
   cursor: pointer;
 }
@@ -381,6 +374,7 @@ $dark-background-color-button: #FFFFFF;
   
   @mixin type-button-handler($color, $background-color, $degraded-background-color, $border-size, $degraded-color, $opacity, $degraded-color-hover, $opacity-hover, $pressed-opacity-color, $pressed-opacity-value, $disabled-background-color) {
     display: flex;
+    height: auto;
     a {
       padding: 12px 20px;
       display: flex;
@@ -1168,5 +1162,78 @@ $dark-background-color-button: #FFFFFF;
 
   &.btn-legacy-gray.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode {
     @include type-button-handler($legacy-gray, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
+	}
+}
+
+
+@mixin practice_builder_button_action_style {
+	&:hover {
+		background-color: get-color("aqua");
+		border: 1px solid get-color("aqua");
+		& span.cmp-button__text {
+			color: #262626;
+		}
+	}
+	&:focus {
+		border: 3px solid get-color("aqua");
+	}
+	&:disabled {
+		background-color: get-color(cool-gray-1);
+		border: none;
+		pointer-events: none;
+		& span.cmp-button__text {
+			color: black;
+		}
+	}
+}
+
+@mixin cmp_button_style ($bg-color) {
+	background-color: get-color($bg-color);
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 0.1875rem;
+	height: 100%;
+	@include mobile {
+		margin-left: 23px;
+	}
+}
+
+.button {
+	height: 100%;
+	&.cmp-button--color-teal {
+		& .cmp-button {
+			@include cmp_button_style("teal");
+			@include practice_builder_button_action_style;
+		}
+		& span.cmp-button__text {
+			color: get-color("white");
+		}
+	}
+	&.cmp-button--shape-rectangle {
+		& .cmp-button {
+			border-radius: unset !important;
+		}
+	}
+	&.cmp-button--theme-light {
+		& .cmp-button {
+			@include cmp_button_style("white");
+			@include practice_builder_button_action_style;
+		}
+		& span.cmp-button__text {
+			color: get-color("teal");
+		}
+	}
+	&.cmp-button--small-minimal {
+		margin-top: 10px;
+		& .cmp-button {
+			height: unset;
+			padding: 6px 8px;
+			border: 1px solid get-color("teal");
+			font-size: 12px;
+			@include practice_builder_button_action_style;
+		}
+	}
+	&.cmp-button-align-right {
+		float: right;
 	}
 }
