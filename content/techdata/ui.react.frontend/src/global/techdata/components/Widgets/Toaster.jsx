@@ -12,10 +12,10 @@ function Toaster({
 }) {
 
   const toaster = store( state => state.toaster, shallow);
-  const {isOpen, Child, isSuccess, title, message, isAutoClose = false } = toaster;
+  const {isOpen, Child, isSuccess, origin, title, message, isAutoClose = false } = toaster;
   const positionRef = useRef({});
   const [, updateState] = useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
+  const forceUpdate = useCallback(() => updateState({}), []);
   const [DOMLoaded, setDOMLoaded] = useState(false);
 
 
@@ -44,16 +44,20 @@ function Toaster({
 
   useEffect(()=>{
     const onPageLoad = () => setDOMLoaded(true);
+    const setPositionRef = () => positionRef.current = calculateSubheaderPosition();
     if (!document.querySelector('.subheader')) return;
     if (document.readyState === "complete") {
       onPageLoad();
     } else {
       window.addEventListener("load", onPageLoad);
       return () => window.removeEventListener("load", onPageLoad);
-    }
-    const setPositionRef = () => positionRef.current = calculateSubheaderPosition();
+    }    
     setPositionRef();
   },[])
+
+  const paddingOnJustUpdating = {
+    "& .MuiPaper-root .cmp-toaster-content" : {padding: origin === 'fromUpdate' && '1rem !important'}
+  }
 
   useEffect(() => toaster?.isOpen && window.scrollTo(0,0),[toaster.isOpen])
   
@@ -63,9 +67,9 @@ function Toaster({
         anchor="right"
         open={isOpen}
         hideBackdrop={true}
+        disableScrollLock={true}
         className="toaster-modal"
-        sx={{height: "max-content", ...positionRef.current}}
-       
+        sx={{height: "max-content", ...positionRef.current, ...paddingOnJustUpdating }}
         onClose={onClose}
         {...MuiDrawerProps}
       >

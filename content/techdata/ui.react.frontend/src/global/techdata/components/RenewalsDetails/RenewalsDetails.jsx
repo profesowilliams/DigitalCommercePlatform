@@ -161,13 +161,13 @@ function RenewalsDetails(props) {
           delay: 2000,
           iterations: 7})
         if(isActiveQuote) {            
-          const toaster = {isOpen:true, isAutoClose:true, isSuccess: true, message:componentProp.quoteEditing.successUpdate}
+          const toaster = {isOpen:true, origin:'fromUpdate', isAutoClose:true, isSuccess: true, message:componentProp.quoteEditing.successUpdate}
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
           if (endUserDetails || resellerDetails)
             changeRefreshDetailApiState();
           return true;          
         } else {
-          const toaster = {isOpen:true, isAutoClose:true, isSuccess: false, message:componentProp.quoteEditing?.failedUpdate}
+          const toaster = {isOpen:true, origin:'fromUpdate', isAutoClose:true, isSuccess: false, message:componentProp.quoteEditing?.failedUpdate}
           effects.setCustomState({ key: 'toaster', value: { ...toaster } });
         }
       }
@@ -177,7 +177,7 @@ function RenewalsDetails(props) {
       if(ex.status === 200 && ex?.data?.content?.salesContentEmail) {
         errorMessage = componentProp.quoteEditing?.failedUpdate?.replace('{email}', ex.data.content.salesContentEmail)
       }
-      const errorToaster = {isOpen:true, isSuccess: false, title: errorTitle, message: errorMessage}
+      const errorToaster = {isOpen:true, origin:'fromUpdate', isSuccess: false, title: errorTitle, message: errorMessage}
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
     return false;

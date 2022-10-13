@@ -110,7 +110,7 @@ export const plainTextColumn = (definition) => {
     cellHeight: () => 45,
     minWidth: columnsMinWidth[columnKey] || null,
     width: columnsWidth[columnKey] || null,
-    resizable: false,
+    resizable: false, 
     cellRenderer: (eventProps) => columnFieldsMap(definition, eventProps),
     ...isHoverable(columnKey),
   };

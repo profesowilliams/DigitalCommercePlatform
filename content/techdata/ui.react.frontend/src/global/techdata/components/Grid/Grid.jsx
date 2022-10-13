@@ -3,12 +3,11 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formateDatePicker, normalizeErrorCode, stringifyValue } from "../../../../utils/utils";
+import { formateDatePicker, fromExceptionToErrorObject, normalizeErrorCode, stringifyValue } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
 import {useStore} from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
 import { isObject } from '../../../../utils';
-import { fromExceptionToErrorObject } from '../../../../utils/utils';
 
 function Grid(props) {
   let {

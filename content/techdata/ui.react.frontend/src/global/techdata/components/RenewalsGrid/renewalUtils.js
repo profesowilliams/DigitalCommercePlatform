@@ -206,6 +206,14 @@ function isRepeatedSortAction(previusSort, newSort){
     return isEqual
 }
 
+function clickPriceTheFirstTime(isPriceColumnClicked, previousSortChanged, gridApiRef){
+    if (isPriceColumnClicked?.current && isFirstTimeSortParameters(previousSortChanged?.current)){
+        gridApiRef.current.columnApi.applyColumnState({
+            state: [{...secondLevelOptions}]
+        })     
+    }
+}
+
 export async function fetchRenewalsByGet(config){
     const {
       request,
@@ -216,13 +224,16 @@ export async function fetchRenewalsByGet(config){
       onFiltersClear,
       firstAPICall,
       onSearchAction,
+      isPriceColumnClicked,
+      gridApiRef
     } = config;
-    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current, secondLevelOptions);
+
+    clickPriceTheFirstTime(isPriceColumnClicked, previousSortChanged, gridApiRef);
+    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
     const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData );
     const mapUrl = urlStrToMapStruc(request.url);  
     const {sortStrValue, isColReseted} = extractSortColAndDirection(hasSortChanged.current?.sortData);
     const secondLevelSort = calcSecondLevelSorting(hasSortChanged.current?.sortData);
-   
     secondLevelSort && !secondLevelSort.includes("undefined") && mapUrl.set('SortBySecondLevel',secondLevelSort);
     mapUrl.set('SortBy',sortStrValue);
     if (isColReseted) mapUrl.delete('SortBy');

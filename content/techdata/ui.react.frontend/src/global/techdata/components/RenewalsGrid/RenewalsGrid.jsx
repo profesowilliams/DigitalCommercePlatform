@@ -105,13 +105,22 @@ function RenewalsGrid(props) {
     window.location = shopURL;
   };
 
+  const isPriceColumnClicked = useRef(false);
+
   useEffect(() => {
+    const catchPriceColumnClickEvent = (e) => {
+      e.stopPropagation();
+      const innerText = e.target.innerText || e.target.closest(".ag-header-cell-label")?.innerText;
+      isPriceColumnClicked.current = innerText.includes('Price');    
+    }
+    window.addEventListener("click", catchPriceColumnClickEvent);
     removeDashboardSeparator(".renewalsgrid")
     const renewalsNode = renewalsRef.current;
     const containsTDSynnexClass = renewalsNode?.parentNode?.parentNode?.parentNode?.classList.contains("cmp-grid-td-synnex");
     if (containsTDSynnexClass) {
       setCustomState({key:'isTDSynnex', value:true});
     }   
+    return () => window.removeEventListener("click",catchPriceColumnClickEvent);
   },[])
 
   useEffect(() => setCustomState({ key: 'aemConfig', value: componentProp }), [])
@@ -173,7 +182,9 @@ function RenewalsGrid(props) {
       request,
       previousSortChanged,
       onFiltersClear,
-      firstAPICall
+      firstAPICall,
+      isPriceColumnClicked,
+      gridApiRef
     }
     response = await handleFetchDataStrategy(renewalOperations)
     const mappedResponse = mapServiceData(response);
