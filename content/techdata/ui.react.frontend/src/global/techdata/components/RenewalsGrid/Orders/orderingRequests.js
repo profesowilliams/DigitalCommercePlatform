@@ -148,15 +148,15 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const { endUser, reseller, customerPO, source } = renewalQuote;
   const resellerData = extractDetailResellerData(reseller);
   const endUserData = extractDetailRenewalData(endUser);
-
+  const EANumber = renewalQuote.endUser?.eaNumber?.text;
   return {
     reseller: { ...resellerData },
     source: { id: source?.id },
     customerPO: customerPO?.text || customerPO,
     endUser: { ...endUserData, name: endUser?.name?.text },
-    items,
-    EANumber: renewalQuote?.EANumber || null,
-    POAllowedLength: customerPO?.allowedLength
+    items,  
+    POAllowedLength: customerPO?.allowedLength,
+    EANumber 
   }
 }
 
@@ -169,9 +169,9 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     };
   }
   try {
-    const { source, reseller, endUser } = renewalData;
+    const { source, reseller, endUser, EANumber } = renewalData;  
     const impersonationAccount = renewalData.reseller.id;
-    const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber };
+    const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber, EANumber };
     if (renewalData?.items) payload.items = renewalData.items;
     const updateresponse = await post(updateRenewalOrderEndpoint, payload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
     if (updateresponse.status === 200) {
