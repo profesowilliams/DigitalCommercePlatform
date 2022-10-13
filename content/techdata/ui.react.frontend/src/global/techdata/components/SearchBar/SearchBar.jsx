@@ -89,9 +89,7 @@ const SearchBar = ({ data, componentProp }) => {
   useEffect(() => {
     const urlOrigin = window.location.origin;
     setOriginURL(urlOrigin);
-    if (window.innerWidth > 768) {
-        document.addEventListener('click', handleOutsideClick);
-    }
+    document.addEventListener('click', handleOutsideClick);
   }, []);
 
   const replaceSearchTerm = (originalStr, searchTerm) => {
@@ -243,6 +241,7 @@ const SearchBar = ({ data, componentProp }) => {
       return null;
     } else {
       const response = await getSearchUrl(searchTermText);
+      setSearchTermText('');
       window.location.href = response;
     }
   };
