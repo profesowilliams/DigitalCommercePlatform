@@ -76,9 +76,12 @@
 
     .cmp-renewal-preview__subtotal {
       background-color: map-get($color-palette, neutral-gray-1);
-      &--note, &--note >b {
+      &--note, &--note * {
+        b {
+          font-weight: bolder;
+        }
         color: map-get($color-palette, 'charcoal');
-        @include font-arial-normal($size: 14px, $line-height: 16px);
+        @include font-arial-normal($weight: unset, $size: 14px, $line-height: 16px);
       }
       &--description, &--value >span {
         color: map-get($color-palette, 'charcoal');

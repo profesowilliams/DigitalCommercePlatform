@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useImperativeHandle, forwardRef } from "react";
 import {Button} from "@mui/material";
 import { teal } from "@mui/material/colors";
+import sanitizeHtml from 'sanitize-html';
 import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
@@ -22,9 +23,10 @@ import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
-      <div className="cmp-renewal-preview__subtotal--note">
-        <b>Note: </b>
-        {gridProps?.note?.replace("Note: ", "")}
+      <div className="cmp-renewal-preview__subtotal--note" 
+        dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(gridProps?.note)
+        }}>
       </div>
       <div className="cmp-renewal-preview__subtotal--price-note">
         <b className="cmp-renewal-preview__subtotal--description">
