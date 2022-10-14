@@ -589,3 +589,110 @@
     }
   }
 }
+
+//Stroke Colors for Icons
+.cmp-stroke-palette {
+  // TDS Primary stroke colors
+  &__teal {
+    stroke: map-get($color-palette, "teal") !important;
+  }
+
+  &__deep-teal {
+    stroke: get-color(deep-teal) !important;
+  }
+
+  &__aqua {
+    stroke: map-get($color-palette, "aqua") !important;
+  }
+
+  &__cool-gray-8 {
+    stroke: get-color(cool-gray-8) !important;
+  }
+
+  &__cool-gray-10 {
+    stroke: get-color(cool-gray-10) !important;
+  }
+
+  &__green {
+    stroke: map-get($color-palette, "green") !important;
+  }
+
+  &__chartreuse {
+    stroke: map-get($color-palette, "chartreuse") !important;
+  }
+
+  &__black {
+    stroke: map-get($color-palette, "black") !important;
+  }
+
+  &__white {
+    stroke: map-get($color-palette, "white") !important;
+  }
+
+  //TDS Secondary stroke colors
+  &__steel-blue {
+    stroke: get-color(steel-blue) !important;
+  }
+
+  &__navy {
+    stroke: map-get($color-palette, "navy") !important;
+  }
+
+  &__copper {
+    stroke: map-get($color-palette, "copper") !important;
+  }
+
+  &__stone {
+    stroke: get-color(stone) !important;
+  }
+
+  &__cool-gray-1 {
+    stroke: get-color(cool-gray-1) !important;
+  }
+
+  //TDS Digital stroke colors
+  &__cherry {
+    stroke: get-color(cherry) !important;
+  }
+
+  &__amber {
+    stroke: get-color(amber) !important;
+  }
+
+  &__cobalt {
+    stroke: get-color(cobalt) !important;
+  }
+
+  &__neutral-gray-1 {
+    stroke: get-color(neutral-gray-1) !important;
+  }
+
+  &__forest {
+    stroke: map-get($color-palette, "forest") !important;
+  }
+
+  &__charcoal {
+    stroke: map-get($color-palette, "charcoal") !important;
+  }
+
+  &__cool-gray-9 {
+    stroke: get-color(cool-gray-9) !important;
+  }
+
+  &__neutral-gray-2 {
+    stroke: get-color(neutral-gray-2) !important;
+  }
+
+  //Legacy stroke colors
+  &__dark-blue {
+    stroke: get-color(dark-blue) !important;
+  }
+
+  &__sky-blue {
+    stroke: get-color(sky-blue) !important;
+  }
+
+  &__legacy-gray {
+    stroke: get-color(legacy-gray) !important;
+  }
+}

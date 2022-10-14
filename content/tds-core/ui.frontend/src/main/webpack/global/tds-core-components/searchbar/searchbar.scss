@@ -137,6 +137,9 @@
       padding: 0;
       margin-left: rem(8px);
       margin-right: rem(8px);
+      &.cmp-searchbar__icon {
+        @include stroke-aqua;
+      }
     }
 
     &--checked {
@@ -146,11 +149,11 @@
   }
 
   &__icon {
-    stroke: get-color(td-dark-blue);
+    @include stroke-cool-gray-10;
     margin-top: rem(9.6px);
 
     @include mobile {
-      stroke: get-color(brand-light-blue);
+      @include stroke-cool-gray-10;
     }
 
     &--checked {
