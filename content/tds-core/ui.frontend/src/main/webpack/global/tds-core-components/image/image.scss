@@ -22,6 +22,17 @@
         padding: rem(8px)
       }
     }
+
+    &--header-without-left{
+      width: rem(196px) !important;
+      padding: rem(21px) rem(26px) rem(21px) rem(0px);
+
+      @include mobile {
+        width: rem(132px) !important;
+        padding: rem(8px)
+      }
+    }
+
     &--footer{
       width: rem(128px) !important;
       padding: rem(0px) rem(0px) rem(8px);
