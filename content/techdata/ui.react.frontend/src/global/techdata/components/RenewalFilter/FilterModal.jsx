@@ -85,6 +85,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
 
   useEffect(() => {
     function dynamicFilterAdjustmnet() {
+      const subHeaderElement = document.querySelector('.subheader > div > div');
+      if (!subHeaderElement) return;
       const { top, height } = document.querySelector('.subheader > div > div').getBoundingClientRect();
       const gap = 7;
       const topCalculation = top + gap + height;
@@ -114,7 +116,6 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       optionFields,
       dateSelected,
       filterList,
-      count: appliedFilterCount,
     });
     toggleFilterModal();
     if (resetFilter)
