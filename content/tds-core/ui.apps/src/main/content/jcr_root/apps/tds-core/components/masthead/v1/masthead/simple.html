@@ -27,5 +27,10 @@
          data-sly-repeat="${container.items}" data-sly-resource="${item.path @ decoration=true}"></sly>
     <sly data-sly-test="${!isAllowedApplicable && !wcmmode.disabled}"
          data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section'}" />
+    <sly data-sly-use.mobileLinks="com.tdscore.core.models.LinkList">
+      <div data-sly-list.item="${mobileLinks.links}" class="hidden">
+        <a href=" ${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank':''}">${item.platformName}</a>
+      </div>
+    </sly>
   </div>
 </template>

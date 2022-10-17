@@ -18,5 +18,10 @@
        class="cmp-container"
        style="${container.backgroundStyle @ context='styleString'}${'height: {0}px' @ format=properties.containerHeight, context='styleString'}">
     <sly data-sly-resource="${resource @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
+    <sly data-sly-use.mobileLinks="com.tdscore.core.models.LinkList">
+      <div data-sly-list.item="${mobileLinks.links}" class="hidden">
+        <a href=" ${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank':''}">${item.platformName}</a>
+      </div>
+    </sly>
   </div>
 </template>
