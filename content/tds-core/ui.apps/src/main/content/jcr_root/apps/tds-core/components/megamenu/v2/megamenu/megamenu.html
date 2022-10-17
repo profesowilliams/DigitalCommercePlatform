@@ -1,96 +1,69 @@
 <sly data-sly-use.model="com.tdscore.core.models.MegaMenu"
-    data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
-  <div id="megamenu2" class="cmp-megamenu2">
+  data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
+  <div>
     <div id="ssoLoginRedirectUrl" data-ssoLoginRedirectUrl="${properties.ssoLoginRedirectUrl}"></div>
     <div id="aemSSOLoginRedirectUrl" data-aemSSOLoginRedirectUrl="${properties.aemSSOLoginRedirectUrl}"></div>
-    <div id="cmp-accessible-nav" class="cmp-megamenu2__body">
-      <div class="cmp-megamenu2__title">Menu</div>
-      <i class="cmp-megamenu2__back fas fa-chevron-left"></i>
+    
+    <nav id="navigation" role="navigation" aria-label="Main" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
       <!-- Level 1 -->
-      <ol class="cmp-megamenu2__primary"
-          data-sly-list.nav="${model.firstLevelMenuItems}">
+      <ul data-sly-list.nav="${model.firstLevelMenuItems}">
         <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=nav.linkUrl}" class="cmp-has-submenu">
           <!-- Navigation -->
-          <a href="${urlHelper.url  @ context='uri'}" aria-expanded="false" aria-haspopup="true" data-cmp-clickable="true"
-              data-level="L1" data-hier="${nav.platformName}"
-              data-cmp-isprivate="${nav.isPrivate ? 'true' : 'false'}"
-              style="display: ${nav.isprivate? 'none' : '' @context= 'styleToken'};"
-              data-cmp-children="${nav.platformMenuID}" title="${nav.platformName}"
-              class="cmp-megamenu2__tab-text">
+          <a href="${urlHelper.url  @ context='uri'}" aria-haspopup="true"
+            data-cmp-clickable="true" data-level="L1" data-hier="${nav.platformName}"
+            data-cmp-isprivate="${nav.isPrivate ? 'true' : 'false'}"
+            style="display: ${nav.isprivate? 'none' : '' @context= 'styleToken'};"
+            data-cmp-children="${nav.platformMenuID}" title="${nav.platformName}" class="">
             ${nav.platformName}
           </a>
-          <div class="cmp-megamenu2__tabpanel" data-cmp-parent="${nav.platformMenuID}">
-            <nav id="${nav.randomID}" class="cmp-navigation2" role="navigation" itemscope=""
-                  itemtype="http://schema.org/SiteNavigationElement">
-              <!-- Level 2 -->
-              <div class="cmp-megamenu2__wrapper cmp-megamenu2__secondary">
-                <ul class="cmp-navigation2__group"
-                    data-sly-list.slnk="${nav.secondaryMenuItems}">
-                  <li class="cmp-navigation2__item cmp-navigation2__item--level-0 cmp-has-submenu"
-                      data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}">
-                    <a href="${urlHelper.url  @ context='uri'}" title="${slnk.pageTitle}"
-                        data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
-                        data-sly-set.hier2="${nav.mobilePlatformLevel}>${slnk.pageTitle}"
-                        data-level="L2" data-cmp-clickable=""
-                        data-cmp-children="menu ${slnk.menuID}"
-                        class="cmp-megamenu2__analytics-link cmp-navigation2__item-link ${itemList.first ? 'cmp-megamenu2__wrapper-item--active' : ''}">
-                      <i data-sly-test="${slnk.enableSecondaryIcon == 'true'}"
-                          class="${slnk.pageIcon}"></i>${slnk.pageTitle}
-                    </a>
-                    <!-- Level 3 -->
-                    <div class="cmp-megamenu2__wrapper cmp-megamenu2__tertiary"
-                         data-sly-set.hier="${item.levels}"
-                         data-cmp-parent="menu ${item.menuID}">
-                      <ul class="cmp-navigation2__group"
-                          data-sly-list.sec="${slnk.subNavLinkslist}">
-                        <li class="cmp-navigation2__item cmp-navigation2__item--level-1"
-                            data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}">
+
+              <ul data-sly-list.slnk="${nav.secondaryMenuItems}">
+                <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}" class="cmp-has-submenu">
+                  
+                  <!-- Level 3 -->
+
+                    <ul class="" data-sly-list.sec="${slnk.subNavLinkslist}">
+                      <li class="cmp-has-submenu"
+                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}">
+
+                        <!-- Level 4 -->
+                          <ul class="" data-sly-list.subSec="${sec.subNavLinkslist}">
+                            <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
+                              data-cmp-data-layer='{"${nav.randomID}-item-734f73b286":{"@type":"core/wcm/components/navigation/v1/navigation/item","repo:modifyDate":"2021-03-17T08:17:44Z","dc:title":"${subSec.pageTitle}","xdm:linkURL":"/content/core-components-examples/config.html"}}'>
+                              <a href="${urlHelper.url  @ context='html'}" title="${subSec.pageTitle}"
+                                data-cmp-clickable="" data-hier="${hier3}>${subSec.pageTitle}" data-mobile="true"
+                                data-level="L4" class=""
+                                aria-expanded="false">
+                                ${subSec.pageTitle}
+                              </a>
+                            </li>
+                          </ul>
+
                           <a href="${urlHelper.url  @ context='html'}" title="${sec.pageTitle}"
-                             data-hier="${hier2}>${sec.pageTitle}"
-                             data-sly-set.hier3="${hier2}>${sec.pageTitle}" data-level="L3"
-                             data-cmp-clickable=""
-                             class="cmp-megamenu2__analytics-link cmp-navigation2__item-link"
-                             data-cmp-children="menu ${sec.hasChildPages ? sec.menuID : ''}">
-                            ${sec.pageTitle}<i class="fas fa-chevron-right"></i>
-                          </a>
-                          <!-- Level 4 -->
-                          <div class="cmp-megamenu2__wrapper cmp-megamenu2__quaternary">
-                            <ul class="cmp-navigation2__group"
-                                data-sly-list.subSec="${sec.subNavLinkslist}">
-                              <li class="cmp-navigation2__item cmp-navigation2__item--level-2"
-                                  data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
-                                  data-cmp-data-layer='{"${nav.randomID}-item-734f73b286":{"@type":"core/wcm/components/navigation/v1/navigation/item","repo:modifyDate":"2021-03-17T08:17:44Z","dc:title":"${subSec.pageTitle}","xdm:linkURL":"/content/core-components-examples/config.html"}}'>
-                                <a href="${urlHelper.url  @ context='html'}"
-                                   title="${subSec.pageTitle}" data-cmp-clickable=""
-                                   data-hier="${hier3}>${subSec.pageTitle}" data-mobile="true"
-                                   data-level="L4"
-                                   class="cmp-megamenu2__analytics-link cmp-navigation2__item-link">
-                                  ${subSec.pageTitle}
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-            <div class="cmp-adbutler" data-sly-test="${nav.adbutlerJSScript}">
-              <div class="cmp-adbutler__content">
-                <div class="cmp-adbutler__content-title">
-                  ${nav.adbutlerHeading}
-                </div>
-                <div class="cmp-adbutler__content-ad">
-                  ${nav.adbutlerJSScript @ context='unsafe'}
-                </div>
-              </div>
-            </div>
-          </div>
+                          data-hier="${hier2}>${sec.pageTitle}" data-sly-set.hier3="${hier2}>${sec.pageTitle}"
+                          data-level="L3" data-cmp-clickable=""
+                          data-cmp-children="${sec.hasChildPages ? sec.menuID : ''}"
+                          aria-expanded="false">
+                          ${sec.pageTitle}<div><i data-sly-test="${sec.hasChildPages == 'true'}"
+                          class="fas fa-chevron-right"></i></div>
+                        </a>
+                      </li>
+                    </ul>
+                    
+                    <a href="${urlHelper.url  @ context='uri'}" title="${slnk.pageTitle}"
+                    data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
+                    data-sly-set.hier2="${nav.mobilePlatformLevel}>${slnk.pageTitle}" data-level="L2"
+                    data-cmp-clickable="" data-cmp-children="${slnk.hasChildPages ? slnk.menuID : ''}"
+                    aria-expanded="false">
+                    ${slnk.pageTitle}<div><i data-sly-test="${slnk.hasChildPages == 'true'}"
+                    class="fas fa-chevron-right"></i></div>
+                  </a>
+                </li>
+              </ul>
+
           <!-- Navigation -->
         </li>
-      </ol>
-    </div>
-  </div>
+      </ul>
+      </nav>
+      </div>
 </sly>

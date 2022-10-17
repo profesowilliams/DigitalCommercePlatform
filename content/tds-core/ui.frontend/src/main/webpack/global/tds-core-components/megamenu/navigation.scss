@@ -1,0 +1,182 @@
+#navigation ul li ul a:hover,
+    #navigation ul a:focus {
+        text-decoration: none;
+        background-color: map-get($color-palette,"neutral-gray-2");
+}
+
+#navigation {
+    display:table;
+    width: fit-content;
+    z-index: 999;
+
+    ul, li {
+        list-style: none;
+        text-align: left;
+    }
+
+    a {
+        text-decoration: none;
+        color: map-get($color-palette,"charcoal");
+        display: block;
+        padding: 0;
+    }
+
+    .current {
+        color: map-get($color-palette,"charcoal");
+        display: block;
+        padding: 0;
+    }
+
+    &>ul {
+        margin: 0;
+        padding: 0;
+        height: 67px;
+        display: table-row;
+        cursor: default;
+
+        &>li {
+            display:table-cell;
+            text-align: center;
+            position:relative;
+            list-style: none;
+            vertical-align: middle;
+            color: map-get($color-palette,"charcoal");
+
+            &:hover {
+                font-weight: bold;
+            }
+
+            &>a {
+                width: 100px;
+                margin: auto;
+                white-space: nowrap;
+            }
+
+            &>ul {
+                height: 343px;
+                width: 280px;
+                display: none;
+                position: absolute;
+                left: 3px;
+                right: 0;
+                top: 100%;
+                padding: 0;
+                margin: 0;
+                background-color: map-get($color-palette, "white");
+
+                li {
+                    line-height: 36px;
+
+                    &:hover {
+                        font-weight: bold;
+                        background-color: map-get($color-palette, "teal");
+
+                        a {
+                            color: map-get($color-palette, "charcoal");
+                        }
+
+                        ul:hover ~ a {
+                            color: map-get($color-palette, "white");
+                        }
+                    }
+
+                    a {
+                        padding-left: 16px;
+                        font-weight: 400;
+                        color: map-get($color-palette, "charcoal");
+                    }
+
+                    div {
+                        float: right;
+                        margin: 0;
+                        padding-right: 20px;
+                        padding-left: 13px;
+                    }
+                }
+
+                &>li {
+                    &>ul {
+                        height: 343px;
+                        width: 280px;
+                        display: none;
+                        position: absolute;
+                        left: 280px;
+                        top: -3px;
+                        padding: 0;
+                        margin: 0;
+                        background-color: map-get($color-palette, "white");
+
+                        &>li {
+                            line-height: 36px;
+
+                            a {
+                                color: map-get($color-palette, "white");
+                            }
+
+                            div {
+                                float: right;
+                                margin: 0;
+                                padding-right: 20px;
+                                padding-left: 13px;
+                            }
+
+                            &>ul {
+                                height: 343px;
+                                width: 280px;
+                                display: none;
+                                position: absolute;
+                                left: 280px;
+                                top: -3px;
+                                padding: 0;
+                                margin: 0;
+                                background-color: map-get($color-palette, "white");
+
+                                li {
+                                    line-height: 36px;
+                                }
+                            }
+                        }
+
+                        &>li {
+
+                            &>ul {
+                                height: 343px;
+                                width: 280px;
+                                display: none;
+                                position: absolute;
+                                left: 280px;
+                                top: -3px;
+                                padding: 0;
+                                margin: 0;
+                                background-color: map-get($color-palette, "white");
+
+                                li {
+                                    line-height: 36px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#navigation > ul > li:hover > ul,  
+#navigation > ul > li > ul > li:hover > ul,
+#navigation > ul > li > ul > li > ul > li:hover > ul {
+    display:block;
+    z-index: 999;
+}
+
+
+#navigation > ul > li > ul > li.cmp-has-submenu {
+    &::after {
+        content: "";
+        background: url('https://api.iconify.design/fluent/chevron-right-24-filled.svg') no-repeat center center / contain;
+    }
+}
+
+#navigation > ul > li > ul, #navigation > ul > li > ul > li > ul, #navigation > ul > li > ul > li > ul > li > ul {
+    border-top: solid 3px map-get($color-palette,"teal");
+}
