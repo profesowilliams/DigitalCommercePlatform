@@ -115,6 +115,8 @@ function RenewalsDetails(props) {
       setToggleEdit(true);
       // Call cancel edit on grid to clean internal values
       gridRef.current.cancelEdit();
+    } else {
+      setEditMode(true);
     }
   }  
   
