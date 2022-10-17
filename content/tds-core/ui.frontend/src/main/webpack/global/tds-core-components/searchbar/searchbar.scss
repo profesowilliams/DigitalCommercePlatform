@@ -137,7 +137,7 @@
       padding: 0;
       margin-left: rem(8px);
       margin-right: rem(8px);
-      &.cmp-searchbar__icon {
+      .cmp-searchbar__icon {
         @include stroke-aqua;
       }
     }
