@@ -111,7 +111,7 @@ function RenewalsGrid(props) {
     const catchPriceColumnClickEvent = (e) => {
       e.stopPropagation();
       const innerText = e.target.innerText || e.target.closest(".ag-header-cell-label")?.innerText;
-      isPriceColumnClicked.current = innerText.includes('Price');    
+      isPriceColumnClicked.current = innerText?.includes('Price');    
     }
     window.addEventListener("click", catchPriceColumnClickEvent);
     removeDashboardSeparator(".renewalsgrid")
