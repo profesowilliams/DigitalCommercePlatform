@@ -67,12 +67,6 @@
                                         showDefaultColors="{Boolean}false"
                                         showProperties="{Boolean}true"
                                         showSwatches="{Boolean}true"/>
-                                    <opacity
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                        fieldDescription="Opacity"
-                                        fieldLabel="Opacity"
-                                        name="./opacity"/>
                                 </items>
                             </column>
                         </items>
