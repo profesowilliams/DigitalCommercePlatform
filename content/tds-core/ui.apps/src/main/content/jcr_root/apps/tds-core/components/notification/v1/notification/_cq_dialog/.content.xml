@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Notification"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    helpPath="https://www.adobe.com/go/aem_cmp_carousel_v1">
+    <content
+        granite:class="cmp-carousel__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <linkList
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Configure Notification"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <message
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldDescription="Enter Message Text"
+                                fieldLabel="Message"
+                                name="./message"/>
+                            <linkUrl
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldDescription="Enter link"
+                                fieldLabel="Link"
+                                name="./linkUrl"
+                                rootPath="/content"/>
+                            <linkLabel
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldDescription="Enter link Label"
+                                fieldLabel="LinkLabel"
+                                name="./linkLabel"/>
+                            <icon
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldDescription="Enter icon"
+                                fieldLabel="Icon"
+                                name="./icon"/>
+                            <EnableLink
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                fieldDescription="Check"
+                                fieldLabel="EnableLink"
+                                name="./enableLink"
+                                text="Enable link"
+                                uncheckedValue="false"
+                                value="false"/>
+                            <linkTarget
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                fieldDescription="Select this if the link has to open in a new tab"
+                                name="./linkTarget"
+                                text="Link to New tab"
+                                uncheckedValue="false"
+                                value="true"/>
+                        </items>
+                    </linkList>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

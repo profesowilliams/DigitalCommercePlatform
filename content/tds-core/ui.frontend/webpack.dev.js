@@ -1217,6 +1217,14 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "notification",
+                template: path.resolve(
+                    __dirname,
+                    // SOURCE_ROOT + "/static/partials/notification/notification.html"
+                    SOURCE_ROOT + "/static/notification.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "genetic-email-template",
                 template: path.resolve(
                     __dirname,
