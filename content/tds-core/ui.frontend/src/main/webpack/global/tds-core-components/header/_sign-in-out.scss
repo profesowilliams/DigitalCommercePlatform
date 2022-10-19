@@ -231,7 +231,7 @@
         font-family: "Open Sans", sans-serif;
         font-size: 14px;
         letter-spacing: 0;
-        background-color: #1699d1;
+        background-color: get-color(deep-teal);
 
         @include tablet {
             background-color: #f6f6f6;

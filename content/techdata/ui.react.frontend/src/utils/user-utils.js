@@ -2,6 +2,7 @@ import { isDisableChecksForDCPAccess, disableEntitlementsList } from "./featureF
 export const ACCESS_TYPES = {
     DCP_ACCESS: "hasDCPAccess",
     CAN_VIEW_ORDERS: 'CanViewOrders',
+    CAN_ACCESS_RENEWALS: 'CanAccessRenewals',
     RENEWALS_ACCESS: 'hasRenewalsAccess',
 }
 

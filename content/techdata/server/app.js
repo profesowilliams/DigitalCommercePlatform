@@ -184,6 +184,10 @@ app.post("/login", function (req, res) {
             entitlement: "hasRenewalsAccess",
             accountId: "",
           },
+          {
+            entitlement: "CanAccessRenewals",
+            accountId: "",
+          },
         ],
         customersV2: [
           {
