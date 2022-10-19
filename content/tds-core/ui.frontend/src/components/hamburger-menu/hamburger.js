@@ -40,8 +40,8 @@ export default class Hamburger {
         this.el?.classList.remove(active);
         this.containerEl?.classList.remove(open);
         this.open = false;
-        if (this.el?.closest('.aem-Grid')) {
-            this.el?.closest('.aem-Grid').classList.remove('header-active');
+         if (this.el?.closest('.cmp-container')) {
+            this.el?.closest('.cmp-container').classList.remove('header-active');
         }
     }
 
@@ -50,8 +50,8 @@ export default class Hamburger {
             this.el.classList.add(active);
             this.containerEl.classList.add(open);
             this.open = true;
-            if (this.el?.closest('.aem-Grid')) {
-                this.el?.closest('.aem-Grid').classList.add('header-active');
+            if (this.el?.closest('.cmp-container')) {
+                this.el?.closest('.cmp-container').classList.add('header-active');
             }
         } else {
             this.hideMegaMenu(active, open);

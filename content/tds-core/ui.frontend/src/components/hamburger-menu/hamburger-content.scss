@@ -6,7 +6,12 @@
             }
         }
     }
-    .aem-Grid > .languagenavigation {
+    .aem-Grid > .languagenavigation,
+    .masthead .masthead {
+        display: none;
+    }
+
+    .hub .cmp-button__text {
         display: none;
     }
     &.cmp-experiencefragment--header-mobile.cmp-container {
@@ -76,7 +81,7 @@
             }
         }
         &.cmp-tds-site-header {
-            .aem-Grid.header-active {
+            .header-active.cmp-container {
                 height: 100vh;
                 position: fixed;
                 top: 0;
@@ -93,20 +98,61 @@
                 color: white;
             }
 
+            .header-active.cmp-container .cmp-button__text {
+                display: inline;
+            }
+
+            .masthead .header-active .masthead #mobile-header-container {
+                display: flex;
+                flex-direction: column-reverse;
+            }
+
+            .header-active.cmp-container .aem-Grid {
+                display: flex;
+                flex-direction: column;
+                justify-content: unset !important;
+                align-items: unset !important;
+            }
+
             .cmp-td-hamburgerMenu {
                 order: 4;
                 margin-right: 24px;
+                border: none;
+            }
+
+            .masthead .header-active .masthead {
+                display: block;
+            }
+
+            .masthead .header-active .masthead .aem-Grid>.languagenavigation {
+                display: block;
+            }
+
+            .masthead .header-active .masthead .aem-Grid>.languagenavigation .cmp-dropbtn {
+                margin-bottom: 10px;
             }
 
             .header-active .cmp-td-hamburgerMenu {
                 position: absolute !important;
                 right: 38px;
-                top: 24px;
+                top: 15px;
                 color: #fff;
                 margin: 0;
                 width: 16px;
             }
-            .header-active.aem-Grid > .languagenavigation {
+
+            .cmp-container {
+                height: auto !important;
+            }
+
+            .aem-Grid {
+                border: none;
+            }
+
+            .dp-figure img {
+                vertical-align: middle;
+            }
+            .header-active.cmp-container .masthead {
                 order: 4;
                 display: block;
                 margin: 0 1pc!important;
@@ -118,7 +164,13 @@
                 right: 0 !important;
             }
 
-            .header-active.aem-Grid > .languagenavigation svg path {
+            .header-active.cmp-container .mobile-bottom-section a {
+                display: block;
+                margin-bottom: 10px;
+                text-decoration: none;
+            }
+
+            .header-active.cmp-container .aem-Grid > .languagenavigation svg path {
                 fill: white;
             }
 
@@ -157,13 +209,22 @@
                 border-top: 1px solid #D9D8D7 !important;
             }
 
-            .header-active > .headerutility {
+            .header-active .aem-Grid > .headerutility {
                 float: none !important;
                 width: 100% !important;
                 display: block !important;
                 order: 1;
                 padding: 24px 16px !important;
                 border-top: 1px solid #D9D9D9 !important;
+            }
+
+            &.cmp-experiencefragment__header--sticky {
+                padding: 0;
+                height: 47px;
+            }
+
+            &.cmp-experiencefragment__header--sticky .aem-Grid {
+                background: transparent;
             }
 
             &.cmp-container>div .header-active .search {
