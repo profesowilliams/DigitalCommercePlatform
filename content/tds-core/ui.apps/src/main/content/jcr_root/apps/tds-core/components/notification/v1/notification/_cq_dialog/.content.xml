@@ -45,15 +45,14 @@
                                 fieldDescription="Enter icon"
                                 fieldLabel="Icon"
                                 name="./icon"/>
-                            <EnableLink
+                            <linkEnable
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                fieldDescription="Check"
-                                fieldLabel="EnableLink"
-                                name="./enableLink"
+                                fieldDescription="Select this if the link should be enabled"
+                                name="./linkEnable"
                                 text="Enable link"
                                 uncheckedValue="false"
-                                value="false"/>
+                                value="true"/>
                             <linkTarget
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
