@@ -284,6 +284,18 @@ const SearchBar = ({ data, componentProp }) => {
     setSearchInputFocused(true);
   };
 
+  const handleOpenSearchBar = () => {
+    if(searchTermText === '') {
+        mobileSearchOpener();
+    } else {
+        if (!mobileState && !isChecked) {
+            mobileSearchOpener();
+        } else {
+            redirectToShop();
+        }
+    }
+  }
+
   const mobileSearchOpener = () => {
       if (mobileState) {
           if (searchInputFocused) {
@@ -357,7 +369,7 @@ const SearchBar = ({ data, componentProp }) => {
                 : "cmp-searchbar__button"
             }
             ref={searchRef}
-            onClick={searchTermText === '' ? mobileSearchOpener : redirectToShop}
+            onClick={handleOpenSearchBar}
           >
             <svg
               className={
