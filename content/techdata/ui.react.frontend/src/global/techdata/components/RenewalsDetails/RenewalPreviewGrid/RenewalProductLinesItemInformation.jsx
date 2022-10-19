@@ -6,6 +6,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
   const {product = [false,false]} = line;
   const [techdata, manufacturer] = product;
   const description = manufacturer?.name;
+  const serialHasValue = line.serialNumbers && line.serialNumbers.length > 0 && line.serialNumbers[0]
   const formatDescription = (description = "") => {
     if (!description) return "N/A";
     const matchFirstWords = /^(.*?\s){12}/;
@@ -76,7 +77,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
               {formatDescription(description)}
             </a>
             <br />
-            <span>
+            {serialHasValue && <span>
               <b>Serial №: </b>
               {line.serialNumbers && line.serialNumbers.length && !line.serialNumbers.every(e => e === null) ? (
                 <a
@@ -105,7 +106,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
                     ? line.serialCellNotFoundMessage
                     : "N/A"
               )}
-            </span>
+            </span>}
             <span>
               <b>Instance: </b>
               {line.instance || " N/A "}
