@@ -5,7 +5,7 @@
   content: $content;
 
   @if $isFontAwesome=="true" {
-    font-family: "Font Awesome 5 Free";
+    font-family: "FontAwesome";
     margin-left: rem(6px);
     font-size: rem(12px);
     margin: 0 rem(10px) 0 0;
