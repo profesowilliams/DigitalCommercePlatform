@@ -122,6 +122,7 @@ function RenewalsDetails(props) {
   
   const handleCancel = () => {
     setOpenCancelDialog(true);
+    setEditMode(true);
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
   };
 
