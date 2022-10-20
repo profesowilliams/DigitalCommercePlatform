@@ -10,7 +10,16 @@
     justify-items: center;
     align-items: center;
 
+    .cmp-notification-link-container{
+        display: flex;
+        align-items: center;
+        a {
+            margin: 0 rem(10px);
+        }
+    }
+
     @mixin notification-type ($color){
+        height: rem(64px);
         width: auto;
         margin-left: 30%;
         background-color:rgba(255, 255, 255, 0.15);
@@ -23,14 +32,26 @@
         font-family: $font-family-everett;
         font-size: 16px;
         line-height: 24px;
-        padding: 20px 0;
+        padding: 10px 0;
+
+        .close-notification:after{
+            display: inline-block;
+            content: "\00d7"; /* This will render the 'X' */
+            margin-right: rem(15px);
+            margin-bottom: rem(15px);
+        }
+
+        .close-notification{
+            margin: 0px;
+        }
 
         .cmp-notification_text{
             color: $deep-teal;
         }
 
         a>span.cmp-notification_text{
-            color: $color;
+            color: $cobalt;
+            margin: 0px;
         }
 
         .cmp-notification_icon{
@@ -65,11 +86,12 @@
     }
     a {
         text-decoration: none;
-        margin-right: rem(20.68px);
+        // margin-right: rem(20.68px);
     }
 
     .cmp-notification-message-container {
         margin-left: rem(22px);
+        display: flex;
     }
 
     .nolink{
