@@ -59,7 +59,7 @@ function RenewalsDetails(props) {
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
     if(isAuthormodeAEM()) return; // Validation for Author ENV
-    (!hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) ||
+    (!hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
     !hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS }))
     && redirectToShop()
   }, [
