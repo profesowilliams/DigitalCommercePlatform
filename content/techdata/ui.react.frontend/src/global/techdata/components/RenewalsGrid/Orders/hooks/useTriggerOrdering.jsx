@@ -27,7 +27,7 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
     );
     const { content = false } = quoteDetails;
 
-    if (!isDefaultQuote && !content.details[0].canOrder) {
+    if (!content.details[0].canOrder) {
       redirectToRenewalDetail(detailUrl, renewalsId);
     }
     else {
