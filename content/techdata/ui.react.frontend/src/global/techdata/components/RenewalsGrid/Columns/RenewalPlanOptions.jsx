@@ -276,7 +276,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                 <>
                                                     <span className="vertical-separator"></span>
                                                     {isIconEnabled ? (
-                                                        <span className="cmp-renewals-cart-icon" onClick={handleCartIconClick} >
+                                                        <span className="cmp-renewals-cart-icon" onClick={(event) => handleCartIconClick(event, option)} >
                                                             <CartIcon />{' '}
                                                             <span>Order</span>
                                                         </span>

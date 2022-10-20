@@ -11,21 +11,31 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
   const effects = useRenewalGridState((state) => state.effects);
   const { closeAndCleanToaster } = effects;
 
-  const handleCartIconClick = async (_event) => {
-    if (!data.isValid) {
-      redirectToRenewalDetail(detailUrl, data.source.id);
+  const handleCartIconClick = async (_event, planOption) => {
+    const renewalsId = planOption ? planOption.id : data.source.id;
+    const isDefaultQuote = !planOption || planOption.id === data.source.id;
+
+    if (isDefaultQuote && !data.isValid) {
+      redirectToRenewalDetail(detailUrl, renewalsId);
       return ;
-    } 
+    }
+
     closeAndCleanToaster();
     const quoteDetails = await fetchQuoteRenewalDetails(
       renewalDetailsEndpoint,
-      data.source.id
+      renewalsId
     );
     const { content = false } = quoteDetails;
-    setToggleOrderDialog((toggle) => !toggle);
-    if (content?.details[0])
-      return setDetails(mapRenewalForUpdateDetails(content.details[0]));
-    setDetails(mapRenewalForUpdateDashboard(data));
+
+    if (!isDefaultQuote && !content.details[0].canOrder) {
+      redirectToRenewalDetail(detailUrl, renewalsId);
+    }
+    else {
+      setToggleOrderDialog((toggle) => !toggle);
+      if (content?.details[0])
+        return setDetails(mapRenewalForUpdateDetails(content.details[0]));
+      setDetails(mapRenewalForUpdateDashboard(data));
+    }
   };
 
   const closeDialog = () => setToggleOrderDialog(false);
