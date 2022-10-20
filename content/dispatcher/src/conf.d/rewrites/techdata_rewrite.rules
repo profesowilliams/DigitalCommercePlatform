@@ -37,6 +37,9 @@ RewriteRule ^/th$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/th/en.html [PT,L
 RewriteRule ^/th/en$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/th/en.html [PT,L]
 RewriteRule ^/vn$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/vn/en.html [PT,L,NC]
 RewriteRule ^/vn/en$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apac/vn/en.html [PT,L]
+RewriteRule ^/jp$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apj/jp/en.html [PT,L,NC]
+RewriteRule ^/jp/en$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apj/jp/en.html [PT,L]
+RewriteRule ^/jp/ja$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/apj/jp/ja.html [PT,L]
 
 # americas
 RewriteRule ^/ar$ /content/${CONTENT_FOLDER_NAME_TECHDATA}/americas/ar/en.html [PT,L,NC]
