@@ -104,7 +104,11 @@ function urlStrToMapStruc(urlStri = ''){
 }
 
 function mapStrucToUrlStr(urlMapStruc = new Map()){
-    return Array.from(urlMapStruc).map(e => e.join("=")).join("&").replace('SortBySecondLevel','SortBy');
+    return Array.from(urlMapStruc)
+      .map((e) => e.join('='))
+      .join('&')
+      .replace('SortBySecondLevel', 'SortBy')
+      .replace('SortBySecondLevelComposite', 'SortBy');
 }
 
 export function addCurrentPageNumber(customPaginationRef, request) {
@@ -234,7 +238,13 @@ export async function fetchRenewalsByGet(config){
     const mapUrl = urlStrToMapStruc(request.url);  
     const {sortStrValue, isColReseted} = extractSortColAndDirection(hasSortChanged.current?.sortData);
     const secondLevelSort = calcSecondLevelSorting(hasSortChanged.current?.sortData);
-    secondLevelSort && !secondLevelSort.includes("undefined") && mapUrl.set('SortBySecondLevel',secondLevelSort);
+    if(secondLevelSort && !secondLevelSort.includes("undefined")) {
+        mapUrl.set('SortBySecondLevel',secondLevelSort);
+        if(secondLevelSort.includes("renewedduration")) {
+            const renewedWithSupport = secondLevelSort.replace('renewedduration', 'support');
+            mapUrl.set('SortBySecondLevelComposite', renewedWithSupport);
+        }
+    }
     mapUrl.set('SortBy',sortStrValue);
     if (isColReseted) mapUrl.delete('SortBy');
     mapUrl.delete('SortDirection')  
