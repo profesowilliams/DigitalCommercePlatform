@@ -16,7 +16,7 @@
 
 #base=styles
 
-vendor/font-awesome/fontawesome.css
-vendor/font-awesome/solid.css
-vendor/adobe-fonts/source-code-pro.css
-vendor/adobe-fonts/source-sans-pro.css
+resources/vendor/font-awesome/fontawesome.css
+resources/vendor/font-awesome/solid.css
+styles/vendor/adobe-fonts/source-code-pro.css
+styles/vendor/adobe-fonts/source-sans-pro.css

@@ -97,10 +97,12 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     }
     const timer = setTimeout(dynamicFilterAdjustmnet, 0);
     window.addEventListener('scroll', dynamicFilterAdjustmnet);
+    window.addEventListener('load', dynamicFilterAdjustmnet);
     return () => {
       document.body.style.overflow = "initial";
       clearTimeout(timer);
       window.removeEventListener('scroll', dynamicFilterAdjustmnet);
+      window.removeEventListener('load', dynamicFilterAdjustmnet);
     };
   }, []);
 

@@ -1,10 +1,10 @@
 import { CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
-import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
-import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, TOASTER_LOCAL_STORAGE_KEY, UPDATE_FAILED } from "../../../../../utils/constants";
-import TransactionNumber from "./TransactionNumber";
-import { handleOrderRequesting } from "./orderingRequests";
+import { PlaceOrderMaterialUi } from "../PlacerOrderMaterialUi";
+import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, TOASTER_LOCAL_STORAGE_KEY, UPDATE_FAILED } from "../../../../../../utils/constants";
+import TransactionNumber from "../TransactionNumber";
+import { handleOrderRequesting } from "../orderingRequests";
 
 const CustomOrderButton = (properties) => ({ children }) =>
   <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>

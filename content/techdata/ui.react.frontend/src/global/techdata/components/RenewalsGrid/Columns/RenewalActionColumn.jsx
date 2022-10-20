@@ -4,7 +4,7 @@ import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants"
 import VerticalSeparator from "../../Widgets/VerticalSeparator";
 import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
-import useTriggerOrdering from "../Orders/useTriggerOrdering";
+import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import {
   getLocalStorageData,
   hasLocalStorageData,

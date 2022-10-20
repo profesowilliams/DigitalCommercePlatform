@@ -6,7 +6,7 @@ import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
 import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
-import useTriggerOrdering from "../Orders/useTriggerOrdering";
+import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
 import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";

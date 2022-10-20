@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import React, { useMemo } from "react";
 import { Dismiss } from "../../../../../fluentIcons/FluentIcons";
 import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
-import usePlaceOrderDialogHook from "./usePlaceOrderDialogHook";
+import usePlaceOrderDialogHook from "./hooks/usePlaceOrderDialogHook";
 import { useEffect } from "react";
 import { thousandSeparator } from "../../../helpers/formatting";
 

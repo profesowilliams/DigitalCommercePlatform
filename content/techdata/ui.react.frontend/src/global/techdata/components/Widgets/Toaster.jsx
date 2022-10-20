@@ -13,10 +13,8 @@ function Toaster({
 
   const toaster = store( state => state.toaster, shallow);
   const {isOpen, Child, isSuccess, origin, title, message, isAutoClose = false } = toaster;
-  const positionRef = useRef({});
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
   const [DOMLoaded, setDOMLoaded] = useState(false);
+  const [subheaderPosition, setSubheaderPosition] = useState('');
 
 
   useEffect(() => {
@@ -30,36 +28,43 @@ function Toaster({
 
   const calculateSubheaderPosition = useCallback(() => {
     const subHeaderElement = document.querySelector('.subheader > div > div');
-    if (!subHeaderElement) return;
-
+    if (!subHeaderElement) return "no Hay Subheader";
     const { top, height } = subHeaderElement.getBoundingClientRect();
+    const gap = 7;  
     if (top < 0) {
-      forceUpdate();
-      return
-    };
-    const gap = 7;
+      const offSetHeight = subHeaderElement.offsetHeight;
+      const scrollY = window.scrollY;
+      const offsetTop = scrollY + top;
+      console.log({offSetHeight,scrollY,top,offsetTop});
+      return `${offSetHeight + offsetTop + gap}px`;
+    };    
     const topCalculation = top + gap + height;
-    return {"& .MuiPaper-root" : {top: `${topCalculation}px`}};
+    return `${topCalculation}px`;
   },[])
 
   useEffect(()=>{
-    const onPageLoad = () => setDOMLoaded(true);
-    const setPositionRef = () => positionRef.current = calculateSubheaderPosition();
+    const onPageLoad = () => { setPositionRef(); setDOMLoaded(true)};
+    const setPositionRef = () => {
+      const topPosition = calculateSubheaderPosition();      
+      topPosition && setSubheaderPosition(topPosition);
+    }
+   
     if (!document.querySelector('.subheader')) return;
     if (document.readyState === "complete") {
       onPageLoad();
     } else {
       window.addEventListener("load", onPageLoad);
-      return () => window.removeEventListener("load", onPageLoad);
+      window.addEventListener("scroll", setPositionRef);
+      return () => {
+        window.removeEventListener("load", onPageLoad);
+        window.removeEventListener("scroll", setPositionRef);
+      }
     }    
-    setPositionRef();
   },[])
 
   const paddingOnJustUpdating = {
     "& .MuiPaper-root .cmp-toaster-content" : {padding: origin === 'fromUpdate' && '1rem !important'}
   }
-
-  useEffect(() => toaster?.isOpen && window.scrollTo(0,0),[toaster.isOpen])
   
   return DOMLoaded && (
     <div className="cmp-toaster-drawer">
@@ -69,7 +74,7 @@ function Toaster({
         hideBackdrop={true}
         disableScrollLock={true}
         className="toaster-modal"
-        sx={{height: "max-content", ...positionRef.current, ...paddingOnJustUpdating }}
+        sx={{height: "max-content",...paddingOnJustUpdating,"& .MuiPaper-root":{top:subheaderPosition}}}
         onClose={onClose}
         {...MuiDrawerProps}
       >

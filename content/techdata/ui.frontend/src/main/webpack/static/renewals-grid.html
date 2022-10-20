@@ -9,6 +9,18 @@
 		<link rel="stylesheet" href="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.css" type="text/css" />
 		<link rel="stylesheet" href="http://localhost:9000/bundle.css" type="text/css" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css" type="text/css" />
+		<style>
+			.test-dev-env-sticky{
+			   position: fixed;
+			   top: 0;
+			   z-index: 999;
+			   background:#ffffff;
+			   width: 100%;
+		   }
+		   .aem-GridColumn--default--1--dev--test{
+			   padding: 0 2rem;
+		   }
+	   </style>
 	</head>
 
 	<body class="page basicpage">
@@ -19,32 +31,27 @@
 					<div id="maincontent" class="cmp-container">
 						<div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
 							<!-- Box Start-->
-
-							<div
-								class="experiencefragment aem-GridColumn--default--none aem-GridColumn aem-GridColumn--default--12 aem-GridColumn--offset--default--0"
-							>
-							<%= require('html-loader!./partials/signin/signin.html') %>
-							<%= require('html-loader!./partials/megamenu/megamenu.html') %>
-							<%= require('html-loader!./partials/searchbar/searchbar.html') %>
-							<%= require('html-loader!./partials/headerutility/headerutility.html') %>
-							<%= require('html-loader!./partials/sub-header/new-subheader.html') %>
-							<div class="subheader"></div>
 								<div
 									id="experiencefragment-2e63ace05a"
 									class="cmp-experiencefragment cmp-experiencefragment--test---header"
 								>
+									<div class="new-megamenu">
+										<%= require('html-loader!./partials/megamenu/megamenu.html') %>
+									</div>
+									<div class="subheader">
+										<%= require('html-loader!./partials/sub-header/common-subheader.html') %>
+									</div>
+								</div>	
 									<div id="container-5facbc53d1" class="cmp-container">
 										<div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
 											<div
-												class="renewalsgrid cmp-grid-td-synnex aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--1 aem-GridColumn--default--1"
+												class="renewalsgrid cmp-grid-td-synnex aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--1 aem-GridColumn--default--1--dev--test"
 											>
-												<%= require('html-loader!./partials/signin/signin.html') %>
 												<%= require('html-loader!./partials/grids/renewals-grid.html') %>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
+												
 							<!-- Box End-->
 						</div>
 					</div>
@@ -52,5 +59,17 @@
 			</div>
 		</div>
 		<%= require('html-loader!./partials/included-scripts/included-scripts.html') %>
+		<script>
+			window.onscroll = () => addSticky();
+			let header = document.querySelector(".cmp-experiencefragment--test---header");
+			let sticky = header.offsetTop;
+			function addSticky() {
+				if (window.pageYOffset > sticky) {
+					header.classList.add("test-dev-env-sticky");
+				} else {
+					header.classList.remove("test-dev-env-sticky");
+				}
+			}
+		</script>
 	</body>
 </html>
