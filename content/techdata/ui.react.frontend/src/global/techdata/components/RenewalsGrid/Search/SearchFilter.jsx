@@ -224,12 +224,12 @@ function _SearchFilter(
     }
   };
 
-  const renderWithPermissions = (option) => {
+  const renderWithPermissions = ({option}) => {
     const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount();
     if (hasNotPrivilege) return <></>;
     return (
       <>
-        <label key={option.searchKey} onClick={() => changeHandler(option)}>
+        <label onClick={() => changeHandler(option)}>
           {option.searchLabel}
         </label>
       </>
@@ -336,7 +336,7 @@ function _SearchFilter(
             <div className="cmp-search-select-container__filler"></div> 
             <If condition={true}>
               <div className={computeClassName("cmp-search-options")}>
-                {options.map((option) => renderWithPermissions(option))}
+                {options.map((option) => <renderWithPermissions option={option} key={option.searchKey} />)}
               </div>
             </If>
           </div>

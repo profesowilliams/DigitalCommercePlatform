@@ -222,13 +222,13 @@ export function ChevronLeftIcon(props) {
 
 export function ChevronDoubleLeftIcon(props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" class="svg_dd790ee3" focusable="false"><path d="M2048 91l-933 933 933 933-91 91L933 1024 1957 0l91 91zm-896 0l-933 933 933 933-91 91L37 1024 1061 0l91 91z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" className="svg_dd790ee3" focusable="false"><path d="M2048 91l-933 933 933 933-91 91L933 1024 1957 0l91 91zm-896 0l-933 933 933 933-91 91L37 1024 1061 0l91 91z"></path></svg>
   )
 }
 
 export function ChevronDoubleRightIcon(props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" class="svg_dd790ee3" focusable="false"><path d="M91 0l1024 1024L91 2048l-91-91 933-933L0 91 91 0zm896 0l1024 1024L987 2048l-91-91 933-933L896 91l91-91z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" className="svg_dd790ee3" focusable="false"><path d="M91 0l1024 1024L91 2048l-91-91 933-933L0 91 91 0zm896 0l1024 1024L987 2048l-91-91 933-933L896 91l91-91z"></path></svg>
   )
 }
 

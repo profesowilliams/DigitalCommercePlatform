@@ -91,6 +91,8 @@ export const subHeader = () => {
             }
         }
 
+        if(!($('.cmp-tabs__tab--active')[0])) return;
+        
         //Centers the active menu item when scrolling horizontally
         $('.cmp-tabs__tab--active')[0].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }

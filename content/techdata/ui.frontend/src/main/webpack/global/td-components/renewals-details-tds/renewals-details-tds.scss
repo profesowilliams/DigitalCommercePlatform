@@ -1,5 +1,5 @@
 .cmp-renewals-details__tds {
-  * {
+  *:not([class*="fas"]) {
     @include font-arial-normal();
   }
 

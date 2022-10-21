@@ -142,6 +142,7 @@ function _RenewalActionColumn({ eventProps }) {
           />
         )}
         <PlaceOrderDialog
+          key={Math.random()}
           isDialogOpen={toggleOrderDialog} 
           onClose={closeDialog}
           orderingFromDashboard={orderingFromDashboard}

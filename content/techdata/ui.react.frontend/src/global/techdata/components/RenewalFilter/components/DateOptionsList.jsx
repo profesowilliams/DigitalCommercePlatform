@@ -6,8 +6,13 @@ export function DateOptionsList() {
 
   const dateOptionsList = useRenewalGridState((state) => state.dateOptionsList);
   const effects = useRenewalGridState((state) => state.effects);
+
   const { computeClassName } = useIsTDSynnexClass();
   const capitalizedItems = ["overdue"]
+  useEffect(()=> {
+    console.log("clear option list again")
+    effects.checkOptionListSelected()
+  },[]);
   function customCapitalize(dateField){
     return capitalizedItems.includes(dateField) ? {textTransform:'capitalize'} : {}
   }

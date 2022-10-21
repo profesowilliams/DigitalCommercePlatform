@@ -302,6 +302,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                 })}
             </div>
             <PlaceOrderDialog
+                key={node?.rowIndex}
                 isDialogOpen={toggleOrderDialog}
                 onClose={closeDialog}
                 orderingFromDashboard={orderingFromDashboard}

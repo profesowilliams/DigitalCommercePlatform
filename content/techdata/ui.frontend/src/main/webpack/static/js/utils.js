@@ -48,6 +48,6 @@ function componentSearch(componentFilter) {
 
 window.onload = () => {
     const componentFilter = document.getElementById("componentPageFilter");
-    componentFilter.focus();
+    componentFilter && componentFilter.focus();
     componentSearch(componentFilter)
 };

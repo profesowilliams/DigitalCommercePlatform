@@ -47,7 +47,6 @@ function PlaceOrderDialog({
     if (!!text && text.includes("({enduser-companyname})")) {
       const splitted = text
         .split(/\({enduser-companyname}\)/gim)
-        .map((_text) => _text);
       splitted.splice(
         1,
         0,
@@ -65,18 +64,16 @@ function PlaceOrderDialog({
     return null;
   };
 
-  const constructTermsCondLink = (text) => {
+  const constructTermsCondLink = (text) => {   
     if (!text) return null;
-    const splitted = text.split(/\b(?=terms .+ conditions)/gi);
-    return splitted.map((_text, index) =>
-      index === 1 ? (
-        <a href={termsAndConditionsLink} key={index} target="_blank" className="cmp-place-order-link">
-          {_text}
-        </a>
-      ) : (
-        _text
-      )
-    );
+    const [label , terms = ''] = text.split(/\b(?=terms .+ conditions)/gi);   
+    return (
+      <>
+        <span>{label}</span>
+        <a href={termsAndConditionsLink} target="_blank" className="cmp-place-order-link">
+          {terms}
+        </a>      
+      </>   )
   };
 
   const handleCloseDialog = (event, reason) => {

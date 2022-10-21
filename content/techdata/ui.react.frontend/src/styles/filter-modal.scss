@@ -21,7 +21,7 @@ $brand-charcoal: #262626;
   top: 220px;
   .filter-modal-container {
     &__popup {
-      * {
+      *:not([class*="fas"]) {
         font-family: Arial;
       }
     }

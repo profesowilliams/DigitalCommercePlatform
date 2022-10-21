@@ -102,6 +102,12 @@ export const renewalsEffects = (set, get) => {
     setCustomState({key:'toaster', value:{isOpen:false}},options);
   }
 
+  function checkOptionListSelected(){
+    const isChecked = (field) => field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
+    const dateOptionsList = get().dateOptionsList.map(item => ({ ...item, checked: isChecked(item.field) }));
+    set({dateOptionsList})
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -114,6 +120,7 @@ export const renewalsEffects = (set, get) => {
     setAppliedFilterCount,
     setToolTipData,
     setDateOptionList,
-    closeAndCleanToaster
+    closeAndCleanToaster,
+    checkOptionListSelected
   };
 };
