@@ -1675,7 +1675,12 @@ $dark-background-color-button: #FFFFFF;
 		}
 	}
 	&.cmp-button--small-minimal {
-		margin-top: 10px;
+      position: absolute;
+      top: -15px;
+      right: 50px;
+      @include mobile {
+        top: 5px;
+      }
 		& .cmp-button {
 			height: unset;
 			padding: 6px 8px;
