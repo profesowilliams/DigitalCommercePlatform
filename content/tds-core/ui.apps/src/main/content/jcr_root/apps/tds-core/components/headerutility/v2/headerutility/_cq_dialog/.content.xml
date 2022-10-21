@@ -43,9 +43,16 @@
                             text="Hide Lang Nav Component"
                             uncheckedValue="false"
                             value="true"/>
+                    <hideButtonComponent
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                            fieldDescription="On selection hides the component. Component shown by default."
+                            name="./hideButtonComponent"
+                            text="Hide Button Component"
+                            uncheckedValue="false"
+                            value="true"/>
                 </items>
             </column>
         </items>
     </content>
 </jcr:root>
-

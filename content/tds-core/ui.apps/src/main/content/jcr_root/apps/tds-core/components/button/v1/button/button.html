@@ -13,21 +13,27 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+  <sly data-sly-set.linkTarget="${properties.link && properties.linkTarget == 'true' ? '_blank' : ''}"/>
 <button
 	data-sly-use.button="com.adobe.cq.wcm.core.components.models.Button"
 	data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
 	data-sly-use.iconTemplate="icon.html"
   data-sly-use.templates="core/wcm/components/commons/v1/templates.html"
 	data-sly-element="${button.link ? 'a' : 'button'}"
-	type="button"
+	type="${button.link ? '' : 'button'}"
 	id="${component.id}"
 	class="cmp-button"
 	href="${button.link}"
+  rel="${linkTarget == '_blank' ? 'noopener' : ''}"
+  target="${linkTarget}"
 	aria-label="${button.accessibilityLabel}"
 	data-cmp-clickable="${button.data ? true : false}"
 	data-cmp-data-layer="${button.data.json}"
 >
 	<sly data-sly-call="${iconTemplate.icon @ icon=button.icon}"></sly>
+  <span data-sly-test="${properties.iconUrl}" class="cmp-image">
+    <img src="${properties.iconUrl}" class="cmp-image__image" alt="${properties.alt}" title="${properties.platformName}">
+  </span>
 	<span data-sly-test="${button.text}" class="cmp-button__text" style="color: ${properties.fontColor @ context ='styleToken'}">${button.text}</span>
 </button>
 <sly data-sly-call="${templates.placeholder @ isEmpty = !button.text, classAppend='cmp-button'}"></sly>

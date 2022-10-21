@@ -1693,3 +1693,45 @@ $dark-background-color-button: #FFFFFF;
 		float: right;
 	}
 }
+
+.button {
+  &.cmp-button-default{
+      color: map-get($color-palette, "charcoal");
+      font-family: $font-family-everett;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      padding-left: rem(6.25px);
+      padding-right: rem(48px);
+      padding-top: rem(16px);
+      padding-bottom: rem(16px);
+      .cmp-image{
+          &__image{
+              width:21.5px;
+              height:21.5px;
+              float:left;
+          }
+      }
+  }
+
+  &.cmp-button-apj{
+      color: get-color(brand-white);
+      font-family: $font-family-everett;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      padding-left: rem(6.25px);
+      padding-right: rem(48px);
+      padding-top: rem(16px);
+      padding-bottom: rem(16px);
+      .cmp-image{
+          &__image{
+              width:21.5px;
+              height:21.5px;
+              float:left;
+          }
+      }
+  }
+}
