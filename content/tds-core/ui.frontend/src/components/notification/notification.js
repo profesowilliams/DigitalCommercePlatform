@@ -9,9 +9,5 @@
               container.parentNode.remove();
             }
         };
-
     });
-
 })();
-
-
