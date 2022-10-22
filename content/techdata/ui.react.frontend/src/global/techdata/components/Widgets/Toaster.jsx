@@ -47,8 +47,8 @@ function Toaster({
     const setPositionRef = () => {
       const topPosition = calculateSubheaderPosition();      
       topPosition && setSubheaderPosition(topPosition);
-    }
-   
+    }   
+    const timer = setTimeout(onPageLoad, 1600);
     if (!document.querySelector('.subheader')) return;
     if (document.readyState === "complete") {
       onPageLoad();
@@ -56,6 +56,7 @@ function Toaster({
       window.addEventListener("load", onPageLoad);
       window.addEventListener("scroll", setPositionRef);
       return () => {
+        clearTimeout(timer);
         window.removeEventListener("load", onPageLoad);
         window.removeEventListener("scroll", setPositionRef);
       }

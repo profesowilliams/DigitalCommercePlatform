@@ -339,6 +339,7 @@ export function isFromRenewalDetailsPage() {
  * @param {number} pageNumber page number
  */
 export function updateQueryString(pageNumber) {
+    if (!pageNumber) return
     if (pageNumber === 1) {
         if (location.href.includes('page=')) {
             history.replaceState(null, '', location.origin + location.pathname);
@@ -374,3 +375,27 @@ export const formatRenewedDuration = (type, renewed, support) => {
     .filter(Boolean)
     .join(', ');
 };
+
+export const checkIfAnyDateRangeIsCleared = ({dateOptionsList,filterList,customStartDate,customEndDate}) => {  
+    const [dateOption] = dateOptionsList.filter(o => o.checked)  
+    if (!dateOption) return false
+    if ((!customStartDate || !customEndDate) && dateOption.field === 'custom'){     
+        getLocalStorageData;
+        setLocalStorageData;
+      const filterLocalStorage = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);  
+      const dateOptionsUncheckedList = dateOptionsList.map( o => ({...o, checked: false}));
+      const filterUnopenedList = filterList.map(o => { 
+        if (o.field === "date"){
+            return {...o, open:false};
+        }      
+        return o;
+      })     
+      Reflect.deleteProperty(filterLocalStorage,'customEndDate');
+      Reflect.deleteProperty(filterLocalStorage,'customStartDate');
+      Reflect.deleteProperty(filterLocalStorage,'dateSelected');
+      filterLocalStorage.filterList = [...filterUnopenedList];
+      setLocalStorageData(FILTER_LOCAL_STORAGE_KEY,{...filterLocalStorage}) 
+      return {dateOptionsUncheckedList,filterUnopenedList};
+    }
+    return false;
+}

@@ -123,6 +123,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     if (resetFilter)
       effects.setCustomState({ key: "resetFilter", value: false });
     onQueryChanged();
+    effects.clearDateSelectionOnRangeClear();
   };
 
   

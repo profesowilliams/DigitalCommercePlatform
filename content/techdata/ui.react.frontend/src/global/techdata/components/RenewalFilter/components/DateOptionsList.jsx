@@ -9,10 +9,7 @@ export function DateOptionsList() {
 
   const { computeClassName } = useIsTDSynnexClass();
   const capitalizedItems = ["overdue"]
-  useEffect(()=> {
-    console.log("clear option list again")
-    effects.checkOptionListSelected()
-  },[]);
+  useEffect(()=>effects.checkOptionListSelected(),[]);
   function customCapitalize(dateField){
     return capitalizedItems.includes(dateField) ? {textTransform:'capitalize'} : {}
   }

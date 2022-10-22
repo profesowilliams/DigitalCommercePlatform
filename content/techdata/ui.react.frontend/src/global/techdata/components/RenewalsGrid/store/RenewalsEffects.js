@@ -1,5 +1,5 @@
 import { FILTER_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import {  getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import {  checkIfAnyDateRangeIsCleared, getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../renewalUtils";
 
 export const renewalsEffects = (set, get) => {
   function setFilterList(newFilterList = []) {
@@ -91,7 +91,7 @@ export const renewalsEffects = (set, get) => {
     set({[key]:value})
   }
 
-  function setDateOptionList(dateOptionsList){
+  function setDateOptionList(dateOptionsList){    
     if (!dateOptionsList) return;
     const dateOptionsWithLocalStorage = dateOptionsList.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected }));
     set({dateOptionsList : dateOptionsWithLocalStorage });
@@ -102,10 +102,22 @@ export const renewalsEffects = (set, get) => {
     setCustomState({key:'toaster', value:{isOpen:false}},options);
   }
 
-  function checkOptionListSelected(){
+  function checkOptionListSelected(){ 
+    const {dateOptionsList, filterList, customStartDate, customEndDate} = get();
     const isChecked = (field) => field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
-    const dateOptionsList = get().dateOptionsList.map(item => ({ ...item, checked: isChecked(item.field) }));
-    set({dateOptionsList})
+    const dateOptionsListLocalChecked = dateOptionsList.map(item => ({ ...item, checked: isChecked(item.field) }));
+    const mutatedDateList = checkIfAnyDateRangeIsCleared({dateOptionsList,filterList,customStartDate,customEndDate})  
+    if (!mutatedDateList) return set({dateOptionsList:dateOptionsListLocalChecked})
+    const {dateOptionsUncheckedList} = mutatedDateList;
+    set({dateOptionsList:dateOptionsUncheckedList});
+  }
+
+  function clearDateSelectionOnRangeClear(){   
+    const {dateOptionsList, filterList, customStartDate, customEndDate} = get();
+    const mutatedDateList = checkIfAnyDateRangeIsCleared({dateOptionsList,filterList,customStartDate,customEndDate})  
+    if (!mutatedDateList) return 
+    const {dateOptionsUncheckedList,filterUnopenedList} = mutatedDateList;
+    set({dateOptionsList:dateOptionsUncheckedList,filterList:filterUnopenedList,customStartDate:null,customEndDate:null,dateSelected:null});
   }
 
   return {
@@ -121,6 +133,7 @@ export const renewalsEffects = (set, get) => {
     setToolTipData,
     setDateOptionList,
     closeAndCleanToaster,
-    checkOptionListSelected
+    checkOptionListSelected,
+    clearDateSelectionOnRangeClear
   };
 };

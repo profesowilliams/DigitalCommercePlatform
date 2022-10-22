@@ -22,7 +22,6 @@ const FilterItem = ({ id }) => {
     const filtersCopy = produce(filterList, (filterDraft) => {
       filterDraft[id].checked = !filterDraft[id].checked;
       const filter = filterDraft[id];
-      console.log('childIds 📛', childIds);
       childIds.forEach((id) => {
         return (filterDraft[id].open = !filterDraft[id].open);
       });

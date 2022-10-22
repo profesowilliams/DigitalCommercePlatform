@@ -10,7 +10,7 @@ import { DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
     useState(false);
-    console.log('grid props', {gridProps, data});
+  
 
   const downloadXLS = () => {
     try {

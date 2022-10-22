@@ -8,12 +8,14 @@ import useFilteringSelected from "../hooks/useIsFilteringSelected";
 import useIsTDSynnexClass from "./useIsTDSynnexClass";
 
 function CustomDatePill({ clearDateFilters }) {
-  const datePickerState = useRenewalGridState((state) => state.datePickerState);
+  const datePickerState = useRenewalGridState( state => state.datePickerState);
+  const customStartDate = useRenewalGridState( state => state.customStartDate);
+  const customEndDate   = useRenewalGridState( state => state.customEndDate);
   const { computeClassName } = useIsTDSynnexClass();
   if (!datePickerState) return null;
   const [startDate, endDate] = datePickerState;
 
-  return (
+  return customStartDate && customEndDate ? (
     <div className={computeClassName("filter-tags")}>
       <span className="filter-tags__title">
         {getLocaleFormattedDate(startDate)}
@@ -24,7 +26,7 @@ function CustomDatePill({ clearDateFilters }) {
         <i className="fas fa-times filter-tags__close"></i>
       </span>
     </div>
-  );
+  ) : null;
 }
 
 function FilterTags() {
