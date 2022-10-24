@@ -45,7 +45,9 @@
                     </li>
                </ol>
                <ol data-sly-test="${!ol}"></ol>
-               <sly data-sly-include="button.html"></sly>
+               <sly data-sly-test="${properties.includeButton}">
+               	<sly data-sly-include="button.html"></sly>
+               </sly>
           </div>
      </div>
      <div data-sly-repeat.item="${tabs.items}"
