@@ -43,10 +43,10 @@ public class MegaMenu {
                 log.debug("item is {}", item.getPath());
                 LinkItem link =  item.adaptTo(LinkItem.class);
 
-                if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems())
-                {
+                if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
-                    if (currentPage != null && currentPage.getTemplate() != null && currentPage.getTemplate().getName().equals("tds-landing-page")) {
+                    if (currentPage != null && currentPage.getTemplate() != null && 
+                        currentPage.getTemplate().getName().equals("tds-landing-page")) {
                         SubNavLinks newLink = new SubNavLinks(
                             new StringBuilder()
                                 .append("View all ")
@@ -62,27 +62,6 @@ public class MegaMenu {
                 }
 
                 menuLinkList.add(link);
-            }
-
-            for (LinkItem item : this.menuLinkList)
-            {
-                if (item.getLinkUrl() != null && item.getHasSecondaryMenuItems())
-                {
-                    Page currentPage = resolver.adaptTo(PageManager.class).getPage(item.getLinkUrl());
-                    if (currentPage != null && currentPage.getTemplate() != null && currentPage.getTemplate().getName().equals("tds-landing-page")) {
-                        SubNavLinks link = new SubNavLinks(
-                            new StringBuilder()
-                                .append("View all ")
-                                .append(item.getPlatformName())
-                                .toString(),
-                            item.getLinkUrl(),
-                            item.getPlatformName(), 
-                            new JsonArray(), 
-                            item.getLinkUrl(), 
-                            "0" );                        
-                        item.addSubNavLink(link);
-                    }
-                }
             }
         }
     }
