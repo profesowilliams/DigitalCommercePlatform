@@ -3,6 +3,7 @@ package com.tdscore.core.models;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.api.Template;
 import com.tdscore.core.util.ContentFragmentHelper;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.google.gson.JsonArray;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -108,14 +109,30 @@ public class LinkItem {
                 while(children.hasNext()){
                     Page childPage = children.next();
                     SubNavLinks link = new SubNavLinks(childPage, resolver, platformName, linkUrl);
+                    
+                    if (link.getSubNavLinkslist().size() > 0) {
+                        Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
+                        if (currentPage != null && 
+                            currentPage.getTemplate() != null && 
+                            currentPage.getTemplate().getName().equals("tds-landing-page")) {
+                            link.addSubNavLink(new SubNavLinks(
+                                new StringBuilder()
+                                    .append("View all ")
+                                    .append(link.getPageTitle())
+                                    .toString(),
+                                link.getPagePath(),
+                                link.getPageTitle(), 
+                                new JsonArray(), 
+                                link.getPagePath(), 
+                                "0" )
+                            );
+                        }
+                    }
                     subLinks.add(link);
                     tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
                 }
             }
         }
-
-
-
     }
 
     private void populateTertiarySubnavLinks(Resource child, Page rootPage, String rootParentLink) {
@@ -165,5 +182,7 @@ public class LinkItem {
         return UUID.randomUUID().toString();
     }
 
-   
+    public void addSubNavLink(SubNavLinks link) {
+        this.subLinks.add(link);
+    }
 }

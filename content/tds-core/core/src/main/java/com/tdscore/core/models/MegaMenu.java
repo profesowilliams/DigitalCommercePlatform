@@ -1,16 +1,22 @@
 package com.tdscore.core.models;
 
+import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.api.Template;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ChildResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.gson.JsonArray;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +33,9 @@ public class MegaMenu {
 
     private List<LinkItem> menuLinkList = new ArrayList<>();
 
+    @Inject
+    private ResourceResolver resolver;
+
     @PostConstruct
     protected void initModel() {
         if (menuList != null) {
@@ -34,6 +43,27 @@ public class MegaMenu {
                 log.debug("item is {}", item.getPath());
                 LinkItem link =  item.adaptTo(LinkItem.class);
                 menuLinkList.add(link);
+            }
+
+            for (LinkItem item : this.menuLinkList)
+            {
+                if (item.getLinkUrl() != null && item.getHasSecondaryMenuItems())
+                {
+                    Page currentPage = resolver.adaptTo(PageManager.class).getPage(item.getLinkUrl());
+                    if (currentPage != null && currentPage.getTemplate() != null && currentPage.getTemplate().getName().equals("tds-landing-page")) {
+                        SubNavLinks link = new SubNavLinks(
+                            new StringBuilder()
+                                .append("View all ")
+                                .append(item.getPlatformName())
+                                .toString(),
+                            item.getLinkUrl(),
+                            item.getPlatformName(), 
+                            new JsonArray(), 
+                            item.getLinkUrl(), 
+                            "0" );                        
+                        item.addSubNavLink(link);
+                    }
+                }
             }
         }
     }

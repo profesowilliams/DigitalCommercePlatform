@@ -188,6 +188,10 @@ public class SubNavLinks {
         return subNavLinkslist;
     }
 
+    public void addSubNavLink(SubNavLinks link) {
+        this.subNavLinkslist.add(link);
+    }
+
     public Page getNavPage() {
         return navPage;
     }

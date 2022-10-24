@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-@Version("2.4")
+@Version("2.5")
 package com.tdscore.core.models;
 
 import org.osgi.annotation.versioning.Version;
