@@ -390,10 +390,12 @@ export const checkIfAnyDateRangeIsCleared = ({dateOptionsList,filterList,customS
         }      
         return o;
       })     
-      Reflect.deleteProperty(filterLocalStorage,'customEndDate');
-      Reflect.deleteProperty(filterLocalStorage,'customStartDate');
-      Reflect.deleteProperty(filterLocalStorage,'dateSelected');
-      filterLocalStorage.filterList = [...filterUnopenedList];
+      if (filterLocalStorage) {
+          Reflect.deleteProperty(filterLocalStorage,'customEndDate');
+          Reflect.deleteProperty(filterLocalStorage,'customStartDate');
+          Reflect.deleteProperty(filterLocalStorage,'dateSelected');
+          filterLocalStorage.filterList = [...filterUnopenedList];
+      }     
       setLocalStorageData(FILTER_LOCAL_STORAGE_KEY,{...filterLocalStorage}) 
       return {dateOptionsUncheckedList,filterUnopenedList};
     }
