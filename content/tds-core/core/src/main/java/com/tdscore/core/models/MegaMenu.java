@@ -42,6 +42,25 @@ public class MegaMenu {
             for (Resource item : menuList.getChildren()) {
                 log.debug("item is {}", item.getPath());
                 LinkItem link =  item.adaptTo(LinkItem.class);
+
+                if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems())
+                {
+                    Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
+                    if (currentPage != null && currentPage.getTemplate() != null && currentPage.getTemplate().getName().equals("tds-landing-page")) {
+                        SubNavLinks newLink = new SubNavLinks(
+                            new StringBuilder()
+                                .append("View all ")
+                                .append(link.getPlatformName())
+                                .toString(),
+                            link.getLinkUrl(),
+                            link.getPlatformName(), 
+                            new JsonArray(), 
+                            link.getLinkUrl(), 
+                            "0" );                        
+                        link.addSubNavLink(newLink);
+                    }
+                }
+
                 menuLinkList.add(link);
             }
 
