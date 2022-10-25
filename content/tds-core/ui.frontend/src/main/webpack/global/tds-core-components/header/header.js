@@ -15,22 +15,57 @@ export default class Header {
         // this.initSecondaryImage();
 
         this.header = document.getElementById('cmp-techdata-header');
-        this.header.classList.add('cmp-experiencefragment__header--sticky');
-        
+        this.authorColor = this.header.style.backgroundColor;
+
+        this.setComponentToStick();
+        this.checkSubheaderContainer();
+        this.checkSubheaderTransparency();
+    }
+
+    setComponentToStick(){
+        const masthead =  document.querySelector('.masthead');
+        const mastheadContainer = masthead.querySelector('.cmp-container');
+        this.stickyHeaderFlag = mastheadContainer.dataset.stickyHeaderflag;
+
+        this.isSubheaderTransparency = false;
+        this.componentToStick = document.getElementById(mastheadContainer.dataset.stickyComponentid);
+        this.componentToStickTop = this.componentToStick ? this.componentToStick.getBoundingClientRect().top : null;
+
+        if(this.stickyHeaderFlag === "true"){
+            this.header.classList.add('cmp-experiencefragment__header--sticky');
+        }
+    }
+
+    checkSubheaderContainer(){
         const aemGrid = document.querySelector(".aem-Grid");
         this.subheaderList = aemGrid.querySelectorAll(".subheader");
         this.subheader = this.subheaderList[0];
-        this.container = this.subheader ? this.subheader.previousElementSibling : null;
 
+        if(!this.subheader.previousElementSibling){
+            if(!this.subheader.closest(".experiencefragment")){
+                this.container = this.subheader.closest(".container") ? this.subheader.closest(".container").previousElementSibling : null;
+            }
+            else{
+                this.container = this.subheader.closest(".experiencefragment") ? this.subheader.closest(".experiencefragment").previousElementSibling : null;
+            }
+        }
+        else{
+            this.container = this.subheader ? this.subheader.previousElementSibling : null;
+        }
+    }
+
+    checkSubheaderTransparency(){
         if(this.header && this.subheader && this.container){
-            this.subheaderNav = this.subheader.querySelector('.cmp-sub-header--sub-nav');
+            this.subheaderNav = this.subheader.querySelector('.cmp-tabs');
             this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
-            this.isSubheaderSticky = false;
+            this.isComponentStuck = false;
 
             if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
                 this.isContainer = true;
-                this.checkHeaderImage();
-                this.checkSubheaderImage();  
+                if(this.stickyHeaderFlag === "true"){ 
+                    this.checkHeaderImage();
+                } 
+                this.checkSubheaderImage();
             }
         }
     }
@@ -86,25 +121,36 @@ export default class Header {
     }
 
     handleStickyHeader() {
-        if(this.header && this.isContainer && this.subheader){
+        if(this.header && this.isContainer && this.subheader && this.stickyHeaderFlag === "true"){
             this.checkHeaderImage();
+        }
+        if(this.stickyHeaderFlag === "true" && this.componentToStick){
             this.checkHeaderSubheader();
         }
     }
 
     checkHeaderSubheader(){
-        if(this.header.getBoundingClientRect().bottom >= this.subheaderNav.getBoundingClientRect().top){
-            if(this.isSubheaderSticky && window.pageYOffset <= this.container.clientHeight - this.subheaderNav.clientHeight - this.header.clientHeight){
-                this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
-                this.subheaderNav.classList.remove('cmp-experiencefragment__subheader--sticky');
-                this.isSubheaderSticky = false;
+        if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
+            if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight) - this.subheaderNav.clientHeight){
+                if(this.subheaderNav.id === this.componentToStick.id){
+                    this.componentToStick.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
+                }
+                this.componentToStick.classList.remove('sticky');
+                this.isComponentStuck = false;
             }
             else{
-                this.subheaderNav.style.width = this.container.clientWidth + "px";
-                this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
-                this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky');
-                this.subheaderNav.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
-                this.isSubheaderSticky = true;
+                if(this.isSubheaderTransparency){
+                    this.componentToStick.style.top = this.header.clientHeight + this.subheaderNav.clientHeight+ "px"; 
+                }
+                else{
+                    this.componentToStick.style.top = this.header.clientHeight + "px";
+                }
+                this.componentToStick.style.width = this.container.clientWidth + "px";
+                this.componentToStick.classList.add('sticky');
+                if(this.subheaderNav.id === this.componentToStick.id){
+                    this.componentToStick.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
+                }
+                this.isComponentStuck = true;
             }
         }
     }
@@ -112,14 +158,22 @@ export default class Header {
     checkHeaderImage(){
         if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
             this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
+            this.header.style.backgroundColor = this.authorColor;
         }
-        else{
+        else {
+            var rgb = this.authorColor.replace(/^rgba?\(|\s+|\)$/g,'').split(',');
+            this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
             this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
         }
     }
 
     checkSubheaderImage(){
         if(this.subheaderNav.getBoundingClientRect().top + parseInt(this.subheaderNav.style.marginTop,10) <= this.container.getBoundingClientRect().bottom){
+            if(this.subheaderNav && this.componentToStick){
+                if(this.subheaderNav.id === this.componentToStick.id){
+                    this.isSubheaderTransparency = true;
+                }
+            }
             this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
         }
     }

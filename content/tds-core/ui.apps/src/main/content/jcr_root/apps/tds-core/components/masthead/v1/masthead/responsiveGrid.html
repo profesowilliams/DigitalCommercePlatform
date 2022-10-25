@@ -13,9 +13,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<template data-sly-template.responsiveGrid="${ @ container}">
+  <template data-sly-template.responsiveGrid="${ @ container}">
   <div id="${container.id}"
        class="cmp-container"
+       data-sticky-headerFlag="${properties.stickyHeaderFlag}"
+       data-sticky-componentId="${properties.stickyComponentId}"
        style="${container.backgroundStyle @ context='styleString'}${'height: {0}px' @ format=properties.containerHeight, context='styleString'}">
     <sly data-sly-resource="${resource @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
     <div class="mobile-bottom-section">

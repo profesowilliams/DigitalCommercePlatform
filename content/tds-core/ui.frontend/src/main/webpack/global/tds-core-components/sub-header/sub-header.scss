@@ -262,16 +262,6 @@
       }
     }
 
-    &.cmp-experiencefragment__subheader--sticky {
-      position: fixed;
-      z-index: 9998;
-      opacity: 1;
-    }
-
-    &.cmp-experiencefragment__subheader--sticky--opaque {
-      opacity: 0.85;
-    }
-
     &__title {
       font-weight: bold;
       color: get-color(brand-white);
@@ -482,5 +472,18 @@
       }
     }
   }
+  }
+}
+
+.subheader{
+  >.cmp-tabs{
+    &.cmp-experiencefragment__subheader--sticky {
+      position: fixed;
+      z-index: 9998;
+      opacity: 1;
+    }
+    &.cmp-experiencefragment__subheader--sticky--opaque {
+      opacity: 0.85;
+    }
   }
 }
