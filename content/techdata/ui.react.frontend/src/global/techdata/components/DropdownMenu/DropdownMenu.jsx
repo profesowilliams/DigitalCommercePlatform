@@ -32,6 +32,16 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const headerContainerEle = document.querySelector('#cmp-techdata-header');
+    if (showMenu) {
+        headerContainerEle.classList.add('signin-menu-active');
+    document
+    } else {
+        headerContainerEle.classList.remove('signin-menu-active');
+    }
+  }, [showMenu]);
+
   useOutsideClick(refContainer, () => {
     if (flagDropdown) {
       setIsSelected(false);
@@ -203,10 +213,10 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
         className={`cmp-sign-in-button clicked ${userId ? "active" : ""}`}
         ref={(o) => (refLogIn.current = o)}
         onClick={(e) => {
-          if ( e.type === 'click' && !showMenu) {
-            setIsSelected(e.type === 'click' && !showMenu);
+          if ( e.type === 'click') {
+            setIsSelected(e.type === 'click');
             setShowMenu(!showMenu);
-            setFlagDropdown(true)
+            setFlagDropdown(!showMenu)
           }
         }}
         

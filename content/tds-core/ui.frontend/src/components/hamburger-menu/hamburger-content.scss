@@ -237,7 +237,7 @@
             }
 
             .header-active .headerutility .languagenavigation {
-                display: none;
+                display: none !important;
             }
             &.cmp-container .header-active .megamenu .cmp-megamenu__title {
                 display: none !important;
@@ -283,8 +283,22 @@
                 padding: 5px 5px;
             }
 
-            .signin svg g {
-                stroke: white;
+            .signin svg g,
+            .signin svg path,
+            .minicart svg  g,
+            .minicart svg path {
+                fill: white;
+            }
+
+            .minicart .minicart {
+                padding: 0;
+            }
+
+            .cmp-sign-in-button.active,
+            .cmp-sign-in-button:active,
+            .cmp-sign-in-button:hover {
+                border: none;
+                box-shadow: none;
             }
 
             .headerutility .signin span {

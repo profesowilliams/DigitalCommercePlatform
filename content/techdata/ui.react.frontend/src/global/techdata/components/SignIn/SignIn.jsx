@@ -222,7 +222,11 @@ const SignIn = (props) => {
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
     routeChange(handleLoginResponse);
-    isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+    const isLoggedIn = isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+
+    if (isLoggedIn == null) {
+        document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
+    }
 
     if(isExtraReloadDisabled()){
       let sessionId = localStorage.getItem("sessionId");
