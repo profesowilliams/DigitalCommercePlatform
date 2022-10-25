@@ -28,10 +28,6 @@
       padding: rem(21px) rem(26px) rem(21px) rem(0px);
       box-sizing: border-box;
 
-      div {
-        width: 94%;
-      }
-
       @include mobile {
         width: rem(132px) !important;
         padding: rem(8px) rem(8px) rem(8px) rem(0px);
