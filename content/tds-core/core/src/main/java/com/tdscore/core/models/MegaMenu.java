@@ -47,7 +47,7 @@ public class MegaMenu {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
                     if (currentPage != null && currentPage.getTemplate() != null && 
                         currentPage.getTemplate().getName().equals("tds-landing-page")) {
-                        SubNavLinks newLink = new SubNavLinks(
+                        link.addSubNavLink(new SubNavLinks(
                             new StringBuilder()
                                 .append("View all ")
                                 .append(link.getPlatformName())
@@ -56,8 +56,9 @@ public class MegaMenu {
                             link.getPlatformName(), 
                             new JsonArray(), 
                             link.getLinkUrl(), 
-                            "0" );                        
-                        link.addSubNavLink(newLink);
+                            "0",
+                            "true")
+                        );
                     }
                 }
 

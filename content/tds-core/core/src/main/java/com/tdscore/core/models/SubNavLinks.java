@@ -47,6 +47,8 @@ public class SubNavLinks {
 
     private List<SubNavLinks> subNavLinkslist =  new ArrayList<>();
 
+    private String isViewAll = "false";
+
     SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink){
         this.navPage = page;
         this.pageTitle = page.getTitle();
@@ -120,6 +122,9 @@ public class SubNavLinks {
         }
     }
 
+    public String getIsViewAll() {
+        return this.isViewAll;
+    }
 
     public String getRootParentTitle() {
         return this.rootParentTitle;
@@ -157,6 +162,15 @@ public class SubNavLinks {
             SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle, this.rootParentLink);
             subNavLinkslist.add(childNav);
         }
+    }
+
+    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount, String isViewAll ){
+        this.pageTitle = name;
+        this.pagePath = pageUrl;
+        this.rootParentTitle = rootParentTitle;
+        this.docCount = docCount;
+        this.isViewAll = isViewAll;
+        childJsonIterator(children, externalUrl);
     }
 
     SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount ){

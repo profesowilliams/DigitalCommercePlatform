@@ -20,14 +20,14 @@
               <ul data-sly-list.slnk="${nav.secondaryMenuItems}">
                 <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}" 
                     class="cmp-has-submenu" 
-                    data-sly-use.linkHelper="${'linkHelper.js' @ linkTitle=slnk.pageTitle}" 
-                    data-view-all="${linkHelper.isViewAll @ context='text'}">
+                    data-view-all="${slnk.isViewAll}">
                   
                   <!-- Level 3 -->
 
                     <ul class="" data-sly-list.sec="${slnk.subNavLinkslist}">
                       <li class="cmp-has-submenu" 
-                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}">
+                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}"
+                        data-view-all="${sec.isViewAll}">
 
                         <!-- Level 4 -->
                           <ul class="" data-sly-list.subSec="${sec.subNavLinkslist}">

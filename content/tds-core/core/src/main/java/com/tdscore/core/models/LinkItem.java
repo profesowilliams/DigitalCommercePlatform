@@ -124,7 +124,8 @@ public class LinkItem {
                                 link.getPageTitle(), 
                                 new JsonArray(), 
                                 link.getPagePath(), 
-                                "0" )
+                                "0",
+                                "true")
                             );
                         }
                     }
