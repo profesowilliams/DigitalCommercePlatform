@@ -1603,12 +1603,15 @@ $tertiary-border-size: 0px;
 
   &:hover {
     text-decoration: underline;
-    opacity: 80%;
+    opacity: 0.8;
     color: inherit;
+    .cmp-button {
+      text-decoration: underline !important;
+    }
   }
 
   &:active {
-    opacity: 100%;
+    opacity: 1;
     background: none;
     color: inherit;
     text-decoration: underline;
