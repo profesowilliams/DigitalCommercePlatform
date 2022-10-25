@@ -26,6 +26,10 @@
             margin: 0 1.25rem;
         }
     }
+
+    &--mobile-links {
+        display: none;
+    }
 }
 
 /* moving container related style system class here to avoid confusions.

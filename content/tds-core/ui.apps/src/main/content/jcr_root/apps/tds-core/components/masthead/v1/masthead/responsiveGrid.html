@@ -22,7 +22,7 @@
     <sly data-sly-resource="${resource @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>
     <div class="mobile-bottom-section">
       <sly data-sly-use.mobileLinks="com.tdscore.core.models.LinkList">
-        <div data-sly-list.item="${mobileLinks.links}">
+        <div data-sly-list.item="${mobileLinks.links}" class="cmp-masthead--mobile-links">
           <a href=" ${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank':''}">${item.platformName}</a>
         </div>
          </sly>

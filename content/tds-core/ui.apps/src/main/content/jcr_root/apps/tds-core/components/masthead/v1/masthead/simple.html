@@ -30,7 +30,7 @@
     <sly data-sly-test="${!isAllowedApplicable && !wcmmode.disabled}"
          data-sly-resource="${resource.path @ resourceType='core/wcm/components/container/v1/container/new', appendPath='/*', decorationTagName='div', cssClassName='new section'}" />
     <sly data-sly-use.mobileLinks="com.tdscore.core.models.LinkList">
-      <div data-sly-list.item="${mobileLinks.links}" class="hidden">
+      <div data-sly-list.item="${mobileLinks.links}" class="cmp-masthead--mobile-links">
         <a href=" ${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank':''}">${item.platformName}</a>
       </div>
     </sly>
