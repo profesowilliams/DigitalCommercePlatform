@@ -40,4 +40,8 @@ export const CustomTextField = styled(TextField)({
     position: 'relative',
     right: '4px',
   },
+  "& .MuiFormHelperText-root": {
+    fontFamily: 'Arial',
+    fontSize: '12px',
+  },
 });
