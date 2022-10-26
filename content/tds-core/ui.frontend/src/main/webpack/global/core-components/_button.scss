@@ -1,5 +1,6 @@
 $teal-color: map-get($color-palette, 'teal');
 $aqua: map-get($color-palette, 'aqua');
+$chartreuse: map-get($color-palette, "chartreuse") !important;
 $deep-teal: get-color(deep-teal);
 $cool-gray-8: get-color(cool-gray-8);
 $cool-gray-10: get-color(cool-gray-10);
@@ -566,6 +567,12 @@ $tertiary-border-size: 0px;
   &.btn-aqua.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode{
     @include type-button-handler($aqua, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
+// ////////////////////////
+&.btn-chartreuse {
+    .cmp-button {
+        background-color: $chartreuse;
+    }
+}
 
 ////////////////////////
 	&.btn-cool-gray-8 {
@@ -1178,414 +1185,6 @@ $tertiary-border-size: 0px;
     @include type-button-handler($legacy-gray, 'null', $secondary-background-color, $primary-border-size, #FFFFFFE5, $secondary-fill-opacity, #FFFFFFFF, $secondary-fill-hover-opacity, $secondary-fill-active-color-opacity, $secondary-fill-active-opacity, $secondary-fill-background-disabled-color);
 	}
 
-  /// Tertiary 
-  
-  
-  &.btn-teal.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler(#ffffff,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-dark-opacity,
-      #ffffffff,
-      $secondary-dark-hover-opacity,
-      $secondary-dark-hover-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-
-  &.btn-teal.cmp-tds-button-tertiary {
-    @include type-button-handler($teal-color,
-      $secondary-background-color,
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      $secondary-hover-color-opacity,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-deep-teal.cmp-tds-button-tertiary {
-    @include type-button-handler($deep-teal,
-      $secondary-background-color,
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-deep-teal.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($deep-teal,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-aqua.cmp-tds-button-tertiary {
-    @include type-button-handler($aqua,
-      $secondary-background-color,
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      $aqua,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-aqua.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($aqua,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      $aqua,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-aqua.cmp-tds-button-secondary-fill.cmp-tds-button-dark-mode {
-    @include type-button-handler($aqua,
-      'null',
-      $secondary-background-color,
-      $primary-border-size,
-      #ffffffe5,
-      $secondary-fill-opacity,
-      #ffffffff,
-      $secondary-fill-hover-opacity,
-      $secondary-fill-active-color-opacity,
-      $secondary-fill-active-opacity,
-      $secondary-fill-background-disabled-color);
-  }
-
-  &.btn-cool-gray-8.cmp-tds-button-tertiary {
-    @include type-button-handler($cool-gray-8,
-      $secondary-background-color,
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-cool-gray-8.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($cool-gray-8,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-cool-gray-10.cmp-tds-button-tertiary {
-    @include type-button-handler($cool-gray-10,
-      $secondary-background-color,
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-cool-gray-10.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($cool-gray-10,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-green.cmp-tds-button-tertiary {
-    @include type-button-handler($green,
-      $secondary-background-color,
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-green.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($green,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-black.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($black,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-white.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($white,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-steel-blue.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($steel-blue,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-navy.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($navy,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-copper.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($copper,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-stone.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($stone,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-cool-gray-1.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($cool-gray-1,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-amber.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($amber,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-forest.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($forest,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-charcoal.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($charcoal,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-cool-gray-9.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($cool-gray-9,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-cobalt.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($cobalt,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-  &.btn-neutral-gray-2.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($neutral-gray-2,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-dark-blue.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($dark-blue,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-sky-blue.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($sky-blue,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
-
-  &.btn-legacy-gray.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
-    @include type-button-handler($legacy-gray,
-      'null',
-      $secondary-background-color,
-      $tertiary-border-size, 
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color);
-  }
 }
 
 
@@ -1741,4 +1340,46 @@ $tertiary-border-size: 0px;
           }
       }
   }
+}
+
+.cmp-tds-tertiary-button {
+  @extend .cmp-background-priority-0;
+  position: relative;display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: rem(12px) rem(20px);
+  gap: rem(10px);
+  width: fit-content !important;
+  height: fit-content !important;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    opacity: 1;
+    z-index: -1;
+  }
+  &:hover {
+    &:before {
+      opacity: 0.8;
+    }
+  }
+  &:active {
+    &:before {
+      opacity: 0.6;
+    }
+  }
+}
+
+
+.cmp-background-priority-0 {
+  z-index: 0;
+}
+
+.cmp-icon-reversed {
+  flex-direction: row-reverse
 }
