@@ -22,7 +22,7 @@ export const createProducedSetter = (setStateFn) => {
  * Util methods to handle input error validations in
  * enduser and reseller edit
  */
-const { REQUIRED_FIELD, REQUIRED_MAX_LENGTH_FIELD, INVALID_EMAIL_TEXT } = endUserConstants;
+const { REQUIRED_FIELD, REQUIRED_MAX_LENGTH_FIELD, MAX_LENGTH_FIELD, INVALID_EMAIL_TEXT } = endUserConstants;
 const showErrorField = (obj) => {
   return { error: obj?.isValid === false && obj?.text?.length === '' };
 };
@@ -39,6 +39,12 @@ export const handleEmailHelperText = (text, isEmailValid) => {
   }
 
   return REQUIRED_FIELD;
+};
+
+export const getOptionalFieldMessage = (obj) => {
+  return obj.allowedLength
+    ? MAX_LENGTH_FIELD.replace("{max-length}", obj.allowedLength)
+    : null;
 };
 
 export const getFieldMessage = (obj, useRequiredMaxLengthMessage) => {

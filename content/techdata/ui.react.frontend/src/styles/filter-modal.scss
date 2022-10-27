@@ -160,6 +160,7 @@ $brand-charcoal: #262626;
 .filter-option {
   &__checkbox {
     accent-color: black;
+    cursor: pointer;
     margin-right: 6px;
     vertical-align: middle;
   }
@@ -174,9 +175,6 @@ $brand-charcoal: #262626;
   }
   &__label.td-synnex {
     color: $brand-green--dark;
-  }
-  &__label:hover {
-    font-weight: bold;
   }
   &__options {
     all: initial;

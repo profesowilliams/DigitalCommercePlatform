@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
 import { endUserLables } from './utils';
-import { handleValidation, populateFieldConfigsFromService, getFieldMessage, handleEmailHelperText } from '../Common/utils';
+import { handleValidation, populateFieldConfigsFromService, getFieldMessage, getOptionalFieldMessage, handleEmailHelperText } from '../Common/utils';
 
 export default function EndUserEdit({
   endUserDetails,
@@ -88,8 +88,8 @@ export default function EndUserEdit({
         label={endUserAddress1}
         variant="standard"
         onChange={(e) => handleAddressChange(e)}
-        {...handleValidation(line1)}
-        helperText={getFieldMessage(line1)}
+        {...handleValidation(line1, true)}
+        helperText={getFieldMessage(line1, true)}
         {...populateFieldConfigsFromService(line1)}
       />}
       {line2.canEdit && <CustomTextField
@@ -97,7 +97,7 @@ export default function EndUserEdit({
         label={endUserAddress2}
         variant="standard"
         onChange={(e) => handleAddressTwoChange(e)}
-        helperText={getFieldMessage(line2)}
+        helperText={getOptionalFieldMessage(line2)}
         {...populateFieldConfigsFromService(line2)}
       />}
       {city.canEdit && <CustomTextField
