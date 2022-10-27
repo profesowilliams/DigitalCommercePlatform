@@ -481,7 +481,7 @@ export const getLocaleFormattedDate = (rawDate) => {
 };
 
 export const removeDashboardSeparator = (originComponentDomStr = '') => {
-  const hideSeparatorsList = separatorList => separatorList && Object.prototype.toString.call(separatorList) === '[object HTMLCollection]' && separatorList.length && [...separatorList].forEach(div => div.style.display = "none");
+  const hideSeparatorsList = separatorList => separatorList && Object.prototype.toString.call(separatorList) === '[object HTMLCollection]' && separatorList.length && [...separatorList].forEach(div => div.firstChild.nextElementSibling.id !== 'header-separator' ? div.style.display = "none" :  div.style.display = "inline");
   const hiddenSeparatorList = document.getElementsByClassName('separator dp-separator--hidden');
   hideSeparatorsList(hiddenSeparatorList)
   const commonSeparatorList =  document.getElementsByClassName("cmp-separator");
