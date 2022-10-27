@@ -60,9 +60,9 @@ $brand-charcoal: #262626;
   }
   &__close {
     position: absolute;
-    top: 0;
+    top: 15px;
     z-index: 1;
-    right: 28rem;
+    left: -21px;
     background-color: transparent;
     &:before {
       content: "\f057";
@@ -86,8 +86,8 @@ $brand-charcoal: #262626;
   }
   &__close.td-synnex{
     top: 15px;
-    left: -18px;
-    position: relative;
+    left: -18px;    
+    position: absolute;
     &:before {
      color: $brand-green;
     }
@@ -95,7 +95,7 @@ $brand-charcoal: #262626;
   &__header {
     display: flex;
     justify-content: space-between;
-    padding: 15px 25px;
+    padding: 35px 25px;
     padding-bottom: 15px;
     border-bottom: 2px solid #000c21;
     h3 {
