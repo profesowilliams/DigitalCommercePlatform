@@ -28,14 +28,13 @@ function Toaster({
 
   const calculateSubheaderPosition = useCallback(() => {
     const subHeaderElement = document.querySelector('.subheader > div > div');
-    if (!subHeaderElement) return "no Hay Subheader";
+    if (!subHeaderElement) return "";
     const { top, height } = subHeaderElement.getBoundingClientRect();
     const gap = 7;  
     if (top < 0) {
       const offSetHeight = subHeaderElement.offsetHeight;
       const scrollY = window.scrollY;
       const offsetTop = scrollY + top;
-      console.log({offSetHeight,scrollY,top,offsetTop});
       return `${offSetHeight + offsetTop + gap}px`;
     };    
     const topCalculation = top + gap + height;
