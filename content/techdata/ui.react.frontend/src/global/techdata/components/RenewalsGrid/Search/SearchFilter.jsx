@@ -224,7 +224,7 @@ function _SearchFilter(
     }
   };
 
-  const renderWithPermissions = ({option}) => {
+  const RenderWithPermissions = ({option}) => {
     const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount();
     if (hasNotPrivilege) return <></>;
     return (
@@ -288,7 +288,7 @@ function _SearchFilter(
                 className="cmp-search-options"
                 style={!isTDSynnex ? { padding: "5px 10px" } : {}}
               >
-                <div className="cmp-search-options__reset">
+                <div className="cmp-search-options__reset" style={{pointerEvents:'none'}}>
                   <label>
                     {callbackExecuted && !filterCounter ? (
                       <p>Sorry, no rows to display</p>
@@ -336,7 +336,7 @@ function _SearchFilter(
             <div className="cmp-search-select-container__filler"></div> 
             <If condition={true}>
               <div className={computeClassName("cmp-search-options")}>
-                {options.map((option) => <renderWithPermissions option={option} key={option.searchKey} />)}
+                {options.map((option) => <RenderWithPermissions option={option} key={option.searchKey} />)}
               </div>
             </If>
           </div>
