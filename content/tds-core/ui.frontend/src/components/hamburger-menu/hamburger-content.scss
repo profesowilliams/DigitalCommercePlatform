@@ -7,7 +7,8 @@
         }
     }
     .aem-Grid > .languagenavigation,
-    .masthead .masthead {
+    .masthead .masthead,
+    .button .headerutility{
         display: none;
     }
 
@@ -91,11 +92,44 @@
                 background-color: #005758;
                 width: 100vw;
                 flex-direction: column;
-                justify-content: unset !important;
-                align-items: unset !important;
+                justify-content: unset ;
+                align-items: unset ;
                 max-height: 100vh;
                 overflow-y: auto;
                 color: white;
+            }
+
+            .header-active .megamenu #navigation {
+                display: block ;
+                width: 100%;
+                text-align: left;
+                padding: 0 1pc;
+
+                & > ul {
+                    display: block;
+                    height: auto;
+                    border-top: 1px solid white;
+                    padding: 10px 0;
+                    li {
+                        text-align: left;
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0.75rem 5px;
+                         &:after {
+                            content: '\f054';
+                            font-family: 'Font Awesome 5 Free';
+                            font-size: rem(16px);
+                            font-weight: 900;
+                            color: get-color(border-lighter-gray);
+                        }
+                        a {
+                            margin: 0;
+                            display: block;
+                            width: auto;
+                            padding:0 10px;
+                        }
+                    }
+                }
             }
 
             .header-active.cmp-container .cmp-button__text {
@@ -110,8 +144,24 @@
             .header-active.cmp-container .aem-Grid {
                 display: flex;
                 flex-direction: column;
-                justify-content: unset !important;
-                align-items: unset !important;
+                justify-content: unset ;
+                align-items: unset ;
+            }
+
+            .headerutility .headerutility.signin {
+                order: 0;
+               }
+
+            .headerutility .headerutility.hub {
+                order: 1;
+            }
+
+            .headerutility .headerutility.button {
+                order: 3;
+            }
+
+            .headerutility .headerutility.minicart {
+                order: 3;
             }
 
             .cmp-td-hamburgerMenu {
@@ -132,8 +182,18 @@
                 margin-bottom: 10px;
             }
 
-            .header-active .cmp-td-hamburgerMenu {
-                position: absolute !important;
+           .header-active.cmp-container .masthead .cmp-container {
+                display: flex;
+                flex-direction: column-reverse;
+            }
+
+            .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
+                margin: 0;
+                min-height: auto;
+            }
+
+            .masthead  .header-active .cmp-td-hamburgerMenu {
+                position: absolute ;
                 right: 38px;
                 top: 15px;
                 color: #fff;
@@ -142,7 +202,7 @@
             }
 
             .cmp-container {
-                height: auto !important;
+                height: auto !important; // Need to override the inline style getting appended from JS
             }
 
             .aem-Grid {
@@ -155,13 +215,17 @@
             .header-active.cmp-container .masthead {
                 order: 4;
                 display: block;
-                margin: 0 1pc!important;
+                margin: 0 1pc;
                 width: calc(100% - 32px);
-                border-top: 1px solid #d9d8d7!important;
-                padding: 24px 0 !important;
+                border-top: 1px solid #d9d8d7;
+                padding: 24px 0;
                 position: fixed;
                 bottom: 0;
-                right: 0 !important;
+                right: 0;
+            }
+
+            .header-active.cmp-container .mobile-bottom-section .cmp-masthead--mobile-links {
+                display: block;
             }
 
             .header-active.cmp-container .mobile-bottom-section a {
@@ -175,7 +239,7 @@
             }
 
             .aem-Grid > .headerutility {
-                display: none !Important;
+                display: none !important; // Need to override the other important style given earlier
             }
 
             .header-active .megamenu {
@@ -185,7 +249,7 @@
                 height: auto;
                 top: auto;
                 left: auto;
-                float: none !important;
+                float: none ;
                 order: 2;
             }
 
@@ -193,27 +257,29 @@
                 position: relative;
                 width: 100%;
                 max-width: none;
-                border: 0 !important;
+                border: 0 ;
                 background-color: transparent;
                 padding: 0;
             }
 
             .header-active .cmp-megamenu {
-                padding: 0 16px !important;
-                border: 0 !important;
+                padding: 0 16px ;
+                border: 0 ;
                 background: transparent;
                 order: 3;
             }
 
             .header-active .cmp-megamenu__body {
-                border-top: 1px solid #D9D8D7 !important;
+                border-top: 1px solid #D9D8D7 ;
             }
 
             .header-active .aem-Grid > .headerutility {
-                float: none !important;
-                width: 100% !important;
-                display: block !important;
+                float: none;
+                width: 100%;
+                display: flex !important; // Need to override the important gieven earlier at other place
                 order: 1;
+                flex-direction: column;
+                align-items: flex-start;
                 padding: 24px 16px !important;
                 border-top: 1px solid #D9D9D9 !important;
             }
@@ -232,19 +298,19 @@
             }
 
             .header-active .cmp-td-logo--header {
-                clear: both !important;
-                float: none !important;
+                clear: both ;
+                float: none ;
             }
 
             .header-active .headerutility .languagenavigation {
-                display: none !important;
+                display: none ;
             }
             &.cmp-container .header-active .megamenu .cmp-megamenu__title {
-                display: none !important;
+                display: none ;
             }
 
             &.cmp-container>div {
-                width: 100vw !important;
+                width: 100vw ;
             }
 
             .header-active .headerutility .hub button,
@@ -252,7 +318,11 @@
             .header-active .headerutility .minicart button,
             .header-active .headerutility .signin button {
                 color: white;
-                font-size: 16px !important;
+                font-size: 16px ;
+            }
+
+            .header-active .headerutility .minicart .cmp-cart__active .cmp-cart__number span {
+                color: black;
             }
 
             .dp-figure {
@@ -271,8 +341,8 @@
                 color: white;
             }
             .search {
-                margin: unset !Important;
-                margin-left: auto !important;
+                margin: unset ;
+                margin-left: auto ;
             }
 
             .hub svg g path {
@@ -302,7 +372,7 @@
             }
 
             .headerutility .signin span {
-                display: inline-block !important;
+                display: inline-block ;
             }
 
             &.cmp-container .cmp-td-hamburgerMenu:after,
@@ -346,6 +416,12 @@
             }
         }
     }
+}
+
+.aem-AuthorLayer-Edit #cmp-techdata-header .aem-Grid>.languagenavigation,
+.aem-AuthorLayer-Edit #cmp-techdata-header .button .headerutility,
+.aem-AuthorLayer-Edit #cmp-techdata-header .masthead .masthead {
+    display: block;
 }
 
 

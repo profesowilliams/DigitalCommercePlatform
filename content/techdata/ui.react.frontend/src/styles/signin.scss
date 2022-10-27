@@ -246,6 +246,14 @@
             &.loggedin.cmp-tds-site-header .cmp-sign-in--container .cmp-sign-in-signout {
                 display: block;
             }
+            &.cmp-tds-site-header .button.headerutility,
+            &.cmp-tds-site-header .button.headerutility .button {
+                display: block;
+            }
+            &.loggedin.cmp-tds-site-header .button.headerutility,
+            &.loggedin.cmp-tds-site-header .button.headerutility .button{
+                display: none;
+            }
             .cmp-sign-in-list.selected.showMenu {
                background-color: #005758;
                z-index: 9999;

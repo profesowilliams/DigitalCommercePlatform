@@ -209,6 +209,7 @@ const SignIn = (props) => {
   }
 
   const handleLoginResponse = () => {
+    document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
     changeLoggedInState(true);
 
     triggerEvent('user:loggedIn');
@@ -222,11 +223,7 @@ const SignIn = (props) => {
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
     routeChange(handleLoginResponse);
-    const isLoggedIn = isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
-
-    if (isLoggedIn == null) {
-        document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
-    }
+     isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
 
     if(isExtraReloadDisabled()){
       let sessionId = localStorage.getItem("sessionId");
