@@ -44,6 +44,17 @@
                                             multiple="{Boolean}true"
                                             rootPath="/content/cq:tags">
                                     </tagCategories>
+                                    <securityCodeEnabled
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            fieldLabel="Security Code Enabled"
+                                            value="true"
+                                            name="./securityCodeEnabled"/>
+                                    <securityCode
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldLabel="Security Code"
+                                            name="./securityCode"/>
                                     <errorPages
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
