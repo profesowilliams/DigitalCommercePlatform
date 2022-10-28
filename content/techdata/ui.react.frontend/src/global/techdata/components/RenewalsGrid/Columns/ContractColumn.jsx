@@ -33,6 +33,14 @@ function _ContractColumn({ data, eventProps }) {
     }
   }, []);
 
+  useEffect(() => {
+    const recordsCount = eventProps.api?.getRenderedNodes()?.map(e => e.data?.source.id)?.filter(e => !!e)?.length;
+    if (recordsCount === 1){
+      setToggled(!isToggled);
+      toggleExpandedRow();
+    }
+  },[])
+
   /**
    * Gets the initial toggle value if it exist in local storage
    * and set the initial toggle value to respective row.
