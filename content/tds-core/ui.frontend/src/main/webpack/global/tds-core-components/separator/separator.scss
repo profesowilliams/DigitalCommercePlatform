@@ -41,6 +41,12 @@
     }
   }
 
+  &--hidden-header {
+    .cmp-separator__horizontal-rule {
+      visibility: hidden;
+    }
+  }
+
   &--teal {
     .cmp-separator__horizontal-rule {
       color: map-get($color-palette, "teal") !important;
