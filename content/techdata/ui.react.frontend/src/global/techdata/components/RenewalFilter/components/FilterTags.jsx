@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import capitalizeFirstLetter, {
@@ -40,6 +40,12 @@ function FilterTags() {
   const handleShowMore = () => {
     setShowMore(!showMore);
   };
+
+  useEffect(() => {
+    if (filterList && filterList.length > 4){
+      setShowMore(true)
+    }
+  },[filterList])
 
   const isOneChecked = (filters, filter) =>
     filters[filter.parentId].childIds.some((id) => {

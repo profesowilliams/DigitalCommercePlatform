@@ -3608,6 +3608,8 @@ app.post("/ui-renewal/v1/Search", (req, res) => {
   // {ProgramName: [],endUserType: []}
   const payload = req.body;
 
+  return res.status(200).json(response);
+
   const formatValue = (name) => name.replace(/\s/g, "").toLowerCase();
   let responseItemList = response.content.items;
   if (payload?.ProgramName)
@@ -3648,7 +3650,7 @@ app.get("/ui-renewal/v1/Search", function (req, res) {
 
   setTimeout(() => {
     res.status(200).json(response);
-  }, 5000);
+  }, 20);
   return;
   // const response = [];
   const query = req.query;

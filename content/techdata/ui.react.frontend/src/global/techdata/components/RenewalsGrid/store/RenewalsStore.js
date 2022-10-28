@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   appliedFilterCount: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "count", 0),
   dateOptionsList: DATE_DEFAULT_OPTIONS.map(item => ({ ...item, checked: item.field === getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected })),
   dateSelected: getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "dateSelected", null),
-  datePickerState: null,
+  datePickerState: getLocalSelectedDateRange(FILTER_LOCAL_STORAGE_KEY, null),
   finalResults: [],
   pagination: {
     totalCounter: 0,
@@ -73,6 +73,15 @@ function getFromQueryString(param) {
 function getLocalValueOrDefault(key, property, otherwise) {
   if (hasLocalStorageData(key) && isFromRenewalDetailsPage()) {
     return getLocalStorageData(key)[property];
+  } else {
+    return otherwise;
+  }
+}
+
+function getLocalSelectedDateRange(key, otherwise){
+  if (hasLocalStorageData(key) && isFromRenewalDetailsPage()) {
+    const {customStartDate = '', customEndDate = ''} = getLocalStorageData(key);
+    return customStartDate && customEndDate ? [customStartDate, customEndDate] : otherwise;
   } else {
     return otherwise;
   }
