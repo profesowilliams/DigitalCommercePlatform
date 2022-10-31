@@ -103,7 +103,7 @@
                 display: block ;
                 width: 100%;
                 text-align: left;
-                padding: 0 1pc;
+                padding: 0 2pc;
 
                 & > ul {
                     display: block;
@@ -176,6 +176,7 @@
 
             .masthead .header-active .masthead .aem-Grid>.languagenavigation {
                 display: block;
+                padding: 0 15px;
             }
 
             .masthead .header-active .masthead .aem-Grid>.languagenavigation .cmp-dropbtn {
@@ -215,8 +216,8 @@
             .header-active.cmp-container .masthead {
                 order: 4;
                 display: block;
-                margin: 0 1pc;
-                width: calc(100% - 32px);
+                margin: 0 2pc;
+                width: calc(100% - 64px);
                 border-top: 1px solid #d9d8d7;
                 padding: 24px 0;
                 position: fixed;
@@ -226,6 +227,7 @@
 
             .header-active.cmp-container .mobile-bottom-section .cmp-masthead--mobile-links {
                 display: block;
+                padding: 0 15px;
             }
 
             .header-active.cmp-container .mobile-bottom-section a {
@@ -280,7 +282,7 @@
                 order: 1;
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 24px 16px !important;
+                padding: 24px 32px !important;
                 border-top: 1px solid #D9D9D9 !important;
             }
 
@@ -326,7 +328,7 @@
             }
 
             .dp-figure {
-                padding-left: 16px;
+                padding-left: 2px;
             }
 
             &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--title {
@@ -337,7 +339,7 @@
                 color: white;
             }
 
-            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-navigation__group li a {
+            &.cmp-container .header-active .megamenu #navigation li a {
                 color: white;
             }
             .search {
