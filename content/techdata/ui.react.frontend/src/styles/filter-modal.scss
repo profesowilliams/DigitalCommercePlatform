@@ -343,7 +343,6 @@ div.filter-accordion {
       list-style: none;
       padding-left: 21px;
       margin-bottom: .45rem;
-      cursor: pointer;
       label {
         color: #555555;
         font-size: 14px;
@@ -352,14 +351,12 @@ div.filter-accordion {
         cursor: pointer;
         user-select: none;  
       }
-      label:hover {
-        font-weight: bold;  
-      }
       input[type="radio"] {
         accent-color: black;
         margin-right: 6px;
         vertical-align: middle;
         margin-top: 0;
+        cursor: pointer;
       }
       input[type="radio"].td-synnex {
         accent-color: $brand-green;

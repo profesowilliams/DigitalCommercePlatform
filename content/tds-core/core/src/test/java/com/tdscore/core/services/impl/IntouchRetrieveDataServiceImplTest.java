@@ -50,7 +50,7 @@ class IntouchRetrieveDataServiceImplTest {
         PrivateAccessor.setField(underTest, "httpClientBuilderFactory", httpClientBuilderFactory);
     }
 
-    @Test
+    //@Test
     void fetchScriptsDataTest() throws IOException {
         IntouchRequest intouchRequest =
                 new IntouchRequest(1234567, API_URL, SITE, ACCEPT_LANGUAGE_EN_US);
