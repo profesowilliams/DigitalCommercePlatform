@@ -12,8 +12,9 @@ export default class Header {
         this.searchEl?.addEventListener('click', () => this.toggleSearch(this.searchEl));
         document.addEventListener('click', (event) => this.showSearchIconOnly(event, this.searchEl));
         window.addEventListener('scroll', () => this.handleStickyHeader());
-        // this.initSecondaryImage();
-
+        if (this.detectMobileView()) {
+            this.initSecondaryImage();
+        }
         this.header = document.getElementById('cmp-techdata-header');
         this.authorColor = this.header.style.backgroundColor;
 
@@ -82,8 +83,24 @@ export default class Header {
             this.subheaderNav.style.width = this.container.clientWidth + "px";
         }
     }
-// Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
-/*     initSecondaryImage() {
+
+    detectMobileView() {
+        /* Storing user's device details in a variable*/
+        const details = navigator.userAgent;
+        
+        /* Creating a regular expression
+        containing some mobile devices keywords
+        to search it in details string*/
+        const regexp = /android|iphone|kindle|ipad/i;
+        
+        /* Using test() method to search regexp in details
+        it returns boolean value*/
+        const isMobileDevice = regexp.test(details);
+        return isMobileDevice
+    }
+    
+    // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
+    initSecondaryImage() {
         const imgEl = document.querySelector('[data-mobile-logo]');
         if (imgEl) {
             const smallLogo = imgEl.dataset.mobileLogo;
@@ -91,11 +108,14 @@ export default class Header {
             img.classList.add('cmp-header--logo-small');
 
             const figure = document.querySelector('.dp-figure');
+
+            const firstImage = figure.getElementsByTagName('img')[0];
+            firstImage.style.display='none';
             if (!figure) return;
             insertAfter(img, figure);
             img.src = smallLogo;
         }
-    } */
+    }
 
     toggleSearch(el) {
         if (hasSomeParentTheClass(el, this.HEADER_MOBILE)) {
