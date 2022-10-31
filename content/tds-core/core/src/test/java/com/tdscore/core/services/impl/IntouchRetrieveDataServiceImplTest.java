@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -50,7 +52,7 @@ class IntouchRetrieveDataServiceImplTest {
         PrivateAccessor.setField(underTest, "httpClientBuilderFactory", httpClientBuilderFactory);
     }
 
-    //@Test
+    @Test
     void fetchScriptsDataTest() throws IOException {
         IntouchRequest intouchRequest =
                 new IntouchRequest(1234567, API_URL, SITE, ACCEPT_LANGUAGE_EN_US);
@@ -58,8 +60,7 @@ class IntouchRetrieveDataServiceImplTest {
                 CONNECTION_TIMEOUT_IN_MILLIS, SOCKET_TIMEOUT_IN_MILLIS)).thenReturn(httpClient);
         Mockito.lenient().when(httpClient.execute(any())).thenReturn(httpResponse);
         Mockito.lenient().when(httpResponse.getEntity()).thenReturn(httpEntity);
-        underTest.fetchScriptsData(intouchRequest);
-        verify(httpResponse, times(1)).getEntity();
+        assertNotNull(underTest.fetchScriptsData(intouchRequest));
 
     }
 
@@ -67,4 +68,6 @@ class IntouchRetrieveDataServiceImplTest {
     final static String SITE = "uk";
     final static String ACCEPT_LANGUAGE_EN_US = "en-us";
     final static String RESPONSE_JSON_STRING = "{\"name\":\"John\", \"age\":30, \"car\":null}";
+    private static final Logger LOGGER = LoggerFactory.getLogger(IntouchRetrieveDataServiceImplTest.class);
+
 }

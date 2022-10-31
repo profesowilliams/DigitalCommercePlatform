@@ -41,9 +41,11 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode rootNode = mapper.readTree(callAPI(httpClient, intouchRequest));
-                return rootNode.get("body").asText();
+                if(rootNode != null && rootNode.get("body") != null) {
+                    return rootNode.get("body").asText();
+                }
             } catch (Exception e) {
-                LOGGER.error("IOException occurred during intouch request call", e);
+                LOGGER.error("Exception occurred during intouch request call", e);
             }
         }
         return StringUtils.EMPTY;
@@ -57,9 +59,6 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
         if(httpClient != null) {
             CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
             return EntityUtils.toString(httpResponse.getEntity());
-//            String dataTemp =
-//                    "{\"body\":\"\\r\\n\\r\\n\\r\\n\\r\\n<link href=\\\"/InTouch/MVC/css/common?v=a239cLOmqMu_4NecJXWPzjKOz3qXkkGNXh5x72r-abY1\\\" rel=\\\"stylesheet\\\"/>\\r\\n\\r\\n<link href=\\\"/InTouch/MVC/css/app/product_search?v=QZBS7_tsN1L8FjY4Cf-Mm80CqYzFTp83HBCB48W7PMA1\\\" rel=\\\"stylesheet\\\"/>\\r\\n\\r\\n<link href=\\\"/InTouch/MVC/css/intouch-css?v=8FMcnhAvFMaXiq3JKIY0S4WRdwmKOb3ZqyQXuK1JYKk1\\\" rel=\\\"stylesheet\\\"/>\\r\\n\\r\\n\"}";
-//            return dataTemp;
         }
         return StringUtils.EMPTY;
     }
