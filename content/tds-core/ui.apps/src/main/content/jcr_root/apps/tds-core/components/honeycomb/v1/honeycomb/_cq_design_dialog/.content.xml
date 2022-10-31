@@ -19,18 +19,24 @@
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
                         path="tds-core/components/authoring/dialog/colorswatches/tab_design/styletab"/>
-                    <maxItems
+                    <properties
                         jcr:primaryType="nt:unstructured"
-                        sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                        fieldLabel="Min Items"
-                        name="./maxItems"
-                        fieldName="./minItems"/>
-                    <maxItems
-                        jcr:primaryType="nt:unstructured"
-                        sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                        fieldLabel="Max Items"
-                        name="./maxItems"
-                        fieldName="./maxItems"/>
+                        jcr:title="Properties"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <maxItems
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                                fieldDescription="Maximal number of items that can be added to the component."
+                                min="1"
+                                step="1"
+                                fieldLabel="Max Items"
+                                fieldName="./maxItems"
+                                name="./maxItems"
+                                value="5"/>
+                        </items>
+                    </properties>
                 </items>
             </tabs>
         </items>
