@@ -288,8 +288,8 @@ function _SearchFilter(
                 className="cmp-search-options"
                 style={!isTDSynnex ? { padding: "5px 10px" } : {}}
               >
-                <div className="cmp-search-options__reset" style={{pointerEvents:'none'}}>
-                  <label>
+                <div className="cmp-search-options__reset">
+                  <label style={{pointerEvents:'none'}}>
                     {callbackExecuted && !filterCounter ? (
                       <p>Sorry, no rows to display</p>
                     ) : (
