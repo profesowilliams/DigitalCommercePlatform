@@ -1035,6 +1035,14 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "verification-code-popup",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                        "/static/partials/modal/verification-code-popup.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "edit-config",
                 template: path.resolve(
                     __dirname,
