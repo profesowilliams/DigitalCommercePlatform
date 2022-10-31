@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   endUser: null,
   reseller: null,
   items: null,
+  savedItems: null,
 };
 
 const store = (set,get) => ({

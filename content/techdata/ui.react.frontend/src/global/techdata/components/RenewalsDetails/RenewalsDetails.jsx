@@ -35,6 +35,7 @@ function RenewalsDetails(props) {
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)  
   const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
+  const gridItems = useRenewalsDetailsStore(state => state.items);
 
   const [editMode, setEditMode] = useState(false);
   const [renewalsDetails, setRenewalsDetails] = useState(null);
@@ -133,6 +134,7 @@ function RenewalsDetails(props) {
     updateDetails()
       .then((result) => {
         if(result) {
+          effects.setCustomState({key: 'savedItems', value: gridItems});
           setLockedEdit(false);
           setToggleEdit(true);
           effects.clearItems();

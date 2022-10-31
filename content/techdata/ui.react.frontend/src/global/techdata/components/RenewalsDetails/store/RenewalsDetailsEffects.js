@@ -1,5 +1,6 @@
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import isEqual from 'lodash.isequal';
 
 export const renewalsEffects = ( set, get ) =>  ({
   setCustomState({key='', value }, options){
@@ -26,7 +27,11 @@ export const renewalsEffects = ( set, get ) =>  ({
   },
 
   clearItems(){   
-    set({items:null})
+    const gridItems = get().items;
+    const gridSavedItems = get().savedItems;
+    if (!gridSavedItems && isEqual(gridItems, gridSavedItems)) {
+      set({items:null})
+    }
   }
 
 })

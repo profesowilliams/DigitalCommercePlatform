@@ -74,6 +74,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const effects = useRenewalsDetailsStore( state => state.effects);
   const { closeAndCleanToaster } = effects;
   const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
+  const gridSavedItems = useRenewalsDetailsStore( state => state.savedItems);
 
   // Keep track of isEditing on rerenders, will be used by quantity cell on redraw
   const isEditingRef = useRef(isEditing);
@@ -118,7 +119,14 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   useImperativeHandle(ref, () => ({
     cancelEdit () {
       // Copy original grid data
-      const copyGridData = JSON.parse(JSON.stringify(gridData));
+      let copyGridData = JSON.parse(JSON.stringify(gridData));
+      if (gridSavedItems) {
+        copyGridData.map((item, index) => {
+          item.id = gridSavedItems[index].id;
+          item.quantity = gridSavedItems[index].quantity;
+          item.unitPrice = gridSavedItems[index].unitPrice;
+        })
+      }
 
       // Replace grid data with original
       setMutableGridData(copyGridData);
@@ -132,7 +140,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     getMutableGridData () {
       return mutableGridData;
     }
-  }), [])
+  }), [gridSavedItems])
 
   const gridColumnWidths = Object.freeze({
     line: "29px",
