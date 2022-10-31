@@ -18,6 +18,7 @@ import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
+import { setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
 
 
 function GridSubTotal({ subtotal, data, gridProps }) {
@@ -262,12 +263,12 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     setIsPODialogOpen(true);
   }
 
-  const onCloseDialog =(options = {}) => {
+  const onCloseOrderDialog =(options = {}) => {
     const {isSuccess = false, toaster} = options || {isSuccess : false, toaster:false} ;
     setIsPODialogOpen(false); 
     if (!isSuccess) return;
     if(isSuccess){
-      effects.setCustomState({ key: 'toaster', value: { ...toaster } }, {key:TOASTER_LOCAL_STORAGE_KEY, saveToLocal: true});
+      setLocalStorageData(TOASTER_LOCAL_STORAGE_KEY,toaster);
       location.href=compProps.quotePreview.renewalsUrl
     }
   }
@@ -307,7 +308,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         ></Modal>
       )}
       <PlaceOrderDialog
-        onClose={onCloseDialog}
+        onClose={onCloseOrderDialog}
         isDialogOpen={isPODialogOpen}
         orderingFromDashboard={compProps.orderingFromDashboard}
         orderEndpoints={orderEndpoints}

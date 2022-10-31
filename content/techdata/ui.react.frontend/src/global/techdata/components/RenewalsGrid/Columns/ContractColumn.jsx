@@ -106,8 +106,15 @@ function _ContractColumn({ data, eventProps }) {
     return (!support || support && rowIndex !== (renewalOptionState?.rowIndex -1) )
   }
 
-  const formatRenewedDuration = (renewed, support) => 
-    renewed && support ?`, ${renewed.split(' ').slice(0,2).join(' ')}, ${support}` : "";
+  const formatRenewedDuration = (renewed, support) => {
+    const extractYear = (renewed) => renewed.split(' ').slice(0, 2).join(' ');
+    const hasOnlyDuration = renewed && !support;
+    return hasOnlyDuration
+      ? `, ${extractYear(renewed)}`
+      : renewed && support
+      ? `, ${extractYear(renewed)}, ${support}`
+      : (support ?`, ${support}` :'');
+  };
   
   
   return (
