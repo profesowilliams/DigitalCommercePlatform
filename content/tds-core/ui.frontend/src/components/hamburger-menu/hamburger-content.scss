@@ -395,6 +395,20 @@
                 top: 12px;
             }
 
+           &.cmp-container .header-active .headerutility .signin button svg {
+                margin-right: 10px;
+                text-align: center;
+                display: block;
+            }
+
+           &.cmp-container .minicart .cmp-cart__icon {
+                width: 26px;
+            }
+
+            &.cmp-container .minicart .cmp-cart {
+                width: 28px;
+            }
+
             &.cmp-container .cmp-td-hamburgerMenu {
                 color: black;
                 position: relative;

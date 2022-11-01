@@ -5,7 +5,7 @@
     margin-left: auto;
   }
 
-  #regionSelectDropdown {
+  .regionSelectDropdown {
     position: absolute;
     z-index: 100;
     right: 0;
@@ -27,7 +27,7 @@
   top: rem(1px);
 }
 
-#regionSelectDropdown {
+.regionSelectDropdown {
   background-color: get-color(brand-white);
 }
 
@@ -40,7 +40,7 @@
   margin: 0 !important;
 }
 
-#regionSelectDropdown .languageselection-button {
+.regionSelectDropdown .languageselection-button {
   display: flex !important;
 }
 

@@ -17,8 +17,13 @@ import events from '../../utils/events';
     events.addLoginListener(listener);
   }
 
-  function showRegionSelectDropdown() {
-    document.getElementById("regionSelectDropdown").classList.add("cmp-show");
+  function showRegionSelectDropdown(event) {
+      if (event && event.target.closest('.languagenavigation')) {
+        const langEle = event.target.closest('.languagenavigation');
+        langEle.querySelector(".regionSelectDropdown").classList.add("cmp-show");
+      } else {
+        document.querySelector(".regionSelectDropdown").classList.add("cmp-show");
+      }
   }
 
   function hideRegionSelectDropdown() {
@@ -28,9 +33,11 @@ import events from '../../utils/events';
     else if(isExtraReloadDisabled()) {
       document.getElementsByClassName("languagenavigation")[0].style.display = "block";
     }
-    document
-      .getElementById("regionSelectDropdown")
-      .classList.remove("cmp-show");
+    const languageSelectorOpeners = document.querySelectorAll('.regionSelectDropdown');
+
+    for (var i = 0; i < languageSelectorOpeners.length; i++) {
+        languageSelectorOpeners[i].classList.remove('cmp-show');
+    }
   }
 
   function showCountriesListPopup() {
@@ -80,7 +87,7 @@ import events from '../../utils/events';
     } else if (event.target.matches(".cmp-button__region-select")) {
       showCountriesListPopup();
     } else if (event.target.matches(".cmp-dropbtn") || event.target.closest('.cmp-dropbtn')) {
-      showRegionSelectDropdown();
+      showRegionSelectDropdown(event);
     }
     else if (!event.target.matches(".cmp-button__region-select")) {
       hideCountriesModal();

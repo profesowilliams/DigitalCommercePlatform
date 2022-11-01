@@ -61,3 +61,78 @@
     }
   }
 }
+
+#cmp-techdata-header {
+    &.cmp-experiencefragment--header-mobile.cmp-container {
+        &.cmp-tds-site-header {
+            .hub .cmp-button .cmp-button__icon {
+                margin-right: 8px;
+                width: 20px;
+            }
+            .hub .cmp-button {
+                padding: 10px 0;
+            }
+            &.hub-menu-active {
+               .hub .cmp-button {
+                    position: relative;
+                    padding: 0;
+                    margin: 0 2px;
+                }
+
+               .hub .cmp-button:after {
+                    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE5LjE2NyA5LjE2N2EuODMzLjgzMyAwIDAwMC0xLjY2N0gzLjAwNWw2LjcyLTYuMDQ3QS44MzMuODMzIDAgMTA4LjYwOC4yMTRsLTguMzMzIDcuNWEuODMzLjgzMyAwIDAwMCAxLjI0bDguMzMzIDcuNWEuODMzLjgzMyAwIDAwMS4xMTUtMS4yNEwzLjAwNSA5LjE2N2gxNi4xNjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+");
+                    background-repeat: no-repeat;
+                    background-position-y: center;
+                    overflow: visible;
+                    content: "";
+                    position: absolute;
+                    width: 30px;
+                    height: 100%;
+                    left: -28px;
+                    top: 0;
+                    background-color: transparent;
+                }
+
+               .headerutility .headerutility,
+               .megamenu {
+                    display: none
+                }
+
+               .headerutility .headerutility.hub {
+                    display: block;
+                    position: relative;
+                }
+
+               .header-active.cmp-container .masthead {
+                    display: none
+                }
+
+               .hub .cmp-button__dropdown {
+                    &.show {
+                       background-color: #005758;
+                       z-index: 9999;
+                       box-shadow: none;
+                       padding: 10px;
+                       max-width: none;
+                       color: #fff;
+                       position: absolute;
+                       left: -32px;
+                       right: 0;
+                       width: calc(100vw - 2pc);
+                       border-top: 1px solid #fff;
+                       margin: 0 1pc;
+                       top: 56px;
+                    }
+
+                    a {
+                        color: white;
+                        font-size: 16px;
+                        line-height: 36px;
+                        padding: 5px 12px;
+                    }
+               }
+            }
+        }
+    }
+}
+
