@@ -3,7 +3,7 @@ package com.tdscore.core.slingcaconfig;
 import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
-@Configuration(label = "Intouch Header/Footer Configuration", description = "API configurations for Intouch header/footer.")
+@Configuration(label = "Intouch Header Footer Configuration", description = "API configurations for Intouch header and footer.")
 public @interface IntouchHeaderConfiguration {
     
     @Property(label = "CSS API Url", description = "API url that provides the CSS urls.")
