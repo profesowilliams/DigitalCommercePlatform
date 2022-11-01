@@ -284,3 +284,11 @@ $brand-green-dark: #003031;
     }
   }
 }
+
+.cmp-grid-techdata {
+  .cmp-search-tooltip {
+    &__button {
+      background-color: $brand-blue;
+    }
+  }
+}

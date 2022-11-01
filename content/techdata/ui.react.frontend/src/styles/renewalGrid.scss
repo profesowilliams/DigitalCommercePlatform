@@ -791,6 +791,12 @@ button.icon-box {
   }
 }
 
+svg {
+  &.cmp-svg-icon__charcoal {
+    fill: $brand-charcoal;
+  }
+}
+
 *, ::before, ::after, svg {
   animation-duration: 1.5s !important;
   animation-iteration-count: infinite !important;

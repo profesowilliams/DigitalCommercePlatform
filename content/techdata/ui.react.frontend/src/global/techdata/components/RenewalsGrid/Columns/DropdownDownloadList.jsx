@@ -2,7 +2,7 @@ import React from "react";
 import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
 import { redirectToRenewalDetail, analyticsColumnDataToPush } from "../renewalUtils";
-import { DocumentExcelIcon, DocumentPdfIcon, EyeIcon } from "../../../../../fluentIcons/FluentIcons";
+import { DocumentExcelIcon, DocumentPdfIcon, DownloadIcon, EyeIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function DropdownDownloadList({ data, aemConfig }) {
   const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, detailUrl, productGrid } = aemConfig;
@@ -43,14 +43,14 @@ function DropdownDownloadList({ data, aemConfig }) {
        <button
         onClick={downloadPDF}
       >
-        <DocumentPdfIcon />
+        <DownloadIcon class="cmp-svg-icon__charcoal"/>
         Download PDF
       </button>|
       {
         productGrid?.showDownloadXLSButton && (
         <>
           <button onClick={downloadXLS}>
-            <DocumentExcelIcon />
+            <DownloadIcon class="cmp-svg-icon__charcoal"/>
             Download XLS
           </button>
           |

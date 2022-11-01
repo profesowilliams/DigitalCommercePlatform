@@ -5,7 +5,7 @@ import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
-import { CartIcon } from "../../../../../fluentIcons/FluentIcons";
+import { CartIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
@@ -235,7 +235,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                             labels?.showDownloadPDFButton && (
                                                 <>
                                                 <button onClick={() => downloadPDF(option.id)}>
-                                                    <i className="fas fa-file-pdf"></i>
+                                                    <DownloadIcon class="cmp-svg-icon__charcoal"/>
                                                     <span>
                                                         &nbsp;&nbsp;{labels.downloadPDFLabel}
                                                     </span>
@@ -249,7 +249,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                             <>
                                                 <span className="vertical-separator"></span>
                                                 <button onClick={() => exportXlsPlan(option?.id)}>
-                                                    <i className="fas fa-file-excel"></i>
+                                                    <DownloadIcon class="cmp-svg-icon__charcoal"/>
                                                     <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
                                                 </button>
                                             </>

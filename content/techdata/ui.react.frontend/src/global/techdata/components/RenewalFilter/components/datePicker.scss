@@ -941,3 +941,27 @@
   color: #555555;
   font-size: 12px;
 }
+
+.cmp-grid-techdata {
+  .filter-modal-content {
+
+    .CalendarDay__selected {
+      &.CalendarDay__selected_start_no_selected_end {
+        color: #08BED5;
+      }
+      background: #262626;
+    }
+
+    .CalendarDay__selected_span {
+      background: rgba(0, 12, 33, 0.3);
+    }
+
+    .CalendarDay__hovered_span {
+      background-color: transparent;
+      &:hover {
+        outline: #262626 solid 1px;
+      }
+    }
+
+  } 
+}

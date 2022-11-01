@@ -26,6 +26,11 @@
 }
 
 .cmp-grid-td-synnex {
+  &.cmp-grid-techdata {
+    .td-capsule {
+      background-color: $brand-blue;
+    }
+  }
   & .td-capsule {
     display: flex;
     align-items: center;

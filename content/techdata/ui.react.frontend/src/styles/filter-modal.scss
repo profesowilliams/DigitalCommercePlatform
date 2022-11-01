@@ -148,6 +148,8 @@ $brand-charcoal: #262626;
   }
   .cmp-quote-button.td-synnex {
     background-color: $brand-green;
+    height: 52px;
+    align-items: center;
   }
   .cmp-quote-button.td-synnex:disabled {
     background-color: $brand-green;
@@ -382,4 +384,35 @@ div.filter-accordion {
 
 .count.td-synnex {
   background-color: $brand-green;
+}
+
+.cmp-grid-techdata {
+  .filter-modal-content {
+    &__close {
+      &::before {
+        color: $brand-blue
+      }
+    }
+    .filter-datepicker-container {
+      .datepicker-checks {
+        li {
+          input[type="radio"] {
+            accent-color: $brand-blue;
+          }
+        }
+      }
+    }
+    .cmp-quote-button {
+      background-color: $brand-blue;
+    }
+  }
+  
+
+  .filter-modal-bottom {
+    .filter-tags-container {
+      .filter-tags {
+        background-color: $brand-blue;
+      }
+    }
+  }
 }
