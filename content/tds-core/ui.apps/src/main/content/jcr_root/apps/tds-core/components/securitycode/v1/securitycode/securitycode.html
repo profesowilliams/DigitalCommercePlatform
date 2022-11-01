@@ -1,8 +1,28 @@
-<div
-  data-panelcontainer="${wcmmode.edit && 'securitycode'}"
-  class="cmp-securitycode"
-  data-cmp-is="securitycode"
-  data-placeholder-text="${wcmmode.edit && 'Please drag Security Code item components here' @ i18n}"
->
-  <p>Security code content comes here..</p>
+
+<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+  <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+</sly>
+
+<div data-sly-test="${properties.title}" class="cmp-s-code-popup__modal">
+  <div class="cmp-s-code-popup__modal__content">
+    <div class="cmp-s-code-popup__modal__content-container" data-error-code="${properties.errorMessage}">
+      <h4>${properties.title}</h4>
+      <p>
+        ${properties.description}
+      </p>
+      <form id="form">
+        <div class="cmp-form__group cmp-form__pincode">
+          <input type="tel" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" autocomplete="off">
+          <input type="tel" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" autocomplete="off">
+          <input type="tel" name="pincode-3" maxlength="1" pattern="[\d]*" tabindex="3" autocomplete="off">
+          <input type="tel" name="pincode-4" maxlength="1" pattern="[\d]*" tabindex="4" autocomplete="off">
+          <input type="tel" name="pincode-5" maxlength="1" pattern="[\d]*" tabindex="5" autocomplete="off">
+          <input type="tel" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" autocomplete="off">
+        </div>
+        <div class="cmp-form__buttons">
+          <a href="#" class="cmp-button cmp-button--primary" disabled>${properties.buttonLabel}</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
