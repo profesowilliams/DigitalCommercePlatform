@@ -52,28 +52,22 @@ function GridHeader({ gridProps, data }) {
       </span>
       <div className="cmp-renewal-preview__download">
         {
-          !gridProps?.productLines?.hideDownloadXLSButton && (
+          gridProps?.productLines?.showDownloadXLSButton && (
           <button onClick={downloadXLS}>
-            <span className="separator">
+            <span className={gridProps?.productLines?.showDownloadPDFButton && 'separator'}>
               {gridProps?.productLines?.downloadXLSLabel || "Export XLS"}
             </span>
           </button>
         )}
-        <button onClick={downloadPDF}>
-          <span>
-            <DownloadIcon className="cmp-renewal-preview__download--icon"/>
-            {gridProps?.productLines?.downloadPDFLabel || "Export PDF"}
-          </span>
-        </button>
-        {/* These buttons are going to be added in a near future, so by now i'll left them commented, and also add the 'separator' class to the xls button */}
-        {/* <button>
-          <span className="separator">Copy</span>
-        </button>
-        <button>
-          <span>
-          Share
-          </span>
-        </button> */}
+        {
+          gridProps?.productLines?.showDownloadPDFButton && (
+            <button onClick={downloadPDF}>
+              <span>
+                <DownloadIcon className="cmp-renewal-preview__download--icon"/>
+                {gridProps?.productLines?.downloadPDFLabel || "Download PDF"}
+              </span>
+          </button>
+        )}
       </div>
     </div>
   );

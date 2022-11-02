@@ -57,6 +57,7 @@ function ResellerInfo({
   const cancelHandler = () => {
     effects.clearEndUser()
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
+    setResellerDetails(({...reseller}));
   };
 
   useEffect(() => {

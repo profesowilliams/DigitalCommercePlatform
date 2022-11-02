@@ -143,11 +143,6 @@ function RenewalPlanOptions({ labels, data, node }) {
         }
         return optionIdSelected === option?.id;
     }
-    const gridConfig = {
-        ...aemConfig,
-        serverSide: false,
-        paginationStyle: "none",
-    };
 
     const renewalDetailsURL = id => encodeURI(
         `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`

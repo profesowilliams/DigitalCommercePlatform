@@ -21,12 +21,16 @@ use(['../common/utils.js'], function(utils) {
         productLines["downloadPDFLabel"] = properties["downloadPDFLabel"];
     }
 
+    if (properties && properties["showDownloadPDFButton"]) {
+        productLines["showDownloadPDFButton"] = properties["showDownloadPDFButton"];
+    }
+
     if (properties && properties["downloadXLSLabel"]) {
         productLines["downloadXLSLabel"] = properties["downloadXLSLabel"];
     }
 
-    if (properties && properties["hideDownloadXLSButton"]) {
-        productLines["hideDownloadXLSButton"] = properties["hideDownloadXLSButton"];
+    if (properties && properties["showDownloadXLSButton"]) {
+        productLines["showDownloadXLSButton"] = properties["showDownloadXLSButton"];
     }
 
     if (properties && properties["shopURL"]) {

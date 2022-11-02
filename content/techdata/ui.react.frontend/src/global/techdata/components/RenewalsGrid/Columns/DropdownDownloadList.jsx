@@ -40,14 +40,17 @@ function DropdownDownloadList({ data, aemConfig }) {
 
   return (
     <div className="icon-container">
-       <button
-        onClick={downloadPDF}
-      >
-        <DownloadIcon class="cmp-svg-icon__charcoal"/>
-        Download PDF
-      </button>|
-      {
-        productGrid?.showDownloadXLSButton && (
+      {productGrid?.showDownloadPDFButton && (
+        <>
+          <button onClick={downloadPDF}>
+            <DownloadIcon class="cmp-svg-icon__charcoal" />
+            Download PDF
+          </button>
+          |
+        </>
+      )}
+
+      {productGrid?.showDownloadXLSButton && (
         <>
           <button onClick={downloadXLS}>
             <DownloadIcon class="cmp-svg-icon__charcoal"/>

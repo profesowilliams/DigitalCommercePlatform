@@ -45,6 +45,19 @@
                                                 fieldLabel="Download PDF Label"
                                                 name="./downloadPDFLabel"
                                                 required="{Boolean}true"/>
+                                            <showDownloadPDFButton
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Hide the 'Download PDF' Button from the details page."
+                                                name="./showDownloadPDFButton"
+                                                text="hide Download PDF Button"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <showDownloadPDFButtonTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                name="./showDownloadPDFButton@TypeHint"
+                                                value="Boolean"/>
                                             <downloadXLS
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -52,17 +65,17 @@
                                                 fieldLabel="Download XLS Label"
                                                 name="./downloadXLSLabel"
                                                 required="{Boolean}true"/>
-                                            <hideDownloadXLSButton
+                                            <showDownloadXLSButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 text="Hide Download XLS Button"
-                                                name="./hideDownloadXLSButton"
+                                                name="./showDownloadXLSButton"
                                                 value="true"
                                                 uncheckedValue="false"/>
-                                            <hideDownloadXLSButtonTypeHint
+                                            <showDownloadXLSButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
-                                                name="./hideDownloadXLSButton@TypeHint"
+                                                name="./showDownloadXLSButton@TypeHint"
                                                 value="Boolean"/>
                                             <line
                                                 jcr:primaryType="nt:unstructured"
