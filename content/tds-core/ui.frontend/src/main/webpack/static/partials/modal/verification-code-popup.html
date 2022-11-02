@@ -1,94 +1,120 @@
-<div
-  class="popup container responsivegrid aem-GridColumn aem-GridColumn--default--12"
->
-  <div class="cmp-popup" style="display: inline;" data-cmp-is="popup" data-placeholder-text="false">
-    <div class="cmp-popup__modal" style="display: inline; background-color: ">
-      <div class="cmp-popup__modal__content">
-        <span class="cmp-popup__modal__content__close">×</span>
+<!DOCTYPE html>
+<html lang="en">
+  <body class="page basicpage" id="page-d456e7a4a8" data-cmp-data-layer-enabled="" data-sec-code-enabled="" data-sec-code="112233" data-disable-impersonation-header="">
 
-        <div id="popup-aa55f77795" class="cmp-container">
-          <div class="securitycode">
-            <div 
-                data-cmp-security-code="123456"
-                data-cmp-security-code-enabled="true" 
-                class="cmp-s-code-popup__modal">
-              <div data-cmp-security-code="123456"
-              data-cmp-security-code-enabled="true" class="cmp-s-code-popup__modal__content">
-                <div
-                  class="cmp-s-code-popup__modal__content-container"
-                  data-error-code="Error Message"
-                >
-                  <h4>Migration Resources</h4>
-                  <p>
-                    Please submit your 6-Digit Security Code to access Migration
-                    Resources.
-                  </p>
-                  <form id="securityform">
-                    <div class="cmp-form__group cmp-form__pincode">
-                      <input
-                        type="number"
-                        name="pincode-1"
-                        maxlength="1"
-                        pattern="[\d]*"
-                        tabindex="1"
-                        autocomplete="off"
-                      />
-                      <input
-                        type="number"
-                        name="pincode-2"
-                        maxlength="1"
-                        pattern="[\d]*"
-                        tabindex="2"
-                        autocomplete="off"
-                      />
-                      <input
-                        type="number"
-                        name="pincode-3"
-                        maxlength="1"
-                        pattern="[\d]*"
-                        tabindex="3"
-                        autocomplete="off"
-                      />
-                      <input
-                        type="number"
-                        name="pincode-4"
-                        maxlength="1"
-                        pattern="[\d]*"
-                        tabindex="4"
-                        autocomplete="off"
-                      />
-                      <input
-                        type="number"
-                        name="pincode-5"
-                        maxlength="1"
-                        pattern="[\d]*"
-                        tabindex="5"
-                        autocomplete="off"
-                      />
-                      <input
-                        type="number"
-                        name="pincode-6"
-                        maxlength="1"
-                        pattern="[\d]*"
-                        tabindex="6"
-                        autocomplete="off"
-                      />
-                    </div>
-                    <div class="cmp-form__buttons">
-                      <button
-                        id="verification-button"
-                        class="cmp-button cmp-button--primary"
-                        disabled
-                        >Submit</button
+    <div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
+      <div
+        class="popup container responsivegrid aem-GridColumn aem-GridColumn--default--12"
+      >
+        <div
+          class="cmp-popup"
+          data-cmp-is="popup"
+          data-placeholder-text="false"
+        >
+          <div
+            data-opener-ids="open-modal"
+            class="cmp-popup__modal"
+            style="background-color: "
+          >
+            <div class="cmp-popup__modal__content">
+              <span class="cmp-popup__modal__content__close">×</span>
+
+              <div id="open-modal" class="cmp-container">
+                <h4>Migration Resources</h4>
+                <div class="securitycode">
+                  <div class="cmp-s-code-popup__modal">
+                    <div class="cmp-s-code-popup__modal__content">
+                      <div
+                        class="cmp-s-code-popup__modal__content-container"
+                        data-error-code="Error Message"
                       >
+                        <h4>Migration Resources</h4>
+                        <p>
+                          Please submit your 6-Digit Security Code to access
+                          Migration Resources.
+                        </p>
+                        <form id="securityform">
+                          <div class="cmp-form__group cmp-form__pincode">
+                            <input
+                              type="tel"
+                              name="pincode-1"
+                              maxlength="1"
+                              pattern="[\d]*"
+                              tabindex="1"
+                              autocomplete="off"
+                            />
+                            <input
+                              type="tel"
+                              name="pincode-2"
+                              maxlength="1"
+                              pattern="[\d]*"
+                              tabindex="2"
+                              autocomplete="off"
+                            />
+                            <input
+                              type="tel"
+                              name="pincode-3"
+                              maxlength="1"
+                              pattern="[\d]*"
+                              tabindex="3"
+                              autocomplete="off"
+                            />
+                            <input
+                              type="tel"
+                              name="pincode-4"
+                              maxlength="1"
+                              pattern="[\d]*"
+                              tabindex="4"
+                              autocomplete="off"
+                            />
+                            <input
+                              type="tel"
+                              name="pincode-5"
+                              maxlength="1"
+                              pattern="[\d]*"
+                              tabindex="5"
+                              autocomplete="off"
+                            />
+                            <input
+                              type="tel"
+                              name="pincode-6"
+                              maxlength="1"
+                              pattern="[\d]*"
+                              tabindex="6"
+                              autocomplete="off"
+                            />
+                          </div>
+                          <div class="cmp-form__buttons">
+                            <button
+                              id="verification-button"
+                              href="#"
+                              class="cmp-button cmp-button--primary"
+                              disabled=""
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </form>
+                      </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="button aem-GridColumn aem-GridColumn--default--12">
+        <button
+          type="button"
+          id="open-modal"
+          class="cmp-button"
+          data-cmp-clickable=""
+          data-cmp-data-layer='{"open-modal":{"@type":"tds-core/components/button/v1/button","repo:modifyDate":"2022-11-02T19:14:24Z","dc:title":"Open Modal"}}'
+        >
+          <span class="cmp-button__text" style="color: ">Open Modal</span>
+        </button>
+      </div>
     </div>
-  </div>
-</div>
+  </body>
+</html>

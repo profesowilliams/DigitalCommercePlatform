@@ -36,16 +36,6 @@
       );
     });
 
-    submitButton.addEventListener(
-      'click',
-      function (e) {
-        validateSecurityCode();
-        e.preventDefault();
-        return false;
-      },
-      true
-    );
-
     securityForm.addEventListener(
       'submit',
       function (e) {
@@ -80,7 +70,14 @@
     }
   }
 
+  function removeLabels() {
+    const form = document.querySelector('#securityform');
+    const elements = [...form.getElementsByTagName('span')];
+    elements.forEach(element => element.remove())
+  }
+
   function validateSecurityCode() {
+    removeLabels();
     const inputValues = [];
     inputs.forEach((i) => {
       inputValues.push(i.value);
