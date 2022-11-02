@@ -1,0 +1,50 @@
+$sizes: 100;
+
+@mixin dynamic-margin {
+  @for $i from 1 through $sizes {
+     $margin: $i * 0.25rem;
+    // margin #{$margin} 
+    .dm#{$i}  {margin: $margin;}
+    .dml#{$i} {margin-left: $margin;}
+    .dmr#{$i} {margin-right: $margin;}
+    .dmt#{$i} {margin-top: $margin;}
+    .dmb#{$i} {margin-bottom: $margin;}
+    .dmx#{$i} {margin-left: $margin; margin-right: $margin;}
+    .dmy#{$i} {margin-top: $margin; margin-bottom: $margin;}
+  }
+}
+@include dynamic-margin;
+
+
+@mixin dynamic-padding {
+  @for $i from 1 through $sizes {
+    $padding: $i * 0.25rem;
+    // padding #{$padding} 
+    .dp#{$i} {padding: $padding;}
+    .dpl#{$i} {padding-left: $padding;}
+    .dpr#{$i} {padding-right: $padding;}
+    .dpt#{$i} {padding-top: $padding;}
+    .dpb#{$i} {padding-bottom: $padding;}
+    .dpx#{$i} {padding-left: $padding; padding-right: $padding;}
+    .dpy#{$i} {padding-top: $padding; padding-bottom: $padding;}
+  }
+}
+@include dynamic-padding;
+
+// NOTE:
+// css naming translation:
+    // .dm  = dynamic margin 
+    // .dml = dynamic margin left
+    // .dmr = dynamic margin right
+    // .dmt = dynamic margin top
+    // .dmb = dynamic margin bottom
+    // .dmx = dynamic margin left + dynamic margin right
+    // .dmy = dynamic margin top + dynamic margin bottom
+    
+    // .dp  = dynamic padding 
+    // .dpl = dynamic padding left
+    // .dpr = dynamic padding right
+    // .dpt = dynamic padding top
+    // .dpb = dynamic padding bottom
+    // .dpx = dynamic padding left + dynamic padding right
+    // .dpy = dynamic padding top + dynamic padding bottom
