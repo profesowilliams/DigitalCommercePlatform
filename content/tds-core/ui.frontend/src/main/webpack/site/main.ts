@@ -20,6 +20,7 @@ import "../../../../../../tds-core/ui.frontend/src/components/languagenavigation
 import "../../../../../../tds-core/ui.frontend/src/components/notification/notification";
 import "../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer";
 import "../../../../../../tds-core/ui.frontend/src/components/popup/popup";
+import "../../../../../../tds-core/ui.frontend/src/components/securitycode/securitycode";
 import "../global/tds-core-components/button/buttons";
 import {Initializer} from "../global/initializer";
 new Initializer();
