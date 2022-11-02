@@ -136,6 +136,10 @@
                 display: inline;
             }
 
+             .header-active.cmp-container .extrabutton .cmp-button__text {
+                margin-left: 8px;
+            }
+
             .masthead .header-active .masthead #mobile-header-container {
                 display: flex;
                 flex-direction: column-reverse;
@@ -223,6 +227,7 @@
                 position: fixed;
                 bottom: 0;
                 right: 0;
+                z-index: 999;
             }
 
             .header-active.cmp-container .mobile-bottom-section .cmp-masthead--mobile-links {
@@ -331,8 +336,17 @@
                 padding-left: 2px;
             }
 
-            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--title {
+            &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--title,
+             &.cmp-container .header-active .languagenavigation span {
                 color: white;
+            }
+
+            .header-active.cmp-container .masthead .regionSelectDropdown {
+                position: absolute;
+                top: auto;
+                bottom: 50px;
+                left: 0;
+                width: 100%;
             }
 
             &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--sub-title {

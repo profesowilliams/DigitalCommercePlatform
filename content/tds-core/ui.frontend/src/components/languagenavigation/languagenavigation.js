@@ -40,17 +40,27 @@ import events from '../../utils/events';
     }
   }
 
-  function showCountriesListPopup() {
+  function showCountriesListPopup(event) {
     showRegionSelectDropdown(); // this is necessary since countries pop-up is inside this div.
     if (userIsLoggedIn) {
       document.getElementsByClassName("languagenavigation")[0].style.display = "block";
     }
-    document.getElementById("countriesListModal").style.display = "block";
+    if (event && event.target.closest('.languagenavigation')) {
+        const langEle = event.target.closest('.languagenavigation');
+        langEle.querySelector("#countriesListModal").style.display = "block";
+    } else {
+        document.querySelector("#countriesListModal").style.display = "block";
+    }
   }
 
   function hideCountriesModal() {
     hideRegionSelectDropdown();
-    document.getElementById("countriesListModal").style.display = "none";
+
+    const countryModals = document.querySelectorAll('.language-modal');
+
+    for (var i = 0; i < countryModals.length; i++) {
+        countryModals[i].style.display = "none";
+    }
   }
 
   function onDocumentReady() {
@@ -63,7 +73,7 @@ import events from '../../utils/events';
     for (var i = 0; i < languageSelectorOpeners.length; i++) {
       languageSelectorOpeners[i].addEventListener('click', function(event) {
           event.preventDefault();
-          showCountriesListPopup();
+          showCountriesListPopup(event);
       });
     }
   }
@@ -85,7 +95,7 @@ import events from '../../utils/events';
       event.target.closest(".app-open-language-selector")) {
       return;
     } else if (event.target.matches(".cmp-button__region-select")) {
-      showCountriesListPopup();
+      showCountriesListPopup(event);
     } else if (event.target.matches(".cmp-dropbtn") || event.target.closest('.cmp-dropbtn')) {
       showRegionSelectDropdown(event);
     }
