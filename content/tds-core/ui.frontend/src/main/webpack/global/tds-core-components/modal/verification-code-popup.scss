@@ -27,6 +27,17 @@
     height: rem(374px);
     background-color:  map-get($color-palette, "white") !important;
     padding: rem(46px) rem(40px);
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
   }
   
   .cmp-s-code-popup__modal__content-input {

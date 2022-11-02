@@ -10,7 +10,7 @@
       <p>
         ${properties.description}
       </p>
-      <form id="form">
+      <form id="securityform">
         <div class="cmp-form__group cmp-form__pincode">
           <input type="tel" name="pincode-1" maxlength="1" pattern="[\d]*" tabindex="1" autocomplete="off">
           <input type="tel" name="pincode-2" maxlength="1" pattern="[\d]*" tabindex="2" autocomplete="off">
@@ -20,7 +20,7 @@
           <input type="tel" name="pincode-6" maxlength="1" pattern="[\d]*" tabindex="6" autocomplete="off">
         </div>
         <div class="cmp-form__buttons">
-          <a href="#" class="cmp-button cmp-button--primary" disabled>${properties.buttonLabel}</a>
+          <button id="verification-button" href="#" class="cmp-button cmp-button--primary" disabled>${properties.buttonLabel}</button>
         </div>
       </form>
     </div>
