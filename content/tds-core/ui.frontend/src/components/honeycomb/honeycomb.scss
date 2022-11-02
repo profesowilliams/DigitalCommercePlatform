@@ -12,6 +12,7 @@
       &[data-cmp-expanded] {
         .cmp-accordion__title {
           color: map-get($color-palette, 'white');
+          margin-top: -2px;
         }
       }
       .cmp-accordion__panel {
@@ -32,6 +33,8 @@
     position: relative;
     bottom: 77px;
     margin: auto;
+    font-size: 16px;
+    font-family: $font-family-everett;
   }
   .cmp-accordion__button {
     width: unset;
@@ -44,7 +47,6 @@
     content: '' !important;
   }
   .cmp-accordion__item {
-    //margin: -27px 0px;
     width: 123px;
     height: 127px;
     margin: -9px 3px;
@@ -57,6 +59,8 @@
     .cmp-honeycomb-expanded-svg {
       height: 136px;
       display: none;
+      margin-top: -6px;
+      margin-left: -3px;
     }
     .cmp-honeycomb-svg {
       height: 126px;
