@@ -59,6 +59,18 @@
                                                         value="article"/>
                                                 </items>
                                             </itemType>
+                                            <linkTarget
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Open the link in a new tab"
+                                                name="./linkTarget"
+                                                value="true"
+                                                uncheckedValue="false"/>
+                                            <linkTargetTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                name="./linkTarget@TypeHint"
+                                                value="Boolean"/>
                                         </items>
                                     </column>
                                 </items>

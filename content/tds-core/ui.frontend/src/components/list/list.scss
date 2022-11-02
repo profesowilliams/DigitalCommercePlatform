@@ -1,42 +1,91 @@
 .dp-list {
     list-style: none;
+    .cmp-list {
+        padding: 0 40px;
+    }
     &.cmp-list__dpb {
 
         .cmp-list__item {
             display: flex;
             align-items: center;
-            padding-right: 15px;
+            padding-right: 36px;
             border-top: 1px solid #E4E5E6;;
             height: 168px;
+
+            @include mobile {
+                height: 100%;
+                padding-right: 0;
+            }
             &:last-child {
                 border-bottom: 1px solid #E4E5E6;;
             }
-
             &:after {
-                content: '>';
+                content:'';
+                color: map-get($color-palette, 'teal');
                 padding-left: 27px;
+                background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAxMiAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEuMjI4OTMgMS4yODEwMkMxLjYxOTQ1IDAuODkwNDk0IDIuMjUyNjIgMC44OTA0OTQgMi42NDMxNCAxLjI4MTAyTDExLjM5MzEgMTAuMDMxQzExLjU4MDcgMTAuMjE4NiAxMS42ODYgMTAuNDcyOSAxMS42ODYgMTAuNzM4MUMxMS42ODYgMTEuMDAzMyAxMS41ODA3IDExLjI1NzcgMTEuMzkzMSAxMS40NDUyTDIuNjQzMTQgMjAuMTk1MkMyLjI1MjYyIDIwLjU4NTggMS42MTk0NSAyMC41ODU4IDEuMjI4OTMgMjAuMTk1MkMwLjgzODQwNSAxOS44MDQ3IDAuODM4NDA1IDE5LjE3MTUgMS4yMjg5MyAxOC43ODFMOS4yNzE4MiAxMC43MzgxTDEuMjI4OTMgMi42OTUyM0MwLjgzODQwNCAyLjMwNDcxIDAuODM4NDA0IDEuNjcxNTQgMS4yMjg5MyAxLjI4MTAyWiIgZmlsbD0iIzAwNTc1OCIvPgo8L3N2Zz4K");
+                height: 21px;
+                background-repeat: no-repeat;
+                @include mobile {
+                    padding-left: 21px;
+                }
             }
+            article {
+                width: 100%;
+                padding-right: 40px;
+                .cmp-list__item-link {
+                    display: grid;
+                    grid-template-columns: 1.4fr 10fr;
+                    text-decoration: none;
+                    grid-gap: 9px;
 
-            .cmp-list__item-link {
-                display: grid;
-                grid-template-columns: 1.5fr 10fr;
-                text-decoration: none;
-                .cmp-image__image-figure {
-                    svg {
-                        width: 100%;
+                    @include tablet {
+                        grid-template-columns: 3fr 10fr;
                     }
-                    grid-row: 1 / span 2;
-                }
-                .cmp-list__item-title {
-                    font-size: 20px;
-                    font-weight: 500;
-                    line-height: 26px;
-                    color: map-get($color-palette, 'deep-teal');
-                    font-family: $font-family-everett
-                }
-                .cmp-list__item-description {
-                    font-weight: 400;
-                    color: map-get($color-palette, 'charcoal');
+                    @include mobile {
+                        grid-template-columns: 1fr;
+                        align-items: center;
+                        height: 60px;
+                    }
+                    .cmp-image__image-figure {
+                        margin-right: 21px;
+                        position: relative;
+                        bottom: 6px;
+                        svg {
+                            width: 100%;
+                            height: 79px;
+                        }
+                        grid-row: 1 / span 2;
+                        @include mobile {
+                            grid-row: 1;
+                            position: unset;
+                            display: none;
+                        }
+                    }
+                    .cmp-list__item-title {
+                        font-size: 20px;
+                        font-weight: 500;
+                        line-height: 26px;
+                        color: map-get($color-palette, 'deep-teal');
+                        font-family: $font-family-everett;
+                        position: relative;
+                        bottom: 10px;
+                        @include mobile {
+                            position: unset;
+                            font-size: 16px;
+                            line-height: 20px;
+                            color: map-get($color-palette, 'teal');
+                        }
+                    }
+                    .cmp-list__item-description {
+                        font-weight: 400;
+                        color: map-get($color-palette, 'charcoal');
+                        position: relative;
+                        bottom: 10px;
+                        @include mobile {
+                            display: none;
+                        }
+                    }
                 }
             }
         }
