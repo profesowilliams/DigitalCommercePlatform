@@ -12,6 +12,36 @@
 	}
 }
 
+.cmp-image {
+  margin: 0;
+  display: flex;
+  width: 100%;
+
+  &__image {
+    width: auto !important;
+  }
+  
+  &-left {
+    .cmp-image {
+    display: flex;
+    justify-content: flex-start;
+    }
+  }
+  &-right {
+    .cmp-image {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }    
+  &-center {
+    .cmp-image {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+
 .cmp-td-logo{
     &--header{
       width: rem(196px) !important;
