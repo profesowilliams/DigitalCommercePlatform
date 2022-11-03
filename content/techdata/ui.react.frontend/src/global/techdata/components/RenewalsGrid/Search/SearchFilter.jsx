@@ -316,10 +316,7 @@ function _SearchFilter(
             <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
                 <span className="cmp-renewal-search__text">Search</span>
             </If>
-            {isTDSynnex 
-              ? <SearchIcon className="search-icon__dark"/>
-              : <i className="fas fa-search cmp-renewal-search__icon"></i>
-            }
+            <SearchIcon className="search-icon__dark"/>
             
           </div>
         </If>

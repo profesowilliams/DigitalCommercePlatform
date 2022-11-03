@@ -179,10 +179,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === 1}
           onClick={goToFirstPage }
         >
-        {isTDSynnex 
-          ? <ChevronDoubleLeftIcon/>
-          : <i className="fas fa-step-backward"></i>
-        }  
+        <ChevronDoubleLeftIcon/>  
            
         </button>
         <button
@@ -191,10 +188,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           disabled={pageNumber === 1}
           onClick={decrementHandler}
         >
-        { isTDSynnex 
-          ? <ChevronLeftIcon/>
-          : <i className="fas fa-chevron-left"></i>
-        }
+        <ChevronLeftIcon/>
           
         </button>
         <div className="cmp-navigation__actions-labels">
@@ -219,20 +213,14 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
           onClick={incrementHandler}
           style={{ cursor: pageNumber !== pageCount && "pointer" }}
         >
-        { isTDSynnex 
-          ? <ChevronRightIcon/>
-          : <i className="fas fa-chevron-right"></i>
-        }
+       <ChevronRightIcon/>
           
         </button>
         <button
           disabled={pageNumber === pageCount}
           onClick={gotToLastPage}
         >
-        {isTDSynnex
-          ? <ChevronDoubleRightIcon/>
-          : <i className="fas fa-step-forward"></i>
-        }
+        <ChevronDoubleRightIcon/>
         </button>
       </div>
     </div>

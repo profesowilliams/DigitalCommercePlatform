@@ -138,11 +138,7 @@ function _ContractColumn({ data, eventProps }) {
             <>
               <If condition={hasOptions}>
                 <div className='cmp-triangle-up' key={Math.random()}>
-                  {
-                    isTDSynnex 
-                    ? <ChevronUpIcon
-                      />
-                    : <i className="fas fa-caret-up" style={iconStyle} />}
+                <ChevronUpIcon/>
                 </div>
               </If>
 
@@ -151,12 +147,7 @@ function _ContractColumn({ data, eventProps }) {
             <>
               <If condition={hasOptions}>
                 <div className='cmp-triangle-down' key={Math.random()}>
-                  {
-                    isTDSynnex 
-                    ? <ChevronDownIcon
-                      />
-                    :<i className="fas fa-caret-down" style={iconStyle} />
-                    }
+                <ChevronDownIcon/>
                 </div>
               </If>
             </>
