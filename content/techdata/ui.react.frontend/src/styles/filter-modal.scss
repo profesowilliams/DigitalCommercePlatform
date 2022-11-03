@@ -139,6 +139,10 @@ $brand-charcoal: #262626;
     background-color: $brand-green; 
     color: white;
   }
+  .cmp-quote-button {
+    height: 52px;
+    align-items: center;
+  }
   .cmp-quote-button:disabled{
     opacity: 0.8;
     background-color: #000c21;
@@ -403,6 +407,10 @@ div.filter-accordion {
     }
     .cmp-quote-button {
       background-color: $brand-blue;
+      &:disabled {
+        background-color: $brand-cool-gray-1;
+        color: $brand-charcoal;
+      }
     }
   }
   
