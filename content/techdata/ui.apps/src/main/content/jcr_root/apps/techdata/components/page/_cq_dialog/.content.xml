@@ -47,7 +47,7 @@
                                     <securityCodeEnabled
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                            fieldLabel="Security Code Enabled"
+                                            text="Security Code Enabled"
                                             value="true"
                                             name="./securityCodeEnabled"/>
                                     <securityCode
