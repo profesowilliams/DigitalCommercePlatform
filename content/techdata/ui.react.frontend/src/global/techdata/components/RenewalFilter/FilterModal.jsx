@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { pushEvent } from "../../../../utils/dataLayerUtils";
@@ -26,7 +25,7 @@ const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
 };
 
-const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
+const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topReference }) => {
   const {
     filterList,
     resetFilter,
@@ -88,8 +87,14 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
       const subHeaderElement = document.querySelector('.subheader > div > div');
       if (!subHeaderElement) return;
       const { top, height } = document.querySelector('.subheader > div > div').getBoundingClientRect();
-      const gap = 7;
-      const topCalculation = top + gap + height;
+      if ( top > 0 ) topReference.current = {top, height};
+      const gap = 7;    
+      let topCalculation = top + gap + height;
+      if (dateSelected === 'custom' && topReference?.current){
+        const {top, height} = topReference.current;
+        topCalculation = top + gap + height;
+        window.scrollTo(0, 0);
+      }      
       filterDom.current.style.top = `${topCalculation}px`;
       filterDom.current.style.height = `calc(100vh - ${topCalculation}px)`;   
       filterBodyDom.current.style.height = `calc(100% - ${192}px)`;     

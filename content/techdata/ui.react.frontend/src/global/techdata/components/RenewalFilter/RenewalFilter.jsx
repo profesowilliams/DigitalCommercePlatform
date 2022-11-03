@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import FilterModal from "./FilterModal";
 import Button from "../Widgets/Button";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
@@ -13,6 +13,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   );
   const effects = useRenewalGridState((state) => state.effects);
   const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
+  const topReference = useRef();
 
   const { toggleFilterModal, closeAndCleanToaster } = effects;
   const handleFilterClick = () => {
@@ -46,6 +47,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
           aemData={aemData}
           handleFilterCloseClick={handleFilterCloseClick}
           onQueryChanged={onQueryChanged}
+          topReference={topReference}
         />
       )}
     </div>
