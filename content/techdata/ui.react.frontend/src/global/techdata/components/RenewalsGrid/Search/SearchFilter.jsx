@@ -12,7 +12,7 @@ import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../..
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
 import { If } from "../../../helpers/If";
-import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 import Capsule from "../../Widgets/Capsule";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
@@ -50,7 +50,7 @@ function _SearchFilter(
   const [capsuleSearchValue, setCapsuleSearchValue] = useState(getInitialValueState());
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = useRenewalGridState((state) => state.effects);
-  const { computeClassName, isTDSynnex } = useIsTDSynnexClass();
+  const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState);
   const { closeAndCleanToaster } = effects;  
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});

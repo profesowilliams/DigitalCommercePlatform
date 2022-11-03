@@ -6,13 +6,13 @@ import FilterDatePicker from "./FilterDatepicker";
 import SubFilter from "./SubFilter";
 import Count from "./Count";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
-import useIsTDSynnexClass from "./useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 
 function Filter({ id }) {  
   const filterList = useRenewalGridState((state) => state.filterList);
   const dateSelected = useRenewalGridState((state) => state.dateSelected);
   const { setFilterList } = useRenewalGridState((state) => state.effects);
-  const { computeClassName } = useIsTDSynnexClass();
+  const { computeClassName } = useComputeBranding(useRenewalGridState);
   if (!filterList) return null;
 
   const filter = filterList[id]; 

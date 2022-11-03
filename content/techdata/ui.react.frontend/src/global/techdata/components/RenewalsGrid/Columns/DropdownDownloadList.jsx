@@ -43,7 +43,7 @@ function DropdownDownloadList({ data, aemConfig }) {
       {productGrid?.showDownloadPDFButton && (
         <>
           <button onClick={downloadPDF}>
-            <DownloadIcon class="cmp-svg-icon__charcoal" />
+            <DownloadIcon className="cmp-svg-icon__charcoal" />
             Download PDF
           </button>
           |
@@ -53,7 +53,7 @@ function DropdownDownloadList({ data, aemConfig }) {
       {productGrid?.showDownloadXLSButton && (
         <>
           <button onClick={downloadXLS}>
-            <DownloadIcon class="cmp-svg-icon__charcoal"/>
+            <DownloadIcon className="cmp-svg-icon__charcoal"/>
             Download XLS
           </button>
           |

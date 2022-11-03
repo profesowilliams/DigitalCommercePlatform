@@ -9,7 +9,7 @@ import { CartIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
-import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 import { redirectToRenewalDetail } from "../renewalUtils";
 import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 
@@ -26,7 +26,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint };
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
     const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
-    const { computeClassName: computeTDSynnexClass, isTDSynnex } = useIsTDSynnexClass();
+    const { computeClassName: computeTDSynnexClass, isTDSynnex } = useComputeBranding(useRenewalGridState);
     const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
 
 
@@ -230,7 +230,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                             labels?.showDownloadPDFButton && (
                                                 <>
                                                 <button onClick={() => downloadPDF(option.id)}>
-                                                    <DownloadIcon class="cmp-svg-icon__charcoal"/>
+                                                    <DownloadIcon className="cmp-svg-icon__charcoal"/>
                                                     <span>
                                                         &nbsp;&nbsp;{labels.downloadPDFLabel}
                                                     </span>
@@ -244,7 +244,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                             <>
                                                 <span className="vertical-separator"></span>
                                                 <button onClick={() => exportXlsPlan(option?.id)}>
-                                                    <DownloadIcon class="cmp-svg-icon__charcoal"/>
+                                                    <DownloadIcon className="cmp-svg-icon__charcoal"/>
                                                     <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
                                                 </button>
                                             </>

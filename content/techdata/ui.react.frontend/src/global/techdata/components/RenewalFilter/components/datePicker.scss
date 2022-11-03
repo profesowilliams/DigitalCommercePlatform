@@ -195,12 +195,12 @@
 }
 .DayPickerKeyboardShortcuts_show__bottomRight::before {
   border-top: 26px solid transparent;
-  border-right: 33px solid var(--main-datepicker-color);;
+  border-right: 33px solid var(--main-datepicker-color);
   bottom: 0;
   right: 0;
 }
 .DayPickerKeyboardShortcuts_show__bottomRight:hover::before {
-  border-right: 33px solid #008489;
+  border-right: 33px solid var(--main-datepicker-color);
 }
 .DayPickerKeyboardShortcuts_show__topRight {
   top: 0;

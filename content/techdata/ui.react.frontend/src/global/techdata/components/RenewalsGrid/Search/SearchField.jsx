@@ -2,12 +2,13 @@ import React from "react";
 import { If } from "../../../helpers/If";
 import { CloseIconWeighted } from "./SearchFilter";
 import { CloseIcon } from "../../../../../fluentIcons/FluentIcons";
-import useIsTDSynnexClass from "../../RenewalFilter/components/useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
+import { useRenewalGridState } from "../store/RenewalsStore";
 
 export function SearchField({ chosenFilter = '', inputRef, triggerSearchOnEnter, searchTerm, setSearchTerm }) {
   const capitalizeContainedID = (searchTermText) => searchTermText.replace(/\bid(?:$|\b)/g,'ID');  
   const formatChosenFilter = (searchTermText) => `Enter ${capitalizeContainedID(searchTermText?.toLowerCase())}`
-  const { isTDSynnex } = useIsTDSynnexClass();
+  const { isTDSynnex } = useComputeBranding(useRenewalGridState);
   return (
     <div className="cmp-search-select-container__box-search-field">
       <input

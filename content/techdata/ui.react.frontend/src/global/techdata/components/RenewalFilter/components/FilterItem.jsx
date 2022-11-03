@@ -1,13 +1,13 @@
 import produce from "immer";
 import React from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
-import useIsTDSynnexClass from "./useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 
 const FilterItem = ({ id }) => {
 
   const filterList = useRenewalGridState(state => state.filterList);
   const effects = useRenewalGridState(state => state.effects);
-  const { computeClassName } = useIsTDSynnexClass();
+  const { computeClassName } = useComputeBranding(useRenewalGridState);
   if (!filterList) return null;
   const { setFilterList } = effects;
   const filter = filterList[id];

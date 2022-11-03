@@ -1,10 +1,13 @@
 import { CircularProgress } from "@mui/material";
+
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { PlaceOrderMaterialUi } from "../PlacerOrderMaterialUi";
 import { GET_STATUS_FAILED, PROCESS_ORDER_FAILED, TOASTER_LOCAL_STORAGE_KEY, UPDATE_FAILED } from "../../../../../../utils/constants";
 import TransactionNumber from "../TransactionNumber";
 import { handleOrderRequesting } from "../orderingRequests";
+import useComputeBranding from "../../../../hooks/useComputeBranding";
+import { AutoRenewIcon } from "../../../../../../fluentIcons/FluentIcons";
 
 const CustomOrderButton = (properties) => ({ children }) =>
   <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>
@@ -21,6 +24,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
   const endUserState = store( state => state.endUser || false);
   const resellerState = store( state => state.reseller || false);
   const itemsState = store( state => state.items || false);
+  const { computeClassName, isTDSynnex } = useComputeBranding(store);
 
   function resetDialogStates() {
     setSubmitted(false);
@@ -81,16 +85,27 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
       purchaseOrderNumber
     );
   }
+
+  const renderIconComponent = (isTDSynnex) => {
+    return isTDSynnex ? (<CircularProgress
+      size={20}      
+      sx={{ color: "white", fontSize: "14px" }}
+    />) : (
+      <AutoRenewIcon
+          size={20}
+          fill='white'   
+          className='cmp-progress-icon'       
+        />
+    )
+  }
+
   const OrderButtonComponent = submitted
     ? CustomOrderButton({
-      startIcon: (
-        <CircularProgress
-          size={20}
-          sx={{ color: "white", fontSize: "14px" }}
-        />
-      ),
+      className: computeClassName('cmp-order-button-component'),
+      startIcon: renderIconComponent(isTDSynnex),
     })
     : CustomOrderButton({
+      className: computeClassName('cmp-order-button-component'),
       disabled: checkButtonDisabled(),
       onClick: () => processOrder(),
     });

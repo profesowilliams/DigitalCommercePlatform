@@ -108,6 +108,7 @@ function RenewalsGrid(props) {
   const isPriceColumnClicked = useRef(false);
 
   useEffect(() => {
+    
     const catchPriceColumnClickEvent = (e) => {
       e.stopPropagation();
       const innerText = e.target.innerText || e.target.closest(".ag-header-cell-label")?.innerText;
@@ -115,11 +116,14 @@ function RenewalsGrid(props) {
     }
     window.addEventListener("click", catchPriceColumnClickEvent);
     removeDashboardSeparator(".renewalsgrid")
+
     const renewalsNode = renewalsRef.current;
-    const containsTDSynnexClass = renewalsNode?.parentNode?.parentNode?.parentNode?.classList.contains("cmp-grid-td-synnex");
-    if (containsTDSynnexClass) {
-      setCustomState({key:'isTDSynnex', value:true});
-    }   
+    const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
+    const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-grid-td-synnex");
+    const isTechdata = parentRenewalsStyle?.classList.contains("cmp-grid-techdata");
+    let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');    
+    setCustomState({key:'branding', value:branding});
+
     return () => window.removeEventListener("click",catchPriceColumnClickEvent);
   },[])
 

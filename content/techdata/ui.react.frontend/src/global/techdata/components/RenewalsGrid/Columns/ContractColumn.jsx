@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from ".././store/RenewalsStore";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
+
 
 function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
@@ -13,7 +15,7 @@ function _ContractColumn({ data, eventProps }) {
   const detailRender = useRenewalGridState(state => state.detailRender);
   const { pageNumber } = useRenewalGridState(state => state.pagination);
   const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
-  const isTDSynnex = useRenewalGridState(state => state.isTDSynnex); 
+  const { isTDSynnex } = useComputeBranding(useRenewalGridState); 
   const rowIndex = eventProps?.node?.rowIndex
   const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
   const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);

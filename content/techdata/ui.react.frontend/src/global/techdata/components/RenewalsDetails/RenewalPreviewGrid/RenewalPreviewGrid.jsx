@@ -19,6 +19,7 @@ import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
 import { setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 
 
 function GridSubTotal({ subtotal, data, gridProps }) {
@@ -64,6 +65,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     getStatusEndpoint: compProps.getStatusEndpoint, 
     orderRenewalEndpoint: compProps.orderRenewalEndpoint
   };
+  const { computeClassName } = useComputeBranding(useRenewalsDetailsStore);
   const [subtotal, setSubtotal] = useState(null);
   const [orderButtonLabel, setOrderButtonLabel] = useState(gridProps?.orderButtonLabel);
   const gridData = data.items ?? [];
@@ -289,7 +291,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         <p className="cmp-place-order-actions">
             <Button
               disabled={!isIconEnabled}
-              sx={{background: teal[800],"&:hover": { background: teal[600] }}}
+              className={computeClassName('cmp-detail-order-button')}             
               onClick={onOrderButtonClicked}
               variant="contained"           
             >

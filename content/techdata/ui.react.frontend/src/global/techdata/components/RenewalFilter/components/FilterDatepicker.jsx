@@ -28,14 +28,17 @@ export default function FilterDatePicker({ isOpen = false }) {
   const effects = useRenewalGridState(state => state.effects);
   const aemConfig = useRenewalGridState(state => state.aemConfig);
   const dateSelected = useRenewalGridState(state => state.dateSelected);
-  const isTDSynnex = useRenewalGridState( state => state.isTDSynnex || false);
+  const branding = useRenewalGridState( state => state.branding || '');
   let customStartDate = useRenewalGridState(state => state.customStartDate);
   let customEndDate = useRenewalGridState(state => state.customEndDate);
-  const navIcons = isTDSynnex ?
+  const navIcons = branding === 'td-synnex' ?
     { navPrev: <ChevronLeftIcon fill="#003031" />, navNext: <ChevronRightIcon fill="#003031" /> } : null
 
-  useEffect(() =>
-    isTDSynnex && document.documentElement.style.setProperty('--main-datepicker-color', '#003031'), [])
+  useEffect(() => {
+    const brandingColor = branding === 'cmp-grid-techdata' ? '#000c21' : (branding === 'td-synnex' ? '#003031' : '#000c21')
+    document.documentElement.style.setProperty('--main-datepicker-color', brandingColor)
+  },[])
+
   useEffect(() => effects.setDateOptionList(aemConfig?.dateOptionValues), [aemConfig?.dateOptionValues]);
   /**
    * Unfortunately moment is a peer dependency of react-dates.

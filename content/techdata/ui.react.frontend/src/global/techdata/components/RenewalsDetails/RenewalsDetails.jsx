@@ -54,6 +54,17 @@ function RenewalsDetails(props) {
     window.location = shopURL;
   };
 
+  const renewalsRef = useRef();
+
+  useEffect(()=>{
+    const renewalsNode = renewalsRef.current;
+    const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
+    const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-grid-td-synnex");
+    const isTechdata = parentRenewalsStyle?.classList.contains("cmp-grid-techdata");
+    let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');    
+    effects.setCustomState({key:'branding', value:branding});
+  },[])
+
   useEffect(() => {
     // Remove Dashboard separator(s) from only Renewal Details page
     removeDashboardSeparator(".renewalsdetails");
@@ -200,7 +211,7 @@ function RenewalsDetails(props) {
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
-    <div className="cmp-quote-preview cmp-renewal-preview">
+    <div className="cmp-quote-preview cmp-renewal-preview" ref={renewalsRef}>
       {renewalsDetails ? (
         <section>
           <ConfigGrid

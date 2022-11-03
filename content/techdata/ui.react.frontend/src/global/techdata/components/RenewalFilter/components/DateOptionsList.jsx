@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
-import useIsTDSynnexClass from "./useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 
 export function DateOptionsList() {
 
   const dateOptionsList = useRenewalGridState((state) => state.dateOptionsList);
   const effects = useRenewalGridState((state) => state.effects);
 
-  const { computeClassName } = useIsTDSynnexClass();
+  const { computeClassName } = useComputeBranding(useRenewalGridState);
   const capitalizedItems = ["overdue"]
   useEffect(()=>effects.checkOptionListSelected(),[]);
   function customCapitalize(dateField){

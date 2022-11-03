@@ -3,8 +3,7 @@ import { teal } from "@mui/material/colors";
 
 export const PlaceOrderMaterialUi = {
   orderButtonProps: {
-    variant: "contained",
-    sx: { background: teal[800], "&:hover": { background: "#08BED5" } },
+    variant: "contained",    
   },
   circularProgress: { size: 20, sx: { color: "white", fontSize: "14px" } },
   textfieldsStyles: {   

@@ -7,6 +7,7 @@ import { PlaceOrderMaterialUi } from "./PlacerOrderMaterialUi";
 import usePlaceOrderDialogHook from "./hooks/usePlaceOrderDialogHook";
 import { useEffect } from "react";
 import { thousandSeparator } from "../../../helpers/formatting";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 
 
 
@@ -41,6 +42,7 @@ function PlaceOrderDialog({
     resetDialogStates   
   } = usePlaceOrderDialogHook({successSubmission, failedSubmission, noResponseMessage, orderEndpoints, renewalData, onClose, isDetails, store, POAllowedLength});   
 
+  const { computeClassName } = useComputeBranding(store);
   const handleClose = (isSuccess = false) => onClose(isSuccess); 
 
   const showEnuserCompanyName = (text) => {
@@ -122,7 +124,7 @@ function PlaceOrderDialog({
               id="cmp-place-order-checkbox"
               checked={termsServiceChecked}
               onChange={(e) => setTermsServiceChecked(e.target.checked)}
-              sx={{ ...PlaceOrderMaterialUi.checkbox }}
+              className={computeClassName('cmp-place-order-checkbox')}
             />
             {""}
             <label htmlFor="cmp-place-order-checkbox">

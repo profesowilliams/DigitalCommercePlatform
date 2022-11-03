@@ -1,8 +1,9 @@
 import React from "react";
-import useIsTDSynnexClass from "./useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
+import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 
 const Count = ({ children, callback }) => {
-  const { computeClassName } = useIsTDSynnexClass();
+  const { computeClassName } = useComputeBranding(useRenewalGridState);
   return <button onClick={callback} className={computeClassName("count")}>{children}</button>;
 };
 

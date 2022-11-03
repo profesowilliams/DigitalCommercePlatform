@@ -12,7 +12,7 @@ import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
 import FilterList from "./components/FilterList";
 import FilterTags from "./components/FilterTags";
-import useIsTDSynnexClass from "./components/useIsTDSynnexClass";
+import useComputeBranding from "../../hooks/useComputeBranding";
 
 import { generateFilterFields } from "./filterUtils/filterUtils";
 import normaliseAPIData from "./filterUtils/normaliseAPIData";
@@ -39,7 +39,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged }) => {
     (state) => state.appliedFilterCount
   );
 
-  const { computeClassName, isTDSynnex } = useIsTDSynnexClass(); 
+  const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState); 
 
   const { setAppliedFilterCount } = useRenewalGridState(
     (state) => state.effects

@@ -117,6 +117,18 @@
 p.cmp-place-order-actions {
     display: flex;
     flex-direction: row-reverse;
+	button.cmp-grid-techdata{
+		background-color: $brand-blue;
+		&:hover{
+			background-color: lighten($brand-blue, 10%);
+		}
+	}
+	button.td-synnex{
+		background-color: $brand-green;
+		&:hover{
+			background-color: lighten($brand-green, 10%);
+		}
+	}
 }
 
 .cmp-place-order-terms{

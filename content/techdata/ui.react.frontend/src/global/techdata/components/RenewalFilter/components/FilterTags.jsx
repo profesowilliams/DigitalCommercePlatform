@@ -5,13 +5,13 @@ import capitalizeFirstLetter, {
   getLocaleFormattedDate,
 } from '../../../../../utils/utils';
 import useFilteringSelected from "../hooks/useIsFilteringSelected";
-import useIsTDSynnexClass from "./useIsTDSynnexClass";
+import useComputeBranding from "../../../hooks/useComputeBranding";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState( state => state.datePickerState);
   const customStartDate = useRenewalGridState( state => state.customStartDate);
   const customEndDate   = useRenewalGridState( state => state.customEndDate);
-  const { computeClassName } = useIsTDSynnexClass();
+  const { computeClassName } = useComputeBranding(useRenewalGridState);
   if (!datePickerState) return null;
   const [startDate, endDate] = datePickerState;
 
@@ -35,7 +35,7 @@ function FilterTags() {
   const effects = useRenewalGridState((state) => state.effects);
   const {hasAnyFilterSelected, filterList, dateSelected} = useFilteringSelected()
   const { setFilterList, clearDateFilters } = effects;
-  const { computeClassName } = useIsTDSynnexClass();
+  const { computeClassName } = useComputeBranding(useRenewalGridState);
   
   const handleShowMore = () => {
     setShowMore(!showMore);

@@ -26,6 +26,32 @@
     display: flex;
     flex-direction: row-reverse;
     margin: 1rem 0;
+    button.cmp-order-button-component {
+        &.td-synnex {
+            background-color: $brand-green;
+            &.Mui-disabled{
+                background-color: #0000001f;
+            }
+        }
+        &.cmp-grid-techdata {
+            background-color: $brand-blue;
+            &.Mui-disabled{
+                background-color: #0000001f;
+            }
+        }
+        .cmp-progress-icon {
+            animation: loading-icon 1.3s linear infinite;
+        }
+    }
+}
+
+@keyframes loading-icon {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .cmp-place-order-terms{
@@ -33,6 +59,15 @@
 		color: #00558C;
 		cursor: pointer;
 	}
+    .cmp-place-order-checkbox {
+        padding-left: 0px;
+        &.td-synnex {
+            color: $brand-green;            
+        }
+        &.cmp-grid-techdata {
+            color: $brand-blue;
+        }
+    }
 }
 
 .cmp-place-order-terms label{	

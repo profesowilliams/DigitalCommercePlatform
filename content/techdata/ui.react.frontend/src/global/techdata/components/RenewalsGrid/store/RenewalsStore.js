@@ -44,7 +44,8 @@ const INITIAL_STATE = {
     isSuccess:false
   },
   isTDSynnex:false,
-  resetGrid:null
+  resetGrid:null,
+  branding:''
 };
 
 /**
