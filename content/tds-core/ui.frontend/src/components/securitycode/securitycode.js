@@ -11,9 +11,9 @@
   const inputs = securityForm?.querySelectorAll('input');
   const dataset = document.querySelector('[data-sec-code]');
   const errorDataset = document.querySelector('[data-error-code]');
-  const { secCode, secCodeEnabled } = dataset.dataset;
+  const { secCode, secCodeEnabled } = dataset?.dataset ? dataset.dataset : {secCode:null, secCodeEnabled:null};
   const validationCodeEnabledFlag = secCodeEnabled || secCodeEnabled === ''
-  const {errorCode} = errorDataset.dataset;
+  const {errorCode} = errorDataset?.dataset ? errorDataset?.dataset : {errorCode: null};
 
   function handlerOpenSecurityCodeModal() {
     inputs.forEach((input) => {
@@ -88,6 +88,7 @@
       insertPageToCookies();
       closeModal();
     } else {
+      ResetInputs()
       const errorLabel = document.createElement('span');
       errorLabel.innerText = errorCode;
       errorLabel.style.color = 'red';
@@ -96,7 +97,17 @@
     }
   }
 
+  function ResetInputs() {
+    inputs.forEach((input, index) => {
+      input.value = null;  
+      if (index === 0) {
+        input.focus();
+      }
+    });
+  }
+
   function focusNextElement() {
+    removeLabels();
     const focusSableElements =
       'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
     if (document.activeElement && document.activeElement.form) {

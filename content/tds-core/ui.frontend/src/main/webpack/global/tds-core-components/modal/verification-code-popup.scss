@@ -8,6 +8,9 @@
     right:0;
     bottom:0;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    
   
   .cmp-s-code-popup__modal__content-container {
     -ms-box-orient: horizontal;
