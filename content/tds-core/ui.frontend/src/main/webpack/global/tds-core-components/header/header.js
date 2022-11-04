@@ -101,20 +101,24 @@ export default class Header {
     
     // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
     initSecondaryImage() {
-        const imgEl = document.querySelector('[data-mobile-logo]');
-        if (imgEl) {
+        const figure = document.querySelectorAll('.dp-figure');
+        if (!figure) return;
+        const images = [];
+        figure.forEach(f => {
+            images.push(f);
+        });
+
+        if (images.length === 0) return;
+        images.forEach(image => {
+            const imgEl = image.querySelector('[data-mobile-logo]');
+            if (!imgEl) return;
             const smallLogo = imgEl.dataset.mobileLogo;
             const img = document.createElement('img');
             img.classList.add('cmp-header--logo-small');
-
-            const figure = document.querySelector('.dp-figure');
-
-            const firstImage = figure.getElementsByTagName('img')[0];
-            firstImage.style.display='none';
-            if (!figure) return;
-            insertAfter(img, figure);
+            image.style.display='none';
+            insertAfter(img, image );
             img.src = smallLogo;
-        }
+        });
     }
 
     toggleSearch(el) {
