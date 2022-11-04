@@ -1,5 +1,6 @@
 @import "../../variables";
 @import "../../../site/variables";
+@import "../../styles/helpers/dynamic-spacing.scss";
 
 .cmp-sub-header {
   font-family: "Open Sans", sans-serif;
@@ -113,7 +114,7 @@
         position: relative;
         padding: 0 !important;
         z-index: 10;
-        margin-right: rem(28px);
+        margin: 0 rem(14px);
 
         span, a
          {
@@ -169,6 +170,7 @@
   }
 }
 
+
 .cmp-new-subheader {
   .cmp-sub-header__menu--hide {
     display: none;
@@ -218,7 +220,6 @@
         margin: auto !important;
         max-width: 90rem;
         width: 100%;
-        padding-left: rem(42px);
 
         @media (max-width: 1023px) {
           padding-left: rem(73px);
@@ -258,6 +259,12 @@
               }
             }
           }
+        }
+
+        .cmp-sub-header-dynamic-padding {
+              @extend .cmp-tabs__tablist;
+              @extend .dpl5;
+              @include dynamic-padding;    
         }
       }
     }
