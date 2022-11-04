@@ -129,7 +129,6 @@
     errorContainer.classList.add('cmp-form__error-container');
     errorIconElement.classList.add('cmp-form_icon');
     errorIconElement.classList.add(errorIcon);
-    errorIconElement.classList.add('fas');
     errorContainer.appendChild(errorIconElement);
     errorContainer.appendChild(errorLabel);
     const referenceNode = document.querySelector('.cmp-form__buttons');

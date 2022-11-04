@@ -8,8 +8,7 @@ import { onEscapeKey } from '../../utils/keyboard';
     const closeButton = modal.getElementsByClassName(
       CLASS_MODAL_CLOSE_BUTTON
     )[0];
-
-    modal.dataset.openerIds.split(',').map((item) => {
+    modal?.dataset?.openerIds && modal.dataset.openerIds.split(',').map((item) => {
       const btn = document.getElementById(item);
 
       if (btn) {
