@@ -24,6 +24,15 @@
     }
   }
 
+  padding-bottom: 120px;
+  margin-left: -21px;
+
+  @include mobile {
+    display: flex;
+    justify-content: center;
+    margin-left: 32px;
+  }
+
   .cmp-accordion {
     padding: 27px 0;
     width: 370px;
@@ -82,6 +91,19 @@
       height: 100px;
       width: 200px;
       align-items: center;
+
+      @include mobile {
+        position: relative;
+        width: 314px;
+        text-align: center;
+        align-items: start;
+        .text {
+          display: flex;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
       &.cmp-accordion__panel--expanded {
         display: flex;
       }
@@ -109,5 +131,68 @@
   }
   .cmp-accordion__item:nth-child(2) {
     margin-left: 40px;
+  }
+
+  @include mobile {
+    .cmp-honeycomb__two-rows {
+      .cmp-accordion__item:nth-child(1) {
+        .cmp-accordion__panel {
+          top: 125px;
+          right: 91px;
+          left: unset;
+        }
+      }
+      .cmp-accordion__item:nth-child(2) {
+        .cmp-accordion__panel {
+          top: 16px;
+          right: 6px;
+          left: unset;
+        }
+      }
+      .cmp-accordion__item:nth-child(3) {
+        .cmp-accordion__panel {
+          top: 16px;
+          right: 157px;
+          left: unset;
+        }
+      }
+    }
+    .cmp-honeycomb__three-rows {
+      .cmp-accordion__item:nth-child(1) {
+        .cmp-accordion__panel {
+          top: 222px;
+          right: 63px;
+          left: unset;
+        }
+      }
+      .cmp-accordion__item:nth-child(2) {
+        .cmp-accordion__panel {
+          top: 113px;
+          left: 22px;
+          right: unset;
+        }
+      }
+      .cmp-accordion__item:nth-child(3) {
+        .cmp-accordion__panel {
+          top: 113px;
+          right: 129px;
+          left: unset;
+        }
+      }
+      .cmp-accordion__item:nth-child(4) {
+        .cmp-accordion__panel {
+          top: 4px;
+          right: 41px;
+          left: unset;
+        }
+      }
+      .cmp-accordion__item:nth-child(5) {
+        .cmp-accordion__panel {
+          top: 4px;
+          right: 192px;
+          left: unset;
+        }
+      }
+    }
   }
 }

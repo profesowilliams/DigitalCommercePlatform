@@ -2,7 +2,7 @@
   data-sly-use.accordion="com.adobe.cq.wcm.core.components.models.Accordion"
   data-panelcontainer="${wcmmode.edit && 'accordion'}"
   id="${accordion.id}"
-  class="cmp-accordion"
+  class="cmp-accordion ${accordion.items.size <= 3 ? 'cmp-honeycomb__two-rows' : 'cmp-honeycomb__three-rows'}"
   data-cmp-is="accordion"
   data-cmp-data-layer="${accordion.data.json}"
   data-cmp-single-expansion="${accordion.singleExpansion}"
