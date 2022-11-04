@@ -21,7 +21,7 @@
     : { errorCode: null };
   const { errorIcon } = errorIconDataset?.dataset
     ? errorIconDataset?.dataset
-    : { errorIcon: 'fa-warning' };
+    : { errorIcon: 'fa-solid fa-triangle-exclamation' };
   const cookieValue = getCookie(COOKIE_NAME);
   const cookieString = pageID + '#' + secCode;
   function handlerOpenSecurityCodeModal() {
@@ -128,7 +128,8 @@
     errorIconElement.style.color = 'red';
     errorContainer.classList.add('cmp-form__error-container');
     errorIconElement.classList.add('cmp-form_icon');
-    errorIconElement.classList.add(errorIcon);
+    const classList = errorIcon.split(' ');
+    classList.forEach(cl => errorIconElement.classList.add(cl))
     errorContainer.appendChild(errorIconElement);
     errorContainer.appendChild(errorLabel);
     const referenceNode = document.querySelector('.cmp-form__buttons');
