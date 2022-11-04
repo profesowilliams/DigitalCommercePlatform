@@ -11,10 +11,19 @@
   const inputs = securityForm?.querySelectorAll('input');
   const dataset = document.querySelector('[data-sec-code]');
   const errorDataset = document.querySelector('[data-error-code]');
-  const { secCode, secCodeEnabled } = dataset?.dataset ? dataset.dataset : {secCode:null, secCodeEnabled:null};
-  const validationCodeEnabledFlag = secCodeEnabled || secCodeEnabled === ''
-  const {errorCode} = errorDataset?.dataset ? errorDataset?.dataset : {errorCode: null};
-
+  const errorIconDataset = document.querySelector('[data-error-icon]');
+  const { secCode, secCodeEnabled } = dataset?.dataset
+    ? dataset.dataset
+    : { secCode: null, secCodeEnabled: null };
+  const validationCodeEnabledFlag = secCodeEnabled || secCodeEnabled === '';
+  const { errorCode } = errorDataset?.dataset
+    ? errorDataset?.dataset
+    : { errorCode: null };
+  const { errorIcon } = errorIconDataset?.dataset
+    ? errorIconDataset?.dataset
+    : { errorIcon: 'fa-warning' };
+  const cookieValue = getCookie(COOKIE_NAME);
+  const cookieString = pageID + '#' + secCode;
   function handlerOpenSecurityCodeModal() {
     inputs.forEach((input) => {
       input.addEventListener(
@@ -39,6 +48,7 @@
     securityForm.addEventListener(
       'submit',
       function (e) {
+        submitButton.disabled = true;
         validateSecurityCode();
         e.preventDefault();
         return false;
@@ -58,9 +68,23 @@
     return null;
   }
 
+  function validatePageCookie() {
+    const previousPagesCookie = cookieValue;
+    let returnValue = true;
+    if (previousPagesCookie) {
+      const cookieArray = previousPagesCookie.split(',');
+      cookieArray.forEach((cookie) => {
+        if (cookie.includes(cookieString)) {
+          returnValue = false;
+          return false;
+        }
+      });
+    }
+    return returnValue;
+  }
+
   function insertPageToCookies() {
-    const cookieString = pageID + '#' + secCode;
-    const previousPagesCookie = getCookie(COOKIE_NAME);
+    const previousPagesCookie = cookieValue;
     if (previousPagesCookie) {
       const hashArray = previousPagesCookie.split(',');
       hashArray.push(cookieString);
@@ -72,8 +96,10 @@
 
   function removeLabels() {
     const form = document.querySelector('#securityform');
-    const elements = [...form.getElementsByTagName('span')];
-    elements.forEach(element => element.remove())
+    const elements = [
+      ...form.getElementsByClassName('cmp-form__error-container'),
+    ];
+    elements.forEach((element) => element.remove());
   }
 
   function validateSecurityCode() {
@@ -88,18 +114,31 @@
       insertPageToCookies();
       closeModal();
     } else {
-      ResetInputs()
-      const errorLabel = document.createElement('span');
-      errorLabel.innerText = errorCode;
-      errorLabel.style.color = 'red';
-      const referenceNode = document.querySelector('.cmp-form__buttons');
-      referenceNode.parentNode.insertBefore(errorLabel, referenceNode);
+      createErrorContainer();
     }
+  }
+
+  function createErrorContainer() {
+    ResetInputs();
+    const errorContainer = document.createElement('div');
+    const errorLabel = document.createElement('span');
+    const errorIconElement = document.createElement('span');
+    errorLabel.innerText = errorCode;
+    errorLabel.style.color = 'red';
+    errorIconElement.style.color = 'red';
+    errorContainer.classList.add('cmp-form__error-container');
+    errorIconElement.classList.add('cmp-form_icon');
+    errorIconElement.classList.add(errorIcon);
+    errorIconElement.classList.add('fas');
+    errorContainer.appendChild(errorIconElement);
+    errorContainer.appendChild(errorLabel);
+    const referenceNode = document.querySelector('.cmp-form__buttons');
+    referenceNode.parentNode.insertBefore(errorContainer, referenceNode);
   }
 
   function ResetInputs() {
     inputs.forEach((input, index) => {
-      input.value = null;  
+      input.value = null;
       if (index === 0) {
         input.focus();
       }
@@ -151,10 +190,12 @@
   document.addEventListener('DOMContentLoaded', () => {
     const modals = document.getElementsByClassName(CLASS_MODAL);
     if (pageID && validationCodeEnabledFlag) {
-      if (modals && modals.length > 0) {
-        for (let element of modals) {
-          modalElement = element;
-          openModal(element);
+      if (validatePageCookie()) {
+        if (modals && modals.length > 0) {
+          for (let element of modals) {
+            modalElement = element;
+            openModal(element);
+          }
         }
       }
     }

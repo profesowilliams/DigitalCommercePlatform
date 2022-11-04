@@ -1,3 +1,4 @@
+$font-size-container: 16px;
 
 .cmp-s-code-popup__modal__content {
     height: 100vh;
@@ -10,7 +11,38 @@
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
-    
+
+    #securityform {
+        display: flex;
+        flex-direction: column;
+    }
+    p {
+        font-size: $font-size-container;
+        text-align: center;
+        margin: 0px;
+    }
+
+    h4 {
+        font-size: 20px;
+    }
+
+    .cmp-form__error-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cmp-form_icon {
+        color: get-color(cherry);
+        margin-right: rem(6px);
+        margin-top: 0.7vh;
+        font-size: $font-size-container;
+    }
+
+    .cmp-form_error-message {
+        color: get-color(cherry);
+        margin-left: rem(6px);
+        font-size: $font-size-container;
+    }
   
   .cmp-s-code-popup__modal__content-container {
     -ms-box-orient: horizontal;
@@ -30,6 +62,15 @@
     height: rem(374px);
     background-color:  map-get($color-palette, "white") !important;
     padding: rem(46px) rem(40px);
+
+    input[type=password] {
+        -webkit-text-security: square;
+    }
+
+    input[type="password"] {
+        -webkit-text-security: square;
+    }
+    
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -203,9 +244,8 @@
 
 .cmp-form__buttons {
     text-align: center;
-    padding: 10px 0 0;
+    margin-top: 24px;
 }
-
 
 .cmp-button {
     position: relative;
@@ -223,7 +263,7 @@
 
 .cmp-button--primary {
     background-color: map-get($color-palette, "teal") !important;
-    margin: 72px auto 0;
+    margin: 0 auto 0;
     color: map-get($color-palette, "white") !important;
     line-height: 48px;
     border: 1px solid transparent;
@@ -258,6 +298,10 @@
     -moz-opacity: 0.3;
     -khtml-opacity: 0.3;
     opacity: 0.3;
+    width: 100%;
+}
+
+.cmp-button--primary {
     width: 100%;
 }
 
