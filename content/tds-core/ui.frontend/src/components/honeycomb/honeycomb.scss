@@ -13,6 +13,7 @@
         .cmp-accordion__title {
           color: map-get($color-palette, 'white');
           margin-top: -2px;
+          font-weight: 500;
         }
       }
       .cmp-accordion__panel {
@@ -41,6 +42,7 @@
     background-color: unset;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
   }
   & > .cmp-accordion .cmp-accordion__button[aria-expanded='false']:after,
   & > .cmp-accordion .cmp-accordion__button[aria-expanded='true']:after {
