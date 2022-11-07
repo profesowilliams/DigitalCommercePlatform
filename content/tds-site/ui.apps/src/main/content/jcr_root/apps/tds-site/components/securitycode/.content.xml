@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Security Code"
     sling:resourceSuperType="tds-core/components/securitycode/v1/securitycode"
-    componentGroup="TDS Data - Content"/>
+    componentGroup="TDS Site - Content"/>
