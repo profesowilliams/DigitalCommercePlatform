@@ -19,7 +19,9 @@ use(function () {
         jsonObject.put("shopUrl", this.shopDomain+this.cartURL);
     }
 
-
+    if (properties.get("cartLabel") != null) {
+        jsonObject.put("cartLabel", properties.get("cartLabel"));
+    }
 
     return {
         configJson: jsonObject.toString()

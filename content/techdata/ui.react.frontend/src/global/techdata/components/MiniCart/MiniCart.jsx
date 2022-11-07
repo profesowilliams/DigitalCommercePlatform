@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { usGet } from "../../../../utils/api";
 import { isAlreadySignedIn } from "../../../../store/action/authAction";
 
-const MiniCartWrapper = ({ children, cartActive, shopUrl }) => {
+const MiniCartWrapper = ({ children, cartActive, shopUrl, cartLabel }) => {
   const sessionId = localStorage.getItem("sessionId");
   const className = `cmp-cart ${cartActive}`;
   if (window.SHOP?.authentication?.isAuthenticated() || sessionId) {
     return (
-      <a href={shopUrl} className={className}>
-        {children}
+      <a href={shopUrl} className="cmp-cart-link">
+          <div className={className}>
+            {children}
+        </div>
+        <span className="cmp-button__text">{cartLabel}</span>
       </a>
     );
   }
@@ -16,7 +19,7 @@ const MiniCartWrapper = ({ children, cartActive, shopUrl }) => {
 };
 
 const MiniCart = ({ componentProp }) => {
-  const { maxItems, endpoint, shopUrl } = JSON.parse(componentProp);
+  const { maxItems, endpoint, shopUrl, cartLabel } = JSON.parse(componentProp);
   const [cartItems, setCartItems] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   useEffect(() => {
@@ -72,7 +75,7 @@ const MiniCart = ({ componentProp }) => {
     setCartActive(newActive);
   }, [cartItems]);
   return (
-    <MiniCartWrapper shopUrl={shopUrl} cartActive={cartActive}>
+    <MiniCartWrapper shopUrl={shopUrl} cartActive={cartActive} cartLabel={cartLabel}>
       <span className="cmp-cart__icon">
         {cartActive ? (
         <svg width="32px" height="32px" viewBox="0 0 31 26" version="1.1">
