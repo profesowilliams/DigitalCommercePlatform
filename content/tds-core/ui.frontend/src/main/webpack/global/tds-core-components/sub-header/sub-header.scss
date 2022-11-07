@@ -217,8 +217,8 @@
 
       &>.cmp-sub-header--content {
         position: relative;
+        max-width: 100%;
         margin: auto !important;
-        max-width: 90rem;
         width: 100%;
 
         @media (max-width: 1023px) {
@@ -730,4 +730,92 @@
       }
     }
   }
+}
+
+    /// below code is for the story 362383 sub-header - new styles for max width and dynamic paddings
+  
+    /// below code is for the story 362383 sub-header - new styles for max width and dynamic paddings
+    @mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
+      &>.cmp-tabs {
+        #{$padding}: rem($default);
+      }
+      &-small {
+        &>.cmp-tabs {
+          #{$padding}: rem($sm);
+        }
+      }
+      &-medium {
+        &>.cmp-tabs {
+          #{$padding}: rem($md);
+        }
+      }
+      &-large{
+        &>.cmp-tabs {
+          #{$padding}: rem($lg);
+        }
+      }
+      &-extra-large{
+        &>.cmp-tabs {
+          #{$padding}: rem($xlg);
+        }
+      }
+      &-dynamic{
+        &>.cmp-tabs {
+    
+          @media only screen and (min-width: 5px) and (max-width: 767px) {  
+            #{$padding}: 1rem;  
+          } 
+    
+          @media only screen and (min-width: 768px) and (max-width: 1023px) {  
+            #{$padding}: 1.5rem;  
+          }
+    
+          @include desktop {
+            #{$padding}: 3rem;
+          }
+        }
+      }
+    }
+    
+    
+    .dp-general__innerspace {
+      &--all {
+        @include padding-sizes(padding, 16px, 8px, 32px, 64px, 160px);
+      }
+    
+      &--top {
+        @include padding-sizes(padding-top, 16px, 8px, 32px, 64px, 160px);
+      }
+    
+      &--bottom {
+        @include padding-sizes(padding-bottom, 16px, 8px, 32px, 64px, 160px);
+      }
+    
+      &--right {
+        @include padding-sizes(padding-right, 16px, 8px, 32px, 64px, 160px);
+      }
+    
+      &--left {
+        @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
+      }
+      
+      &--dynamic {
+        @include padding-sizes(padding-left, 16px, 8px, 32px, 64px, 160px);
+      }
+    }
+
+    
+@include mobile {
+
+  .dp-general__innerspace--left-large, 
+  .dp-general__innerspace--left-medium > .cmp-tabs, 
+  .dp-general__innerspace--left-large > .cmp-tabs {
+    padding-left: 0!important;
+  }
+
+  .dp-general__innerspace--right-large, 
+  .dp-general__innerspace--right-medium >.cmp-tabs, 
+  .dp-general__innerspace--right-large > .cmp-tabs {
+    padding-right: 0!important;
+  }  
 }
