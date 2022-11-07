@@ -2701,52 +2701,97 @@ $tertiary-border-size: 0px;
       $secondary-fill-background-disabled-color);
   }
 }
-
 /// TDS NEW LINK
 .cmp-tds-link {
-  border: 0 solid transparent;
-  background: none;
-  padding: rem(12px) rem(20px);
-  font-size: rem(16px);
-  font-weight: bold;
-  color: inherit;
-  width: fit-content;
-  height: fit-content;
-
-  &:hover {
-    text-decoration: underline;
-    opacity: 0.8;
+  button {
+    border: 0 solid transparent;
+    background: none;
+    font-size: rem(16px);
+    font-weight: bold;
     color: inherit;
+    width: fit-content;
+    height: fit-content;
+    padding: rem(12px) rem(20px);
 
-    .cmp-button {
-      text-decoration: underline !important;
+    &:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+      color: inherit;
+
+      .cmp-button {
+        text-decoration: underline;
+      }
+    }
+
+    &:active {
+      opacity: 1;
+      background: none;
+      color: inherit;
+      text-decoration: underline;
+      -webkit-filter: brightness(80%);
+      -moz-filter: brightness(80%);
+      -o-filter: brightness(80%);
+      -ms-filter: brightness(80%);
+      filter: brightness(80%);
     }
   }
 
-  &:active {
-    opacity: 1;
-    background: none;
-    color: inherit;
-    text-decoration: underline;
-    -webkit-filter: brightness(80%);
-    -moz-filter: brightness(80%);
-    -o-filter: brightness(80%);
-    -ms-filter: brightness(80%);
-    filter: brightness(80%);
+  button[disabled] {
+    opacity: .8;
+    padding: rem(12px) rem(20px);
+    box-sizing: border-box;
+    cursor: not-allowed;
+    filter: grayscale(1);
+    text-decoration: none !important;
+
+    &:hover {
+      .cmp-button {
+         opacity: .8 !important;
+      }
+    }
+
+    &:active {
+      .cmp-button {
+        opacity: .8 !important;
+        background: none;
+        filter: grayscale(1);
+      }
+    }
   }
 }
 
 .cmp-tds-link-light {
-  color: map-get($color-palette, "white") !important;
-
-  &:hover {
-    opacity: 0.85;
+  button {
     color: map-get($color-palette, "white") !important;
+
+    &:hover {
+      opacity: 0.85;
+      color: map-get($color-palette, "white") !important;
+    }
+
+    &:active {
+      opacity: 0.7;
+      color: map-get($color-palette, "white") !important;
+    }
   }
 
-  &:active {
-    opacity: 0.7;
-    color: map-get($color-palette, "white") !important;
+  button[disabled] {
+    color: get-color(neutral-gray-2) !important;
+    opacity: 1 !important;
+
+    &:hover {
+      .cmp-button {
+        opacity: 1 !important;
+      }
+    }
+
+    &:active {
+      .cmp-button {
+        opacity: 1 !important;
+        background: none;
+        filter: grayscale(1);
+      }
+    }
   }
 }
 
@@ -2788,7 +2833,6 @@ $tertiary-border-size: 0px;
 }
 
 .button {
-  height: 100%;
 
   &.cmp-button--color-teal {
     & .cmp-button {
@@ -2888,64 +2932,105 @@ $tertiary-border-size: 0px;
 }
 
 .cmp-tds-tertiary-button {
-  @extend .cmp-background-priority-0;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: rem(12px) rem(20px);
-  gap: rem(10px);
-  width: fit-content !important;
-  height: fit-content !important;
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: map-get($color-palette, "white") !important;
-    opacity: 1;
-    z-index: -1;
-  }
-
-  &:hover {
-    &:before {
-      opacity: 0.8;
-    }
-  }
-
-  &:active {
-    &:before {
-      opacity: 0.6;
-    }
-  }
+    @extend .cmp-background-priority-0;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding:0;
+    box-sizing: border-box;
+    gap: rem(10px);
+    width: fit-content !important;
+    height: fit-content !important;
 
   .cmp-button {
+      padding: rem(12px) rem(20px);
     .cmp-button__icon {
       margin: 0 rem(5px);
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: map-get($color-palette, "white") !important;
+      opacity: 1;
+      z-index: -1;
+    }
+
+    &:hover {
+      &:before {
+        opacity: 0.8;
+      }
+    }
+
+    &:active {
+      &:before {
+        opacity: 0.6;
+      }
+    }
+
+
+    &[disabled] {
+      box-sizing: border-box;
+      cursor: not-allowed;
+      filter: grayscale(1);
+      background: map-get($color-palette, "white") !important;
     }
   }
 }
 
 .cmp-tds-tertiary-light-button {
-  color: map-get($color-palette, "white") !important;
 
-  &:before {
-    opacity: 0 !important;
-  }
-
-  &:hover {
-    &:before {
-      opacity: 0.1 !important;
+  .cmp-button {
+    .cmp-button__icon {
+      margin: 0 rem(5px);
     }
-  }
 
-  &:active {
+    color: map-get($color-palette, "white") !important;
+
     &:before {
-      opacity: 0.2 !important;
+      opacity: 0 !important;
+    }
+
+    &:hover {
+      &:before {
+        opacity: 0.1 !important;
+      }
+    }
+
+    &:active {
+      &:before {
+        opacity: 0.2 !important;
+      }
+    }
+
+    &[disabled] {
+      background: none !important;
+      color: get-color(neutral-gray-2) !important;
+
+      &::before {
+        background: none !important;
+      }
+
+      &:hover {
+        &::before {
+          opacity: 0 !important;
+        }
+      }
+
+      &:active {
+        &::before {
+          opacity: 0 !important;
+          background: none;
+          filter: grayscale(1);
+        }
+      }
     }
   }
 }
