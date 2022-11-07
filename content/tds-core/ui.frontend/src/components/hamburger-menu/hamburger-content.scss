@@ -345,6 +345,9 @@
              &.cmp-container .header-active .languagenavigation span {
                 color: white;
             }
+            &.cmp-container .header-active .languagenavigation .cmp-form-options__field-description {
+                color: black;
+            }
 
             .header-active.cmp-container .masthead .regionSelectDropdown {
                 position: absolute;
