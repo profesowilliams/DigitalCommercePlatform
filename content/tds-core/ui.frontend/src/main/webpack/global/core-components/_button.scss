@@ -2776,7 +2776,7 @@ $tertiary-border-size: 0px;
   }
 
   button[disabled] {
-    color: get-color(neutral-gray-2) !important;
+    color: get-color(cool-gray-8) !important;
     opacity: 1 !important;
 
     &:hover {
@@ -3012,7 +3012,7 @@ $tertiary-border-size: 0px;
 
     &[disabled] {
       background: none !important;
-      color: get-color(neutral-gray-2) !important;
+      color: get-color(cool-gray-8) !important;
 
       &::before {
         background: none !important;
