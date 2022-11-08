@@ -11,7 +11,64 @@ export default class Header {
         window.addEventListener('resize', () => this.headerResize());
         this.searchEl?.addEventListener('click', () => this.toggleSearch(this.searchEl));
         document.addEventListener('click', (event) => this.showSearchIconOnly(event, this.searchEl));
-        // this.initSecondaryImage();
+        window.addEventListener('scroll', () => this.handleStickyHeader());
+
+        this.header = document.getElementById('cmp-techdata-header');
+        this.authorColor = this.header.style.backgroundColor;
+
+        this.setComponentToStick();
+        this.checkSubheaderContainer();
+        this.setSubheaderMargin();
+    }
+
+    setComponentToStick(){
+        const masthead =  document.querySelector('.masthead');
+        const mastheadContainer = masthead.querySelector('.cmp-container');
+        this.stickyHeaderFlag = mastheadContainer.dataset.stickyHeaderflag;
+
+        this.isSubheaderTransparency = false;
+        this.componentToStick = document.getElementById(mastheadContainer.dataset.stickyComponentid);
+        this.componentToStickTop = this.componentToStick ? this.componentToStick.getBoundingClientRect().top : null;
+
+        if(this.stickyHeaderFlag === "true"){
+            this.header.classList.add('cmp-experiencefragment__header--sticky');
+        }
+    }
+
+    checkSubheaderContainer(){
+        const aemGrid = document.querySelector(".aem-Grid");
+        this.subheaderList = aemGrid.querySelectorAll(".subheader");
+        this.subheader = this.subheaderList[0];
+
+        if(this.subheader){
+            if(!this.subheader.previousElementSibling){
+                if(!this.subheader.closest(".experiencefragment")){
+                    this.container = this.subheader.closest(".container") ? this.subheader.closest(".container").previousElementSibling : null;
+                }
+                else{
+                    this.container = this.subheader.closest(".experiencefragment") ? this.subheader.closest(".experiencefragment").previousElementSibling : null;
+                }
+            }
+            else{
+                this.container = this.subheader ? this.subheader.previousElementSibling : null;
+            }
+        }
+    }
+
+    setSubheaderMargin(){
+        if(this.header && this.subheader && this.container){
+            this.subheaderNav = this.subheader.querySelector('.cmp-tabs');
+            this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
+            this.isComponentStuck = false;
+
+            if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
+                this.isContainer = true;
+                if(this.stickyHeaderFlag === "true"){ 
+                    this.checkHeaderImage();
+                } 
+                this.checkSubheaderImage();
+            }
+        }
     }
 
     headerResize() {
@@ -19,6 +76,11 @@ export default class Header {
             this.headerEl?.classList.add(this.HEADER_MOBILE);
         } else {
             this.headerEl?.classList.remove(this.HEADER_MOBILE);
+        }
+
+        if(this.header && this.subheaderNav && this.container){
+            this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
+            this.subheaderNav.style.width = this.container.clientWidth + "px";
         }
     }
 // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
@@ -56,6 +118,64 @@ export default class Header {
                 document.querySelector('.cmp-header--logo-small')?.classList.remove('active');
                 document.querySelector('.dp-figure').style.display = 'block';
             }
+        }
+    }
+
+    handleStickyHeader() {
+        if(this.header && this.isContainer && this.subheader){
+            this.checkHeaderImage();
+            this.checkHeaderSubheader();
+        }
+    }
+
+    checkHeaderSubheader(){
+        if(this.componentToStick){
+            if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top - this.subheaderNav.clientHeight){
+                if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight) - this.subheaderNav.clientHeight){
+                    if(this.subheaderNav.id === this.componentToStick.id){
+                        this.componentToStick.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
+                    }
+                    this.componentToStick.classList.remove('sticky');
+                    this.isComponentStuck = false;
+                }
+                else{
+                    if(this.isSubheaderTransparency){
+                        this.componentToStick.style.top = this.header.clientHeight + this.subheaderNav.clientHeight+ "px"; 
+                    }
+                    else{
+                        this.componentToStick.style.top = this.header.clientHeight + "px";
+                    }
+                    this.componentToStick.style.width = this.container.clientWidth + "px";
+                    this.componentToStick.classList.add('sticky');
+                    if(this.subheaderNav.id === this.componentToStick.id){
+                        this.componentToStick.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
+                    }
+                    this.isComponentStuck = true;
+                }
+            }
+        }
+    }
+
+    checkHeaderImage(){
+        if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
+            this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
+            this.header.style.backgroundColor = this.authorColor;
+        }
+        else {
+            var rgb = this.authorColor.replace(/^rgba?\(|\s+|\)$/g,'').split(',');
+            this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
+            this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
+        }
+    }
+
+    checkSubheaderImage(){
+        if(this.subheaderNav.getBoundingClientRect().top + parseInt(this.subheaderNav.style.marginTop,10) <= this.container.getBoundingClientRect().bottom){
+            if(this.subheaderNav && this.componentToStick){
+                if(this.subheaderNav.id === this.componentToStick.id){
+                    this.isSubheaderTransparency = true;
+                }
+            }
+            this.subheaderNav.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
         }
     }
 }
