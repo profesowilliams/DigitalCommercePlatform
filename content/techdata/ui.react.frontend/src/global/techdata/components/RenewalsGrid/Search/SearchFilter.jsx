@@ -278,9 +278,7 @@ function _SearchFilter(
                 className={computeClassName("cmp-search-tooltip__button")}
                 onClick={() => triggerSearch()}
               >
-               {isTDSynnex 
-               ? <SearchIcon className="search-icon__light"/>
-                :<i className="fas fa-search"></i>}
+              <SearchIcon className="search-icon__light"/>
               </button>
             </div>
             <If condition={isResetVisible}>
@@ -296,14 +294,9 @@ function _SearchFilter(
                       <p>Search by {chosenFilter}</p>
                     )}
                   </label>
-                  { isTDSynnex
-                      ? (
-                          <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
-                            <ChevronDownIcon onClick={onReset}/>
-                          </div>
-                        )
-                      : <a onClick={onReset}>Reset</a>
-                  }
+                    <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
+                      <ChevronDownIcon onClick={onReset}/>
+                    </div>     
                 </div>
               </div>
             </If>
@@ -330,11 +323,9 @@ function _SearchFilter(
         <If condition={isDropdownVisible}>
           <div className="cmp-search-select-container" ref={node}>
             <div className="cmp-search-select-container__box">
-              <input className={computeClassName("inputStyle")} placeholder={isTDSynnex ? "Search": "Search by"} disabled />
+              <input className={computeClassName("inputStyle")} placeholder={"Search"} disabled />
               <button className={computeClassName("cmp-search-tooltip__button")}>
-              {isTDSynnex ? 
               <SearchIcon className="search-icon__light"/>
-              : <i className="fas fa-search cmp-renewal-search__icon"></i>}
               </button>
             </div>
             <div className="cmp-search-select-container__filler"></div> 

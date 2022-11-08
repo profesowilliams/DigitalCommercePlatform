@@ -110,6 +110,9 @@
       width: 85px;
       align-items: center;
       text-transform: unset;
+      &:disabled {
+        background-color: map-get($color-palette, 'neutral-gray-2');
+      }
     }
   }
 
@@ -186,7 +189,9 @@
 
       button {
         background-color: $brand-blue;
-        
+        &:disabled {
+          background-color: map-get($color-palette, 'neutral-gray-2');
+        }
       }
     }
 
