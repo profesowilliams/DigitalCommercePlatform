@@ -67,12 +67,29 @@
       margin-left: auto;
     }
 
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {  
+      width: 96% !important;
+
+      .cmp-notification-message-container { 
+        width: 85%;
+        justify-content: space-between;
+      }
+      
+    }
+
     @include mobile {
       height: auto;
+      width: 92% !important;
       .cmp-notification {
         flex-direction: column;
         position: relative;
       }
+
+      .cmp-notification_text {
+        text-align: justify;
+        width: 80%;
+      }
+  
 
       .cmp-notification-message-container {
         display: flex;
