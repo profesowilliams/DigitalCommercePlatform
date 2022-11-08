@@ -42,6 +42,9 @@
       text-decoration: underline;
       text-underline-offset: 3px;
     }
+    svg {
+      stroke: $brand-green;
+    }
     &__default {
       @include font-arial-normal();
       background-color: transparent;
@@ -151,9 +154,9 @@
 
   .cmp-grid.ag-theme-alpine {
     .ag-header {
-      height: 65px !important;
+      height: 72px !important;
       &-row {
-        height: 55px !important;
+        height: 50px !important;
       }
       &-cell {
         padding: 0 10px 10px;

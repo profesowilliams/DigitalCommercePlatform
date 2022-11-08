@@ -65,6 +65,9 @@
         .cmp-renewals-qp__edit-planel {
             .MuiFormHelperText-root {
                 margin: 0;
+                &:not(.Mui-error) {
+                    color: $brand-icon-gray-color;
+                }
             }
         }
     }

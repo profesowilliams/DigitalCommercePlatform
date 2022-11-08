@@ -59,7 +59,7 @@ function RenewalsDetails(props) {
   useEffect(()=>{
     const renewalsNode = renewalsRef.current;
     const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
-    const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-grid-td-synnex");
+    const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-renewals-details__tds");
     const isTechdata = parentRenewalsStyle?.classList.contains("cmp-grid-techdata");
     let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');    
     effects.setCustomState({key:'branding', value:branding});

@@ -407,6 +407,7 @@ div.filter-accordion {
     }
     .cmp-quote-button {
       background-color: $brand-blue;
+      color: $td-neutral-gray;
       &:disabled {
         background-color: $brand-cool-gray-1;
         color: $brand-charcoal;

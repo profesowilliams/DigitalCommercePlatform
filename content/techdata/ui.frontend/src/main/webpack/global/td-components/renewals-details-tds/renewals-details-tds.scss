@@ -103,6 +103,16 @@
     }
   }
 
+  .cmp-place-order-actions {
+    button {
+      background-color: $brand-green;
+      height: 48px;
+      width: 85px;
+      align-items: center;
+      text-transform: unset;
+    }
+  }
+
   .cmp-grid.ag-theme-alpine {
     .ag-row * {
       @include font-arial-normal($size: 14px, $line-height:16px);
@@ -111,6 +121,69 @@
 
     .ag-header {
       border: none;
+    }
+  }
+}
+
+/**
+**  Tech Data Branding version of cmp-renewals-details__tds
+**/
+
+.cmp-grid-techdata {
+    .cmp-renewals-qp__reseller-info,
+    .cmp-renewals-qp__agreement-info,
+    .cmp-renewals-qp__enduser-info
+     {
+      &--title {
+        color: $brand-blue;
+      }
+    }
+    
+  .cmp-renewals-qp__config-grid {
+    .export-container {
+      .quote-preview {
+        color: $brand-blue;
+      }
+
+      button span {
+        color: $brand-blue;
+      }
+    }    
+  }
+
+  .cmp-renewal-preview {
+    .details-container {
+      .details-preview {
+        color: $brand-blue;
+      }
+    }
+  }
+  
+  .icon-button {
+    &__container {
+      &.cancel-save__absolute {
+        stroke-width: 0.3px;
+      }
+    }
+    svg {
+     stroke: $brand-blue;
+    }
+    &__default {
+      color: $brand-blue;
+    }
+  }
+
+  p {
+    &.cmp-place-order-actions {
+
+      button {
+        background-color: $brand-blue;
+        
+      }
+    }
+
+    &.cmp-renewals-qp__missing-info--text {
+      color: $brand-blue;
     }
   }
 }
