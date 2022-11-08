@@ -67,33 +67,38 @@
       margin-left: auto;
     }
 
+    // Tablet scree
     @media only screen and (min-width: 768px) and (max-width: 1023px) {  
       width: 96% !important;
-
+      margin-left: rem(16px) !important;
+      margin-right: rem(16px) !important;
       .cmp-notification-message-container { 
         width: 85%;
-        justify-content: space-between;
+        justify-content: space-evenly;
       }
-      
     }
 
-    @include mobile {
+    @media only screen and (min-width: 5px) and (max-width: 767px) {  
       height: auto;
       width: 92% !important;
+      margin-left: rem(16px) !important;
+      margin-right: rem(16px) !important;
       .cmp-notification {
         flex-direction: column;
         position: relative;
       }
 
-      .cmp-notification_text {
+      .cmp-notification .cmp-notification_text {
         text-align: justify;
         width: 80%;
+        
       }
   
 
       .cmp-notification-message-container {
         display: flex;
-        align-items: flex-start !important;
+        align-items: flex-start !important; 
+        margin-right: rem(40px)
       }
 
       .cmp-notification-link-container {
