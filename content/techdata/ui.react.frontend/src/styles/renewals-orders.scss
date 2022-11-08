@@ -18,6 +18,7 @@
     }
     .cmp-place-order-title{
         font-family: "Arial";
+        color: $brand-charcoal;
     }
 
 }
@@ -59,6 +60,13 @@
 		color: #00558C;
 		cursor: pointer;
 	}
+    label {
+        a.cmp-place-order-link {
+            color: #006FBA;
+            text-decoration: none;
+        }
+        color: $brand-charcoal;
+    }
     .cmp-place-order-checkbox {
         padding-left: 0px;
         &.td-synnex {
@@ -74,7 +82,7 @@
     cursor: pointer;
 }
 
-@mixin toasterContent($borderColor : #207c71){
+@mixin toasterContent($borderColor : #38853C){
     padding: 29px;
     border-left: 9px solid $borderColor;
     display: flex;
@@ -117,7 +125,7 @@
             }
         }
         .cmp-toaster-content-error{
-            @include toasterContent($borderColor: rgb(181 0 0));         
+            @include toasterContent($borderColor: #CD163F);         
             p {
                 margin-bottom: 0;
             } 
