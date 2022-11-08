@@ -50,7 +50,7 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Hide the 'Download PDF' Button from the details page."
                                                 name="./showDownloadPDFButton"
-                                                text="hide Download PDF Button"
+                                                text="Show Download PDF Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
                                             <showDownloadPDFButtonTypeHint
@@ -68,7 +68,7 @@
                                             <showDownloadXLSButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                                text="Hide Download XLS Button"
+                                                text="Show Download XLS Button"
                                                 name="./showDownloadXLSButton"
                                                 value="true"
                                                 uncheckedValue="false"/>
