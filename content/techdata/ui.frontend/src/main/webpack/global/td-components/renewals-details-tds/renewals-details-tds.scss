@@ -157,6 +157,11 @@
         color: $brand-blue;
       }
     }
+    .icon-button {
+      svg {
+        stroke: $brand-blue;
+       }
+    }
   }
   
   .icon-button {
