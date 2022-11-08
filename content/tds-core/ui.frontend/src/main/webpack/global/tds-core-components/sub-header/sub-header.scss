@@ -226,7 +226,8 @@
         }
 
         @include mobile{
-          padding-left: rem(39px);
+          //padding-left: rem(39px);
+          // commenting out temporarily until I check with Leo if it is important - Olivera
         }
 
         .cmp-tabs__tablist {
