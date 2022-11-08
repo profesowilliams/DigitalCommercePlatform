@@ -143,6 +143,13 @@
 
              .header-active.cmp-container .extrabutton .cmp-button__text {
                 margin-left: 8px;
+                color: map-get($color-palette, 'white');
+            }
+            .header-active.cmp-container .extrabutton {
+                padding: 2px 0;
+            }
+            .header-active.cmp-container .extrabutton .fa-handshake:before {
+                color: map-get($color-palette, 'white');
             }
 
             .masthead .header-active .masthead #mobile-header-container {
@@ -186,6 +193,12 @@
             .masthead .header-active .masthead .aem-Grid>.languagenavigation {
                 display: block;
                 padding: 0 15px;
+            }
+            .header-active.cmp-container .masthead .regionSelectDropdown .language-modal__content__row .language-modal__content__column {
+                display: none;
+            }
+            .header-active.cmp-container .masthead .regionSelectDropdown .language-modal__content__row .language-modal__content__column:last-child {
+                display: block;
             }
 
             .masthead .header-active .masthead .aem-Grid>.languagenavigation .cmp-dropbtn {

@@ -300,7 +300,8 @@
                        left: -25px;
                     }
                 }
-                .megamenu {
+                .megamenu,
+                 {
                     display: none;
                 }
                 .headerutility .headerutility {
@@ -309,6 +310,9 @@
                         display: block;
                     }
                 }
+                .headerutility .cmp-sign-in .showMenu .user-greet,
+                .headerutility .cmp-sign-in .showMenu .ec-id,
+                .headerutility .cmp-sign-in-list-content li:first-child,
                 .header-active.cmp-container .masthead {
                     display: none;
                 }
