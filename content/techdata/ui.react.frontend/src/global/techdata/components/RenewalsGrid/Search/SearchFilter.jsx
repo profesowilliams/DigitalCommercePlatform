@@ -164,7 +164,7 @@ function _SearchFilter(
     const isComingFromSearch =
       e.target.parentNode?.className === "cmp-renewal-search";
     const isComingFromReset =
-      e.target.parentNode?.className === "cmp-search-options__reset";
+      e.target.parentNode?.className === "cmp-search-options__reset" || e.target.parentNode?.className === "cmp-search-options__reset__icon-container";
     if (
       node.current &&
       !isComingFromSearch &&
@@ -299,7 +299,7 @@ function _SearchFilter(
                   { isTDSynnex
                       ? (
                           <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
-                            <ChevronDownIcon/>
+                            <ChevronDownIcon onClick={onReset}/>
                           </div>
                         )
                       : <a onClick={onReset}>Reset</a>
