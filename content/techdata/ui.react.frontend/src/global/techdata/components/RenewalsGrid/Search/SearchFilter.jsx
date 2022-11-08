@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { useEffect } from "react";
-import { ArrowClockWiseIcon, SearchIcon } from "../../../../../fluentIcons/FluentIcons";
+import { ChevronDownIcon, SearchIcon } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
@@ -296,7 +296,14 @@ function _SearchFilter(
                       <p>Search by {chosenFilter}</p>
                     )}
                   </label>
-                  { isTDSynnex ? <ArrowClockWiseIcon onClick={onReset} /> : <a onClick={onReset}>Reset</a>}
+                  { isTDSynnex
+                      ? (
+                          <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
+                            <ChevronDownIcon/>
+                          </div>
+                        )
+                      : <a onClick={onReset}>Reset</a>
+                  }
                 </div>
               </div>
             </If>

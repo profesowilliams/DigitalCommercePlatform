@@ -201,6 +201,13 @@ $brand-green-dark: #003031;
     label {
       padding: 0;    
     }
+    .cmp-search-options__reset__icon-container {
+      height: 30px;
+      width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     svg {
       width: 16px;
       height: 16px;
@@ -253,17 +260,23 @@ $brand-green-dark: #003031;
     &__reset {
      padding: unset;
      font-size: 13px;
+
      svg {
       margin-right: 16px;
       fill: $brand-charcoal;
      }
+      .cmp-search-options__reset__icon-container {
+        svg {
+          margin-right: 0;
+        }
+      }
     }
   }
   & .cmp-search-options label {
     padding: 6px 16px;
     color: $brand-charcoal;
     &:hover {
-      background-color: #E4E5E6;
+      background-color: unset;
     }
   }
 
