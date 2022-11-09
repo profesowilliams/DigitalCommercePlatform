@@ -38,7 +38,7 @@
 
   .cmp-accordion {
     padding: 27px 0;
-    width: 370px;
+    width: 360px;
     display: flex;
     flex-wrap: wrap;
   }
@@ -130,10 +130,10 @@
 
   .cmp-accordion__item:nth-child(1),
   .cmp-accordion__item:nth-child(4) {
-    margin-left: 103px;
+    margin-left: 94px;
   }
   .cmp-accordion__item:nth-child(2) {
-    margin-left: 40px;
+    margin-left: 31px;
   }
 
   @include mobile {
