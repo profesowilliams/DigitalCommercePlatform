@@ -1,4 +1,5 @@
-.cmp-grid-techdata {
+.cmp-grid-techdata { 
+    --color-white: rgba(255, 255, 255, 0.2);
     &.cmp-cancel-dialog {
         color: $brand-blue;
         &__cancel-button {
@@ -15,11 +16,11 @@
                     color: $brand-blue;
                 }
             }
-            &--no {
+            &--no { 
                 border-radius: 2px;
                 background-color: $brand-blue;
                 &:hover {
-                    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), $brand-blue;
+                    background: linear-gradient(0deg, var(--color-white),var(--color-white)), $brand-blue;
                     color: $brand-white;
                 }
             }
