@@ -90,7 +90,7 @@
                 left: 0;
                 bottom: 0;
                 right: 0;
-                background-color: #005758;
+                background-color: map-get($color-palette, "teal") !important; // To override the desktop inline style
                 width: 100vw;
                 flex-direction: column;
                 justify-content: unset ;
@@ -208,6 +208,7 @@
            .header-active.cmp-container .masthead .cmp-container {
                 display: flex;
                 flex-direction: column-reverse;
+                padding: 0;
             }
 
             .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
@@ -244,6 +245,7 @@
                 padding: 24px 0;
                 position: fixed;
                 bottom: 0;
+                left: 0;
                 right: 0;
                 z-index: 999;
             }

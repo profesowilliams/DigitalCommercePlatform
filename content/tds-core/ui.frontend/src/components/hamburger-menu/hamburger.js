@@ -12,6 +12,8 @@ export default class Hamburger {
         this.el = el;
         this.open = false;
         this.containerEl = document.querySelector('.megamenu');
+        this.headerResize();
+        window.addEventListener('resize', () => this.headerResize());
 
         this.el.addEventListener('click', () => this.handleClick(classObj));
         document.addEventListener('click', (e) => this.hideWhenOutside(e, classObj));
@@ -42,7 +44,43 @@ export default class Hamburger {
         this.open = false;
          if (this.el?.closest('.cmp-container')) {
             this.el?.closest('.cmp-container').classList.remove('header-active');
+            this.headerResize();
         }
+    }
+
+    updateHeaderLogo(mobileFlag) {
+        const tdsSiteheader = document.querySelector('.cmp-tds-site-header');
+        if (tdsSiteheader && tdsSiteheader.querySelector('.header-active')) {
+            const tdsSiteHeaderLogo = tdsSiteheader.querySelector('.masthead .cmp-image__link img');
+            if (mobileFlag) {
+                const desktopLogo = tdsSiteHeaderLogo?.getAttribute('src');
+                const mobileLogo = tdsSiteHeaderLogo?.dataset?.mobileLogo;
+                tdsSiteHeaderLogo.src = mobileLogo;
+                tdsSiteHeaderLogo.dataset.desktopLogo = desktopLogo;
+            } else {
+                if (tdsSiteHeaderLogo?.dataset?.desktopLogo) {
+                    const desktopLogo = tdsSiteHeaderLogo?.dataset?.desktopLogo;
+                    tdsSiteHeaderLogo.src = desktopLogo;
+                }
+            }
+        } else {
+            const tdsSiteHeaderLogo = tdsSiteheader?.querySelector('.masthead .cmp-image__link img');
+            if (tdsSiteHeaderLogo?.dataset?.desktopLogo) {
+                const desktopLogo = tdsSiteHeaderLogo?.dataset?.desktopLogo;
+                tdsSiteHeaderLogo.src = desktopLogo;
+            }
+        }
+    }
+
+    headerResize() {
+       var $this = this;
+       setTimeout(function() {
+           if (window.matchMedia("(max-width:1023px)").matches) {
+              $this.updateHeaderLogo(true);
+           } else {
+               $this.updateHeaderLogo(false);
+           }
+       }, 100);
     }
 
     handleClick({active, open}) {
@@ -52,6 +90,7 @@ export default class Hamburger {
             this.open = true;
             if (this.el?.closest('.cmp-container')) {
                 this.el?.closest('.cmp-container').classList.add('header-active');
+                this.headerResize();
             }
         } else {
             this.hideMegaMenu(active, open);
