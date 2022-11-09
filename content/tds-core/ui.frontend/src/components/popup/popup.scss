@@ -1,9 +1,9 @@
-
+$pop-up-z-index-value: 9999999;
 
 .cmp-popup__modal {
   display: none;
   position: fixed;
-  z-index: 9999999; //There are diff z-indexes in the codebase for the navbar, we might need to redefine all of them.
+  z-index: $pop-up-z-index-value; //There are diff z-indexes in the codebase for the navbar, we might need to redefine all of them.
   padding-top: 100px;
   left: 0;
   top: 0;

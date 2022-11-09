@@ -3,7 +3,6 @@ import { onEscapeKey } from '../../utils/keyboard';
   const CLASS_MODAL = 'cmp-popup__modal';
   const CLASS_MODAL_OPENED = 'cmp-popup__modal--open';
   const CLASS_MODAL_CLOSE_BUTTON = 'cmp-popup__modal__content__close';
-
   const configureModal = (modal) => {
     const closeButton = modal.getElementsByClassName(
       CLASS_MODAL_CLOSE_BUTTON
@@ -44,12 +43,16 @@ import { onEscapeKey } from '../../utils/keyboard';
       window.onclick = function (event) {
         const currentOpenPopup = isModalTarget(event.target, modals);
         if (currentOpenPopup) {
+          const securityCode = currentOpenPopup.getElementsByClassName("securitycode")[0];
+          if (securityCode) return;
           currentOpenPopup.classList.remove(CLASS_MODAL_OPENED);
         }
       };
 
       onEscapeKey(() => {
         for (let element of modals) {
+          const securityCode = element.getElementsByClassName("securitycode")[0];
+          if (securityCode) return;
           element.classList.remove(CLASS_MODAL_OPENED);
         }
       });
