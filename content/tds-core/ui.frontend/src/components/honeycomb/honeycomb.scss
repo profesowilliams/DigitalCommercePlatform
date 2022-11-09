@@ -30,7 +30,10 @@
   @include mobile {
     display: flex;
     justify-content: center;
-    margin-left: 32px;
+
+    .cmp-honeycomb__two-rows {
+      margin-left: 32px;
+    }
   }
 
   .cmp-accordion {
