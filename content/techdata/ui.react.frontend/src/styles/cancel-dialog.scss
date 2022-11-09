@@ -1,5 +1,5 @@
 .cmp-grid-techdata { 
-    --color-white: rgba(255, 255, 255, 0.2);
+
     &.cmp-cancel-dialog {
         color: $brand-blue;
         &__cancel-button {
@@ -19,9 +19,22 @@
             &--no { 
                 border-radius: 2px;
                 background-color: $brand-blue;
+               
                 &:hover {
-                    background: linear-gradient(0deg, var(--color-white),var(--color-white)), $brand-blue;
+                    
+                    background: $brand-blue;
                     color: $brand-white;
+                    position: relative;
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-image: linear-gradient(0deg, #FFFFFF, #FFFFFF);
+                        opacity: .2;
+                    }
                 }
             }
         }
