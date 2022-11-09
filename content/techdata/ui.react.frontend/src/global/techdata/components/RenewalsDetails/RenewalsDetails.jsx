@@ -270,6 +270,7 @@ function RenewalsDetails(props) {
         ></Modal>
       )}      
       <CancelDialog
+        branding={useRenewalsDetailsStore(state => state.branding || '')}
         isDialogOpen={openCancelDialog}
         onClose={closeCancelDialog}
         labels={componentProp.quoteEditing}

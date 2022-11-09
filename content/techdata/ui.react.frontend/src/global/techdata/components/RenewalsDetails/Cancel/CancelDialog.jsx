@@ -15,7 +15,7 @@ import {
 } from "./CancelDialogMaterialUI";
 import { getDictionaryValue } from "../../../../../utils/utils";
 
-function CancelDialog({ isDialogOpen, onClose, labels = {}}) {
+function CancelDialog({ branding, isDialogOpen, onClose, labels = {}}) {
     const {
         cancelDialogTitle = "",
         cancelDialogDescription = "",
@@ -36,12 +36,12 @@ function CancelDialog({ isDialogOpen, onClose, labels = {}}) {
             <DialogTitle>
                 {cancelDialogTitle}
             </DialogTitle>
-            <DialogContent {...dialogContentUI}>
+            <DialogContent className={`cmp-cancel-dialog ${branding}`} {...dialogContentUI}>
                 {cancelDialogDescription}
             </DialogContent>
             <DialogActions {...actionsUI}>
-                <Button autoFocus onClick={handleReset} {...cancelButtonUI}>{cancelDialogYes}</Button>
-                <Button onClick={handleClose} {...continueButtonUI}>{cancelDialogNo}</Button>
+                <Button className={`cmp-cancel-dialog__cancel-button--yes ${branding}`} autoFocus onClick={handleReset} {...cancelButtonUI}>{cancelDialogYes}</Button>
+                <Button className={`cmp-cancel-dialog__cancel-button--no ${branding}`} onClick={handleClose} {...continueButtonUI}>{cancelDialogNo}</Button>
             </DialogActions>
         </Dialog>
     );

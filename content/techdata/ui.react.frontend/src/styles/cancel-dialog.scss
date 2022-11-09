@@ -1,0 +1,28 @@
+.cmp-grid-techdata {
+    &.cmp-cancel-dialog {
+        color: $brand-blue;
+        &__cancel-button {
+            &--yes {
+                border-radius: 2px;
+                color: $brand-blue;
+                &.MuiButton-outlined {
+                   border: 1px solid $brand-blue;
+                }
+                &:hover {
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                    background-color: rgba(0, 12, 33, 0.1);
+                    color: $brand-blue;
+                }
+            }
+            &--no {
+                border-radius: 2px;
+                background-color: $brand-blue;
+                &:hover {
+                    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), $brand-blue;
+                    color: $brand-white;
+                }
+            }
+        }
+    }
+}
