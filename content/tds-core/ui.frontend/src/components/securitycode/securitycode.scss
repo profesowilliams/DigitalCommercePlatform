@@ -38,7 +38,12 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 }
 
 .cmp-popup__modal__content {
-  display: none;
+  background-color: rgba(0, 0, 0, 0);
+  border: rgba(0, 0, 0, 0);
+}
+
+.cmp-popup__modal__content__close {
+  color: rgba(0, 0, 0, 0);
 }
 
 .cmp-s-code-popup__modal__content {
@@ -76,6 +81,7 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
     color: get-color(cherry);
     margin-right: rem(6px);
     font-size: $font-size-container;
+    margin-top: rem(3px);
   }
 
   .cmp-form_error-message {

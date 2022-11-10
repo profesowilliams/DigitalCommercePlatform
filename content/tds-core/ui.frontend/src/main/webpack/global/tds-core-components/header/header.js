@@ -42,9 +42,9 @@ export default class Header {
         this.subheaderList = aemGrid.querySelectorAll(".subheader");
         this.subheader = this.subheaderList[0];
 
-        if(!this.subheader.previousElementSibling){
-            if(!this.subheader.closest(".experiencefragment")){
-                this.container = this.subheader.closest(".container") ? this.subheader.closest(".container").previousElementSibling : null;
+        if(!this?.subheader?.previousElementSibling){
+            if(!this?.subheader?.closest(".experiencefragment")){
+                this.container = this?.subheader?.closest(".container") ? this?.subheader?.closest(".container")?.previousElementSibling : null;
             }
             else{
                 this.container = this.subheader.closest(".experiencefragment") ? this.subheader.closest(".experiencefragment").previousElementSibling : null;
