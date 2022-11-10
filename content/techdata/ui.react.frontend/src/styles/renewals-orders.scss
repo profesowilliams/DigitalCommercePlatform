@@ -12,6 +12,9 @@
         cursor: pointer;
     }
     .cmp-order-purchase-order-number{
+        label, p {
+            color: $brand-icon-gray-color;
+        }
         label.Mui-error{
             color: #a6aaab !important;
         }
