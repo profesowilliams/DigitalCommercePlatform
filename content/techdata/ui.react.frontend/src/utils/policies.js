@@ -1,6 +1,5 @@
-import { getUser } from "./index";
+import { getUser, getHeaderInfoFromUrl } from "./index";
 import {isExtraReloadDisabled, intouchHeaderAPIUrl, intouchFooterAPIUrl} from "./featureFlagUtils";
-import {getHeaderInfoFromUrl} from "./utils";
 
 export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
 
