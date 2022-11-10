@@ -108,3 +108,4 @@ Included in the ui.frontend module is a [webpack-dev-server](https://github.com/
 2. Navigate inside the `ui.frontend` folder.
 3. Run the following command `npm run start` to start the webpack dev server. Once started it should open a browser (localhost:8080 or the next available port).
 4. You can now modify CSS, JS, SCSS, and TS files and see the changes immediately reflected in the webpack dev server.
+
