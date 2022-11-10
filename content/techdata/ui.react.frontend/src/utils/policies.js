@@ -73,7 +73,7 @@ const headerHTML = () => {
     if (headerEle && sessionId) {
     	const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', intouchHeaderAPIUrl);
+        xhr.open('GET', intouchHeaderAPIUrl());
         xhr.setRequestHeader('Site', headerInfo.site);
         xhr.setRequestHeader('SessionId', sessionId);
         xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
@@ -95,7 +95,7 @@ const footerHTML = () => {
     const sessionId = localStorage.getItem('sessionId');
     if (footerEle && sessionId) {
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', intouchFooterAPIUrl);
+        xhr.open('GET', intouchFooterAPIUrl());
         const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
         xhr.setRequestHeader('Site', headerInfo.site);
         xhr.setRequestHeader('SessionId', sessionId);
