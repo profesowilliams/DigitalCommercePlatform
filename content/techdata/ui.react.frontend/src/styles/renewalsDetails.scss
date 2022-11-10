@@ -65,12 +65,22 @@
         .cmp-renewals-qp__edit-planel {
             .MuiFormHelperText-root {
                 margin: 0;
+                &.Mui-error {
+                    color: $brand-cherry;
+                }
                 &:not(.Mui-error) {
                     color: $brand-icon-gray-color;
                 }
             }
             .MuiInputLabel-root {
                 color: $brand-icon-gray-color;
+            }
+            .MuiInput-underline {
+                &.Mui-error {
+                    &::after {
+                        color: $brand-cherry;
+                    }
+                }
             }
         }
     }

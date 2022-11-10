@@ -203,4 +203,12 @@
   .cmp-renewals-details .cmp-quantity-column__btn {
     background-color: $brand-blue;
   }
+
+  .MuiInput-underline {
+    &.Mui-focused {
+      &:after {
+        border-bottom-color: $brand-blue;
+      }
+    }
+  }
 }
