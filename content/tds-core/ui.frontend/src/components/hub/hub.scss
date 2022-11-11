@@ -2,7 +2,7 @@
   position: relative;
   display: inline-block;
   width: auto !important;
-  z-index: 99999;
+  z-index: 99;
   &.active {
     .cmp-button {
       &:after {

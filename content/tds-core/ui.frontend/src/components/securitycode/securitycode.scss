@@ -10,25 +10,25 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 
 .cmp-popup__modal {
   top: 5vw;
-  z-index: $z-index-value-up-of-popup;
+  z-index: 100;
 }
 .cmp-navigation--us #navigation {
-  z-index: $z-index-value-up-subheader;
+  z-index: 100;
 }
 .cmp-navigation--us #navigation > ul > li > ul > li > ul {
     height: auto;
 }
 
 .headerutility .languagenavigation .regionSelectDropdown {
-  z-index: $z-index-value-up-subheader;
+  z-index: 100;
 }
 
 .headerutility {
-    z-index: $z-index-value-up-subheader;
+    z-index: 100;
 }
 
 .hub .cmp-button__dropdown {
-  z-index: $z-index-value-up-subheader;
+  z-index: 100;
 }
 
 #navigation > ul > li:hover > ul,
