@@ -22,8 +22,18 @@
     .cmp-place-order-title{
         font-family: "Arial";
         color: $brand-charcoal;
+        span b {
+            font-family: "Arial";
+        }
     }
 
+    .cmp-place-order-content {
+        .cmp-order-purchase-order-number {
+            .MuiInputLabel-root, .MuiInput-root .MuiInput-input, .MuiFormHelperText-root.MuiFormHelperText-root {
+                font-family: "Arial";
+            }
+        }
+    }
 }
 
 .cmp-place-order-actions {
@@ -31,6 +41,7 @@
     flex-direction: row-reverse;
     margin: 1rem 0;
     button.cmp-order-button-component {
+        font-family: "Arial";
         text-transform: none;
         &.td-synnex {
             background-color: $brand-green;
@@ -65,6 +76,9 @@
 		cursor: pointer;
 	}
     label {
+        span, .cmp-place-order-link {
+            font-family: "Arial";
+        }
         a.cmp-place-order-link {
             color: #006FBA;
             text-decoration: none;
