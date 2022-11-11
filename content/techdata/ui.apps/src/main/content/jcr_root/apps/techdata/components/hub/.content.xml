@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Hub"
     sling:resourceSuperType="tds-core/components/hub/v1/hub"
-    componentGroup="Tech Data - Content"/>
+    componentGroup="Tech Data - Structure"/>

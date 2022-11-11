@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Hub"
     sling:resourceSuperType="core/wcm/components/button/v1/button"
-    componentGroup="TDS Core - Content"/>
+    componentGroup="TDS Core - Structure"/>

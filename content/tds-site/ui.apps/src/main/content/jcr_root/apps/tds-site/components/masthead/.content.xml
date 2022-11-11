@@ -5,4 +5,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Masthead"
     sling:resourceSuperType="tds-core/components/masthead/v1/masthead"
-    componentGroup="TDS Site - Content"/>
+    componentGroup="TDS Site - Structure"/>
