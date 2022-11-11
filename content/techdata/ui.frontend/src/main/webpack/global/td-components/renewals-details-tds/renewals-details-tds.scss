@@ -171,11 +171,7 @@
   }
   
   .icon-button {
-    &__container {
-      &.cancel-save__absolute {
-        stroke-width: 0.3px;
-      }
-    }
+    
     svg {
      stroke: $brand-blue;
     }
