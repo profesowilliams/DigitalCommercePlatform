@@ -376,6 +376,16 @@
                 width: 100%;
             }
 
+            .header-active.cmp-container .masthead .regionSelectDropdown.cmp-show  {
+                .language-modal {
+                    display: block !important; // Overriding the inline style without effecting the desktop style
+                }
+                .languageselection-button,
+                .options {
+                    display: none !important; // Overriding the inline style without effecting the desktop style
+                }
+            }
+
             &.cmp-container .header-active .megamenu .cmp-megamenu__tabpanel .cmp-megamenu__secondary--sub-title {
                 color: white;
             }
