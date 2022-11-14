@@ -40,7 +40,7 @@
 /0018 { /type "allow" /method "GET" /url '/libs/cq/i18n/dict.*.json' } # AEM servlet for getting dictionary keys
 
 # Deny content grabbing for greedy queries and prevent un-intended self DOS attacks
-/0100 { /type "deny" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed)' }
+/0100 { /type "deny" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|validator|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed)' }
 
 # Deny authoring query params
 /0101 { /type "deny" /method "GET" /query "debug=*" }
