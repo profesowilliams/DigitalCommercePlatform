@@ -5,8 +5,8 @@ use(function () {
   var internalEndPoint = null;
   var externalEndPoint = null;
 
-  if(this.uiServiceDomain != null && this.puchOutEndpoint !== null){
-    jsonObject["puchOutEndpoint"] = this.uiServiceDomain+this.puchOutEndpoint;
+  if(this.uiServiceDomain != null && this.punchOutEndpoint !== null){
+    jsonObject["punchOutEndpoint"] = this.uiServiceDomain+this.punchOutEndpoint;
   }
 
   if (properties) {

@@ -31,7 +31,7 @@ use(['../common/utils.js'], function (utils) {
     	jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.quotesPreviewEndPoint;
     	jsonObject["quickQuoteEndpoint"] = this.uiServiceDomain+this.quickQuoteEndpoint;
         jsonObject["pricingEndPoint"] = this.uiServiceDomain+this.quotesPreviewPricingEndPoint;
-        jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAdressEndPoint;
+        jsonObject["companyInfoEndPoint"] = this.uiServiceDomain+this.accountAddressEndPoint;
         jsonObject["dealsForEndpoint"] = this.uiServiceDomain + this.serviceData.dealsForEndpoint;
         jsonObject["pricingConditionsEndpoint"] = this.uiServiceDomain + this.serviceData.orderLevelsForQuotePreviewEndpoint;
     }

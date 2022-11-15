@@ -21,7 +21,7 @@ const EditConfig = ({ componentProp }) => {
         ignoreSalesOrganization,
         isDefault,
         placeholderText,
-        puchOutEndpoint,
+        punchOutEndpoint,
         errorTitle,
         error404Message,
         error428Message,
@@ -103,7 +103,7 @@ const EditConfig = ({ componentProp }) => {
             "Action": "edit" 
         }
         setLoadingGetUrl(true);
-        const result = await usPost(puchOutEndpoint,body)
+        const result = await usPost(punchOutEndpoint,body)
         const errorObject = result.data?.error;
         
         if (errorObject && errorObject.isError) {

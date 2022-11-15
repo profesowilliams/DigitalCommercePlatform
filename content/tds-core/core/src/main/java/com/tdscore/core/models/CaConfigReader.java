@@ -89,7 +89,7 @@ public class CaConfigReader {
 
     private String quotesPreviewPricingEndPoint;
 
-    private String accountAdressEndPoint;
+    private String accountAddressEndPoint;
 
     private String vendorConnectionEndpoint;
 
@@ -177,7 +177,7 @@ public class CaConfigReader {
 
     private String orderDetailPage;
 
-    private String puchOutEndpoint;
+    private String punchOutEndpoint;
 
     private String actionItemsEndpoint;
 
@@ -233,6 +233,7 @@ public class CaConfigReader {
 
     @PostConstruct
     public void init() {
+
         ServiceEndPointsConfiguration serviceEndPointsConfiguration =
                 page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
         MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
@@ -275,10 +276,10 @@ public class CaConfigReader {
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
         quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
-        accountAdressEndPoint = serviceEndPointsConfiguration.accountAdressEndPoint();
+        accountAddressEndPoint = serviceEndPointsConfiguration.accountAddressEndPoint();
         configurationsEndpoint = serviceEndPointsConfiguration.configurationsEndpoint();
         consumerRequestHeader = serviceEndPointsConfiguration.consumerRequestHeader();
-        puchOutEndpoint = serviceEndPointsConfiguration.puchOutEndpoint();
+        punchOutEndpoint = serviceEndPointsConfiguration.punchOutEndpoint();
         downloadOrderDetailsEndpoint = serviceEndPointsConfiguration.downloadOrderDetailsEndpoint();
         shopDomain = mcConfiguration.shopDomain();
         renewalsGridEndpoint = serviceEndPointsConfiguration.renewalsGridEndpoint();
@@ -485,8 +486,8 @@ public class CaConfigReader {
         return quotesPreviewPricingEndPoint;
     }
 
-    public String getAccountAdressEndPoint() {
-        return accountAdressEndPoint;
+    public String getAccountAddressEndPoint() {
+        return accountAddressEndPoint;
     }
 
     public String getConfigurationsEndpoint() {
@@ -497,8 +498,8 @@ public class CaConfigReader {
         return consumerRequestHeader;
     }
 
-    public String getPuchOutEndpoint(){
-        return puchOutEndpoint;
+    public String getPunchOutEndpoint(){
+        return punchOutEndpoint;
     }
 
     public String getShopDomain() {

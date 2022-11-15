@@ -3,7 +3,7 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
 
-<sly data-sly-use.model="${'createconfig.js' @ multifieldName='VendorList', uiServiceDomain=serviceData.uiServiceDomain, puchOutEndpoint=serviceData.puchOutEndpoint}">
+<sly data-sly-use.model="${'createconfig.js' @ multifieldName='VendorList', uiServiceDomain=serviceData.uiServiceDomain, punchOutEndpoint=serviceData.punchOutEndpoint}">
     <div id="CreateConfigWidget" data-observe-mutation>
         <div data-component="CreateConfig" data-cmp-type="react" className="createconfigwidget" data-config="${model.configJson}">
         </div>

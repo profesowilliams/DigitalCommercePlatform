@@ -11,6 +11,7 @@ import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.request.RequestParameterMap;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.testing.mock.sling.ResourceResolverType;
 import org.apache.sling.testing.mock.sling.servlet.MockSlingHttpServletRequest;
@@ -79,7 +80,9 @@ class FormServletTest {
 
     @Mock
     EmailService emailService;
-
+    
+    @Mock
+    ResourceResolverFactory resourceResolverFactory;
 
     byte[] fileBytesMaxAllowed = new byte[1000000];
     byte[] fileBytesAbove = new byte[1000001];
@@ -107,6 +110,15 @@ class FormServletTest {
             paramField = underTest.getClass().getDeclaredField("emailParams");
             paramField.setAccessible(true);
             paramField.set(underTest, emailParams);
+        }catch (NoSuchFieldException | IllegalAccessException e) {
+            log.error("Error occurred in Form Servlet setup", e);
+        }
+
+        Field resourceResolverFactoryField = null;
+        try {
+        	resourceResolverFactoryField = underTest.getClass().getDeclaredField("resourceResolverFactory");
+        	resourceResolverFactoryField.setAccessible(true);
+        	resourceResolverFactoryField.set(underTest, resourceResolverFactory);
         }catch (NoSuchFieldException | IllegalAccessException e) {
             log.error("Error occurred in Form Servlet setup", e);
         }
@@ -271,12 +283,13 @@ class FormServletTest {
         String[] emails = new String[]{"test@techdata.com"};
         String[] groups = new String[]{"author"};
 
-
-        when(mockRequest.getResourceResolver()).thenReturn(resourceResolver);
+        
+        when(resourceResolverFactory.getServiceResourceResolver(any())).thenReturn(resourceResolver);
         when(resourceResolver.getResource(any())).thenReturn(resource);
         when(resource.adaptTo(Page.class)).thenReturn(page);
         when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
         Mockito.when(resource.adaptTo(Page.class)).thenReturn(page);
+        
         when(page.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
         when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
         when(formConfigurations.allowedFileExtensions()).thenReturn(allowedFileTypesArray);

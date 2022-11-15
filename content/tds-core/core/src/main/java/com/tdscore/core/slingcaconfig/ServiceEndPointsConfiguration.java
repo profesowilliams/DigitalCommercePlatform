@@ -105,10 +105,10 @@ public @interface ServiceEndPointsConfiguration {
     String quotesPreviewPricingEndPoint();
 
     @Property(label = "Account Address Endpoint", description = "Account Address Endpoint")
-    String accountAdressEndPoint();
+    String accountAddressEndPoint();
 
     @Property(label = "Punch Out Endpoint", description = "Punch Out Endpoint")
-    String puchOutEndpoint();
+    String punchOutEndpoint();
 
     @Property(label = "Configurations Endpoint", description = "Configurations Endpoint ")
     String configurationsEndpoint();

@@ -38,7 +38,7 @@ use(function () {
         }
     }
     if (this.uiServiceDomain != null) {
-        jsonObject.put("punchOutUrl",this.uiServiceDomain+this.puchOutEndpoint);
+        jsonObject.put("punchOutUrl",this.uiServiceDomain+this.punchOutEndpoint);
 
     }
     if (properties.get("createConfigTitle") != null) {

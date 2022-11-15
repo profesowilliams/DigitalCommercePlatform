@@ -2,7 +2,7 @@
 	<sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
 		<div class="cq-placeholder" data-emptyText="${component.title}"></div>
 	</sly>	
-	<sly data-sly-use.configJson="${'editconfig.js' @ uiServiceDomain=serviceData.uiServiceDomain, puchOutEndpoint=serviceData.puchOutEndpoint}">
+	<sly data-sly-use.configJson="${'editconfig.js' @ uiServiceDomain=serviceData.uiServiceDomain, punchOutEndpoint=serviceData.punchOutEndpoint}">
 		<div id="EditConfig" data-observe-mutation>
 			<div data-component="EditConfig" data-cmp-type="react" className="cmp-edit-config"
 			data-config="${configJson.properties}"></div>

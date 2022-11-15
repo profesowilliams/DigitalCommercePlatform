@@ -12,8 +12,10 @@ import org.apache.http.HttpStatus;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.request.RequestParameter;
+import org.apache.sling.api.resource.LoginException;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
+import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.caconfig.ConfigurationBuilder;
@@ -52,8 +54,12 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final int ONE_MB_IN_BYTES = 1000000;
         public static final String A_TO_Z_LOWERCASE = "a-z";
         private static final String ENCODE_DELIMITER = "==";
+        private static final String SERVICE_USER = "caconfig-service-user";
+        
         @Reference
+        private ResourceResolverFactory resourceResolverFactory;
 
+        @Reference
         private transient EmailService emailService;
         private String[] toEmailAddresses;
         private String submitterEmailFieldName = StringUtils.EMPTY;
@@ -69,59 +75,78 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+            try {
                 PrintWriter out = response.getWriter();
-                ResourceResolver resourceResolver = request.getResourceResolver();
+                ResourceResolver resourceResolver = getResourceResolver();//request.getResourceResolver();
                 Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
                 Page page = resource.adaptTo(Page.class);
                 ServiceEndPointsConfiguration serviceEndPointsConfiguration =
                         page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
                 out.print(serviceEndPointsConfiguration.downloadInvoiceEndpoint());
+            }
+            catch (LoginException e) {
+                    LOG.error("Login Exception occurred during form submission", e);
+                    response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, e.getMessage());
+            }
         }
 
         @Override
         protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws IOException {
                 Map<String, String> emailParams = new HashMap<>();
-                ResourceResolver resourceResolver = request.getResourceResolver();
+                ResourceResolver resourceResolver;//= request.getResourceResolver();
                 Map<String, DataSource> attachments = new HashMap<>();
                 try
                 {
-                        final boolean isMultipart = org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(request);
+                    resourceResolver = getResourceResolver();//request.getResourceResolver();
 
-                        if (isMultipart) {
-                                LOG.info("Received Multi-part form data for processing");
-                                StringBuilder currentPagePath = getCurrentPageParamValue(request);
-                                if(StringUtils.isEmpty(currentPagePath.toString())) {
-                                        currentPagePath.append(Constants.TECHDATA_CONTENT_PAGE_ROOT);
-                                }
-                                Resource resource = resourceResolver.getResource(currentPagePath.toString());
-                                FormConfigurations formConfigurations = getCAConfigFormEmailObject(resource);
-                                if(formConfigurations != null) {
-                                        populateDefaultValuesToEmailParams(emailParams, formConfigurations.apacFormParameterList());
-                                        requiredAttachmentPaths = getPipeSplitMap(formConfigurations.requiredAttachmentPaths());
-                                        prepareEncodedChars(formConfigurations);
-                                        prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
-                                        populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
-                                        handleAttachmentsInEmail(formConfigurations, emailParams);
-                                        thresholdFileSize = formConfigurations.fileThresholdInMB();
-                                        allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
-                                        allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
-                                        handleRequiredAttachments(request, emailParams, attachments);
-                                        blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
-                                        if (isValidFileInEmailRequest(request)) {
-                                                sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
-                                                        internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
-                                        } else {
-                                                LOG.info("Ignored:: Wrong form/email request with invalid upload file size or extension..");
-                                                sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
-                                                        internalEmailTemplatePath, confirmationEmailTemplatePath, null);
-                                        }
-                                }
+                    final boolean isMultipart = org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(request);
+
+                    if (isMultipart) {
+                        LOG.info("Received Multi-part form data for processing");
+                        StringBuilder currentPagePath = getCurrentPageParamValue(request);
+                        if(StringUtils.isEmpty(currentPagePath.toString())) {
+                                currentPagePath.append(Constants.TECHDATA_CONTENT_PAGE_ROOT);
                         }
+                        Resource resource = resourceResolver.getResource(currentPagePath.toString());
+                        FormConfigurations formConfigurations = getCAConfigFormEmailObject(resource);
+
+                        if(formConfigurations != null) {
+                            populateDefaultValuesToEmailParams(emailParams, formConfigurations.apacFormParameterList());
+                            requiredAttachmentPaths = getPipeSplitMap(formConfigurations.requiredAttachmentPaths());
+                            prepareEncodedChars(formConfigurations);
+                            prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
+                            populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
+                            handleAttachmentsInEmail(formConfigurations, emailParams);
+                            thresholdFileSize = formConfigurations.fileThresholdInMB();
+                            allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
+                            allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
+                            handleRequiredAttachments(request, emailParams, attachments);
+                            blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
+                            if (isValidFileInEmailRequest(request)) {
+                                sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
+                                        internalEmailTemplatePath, confirmationEmailTemplatePath, attachments);
+                            } else {
+                                LOG.info("Ignored:: Wrong form/email request with invalid upload file size or extension..");
+                                sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
+                                        internalEmailTemplatePath, confirmationEmailTemplatePath, null);
+                            }
+                        }
+                    }
                 }
                 catch (CustomFormException e) {
                         LOG.error("Exception occurred during form submission", e);
                         response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, e.getMessage());
                 }
+                catch (LoginException e) {
+                        LOG.error("Login Exception occurred during form submission", e);
+                        response.sendError(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE, e.getMessage());
+                }
+        }
+
+        private ResourceResolver getResourceResolver() throws LoginException{
+            final Map<String, Object> param = new HashMap<>();
+            param.put(ResourceResolverFactory.USER, SERVICE_USER);
+            return resourceResolverFactory.getServiceResourceResolver(param);
         }
 
         private StringBuilder getCurrentPageParamValue(SlingHttpServletRequest request) {
@@ -245,7 +270,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         private void handleRequiredAttachments(SlingHttpServletRequest request, Map<String, String> emailParams, 
-                Map<String, DataSource> attachments) throws CustomFormException {
+                Map<String, DataSource> attachments) throws LoginException, CustomFormException {
             String groupKey = emailParams.get(Constants.FORM_GROUP_KEY_FIELD);
 
             if (groupKey != null)
@@ -373,8 +398,8 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         }
 
-        private InputStream getEmailAttachmentAsset(SlingHttpServletRequest request, String path) {
-            Resource resource = request.getResourceResolver().getResource(path);
+        private InputStream getEmailAttachmentAsset(SlingHttpServletRequest request, String path) throws LoginException {
+            Resource resource = getResourceResolver().getResource(path);//request.getResourceResolver().getResource(path);
             ExtractBinaryAsset binaryAsset = resource != null ? resource.adaptTo(ExtractBinaryAsset.class) : null;
             return binaryAsset != null ? binaryAsset.getBinary() : null;
         }
