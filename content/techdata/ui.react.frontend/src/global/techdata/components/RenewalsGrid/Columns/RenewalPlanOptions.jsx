@@ -61,29 +61,25 @@ function RenewalPlanOptions({ labels, data, node }) {
         const url = exportXLSRenewalsEndpoint;
         generateFileFromPost({ url, name, postData })
     }
-    const computeClassName = (optionList, index) => {
-        const mediumScreenWidth = 1160;
-        const largeScreenWidth = 1638;
-        const availWidth = window.screen.availWidth;
-        const isLastElement = ({ cols }) => (index + 1) % cols == 0;
-        if (optionList.length - 1  === index ) {
-            return "card-no-border";
-        }
-        if (index >= 3 ) {
-            return "card-right-border"
-        }
-        //on 1 single row no border bottom and last element no right border
-        if (optionList.length < 4) {
-            if (optionList.length - 1 === index) return "card-no-border";
-            return "card-right-border";
-        }       
-        //on 3 cols and multiple rows hide right border only on the last element
-        if (availWidth >= mediumScreenWidth) {
-            if (isLastElement({ cols: 3 })) return "card-bottom-border";
-        }
-        return "card-full-border";
-    }
 
+    const computeClassName = (optionList, index) => {
+        const isLastElement = index+1 === optionList.length || (index + 1) % 3 == 0;
+        const isMultiRows = optionList.length > 3;
+        let className = 'card-full-border';
+
+        if (!isMultiRows) {        
+            className = index === 2 ? 'card-no-border' : 'card-right-border' ;
+            className = isLastElement ? 'card-no-border' : className;
+        } 
+        if (isMultiRows && index === 2) {        
+            className = 'card-no-border card-bottom-border';
+        } 
+        if (isMultiRows && index > 2) {        
+            className = isLastElement ? 'card-no-border': 'card-right-border';
+        } 
+       
+        return className;
+    }
 
     const downloadPDF = (Id) => {
         try {

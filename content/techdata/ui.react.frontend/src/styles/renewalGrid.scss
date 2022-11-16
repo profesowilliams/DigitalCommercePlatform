@@ -547,7 +547,29 @@ span.ag-group-value {
     align-items: center;    
   }
   .cmp-order-label-disabled{
-    color: #c6c6c6 !important;
+    color: #c6c6c6;
+  }
+}
+
+.card-no-border .footer { 
+  .cmp-renewals-cart-icon {   
+    @include cart-icon;
+    cursor: pointer;
+    align-items: center;    
+  }
+  .cmp-order-label-disabled{
+    color: #c6c6c6;
+  }
+}
+
+.card-full-border .footer { 
+  .cmp-renewals-cart-icon {   
+    @include cart-icon;
+    cursor: pointer;
+    align-items: center;    
+  }
+  .cmp-order-label-disabled{
+    color: #c6c6c6;
   }
 }
 
