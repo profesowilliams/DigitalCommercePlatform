@@ -85,6 +85,7 @@ const headerHTML = () => {
             console.error(`Error ${xhr.status}: ${xhr.statusText}`);
           } else { // show the result
             console.log(xhr);
+            headerEle.innerHTML = xhr.responseText;
           }
         };
     }
@@ -108,6 +109,7 @@ const footerHTML = () => {
             console.error(`Error ${xhr.status}: ${xhr.statusText}`);
           } else { // show the result
             console.log(xhr);
+            headerEle.innerHTML = xhr.responseText;
           }
         };
     }
