@@ -19,6 +19,9 @@ export default class Header {
         this.setComponentToStick();
         this.checkSubheaderContainer();
         this.setSubheaderMargin();
+        this.checkHeaderImage();
+
+        this.isComponentStuck = false;
     }
 
     setComponentToStick(){
@@ -50,23 +53,29 @@ export default class Header {
                 }
             }
             else{
-                this.container = this.subheader ? this.subheader.previousElementSibling : null;
+                this.container = this.subheader.previousElementSibling;
             }
         }
     }
 
     setSubheaderMargin(){
-        if(this.header && this.subheader && this.container){
-            this.subheaderNav = this.subheader.querySelector('.cmp-tabs');
-            this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
-            this.isComponentStuck = false;
-
-            if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
-                this.isContainer = true;
-                if(this.stickyHeaderFlag === "true"){ 
-                    this.checkHeaderImage();
-                } 
-                this.checkSubheaderImage();
+        if(this.header){
+            if(this.subheader && this.container){
+                if(this.container.classList.contains("container")){
+                    this.isContainer = true;
+                    this.subheaderNav = this.subheader.querySelector('.cmp-tabs');
+                    this.subheaderNav.style.marginTop = "-"+this.subheaderNav.clientHeight+"px";
+                    if(this.stickyHeaderFlag === "true"){ 
+                        this.checkHeaderImage();
+                    } 
+                    this.checkSubheaderImage();
+                }
+                else{
+                    this.checkHeaderComponent();
+                }
+            }
+            else {
+                this.checkHeaderComponent();
             }
         }
     }
@@ -122,15 +131,34 @@ export default class Header {
     }
 
     handleStickyHeader() {
-        if(this.header && this.isContainer && this.subheader){
+        if(this.header){
             this.checkHeaderImage();
-            this.checkHeaderSubheader();
+            if(this.subheader && this.isContainer){
+                this.checkHeaderSubheader();
+            }
+            else if(this.componentToStick){
+                this.checkHeaderComponent();
+            }
+        }
+    }
+
+    checkHeaderComponent(){
+        if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
+            if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight)){
+                this.componentToStick.classList.remove('sticky');
+                this.isComponentStuck = false;
+            }
+            else{
+                this.componentToStick.style.top = this.header.clientHeight + "px";
+                this.componentToStick.classList.add('sticky');
+                this.isComponentStuck = true;
+            }
         }
     }
 
     checkHeaderSubheader(){
         if(this.componentToStick){
-            if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top - this.subheaderNav.clientHeight){
+            if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
                 if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight) - this.subheaderNav.clientHeight){
                     if(this.subheaderNav.id === this.componentToStick.id){
                         this.componentToStick.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
@@ -145,7 +173,6 @@ export default class Header {
                     else{
                         this.componentToStick.style.top = this.header.clientHeight + "px";
                     }
-                    this.componentToStick.style.width = this.container.clientWidth + "px";
                     this.componentToStick.classList.add('sticky');
                     if(this.subheaderNav.id === this.componentToStick.id){
                         this.componentToStick.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
@@ -157,12 +184,18 @@ export default class Header {
     }
 
     checkHeaderImage(){
-        if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
-            this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
-            this.header.style.backgroundColor = this.authorColor;
+        var rgb = this.authorColor.replace(/^rgba?\(|\s+|\)$/g,'').split(',');
+        if(this.isContainer){
+            if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
+                this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
+                this.header.style.backgroundColor = this.authorColor;
+            }
+            else {
+                this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
+                this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
+            }
         }
-        else {
-            var rgb = this.authorColor.replace(/^rgba?\(|\s+|\)$/g,'').split(',');
+        else{
             this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
             this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
         }
