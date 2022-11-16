@@ -1,6 +1,6 @@
 import produce from "immer";
 import set from "lodash.set";
-import { endUserConstants } from "../EndUser/utils";
+import { getInvalidEmailText, getRequiredFieldText, getRequiredMaxLengthFieldText, getMaxLengthFieldText } from "../EndUser/utils";
 
 // Helper function that uses a setState function and calls it using immer produce.
 // Uses lodash set to be able to use a path instead of manually navigating the draft object.
@@ -22,28 +22,27 @@ export const createProducedSetter = (setStateFn) => {
  * Util methods to handle input error validations in
  * enduser and reseller edit
  */
-const { REQUIRED_FIELD, REQUIRED_MAX_LENGTH_FIELD, MAX_LENGTH_FIELD, INVALID_EMAIL_TEXT } = endUserConstants;
 const showErrorField = (obj) => {
   return { error: obj?.isValid === false && obj?.text?.length === '' };
 };
 
 const showErrorMsg = (obj) => {
   if (obj?.text?.length === 0 && obj?.isMandatory === true) {
-    return { helperText: REQUIRED_FIELD };
+    return { helperText: getRequiredFieldText() };
   }
 };
 
 export const handleEmailHelperText = (text, isEmailValid) => {
   if (!isEmailValid && text.length !== 0) {
-    return INVALID_EMAIL_TEXT;
+    return getInvalidEmailText();
   }
 
-  return REQUIRED_FIELD;
+  return getRequiredFieldText();
 };
 
 export const getOptionalFieldMessage = (obj) => {
   return obj.allowedLength
-    ? MAX_LENGTH_FIELD.replace("{max-length}", obj.allowedLength)
+    ? getMaxLengthFieldText().replace("{max-length}", obj.allowedLength)
     : null;
 };
 
@@ -52,8 +51,8 @@ export const getFieldMessage = (obj, useRequiredMaxLengthMessage) => {
     return undefined;
   }
   return useRequiredMaxLengthMessage && obj.allowedLength
-    ? REQUIRED_MAX_LENGTH_FIELD.replace("{max-length}", obj.allowedLength)
-    : REQUIRED_FIELD;
+    ? getRequiredMaxLengthFieldText().replace("{max-length}", obj.allowedLength)
+    : getRequiredFieldText();
 };
 
 export const handleValidation = (obj, useRequiredMaxLengthMessage) => {

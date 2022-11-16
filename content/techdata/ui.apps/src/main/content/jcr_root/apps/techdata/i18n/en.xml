@@ -3,6 +3,11 @@
     jcr:language="en"
     jcr:mixinTypes="[mix:language]"
     jcr:primaryType="nt:folder">
+
+    <techdata.validation.message.invalidEmail jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Enter a valid email address. For example, name@email.com"/>
+    <techdata.validation.message.requiredField jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="This is a required field."/>
+    <techdata.validation.message.requiredMaxLengthField jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="This is a required field, max {max-length} characters."/>
+    <techdata.validation.message.maxLengthField jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Max {max-length} characters."/>
     
     <techdata.buttons.label.save jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Save"/>
     <techdata.buttons.label.cancel jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Cancel"/>

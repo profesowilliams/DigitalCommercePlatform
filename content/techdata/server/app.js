@@ -4800,6 +4800,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
 
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
   res.json({
+    "techdata.validation.message.invalidEmail": "Enter a valid email address. For example, name@email.com from apps",
+    "techdata.validation.message.requiredField": "This is a required field. from apps",
+    "techdata.validation.message.requiredMaxLengthField": "This is a required field, max {max-length} characters. from apps",
+    "techdata.validation.message.maxLengthField": "Max {max-length} characters. from apps",
     "techdata.buttons.label.save": "Save",
     "techdata.buttons.label.cancel": "Cancel",
     "techdata.buttons.label.edit": "Edit",

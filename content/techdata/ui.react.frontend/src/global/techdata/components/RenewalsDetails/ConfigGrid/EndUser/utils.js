@@ -1,3 +1,5 @@
+import { getDictionaryValue } from '../../../../../../utils/utils';
+
 export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
   const contact = endUser.contact[0];
   const address = endUser.address;
@@ -51,10 +53,6 @@ export default function getModifiedEndUserData(endUserResponseAsObj, endUser) {
 }
 
 export const endUserConstants = {
-  INVALID_EMAIL_TEXT: 'Enter a valid email address. For example, name@email.com',
-  REQUIRED_FIELD: 'This is a required field.',
-  REQUIRED_MAX_LENGTH_FIELD: 'This is a required field, max {max-length} characters.',
-  MAX_LENGTH_FIELD: 'Max {max-length} characters.',
   SIXTY: 60,
   TWENTY: 20,
 };
@@ -71,3 +69,15 @@ export const endUserLables = {
   endUserAreaCode: 'Area code',
   endUserVendorAccountNumber: 'Vendor account №',
 };
+
+export const getInvalidEmailText = () =>
+  getDictionaryValue("techdata.validation.message.invalidEmail", 'Enter a valid email address. For example, name@email.com');
+
+export const getRequiredFieldText = () =>
+  getDictionaryValue("techdata.validation.message.requiredField", 'This is a required field.');
+
+export const getRequiredMaxLengthFieldText = () =>
+  getDictionaryValue("techdata.validation.message.requiredMaxLengthField", 'This is a required field, max {max-length} characters.');
+
+export const getMaxLengthFieldText = () =>
+  getDictionaryValue("techdata.validation.message.maxLengthField", 'Max {max-length} characters.');
