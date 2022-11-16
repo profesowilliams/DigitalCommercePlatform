@@ -107,7 +107,8 @@
     button {
       background-color: $brand-green;
       height: 48px;
-      width: 85px;
+      width: -moz-fit-content;
+      width: fit-content;
       align-items: center;
       text-transform: unset;
       &:disabled {
