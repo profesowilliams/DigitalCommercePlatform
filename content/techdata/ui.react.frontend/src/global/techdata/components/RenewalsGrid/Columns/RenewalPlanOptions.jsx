@@ -129,8 +129,8 @@ function RenewalPlanOptions({ labels, data, node }) {
     }
 
     const formatExpiryDateLabel = (option) => {
-        if (!option?.expiryDate) return "No date provided"
-        return getLocaleFormattedDate(option?.expiryDate)
+        if (!option?.formattedExpiryDate) return "No date provided"
+        return option?.formattedExpiryDate
     }
 
     const setDefaultCheckedOption = (option) => {

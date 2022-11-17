@@ -74,7 +74,7 @@ function GridHeader({ gridProps, data }) {
 }
 
 function ConfigGrid({ data, gridProps, updateDetails }) {
-  const { reseller, endUser, items, programName, dueDate, endUserType, source, expiry, customerPO, vendorLogo, EANumber } = data;
+  const { reseller, endUser, items, programName, formattedDueDate, endUserType, source, formattedExpiry, customerPO, vendorLogo, EANumber } = data;
   const { quotePreview } = gridProps;
   Object.keys(quotePreview).forEach(key => {
     if (typeof quotePreview[key] === 'string') {
@@ -85,7 +85,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
         });
     }
   });
-
+  
   return (
     <div className="cmp-renewals-qp__config-grid">
       <div className="header-container">
@@ -126,10 +126,10 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
         <AgreementInfo
           source={source}
           programName={programName}
-          dueDate={dueDate}
+          formattedDueDate={formattedDueDate}
           agreementInfo={quotePreview.agreementInfo}
           contract={items[0].contract}
-          expiry={expiry}
+          formattedExpiry={formattedExpiry}
           customerPO={customerPO}
         />
       </div>

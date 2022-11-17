@@ -1,10 +1,12 @@
 import React from "react";
-import { getLocaleFormattedDate } from "../../../../../utils/utils";
 
 function DueDateColumn({ columnValue }) {
+  const displayDueDate = (dueDate) => {
+    return dueDate?.length >= 10 ? dueDate?.slice(0, 10) : '';
+  }
   return (
     <div className="cmp-due-date-column"> 
-      {getLocaleFormattedDate(columnValue)}
+      {displayDueDate(columnValue)}
     </div>
   );
 }

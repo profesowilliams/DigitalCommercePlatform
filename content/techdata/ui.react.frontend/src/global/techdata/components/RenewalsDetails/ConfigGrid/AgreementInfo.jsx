@@ -1,19 +1,13 @@
 import React from "react";
-import { getLocaleFormattedDate } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 
-
 function DurationDates({ startDate, endDate, label }) {
-  const checkNullEndDate = (date) => {
-    if (!date) return '';
-    return `- ${getLocaleFormattedDate(date)}`;
-  };
   return (
     <p>
       <If condition={startDate}>
         <span>
-          {label} {getLocaleFormattedDate(startDate)} {checkNullEndDate(endDate)}
+          {label} {startDate} - {endDate}
         </span>
       </If>
     </p>
@@ -24,9 +18,9 @@ function AgreementInfo({
   source,
   contract,
   programName,
-  dueDate,
+  formattedDueDate,
   agreementInfo,
-  expiry,
+  formattedExpiry,
   customerPO
 }) {
   const AgreementInfo = () => {
@@ -37,15 +31,15 @@ function AgreementInfo({
           <Info noColon label={agreementInfo?.vendorQuoteId}>{customerPO}</Info>
           <Info noColon label={agreementInfo?.agreementNoLabel}>{contract?.id}</Info>
         </p>        
-        <p> <Info noColon label={agreementInfo?.quoteExpiryDateLabel}>{getLocaleFormattedDate(expiry)}</Info> </p>
-        <p> <Info noColon label={agreementInfo?.quotedueDateLabel}>{getLocaleFormattedDate(dueDate)}</Info> </p>
+        <p> <Info noColon label={agreementInfo?.quoteExpiryDateLabel}>{formattedExpiry}</Info> </p>
+        <p> <Info noColon label={agreementInfo?.quotedueDateLabel}>{formattedDueDate}</Info> </p>
         <p>
           <Info noColon label={agreementInfo?.programLabel}>{programName}</Info>
           <Info noColon label={agreementInfo?.durationLabel}>{contract?.renewedDuration}</Info>      
           <Info noColon label={agreementInfo?.supportLevelLabel}>{contract?.serviceLevel}</Info> 
         </p>
-        <DurationDates label={agreementInfo.agreementDuration} startDate={contract?.newAgreementStartDate} endDate={contract?.newAgreementEndDate} />
-        <DurationDates label={agreementInfo.usageDuration} startDate={contract?.newUsagePeriodStartDate} endDate={contract?.newUsagePeriodEndDate} />
+        <DurationDates label={agreementInfo.agreementDuration} startDate={contract?.formattedNewAgreementStartDate} endDate={contract?.formattedNewAgreementEndDate} />
+        <DurationDates label={agreementInfo.usageDuration} startDate={contract?.formattedNewUsagePeriodStartDate} endDate={contract?.formattedNewUsagePeriodEndDate} />
       </div>
     );
   };
