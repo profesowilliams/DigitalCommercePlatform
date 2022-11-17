@@ -73,7 +73,7 @@
                                                 fieldDescription="Icon from DAM for displaying in the button"
                                                 fieldLabel="Icon from DAM"
                                                 name="./iconUrl"
-                                                rootPath="/content"/>
+                                                rootPath="/content/dam"/>
                                             <id
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
