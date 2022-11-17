@@ -1,11 +1,18 @@
 import { getUser, getHeaderInfoFromUrl } from "./index";
 import {isExtraReloadDisabled, intouchHeaderAPIUrl, intouchFooterAPIUrl} from "./featureFlagUtils";
 
-export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
+const removeTrailingQuestionMark = (url) => {
+    if (url.endsWith("?")) {
+        return url.substring(0, url.length - 1);
+    }
+    return url;
+};
 
+export const redirectUnauthenticatedUser = (authUrl, clientId, shopLoginRedirectUrl) => {
     // colon separated shop domain names
     let actionLogin = '?action=login';
-    let currUrl = window.location.href;
+    let currUrl = removeTrailingQuestionMark(window.location.href);
+
     if(currUrl.indexOf('?action=login') > 0) {
         currUrl = currUrl.split(actionLogin)[0];
     }

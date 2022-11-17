@@ -35,10 +35,10 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   useEffect(() => {
     const headerContainerEle = document.querySelector('#cmp-techdata-header');
     if (showMenu) {
-        headerContainerEle.classList.add('signin-menu-active');
+        headerContainerEle?.classList.add('signin-menu-active');
     document
     } else {
-        headerContainerEle.classList.remove('signin-menu-active');
+        headerContainerEle?.classList.remove('signin-menu-active');
     }
   }, [showMenu]);
 
