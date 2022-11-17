@@ -71,7 +71,7 @@ $tertiary-hover-opacity: 15%;
 $dark-background-color-button: #ffffff;
 
 $tertiary-border-size: 0px;
-$link-active-color-opacity: rgba(255, 255, 255, .5);
+$link-active-color-opacity: rgba(255, 255, 255, 0.5);
 $link-active-opacity: 20%;
 
 .cmp-button {
@@ -375,7 +375,7 @@ $link-active-opacity: 20%;
   }
 
   &-light-mode {
-    background-color: get-color(neutral-gray-2);
+    background-color: get-color(container-transparent);
     font-size: 30px;
   }
 
@@ -439,6 +439,14 @@ $link-active-opacity: 20%;
         color: $cool-gray-8 !important;
         pointer-events: none;
       }
+    }
+
+    .disabled-link {
+      pointer-events: none;
+      background-color: $disabled-background-color !important;
+      border-color: $cool-gray-8 !important;
+      color: $cool-gray-8 !important;
+      pointer-events: none;
     }
 
     .cmp-button {
@@ -514,7 +522,13 @@ $link-active-opacity: 20%;
   ) {
     display: flex;
     height: auto;
-
+    .disabled-link {
+      pointer-events: none;
+      background-color: $disabled-background-color !important;
+      border-color: $cool-gray-8 !important;
+      color: $cool-gray-8 !important;
+      pointer-events: none;
+    }
     a {
       padding: 12px 20px;
       display: flex;
@@ -1097,7 +1111,7 @@ $link-active-opacity: 20%;
     );
   }
 
-/////////////AQUI
+  /////////////AQUI
   &.btn-deep-teal.cmp-tds-button-link.cmp-tds-button-dark-mode {
     @include type-button-handler-link(
       #ffffffff,
@@ -1803,8 +1817,6 @@ $link-active-opacity: 20%;
     );
   }
 
-
-  
   // ////////////////////////
   &.btn-white {
     .cmp-button {
@@ -2675,8 +2687,6 @@ $link-active-opacity: 20%;
     );
   }
 
-  
-
   &.btn-cool-gray-1.cmp-tds-button-link {
     @include type-button-handler-link(
       $cool-gray-1,
@@ -2812,11 +2822,6 @@ $link-active-opacity: 20%;
     );
   }
 
-
-
-
-
-
   &.btn-cherry.cmp-tds-button-tertiary {
     @include type-button-handler(
       $cherry,
@@ -2880,9 +2885,6 @@ $link-active-opacity: 20%;
       $secondary-background-disabled-color
     );
   }
-
-
-
 
   &.btn-amber {
     .cmp-button {
@@ -3713,7 +3715,6 @@ $link-active-opacity: 20%;
       $secondary-background-disabled-color
     );
   }
-
 
   &.btn-neutral-gray-1 {
     .cmp-button {

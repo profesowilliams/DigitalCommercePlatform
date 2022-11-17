@@ -22,7 +22,7 @@
 	data-sly-element="${button.link ? 'a' : 'button'}"
 	type="${button.link ? '' : 'button'}"
 	id="${component.id}"
-	class="cmp-button"
+	class="{properties.disabled ? 'disabled-link cmp-button ' : 'cmp-button'} " 
 	href="${button.link}"
   rel="${linkTarget == '_blank' ? 'noopener' : ''}"
   target="${linkTarget}"

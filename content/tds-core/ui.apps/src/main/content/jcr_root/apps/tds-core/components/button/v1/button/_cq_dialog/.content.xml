@@ -52,6 +52,15 @@
                                                 name="./linkTarget"
                                                 uncheckedValue="{Boolean}false"
                                                 value="{Boolean}true"/>
+                                            <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="Disabled Button"
+                                                fieldLabel="Disabled Button"
+                                                fieldDescription="Disabled the button"
+                                                name="./disabled"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
                                             <icon
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -64,7 +73,7 @@
                                                 fieldDescription="Icon from DAM for displaying in the button"
                                                 fieldLabel="Icon from DAM"
                                                 name="./iconUrl"
-                                                rootPath="/content/dam/techdata"/>
+                                                rootPath="/content"/>
                                             <id
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
