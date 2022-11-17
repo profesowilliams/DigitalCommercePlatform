@@ -50,11 +50,11 @@
     }
 
     .cmp-notification_text {
-      color: $deep-teal;
+      color: get-color(deep-teal);
     }
 
     a > span.cmp-notification_text {
-      color: $cobalt;
+      color: get-color(cobalt);
       margin: 0px;
     }
 
@@ -123,19 +123,19 @@
   }
 
   &-primary {
-    @include notification-type($cobalt);
+    @include notification-type(get-color(cobalt));
   }
 
   &-secondary {
-    @include notification-type($forest);
+    @include notification-type(get-color(forest));
   }
 
   &-alert {
-    @include notification-type($cherry);
+    @include notification-type(get-color(cherry));
   }
 
   &-warning {
-    @include notification-type($amber);
+    @include notification-type(get-color(amber));
   }
 
   &-small {
