@@ -447,6 +447,22 @@ $link-active-opacity: 20%;
       border-color: $cool-gray-8 !important;
       color: $cool-gray-8 !important;
       pointer-events: none;
+
+      span {
+        color: $cool-gray-8 !important;
+      }
+
+      .cmp-button__icon{
+        color: $cool-gray-8 !important;
+      }
+    }
+
+    .disabled-link span {
+      color: $cool-gray-8 !important;
+    }
+
+    .disabled-link .cmp-button__icon{
+      color: $cool-gray-8 !important;
     }
 
     .cmp-button {
@@ -528,7 +544,16 @@ $link-active-opacity: 20%;
       border-color: $cool-gray-8 !important;
       color: $cool-gray-8 !important;
       pointer-events: none;
+
+      span {
+        color: $cool-gray-8 !important;
+      }
+
+      .cmp-button__icon{
+        color: $cool-gray-8 !important;
+      }
     }
+
     a {
       padding: 12px 20px;
       display: flex;
