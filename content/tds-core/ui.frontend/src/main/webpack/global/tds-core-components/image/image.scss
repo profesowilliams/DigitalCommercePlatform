@@ -21,9 +21,10 @@
   }
 }
 
-
-.cmp-teaser__image .cmp-image {
-  display: block;
+.cmp-teaser__image{
+  .cmp-image {
+    display: block;
+  }
 }
 
 .cmp-image {
