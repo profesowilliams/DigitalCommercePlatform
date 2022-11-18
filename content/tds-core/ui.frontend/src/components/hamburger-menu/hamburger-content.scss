@@ -119,19 +119,15 @@
                         text-align: left;
                         display: flex;
                         justify-content: space-between;
-                        padding: 0.75rem 5px;
-                         &:after {
-                            content: '\f054';
-                            font-family: 'Font Awesome 5 Free';
-                            font-size: rem(16px);
-                            font-weight: 900;
-                            color: get-color(border-lighter-gray);
-                        }
+                        padding: 0.75rem 21px;
                         a {
                             margin: 0;
                             display: block;
-                            width: auto;
+                            width: 100%;
                             padding:0 10px;
+                        }
+                        .fa-chevron-right {
+                            display: none;
                         }
                     }
                 }

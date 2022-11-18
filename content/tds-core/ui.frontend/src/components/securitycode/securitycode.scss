@@ -30,11 +30,12 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 .hub .cmp-button__dropdown {
   z-index: 100;
 }
-
-#navigation > ul > li:hover > ul,
-#navigation > ul > li > ul > li:hover > ul,
-#navigation > ul > li > ul > li > ul > li:hover > ul {
-  z-index: $z-index-value-up-subheader;
+@include desktop {
+    #navigation > ul > li:hover > ul,
+    #navigation > ul > li > ul > li:hover > ul,
+    #navigation > ul > li > ul > li > ul > li:hover > ul {
+      z-index: $z-index-value-up-subheader;
+    }
 }
 
 .cmp-popup__modal__content {

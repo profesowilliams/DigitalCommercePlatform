@@ -6,7 +6,7 @@
     
     <nav id="navigation" role="navigation" aria-label="Main" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
       <!-- Level 1 -->
-      <ul data-sly-list.nav="${model.firstLevelMenuItems}">
+      <ul data-sly-list.nav="${model.firstLevelMenuItems}" data-level="1">
         <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=nav.linkUrl}" class="cmp-has-submenu">
           <!-- Navigation -->
           <a href="${urlHelper.url  @ context='uri'}" aria-haspopup="true"
@@ -18,6 +18,7 @@
           </a>
 
               <ul data-sly-list.slnk="${nav.secondaryMenuItems}">
+                <span class="cmp-sub-menu-heading">${nav.platformName}</span>
                 <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}" 
                     class="cmp-has-submenu" 
                     data-view-all="${slnk.isViewAll}">
@@ -25,12 +26,14 @@
                   <!-- Level 3 -->
 
                     <ul class="" data-sly-list.sec="${slnk.subNavLinkslist}">
+                      <span class="cmp-sub-menu-heading">${slnk.pageTitle}</span>
                       <li class="cmp-has-submenu" 
                         data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}"
                         data-view-all="${sec.isViewAll}">
 
                         <!-- Level 4 -->
                           <ul class="" data-sly-list.subSec="${sec.subNavLinkslist}">
+                            <span class="cmp-sub-menu-heading">${sec.pageTitle}</span>
                             <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
                               data-cmp-data-layer='{"${nav.randomID}-item-734f73b286":{"@type":"core/wcm/components/navigation/v1/navigation/item","repo:modifyDate":"2021-03-17T08:17:44Z","dc:title":"${subSec.pageTitle}","xdm:linkURL":"/content/core-components-examples/config.html"}}'>
                               <a href="${urlHelper.url  @ context='html'}" title="${subSec.pageTitle}"

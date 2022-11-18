@@ -341,3 +341,53 @@ Array.prototype.forEach.call(menuItems1, function (el, i) {
     });
   });
 });
+
+const hasSubMenuEle = document.querySelectorAll('#navigation .cmp-has-submenu a');
+const subMenuEleheading = document.querySelectorAll('#navigation .cmp-sub-menu-heading');
+
+const removeActiveSiblingMenu = (e) => {
+    const flag = e.target.closest('.cmp-has-submenu').classList.contains('active');
+     let subMenuEle = e.target.closest('ul');
+     subMenuEle = subMenuEle.querySelectorAll('.cmp-has-submenu');
+     subMenuEle && subMenuEle.forEach((ele) => {
+        ele.classList.remove('active');
+     });
+     if (flag) {
+        e.target.closest('.cmp-has-submenu').classList.add('active');
+     }
+};
+
+subMenuEleheading && subMenuEleheading.forEach((ele) => {
+    ele.addEventListener('click', (e) => {
+        if (e.target.closest('.cmp-has-submenu')) {
+            e.target.closest('.cmp-has-submenu').classList.remove('active');
+            if (e.target.closest(".cmp-has-submenu")?.parentElement?.dataset?.level == '1') {
+                const headerContainerEle = document.querySelector('#cmp-techdata-header');
+                headerContainerEle.classList.remove('mega-menu-active');
+            }
+        }
+    });
+});
+
+hasSubMenuEle && hasSubMenuEle.forEach((ele) => {
+    ele.addEventListener('click', (e) => {
+        if (e.target.closest('li')?.querySelector('ul') !== null) {
+            e.preventDefault();
+            removeActiveSiblingMenu(e);
+            e.target.closest('.cmp-has-submenu').classList.contains('active') ?
+                e.target.closest('.cmp-has-submenu').classList.remove('active') :
+                e.target.closest('.cmp-has-submenu').classList.add('active');
+            if (e.target.closest('ul').parentElement?.id == 'navigation') {
+                const headerContainerEle = document.querySelector('#cmp-techdata-header');
+                if (e.target.closest('.cmp-has-submenu').classList.contains('active')) {
+                    headerContainerEle.classList.add('mega-menu-active');
+                } else {
+                    headerContainerEle.classList.remove('mega-menu-active');
+                }
+            }
+        }
+    });
+});
+
+
+console.log('Mega menu loaded')

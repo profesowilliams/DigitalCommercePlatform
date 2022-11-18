@@ -52,7 +52,7 @@ export default class Hamburger {
         const tdsSiteheader = document.querySelector('.cmp-tds-site-header');
         if (tdsSiteheader && tdsSiteheader.querySelector('.header-active')) {
             const tdsSiteHeaderLogo = tdsSiteheader.querySelector('.masthead .cmp-image__link img');
-            if (mobileFlag) {
+            if (mobileFlag && tdsSiteHeaderLogo) {
                 const desktopLogo = tdsSiteHeaderLogo?.getAttribute('src');
                 const mobileLogo = tdsSiteHeaderLogo?.dataset?.mobileLogo;
                 tdsSiteHeaderLogo.src = mobileLogo;

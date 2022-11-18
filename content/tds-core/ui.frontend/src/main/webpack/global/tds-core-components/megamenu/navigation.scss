@@ -339,11 +339,13 @@
         background-color: map-get($color-palette,"neutral-gray-2");
 }
 
-#navigation > ul > li:hover > ul,  
-#navigation > ul > li > ul > li:hover > ul,
-#navigation > ul > li > ul > li > ul > li:hover > ul {
-    display:block;
-    z-index: 999;
+@include desktop {
+    #navigation > ul > li:hover > ul,
+    #navigation > ul > li > ul > li:hover > ul,
+    #navigation > ul > li > ul > li > ul > li:hover > ul {
+        display:block;
+        z-index: 999;
+    }
 }
 
 
