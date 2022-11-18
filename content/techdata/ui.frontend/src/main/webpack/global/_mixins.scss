@@ -1,3 +1,4 @@
+@import '../../../../../../tds-core/ui.frontend/src/main/webpack/global/mixins';
 @mixin fontdef($font-path, $font-type: "Regular", $font-name: "OpenSans") {
   src: url("#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf") format("ttf"),
   url("#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf") format("ttf");

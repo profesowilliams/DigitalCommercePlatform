@@ -5,6 +5,7 @@ const SearchAreas = ({
   selectedArea,
   changeSelectedArea,
   toggleSearchIcon,
+  isMobile,
 }) => {
   const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
   const [activeId, setActiveId] = useState();
@@ -19,12 +20,14 @@ const SearchAreas = ({
     changeSelectedArea(areaConfiguration);
   };
 
+  const classSelectedAreaString = "cmp-searcharea__selectedarea  cmp-searcharea__selectedarea--checked";
+
   return (
     <>
       <div
         className={
           areaSelectionOpen === true
-            ? "cmp-searcharea__selectedarea  cmp-searcharea__selectedarea--checked"
+            ? isMobile == true ? 'cmp-searcharea__selectedarea--mobile' + classSelectedAreaString : classSelectedAreaString
             : "cmp-searcharea__selectedarea"
         }
       >
@@ -42,7 +45,7 @@ const SearchAreas = ({
       </div>
       <ul
         className={
-          areaSelectionOpen === true
+          areaSelectionOpen === true || isMobile
             ? "cmp-searcharea cmp-searcharea--checked"
             : "cmp-searcharea"
         }
@@ -57,7 +60,6 @@ const SearchAreas = ({
                     : "cmp-searcharea__area"
                 }
                 key={areaConfiguration.area}
-                key={index}
                 onClick={() => setActiveId(areaConfiguration.area)}
               >
                 <button
