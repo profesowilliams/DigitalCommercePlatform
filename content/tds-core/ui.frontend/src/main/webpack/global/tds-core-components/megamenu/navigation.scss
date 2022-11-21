@@ -57,7 +57,8 @@
                 }
 
                 & > ul {
-                    height: 343px;
+                    min-height: 343px;
+                    max-height: fit-content;
                     width: 280px;
                     display: none;
                     position: absolute;
@@ -106,7 +107,8 @@
 
                     & > li {
                         & > ul {
-                            height: 343px;
+                            min-height: 343px;
+                            max-height: fit-content;
                             width: 280px;
                             display: none;
                             position: absolute;
@@ -131,7 +133,8 @@
                                 }
 
                                 & > ul {
-                                    height: 343px;
+                                    min-height: 343px;
+                                    max-height: fit-content;
                                     width: 280px;
                                     display: none;
                                     position: absolute;
@@ -150,7 +153,8 @@
                             & > li {
 
                                 & > ul {
-                                    height: 343px;
+                                    min-height: 343px;
+                                    max-height: fit-content;
                                     width: 280px;
                                     display: none;
                                     position: absolute;
@@ -223,7 +227,8 @@
                 }
     
                 &>ul {
-                    height: 343px;
+                    min-height: 343px;
+                    max-height: fit-content;
                     width: 280px;
                     display: none;
                     position: absolute;
@@ -266,7 +271,8 @@
     
                     &>li {
                         &>ul {
-                            height: 343px;
+                            min-height: 343px;
+                            max-height: fit-content;
                             width: 280px;
                             display: none;
                             position: absolute;
@@ -291,7 +297,8 @@
                                 }
     
                                 &>ul {
-                                    height: 343px;
+                                    min-height: 343px;
+                                    max-height: fit-content;
                                     width: 280px;
                                     display: none;
                                     position: absolute;
@@ -310,7 +317,8 @@
                             &>li {
     
                                 &>ul {
-                                    height: 343px;
+                                    min-height: 343px;
+                                    max-height: fit-content;
                                     width: 280px;
                                     display: none;
                                     position: absolute;
