@@ -73,6 +73,9 @@ $dark-background-color-button: #ffffff;
 $tertiary-border-size: 0px;
 $link-active-color-opacity: rgba(255, 255, 255, 0.5);
 $link-active-opacity: 20%;
+$link-hover-opacity: 80%;
+
+$link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
 .cmp-button {
   cursor: pointer;
@@ -489,7 +492,12 @@ $link-active-opacity: 20%;
 
     &:hover {
       .cmp-button {
-        color: $color;
+        color: mix(
+          $color,
+          $degraded-background-color,
+          $opacity-hover,
+        );
+
         text-decoration: underline;
         text-underline-offset: 3px;
       }
@@ -573,7 +581,7 @@ $link-active-opacity: 20%;
         background-color: mix(
           $background-color,
           $degraded-background-color,
-          $opacity
+          $opacity-hover
         );
       }
 
@@ -758,11 +766,11 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
+      $link-hover-color-opacity,
       $secondary-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
@@ -774,12 +782,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $teal-color,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -957,12 +965,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $deep-teal,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1108,12 +1116,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $aqua,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1124,28 +1132,27 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
     );
   }
 
-  /////////////AQUI
   &.btn-deep-teal.cmp-tds-button-link.cmp-tds-button-dark-mode {
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
@@ -1157,12 +1164,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $teal-color,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1315,12 +1322,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $cool-gray-8,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1331,12 +1338,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1498,12 +1505,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $cool-gray-10,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1652,8 +1659,8 @@ $link-active-opacity: 20%;
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1664,12 +1671,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1814,12 +1821,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $black,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1830,12 +1837,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -1982,12 +1989,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $white,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2002,8 +2009,8 @@ $link-active-opacity: 20%;
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2149,12 +2156,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $steel-blue,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2165,13 +2172,29 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
+      $secondary-active-opacity,
+      $secondary-background-disabled-color
+    );
+  }
+
+  &.btn-teal.cmp-tds-button-link {
+    @include type-button-handler-link(
+      $teal-color,
+      get-color(container-transparent),
+      $link-hover-color-opacity,
+      $primary-border-size,
+      #ffffffff,
+      $secondary-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
+      $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
     );
@@ -2315,12 +2338,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $navy,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2331,12 +2354,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2583,12 +2606,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $copper,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2716,12 +2739,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $cool-gray-1,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2732,12 +2755,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2883,12 +2906,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $cherry,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -2899,12 +2922,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3049,12 +3072,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $amber,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3065,12 +3088,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3215,12 +3238,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $forest,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3231,12 +3254,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3381,12 +3404,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $charcoal,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3397,12 +3420,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3547,12 +3570,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $cool-gray-9,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3563,12 +3586,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3713,12 +3736,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $cobalt,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3729,12 +3752,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3880,12 +3903,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $neutral-gray-1,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -3896,12 +3919,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -4047,12 +4070,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $neutral-gray-2,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -4063,12 +4086,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -4214,12 +4237,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $dark-blue,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -4230,12 +4253,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -4482,12 +4505,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       $legacy-gray,
       get-color(container-transparent),
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $secondary-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
@@ -4498,12 +4521,12 @@ $link-active-opacity: 20%;
     @include type-button-handler-link(
       #ffffffff,
       'null',
-      $secondary-background-color,
+      $link-hover-color-opacity,
       $primary-border-size,
       #ffffffff,
       $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
+      $link-hover-color-opacity,
+      $link-hover-opacity,
       $link-active-color-opacity,
       $secondary-active-opacity,
       $secondary-background-disabled-color
