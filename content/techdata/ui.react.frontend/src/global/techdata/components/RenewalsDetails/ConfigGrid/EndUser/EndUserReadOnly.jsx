@@ -1,4 +1,5 @@
 import React from "react";
+import { getDictionaryValue } from "../../../../../../utils/utils";
 import Info from "../../../common/quotes/DisplayItemInfo";
 
 export default function EndUserInfoReadOnly ({ endUserData, endUserType, productLines }) {
@@ -26,9 +27,9 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
         <Info>{address.postalCode ?? ''}</Info>
       </p>
       <p>          
-        <Info label={productLines.endCustomerType} noColon>{endUserType}</Info>
-        <Info label={productLines.vendorAccountNo} noColon>{endUserData.vendorAccountNumber}</Info>
-        <Info label={productLines.endCustpreviousPurchaseOrderNo} noColon>{endUserData.previousEndUserPO}</Info>     
+        <Info label={getDictionaryValue("techdata.renewals.label.enduserType", "End user type")}>{endUserType}</Info>
+        <Info label={getDictionaryValue("techdata.renewals.label.vendorAccountNumber", "Vendor account №")}>{endUserData.vendorAccountNumber}</Info>
+        <Info label={getDictionaryValue("techdata.renewals.label.previousPurchaseNumber", "Previous purchase order №")}>{endUserData.previousEndUserPO}</Info>   
       </p>
     </div>
   );

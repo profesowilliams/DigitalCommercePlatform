@@ -20,6 +20,7 @@ import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
 import { setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
 import useComputeBranding from "../../../hooks/useComputeBranding";
+import { getDictionaryValue } from "../../../../../utils/utils";
 
 
 function GridSubTotal({ subtotal, data, gridProps }) {
@@ -32,7 +33,7 @@ function GridSubTotal({ subtotal, data, gridProps }) {
       </div>
       <div className="cmp-renewal-preview__subtotal--price-note">
         <b className="cmp-renewal-preview__subtotal--description">
-          {gridProps.quoteSubtotal}
+          { getDictionaryValue("techdata.renewals.label.preview.quoteSubtotal", "Quote Subtotal") }
         </b>
         <span className="cmp-renewal-preview__subtotal--value">
           <span className="cmp-renewal-preview__subtotal--currency-symbol">
@@ -295,7 +296,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
               onClick={onOrderButtonClicked}
               variant="contained"           
             >
-              {orderButtonLabel}
+              { getDictionaryValue("techdata.buttons.label.order", "Order") }
             </Button>
           </p>
         </div>

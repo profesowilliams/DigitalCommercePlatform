@@ -1,4 +1,5 @@
 import React from "react";
+import { getDictionaryValue } from "../../../../../../utils/utils";
 import Info from "../../../common/quotes/DisplayItemInfo";
 export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) {  
   const { 
@@ -34,8 +35,8 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
         <Info>{address.postalCode}</Info> 
       </p>
       <p>
-        <Info label={resellerSAPaccNoLabel} noColon>{id}</Info>
-        <Info label={resellerVendorAccountNoLabel} noColon>{vendorAccountNumber}</Info>
+        <Info label={getDictionaryValue("techdata.renewals.label.accountNumber",'Account Nº') } >{id}</Info>
+        <Info label={ getDictionaryValue("techdata.renewals.label.vendorAccountNumber",'Vendor account Nº') } >{vendorAccountNumber}</Info>
       </p>
     </div>
   );

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
 import { useRef } from 'react';
 import { handleValidation, populateFieldConfigsFromService, getFieldMessage, handleEmailHelperText } from '../Common/utils';
+import { getDictionaryValue } from '../../../../../../utils/utils';
 
 export default function ResellerEdit({
   resellerDetails,
@@ -34,7 +35,7 @@ export default function ResellerEdit({
       {contactName.canEdit && <CustomTextField
         inputRef={contactNameRef}
         id="reseller-contact-name"
-        label="Contact full name"
+        label= { getDictionaryValue("techdata.renewals.label.contactName", 'Contact full name') }
         variant="standard"
         onChange={handlers["contactName"]}
         helperText={getFieldMessage(contactName, true)}
@@ -43,7 +44,7 @@ export default function ResellerEdit({
       />}
       {contact[0]['email'].canEdit && <CustomTextField
         id="reseller-email"
-        label="Contact email"
+        label={ getDictionaryValue("techdata.renewals.label.email", 'Contact email') }
         variant="standard"
         onChange={handlers["email"]}
         error={!isEmailValid}
@@ -52,7 +53,7 @@ export default function ResellerEdit({
       />}
       {contact[0]['phone'].canEdit && <CustomTextField
         id="reseller-phone"
-        label="Contact telephone number"
+        label={ getDictionaryValue("techdata.renewals.label.telephoneNumber", 'Contact telephone number') }
         variant="standard"
         onChange={handlers["phone"]}
         helperText={getFieldMessage(contact[0]['phone'])}

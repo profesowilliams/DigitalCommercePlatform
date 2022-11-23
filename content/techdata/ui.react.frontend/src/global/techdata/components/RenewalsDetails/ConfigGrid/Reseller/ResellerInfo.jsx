@@ -9,6 +9,7 @@ import { isObject } from "../../../../../../utils";
 import getModifiedResellerData from "./utils";
 import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
 import { extractDetailResellerData } from "../../../RenewalsGrid/Orders/orderingRequests"
+import { getDictionaryValue } from "../../../../../../utils/utils";
 
 function ResellerInfo({ 
   reseller,
@@ -71,9 +72,9 @@ function ResellerInfo({
   return (
     <div className={`cmp-renewals-qp__reseller-info ${showError && `error-feedback`}`}>
       <span className="cmp-renewals-qp__reseller-info--title">
-        {resellerLabels.resellerLabel}
+        {getDictionaryValue("techdata.renewals.label.reseller", "Reseller")}
       </span>
-      {showError && <MissingInfo>Reseller missing information</MissingInfo>}
+      {showError && <MissingInfo>{ getDictionaryValue( "techdata.renewals.label.preview.reseller.missinginfo", "Reseller missing information")}</MissingInfo>}
       {showEditButton && (
         <EditFlow
           disabled={!editMode && isEditingDetails}

@@ -58,16 +58,16 @@ export const endUserConstants = {
 };
 
 export const endUserLables = {
-  endUserName: 'Company name',
-  endUserFullName: 'Contact full name',
-  endUserEmail: 'Contact email',
-  endUserPhone: 'Contact telephone number',
-  endUserAddress1: 'Address 1',
-  endUserAddress2: 'Address 2',
-  endUserCity: 'City',
-  endUserCountry: 'Country',
-  endUserAreaCode: 'Area code',
-  endUserVendorAccountNumber: 'Vendor account №',
+  endUserName: getDictionaryValue("techdata.renewals.label.companyName", 'Company name'), 
+  endUserFullName: getDictionaryValue("techdata.renewals.label.contactName", 'Contact full name'),
+  endUserEmail: getDictionaryValue("techdata.renewals.label.email", 'Contact email'),
+  endUserPhone: getDictionaryValue("techdata.renewals.label.telephoneNumber", 'Contact telephone number'),
+  endUserAddress1: getDictionaryValue("techdata.renewals.label.address1", 'Address 1'),
+  endUserAddress2: getDictionaryValue("techdata.renewals.label.address2", 'Address 2'),
+  endUserCity: getDictionaryValue("techdata.renewals.label.city", 'City'),
+  endUserCountry: getDictionaryValue("techdata.renewals.label.country", 'Country'),
+  endUserAreaCode: getDictionaryValue("techdata.renewals.label.areaCode", 'Area code'),
+  endUserVendorAccountNumber: getDictionaryValue("techdata.renewals.label.vendorAccountNumber", 'Vendor account №'),
 };
 
 export const getInvalidEmailText = () =>

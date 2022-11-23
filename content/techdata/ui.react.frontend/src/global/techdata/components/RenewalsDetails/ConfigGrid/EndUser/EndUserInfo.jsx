@@ -21,6 +21,7 @@ import IconButton from '@mui/material/IconButton';
 import EditFlow from "../Common/EditFlow";
 import { useRenewalsDetailsStore } from "../../store/RenewalsDetailsStore";
 import { extractDetailRenewalData } from "../../../RenewalsGrid/Orders/orderingRequests"
+import { getDictionaryValue } from '../../../../../../utils/utils';
 
 function EndUserInfo({
   endUser,
@@ -253,9 +254,9 @@ function EndUserInfo({
       }`}
     >
       <span className="cmp-renewals-qp__enduser-info--title">
-        {productLines.endCustomerLabel}
+        {getDictionaryValue("techdata.renewals.label.enduser", "End user")}
       </span>
-      {showError && <MissingInfo>End user missing information</MissingInfo>}
+      {showError && <MissingInfo>{ getDictionaryValue("techdata.renewals.label.preview.enduser.missinginfo", "End user missing information")}</MissingInfo>}
       {showEditButton && (
         <EditFlow
           disabled={!editMode && isEditingDetails}

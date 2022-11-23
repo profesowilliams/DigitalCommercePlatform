@@ -10,8 +10,10 @@
     <techdata.validation.message.maxLengthField jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Max {max-length} characters."/>
     
     <techdata.buttons.label.save jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Save"/>
+    <techdata.buttons.label.saving jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Saving"/>
     <techdata.buttons.label.cancel jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Cancel"/>
     <techdata.buttons.label.edit jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Edit"/>
+    <techdata.buttons.label.order jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Order"/>
 
     <techdata.buttons.label.cancelDialogNo jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="No, continue editing"/>
     <techdata.buttons.label.cancelDialogYes jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Yes, cancel"/>
@@ -26,4 +28,38 @@
     <techdata.grids.message.error.404 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Not found"/>
     <techdata.grids.message.error.408 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Timeout"/>
     <techdata.grids.message.error.500 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Unknown error"/>
+
+    <techdata.renewals.label.agreement jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Agreement"/>
+    <techdata.renewals.label.enduser jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="End user"/>
+    <techdata.renewals.label.enduserType jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="End user type"/>
+    <techdata.renewals.label.companyName jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Company name"/>
+    <techdata.renewals.label.contactName jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Contact full name"/>
+    <techdata.renewals.label.email jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Contact email"/>
+    <techdata.renewals.label.telephoneNumber jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Contact telephone number"/>
+    <techdata.renewals.label.address1 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Contact address 1"/>
+    <techdata.renewals.label.address2 jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Contact address 2"/>
+    <techdata.renewals.label.city jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="City"/>
+    <techdata.renewals.label.country jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Country"/>
+    <techdata.renewals.label.areaCode jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Area Code"/>
+    <techdata.renewals.label.vendorAccountNumber jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Vendor account №"/>
+    <techdata.renewals.label.previousPurchaseNumber jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Previous purchase order №"/>
+    <techdata.renewals.label.accountNumber jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Account №"/>
+    <techdata.renewals.label.agreementNumber jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Agreement №"/>
+    <techdata.renewals.label.quoteNumber jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Quote №"/>
+    <techdata.renewals.label.quoteExpiryDate jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Quote expiry date"/>
+    <techdata.renewals.label.quoteDueDate jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Quote due date"/>
+    <techdata.renewals.label.vendorQuoteID jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Vendor quote ID"/>
+    <techdata.renewals.label.program jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Program"/>
+    <techdata.renewals.label.duration jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Duration"/>
+    <techdata.renewals.label.supportLevel jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Support level"/>
+    <techdata.renewals.label.agreementDuration jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Agreement Duration"/>
+    <techdata.renewals.label.usageDuration jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Usage Duration"/>
+    <techdata.renewals.label.reseller jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Reseller"/>
+    <techdata.renewals.label.downloadPdf jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Download PDF"/>
+    <techdata.renewals.label.downloadXls jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Download XLS"/>
+    <techdata.renewals.label.preview.enduser.missinginfo jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="End user missing information"/>
+    <techdata.renewals.label.preview.reseller.missinginfo jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Reseller missing information"/>
+    <techdata.renewals.label.preview.quoteSubtotal jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Quote Subtotal"/>
+    <techdata.renewals.label.preview.backToRenewals jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Back to all Renewals"/>
+    <techdata.renewals.label.preview.quotePreview jcr:mixinTypes="[sling:Message]" jcr:primaryType="nt:folder" sling:message="Quote Preview"/>
 </jcr:root>

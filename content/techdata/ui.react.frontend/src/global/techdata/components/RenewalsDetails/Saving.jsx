@@ -1,5 +1,6 @@
 import React from "react";
 import { LoaderIcon } from "../../../../fluentIcons/FluentIcons";
+import { getDictionaryValue } from "../../../../utils/utils";
 import IconButton from "../Widgets/IconButton";
 
 export default function Saving({ customClass }) {
@@ -8,7 +9,7 @@ export default function Saving({ customClass }) {
       btnClass={customClass}
       icon={<LoaderIcon className="loader-rotate" />}
     >
-      Saving
+      { getDictionaryValue("techdata.buttons.label.saving", "Saving") }
     </IconButton>
   );
 }

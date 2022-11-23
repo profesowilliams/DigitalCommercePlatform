@@ -4,7 +4,7 @@ import EndUserInfo from "./EndUser/EndUserInfo";
 import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
-import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
+import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
 import { DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function GridHeader({ gridProps, data }) {
@@ -55,7 +55,7 @@ function GridHeader({ gridProps, data }) {
           gridProps?.productLines?.showDownloadXLSButton && (
           <button onClick={downloadXLS}>
             <span className={gridProps?.productLines?.showDownloadPDFButton && 'separator'}>
-              {gridProps?.productLines?.downloadXLSLabel || "Export XLS"}
+            {getDictionaryValue("techdata.renewals.label.downloadXls", "Download XLS")}
             </span>
           </button>
         )}
@@ -64,7 +64,7 @@ function GridHeader({ gridProps, data }) {
             <button onClick={downloadPDF}>
               <span>
                 <DownloadIcon className="cmp-renewal-preview__download--icon"/>
-                {gridProps?.productLines?.downloadPDFLabel || "Download PDF"}
+                {getDictionaryValue("techdata.renewals.label.downloadPdf", "Download PDF")}
               </span>
           </button>
         )}
@@ -96,13 +96,13 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
             underline="none"
           >
             <i className="fas fa-chevron-left"></i>
-            {quotePreview.renewalsUrlLabel || "Back to all Renewals"}
+            { getDictionaryValue("techdata.renewals.label.preview.backToRenewals", "Back to all Renewals") }
           </Link>
           <img className="vendorLogo" src={vendorLogo} alt="vendor logo" />
         </div>
         <div className="export-container">
           <span className="quote-preview">
-            {gridProps?.quotePreview?.quotePreviewlabel}
+            { getDictionaryValue("techdata.renewals.label.preview.quotePreview", "Quote Preview") }
           </span>
           <GridHeader data={data} gridProps={gridProps} />
         </div>
