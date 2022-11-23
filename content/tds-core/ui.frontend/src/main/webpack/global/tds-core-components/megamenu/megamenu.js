@@ -342,6 +342,14 @@ Array.prototype.forEach.call(menuItems1, function (el, i) {
   });
 });
 
+document.addEventListener('header-closed', function() {
+   document.querySelectorAll('#navigation .cmp-has-submenu')?.forEach((val) => {
+      val.classList.remove('active');
+   });
+   const headerContainerEle = document.querySelector('#cmp-techdata-header');
+   headerContainerEle?.classList.remove('mega-menu-active');
+});
+
 const hasSubMenuEle = document.querySelectorAll('#navigation .cmp-has-submenu a');
 const subMenuEleheading = document.querySelectorAll('#navigation .cmp-sub-menu-heading');
 

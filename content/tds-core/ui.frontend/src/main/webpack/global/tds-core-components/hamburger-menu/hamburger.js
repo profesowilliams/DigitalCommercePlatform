@@ -44,6 +44,7 @@ export default class Hamburger {
         this.open = false;
         if (this.el?.closest('.cmp-container')) {
             this.el?.closest('.cmp-container').classList.remove('header-active');
+            document.dispatchEvent(new CustomEvent('header-closed'));
             this.headerResize();
         }
     }
