@@ -162,9 +162,9 @@ function _SearchFilter(
 
   const handleOutsideClick = (e) => {
     const isComingFromSearch =
-      e.target.parentNode?.className === "cmp-renewal-search";
+      e.target.closest(".cmp-renewal-search");
     const isComingFromReset =
-      e.target.parentNode?.className === "cmp-search-options__reset" || e.target.parentNode?.className === "cmp-search-options__reset__icon-container";
+      e.target.closest(".cmp-search-options__reset") || e.target.closest(".cmp-search-options__reset__icon-container");
     if (
       node.current &&
       !isComingFromSearch &&
