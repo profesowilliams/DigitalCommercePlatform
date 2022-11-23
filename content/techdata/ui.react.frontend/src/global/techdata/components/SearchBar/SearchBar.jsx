@@ -338,7 +338,7 @@ const SearchBar = ({ data, componentProp }) => {
   const renderSearch = () => {
     return (
       <>
-        {mobileState ? (
+        {mobileState && isChecked ? (
           <span
             onClick={handleCloseSearchBar}
             className={
@@ -367,8 +367,8 @@ const SearchBar = ({ data, componentProp }) => {
           <input
             className={
               isChecked
-                ? mobileState ? 'cmp-searchbar__input cmp-searchbar__input--mobile' : 'cmp-searchbar__input'
-                : 'cmp-searchbar__input cmp-search-icon-hidden'
+                ? 'cmp-searchbar__input cmp-searchbar__input--mobile'
+                : 'cmp-searchbar__input cmp-searchbar__input--mobile cmp-search-icon-hidden'
             }
             data-cmp-hook-search="input"
             type="text"
@@ -474,7 +474,7 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const RenderMobileView = (
-    <div className="cmp-searchbar__mobile-container--mobile" style={isClicked ? {'position' : 'fixed'} : {}} >
+    <div className={isChecked ? "cmp-searchbar__mobile-container--mobile" : ''} style={isChecked ? {'position' : 'fixed'} : {}} >
       <div className="cmp-searchbar__container">{renderSearch()}</div>
       {renderContextMenu()}
     </div>
@@ -503,6 +503,7 @@ const SearchBar = ({ data, componentProp }) => {
 
   return mobileState ? RenderMobileView : RenderDesktopView;
 };
+    
 
 const mapStateToProps = (state) => {
   return {
