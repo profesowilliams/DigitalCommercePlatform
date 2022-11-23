@@ -71,8 +71,6 @@ const SearchBar = ({ data, componentProp }) => {
 
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
   const [searchInputFocused, setSearchInputFocused] = useState(false);
-  const [closeModal, setCloseModal] = useState(false);
-  const [isMobile, setMobile] = useState(false);
   const [isClicked, setClicked] = useState(false);
   const [isChecked, setChecked] = useState(false);
   const [isFocus, setFocus] = useState(false);
@@ -85,9 +83,6 @@ const SearchBar = ({ data, componentProp }) => {
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
   const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
   const isLoggedIn = useStore((state) => state.isLoggedIn);
-
-  const CLASS_SEARCH_ICON_HIDDEN = 'cmp-button__icon cmp-search-icon-hidden';
-  const CLASS_SEARCH_ICON_VISIBLE = 'cmp-button__icon';
 
   useEffect(() => {
     const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
@@ -113,7 +108,6 @@ const SearchBar = ({ data, componentProp }) => {
           isChecked)) &&
       !event.target.classList.contains('cmp-searcharea__button')
     ) {
-      setMobile(false);
       setSearchInputFocused(false);
       setChecked(false);
       setFocus(false);
@@ -273,18 +267,15 @@ const SearchBar = ({ data, componentProp }) => {
 
   const gotFocus = () => {
     if (mobileState) {
-      setMobile(true);
       setSearchInputFocused(true);
       setFocus(true);
     } else {
-      setMobile(true);
       setFocus(true);
     }
   };
 
   const lostFocus = () => {
     if (searchTermText.length === 0) {
-      setMobile(false);
       setSearchInputFocused(false);
       setChecked(false);
       setFocus(false);
@@ -303,6 +294,7 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const handleOpenSearchBar = () => {
+    setClicked(true);
     if (searchTermText === '') {
       mobileSearchOpener();
     } else {
@@ -315,11 +307,12 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const handleCloseSearchBar = () => {
-    setCloseModal(true);
+    setClicked(false);
+    setChecked(false);
+    setSearchInputFocused(false);
   };
 
   const mobileSearchOpener = () => {
-    setCloseModal(false);
     if (mobileState) {
       if (searchInputFocused) {
         lostFocus();
@@ -345,11 +338,13 @@ const SearchBar = ({ data, componentProp }) => {
   const renderSearch = () => {
     return (
       <>
-        {isMobile ? (
+        {mobileState ? (
           <span
             onClick={handleCloseSearchBar}
             className={
-              isClicked ? CLASS_SEARCH_ICON_HIDDEN : CLASS_SEARCH_ICON_VISIBLE
+              !isChecked
+              ? 'cmp-searchbar__button cmp-searchbar__button--mobile'
+              : 'cmp-searchbar__button'
             }
           >
             <svg
@@ -371,9 +366,9 @@ const SearchBar = ({ data, componentProp }) => {
         <div className="input-icon">
           <input
             className={
-              isMobile
-                ? 'cmp-searchbar__input cmp-searchbar__input--mobile'
-                : 'cmp-searchbar__input'
+              isChecked
+                ? mobileState ? 'cmp-searchbar__input cmp-searchbar__input--mobile' : 'cmp-searchbar__input'
+                : 'cmp-searchbar__input cmp-search-icon-hidden'
             }
             data-cmp-hook-search="input"
             type="text"
@@ -389,12 +384,10 @@ const SearchBar = ({ data, componentProp }) => {
             value={searchTermText}
             placeholder={placeholder}
           />
-          {isMobile && searchTermText.length > 0 ? (
+          {mobileState && searchTermText.length > 0 ? (
             <span
-              // onClick={clearInputSearch()}
               onClick={clearInputSearch}
               className="cmp-button__icon cmp-icon-input"
-              // style={isClicked ? { display: 'none' } : { display: 'inline' }}
             >
               <svg
                 width="20"
@@ -416,7 +409,7 @@ const SearchBar = ({ data, componentProp }) => {
 
         <button
           className={
-            isMobile
+            isChecked
               ? 'cmp-searchbar__button cmp-searchbar__button--mobile'
               : 'cmp-searchbar__button'
           }
@@ -425,7 +418,7 @@ const SearchBar = ({ data, componentProp }) => {
         >
           <svg
             className={
-              isClicked
+              !isClicked
                 ? 'cmp-searchbar__icon cmp-searchbar__icon--checked'
                 : 'cmp-searchbar__icon'
             }
@@ -455,7 +448,7 @@ const SearchBar = ({ data, componentProp }) => {
         </button>
       </>
     );
-  };
+  };    
 
   const renderContextMenu = () => {
     if (!searchInputFocused) {
@@ -468,45 +461,47 @@ const SearchBar = ({ data, componentProp }) => {
           selectedArea={selectedArea}
           changeSelectedArea={changeSelectedArea}
           toggleSearchIcon={toggleSearchIcon}
-          isMobile={isMobile}
+          isMobile={mobileState}
         ></SearchAreas>
         <SearchSuggestions
           suggestionsList={typeAheadSuggestions.Suggestions}
           getTypeAheadSearchUrl={getTypeAheadSearchUrl}
           handlerAnalyticEvent={handlerAnalyticsSearchEvent}
-          isMobile={isMobile}
+          isMobile={mobileState}
         ></SearchSuggestions>
       </div>
     );
   };
 
-  const RENDER_MOBILE_VIEW = (
-    <div className="cmp-searchbar__mobile-container--mobile">
+  const RenderMobileView = (
+    <div className="cmp-searchbar__mobile-container--mobile" style={isClicked ? {'position' : 'fixed'} : {}} >
       <div className="cmp-searchbar__container">{renderSearch()}</div>
       {renderContextMenu()}
     </div>
   );
 
-  const RENDER_DESKTOP_VIEW = (
-    <div
-      id={id}
-      ref={searchContainerRef}
-      className={`cmp-searchbar ${
-        isChecked === true ? 'cmp-searchbar--checked' : ' '
-      }`}
-    >
-      <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
-        <i className="cmp-searchbar__clear-icon"></i>
-      </button>
-      <div className="cmp-searchbar__container">{renderSearch()}</div>
-      {renderContextMenu()}
-      <span
-        className="cmp-searchbar__loading-indicator"
-        data-cmp-hook-search="loadingIndicator"
-      ></span>
-    </div>
-  );
-  return isMobile ? RENDER_MOBILE_VIEW : RENDER_DESKTOP_VIEW;
+  const RenderDesktopView = (
+      <div
+        id={id}
+        ref={searchContainerRef}
+        className={`cmp-searchbar ${
+          isChecked === true ? 'cmp-searchbar--checked' : ' '
+        }`}
+      >
+        <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
+          <i className="cmp-searchbar__clear-icon"></i>
+        </button>
+        <div className="cmp-searchbar__container">{renderSearch()}</div>
+        {renderContextMenu()}
+        <span
+          className="cmp-searchbar__loading-indicator"
+          data-cmp-hook-search="loadingIndicator"
+        ></span>
+      </div>
+    );
+
+
+  return mobileState ? RenderMobileView : RenderDesktopView;
 };
 
 const mapStateToProps = (state) => {
