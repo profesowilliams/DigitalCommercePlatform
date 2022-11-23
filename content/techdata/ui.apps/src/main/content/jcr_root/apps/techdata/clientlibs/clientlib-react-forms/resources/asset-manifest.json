@@ -1,17 +1,25 @@
 {
   "files": {
-    "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.be4cdc8e.css",
-    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.10fcb1c1.js",
+    "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.7bed4e40.css",
+    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.7463f0e2.js",
     "static/js/787.c9ff93fe.chunk.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js",
     "static/media/OpenSans_SemiBold.ttf": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/OpenSans_SemiBold.917aa0aa0ddaafd4eb54.ttf",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4taVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4taVIUwaEQbjB_mQ.76f19aa8b3824bd998c6.woff2",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4gaVIUwaEQbjA.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4gaVIUwaEQbjA.f20ebe74afbbfda7759d.woff2",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4uaVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4uaVIUwaEQbjB_mQ.55f77b932b6eeeb21f92.woff2",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4kaVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4kaVIUwaEQbjB_mQ.24b9f797f6ca1657f371.woff2",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4jaVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4jaVIUwaEQbjB_mQ.59fbdba97cef97b05f45.woff2",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4iaVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4iaVIUwaEQbjB_mQ.f762d4259c50b8667c5a.woff2",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4vaVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4vaVIUwaEQbjB_mQ.a5281b530c55f06a8fc4.woff2",
     "index.html": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/index.html",
+    "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4saVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4saVIUwaEQbjB_mQ.ec19fd5873aa47333a3e.woff2",
     "static/media/index.cjs": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/index.cd351d7c31d0d3fccf96.cjs",
-    "main.be4cdc8e.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.be4cdc8e.css.map",
-    "main.10fcb1c1.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.10fcb1c1.js.map",
+    "main.7bed4e40.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.7bed4e40.css.map",
+    "main.7463f0e2.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.7463f0e2.js.map",
     "787.c9ff93fe.chunk.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.be4cdc8e.css",
-    "static/js/main.10fcb1c1.js"
+    "static/css/main.7bed4e40.css",
+    "static/js/main.7463f0e2.js"
   ]
 }
