@@ -31,90 +31,13 @@
   width: rem(24px);
 }
 
-.cmp-search-icon-hidden {
-  display: none !important;
-}
-
-.cmp-searchbar__mobile-container--mobile {
-  width: 100vw !important;
-  height: 100vh !important;
-  background-color: white;
-  position: fixed;
-  z-index: 101;
-  top: 0;
-  left: 0;
-
-  .cmp-searchbar__container {
-    margin-top: rem(80px);
-    margin-bottom: 1vh;
-    justify-content: space-between;
-  }
-
-  .input-icon {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .cmp-icon-input i svg {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 69px;
-  }
-  .cmp-icon-input svg {
-    right: rem(26px);
-  }
-
-  .cmp-button__icon {
-    margin-left: rem(15px);
-  }
-
-  .cmp-searchbar__context-menu {
-    box-shadow: 0px;
-  }
-
-  .cmp-searcharea__selectedarea-button {
-    padding-left: rem(61px);
-  }
-
-  .cmp-searchsuggestions__suggestion.cmp-searchsuggestions__suggestion-withRefinement {
-    padding-left: rem(61px);
-  }
-
-  .cmp-searcharea__area {
-    .cmp-searcharea__button {
-      margin-left: rem(61px);
-    }
-  }
-
-  .cmp-searchbar__button {
-    z-index: 999999999999999999999999999999999999999;
-  }
-
-  .cmp-searchbar__button--mobile {
-    display: none;
-  }
-
-  .cmp-searchbar__input--mobile {
-    width: 95%;
-    background: linear-gradient(#000, #000) center bottom 5px /
-      calc(100% - 10px) 2px no-repeat;
-    :focus {
-      border: 0px;
-    }
-  }
-
-  .cmp-searcharea__selectedarea {
-    border-bottom: 0px;
-  }
-}
-
 //Search Bar styles
 .cmp-searchbar {
   min-width: rem(250px);
   position: relative;
   width: 100%;
   padding: 10px 0;
+
 
   @include mobile {
     display: flex;
@@ -128,15 +51,15 @@
 
   &--checked {
     @include mobile {
-      background-color: get-color(brand-white);
-      margin-left: 0;
-      margin-top: 0;
-      width: 100%;
-      left: 0;
-      top: rem(45px);
-      z-index: -1;
-      max-height: 80px;
-      position: fixed;
+        background-color: get-color(brand-white);
+        margin-left: 0;
+        margin-top: 0;
+        width: 100%;
+        left: 0;
+        top: rem(45px);
+        z-index: -1;
+        max-height: 80px;
+        position: fixed;
     }
   }
 
@@ -151,20 +74,15 @@
   }
 
   &__input {
-    border: 0.0625rem solid #979797;
+    border: rem(1px) solid get-color(text-shadow);
     border-radius: rem(6px) 0 0 rem(6px);
     border-right: 0;
     box-sizing: border-box;
     outline: none;
+    padding: rem(10px) rem(14px);
     transition: all 400ms ease;
-    height: 100%;
-    min-width: 100%;
     width: 100%;
-
-    padding: rem(6px) rem(10.8px);
-    visibility: visible;
-    display: flex;
-    width: 86%;
+    height: 100%;
 
     &:focus {
       border: rem(1px) solid get-color(td-dark-blue);
@@ -175,24 +93,19 @@
       font-style: italic;
     }
 
-    border: rem(1px) solid get-color(border-light-gray);
-    border-radius: 0;
-    padding: 0;
+      border: rem(1px) solid get-color(border-light-gray);
+      border-radius: 0;
+      padding: 0;
+      display: none;
+      min-width: 0;
+      width: 0;
 
-    &--mobile {
-      &:focus {
-        border: 0px;
+      &--mobile {
+        padding: rem(6px) rem(10px);
+        visibility: visible;
+        display: flex;
+        width: 86%;
       }
-
-      &::placeholder {
-        color: get-color(border-light-gray);
-        font-style: italic;
-      }
-      padding: rem(6px) rem(10px);
-      visibility: visible;
-      display: flex;
-      width: 86%;
-    }
   }
 
   &__button {
@@ -215,10 +128,10 @@
       }
     }
 
-    background-color: transparent;
-    border: none !important;
-    padding: 0;
-    margin: 0 rem(8px);
+      background-color: transparent;
+      border: none !important;
+      padding: 0;
+      margin: 0 rem(8px);
 
     &--mobile {
       padding: 0;
@@ -299,7 +212,7 @@
     @include nav-button;
 
     &:hover {
-      background-color: map-get($color-palette, 'td-lighter-gray');
+      background-color: map-get($color-palette, "td-lighter-gray");
       color: get-color(brand-text-gray);
     }
   }
@@ -332,9 +245,9 @@
 
       &:hover,
       &:active {
-        background-color: map-get($color-palette, 'td-lighter-gray');
+        background-color: map-get($color-palette, "td-lighter-gray");
         color: get-color(brand-text-gray);
-
+        
         svg {
           color: get-color(brand-nav-blue);
         }
@@ -406,7 +319,7 @@
     }
 
     &:hover {
-      background-color: map-get($color-palette, 'td-lighter-gray');
+      background-color: map-get($color-palette, "td-lighter-gray");
       color: get-color(brand-white);
     }
   }
