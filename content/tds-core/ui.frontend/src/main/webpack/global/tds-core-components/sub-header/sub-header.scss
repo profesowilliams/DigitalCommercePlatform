@@ -222,7 +222,8 @@
         width: 100%;
 
         @media (max-width: 1023px) {
-          padding-left: rem(73px);
+            height: auto !important;
+            padding-left: 48px !important;
         }
 
         @include mobile{
@@ -394,11 +395,15 @@
  }
 
 @media (max-width: 768.98px) {
-  .subheader {    
+  .subheader {
+      .cmp-sub-header--sub-nav.new-sub>.cmp-sub-header--content {
+        height: auto !important;
+        padding-left: 16px !important;
+      }
       &.cmp-sub-header-no-logo {        
         .cmp-sub-header--content {
-          display: flex!important;
-          height: 0px!important;
+          height: auto !important;
+          padding-left: 16px !important;
     
           .cmp-sub-header--sub-nav__title {
             margin-top: 0!important;
