@@ -1,4 +1,5 @@
 (function () {
+  const md5  = require("blueimp-md5");
   const CLASS_MODAL = 'cmp-popup__modal';
   const CLASS_MODAL_OPENED = 'cmp-popup__modal--open';
   const ID_SECURITY_FORM = 'securityform';
@@ -10,11 +11,15 @@
   const securityForm = document.getElementById(ID_SECURITY_FORM);
   const inputs = securityForm?.querySelectorAll('input');
   const dataset = document.querySelector('[data-sec-code]');
+  const dataSecCode = document.body.getAttribute('data-sec-code');
+  const encryptCode = encryptSecurityCode(dataSecCode);
   const errorDataset = document.querySelector('[data-error-code]');
   const errorIconDataset = document.querySelector('[data-error-icon]');
   const { secCode, secCodeEnabled } = dataset?.dataset
     ? dataset.dataset
     : { secCode: null, secCodeEnabled: null };
+  // encrypt security code
+  document.body.setAttribute('data-sec-code', encryptCode);
   const validationCodeEnabledFlag = secCodeEnabled || secCodeEnabled === '';
   const { errorCode } = errorDataset?.dataset
     ? errorDataset?.dataset
@@ -23,7 +28,7 @@
     ? errorIconDataset?.dataset
     : { errorIcon: 'fa-solid fa-triangle-exclamation' };
   const cookieValue = getCookie(COOKIE_NAME);
-  const cookieString = pageID + '#' + secCode;
+  const cookieString = pageID + '#' + encryptSecurityCode(secCode);
   function handlerOpenSecurityCodeModal() {
     inputs.forEach((input) => {
       input.addEventListener(
@@ -183,11 +188,16 @@
     handlerOpenSecurityCodeModal();
   }
 
+  function encryptSecurityCode(hash) {
+    return md5(hash);
+  }
+
   function closeModal() {
     const tempModal = document.getElementsByClassName(CLASS_MODAL)[0];
     tempModal.style.display = 'none';
   }
   document.addEventListener('DOMContentLoaded', () => {
+
     const modals = document.getElementsByClassName(CLASS_MODAL);
     if (pageID && validationCodeEnabledFlag) {
       if (validatePageCookie()) {
