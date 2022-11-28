@@ -47,6 +47,7 @@ module.exports = {
       name: 'clientlib-dependencies',
       categories: ['techdata.dependencies'],
       dependencies:['techdata.grid', 'techdata.scene7.dynamicmedia'],
+      embed: ['tds-core.dependencies'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib
         // directories
