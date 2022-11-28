@@ -26,6 +26,8 @@ function Grid(props) {
     icons,
     omitCreatedQuery = false,
     contextMenuItems = undefined,
+    extendedContextMenuItems = undefined,
+    noContextMenuItemsWhenColumnNull = false,
     customizedDetailedRender,
     onExpandAnalytics,
     onCollapseAnalytics,
@@ -102,10 +104,83 @@ function Grid(props) {
     };
   }, []);
 
+  const getDefaultMenuItems = (params) => {
+    const extendedItems =
+      typeof extendedContextMenuItems === "function" ? extendedContextMenuItems(params) : [];
+    return [
+      {
+        name: config?.menuCopy,
+        shortcut: "Ctrl+C",
+        action: () => {
+          switch (true) {
+            case !params.value && typeof getDefaultCopyValue === 'function':
+              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
+              break;
+            case isObject(params.value):
+              navigator.clipboard.writeText(stringifyValue(params.value?.name));
+              break;
+            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
+              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
+              break;
+            default:
+              navigator.clipboard.writeText(stringifyValue(params.value));
+              break;
+          }
+        },
+        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+      },
+      {
+        name: config?.menuCopyWithHeaders,
+        action: function () {
+          navigator.clipboard.writeText(
+            `${params.column.colDef.headerName}\n${
+              stringifyValue(params.value) || ""
+            }`
+          );
+        },
+        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+      },
+      "separator",
+      {
+        name: config?.menuExport,
+        subMenu: [
+          {
+            name: config?.menuCsvExport,
+            action: function () {
+              gridApi.current.exportDataAsCsv();
+            },
+            icon: '<span class="ag-icon ag-icon-csv" unselectable="on" role="presentation"></span>',
+          },
+          {
+            name: config?.menuExcelExport,
+            action: function () {
+              gridApi.current.exportDataAsExcel();
+            },
+            icon: '<span class="ag-icon ag-icon-excel" unselectable="on" role="presentation"></span>',
+          },
+        ],
+        icon: '<span class="ag-icon ag-icon-save" unselectable="on" role="presentation"></span>',
+      },
+      ...extendedItems,
+    ];
+  };
+    
   /*
     function that returns AG grid vnode outside main return function to keep that
     node on useState hook and set it once per component lifecycle or on demand
   */
+
+  const getContextMenuItems = (params) => {
+    if (contextMenuItems) {
+      return contextMenuItems(params);
+    }
+    else if (noContextMenuItemsWhenColumnNull && !params.column) {
+      return undefined;
+    }
+    else {
+      return getDefaultMenuItems(params);
+    }
+  };
  
   const AgGrid = () => (
     <AgGridReact
@@ -181,67 +256,6 @@ function Grid(props) {
       })}
     </AgGridReact>
   );
-
-  const getContextMenuItems = (params) => {
-    const extendedItems =
-      typeof contextMenuItems === "function" ? contextMenuItems(params) : [];
-    return [
-      {
-        name: config?.menuCopy,
-        shortcut: "Ctrl+C",
-        action: () => {
-          switch (true) {
-            case !params.value && typeof getDefaultCopyValue === 'function':
-              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
-              break;
-            case isObject(params.value):
-              navigator.clipboard.writeText(stringifyValue(params.value?.name));
-              break;
-            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
-              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
-              break;
-            default:
-              navigator.clipboard.writeText(stringifyValue(params.value));
-              break;
-          }
-        },
-        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
-      },
-      {
-        name: config?.menuCopyWithHeaders,
-        action: function () {
-          navigator.clipboard.writeText(
-            `${params.column.colDef.headerName}\n${
-              stringifyValue(params.value) || ""
-            }`
-          );
-        },
-        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
-      },
-      "separator",
-      {
-        name: config?.menuExport,
-        subMenu: [
-          {
-            name: config?.menuCsvExport,
-            action: function () {
-              gridApi.current.exportDataAsCsv();
-            },
-            icon: '<span class="ag-icon ag-icon-csv" unselectable="on" role="presentation"></span>',
-          },
-          {
-            name: config?.menuExcelExport,
-            action: function () {
-              gridApi.current.exportDataAsExcel();
-            },
-            icon: '<span class="ag-icon ag-icon-excel" unselectable="on" role="presentation"></span>',
-          },
-        ],
-        icon: '<span class="ag-icon ag-icon-save" unselectable="on" role="presentation"></span>',
-      },
-      ...extendedItems,
-    ];
-  };
 
   const setLicenseKey = () => {
     if (isLicenseSet != true) {

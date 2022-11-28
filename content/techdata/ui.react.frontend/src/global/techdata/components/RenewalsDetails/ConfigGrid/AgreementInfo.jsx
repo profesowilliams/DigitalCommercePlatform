@@ -23,7 +23,7 @@ function AgreementInfo({
   formattedDueDate,
   agreementInfo,
   formattedExpiry,
-  customerPO
+  vendorReference
 }) {
   const AgreementInfo = () => {
     return (

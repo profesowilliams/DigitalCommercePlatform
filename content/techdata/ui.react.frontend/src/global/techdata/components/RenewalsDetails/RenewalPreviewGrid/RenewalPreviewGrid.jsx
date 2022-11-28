@@ -5,8 +5,8 @@ import sanitizeHtml from 'sanitize-html';
 import PlaceOrderDialog from '../../RenewalsGrid/Orders/PlaceOrderDialog';
 import Grid from "../../Grid/Grid";
 import Modal from "../../Modal/Modal";
-import RenewalProductLinesItemInformation from "./RenewalProductLinesItemInformation";
-import RenewalManufacturer from "./RenewalManufacturer";
+import RenewalProductLinesItemInformation, { getItemInformation } from "./RenewalProductLinesItemInformation";
+import RenewalManufacturer, { getRenewalManufacturer } from "./RenewalManufacturer";
 import { thousandSeparator } from "../../../helpers/formatting";
 import QuantityColumn from "../Columns/QuantityColumn.jsx";
 import buildColumnDefinitions from "./buildColumnDefinitions";
@@ -278,6 +278,20 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
 
 
 
+  const getDefaultCopyValue = (params) => {
+    const colId = params?.column?.colId;
+    const nodeData = params?.node?.data
+
+    switch (colId) {
+      case 'mfrNumber':
+        return getRenewalManufacturer(nodeData);
+      case "shortDescription":
+        return getItemInformation(nodeData);
+      default:
+        return "";
+    }
+  }
+
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
       <section>
@@ -286,6 +300,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           columnDefinition={columnDefs}
           config={gridConfig}
           data={mutableGridData}
+          getDefaultCopyValue={getDefaultCopyValue}
         />
         <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
         <div className="place-cmp-order-dialog-container">

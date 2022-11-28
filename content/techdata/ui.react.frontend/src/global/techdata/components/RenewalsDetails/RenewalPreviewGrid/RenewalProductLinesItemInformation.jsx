@@ -2,16 +2,37 @@ import React, { useCallback } from "react";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
 
+const hasSerialNumbers = (line) => line.serialNumbers && line.serialNumbers.length > 0 && line.serialNumbers[0];
+
+export const getItemInformation = (line) => {
+  const {product = [false,false]} = line;
+  const [techdata, manufacturer] = product;
+  const description = manufacturer?.name;
+
+  const serialNumbers = hasSerialNumbers(line) && !line.serialNumbers.every(e => e === null)
+      ? `
+Serial №: ${line.serialNumbers.join(", ")}`
+      : "";
+
+  const instance = line.instance
+      ? `
+Instance:${line.instance}`
+      : "";
+
+  return `${description}${serialNumbers}${instance}`;
+}
+
+
 function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shopDomainPage = "", invokeModal }) {
   const {product = [false,false]} = line;
   const [techdata, manufacturer] = product;
   const description = manufacturer?.name;
-  const serialHasValue = line.serialNumbers && line.serialNumbers.length > 0 && line.serialNumbers[0]
+  const serialHasValue = hasSerialNumbers(line);
   const formatDescription = (description = "") => {
     if (!description) return "N/A";
     const matchFirstWords = /^(.*?\s){12}/;
     const matched = description.match(matchFirstWords);
-    if (!matched || (!matched.length)) return <p>{description}</p>
+    if (true || !matched || (!matched.length)) return <p>{description}</p>
     const firstTextRow = matched[0];
     const secondTextRow = description.substring(firstTextRow.length);
     return (
@@ -107,10 +128,10 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
                     : "N/A"
               )}
             </span>}
-            <span>
+            {line.instance && <span>
               <b>Instance: </b>
-              {line.instance || " N/A "}
-            </span>
+              {line.instance}
+            </span>}
           </div>
         </div>
       </div>

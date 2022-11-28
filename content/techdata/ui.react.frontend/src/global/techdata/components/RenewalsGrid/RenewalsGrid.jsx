@@ -367,6 +367,7 @@ function RenewalsGrid(props) {
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
           suppressPaginationPanel={true}
+          noContextMenuItemsWhenColumnNull={true}
         />
       </div>
       <ToolTip toolTipData={toolTipData} />

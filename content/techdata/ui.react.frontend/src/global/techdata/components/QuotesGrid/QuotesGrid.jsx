@@ -209,7 +209,7 @@ function QuotesGrid(props) {
     },
   ];
 
-  const contextMenuItems = (params) => {
+  const extendedContextMenuItems = (params) => {
     const quoteDetailsUrl = `${componentProp.quoteDetailUrl}?id=${params.node.data.id}`;
     return params.column.colId === "id"
       ? [
@@ -285,7 +285,7 @@ function QuotesGrid(props) {
         <Grid
           columnDefinition={columnDefs}
           options={options}
-          contextMenuItems={contextMenuItems}
+          extendedContextMenuItems={extendedContextMenuItems}
           config={componentProp}
           onAfterGridInit={(config) => filteringExtension.onAfterGridInit(config)}
           requestInterceptor={(request) => detailRedirectHandler(request)}

@@ -198,6 +198,7 @@
     }
   }
   .cmp-renewal-plan-column{
+    user-select: text;
 		display: grid;
 		grid-template-columns: repeat( auto-fit, minmax(297px, 1fr) );
 		grid-gap: 26px;
