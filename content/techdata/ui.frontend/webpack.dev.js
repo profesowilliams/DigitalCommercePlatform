@@ -1214,6 +1214,14 @@ module.exports = (env) => {
                     SOURCE_ROOT + "/static/partials/email-templates/apac-email-template.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: "verification-code-popup",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT +
+                        "/static/partials/modal/verification-code-popup.html"
+                ),
+            }),
         ],
         devServer: {
             inline: true,

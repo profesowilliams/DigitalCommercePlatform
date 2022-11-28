@@ -18,7 +18,7 @@ import "../global/td-components/contentfragment-bio/contentfragment-bio";
 import "../../../../../../tds-core/ui.frontend/src/components/languagenavigation/languagenavigation";
 import "../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer";
 import "../../../../../../tds-core/ui.frontend/src/components/popup/popup";
-import "../../../../../../tds-core/ui.frontend/src/components/securitycode/securitycode";
+import "../../../components/securitycode/securitycode";
 import "../global/td-components/button/buttons";
 import {Initializer} from "../global/initializer";
 new Initializer();
@@ -27,7 +27,6 @@ import "../global/td-components/analytics/analytics-tracking";
 import "../global/td-components/authentication/authentication";
 import "../global/td-components/form-options/brand-filter/brandFilter";
 import "../../../../../../tds-core/ui.frontend/src/components/hub/hub";
-
 
 //include fortawesome library bundle
 import "fortawesome/js/fontawesome"
