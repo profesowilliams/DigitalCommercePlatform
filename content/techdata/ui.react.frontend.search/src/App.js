@@ -5,9 +5,7 @@ import { SearchComponent } from '@techdata/search-results'
 function App() {
     const [aemSessionId] = useState(localStorage.getItem('sessionId'));
     const defaultConfig = {
-        //baseHref: '/content/techdata/language-masters/en/about-us1.html',
-        //baseHref: '/index.html',
-        baseHref: '/content/tds-site/testing-branches/devs-testing-branch/dave/search-results.html',
+        baseHref: '/index.html',
         uiSearchBaseUrl: 'https://eastus-dit-ui.dc.tdebusiness.cloud/ui-search/v1',
         uiBrowseBaseUrl: 'https://eastus-dit-ui.dc.tdebusiness.cloud/ui-browse/v1',
         uiLocalizeBaseUrl: 'https://eastus-dit-ui.dc.tdebusiness.cloud/ui-localize/v1',
@@ -17,20 +15,20 @@ function App() {
         site: 'US'
     };
 
-     const config = document.getElementById('root-search')?.dataset.config;
-     let searchConfig = defaultConfig;
-     
-    if (config?.baseHref) {
-        searchConfig = JSON.parse(config);        
+    const config = document.getElementById('root-search')?.dataset.config;
+    let searchConfig = defaultConfig;
+
+    if (config && config !== '') {
+        searchConfig = JSON.parse(config);
         console.log('Using AEM configuration...');
-    } else { 
+    } else {
         console.log('Using default configuration...');
     }
 
-     searchConfig.sessionId = aemSessionId;
-     console.log('searchConfig', searchConfig)
+    searchConfig.sessionId = aemSessionId;
+    console.log('searchConfig', searchConfig)
 
-    return <SearchComponent config={searchConfig} />    
+    return <SearchComponent config={searchConfig} />
 }
 
 export default App

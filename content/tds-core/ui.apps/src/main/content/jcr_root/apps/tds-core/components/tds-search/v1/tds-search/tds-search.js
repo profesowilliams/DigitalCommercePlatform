@@ -16,19 +16,19 @@ use(function () {
     }
 
     if (properties.get("uiSearchBaseUrl") != null) {
-        jsonObject.put("uiSearchBaseUrl", this.uiServiceDomain + properties.get("uiSearchBaseUrl"));
+        jsonObject.put("uiSearchBaseUrl", properties.get("uiSearchBaseUrl"));
     }
 
     if (properties.get("uiBrowseBaseUrl") != null) {
-        jsonObject.put("uiBrowseBaseUrl", this.uiServiceDomain + properties.get("uiBrowseBaseUrl"));
+        jsonObject.put("uiBrowseBaseUrl", properties.get("uiBrowseBaseUrl"));
     }
 
     if (properties.get("uiLocalizeBaseUrl") != null) {
-        jsonObject.put("uiLocalizeBaseUrl", this.uiServiceDomain + properties.get("uiLocalizeBaseUrl"));
+        jsonObject.put("uiLocalizeBaseUrl", properties.get("uiLocalizeBaseUrl"));
     }
 
     if (properties.get("loginRedirectUrlQueryParameter") != null) {
-        jsonObject.put("loginRedirectUrlQueryParameter", this.uiServiceDomain + properties.get("loginRedirectUrlQueryParameter"));
+        jsonObject.put("loginRedirectUrlQueryParameter", properties.get("loginRedirectUrlQueryParameter"));
     }
 
     return {

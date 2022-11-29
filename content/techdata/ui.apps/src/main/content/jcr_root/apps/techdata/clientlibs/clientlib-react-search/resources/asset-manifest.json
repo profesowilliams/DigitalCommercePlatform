@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.da645f5d.css",
-    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.1e79faa6.js",
+    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.22359979.js",
     "static/js/787.c9ff93fe.chunk.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js",
     "index.html": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/index.html",
     "main.da645f5d.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.da645f5d.css.map",
-    "main.1e79faa6.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.1e79faa6.js.map",
+    "main.22359979.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.22359979.js.map",
     "787.c9ff93fe.chunk.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.da645f5d.css",
-    "static/js/main.1e79faa6.js"
+    "static/js/main.22359979.js"
   ]
 }
