@@ -53,7 +53,7 @@ export default function FilterDatePicker({ isOpen = false }) {
     const locale = getClientLocale();
 
     if (locale === localeByCountry.IN || locale === localeByCountry.HK) {
-      return "DD-MM-YYYY";
+      return 'MMM D, YYYY';
     }
 
     return "MM/DD/YYYY";
@@ -75,8 +75,7 @@ export default function FilterDatePicker({ isOpen = false }) {
               {...navIcons}
               endDateId="end-date"
               verticalHeight={468}
-              showDefaultInputIcon={true}
-              customInputIcon={<i className="fas fa-calendar-alt"></i>}
+              showDefaultInputIcon={false}   
               customArrowIcon={<div className="customHyphen"></div>}
               reopenPickerOnClearDates
               keepOpenOnDateSelect={true}
