@@ -30,7 +30,7 @@ function AgreementInfo({
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
           <Info label={getDictionaryValue("techdata.renewals.label.quoteNumber", "Quote №")}>{source?.id}</Info>
-          <Info label={getDictionaryValue("techdata.renewals.label.vendorQuoteID","Vendor quote ID")}>{customerPO}</Info>
+          <Info label={getDictionaryValue("techdata.renewals.label.vendorQuoteID","Vendor quote ID")}>{vendorReference?.value}</Info>
           <Info label={getDictionaryValue("techdata.renewals.label.agreementNumber", "Agreement №")}>{contract?.id}</Info>
         </p>        
         <p> <Info label={getDictionaryValue("techdata.renewals.label.quoteExpiryDate", "Quote expiry date")}>{formattedExpiry}</Info> </p>

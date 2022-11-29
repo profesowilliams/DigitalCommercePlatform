@@ -164,11 +164,6 @@ function Grid(props) {
       ...extendedItems,
     ];
   };
-    
-  /*
-    function that returns AG grid vnode outside main return function to keep that
-    node on useState hook and set it once per component lifecycle or on demand
-  */
 
   const getContextMenuItems = (params) => {
     if (contextMenuItems) {
@@ -181,7 +176,11 @@ function Grid(props) {
       return getDefaultMenuItems(params);
     }
   };
- 
+
+  /*
+    function that returns AG grid vnode outside main return function to keep that
+    node on useState hook and set it once per component lifecycle or on demand
+  */
   const AgGrid = () => (
     <AgGridReact
       masterDetail={true}
