@@ -436,7 +436,7 @@
       }
 
     .cmp-tabs {
-      height: 60px;
+      height: auto;
 
       .cmp-sub-header--sub-nav {
         display: block!important;
@@ -476,7 +476,7 @@
           gap: 1rem;
           grid-template-rows: auto;
           overflow-y: hidden;
-          height: 60px;
+          height: auto;
 
           &::-webkit-scrollbar {
             display: none;
@@ -736,6 +736,25 @@
       }
     }
   }
+}
+
+.cmp-experiencefragment--subheader .cmp-container--max-1440 {
+    max-width: none;
+}
+
+.cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs {
+    padding: 0;
+}
+
+.cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs .cmp-sub-header--content {
+    max-width: 90rem;
+    height: auto;
+    margin: 0 auto !important;
+}
+
+.cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs .cmp-tabs__tabpanel {
+    max-width: 90rem;
+    margin: 0 auto;
 }
 
     /// below code is for the story 362383 sub-header - new styles for max width and dynamic paddings
