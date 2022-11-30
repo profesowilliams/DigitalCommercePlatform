@@ -67,7 +67,6 @@ function RenewalsDetails(props) {
 
   useEffect(() => {
     // Remove Dashboard separator(s) from only Renewal Details page
-    removeDashboardSeparator(".renewalsdetails");
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
     if(isAuthormodeAEM()) return; // Validation for Author ENV

@@ -115,7 +115,6 @@ function RenewalsGrid(props) {
       isPriceColumnClicked.current = innerText?.includes('Price');    
     }
     window.addEventListener("click", catchPriceColumnClickEvent);
-    removeDashboardSeparator(".renewalsgrid")
 
     const renewalsNode = renewalsRef.current;
     const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
