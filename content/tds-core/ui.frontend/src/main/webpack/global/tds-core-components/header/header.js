@@ -8,6 +8,7 @@ export default class Header {
         this.HEADER_MOBILE = 'cmp-experiencefragment--header-mobile';
         
         this.headerResize();
+        this.headerStickyStyle();
         window.addEventListener('resize', () => this.headerResize());
         this.searchEl?.addEventListener('click', () => this.toggleSearch(this.searchEl));
         document.addEventListener('click', (event) => this.showSearchIconOnly(event, this.searchEl));
@@ -144,6 +145,17 @@ export default class Header {
         }
     }
 
+    headerStickyStyle() {
+        const stickyHeader = document.querySelector('.cmp-experiencefragment__header--sticky');
+        if (stickyHeader) {
+            if (window.scrollY == 0) {
+                document.querySelector('.cmp-experiencefragment__header--sticky').classList.remove('header-sticky');
+            } else {
+                document.querySelector('.cmp-experiencefragment__header--sticky').classList.add('header-sticky');
+            }
+        }
+    }
+
     handleStickyHeader() {
         if(this.header && this.isContainer && this.subheader && this.stickyHeaderFlag === "true"){
             this.checkHeaderImage();
@@ -151,6 +163,7 @@ export default class Header {
         if(this.stickyHeaderFlag === "true" && this.componentToStick){
             this.checkHeaderSubheader();
         }
+        this.headerStickyStyle();
     }
 
     checkHeaderSubheader(){
