@@ -35,8 +35,8 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
         <Info>{address.postalCode}</Info> 
       </p>
       <p>
-        <Info label={getDictionaryValue("techdata.renewals.label.accountNumber",'Account Nº') } >{id}</Info>
-        <Info label={ getDictionaryValue("techdata.renewals.label.vendorAccountNumber",'Vendor account Nº') } >{vendorAccountNumber}</Info>
+        <Info label={getDictionaryValue("details.renewal.label.resellerAccountNo",'Account Nº') } >{id}</Info>
+        <Info label={ getDictionaryValue("details.renewal.label.vendorAccountNo",'Vendor account Nº') } >{vendorAccountNumber}</Info>
       </p>
     </div>
   );

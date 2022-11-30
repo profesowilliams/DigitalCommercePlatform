@@ -254,9 +254,9 @@ function EndUserInfo({
       }`}
     >
       <span className="cmp-renewals-qp__enduser-info--title">
-        {getDictionaryValue("techdata.renewals.label.enduser", "End user")}
+        {getDictionaryValue("details.renewal.label.endUser", "End user")}
       </span>
-      {showError && <MissingInfo>{ getDictionaryValue("techdata.renewals.label.preview.enduser.missinginfo", "End user missing information")}</MissingInfo>}
+      {showError && <MissingInfo>{ getDictionaryValue("details.renewal.label.endUserMissingInfo", "End user missing information")}</MissingInfo>}
       {showEditButton && (
         <EditFlow
           disabled={!editMode && isEditingDetails}

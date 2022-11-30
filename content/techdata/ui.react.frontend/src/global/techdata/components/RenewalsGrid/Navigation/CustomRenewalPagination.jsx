@@ -11,6 +11,7 @@ import {
   maxCounterCalculator,
   minCounterCalculator,
 } from "../../../../../utils/paginationUtil";
+import { getDictionaryValue } from "../../../../../utils/utils";
 import { useMultiFilterSelected } from "../../RenewalFilter/hooks/useFilteringState";
 import { updateQueryString } from "../renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
@@ -158,21 +159,21 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
     return upperLimit > totalCounter ? totalCounter : upperLimit;
   }
 
+  const getPaginationMinCounter = () => {
+    return paginationCounter.minCounter > 0
+    ? paginationCounter.minCounter
+    : minPaginationCounter();
+  }
+
+  const processPaginationString = () => {
+    const dictionaryLabel = getDictionaryValue("grids.common.label.results", "{0} - {1} of {2} results");
+    return dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter);
+  }
+  
   return (
     <div className="cmp-navigation">
       <div className="navigation__info">
-        <span className="cta">
-          {paginationCounter.minCounter > 0
-            ? paginationCounter.minCounter
-            : minPaginationCounter()}
-        </span>
-        -
-        <span className="cta">
-          {getUpperLimitShownItemsNumber()}
-        </span>
-        {' '}of{' '}
-        <span className="cta">{' '}{totalCounter}{' '}</span>
-        results
+        {processPaginationString()}
       </div>
       <div className="cmp-navigation__actions">
         <button
@@ -202,7 +203,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
             defaultValue={pageNumber}
             key={Math.random()}
           />
-          <span>of</span>
+          <span>{getDictionaryValue("grids.common.label.of", "of")}</span>
           <span>{pageCount}</span>
         </div>      
         <button

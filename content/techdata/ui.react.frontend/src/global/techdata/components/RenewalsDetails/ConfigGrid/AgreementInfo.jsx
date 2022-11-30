@@ -29,19 +29,19 @@ function AgreementInfo({
     return (
       <div className="cmp-renewals-qp__agreement-info--address-group">
         <p>
-          <Info label={getDictionaryValue("techdata.renewals.label.quoteNumber", "Quote №")}>{source?.id}</Info>
-          <Info label={getDictionaryValue("techdata.renewals.label.vendorQuoteID","Vendor quote ID")}>{vendorReference?.value}</Info>
-          <Info label={getDictionaryValue("techdata.renewals.label.agreementNumber", "Agreement №")}>{contract?.id}</Info>
+          <Info label={getDictionaryValue("details.renewal.label.quoteNo", "Quote №")}>{source?.id}</Info>
+          <Info label={getDictionaryValue("grids.renewal.label.vendorQuoteId","Vendor quote ID")}>{vendorReference?.value}</Info>
+          <Info label={getDictionaryValue("details.renewal.label.agreementNo", "Agreement №")}>{contract?.id}</Info>
         </p>        
-        <p> <Info label={getDictionaryValue("techdata.renewals.label.quoteExpiryDate", "Quote expiry date")}>{formattedExpiry}</Info> </p>
-        <p> <Info label={getDictionaryValue("techdata.renewals.label.quoteDueDate", "Quote due date")}>{formattedDueDate}</Info> </p>
+        <p> <Info label={getDictionaryValue("details.renewal.label.quoteExpiryNo", "Quote expiry date")}>{formattedExpiry}</Info> </p>
+        <p> <Info label={getDictionaryValue("details.renewal.label.quoteDueDate", "Quote due date")}>{formattedDueDate}</Info> </p>
         <p>
-          <Info label={getDictionaryValue("techdata.renewals.label.program", "Program")}>{programName}</Info>
-          <Info label={getDictionaryValue("techdata.renewals.label.duration", "Duration")}>{contract?.renewedDuration}</Info>      
-          <Info label={getDictionaryValue("techdata.renewals.label.supportLevel", "Support level")}>{contract?.serviceLevel}</Info> 
+          <Info label={getDictionaryValue("details.renewal.label.program", "Program")}>{programName}</Info>
+          <Info label={getDictionaryValue("details.renewal.label.duration", "Duration")}>{contract?.renewedDuration}</Info>      
+          <Info label={getDictionaryValue("details.renewal.label.supportLevel", "Support level")}>{contract?.serviceLevel}</Info> 
         </p>
-        <DurationDates label={getDictionaryValue("techdata.renewals.label.agreementDuration", "Agreement Duration")} startDate={contract?.formattedNewAgreementStartDate} endDate={contract?.formattedNewAgreementEndDate} />
-        <DurationDates label={getDictionaryValue("techdata.renewals.label.usageDuration", "Usage Duration")} endDate={contract?.formattedNewUsagePeriodEndDate} />
+        <DurationDates label={getDictionaryValue("details.renewal.label.agreementDuration", "Agreement Duration")} startDate={contract?.formattedNewAgreementStartDate} endDate={contract?.formattedNewAgreementEndDate} />
+        <DurationDates label={getDictionaryValue("details.renewal.label.usageDuration", "Usage Duration")} endDate={contract?.formattedNewUsagePeriodEndDate} />
       </div>
     );
   };
@@ -49,7 +49,7 @@ function AgreementInfo({
   return (
     <div className="cmp-renewals-qp__agreement-info">
       <span className="cmp-renewals-qp__agreement-info--title">
-        {getDictionaryValue("techdata.renewals.label.agreement", "Agreement")}
+        {getDictionaryValue("details.renewal.label.agreement", "Agreement")}
       </span>
       <AgreementInfo />
     </div>

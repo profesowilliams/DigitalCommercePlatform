@@ -7,7 +7,7 @@ function Edit({ handler, btnClass, disabled }) {
   const iconColor = disabled && "#D9D8D7";
   return (
     <IconButton btnClass={btnClass} icon={<PenIcon color={iconColor} />} onClick={handler} disabled={disabled}>
-      { getDictionaryValue("techdata.buttons.label.edit", "Edit") }
+      { getDictionaryValue("button.common.label.edit", "Edit") }
     </IconButton>
   );
 }

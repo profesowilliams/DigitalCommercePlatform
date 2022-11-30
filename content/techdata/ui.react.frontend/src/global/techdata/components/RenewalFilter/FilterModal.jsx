@@ -20,6 +20,7 @@ import { useMultiFilterSelected } from "./hooks/useFilteringState";
 import useFilteringSelected from "./hooks/useIsFilteringSelected";
 
 import { RenewalErrorBoundary } from "./renewalErrorBoundary";
+import { getDictionaryValue } from "../../../../utils/utils";
 
 const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
@@ -169,7 +170,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
                   onClick={showResult}
                   disabled={!hasAnyFilterSelected()}
                 >
-                  {aemData.showResultLabel || "Show Results"}
+                  {getDictionaryValue("grids.common.label.filterSearch", "Show results")}
                 </Button>
               </div>
             </div>

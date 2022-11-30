@@ -9,7 +9,7 @@ export default function Saving({ customClass }) {
       btnClass={customClass}
       icon={<LoaderIcon className="loader-rotate" />}
     >
-      { getDictionaryValue("techdata.buttons.label.saving", "Saving") }
+      { getDictionaryValue("button.common.label.saving", "Saving") }
     </IconButton>
   );
 }

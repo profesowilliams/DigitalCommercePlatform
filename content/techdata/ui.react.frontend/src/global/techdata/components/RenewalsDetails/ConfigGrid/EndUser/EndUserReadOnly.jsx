@@ -27,9 +27,9 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
         <Info>{address.postalCode ?? ''}</Info>
       </p>
       <p>          
-        <Info label={getDictionaryValue("techdata.renewals.label.enduserType", "End user type")}>{endUserType}</Info>
-        <Info label={getDictionaryValue("techdata.renewals.label.vendorAccountNumber", "Vendor account №")}>{endUserData.vendorAccountNumber}</Info>
-        <Info label={getDictionaryValue("techdata.renewals.label.previousPurchaseNumber", "Previous purchase order №")}>{endUserData.previousEndUserPO}</Info>   
+        <Info label={getDictionaryValue("details.renewal.label.endUserType", "End user type")}>{endUserType}</Info>
+        <Info label={getDictionaryValue("details.renewal.label.vendorAccountNo", "Vendor account №")}>{endUserData.vendorAccountNumber}</Info>
+        <Info label={getDictionaryValue("details.renewal.label.prevPONo", "Previous purchase order №")}>{endUserData.previousEndUserPO}</Info>   
       </p>
     </div>
   );

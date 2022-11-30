@@ -58,26 +58,26 @@ export const endUserConstants = {
 };
 
 export const endUserLables = {
-  endUserName: getDictionaryValue("techdata.renewals.label.companyName", 'Company name'), 
-  endUserFullName: getDictionaryValue("techdata.renewals.label.contactName", 'Contact full name'),
-  endUserEmail: getDictionaryValue("techdata.renewals.label.email", 'Contact email'),
-  endUserPhone: getDictionaryValue("techdata.renewals.label.telephoneNumber", 'Contact telephone number'),
-  endUserAddress1: getDictionaryValue("techdata.renewals.label.address1", 'Address 1'),
-  endUserAddress2: getDictionaryValue("techdata.renewals.label.address2", 'Address 2'),
-  endUserCity: getDictionaryValue("techdata.renewals.label.city", 'City'),
-  endUserCountry: getDictionaryValue("techdata.renewals.label.country", 'Country'),
-  endUserAreaCode: getDictionaryValue("techdata.renewals.label.areaCode", 'Area code'),
-  endUserVendorAccountNumber: getDictionaryValue("techdata.renewals.label.vendorAccountNumber", 'Vendor account №'),
+  endUserName: getDictionaryValue("details.renewal.editLabel.companyName", 'Company name'), 
+  endUserFullName: getDictionaryValue("details.renewal.editLabel.contactName", 'Contact full name'),
+  endUserEmail: getDictionaryValue("details.renewal.editLabel.contactEmail", 'Contact email'),
+  endUserPhone: getDictionaryValue("details.renewal.editLabel.contactPhone", 'Contact telephone number'),
+  endUserAddress1: getDictionaryValue("details.renewal.editLabel.contactAddress", 'Address 1'),
+  endUserAddress2: getDictionaryValue("details.renewal.editLabel.contactAddress2", 'Address 2'),
+  endUserCity: getDictionaryValue("details.renewal.editLabel.city", 'City'),
+  endUserCountry: getDictionaryValue("details.renewal.editLabel.country", 'Country'),
+  endUserAreaCode: getDictionaryValue("details.renewal.editLabel.areaCode", 'Area code'),
+  endUserVendorAccountNumber: getDictionaryValue("details.renewal.label.vendorAccountNo", 'Vendor account №'),
 };
 
 export const getInvalidEmailText = () =>
-  getDictionaryValue("techdata.validation.message.invalidEmail", 'Enter a valid email address. For example, name@email.com');
+  getDictionaryValue("details.common.validation.invalidEmail", 'Enter a valid email address. For example, name@email.com');
 
 export const getRequiredFieldText = () =>
-  getDictionaryValue("techdata.validation.message.requiredField", 'This is a required field.');
+  getDictionaryValue("details.common.validation.requiredField", 'This is a required field.');
 
 export const getRequiredMaxLengthFieldText = () =>
-  getDictionaryValue("techdata.validation.message.requiredMaxLengthField", 'This is a required field, max {max-length} characters.');
+  getDictionaryValue("details.common.validation.requiredFieldMaxChars", 'This is a required field, max {max-length} characters.');
 
 export const getMaxLengthFieldText = () =>
-  getDictionaryValue("techdata.validation.message.maxLengthField", 'Max {max-length} characters.');
+  getDictionaryValue("details.common.validation.maxLength", 'Max {max-length} characters.');

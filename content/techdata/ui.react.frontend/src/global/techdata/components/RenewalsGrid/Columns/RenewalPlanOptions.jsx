@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { thousandSeparator } from "../../../helpers/formatting";
-import { fileExtensions, generateFileFromPost, getLocaleFormattedDate } from "../../../../../utils/utils";
+import { fileExtensions, generateFileFromPost, getDictionaryValue, getLocaleFormattedDate } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
@@ -98,8 +98,8 @@ function RenewalPlanOptions({ labels, data, node }) {
 
     const showPlanLabels = (option) => {
         const planLabels = {
-            selected: "Selected Plan",
-            current: "Current Plan"
+            selected: getDictionaryValue("grids.renewal.label.selectedPlan", "Selected Plan"),
+            current:  getDictionaryValue("grids.renewal.label.currentPlan", "Current Plan")
         };
         if (isPlanSelected(option)) {
             return isCurrentPlan(option) ? planLabels.current : planLabels.selected;
@@ -216,9 +216,9 @@ function RenewalPlanOptions({ labels, data, node }) {
                                     <span className="currentPlan">
                                         {showPlanLabels(option)}
                                     </span>
-                                    <p>{labels.quoteIdLabel}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
-                                    <p>{labels.refNoLabel} {optionPlanLink(option?.id)}</p>
-                                    <p>{labels.expiryDateLabel}  {formatExpiryDateLabel(option)}</p>
+                                    <p>{`${getDictionaryValue("details.renewal.label.quoteId", "Quote ID")}:`}  {option?.quoteID ? option?.quoteID : 'No data provided'}</p>
+                                    <p>{`${getDictionaryValue("grids.renewal.label.refNo", "Ref No")}:`} {optionPlanLink(option?.id)}</p>
+                                    <p>{`${getDictionaryValue("grids.renewal.label.expiryDate", "Expiry Date")}:`}  {formatExpiryDateLabel(option)}</p>
                                 </div>
                                 {isPlanSelected(option) && (
                                     <div className="footer">
@@ -228,7 +228,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                 <button onClick={() => downloadPDF(option.id)}>
                                                     <DownloadIcon className="cmp-svg-icon__charcoal"/>
                                                     <span>
-                                                        &nbsp;&nbsp;{labels.downloadPDFLabel}
+                                                        &nbsp;&nbsp;{getDictionaryValue("button.common.label.downloadPDF", "Download PDF")}
                                                     </span>
                                                 </button>
                                                 </>
@@ -241,7 +241,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                 <span className="vertical-separator"></span>
                                                 <button onClick={() => exportXlsPlan(option?.id)}>
                                                     <DownloadIcon className="cmp-svg-icon__charcoal"/>
-                                                    <span>&nbsp;&nbsp;{labels.downloadXLSLabel}</span>
+                                                    <span>&nbsp;&nbsp;{getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}</span>
                                                 </button>
                                             </>
                                         )}  
@@ -255,7 +255,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                     }>
                                                     <i className="far fa-eye"></i>
                                                     <span>
-                                                        &nbsp;&nbsp;{labels.seeDetailsLabel}
+                                                        &nbsp;&nbsp;{getDictionaryValue("button.common.label.seeDetails", "See Details")}
                                                     </span>
                                                 </button>
                                             </>
@@ -269,7 +269,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                     {isIconEnabled ? (
                                                         <span className="cmp-renewals-cart-icon" onClick={(event) => handleCartIconClick(event, option)} >
                                                             <CartIcon />{' '}
-                                                            <span>Order</span>
+                                                            <span>{ getDictionaryValue("button.common.label.order", "Order")}</span>
                                                         </span>
                                                     ) : (
                                                         <>

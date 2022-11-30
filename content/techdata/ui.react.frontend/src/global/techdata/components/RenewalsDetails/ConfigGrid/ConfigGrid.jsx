@@ -55,7 +55,7 @@ function GridHeader({ gridProps, data }) {
           gridProps?.productLines?.showDownloadXLSButton && (
           <button onClick={downloadXLS}>
             <span className={gridProps?.productLines?.showDownloadPDFButton && 'separator'}>
-            {getDictionaryValue("techdata.renewals.label.downloadXls", "Download XLS")}
+            {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
             </span>
           </button>
         )}
@@ -64,7 +64,7 @@ function GridHeader({ gridProps, data }) {
             <button onClick={downloadPDF}>
               <span>
                 <DownloadIcon className="cmp-renewal-preview__download--icon"/>
-                {getDictionaryValue("techdata.renewals.label.downloadPdf", "Download PDF")}
+                {getDictionaryValue("button.common.label.downloadPDF", "Download PDF")}
               </span>
           </button>
         )}
@@ -96,13 +96,13 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
             underline="none"
           >
             <i className="fas fa-chevron-left"></i>
-            { getDictionaryValue("techdata.renewals.label.preview.backToRenewals", "Back to all Renewals") }
+            { getDictionaryValue("details.renewal.label.backTo", "Back to all Renewals") }
           </Link>
           <img className="vendorLogo" src={vendorLogo} alt="vendor logo" />
         </div>
         <div className="export-container">
           <span className="quote-preview">
-            { getDictionaryValue("techdata.renewals.label.preview.quotePreview", "Quote Preview") }
+            { getDictionaryValue("details.renewal.label.title", "Quote Preview") }
           </span>
           <GridHeader data={data} gridProps={gridProps} />
         </div>

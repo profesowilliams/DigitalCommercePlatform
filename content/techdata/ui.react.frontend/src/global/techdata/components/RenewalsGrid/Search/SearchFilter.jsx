@@ -11,6 +11,7 @@ import { ChevronDownIcon, SearchIcon } from "../../../../../fluentIcons/FluentIc
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
+import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import Capsule from "../../Widgets/Capsule";
@@ -314,7 +315,7 @@ function _SearchFilter(
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
             <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
-                <span className="cmp-renewal-search__text">Search</span>
+                <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
             </If>
             <SearchIcon className="search-icon__dark"/>
             
@@ -323,7 +324,7 @@ function _SearchFilter(
         <If condition={isDropdownVisible}>
           <div className="cmp-search-select-container" ref={node}>
             <div className="cmp-search-select-container__box">
-              <input className={computeClassName("inputStyle")} placeholder={"Search"} disabled />
+              <input className={computeClassName("inputStyle")} placeholder={getDictionaryValue("grids.common.label.search", "Search") } disabled />
               <button className={computeClassName("cmp-search-tooltip__button")}>
               <SearchIcon className="search-icon__light"/>
               </button>

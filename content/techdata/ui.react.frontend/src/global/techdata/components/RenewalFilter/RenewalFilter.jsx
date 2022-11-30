@@ -5,6 +5,7 @@ import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import Count from "./components/Count";
 import { OptionsIcon } from "../../../../fluentIcons/FluentIcons";
+import { getDictionaryValue } from "../../../../utils/utils";
 
 
 export default function RenewalFilter({ aemData, onQueryChanged }) {
@@ -38,7 +39,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
         onClick={handleFilterClick}
       >
         {appliedFilterCount !== 0 && <Count>{appliedFilterCount}</Count>}
-        <Button btnClass="cmp-renewals-filter__button">Filter</Button>
+        <Button btnClass="cmp-renewals-filter__button">{getDictionaryValue("grids.common.label.filter", "Filter")}</Button>
         <OptionsIcon/>
         
       </div>

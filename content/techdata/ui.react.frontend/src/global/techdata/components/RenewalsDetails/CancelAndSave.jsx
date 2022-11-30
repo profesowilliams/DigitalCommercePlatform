@@ -9,11 +9,11 @@ function CancelAndSave({ cancelHandler, saveHandler, customClass, btnClass, disa
   return (
     <div className={`icon-button__container ${customClass || ""}`}>
       <IconButton btnClass={btnClass} icon={<CloseRoundIcon color={iconColor} />} onClick={cancelHandler} disabled={disabled}>
-        { getDictionaryValue("techdata.buttons.label.cancel", "Cancel") }
+        { getDictionaryValue("button.common.label.cancel", "Cancel") }
       </IconButton>
       <Pipe />
       <IconButton btnClass={btnClass} icon={<SaveIcon color={iconColor} />} onClick={saveHandler} disabled={disabled}>
-        { getDictionaryValue("techdata.buttons.label.save", "Save") }
+        { getDictionaryValue("button.common.label.save", "Save") }
       </IconButton>
     </div>
   );

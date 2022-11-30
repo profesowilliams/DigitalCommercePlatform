@@ -1,5 +1,5 @@
 import React from "react";
-import { fileExtensions, generateFileFromPost } from "../../../../../utils/utils";
+import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
 import { redirectToRenewalDetail, analyticsColumnDataToPush } from "../renewalUtils";
 import { DocumentExcelIcon, DocumentPdfIcon, DownloadIcon, EyeIcon } from "../../../../../fluentIcons/FluentIcons";
@@ -44,7 +44,7 @@ function DropdownDownloadList({ data, aemConfig }) {
         <>
           <button onClick={downloadPDF}>
             <DownloadIcon className="cmp-svg-icon__charcoal" />
-            Download PDF
+              { getDictionaryValue("button.common.label.downloadPDF", "Download PDF")}
           </button>
           |
         </>
@@ -54,14 +54,14 @@ function DropdownDownloadList({ data, aemConfig }) {
         <>
           <button onClick={downloadXLS}>
             <DownloadIcon className="cmp-svg-icon__charcoal"/>
-            Download XLS
+            { getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
           </button>
           |
         </>
       )}
       <button onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id)}>
         <EyeIcon />
-        See details
+        { getDictionaryValue("button.common.label.seeDetails", "See details")}
       </button>
     </div>
   );

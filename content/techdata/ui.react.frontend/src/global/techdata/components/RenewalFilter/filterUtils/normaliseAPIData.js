@@ -1,3 +1,5 @@
+import { getDictionaryValue } from "../../../../../utils/utils";
+
 const findChildIds = (arr, norm) => {
   return arr.map((item) => {
     return norm.find((x) => x.title === item.name).id;
@@ -103,7 +105,7 @@ const normaliseAPIData = (data) => {
     field: "date",
     id: (temp += 1),
     open: false,
-    title: "Date",
+    title: getDictionaryValue("grids.common.label.filterDate", "Date"),
   });
 
   s[0].childIds.push(temp);

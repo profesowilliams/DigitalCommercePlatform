@@ -72,9 +72,9 @@ function ResellerInfo({
   return (
     <div className={`cmp-renewals-qp__reseller-info ${showError && `error-feedback`}`}>
       <span className="cmp-renewals-qp__reseller-info--title">
-        {getDictionaryValue("techdata.renewals.label.reseller", "Reseller")}
+        {getDictionaryValue("details.renewal.label.reseller", "Reseller")}
       </span>
-      {showError && <MissingInfo>{ getDictionaryValue( "techdata.renewals.label.preview.reseller.missinginfo", "Reseller missing information")}</MissingInfo>}
+      {showError && <MissingInfo>{ getDictionaryValue( "details.renewal.label.resellerMissingInfo", "Reseller missing information")}</MissingInfo>}
       {showEditButton && (
         <EditFlow
           disabled={!editMode && isEditingDetails}

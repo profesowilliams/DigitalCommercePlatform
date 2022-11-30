@@ -33,7 +33,7 @@ function GridSubTotal({ subtotal, data, gridProps }) {
       </div>
       <div className="cmp-renewal-preview__subtotal--price-note">
         <b className="cmp-renewal-preview__subtotal--description">
-          { getDictionaryValue("techdata.renewals.label.preview.quoteSubtotal", "Quote Subtotal") }
+          { getDictionaryValue("details.renewal.label.subtotal", "Quote Subtotal") }
         </b>
         <span className="cmp-renewal-preview__subtotal--value">
           <span className="cmp-renewal-preview__subtotal--currency-symbol">
@@ -311,7 +311,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
               onClick={onOrderButtonClicked}
               variant="contained"           
             >
-              { getDictionaryValue("techdata.buttons.label.order", "Order") }
+              { getDictionaryValue("button.common.label.order", "Order") }
             </Button>
           </p>
         </div>
