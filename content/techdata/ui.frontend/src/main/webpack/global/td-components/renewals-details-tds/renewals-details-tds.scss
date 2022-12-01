@@ -73,6 +73,12 @@
         display: inline-block;
         margin-right: 14px;
       }
+      button{
+        &:hover span, &:hover svg path{
+          color: map-get($color-palette, td-lightblue);
+          fill: map-get($color-palette, td-lightblue);
+        } 
+      }
     }
 
     .cmp-renewal-preview__subtotal {
