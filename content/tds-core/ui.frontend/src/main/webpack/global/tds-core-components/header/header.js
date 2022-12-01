@@ -48,7 +48,7 @@ export default class Header {
                 this.container = this?.subheader?.closest(".container") ? this?.subheader?.closest(".container")?.previousElementSibling : null;
             }
             else{
-                this.container = this.subheader.closest(".experiencefragment") ? this.subheader.closest(".experiencefragment").previousElementSibling : null;
+                this.container = this.subheader.closest(".experiencefragment").previousElementSibling ? this.subheader.closest(".experiencefragment").previousElementSibling : this.subheader.closest(".experiencefragment").closest(".container").previousElementSibling;
             }
         }
         else{
@@ -182,8 +182,10 @@ export default class Header {
                 else{
                     this.componentToStick.style.top = this.header.clientHeight + "px";
                 }
-                this.componentToStick.style.width = this.container.clientWidth + "px";
                 this.componentToStick.classList.add('sticky');
+                if(this.componentToStick.style != "container"){
+                    this.componentToStick.style.width = this.container.clientWidth + "px";
+                }
                 if(this.subheaderNav.id === this.componentToStick.id){
                     this.componentToStick.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
                 }
