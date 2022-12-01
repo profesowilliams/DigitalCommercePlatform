@@ -4,7 +4,6 @@ import { fileExtensions, generateFileFromPost, getDictionaryValue, getLocaleForm
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { If } from "../../../helpers/If";
 import { CartIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
@@ -13,19 +12,16 @@ import useComputeBranding from "../../../hooks/useComputeBranding";
 import { redirectToRenewalDetail } from "../renewalUtils";
 import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 
-function RenewalPlanOptions({ labels, data, node }) {
-    const effects = useRenewalGridState(st => st.effects);
+function RenewalPlanOptions({ labels, data, node }) {  
     const aemConfig = useRenewalGridState((state) => state.aemConfig);
     const { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint } = aemConfig;
     const { pageNumber } = useRenewalGridState((state) => state.pagination);
     const { orderingFromDashboard } = useRenewalGridState(state => state.aemConfig);
     const [optionIdSelected, setOptionIdSelected] = useState();
-    const optionIdSelectedRef = useRef();
     const rowIndexRef = useRef(node?.rowIndex)
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
     const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint };
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
-    const selectPlan = (value) => effects.setCustomState({ key: 'renewalOptionState', value })
     const { computeClassName: computeTDSynnexClass, isTDSynnex } = useComputeBranding(useRenewalGridState);
     const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
 
@@ -44,17 +40,10 @@ function RenewalPlanOptions({ labels, data, node }) {
 
         const currentPlan = options.find((plan) => isCurrentPlan(plan));
         return currentPlan ? currentPlan?.id : 0;
-    }
-    const optionToParent = (idSelected) => {
-        const option = data?.options.find(opt => opt.id === idSelected)
-        return { ...option, rowIndex: rowIndexRef.current }
-    }
+    }   
 
-    useEffect(() => {
-        setOptionIdSelected(findAndReturnCurrentPlanId(data?.options))
-        return () => selectPlan(optionToParent(optionIdSelectedRef.current))
-    }, [])
-
+    useEffect(() => setOptionIdSelected(findAndReturnCurrentPlanId(data?.options)), [])
+    
     const exportXlsPlan = (id) => {
         const postData = { id };
         const name = `renewal-${id}.xlsx`;
@@ -120,7 +109,6 @@ function RenewalPlanOptions({ labels, data, node }) {
     const changeRadioButton = (event) => {
         const id = event?.target?.value;
         setOptionIdSelected(id);
-        optionIdSelectedRef.current = id;
         setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
             ...getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY),
             selectedPlanId: id,
@@ -160,7 +148,7 @@ function RenewalPlanOptions({ labels, data, node }) {
 
     const formatRenewedDuration = renewed  => {
         const matchAfterYear = /(?<=Year).*$/gm
-        return renewed.replace(matchAfterYear, ' ');
+        return renewed.replace(matchAfterYear, ' ')?.trim();
     }        
 
     const hasTwoRows = (options) => {

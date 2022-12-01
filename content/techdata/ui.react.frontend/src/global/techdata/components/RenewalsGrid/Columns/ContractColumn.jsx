@@ -1,25 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "../../../../../fluentIcons/FluentIcons";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
-import useComputeBranding from "../../../hooks/useComputeBranding";
-import Info from "../../common/quotes/DisplayItemInfo";
 import { useRenewalGridState } from ".././store/RenewalsStore";
 import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
 
 
 function _ContractColumn({ data, eventProps }) {
   const renewed = data?.renewedDuration;
-  const effects = useRenewalGridState(state => state.effects);
-  const { setCustomState, closeAndCleanToaster } = effects;
+  const { setCustomState, closeAndCleanToaster }  = useRenewalGridState(state => state.effects); 
   const detailRender = useRenewalGridState(state => state.detailRender);
   const { pageNumber } = useRenewalGridState(state => state.pagination);
-  const renewalOptionState = useRenewalGridState(state => state.renewalOptionState);
-  const { isTDSynnex } = useComputeBranding(useRenewalGridState); 
   const rowIndex = eventProps?.node?.rowIndex
-  const {contractDuration, support} = !renewalOptionState ? {contractDuration:'',support:''} :renewalOptionState ;
   const rowCollapsedIndexList = useRenewalGridState(state => state.rowCollapsedIndexList);
-  const [isToggled, setToggled] = React.useState(false);
+  const [isToggled, setToggled] = useState(false);
   useEffect(() => {
     if (detailRender === "primary") setToggled(false)
   }, [detailRender])
@@ -64,7 +58,6 @@ function _ContractColumn({ data, eventProps }) {
     }
   }
 
-  const iconStyle = { color: "#21314D", cursor: "pointer", fontSize: "1.2rem" };
   const hasOptions = data?.options && data?.options?.length > 0;
 
   /**
@@ -102,11 +95,6 @@ function _ContractColumn({ data, eventProps }) {
       });
     }, 0)
   }
-  const hasRenderStateTextFromPlanOptions = () => support && rowIndex == (renewalOptionState?.rowIndex -1);
-
-  const keepDataAfterRenderTextPlanOptions = () => {
-    return (!support || support && rowIndex !== (renewalOptionState?.rowIndex -1) )
-  }
 
   const formatRenewedDuration = (renewed, support) => {
     const extractYear = (renewed) => renewed.split(' ').slice(0, 2).join(' ');
@@ -123,18 +111,12 @@ function _ContractColumn({ data, eventProps }) {
     <>{data ? (
       <>
         <div className="cmp-renewal-duration" onClick={toggleExpandedRow} style={{cursor: !hasOptions && 'initial' }}>
-          { keepDataAfterRenderTextPlanOptions() && (
+          { renewed ? (
             <span className="cmp-renewal-duration__info">
             Renewal{formatRenewedDuration(renewed, data?.support)}    
             </span>
-          )}           
-          { hasRenderStateTextFromPlanOptions() && (
-            <span className="cmp-renewal-duration__info">          
-              Renewal{formatRenewedDuration(contractDuration, support)}              
-            </span>
-          )}
-
-          {isToggled ? (
+          ) : null } 
+          { isToggled ? (
             <>
               <If condition={hasOptions}>
                 <div className='cmp-triangle-up' key={Math.random()}>
