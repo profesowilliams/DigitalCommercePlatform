@@ -22,6 +22,10 @@
         "@babel/preset-env": "^7.3.1",
         "@babel/preset-react": "7.0.0",
         "@babel/preset-typescript": "^7.10.1",
+        "@iconify/icons-fa-regular": "^1.2.4",
+        "@iconify/icons-fa-solid": "^1.2.4",
+        "@iconify/icons-fluent": "^1.2.18",
+        "@iconify/react": "^4.0.1",
         "aem-clientlib-generator": "^1.7.1",
         "autoprefixer": "^9.7.6",
         "babel-eslint": "^10.0.1",
@@ -38,13 +42,13 @@
         "optimize-css-assets-webpack-plugin": "^5.0.3",
         "postcss-loader": "^3.0.0",
         "sass-loader": "^7.0.3",
+        "simple-zustand-devtools": "^1.0.1",
         "unfetch": "^4.1.0",
         "webpack": "^4.42.1",
         "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.10.3",
         "webpack-import-glob-loader": "^1.6.3",
-        "webpack-merge": "^4.2.2",
-        "simple-zustand-devtools": "^1.0.1"
+        "webpack-merge": "^4.2.2"
     },
     "dependencies": {
         "@emotion/react": "^11.9.3",

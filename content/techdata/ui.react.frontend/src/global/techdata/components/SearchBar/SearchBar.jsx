@@ -414,35 +414,6 @@ const SearchBar = ({ data, componentProp }) => {
           ref={searchRef}
           onClick={handleOpenSearchBar}
         >
-          <svg
-            className={
-              !isClicked
-                ? 'cmp-searchbar__icon cmp-searchbar__icon--checked'
-                : 'cmp-searchbar__icon'
-            }
-            width="26px"
-            height="26px"
-            viewBox="0 0 28 28"
-            version="1.1"
-          >
-            <g id="Symbols" fill="none">
-              <g id="Icon---Search">
-                <g id="Group-5" transform="translate(1.000000, 1.000000)">
-                  <path
-                    d="M10.0000394,0 C15.5228817,0 20.0000789,4.53561095 20.0000789,10.1309296 C20.0000789,15.7259892 15.5228817,20.2616001 10.0000394,20.2616001 C4.47719715,20.2616001 0,15.7259892 0,10.1309296 C0,4.53561095 4.47719715,0 10.0000394,0 Z"
-                    id="Stroke-1"
-                  ></path>
-                  <line
-                    x1="18.9999724"
-                    y1="18.9096442"
-                    x2="26"
-                    y2="26"
-                    id="Stroke-3"
-                  ></line>
-                </g>
-              </g>
-            </g>
-          </svg>
         </button>
       </>
     );

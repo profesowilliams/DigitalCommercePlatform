@@ -1,0 +1,237 @@
+.headerutility {
+
+    .searchbar {
+        .cmp-searchbar__button {
+            &::before {
+                content: url('/content/dam/global-shared/icons/tds/regular/search.svg');
+                background: no-repeat;
+                height: 24px;
+                width: 24px;
+            }
+        }
+    }  
+
+    .hub {
+        .cmp-button {
+            background: url('/content/dam/global-shared/icons/tds/regular/griddots.svg') no-repeat;
+            height: 24px;
+            width: 24px;
+            padding: 0;
+            vertical-align: middle;
+        }
+    }
+
+    .signin {
+        .cmp-sign-in-button {
+            &::before {
+                content: url('/content/dam/global-shared/icons/tds/regular/person.svg');
+                background: no-repeat;
+                height: 24px;
+                width: 24px;
+            }
+
+            &.authenticated {
+                &::before {
+                    content: url('/content/dam/global-shared/icons/tds/filled/person.svg');
+                    background: no-repeat;
+                    height: 24px;
+                    width: 24px;
+                }
+            }
+        }
+    }
+
+    .minicart {
+        .cmp-button {
+            background: url('/content/dam/global-shared/icons/tds/regular/cart.svg') no-repeat;
+            height: 24px;
+            width: 24px;
+            padding: 0;
+            vertical-align: middle;
+        }
+    }
+
+    .languagenavigation {
+        .cmp-dropbtn {
+            &::before {
+                content: url('/content/dam/global-shared/icons/tds/regular/globe.svg');
+                background: no-repeat;
+                height: 24px;
+                width: 24px;
+            }
+        }
+    }
+
+
+&.theme {        
+    &.dark {
+        @extend .headerutility;
+
+        .searchbar {
+            .cmp-searchbar__button {
+                &:hover {
+                    &::before {
+                        content: url('/content/dam/global-shared/icons/tds/blended/search.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                    }
+                }
+            }
+        }  
+
+        .hub {
+            .cmp-button {
+                &:hover {
+                    content: '';
+                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
+                    background: no-repeat;
+                    height: 24px;
+                    width: 24px;
+                    -webkit-mask-size: cover;
+                    mask-size: cover;
+                    background-color: #006FBA;
+                }
+            }
+        }
+
+        .signin {
+            .cmp-sign-in-button {
+                &:hover {
+                    &::before {
+                        content: '';
+                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
+                        mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                        -webkit-mask-size: cover;
+                        mask-size: cover;
+                        background-color: #006FBA;
+                    }
+                }
+            }
+        }
+
+        .minicart {
+            .cmp-button {
+                &:hover {
+                    content: '';
+                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
+                    background: no-repeat;
+                    height: 24px;
+                    width: 24px;
+                    -webkit-mask-size: cover;
+                    mask-size: cover;
+                    background-color: #006FBA;
+                }
+            }
+        }
+
+        .languagenavigation {
+            .cmp-dropbtn {
+                &:hover {
+                    &::before {
+                        content: '';
+                        mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
+                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                        -webkit-mask-size: cover;
+                        mask-size: cover;
+                        background-color: #006FBA;
+                    }
+                }
+            }
+        }
+    }
+
+    &.light {
+        @extend .headerutility;
+
+        .searchbar {
+            .cmp-searchbar__button {
+                &:hover {
+                    &::before {
+                        content: url('/content/dam/global-shared/icons/tds/blended/search.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                    }
+                }
+            }
+        }  
+
+        .hub {
+            .cmp-button {
+                &:hover {
+                    content: '';
+                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
+                    background: no-repeat;
+                    height: 24px;
+                    width: 24px;
+                    -webkit-mask-size: cover;
+                    mask-size: cover;
+                    background-color: #006FBA;
+                }
+            }
+        }
+
+        .signin {
+            .cmp-sign-in-button {
+                &:hover {
+                    &::before {
+                        content: '';
+                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
+                        mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                        -webkit-mask-size: cover;
+                        mask-size: cover;
+                        background-color: #006FBA;
+                    }
+                }
+            }
+        }
+
+        .minicart {
+            .cmp-button {
+                &:hover {
+                    content: '';
+                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
+                    background: no-repeat;
+                    height: 24px;
+                    width: 24px;
+                    -webkit-mask-size: cover;
+                    mask-size: cover;
+                    background-color: #006FBA;
+                }
+            }
+        }
+
+        .languagenavigation {
+            .cmp-dropbtn {
+                &:hover {
+                    &::before {
+                        content: '';
+                        mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
+                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                        -webkit-mask-size: cover;
+                        mask-size: cover;
+                        background-color: #006FBA;
+                    }
+                }
+            }
+        }
+    }
+}
+}
