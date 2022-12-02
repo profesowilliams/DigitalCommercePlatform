@@ -61,6 +61,14 @@
                                 text="Link to New tab"
                                 uncheckedValue="false"
                                 value="true"/>
+                            <closeNotification
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                fieldDescription="Select this if the user can close the notification"
+                                name="./closeNotification"
+                                text="Close notification"
+                                uncheckedValue="false"
+                                value="true"/>
                         </items>
                     </linkList>
                 </items>

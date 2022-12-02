@@ -7,8 +7,11 @@
         <span class="cmp-notification_text">${properties.message}</span>    
     </div>
     <a target="${properties.linkTarget == 'true' ? '_blank' : '_self'}" href="${properties.linkUrl}" class="cmp-notification-link ${properties.linkEnable == 'true' ? '' : 'nolink'}">
-        <span class="cmp-notification_text">${properties.linkLabel}</span>
+        <span data-sly-test="${properties.linkLabel}" class="cmp-notification_text">${properties.linkLabel}</span>
     </a>
-    <a class="close-notification">
-    </a>
+    <sly data-sly-test="${properties.closeNotification}">
+		<a class="close-notification">
+        </a>
+	</sly>
+    
 </div>
