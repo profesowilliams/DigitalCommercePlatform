@@ -371,9 +371,7 @@ export const redirectToRenewalDetail = (detailUrl, id = "") => {
 };
 
 export const formatRenewedDuration = (type, renewed, support) => {
-  return [type, renewed?.split(' ').slice(0, 2).join(' '), support]
-    .filter(Boolean)
-    .join(', ');
+  return [type, renewed, support].filter(Boolean).join(', ');
 };
 
 export const checkIfAnyDateRangeIsCleared = ({dateOptionsList,filterList,customStartDate,customEndDate}) => {  

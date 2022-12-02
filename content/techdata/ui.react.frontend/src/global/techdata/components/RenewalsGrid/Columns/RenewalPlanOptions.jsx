@@ -9,7 +9,7 @@ import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
 import useComputeBranding from "../../../hooks/useComputeBranding";
-import { redirectToRenewalDetail } from "../renewalUtils";
+import { redirectToRenewalDetail, formatRenewedDuration } from "../renewalUtils";
 import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 
 function RenewalPlanOptions({ labels, data, node }) {  
@@ -93,9 +93,6 @@ function RenewalPlanOptions({ labels, data, node }) {
         if (isPlanSelected(option)) {
             return isCurrentPlan(option) ? planLabels.current : planLabels.selected;
         }
-        if (!isPlanSelected(option) && isCurrentPlan(option)) {
-            return planLabels.current
-        }
         return "";
     }
     const computeMarketingCssStyle = () => {
@@ -103,7 +100,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     }
 
     const setStylesOnSelected = (option) => {
-        return { fontSize: isPlanSelected(option) && '17px' }
+        return isPlanSelected(option) && { fontWeight: 700 };
     }
 
     const changeRadioButton = (event) => {
@@ -145,12 +142,7 @@ function RenewalPlanOptions({ labels, data, node }) {
         underline="none"
     >
         {id}
-    </Link>
-
-    const formatRenewedDuration = renewed  => {
-        const matchAfterYear = /(?<=Year).*$/gm
-        return renewed.replace(matchAfterYear, ' ')?.trim();
-    }        
+    </Link>     
 
     const hasTwoRows = (options) => {
         if (!options) return '';
@@ -160,42 +152,62 @@ function RenewalPlanOptions({ labels, data, node }) {
 
     const calcPlanColumnClassName = (data) => `${computeTDSynnexClass("cmp-renewal-plan-column")} ${hasTwoRows(data?.options)}`;
 
+    const PlanLeftHeader = (data) => {
+      const durationSplit = formatRenewedDuration(null, data.option?.contractDuration, data.option?.support)?.split(' ');
+      let durationLine1 = '';
+      let durationLine2 = '';
+
+      if (durationSplit?.length > 4) {
+        durationLine1 = durationSplit.slice(0, 4).join(' ');
+        durationLine2 = durationSplit.slice(4).join(' ');
+      } else {
+        durationLine1 = durationSplit.join(' ');
+      }
+
+      return (
+        <>
+          <input
+            key={Math.random()}
+            id={data.option?.id}
+            name="planOption"
+            type="radio"
+            defaultChecked={setDefaultCheckedOption(data.option)}
+            value={data.option?.id}
+          />
+          <label
+            htmlFor={data.option?.id}
+            style={{ ...setStylesOnSelected(data.option) }}
+          >
+            &nbsp;&nbsp;{durationLine1}
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp; {durationLine2}
+          </label>
+        </>
+      );
+    };
+    
     return (
         <div key={rowIndexRef.current + Math.random()}>
             <div className={calcPlanColumnClassName(data)}>
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
                 </div>
-                {data?.options && data.options.map((option, index) => {              
+                {data?.options && data.options.map((option, index) => {     
                     return (
                         <div className="cmp-renewal-plan-column__item" key={option?.id}>
                             <div className={computeClassName(data?.options, index)}>
                                 <div className="header">
                                     <div className="leftHeader">
-                                        <h4 onChange={changeRadioButton}>
-                                            <input
-                                                key={Math.random()}
-                                                id={option?.id}
-                                                name="planOption"
-                                                type="radio"
-                                                defaultChecked={setDefaultCheckedOption(option)}
-                                                value={option?.id}
-                                            />
-                                            <label
-                                                htmlFor={option?.id}
-                                                style={{ ...setStylesOnSelected(option) }}
-                                            >
-                                                &nbsp;&nbsp;{formatRenewedDuration(option?.contractDuration)},{' '}
-                                                {option?.support}
-                                            </label>
-                                        </h4>
+                                        <div onChange={changeRadioButton}>
+                                            <PlanLeftHeader data={option} /> 
+                                        </div>
                                     </div>
                                     <div className="rightHeader">
-                                        <h4
+                                        <div
                                             htmlFor={option?.id}
                                             style={{ ...setStylesOnSelected(option) }}
                                         > {formatTotalValue(option)}
-                                        </h4>
+                                        </div>
                                     </div>
                                     <div className="clear"></div>
                                 </div>
