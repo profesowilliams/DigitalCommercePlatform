@@ -122,8 +122,9 @@ function RenewalPlanOptions({ labels, data, node }) {
     }
 
     const setDefaultCheckedOption = (option) => {
+        if (option?.quoteCurrent) return true
         if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
-            return option?.id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"];
+             return option?.id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"];
         }
         return optionIdSelected === option?.id;
     }
@@ -177,9 +178,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                 id={option?.id}
                                                 name="planOption"
                                                 type="radio"
-                                                defaultChecked={setDefaultCheckedOption(
-                                                    option
-                                                )}
+                                                defaultChecked={setDefaultCheckedOption(option)}
                                                 value={option?.id}
                                             />
                                             <label

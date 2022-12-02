@@ -50,13 +50,7 @@ export default function FilterDatePicker({ isOpen = false }) {
     customEndDate = moment(customEndDate);
 
   function getDisplayFormatBasedOnLocale() {
-    const locale = getClientLocale();
-
-    if (locale === localeByCountry.IN || locale === localeByCountry.HK) {
-      return 'MMM D, YYYY';
-    }
-
-    return "MM/DD/YYYY";
+    return 'MMM D, YYYY';
   }
 
   return (
