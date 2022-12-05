@@ -81,9 +81,6 @@ const SearchBar = ({ data, componentProp }) => {
 
   const isLoggedIn = useStore(state => state.isLoggedIn);
 
-  const CLASS_SEARCH_ICON_INACTIVE = 'cmp-searchbar__button--inactive';
-  const CLASS_SEARCH_ICON_ACTIVE = 'cmp-searchbar__button--active';
-
   useEffect(() => {
     const timeOutId = setTimeout(() => loadSuggestions(searchTermText), 200);
     return () => clearTimeout(timeOutId);
@@ -365,21 +362,26 @@ const SearchBar = ({ data, componentProp }) => {
             value={searchTermText}
             placeholder={placeholder}
           />
-
-        <button
-          className={
-            isChecked
-              ? 'cmp-searchbar__button cmp-searchbar__button--mobile'
-              : 'cmp-searchbar__button'
-          }
-          ref={searchRef}
-          onClick={handleOpenSearchBar}
-        >
-        </button>
-      </>
-    );
+          <button
+            className={
+              isMobile
+                ? "cmp-searchbar__button cmp-searchbar__button--mobile"
+                : "cmp-searchbar__button"
+            }
+            ref={searchRef}
+            onClick={handleOpenSearchBar}
+          >
+            <svg
+              className={
+                isChecked
+                  ? CLASS_SEARCH_ICON_ACTIVE
+                  : CLASS_SEARCH_ICON_INACTIVE
+              }>
+            </svg>
+          </button>
+        </>
+      );
   };
-
   return (
     <div
       id={id}
