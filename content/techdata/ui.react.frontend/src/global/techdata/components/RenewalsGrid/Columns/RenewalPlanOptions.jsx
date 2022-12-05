@@ -199,7 +199,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                 <div className="header">
                                     <div className="leftHeader">
                                         <div onChange={changeRadioButton}>
-                                            <PlanLeftHeader data={option} /> 
+                                            <PlanLeftHeader option={option} /> 
                                         </div>
                                     </div>
                                     <div className="rightHeader">
