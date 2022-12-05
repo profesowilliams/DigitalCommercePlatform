@@ -92,7 +92,7 @@ const headerHTML = () => {
             console.error(`Error ${xhr.status}: ${xhr.statusText}`);
           } else { // show the result
             console.log(xhr);
-            headerEle.innerHTML = xhr.responseText;
+            headerEle.innerHTML = JSON.parse(xhr).body;
           }
         };
     }
@@ -116,7 +116,7 @@ const footerHTML = () => {
             console.error(`Error ${xhr.status}: ${xhr.statusText}`);
           } else { // show the result
             console.log(xhr);
-            headerEle.innerHTML = xhr.responseText;
+            footerEle.innerHTML = JSON.parse(xhr).body;
           }
         };
     }
