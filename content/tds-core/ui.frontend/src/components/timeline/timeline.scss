@@ -1,0 +1,66 @@
+.cmp-timeline {
+    background-color: transparent;
+    .cmp-timeline-steps {
+        list-style: none;
+        padding: 0;
+        .cmp-timeline-steps__first-item, .cmp-timeline-steps__last-item {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            .cmp-timeline-steps__item--infocontainer {
+                display: flex;
+                position: absolute;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                width: 60px;
+                flex-direction: column;
+                svg {
+                    margin-bottom: 9px;
+                }
+                .dp-title__text{
+                    margin: 0;
+                    text-align: center;
+                }
+            }
+        }
+        .cmp-timeline-steps__item {
+            display: flex;
+            background-color: white;
+
+            .cmp-timeline-steps__item--imagecontainer {
+                background-color: #003031;
+                width: 115px;
+                display: flex;
+                align-items: center;
+                .cmp-image {
+                    width: 46px;
+                    margin: auto;
+                }
+            }
+            .cmp-timeline-steps__item--infocontainer {
+                padding: 17px 0 17px 17px;
+                flex: 0 0 82%;
+                .dp-title__text {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 21px;
+                    font-family: $font-family-everett;
+                    color: map-get($color-palette, 'deep-teal');
+                    margin: 0px 0px 10px 0px;
+                }
+                .dp-description {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 24px;
+                    font-family: 'Arial', sans-serif;
+                    color: map-get($color-palette, 'charcoal');
+                }
+            }
+        }
+        .cmp-timeline-steps__item--imagedivider .cmp-image {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

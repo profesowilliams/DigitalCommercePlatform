@@ -1,0 +1,41 @@
+<template data-sly-template.item="${@ step}">
+  <figure class="cmp-timeline-steps__item--imagecontainer">
+    <div
+      class="cmp-image"
+      data-sly-use.icon="${'com.tdscore.core.models.AssetUtilities' @ path=step.icon}"
+    >
+      ${icon.binary @ context='unsafe'}
+    </div>
+  </figure>
+  <section class="cmp-timeline-steps__item--infocontainer">
+    <h5 class="dp-title__text" style="color: !important">${step.title}</h5>
+    <p class="dp-description">${step.description}</p>
+  </section>
+</template>
+
+<template data-sly-template.externalItem="${@ step}">
+  
+  <figure class="cmp-timeline-steps__item--imagecontainer">
+    <div
+      class="cmp-image"
+      data-sly-use.icon="${'com.tdscore.core.models.AssetUtilities' @ path=step.background}"
+    >
+      ${icon.binary @ context='unsafe'}
+    </div>
+  </figure>
+  <section class="cmp-timeline-steps__item--infocontainer">
+    <sly data-sly-use.icon="${'com.tdscore.core.models.AssetUtilities' @ path=step.icon}">${icon.binary @ context='unsafe'}</sly>
+    <h5 class="dp-title__text" style="color: !important">${step.title}</h5>
+  </section>
+</template>
+
+<template data-sly-template.divider="${@ image}">
+  <figure class="cmp-timeline-steps__item--imagedivider">
+    <div
+      class="cmp-image"
+      data-sly-use.icon="${'com.tdscore.core.models.AssetUtilities' @ path=image}"
+    >
+      ${icon.binary @ context='unsafe'}
+    </div>
+  </figure>
+</template>

@@ -1,0 +1,42 @@
+<ul
+  data-sly-use.model="${'timeline.js' @ serviceData=serviceData}"
+  data-sly-use.component="com.adobe.cq.wcm.core.components.models.Component"
+  data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+  data-sly-use.itemTemplate="item.html"
+  id="${component.id}"
+  class="cmp-timeline-steps"
+  style="color: ${properties.fontColor @ context='styleToken'}"
+>
+  <li>
+    <div
+      class="cmp-timeline-steps__first-item"
+      data-sly-call="${itemTemplate.externalItem @ step = model.firstStep}"
+    ></div>
+
+    <sly
+      data-sly-call="${itemTemplate.divider @ image = model.firstStep.divider}"
+    ></sly>
+  </li>
+  <sly data-sly-list.step="${model.steps}">
+    <li>
+      <div
+        class="cmp-timeline-steps__item"
+        data-sly-call="${itemTemplate.item @ step = step}"
+      ></div>
+
+      <sly data-sly-test="${!stepList.last}"
+        data-sly-call="${itemTemplate.divider @ image = model.divider}"
+      ></sly>
+    </li>
+  </sly>
+  <li>
+    <sly
+      data-sly-call="${itemTemplate.divider @ image = model.lastStep.divider}"
+    ></sly>
+
+    <div
+      class="cmp-timeline-steps__last-item"
+      data-sly-call="${itemTemplate.externalItem @ step = model.lastStep}"
+    ></div>
+  </li>
+</ul>
