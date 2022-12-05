@@ -1,16 +1,16 @@
 # deny everything and allow specific entries
 # Start with everything blocked as a safeguard and open things customers need and what's safe OOTB
-/0001 { /type "deny"  /url "*" }
+/0200 { /type "deny"  /url "*" }
 
 # Block use of all suffixes on any resource in /content
-/0160 { /type "deny" /url "/content*" /suffix "*" }
+/0201 { /type "deny" /url "/content*" /suffix "*" }
 # Suffix patterns which are needed on the server side can be added in an allow list manner
-/0161 { /type "allow" /url "/content/*" /suffix "/content/*" /method "GET" }
+/0202 { /type "allow" /url "/content/*" /suffix "/content/*" /method "GET" }
 
 # Block use of all selectors on any resource in /content
-/0150 { /type "deny" /url "/content*" /selectors "*" }
+/0203 { /type "deny" /url "/content*" /selectors "*" }
 # Individual selectors which are needed on the server side can be added in an allow list manner
-/0151 { /type "allow" /url "/content*" /selectors '(model|legit-selector|other-fine-selector)' /method "GET" }
+/0204 { /type "allow" /url "/content*" /selectors '(model|legit-selector|other-fine-selector)' /method "GET" }
 
 
 # Open consoles if this isn't a production environment by uncommenting the next few lines
@@ -22,41 +22,43 @@
 # /005 { /type "allow" /url "/bin/*"    }  # allow bin path access
 
 # This rule allows content to be access
-/0010 { /type "allow" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|pdf|png|svg|swf|ttf|woff|woff2|html|txt|xml|docx|doc|xls|xlsx|ppt|pptx|csv|zip)' /path "/content/*" }  # disable this rule to allow mapped content only
+/0205 { /type "allow" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|pdf|png|svg|swf|ttf|woff|woff2|html|txt|xml|docx|doc|xls|xlsx|ppt|pptx|csv|zip)' /path "/content/*" }  # disable this rule to allow mapped content only
 #/0011 { /type "allow" /extension "json" /selectors "model" /path "/content/*" }
 
 # Enable specific mime types clientlibs directories
-/0012 { /type "allow" /method "GET" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|png|svg|swf|ttf|woff|woff2)' /path "/etc/clientlibs/*" }
+/0206 { /type "allow" /method "GET" /extension '(css|eot|gif|ico|jpeg|jpg|js|gif|png|svg|swf|ttf|woff|woff2)' /path "/etc/clientlibs/*" }
 
 # Enable clientlibs proxy servlet
-/0013 { /type "allow" /method "GET" /url "/etc.clientlibs/*" }
+/0207 { /type "allow" /method "GET" /url "/etc.clientlibs/*" }
 
 # Enable basic features
-/0014 { /type "allow" /method "GET" /url '/libs/granite/csrf/token.json' /extension 'json' } # AEM provides a framework aimed at preventing Cross-Site Request Forgery attacks
-/0015 { /type "allow" /method "POST" /url "/content/[.]*.form.html" }  # allow POSTs to form selectors under content
+/0208 { /type "allow" /method "GET" /url '/libs/granite/csrf/token.json' /extension 'json' } # AEM provides a framework aimed at preventing Cross-Site Request Forgery attacks
+/0209 { /type "allow" /method "POST" /url "/content/[.]*.form.html" }  # allow POSTs to form selectors under content
 
-/0016 { /type "allow" /method "GET" /path "/libs/cq/personalization" }  # enable personalization
-/0017 { /type "allow" /method "POST" /path "/content/[.]*.commerce.cart.json" }  # allow POSTs to update the shopping cart
-/0018 { /type "allow" /method "GET" /url '/libs/cq/i18n/dict.*.json' } # AEM servlet for getting dictionary keys
+/0210 { /type "allow" /method "GET" /path "/libs/cq/personalization" }  # enable personalization
+/0211 { /type "allow" /method "POST" /path "/content/[.]*.commerce.cart.json" }  # allow POSTs to update the shopping cart
+/0212 { /type "allow" /method "GET" /url '/libs/cq/i18n/dict.*.json' } # AEM servlet for getting dictionary keys
 
 # Deny content grabbing for greedy queries and prevent un-intended self DOS attacks
-/0100 { /type "deny" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|validator|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed|css)' /suffix '(/etc/*)'}
+/0213 { /type "deny" /selectors '(feed|rss|pages|languages|blueprint|infinity|tidy|sysview|validator|docview|query|[0-9-]+|jcr:content)' /extension '(json|xml|html|feed|css)' /suffix '(/etc/*)'}
 
 # Deny authoring query params
-/0101 { /type "deny" /method "GET" /query "debug=*" }
-/0102 { /type "deny" /method "GET" /query "wcmmode=*" }
+/0214 { /type "deny" /method "GET" /query "debug=*" }
+/0215 { /type "deny" /method "GET" /query "wcmmode=*" }
 # Deny front door entry
-/0103 { /type "deny" /path "/content/ams/healthcheck/*" }
-/0104 { /type "deny" /url "/content/regent.html" }
+/0216 { /type "deny" /path "/content/ams/healthcheck/*" }
+/0217 { /type "deny" /url "/content/regent.html" }
 
 # Enable specific mime types clientlibs directories
-/0105 { /type "allow" /extension '(gltf|stl|obj|usdz|glb)' /method "GET" /path "/content/dam/*" }
-/0106 { /type "allow" /method "POST" /url "/bin/form" }  # form servlet allow
-/0109 { /type "allow" /method "GET"  /url "/content/tds-core/apis/tdpostform" } # form servlet allow
-/0110 { /type "allow" /method "POST" /url "/content/tds-core/apis/tdpostform" } # form servlet allow
+/0218 { /type "allow" /extension '(gltf|stl|obj|usdz|glb)' /method "GET" /path "/content/dam/*" }
+/0219 { /type "allow" /method "POST" /url "/bin/form" }  # form servlet allow
+/0220 { /type "allow" /method "GET"  /url "/content/tds-core/apis/tdpostform" } # form servlet allow
+/0221 { /type "allow" /method "POST" /url "/content/tds-core/apis/tdpostform" } # form servlet allow
 
 # filter allow rules for POST/GET for cisco punch-out urls
-/0107 { /type "allow" /method "POST" /url "*/Quotes/GetCXML*" } # servlet allow
-/0108 { /type "allow" /method "GET" /url "*/Quotes/GetCXML*" } # servlet allow
+/0222 { /type "allow" /method "POST" /url "*/Quotes/GetCXML*" } # servlet allow
+/0223 { /type "allow" /method "GET" /url "*/Quotes/GetCXML*" } # servlet allow
 # SAML filter for SSO
-/0100 { /type "allow" /method "POST" /url "*/saml_login" }
+/0224 { /type "allow" /method "POST" /url "*/saml_login" }
+# Block urls matching forms validator
+/0225 { /type "deny"  /path "*/content/dam/formsanddocuments*" }
