@@ -58,6 +58,9 @@ const SearchBar = ({ data, componentProp }) => {
     typeAheadDomain,
     dcpDomain,
   } = JSON.parse(componentProp);
+  
+  const CLASS_SEARCH_ICON_INACTIVE = 'cmp-searchbar__button--inactive';
+  const CLASS_SEARCH_ICON_ACTIVE = 'cmp-searchbar__button--active';
 
   const searchRef = useRef(null);
   const searchContainerRef = useRef(null);
