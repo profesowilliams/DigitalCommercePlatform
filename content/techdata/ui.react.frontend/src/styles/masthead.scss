@@ -1,13 +1,19 @@
-.headerutility {
+.headerutility, .masthead {
+    font-size: 16px;
 
     .searchbar {
         .cmp-searchbar__button {
-            &::before {
-                content: url('/content/dam/global-shared/icons/tds/regular/search.svg');
-                background: no-repeat;
-                height: 24px;
-                width: 24px;
-            }
+            content: '';
+            -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+            mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: #000;
+            padding: 0;
+            vertical-align: middle
         }
     }  
 
