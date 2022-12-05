@@ -209,6 +209,7 @@
                 display: flex;
                 flex-direction: column-reverse;
                 padding: 0;
+                background-color: map-get($color-palette, "teal") !important; // To override the desktop inline style
             }
 
             .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
@@ -227,6 +228,11 @@
 
             .cmp-container {
                 height: auto !important; // Need to override the inline style getting appended from JS
+                width: 100%;
+            }
+
+            .cmp-image {
+                min-height: 36px;
             }
 
             .aem-Grid {
