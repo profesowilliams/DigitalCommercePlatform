@@ -1,17 +1,24 @@
 @import "../../_mixins.scss";
 @import "../../styles/helpers/colors.scss";
 
-@mixin accordionIcon($isFontAwesome, $content) {
-  content: $content;
+@mixin accordionIcon($isIcon, $content) {
 
-  @if $isFontAwesome=="true" {
-    font-family: "FontAwesome";
-    margin-left: rem(6px);
-    font-size: rem(12px);
-    margin: 0 rem(10px) 0 0;
+
+  @if $isIcon=="true" {
+    -webkit-mask-image: $content;
+    mask-image: $content;
+    background: no-repeat;
+    height: 12px;
+    width: 12px;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: map-get($color-palette, 'white');
+    padding: 0;
+    vertical-align: middle
   }
 
   @else {
+    content: $content;
     font-size: 0.375rem;
     vertical-align: auto;
   }
@@ -178,11 +185,11 @@
   &__footer {
     &.cmp-accordion__chevronFooter {
       .cmp-accordion__button[aria-expanded="false"]::before {
-        @include accordionIcon("true", "\f054");
+        @include accordionIcon("true", url('/content/dam/global-shared/icons/regular/chevron-right.svg'));
       }
 
       .cmp-accordion__button[aria-expanded="true"]::before {
-        @include accordionIcon("true", "\f078");
+        @include accordionIcon("true", url('/content/dam/global-shared/icons/regular/chevron-down.svg'));
       }
     }
 
