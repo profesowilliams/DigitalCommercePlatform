@@ -398,7 +398,6 @@
   .subheader {
       .cmp-sub-header--sub-nav.new-sub>.cmp-sub-header--content {
         height: auto !important;
-        padding-left: 16px !important;
       }
       &.cmp-sub-header-no-logo {        
         .cmp-sub-header--content {
@@ -749,7 +748,7 @@
 .cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs .cmp-sub-header--content {
     max-width: 90rem;
     height: auto;
-    margin: 0 auto !important;
+    margin: 0 !important;
 }
 
 .cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs .cmp-tabs__tabpanel {
@@ -761,31 +760,31 @@
   
     /// below code is for the story 362383 sub-header - new styles for max width and dynamic paddings
     @mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
-      &>.cmp-tabs {
+      &>.cmp-tabs .cmp-sub-header--sub-nav {
         #{$padding}: rem($default);
       }
       &-small {
-        &>.cmp-tabs {
+        &>.cmp-tabs .cmp-sub-header--sub-nav {
           #{$padding}: rem($sm);
         }
       }
       &-medium {
-        &>.cmp-tabs {
+        &>.cmp-tabs .cmp-sub-header--sub-nav {
           #{$padding}: rem($md);
         }
       }
       &-large{
-        &>.cmp-tabs {
+        &>.cmp-tabs .cmp-sub-header--sub-nav {
           #{$padding}: rem($lg);
         }
       }
       &-extra-large{
-        &>.cmp-tabs {
+        &>.cmp-tabs .cmp-sub-header--sub-nav {
           #{$padding}: rem($xlg);
         }
       }
       &-dynamic{
-        &>.cmp-tabs {
+        &>.cmp-tabs .cmp-sub-header--sub-nav {
     
           @media only screen and (min-width: 5px) and (max-width: 767px) {  
             #{$padding}: 1rem;  
@@ -832,15 +831,15 @@
     
 @include mobile {
 
-  .dp-general__innerspace--left-large, 
-  .dp-general__innerspace--left-medium > .cmp-tabs, 
-  .dp-general__innerspace--left-large > .cmp-tabs {
+  .dp-general__innerspace--left-large >.cmp-tabs .cmp-sub-header--sub-nav,
+  .dp-general__innerspace--left-medium > .cmp-tabs .cmp-sub-header--sub-nav,
+  .dp-general__innerspace--left-large > .cmp-tabs .cmp-sub-header--sub-nav {
     padding-left: 0!important;
   }
 
-  .dp-general__innerspace--right-large, 
-  .dp-general__innerspace--right-medium >.cmp-tabs, 
-  .dp-general__innerspace--right-large > .cmp-tabs {
+  .dp-general__innerspace--right-large >.cmp-tabs .cmp-sub-header--sub-nav,
+  .dp-general__innerspace--right-medium >.cmp-tabs .cmp-sub-header--sub-nav,
+  .dp-general__innerspace--right-large > .cmp-tabs .cmp-sub-header--sub-nav {
     padding-right: 0!important;
   }  
 }
