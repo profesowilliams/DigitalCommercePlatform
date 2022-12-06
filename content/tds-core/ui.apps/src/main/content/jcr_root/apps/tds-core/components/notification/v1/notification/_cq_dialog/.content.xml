@@ -45,6 +45,13 @@
                                 fieldDescription="Enter icon"
                                 fieldLabel="Icon"
                                 name="./icon"/>
+                            <iconUrl
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldDescription="Icon from DAM for displaying in the button"
+                                fieldLabel="Icon from DAM"
+                                name="./iconUrl"
+                                rootPath="/content/dam"/>
                             <linkEnable
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

@@ -2,8 +2,8 @@
     class="cmp-notification"
     data-sly-test=${properties.message}
 >
-    <div class="cmp-notification-message-container">
-        <span class="cmp-notification_icon ${properties.icon}"></span>
+    <div class="cmp-notification-message-container" data-cmp-icon="${properties.icon}" data-cmp-icon-dam="${properties.iconUrl}">
+        <span class="cmp-notification_icon" ></span>
         <span class="cmp-notification_text">${properties.message}</span>    
     </div>
     <a target="${properties.linkTarget == 'true' ? '_blank' : '_self'}" href="${properties.linkUrl}" class="cmp-notification-link ${properties.linkEnable == 'true' ? '' : 'nolink'}">
@@ -13,5 +13,4 @@
 		<a class="close-notification">
         </a>
 	</sly>
-    
 </div>

@@ -33,11 +33,25 @@
     document.addEventListener('DOMContentLoaded', () => {
         const notificationElements = Array.prototype.slice.call(document.getElementsByClassName(CLASS_NOTIFICATION_ICON)); 
         notificationElements.forEach(n => {
-            if (n.tagName === "SPAN" || n.tagName === "svg") {
+            if (n.tagName === "SPAN" || n.tagName === "svg" || n.tagName === "img" || n.tagName  ==='IMG') {
                 const parent = n.parentNode.parentNode.parentNode; // 3 parents up
                 const classType = Array.prototype.slice.call(parent.classList).filter(classElement => arrayClassElements.includes(classElement))[0];
+                const iconFA = n.parentNode.getAttribute('data-cmp-icon')
+                const iconDAM = n.parentNode.getAttribute('data-cmp-icon-dam');
                 const img = document.createElement("img");
-                img.src = selectHandlerClass(classType);
+                const iItem = document.createElement("i");
+                if (iconDAM) {
+                    img.src = iconDAM;
+                } else if (iconFA) {
+                    const arrayIcon = iconFA.split(' ');
+                    arrayIcon.forEach(i => {
+                        iItem.classList.add(i);
+                    })
+                    n.parentNode.replaceChild(iItem, n);
+                    return;
+                } else {
+                    img.src = selectHandlerClass(classType);
+                }
                 img.classList.add(CLASS_NOTIFICATION_ICON);
                 n.parentNode.replaceChild(img, n);
             }
