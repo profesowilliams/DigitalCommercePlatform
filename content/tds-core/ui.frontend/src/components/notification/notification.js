@@ -16,13 +16,13 @@
     const selectHandlerClass = (classType) => {
         switch(classType){
             case CLASS_NOTIFICATION_ICON_ALERT: 
-                return '/content/dam/global-shared/icons/Alert.svg';
+                return '/content/dam/global-shared/icons/notification/alert.svg';
             case CLASS_NOTIFICATION_ICON_WARNING: 
-                return "/content/dam/global-shared/icons/Warning.svg";
+                return "/content/dam/global-shared/icons/notification/warning.svg";
             case CLASS_NOTIFICATION_ICON_CHECK: 
-                return "/content/dam/global-shared/icons/Check.svg";
+                return "/content/dam/global-shared/icons/notification/check.svg";
             case CLASS_NOTIFICATION_ICON_INFO: 
-                return "/content/dam/global-shared/icons/Info.svg";
+                return "/content/dam/global-shared/icons/notification/info.svg";
         }
     };
 
