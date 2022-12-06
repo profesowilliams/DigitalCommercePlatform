@@ -841,3 +841,9 @@ svg {
   animation-duration: 1.5s !important;
   animation-iteration-count: infinite !important;
 }
+
+.ag-theme-alpine.ag-popup{
+  .ag-menu.ag-popup-child[role=dialog]{
+    top: unset;   
+  }
+}
