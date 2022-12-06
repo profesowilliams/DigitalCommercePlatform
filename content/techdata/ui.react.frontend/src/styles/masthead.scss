@@ -1,57 +1,135 @@
-.headerutility, .masthead {
-    font-size: 16px;
+// NOTE: These values are only used for filters. The beginning icon must be #000
+$cobalt: invert(30%) sepia(87%) saturate(1349%) hue-rotate(181deg) brightness(91%) contrast(101%);
+$charcoal: invert(12%) sepia(14%) saturate(0%) hue-rotate(246deg) brightness(86%) contrast(89%);
+$white: invert(99%) sepia(75%) saturate(181%) hue-rotate(245deg) brightness(123%) contrast(100%);
+$aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%) contrast(94%);
 
-    .searchbar {
-        .cmp-searchbar__button {
-            content: '';
-            -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
-            mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
-            background: no-repeat;
-            height: 24px;
-            width: 24px;
-            -webkit-mask-size: cover;
-            mask-size: cover;
-            background-color: #000;
-            padding: 0;
-            vertical-align: middle
-        }
-    }  
+.searchbar {
+    .cmp-searchbar__button {
+        content: '';
+        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+        background: no-repeat;
+        height: 24px;
+        width: 24px;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        background-color: map-get($color-palette, 'black');
+        padding: 0;
+        vertical-align: middle
+    }
+}  
+
+.theme {        
+    &.dark {
+        @extend .searchbar;
+
+        .searchbar {
+            .cmp-searchbar__button {
+                background-color: map-get($color-palette, 'charcoal');
+
+                &:hover {
+                    background-color: map-get($color-palette, 'cobalt');
+                }
+            }
+        }  
+    }
+
+    &.light {
+        @extend .searchbar;
+
+        .searchbar {
+            .cmp-searchbar__button {
+                filter: $white;
+
+                &:hover {
+                    filter: $aqua;
+                }
+            }
+        }  
+    }
+}
+
+.headerutility {
+    font-size: 16px;
 
     .hub {
         .cmp-button {
-            background: url('/content/dam/global-shared/icons/tds/regular/griddots.svg') no-repeat;
-            height: 24px;
-            width: 24px;
-            padding: 0;
-            vertical-align: middle;
+
+            &::before {
+                content: '';
+                -webkit-mask: url('/content/dam/global-shared/icons/regular/griddots.svg') no-repeat;
+                mask: url('/content/dam/global-shared/icons/regular/griddots.svg') no-repeat;
+                background: no-repeat;
+                height: 24px;
+                width: 24px;
+                -webkit-mask-size: cover;
+                mask-size: cover;
+                background-color: map-get($color-palette, 'black');
+                padding: 0;
+                vertical-align: middle;
+                display: inline-block;
+            }
+
+            &__text {
+                padding-left: 2.5px;
+                vertical-align: middle;
+            }
         }
     }
 
     .signin {
         .cmp-sign-in-button {
+            font-size: 16px;
+
             &::before {
-                content: url('/content/dam/global-shared/icons/tds/regular/person.svg');
+                content: '';
+                -webkit-mask: url('/content/dam/global-shared/icons/regular/person.svg') no-repeat;
+                mask: url('/content/dam/global-shared/icons/regular/person.svg') no-repeat;
                 background: no-repeat;
                 height: 24px;
                 width: 24px;
+                -webkit-mask-size: cover;
+                mask-size: cover;
+                background-color: map-get($color-palette, 'black');
+                padding: 0;
+                vertical-align: middle
             }
 
             &.authenticated {
                 &::before {
-                    content: url('/content/dam/global-shared/icons/tds/filled/person.svg');
+                    content: '';
+                    -webkit-mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
                     background: no-repeat;
                     height: 24px;
                     width: 24px;
+                    -webkit-mask-size: cover;
+                    mask-size: cover;
+                    background-color: map-get($color-palette, 'black');
+                    padding: 0;
+                    vertical-align: middle
                 }
+            }
+
+            span {
+                padding-left: 2.5px;
+                vertical-align: middle;
             }
         }
     }
 
     .minicart {
-        .cmp-button {
-            background: url('/content/dam/global-shared/icons/tds/regular/cart.svg') no-repeat;
+        .cmp-cart__icon {
+            content: '';
+            -webkit-mask: url('/content/dam/global-shared/icons/regular/cart.svg') no-repeat;
+            mask: url('/content/dam/global-shared/icons/regular/cart.svg') no-repeat;
+            background: no-repeat;
             height: 24px;
             width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'black');
             padding: 0;
             vertical-align: middle;
         }
@@ -60,95 +138,111 @@
     .languagenavigation {
         .cmp-dropbtn {
             &::before {
-                content: url('/content/dam/global-shared/icons/tds/regular/globe.svg');
+                content: '';
+                -webkit-mask: url(/content/dam/global-shared/icons/regular/globe.svg) no-repeat;
+                mask: url(/content/dam/global-shared/icons/regular/globe.svg) no-repeat;
                 background: no-repeat;
                 height: 24px;
                 width: 24px;
+                -webkit-mask-size: cover;
+                mask-size: cover;
+                background-color: map-get($color-palette, 'black');
+                padding: 0;
+                vertical-align: middle;
             }
         }
     }
+}
 
-
-&.theme {        
+.theme {        
     &.dark {
         @extend .headerutility;
 
-        .searchbar {
-            .cmp-searchbar__button {
-                &:hover {
-                    &::before {
-                        content: url('/content/dam/global-shared/icons/tds/blended/search.svg');
-                        background: no-repeat;
-                        height: 24px;
-                        width: 24px;
-                    }
-                }
-            }
-        }  
-
         .hub {
             .cmp-button {
-                &:hover {
-                    content: '';
-                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
-                    mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
-                    background: no-repeat;
-                    height: 24px;
-                    width: 24px;
-                    -webkit-mask-size: cover;
-                    mask-size: cover;
-                    background-color: #006FBA;
+
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
                 }
+
+                &:hover {
+                    &::before {
+                        background-color: map-get($color-palette, 'cobalt');
+                    }
+                }
+
             }
         }
 
         .signin {
             .cmp-sign-in-button {
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
+
+                    &.authenticated {
+                        background-color: map-get($color-palette, 'charcoal');
+                    }
+                }
+
                 &:hover {
                     &::before {
-                        content: '';
-                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
-                        mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
-                        background: no-repeat;
-                        height: 24px;
-                        width: 24px;
-                        -webkit-mask-size: cover;
-                        mask-size: cover;
-                        background-color: #006FBA;
+                        background-color: map-get($color-palette, 'cobalt');
+                    }
+
+                    &.authenticated {
+                        &::before {
+                            content: '';
+                            -webkit-mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
+                            mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
+                            background: no-repeat;
+                            height: 24px;
+                            width: 24px;
+                            -webkit-mask-size: cover;
+                            mask-size: cover;
+                            background-color: map-get($color-palette, 'cobalt');
+                            padding: 0;
+                            vertical-align: middle
+                        }
                     }
                 }
             }
         }
 
         .minicart {
-            .cmp-button {
+            .cmp-cart__icon {
+                background-color: map-get($color-palette, 'charcoal');
+
                 &:hover {
                     content: '';
-                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
-                    mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
+                    -webkit-mask: url('/content/dam/global-shared/icons/regular/cart.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/regular/cart.svg') no-repeat;
                     background: no-repeat;
                     height: 24px;
                     width: 24px;
                     -webkit-mask-size: cover;
                     mask-size: cover;
-                    background-color: #006FBA;
+                    background-color: map-get($color-palette, 'cobalt');
                 }
             }
         }
 
         .languagenavigation {
             .cmp-dropbtn {
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
+                }
+
                 &:hover {
                     &::before {
                         content: '';
-                        mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
-                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
+                        mask: url('/content/dam/global-shared/icons/blended/globe.svg');
+                        -webkit-mask: url('/content/dam/global-shared/icons/blended/globe.svg');
                         background: no-repeat;
                         height: 24px;
                         width: 24px;
                         -webkit-mask-size: cover;
                         mask-size: cover;
-                        background-color: #006FBA;
+                        background-color: map-get($color-palette, 'cobalt');
                     }
                 }
             }
@@ -158,86 +252,151 @@
     &.light {
         @extend .headerutility;
 
-        .searchbar {
-            .cmp-searchbar__button {
-                &:hover {
-                    &::before {
-                        content: url('/content/dam/global-shared/icons/tds/blended/search.svg');
-                        background: no-repeat;
-                        height: 24px;
-                        width: 24px;
-                    }
-                }
-            }
-        }  
-
         .hub {
             .cmp-button {
+                &::before {
+                    filter: $white;
+                }
+
                 &:hover {
-                    content: '';
-                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
-                    mask: url('/content/dam/global-shared/icons/tds/blended/griddots.svg') no-repeat;
-                    background: no-repeat;
-                    height: 24px;
-                    width: 24px;
-                    -webkit-mask-size: cover;
-                    mask-size: cover;
-                    background-color: #006FBA;
+                    &::before {
+                        filter: $aqua;
+                    }
                 }
             }
         }
 
         .signin {
             .cmp-sign-in-button {
+                &::before {
+                    filter: $white;
+                }
+
+                &.authenticated {
+                    &::before {
+                        filter: $white;
+                    }
+                }
+
                 &:hover {
                     &::before {
-                        content: '';
-                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
-                        mask: url('/content/dam/global-shared/icons/tds/blended/person.svg');
-                        background: no-repeat;
-                        height: 24px;
-                        width: 24px;
-                        -webkit-mask-size: cover;
-                        mask-size: cover;
-                        background-color: #006FBA;
+                        filter: $aqua;
+                    }
+
+                    &.authenticated {
+                        &::before {
+                            filter: $aqua;
+                        }
                     }
                 }
             }
         }
 
         .minicart {
-            .cmp-button {
+            .cmp-cart__icon {
+                filter: $white;
+
                 &:hover {
-                    content: '';
-                    -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
-                    mask: url('/content/dam/global-shared/icons/tds/blended/cart.svg') no-repeat;
-                    background: no-repeat;
-                    height: 24px;
-                    width: 24px;
-                    -webkit-mask-size: cover;
-                    mask-size: cover;
-                    background-color: #006FBA;
+                    filter: $aqua;
                 }
             }
         }
 
         .languagenavigation {
             .cmp-dropbtn {
+                &::before {
+                    filter: $white;
+                }
+
                 &:hover {
                     &::before {
-                        content: '';
-                        mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
-                        -webkit-mask: url('/content/dam/global-shared/icons/tds/blended/globe.svg');
-                        background: no-repeat;
-                        height: 24px;
-                        width: 24px;
-                        -webkit-mask-size: cover;
-                        mask-size: cover;
-                        background-color: #006FBA;
+                        filter: $aqua;
                     }
                 }
             }
         }
     }
 }
+
+//Fluent UI icons
+.cmp-button__icon {
+    &--fluent {
+        &.people-filled {
+            content: url('/content/dam/global-shared/icons/filled/people.svg');
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'cobalt');
+            display: inline;
+            align-items: center;
+        }
+
+        &.handshake-regular {
+            content: url('/content/dam/global-shared/icons/regular/handshake.svg');
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'white');
+            display: inline;
+            align-items: center;
+        }
+    }
+}
+
+
+@media (max-width: 1024px) { 
+    .headerutility, .masthead {
+        .hub {
+            .cmp-button {
+                margin: 0!important;
+
+                &::before {
+                    background-color: map-get($color-palette, 'white');
+                }
+
+                &__text {
+                    padding-left: 2.5px;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .signin {
+            .cmp-sign-in-button {
+                font-size: 16px;
+    
+                &::before {
+                    background-color: map-get($color-palette, 'white');
+                }
+    
+                &.authenticated {
+                    &::before {
+                        background-color: map-get($color-palette, 'white');
+                    }
+                }
+    
+                span {
+                    padding-left: 2.5px;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+        .languagenavigation {
+            .cmp-dropbtn {
+                &::before {
+                    background-color: map-get($color-palette, 'white');
+                }
+
+                span {
+                    padding-left: 2.5px;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
 }

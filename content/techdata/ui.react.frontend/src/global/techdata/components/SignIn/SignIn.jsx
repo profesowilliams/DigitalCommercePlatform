@@ -320,7 +320,7 @@ const SignIn = (props) => {
         return;
     } else
     return (
-      <button className={isAuthenticated ? 'cmp-sign-in-button' : 'cmp-sign-in-button authenticated'} onClick={onSignIn}>
+      <button className={isAuthenticated === null ? 'cmp-sign-in-button authenticated' : 'cmp-sign-in-button'} onClick={onSignIn}>
         <span>{configDataAEM.label}</span>
       </button>
     );
