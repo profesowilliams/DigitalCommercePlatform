@@ -6,6 +6,7 @@ import capitalizeFirstLetter, {
 } from '../../../../../utils/utils';
 import useFilteringSelected from "../hooks/useIsFilteringSelected";
 import useComputeBranding from "../../../hooks/useComputeBranding";
+import { dateToString } from "../../../helpers/formatting";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState( state => state.datePickerState);
@@ -18,9 +19,9 @@ function CustomDatePill({ clearDateFilters }) {
   return customStartDate && customEndDate ? (
     <div className={computeClassName("filter-tags")}>
       <span className="filter-tags__title">
-        {getLocaleFormattedDate(startDate)}
-        {" - "}
-        {getLocaleFormattedDate(endDate)}{" "}
+        {dateToString(startDate,"MMM d',' y")}
+        {"  -  "}
+        {dateToString(endDate,"MMM d',' y")}{" "}
       </span>
       <span onClick={() => clearDateFilters()}>
         <i className="fas fa-times filter-tags__close"></i>
