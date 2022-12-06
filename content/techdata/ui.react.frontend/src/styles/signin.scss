@@ -31,14 +31,12 @@
     padding: 2px 0;
     color: #000;
     font-family: "Open Sans", sans-serif;
-    font-size: 14px;
     letter-spacing: 0;
     line-height: 13px;
     border-bottom: 2px solid transparent;
 
     @media only screen and (min-width: 1024px) and (max-width: 1260px) {
         padding: 0 0.1rem;
-        font-size: .8rem;
     }
 
     @include tablet {
@@ -196,7 +194,6 @@
     margin-left: -#{$offset-sm};
     color: white;
     font-family: "Open Sans", sans-serif;
-    font-size: 14px;
     letter-spacing: 0;
     background-color: #1699d1;
 
