@@ -116,7 +116,6 @@ export default class Header {
             const smallLogo = imgEl.dataset.mobileLogo;
             const img = document.createElement('img');
             img.classList.add('cmp-header--logo-small');
-            image.style.display='none';
             insertAfter(img, image );
             img.src = smallLogo;
         });
