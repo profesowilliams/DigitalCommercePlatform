@@ -79,6 +79,7 @@ function _ContractColumn({ data, eventProps }) {
     });
     setCustomState({ key: 'rowCollapsedIndexList', value: rowCollapsedIndexList })
     closeAndCleanToaster();
+    const selectedPlanId = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.selectedPlanId;
     /**
      * Ag-grid gives detailed-view the same index as normal grid rows. This
      * prevents targeting the toggle state appropriately. Hence DOM query.
@@ -89,8 +90,8 @@ function _ContractColumn({ data, eventProps }) {
         detailRender: 'secondary',
         rowCollapsedIndexList,
         rowIndex: parseFloat(document.querySelector(".ag-full-width-container")?.querySelector("[row-index]")?.getAttribute("row-index")),
-        capturedPlanPage: pageNumber,
-        selectedPlanId: eventProps.data.options[0]['id'],
+        capturedPlanPage: pageNumber,   
+        ...(selectedPlanId && {selectedPlanId}) 
       });
     }, 0)
   }  

@@ -47,7 +47,7 @@ function Grid(props) {
     to: null,
     total: null,
   });
-  const [popupParent] = useState(document.querySelector('body'));
+  const popupParent = useMemo(() => document.querySelector('body'), []);
   const isLoggedIn = useStore(state => state.isLoggedIn)
   const pagination =
     config?.paginationStyle &&
@@ -212,7 +212,6 @@ function Grid(props) {
       rowHeight={DEFAULT_ROW_HEIGHT}
       onViewportChanged={onViewportChanged}
       blockLoadDebounceMillis={100}
-      masterDetail={true}
       detailCellRenderer={"$$detailRenderer"}
       detailRowAutoHeight={true}
       animateRows={false}

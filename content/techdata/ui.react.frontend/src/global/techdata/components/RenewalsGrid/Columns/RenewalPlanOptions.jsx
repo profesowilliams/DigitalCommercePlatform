@@ -24,13 +24,20 @@ function RenewalPlanOptions({ labels, data, node }) {
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
     const { computeClassName: computeTDSynnexClass, isTDSynnex } = useComputeBranding(useRenewalGridState);
     const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
+    const calculateOptionsWithChecked = () => {     
+        const localPlanOption = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
+        const selectedPlanId = localPlanOption?.selectedPlanId;     
+        const calcSelectedPlan = o => o.id === selectedPlanId ? true : o.quoteCurrent;          
+        return data?.options?.map(o => ({...o, checked: calcSelectedPlan(o) }));
+    }
+    const optionsSt = useState(calculateOptionsWithChecked);
 
-
-    const isPlanSelected = ({ id }) => {
-        if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
-            return (id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"]);
-        }
-        return id === optionIdSelected;
+    
+    const isPlanSelected = (option) => {
+        if (getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY) && "selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
+            return (option?.id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"]);
+        } 
+        return option?.checked;
     };
     const isCurrentPlan = plan => plan.quoteCurrent;
     const findAndReturnCurrentPlanId = (options) => {
@@ -90,10 +97,7 @@ function RenewalPlanOptions({ labels, data, node }) {
             selected: getDictionaryValue("grids.renewal.label.selectedPlan", "Selected Plan"),
             current:  getDictionaryValue("grids.renewal.label.currentPlan", "Current Plan")
         };
-        if (isPlanSelected(option)) {
-            return isCurrentPlan(option) ? planLabels.current : planLabels.selected;
-        }
-        return "";
+        return option.quoteCurrent ? planLabels.current : (option?.checked ? planLabels.selected : '');
     }
     const computeMarketingCssStyle = () => {
         return "card-right-border";
@@ -118,12 +122,12 @@ function RenewalPlanOptions({ labels, data, node }) {
         return option?.formattedExpiryDate
     }
 
-    const setDefaultCheckedOption = (option) => {
-        if (option?.quoteCurrent) return true
-        if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
-             return option?.id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"];
-        }
-        return optionIdSelected === option?.id;
+    const updateLocalStorage = (id) => {
+        setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
+            ...getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY),            
+            capturedPlanPage: pageNumber,
+            selectedPlanId: id
+        });
     }
 
     const renewalDetailsURL = id => encodeURI(
@@ -152,16 +156,28 @@ function RenewalPlanOptions({ labels, data, node }) {
 
     const calcPlanColumnClassName = (data) => `${computeTDSynnexClass("cmp-renewal-plan-column")} ${hasTwoRows(data?.options)}`;
 
-    const PlanLeftHeader = (data) => {
+    const PlanLeftHeader = (data) => {      
       const durationSplit = formatRenewedDuration(null, data.option?.contractDuration, data.option?.support)?.split(' ');
       let durationLine1 = '';
       let durationLine2 = '';
+      const [ _ , setOptionsListSt ] = data?.optionsSt;
 
       if (durationSplit?.length > 4) {
         durationLine1 = durationSplit.slice(0, 4).join(' ');
         durationLine2 = durationSplit.slice(4).join(' ');
       } else {
         durationLine1 = durationSplit.join(' ');
+      }
+
+      const handleRadioChange = (evt) => {
+        const id = evt?.target?.value;      
+          const handleIsChecked = option => id === option?.id ? !option?.checked : option?.checked;
+          setOptionsListSt(optionsList => {
+              const updatedList = optionsList.map(o => ({ ...o, checked: false })).map(o => ({ ...o, checked: handleIsChecked(o) }));
+              updateLocalStorage(id);
+              return updatedList;
+          });
+
       }
 
       return (
@@ -171,7 +187,8 @@ function RenewalPlanOptions({ labels, data, node }) {
             id={data.option?.id}
             name="planOption"
             type="radio"
-            defaultChecked={setDefaultCheckedOption(data.option)}
+            checked={data?.option?.checked}
+            onChange={handleRadioChange}
             value={data.option?.id}
           />
           <label
@@ -192,14 +209,14 @@ function RenewalPlanOptions({ labels, data, node }) {
                 <div className={`cmp-card-marketing-section ${computeMarketingCssStyle()}`}>
                     <div className="marketing-body"></div>
                 </div>
-                {data?.options && data.options.map((option, index) => {     
+                {optionsSt[0] && optionsSt[0].map((option, index) => {     
                     return (
                         <div className="cmp-renewal-plan-column__item" key={option?.id}>
                             <div className={computeClassName(data?.options, index)}>
                                 <div className="header">
                                     <div className="leftHeader">
-                                        <div onChange={changeRadioButton}>
-                                            <PlanLeftHeader option={option} /> 
+                                        <div>
+                                            <PlanLeftHeader option={option} optionsSt={optionsSt} /> 
                                         </div>
                                     </div>
                                     <div className="rightHeader">
