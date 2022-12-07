@@ -307,7 +307,10 @@ window.onload = function() {
         document.getElementsByClassName('basicpage')[0].setAttribute('style', '');
     }
 
-    // load intouch header/footer
+}
+
+$( document ).ready(function() {
+// load intouch header/footer
     renderIntouchHeaderHTML();
     renderIntouchFooterHTML();
 }
