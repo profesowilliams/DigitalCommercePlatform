@@ -748,7 +748,7 @@
 .cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs .cmp-sub-header--content {
     max-width: 90rem;
     height: auto;
-    margin: 0 !important;
+    margin: 0 auto !important;
 }
 
 .cmp-experiencefragment--subheader .cmp-container--max-1440 .cmp-tabs .cmp-tabs__tabpanel {
@@ -760,31 +760,31 @@
   
     /// below code is for the story 362383 sub-header - new styles for max width and dynamic paddings
     @mixin padding-sizes($padding, $default, $sm, $md, $lg, $xlg) {
-      &>.cmp-tabs .cmp-sub-header--sub-nav {
+      &>.cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
         #{$padding}: rem($default);
       }
       &-small {
-        &>.cmp-tabs .cmp-sub-header--sub-nav {
+        &>.cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
           #{$padding}: rem($sm);
         }
       }
       &-medium {
-        &>.cmp-tabs .cmp-sub-header--sub-nav {
+        &>.cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
           #{$padding}: rem($md);
         }
       }
       &-large{
-        &>.cmp-tabs .cmp-sub-header--sub-nav {
+        &>.cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
           #{$padding}: rem($lg);
         }
       }
       &-extra-large{
-        &>.cmp-tabs .cmp-sub-header--sub-nav {
+        &>.cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
           #{$padding}: rem($xlg);
         }
       }
       &-dynamic{
-        &>.cmp-tabs .cmp-sub-header--sub-nav {
+        &>.cmp-tabs .cmp-sub-header--sub-nav .cmp-sub-header--content {
     
           @media only screen and (min-width: 5px) and (max-width: 767px) {  
             #{$padding}: 1rem;  
