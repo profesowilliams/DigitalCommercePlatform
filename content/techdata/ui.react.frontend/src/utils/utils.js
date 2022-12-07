@@ -313,7 +313,7 @@ $( document ).ready(function() {
 // load intouch header/footer
     renderIntouchHeaderHTML();
     renderIntouchFooterHTML();
-}
+});
 
 const renderIntouchHeaderHTML = () => {
     const headerEle = document.querySelector('#intouch-headerhtml');
