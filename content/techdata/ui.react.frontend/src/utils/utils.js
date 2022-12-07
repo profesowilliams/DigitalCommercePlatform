@@ -3,6 +3,8 @@ import {nanoid} from "nanoid";
 import { isObject } from ".";
 import { usPost } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
+import { getHeaderInfoFromUrl } from "./index";
+import {intouchHeaderAPIUrl, intouchFooterAPIUrl} from "./featureFlagUtils";
 
 export const fileExtensions = {
   xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -304,7 +306,60 @@ window.onload = function() {
     if(localStorage.getItem('sessionId') !== null) {
         document.getElementsByClassName('basicpage')[0].setAttribute('style', '');
     }
+
+    // load intouch header/footer
+    renderIntouchHeaderHTML();
+    renderIntouchFooterHTML();
 }
+
+const renderIntouchHeaderHTML = () => {
+    const headerEle = document.querySelector('#intouch-headerhtml');
+    const sessionId = localStorage.getItem('sessionId');
+    if (headerEle && sessionId) {
+    	const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', intouchHeaderAPIUrl());
+        xhr.setRequestHeader('Site', headerInfo.site);
+        xhr.setRequestHeader('SessionId', sessionId);
+        xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.send();
+
+        xhr.onload = function() {
+          if (xhr.status != 200) {
+            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
+          } else { // show the result
+            console.log(xhr.responseText);
+            headerEle.innerHTML = JSON.parse(xhr.responseText).body;
+          }
+        };
+    }
+};
+
+const renderIntouchFooterHTML = () => {
+    const footerEle = document.querySelector('#intouch-footerhtml');
+    const sessionId = localStorage.getItem('sessionId');
+    if (footerEle && sessionId) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', intouchFooterAPIUrl());
+        const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+        xhr.setRequestHeader('Site', headerInfo.site);
+        xhr.setRequestHeader('SessionId', sessionId);
+        xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
+        xhr.setRequestHeader('content-type', 'application/json');
+        xhr.send();
+
+        xhr.onload = function() {
+          if (xhr.status != 200) {
+            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
+          } else { // show the result
+            console.log(xhr.responseText);
+            footerEle.innerHTML = JSON.parse(xhr.responseText).body;
+          }
+        };
+    }
+};
+
 
 export const getDictionaryValue = (dictionaryKey, defaultValue) => {
     let dictionaryValue = Granite?.I18n?.get(dictionaryKey);

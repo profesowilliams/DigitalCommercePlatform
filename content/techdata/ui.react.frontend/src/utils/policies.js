@@ -1,5 +1,4 @@
-import { getUser, getHeaderInfoFromUrl } from "./index";
-import {isExtraReloadDisabled, intouchHeaderAPIUrl, intouchFooterAPIUrl} from "./featureFlagUtils";
+import { getUser } from "./index";
 
 const removeTrailingQuestionMark = (url) => {
     if (url.endsWith("?")) {
@@ -43,12 +42,6 @@ export const isAuthenticated = (authUrl, clientId, isPrivatePage, shopLoginRedir
         return window.location.href.includes("editor.html");
     }
 
-    // Get Header HTML and render in DOM
-    headerHTML();
-
-    // Get Footer HTML and render in DOM
-    footerHTML();
-
     const isEditMode = getIsEditMode();
 
     return user || signinCode || !isPrivatePage || isEditMode
@@ -74,50 +67,3 @@ export const refreshPage = event => {
     return true;
 };
 
-const headerHTML = () => {
-    const headerEle = document.querySelector('#intouch-headerhtml');
-    const sessionId = localStorage.getItem('sessionId');
-    if (headerEle && sessionId) {
-    	const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', intouchHeaderAPIUrl());
-        xhr.setRequestHeader('Site', headerInfo.site);
-        xhr.setRequestHeader('SessionId', sessionId);
-        xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.send();
-
-        xhr.onload = function() {
-          if (xhr.status != 200) {
-            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
-          } else { // show the result
-            console.log(xhr);
-            headerEle.innerHTML = JSON.parse(xhr).body;
-          }
-        };
-    }
-};
-
-const footerHTML = () => {
-    const footerEle = document.querySelector('#intouch-footerhtml');
-    const sessionId = localStorage.getItem('sessionId');
-    if (footerEle && sessionId) {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', intouchFooterAPIUrl());
-        const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-        xhr.setRequestHeader('Site', headerInfo.site);
-        xhr.setRequestHeader('SessionId', sessionId);
-        xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.send();
-
-        xhr.onload = function() {
-          if (xhr.status != 200) {
-            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
-          } else { // show the result
-            console.log(xhr);
-            footerEle.innerHTML = JSON.parse(xhr).body;
-          }
-        };
-    }
-};
