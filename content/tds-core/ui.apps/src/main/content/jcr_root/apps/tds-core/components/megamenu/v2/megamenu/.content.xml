@@ -3,4 +3,5 @@
     cq:isContainer="true"
     jcr:primaryType="cq:Component"
     jcr:title="Mega Menu v2"
+    sling:resourceSuperType="core/wcm/components/navigation/v1/navigation"		  
     componentGroup="TDS Core - Structure"/>

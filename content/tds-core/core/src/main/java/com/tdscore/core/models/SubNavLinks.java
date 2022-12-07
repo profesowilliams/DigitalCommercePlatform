@@ -1,5 +1,8 @@
 package com.tdscore.core.models;
 
+import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
+import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.adobe.cq.dam.cfm.ContentFragment;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
@@ -14,7 +17,8 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 
 import static  com.tdscore.core.util.Constants.*;
@@ -226,7 +230,9 @@ public class SubNavLinks {
         this.hasChildPages = hasChildPages;
     }
 
-    public String getMenuID() {return (this.getRootParentTitle()+"-"+this.getDocCount()+this.getPageTitle()).toLowerCase(Locale.ROOT); }
+    public String getMenuID() {
+        return (this.getRootParentTitle()+"-"+this.getPageTitle()).toLowerCase(Locale.ROOT); 
+    }
 
     public String getLevels() {
         if(this.getDocCount() == null)
@@ -237,6 +243,14 @@ public class SubNavLinks {
 
     public String getRootParentLink(){
         return this.rootParentLink;
+    }
+
+    public ComponentData getData() {
+        return DataLayerBuilder.forComponent()
+            .withId(() -> "megamenu-"+this.getMenuID())
+            .withTitle(() -> this.getPageTitle())
+            .withLinkUrl(() -> this.getPagePath())
+            .build();        
     }
 }
 

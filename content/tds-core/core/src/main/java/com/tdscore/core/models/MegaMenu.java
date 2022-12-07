@@ -1,5 +1,9 @@
 package com.tdscore.core.models;
 
+import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
+import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
+
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.Template;
@@ -76,5 +80,11 @@ public class MegaMenu {
         return this.menuLinkList;
     }
 
-
+    public ComponentData getData() {
+      
+        return DataLayerBuilder.forComponent()
+            .withId(() -> "megamenu")
+            .build();
+        
+    }
 }

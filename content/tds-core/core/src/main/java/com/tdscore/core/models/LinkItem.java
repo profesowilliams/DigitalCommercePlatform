@@ -1,5 +1,8 @@
 package com.tdscore.core.models;
 
+import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
+import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
@@ -114,7 +117,7 @@ public class LinkItem {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
                         if (currentPage != null && 
                             currentPage.getTemplate() != null && 
-                            currentPage.getTemplate().getName().equals("tds-landing-page")) {
+                            currentPage.getTemplate().getName().equals("tds-landing-page")) { // TODO: Pull this in from the configs
                             link.addSubNavLink(new SubNavLinks(
                                 new StringBuilder()
                                     .append("View all ")
@@ -143,7 +146,6 @@ public class LinkItem {
             this.subLinks.add(link);
             tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
         }
-
     }
 
     public String getPlatformMenuID(){
@@ -185,5 +187,15 @@ public class LinkItem {
 
     public void addSubNavLink(SubNavLinks link) {
         this.subLinks.add(link);
+    }
+
+    public ComponentData getData() {
+      
+        return DataLayerBuilder.forComponent()
+            .withId(() -> "megamenu-"+this.getMobilePlatformLevel())
+            .withTitle(() -> this.getMobilePlatformLevel())
+            .withLinkUrl(() -> this.getLinkUrl())
+            .build();
+        
     }
 }
