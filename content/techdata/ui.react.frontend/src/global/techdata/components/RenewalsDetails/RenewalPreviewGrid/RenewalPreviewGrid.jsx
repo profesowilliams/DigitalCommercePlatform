@@ -206,6 +206,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
       cellRenderer: (props) => Price(props),
       width: gridColumnWidths.percentageOfflist,
+      valueGetter:'(data.unitListPrice - data.unitPrice) / data.unitListPrice * 100'
     },
     {
       field:'unitPrice',
