@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchRefinements from './SearchRefinements'
 
-const SearchSuggestions = ({ suggestionsList, getTypeAheadSearchUrl, handlerAnalyticEvent }) => {
+const SearchSuggestions = ({ suggestionsList, getTypeAheadSearchUrl, handlerAnalyticEvent, isMobile }) => {
   if (!suggestionsList) {
     return null;
   }
@@ -25,19 +25,22 @@ const SearchSuggestions = ({ suggestionsList, getTypeAheadSearchUrl, handlerAnal
         return (
           <li
             onClick={() => analyticEventHandler(suggestion.Keyword)}
-            className={`cmp-searchsuggestions__suggestion ${suggestion.Refinements?.length > 0 ? "cmp-searchsuggestions__suggestion-withRefinement" : ""}`}
+            className={`cmp-searchsuggestions__suggestion ${suggestion.Refinements?.length > 0  && !isMobile? "cmp-searchsuggestions__suggestion-withRefinement" : ""}`}
             key={index}
           >
-            <a className="cmp-searchsuggestions__link" href={getTypeAheadSearchUrl(suggestion.Keyword, index)}>
+            <a className={isMobile ? "cmp-searchsuggestions__link-mobile ": "cmp-searchsuggestions__link"} href={getTypeAheadSearchUrl(suggestion.Keyword, index)}>
               {suggestion.Keyword}
             </a>
-
-            <SearchRefinements 
-              originalKeyword={suggestion.Keyword} 
-              refinements={suggestion.Refinements}
-              itemIndex={index}
-              getTypeAheadSearchUrl={getTypeAheadSearchUrl}
-            />
+            {
+              !isMobile && (
+                <SearchRefinements
+                  originalKeyword={suggestion.Keyword} 
+                  refinements={suggestion.Refinements}
+                  itemIndex={index}
+                  getTypeAheadSearchUrl={getTypeAheadSearchUrl}
+                />
+              )
+            }
           </li>
         );
       })}
