@@ -7,6 +7,8 @@ import capitalizeFirstLetter, {
 import useFilteringSelected from "../hooks/useIsFilteringSelected";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { dateToString } from "../../../helpers/formatting";
+import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState( state => state.datePickerState);
@@ -15,6 +17,20 @@ function CustomDatePill({ clearDateFilters }) {
   const { computeClassName } = useComputeBranding(useRenewalGridState);
   if (!datePickerState) return null;
   const [startDate, endDate] = datePickerState;
+  const handleClearCustomDate = () => {
+    clearDateFilters();
+    const localFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+    const clearedCustomRange = {
+      ...localFilters,
+      dateSelected: null,
+      customEndDate: null,
+      customStartDate: null,
+      optionFields: {
+        ...localFilters, DueDateFrom: null, DueDateTo: null
+      }
+    }
+    setLocalStorageData(FILTER_LOCAL_STORAGE_KEY,clearedCustomRange);
+  }
 
   return customStartDate && customEndDate ? (
     <div className={computeClassName("filter-tags")}>
@@ -23,7 +39,7 @@ function CustomDatePill({ clearDateFilters }) {
         {"  -  "}
         {dateToString(endDate,"MMM d',' y")}{" "}
       </span>
-      <span onClick={() => clearDateFilters()}>
+      <span onClick={handleClearCustomDate}>
         <i className="fas fa-times filter-tags__close"></i>
       </span>
     </div>
