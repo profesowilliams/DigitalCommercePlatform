@@ -142,7 +142,7 @@
             }
 
              .header-active.cmp-container .extrabutton .cmp-button__text {
-                margin-left: 8px;
+                margin-left: 2px;
                 color: map-get($color-palette, 'white');
             }
             .header-active.cmp-container .extrabutton {
@@ -428,6 +428,7 @@
 
             .headerutility .signin span {
                 display: inline-block ;
+                padding-left: 8px;
             }
 
             &.cmp-container .cmp-td-hamburgerMenu:after,
