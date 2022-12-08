@@ -364,7 +364,6 @@ const SearchBar = ({ data, componentProp }) => {
         )}
         <div className="input-icon">
           <input
-            style={validateSearchTerm() ? {marginTop: '15px'} : {}}
             className={
               isChecked
                 ? 'cmp-searchbar__input cmp-searchbar__input--mobile'
