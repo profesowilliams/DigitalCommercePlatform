@@ -60,17 +60,16 @@
             }
         })        
 
-        /**
-         * @type {HTMLCollectionOf<Element>[]}
-         */
-         const closeElements = Array.prototype.slice.call(document.getElementsByClassName(CLASS_NOTIFICATION_CLOSE_BUTTON)); 
-         closeElements.forEach(c => {
-            const parent = c.parentNode;
-            const container = parent.parentNode;
-            container.addEventListener('click', () => {
-                container.remove()
-            }, false);
-        })
+            /**
+             * @type {HTMLCollectionOf<Element>[]}
+             */
+            const closeElements = Array.prototype.slice.call(document.getElementsByClassName(CLASS_NOTIFICATION_CLOSE_BUTTON)); 
+            closeElements.forEach(c => {
+                const parent = c.parentNode;
+                const container = parent.parentNode;
+                c.addEventListener('click', () => {
+                    container.remove()
+                }, false);
+            })
     });
 })();
-    
