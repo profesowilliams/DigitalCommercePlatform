@@ -330,6 +330,7 @@ export function clearLocalStorageGridData() {
 
 export function isFromRenewalDetailsPage() {
     const renewalsDetailsUrl = process.env.NODE_ENV === "development" ? 'td-renewals-details-react' : 'renewal-details.html';
+    if (process.env.NODE_ENV === "development") return true;
     return (document.referrer.split('?')[0])?.split('/')?.pop() === renewalsDetailsUrl;
 }
 

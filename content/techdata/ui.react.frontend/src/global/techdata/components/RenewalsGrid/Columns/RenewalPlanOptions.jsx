@@ -26,19 +26,22 @@ function RenewalPlanOptions({ labels, data, node }) {
     const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
     const calculateOptionsWithChecked = () => {     
         const localPlanOption = getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
-        const selectedPlanId = localPlanOption?.selectedPlanId;     
-        const calcSelectedPlan = o => o.id === selectedPlanId ? true : o.quoteCurrent;          
+        const localId = localPlanOption?.selectedPlanId;     
+        const calcSelectedPlan = option => {
+            const isPlanIdInsideRow = (id = '') => data.options.map(o => o.id).includes(id);
+            if (isPlanIdInsideRow(localId) && localId === option.id){
+                return true
+            } else {
+                return !isPlanIdInsideRow(localId) ? option.quoteCurrent : false;
+            }
+        };          
         return data?.options?.map(o => ({...o, checked: calcSelectedPlan(o) }));
     }
     const optionsSt = useState(calculateOptionsWithChecked);
 
     
-    const isPlanSelected = (option) => {
-        if (getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY) && "selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
-            return (option?.id === getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)["selectedPlanId"]);
-        } 
-        return option?.checked;
-    };
+    const isPlanSelected = (option) => option?.checked;         
+   
     const isCurrentPlan = plan => plan.quoteCurrent;
     const findAndReturnCurrentPlanId = (options) => {
         if ("selectedPlanId" in getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
