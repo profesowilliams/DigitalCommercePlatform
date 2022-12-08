@@ -163,7 +163,7 @@ public class SubNavLinks {
         while(itr.hasNext()){
             Page childPage = itr.next();
             hasChildPages = "true";
-            SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle, this.rootParentLink);
+            SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle+"-"+this.pageTitle, this.rootParentLink);
             subNavLinkslist.add(childNav);
         }
     }
@@ -249,6 +249,7 @@ public class SubNavLinks {
         return DataLayerBuilder.forComponent()
             .withId(() -> "megamenu-"+this.getMenuID())
             .withTitle(() -> this.getPageTitle())
+            .withParentId(() -> "megamenu-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
             .withLinkUrl(() -> this.getPagePath())
             .build();        
     }

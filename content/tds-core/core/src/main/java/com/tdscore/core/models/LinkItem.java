@@ -194,6 +194,7 @@ public class LinkItem {
         return DataLayerBuilder.forComponent()
             .withId(() -> "megamenu-"+this.getMobilePlatformLevel())
             .withTitle(() -> this.getMobilePlatformLevel())
+            .withParentId(() -> "megamenu")
             .withLinkUrl(() -> this.getLinkUrl())
             .build();
         
