@@ -16,9 +16,27 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         mask-size: cover;
         background-color: map-get($color-palette, 'black');
         padding: 0;
-        vertical-align: middle
+        vertical-align: middle;          
     }
-}  
+}
+
+.searchbar {
+    .cmp-searchbar__mobile-container--mobile {
+        .cmp-searchbar__button {
+            content: '';
+            -webkit-mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg') no-repeat;
+            mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg') no-repeat;
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'black');
+            padding: 0;
+            vertical-align: middle
+        }
+    }     
+}
 
 .theme {        
     &.dark {
