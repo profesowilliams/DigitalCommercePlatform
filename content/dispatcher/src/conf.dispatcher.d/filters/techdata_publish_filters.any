@@ -61,4 +61,5 @@
 # SAML filter for SSO
 /0224 { /type "allow" /method "POST" /url "*/saml_login" }
 # Block urls matching forms validator
-/0225 { /type "deny"  /path "*/content/dam/formsanddocuments*" }
+/0225 { /type "deny"  /url "*form.validator.html*" }
+
