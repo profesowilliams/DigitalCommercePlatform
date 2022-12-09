@@ -131,6 +131,7 @@
             @include toasterContent;    
             &__message{
                 font-family: "Arial";
+                color: $brand-charcoal;
                 p {
                     font-family: "Arial";
                     margin: 0;                
