@@ -314,6 +314,14 @@ use(['../common/utils.js'], function(utils) {
         if (!!orderingFromDashboard) {jsonObject['orderingFromDashboard'] = orderingFromDashboard};
     }
 
+    if (properties && properties["hideCopyHeaderOption"]) {
+        jsonObject["hideCopyHeaderOption"] = properties["hideCopyHeaderOption"];
+    }
+
+    if (properties && properties["hideExportOption"]) {
+        jsonObject["hideExportOption"] = properties["hideExportOption"];
+    }
+
     return {
         configJson: JSON.stringify(jsonObject)
     };

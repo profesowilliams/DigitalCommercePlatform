@@ -197,6 +197,10 @@ use(['../common/utils.js'], function(utils) {
         productGrid["showDownloadXLSButton"] = properties["showDownloadXLSButton"];
     }
 
+    if (properties && properties["showDownloadXLSButton"]) {
+        productGrid["showDownloadXLSButton"] = properties["showDownloadXLSButton"];
+    }
+
     if (properties && properties["showSeeDetailsButton"]) {
         productGrid["showSeeDetailsButton"] = properties["showSeeDetailsButton"];
     }
@@ -255,6 +259,14 @@ use(['../common/utils.js'], function(utils) {
     }
 
     if (!!icons) {jsonObject['icons'] = icons};
+
+    if (properties && properties["hideCopyHeaderOption"]) {
+        jsonObject["hideCopyHeaderOption"] = properties["hideCopyHeaderOption"];
+    }
+
+    if (properties && properties["hideExportOption"]) {
+        jsonObject["hideExportOption"] = properties["hideExportOption"];
+    }
 
     return {
         configJson: JSON.stringify(jsonObject)

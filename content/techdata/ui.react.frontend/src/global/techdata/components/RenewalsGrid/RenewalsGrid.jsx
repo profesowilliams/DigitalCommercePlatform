@@ -20,6 +20,7 @@ import {
   updateQueryString,
   handleFetchDataStrategy,
   formatRenewedDuration,
+  getContextMenuItems,
 } from "./renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
@@ -31,6 +32,7 @@ import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
 import Toaster from "../Widgets/Toaster";
 import TransactionNumber from "./Orders/TransactionNumber";
 import { removeDashboardSeparator } from "../../../../utils/utils";
+import { isObject } from "../../../../utils";
 
 function ToolTip({ toolTipData }) {
   return (
@@ -324,6 +326,8 @@ function RenewalsGrid(props) {
     closeAndCleanToaster();    
   }
 
+  const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
+
   return (
     <section ref={renewalsRef}>      
       <div className="cmp-renewals-subheader">
@@ -366,6 +370,7 @@ function RenewalsGrid(props) {
           omitCreatedQuery={true}
           customizedDetailedRender={RenewalDetailRenderers}
           suppressPaginationPanel={true}
+          contextMenuItems={contextMenuItems}
           noContextMenuItemsWhenColumnNull={true}
         />
       </div>

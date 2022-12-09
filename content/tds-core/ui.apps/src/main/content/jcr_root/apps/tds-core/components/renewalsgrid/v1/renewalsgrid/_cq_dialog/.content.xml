@@ -129,6 +129,30 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Of Text Label"
                                                 name="./ofTextLabel"/>
+                                            <hideCopyHeaderOption
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                name="./hideCopyHeaderOption"
+                                                text="Hide Copy Header Option"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <hideCopyHeaderOptionTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                name="./hideCopyHeaderOption@TypeHint"
+                                                value="Boolean"/>
+                                            <hideExportOption
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                name="./hideExportOption"
+                                                text="Hide Export Option"
+                                                uncheckedValue="false"
+                                                value="true"/>
+                                            <hideExportOptionTypeHint
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                                                name="./hideExportOption@TypeHint"
+                                                value="Boolean"/>
                                         </items>
                                     </column>
                                 </items>

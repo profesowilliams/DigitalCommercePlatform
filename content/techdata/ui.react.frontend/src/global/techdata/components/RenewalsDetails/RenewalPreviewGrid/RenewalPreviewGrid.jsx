@@ -18,7 +18,7 @@ import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
-import { setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import { getContextMenuItems, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { getDictionaryValue } from "../../../../../utils/utils";
 
@@ -293,6 +293,8 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     }
   }
 
+  const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
+
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
       <section>
@@ -302,6 +304,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           config={gridConfig}
           data={mutableGridData}
           getDefaultCopyValue={getDefaultCopyValue}
+          contextMenuItems={contextMenuItems}
         />
         <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
         <div className="place-cmp-order-dialog-container">

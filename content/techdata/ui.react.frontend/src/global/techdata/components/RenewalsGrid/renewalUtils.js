@@ -9,6 +9,7 @@ import {
 } from "../../../../utils/constants";
 import { sortRenewalObjects } from "../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
+import { isObject } from "../../../../utils";
 
 export  const secondLevelOptions = {
     colId: 'total',
@@ -400,3 +401,58 @@ export const checkIfAnyDateRangeIsCleared = ({dateOptionsList,filterList,customS
     }
     return false;
 }
+
+export const getContextMenuItems = (params, config ) => [
+    {
+        name: config?.menuCopy,
+        shortcut: "Ctrl+C",
+        action: () => {
+          switch (true) {
+            case !params.value && typeof getDefaultCopyValue === 'function':
+              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
+              break;
+            case isObject(params.value):
+              navigator.clipboard.writeText(stringifyValue(params.value?.name));
+              break;
+            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
+              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
+              break;
+            default:
+              navigator.clipboard.writeText(stringifyValue(params.value));
+              break;
+          }
+        },
+        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+      },
+      ...(!config?.hideCopyHeaderOption ? [{
+        name: config?.menuCopyWithHeaders,
+        action: function () {
+          navigator.clipboard.writeText(
+            `${params.column.colDef.headerName}\n${stringifyValue(params.value) || ""
+            }`
+          );
+        },
+        icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
+      }] : []),
+      ...(!config?.hideExportOption ? ["separator", {
+        name: config?.menuExport,
+        subMenu: [
+          {
+            name: config?.menuCsvExport,
+            action: function () {
+              gridApi.current.exportDataAsCsv();
+            },
+            icon: '<span class="ag-icon ag-icon-csv" unselectable="on" role="presentation"></span>',
+          },
+          {
+            name: config?.menuExcelExport,
+            action: function () {
+              gridApi.current.exportDataAsExcel();
+            },
+            icon: '<span class="ag-icon ag-icon-excel" unselectable="on" role="presentation"></span>',
+          },
+        ],
+        icon: '<span class="ag-icon ag-icon-save" unselectable="on" role="presentation"></span>',
+      }] : [])
+
+]
