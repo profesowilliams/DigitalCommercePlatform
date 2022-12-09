@@ -48,7 +48,7 @@
                             <iconUrl
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                fieldDescription="Icon from DAM for displaying in the button"
+                                fieldDescription="Icon from DAM for displaying in the notification"
                                 fieldLabel="Icon from DAM"
                                 name="./iconUrl"
                                 rootPath="/content/dam"/>
