@@ -20,7 +20,7 @@
           </a>
 
               <ul data-sly-list.slnk="${nav.secondaryMenuItems}">
-                <!--<span class="cmp-sub-menu-heading">${nav.platformName}</span>-->
+                <span class="cmp-sub-menu-heading">${nav.platformName}</span>
                 <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}" 
                     data-cmp-data-layer="${slnk.data.json}"
                     class="cmp-has-submenu" 
@@ -29,7 +29,7 @@
                   <!-- Level 3 -->
 
                     <ul class="" data-sly-list.sec="${slnk.subNavLinkslist}">
-                      <!--<span class="cmp-sub-menu-heading">${slnk.pageTitle}</span>-->
+                      <span class="cmp-sub-menu-heading">${slnk.pageTitle}</span>
                       <li class="cmp-has-submenu" 
                         data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}"
                         data-view-all="${sec.isViewAll}"
@@ -37,7 +37,7 @@
 
                         <!-- Level 4 -->
                           <ul class="" data-sly-list.subSec="${sec.subNavLinkslist}">
-                            <!--<span class="cmp-sub-menu-heading">${sec.pageTitle}</span>-->
+                            <span class="cmp-sub-menu-heading">${sec.pageTitle}</span>
                             <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
                                 data-cmp-data-layer="${subsec.data.json}">
                               <a href="${urlHelper.url  @ context='html'}" title="${subSec.pageTitle}"
