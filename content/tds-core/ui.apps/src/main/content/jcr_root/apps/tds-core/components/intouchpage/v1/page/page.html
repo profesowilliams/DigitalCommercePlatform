@@ -22,7 +22,6 @@
       data-sly-use.redirect="redirect.html">
 <head data-sly-call="${head.head @ page = page, pwa = pwa}"></head>
 <body class="${page.cssClassNames}"
-
       id="${page.id}"
       style="${(props.privatePage) ? 'transform: scale(0);' : '' @ context='styleString'}"
       data-authormode="${wcmmode.edit || wcmmode.preview}"
@@ -34,6 +33,16 @@
       data-intouch-header-api-url="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Header"
       data-intouch-footer-api-url="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Footer"
       data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}">
+        <script data-sly-test.dataLayerEnabled="${page.data}">
+          window.adobeDataLayer = window.adobeDataLayer || [];
+          adobeDataLayer.push({
+              page: JSON.parse("${page.data.json @ context='scriptString'}"),
+              event:'cmp:show',
+              eventInfo: {
+                  path: 'page.${page.id @ context="scriptString"}'
+              }
+          });
+        </script>
 <div id="top"></div>
 
     <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
