@@ -340,6 +340,11 @@ const SearchBar = ({ data, componentProp }) => {
   const clearInputSearch = () => {
     setSearchTermText('');
   };
+
+  const handlerOpenKeyboard = () => {
+    navigator.virtualKeyboard.show();
+  }
+
   const renderSearch = () => {
     return (
       <>
@@ -475,7 +480,7 @@ const SearchBar = ({ data, componentProp }) => {
   
   const RenderMobileView = (
     <div className={isChecked && "cmp-searchbar__mobile-container--mobile"}>
-      <div className="cmp-searchbar__container">{renderSearch()}</div>
+      <div onClick={handlerOpenKeyboard} className="cmp-searchbar__container">{renderSearch()}</div>
       {renderContextMenu()}
     </div>
   );
