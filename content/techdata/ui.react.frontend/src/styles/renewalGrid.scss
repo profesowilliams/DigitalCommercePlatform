@@ -61,6 +61,9 @@
       span{
         color: $brand-text-gray;
       }
+      &:disabled {
+        cursor: default;
+      }
     }
     span.vertical-separator{
       background: #cbc9c9;

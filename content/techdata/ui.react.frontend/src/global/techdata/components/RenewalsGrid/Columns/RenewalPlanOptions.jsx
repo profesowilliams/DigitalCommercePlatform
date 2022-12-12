@@ -292,7 +292,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                                                         </span>
                                                     ) : (
                                                         <>
-                                                            <button>
+                                                            <button disabled>
                                                                 <CartIcon
                                                                     fill="#c6c6c6"
                                                                     style={{ pointerEvents: 'none' }}
