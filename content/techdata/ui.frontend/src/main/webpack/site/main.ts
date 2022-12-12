@@ -19,6 +19,7 @@ import "../../../../../../tds-core/ui.frontend/src/components/languagenavigation
 import "../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer";
 import "../../../../../../tds-core/ui.frontend/src/components/popup/popup";
 import "../../../components/securitycode/securitycode";
+import "../../../components/notification/notification";
 import "../global/td-components/button/buttons";
 import {Initializer} from "../global/initializer";
 new Initializer();

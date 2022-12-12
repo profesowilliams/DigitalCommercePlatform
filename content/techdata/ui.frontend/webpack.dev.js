@@ -1215,6 +1215,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "notification",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/notification.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "verification-code-popup",
                 template: path.resolve(
                     __dirname,

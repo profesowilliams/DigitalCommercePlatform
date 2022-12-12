@@ -1228,7 +1228,6 @@ module.exports = (env) => {
                 filename: "notification",
                 template: path.resolve(
                     __dirname,
-                    // SOURCE_ROOT + "/static/partials/notification/notification.html"
                     SOURCE_ROOT + "/static/notification.html"
                 ),
             }),
