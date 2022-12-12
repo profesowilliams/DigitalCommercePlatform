@@ -143,9 +143,9 @@ public class FormServlet extends SlingAllMethodsServlet {
                 }
         }
 
-        private ResourceResolver getResourceResolver() throws LoginException{
+        private ResourceResolver getResourceResolver() throws LoginException {
             final Map<String, Object> param = new HashMap<>();
-            param.put(ResourceResolverFactory.USER, SERVICE_USER);
+            param.put(ResourceResolverFactory.SUBSERVICE, SERVICE_USER);
             return resourceResolverFactory.getServiceResourceResolver(param);
         }
 
