@@ -21,8 +21,7 @@ import com.google.gson.JsonArray;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Model(adaptables = {SlingHttpServletRequest.class, Resource.class},
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
@@ -40,12 +39,16 @@ public class MegaMenu {
     @Inject
     private ResourceResolver resolver;
 
+    private String menuID;
+
     @PostConstruct
     protected void initModel() {
         if (menuList != null) {
+            this.menuID = "megamenu-"+this.getRandomID();
             for (Resource item : menuList.getChildren()) {
                 log.debug("item is {}", item.getPath());
                 LinkItem link =  item.adaptTo(LinkItem.class);
+                link.setParentID(this.menuID);
 
                 if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
@@ -61,7 +64,8 @@ public class MegaMenu {
                             new JsonArray(), 
                             link.getLinkUrl(), 
                             "0",
-                            "true")
+                            "true",
+                            this.menuID)
                         );
                     }
                 }
@@ -71,6 +75,13 @@ public class MegaMenu {
         }
     }
 
+    public String getRandomID() {
+        return UUID.randomUUID().toString().split("-",0)[0];
+    }
+
+    public String getID() {
+        return this.menuID;
+    }
     public String getMessage(){
         return "hello from model" + menuLinkList.size();
     }
@@ -83,7 +94,7 @@ public class MegaMenu {
     public ComponentData getData() {
       
         return DataLayerBuilder.forComponent()
-            .withId(() -> "megamenu")
+            .withId(() -> this.getID())
             .build();
         
     }

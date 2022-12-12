@@ -53,6 +53,8 @@ public class SubNavLinks {
 
     private String isViewAll = "false";
 
+    private String parentID;
+
     SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink){
         this.navPage = page;
         this.pageTitle = page.getTitle();
@@ -168,12 +170,13 @@ public class SubNavLinks {
         }
     }
 
-    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount, String isViewAll ){
+    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount, String isViewAll, String parentId){
         this.pageTitle = name;
         this.pagePath = pageUrl;
         this.rootParentTitle = rootParentTitle;
         this.docCount = docCount;
         this.isViewAll = isViewAll;
+        this.parentID = parentId;
         childJsonIterator(children, externalUrl);
     }
 
@@ -182,6 +185,7 @@ public class SubNavLinks {
         this.pagePath = pageUrl;
         this.rootParentTitle = rootParentTitle;
         this.docCount = docCount;
+
         childJsonIterator(children, externalUrl);
 
     }
@@ -245,11 +249,19 @@ public class SubNavLinks {
         return this.rootParentLink;
     }
 
+    public String getParentID() {
+        return this.parentID;
+    }
+
+    public void setParentID(String parentId) {
+        this.parentID = parentId;
+    }
+
     public ComponentData getData() {
         return DataLayerBuilder.forComponent()
-            .withId(() -> "megamenu-"+this.getMenuID())
+            .withId(() -> this.getParentID()+"-"+this.getMenuID())
             .withTitle(() -> this.getPageTitle())
-            .withParentId(() -> "megamenu-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
+            .withParentId(() -> this.getParentID()+"-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
             .withLinkUrl(() -> this.getPagePath())
             .build();        
     }

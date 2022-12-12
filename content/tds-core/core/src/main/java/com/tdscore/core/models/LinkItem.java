@@ -88,6 +88,8 @@ public class LinkItem {
 
     private List<SubNavLinks> tertiarySubNavLinks = new ArrayList<>();
 
+    private String parentID;
+
     @PostConstruct
     protected void init(){
         if(resolver != null && navigationCatalogRoot != null){
@@ -128,7 +130,8 @@ public class LinkItem {
                                 new JsonArray(), 
                                 link.getPagePath(), 
                                 "0",
-                                "true")
+                                "true",
+                                this.parentID)
                             );
                         }
                     }
@@ -189,12 +192,36 @@ public class LinkItem {
         this.subLinks.add(link);
     }
 
+    public void setParentID(String parentId) {
+        this.parentID = parentId;
+        updateSublinkParent();
+    }
+
+    public String getParentID() {
+        return this.parentID;
+    }   
+
+    private void updateSublinkParent() {
+        for(SubNavLinks link : this.subLinks) {
+            link.setParentID(this.getParentID());
+            for(SubNavLinks subLevel1 : link.getSubNavLinkslist()) {
+                subLevel1.setParentID(this.getParentID());
+                for(SubNavLinks subLevel2 : subLevel1.getSubNavLinkslist()) {
+                    subLevel2.setParentID(this.getParentID());
+                    for(SubNavLinks subLevel3 : subLevel2.getSubNavLinkslist()) {
+                        subLevel3.setParentID(this.getParentID());
+                    }
+                }
+            }
+        }
+    }
+
     public ComponentData getData() {
       
         return DataLayerBuilder.forComponent()
-            .withId(() -> "megamenu-"+this.getMobilePlatformLevel())
+            .withId(() -> this.getParentID()+"-"+this.getPlatformMenuID())
             .withTitle(() -> this.getMobilePlatformLevel())
-            .withParentId(() -> "megamenu")
+            .withParentId(() -> this.getParentID())
             .withLinkUrl(() -> this.getLinkUrl())
             .build();
         
