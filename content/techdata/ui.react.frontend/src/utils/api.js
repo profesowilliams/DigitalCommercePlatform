@@ -15,7 +15,7 @@ export const USaxios = axios.create({
       'Site': headerInfo.site,
       'Accept-Language': headerInfo.acceptLanguage,
       'Consumer': consumer,
-      'SessionId': sessionId,
+      'SessionId': sessionId ?? '',
       'Content-Type': 'application/json',
     }
   }
@@ -37,7 +37,7 @@ if(isHttpOnlyEnabled()) {
   axios.defaults.withCredentials = true;
   USaxios.defaults.withCredentials = true;
 } else {
-  axios.defaults.headers.common['SessionId'] = sessionId;
+  axios.defaults.headers.common['SessionId'] = sessionId ?? '';
 }
 
 export const { get: usGet, post: usPost, put: usPut } = USaxios;

@@ -83,12 +83,6 @@ app.post("/auth", function (req, res) {
   res.type("application/json");
 
   if (checkCreds(userid, password)) {
-    if (isHttpOnlyEnabled) {
-      res.cookie(SESSION_COOKIE, "secret-session-id", {
-        expires: new Date(Date.now() + 9999999),
-        httpOnly: true,
-      });
-    }
     const queryStringAppend = redirect.indexOf("?") >= 0 ? "&" : "?";
     res.redirect(redirect + queryStringAppend + "code=" + codeValue);
   } else {
@@ -126,6 +120,13 @@ app.post("/login", function (req, res) {
   let code = req.body.code;
   let redirectUrl = req.body.RedirectUri;
   let applicationName = req.body.applicationName;
+  
+  if (isHttpOnlyEnabled) {
+    res.cookie(SESSION_COOKIE, "secret-session-id", {
+      expires: new Date(Date.now() + 9999999),
+      httpOnly: true,
+    });
+  }
 
   let resJsonSuccess = {
     content: {
