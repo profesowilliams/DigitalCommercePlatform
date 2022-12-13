@@ -100,8 +100,12 @@ function RenewalPlanOptions({ labels, data, node }) {
             selected: getDictionaryValue("grids.renewal.label.selectedPlan", "Selected Plan"),
             current:  getDictionaryValue("grids.renewal.label.currentPlan", "Current Plan")
         };
-        return option.quoteCurrent ? planLabels.current : (option?.checked ? planLabels.selected : '');
+        if (isPlanSelected(option)) {
+            return option.quoteCurrent ? planLabels.current : planLabels.selected;
+        }
+        return '';
     }
+    
     const computeMarketingCssStyle = () => {
         return "card-right-border";
     }
