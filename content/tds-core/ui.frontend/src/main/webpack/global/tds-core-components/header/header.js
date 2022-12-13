@@ -6,6 +6,8 @@ export default class Header {
         this.headerEl = document.querySelector('#cmp-techdata-header');
         this.searchEl = document.querySelector('#cmp-techdata-header .search');
         this.HEADER_MOBILE = 'cmp-experiencefragment--header-mobile';
+        this.stickyHeaderEle = document.querySelector('.subheader');
+        this.subHeaderTop = this.stickyHeaderEle.getBoundingClientRect().top;
         
         this.headerResize();
         this.headerStickyStyle();
@@ -78,6 +80,8 @@ export default class Header {
         } else {
             this.headerEl?.classList.remove(this.HEADER_MOBILE);
         }
+
+        this.subHeaderTop = this.stickyHeaderEle.getBoundingClientRect().top;
 
         if(this.header && this.subheaderNav && this.container){
             this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
@@ -166,8 +170,9 @@ export default class Header {
     }
 
     checkHeaderSubheader(){
+        this.subHeaderTop = this.stickyHeaderEle.getBoundingClientRect().top;
         if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
-            if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight) - this.subheaderNav.clientHeight){
+            if ((window.scrollY + this.header.clientHeight) < (this.subHeaderTop + window.scrollY)) {
                 if(this.subheaderNav.id === this.componentToStick.id){
                     this.componentToStick.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
                 }
