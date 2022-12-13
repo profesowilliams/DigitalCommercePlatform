@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    searchDealsPlaceholder="Search End User or Leave Blank"
+    searchingDealsLabel="Searching Deals"
+    noDealsFoundLabel="No Deal(s) Found"
+    dealsFoundLabel="Deal(s) Found"
+    bidLabel="Bid:"
+    versionLabel="Version:"
+    referenceMaxCharacterError="Maximum amount of characters exceeded"
+    spaIdLabel="Deal ID:"
+    endUserNameLabel="End User:"
+    errorGettingDealsLabel="There was an error trying to get the Deals, please try again."
+    dealsPricingNote="Note: The pricing updates will be reflected when you create a TD quote."
+    menuCopy="Copy"
+    menuCopyWithHeaders="Copy with headers"
+    menuExport="Export"
+    menuCsvExport="CSV Export"
+    menuExcelExport="Excel Eport"
+    menuOpenLink="Open link in new tab"
+    menuCopyLink="Copy link"
+    error404Message="Deal / Estimate not found."
+    error428Message="Not connected to the vendor. Please connect and try again."
+    errorGenericMessage="An unexpected error occurred."
+    errorLoadingPageRedirect="/configuration-grid"
+    errorLoadingPageTitle="Quote Preview"
+>
+
+    <columnList jcr:primaryType="nt:unstructured">
+        <item0
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Select All"
+            columnKey="id"
+            sortable="{Boolean}false"
+        />
+        <item1
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Type"
+            columnKey="configurationType"
+            sortable="{Boolean}false"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Vendor"
+            columnKey="vendor"
+            sortable="{Boolean}false"
+        />
+        <item3
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Created"
+            columnKey="created"
+            sortable="{Boolean}false"
+        />
+        <item4
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Expires"
+            columnKey="expires"
+            sortable="{Boolean}false"
+        />
+        <item5
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Config Name"
+            columnKey="configName"
+            sortable="{Boolean}true"
+        />
+        <item6
+            jcr:primaryType="nt:unstructured"
+            columnLabel="End User Name"
+            columnKey="endUserName"
+            sortable="{Boolean}false"
+        />
+        <item7
+            jcr:primaryType="nt:unstructured"
+            columnLabel="TD Quote Id"
+            columnKey="quotes"
+            sortable="{Boolean}false"
+        />
+        <item8
+            jcr:primaryType="nt:unstructured"
+            columnLabel="Action"
+            columnKey="action"
+            sortable="{Boolean}false"
+        />
+    </columnList>
+</jcr:root>

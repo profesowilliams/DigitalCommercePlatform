@@ -184,7 +184,7 @@
                                                             <lists
                                                                 jcr:primaryType="nt:unstructured"
                                                                 features="*"/>
-                                                            <misctools jcr:primaryType="nt:unstructured">
+                                                            <misctools jcr:primaryType="nt:unstructured" features="*">
                                                                 <specialCharsConfig jcr:primaryType="nt:unstructured">
                                                                     <chars jcr:primaryType="nt:unstructured">
                                                                         <default_copyright
@@ -206,6 +206,11 @@
                                                                     </chars>
                                                                 </specialCharsConfig>
                                                             </misctools>
+                                                            <styles
+                                                                jcr:primaryType="nt:unstructured"
+                                                                features="*">
+                                                                <styles jcr:primaryType="cq:WidgetCollection"/>
+                                                            </styles>
                                                             <paraformat
                                                                 jcr:primaryType="nt:unstructured"
                                                                 features="*">
@@ -264,7 +269,7 @@
                                                             <cui jcr:primaryType="nt:unstructured">
                                                                 <inline
                                                                     jcr:primaryType="nt:unstructured"
-                                                                    toolbar="[format#bold,format#italic,format#underline,#justify,#lists,links#modifylink,links#unlink,#paraformat]">
+                                                                    toolbar="[format#bold,format#italic,format#underline,#justify,#lists,links#modifylink,links#unlink,#paraformat,misctools#sourceedit]">
                                                                     <popovers jcr:primaryType="nt:unstructured">
                                                                         <justify
                                                                             jcr:primaryType="nt:unstructured"
