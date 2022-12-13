@@ -551,8 +551,8 @@ span.ag-group-value {
   }
 }
 
-.cmp-renewals-grid {
-  .card-right-border {
+.cmp-renewals-grid {  
+  :is(.card-right-border,.card-no-border,.card-bottom-border) {
     .footer {
       button {
         @include cart-icon;
