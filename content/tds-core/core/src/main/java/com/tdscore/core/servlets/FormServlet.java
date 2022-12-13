@@ -57,7 +57,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private static final String SERVICE_USER = "caconfig-service-user";
         
         @Reference
-        private ResourceResolverFactory resourceResolverFactory;
+        private transient ResourceResolverFactory resourceResolverFactory;
 
         @Reference
         private transient EmailService emailService;
@@ -75,9 +75,8 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
-            try {
+            try (ResourceResolver resourceResolver = getResourceResolver()) {
                 PrintWriter out = response.getWriter();
-                ResourceResolver resourceResolver = getResourceResolver();//request.getResourceResolver();
                 Resource resource = resourceResolver.getResource(Constants.TECHDATA_CONTENT_PAGE_ROOT);
                 Page page = resource.adaptTo(Page.class);
                 ServiceEndPointsConfiguration serviceEndPointsConfiguration =
@@ -93,11 +92,9 @@ public class FormServlet extends SlingAllMethodsServlet {
         @Override
         protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws IOException {
                 Map<String, String> emailParams = new HashMap<>();
-                ResourceResolver resourceResolver;//= request.getResourceResolver();
                 Map<String, DataSource> attachments = new HashMap<>();
-                try
+                try(ResourceResolver resourceResolver = getResourceResolver())
                 {
-                    resourceResolver = getResourceResolver();//request.getResourceResolver();
 
                     final boolean isMultipart = org.apache.commons.fileupload.servlet.ServletFileUpload.isMultipartContent(request);
 
@@ -120,7 +117,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                             thresholdFileSize = formConfigurations.fileThresholdInMB();
                             allowedFileExtensions = Arrays.asList(formConfigurations.allowedFileExtensions());
                             allowedFileContentTypes = Arrays.asList(formConfigurations.allowedFileContentTypes());
-                            handleRequiredAttachments(request, emailParams, attachments);
+                            handleRequiredAttachments(emailParams, attachments);
                             blacklistCharsRegexExpr = formConfigurations.textFieldRegexString();
                             if (isValidFileInEmailRequest(request)) {
                                 sendEmailWithFormData(toEmailAddresses, emailParams, submitterEmailFieldName,
@@ -229,10 +226,8 @@ public class FormServlet extends SlingAllMethodsServlet {
         }
 
         private String[] addEmailToRecipients(String[] recipientList, String emailAddress) {
-            String updatedEmailList[] = new String[recipientList.length + 1];
-            for (int index = 0; index < recipientList.length; index++) {
-                updatedEmailList[index] = recipientList[index];
-            }
+            String[] updatedEmailList = new String[recipientList.length + 1];
+            System.arraycopy(recipientList, 0, updatedEmailList, 0, recipientList.length);
             updatedEmailList[updatedEmailList.length-1] = emailAddress;
             return updatedEmailList;
         }
@@ -269,8 +264,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                 return input;
         }
 
-        private void handleRequiredAttachments(SlingHttpServletRequest request, Map<String, String> emailParams, 
-                Map<String, DataSource> attachments) throws LoginException, CustomFormException {
+        private void handleRequiredAttachments(Map<String, String> emailParams, Map<String, DataSource> attachments) throws LoginException, CustomFormException {
             String groupKey = emailParams.get(Constants.FORM_GROUP_KEY_FIELD);
 
             if (groupKey != null)
@@ -281,20 +275,17 @@ public class FormServlet extends SlingAllMethodsServlet {
                     if (attachmentPaths != null)
                     {
                         for(String path : attachmentPaths) {
-                            InputStream file = getEmailAttachmentAsset(request, path);
+                            InputStream file = getEmailAttachmentAsset(path);
                             if (file != null) {
-                                attachments.put(getFileName(path), new ByteArrayDataSource(file, "application/pdf")); // TODO: Get this MIME type dynamically somehow
+                                attachments.put(getFileName(path), new ByteArrayDataSource(file, "application/pdf"));
                             }
                         }
-                    }else{
-                            return;
                     }
                 } catch (IOException e) {
                     throw new CustomFormException("Failed when processing the required attachments for " + groupKey);
                 }
             }else{
                     LOG.error("Group Key Not found");
-                    return;
             }
         }
 
@@ -316,9 +307,9 @@ public class FormServlet extends SlingAllMethodsServlet {
         private void handleAttachmentsInEmail(FormConfigurations formConfigurations,Map<String, String> emailParams){
                 for (int i=1;i<=formConfigurations.filesCount();i++){
                         if (emailParams.get("file")==null){
-                               emailParams.put("file","");
-                        } else if (emailParams.get("file"+i)==null){
-                                emailParams.put("file"+i,"");
+                               emailParams.put("file",StringUtils.EMPTY);
+                        } else {
+                            emailParams.putIfAbsent("file" + i, StringUtils.EMPTY);
                         }
                 }
         }
@@ -398,15 +389,17 @@ public class FormServlet extends SlingAllMethodsServlet {
 
         }
 
-        private InputStream getEmailAttachmentAsset(SlingHttpServletRequest request, String path) throws LoginException {
-            Resource resource = getResourceResolver().getResource(path);//request.getResourceResolver().getResource(path);
-            ExtractBinaryAsset binaryAsset = resource != null ? resource.adaptTo(ExtractBinaryAsset.class) : null;
-            return binaryAsset != null ? binaryAsset.getBinary() : null;
+        private InputStream getEmailAttachmentAsset(String path) throws LoginException {
+            try (ResourceResolver resourceResolver = getResourceResolver()) {
+                Resource resource = resourceResolver.getResource(path);
+                ExtractBinaryAsset binaryAsset = resource != null ? resource.adaptTo(ExtractBinaryAsset.class) : null;
+                return binaryAsset != null ? binaryAsset.getBinary() : null;
+            }
         }
 
         private String getFileName(String path) {
             String[] segments = path.split("/");
             
-            return segments != null ? segments[segments.length-1] : StringUtils.EMPTY;            
+            return segments[segments.length-1];
         }
 }
