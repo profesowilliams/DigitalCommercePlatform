@@ -116,6 +116,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Consumer Http Request Header", description = "Consumer Http Request Header")
     String consumerRequestHeader();
 
+    @Property(label = "Environment Http Request Header", description = "Environment Http Request Header")
+    String environmentRequestHeader();
+
     @Property(label = "Order Detail Endpoint", description = "Order Detail Endpoint")
     String orderDetailEndpoint();
 

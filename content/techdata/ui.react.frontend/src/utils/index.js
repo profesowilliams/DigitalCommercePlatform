@@ -143,3 +143,17 @@ export function getConsumerRequestHeader() {
   }
   return 'AEM';
 }
+
+export function isEnvironmentEnabled() {
+  return document.body.hasAttribute('data-environment-header-enabled');
+}
+
+export function getEnvironmentHeader() {
+  if (
+    document.body.hasAttribute('data-environment-request-header') &&
+    document.body.getAttribute('data-environment-request-header').length > 0
+  ) {
+    return document.body.getAttribute('data-environment-request-header');
+  }
+  return '';
+}
