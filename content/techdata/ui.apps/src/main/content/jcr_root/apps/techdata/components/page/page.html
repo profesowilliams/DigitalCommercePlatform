@@ -38,11 +38,9 @@
 <div id="top"></div>
 
 <sly data-sly-use.configData="com.techdata.core.models.CaConfigReader">
-    <sly data-sly-test="${configData.enableGoogleTagManager}">
-        <!-- Google Tag Manager in Body -->
-        ${configData.gtmBodyJSScript @ context='scriptComment'}
-        <!-- End Google Tag Manager in Body -->
-    </sly>
+    <!-- Google Tag Manager in Body -->
+    ${configData.gtmBodyJSScript @ context='scriptComment'}
+    <!-- End Google Tag Manager in Body -->
 </sly>
 <script data-sly-test.dataLayerEnabled="${page.data}">
           window.adobeDataLayer = window.adobeDataLayer || [];

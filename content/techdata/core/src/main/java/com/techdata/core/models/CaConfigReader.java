@@ -212,10 +212,6 @@ public class CaConfigReader {
 
     private String renewalGetStatusEndpoint;
 
-    private boolean enableGoogleTagManager;
-
-    private String gtmHeadJSScript;
-
     private String gtmBodyJSScript;
 
     @PostConstruct
@@ -282,8 +278,6 @@ public class CaConfigReader {
         checkoutRedirectUrl = mcConfiguration.checkoutRedirectUrl();
         tdPartSmart = mcConfiguration.tdPartSmart();
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
-        enableGoogleTagManager = analyticsConfiguration.enableGoogleTagManager();
-        gtmHeadJSScript = analyticsConfiguration.gtmHeadJSScript();
         gtmBodyJSScript = analyticsConfiguration.gtmBodyJSScript();
 
         buildSearchConfigurations();
@@ -701,14 +695,6 @@ public class CaConfigReader {
     public String getRenewalGetStatusEndpoint(){
         return renewalGetStatusEndpoint;
     };
-
-    public boolean isEnableGoogleTagManager() {
-        return enableGoogleTagManager;
-    }
-
-    public String getGtmHeadJSScript() {
-        return gtmHeadJSScript;
-    }
 
     public String getGtmBodyJSScript() {
         return gtmBodyJSScript;

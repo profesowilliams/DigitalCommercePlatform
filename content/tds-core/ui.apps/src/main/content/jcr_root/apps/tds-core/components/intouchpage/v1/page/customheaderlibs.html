@@ -69,11 +69,7 @@
 		<sly data-sly-test="${configData.analyticsSnippet}">
 			<script src="${configData.analyticsSnippet @ context='unsafe'}" async></script>
 		</sly>
-		<sly data-sly-test="${configData.enableGoogleTagManager}">
-			<!-- Google Tag Manager in Head -->
-			${configData.gtmHeadJSScript @ context='scriptComment'}
-			<!-- End Google Tag Manager in Head -->
-		</sly>
+
 
 		<sly data-sly-test="${configData.intouchCSSScriptsData}">
 			<!-- Intouch CSS scripts in Head -->
