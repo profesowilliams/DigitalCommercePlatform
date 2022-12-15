@@ -1229,6 +1229,13 @@ module.exports = (env) => {
                         "/static/partials/modal/verification-code-popup.html"
                 ),
             }),
+            new HtmlWebpackPlugin({
+                filename: 'dpb-hero',
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + '/static/dpb-hero.html'
+                ),
+            }),
         ],
         devServer: {
             inline: true,
