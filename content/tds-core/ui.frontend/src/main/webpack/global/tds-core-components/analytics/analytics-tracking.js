@@ -284,79 +284,11 @@
         });
     }
 
-    function validateDataObject(dataObject) {
-        if (dataObject != null) {
-            for (var property in filter) {   
-                if (!dataObject.hasOwnProperty(property) || (filter[property] !== null && filter[property] !== dataObject[property])) {
-                    return;
-                }
-                return dataObject;
-            }
-        }
-    }
-
-    function getDataObjectHelper(event, filter) {
-        if (event.hasOwnProperty("eventInfo") && event.eventInfo.hasOwnProperty("path")) {
-            const dataObject = window.adobeDataLayer.getState(event.eventInfo.path);
-            validateDataObject(dataObject);
-        }
-        return;
-    }
-
-    function pageShownHandler(event) {
-        var dataObject = getDataObjectHelper(event, {
-        "@type": "tds-site/components/page",
-        });
-  
-        if (dataObject != null) {
-        window.dataLayer.push({
-            page: {
-            pageInfo: {
-                pageName: "us:en:home",
-                url: "www.techdata.com/us/en.html",
-                server: "www.techdata.com",
-                country: "us",
-                language: "en",
-                currencyCode: "USD",
-            },
-    
-            category: {
-                pageType: "home",
-                sitesection1: "home",
-                sitesection2: "",
-                sitesection3: "us",
-                sitesection4: "en",
-            },
-    
-            errorDetails: {
-                errorCode: "",
-                errorName: "",
-                error404: "",
-            },
-                visitor: {
-                ecID: "",
-                sapID: "",
-                loginStatus: "",
-            },
-            },
-        });
-        }
-    }
-
-    function initAdobeDataLayer () {
-        window.adobeDataLayer = window.adobeDataLayer || [];
-        window.adobeDataLayer.push(function (dl) {
-            dl.addEventListener("cmp:show", pageShownHandler);
-        });
-    }
-
     if (document.readyState !== "loading") {
         clickEventHandler();
-        initAdobeDataLayer();
     } else {
         document.addEventListener("DOMContentLoaded", () =>{
-            clickEventHandler();   
-            initAdobeDataLayer();
+            clickEventHandler();
         });
     }        
 })();
