@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { getHeaderInfoFromUrl, getConsumerRequestHeader, isEnvironmentEnabled, getEnvironmentHeader } from '../utils';
 
+const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
+
 const sessionId = localStorage.getItem('sessionId');
 const userData = JSON.parse(localStorage.getItem('userData') || '{ "id": "NoAuth" }');
 const traceId = `${userData.id}_${new Date().toISOString()}`;
@@ -8,17 +10,23 @@ const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 const consumer = getConsumerRequestHeader();
 const envHeader = getEnvironmentHeader();
 
-export const USaxios = axios.create({
-  headers:{
-    common: { 
-      'TraceId': traceId,
-      'Site': headerInfo.site,
-      'Accept-Language': headerInfo.acceptLanguage,
-      'Consumer': consumer,
-      'SessionId': sessionId ?? '',
-      'Content-Type': 'application/json',
-    }
+
+const headers = {
+  common: { 
+    'TraceId': traceId,
+    'Site': headerInfo.site,
+    'Accept-Language': headerInfo.acceptLanguage,
+    'Consumer': consumer,
+    'Content-Type': 'application/json',
   }
+}
+
+if(!isHttpOnlyEnabled() && sessionId) {
+  headers.common['SessionId'] = sessionId ?? '';
+}
+
+export const USaxios = axios.create({
+  headers
 });
 
 axios.defaults.headers.common['TraceId'] = traceId;
@@ -32,7 +40,6 @@ if (isEnvironmentEnabled()) {
   USaxios.defaults.headers.common['Environment'] = envHeader;
 }
 
-const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
 if(isHttpOnlyEnabled()) {
   axios.defaults.withCredentials = true;
   USaxios.defaults.withCredentials = true;

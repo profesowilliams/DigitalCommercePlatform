@@ -231,8 +231,10 @@ const SignIn = (props) => {
     if(isExtraReloadDisabled()){
       let sessionId = localStorage.getItem("sessionId");
 
-      axios.defaults.headers.common['SessionId'] = sessionId;
-      USaxios.defaults.headers.common['SessionId'] = sessionId;
+      if(sessionId) {
+        axios.defaults.headers.common['SessionId'] = sessionId;
+        USaxios.defaults.headers.common['SessionId'] = sessionId;
+      }
 
       if(sessionId && localStorage.getItem("userData")){
         handleLoginResponse();
