@@ -118,8 +118,7 @@ public class LinkItem {
                     if (link.getSubNavLinkslist().size() > 0) {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
                         if (currentPage != null && 
-                            currentPage.getTemplate() != null && 
-                            currentPage.getTemplate().getName().equals("tds-landing-page")) { // TODO: Pull this in from the configs
+                            currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
                             link.addSubNavLink(new SubNavLinks(
                                 new StringBuilder()
                                     .append("View all ")

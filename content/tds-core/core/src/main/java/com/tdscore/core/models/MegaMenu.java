@@ -52,8 +52,8 @@ public class MegaMenu {
 
                 if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
-                    if (currentPage != null && currentPage.getTemplate() != null && 
-                        currentPage.getTemplate().getName().equals("tds-landing-page")) {
+                    if (currentPage != null && 
+                        currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
                         link.addSubNavLink(new SubNavLinks(
                             new StringBuilder()
                                 .append("View all ")
