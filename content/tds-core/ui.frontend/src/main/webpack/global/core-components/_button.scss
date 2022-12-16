@@ -730,6 +730,22 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     );
   }
 
+  &.btn-teal.cmp-tds-button-primary {
+    @include type-button-handler(
+      #ffffff,
+      $teal-color,
+      $secondary-background-color,
+      $primary-border-size,
+      $primary-icon-color,
+      $primary-opacity,
+      #ffffff33,
+      $primary-hover-opacity,
+      $primary-active-color-opacity,
+      $primary-active-opacity,
+      $primary-background-disabled-color
+    );
+  }
+
   &.btn-teal.cmp-tds-button-tertiary {
     @include type-button-handler(
       $teal-color,
