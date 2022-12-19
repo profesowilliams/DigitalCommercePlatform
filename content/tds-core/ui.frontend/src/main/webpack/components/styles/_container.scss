@@ -25,6 +25,32 @@
       margin: 0 1.25rem;
     }
   }
+
+  @media (min-width: 769px) {
+    .flex-container {
+      #equal-high > .aem-Grid:before {
+        content: none;
+    	}
+
+    	#equal-high .cmp-container {
+    		height: 100%;
+    	}
+
+    	#equal-high .cmp-container .aem-Grid {
+    		height: 100%;
+    		display: flex;
+    		flex-direction: column;
+    	}
+
+    	#equal-high-col .aem-Grid .container:last-child {
+    		height: 100%;
+    	}
+
+    	#equal-high > .aem-Grid {
+    		display: flex;
+    	}
+    }
+  }
 }
 
 /* moving container related style system class here to avoid confusions.
