@@ -3,330 +3,330 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Properties"
     sling:resourceType="cq/gui/components/authoring/dialog">
-    <content
+	<content
         jcr:mixinTypes="[]"
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
-        <items jcr:primaryType="nt:unstructured">
-            <column
+		<items jcr:primaryType="nt:unstructured">
+			<column
                 jcr:primaryType="nt:unstructured"
                 sling:resourceType="granite/ui/components/coral/foundation/container">
-                <items jcr:primaryType="nt:unstructured">
-                    <tabs
+				<items jcr:primaryType="nt:unstructured">
+					<tabs
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/tabs"
                         maximized="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
-                            <properties
+						<items jcr:primaryType="nt:unstructured">
+							<properties
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Properties"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <itemsPerPage
+										<items jcr:primaryType="nt:unstructured">
+											<itemsPerPage
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Items Per Page"
                                                 name="./itemsPerPage"
                                                 required="{Boolean}true"/>
-                                            <multipleSPADealLabel
+											<multipleSPADealLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="SPA Deals Label for Multiple items"
                                                 name="./spaDealsIdLabel"/>
-                                            <shopPath
+											<shopPath
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Shop Path"
                                                 name="./shopPath"
                                                 required="{Boolean}true"/>
-                                            <paginationStyle
+											<paginationStyle
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
                                                 fieldLabel="Select Pagination Style"
                                                 name="./paginationStyle">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <pages
+												<items jcr:primaryType="nt:unstructured">
+													<pages
                                                         jcr:primaryType="nt:unstructured"
                                                         checked="{Boolean}true"
                                                         text="Pages"
                                                         value="pages"/>
-                                                    <scroll
+													<scroll
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Scroll"
                                                         value="scroll"/>
-                                                    <none
+													<none
                                                         jcr:primaryType="nt:unstructured"
                                                         text="None"
                                                         value="none"/>
-                                                </items>
-                                            </paginationStyle>
-                                            <defaultSortingColumnKey
+												</items>
+											</paginationStyle>
+											<defaultSortingColumnKey
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Default Sorting Column Key"
                                                 fieldLabel="Default Sorting Column Key"
                                                 name="./defaultSortingColumnKey"/>
-                                            <defaultSortingDirection
+											<defaultSortingDirection
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Sorting Direction"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/radiogroup"
                                                 margin="{Boolean}true"
                                                 name="./defaultSortingDirection">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <asc
+												<items jcr:primaryType="nt:unstructured">
+													<asc
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Ascending Order"
                                                         value="asc"/>
-                                                    <desc
+													<desc
                                                         jcr:primaryType="nt:unstructured"
                                                         checked="{Boolean}true"
                                                         text="Descending Order"
                                                         value="desc"/>
-                                                </items>
-                                            </defaultSortingDirection>
-                                            <menuCopy
+												</items>
+											</defaultSortingDirection>
+											<menuCopy
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy Label"
                                                 name="./menuCopy"/>
-                                            <menuCopyWithHeaders
+											<menuCopyWithHeaders
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy with headers Label"
                                                 name="./menuCopyWithHeaders"/>
-                                            <menuExport
+											<menuExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Export Label"
                                                 name="./menuExport"/>
-                                            <menuCsvExport
+											<menuCsvExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu CSV Export Label"
                                                 name="./menuCsvExport"/>
-                                            <menuExcelExport
+											<menuExcelExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Excel Export Label"
                                                 name="./menuExcelExport"/>
-                                            <menuOpenLink
+											<menuOpenLink
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Open link Label"
                                                 name="./menuOpenLink"/>
-                                            <menuCopyLink
+											<menuCopyLink
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy link Label"
                                                 name="./menuCopyLink"/>
-                                            <ofTextLabel
+											<ofTextLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Of Text Label"
                                                 name="./ofTextLabel"/>
-                                            <hideCopyHeaderOption
+											<hideCopyHeaderOption
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 name="./hideCopyHeaderOption"
                                                 text="Hide Copy Header Option"
                                                 uncheckedValue="false"
                                                 value="true"/>
-                                            <hideCopyHeaderOptionTypeHint
+											<hideCopyHeaderOptionTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./hideCopyHeaderOption@TypeHint"
                                                 value="Boolean"/>
-                                            <hideExportOption
+											<hideExportOption
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 name="./hideExportOption"
                                                 text="Hide Export Option"
                                                 uncheckedValue="false"
                                                 value="true"/>
-                                            <hideExportOptionTypeHint
+											<hideExportOptionTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./hideExportOption@TypeHint"
                                                 value="Boolean"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </properties>
-                            <elements
+										</items>
+									</column>
+								</items>
+							</properties>
+							<elements
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Items"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <actions
+										<items jcr:primaryType="nt:unstructured">
+											<actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                 composite="{Boolean}true"
                                                 fieldDescription="Click 'Add' to add labels"
                                                 fieldLabel="Grid Columns Definition">
-                                                <field
+												<field
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                                     name="./columnList">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <column
+													<items jcr:primaryType="nt:unstructured">
+														<column
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <columnLabel
+															<items jcr:primaryType="nt:unstructured">
+																<columnLabel
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="Enter column label"
                                                                     fieldLabel="Column Label"
                                                                     name="./columnLabel"
                                                                     required="{Boolean}true"/>
-                                                                <columnKey
+																<columnKey
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="Enter Column key for the column"
                                                                     fieldLabel="Column Key"
                                                                     name="./columnKey"
                                                                     required="{Boolean}true"/>
-                                                                <columnType
+																<columnType
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                     fieldLabel="Column Type"
                                                                     name="./columnType">
-                                                                    <items jcr:primaryType="nt:unstructured">
-                                                                        <plainText
+																	<items jcr:primaryType="nt:unstructured">
+																		<plainText
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Plain Text"
                                                                             value="plainText"/>
-                                                                        <date
+																		<date
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Date"
                                                                             value="date"/>
-                                                                        <buttonList
+																		<buttonList
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Buttons List"
                                                                             value="buttonList"/>
-                                                                        <plainResellerColumn
+																		<plainResellerColumn
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Plain Reseller Column"
                                                                             value="plainResellerColumn"/>
-                                                                        <renewalPlan
+																		<renewalPlan
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Renewal Plan Column"
                                                                             value="renewalPlan"/>
-                                                                    </items>
-                                                                </columnType>
-                                                                <sortable
+																	</items>
+																</columnType>
+																<sortable
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                                     name="./sortable"
                                                                     text="Sortable"
                                                                     uncheckedValue="false"
                                                                     value="{Boolean}true"/>
-                                                                <sortableTypehint
+																<sortableTypehint
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                                     name="./sortable@TypeHint"
                                                                     value="Boolean"/>
-                                                            </items>
-                                                        </column>
-                                                    </items>
-                                                </field>
-                                            </actions>
-                                            <detailUrl
+															</items>
+														</column>
+													</items>
+												</field>
+											</actions>
+											<detailUrl
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                 fieldLabel="Details URL"
                                                 name="./detailUrl"
                                                 rootPath="/content/techdata"/>
-                                            <detailUrlSuffix
+											<detailUrlSuffix
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Details URL Id Suffix"
                                                 name="./detailUrlSuffix"
                                                 rootPath="/content/techdata"/>
-                                            <displayCurrencyName
+											<displayCurrencyName
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 name="./displayCurrencyName"
                                                 text="Display Currency Name"
                                                 uncheckedValue="false"
                                                 value="true"/>
-                                            <displayCurrencyNameTypeHint
+											<displayCurrencyNameTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./displayCurrencyName@TypeHint"
                                                 value="Boolean"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </elements>
-                            <filters
+										</items>
+									</column>
+								</items>
+							</elements>
+							<filters
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Filters"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <title
+										<items jcr:primaryType="nt:unstructured">
+											<title
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Filter Title"
                                                 name="./filterTitle"/>
-                                            <clearallFilter
+											<clearallFilter
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Clear All Filter Title"
                                                 name="./clearAllFilterTitle"/>
-                                            <showresultbtn
+											<showresultbtn
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Show Result Label"
                                                 name="./showResultLabel"/>
-                                            <filterType
+											<filterType
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldLabel="Filter Type"
                                                 name="./filterType">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <static
+												<items jcr:primaryType="nt:unstructured">
+													<static
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Static"
                                                         value="static"/>
-                                                    <dynamic
+													<dynamic
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Dynamic"
                                                         value="dynamic"/>
-                                                </items>
-                                            </filterType>
-                                            <dateOptions
+												</items>
+											</filterType>
+											<dateOptions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                 composite="{Boolean}true"
                                                 fieldDescription="Click 'Add' to add labels"
                                                 fieldLabel="Date Options">
-                                                <field
+												<field
                                                     jcr:mixinTypes="[]"
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                                     name="./dateOptionsList">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <column
+													<items jcr:primaryType="nt:unstructured">
+														<column
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <dateLabel
+															<items jcr:primaryType="nt:unstructured">
+																<dateLabel
                                                                     jcr:mixinTypes="[]"
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -334,261 +334,261 @@
                                                                     fieldLabel="Enter Date Label"
                                                                     name="./label"
                                                                     required="{Boolean}true"/>
-                                                                <dateField
+																<dateField
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                     fieldDescription="Select the date option range"
                                                                     fieldLabel="Select Date Field"
                                                                     name="./field"
                                                                     required="{Boolean}true">
-                                                                    <items jcr:primaryType="nt:unstructured">
-                                                                        <overdue
+																	<items jcr:primaryType="nt:unstructured">
+																		<overdue
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Overdue"
                                                                             value="overdue"/>
-                                                                        <today
+																		<today
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Today"
                                                                             value="today"/>
-                                                                        <zeroplus
+																		<zeroplus
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="0 - 30 days"
                                                                             value="30"/>
-                                                                        <thirtyplus
+																		<thirtyplus
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="31 - 60 days"
                                                                             value="60"/>
-                                                                        <sixtyplus
+																		<sixtyplus
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="61 - 90 days"
                                                                             value="90"/>
-                                                                        <ninetyplus
+																		<ninetyplus
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="91+ days"
                                                                             value="91"/>
-                                                                        <custom
+																		<custom
                                                                             jcr:mixinTypes="[]"
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Custom date range"
                                                                             value="custom"/>
-                                                                    </items>
-                                                                </dateField>
-                                                            </items>
-                                                        </column>
-                                                    </items>
-                                                </field>
-                                            </dateOptions>
-                                            <actions
+																	</items>
+																</dateField>
+															</items>
+														</column>
+													</items>
+												</field>
+											</dateOptions>
+											<actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                 composite="{Boolean}true"
                                                 fieldDescription="Click 'Add' to add labels"
                                                 fieldLabel="Filter List">
-                                                <field
+												<field
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                                     name="./filterList">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <column
+													<items jcr:primaryType="nt:unstructured">
+														<column
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <accordionLabel
+															<items jcr:primaryType="nt:unstructured">
+																<accordionLabel
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="Enter Accordion Label"
                                                                     fieldLabel="Accordion Label"
                                                                     name="./accordionLabel"
                                                                     required="{Boolean}true"/>
-                                                                <filterField
+																<filterField
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="Enter field to match service request"
                                                                     fieldLabel="Filter Field"
                                                                     name="./filterField"
                                                                     required="{Boolean}true"/>
-                                                                <filtersOptions
+																<filtersOptions
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                                     composite="{Boolean}true"
                                                                     fieldDescription="Click 'Add' to add labels"
                                                                     fieldLabel="Filter Options">
-                                                                    <field
+																	<field
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/container"
                                                                         name="./filtersOptionsList">
-                                                                        <items jcr:primaryType="nt:unstructured">
-                                                                            <title
+																		<items jcr:primaryType="nt:unstructured">
+																			<title
                                                                                 jcr:primaryType="nt:unstructured"
                                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                                 fieldLabel="Filter Option Label"
                                                                                 name="./filterOptionLabel"/>
-                                                                            <subfiltersOptions
+																			<subfiltersOptions
                                                                                 jcr:primaryType="nt:unstructured"
                                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                                                 composite="{Boolean}true"
                                                                                 fieldLabel="Sub Filter Options">
-                                                                                <field
+																				<field
                                                                                     jcr:primaryType="nt:unstructured"
                                                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                                                                     name="./subFilterOptionList">
-                                                                                    <items jcr:primaryType="nt:unstructured">
-                                                                                        <options
+																					<items jcr:primaryType="nt:unstructured">
+																						<options
                                                                                             jcr:primaryType="nt:unstructured"
                                                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                                             fieldLabel="Option Label"
                                                                                             name="./subFilterOptionsLabel"/>
-                                                                                    </items>
-                                                                                </field>
-                                                                            </subfiltersOptions>
-                                                                        </items>
-                                                                    </field>
-                                                                </filtersOptions>
-                                                            </items>
-                                                        </column>
-                                                    </items>
-                                                </field>
-                                            </actions>
-                                        </items>
-                                    </column>
-                                </items>
-                            </filters>
-                            <search
+																					</items>
+																				</field>
+																			</subfiltersOptions>
+																		</items>
+																	</field>
+																</filtersOptions>
+															</items>
+														</column>
+													</items>
+												</field>
+											</actions>
+										</items>
+									</column>
+								</items>
+							</filters>
+							<search
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Search"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <actions
+										<items jcr:primaryType="nt:unstructured">
+											<actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                                 composite="{Boolean}true"
                                                 fieldDescription="Click 'Add' to add search options"
                                                 fieldLabel="Search Options">
-                                                <field
+												<field
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
                                                     name="./searchOptionsList">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <column
+													<items jcr:primaryType="nt:unstructured">
+														<column
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <searchLabel
+															<items jcr:primaryType="nt:unstructured">
+																<searchLabel
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="Enter Search Label"
                                                                     fieldLabel="Search Label"
                                                                     name="./searchLabel"/>
-                                                                <searchKey
+																<searchKey
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                     fieldDescription="This key will match with the service request"
                                                                     fieldLabel="Enter Search Key"
                                                                     name="./searchKey">
-                                                                    <items jcr:primaryType="nt:unstructured">
-                                                                        <contractId
+																	<items jcr:primaryType="nt:unstructured">
+																		<contractId
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="ContractID"
                                                                             value="ContractID"/>
-                                                                        <vendorId
+																		<vendorId
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="VendorQuoteID"
                                                                             value="VendorQuoteID"/>
-                                                                        <serialNumber
+																		<serialNumber
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="SerialNumber"
                                                                             value="SerialNumber"/>
-                                                                        <instanceNumber
+																		<instanceNumber
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Instance"
                                                                             value="Instance"/>
-                                                                        <enduserName
+																		<enduserName
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="EndUser"
                                                                             value="EndUser"/>
-                                                                        <endUserEmail
+																		<endUserEmail
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="EndUserEmail"
                                                                             value="EndUserEmail"/>
-                                                                        <resellerName
+																		<resellerName
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="ResellerName"
                                                                             value="ResellerName"/>
-                                                                        <resellerId
+																		<resellerId
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="ResellerId"
                                                                             value="ResellerId"/>
-                                                                        <distiQuoteId
+																		<distiQuoteId
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Disti Quote Id"
                                                                             value="Id"/>
-                                                                    </items>
-                                                                </searchKey>
-                                                                <isHouseAccount
+																	</items>
+																</searchKey>
+																<isHouseAccount
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                                     name="./showIfIsHouseAccount"
                                                                     text="Show if is House Account"
                                                                     uncheckedValue="false"
                                                                     value="{Boolean}true"/>
-                                                                <isHouseAccountTypehint
+																<isHouseAccountTypehint
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                                     name="./showIfIsHouseAccount@TypeHint"
                                                                     value="Boolean"/>
-                                                            </items>
-                                                        </column>
-                                                    </items>
-                                                </field>
-                                            </actions>
-                                        </items>
-                                    </column>
-                                </items>
-                            </search>
-                            <productGrid
+															</items>
+														</column>
+													</items>
+												</field>
+											</actions>
+										</items>
+									</column>
+								</items>
+							</search>
+							<productGrid
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Product Grid"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <column
+								<items jcr:primaryType="nt:unstructured">
+									<column
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <quoteId
+										<items jcr:primaryType="nt:unstructured">
+											<quoteId
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Quote Id Label"
                                                 fieldLabel="Quote Id Label"
                                                 name="./quoteIdLabel"
                                                 required="{Boolean}true"/>
-                                            <refNo
+											<refNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Ref No Label"
                                                 fieldLabel="Ref No Label"
                                                 name="./refNoLabel"
                                                 required="{Boolean}true"/>
-                                            <expiryDate
+											<expiryDate
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Expiry Date Label"
                                                 fieldLabel="Expiry Date Label"
                                                 name="./expiryDateLabel"
                                                 required="{Boolean}true"/>
-                                            <downloadPDF
+											<downloadPDF
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Download PDF Label"
                                                 fieldLabel="Download PDF Label"
                                                 name="./downloadPDFLabel"
                                                 required="{Boolean}true"/>
-                                            <showDownloadPDFButton
+											<showDownloadPDFButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Show the 'Download PDF' Button on the Expanded Renewal Plan."
@@ -596,19 +596,19 @@
                                                 text="Show Download PDF Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
-                                            <showDownloadPDFButtonTypeHint
+											<showDownloadPDFButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./showDownloadPDFButton@TypeHint"
                                                 value="Boolean"/>
-                                            <downloadXLS
+											<downloadXLS
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Download XLS Label"
                                                 fieldLabel="Enter Download XLS Label"
                                                 name="./downloadXLSLabel"
                                                 required="{Boolean}true"/>
-                                            <showDownloadXLSButton
+											<showDownloadXLSButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Show the 'Download XLS' Button on the Expanded Renewal Plan."
@@ -616,19 +616,19 @@
                                                 text="Show Download XLS Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
-                                            <showDownloadXLSButtonTypeHint
+											<showDownloadXLSButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./showDownloadXLSButton@TypeHint"
                                                 value="Boolean"/>
-                                            <seeDetails
+											<seeDetails
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter See Details Label"
                                                 fieldLabel="See Details Label"
                                                 name="./seeDetailsLabel"
                                                 required="{Boolean}true"/>
-                                            <showSeeDetailsButton
+											<showSeeDetailsButton
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                 fieldDescription="Show the 'See Details' button on the Expanded Renewal Plan."
@@ -636,61 +636,61 @@
                                                 text="Show See Details Button"
                                                 uncheckedValue="false"
                                                 value="true"/>
-                                            <showSeeDetailsButtonTypeHint
+											<showSeeDetailsButtonTypeHint
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./showSeeDetailsButton@TypeHint"
                                                 value="Boolean"/>
-                                        </items>
-                                    </column>
-                                </items>
-                            </productGrid>
-                            <icons
+										</items>
+									</column>
+								</items>
+							</productGrid>
+							<icons
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Icons"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <columns
+								<items jcr:primaryType="nt:unstructured">
+									<columns
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
                                         margin="{Boolean}true">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <column
+										<items jcr:primaryType="nt:unstructured">
+											<column
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <overdueGroup
+												<items jcr:primaryType="nt:unstructured">
+													<overdueGroup
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <overdueIcon
+														<items jcr:primaryType="nt:unstructured">
+															<overdueIcon
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
                                                                 name="./overdueIcon"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <bell
+																<items jcr:primaryType="nt:unstructured">
+																	<bell
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Bell"
                                                                         value="fas fa-bell"/>
-                                                                    <alarmClock
+																	<alarmClock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Alarm Clock"
                                                                         value="fas fa-alarm-clock"/>
-                                                                    <clock
+																	<clock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Clock"
                                                                         value="fas fa-clock"/>
-                                                                    <calendar
+																	<calendar
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Calendar"
                                                                         value="calendar"/>
-                                                                </items>
-                                                            </overdueIcon>
-                                                            <overdueIconColor
+																</items>
+															</overdueIcon>
+															<overdueIconColor
                                                                 jcr:mixinTypes="[]"
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
@@ -700,69 +700,69 @@
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
                                                                 value="HEX">
-                                                                <datasource
+																<datasource
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
-                                                            </overdueIconColor>
-                                                            <overdueDaysRange
+															</overdueIconColor>
+															<overdueDaysRange
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
                                                                 name="./overdueDaysRange"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <overdue
+																<items jcr:primaryType="nt:unstructured">
+																	<overdue
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Overdue"
                                                                         value="overdue"/>
-                                                                    <afterZero
+																	<afterZero
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="0 - 30 days"
                                                                         value="0-30"/>
-                                                                    <afterThirty
+																	<afterThirty
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="31 - 60 days"
                                                                         value="31-60"/>
-                                                                    <sixtyOnePlus
+																	<sixtyOnePlus
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="61+ days"
                                                                         value="61+"/>
-                                                                </items>
-                                                            </overdueDaysRange>
-                                                        </items>
-                                                    </overdueGroup>
-                                                    <afterZeroIconsGroup
+																</items>
+															</overdueDaysRange>
+														</items>
+													</overdueGroup>
+													<afterZeroIconsGroup
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <afterZeroIcon
+														<items jcr:primaryType="nt:unstructured">
+															<afterZeroIcon
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
                                                                 name="./afterZeroIcon"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <bell
+																<items jcr:primaryType="nt:unstructured">
+																	<bell
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Bell"
                                                                         value="fas fa-bell"/>
-                                                                    <alarmClock
+																	<alarmClock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Alarm Clock"
                                                                         value="fas fa-alarm-clock"/>
-                                                                    <clock
+																	<clock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Clock"
                                                                         value="fas fa-clock"/>
-                                                                    <calendar
+																	<calendar
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Calendar"
                                                                         value="calendar"/>
-                                                                </items>
-                                                            </afterZeroIcon>
-                                                            <afterThirtyIconColor
+																</items>
+															</afterZeroIcon>
+															<afterThirtyIconColor
                                                                 jcr:mixinTypes="[]"
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
@@ -772,69 +772,69 @@
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
                                                                 value="HEX">
-                                                                <datasource
+																<datasource
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
-                                                            </afterThirtyIconColor>
-                                                            <afterThirtyDaysRange
+															</afterThirtyIconColor>
+															<afterThirtyDaysRange
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
                                                                 name="./afterZeroDaysRange"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <overdue
+																<items jcr:primaryType="nt:unstructured">
+																	<overdue
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Overdue"
                                                                         value="overdue"/>
-                                                                    <afterZero
+																	<afterZero
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="0 - 30 days"
                                                                         value="0-30"/>
-                                                                    <afterThirty
+																	<afterThirty
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="31 - 60 days"
                                                                         value="31-60"/>
-                                                                    <sixtyOnePlus
+																	<sixtyOnePlus
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="61+ days"
                                                                         value="61+"/>
-                                                                </items>
-                                                            </afterThirtyDaysRange>
-                                                        </items>
-                                                    </afterZeroIconsGroup>
-                                                    <afterThirtyIconsGroup
+																</items>
+															</afterThirtyDaysRange>
+														</items>
+													</afterZeroIconsGroup>
+													<afterThirtyIconsGroup
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <afterThirtyIcon
+														<items jcr:primaryType="nt:unstructured">
+															<afterThirtyIcon
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match the desired font awesome class"
                                                                 fieldLabel="Select Icon Class"
                                                                 name="./afterThirtyIcon"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <bell
+																<items jcr:primaryType="nt:unstructured">
+																	<bell
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Bell"
                                                                         value="fas fa-bell"/>
-                                                                    <alarmClock
+																	<alarmClock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Alarm Clock"
                                                                         value="fas fa-alarm-clock"/>
-                                                                    <clock
+																	<clock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Clock"
                                                                         value="fas fa-clock"/>
-                                                                    <calendar
+																	<calendar
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Calendar"
                                                                         value="calendar"/>
-                                                                </items>
-                                                            </afterThirtyIcon>
-                                                            <afterThirtyIconColor
+																</items>
+															</afterThirtyIcon>
+															<afterThirtyIconColor
                                                                 jcr:mixinTypes="[]"
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
@@ -844,43 +844,43 @@
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
                                                                 value="HEX">
-                                                                <datasource
+																<datasource
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
-                                                            </afterThirtyIconColor>
-                                                            <afterThirtyDaysRange
+															</afterThirtyIconColor>
+															<afterThirtyDaysRange
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
                                                                 name="./afterThirtyDaysRange"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <overdue
+																<items jcr:primaryType="nt:unstructured">
+																	<overdue
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Overdue"
                                                                         value="overdue"/>
-                                                                    <afterZero
+																	<afterZero
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="0 - 30 days"
                                                                         value="0-30"/>
-                                                                    <afterThirty
+																	<afterThirty
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="31 - 60 days"
                                                                         value="31-60"/>
-                                                                    <sixtyOnePlus
+																	<sixtyOnePlus
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="61+ days"
                                                                         value="61+"/>
-                                                                </items>
-                                                            </afterThirtyDaysRange>
-                                                        </items>
-                                                    </afterThirtyIconsGroup>
-                                                    <sixtyOnePlusIconsGroup
+																</items>
+															</afterThirtyDaysRange>
+														</items>
+													</afterThirtyIconsGroup>
+													<sixtyOnePlusIconsGroup
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <sixtyPlusIcon
+														<items jcr:primaryType="nt:unstructured">
+															<sixtyPlusIcon
                                                                 cq:lastReplicated="{Date}2022-06-29T07:19:23.431-05:00"
                                                                 cq:lastReplicatedBy="admin"
                                                                 cq:lastReplicationAction="Activate"
@@ -891,26 +891,26 @@
                                                                 fieldLabel="Select Icon Class"
                                                                 name="./sixtyPlusIcon"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <bell
+																<items jcr:primaryType="nt:unstructured">
+																	<bell
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Bell"
                                                                         value="fas fa-bell"/>
-                                                                    <alarmClock
+																	<alarmClock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Alarm Clock"
                                                                         value="fas fa-alarm-clock"/>
-                                                                    <clock
+																	<clock
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Clock"
                                                                         value="fas fa-clock"/>
-                                                                    <calendar
+																	<calendar
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Calendar"
                                                                         value="calendar"/>
-                                                                </items>
-                                                            </sixtyPlusIcon>
-                                                            <sixtyPlusIconColor
+																</items>
+															</sixtyPlusIcon>
+															<sixtyPlusIconColor
                                                                 jcr:mixinTypes="[]"
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
@@ -920,31 +920,31 @@
                                                                 showProperties="{Boolean}true"
                                                                 showSwatches="{Boolean}true"
                                                                 value="HEX">
-                                                                <datasource
+																<datasource
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
-                                                            </sixtyPlusIconColor>
-                                                            <sixtyPlusDaysRange
+															</sixtyPlusIconColor>
+															<sixtyPlusDaysRange
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                                 fieldDescription="This will match with days return by the ui service"
                                                                 fieldLabel="Select days range"
                                                                 name="./sixtyPlusDaysRange"
                                                                 required="{Boolean}true">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <overdue
+																<items jcr:primaryType="nt:unstructured">
+																	<overdue
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="Overdue"
                                                                         value="overdue"/>
-                                                                    <afterZero
+																	<afterZero
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="0 - 30 days"
                                                                         value="0-30"/>
-                                                                    <afterThirty
+																	<afterThirty
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="31 - 60 days"
                                                                         value="31-60"/>
-                                                                    <sixtyOnePlus
+																	<sixtyOnePlus
                                                                         cq:lastReplicated="{Date}2022-06-22T22:41:39.521-05:00"
                                                                         cq:lastReplicatedBy="admin"
                                                                         cq:lastReplicationAction="Activate"
@@ -952,89 +952,172 @@
                                                                         jcr:primaryType="nt:unstructured"
                                                                         text="61+ days"
                                                                         value="61+"/>
-                                                                </items>
-                                                            </sixtyPlusDaysRange>
-                                                        </items>
-                                                    </sixtyOnePlusIconsGroup>
-                                                </items>
-                                            </column>
-                                        </items>
-                                    </columns>
-                                </items>
-                            </icons>
-                            <orders
+																</items>
+															</sixtyPlusDaysRange>
+														</items>
+													</sixtyOnePlusIconsGroup>
+												</items>
+											</column>
+										</items>
+									</columns>
+								</items>
+							</icons>
+							<orders
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Orders"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <columns
+								<items jcr:primaryType="nt:unstructured">
+									<columns
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
                                         margin="{Boolean}true">
-                                        <items jcr:primaryType="nt:unstructured">
-                                            <column
+										<items jcr:primaryType="nt:unstructured">
+											<column
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <orderingGroup
+												<items jcr:primaryType="nt:unstructured">
+													<orderingGroup
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <showOrderingIcon
+														<items jcr:primaryType="nt:unstructured">
+															<showOrderingIcon
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                                 name="./showOrderingIcon"
                                                                 text="Show Ordering Icon"
                                                                 uncheckedValue="false"
                                                                 value="true"/>
-                                                            <showOrderingIconTypehint
+															<showOrderingIconTypehint
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                                 name="./showOrderingIcon@TypeHint"
                                                                 value="Boolean"/>
-                                                            <placeOrderDialogTitle
+															<placeOrderDialogTitle
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Place Order Dialog Title"
                                                                 name="./placeOrderDialogTitle"/>
-                                                            <termsAndConditions
+															<termsAndConditions
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Terms and Conditions"
                                                                 name="./termsAndConditions"/>
-                                                            <termsAndConditionsLink
+															<termsAndConditionsLink
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Terms and Conditions Link"
                                                                 name="./termsAndConditionsLink"/>
-                                                            <successSubmission
+															<successSubmission
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Success Submission"
                                                                 name="./successSubmission"/>
-                                                            <failedSubmission
+															<failedSubmission
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Failed Submission"
                                                                 name="./failedSubmission"/>
-                                                            <failedSubmissionNoResponse
+															<failedSubmissionNoResponse
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
                                                                 fieldLabel="On Failed Submission (No Response)"
                                                                 name="./noResponseMessage"/>
-                                                        </items>
-                                                    </orderingGroup>
-                                                </items>
-                                            </column>
-                                        </items>
-                                    </columns>
-                                </items>
-                            </orders>
-                        </items>
-                    </tabs>
-                </items>
-            </column>
-        </items>
-    </content>
+														</items>
+													</orderingGroup>
+												</items>
+											</column>
+										</items>
+									</columns>
+								</items>
+							</orders>
+							<results
+								jcr:primaryType="nt:unstructured"
+								jcr:title="Search No Results"
+								sling:resourceType="granite/ui/components/coral/foundation/container"
+								margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<columns
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                        margin="{Boolean}true">
+										<items jcr:primaryType="nt:unstructured">
+											<column
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+												<items jcr:primaryType="nt:unstructured">
+													<noResultsGroup
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/well">
+														<items jcr:primaryType="nt:unstructured">
+															<noResultsTitle
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="Title for No Records Found Search/Filtered"
+                                                                name="./noResultsTitle"/>
+															<noResultsDescription
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                fieldLabel="Description for No Records Found Search/Filtered"
+                                                                name="./noResultsDescription"/>
+															<noResultsImage
+																jcr:primaryType="nt:unstructured"
+																sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
+																autoStart="{Boolean}false"
+																allowUpload="{Boolean}false"
+																class="cq-droptarget"
+																fileNameParameter="./noResultsImageFileName"
+																fileReferenceParameter="./noResultsImageFileReference"
+																mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
+																multiple="{Boolean}false"
+																name="./noResultsImage"
+																title="Upload Image Asset"
+                                                                fieldLabel="Upload Image Asset"
+																uploadUrl="${suffix.path}"
+																useHTML5="{Boolean}true"/>
+														</items>
+													</noResultsGroup>
+													<noDataGroup
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/well">
+														<items jcr:primaryType="nt:unstructured">
+															<noDataTitle
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="Title for No Reseller Data Available"
+                                                                name="./noDataTitle"/>
+															<noDataDescription
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                                fieldLabel="Description for No Reseller Data Available"
+                                                                name="./noDataDescription"/>
+															<noDataImage
+																jcr:primaryType="nt:unstructured"
+																sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
+																autoStart="{Boolean}false"
+																allowUpload="{Boolean}false"
+																class="cq-droptarget"
+																fileNameParameter="./noDataImageFileName"
+																fileReferenceParameter="./noDataImageFileReference"
+																mimeTypes="[image/gif,image/jpeg,image/png,image/tiff,image/svg+xml]"
+																multiple="{Boolean}false"
+																name="./noDataImage"
+																title="Upload Image Asset"
+                                                                fieldLabel="Upload Image Asset"
+																uploadUrl="${suffix.path}"
+																useHTML5="{Boolean}true"/>
+														</items>
+													</noDataGroup>
+												</items>
+											</column>
+										</items>
+									</columns>
+								</items>
+							</results>
+						</items>
+					</tabs>
+				</items>
+			</column>
+		</items>
+	</content>
 </jcr:root>

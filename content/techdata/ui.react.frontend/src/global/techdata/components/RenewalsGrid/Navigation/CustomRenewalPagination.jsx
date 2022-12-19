@@ -167,7 +167,7 @@ function CustomRenewalPagination({ onQueryChanged }, ref) {
 
   const processPaginationString = () => {
     const dictionaryLabel = getDictionaryValue("grids.common.label.results", "{0} - {1} of {2} results");
-    return dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter);
+    return dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter || '');
   }
   
   return (

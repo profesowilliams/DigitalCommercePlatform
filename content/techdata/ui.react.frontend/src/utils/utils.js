@@ -5,6 +5,7 @@ import { usPost } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
 import { getHeaderInfoFromUrl } from "./index";
 import {intouchHeaderAPIUrl, intouchFooterAPIUrl} from "./featureFlagUtils";
+import { SEARCH_LOCAL_STORAGE_KEY, FILTER_LOCAL_STORAGE_KEY } from "./constants";
 
 export const fileExtensions = {
   xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -545,3 +546,9 @@ export const removeDashboardSeparator = (originComponentDomStr = '') => {
   const commonSeparatorList =  document.getElementsByClassName("cmp-separator");
   hideSeparatorsList(commonSeparatorList)
 }
+
+ export function hasSearchOrFilterPresent() {
+   const searchData = localStorage.getItem(SEARCH_LOCAL_STORAGE_KEY);
+   const filterData = localStorage.getItem(FILTER_LOCAL_STORAGE_KEY);
+   return filterData && JSON.parse(filterData).count > 0 || searchData && JSON.parse(searchData).value !== '';
+ }

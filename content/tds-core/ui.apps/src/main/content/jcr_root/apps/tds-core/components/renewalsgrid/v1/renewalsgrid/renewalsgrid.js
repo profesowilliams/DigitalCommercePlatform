@@ -5,6 +5,7 @@ use(['../common/utils.js'], function(utils) {
     let optionData = {};
     var productGrid = {};
     let icons = {};
+    let noResultsValues = {};
 
     if (properties && properties["detailUrl"]) {
         jsonObject["detailUrl"] = properties["detailUrl"];
@@ -266,6 +267,34 @@ use(['../common/utils.js'], function(utils) {
 
     if (properties && properties["hideExportOption"]) {
         jsonObject["hideExportOption"] = properties["hideExportOption"];
+    }
+
+    if (properties && properties["noResultsTitle"]) {
+        noResultsValues.noResultsTitle = properties["noResultsTitle"];
+    }
+
+    if (properties && properties["noResultsDescription"]) {
+        noResultsValues.noResultsDescription = properties["noResultsDescription"];
+    }
+
+    if (properties && properties["noResultsImageFileReference"]) {
+        noResultsValues.noResultsImage = properties["noResultsImageFileReference"];
+    }
+
+    if (properties && properties["noDataTitle"]) {
+        noResultsValues.noDataTitle = properties["noDataTitle"];
+    }
+
+    if (properties && properties["noDataDescription"]) {
+        noResultsValues.noDataDescription = properties["noDataDescription"];
+    }
+
+    if (properties && properties["noDataImageFileReference"]) {
+        noResultsValues.noDataImage = properties["noDataImageFileReference"];
+    }
+
+    if (noResultsValues != null) {
+        jsonObject["noResultsValues"] = noResultsValues;
     }
 
     return {

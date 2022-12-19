@@ -3,7 +3,7 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formateDatePicker, fromExceptionToErrorObject, normalizeErrorCode, stringifyValue } from "../../../../utils/utils";
+import { formateDatePicker, fromExceptionToErrorObject, normalizeErrorCode, stringifyValue, hasSearchOrFilterPresent } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
 import {useStore} from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
@@ -72,12 +72,33 @@ function Grid(props) {
   };
 
   const CustomNoRowsOverlay = (props) => {
-    return (
-      <div className=" customErrorNoRows">
-        {props.noRowsMessageFunc(props)}
-        <i className="far info-circle errorIcon"></i>
-      </div>
-    );
+    const configInfo = hasSearchOrFilterPresent()
+      ? {
+          src: config.searchResultsError?.noResultsImage,
+          title: config.searchResultsError?.noResultsTitle,
+          description: config.searchResultsError?.noResultsDescription,
+        }
+      : {
+          src: config.searchResultsError?.noDataImage,
+          title: config.searchResultsError?.noDataTitle,
+          description: config.searchResultsError?.noDataDescription,
+        };
+    
+    return <>
+    {config.searchResultsError ? (
+        <div className='cmp-renewal-search-error'>
+          <div><img className='cmp-renewal-search-error__image' src={configInfo.src} /></div>
+          <div className='cmp-renewal-search-error__title'>{configInfo.title}</div>
+          <div className='cmp-renewal-search-error__description'>{configInfo.description}</div>
+        </div>
+      ) :
+      (
+        <div className=" customErrorNoRows">
+          {props.noRowsMessageFunc(props)}
+          <i className="far info-circle errorIcon"></i>
+        </div>
+      )
+    }</>
   };
 
   const noRowMsg = {
@@ -618,7 +639,7 @@ function Grid(props) {
             config.paginationStyle === "scroll" ? "visible" : "hidden"
           }`}
         >
-          {actualRange.from} - {actualRange.to} of {actualRange.total}
+          {actualRange.from} - {actualRange.to} of {actualRange.total || ''}
         </div>
         {agGrid}
       </Fragment>

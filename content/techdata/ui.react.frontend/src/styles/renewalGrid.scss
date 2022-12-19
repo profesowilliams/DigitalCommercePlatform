@@ -94,6 +94,11 @@
   }
   .ag-theme-alpine .ag-root-wrapper {
     border: none;
+    .ag-root-wrapper-body {
+      .ag-body-viewport {
+        min-height: 300px;
+      }
+    }    
   }
   .cmp-renewal-duration{
     display: flex;
@@ -470,6 +475,24 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    .cmp-renewal-search-error {
+      &__image {
+        height: 142px;
+        display: inline;
+      }
+      &__title {
+        font-size: 19px;
+        font-weight: 600;
+        height: 38px;
+        line-height: 34px;
+      }
+      &__description {
+        width: 400px;
+        font-size: 15px;
+        line-height: 24px;
+        white-space: pre-wrap;
+      }
+    }    
   }
   .icon-container {
     margin: 0 0.8em;
