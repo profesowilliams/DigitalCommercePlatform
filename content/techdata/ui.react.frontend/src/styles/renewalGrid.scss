@@ -542,12 +542,22 @@ span.ag-group-value {
   justify-content: center;
   align-items: center;
   padding-right: 2rem;
-  @include cart-icon;
   > * {
     cursor: pointer;   
   }
   .cmp-renewals-cart-icon{  
     @include cart-icon;
+  }
+  .cmp-renewals-ellipsis {
+    @include cart-icon;
+  }
+  &:hover svg.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    & + .cmp-vertical-separator {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 }
 
@@ -556,6 +566,10 @@ span.ag-group-value {
     .footer {
       button {
         @include cart-icon;
+        &:disabled {
+          opacity: 0.5;
+          pointer-events: none;
+        }
       }
     }
   }

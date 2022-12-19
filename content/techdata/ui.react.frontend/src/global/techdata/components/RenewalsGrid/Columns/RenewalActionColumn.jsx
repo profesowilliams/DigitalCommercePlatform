@@ -152,7 +152,8 @@ function _RenewalActionColumn({ eventProps }) {
           store={useRenewalGridState} 
         />
         <VerticalSeparator/>
-        <EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} />
+        <span className="cmp-renewals-ellipsis"><EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} /></span>
+        
       </div>
     </>
   );
