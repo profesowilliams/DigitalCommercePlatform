@@ -4617,20 +4617,18 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   }
 
   &.cmp-button--small-minimal {
-    position: absolute;
-    top: -15px;
-    right: 50px;
-
-    @include mobile {
-      top: 5px;
-    }
 
     & .cmp-button {
       height: unset;
-      padding: 6px 8px;
+      padding: 5px 0px !important;
       border: 1px solid get-color('teal');
-      font-size: 12px;
+      font-size: 12px!important;
       @include practice_builder_button_action_style;
+
+      & .cmp-image {
+        width: 16px;
+        height: 16px;
+      }
     }
   }
 
