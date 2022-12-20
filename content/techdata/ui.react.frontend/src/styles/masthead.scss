@@ -40,7 +40,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
 
 //Fluent UI icons
 .cmp-button__icon {
-    &--fluent {
+    &--fluent, .fluent {
         &.people-filled {
 
             &::before {
@@ -63,8 +63,8 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
 
             &::before {
                 content: "";
-                mask: url('/content/dam/global-shared/icons/regular/handshake.svg');
-                -webkit-mask: url('/content/dam/global-shared/icons/regular/handshake.svg');
+                mask: url('/content/dam/global-shared/icons/filled/handshake.svg');
+                -webkit-mask: url('/content/dam/global-shared/icons/filled/handshake.svg');
                 background: no-repeat;
                 height: 24px;
                 width: 24px;
@@ -231,8 +231,8 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         .cmp-dropbtn {
             &::before {
                 content: '';
-                -webkit-mask: url(/content/dam/global-shared/icons/regular/globe.svg) no-repeat;
-                mask: url(/content/dam/global-shared/icons/regular/globe.svg) no-repeat;
+                -webkit-mask: url('/content/dam/global-shared/icons/regular/globe.svg') no-repeat;
+                mask: url('/content/dam/global-shared/icons/regular/globe.svg') no-repeat;
                 background: no-repeat;
                 height: 24px;
                 width: 24px;
@@ -252,7 +252,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         @extend .cmp-button__icon;
 
         .cmp-button__icon {
-            &--fluent {
+            &--fluent, .fluent {
                 &.people-filled {
                     &::before {
                         background-color: map-get($color-palette, 'charcoal');
@@ -284,7 +284,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         @extend .cmp-button__icon;
 
         .cmp-button__icon {
-            &--fluent {
+            &--fluent, .fluent {
                 &.people-filled {
                     &::before {
                         filter: $white;
