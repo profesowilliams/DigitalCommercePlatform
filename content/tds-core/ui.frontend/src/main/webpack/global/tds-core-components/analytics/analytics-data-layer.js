@@ -26,11 +26,9 @@ import {getCookie} from '../../../static/js/utils.js';
         if (dataObject != null) {
             const dataLayerObject = {
                 page: {
-                    pageInfo: {
-                        pageName: dataObject["dc:title"],
-                        url: dataObject["repo:path"],
-                        language: dataObject["xdm:language"],
-                    },
+                    pageInfo: dataObject,
+                    category: {},
+                    errorDetails: {},
                     visitor: {
                         loginStatus: loginToken ? true : false,
                     },
@@ -40,18 +38,18 @@ import {getCookie} from '../../../static/js/utils.js';
         }
     }
 
-    function initAdobeDataLayer () {
-        window.adobeDataLayer = window.adobeDataLayer || [];
-        window.adobeDataLayer.push(function (dl) {
+    function initDataLayer () {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(function (dl) {
             dl.addEventListener("cmp:show", pageShownHandler);
         });
     }
 
     if (document.readyState !== "loading") {
-        initAdobeDataLayer();
+        initDataLayer();
     } else {
         document.addEventListener("DOMContentLoaded", () =>{
-            initAdobeDataLayer();
+            initDataLayer();
         });
     }        
 })();
