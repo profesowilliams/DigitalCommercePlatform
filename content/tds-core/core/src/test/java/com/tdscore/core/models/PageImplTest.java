@@ -71,7 +71,7 @@ class PageImplTest {
         when(basePage.getLanguage()).thenReturn("en");
         when(basePage.getCssClassNames()).thenReturn("cssNames");
         when(basePage.getId()).thenReturn("1234ABCD");
-        when(basePage.getData()).thenReturn(null);
+//        when(basePage.getData()).thenReturn(null);
         when(basePage.getRedirectTarget()).thenReturn(null);
         when(request.getServerName()).thenReturn("https://tdscore.com");
         when(pageProperties.get("pageType", StringUtils.EMPTY)).thenReturn("home");

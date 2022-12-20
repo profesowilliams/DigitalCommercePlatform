@@ -84,6 +84,7 @@ public class PageImpl implements Page {
     @Override
     public ComponentData getData() {
         Resource currentPageResource = currentPage.getContentResource();
+        if(currentPageResource == null) return null;
         return DataLayerBuilder.forPage()
                 .withId(this::getId)
                 .withTitle(this::getTitle)
