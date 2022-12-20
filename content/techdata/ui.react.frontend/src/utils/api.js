@@ -43,6 +43,7 @@ if (isEnvironmentEnabled()) {
 if(isHttpOnlyEnabled()) {
   axios.defaults.withCredentials = true;
   USaxios.defaults.withCredentials = true;
+  axios.defaults.headers.common['SessionId'] = '';
 } else {
   axios.defaults.headers.common['SessionId'] = sessionId ?? '';
 }
