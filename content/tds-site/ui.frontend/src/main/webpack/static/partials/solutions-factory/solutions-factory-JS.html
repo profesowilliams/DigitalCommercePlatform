@@ -1,0 +1,104 @@
+<script src="https://app-ab43.marketo.com/js/forms2/js/forms2.min.js"></script>
+<script>
+  MktoForms2.loadForm(
+    "https://app-ab43.marketo.com",
+    "946-OMQ-360",
+    8774,
+    function (form) {
+      // Add an onSubmit handler
+      form.onSuccess(function (values, followUpUrl) {
+        closeModal();
+      });
+      form.onSubmit(function (e) {
+        // Get the form field values
+        var vals = form.vals();
+        // You may wish to call other function calls here, for example to fire google analytics tracking or the like
+        closeModal();
+        // We'll just alert them to show the principle
+      });
+    }
+  );
+
+  function closeModal() {
+    $("#myModal").modal("hide");
+  }
+</script>
+<script>
+  $(document).ready(function () {
+    var tab = 1;
+    var openTab = 1;
+    $(".tab").on("click", (e) => {
+      var id = $(e.currentTarget).attr("id");
+      $(".selected").removeClass("selected");
+      $(e.currentTarget).addClass("selected");
+      tab = id[4];
+      openTab = ".tab-content-" + tab;
+      $(".tab-content").removeClass("active");
+      $(openTab).addClass("active");
+    });
+  });
+
+  var acc = 0;
+  var openAcc = 0;
+  $(".accordian-header").on("click", (e) => {
+    const id = $(e.currentTarget).attr("id");
+
+    if (acc === id) {
+      $(".accordian-header").removeClass("selected");
+      $(".accordian-content").removeClass("active");
+      acc = 0;
+      openAcc = 0;
+    } else {
+      $(".accordian-header").removeClass("selected");
+      $(e.currentTarget).addClass("selected");
+      acc = id;
+      openAcc = ".accordian-content-" + acc;
+      $(".accordian-content").removeClass("active");
+      $(openAcc).addClass("active");
+    }
+  });
+
+  function openModal() {
+    modal.style.display = "block";
+  }
+
+  function closeModal(event) {
+    if (event.target !== btnModal) {
+      modal.style.display = "none";
+    }
+  }
+
+  // Get the modal
+  const modal = document.getElementsByClassName("feature-modal")[0];
+  // Get the button that opens the modal
+  const btnModal = document.getElementsByClassName("open-feature-modal")[0];
+  btnModal.addEventListener("click", openModal);
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener("click", closeModal, null);
+
+  function openLanguageNavigationCountryList() {
+    const countriesListModal = document.querySelector("#countriesListModal");
+    countriesListModal.style.display = "block";
+  }
+
+  const btn = document.querySelector(".languageselection-button");
+  btn.addEventListener("click", openLanguageNavigationCountryList);
+
+  function initSlider(selector, options) {
+    if ($.fn.slick) {
+      $(selector).slick(options);
+    } else {
+      setTimeout(function () {
+        initSlider(selector, options);
+      }, 500);
+    }
+  }
+  initSlider(".testimonial", {
+    dots: false,
+    // arrows: true,
+    slidesToShow: 1,
+    adaptiveHeight: false,
+    infinite: true,
+    autoplay: 5000,
+  });
+</script>

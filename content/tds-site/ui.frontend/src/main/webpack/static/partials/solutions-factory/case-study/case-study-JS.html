@@ -1,0 +1,43 @@
+<script src="https://app-ab43.marketo.com/js/forms2/js/forms2.min.js"></script>
+<script>
+  $.modal({
+    opener: ".open-feature-modal",
+    modal: ".feature-modal",
+    prepare: false,
+  });
+
+  MktoForms2.loadForm(
+    "https://app-ab43.marketo.com",
+    "946-OMQ-360",
+    8774,
+    function (form) {
+      // Add an onSubmit handler
+      form.onSuccess(function (values, followUpUrl) {
+        closeModal();
+      });
+      form.onSubmit(function (e) {
+        // Get the form field values
+        var vals = form.vals();
+        // You may wish to call other function calls here, for example to fire google analytics tracking or the like
+        closeModal();
+        // We'll just alert them to show the principle
+      });
+    }
+  );
+
+  // Get the modal
+  const modal = document.getElementsByClassName("feature-modal")[0];
+  // Get the button that opens the modal
+  const btnModal = document.getElementsByClassName("open-feature-modal")[0];
+  btnModal.addEventListener("click", openModal);
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener("click", closeModal, null);
+
+  function openLanguageNavigationCountryList() {
+    const countriesListModal = document.querySelector("#countriesListModal");
+    countriesListModal.style.display = "block";
+  }
+
+  const btn = document.querySelector(".languageselection-button");
+  btn.addEventListener("click", openLanguageNavigationCountryList);
+</script>
