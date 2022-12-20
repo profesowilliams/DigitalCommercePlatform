@@ -11,7 +11,7 @@ var dateFormat = require("dateformat");
 var now = new Date();
 var codeValue = "DYSjfUsN1GIOMnQt-YITfti0w9APbRTDPwcAAABk";
 var SESSION_COOKIE = "session-id";
-var isHttpOnlyEnabled = false;
+var isHttpOnlyEnabled = true;
 
 app.use(cookieParser());
 app.use(bodyParser.json()); // support json encoded bodies

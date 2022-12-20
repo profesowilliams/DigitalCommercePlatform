@@ -68,7 +68,7 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 	return dispatch => {
 		dispatch(signInRequest());
 		axios
-			.post(signInUrl, postData, {headers:headerJson, withCredentials: isHttpOnlyEnabled() })
+			.post(signInUrl, postData, {headers:headerJson, withCredentials: false })
 			.then(response => {
 				dispatch(signInResponse(response.data.content.user));
 				localStorage.setItem('userData', JSON.stringify(response.data.content.user));
