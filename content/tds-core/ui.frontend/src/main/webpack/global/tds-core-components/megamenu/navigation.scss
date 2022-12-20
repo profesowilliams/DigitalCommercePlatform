@@ -348,19 +348,12 @@
 }
 
 @include desktop {
-    #navigation > ul > li:hover > ul,
-    #navigation > ul > li > ul > li:hover > ul,
-    #navigation > ul > li > ul > li > ul > li:hover > ul {
-        display:block;
+
+    #navigation > ul > li:hover > ul, #navigation > ul > li.open > ul,
+    #navigation > ul > li > ul > li:hover > ul, #navigation > ul > li > ul > li.open > ul,
+    #navigation > ul > li > ul > li > ul > li:hover > ul, #navigation > ul > li > ul > li > ul > li.open > ul {
+        display: block;
         z-index: 999;
-    }
-}
-
-
-#navigation > ul > li > ul > li.cmp-has-submenu {
-    &::after {
-        content: "";
-        background: url('https://api.iconify.design/fluent/chevron-right-24-filled.svg') no-repeat center center / contain;
     }
 }
 
