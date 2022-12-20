@@ -36,10 +36,10 @@
       data-environment-header-enabled="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].environmentEnabled}"
       data-environment-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].environmentRequestHeader}"
       data-disable-impersonation-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableImpersonateAccountRequestHeader}">
-        <script data-sly-test.dataLayerEnabled="${page.data}">
+        <script data-sly-test.dataLayerEnabled="${page.dataJson}">
           window.adobeDataLayer = window.adobeDataLayer || [];
           adobeDataLayer.push({
-              page: JSON.parse("${page.data.json @ context='scriptString'}"),
+              page: JSON.parse("${page.dataJson @ context='scriptString'}"),
               event:'cmp:show',
               eventInfo: {
                   path: 'page.${page.id @ context="scriptString"}'

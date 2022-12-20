@@ -42,7 +42,7 @@
     ${configData.gtmBodyJSScript @ context='scriptComment'}
     <!-- End Google Tag Manager in Body -->
 </sly>
-<script data-sly-test.dataLayerEnabled="${page.data}">
+<script data-sly-test.dataLayerEnabled="${page.dataJson}">
           window.adobeDataLayer = window.adobeDataLayer || [];
           
           let sessionId = window.localStorage.getItem("sessionId");

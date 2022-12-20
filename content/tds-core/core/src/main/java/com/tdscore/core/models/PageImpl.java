@@ -7,6 +7,10 @@ import com.adobe.cq.wcm.core.components.models.NavigationItem;
 import com.adobe.cq.wcm.core.components.models.Page;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
+import com.adobe.cq.wcm.core.components.util.ComponentUtils;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
@@ -23,9 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.tdscore.core.util.Constants.COUNTRY_PAGE;
 import static com.tdscore.core.util.Constants.LOCALE_PAGE;
@@ -83,61 +85,52 @@ public class PageImpl implements Page {
 
     @Override
     public ComponentData getData() {
-        Resource currentPageResource = currentPage.getContentResource();
-        if(currentPageResource == null) return null;
-        return DataLayerBuilder.forPage()
-                .withId(this::getId)
-                .withTitle(this::getTitle)
-                .withType(currentPageResource::getResourceType)
-                .withLinkUrl(this::getPageUrl)
-                .withLanguage(() -> currentPage.getLanguage().getLanguage())
-                .build();
+        return basePage.getData();
     }
 
-//    @Override
-//    public ComponentData getData() {
-//        Resource currentPageResource = currentPage.getContentResource();
-//        // Use ComponentUtils to verify if the DataLayer is enabled
-//        Map<String, String> categoryMap = new HashMap<>();
-//        categoryMap.put(PAGE_TYPE, getPageType());
-//        String[] siteSections = getSiteSections();
-//        for (int i = 0; i < siteSections.length; i++) {
-//            categoryMap.put("siteSection"+ (i + 1), siteSections[i]);
-//        }
-//        Map<String, String> errorMap = new HashMap<>();
-//        errorMap.put(ERROR_CODE, getErrorCode());
-//        errorMap.put(ERROR_NAME, getErrorName());
-//        //Create a map of properties we want to expose
-//        Map<String, Object> analyticsPageProperties = new HashMap<>();
-//        analyticsPageProperties.put("@type", currentPageResource.getResourceType());
-//        analyticsPageProperties.put("repo:modifyDate", currentPage.getLastModified().toString());
-//        analyticsPageProperties.put("dc:title", currentPage.getTitle());
-//        analyticsPageProperties.put("dc:description", currentPage.getDescription());
-//        analyticsPageProperties.put("repo:path", currentPage.getPath());
-//        analyticsPageProperties.put("xdm:template", currentPage.getTemplate().getPath());
-//        analyticsPageProperties.put("xdm:language", currentPage.getLanguage().getLanguage());
-//        analyticsPageProperties.put("dc:currency", getCurrencyCode());
-//        analyticsPageProperties.put("xdm:country", getCurrencyCode());
-//        analyticsPageProperties.put("dc:pageName", getAnalyticsPageName());
-//        analyticsPageProperties.put("dc:server", request.getServerName());
-//        analyticsPageProperties.put("dc:url", getPageUrl());
-//        analyticsPageProperties.put("category", categoryMap);
-//        analyticsPageProperties.put("error", errorMap);
-//
-//        //Use AEM Core Component utils to get a unique identifier for the Byline component (in case multiple are on the page)
+    public String getDataJson() {
+        Resource currentPageResource = currentPage.getContentResource();
+        // Use ComponentUtils to verify if the DataLayer is enabled
+        Map<String, String> categoryMap = new HashMap<>();
+        categoryMap.put(PAGE_TYPE, getPageType());
+        String[] siteSections = getSiteSections();
+        for (int i = 0; i < siteSections.length; i++) {
+            categoryMap.put("siteSection"+ (i + 1), siteSections[i]);
+        }
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put(ERROR_CODE, getErrorCode());
+        errorMap.put(ERROR_NAME, getErrorName());
+        //Create a map of properties we want to expose
+        Map<String, Object> analyticsPageProperties = new HashMap<>();
+        analyticsPageProperties.put("@type", currentPageResource.getResourceType());
+        analyticsPageProperties.put("repo:modifyDate", currentPage.getLastModified().toString());
+        analyticsPageProperties.put("dc:title", currentPage.getTitle());
+        analyticsPageProperties.put("dc:description", currentPage.getDescription());
+        analyticsPageProperties.put("repo:path", currentPage.getPath());
+        analyticsPageProperties.put("xdm:template", currentPage.getTemplate().getPath());
+        analyticsPageProperties.put("xdm:language", currentPage.getLanguage().getLanguage());
+        analyticsPageProperties.put("dc:currency", getCurrencyCode());
+        analyticsPageProperties.put("xdm:country", getCurrencyCode());
+        analyticsPageProperties.put("dc:pageName", getAnalyticsPageName());
+        analyticsPageProperties.put("dc:server", request.getServerName());
+        analyticsPageProperties.put("dc:url", getPageUrl());
+        analyticsPageProperties.put("category", categoryMap);
+        analyticsPageProperties.put("error", errorMap);
+
+        //Use AEM Core Component utils to get a unique identifier for the Byline component (in case multiple are on the page)
 //        String id = ComponentUtils.getId(currentPageResource, this.currentPage, this.componentContext);
-//        // Return the bylineProperties as a JSON String with a key of the bylineResource's ID
-//        try {
-//            return String.format("{\"%s\":%s}",
-//                    id,
-//                    // Use the ObjectMapper to serialize the bylineProperties to a JSON string
-//                    new ObjectMapper().writeValueAsString(analyticsPageProperties));
-//        } catch (JsonProcessingException e) {
-//            LOG.error("Unable to generate dataLayer JSON string", e);
-//        }
-//
-//        return null;
-//    }
+        // Return the bylineProperties as a JSON String with a key of the bylineResource's ID
+        try {
+            return String.format("{\"%s\":%s}",
+                    this.getId(),
+                    // Use the ObjectMapper to serialize the bylineProperties to a JSON string
+                    new ObjectMapper().writeValueAsString(analyticsPageProperties));
+        } catch (JsonProcessingException e) {
+            LOG.error("Unable to generate dataLayer JSON string", e);
+        }
+
+        return null;
+    }
 
     @Override
     public NavigationItem getRedirectTarget() {
@@ -145,6 +138,7 @@ public class PageImpl implements Page {
     }
 
 
+    @JsonProperty("xdm:pageName")
     public String getAnalyticsPageName() {
         com.day.cq.wcm.api.Page localePage = currentPage.getAbsoluteParent(LOCALE_PAGE);
         if(localePage != null) {
@@ -160,6 +154,7 @@ public class PageImpl implements Page {
         return StringUtils.EMPTY;
     }
 
+    @JsonProperty("xdm:country")
     public String getCountry() {
         com.day.cq.wcm.api.Page countryPage = currentPage.getAbsoluteParent(COUNTRY_PAGE);
         String country = "us";
@@ -177,6 +172,7 @@ public class PageImpl implements Page {
         return request.getServerName();
     }
 
+    @JsonProperty("xdm:country")
     public String getCurrencyCode() {
         com.day.cq.wcm.api.Page countryPage = currentPage.getAbsoluteParent(COUNTRY_PAGE);
         if(countryPage != null) {
