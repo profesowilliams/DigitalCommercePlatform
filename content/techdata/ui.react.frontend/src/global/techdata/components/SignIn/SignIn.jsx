@@ -212,6 +212,8 @@ const SignIn = (props) => {
     changeLoggedInState(true);
 
     triggerEvent('user:loggedIn');
+    // handle country redirection
+    redirectBasedOnCountry();
   }
 
   const handleLoginRedirection = () => {
