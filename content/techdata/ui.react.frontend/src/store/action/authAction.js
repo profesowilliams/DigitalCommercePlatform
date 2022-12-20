@@ -1,5 +1,5 @@
 import { SIGN_IN_REQUEST, SIGN_IN_RESPONSE, SIGN_IN_ERROR, SIGN_OUT_REQUEST } from '../constants/auth';
-import axios from '../../utils/axios';
+import { post } from '../../utils/api';
 import { createSessionId, setSessionId, createMaxTimeout, getHeaderInfoFromUrl, getConsumerRequestHeader } from '../../utils';
 import {refreshPage} from '../../utils/policies';
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../utils/featureFlagUtils"
@@ -44,25 +44,13 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 		if(!isHttpOnlyEnabled()){
 			setSessionId(sessionId);
 		}
-		const addMissingHeaders = isHttpOnlyEnabled() ? {
-			'sec-fetch-mode' : 'cors',
-			'sec-fetch-dest' : 'empty',
-			// 'pragma' : 'no-cache',
-			// 'sec-ch-ua-platform' : '"Windows"',
-			// 'sec-fetch-site' : 'same-site',
-			// 'sec-ch-ua-mobile' : '?0',
-			// 'origin' : 'https://sit.dc.tdebusiness.cloud',
-			// 'referer' : 'https://sit.dc.tdebusiness.cloud/'
-
-		} :{}
 		return {
 			'TraceId': `AEM_${new Date().toISOString()}`,
 			'Site': headerInfo.site,
 			'Accept-Language': headerInfo.acceptLanguage,
 			'Consumer': consumer,
 			'SessionId': sessionId ?? '',
-			'Content-Type': 'application/json',	
-			...addMissingHeaders
+			'Content-Type': 'application/json',		
 		}
 	};
 
@@ -78,12 +66,11 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 	let headers = prepareSignInHeader();
 	console.log('🚀headers we are about to send >>',headers);
 	let postData = prepareSignInBody();	
-	const requestConf = { headers , withCredentials: isHttpOnlyEnabled() };
+	const requestConf = { withCredentials: isHttpOnlyEnabled() };
 	console.log('🚀requestConf >>',requestConf);
 	return dispatch => {
 		dispatch(signInRequest());
-		axios
-			.post(signInUrl, postData, requestConf)
+			post(signInUrl, postData, requestConf)
 			.then(response => {
 				dispatch(signInResponse(response.data.content.user));
 				localStorage.setItem('userData', JSON.stringify(response.data.content.user));
@@ -91,6 +78,7 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 				refreshPage();
 			})
 			.catch(err => {
+				console.log('📛 error on Login Request >>',err);
 				dispatch(signInError(err.message));
 			});
 	};

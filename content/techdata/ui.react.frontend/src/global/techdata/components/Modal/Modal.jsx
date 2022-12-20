@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, Fragment } from 'react';
+import { useMemo } from 'react';
 import { useItemListExportState } from '../OrderDetails/OrderDetailItemExport/hooks/useOrderDetailExport';
 
 function Modal({ isModalVisible, modalProperties, modalContent, modalAction, actionErrorMessage, onModalClosed, componentProp, ...restProps }) {
@@ -30,10 +31,12 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, act
 	useEffect(() => {
 		setModalVisible(isModalVisible ?? true);
 	}, [isModalVisible]);
+
+	const modalVisibleClass = useMemo(() => modalVisible ? 'cmp-isvisible' : 'cmp-ishidden', [modalVisible]);
 	
 	
-	return modalVisible ? (
-		<div className={`cmp-modal ${modalVisible ? 'visible' : 'hidden'} `}>
+	return (
+		<div className={`cmp-modal ${modalVisibleClass} `}>
 			<div className='cmp-modal_container'>
 				<div className='cmp-modal_backdrop' />
 				<div className='cmp-modal_content'>
@@ -71,7 +74,7 @@ function Modal({ isModalVisible, modalProperties, modalContent, modalAction, act
 				</div>
 			</div>
 		</div>
-	) : null;
+	);
 }
 
 export default Modal;
