@@ -150,6 +150,24 @@
     width: 100%;
     height: 40px;
     padding: 0 rem(8px);
+
+    .input-icon{
+      .cmp-icon-input{
+        position: relative;
+        right: 25px;
+        top: 5px;
+        span {
+          position: relative;
+          right: 25px;
+          top: 5px;
+        }
+      }
+    }
+
+    div:first-child{
+      width: 100%;
+      display: flex;
+    }
   }
 
   &__input {

@@ -334,7 +334,7 @@ const SearchBar = ({ data, componentProp }) => {
   };
 
   const validateSearchTerm = () => {
-    return searchTermText && searchTermText?.length > 0 && mobileState ? true : false;
+    return searchTermText && searchTermText?.length > 0 ? true : false;
   };
 
   const clearInputSearch = () => {
