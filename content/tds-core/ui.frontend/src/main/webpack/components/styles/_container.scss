@@ -49,6 +49,14 @@
     	#equal-high > .aem-Grid {
     		display: flex;
     	}
+
+    	& > .cmp-container > .aem-Grid {
+            display: flex;
+        }
+
+        & > .cmp-container > .aem-Grid .cmp-container {
+            height: 100%;
+        }
     }
   }
 }
