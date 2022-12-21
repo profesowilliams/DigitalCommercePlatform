@@ -55,7 +55,8 @@ function GridHeader({ gridProps, data }) {
           gridProps?.productLines?.showDownloadXLSButton && (
           <button onClick={downloadXLS}>
             <span className={gridProps?.productLines?.showDownloadPDFButton && 'separator'}>
-            {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
+              <DownloadIcon className="cmp-renewal-preview__download--icon"/>
+              {getDictionaryValue("button.common.label.downloadXLS", "Download XLS")}
             </span>
           </button>
         )}
