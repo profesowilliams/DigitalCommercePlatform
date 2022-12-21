@@ -69,6 +69,13 @@
     left: 90%;
     top: 85px;
   }
+  .cmp-searchbar__remove-icon--mobile{
+    position: absolute;
+    margin-left: 0rem;
+    margin-right: 1rem;
+    left: 90%;
+    top: 85px;
+  }
   .cmp-searchbar__context-menu {
     box-shadow: 0px;
   }
@@ -110,6 +117,11 @@
   }
 }
 
+.cmp-searchbar__remove-icon {
+  position: absolute;
+  left: 70%;
+  top: 34%;
+}
 //Search Bar styles
 .cmp-searchbar {
   min-width: rem(250px);
@@ -153,13 +165,10 @@
 
     .input-icon{
       .cmp-icon-input{
-        position: relative;
-        right: 25px;
-        top: 5px;
-        span {
+        .cmp-searchbar__remove-icon {
           position: relative;
           right: 25px;
-          top: 5px;
+          top: 5px;  
         }
       }
     }

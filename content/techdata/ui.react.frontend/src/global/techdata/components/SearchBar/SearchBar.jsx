@@ -78,6 +78,7 @@ const SearchBar = ({ data, componentProp }) => {
 
   const [width] = useWindowSize();
   const mobileState = width <= 767;
+  const removeIconClassMobile = mobileState ? 'cmp-searchbar__remove-icon--mobile' : 'cmp-searchbar__remove-icon';
 
   const [selectedArea, setSelectedArea] = useState(areaList[0]);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
@@ -391,7 +392,7 @@ const SearchBar = ({ data, componentProp }) => {
           {validateSearchTerm() && (
             <span
               onClick={clearInputSearch}
-              className="cmp-button__icon cmp-icon-input"
+              className={"cmp-button__icon cmp-icon-input " + removeIconClassMobile}
             >
               <svg
                 width="20"
