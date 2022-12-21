@@ -2,23 +2,14 @@
 @import "../../styles/helpers/colors.scss";
 
 @mixin accordionIcon($isIcon, $content) {
-
+  content: $content;
 
   @if $isIcon=="true" {
-    -webkit-mask-image: $content;
-    mask-image: $content;
-    background: no-repeat;
-    height: 12px;
-    width: 12px;
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    background-color: map-get($color-palette, 'white');
-    padding: 0;
-    vertical-align: middle
+    margin-left: rem(6px);
+    margin: 0 rem(10px) 0 0;
   }
 
   @else {
-    content: $content;
     font-size: 0.375rem;
     vertical-align: auto;
   }
@@ -185,11 +176,11 @@
   &__footer {
     &.cmp-accordion__chevronFooter {
       .cmp-accordion__button[aria-expanded="false"]::before {
-        @include accordionIcon("true", url('/content/dam/global-shared/icons/regular/chevron-right.svg'));
+        @include accordionIcon("true", url('https://api.iconify.design/fluent/chevron-right-12-regular.svg?color=%23FFFFFF'));
       }
 
       .cmp-accordion__button[aria-expanded="true"]::before {
-        @include accordionIcon("true", url('/content/dam/global-shared/icons/regular/chevron-down.svg'));
+        @include accordionIcon("true", url('https://api.iconify.design/fluent/chevron-down-12-regular.svg?color=%23FFFFFF'));
       }
     }
 
