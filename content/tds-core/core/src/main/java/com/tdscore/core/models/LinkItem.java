@@ -3,6 +3,8 @@ package com.tdscore.core.models;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
+
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageFilter;
 import com.day.cq.wcm.api.PageManager;
@@ -15,6 +17,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.gson.JsonArray;
@@ -31,6 +34,9 @@ public class LinkItem {
 
     protected static final Logger log = LoggerFactory.getLogger(LinkItem.class);
     private static final String CATALOG_ROOT_PARENT_PATH = "/content/dam/tds-core/catalog";
+
+    @Self
+    private SlingHttpServletRequest request;
 
     @Inject
     private String platformName;
@@ -84,6 +90,8 @@ public class LinkItem {
     @Inject
     private String randomID;
 
+    private static final String VIEW_ALL_KEY = "megamenu.common.viewAll";
+
     List<SubNavLinks> subLinks = new ArrayList<>();
 
     private List<SubNavLinks> tertiarySubNavLinks = new ArrayList<>();
@@ -119,9 +127,15 @@ public class LinkItem {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
                         if (currentPage != null && 
                             currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
+                            I18n i18n = getI18n(currentPage);
+                            String viewAllText = i18n.getVar(VIEW_ALL_KEY);
+                            viewAllText = (viewAllText != null && 
+                                !viewAllText.trim().isEmpty() && 
+                                !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All "; 
+
                             link.addSubNavLink(new SubNavLinks(
                                 new StringBuilder()
-                                    .append("View all ")
+                                    .append(viewAllText)
                                     .append(link.getPageTitle())
                                     .toString(),
                                 link.getPagePath(),
@@ -139,6 +153,12 @@ public class LinkItem {
                 }
             }
         }
+    }
+
+    private I18n getI18n(Page currentPage) {
+        Locale pageLang = currentPage.getLanguage();
+        ResourceBundle resourceBundle = this.request.getResourceBundle(pageLang);
+        return new I18n(resourceBundle);
     }
 
     private void populateTertiarySubnavLinks(Resource child, Page rootPage, String rootParentLink) {

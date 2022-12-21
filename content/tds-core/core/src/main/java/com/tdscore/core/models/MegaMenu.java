@@ -4,6 +4,7 @@ import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
 import com.adobe.cq.wcm.core.components.models.datalayer.builder.DataLayerBuilder;
 import com.adobe.cq.wcm.core.components.util.ComponentUtils;
 
+import com.day.cq.i18n.I18n;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.day.cq.wcm.api.Template;
@@ -15,6 +16,7 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ChildResource;
+import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.gson.JsonArray;
@@ -31,6 +33,9 @@ public class MegaMenu {
 
     protected static final Logger log = LoggerFactory.getLogger(MegaMenu.class);
 
+    @Self
+    private SlingHttpServletRequest request;
+
     @ChildResource
     private Resource menuList;
 
@@ -40,6 +45,8 @@ public class MegaMenu {
     private ResourceResolver resolver;
 
     private String menuID;
+
+    private static final String VIEW_ALL_KEY = "megamenu.common.viewAll";
 
     @PostConstruct
     protected void initModel() {
@@ -54,9 +61,15 @@ public class MegaMenu {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
                     if (currentPage != null && 
                         currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
+                        I18n i18n = getI18n(currentPage);
+                        String viewAllText = i18n.getVar(VIEW_ALL_KEY);
+                        viewAllText = (viewAllText != null && 
+                            !viewAllText.trim().isEmpty() && 
+                            !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All "; 
+
                         link.addSubNavLink(new SubNavLinks(
                             new StringBuilder()
-                                .append("View all ")
+                                .append(viewAllText)
                                 .append(link.getPlatformName())
                                 .toString(),
                             link.getLinkUrl(),
@@ -73,6 +86,12 @@ public class MegaMenu {
                 menuLinkList.add(link);
             }
         }
+    }
+
+    private I18n getI18n(Page currentPage) {
+        Locale pageLang = currentPage.getLanguage();
+        ResourceBundle resourceBundle = this.request.getResourceBundle(pageLang);
+        return new I18n(resourceBundle);
     }
 
     public String getRandomID() {
