@@ -20,12 +20,13 @@
 }
 .cmp-modal {
 	font-family: $font-family-sans-serif;
-	&.visible {
-		animation: a-fade-in 0.15s linear;
+	transition: all .5s linear;
+	&.cmp-isvisible {
+		opacity: 1;
 		visibility: visible;
 	}
-	&.hidden {
-		animation: a-fade-out 0.15s linear;
+	&.cmp-ishidden {
+		opacity: 0;
 		visibility: hidden;
 	}
 	&_backdrop {
@@ -57,7 +58,7 @@
 		max-width: 100%;
 		width: fit-content;
 		min-width: 25%;
-		box-shadow: 2px 2px 4px;
+		box-shadow: 2px 2px 4px #00000082;
 	}
 	&_header {
 		color: get-color(brand-blue);
@@ -72,7 +73,7 @@
 	}
 	&_body {
 		margin: 2rem;
-		min-height: rem(100px);
+		min-height: fit-content;
 		font-size: $font-size-medium;
 	}
 	&_btn {
