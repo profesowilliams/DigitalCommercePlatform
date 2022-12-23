@@ -63,11 +63,9 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 		}
 	};
 
-	let headers = prepareSignInHeader();
-	console.log('🚀headers we are about to send >>',headers);
+	let headers = prepareSignInHeader();	
 	let postData = prepareSignInBody();	
-	const requestConf = { withCredentials: isHttpOnlyEnabled() };
-	console.log('🚀requestConf >>',requestConf);
+	const requestConf = { headers, withCredentials: isHttpOnlyEnabled() };	
 	return dispatch => {
 		dispatch(signInRequest());
 			post(signInUrl, postData, requestConf)
