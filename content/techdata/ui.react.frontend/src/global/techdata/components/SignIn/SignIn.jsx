@@ -208,6 +208,13 @@ const SignIn = (props) => {
     toggleLangNavigation(isAlreadySignedIn());
   }
 
+  function hideDropdownButton() {
+    const hideDropdownEle = document.querySelectorAll('.cmp-button__dropdown[data-hide-dropdown="true"]');
+    hideDropdownEle && hideDropdownEle.forEach(function(val){
+        val.closest('.dropdownbutton').classList.add('hidden');
+    })
+  }
+
   const handleLoginResponse = () => {
     changeLoggedInState(true);
 
@@ -228,6 +235,7 @@ const SignIn = (props) => {
 
     if (isLoggedIn == null  && localStorage.getItem("sessionId")) {
       document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
+      hideDropdownButton();
     }
 
     if(isExtraReloadDisabled()){

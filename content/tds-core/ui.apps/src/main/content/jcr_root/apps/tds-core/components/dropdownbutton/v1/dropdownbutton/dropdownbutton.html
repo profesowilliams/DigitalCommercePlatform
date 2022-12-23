@@ -19,7 +19,7 @@
 </button>
 
 <sly data-sly-use.dropdownLinks="com.tdscore.core.models.DropdownButton">
-	<div data-sly-list.item="${dropdownLinks.links}" class="cmp-button__dropdown">
+	<div data-sly-list.item="${dropdownLinks.links}" class="cmp-button__dropdown" data-hide-dropdown="${properties.hideDropDown}">
 		<a href=" ${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank':''}">${item.platformName}</a>
 	</div>
 </sly>

@@ -154,9 +154,6 @@ public class VendorListItem implements ListItem {
                 case VENDOR_CATEGORY:
                     tags = prepareTags(ce, resource);
                     break;
-                default:
-                    log.warn("Invalid vendor key.");
-                    break;
             }
         }
 
