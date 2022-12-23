@@ -93,6 +93,14 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                     background-color: map-get($color-palette, 'cobalt');
                 }
             }
+
+            .cmp-searchbar--checked {
+                .cmp-searchbar__button {
+                    -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    background-color: map-get($color-palette, 'cobalt');
+                }
+            }
         }  
     }
 
@@ -104,6 +112,14 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 filter: $white;
 
                 &:hover {
+                    -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    filter: $aqua;
+                }
+            }
+
+            .cmp-searchbar--checked {
+                .cmp-searchbar__button {
                     -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     filter: $aqua;
