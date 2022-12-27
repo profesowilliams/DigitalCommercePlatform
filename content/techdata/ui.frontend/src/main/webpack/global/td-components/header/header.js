@@ -6,7 +6,8 @@ export default class Header {
         this.headerEl = document.querySelector('#cmp-techdata-header');
         this.searchEl = document.querySelector('#cmp-techdata-header .search');
         this.HEADER_MOBILE = 'cmp-experiencefragment--header-mobile';
-        
+        this.masthead = document.querySelector('.masthead');
+
         this.headerResize();
         window.addEventListener('resize', () => this.headerResize());
         this.searchEl?.addEventListener('click', () => this.toggleSearch(this.searchEl));
@@ -16,17 +17,18 @@ export default class Header {
         this.header = document.getElementById('cmp-techdata-header');
         this.authorColor = this.header.style.backgroundColor;
 
-        this.setComponentToStick();
-        this.checkSubheaderContainer();
-        this.setSubheaderMargin();
-        this.checkHeaderImage();
+        if(!this.masthead === undefined) {
+            this.setComponentToStick();
+            this.checkSubheaderContainer();
+            this.setSubheaderMargin();
+            this.checkHeaderImage();
+        }
 
         this.isComponentStuck = false;
     }
 
     setComponentToStick(){
-        const masthead =  document.querySelector('.masthead');
-        const mastheadContainer = masthead.querySelector('.cmp-container');
+        const mastheadContainer = this.masthead.querySelector('.cmp-container');
         this.stickyHeaderFlag = mastheadContainer.dataset.stickyHeaderflag;
 
         this.isSubheaderTransparency = false;
