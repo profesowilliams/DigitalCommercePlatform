@@ -7,6 +7,7 @@ import Header from './td-components/header/header';
 import MegamenuMobile from './td-components/megamenu/megamenu-mobile';
 import bp from '../common-utils/js/media-match';
 import {subHeader} from './td-components/sub-header/subHeader';
+import './td-components/carousel/carousel';
 
 export function Initializer() {
     this.initComponents();

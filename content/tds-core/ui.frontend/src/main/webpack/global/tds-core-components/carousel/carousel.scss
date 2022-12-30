@@ -567,3 +567,13 @@
   width: 100%;
 
 }
+
+.cmp-carousel__action {
+  &--previous, &--next {
+      &:disabled {
+          .cmp-carousel__action-icon {
+              border-color: map-get($color-palette,"neutral-gray-2");
+          }
+      }
+  }
+}
