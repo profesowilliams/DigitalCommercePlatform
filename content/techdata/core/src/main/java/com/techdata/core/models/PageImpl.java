@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -89,48 +88,33 @@ public class PageImpl implements Page {
     }
 
     public String getDataJson() {
-        Resource currentPageResource = currentPage.getContentResource();
-        // Use ComponentUtils to verify if the DataLayer is enabled
-        Map<String, String> categoryMap = new HashMap<>();
-        categoryMap.put(PAGE_TYPE, getPageType());
-        String[] siteSections = getSiteSections();
-        for (int i = 0; i < siteSections.length; i++) {
-            categoryMap.put("siteSection"+ (i + 1), siteSections[i]);
-        }
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("errorCode", getErrorCode());
-        errorMap.put("errorName", getErrorName());
         //Create a map of properties we want to expose
         Map<String, Object> analyticsPageProperties = new HashMap<>();
-        analyticsPageProperties.put("@type", currentPageResource.getResourceType());
+        analyticsPageProperties.put("@type", currentPage.getContentResource().getResourceType());
         analyticsPageProperties.put("repo:modifyDate", currentPage.getLastModified().toString());
         analyticsPageProperties.put("dc:title", currentPage.getTitle());
         analyticsPageProperties.put("dc:description", currentPage.getDescription());
-        analyticsPageProperties.put("repo:path", currentPage.getPath());
+        analyticsPageProperties.put("repo:path", currentPage.getPath() + ".html");
         analyticsPageProperties.put("xdm:template", currentPage.getTemplate().getPath());
+        analyticsPageProperties.put("xdm:tags", null);
         analyticsPageProperties.put("xdm:language", currentPage.getLanguage().getLanguage());
-        analyticsPageProperties.put("dc:currency", getCurrencyCode());
-        analyticsPageProperties.put("xdm:country", getCurrencyCode());
-        analyticsPageProperties.put("dc:pageName", getAnalyticsPageName());
-        analyticsPageProperties.put("dc:server", request.getServerName());
-        analyticsPageProperties.put("dc:url", getPageUrl());
-        analyticsPageProperties.put("category", categoryMap);
-        analyticsPageProperties.put("error", errorMap);
+        analyticsPageProperties.put("xdm:currency", getCurrencyCode());
+        analyticsPageProperties.put("xdm:pageType", getPageType());
 
-        //Use AEM Core Component utils to get a unique identifier for the Byline component (in case multiple are on the page)
-//        String id = ComponentUtils.getId(currentPageResource, this.currentPage, this.componentContext);
-        // Return the bylineProperties as a JSON String with a key of the bylineResource's ID
         try {
-            return String.format("{\"%s\":%s}",
+            String jsonString = String.format("{\"%s\":%s}",
                     this.getId(),
                     // Use the ObjectMapper to serialize the bylineProperties to a JSON string
                     new ObjectMapper().writeValueAsString(analyticsPageProperties));
+            LOG.info("Analytics {}", jsonString);
+            return jsonString;
         } catch (JsonProcessingException e) {
             LOG.error("Unable to generate dataLayer JSON string", e);
         }
 
         return null;
     }
+
     @Override
     public NavigationItem getRedirectTarget() {
         return basePage.getRedirectTarget();
