@@ -280,23 +280,6 @@ function RenewalsGrid(props) {
     }
   }
 
-  const getDefaultCopyValue = (params) => {
-    const colId = params?.column?.colId;
-    const nodeData = params?.node?.data
-    switch (colId) {
-      case "resellername":
-        return nodeData?.reseller?.name;
-      case "Id":
-        return nodeData?.source?.id;
-      case "renewedduration":
-        return `${nodeData?.source?.type}: ${nodeData?.programName}`
-      case "total":
-        return thousandSeparator(nodeData?.renewal?.total);
-      default:
-        return "";
-    }
-  }
-
   /**
    * A custom implementation to enable tooltips on hover
    * for those columns whose values are truncated. Modify `hoverableList`
@@ -350,8 +333,7 @@ function RenewalsGrid(props) {
       </div>
 
       <div className="cmp-renewals-grid">
-        <Grid
-          getDefaultCopyValue={getDefaultCopyValue}
+        <Grid       
           columnDefinition={columnDefs}
           options={options}
           config={gridConfig}

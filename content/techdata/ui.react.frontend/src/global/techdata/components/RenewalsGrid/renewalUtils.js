@@ -7,9 +7,11 @@ import {
   SORT_LOCAL_STORAGE_KEY,
   TOASTER_LOCAL_STORAGE_KEY,
 } from "../../../../utils/constants";
-import { sortRenewalObjects } from "../../../../utils/utils";
+import { sortRenewalObjects, stringifyValue } from "../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../utils/dataLayerUtils";
 import { isObject } from "../../../../utils";
+import { thousandSeparator } from "../../helpers/formatting";
+import { getRenewalManufacturer } from "../RenewalsDetails/RenewalPreviewGrid/RenewalManufacturer";
 
 export  const secondLevelOptions = {
     colId: 'total',
@@ -402,14 +404,54 @@ export const checkIfAnyDateRangeIsCleared = ({dateOptionsList,filterList,customS
     return false;
 }
 
-export const getContextMenuItems = (params, config ) => [
+export const mapCopyOnNullValue = (params) => {
+    const colId = params?.column?.colId;
+    const nodeData = params?.node?.data
+    switch (colId) {
+      case "resellername":
+        return nodeData?.reseller?.name;
+      case "Id":
+        return nodeData?.source?.id;
+      case "renewedduration":
+        return `${nodeData?.source?.type}: ${nodeData?.renewedDuration}`
+      case "total":
+        return `${thousandSeparator(nodeData?.renewal?.total)} ${nodeData?.renewal?.currency}`;
+      case "mfrNumber":
+        return getRenewalManufacturer(nodeData);
+      default:
+        return "";
+    }
+  }
+
+const mapVendorWithProgramName = (params) => {
+    navigator.clipboard.writeText(stringifyValue(`${params?.value?.name} : ${params?.node?.data?.programName}`));
+}
+
+const mapDueDateFormatted = (params) => {
+    navigator.clipboard.writeText(stringifyValue(params?.node?.data?.formattedDueDate));
+}
+
+const hasPriceColumns = (params) => {
+    return  params?.column?.colId === "unitListPrice" || params?.column?.colId === 'unitPrice' || params?.column?.colId === 'totalPrice';
+}
+
+export const getContextMenuItems = (params, config) => [
     {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
         action: () => {
           switch (true) {
-            case !params.value && typeof getDefaultCopyValue === 'function':
-              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
+            case hasPriceColumns(params): 
+                navigator.clipboard.writeText(stringifyValue(thousandSeparator(params?.value)));
+                break;
+            case params?.column?.colId === 'dueDate':
+                mapDueDateFormatted(params);
+                break;
+            case params?.column?.colId === 'vendor':
+                mapVendorWithProgramName(params)
+                break;
+            case !params.value && typeof mapCopyOnNullValue === 'function':
+              navigator.clipboard.writeText(stringifyValue(mapCopyOnNullValue(params)));
               break;
             case isObject(params.value):
               navigator.clipboard.writeText(stringifyValue(params.value?.name));
