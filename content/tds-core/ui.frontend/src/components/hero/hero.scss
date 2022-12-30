@@ -1,4 +1,68 @@
 .hero {
+    .cmp-teaser {
+        position: relative;
+
+        &__title {
+            font-size: clamp(1rem, 0.4178rem + 2.7397vw, 3.5rem);
+            font-weight: 500;
+        }
+
+        &__image-container {
+            position: relative;
+        }
+
+        &__content[data-cmp-hasimage] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: clamp(800px, 50vw, 900px);
+            padding: 2rem 6rem;
+            color: get-color(brand-white);
+            .cmp-item {
+                color: get-color(brand-white);
+            }
+            .cmp-teaser__footer {
+                color: get-color(brand-white);
+            }
+        }
+
+        &__footer {
+            font-size: rem(20px);
+        }
+
+        .cmp-hero-items-description-list {
+            display: flex;
+            margin: 2rem 0;
+            width: 88%;
+            justify-content: space-between;
+        }
+    }
+
+    .cmp-item {
+        font-size: rem(20px);
+    }
+
+    .cmp-item>p:first-child {
+        display: flex;
+        justify-content: center;
+    }
+
+    .cmp-item>p:nth-child(2) {
+        text-align: center;
+        width: 10rem;
+        margin-top: 1rem;
+    }
+
+    .cmp-item img,
+    picture {
+        max-width: 100%;
+        display: block;
+        width: 2rem;
+    }
+}
+
+.hero {
   &.cmp-dpb-hero {
     position: relative;
 

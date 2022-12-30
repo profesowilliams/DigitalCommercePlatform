@@ -1,0 +1,22 @@
+<sly data-sly-template.description="${@ teaser}">
+    <sly
+        data-sly-use.richtext="${'tds-core/components/hero/v1/hero/description.js' @ description= teaser.description }" />
+    <div class="hidden" data-config="${richtext.test}"></div>
+    <div class="display-none" data-config="${richtext.test}"></div>
+    <div class="display-none" data-config="${richtext.msgDebugMsg}"></div>
+    <div data-sly-test="${richtext.authorUsedTemplate}" class="cmp-teaser-hero__description">
+        <div class="cmp-hero-items-description-list" data-sly-list.element="${richtext.description}">
+            <div class="cmp-item">
+                ${element @context="html"}
+            </div>
+        </div>
+        <sly data-sly-test="${richtext.footerText}">
+            <span class="cmp-teaser__footer">
+                ${richtext.footerText @context="html"}
+            </span>
+        </sly>
+    </div>
+    <div class="cmp-teaser-hero__description" data-sly-test="${!richtext.authorUsedTemplate}"
+        style="color: ${properties.fontColorDescription @ context ='styleToken'}">
+        ${teaser.description @ context="html"}</div>
+</sly>
