@@ -4,7 +4,7 @@
   xmlns:jcr="http://www.jcp.org/jcr/1.0"
   xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
   jcr:primaryType="nt:unstructured"
-  jcr:title="Lean the skills you need to grow your ${variable-name}"
-  jcr:description="&lt;p>{item}&lt;/p>&#xd;&#xa;&lt;p>&lt;img src=&quot;/content/dam/tds-site/Map.svg&quot; alt=&quot;&quot; />&lt;/p>&#xd;&#xa;&lt;p>Clear and holistic roadmap&lt;/p>&#xd;&#xa;&lt;p>{item}&lt;/p>&#xd;&#xa;&lt;p>&lt;img src=&quot;/content/dam/tds-site/Video.svg&quot; alt=&quot;&quot; />&lt;/p>&#xd;&#xa;&lt;p>600+ tools and resources&lt;/p>&#xd;&#xa;&lt;p>{item}&lt;/p>&#xd;&#xa;&lt;p>&lt;img src=&quot;/content/dam/tds-site/QuestionBubble.svg&quot; alt=&quot;&quot; />&lt;/p>&#xd;&#xa;&lt;p>Network of experts&lt;/p>&#xd;&#xa;&lt;p>{footer}&lt;/p>&#xd;&#xa;&lt;p>Access the right tools, resources and people to get the most of your business&lt;/p>&#xd;&#xa;&lt;p> &lt;/p>&#xd;&#xa;"
+  jcr:title="Learn the skills you need to grow your ${variable-name}"
+  jcr:description="&lt;p>{item}&lt;/p>&#xd;&#xa;&lt;p>Clear and holistic roadmap&lt;/p>&#xd;&#xa;&lt;p>{item}&lt;/p>&#xd;&#xa;&lt;p>Network of experts&lt;/p>&#xd;&#xa;&lt;p>{item}&lt;/p>&#xd;&#xa;&lt;p>600+ tools and resources&lt;/p>&#xd;&#xa;&lt;p>{footer}&lt;/p>&#xd;&#xa;&lt;p>Access the right tools, resources and people to grow your business in booming technology markets&lt;/p>&#xd;&#xa;"
 >
 </jcr:root>

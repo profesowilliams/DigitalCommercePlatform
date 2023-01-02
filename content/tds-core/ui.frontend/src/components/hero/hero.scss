@@ -1,14 +1,36 @@
 .hero {
+    @include mobile {
+        height: 32rem;
+        position: relative;
+    }
     .cmp-teaser {
         position: relative;
+        @include mobile {
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top;
+        }
 
         &__title {
             font-size: clamp(1rem, 0.4178rem + 2.7397vw, 3.5rem);
             font-weight: 500;
+            width: 46%;
+            @include mobile {
+                width: 70%;
+                font-size: 2rem;
+            }
         }
 
         &__image-container {
             position: relative;
+            @include mobile{
+                position: absolute;
+                bottom: 0;
+                top: 0;
+                left: 0;
+                right: 0; 
+            }
         }
 
         &__content[data-cmp-hasimage] {
@@ -16,42 +38,69 @@
             top: 0;
             left: 0;
             height: 100%;
-            width: clamp(800px, 50vw, 900px);
-            padding: 2rem 6rem;
-            color: get-color(brand-white);
+            width: 100%;
+            overflow-x: hidden;
+            padding: 2rem 6rem;     
+            @include mobile {
+                padding: 3.5rem 2rem !important;  
+            }      
             .cmp-item {
-                color: get-color(brand-white);
+                color: inherit;
             }
             .cmp-teaser__footer {
-                color: get-color(brand-white);
+                color: inherit;
             }
         }
 
         &__footer {
             font-size: rem(20px);
+            @include mobile {
+                font-size: .89rem;   
+            }
         }
 
         .cmp-hero-items-description-list {
             display: flex;
             margin: 2rem 0;
-            width: 88%;
+            width: 46%;
             justify-content: space-between;
+            color: get-color(brand-white);
+            @include mobile {
+                width: 100% !important;
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     }
 
     .cmp-item {
         font-size: rem(20px);
+        @include mobile {
+            font-size: .89rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
     }
 
     .cmp-item>p:first-child {
         display: flex;
         justify-content: center;
+        img {
+            @include mobile {
+                width: 1.2rem;       
+            }
+        }
     }
 
     .cmp-item>p:nth-child(2) {
         text-align: center;
         width: 10rem;
         margin-top: 1rem;
+        @include mobile {
+            width: max-content;
+            margin-top: 0;
+        }
     }
 
     .cmp-item img,

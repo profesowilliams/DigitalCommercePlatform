@@ -1,12 +1,10 @@
 <sly data-sly-template.description="${@ teaser}">
-    <sly
-        data-sly-use.richtext="${'tds-core/components/hero/v1/hero/description.js' @ description= teaser.description }" />
-    <div class="hidden" data-config="${richtext.test}"></div>
-    <div class="display-none" data-config="${richtext.test}"></div>
-    <div class="display-none" data-config="${richtext.msgDebugMsg}"></div>
-    <div data-sly-test="${richtext.authorUsedTemplate}" class="cmp-teaser-hero__description">
+    <sly data-sly-use.richtext="${'tds-core/components/hero/v1/hero/description.js' @ description= teaser.description }" />
+    <div class="display-none" data-config="${richtext.test}" data-config="${richtext.test}"></div>
+    <div class="display-none" data-sly-test="${richtext.msgDebugMsg}" data-config="${richtext.msgDebugMsg}"></div>
+    <div data-sly-test="${richtext.authorUsedTemplate}" class="cmp-teaser-hero__description" style="color: ${properties.fontColorDescription @ context ='styleToken'}">
         <div class="cmp-hero-items-description-list" data-sly-list.element="${richtext.description}">
-            <div class="cmp-item">
+            <div class="cmp-item" style="color: ${properties.fontColorDescription @ context ='styleToken'}">
                 ${element @context="html"}
             </div>
         </div>
