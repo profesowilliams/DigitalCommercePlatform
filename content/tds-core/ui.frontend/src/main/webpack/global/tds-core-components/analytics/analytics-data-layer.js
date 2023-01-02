@@ -41,7 +41,9 @@ import { getCookie } from '../../../static/js/utils.js';
       const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
       const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
       const pageInfo = cmpShowAdobeDataLayer.page[pageObjectName];
-      const pageName = siteSectionArray.toString().replaceAll('/', ':');
+      const siteSectionName = []
+      siteSectionArray.forEach((item, index) => index > 0 && siteSectionName.push(item));
+      const pageName = siteSectionName.toString().replaceAll(',', ':').replace('.html', '');
       let country = '';
       categoryObject.pageType = pageInfo['xdm:pageType'];
       const pageCurrency = pageInfo['xdm:currency'];
