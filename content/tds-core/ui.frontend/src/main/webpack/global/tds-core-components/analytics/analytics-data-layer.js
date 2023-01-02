@@ -1,5 +1,8 @@
 import { getCookie } from '../../../static/js/utils.js';
 (function () {
+  let sessionId = window.localStorage.getItem("sessionId");
+  let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+
   function validateDataObject(dataObject, filter) {
     if (dataObject != null) {
       for (var property in filter) {
@@ -33,25 +36,33 @@ import { getCookie } from '../../../static/js/utils.js';
       const url = window.location.href;
       const server = window.location.hostname;
       const siteSectionArray = window.location.pathname.split('/');
-      const categoryObject = { pageType: '', sitesection: '' };
+      const categoryObject = { pageType: ''};
       const localStorage = window.localStorage;
+      const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
+      const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
+      const pageInfo = cmpShowAdobeDataLayer.page[pageObjectName];
+      const pageName = siteSectionArray.toString().replaceAll('/', ':');
+      let country = '';
+      categoryObject.pageType = pageInfo['xdm:pageType'];
+      const pageCurrency = pageInfo['xdm:currency'];
       siteSectionArray.forEach((siteSection, index) => {
-        if (index === siteSectionArray.length - 1) {
-          categoryObject.sitesection = siteSection;
+        if (index === 1) {
+          country = siteSection;
         }
-        if (index > 0 && index < siteSectionArray.length - 1) {
-          categoryObject['siteSection' + index] = siteSection;
+        if (index > 2 && index < siteSectionArray.length) {
+          categoryObject['siteSection' + (index - 2)] = siteSection;
         }
       });
+      
       const dataLayerObject = {
         page: {
           pageInfo: {
-            pageName: dataObject['dc:title'], // pull from ACDL
+            pageName: pageName, // pull from ACDL
             url: url, // pull from window.location
             server: server, // pull from window.location
-            //   "country": "us",  // pull from ACDL
+            country: country,  // pull from ACDL
             language: dataObject['xdm:language'], // pull from ACDL
-            //   "currencyCode": "USD"  // pull from ACDL
+            currencyCode: pageCurrency  // pull from ACDL
           },
           category: categoryObject,
           errorDetails: {
@@ -60,14 +71,15 @@ import { getCookie } from '../../../static/js/utils.js';
             //   "error404": ""  // pull from window.location
           },
           visitor: {
-            ecID: '', // pull from local storage
-            sapID: '', // pull from local storage
-            loginStatus: localStorage.userData ? true : false, // pull from local storage
-          },
+            ecID: sessionId && userData?.id ? userData.id : null,
+            sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+            loginStatus: sessionId ? "Logged in" : "Logged out"
+          }
         },
       };
       window.dataLayer.push(dataLayerObject);
     }
+      
   }
 
   function initDataLayer() {
