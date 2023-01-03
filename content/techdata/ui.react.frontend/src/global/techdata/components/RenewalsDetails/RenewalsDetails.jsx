@@ -20,6 +20,7 @@ import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '..
 import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
 import EditFlow from './ConfigGrid/Common/EditFlow'; 
 import { removeDashboardSeparator } from "../../../../utils/utils";
+import useAuth from "../../hooks/useAuth";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -32,7 +33,7 @@ function RenewalsDetails(props) {
   );
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
   const shopURL = componentProp.shopURL;
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const { isUserLoggedIn:isLoggedIn } = useAuth();
   const changeRefreshDetailApiState = useStore((state) => state.changeRefreshDetailApiState)  
   const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
   const gridItems = useRenewalsDetailsStore(state => state.items);

@@ -26,11 +26,12 @@ import {useStore} from "../../../../utils/useStore";
 import { triggerEvent } from "../../../../utils/events";
 import axios from 'axios';
 import Modal from '../Modal/Modal';
+import useAuth from "../../hooks/useAuth";
 
 const FA = require("react-fontawesome");
 
 const ExposeSigninStatus = forwardRef((props, ref) => {
-  const isLoggedIn = useStore(state => state.isLoggedIn);
+  const {isUserLoggedIn:isLoggedIn} = useAuth();
   useImperativeHandle(ref, () => ({
       getLoginStatus() {
         return isLoggedIn;
@@ -50,6 +51,7 @@ const SignIn = (props) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [modelComponent, setModelComponent] = useState(null);
+  const { isUserLoggedIn } = useAuth();
   let tempProperties = {
     title:  'Error'
   };
@@ -158,7 +160,7 @@ const SignIn = (props) => {
     if (actionParamValues.length > 0) {
       let redirectUrl = actionParamValues.length > 1 ? actionParamValues[1] : "";
       if(redirectUrl) {
-          if(!localStorage.getItem("sessionId")) {
+          if(!isUserLoggedIn) {
             localStorage.setItem("redirectUrl", redirectUrl);
             // for not logged in user - then authenticate and store redirectUrl(shop) to localStorage
             redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
@@ -179,7 +181,7 @@ const SignIn = (props) => {
   const isSessionExpired = () => {
     try {
       let sessionId = localStorage.getItem("sessionId");
-      if (sessionId) {
+      if (isUserLoggedIn) {
         let sessionMaxTimeout = localStorage.getItem("sessionMaxTimeout");
         let sessionIdleTimeout = localStorage.getItem("sessionIdleTimeout");
         // Below is added for missing sessionMaxTimeout/sessionIdleTimeout localstorage esp for existing login sessions
@@ -375,7 +377,7 @@ const SignIn = (props) => {
   }
 
   const signInButton = () => {
-    if(hideWhenNotLoggedIn == "true" && !localStorage.getItem("sessionId")) {
+    if(hideWhenNotLoggedIn == "true" && !isUserLoggedIn) {
         return;
     } else
     return (

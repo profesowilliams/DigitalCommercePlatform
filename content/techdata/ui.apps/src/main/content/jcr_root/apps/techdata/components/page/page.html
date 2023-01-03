@@ -57,6 +57,12 @@
           window.adobeDataLayer = window.adobeDataLayer || [];
           
           let sessionId = window.localStorage.getItem("sessionId");
+          const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+          let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+          if (isExtraReloadDisabled()) {
+            window.addEventListener( 'user:loggedIn', () => userIsLoggedIn = true);
+            window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+          }
           let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
           
           adobeDataLayer.push({

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { get } from '../../../utils/api';
 import { useStore } from "../../../utils/useStore"
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../utils/featureFlagUtils";
+import useAuth from "./useAuth";
 
 // hook for getting data from API on component init, checks if component is mounted before call
 // return array of three states = [ response - actual response, 
@@ -13,7 +14,7 @@ export default function useGet(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  const isLoggedIn = useStore(state => state.isLoggedIn);
+  const {isUserLoggedIn:isLoggedIn} = useAuth();
   const refreshRenewalDetailApi = useStore(state => state.refreshRenewalDetailApi);
 
   useEffect(() => {

@@ -32,7 +32,12 @@
     const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
     const LIST_CLASSNAME = "cmp-list__item-link-analytics";
 
-    let sessionId = window.localStorage.getItem("sessionId");
+    const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+    let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+    if (isExtraReloadDisabled()) {
+        window.addEventListener('user:loggedIn' , () => userIsLoggedIn = true);
+        window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+    }
     let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
 
     function parseNameFromElement(elementClicked) {
@@ -86,9 +91,9 @@
         object.page = object.page || {};
 
         object.page.visitor = {
-            ecID: sessionId && userData?.id ? userData.id : null,
-            sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-            loginStatus: sessionId ? "Logged in" : "Logged out"
+            ecID: userIsLoggedIn && userData?.id ? userData.id : null,
+            sapID: userIsLoggedIn && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+            loginStatus: userIsLoggedIn ? "Logged in" : "Logged out"
         }
 
         return object;

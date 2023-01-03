@@ -20,6 +20,7 @@ import {
   ERROR_CREATE_QUOTE_NOT_VALID_CART,
   ERROR_TITLE_DEFAULT
 } from '../../../../utils/constants';
+import useAuth from '../../hooks/useAuth';
 
 const fixedPayload = { 
     "createFromId": "96722368",
@@ -53,7 +54,7 @@ const QuoteCreate = ({
   const [cartID, setCartID] = useState(false);
   const [createQuoteButtonEnabled, setCreateQuoteButtonEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const {isUserLoggedIn : isLoggedIn} = useAuth();
 
   const [modal, setModal] = useState(null);
   const methods = optionsList;
@@ -141,7 +142,7 @@ const QuoteCreate = ({
 
       //this condition for key equeals to cero is to give QA an opprtunity to test a failed create quote
       //this conditins needs to be removed later
-      if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+      if(isLoggedIn){
       let params = { ...fixedPayload, pricingCondition: pricing.key === '1' ? null : pricing.key, createFromType: createFromTypes[methodSelected.key]  }
       if( methodSelected.key !== 'active' )
         params = {...params, createFromId: cartID };

@@ -41,6 +41,7 @@ import {
 } from "../../../../utils/constants";
 import { isNotEmptyValue } from "../../../../utils/utils";
 import {useStore} from "../../../../utils/useStore"
+import useAuth from "../../hooks/useAuth";
 
 function QuotePreview(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -60,7 +61,7 @@ function QuotePreview(props) {
   const modalConfig = componentProp?.modalConfig;
   const DEAL_ATTRIBUTE_FIELDNAME = "DEALIDENTIFIER";
 
-  const isLoggedIn = useStore(state => state.isLoggedIn);
+  const {isUserLoggedIn:isLoggedIn} = useAuth();
 
   componentProp.productLines.agGridLicenseKey = componentProp.agGridLicenseKey;
   const channel = new BroadcastChannel(QUOTE_PREVIEW_BROADCAST_CHANNEL_ID);
@@ -114,7 +115,7 @@ function QuotePreview(props) {
    */
   useEffect(() => { 
     const quoteDetailsResponse = apiResponse?.content?.quotePreview?.quoteDetails;
-    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+    if(isLoggedIn){
       if(quoteDetailsResponse) {
         handlerBoxShowRequiredField(quoteDetailsResponse);
         const customerBuyMethod =  quoteDetailsResponse.customerBuyMethod;

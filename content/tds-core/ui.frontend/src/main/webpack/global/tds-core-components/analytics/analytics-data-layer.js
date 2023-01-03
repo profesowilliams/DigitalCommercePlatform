@@ -1,5 +1,12 @@
-(function () {
-  let sessionId = window.localStorage.getItem("sessionId");
+import { getCookie } from '../../../static/js/utils.js';
+(function () {  
+  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+  if (isExtraReloadDisabled()) {
+    window.addEventListener('user:loggedIn' , () => userIsLoggedIn = true);
+    window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+  }
+  
   let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
 
   function validateDataObject(dataObject, filter) {
@@ -93,9 +100,9 @@
             //   "error404": ""  // pull from window.location
           },
           visitor: {
-            ecID: sessionId && userData?.id ? userData.id : null,
-            sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-            loginStatus: sessionId ? "Logged in" : "Logged out"
+            ecID: userIsLoggedIn && userData?.id ? userData.id : null,
+            sapID: userIsLoggedIn && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+            loginStatus: userIsLoggedIn ? "Logged in" : "Logged out"
           }
         },
       };

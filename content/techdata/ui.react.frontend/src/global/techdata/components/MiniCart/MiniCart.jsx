@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { usGet } from "../../../../utils/api";
 import { isAlreadySignedIn } from "../../../../store/action/authAction";
+import useAuth from "../../hooks/useAuth";
 
 const MiniCartWrapper = ({ children, cartActive, shopUrl, cartLabel }) => {
   const sessionId = localStorage.getItem("sessionId");
+  const { isUserLoggedIn } = useAuth();
   const className = `cmp-cart ${cartActive}`;
-  if (window.SHOP?.authentication?.isAuthenticated() || sessionId) {
+  if (window.SHOP?.authentication?.isAuthenticated() || isUserLoggedIn) {
     return (
       <a href={shopUrl} className="cmp-cart-link">
           <div className={className}>

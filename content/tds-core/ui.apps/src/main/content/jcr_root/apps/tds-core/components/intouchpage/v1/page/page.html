@@ -57,11 +57,17 @@
         if(typeof QSI === "undefined") {
             // QSI object populated only for logged in user
             let sessionId = window.localStorage.getItem("sessionId");
+            const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+            let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+             if (isExtraReloadDisabled()) {
+                window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
+                window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+            }
             let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-            if(sessionId && userData) {
+            if(userIsLoggedIn && userData) {
                 QSI = {};
                 QSI.config = {
-                  externalReference: sessionId && userData?.id ? userData.id : null
+                  externalReference: userIsLoggedIn && userData?.id ? userData.id : null
                     };
             }
         }

@@ -8,6 +8,7 @@ import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
 import {useStore} from "../../../../utils/useStore"
 import { isNotEmptyValue } from '../../../../utils/utils';
 import { QUOTE_PREVIEW_BROADCAST_CHANNEL_ID } from '../../../../utils/constants';
+import useAuth from '../../hooks/useAuth';
 
 const CreateConfig = ({ componentProp }) => {
   const { label, buttonTitle, optionsList, dropdownLabel, punchOutUrl, placeholderText, nodePath }  = JSON.parse(componentProp);
@@ -15,7 +16,7 @@ const CreateConfig = ({ componentProp }) => {
   const [redirectUrl, setRedirectUrl] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const { isUserLoggedIn: isLoggedIn } = useAuth();
   const POST_BACK_URL = "https://shop.techdata.com";
   const [quoteIDAnalytic, setQuoteIDAnalytic] = useState(null);
   const [flagUpdate, setFlagUpdate] = useState(false);
@@ -86,7 +87,7 @@ const CreateConfig = ({ componentProp }) => {
 
     try {
       const result = await usPost(punchOutUrl, params);
-      if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+      if(isLoggedIn){
         if (result?.data?.content?.url) {
           analyticsData(methodSelected.label, false);
           setFlagUpdate(true);

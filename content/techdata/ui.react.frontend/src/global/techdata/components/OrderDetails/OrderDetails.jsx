@@ -9,6 +9,7 @@ import { getUrlParams } from "../../../../utils";
 import useGet from "../../hooks/useGet";
 import {useStore} from "../../../../utils/useStore"
 import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
+import useAuth from "../../hooks/useAuth";
 
 const OrderDetails = ({ componentProp }) => {
   const {
@@ -29,7 +30,7 @@ const OrderDetails = ({ componentProp }) => {
   const [orderDetails, setOrderDetails] = useState(null);
   const [quoteWithMarkup, setQuoteWithMarkup] = useState(null);
   const [quoteOption, setQuoteOption] = useState(null);
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const { isUserLoggedIn: isLoggedIn } = useAuth();
   
   useEffect(() => {
     if (iconList.length === 0) {
