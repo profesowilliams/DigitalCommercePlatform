@@ -1,4 +1,3 @@
-import { getCookie } from '../../../static/js/utils.js';
 (function () {
   let sessionId = window.localStorage.getItem("sessionId");
   let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
@@ -28,6 +27,21 @@ import { getCookie } from '../../../static/js/utils.js';
     }
     return;
   }
+
+  function getCountry(siteSectionName, language) {
+    const elementReturn = {
+      country: '',
+      index: 0
+    }
+    siteSectionName.find((s, index) => {
+      if (s == language) {
+        elementReturn.country = siteSectionName[index - 1];
+        elementReturn.index = index;
+      }
+    });
+    return elementReturn
+  }
+
   function pageShownHandler(event) {
     const dataObject = getDataObjectHelper(event, {
       '@type': 'tds-site/components/page',
@@ -35,35 +49,41 @@ import { getCookie } from '../../../static/js/utils.js';
     if (dataObject != null) {
       const url = window.location.href;
       const server = window.location.hostname;
-      const siteSectionArray = window.location.pathname.split('/');
       const categoryObject = { pageType: ''};
-      const localStorage = window.localStorage;
+      const language = dataObject['xdm:language'];
       const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
       const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
       const pageInfo = cmpShowAdobeDataLayer.page[pageObjectName];
-      const siteSectionName = []
-      siteSectionArray.forEach((item, index) => index > 0 && siteSectionName.push(item));
-      const pageName = siteSectionName.toString().replaceAll(',', ':').replace('.html', '');
-      let country = '';
+      const siteSectionName = [];
+      window.location.pathname.split('/').forEach((item, index) => index > 0 && siteSectionName.push(item));
+      const returnObject  = getCountry(siteSectionName, language);
+      const country = returnObject.country;
+      const countryIndex = returnObject.index;
+      let pageName = '';
+      siteSectionName.forEach((element, index) => {
+        if (index > countryIndex) {
+          pageName += ':' + element;
+        }
+      })
+      pageName = pageName.replace('.html', '');
+      
       categoryObject.pageType = pageInfo['xdm:pageType'];
       const pageCurrency = pageInfo['xdm:currency'];
-      siteSectionArray.forEach((siteSection, index) => {
-        if (index === 1) {
-          country = siteSection;
-        }
-        if (index > 2 && index < siteSectionArray.length) {
-          categoryObject['siteSection' + (index - 2)] = siteSection;
+      siteSectionName.forEach((siteSection, index) => {
+        if (index > 1 && index < siteSectionName.length) {
+          categoryObject['siteSection' + (index - 1)] = siteSection.replace('.html', '');
         }
       });
+      
       
       const dataLayerObject = {
         page: {
           pageInfo: {
-            pageName: pageName, // pull from ACDL
+            pageName: pageName.substring(1), // pull from ACDL
             url: url, // pull from window.location
             server: server, // pull from window.location
             country: country,  // pull from ACDL
-            language: dataObject['xdm:language'], // pull from ACDL
+            language: language, // pull from ACDL
             currencyCode: pageCurrency  // pull from ACDL
           },
           category: categoryObject,
@@ -81,6 +101,7 @@ import { getCookie } from '../../../static/js/utils.js';
       };
       window.dataLayer.push(dataLayerObject);
     }
+      
       
   }
 
