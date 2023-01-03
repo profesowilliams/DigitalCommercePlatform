@@ -109,6 +109,32 @@
         display: block;
         width: 2rem;
     }
+
+    .cmp-teaser__action-container {
+        a {
+            padding: rem(12.8px) rem(24px);
+            display: inline-block;
+            background: $white;
+            border-radius: rem(1px);
+            text-align: center;
+            font-family: $font-family;
+            font-style: normal;
+            font-weight: 400;
+            font-size: rem(20px);
+            line-height: rem(18px);
+            color: $brand-green;
+            margin-top: rem(24px);          
+            text-transform: capitalize;
+
+            @include mobile {
+                padding: rem(12px) rem(20px);
+                font-family: $font-family-everett;
+                font-size: rem(16px);
+                line-height: rem(24px);
+                width: 100%;
+            }
+        }
+    }
 }
 
 .hero {
