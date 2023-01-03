@@ -294,7 +294,7 @@ use(['../common/utils.js'], function(utils) {
     }
 
     if (noResultsValues != null) {
-        jsonObject["noResultsValues"] = noResultsValues;
+        jsonObject["searchResultsError"] = noResultsValues;
     }
 
     return {
