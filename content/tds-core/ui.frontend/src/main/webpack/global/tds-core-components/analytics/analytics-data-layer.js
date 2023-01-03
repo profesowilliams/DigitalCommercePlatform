@@ -1,12 +1,11 @@
-import { getCookie } from '../../../static/js/utils.js';
-(function () {  
+(function () {
   const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
   let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
   if (isExtraReloadDisabled()) {
     window.addEventListener('user:loggedIn' , () => userIsLoggedIn = true);
     window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
   }
-  
+  let sessionId = window.localStorage.getItem("sessionId");
   let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
 
   function validateDataObject(dataObject, filter) {
@@ -49,6 +48,26 @@ import { getCookie } from '../../../static/js/utils.js';
     return elementReturn
   }
 
+  function isCategoryKeyword(element, keyword = 'siteSection') {
+    if (element.includes(keyword)) {
+      return element;
+    }
+  }
+
+  function fillCategorySiteSections (categoryObject){
+    const categoryKeys = Object.keys(categoryObject);
+    const categorySiteSections = categoryKeys.filter((element) => isCategoryKeyword(element));
+    if (categorySiteSections.length < 5) {
+      const newCategoryObject = categoryObject;
+      for (let i = categorySiteSections.length + 1; i < 5; i++) {
+        newCategoryObject['siteSection' + i] = 'n/a';
+      }
+      return newCategoryObject;
+    } else {
+      return categoryObject;
+    }
+  }
+
   function pageShownHandler(event) {
     const dataObject = getDataObjectHelper(event, {
       '@type': 'tds-site/components/page',
@@ -56,7 +75,7 @@ import { getCookie } from '../../../static/js/utils.js';
     if (dataObject != null) {
       const url = window.location.href;
       const server = window.location.hostname;
-      const categoryObject = { pageType: ''};
+      let categoryObject = { pageType: ''};
       const language = dataObject['xdm:language'];
       const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
       const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
@@ -68,21 +87,21 @@ import { getCookie } from '../../../static/js/utils.js';
       const countryIndex = returnObject.index;
       let pageName = '';
       siteSectionName.forEach((element, index) => {
-        if (index > countryIndex) {
+        if (index > (countryIndex-2)) { // countryIndex less 2 sites that mean language and country
           pageName += ':' + element;
         }
       })
       pageName = pageName.replace('.html', '');
-      
-      categoryObject.pageType = pageInfo['xdm:pageType'];
       const pageCurrency = pageInfo['xdm:currency'];
+      let cont = 0;
       siteSectionName.forEach((siteSection, index) => {
-        if (index > 1 && index < siteSectionName.length) {
-          categoryObject['siteSection' + (index - 1)] = siteSection.replace('.html', '');
+        if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
+          categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
         }
       });
-      
-      
+       
+      categoryObject = fillCategorySiteSections(categoryObject);
+      categoryObject.pageType = pageInfo['xdm:pageType'];
       const dataLayerObject = {
         page: {
           pageInfo: {
