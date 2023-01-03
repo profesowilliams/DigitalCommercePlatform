@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +93,9 @@ public class PageImpl implements Page {
         //Create a map of properties we want to expose
         Map<String, Object> analyticsPageProperties = new HashMap<>();
         analyticsPageProperties.put("@type", currentPage.getContentResource().getResourceType());
-        analyticsPageProperties.put("repo:modifyDate", currentPage.getLastModified().toString());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String strDate = dateFormat.format(currentPage.getLastModified().getTime());
+        analyticsPageProperties.put("repo:modifyDate", strDate);
         analyticsPageProperties.put("dc:title", currentPage.getTitle());
         analyticsPageProperties.put("dc:description", currentPage.getDescription());
         analyticsPageProperties.put("repo:path", currentPage.getPath() + ".html");
@@ -104,9 +108,8 @@ public class PageImpl implements Page {
         try {
             String jsonString = String.format("{\"%s\":%s}",
                     this.getId(),
-                    // Use the ObjectMapper to serialize the bylineProperties to a JSON string
                     new ObjectMapper().writeValueAsString(analyticsPageProperties));
-            LOG.info("Analytics {}", jsonString);
+            LOG.debug("Analytics {}", jsonString);
             return jsonString;
         } catch (JsonProcessingException e) {
             LOG.error("Unable to generate dataLayer JSON string", e);
