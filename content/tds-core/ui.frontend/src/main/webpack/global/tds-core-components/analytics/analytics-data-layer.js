@@ -73,6 +73,14 @@
       '@type': 'tds-site/components/page',
     });
     if (dataObject != null) {
+      /**@type String */
+      let errorCode = dataObject['repo:path'];
+      const errorName = dataObject['dc:title'];
+      let flagError = false;
+      if (errorCode.includes('error')) {
+        flagError = true;
+        errorCode = errorCode.split('errors')[1].replace('.html','').substring(1);
+      }
       const url = window.location.href;
       const server = window.location.hostname;
       let categoryObject = { pageType: ''};
@@ -114,9 +122,8 @@
           },
           category: categoryObject,
           errorDetails: {
-            //   "errorCode": "",  // pull from window.location
-            //   "errorName": "",  // pull from window.location
-            //   "error404": ""  // pull from window.location
+            errorCode: flagError ? errorCode : '',
+            errorName: flagError ? errorName : ''
           },
           visitor: {
             ecID: userIsLoggedIn && userData?.id ? userData.id : null,
