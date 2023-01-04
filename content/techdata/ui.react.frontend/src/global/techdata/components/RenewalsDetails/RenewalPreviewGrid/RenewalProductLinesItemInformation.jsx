@@ -1,13 +1,12 @@
 import React, { useCallback } from "react";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
+import { formatDetailsShortDescription } from "../../RenewalsGrid/renewalUtils";
 
 const hasSerialNumbers = (line) => line.serialNumbers && line.serialNumbers.length > 0 && line.serialNumbers[0];
 
 export const getItemInformation = (line) => {
-  const {product = [false,false]} = line;
-  const [techdata, manufacturer] = product;
-  const description = manufacturer?.name;
+  const description = formatDetailsShortDescription(line)
 
   const serialNumbers = hasSerialNumbers(line) && !line.serialNumbers.every(e => e === null)
       ? `
@@ -24,24 +23,9 @@ Instance:${line.instance}`
 
 
 function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shopDomainPage = "", invokeModal }) {
-  const {product = [false,false]} = line;
-  const [techdata, manufacturer] = product;
-  const description = manufacturer?.name;
+  const description =  formatDetailsShortDescription(line);
   const serialHasValue = hasSerialNumbers(line);
-  const formatDescription = (description = "") => {
-    if (!description) return "N/A";
-    const matchFirstWords = /^(.*?\s){12}/;
-    const matched = description.match(matchFirstWords);
-    if (true || !matched || (!matched.length)) return <p>{description}</p>
-    const firstTextRow = matched[0];
-    const secondTextRow = description.substring(firstTextRow.length);
-    return (
-      <>
-        <p>{firstTextRow}</p>
-        <p>{secondTextRow}</p>
-      </>
-    )
-  }
+ 
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.product) {
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -95,7 +79,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
               target={!isLinkDisabled ? "_blank" : null}
               className={`cmp-product-lines-grid__item-information__box-text__header__link ${!isLinkDisabled ? "" : "no-link"}`}
             >
-              {formatDescription(description)}
+              <p>{description}</p>
             </a>
             <br />
             {serialHasValue && <span>

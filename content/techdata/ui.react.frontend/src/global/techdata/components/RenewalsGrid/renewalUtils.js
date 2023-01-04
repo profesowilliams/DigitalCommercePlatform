@@ -404,6 +404,24 @@ export const checkIfAnyDateRangeIsCleared = ({dateOptionsList,filterList,customS
     return false;
 }
 
+export const formatDetailsShortDescription = (columnData = "") => {
+    const {product = [false,false]} = columnData;
+    const [techdata, manufacturer] = product;
+    const description = manufacturer?.name;
+    if (!description) return "N/A";
+    const matchFirstWords = /^(.*?\s){12}/;
+    const matched = description.match(matchFirstWords);
+    if (true || !matched || (!matched.length)) return description;
+    const firstTextRow = matched[0];
+    const secondTextRow = description.substring(firstTextRow.length);
+    return (
+      <>
+        <p>{firstTextRow}</p>
+        <p>{secondTextRow}</p>
+      </>
+    )
+  }
+
 export const mapCopyOnNullValue = (params) => {
     const colId = params?.column?.colId;
     const nodeData = params?.node?.data
@@ -435,6 +453,13 @@ const hasPriceColumns = (params) => {
     return  params?.column?.colId === "unitListPrice" || params?.column?.colId === 'unitPrice' || params?.column?.colId === 'totalPrice';
 }
 
+const mapShortDescriptionCopy = (params) => {
+    const nodeData = params?.node?.data;
+    const description = formatDetailsShortDescription(nodeData);
+    const instance = nodeData?.instance ? nodeData.instance : 'N/A'; 
+    navigator.clipboard.writeText(stringifyValue(`${description} Instance: ${instance}`));
+}
+
 export const getContextMenuItems = (params, config) => [
     {
         name: config?.menuCopy,
@@ -448,7 +473,10 @@ export const getContextMenuItems = (params, config) => [
                 mapDueDateFormatted(params);
                 break;
             case params?.column?.colId === 'vendor':
-                mapVendorWithProgramName(params)
+                mapVendorWithProgramName(params);
+                break;
+            case params?.column?.colId === 'shortDescription':
+                mapShortDescriptionCopy(params);
                 break;
             case !params.value && typeof mapCopyOnNullValue === 'function':
               navigator.clipboard.writeText(stringifyValue(mapCopyOnNullValue(params)));
