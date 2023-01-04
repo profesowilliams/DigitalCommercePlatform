@@ -34,12 +34,16 @@
     return;
   }
 
-  function getCountry(siteSectionName, language) {
+  function getCountry(siteSectionName, language, flagLanguage) {
     const elementReturn = {
       country: '',
       index: 0
     }
     siteSectionName.find((s, index) => {
+      if (flagLanguage && s.includes(language)) {
+        elementReturn.country = siteSectionName[index - 1];
+        elementReturn.index = index;
+      }
       if (s == language) {
         elementReturn.country = siteSectionName[index - 1];
         elementReturn.index = index;
@@ -47,6 +51,7 @@
     });
     return elementReturn
   }
+    
 
   function isCategoryKeyword(element, keyword = 'siteSection') {
     if (element.includes(keyword)) {
@@ -54,7 +59,14 @@
     }
   }
 
-  function fillCategorySiteSections (categoryObject){
+  function fillCategorySiteSections (categoryObject, flagLanguage){
+    if (flagLanguage) {
+      const newCategoryObject = {pageType: ''};
+      for (let i = 0; i < 5; i++) {
+        newCategoryObject['siteSection' + i] = 'n/a';
+      }
+      return newCategoryObject;
+    }
     const categoryKeys = Object.keys(categoryObject);
     const categorySiteSections = categoryKeys.filter((element) => isCategoryKeyword(element));
     if (categorySiteSections.length < 5) {
@@ -68,6 +80,55 @@
     }
   }
 
+  function setPageName(siteSectionName, countryIndex, flagLanguage, pageType) {
+    let pageName = '';
+    if (flagLanguage) {
+      countryIndex = 0;
+      siteSectionName.forEach((element, index) => {
+        if (index > (countryIndex+1)) {
+          pageName += ':' + element;
+        }
+      })
+      pageName = pageName.replace('.html', '');
+      pageName += ':' + pageType;
+      return pageName;
+    }
+    siteSectionName.forEach((element, index) => {
+      if (index > (countryIndex-2)) { // countryIndex less 2 sites that mean language and country
+        pageName += ':' + element;
+      }
+    })
+    pageName = pageName.replace('.html', '');
+    return pageName;
+  }
+
+  /**
+   * 
+   * @param {string} language 
+   * @param {string} url 
+   */
+  function setFlagHomeLanguagePage(language, url) {
+    const pages = url.split('.html')[0].split('/');
+    const page = pages[pages.length - 1];
+    return page == language;
+  }
+
+  /**
+   * 
+   * @param {string} errorCode 
+   */
+  function setErrorFlag(errorCode) {
+    let flagError = false;
+    if (errorCode.includes('error')) {
+      flagError = true;
+      errorCode = errorCode.split('errors')[1].replace('.html','').substring(1);
+    }
+    return {
+      flagError,
+      errorCode
+    }
+  }
+
   function pageShownHandler(event) {
     const dataObject = getDataObjectHelper(event, {
       '@type': 'tds-site/components/page',
@@ -76,30 +137,25 @@
       /**@type String */
       let errorCode = dataObject['repo:path'];
       const errorName = dataObject['dc:title'];
-      let flagError = false;
-      if (errorCode.includes('error')) {
-        flagError = true;
-        errorCode = errorCode.split('errors')[1].replace('.html','').substring(1);
-      }
+      const pathnamePage = window.location.pathname;
+      const errorObject = setErrorFlag(errorCode);
+      const flagError = errorObject.flagError;
       const url = window.location.href;
       const server = window.location.hostname;
+      
       let categoryObject = { pageType: ''};
       const language = dataObject['xdm:language'];
+      const flagLanguage = setFlagHomeLanguagePage(language, pathnamePage);
       const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
       const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
       const pageInfo = cmpShowAdobeDataLayer.page[pageObjectName];
+      const pageType = pageInfo['xdm:pageType'];
       const siteSectionName = [];
-      window.location.pathname.split('/').forEach((item, index) => index > 0 && siteSectionName.push(item));
-      const returnObject  = getCountry(siteSectionName, language);
+      pathnamePage.split('/').forEach((item, index) => index > 0 && siteSectionName.push(item));
+      const returnObject  = getCountry(siteSectionName, language, flagLanguage);
       const country = returnObject.country;
       const countryIndex = returnObject.index;
-      let pageName = '';
-      siteSectionName.forEach((element, index) => {
-        if (index > (countryIndex-2)) { // countryIndex less 2 sites that mean language and country
-          pageName += ':' + element;
-        }
-      })
-      pageName = pageName.replace('.html', '');
+      const pageName = setPageName(siteSectionName, countryIndex, flagLanguage, pageType);
       const pageCurrency = pageInfo['xdm:currency'];
       let cont = 0;
       siteSectionName.forEach((siteSection, index) => {
@@ -108,8 +164,8 @@
         }
       });
        
-      categoryObject = fillCategorySiteSections(categoryObject);
-      categoryObject.pageType = pageInfo['xdm:pageType'];
+      categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
+      categoryObject.pageType = pageType;
       const dataLayerObject = {
         page: {
           pageInfo: {
