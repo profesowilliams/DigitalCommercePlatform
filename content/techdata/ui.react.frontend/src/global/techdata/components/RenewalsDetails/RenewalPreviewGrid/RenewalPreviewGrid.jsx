@@ -18,7 +18,7 @@ import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
-import { getContextMenuItems, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import { getContextMenuItems, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { getDictionaryValue } from "../../../../../utils/utils";
 

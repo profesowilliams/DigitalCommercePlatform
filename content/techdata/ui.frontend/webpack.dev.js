@@ -1020,6 +1020,13 @@ module.exports = (env) => {
                 ),
             }),
             new HtmlWebpackPlugin({
+                filename: "orders-tracking-grid",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/orders-tracking-grid.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
                 filename: "modal",
                 template: path.resolve(
                     __dirname,

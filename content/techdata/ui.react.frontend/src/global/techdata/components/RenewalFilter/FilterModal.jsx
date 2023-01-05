@@ -5,7 +5,7 @@ import { pushEvent } from "../../../../utils/dataLayerUtils";
 import {
   getLocalStorageData,
   setLocalStorageData,
-} from "../RenewalsGrid/renewalUtils";
+} from "../RenewalsGrid/utils/renewalUtils";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";

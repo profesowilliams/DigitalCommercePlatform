@@ -1,5 +1,5 @@
 import { FILTER_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import {  checkIfAnyDateRangeIsCleared, getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import {  checkIfAnyDateRangeIsCleared, getLocalStorageData, removeLocalStorageData, setLocalStorageData } from "../utils/renewalUtils";
 
 export const renewalsEffects = (set, get) => {
   function setFilterList(newFilterList = []) {

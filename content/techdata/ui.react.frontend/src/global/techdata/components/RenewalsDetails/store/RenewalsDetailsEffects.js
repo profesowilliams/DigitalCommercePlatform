@@ -1,5 +1,5 @@
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import { setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 import isEqual from 'lodash.isequal';
 
 export const renewalsEffects = ( set, get ) =>  ({

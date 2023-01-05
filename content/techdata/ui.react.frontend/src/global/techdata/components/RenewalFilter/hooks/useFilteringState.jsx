@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { isObject } from "../../../../../utils";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { generateFilterFields } from "../filterUtils/filterUtils";
 

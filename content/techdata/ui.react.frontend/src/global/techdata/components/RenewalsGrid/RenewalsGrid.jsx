@@ -3,7 +3,6 @@ import { LOCAL_STORAGE_KEY_USER_DATA, TOASTER_LOCAL_STORAGE_KEY } from "../../..
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
-import Grid from "../Grid/Grid";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
@@ -21,18 +20,21 @@ import {
   handleFetchDataStrategy,
   formatRenewedDuration,
   getContextMenuItems,
-} from "./renewalUtils";
+} from "./utils/renewalUtils";
 import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow';
 import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
-import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./renewalUtils";
+import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./utils/renewalUtils";
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
 import Toaster from "../Widgets/Toaster";
 import TransactionNumber from "./Orders/TransactionNumber";
 import { removeDashboardSeparator } from "../../../../utils/utils";
 import { isObject } from "../../../../utils";
+import { getBaseColumnDefinitions } from "../BaseGrid/utils/GenericColumnTypes";
+import { renewalsDefinitions } from "./utils/renewalsDefinitions";
+import BaseGrid from "../BaseGrid/BaseGrid";
 
 function ToolTip({ toolTipData }) {
   return (
@@ -146,24 +148,6 @@ function RenewalsGrid(props) {
     hasAccess,
     isAuthormodeAEM
   ]);
-
-  const columnDefs = getColumnDefinitions(componentProp.columnList);
-
-  var distiColumnIndex = columnDefs.findIndex(c => c.field === 'Id');
-  if (distiColumnIndex > -1) {
-    columnDefs[distiColumnIndex] = {
-      ...columnDefs[distiColumnIndex],
-      cellStyle: {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0},
-    };
-  }
-
-  var totalColumnIndex = columnDefs.findIndex(c => c.field === 'total');
-  if (totalColumnIndex > -1) {
-    columnDefs[totalColumnIndex] = {
-      ...columnDefs[totalColumnIndex],
-      cellStyle: {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0},
-    };
-  }
 
   const gridConfig = {
     ...componentProp,
@@ -331,31 +315,20 @@ function RenewalsGrid(props) {
           />
         </div>
       </div>
-
-      <div className="cmp-renewals-grid">
-        <Grid       
-          columnDefinition={columnDefs}
-          options={options}
-          config={gridConfig}
-          onAfterGridInit={_onAfterGridInit}
-          requestInterceptor={customRequestInterceptor}
-          mapServiceData={mapServiceData}
-          isRenewals={true}
-          onSortChanged={onSortChanged}
-          handlerIsRowMaster={() => true}
-          icons={{
-            groupExpanded: "<i></i>",
-            groupContracted: "<i></i>",
-          }}
-          onCellMouseOver={cellMouseOver}
-          onCellMouseOut={cellMouseOut}
-          omitCreatedQuery={true}
-          customizedDetailedRender={RenewalDetailRenderers}
-          suppressPaginationPanel={true}
-          contextMenuItems={contextMenuItems}
-          noContextMenuItemsWhenColumnNull={true}
-        />
-      </div>
+      <BaseGrid 
+        columnList={componentProp.columnList}
+        definitions={renewalsDefinitions()}
+        config={gridConfig}
+        options={options}
+        gridConfig={gridConfig}
+        _onAfterGridInit={_onAfterGridInit}
+        customRequestInterceptor={customRequestInterceptor} 
+        mapServiceData={mapServiceData} 
+        onSortChanged={onSortChanged}
+        cellMouseOver={cellMouseOver}
+        cellMouseOut={cellMouseOut}
+        DetailRenderers={RenewalDetailRenderers}
+        contextMenuItems={contextMenuItems} />
       <ToolTip toolTipData={toolTipData} />
       <div className="cmp-renewals__pagination--bottom">
         <CustomRenewalPagination
@@ -372,5 +345,6 @@ function RenewalsGrid(props) {
 }
 
 export default RenewalsGrid;
+
 
 

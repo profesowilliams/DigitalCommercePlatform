@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { redirectToRenewalDetail } from "../../renewalUtils";
+import { redirectToRenewalDetail } from "../../utils/renewalUtils";
 import { TOASTER_LOCAL_STORAGE_KEY } from '../../../../../../utils/constants';
 import { useRenewalGridState } from '../../store/RenewalsStore';
 import { fetchQuoteRenewalDetails, mapRenewalForUpdateDashboard, mapRenewalForUpdateDetails } from '../orderingRequests';

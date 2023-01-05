@@ -1,7 +1,7 @@
 import React from "react";
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
 import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils";
-import { redirectToRenewalDetail, analyticsColumnDataToPush } from "../renewalUtils";
+import { redirectToRenewalDetail, analyticsColumnDataToPush } from "../utils/renewalUtils";
 import { DocumentExcelIcon, DocumentPdfIcon, DownloadIcon, EyeIcon } from "../../../../../fluentIcons/FluentIcons";
 
 function DropdownDownloadList({ data, aemConfig }) {

@@ -4662,3 +4662,127 @@ app.post("/ui-renewal/v1/order", function (req, res) {
   };
   return res.status(200).json(success);
 });
+
+app.get("/ui-commerce/v2/orders", (req, res) => {
+  const response = {
+    content: {
+      totalItems: 4,
+      pageCount: 1,
+      pageNumber: 1,
+      pageSize: 25,
+      items: [
+        {
+          trackings: [],
+          devlieryNotes: [],
+          id: "S000402930",
+          reseller: "4674524412",
+          vendor: [{ vendorName: "MICROSOFT" }],
+          created: "11/19/22",
+          shipTo: "vivek GB INT",
+          type: "Manual",
+          price: "21.53",
+          priceFormatted: "21.53",
+          currency: "USD",
+          currencySymbol: "$",
+          status: "Open",
+          invoice: null,
+          isReturn: false,
+          invoices: [
+            {
+              id: "Pending",
+              line: "",
+              quantity: 0,
+              price: 21.53,
+              created: null,
+            },
+          ],
+        },
+        {
+          trackings: [],
+          devlieryNotes: [],
+          id: "I032415960",
+          reseller: "20221020132028             32415960",
+          vendor: [
+            { vendorName: "ADOBE" },
+            { vendorName: "HP INC" },
+            { vendorName: "DELL" },
+            { vendorName: "ACER" },
+          ],
+          created: "11/15/22",
+          shipTo: "Tech Data Limited",
+          type: "Web",
+          price: "3,344.76",
+          priceFormatted: "3,344.76",
+          currency: "USD",
+          currencySymbol: "$",
+          status: "Sales Review",
+          invoice: null,
+          isReturn: false,
+          invoices: [
+            {
+              id: "Pending",
+              line: "",
+              quantity: 0,
+              price: 3331.64,
+              created: null,
+            },
+          ],
+        },
+        {
+          trackings: [],
+          devlieryNotes: [],
+          id: "S000402895",
+          reseller: "32114612123",
+          vendor: [{ vendorName: "MICROSOFT" }],
+          created: "11/07/22",
+          shipTo: "vivek GB INT",
+          type: "Manual",
+          price: "0.00",
+          priceFormatted: "0.00",
+          currency: "USD",
+          currencySymbol: "$",
+          status: "Cancelled",
+          invoice: null,
+          isReturn: false,
+          invoices: [
+            {
+              id: "Pending",
+              line: "",
+              quantity: 0,
+              price: 265.88,
+              created: null,
+            },
+          ],
+        },
+        {
+          trackings: [],
+          devlieryNotes: [],
+          id: "I032415946",
+          reseller: "20221103150224             32415946",
+          vendor: [{ vendorName: "EPSON" }],
+          created: "11/07/22",
+          shipTo: "Tech Data Limited",
+          type: "Web",
+          price: "289.24",
+          priceFormatted: "289.24",
+          currency: "USD",
+          currencySymbol: "$",
+          status: "Sales Review",
+          invoice: null,
+          isReturn: false,
+          invoices: [
+            {
+              id: "Pending",
+              line: "",
+              quantity: 0,
+              price: 278.03,
+              created: null,
+            },
+          ],
+        },
+      ],
+    },
+    error: { code: 0, messages: [], isError: false },
+  };
+  return res.status(200).json(response);
+});

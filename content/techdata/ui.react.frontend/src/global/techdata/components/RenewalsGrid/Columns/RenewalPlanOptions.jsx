@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState, useMemo, useCallback } from "react"
 import { thousandSeparator } from "../../../helpers/formatting";
 import { fileExtensions, generateFileFromPost, getDictionaryValue, getLocaleFormattedDate } from "../../../../../utils/utils";
 import { useRenewalGridState } from "../store/RenewalsStore";
-import { getLocalStorageData, setLocalStorageData } from "../renewalUtils";
+import { getLocalStorageData, setLocalStorageData } from "../utils/renewalUtils";
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { CartIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
 import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
 import Link from "../../Widgets/Link";
 import useComputeBranding from "../../../hooks/useComputeBranding";
-import { redirectToRenewalDetail, formatRenewedDuration } from "../renewalUtils";
+import { redirectToRenewalDetail, formatRenewedDuration } from "../utils/renewalUtils";
 import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
 
 function RenewalPlanOptions({ labels, data, node }) {  

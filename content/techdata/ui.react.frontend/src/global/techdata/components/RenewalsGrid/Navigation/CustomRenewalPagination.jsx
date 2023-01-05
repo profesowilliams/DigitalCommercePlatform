@@ -13,7 +13,7 @@ import {
 } from "../../../../../utils/paginationUtil";
 import { getDictionaryValue } from "../../../../../utils/utils";
 import { useMultiFilterSelected } from "../../RenewalFilter/hooks/useFilteringState";
-import { updateQueryString } from "../renewalUtils";
+import { updateQueryString } from "../utils/renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 
 function CustomRenewalPagination({ onQueryChanged }, ref) {

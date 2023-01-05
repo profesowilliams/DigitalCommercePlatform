@@ -8,7 +8,7 @@ import useFilteringSelected from "../hooks/useIsFilteringSelected";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { dateToString } from "../../../helpers/formatting";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/renewalUtils";
+import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 
 function CustomDatePill({ clearDateFilters }) {
   const datePickerState = useRenewalGridState( state => state.datePickerState);

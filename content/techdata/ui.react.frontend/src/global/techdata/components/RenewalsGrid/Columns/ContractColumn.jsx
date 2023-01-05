@@ -3,7 +3,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "../../../../../fluentIcons/Fluen
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
 import { useRenewalGridState } from ".././store/RenewalsStore";
-import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData, formatRenewedDuration } from "../renewalUtils";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData, formatRenewedDuration } from "../utils/renewalUtils";
 
 
 function _ContractColumn({ data, eventProps }) {

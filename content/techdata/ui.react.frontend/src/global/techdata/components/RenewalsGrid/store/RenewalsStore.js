@@ -1,6 +1,6 @@
 import Create from "zustand";
 import { renewalsEffects } from "./RenewalsEffects";
-import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../renewalUtils";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../utils/renewalUtils";
 import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
 import { DATE_DEFAULT_OPTIONS } from "./RenewalsStoreConstants";

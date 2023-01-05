@@ -15,7 +15,7 @@ import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import Capsule from "../../Widgets/Capsule";
-import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../renewalUtils";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../utils/renewalUtils";
 import { useRenewalGridState } from "../store/RenewalsStore";
 import { SearchField } from "./SearchField";
 
