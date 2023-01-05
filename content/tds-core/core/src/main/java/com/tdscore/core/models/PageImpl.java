@@ -6,6 +6,7 @@ import com.adobe.cq.wcm.core.components.models.HtmlPageItem;
 import com.adobe.cq.wcm.core.components.models.NavigationItem;
 import com.adobe.cq.wcm.core.components.models.Page;
 import com.adobe.cq.wcm.core.components.models.datalayer.ComponentData;
+import com.day.cq.tagging.TagConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +28,7 @@ import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static com.tdscore.core.util.Constants.COUNTRY_PAGE;
 import static com.tdscore.core.util.Constants.LOCALE_PAGE;
@@ -98,7 +100,14 @@ public class PageImpl implements Page {
         analyticsPageProperties.put("dc:description", currentPage.getDescription());
         analyticsPageProperties.put("repo:path", currentPage.getPath() + ".html");
         analyticsPageProperties.put("xdm:template", currentPage.getTemplate().getPath());
-        analyticsPageProperties.put("xdm:tags", null);
+        analyticsPageProperties.put("xdm:tags",
+                Optional.ofNullable(Arrays.toString(currentPage.getContentResource().getValueMap().get(TagConstants.PN_TAGS, new String[]{})))
+                        .filter(StringUtils::isNotEmpty)
+                        .map(tagsValue -> tagsValue.split(","))
+                        .map(Arrays::stream)
+                        .orElseGet(Stream::empty)
+                        .filter(StringUtils::isNotEmpty)
+                        .toArray(String[]::new));
         analyticsPageProperties.put("xdm:language", currentPage.getLanguage().getLanguage());
         analyticsPageProperties.put("xdm:currency", getCurrencyCode());
         analyticsPageProperties.put("xdm:pageType", getPageType());
