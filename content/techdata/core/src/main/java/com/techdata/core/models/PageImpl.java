@@ -92,28 +92,28 @@ public class PageImpl implements Page {
     }
 
     public String getDataJson() {
-        //Create a map of properties we want to expose
-        Map<String, Object> analyticsPageProperties = new HashMap<>();
-        analyticsPageProperties.put("@type", currentPage.getContentResource().getResourceType());
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        String strDate = dateFormat.format(currentPage.getLastModified().getTime());
-        analyticsPageProperties.put("repo:modifyDate", strDate);
-        analyticsPageProperties.put("dc:title", currentPage.getTitle());
-        analyticsPageProperties.put("dc:description", currentPage.getDescription());
-        analyticsPageProperties.put("repo:path", currentPage.getPath() + ".html");
-        analyticsPageProperties.put("xdm:template", currentPage.getTemplate().getPath());
-        analyticsPageProperties.put("xdm:tags", prepareTagsStringArray());
-        analyticsPageProperties.put("xdm:language", currentPage.getLanguage().getLanguage());
-        analyticsPageProperties.put("xdm:currency", getCurrencyCode());
-        analyticsPageProperties.put("xdm:pageType", getPageType());
-
         try {
+            //Create a map of properties we want to expose
+            Map<String, Object> analyticsPageProperties = new HashMap<>();
+            analyticsPageProperties.put("@type", currentPage.getContentResource().getResourceType());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            String strDate = dateFormat.format(currentPage.getLastModified().getTime());
+            analyticsPageProperties.put("repo:modifyDate", strDate);
+            analyticsPageProperties.put("dc:title", currentPage.getTitle());
+            analyticsPageProperties.put("dc:description", currentPage.getDescription());
+            analyticsPageProperties.put("repo:path", currentPage.getPath() + ".html");
+            analyticsPageProperties.put("xdm:template", currentPage.getTemplate().getPath());
+            analyticsPageProperties.put("xdm:tags", prepareTagsStringArray());
+            analyticsPageProperties.put("xdm:language", currentPage.getLanguage().getLanguage());
+            analyticsPageProperties.put("xdm:currency", getCurrencyCode());
+            analyticsPageProperties.put("xdm:pageType", getPageType());
+
             String jsonString = String.format("{\"%s\":%s}",
                     this.getId(),
                     new ObjectMapper().writeValueAsString(analyticsPageProperties));
             LOG.debug("Analytics {}", jsonString);
             return jsonString;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             LOG.error("Unable to generate dataLayer JSON string", e);
         }
 
