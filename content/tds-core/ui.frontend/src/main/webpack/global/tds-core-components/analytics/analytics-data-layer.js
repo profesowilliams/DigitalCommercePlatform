@@ -163,7 +163,6 @@
           categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
         }
       });
-       
       categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
       categoryObject.pageType = pageType;
       const dataLayerObject = {
@@ -188,6 +187,7 @@
           }
         },
       };
+      dataLayerObject.page[pageObjectName] = pageInfo;
       window.dataLayer.push(dataLayerObject);
     }
       
