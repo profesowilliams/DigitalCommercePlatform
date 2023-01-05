@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import * as DataLayerUtils from "../../../../../utils/dataLayerUtils";
 import OrderDetailsSerialNumbers from "../../OrderDetails/OrderDetailsSerialNumbers/OrderDetailsSerialNumbers";
-import { formatDetailsShortDescription } from "../../RenewalsGrid/renewalUtils";
+import { formatDetailsShortDescription } from "../../RenewalsGrid/utils/renewalUtils";
 
 const hasSerialNumbers = (line) => line.serialNumbers && line.serialNumbers.length > 0 && line.serialNumbers[0];
 
