@@ -55,12 +55,15 @@ public class SubNavLinks {
 
     private String parentID;
 
-    SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink){
+    private Date lastModifiedDate;
+
+    SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink, Date lastModifiedDate){
         this.navPage = page;
         this.pageTitle = page.getTitle();
         this.pagePath = page.getPath();
         this.rootParentTitle = rootParentTitle;
         this.rootParentLink = rootParentLink;
+        this.lastModifiedDate = lastModifiedDate;
 
         ValueMap pageProps = page.getProperties();
         if (pageProps.containsKey(FONTAWESOME_ICON_PROPERTY_NAME))
@@ -165,18 +168,19 @@ public class SubNavLinks {
         while(itr.hasNext()){
             Page childPage = itr.next();
             hasChildPages = "true";
-            SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle+"-"+this.pageTitle, this.rootParentLink);
+            SubNavLinks childNav = new SubNavLinks(childPage, resolver, this.rootParentTitle+"-"+this.pageTitle, this.rootParentLink, childPage.getLastModified().getTime());
             subNavLinkslist.add(childNav);
         }
     }
 
-    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount, String isViewAll, String parentId){
+    SubNavLinks(String name, String pageUrl, String rootParentTitle, JsonArray children, String externalUrl, String docCount, String isViewAll, String parentId, Date lastModifiedDate){
         this.pageTitle = name;
         this.pagePath = pageUrl;
         this.rootParentTitle = rootParentTitle;
         this.docCount = docCount;
         this.isViewAll = isViewAll;
         this.parentID = parentId;
+        this.lastModifiedDate = lastModifiedDate;
         childJsonIterator(children, externalUrl);
     }
 
@@ -260,6 +264,8 @@ public class SubNavLinks {
     public ComponentData getData() {
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getParentID()+"-"+this.getMenuID())
+            .withType(() -> "tds-site/components/megamenu/item")
+            .withLastModifiedDate(() -> this.lastModifiedDate)
             .withTitle(() -> this.getPageTitle())
             .withParentId(() -> this.getParentID()+"-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
             .withLinkUrl(() -> this.getPagePath())

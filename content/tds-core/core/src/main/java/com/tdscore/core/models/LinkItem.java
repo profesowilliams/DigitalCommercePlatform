@@ -74,6 +74,9 @@ public class LinkItem {
     @Inject
     private String adbutlerJSScript;
 
+    @Inject 
+    private Date lastModifiedDate;
+
     @Inject
     private ResourceResolver resolver;
 
@@ -121,7 +124,7 @@ public class LinkItem {
                 Iterator<Page> children = rootPage.listChildren(new PageFilter());
                 while(children.hasNext()){
                     Page childPage = children.next();
-                    SubNavLinks link = new SubNavLinks(childPage, resolver, platformName, linkUrl);
+                    SubNavLinks link = new SubNavLinks(childPage, resolver, platformName, linkUrl, childPage.getLastModified().getTime());
                     
                     if (link.getSubNavLinkslist().size() > 0) {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
@@ -144,7 +147,8 @@ public class LinkItem {
                                 link.getPagePath(), 
                                 "0",
                                 "true",
-                                this.parentID)
+                                this.parentID,
+                                rootPage.getLastModified().getTime())
                             );
                         }
                     }
@@ -220,6 +224,10 @@ public class LinkItem {
         return this.parentID;
     }   
 
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     private void updateSublinkParent() {
         for(SubNavLinks link : this.subLinks) {
             link.setParentID(this.getParentID());
@@ -239,10 +247,11 @@ public class LinkItem {
       
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getParentID()+"-"+this.getPlatformMenuID())
+            .withType(() -> "tds-site/components/megamenu/item")
             .withTitle(() -> this.getMobilePlatformLevel())
+            .withLastModifiedDate(() -> this.lastModifiedDate)
             .withParentId(() -> this.getParentID())
             .withLinkUrl(() -> this.getLinkUrl())
-            .build();
-        
+            .build();      
     }
 }

@@ -59,6 +59,7 @@ public class MegaMenu {
 
                 if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
+                    link.setLastModifiedDate(currentPage.getLastModified().getTime());
                     if (currentPage != null && 
                         currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
                         I18n i18n = getI18n(currentPage);
@@ -78,7 +79,8 @@ public class MegaMenu {
                             link.getLinkUrl(), 
                             "0",
                             "true",
-                            this.menuID)
+                            this.menuID,
+                            currentPage.getLastModified().getTime())
                         );
                     }
                 }
@@ -114,6 +116,7 @@ public class MegaMenu {
       
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getID())
+            .withType(() -> "tds-site/components/megamenu/")
             .build();
         
     }
