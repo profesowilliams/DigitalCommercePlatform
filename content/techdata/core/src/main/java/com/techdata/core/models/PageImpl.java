@@ -129,7 +129,11 @@ public class PageImpl implements Page {
             if(tagManager != null) {
                 for (int i = 0; i < tagsDefinedOnPage.length; i++) {
                     Tag tag = tagManager.resolve(tagsDefinedOnPage[i]);
-                    tagValuesArray[i] = tag.getTitle();
+                    if(tag != null) {
+                        String tagValue = tag.getTitle();
+                        if(tagValue == null) tagValue = tag.getName();
+                        tagValuesArray[i] = tagValue;
+                    }
                 }
             }
         }
