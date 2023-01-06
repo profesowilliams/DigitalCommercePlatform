@@ -39,7 +39,7 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 
 	const  prepareSignInHeader = () => {
 		let code = localStorage.getItem('signInCode');
-		const sessionId = !isHttpOnlyEnabled() ? createSessionId() : '';
+		const sessionId = !isHttpOnlyEnabled() ? createSessionId() : 'xx';
 		createMaxTimeout();
 		setSessionId(sessionId);
 		return {
