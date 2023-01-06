@@ -86,7 +86,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 &::before {
                     background-color: map-get($color-palette, 'white');
                 }
-              }
+            }
         }
     }
 }
@@ -337,6 +337,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 &.handshake-regular {
                     &::before {
                         background-color: map-get($color-palette, 'charcoal');
+
+                        @media (max-width: 1024px) {
+                            background-color: map-get($color-palette, 'white');
+                        }
                     }
     
                     &:hover {
