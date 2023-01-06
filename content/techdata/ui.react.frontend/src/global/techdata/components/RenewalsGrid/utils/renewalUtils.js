@@ -180,9 +180,14 @@ export async function fetchRenewalsFilterByPost(config){
         }
         const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
         if (!isSameFilter) params.PageNumber = 1;
-        const result = await usPost(componentProp.uiServiceEndPoint, params);
-        previousFilter.current = {...params};
-        return result
+        try {
+            const result = await usPost(componentProp.uiServiceEndPoint, params);
+            previousFilter.current = {...params};
+            return result
+        } catch (error) {
+            console.log('🚀error on post http method renewals grid >>',error);
+        }
+       
       }
     return false
 }
@@ -269,11 +274,15 @@ export async function fetchRenewalsByGet(config){
     if (onFiltersClear) mapUrl.set('PageNumber', 1);
     const finalUrl = mapStrucToUrlStr(mapUrl);
     previousSortChanged.current = hasSortChanged.current;
-    firstAPICall.current = false;    
-    let gridData =  await usGet(finalUrl);
-    if (!localStorage.getItem('sessionId'))
-        setTimeout(() => gridData = usGet(finalUrl), 0)  
-    return gridData;
+    firstAPICall.current = false;  
+    console.log('🚀finalUrl test url before doing the request >>',finalUrl);
+    try {
+        let gridData =  await usGet(finalUrl);
+        return gridData;
+    } catch (error) {
+        console.log('🚀error fetching renewals grid data >> ',error);
+    }
+   
 }
 
 export function setPaginationData(mappedResponse,pageSize) {

@@ -30,9 +30,6 @@ import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
 import Toaster from "../Widgets/Toaster";
 import TransactionNumber from "./Orders/TransactionNumber";
-import { removeDashboardSeparator } from "../../../../utils/utils";
-import { isObject } from "../../../../utils";
-import { getBaseColumnDefinitions } from "../BaseGrid/utils/GenericColumnTypes";
 import { renewalsDefinitions } from "./utils/renewalsDefinitions";
 import BaseGrid from "../BaseGrid/BaseGrid";
 
