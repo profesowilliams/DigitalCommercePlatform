@@ -119,13 +119,20 @@
    */
   function setErrorFlag(errorCode) {
     let flagError = false;
-    if (errorCode.includes('error')) {
-      flagError = true;
-      errorCode = errorCode.split('errors')[1].replace('.html','').substring(1);
-    }
-    return {
-      flagError,
-      errorCode
+    try {
+      if (errorCode.includes('error')) {
+        flagError = true;
+        errorCode = errorCode.split('errors')[1].replace('.html','').substring(1);
+      }
+      return {
+        flagError,
+        errorCode
+      }
+    } catch (error) { // in case of null or undefined, catch the return object
+      return {
+        flagError,
+        errorCode: ''
+      }
     }
   }
 
