@@ -47,7 +47,7 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 			'Site': headerInfo.site,
 			'Accept-Language': headerInfo.acceptLanguage,
 			'Consumer': consumer,
-			'SessionId': sessionId ?? '',
+			'SessionId': !isHttpOnlyEnabled() ? sessionId : '',
 			'Content-Type': 'application/json',		
 		}
 	};
