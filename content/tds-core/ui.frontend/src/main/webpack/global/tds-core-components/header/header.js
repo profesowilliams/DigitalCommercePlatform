@@ -6,8 +6,9 @@ export default class Header {
         this.headerEl = document.querySelector('#cmp-techdata-header');
         this.searchEl = document.querySelector('#cmp-techdata-header .search');
         this.HEADER_MOBILE = 'cmp-experiencefragment--header-mobile';
-        this.stickyHeaderEle = document.querySelector('.subheader');
-        this.subHeaderTop = this.stickyHeaderEle ? this.stickyHeaderEle.getBoundingClientRect().top : null;
+        this.stickyHeaderEle = document.querySelector(".subheader");
+        this.headerHeight = this.headerEl.clientHeight;
+        this.stickyCount = 0;
         
         this.headerResize();
         this.headerStickyStyle();
@@ -81,7 +82,8 @@ export default class Header {
             this.headerEl?.classList.remove(this.HEADER_MOBILE);
         }
 
-        this.subHeaderTop = this.stickyHeaderEle ? this.stickyHeaderEle.getBoundingClientRect().top : null;
+        this.headerHeight = this.headerEl.clientHeight;
+        this.subHeaderStop = (this.stickyHeaderEle.offsetTop - this.headerHeight);
 
         if(this.header && this.subheaderNav && this.container){
             this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
@@ -170,31 +172,33 @@ export default class Header {
     }
 
     checkHeaderSubheader(){
-        this.subHeaderTop = this.stickyHeaderEle ? this.stickyHeaderEle.getBoundingClientRect().top : null;
-        if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
-            if (this.subHeaderTop && (window.scrollY + this.header.clientHeight) < (this.subHeaderTop + window.scrollY)) {
-                if(this.subheaderNav.id === this.componentToStick.id){
-                    this.componentToStick.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
-                }
-                this.componentToStick.classList.remove('sticky');
-                this.isComponentStuck = false;
+        if (this.stickyCount == 0) {
+            this.subHeaderStop = (this.stickyHeaderEle.offsetTop - this.headerHeight);
+            this.stickyCount++;
+        }
+        const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+
+        if (scrollTop >= this.subHeaderStop) {
+            if(this.isSubheaderTransparency){
+                this.componentToStick.style.top = this.header.clientHeight + this.subheaderNav.clientHeight+ "px";
             }
             else{
-                if(this.isSubheaderTransparency){
-                    this.componentToStick.style.top = this.header.clientHeight + this.subheaderNav.clientHeight+ "px"; 
-                }
-                else{
-                    this.componentToStick.style.top = this.header.clientHeight + "px";
-                }
-                this.componentToStick.classList.add('sticky');
-                if(this.componentToStick.style != "container"){
-                    this.componentToStick.style.width = this.container.clientWidth + "px";
-                }
-                if(this.subheaderNav.id === this.componentToStick.id){
-                    this.componentToStick.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
-                }
-                this.isComponentStuck = true;
+                this.componentToStick.style.top = this.header.clientHeight + "px";
             }
+            this.componentToStick.classList.add('sticky');
+            if(this.componentToStick.style != "container"){
+                this.componentToStick.style.width = this.container.clientWidth + "px";
+            }
+            if(this.subheaderNav.id === this.componentToStick.id){
+                this.componentToStick.classList.remove('cmp-experiencefragment__subheader--sticky--opaque');
+            }
+            this.isComponentStuck = true;
+        } else {
+            if(this.subheaderNav.id === this.componentToStick.id){
+                this.componentToStick.classList.add('cmp-experiencefragment__subheader--sticky--opaque');
+            }
+            this.componentToStick.classList.remove('sticky');
+            this.isComponentStuck = false;
         }
     }
 
