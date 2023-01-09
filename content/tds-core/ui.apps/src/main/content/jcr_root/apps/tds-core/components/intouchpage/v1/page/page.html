@@ -46,7 +46,7 @@
 <div id="top"></div>
     <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
         <!-- Embed intouch auto script Start -->
-        <sly data-sly-test="${configData.backgroundLoginEnabled">
+        <sly data-sly-test="${configData.backgroundLoginEnabled}">
             ${configData.backgroundLoginSnippet @ context='scriptComment'}
         </sly>
         <!-- Embed intouch auto script End -->

@@ -20,7 +20,7 @@ public @interface IntouchConfiguration {
     @Property(label = "Footer API Url", description = "API url that provides the Footer HTML Fragment.")
     String footerAPIUrl() default "https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Footer";
 
-    @Property(label = "Background Login Enabled", description = "Flag to enable or disable")
+    @Property(label = "Background Login Enabled", description = "Flag to enable or disable snippet")
     boolean backgroundLoginEnabled() default false;
 
     @Property(label = "Background Login Snippet", description = "Provides script that will be embedded in Body section of the page.")
