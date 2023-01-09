@@ -29,8 +29,10 @@
       data-disable-extra-reload="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].extraReloadDisabled}"
       data-disable-check-for-dcp-access="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableChecksForDCPAccess}"
       data-disable-entitlements-list="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableEntitlementsList}"
-      data-intouch-header-api-url="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Header"
-      data-intouch-footer-api-url="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Footer"
+      data-intouch-header-api-url="${caconfig['com.tdscore.core.slingcaconfig.IntouchConfiguration].headerAPIUrl}"
+      data-intouch-footer-api-url="${caconfig['com.tdscore.core.slingcaconfig.IntouchConfiguration].footerAPIUrl}"
+<!--      data-intouch-header-api-url="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Header"-->
+<!--      data-intouch-footer-api-url="https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Footer"-->
       data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}">
         <script data-sly-test.dataLayerEnabled="${page.dataJson}">
           window.adobeDataLayer = window.adobeDataLayer || [];
@@ -42,9 +44,15 @@
               }
           });
         </script>
-<div id="top"></div>
 
+<div id="top"></div>
     <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
+        <!-- Embed intouch auto script Start -->
+        <sly data-sly-test="${configData.backgroundLoginEnabled">
+            ${configData.backgroundLoginSnippet @ context='scriptComment'}
+        </sly>
+        <!-- Embed intouch auto script End -->
+
         <!-- Google Tag Manager in Body -->
         ${configData.gtmBodyJSScript @ context='scriptComment'}
         <!-- End Google Tag Manager in Body -->

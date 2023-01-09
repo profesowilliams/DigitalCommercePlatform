@@ -229,6 +229,10 @@ public class CaConfigReader {
 
     private String intouchFooterAPIUrl;
 
+    private boolean backgroundLoginEnabled;
+
+    private String backgroundLoginSnippet;
+
     @PostConstruct
     public void init() {
 
@@ -314,13 +318,14 @@ public class CaConfigReader {
     }
 
     private void buildIntouchHeaderConfigurationConfigs() {
-        IntouchHeaderConfiguration intouchConfiguration =
-                page.adaptTo(ConfigurationBuilder.class).as(IntouchHeaderConfiguration.class);
+        IntouchConfiguration intouchConfiguration = page.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
         if(intouchConfiguration != null) {
             intouchCSSAPIUrl = intouchConfiguration.cssAPIUrl();
             intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
             intouchHeaderAPIUrl = intouchConfiguration.headerAPIUrl();
             intouchFooterAPIUrl = intouchConfiguration.footerAPIUrl();
+            backgroundLoginEnabled = intouchConfiguration.backgroundLoginEnabled();
+            backgroundLoginSnippet = intouchConfiguration.backgroundLoginSnippet();
         }
     }
 
@@ -750,5 +755,21 @@ public class CaConfigReader {
 
     public String getIntouchFooterAPIUrl() {
         return intouchFooterAPIUrl;
+    }
+
+    public String getIntouchCSSAPIUrl() {
+        return intouchCSSAPIUrl;
+    }
+
+    public String getIntouchJSAPIUrl() {
+        return intouchJSAPIUrl;
+    }
+
+    public boolean isBackgroundLoginEnabled() {
+        return backgroundLoginEnabled;
+    }
+
+    public String getBackgroundLoginSnippet() {
+        return backgroundLoginSnippet;
     }
 }
