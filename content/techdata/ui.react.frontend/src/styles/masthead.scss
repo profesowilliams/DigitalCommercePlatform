@@ -57,12 +57,6 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 align-items: center;
                 vertical-align: middle
             }
-
-            @media (max-width: 1024px) {
-                &::before {
-                    background-color: map-get($color-palette, 'white');
-                }
-              }
         }
 
         &.handshake-regular {
@@ -80,37 +74,6 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 display: inline-block;
                 align-items: center;
                 vertical-align: middle
-            }
-
-            @media (max-width: 1024px) {
-                &::before {
-                    background-color: map-get($color-palette, 'white');
-                }
-            }
-        }
-    }
-}
-
-.theme {        
-    &.dark {
-        .dropdownbutton, .button {
-            .cmp-button {
-                @media (max-width: 1024px) {
-                    color: map-get($color-palette, 'white');
-                    padding: 0;
-                }                
-            }
-        }
-    }
-
-    &.light {
-        .dropdownbutton, .button {
-            .cmp-button {
-                color: map-get($color-palette, 'white');
-
-                @media (max-width: 1024px) {
-                    padding: 0;
-                }
             }
         }
     }
@@ -202,6 +165,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         .cmp-sign-in-button {
             font-size: 16px;
 
+            &:hover {
+                box-shadow: none;
+            }
+
             &::before {
                 content: '';
                 -webkit-mask: url('/content/dam/global-shared/icons/regular/person.svg') no-repeat;
@@ -241,6 +208,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
 
     .minicart {
         .cmp-cart__icon {
+            &:hover {
+                box-shadow: none;
+            }
+
             &::before {
                 content: '';
                 -webkit-mask: url('/content/dam/global-shared/icons/regular/cart.svg') no-repeat;
@@ -291,6 +262,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
 
     .languagenavigation {
         .cmp-dropbtn {
+            &:hover {
+                box-shadow: none;
+            }
+
             &::before {
                 content: '';
                 -webkit-mask: url('/content/dam/global-shared/icons/regular/globe.svg') no-repeat;
@@ -313,79 +288,29 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
             }
         }
     }
-}
 
-// Note: Move custom icons to another file and import it here
-.theme {
-    &.dark {
-        @extend .cmp-button__icon;
-
-        .cmp-button__icon {
-            &--fluent, .fluent {
-                &.people-filled {
-                    &::before {
-                        background-color: map-get($color-palette, 'charcoal');
-                    }
-    
-                    &:hover {
-                        &::before {
-                            background-color: map-get($color-palette, 'cobalt');
-                        }
-                    }
+    .button {
+        .extrabutton {
+            .cmp-button {
+                @media (max-width: 1024px) {
+                    padding: 0;
                 }
-        
-                &.handshake-regular {
-                    &::before {
-                        background-color: map-get($color-palette, 'charcoal');
 
-                        @media (max-width: 1024px) {
-                            background-color: map-get($color-palette, 'white');
-                        }
-                    }
-    
-                    &:hover {
+                .cmp-button__icon {
+                    .fluent {
                         &::before {
-                            background-color: map-get($color-palette, 'cobalt');
+                            background-color: map-get($color-palette, 'black');
                         }
-                    }
-                }
+                    }  
+
+                    @media (max-width: 1024px) {
+                        span {
+                            padding-left: 2.5px;
+                            vertical-align: middle;
+                        }
+                    } 
+                }             
             }
-        }
-    }
-
-    &.light {
-        @extend .cmp-button__icon;
-
-        .cmp-button__icon {
-            &--fluent, .fluent {
-                &.people-filled {
-                    &::before {
-                        filter: $white;
-                    }
-    
-                    &:hover {
-                        &::before {
-                            filter: $aqua;
-                        }
-                    }
-                }
-        
-                &.handshake-regular {
-                    &::before {
-                        filter: $white;
-                    }
-    
-                    &:hover {
-                        &::before {
-                            filter: $aqua;
-                        }
-                    }
-                }
-            }
-        }
-
-        .cmp-button__text {
-            color: map-get($color-palette, 'white');
         }
     }
 }
@@ -453,6 +378,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                             vertical-align: middle
                         }
                     }
+
+                    span {
+                        color: map-get($color-palette, 'cobalt');
+                    }
                 }
             }
         }
@@ -517,6 +446,44 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                         mask-size: cover;
                         background-color: map-get($color-palette, 'cobalt');
                     }
+
+                    span {
+                        color: map-get($color-palette, 'cobalt');
+                    }
+                }
+            }
+        }
+
+        .button {
+            .extrabutton {
+                .cmp-button {
+                    .cmp-button__icon {
+                        .fluent {
+                            &::before {
+                                background-color: map-get($color-palette, 'charcoal');
+                            }
+
+                            @media (max-width: 1024px) {
+                                &::before {
+                                    background-color: map-get($color-palette, 'white');
+                                }                            
+                            }  
+                        }
+                    }   
+                    
+                    &:hover {
+                        .cmp-button__icon {
+                            .fluent {
+                                &::before {
+                                    background-color: map-get($color-palette, 'cobalt');
+                                }
+                            }
+                        }
+
+                        .cmp-button__text {
+                            color: map-get($color-palette, 'cobalt');
+                        }
+                    }            
                 }
             }
         }
@@ -563,6 +530,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                             filter: $aqua;
                         }
                     }
+
+                    span {
+                        color: map-get($color-palette, 'aqua');
+                    }
                 }
 
                 span {
@@ -593,6 +564,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                             filter: $aqua;
                         }
                     }
+
+                    .cmp-button__text {
+                        color: map-get($color-palette, 'aqua');
+                    }
                 }
 
                 span {
@@ -613,10 +588,46 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                         -webkit-mask: url('/content/dam/global-shared/icons/blended/globe.svg');
                         filter: $aqua;
                     }
+
+                    span {
+                        color: map-get($color-palette, 'cobalt');
+                    }
                 }
 
                 span {
                     color: map-get($color-palette, 'white');
+                }
+            }
+        }
+
+        .button {
+            .extrabutton {
+                .cmp-button {
+                    .cmp-button__icon {
+                        .fluent {
+                            &::before {
+                                filter: $white;
+                            }
+                        }
+                    }   
+                    
+                    &:hover {
+                        .cmp-button__icon {
+                            .fluent {
+                                &::before {
+                                    filter: $aqua;
+                                }
+                            }
+                        }
+
+                        .cmp-button__text {
+                            color: map-get($color-palette, 'aqua');
+                        }
+                    }
+
+                    span {
+                        color: map-get($color-palette, 'white');
+                    } 
                 }
             }
         }
