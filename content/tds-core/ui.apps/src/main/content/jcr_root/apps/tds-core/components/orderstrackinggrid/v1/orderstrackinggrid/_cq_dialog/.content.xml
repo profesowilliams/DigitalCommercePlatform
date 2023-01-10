@@ -65,6 +65,28 @@
                                                         value="none"/>
 												</items>
 											</paginationStyle>
+                                            <defaultDateRange
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                fieldLabel="Default Search Date Range"
+                                                name="./defaultSearchDateRange">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <plainText
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Last 30 Days"
+                                                        value="30"/>
+                                                    <date
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Last 60 Days"
+                                                        value="60"/>
+                                                    <buttonList
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Last 90 Days"
+                                                        value="90"/>
+                                                
+                                                </items>
+                                            </defaultDateRange>
+
 											<defaultSortingColumnKey
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="/libs/granite/ui/components/coral/foundation/form/textfield"

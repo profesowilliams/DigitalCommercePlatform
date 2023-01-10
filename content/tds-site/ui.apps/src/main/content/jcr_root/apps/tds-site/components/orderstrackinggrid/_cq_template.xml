@@ -50,6 +50,7 @@
     failedUpdate="Please try again. If the error persists please contact us at ({email})"
     orderButtonLabel="Order"
     saveAndOrderButtonLabel="Save and order"
+    defaultSearchDateRange="30"
     >
     <configurationTypesList jcr:primaryType="nt:unstructured">
         <item0

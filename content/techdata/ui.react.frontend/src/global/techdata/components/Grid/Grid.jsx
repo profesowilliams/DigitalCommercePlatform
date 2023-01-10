@@ -36,6 +36,7 @@ function Grid(props) {
     getDefaultCopyValue,
     suppressPaginationPanel = false,
     getRowId,
+    defaultSearchDateRange = false
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -394,9 +395,10 @@ function Grid(props) {
       const createdToString = formateDatePicker(createdTo);
       const createdFromString = formateDatePicker(createdFrom);
 
-      const createdParam = !omitCreatedQuery
+      const _createdParam = !omitCreatedQuery 
         ? `&createdFrom=${createdFromString}&createdTo=${createdToString}`
         : "";
+      const createdParam = !defaultSearchDateRange ? _createdParam : defaultSearchDateRange;
       const sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${createdParam}`

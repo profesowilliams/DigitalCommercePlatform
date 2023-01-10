@@ -132,6 +132,10 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["filterType"] = properties["filterType"];
     }
 
+    if (properties && properties["defaultSearchDateRange"]) {
+        jsonObject["defaultSearchDateRange"] = properties["defaultSearchDateRange"];
+    }
+
     let node = resourceResolver.getResource(currentNode.getPath() + "/filterList");
     let filterListValues = [];
     if (node !== null) {
