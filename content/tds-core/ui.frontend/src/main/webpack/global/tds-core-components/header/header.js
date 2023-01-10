@@ -20,6 +20,8 @@ export default class Header {
             this.initSecondaryImage();
         }
         this.header = document.getElementById('cmp-techdata-header');
+        this.headerBgEle = document.querySelector('#cmp-techdata-header > .aem-Grid > .container > .cmp-container');
+        this.headerBgColor = this.headerBgEle.style.backgroundColor;
         this.authorColor = this.header.style.backgroundColor;
 
         this.setComponentToStick();
@@ -67,9 +69,9 @@ export default class Header {
 
             if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
                 this.isContainer = true;
-                if(this.stickyHeaderFlag === "true"){ 
+                if(this.stickyHeaderFlag === "true"){
                     this.checkHeaderImage();
-                } 
+                }
                 this.checkSubheaderImage();
             }
         }
@@ -94,18 +96,18 @@ export default class Header {
     detectMobileView() {
         /* Storing user's device details in a variable*/
         const details = navigator.userAgent;
-        
+
         /* Creating a regular expression
         containing some mobile devices keywords
         to search it in details string*/
         const regexp = /android|iphone|kindle|ipad/i;
-        
+
         /* Using test() method to search regexp in details
         it returns boolean value*/
         const isMobileDevice = regexp.test(details);
         return isMobileDevice
     }
-    
+
     // Comment on this block to preserve big logo on mobile for the new composition with the new searchBar component
     initSecondaryImage() {
         const figure = document.querySelectorAll('.dp-figure');
@@ -202,15 +204,26 @@ export default class Header {
         }
     }
 
+    bgAlpha(ele, a) {
+        const current_color = ele.style.backgroundColor;
+        if (current_color) {
+            var match = /rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*\d+[\.\d+]*)*\)/g.exec(current_color)
+            a = a > 1 ? (a / 100) : a;
+           ele.style.backgroundColor = "rgba(" + [match[1],match[2],match[3],a].join(',') +")";
+        }
+      }
+
     checkHeaderImage(){
         if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
             this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
             this.header.style.backgroundColor = this.authorColor;
+            this.headerBgEle.style.backgroundColor = this.headerBgColor;
         }
         else {
             var rgb = this.authorColor.replace(/^rgba?\(|\s+|\)$/g,'').split(',');
             this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
             this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
+            this.bgAlpha(this.headerBgEle, 1);
         }
     }
 

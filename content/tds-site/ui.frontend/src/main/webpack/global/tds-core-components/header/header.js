@@ -15,8 +15,10 @@ export default class Header {
         // this.initSecondaryImage();
 
         this.header = document.getElementById('cmp-techdata-header');
+        this.headerBgEle = document.querySelector('#cmp-techdata-header > .aem-Grid > .container > .cmp-container');
+        this.headerBgColor = this.headerBgEle.style.backgroundColor;
         this.header.classList.add('cmp-experiencefragment__header--sticky');
-        
+
         const aemGrid = document.querySelector(".aem-Grid");
         this.subheaderList = aemGrid.querySelectorAll(".subheader");
         this.subheader = this.subheaderList[0];
@@ -30,7 +32,7 @@ export default class Header {
             if(this.container.classList.contains("container") || this.container.classList.contains("teaser")){
                 this.isContainer = true;
                 this.checkHeaderImage();
-                this.checkSubheaderImage();  
+                this.checkSubheaderImage();
             }
         }
     }
@@ -103,12 +105,26 @@ export default class Header {
         }
     }
 
+    bgAlpha(ele, a) {
+        var current_color = ele.style.backgroundColor;
+        if (current_color) {
+            var match = /rgba?\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*\d+[\.\d+]*)*\)/g.exec(current_color)
+            a = a > 1 ? (a / 100) : a;
+           ele.style.backgroundColor = "rgba(" + [match[1],match[2],match[3],a].join(',') +")";
+        }
+    }
+
     checkHeaderImage(){
         if(this.header.getBoundingClientRect().bottom >= this.container.getBoundingClientRect().top && this.container.getBoundingClientRect().bottom > 0 && window.pageYOffset == 0){
             this.header.classList.add('cmp-experiencefragment__header--sticky--opaque');
+            this.header.style.backgroundColor = this.authorColor;
+            this.headerBgEle.style.backgroundColor = this.headerBgColor;
         }
-        else{
+        else {
+            var rgb = this.authorColor.replace(/^rgba?\(|\s+|\)$/g,'').split(',');
+            this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
             this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
+            this.bgAlpha(this.headerBgEle, 1);
         }
     }
 
