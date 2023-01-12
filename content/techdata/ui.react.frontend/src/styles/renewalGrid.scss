@@ -879,7 +879,7 @@ svg {
 
 *, ::before, ::after, svg {
   animation-duration: 1.5s !important;
-  animation-iteration-count: infinite !important;
+  animation-iteration-count: 1;
 }
 
 .ag-theme-alpine.ag-popup{
