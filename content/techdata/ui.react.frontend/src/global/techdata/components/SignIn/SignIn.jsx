@@ -402,10 +402,12 @@ const SignIn = (props) => {
           />
         ) : (
           signInButton()
-        )}
-        {isError && isLoading ? <SpinnerCode /> : null}
-        {isError && isLoading && !modelComponent ? displayModel(): null}
-        {modelComponent}
+        )}       
+        <Modal
+          isModalVisible={isError && isLoading}
+          modalContent={errorMessage}
+          modalProperties={tempProperties}
+      />
       </div>
     </div>
   );

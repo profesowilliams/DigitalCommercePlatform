@@ -8,6 +8,7 @@ import { getDictionaryValue } from '../../../../utils/utils';
 import {useStore} from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
 import { isObject } from '../../../../utils';
+import useAuth from "../../hooks/useAuth";
 
 function Grid(props) {
   let {
@@ -49,7 +50,7 @@ function Grid(props) {
     total: null,
   });
   const popupParent = useMemo(() => document.querySelector('body'), []);
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const {isUserLoggedIn: isLoggedIn} = useAuth();
   const pagination =
     config?.paginationStyle &&
     config?.paginationStyle !== "none" &&
@@ -615,7 +616,7 @@ function Grid(props) {
   }
 
   useEffect(() => {
-    if((isExtraReloadDisabled() && isLoggedIn) || !isExtraReloadDisabled()){
+    if(isLoggedIn){
       !data && getGridData();
       setAgGrid(<AgGrid />);
       // set minimum height if height wasn't explicitly set in css
@@ -631,7 +632,7 @@ function Grid(props) {
         window.removeEventListener("resize", onResize);
       };
     }
-  }, [isExtraReloadDisabled() && isLoggedIn]);
+  }, [isLoggedIn]);
 
   return (
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>

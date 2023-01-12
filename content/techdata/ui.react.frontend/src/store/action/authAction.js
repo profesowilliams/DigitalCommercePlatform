@@ -39,9 +39,9 @@ export const signInAsynAction = (apiUrl, handleLoginResponse) => {
 
 	const  prepareSignInHeader = () => {
 		let code = localStorage.getItem('signInCode');
-		const sessionId = !isHttpOnlyEnabled() ? createSessionId() : 'xx';
+		const sessionId = !isHttpOnlyEnabled() ? createSessionId() : null;
 		createMaxTimeout();
-		setSessionId(sessionId);
+		!isHttpOnlyEnabled() && setSessionId(sessionId);
 		return {
 			'TraceId': `AEM_${new Date().toISOString()}`,
 			'Site': headerInfo.site,
