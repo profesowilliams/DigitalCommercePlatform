@@ -4,21 +4,23 @@
   text-align: left;
   position: relative;
   padding-bottom: 2rem;  
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
   .rightHeader {
     margin-left: 2px;
-    float: right;
     font-size: 14px;
     color: $brand-blue;
-  }
-  .clear {
-    clear: both;
   }
   .leftHeader {
-    float: left;
     font-size: 14px;
     color: $brand-blue;
+    flex-grow: 0;
+    white-space: normal;
     div{
       label{
+        padding-left: 8px;
         cursor: pointer;
         transition: all .13s ease;
       }

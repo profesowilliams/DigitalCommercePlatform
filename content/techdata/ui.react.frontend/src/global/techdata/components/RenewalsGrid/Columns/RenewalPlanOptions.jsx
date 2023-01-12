@@ -164,17 +164,8 @@ function RenewalPlanOptions({ labels, data, node }) {
     const calcPlanColumnClassName = (data) => `${computeTDSynnexClass("cmp-renewal-plan-column")} ${hasTwoRows(data?.options)}`;
 
     const PlanLeftHeader = (data) => {      
-      const durationSplit = formatRenewedDuration(null, data.option?.contractDuration, data.option?.support)?.split(' ');
-      let durationLine1 = '';
-      let durationLine2 = '';
+      const durationSplit = formatRenewedDuration(null, data.option?.contractDuration, data.option?.support);
       const [ _ , setOptionsListSt ] = data?.optionsSt;
-
-      if (durationSplit?.length > 4) {
-        durationLine1 = durationSplit.slice(0, 4).join(' ');
-        durationLine2 = durationSplit.slice(4).join(' ');
-      } else {
-        durationLine1 = durationSplit.join(' ');
-      }
 
       const handleRadioChange = (evt) => {
         const id = evt?.target?.value;      
@@ -202,9 +193,7 @@ function RenewalPlanOptions({ labels, data, node }) {
             htmlFor={data.option?.id}
             style={{ ...setStylesOnSelected(data.option) }}
           >
-            &nbsp;&nbsp;{durationLine1}
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp; {durationLine2}
+            {durationSplit}
           </label>
         </>
       );
@@ -233,7 +222,6 @@ function RenewalPlanOptions({ labels, data, node }) {
                                         > {formatTotalValue(option)}
                                         </div>
                                     </div>
-                                    <div className="clear"></div>
                                 </div>
                                 <div className="planDetails">
                                     <span className="currentPlan">
