@@ -31,6 +31,8 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -72,6 +74,7 @@ public class FormServlet extends SlingAllMethodsServlet {
         private List<String> allowedFileContentTypes = new ArrayList<>();
         private Map<String,String> charsEncodedMap = new HashMap<>();
         private String blacklistCharsRegexExpr;
+        private boolean convertToUSDateFormat;
 
         @Override
         protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
@@ -110,6 +113,7 @@ public class FormServlet extends SlingAllMethodsServlet {
                         if(formConfigurations != null) {
                             populateDefaultValuesToEmailParams(emailParams, formConfigurations.apacFormParameterList());
                             requiredAttachmentPaths = getPipeSplitMap(formConfigurations.requiredAttachmentPaths());
+                            convertToUSDateFormat = formConfigurations.convertToUSDateFormat();
                             prepareEncodedChars(formConfigurations);
                             prepareEmailRequestFromFormData(request.getRequestParameterMap(), attachments, emailParams);
                             populateEmailAttributesFromCAConfig(formConfigurations, emailParams);
@@ -261,10 +265,22 @@ public class FormServlet extends SlingAllMethodsServlet {
                 for (String key : keyset) {
                         input = input.replace(key, charsEncodedMap.get(key));
                 }
-                return input;
+                return convertToRightFormatForValidDate(input);
         }
 
-        private void handleRequiredAttachments(Map<String, String> emailParams, Map<String, DataSource> attachments) throws LoginException, CustomFormException {
+    private String convertToRightFormatForValidDate(String input) {
+        if (convertToUSDateFormat) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date formattedDate = dateFormat.parse(input);
+                dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                input = dateFormat.format(formattedDate);
+            } catch (Exception ignored) {}
+        }
+        return input;
+    }
+
+    private void handleRequiredAttachments(Map<String, String> emailParams, Map<String, DataSource> attachments) throws LoginException, CustomFormException {
             String groupKey = emailParams.get(Constants.FORM_GROUP_KEY_FIELD);
 
             if (groupKey != null)
