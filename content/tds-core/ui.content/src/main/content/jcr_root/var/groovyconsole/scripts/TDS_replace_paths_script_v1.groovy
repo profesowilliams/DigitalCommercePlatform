@@ -1,6 +1,6 @@
 
 // The root CMS path that require replacement of paths
-def rootPath = "/content/techdata/americas/pe/en/about-us1"
+def rootPath = "/content/techdata/testing-branch/bala-blueprint/en/about-us1"
 
 // change from
 def sourceResourcePath = "tds-site"
@@ -24,45 +24,46 @@ getPage(rootPath).recurse { page ->
 
         // cq:template
         def templateValue = content.get("cq:template")
-        if(templateValue) {
-            if(templatePathsList.contains(templateValue)) {
+        if (templateValue) {
+            if (templatePathsList.contains(templateValue)) {
 
                 // "/conf/tds-site/src-path1#/conf/techdata/des-path1£/conf/techdata/src-path2#/conf/tds-site/des-path2"
                 def templateSplitStrings = templatePathsList.split("£")
-                for(item in templateSplitStrings) {
+                for (item in templateSplitStrings) {
 
                     // "/conf/tds-site/src-path1#/conf/techdata/des-path1
                     def templatesBothPaths = item.split("#")
-                    if(templatesBothPaths[0].contains(templateValue)) {
+                    if (templatesBothPaths[0].contains(templateValue)) {
                         content.set("cq:template", templatesBothPaths[1])
                     }
                 }
             }
+        }
 
-            // errorPages
-            def errorPagesValue = content.get("errorPages")
-            if (errorPagesValue && errorPagesValue.contains("techdata")) {
-                content.set("errorPages", errorPagesValue.replace("/content/tds-site/","/content/techdata/"))
+        // errorPages
+        def errorPagesValue = content.get("errorPages")
+        if (errorPagesValue && errorPagesValue.contains("techdata")) {
+            content.set("errorPages", errorPagesValue.replace("/content/tds-site/", "/content/techdata/"))
+        }
+
+        // update properties inside each node
+        content?.recurse { node ->
+
+            //node resourceType
+            def nodeResourceType = node.get("sling:resourceType")
+            if (nodeResourceType && nodeResourceType.contains("tds-site")) {
+                node.set("sling:resourceType", nodeResourceType.replace("tds-site/", "techdata/"))
             }
 
-            // update properties inside each node
-            content?.recurse { node ->
-
-                //node resourceType
-                def nodeResourceType = node.get("sling:resourceType")
-                if (nodeResourceType && nodeResourceType.contains("tds-site")) {
-                    node.set("sling:resourceType", nodeResourceType.replace("tds-site/","techdata/"))
-                }
-
-                //cq:master
-                def blueprintMasterValue = node.get("cq:master")
-                if (blueprintMasterValue && nodeResourceType.contains("tds-site")) {
-                    node.set("sling:resourceType", blueprintMasterValue.replace("tds-site/","techdata/"))
-                }
-            }
+            //cq:master
+            //def blueprintMasterValue = node.get("cq:master")
+            //if (blueprintMasterValue && nodeResourceType.contains("tds-site")) {
+            //  node.set("sling:resourceType", blueprintMasterValue.replace("tds-site/","techdata/"))
+            //}
         }
 
     }
 }
+
 // save all updated properties
 save()
