@@ -82,5 +82,8 @@ public @interface FormConfigurations {
     boolean shouldSendCustomerSubmissionEmail() default false;
 
     @Property(label = "Paths for Required Attachments", description = "region|/path/to/file/attachment1,/path/to/file/attachment2")
-    String[] requiredAttachmentPaths();    
+    String[] requiredAttachmentPaths();
+
+    @Property(label = "Convert to US date format", description = "Checking on this will convert the form submit values to MM/DD/YYYY")
+    boolean convertToUSDateFormat() default false;
 }
