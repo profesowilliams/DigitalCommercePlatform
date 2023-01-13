@@ -90,7 +90,7 @@
   } 
 } 
 
-.cmp-renewals-grid {
+.cmp-renewals-grid, .cmp-base-grid {
   .page-info.hidden{
     display: none;
   }
@@ -471,7 +471,7 @@
     }
   }
 }
-.cmp-renewals-grid {
+.cmp-renewals-grid, .cmp-base-grid {
   .ag-react-container {
     font-size: 0.875rem;
     white-space: nowrap;
@@ -586,7 +586,7 @@ span.ag-group-value {
   }
 }
 
-.cmp-renewals-grid {  
+.cmp-renewals-grid, .cmp-base-grid {  
   :is(.card-right-border,.card-no-border,.card-bottom-border) {
     .footer {
       button {
@@ -746,7 +746,7 @@ button.icon-box {
       }
     }
   }
-  & .cmp-renewals-grid {
+  & .cmp-renewals-grid, .cmp-base-grid {
     & .cmp-renewal-duration {
       & .cmp-triangle-down, .cmp-triangle-up {
         display: flex;

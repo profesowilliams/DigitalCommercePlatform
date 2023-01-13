@@ -1,0 +1,18 @@
+.cmp-order-tracking-grid {
+    .ag-header-cell[col-id~="total"] {
+        text-align: right;
+        .ag-header-cell-text[ref='eText'] {        
+            position: relative;
+            &::before {
+                position: absolute;
+                top: 1.8px;
+                left: -14px;
+            }
+        }
+    }
+    .ag-cell.ag-cell-value[col-id~="total"] {
+        .ag-react-container {
+            text-align: right;
+        }
+    }
+}

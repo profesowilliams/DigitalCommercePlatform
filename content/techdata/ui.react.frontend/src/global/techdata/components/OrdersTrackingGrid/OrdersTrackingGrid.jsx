@@ -11,16 +11,20 @@ function OrdersTrackingGrid(props) {
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
-  const defaultSearchDateRange = setDefaultSearchDateRange(componentProp?.defaultSearchDateRange);
+  const defaultSearchDateRange = setDefaultSearchDateRange(
+    componentProp?.defaultSearchDateRange
+  );
 
   return (
-    <BaseGrid
-      columnList={componentProp.columnList}
-      definitions={ordersTrackingDefinition()}
-      config={gridConfig} 
-      gridConfig={gridConfig}
-      defaultSearchDateRange={defaultSearchDateRange}
-    />
+    <div className='cmp-order-tracking-grid'>
+      <BaseGrid
+        columnList={componentProp.columnList}
+        definitions={ordersTrackingDefinition()}
+        config={gridConfig}
+        gridConfig={gridConfig}
+        defaultSearchDateRange={defaultSearchDateRange}
+      />
+    </div>
   );
 }
 

@@ -14,7 +14,7 @@ function BaseGrid_({
   console.log('🚀extendedConfig >>',extendedConfig);
   return (
     <ErrorBoundaryBaseGrid>
-      <div className="cmp-renewals-grid">
+      <div className="cmp-base-grid">
         <Grid
           columnDefinition={columnDefs}
           customizedDetailedRender={DetailRenderers}
