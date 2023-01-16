@@ -4,11 +4,12 @@ import useGet from "../../hooks/useGet";
 import { useStore } from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import useAuth from '../../hooks/useAuth';
 
 function MyRenewals(props) {
 	const componentProp = JSON.parse(props.componentProp);
 	const domRef = createRef();
-	const isLoggedIn = useStore(state => state.isLoggedIn)
+	const {isUserLoggedIn:isLoggedIn} = useAuth();
 	const url = componentProp.uiServiceEndPoint
 	const [apiResponse, isLoading, error] = useGet(url);
 
@@ -25,7 +26,7 @@ function MyRenewals(props) {
 				createChart(ctx, chartData);
 			}
 		}
-	}, [apiResponse, isExtraReloadDisabled(), isLoggedIn]);
+	}, [apiResponse, isExtraReloadDisabled, isLoggedIn]);
 
 	function createChart(node, chartData) {
 		const colorArray = chartData.map((d, i) => {

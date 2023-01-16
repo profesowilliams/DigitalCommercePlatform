@@ -5,6 +5,7 @@ import { get } from "../../../../utils/api";
 import {useStore} from "../../../../utils/useStore"
 import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import useAuth from "../../hooks/useAuth";
 
 const MyConfigurations = ({ componentProp }) => {
   const { label, endpoint, orderLabels, daysLabel } = JSON.parse(componentProp);
@@ -15,7 +16,7 @@ const MyConfigurations = ({ componentProp }) => {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const refs = [domRef1, domRef2, domRef3];
-  const isLoggedIn = useStore(state => state.isLoggedIn)
+  const {isUserLoggedIn:isLoggedIn} = useAuth();
 
   const getColors = (i) => {
     const elem = document.querySelector(

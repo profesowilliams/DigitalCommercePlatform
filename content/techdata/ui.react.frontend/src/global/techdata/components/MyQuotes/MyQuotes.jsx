@@ -4,6 +4,7 @@ import { get } from '../../../../utils/api';
 import {useStore} from "../../../../utils/useStore"
 import { removeStringDecimals } from '../../helpers/formatting';
 import {isExtraReloadDisabled} from "../../../../utils/featureFlagUtils"
+import useAuth from '../../hooks/useAuth';
 
 const Pill = ({type, msg}) => {
     return <span className={`pill ${type}`}>{msg}</span>
@@ -15,7 +16,8 @@ const NoData = ({type = "error", msg = 'N/A'}) => {
 
 const MyQuotes = ({ componentProp }) => {
     const [myQuotesDetails, setMyQuotes] = useState({});
-    const isLoggedIn = useStore(state => state.isLoggedIn)
+    // const isLoggedIn = useStore(state => state.isLoggedIn)
+    const {isUserLoggedIn :isLoggedIn} = useAuth();
     const {
         label,
         labelConverted,
@@ -40,7 +42,7 @@ const MyQuotes = ({ componentProp }) => {
                 setMyQuotes(items)
             }
         })()
-    }, [isExtraReloadDisabled() && isLoggedIn])
+    }, [isExtraReloadDisabled, isLoggedIn])
   
     return (
         <section id="cmp-quotes">

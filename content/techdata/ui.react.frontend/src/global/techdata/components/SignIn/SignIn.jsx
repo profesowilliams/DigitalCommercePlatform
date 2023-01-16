@@ -13,7 +13,7 @@ import {
   isAuthenticated,
   redirectUnauthenticatedUser,
 } from "../../../../utils/policies";
-import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
 import { usPost, USaxios } from "../../../../utils/api";
@@ -126,6 +126,7 @@ const SignIn = (props) => {
     //This will only get triggered if the query params are sent via shop
     if (window.location.search) {
       let actionParam = getQueryStringValue(ACTION_QUERY_PARAM);
+      console.log('🚀actionParam >>',actionParam);
       if (
         actionParam &&
         actionParam.startsWith(ACTION_QUERY_PARAM_LOGOUT_VALUE)
@@ -179,6 +180,8 @@ const SignIn = (props) => {
   const isSessionExpired = () => {
     try {
       let sessionId = localStorage.getItem("sessionId");
+      //If we have http only enabled on feature flags, the expiring is being controlled via backend with the cookie 
+      if (isHttpOnlyEnabled()) return false;  
       if (sessionId) {
         let sessionMaxTimeout = localStorage.getItem("sessionMaxTimeout");
         let sessionIdleTimeout = localStorage.getItem("sessionIdleTimeout");
@@ -227,6 +230,7 @@ const SignIn = (props) => {
     if (isSessionExpired()) {
       signOutForExpiredSession(authUrl, clientId);
     }
+    console.log('🚀pingLogoutURL, errorPageUrl, logoutURL >>',pingLogoutURL, errorPageUrl, logoutURL);
     redirectIfActionParameter(pingLogoutURL, errorPageUrl, logoutURL);
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
