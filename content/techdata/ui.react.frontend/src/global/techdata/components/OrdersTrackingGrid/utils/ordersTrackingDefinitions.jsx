@@ -1,4 +1,5 @@
 import React from "react";
+import DeliveryNotesColumn from "../Columns/DeliveryNotesColumn";
 import InvoiceColumn from "../Columns/InvoiceColumn";
 import OrderTrackingActionColumn from "../Columns/OrderTrackingActionColumn";
 
@@ -15,6 +16,7 @@ export const ordersTrackingDefinition = () => {
       select: <SelectColumn data={data} />,
       total: <TotalColumn data={data} />,
       invoices: <InvoiceColumn invoices={data?.invoices} />,
+      deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} />,
       actions: <OrderTrackingActionColumn />
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';

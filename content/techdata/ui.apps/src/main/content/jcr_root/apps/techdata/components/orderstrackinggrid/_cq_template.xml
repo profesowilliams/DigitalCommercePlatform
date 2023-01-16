@@ -127,6 +127,13 @@
         />
         <item8
             jcr:primaryType="nt:unstructured"
+            columnLabel="D-Notes"
+            columnKey="deliveryNotes"
+            sortable="{Boolean}false"
+            columnType="plainText"
+        />
+        <item9
+            jcr:primaryType="nt:unstructured"
             columnLabel="Actions"
             columnKey="actions"
             sortable="{Boolean}false"

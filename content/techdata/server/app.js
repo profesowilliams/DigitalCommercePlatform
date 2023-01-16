@@ -4673,7 +4673,29 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
       items: [
         {
           trackings: [],
-          devlieryNotes: [],
+          deliveryNotes: [
+              {
+                  "packageCount": null,
+                  "billOfLading": null,
+                  "soldToParty": null,
+                  "deliveryType": null,
+                  "goodsArrivalDate": null,
+                  "deliveryNoteNumber": null,
+                  "recordCreatedDates": null,
+                  "quantityDelivered": null,
+                  "warehouseNumber": null,
+                  "storageLocation": null,
+                  "material": null,
+                  "plant": null,
+                  "id": "7108712174",
+                  "line": "10",
+                  "quantity": 5,
+                  "created": "02-09-2022",
+                  "shippedFrom": null,
+                  "actualShipDate": "02-09-2022",
+                  "shippedFromText": "Aalst"
+              }
+          ],
           id: "S000402930",
           reseller: "4674524412",
           vendor: [{ vendorName: "MICROSOFT" }],
@@ -4699,7 +4721,50 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
         },
         {
           trackings: [],
-          devlieryNotes: [],
+          deliveryNotes: [
+            {
+                "packageCount": null,
+                "billOfLading": null,
+                "soldToParty": null,
+                "deliveryType": null,
+                "goodsArrivalDate": null,
+                "deliveryNoteNumber": null,
+                "recordCreatedDates": null,
+                "quantityDelivered": null,
+                "warehouseNumber": null,
+                "storageLocation": null,
+                "material": null,
+                "plant": null,
+                "id": "7108712174",
+                "line": "10",
+                "quantity": 5,
+                "created": "02-09-2022",
+                "shippedFrom": null,
+                "actualShipDate": "02-09-2022",
+                "shippedFromText": "Aalst"
+            },
+            {
+                "packageCount": null,
+                "billOfLading": null,
+                "soldToParty": null,
+                "deliveryType": null,
+                "goodsArrivalDate": null,
+                "deliveryNoteNumber": null,
+                "recordCreatedDates": null,
+                "quantityDelivered": null,
+                "warehouseNumber": null,
+                "storageLocation": null,
+                "material": null,
+                "plant": null,
+                "id": "7108712174",
+                "line": "10",
+                "quantity": 5,
+                "created": "02-09-2022",
+                "shippedFrom": null,
+                "actualShipDate": "02-09-2022",
+                "shippedFromText": "Aalst"
+            }
+          ],
           id: "I032415960",
           reseller: "20221020132028             32415960",
           vendor: [
@@ -4730,7 +4795,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
         },
         {
           trackings: [],
-          devlieryNotes: [],
+          deliveryNotes: [],
           id: "S000402895",
           reseller: "32114612123",
           vendor: [{ vendorName: "MICROSOFT" }],
@@ -4756,7 +4821,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
         },
         {
           trackings: [],
-          devlieryNotes: [],
+          deliveryNotes: [],
           id: "I032415946",
           reseller: "20221103150224             32415946",
           vendor: [{ vendorName: "EPSON" }],
