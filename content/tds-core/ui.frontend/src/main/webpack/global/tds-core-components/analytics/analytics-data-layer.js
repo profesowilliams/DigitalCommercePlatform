@@ -194,7 +194,7 @@
           }
         },
       };
-      window.dataLayer.push(dataLayerObject.page);
+      window.dataLayer.push({page: dataLayerObject.page});
       window.adobeDataLayer.push(dataLayerObject);
     }
       
