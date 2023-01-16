@@ -291,7 +291,7 @@ function RenewalsGrid(props) {
   }
 
   const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
-
+ 
   return (
     <section ref={renewalsRef}>      
       <div className="cmp-renewals-subheader">
@@ -318,14 +318,24 @@ function RenewalsGrid(props) {
         config={gridConfig}
         options={options}
         gridConfig={gridConfig}
-        _onAfterGridInit={_onAfterGridInit}
+        onAfterGridInit={_onAfterGridInit}
         customRequestInterceptor={customRequestInterceptor} 
         mapServiceData={mapServiceData} 
         onSortChanged={onSortChanged}
         cellMouseOver={cellMouseOver}
+        handlerIsRowMaster={() => true}
+        icons={{
+          groupExpanded: "<i></i>",
+          groupContracted: "<i></i>",
+        }}
         cellMouseOut={cellMouseOut}
         DetailRenderers={RenewalDetailRenderers}
-        contextMenuItems={contextMenuItems} />
+        suppressPaginationPanel={true}
+        onCellMouseOver={cellMouseOver}
+        onCellMouseOut={cellMouseOut}
+        omitCreatedQuery={true}
+        contextMenuItems={contextMenuItems}
+        noContextMenuItemsWhenColumnNull={true} />
       <ToolTip toolTipData={toolTipData} />
       <div className="cmp-renewals__pagination--bottom">
         <CustomRenewalPagination
