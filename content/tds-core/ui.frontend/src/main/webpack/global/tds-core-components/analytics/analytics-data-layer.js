@@ -194,8 +194,8 @@
           }
         },
       };
-      dataLayerObject.page[pageObjectName] = pageInfo;
-      window.dataLayer.push(dataLayerObject);
+      window.dataLayer.push(dataLayerObject.page);
+      window.adobeDataLayer.push(dataLayerObject);
     }
       
       
