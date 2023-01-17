@@ -38,8 +38,11 @@
     }
 
     &__select-column {
+        display: flex;
+        cursor: pointer;
         &__caret {
-            margin-left: 28px;
+            margin-left: auto;
+            align-self: flex-end;
         }
     }
 }
