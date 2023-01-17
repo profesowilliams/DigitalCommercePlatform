@@ -4645,9 +4645,6 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   .button {
     &.cmp-button--small-minimal {
-      position: absolute;
-      top: -15px;
-      right: 50px;
   
       @include mobile {
         top: 5px;

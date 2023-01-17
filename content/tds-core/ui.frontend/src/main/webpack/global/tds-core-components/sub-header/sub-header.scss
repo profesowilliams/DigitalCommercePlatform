@@ -182,6 +182,7 @@
     > li {
       a,
       span.cmp-sub-header__span {
+        white-space: nowrap;
         height: rem(40px);
         box-shadow: unset;
 
@@ -195,6 +196,7 @@
       &.cmp-tabs__tab--active {
         a,
         span.cmp-sub-header__span {
+          white-space: nowrap;
           border-bottom-width: rem(2px);
           border-bottom-style: solid;
           border-bottom-color: inherit;
@@ -221,6 +223,10 @@
         margin: auto !important;
         width: 100%;
 
+        & > div:not(.cmp-sub-header--sub-nav__title) {
+          width:100%;
+        }
+        
         @media (max-width: 1023px) {
             height: auto !important;
         }
@@ -234,6 +240,7 @@
 
           &>.cmp-tabs__tab {
             span.cmp-sub-header__span {
+              white-space: nowrap;
               height: 2.5rem;
               a {
                 height: 2.5rem;
@@ -250,6 +257,7 @@
             }
             &.cmp-tabs__tab--active{
               span.cmp-sub-header__span {
+                white-space: nowrap;
                 & {
                   box-shadow: unset;
                 }
@@ -278,6 +286,7 @@
       height: inherit;
 
       span.cmp-sub-header__span {
+        white-space: nowrap;
         line-height: 2.5;
         padding-right: rem(48px)!important; 
         @media (max-width: 1023px) {
@@ -353,6 +362,7 @@
         &.new-sub {
           a,
           span.cmp-sub-header__span {
+            white-space: nowrap;
             color: get-color(deep-teal);
           }
 
@@ -371,6 +381,7 @@
     .cmp-tabs {
       .cmp-tabs__tablist {
         .cmp-sub-header__span {
+          white-space: nowrap;
         }
       }
     }
@@ -394,6 +405,7 @@
 
         .cmp-tabs__tablist {
           .cmp-sub-header__span {
+            white-space: nowrap;
             top: 0;
           }
         }
@@ -446,6 +458,7 @@
             height: unset!important;
 
             .cmp-sub-header__span {
+              white-space: nowrap;
               top: 0;
             }
           }
