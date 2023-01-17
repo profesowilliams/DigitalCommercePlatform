@@ -1,6 +1,6 @@
 import React from "react";
 import { If } from "../../../helpers/If";
-import { CloseIconWeighted } from "./SearchFilter";
+import { CloseIconWeighted } from "./RenewalSearch";
 import { CloseIcon } from "../../../../../fluentIcons/FluentIcons";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { useRenewalGridState } from "../store/RenewalsStore";

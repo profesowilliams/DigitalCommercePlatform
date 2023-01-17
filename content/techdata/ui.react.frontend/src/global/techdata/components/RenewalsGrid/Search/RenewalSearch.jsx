@@ -25,7 +25,7 @@ export const CloseIconWeighted = (props) => (
   </svg>
 );
 
-function _SearchFilter(
+function _RenewalSearch(
   { styleProps, options, callback, inputType, filterCounter, onQueryChanged },
   ref
 ) {
@@ -342,12 +342,12 @@ function _SearchFilter(
   );
 }
 
-const SearchFilter = React.memo(forwardRef(_SearchFilter));
+const RenewalSearch = React.memo(forwardRef(_RenewalSearch));
 
-export default SearchFilter;
+export default RenewalSearch;
 
 
-_SearchFilter.propTypes = {
+_RenewalSearch.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       searchLabel: PropTypes.string,

@@ -21,7 +21,6 @@ import {
   formatRenewedDuration,
   getContextMenuItems,
 } from "./utils/renewalUtils";
-import SearchFilter from "./Search/SearchFilter";
 import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow';
 import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
@@ -32,8 +31,11 @@ import Toaster from "../Widgets/Toaster";
 import TransactionNumber from "./Orders/TransactionNumber";
 import { renewalsDefinitions } from "./utils/renewalsDefinitions";
 import BaseGrid from "../BaseGrid/BaseGrid";
+import BaseGridHeader from "../BaseGrid/BaseGridHeader";
+import RenewalSearch from "./Search/RenewalSearch";
 
-function ToolTip({ toolTipData }) {
+function ToolTip() {
+  const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   return (
     toolTipData.show ? (
       <div
@@ -52,7 +54,6 @@ function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic } = useRenewalFiltering();
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
-  const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
   const firstAPICall = useRef(true);
   
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
@@ -121,8 +122,8 @@ function RenewalsGrid(props) {
     const parentRenewalsStyle = renewalsNode?.parentNode?.parentNode?.parentNode;
     const isTDSynnex = parentRenewalsStyle?.classList.contains("cmp-grid-td-synnex");
     const isTechdata = parentRenewalsStyle?.classList.contains("cmp-grid-techdata");
-    let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');    
-    setCustomState({key:'branding', value:branding});
+    let branding = isTDSynnex ? 'td-synnex' : (isTechdata ? 'cmp-grid-techdata' : '');
+    setCustomState({ key: 'branding', value: branding });
 
     return () => window.removeEventListener("click",catchPriceColumnClickEvent);
   },[])
@@ -293,50 +294,46 @@ function RenewalsGrid(props) {
   const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
  
   return (
-    <section ref={renewalsRef}>      
-      <div className="cmp-renewals-subheader">
-        <CustomRenewalPagination
-          onQueryChanged={onQueryChanged}
-          ref={customPaginationRef}
-        />
-        <div className="renewal-filters">
-          <SearchFilter
+    <section ref={renewalsRef} id="renewals-grid-component">
+      <BaseGridHeader
+        leftComponents={[
+          <CustomRenewalPagination
+            onQueryChanged={onQueryChanged}
+            ref={customPaginationRef}
+          />
+        ]}
+        rightComponents={[
+          <RenewalSearch
             options={searchOptionsList}
             onQueryChanged={onQueryChanged}
             ref={searchCriteria}
-          />        
-          <VerticalSeparator />
+          />,
+          <VerticalSeparator />,
           <RenewalFilter
             aemData={componentProp}
             onQueryChanged={onQueryChanged}
           />
-        </div>
-      </div>
-      <BaseGrid 
+        ]}
+      />      
+      <BaseGrid
         columnList={componentProp.columnList}
         definitions={renewalsDefinitions()}
         config={gridConfig}
         options={options}
         gridConfig={gridConfig}
         onAfterGridInit={_onAfterGridInit}
-        customRequestInterceptor={customRequestInterceptor} 
-        mapServiceData={mapServiceData} 
+        requestInterceptor={customRequestInterceptor}
+        mapServiceData={mapServiceData}
         onSortChanged={onSortChanged}
-        cellMouseOver={cellMouseOver}
         handlerIsRowMaster={() => true}
-        icons={{
-          groupExpanded: "<i></i>",
-          groupContracted: "<i></i>",
-        }}
-        cellMouseOut={cellMouseOut}
+        icons={{groupExpanded: "<i></i>",groupContracted: "<i></i>",}}
         DetailRenderers={RenewalDetailRenderers}
-        suppressPaginationPanel={true}
         onCellMouseOver={cellMouseOver}
         onCellMouseOut={cellMouseOut}
         omitCreatedQuery={true}
         contextMenuItems={contextMenuItems}
         noContextMenuItemsWhenColumnNull={true} />
-      <ToolTip toolTipData={toolTipData} />
+      <ToolTip />
       <div className="cmp-renewals__pagination--bottom">
         <CustomRenewalPagination
             onQueryChanged={onQueryChanged}

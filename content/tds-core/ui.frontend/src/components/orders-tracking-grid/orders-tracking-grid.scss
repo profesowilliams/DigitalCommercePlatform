@@ -1,3 +1,12 @@
+%clickable-action {
+    display: flex;
+    gap: rem(8px);
+    align-items: center;
+    cursor: pointer;
+    & > * {
+        cursor: pointer;
+    }
+}
 .cmp-order-tracking-grid {
     .ag-header-cell[col-id~="total"] {
         text-align: right;
@@ -14,5 +23,17 @@
         .ag-react-container {
             text-align: right;
         }
+    }
+    &__open-orders {
+        @extend %clickable-action;
+    }
+    &__search {
+        @extend %clickable-action;
+    }
+    &__filter {
+        @extend %clickable-action;
+    }
+    &__export {
+        @extend %clickable-action;
     }
 }
