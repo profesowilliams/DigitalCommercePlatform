@@ -308,14 +308,34 @@
   }
 }
 
+// This is the subheader wrapper
+.subheader {
+  text-align: center;
+  text-align: -webkit-center;
+
+  & > * > div {
+    max-width: 1440px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+
+    @include mobile {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+}
+
 /* StreamOne Styling */
 .subheader {
   &.cmp-sub-header-stream-one {
-    .cmp-sub-header {
-      &--sub-nav {
-        &.new-sub {
-          background-color: get-color(deep-teal);
-          @include subheader-span-border-bottom;
+    #subheader {
+      background-color: get-color(deep-teal);
+
+      .cmp-sub-header {
+        &--sub-nav {
+          &.new-sub {
+            @include subheader-span-border-bottom;
+          }
         }
       }
     }
@@ -325,10 +345,12 @@
 /* DPB Styling */
 .subheader {
   &.cmp-sub-header-dpb {
+    #subheader {
+      background-color: get-color(secondary-ivory);
+
     .cmp-sub-header {
       &--sub-nav {
         &.new-sub {
-          background-color: get-color(secondary-ivory);
           a,
           span.cmp-sub-header__span {
             color: get-color(deep-teal);
@@ -339,6 +361,7 @@
       }
     }
   }
+}
 }
 
 .subheader {
