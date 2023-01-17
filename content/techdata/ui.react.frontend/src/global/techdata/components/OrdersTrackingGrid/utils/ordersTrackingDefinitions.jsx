@@ -13,7 +13,7 @@ export const ordersTrackingDefinition = () => {
     const { columnKey } = aemDefinition;
     const { value, data } = eventProps;   
     const columnComponents = {
-      select: <SelectColumn data={data} />,
+      select: <SelectColumn data={data} eventProps={eventProps} />,
       total: <TotalColumn data={data} />,
       invoices: <InvoiceColumn invoices={data?.invoices} />,
       deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} />,

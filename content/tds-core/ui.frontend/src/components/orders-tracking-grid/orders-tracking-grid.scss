@@ -36,4 +36,10 @@
     &__export {
         @extend %clickable-action;
     }
+
+    &__select-column {
+        &__caret {
+            margin-left: 28px;
+        }
+    }
 }
