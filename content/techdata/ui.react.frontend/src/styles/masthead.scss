@@ -156,7 +156,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
             }
 
             @media (max-width: 1024px) {
-                margin: 0!important;
+                margin: 0 !important;
             }
         }
     }
@@ -203,6 +203,20 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 padding-left: 2.5px;
                 vertical-align: middle;
             }
+        }
+    }
+
+    @include mobile {
+        .cmp-sign-in-button-hiddenLabel {
+            padding-left: 2.5px;
+            vertical-align: middle;
+            display: inline;
+        }
+    }
+
+    @media only screen {
+        .cmp-sign-in-button-hiddenLabel {
+            display: none;
         }
     }
 
@@ -301,15 +315,15 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                         &::before {
                             background-color: map-get($color-palette, 'black');
                         }
-                    }  
+                    }
 
                     @media (max-width: 1024px) {
                         span {
                             padding-left: 2.5px;
                             vertical-align: middle;
                         }
-                    } 
-                }             
+                    }
+                }
             }
         }
     }

@@ -31,6 +31,14 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Label"
 												name="./label"/>
+											<showLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                fieldDescription="Select whether or not to display the label in desktop mode."
+                                                name="./showLabel"
+                                                text="Show Label?"
+                                                uncheckedValue="false"
+                                                value="true"/>
 											<hideWhenNotLoggedIn
 													jcr:primaryType="nt:unstructured"
 													sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"

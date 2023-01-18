@@ -55,89 +55,94 @@ use(function () {
         jsonObject.put("isPrivatePage", false);
     }
 
-    if (properties.get("label") != null) {
+    if (properties.get("label") !== null) {
         jsonObject.put("label", properties.get("label"));
     }
-    if (properties.get("authenticationURL") != null)
+    
+    if (properties.get("showLabel") !== null) {
+      jsonObject.put("showLabel", properties.get("showLabel"));
+    }
+
+    if (properties.get("authenticationURL") !== null)
     {
         jsonObject.put("authenticationURL", properties.get("authenticationURL"));
     }else{
-        if (this.authorizationPageURL != null) {
+        if (this.authorizationPageURL !== null) {
             jsonObject.put("authenticationURL", this.authorizationPageURL);
         }
     }
 
-    if (properties.get("shopLoginRedirectUrl") != null) {
+    if (properties.get("shopLoginRedirectUrl") !== null) {
         jsonObject.put("shopLoginRedirectUrl", properties.get("shopLoginRedirectUrl"));
     }
 
-    if (properties.get("uiServiceEndPoint") != null)
+    if (properties.get("uiServiceEndPoint") !== null)
     {
         jsonObject.put("uiServiceEndPoint", properties.get("uiServiceEndPoint"));
     }else{
-        if (this.uiServiceDomain != null) {
+        if (this.uiServiceDomain !== null) {
             jsonObject.put("uiServiceEndPoint", this.uiServiceDomain+this.loginEndpoint);
         }
     }
 
-    if (properties.get("clientId") != null)
+    if (properties.get("clientId") !== null)
     {
         jsonObject.put("clientId", properties.get("clientId"));
     }else{
-        if (this.pingAppId != null) {
+        if (this.pingAppId !== null) {
             jsonObject.put("clientId", this.pingAppId);
         }
     }
 
-    if (properties.get("hideWhenNotLoggedIn") != null) {
+    if (properties.get("hideWhenNotLoggedIn") !== null) {
         jsonObject.put("hideWhenNotLoggedIn", properties.get("hideWhenNotLoggedIn"));
     }
 
-    if (properties.get("logoutURL") != null) {
+    if (properties.get("logoutURL") !== null) {
 
         var logoutUrl = parseLinkURL(properties.get("logoutURL"))
         jsonObject.put("logoutURL", logoutUrl);
     }
 
-    if (properties.get("pingLogoutURL") != null) {
+    if (properties.get("pingLogoutURL") !== null) {
 
         var pingLogoutURL = parseLinkURL(properties.get("pingLogoutURL"))
         jsonObject.put("pingLogoutURL", pingLogoutURL);
     }
 
-    if (properties.get("errorPageUrl") != null) {
+    if (properties.get("errorPageUrl") !== null) {
 
         var errorPageUrl = parseLinkURL(properties.get("errorPageUrl"))
         jsonObject.put("errorPageUrl", errorPageUrl);
     }
-    if (properties.get("aemAuthUrl") != null) {
+    if (properties.get("aemAuthUrl") !== null) {
         var aemAuthUrl = parseLinkURL(properties.get("aemAuthUrl"))
         jsonObject.put("aemAuthUrl", aemAuthUrl);
     }
 
-    if (properties.get("shopLogoutRedirectUrl") != null) {
+    if (properties.get("shopLogoutRedirectUrl") !== null) {
 
             var shopLogoutRedirectUrl = parseLinkURL(properties.get("shopLogoutRedirectUrl"))
             jsonObject.put("shopLogoutRedirectUrl", shopLogoutRedirectUrl);
         }
 
-    if (properties.get("clientId") != null) {
+    if (properties.get("clientId") !== null) {
         jsonObject.put("clientId", properties.get("clientId"));
     }
 
-    if (properties.get("myEcIdlabel") != null) {
+    if (properties.get("myEcIdlabel") !== null) {
         jsonObject.put("myEcIdlabel", properties.get("myEcIdlabel"));
     }
-    if (properties.get("welcomeLabel") != null) {
+    if (properties.get("welcomeLabel") !== null) {
         jsonObject.put("welcomeLabel", properties.get("welcomeLabel"));
     }
-    if (properties.get("errorMessage") != null) {
+    if (properties.get("errorMessage") !== null) {
         jsonObject.put("errorMessage", properties.get("errorMessage"));
     }
-    if (properties.get("myEcId") != null) {
+    if (properties.get("myEcId") !== null) {
         jsonObject.put("myEcId", properties.get("myEcId"));
     }
-    if (listValues != null) {
+    if (listValues !== null) {
         jsonObject.put("items", listValues);
     }
 

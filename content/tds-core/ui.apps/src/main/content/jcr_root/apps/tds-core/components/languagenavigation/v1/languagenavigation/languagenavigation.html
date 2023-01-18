@@ -1,12 +1,12 @@
 <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
   <div class="cq-placeholder" data-emptyText="${component.title}"></div>
 </sly>
-<sly
-        data-sly-use.model="com.tdscore.core.models.LanguageDropDownModel">
+<sly data-sly-use.model="com.tdscore.core.models.LanguageDropDownModel">
   <button class="cmp-dropbtn">
     <sly data-sly-test="${properties.showIcon}">
-      <span >${model.countryRootPageTitle}</span>
+      <span class="${properties.showLabel == 'true' ? '' : 'language-hiddenLabel'}"></span>
     </sly>
+    <span class="${properties.showLabel == 'true' ? '' : 'language-hiddenLabel'}">${model.countryRootPageTitle}</span>
   </button>
   <div class="regionSelectDropdown cmp-dropdown-content">
     <form method="POST" action="/content/core-components-examples/library/form/button.html"

@@ -70,10 +70,16 @@
 
     @include mobile {
         margin-bottom: rem(0px);
+
+        & > .language-hiddenLabel {
+            display: inline;
+        }
     }
 
-    @media only screen and (min-width: 1024px) and (max-width: 1260px) {
-        
+    @media only screen and (min-width: 769px) {
+        & > .language-hiddenLabel {
+            display: none;
+        }
     }
 
     &:hover {

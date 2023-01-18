@@ -79,7 +79,8 @@ const SignIn = (props) => {
     errorPageUrl,
     errorMessage,
     shopLogoutRedirectUrl,
-    hideWhenNotLoggedIn
+    hideWhenNotLoggedIn,
+    showLabel
   } = configDataAEM;
   const requested = props.data.auth.requested;
   const isError = props.data.auth.showError;
@@ -237,7 +238,7 @@ const SignIn = (props) => {
     routeChange(handleLoginResponse);
     const isLoggedIn = isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
 
-    if (isLoggedIn == null  && localStorage.getItem("sessionId")) {
+    if (isLoggedIn === null  && localStorage.getItem("sessionId")) {
       document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
       hideDropdownButton();
     }
@@ -286,7 +287,7 @@ const SignIn = (props) => {
 
     const performRedirectForAbsPath = (countryCodeFromAPI, countryCodeFromUrl, urlSplitStrings) => {
       if(urlSplitStrings.length <= 3) { // add .html to the url
-          if(urlSplitStrings[2] == undefined) {
+          if(urlSplitStrings[2] === undefined) {
               countryCodeFromUrl = "/" + urlSplitStrings[1];
           }
           countryCodeFromAPI =  countryCodeFromAPI + ".html";
@@ -296,7 +297,7 @@ const SignIn = (props) => {
 
     const performRedirectForCmsPath = (countryCodeFromAPI, countryCodeFromUrl, urlSplitStrings) => {
        countryCodeFromUrl = "/" + urlSplitStrings[4] + "/" + urlSplitStrings[5];
-          if(urlSplitStrings.length == 6) { // add .html to the url
+          if(urlSplitStrings.length === 6) { // add .html to the url
            countryCodeFromAPI =  countryCodeFromAPI + ".html";
       }
       performRedirect(countryCodeFromUrl, countryCodeFromAPI);
@@ -379,12 +380,12 @@ const SignIn = (props) => {
   }
 
   const signInButton = () => {
-    if(hideWhenNotLoggedIn == "true" && !localStorage.getItem("sessionId")) {
+    if(hideWhenNotLoggedIn === "true" && !localStorage.getItem("sessionId")) {
         return;
     } else
     return (
       <button className={isAuthenticated === null ? 'cmp-sign-in-button authenticated' : 'cmp-sign-in-button'} onClick={onSignIn}>
-        <span>{configDataAEM.label}</span>
+        <span className={showLabel === "true" ? '' : 'cmp-sign-in-button-hiddenLabel'}>{configDataAEM.label}</span>
       </button>
     );
   };
