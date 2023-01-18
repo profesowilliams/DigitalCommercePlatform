@@ -1,49 +1,97 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { CartIcon, EllipsisIcon } from "../../../../../fluentIcons/FluentIcons";
-import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import VerticalSeparator from "../../Widgets/VerticalSeparator";
-import useIsIconEnabled from "../Orders/hooks/useIsIconEnabled";
-import PlaceOrderDialog from "../Orders/PlaceOrderDialog";
-import useTriggerOrdering from "../Orders/hooks/useTriggerOrdering";
+import React, { useEffect, useMemo, useState, useRef } from 'react';
+import { CartIcon, DownloadIcon, EllipsisIcon, EyeIcon, EyeLightIcon } from '../../../../../fluentIcons/FluentIcons';
+import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import VerticalSeparator from '../../Widgets/VerticalSeparator';
+import useIsIconEnabled from '../Orders/hooks/useIsIconEnabled';
+import PlaceOrderDialog from '../Orders/PlaceOrderDialog';
+import useTriggerOrdering from '../Orders/hooks/useTriggerOrdering';
 import {
+  analyticsColumnDataToPush,
   getLocalStorageData,
   hasLocalStorageData,
   isFromRenewalDetailsPage,
-  setLocalStorageData
-} from "../utils/renewalUtils";
-import { useRenewalGridState } from "../store/RenewalsStore";
-
+  redirectToRenewalDetail,
+  setLocalStorageData,
+} from '../utils/renewalUtils';
+import { useRenewalGridState } from '../store/RenewalsStore';
+import Dialog from "@mui/material/Dialog";
+import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
+import { fileExtensions, generateFileFromPost } from '../../../../../utils/utils';
 
 function _RenewalActionColumn({ eventProps }) {
   const [isToggled, setToggled] = useState(false);
-  const effects = useRenewalGridState((state) => state.effects);      
+  const effects = useRenewalGridState((state) => state.effects);
+  const openedActionMenu = useRenewalGridState((state) => state.openedActionMenu);
+  const parentPosition = useRef({ x: 0, y: 0 });
+  const divRef = useRef(null);
+  const [showActionsMenu, setShowActionsMenu] = useState(false);
+  const dialogRef = useRef();
   const rowCollapsedIndexList = useRenewalGridState(
     (state) => state.rowCollapsedIndexList
   );
   const { pageNumber } = useRenewalGridState((state) => state.pagination);
-  const { detailUrl = "", orderingFromDashboard, ...endpoints } = useRenewalGridState(
-    (state) => state.aemConfig
-  );
-  const {updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint} = endpoints;
+  const {
+    detailUrl = '',
+    orderingFromDashboard,
+    ...endpoints
+  } = useRenewalGridState((state) => state.aemConfig);
+  const {
+    updateRenewalOrderEndpoint,
+    getStatusEndpoint,
+    orderRenewalEndpoint,
+    renewalDetailsEndpoint,
+    exportXLSRenewalsEndpoint,
+    exportPDFRenewalsEndpoint
+  } = endpoints;
 
   const { value, data } = eventProps;
 
-  const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
+  const isIconEnabled = useIsIconEnabled(
+    data?.firstAvailableOrderDate,
+    data?.canPlaceOrder,
+    orderingFromDashboard?.showOrderingIcon
+  );
 
-  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
+  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } =
+    useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
 
-  const orderEndpoints ={updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint};
+  const orderEndpoints = {
+    updateRenewalOrderEndpoint,
+    getStatusEndpoint,
+    orderRenewalEndpoint,
+  };
 
   const iconStyle = {
-    color: "#21314D",
-    cursor: "pointer",
-    fontSize: "1.2rem",
-    width: "1.3rem",
+    color: '#21314D',
+    cursor: 'pointer',
+    fontSize: '1.2rem',
+    width: '1.3rem',
   };
-  React.useEffect(() => {
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (!dialogRef.current?.contains(event.target)) {
+        setShowActionsMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowActionsMenu]);
+
+  useEffect(() => {
     const currentNode = eventProps.node;
-    rowCollapsedIndexList?.includes(currentNode.rowIndex) && setToggled(false);
-  }, [rowCollapsedIndexList, eventProps.node, setToggled]);
+    openedActionMenu !== currentNode?.rowIndex && setShowActionsMenu(false);
+  }, [eventProps.node,openedActionMenu]);
+
+  const isTheLastRow = useMemo(() => {
+    let maximumValue = 0;
+    eventProps.api.forEachNode(node => {      
+      maximumValue = Math.max(node?.rowIndex, maximumValue);
+    });   
+    return eventProps.node.rowIndex === maximumValue;
+  },[]);
 
   useEffect(() => {
     getInitialToggleState();
@@ -63,7 +111,7 @@ function _RenewalActionColumn({ eventProps }) {
     if (hasLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)) {
       if (
         getLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY)?.detailRender !==
-        "primary"
+        'primary'
       )
         return;
 
@@ -72,7 +120,7 @@ function _RenewalActionColumn({ eventProps }) {
       )?.rowIndex;
       const capturedPlanPage = getLocalStorageData(
         PLANS_ACTIONS_LOCAL_STORAGE_KEY
-      )["capturedPlanPage"];
+      )['capturedPlanPage'];
 
       if (
         eventProps.node.rowIndex === localRowIndex - 1 &&
@@ -88,66 +136,114 @@ function _RenewalActionColumn({ eventProps }) {
    * Triggered when the actions button is clicked.
    * @returns void
    */
-  const toggleExpandedRow = () => {
-    effects.setCustomState({ key: "detailRender", value: "primary" });
-    eventProps.node.setExpanded(!isToggled);
-    setToggled(!isToggled);
-    const rowCollapsedIndexList = [];
-    eventProps.api.forEachNode((node) => {
-      if (node?.rowIndex !== eventProps.node?.rowIndex) {
-        node.expanded = false;
-        rowCollapsedIndexList.push(node?.rowIndex);
+  const handleShowActionMenu = (evt) => {
+    setShowActionsMenu((st) => !st);   
+    parentPosition.current = {top: evt?.clientY, right: evt.clientX }; 
+    effects.setCustomState({key:'openedActionMenu', value: eventProps.node?.rowIndex});  
+  };
+
+  const dialogStyling = {
+    position: 'fixed',
+    top: parentPosition.current.top,
+    left: parentPosition.current.right,
+    bottom:'initial',
+    width: '15rem',
+    transform:`translate(-12.31rem,${isTheLastRow ? '-13rem' : '1rem'})`,          
+    '& .MuiDialog-container': {             
+      height:'max-content',           
+      '& .MuiPaper-root' : {
+        margin: 0
       }
-    });
-    effects.setCustomState({
-      key: "rowCollapsedIndexList",
-      value: rowCollapsedIndexList,
-    });
-    /**
-     * Ag-grid gives detailed-view the same index as normal grid rows. This
-     * prevents targeting the toggle state appropriately. Hence DOM query.
-     * setTimeout to excecute this last from the call stack.
-     */
-    setTimeout(() => {
-      setLocalStorageData(PLANS_ACTIONS_LOCAL_STORAGE_KEY, {
-        detailRender: "primary",
-        rowCollapsedIndexList,
-        rowIndex: parseFloat(
-          document
-            .querySelector(".ag-full-width-container")
-            ?.querySelector("[row-index]")
-            ?.getAttribute("row-index")
-        ),
-        capturedPlanPage: pageNumber,
+    }
+  };
+
+  const downloadXLS = () => {
+    try {
+      pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadXLS));
+      generateFileFromPost({
+        url: exportXLSRenewalsEndpoint,
+        name: `Renewals Quote ${data?.source?.id}.xlsx`,
+        postData: {
+          Id: data?.source?.id
+        }
       });
-    }, 0);
-  }; 
+    } catch (error) {
+      console.error("error", error);
+    }
+  };
+
+  const downloadPDF = () => {
+    try {      
+      pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadPDF));
+      generateFileFromPost({
+        url: exportPDFRenewalsEndpoint,
+        name: `Renewals Quote ${data?.source?.id}.pdf`,
+        postData: {
+          Id: data?.source?.id
+        },
+        fileTypeExtension: fileExtensions.pdf
+      })
+    } catch (error) {
+      console.error("error", error);
+    }
+    }
 
   return (
     <>
-      <div className="cmp-renewal-action-container">
+      <div className="cmp-renewal-action-container" style={{position:'relative'}} key={Math.random()}>
         {isIconEnabled ? (
-          <span className="cmp-renewals-cart-icon"><CartIcon onClick={handleCartIconClick} /></span>
+          <span className="cmp-renewals-cart-icon">
+            <CartIcon onClick={handleCartIconClick} />
+          </span>
         ) : (
           <CartIcon
-          className="disabled"
-            fill="#bcc0c3"                        
-            style={{ pointerEvents: "none" }}
+            className="disabled"
+            fill="#bcc0c3"
+            style={{ pointerEvents: 'none' }}
           />
         )}
         <PlaceOrderDialog
           key={Math.random()}
-          isDialogOpen={toggleOrderDialog} 
+          isDialogOpen={toggleOrderDialog}
           onClose={closeDialog}
           orderingFromDashboard={orderingFromDashboard}
           renewalData={details}
-          closeOnBackdropClick={false}  
+          closeOnBackdropClick={false}
           orderEndpoints={orderEndpoints}
-          store={useRenewalGridState} 
+          store={useRenewalGridState}
         />
-        <VerticalSeparator/>
-        <span className="cmp-renewals-ellipsis"><EllipsisIcon onClick={toggleExpandedRow} style={iconStyle} /></span>
-        
+        <VerticalSeparator />
+        <span className="cmp-renewals-ellipsis" ref={divRef}>
+          <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
+        </span>
+        <Dialog 
+          onClose={() => setShowActionsMenu(false)}
+          ref={dialogRef}
+          hideBackdrop
+          open={showActionsMenu}
+          sx={dialogStyling}
+          >
+          <div className="cmp-renewals-actions-menu">
+            <div className="cmp-renewals-actions-menu__item" onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id)}>
+              <span className="cmp-renewals-actions-menu__item-icon">
+                <EyeLightIcon />
+              </span>
+              <span className="cmp-renewals-actions-menu__item-label">View quote</span>
+            </div>
+            <div className="cmp-renewals-actions-menu__item" onClick={downloadPDF}>
+              <span className="cmp-renewals-actions-menu__item-icon">
+                <DownloadIcon />
+              </span>
+              <span className="cmp-renewals-actions-menu__item-label">Download PDF</span>
+            </div>
+            <div className="cmp-renewals-actions-menu__item" onClick={downloadXLS}>
+              <span className="cmp-renewals-actions-menu__item-icon">
+                <DownloadIcon />
+              </span>
+              <span className="cmp-renewals-actions-menu__item-label">Download XLS</span>
+            </div>
+          </div>
+        </Dialog>
       </div>
     </>
   );

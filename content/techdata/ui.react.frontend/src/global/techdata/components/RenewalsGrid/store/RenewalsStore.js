@@ -36,6 +36,7 @@ const INITIAL_STATE = {
   resetFilter:false,
   rowCollapsedIndexList:null,
   dueDaysIcons: null,
+  openedActionMenu: null,
   toaster:{
     isOpen:false,
     title: "",

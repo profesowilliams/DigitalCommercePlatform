@@ -889,3 +889,27 @@ svg {
     top: unset;   
   }
 }
+
+.cmp-renewals-actions-menu {
+  box-shadow: 2px 2px 4px #00000082;
+  background-color: white;
+  display: flex;
+  flex-direction: column;    
+  &__item:first-child {
+      padding-top: 1.4rem;
+  }
+  &__item:last-child {
+      padding-bottom: 1.4rem;
+  }
+  &__item {
+      display: flex;
+      gap: 0.4rem;
+      cursor: pointer;
+      padding: 1rem 1.3rem;
+      align-items: center;
+      padding-left: 1.7rem;
+      &:hover{
+          background-color: gainsboro;
+      }
+  }
+}
