@@ -45,7 +45,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     (state) => state.effects
   );
 
-  const { hasAnyFilterSelected, dateSelected } = useFilteringSelected();
+  const { hasFilterChangeAvailable, dateSelected } = useFilteringSelected();
 
   const [DOMLoaded, setDOMLoaded] = useState(false);
 
@@ -119,11 +119,19 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
   const showResult = () => {
     const [optionFields] = _generateFilterFields();
     setAppliedFilterCount();
+    const filtersCopy = [...filterList].map((filter, index) => {
+      if (index !== 0) {
+        const applied = filter.checked;
+        return {...filter,applied};
+      }
+      return filter;
+    });
+    setFilterList(filtersCopy);
     setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
       ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
       optionFields,
       dateSelected,
-      filterList,
+      filterList: filtersCopy,
     });
     toggleFilterModal();
     if (resetFilter)
@@ -132,7 +140,21 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     effects.clearDateSelectionOnRangeClear();
   };
 
-  
+  const handleCloseModalClick = () => {
+    const hasDateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
+    const filtersCopy = [...filterList].map((filter, index) => {
+      if (index !== 0) {
+        const checked = filter.applied;
+        return {...filter,checked};
+      }
+      return filter;
+    });
+    setFilterList(filtersCopy);
+    handleFilterCloseClick();
+    if(!hasDateApplied) {
+      effects.clearDateFilters();
+    }
+  };
 
   if (!filterList) return null;
 
@@ -154,7 +176,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
       <div className={computeClassName("filter-modal-content")} ref={filterDom}>
         <RenewalErrorBoundary>
           <Button
-            onClick={handleFilterCloseClick}
+            onClick={handleCloseModalClick}
             btnClass={computeClassName("filter-modal-content__close")}
           />
           <FilterDialog>
@@ -168,7 +190,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
                 <Button
                   btnClass={computeClassName("cmp-quote-button filter-modal-content__results")}
                   onClick={showResult}
-                  disabled={!hasAnyFilterSelected()}
+                  disabled={!hasFilterChangeAvailable()}
                 >
                   {getDictionaryValue("grids.common.label.filterSearch", "Show results")}
                 </Button>

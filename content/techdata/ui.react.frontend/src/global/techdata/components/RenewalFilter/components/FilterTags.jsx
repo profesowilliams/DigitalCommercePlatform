@@ -50,8 +50,8 @@ function FilterTags() {
 
   const [showMore, setShowMore] = useState(false); 
   const effects = useRenewalGridState((state) => state.effects);
-  const {hasAnyFilterSelected, filterList, dateSelected} = useFilteringSelected()
-  const { setFilterList, clearDateFilters } = effects;
+  const { hasAnyFilterApplied, filterList, dateSelected } = useFilteringSelected()
+  const { setFilterList, clearDateFilters, setCustomState } = effects;
   const { computeClassName } = useComputeBranding(useRenewalGridState);
   
   const handleShowMore = () => {
@@ -63,6 +63,13 @@ function FilterTags() {
       setShowMore(true)
     }
   },[filterList])
+
+  useEffect(() => {
+    const hasDateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
+    if(hasDateApplied) {
+      setCustomState({ key:'dateSelected', value:hasDateApplied });
+    }
+  },[])
 
   const isOneChecked = (filters, filter) =>
     filters[filter.parentId].childIds.some((id) => {
@@ -121,7 +128,7 @@ function FilterTags() {
   };
 
   return (
-    <If condition={hasAnyFilterSelected()}>
+    <If condition={hasAnyFilterApplied()}>
       <div className={`filter-tags-container ${showMore ? "active" : ""}`}>
         <span onClick={handleShowMore} className="filter-tags-more"></span>
         {filterList &&

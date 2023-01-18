@@ -19,6 +19,7 @@ const normaliseState = (data) => {
       id: temp,
       open: false,
       checked: false,
+      applied: false,
     };
 
     // loop through next label
@@ -30,6 +31,7 @@ const normaliseState = (data) => {
           id: temp,
           open: false,
           checked: false,
+          applied: false,
         };
 
         if ("subFilterOptionsValues" in subItem) {
@@ -40,6 +42,7 @@ const normaliseState = (data) => {
               id: temp,
               open: false,
               checked: false,
+              applied: false,
             };
           });
         }

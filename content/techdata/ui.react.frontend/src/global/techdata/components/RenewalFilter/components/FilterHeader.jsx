@@ -14,7 +14,8 @@ function FilterHeader({ onQueryChanged }) {
       if (index !== 0) {
         const open = false;
         const checked = false;
-        return {...filter,open,checked};
+        const applied = false;
+        return {...filter,open,checked,applied};
       }
       return filter;
     });
