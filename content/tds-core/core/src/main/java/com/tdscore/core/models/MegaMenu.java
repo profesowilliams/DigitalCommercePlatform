@@ -110,10 +110,22 @@ public class MegaMenu {
         return this.menuLinkList;
     }
 
+    public Date getLastModified() {
+        Date dateValue = new Date();
+        Resource parent = this.menuList.getParent();
+        if (parent != null) {
+            dateValue = new Date(parent.getResourceMetadata().getModificationTime());
+        }
+
+        return dateValue;
+    }
+
     public ComponentData getData() {
       
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getID())
+            .withType(() -> "tds-site/components/megamenu/")
+            .withLastModifiedDate(() -> this.getLastModified())
             .build();
         
     }
