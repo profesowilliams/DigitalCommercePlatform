@@ -115,7 +115,7 @@
         <item6
             jcr:primaryType="nt:unstructured"
             columnLabel="Total"
-            columnKey="total"
+            columnKey="priceFormatted"
             sortable="{Boolean}true"
             columnType="plainText"
         />

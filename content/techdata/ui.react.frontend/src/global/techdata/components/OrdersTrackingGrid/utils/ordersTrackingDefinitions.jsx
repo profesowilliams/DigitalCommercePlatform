@@ -14,7 +14,7 @@ export const ordersTrackingDefinition = () => {
     const { value, data } = eventProps;   
     const columnComponents = {
       select: <SelectColumn data={data} eventProps={eventProps} />,
-      total: <TotalColumn data={data} />,
+      priceFormatted: <TotalColumn data={data} />,
       invoices: <InvoiceColumn invoices={data?.invoices} />,
       deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} />,
       actions: <OrderTrackingActionColumn />
