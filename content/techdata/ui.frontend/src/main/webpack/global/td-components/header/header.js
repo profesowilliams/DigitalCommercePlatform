@@ -17,7 +17,7 @@ export default class Header {
         this.header = document.getElementById('cmp-techdata-header');
         this.authorColor = this.header.style.backgroundColor;
 
-        if(!this.masthead === undefined) {
+        if(this.masthead !== undefined) {
             this.setComponentToStick();
             this.checkSubheaderContainer();
             this.setSubheaderMargin();
