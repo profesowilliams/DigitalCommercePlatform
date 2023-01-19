@@ -254,7 +254,7 @@ function RenewalsGrid(props) {
       case "renewedduration":
         return formatRenewedDuration(event.data.source.type, event.data.renewedDuration, event.data.support);
       case "resellername":
-        return event.data.reseller.name;
+        return event.data.reseller.name + " [" + event.data.reseller.id + "]";
       case "vendor":
         return `${event.value.name}: ${event.data.programName}`
       default:
