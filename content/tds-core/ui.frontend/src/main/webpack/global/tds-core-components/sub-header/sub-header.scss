@@ -237,6 +237,7 @@
         }
 
         .cmp-tabs__tablist {
+          flex-flow:nowrap;
 
           &>.cmp-tabs__tab {
             span.cmp-sub-header__span {
@@ -432,6 +433,12 @@
   .subheader {
       .cmp-sub-header--sub-nav.new-sub>.cmp-sub-header--content {
         height: auto !important;
+        display:flex!important;
+        padding-top:3px;
+         
+        & div:not(cmp-sub-header--sub-nav__title) {
+          display: none;
+        }
       }
       &.cmp-sub-header-no-logo {        
         .cmp-sub-header--content {
@@ -481,7 +488,6 @@
 
         .cmp-sub-header--sub-nav__title {
           height: 16px;
-          margin-top: 7px;
           margin-left: 0px;
 
           .cmp-sub-header--sub-nav__image {
