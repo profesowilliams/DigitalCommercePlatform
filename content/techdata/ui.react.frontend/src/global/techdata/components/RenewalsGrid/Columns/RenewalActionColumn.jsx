@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
-import { CartIcon, DownloadIcon, EllipsisIcon, EyeIcon, EyeLightIcon } from '../../../../../fluentIcons/FluentIcons';
+import { CartIcon, CopyIcon, DownloadIcon, EllipsisIcon, EyeIcon, EyeLightIcon } from '../../../../../fluentIcons/FluentIcons';
 import { PLANS_ACTIONS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
 import useIsIconEnabled from '../Orders/hooks/useIsIconEnabled';
@@ -17,24 +17,36 @@ import { useRenewalGridState } from '../store/RenewalsStore';
 import Dialog from "@mui/material/Dialog";
 import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 import { fileExtensions, generateFileFromPost } from '../../../../../utils/utils';
+import useOutsideClick from '../../../hooks/useOutsideClick';
 
 function _RenewalActionColumn({ eventProps }) {
+  const { value, data } = eventProps;
   const [isToggled, setToggled] = useState(false);
-  const effects = useRenewalGridState((state) => state.effects);
-  const openedActionMenu = useRenewalGridState((state) => state.openedActionMenu);
+  const [showActionsMenu, setShowActionsMenu] = useState(false);
   const parentPosition = useRef({ x: 0, y: 0 });
   const divRef = useRef(null);
-  const [showActionsMenu, setShowActionsMenu] = useState(false);
   const dialogRef = useRef();
-  const rowCollapsedIndexList = useRenewalGridState(
-    (state) => state.rowCollapsedIndexList
-  );
+  const effects = useRenewalGridState((state) => state.effects);
+  const openedActionMenu = useRenewalGridState((state) => state.openedActionMenu);
   const { pageNumber } = useRenewalGridState((state) => state.pagination);
   const {
     detailUrl = '',
     orderingFromDashboard,
+    productGrid,
     ...endpoints
   } = useRenewalGridState((state) => state.aemConfig);
+
+  const isIconEnabled = useIsIconEnabled(
+    data?.firstAvailableOrderDate,
+    data?.canPlaceOrder,
+    orderingFromDashboard?.showOrderingIcon
+  );
+
+  const canCopy = data?.canCopy;
+
+  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } =
+    useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
+
   const {
     updateRenewalOrderEndpoint,
     getStatusEndpoint,
@@ -43,17 +55,6 @@ function _RenewalActionColumn({ eventProps }) {
     exportXLSRenewalsEndpoint,
     exportPDFRenewalsEndpoint
   } = endpoints;
-
-  const { value, data } = eventProps;
-
-  const isIconEnabled = useIsIconEnabled(
-    data?.firstAvailableOrderDate,
-    data?.canPlaceOrder,
-    orderingFromDashboard?.showOrderingIcon
-  );
-
-  const { handleCartIconClick, details, toggleOrderDialog, closeDialog } =
-    useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
 
   const orderEndpoints = {
     updateRenewalOrderEndpoint,
@@ -68,17 +69,7 @@ function _RenewalActionColumn({ eventProps }) {
     width: '1.3rem',
   };
 
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (!dialogRef.current?.contains(event.target)) {
-        setShowActionsMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [setShowActionsMenu]);
+  useOutsideClick(dialogRef, () => setShowActionsMenu(false), 'mousedown', [setShowActionsMenu]);
 
   useEffect(() => {
     const currentNode = eventProps.node;
@@ -187,6 +178,10 @@ function _RenewalActionColumn({ eventProps }) {
       console.error("error", error);
     }
     }
+  
+  const triggerCopyFlyout = () => {
+    console.log('flyout');
+  }
 
   return (
     <>
@@ -228,20 +223,32 @@ function _RenewalActionColumn({ eventProps }) {
               <span className="cmp-renewals-actions-menu__item-icon">
                 <EyeLightIcon />
               </span>
-              <span className="cmp-renewals-actions-menu__item-label">View quote</span>
+              <span className="cmp-renewals-actions-menu__item-label">View details</span>
             </div>
-            <div className="cmp-renewals-actions-menu__item" onClick={downloadPDF}>
+            {canCopy ? (
+              <div className="cmp-renewals-actions-menu__item" onClick={triggerCopyFlyout}>
               <span className="cmp-renewals-actions-menu__item-icon">
-                <DownloadIcon />
+                <CopyIcon width="16" height="16" />
               </span>
-              <span className="cmp-renewals-actions-menu__item-label">Download PDF</span>
+              <span className="cmp-renewals-actions-menu__item-label">Copy</span>
             </div>
-            <div className="cmp-renewals-actions-menu__item" onClick={downloadXLS}>
-              <span className="cmp-renewals-actions-menu__item-icon">
-                <DownloadIcon />
-              </span>
-              <span className="cmp-renewals-actions-menu__item-label">Download XLS</span>
-            </div>
+            ) : null}
+            {productGrid?.showDownloadPDFButton ? (
+              <div className="cmp-renewals-actions-menu__item" onClick={downloadPDF}>
+                <span className="cmp-renewals-actions-menu__item-icon">
+                  <DownloadIcon />
+                </span>
+                <span className="cmp-renewals-actions-menu__item-label">Download PDF</span>
+              </div>
+            ) : null}
+            {productGrid?.showDownloadXLSButton ? (
+              <div className="cmp-renewals-actions-menu__item" onClick={downloadXLS}>
+                <span className="cmp-renewals-actions-menu__item-icon">
+                  <DownloadIcon />
+                </span>
+                <span className="cmp-renewals-actions-menu__item-label">Download XLS</span>
+              </div>
+            ) : null}         
           </div>
         </Dialog>
       </div>

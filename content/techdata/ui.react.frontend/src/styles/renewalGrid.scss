@@ -911,5 +911,10 @@ svg {
       &:hover{
           background-color: gainsboro;
       }
+      &-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
   }
 }
