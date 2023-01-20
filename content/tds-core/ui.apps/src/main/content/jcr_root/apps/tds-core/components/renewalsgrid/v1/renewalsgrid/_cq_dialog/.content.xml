@@ -153,6 +153,27 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./hideExportOption@TypeHint"
                                                 value="Boolean"/>
+                                            <copyFlyoutGroup
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <copyFlyoutTitle
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Copy Flyout Title"
+                                                        name="./copyFlyoutTitle"/>
+                                                    <copyFlyoutDescription
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Copy Flyout Description"
+                                                        name="./copyFlyoutDescription"/>
+                                                    <copyFlyoutButton
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Copy Flyout Button Label"
+                                                        name="./copyFlyoutButton"/>
+                                                </items>
+                                            </copyFlyoutGroup>                                           
 										</items>
 									</column>
 								</items>

@@ -33,6 +33,7 @@ import { renewalsDefinitions } from "./utils/renewalsDefinitions";
 import BaseGrid from "../BaseGrid/BaseGrid";
 import BaseGridHeader from "../BaseGrid/BaseGridHeader";
 import RenewalSearch from "./Search/RenewalSearch";
+import CopyFlyout from "../CopyFlyout/CopyFlyout";
 
 function ToolTip() {
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
@@ -344,6 +345,7 @@ function RenewalsGrid(props) {
         onClose={onCloseToaster}
         store={useRenewalGridState} 
         message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
+      <CopyFlyout store={useRenewalGridState} copyFlyout={gridConfig.copyFlyout} />
     </section>
   );
 }

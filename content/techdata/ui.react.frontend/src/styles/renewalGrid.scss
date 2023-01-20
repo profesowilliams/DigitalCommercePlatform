@@ -918,3 +918,42 @@ svg {
       }
   }
 }
+
+.cmp-renewals-copy-flyout {
+  position: relative;
+  height: 100%;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    align-items: center;
+    border-bottom: 3px solid $brand-charcoal;
+    padding-bottom: 1.44rem;
+    &-title{
+      font-size: 1.8rem;
+    }
+    &-icon{
+      font-size: 2rem;
+      cursor: pointer;
+    }    
+  }
+  &__content{
+    padding: 0 1.5rem;
+    &-description {
+      margin: 2.5rem 0;
+    }
+  }
+  &__footer {
+    button{
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: $td-neutral-gray-2;
+      text-align: center;
+      color: $brand-text-lightgray;
+      padding: 1.4rem 2rem;
+    }
+  }
+}

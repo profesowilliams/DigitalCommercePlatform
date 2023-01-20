@@ -6,6 +6,7 @@ use(['../common/utils.js'], function(utils) {
     var productGrid = {};
     let icons = {};
     let noResultsValues = {};
+    let copyFlyout = {};
 
     if (properties && properties["detailUrl"]) {
         jsonObject["detailUrl"] = properties["detailUrl"];
@@ -293,8 +294,24 @@ use(['../common/utils.js'], function(utils) {
         noResultsValues.noDataImage = properties["noDataImageFileReference"];
     }
 
+    if (properties && properties["copyFlyoutTitle"]) {
+        copyFlyout.title = properties["copyFlyoutTitle"];
+    }
+
+    if (properties && properties["copyFlyoutDescription"]) {
+        copyFlyout.description = properties["copyFlyoutDescription"];
+    }
+
+    if (properties && properties["copyFlyoutButton"]) {
+        copyFlyout.button = properties["copyFlyoutButton"];
+    }
+
     if (noResultsValues != null) {
         jsonObject["searchResultsError"] = noResultsValues;
+    }
+
+    if (copyFlyout != null) {
+        jsonObject["copyFlyout"] = copyFlyout;
     }
 
     return {

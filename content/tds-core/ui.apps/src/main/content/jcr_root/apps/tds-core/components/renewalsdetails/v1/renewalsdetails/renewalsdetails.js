@@ -9,6 +9,8 @@ use(['../common/utils.js'], function(utils) {
     var errorMessages = {};
     var endCustomer = {};
     var quoteEditing = {};
+    let copyFlyout = {};
+    
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
     }
@@ -320,6 +322,22 @@ use(['../common/utils.js'], function(utils) {
 
     if (properties && properties["hideExportOption"]) {
         jsonObject["hideExportOption"] = properties["hideExportOption"];
+    }
+
+    if (properties && properties["copyFlyoutTitle"]) {
+        copyFlyout.title = properties["copyFlyoutTitle"];
+    }
+
+    if (properties && properties["copyFlyoutDescription"]) {
+        copyFlyout.description = properties["copyFlyoutDescription"];
+    }
+
+    if (properties && properties["copyFlyoutButton"]) {
+        copyFlyout.button = properties["copyFlyoutButton"];
+    }
+
+    if (copyFlyout != null) {
+        jsonObject["copyFlyout"] = copyFlyout;
     }
 
     return {

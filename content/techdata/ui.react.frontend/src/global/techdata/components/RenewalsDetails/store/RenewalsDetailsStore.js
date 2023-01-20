@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   reseller: null,
   items: null,
   savedItems: null,
+  showCopyFlyout:false
 };
 
 const store = (set,get) => ({

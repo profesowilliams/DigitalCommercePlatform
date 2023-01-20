@@ -180,7 +180,8 @@ function _RenewalActionColumn({ eventProps }) {
     }
   
   const triggerCopyFlyout = () => {
-    console.log('flyout');
+    setShowActionsMenu(false);
+    effects.setCustomState({key:'showCopyFlyout',value:true})
   }
 
   return (
