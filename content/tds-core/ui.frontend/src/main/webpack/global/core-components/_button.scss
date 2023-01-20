@@ -4653,10 +4653,11 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   
       & .cmp-button {
         height: unset;
-        padding-top: 8.25px!important;
-        padding-bottom: 8.25px!important;
+        padding-top: 8px!important;
+        padding-bottom: 8px!important;
         border: 1px solid get-color('teal');
         font-size: 12px;
+        line-height:16px;
         @include practice_builder_button_action_style;
       }
     }
