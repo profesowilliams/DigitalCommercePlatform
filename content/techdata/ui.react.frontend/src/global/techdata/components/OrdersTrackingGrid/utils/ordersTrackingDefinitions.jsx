@@ -13,6 +13,10 @@ export const ordersTrackingDefinition = () => {
     const { columnKey } = aemDefinition;
     const { value, data } = eventProps;   
     const columnComponents = {
+      // US 399164: We will update the field mapping later when the UI service is ready.
+      // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
+      // and will render order date on DIT and SIT env
+      updated: data?.updated ?? data?.created,
       select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: <InvoiceColumn invoices={data?.invoices} />,

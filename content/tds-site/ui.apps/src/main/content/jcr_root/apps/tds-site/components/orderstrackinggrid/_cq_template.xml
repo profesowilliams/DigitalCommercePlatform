@@ -79,61 +79,68 @@
         />
         <item1
             jcr:primaryType="nt:unstructured"
+            columnLabel="Updated"
+            columnKey="updated"
+            sortable="{Boolean}true"
+            columnType="plainText"
+        />
+        <item2
+            jcr:primaryType="nt:unstructured"
             columnLabel="Ship to"
             columnKey="shipTo"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item2
+        <item3
             jcr:primaryType="nt:unstructured"
             columnLabel="Status"
             columnKey="status"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item3
+        <item4
             jcr:primaryType="nt:unstructured"
             columnLabel="Order Date"
             columnKey="created"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item4
+        <item5
             jcr:primaryType="nt:unstructured"
             columnLabel="Order Nº"
             columnKey="id"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item5
+        <item6
             jcr:primaryType="nt:unstructured"
             columnLabel="PO Nº"
             columnKey="reseller"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item6
+        <item7
             jcr:primaryType="nt:unstructured"
             columnLabel="Total"
             columnKey="priceFormatted"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item7
+        <item8
             jcr:primaryType="nt:unstructured"
             columnLabel="Invoices"
             columnKey="invoices"
             sortable="{Boolean}true"
             columnType="plainText"
         />
-        <item8
+        <item9
             jcr:primaryType="nt:unstructured"
             columnLabel="D-Notes"
             columnKey="deliveryNotes"
             sortable="{Boolean}false"
             columnType="plainText"
         />
-        <item9
+        <item10
             jcr:primaryType="nt:unstructured"
             columnLabel="Actions"
             columnKey="actions"
