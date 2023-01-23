@@ -679,7 +679,7 @@ button.icon-box {
   }
 }
 
-.cmp-grid-td-synnex, .cmp-order-tracking-grid {
+.cmp-grid-td-synnex, .cmp-order-tracking-grid, .cmp-grid-techdata {
   & .cmp-renewals-subheader, .cmp-renewals__pagination--bottom {
     @include font-arial-normal();
     border-bottom: unset;
