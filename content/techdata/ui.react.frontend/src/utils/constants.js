@@ -72,6 +72,9 @@ export const FILTER_LOCAL_STORAGE_KEY = 'filterLocalStorageData';
 export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to access this information';
 export const ERROR_TITLE_DEFAULT = 'Error';
 
+export const ORDER_PAGINATION_LOCAL_STORAGE_KEY = 'orderPaginationLocalStorageData';
+
+
 // Create Quote
 export const ERROR_CREATE_QUOTE_EMPTY_CART = 'The cart is empty';
 export const ERROR_CREATE_QUOTE_NOT_VALID_CART = 'Not a valid cart available';

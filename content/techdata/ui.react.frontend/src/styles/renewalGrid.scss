@@ -257,6 +257,10 @@
   align-items: center;
   height:45px;
   margin-top: 2.5rem;
+  &-left{
+    display: flex;
+    gap: .5rem;
+  }
   /*
     Styles for pagination
   */
@@ -675,7 +679,7 @@ button.icon-box {
   }
 }
 
-.cmp-grid-td-synnex {
+.cmp-grid-td-synnex, .cmp-order-tracking-grid {
   & .cmp-renewals-subheader, .cmp-renewals__pagination--bottom {
     @include font-arial-normal();
     border-bottom: unset;

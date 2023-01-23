@@ -14,7 +14,7 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
   const handleCartIconClick = async (_event, planOption) => {
     const renewalsId = planOption ? planOption.id : data.source.id;
     const isDefaultQuote = !planOption || planOption.id === data.source.id;
-
+    return setToggleOrderDialog((toggle) => !toggle);
     if (isDefaultQuote && !data.isValid) {
       redirectToRenewalDetail(detailUrl, renewalsId);
       return ;

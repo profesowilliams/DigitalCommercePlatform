@@ -285,13 +285,13 @@ export async function fetchRenewalsByGet(config){
    
 }
 
-export function setPaginationData(mappedResponse,pageSize) {
+export function setPaginationData(mappedResponse,pageSize = 25) {
     const { pageCount, pageNumber, totalItems } = mappedResponse;
     return {
         currentResultsInPage: pageSize,
         totalCounter: totalItems,
         pageCount,
-        pageNumber: parseInt(pageNumber),
+        pageNumber: parseInt(pageNumber) || 1,
     };
 }
 

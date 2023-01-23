@@ -6,8 +6,6 @@ import { thousandSeparator } from "../../helpers/formatting";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";
 import VerticalSeparator from "../Widgets/VerticalSeparator";
-import CustomRenewalPagination from "./Navigation/CustomRenewalPagination";
-import { getColumnDefinitions } from "./Columns/GenericColumnTypes";
 import RenewalDetailRenderers from "./Columns/RenewalDetailRenderers";
 import {
   addCurrentPageNumber,
@@ -34,6 +32,8 @@ import BaseGrid from "../BaseGrid/BaseGrid";
 import BaseGridHeader from "../BaseGrid/BaseGridHeader";
 import RenewalSearch from "./Search/RenewalSearch";
 import CopyFlyout from "../CopyFlyout/CopyFlyout";
+import BaseGridPagination from "../BaseGrid/Pagination/BaseGridPagination";
+import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
 
 function ToolTip() {
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
@@ -52,7 +52,7 @@ function ToolTip() {
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function RenewalsGrid(props) {
-  const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic } = useRenewalFiltering();
+  const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic } = useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
@@ -298,9 +298,10 @@ function RenewalsGrid(props) {
     <section ref={renewalsRef} id="renewals-grid-component">
       <BaseGridHeader
         leftComponents={[
-          <CustomRenewalPagination
+          <BaseGridPagination
             onQueryChanged={onQueryChanged}
             ref={customPaginationRef}
+            store={useRenewalGridState}
           />
         ]}
         rightComponents={[
@@ -336,9 +337,10 @@ function RenewalsGrid(props) {
         noContextMenuItemsWhenColumnNull={true} />
       <ToolTip />
       <div className="cmp-renewals__pagination--bottom">
-        <CustomRenewalPagination
+        <BaseGridPagination
             onQueryChanged={onQueryChanged}
             ref={customPaginationRef}
+            store={useRenewalGridState}
           />
       </div>
       <Toaster

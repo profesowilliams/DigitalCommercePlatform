@@ -56,7 +56,7 @@ const INITIAL_STATE = {
  * @param {string} param Query string param
  * @returns any | false
  */
-function getFromQueryString(param) {
+export function getFromQueryString(param) {
   if (location?.href?.includes(param)) {
     return location.href.split(param).pop() === '1' ? false : location.href.split(param).pop();
   }
@@ -73,7 +73,7 @@ function getFromQueryString(param) {
  * @param {string | number} otherwise a default return value if the check fails
  * @returns Either the parsed Object or the value of otherwise argument.
  */
-function getLocalValueOrDefault(key, property, otherwise) {
+export function getLocalValueOrDefault(key, property, otherwise) {
   if (hasLocalStorageData(key) && isFromRenewalDetailsPage()) {
     return getLocalStorageData(key)[property];
   } else {
