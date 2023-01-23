@@ -35,7 +35,7 @@ const createPlainTextColumn = (definition, bussinesConfig = {}) => createColumn(
 const createButtonListColumn = (definition, bussinesConfig = {}) => createColumn(definition, bussinesConfig);
 
 const createPlainResellerColumn = (definition, bussinesConfig = {}) => {
-  if (!isHouseAccount()) {
+  if (isHouseAccount()) {
     return createColumn(definition, bussinesConfig);
   } else {
     return null;
