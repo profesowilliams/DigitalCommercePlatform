@@ -11,6 +11,7 @@
   const securityForm = document.getElementById(ID_SECURITY_FORM);
   const inputs = securityForm?.querySelectorAll('input');
   const dataset = document.querySelector('[data-sec-code]');
+  const dataSecCodeEnabled = document.querySelector('[data-sec-code-enabled]') ? true :  false;
   const dataSecCode = document.body.getAttribute('data-sec-code');
   const encryptCode = encryptSecurityCode(dataSecCode);
   const errorDataset = document.querySelector('[data-error-code]');
@@ -195,19 +196,30 @@
     const tempModal = document.getElementsByClassName(CLASS_MODAL)[0];
     tempModal.style.display = 'none';
   }
-  document.addEventListener('DOMContentLoaded', () => {
 
-    const modals = document.getElementsByClassName(CLASS_MODAL);
-    if (pageID && validationCodeEnabledFlag) {
+  function hideModal(modals) {
+    for (let element of modals) {
+      element.style["display"] = "none";
+    }
+  }
+
+  function handlerModalEnable(modals) {
+    if (pageID && validationCodeEnabledFlag && dataSecCodeEnabled) {
       if (validatePageCookie()) {
           for (let element of modals) {
             openModal(element);
           }
       } else {
-        for (let element of modals) {
-          element.style["display"] = "none";
-        }
+        hideModal(modals);
       }
+    } else {
+      hideModal(modals);
     }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const modals = document.getElementsByClassName(CLASS_MODAL);
+    handlerModalEnable(modals);
   });
+    
 })();
