@@ -1,6 +1,6 @@
 (function () {
   const md5  = require("blueimp-md5");
-  const CLASS_MODAL = 'cmp-popup__modal';
+  const CLASS_MODAL = 'securitycode'; 
   const CLASS_MODAL_OPENED = 'cmp-popup__modal--open';
   const ID_SECURITY_FORM = 'securityform';
   const pageID = document.body.id;
@@ -49,7 +49,6 @@
         true
       );
     });
-
     securityForm.addEventListener(
       'submit',
       function (e) {
@@ -201,11 +200,12 @@
     const modals = document.getElementsByClassName(CLASS_MODAL);
     if (pageID && validationCodeEnabledFlag) {
       if (validatePageCookie()) {
-        if (modals && modals.length > 0) {
           for (let element of modals) {
-            modalElement = element;
             openModal(element);
           }
+      } else {
+        for (let element of modals) {
+          element.style["display"] = "none";
         }
       }
     }

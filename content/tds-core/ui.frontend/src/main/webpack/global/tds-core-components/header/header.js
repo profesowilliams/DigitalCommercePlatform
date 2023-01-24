@@ -85,8 +85,9 @@ export default class Header {
         }
 
         this.headerHeight = this.headerEl.clientHeight;
-        this.subHeaderStop = (this.stickyHeaderEle.offsetTop - this.headerHeight);
-
+        if (this?.stickyHeaderEle?.offsetTop) {
+            this.subHeaderStop = (this.stickyHeaderEle.offsetTop - this.headerHeight);
+        }
         if(this.header && this.subheaderNav && this.container){
             this.subheaderNav.style.top = this.header.clientHeight + this.subheaderNav.clientHeight + "px";
             this.subheaderNav.style.width = this.container.clientWidth + "px";
@@ -174,7 +175,7 @@ export default class Header {
     }
 
     checkHeaderSubheader(){
-        if (this.stickyCount == 0) {
+        if (this.stickyCount == 0 || this?.stickyHeaderEle?.offsetTop !== null) {
             this.subHeaderStop = (this.stickyHeaderEle.offsetTop - this.headerHeight);
             this.stickyCount++;
         }

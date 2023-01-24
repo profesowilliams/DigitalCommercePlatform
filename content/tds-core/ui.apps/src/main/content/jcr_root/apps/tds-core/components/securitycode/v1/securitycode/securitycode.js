@@ -11,7 +11,6 @@
   containerDataset[0].dataset
   const dataset = document.querySelector('[data-cmp-security-code]');
   const {cmpSecurityCode, cmpSecurityCodeEnabled} = dataset.dataset;
-  console.log("🚀 ~ file: popup.js ~ line 76 ~ cmpSecurityCodeEnabled", cmpSecurityCodeEnabled)
   let flagSubmitCode = false;
   inputs.forEach(input =>{
     input.addEventListener('keydown', function(e) {
