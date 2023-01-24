@@ -76,7 +76,7 @@ function OrdersTrackingGrid(props) {
       />
       <BaseGrid
         columnList={componentProp.columnList}
-        definitions={ordersTrackingDefinition()}
+        definitions={ordersTrackingDefinition(componentProp)}
         config={gridConfig}
         gridConfig={gridConfig}
         defaultSearchDateRange={defaultSearchDateRange}

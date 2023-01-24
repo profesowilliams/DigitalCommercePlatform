@@ -1,13 +1,14 @@
 import React from "react";
 import DeliveryNotesColumn from "../Columns/DeliveryNotesColumn";
 import InvoiceColumn from "../Columns/InvoiceColumn";
+import OrderNoColumn from "../Columns/OrderNoColumn";
 import OrderTrackingActionColumn from "../Columns/OrderTrackingActionColumn";
 
 
 import SelectColumn from "../Columns/SelectColumn";
 import TotalColumn from "../Columns/TotalColumn";
 
-export const ordersTrackingDefinition = () => {
+export const ordersTrackingDefinition = ({ detailUrl }) => {
 
   const createColumnComponent = (eventProps, aemDefinition) => {  
     const { columnKey } = aemDefinition;
@@ -21,6 +22,7 @@ export const ordersTrackingDefinition = () => {
       priceFormatted: <TotalColumn data={data} />,
       invoices: <InvoiceColumn invoices={data?.invoices} />,
       deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} />,
+      id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
       actions: <OrderTrackingActionColumn />
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';
