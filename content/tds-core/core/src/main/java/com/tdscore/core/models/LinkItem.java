@@ -132,10 +132,13 @@ public class LinkItem {
                         if (currentPage != null && 
                             currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
                             I18n i18n = getI18n(currentPage);
-                            String viewAllText = i18n.getVar(VIEW_ALL_KEY);
-                            viewAllText = (viewAllText != null && 
-                                !viewAllText.trim().isEmpty() && 
-                                !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All "; 
+                            String viewAllText = "View All ";
+                            if(i18n != null) {
+                                viewAllText = i18n.getVar(VIEW_ALL_KEY);
+                                viewAllText = (viewAllText != null &&
+                                        !viewAllText.trim().isEmpty() &&
+                                        !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All ";
+                            }
 
                             link.addSubNavLink(new SubNavLinks(
                                 new StringBuilder()
@@ -161,6 +164,7 @@ public class LinkItem {
     }
 
     private I18n getI18n(Page currentPage) {
+        if(this.request == null) return null;
         Locale pageLang = currentPage.getLanguage();
         ResourceBundle resourceBundle = this.request.getResourceBundle(pageLang);
         return new I18n(resourceBundle);
