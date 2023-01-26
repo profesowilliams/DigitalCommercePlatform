@@ -459,7 +459,6 @@ const SearchBar = ({ data, componentProp }) => {
     }
     return (
       <div className="cmp-searchbar__context-menu">
-        {!mobileState && (
           <SearchAreas
             areaList={areaList}
             selectedArea={selectedArea}
@@ -467,7 +466,6 @@ const SearchBar = ({ data, componentProp }) => {
             toggleSearchIcon={toggleSearchIcon}
             isMobile={mobileState}
           ></SearchAreas>
-        )}
         
         <SearchSuggestions
           suggestionsList={typeAheadSuggestions.Suggestions}
