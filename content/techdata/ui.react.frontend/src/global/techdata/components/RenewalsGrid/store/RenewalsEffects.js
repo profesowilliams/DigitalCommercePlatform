@@ -110,12 +110,24 @@ export const renewalsEffects = (set, get) => {
     set({dateOptionsList:dateOptionsUncheckedList});
   }
 
-  function clearDateSelectionOnRangeClear(){   
-    const {dateOptionsList, filterList, customStartDate, customEndDate} = get();
-    const mutatedDateList = checkIfAnyDateRangeIsCleared({dateOptionsList,filterList,customStartDate,customEndDate})  
-    if (!mutatedDateList) return 
-    const {dateOptionsUncheckedList,filterUnopenedList} = mutatedDateList;
-    set({dateOptionsList:dateOptionsUncheckedList,filterList:filterUnopenedList,customStartDate:null,customEndDate:null,dateSelected:null});
+  function clearUnappliedDateRange(){ 
+    const {dateOptionsList} = get();
+    const dateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
+    const isChecked = (field) => field === dateApplied;
+    const dateOptionsListLocalChecked = dateOptionsList.map(item => ({ ...item, checked: isChecked(item.field) }));
+    if(dateApplied && dateApplied !== 'custom') {
+      set({dateOptionsList:dateOptionsListLocalChecked, customStartDate: null, customEndDate: null, datePickerState: null});
+    } else if(!dateApplied) {
+      clearDateFilters();
+    }
+  }
+
+  function setAppliedCustomDateRange(){ 
+    const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+    if(appliedFilters) {
+      setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
+      set({customStartDate: appliedFilters?.customStartDate, customEndDate: appliedFilters?.customEndDate});
+    }
   }
 
   return {
@@ -132,6 +144,7 @@ export const renewalsEffects = (set, get) => {
     setDateOptionList,
     closeAndCleanToaster,
     checkOptionListSelected,
-    clearDateSelectionOnRangeClear
+    clearUnappliedDateRange,
+    setAppliedCustomDateRange
   };
 };

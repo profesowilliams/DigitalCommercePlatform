@@ -73,18 +73,11 @@ export default function FilterDatePicker({ isOpen = false }) {
               customArrowIcon={<div className="customHyphen"></div>}
               reopenPickerOnClearDates
               keepOpenOnDateSelect={true}
-              onDatesChange={({ startDate, endDate }) => {            
-                effects.setCustomState({key:'customStartDate',value:startDate || undefined});
-                effects.setCustomState({key:'customEndDate',value:endDate || undefined});
+              onDatesChange={({ startDate, endDate }) => {   
+                effects.setCustomState({key:'customStartDate', value:startDate?.toISOString() || undefined});
+                effects.setCustomState({key:'customEndDate', value:endDate?.toISOString() || undefined});
                 if (startDate, endDate ) {
-                  effects.setDatePickerState(startDate?.toDate(), endDate?.toDate())
-                  setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
-                    ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
-                    ...{
-                      customStartDate: startDate,
-                      customEndDate: endDate,
-                    },
-                  });
+                  effects.setDatePickerState(startDate?.toDate(), endDate?.toDate());
                 }
               }}
               isOutsideRange={() => false}

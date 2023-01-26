@@ -10,9 +10,9 @@ export default function useFilteringSelected(){
     const dateSelected = useRenewalGridState((state) => state.dateSelected);    
  
     const isDateSelectedOrApplied = () => {
-      const isRangeDateSelected = (customStartDate && customEndDate);        
-      const hasDateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
-      const hasDateSelected = dateSelected === "custom" ? isRangeDateSelected : !!dateSelected
+      const isRangeDateSelected = (customStartDate !== null && customEndDate !== null);        
+      const hasDateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected !== null;
+      const hasDateSelected = dateSelected === 'custom' ? isRangeDateSelected : !!dateSelected;
       return hasDateSelected || hasDateApplied;
     }    
 
@@ -21,14 +21,27 @@ export default function useFilteringSelected(){
       return noChildIds.some((filter) => filter.checked || filter.applied) || isDateSelectedOrApplied();
     }
 
+    const hasDateFilterChangeAvailable = () => {
+      const localFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+      const hasCustomSelected = dateSelected === 'custom';
+      const hasLocalDateApplied = localFilters?.dateSelected;  
+      const hasValidCustomRange = hasCustomSelected && !!(customStartDate && customEndDate);          
+      let hasDateChangeToApply = dateSelected && hasLocalDateApplied !== dateSelected;
+      // removing applied date
+      hasDateChangeToApply = hasLocalDateApplied && !dateSelected ? true : hasDateChangeToApply;
+      // changing start date range      
+      hasDateChangeToApply = hasCustomSelected && customStartDate !== localFilters?.customStartDate? true : hasDateChangeToApply;
+      // changing end date range      
+      hasDateChangeToApply = hasCustomSelected && customEndDate !== localFilters?.customEndDate? true : hasDateChangeToApply;
+      // custom range valid
+      hasDateChangeToApply = hasCustomSelected && !hasValidCustomRange ? false : hasDateChangeToApply;
+      return hasDateChangeToApply;
+    }
+
     const hasFilterChangeAvailable = () => {
       const noChildIds = filterList.filter(filter => !filter.childIds.length);
       const hasFilterListChange = noChildIds.some((filter) => (filter.checked && !filter.applied) || (!filter.checked && filter.applied));
-      const localDateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;  
-      const hasValidCustomRange = dateSelected === "custom" ? (customStartDate && customEndDate) : true;
-      const hasDateFilterChange = !localDateApplied && dateSelected || localDateApplied && !dateSelected && hasValidCustomRange;    
-      const hasDateChangeToApply = localDateApplied && dateSelected && localDateApplied !== dateSelected;
-      return hasFilterListChange || hasDateFilterChange || hasDateChangeToApply;
+      return hasFilterListChange || hasDateFilterChangeAvailable();
     }
 
     return {hasAnyFilterApplied, hasFilterChangeAvailable, filterList, dateSelected}

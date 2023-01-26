@@ -19,17 +19,6 @@ function CustomDatePill({ clearDateFilters }) {
   const [startDate, endDate] = datePickerState;
   const handleClearCustomDate = () => {
     clearDateFilters();
-    const localFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
-    const clearedCustomRange = {
-      ...localFilters,
-      dateSelected: null,
-      customEndDate: null,
-      customStartDate: null,
-      optionFields: {
-        ...localFilters, DueDateFrom: null, DueDateTo: null
-      }
-    }
-    setLocalStorageData(FILTER_LOCAL_STORAGE_KEY,clearedCustomRange);
   }
 
   return customStartDate && customEndDate ? (

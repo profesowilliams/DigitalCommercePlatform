@@ -48,6 +48,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
   const { hasFilterChangeAvailable, dateSelected } = useFilteringSelected();
 
   const [DOMLoaded, setDOMLoaded] = useState(false);
+  const customStartDate = useRenewalGridState(state => state.customStartDate);
+  const customEndDate = useRenewalGridState(state => state.customEndDate);
 
   let aemFilterData;
   aemData.filterType =
@@ -59,9 +61,10 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     aemFilterData = normaliseState(aemData.filterListValues);
   }
 
-  const { setFilterList, toggleFilterModal } = effects;
+  const { setFilterList, toggleFilterModal, setAppliedCustomDateRange, clearUnappliedDateRange, setCustomState } = effects;
 
   useEffect(() => {
+    setAppliedCustomDateRange();
     if (!filterList) {
       setFilterList(aemFilterData);
     }
@@ -131,17 +134,18 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
       ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
       optionFields,
       dateSelected,
+      customStartDate: dateSelected==='custom' ? customStartDate : null,
+      customEndDate: dateSelected==='custom' ? customEndDate : null,
       filterList: filtersCopy,
     });
     toggleFilterModal();
     if (resetFilter)
-      effects.setCustomState({ key: "resetFilter", value: false });
+      setCustomState({ key: "resetFilter", value: false });
     onQueryChanged();
-    effects.clearDateSelectionOnRangeClear();
+    clearUnappliedDateRange();
   };
 
   const handleCloseModalClick = () => {
-    const hasDateApplied = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY)?.dateSelected;
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
         const checked = filter.applied;
@@ -150,10 +154,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
       return filter;
     });
     setFilterList(filtersCopy);
-    handleFilterCloseClick();
-    if(!hasDateApplied) {
-      effects.clearDateFilters();
-    }
+    handleFilterCloseClick();    
+    clearUnappliedDateRange();   
   };
 
   if (!filterList) return null;
