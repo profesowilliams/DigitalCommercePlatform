@@ -158,18 +158,6 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
 
   if (!filterList) return null;
 
-  function getFilterParent(){
-    const newSubheader = document.querySelector("[data-component='NewSubheader']");
-    const apjHeader = document.querySelector("#cmp-techdata-header");
-    const subheaderDom = document.querySelector(".cmp-sub-header--sub-nav.new-sub");
-    const aemAPJMainSubheader = subheaderDom || apjHeader;    
-    if (isTDSynnex && aemAPJMainSubheader) {
-      aemAPJMainSubheader.style.position = 'relative';
-      return aemAPJMainSubheader;
-    } 
-    return !!newSubheader ? newSubheader : (!!apjHeader ? apjHeader : document.body );
-  }
-
   return DOMLoaded && 
     <>
       <div className="filter-modal-container" />

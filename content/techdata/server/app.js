@@ -10579,5 +10579,10 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
     },
     error: { code: 0, messages: [], isError: false },
   };
+  const query = req.query;
+  if (query.PageNumber) {
+    console.log(query.PageNumber);
+    response.content.pageNumber = parseInt(query.PageNumber);
+  }
   return res.status(200).json(response);
 });
