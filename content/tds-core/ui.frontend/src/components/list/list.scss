@@ -12,9 +12,8 @@
         .cmp-list__item {
             display: flex;
             align-items: center;
-            padding-right: 36px;
             border-top: 1px solid #E4E5E6;
-            height: 168px;
+            padding: 30px 36px 30px 0px;
             &:hover {
                 background-color: map-get($color-palette, 'cool-gray-1');
             }
@@ -22,6 +21,7 @@
             @include mobile {
                 height: 100%;
                 padding-right: 0;
+                padding: 0;
 
                 &:hover {
                     background-color: unset;
@@ -59,8 +59,8 @@
                     }
                     .cmp-image__image-figure {
                         margin-right: 21px;
-                        position: relative;
-                        bottom: 6px;
+                        display: flex;
+                        align-items: center;
                         svg {
                             width: 100%;
                             height: 79px;
@@ -78,10 +78,7 @@
                         line-height: 26px;
                         color: map-get($color-palette, 'deep-teal');
                         font-family: $font-family-everett;
-                        position: relative;
-                        bottom: 10px;
                         @include mobile {
-                            position: unset;
                             font-size: 16px;
                             line-height: 20px;
                             color: map-get($color-palette, 'teal');
@@ -90,8 +87,6 @@
                     .cmp-list__item-description {
                         font-weight: 400;
                         color: map-get($color-palette, 'charcoal');
-                        position: relative;
-                        bottom: 10px;
                         @include mobile {
                             display: none;
                         }
