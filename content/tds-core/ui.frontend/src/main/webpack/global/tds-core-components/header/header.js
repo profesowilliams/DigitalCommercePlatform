@@ -22,6 +22,7 @@ export default class Header {
         this.header = document.getElementById('cmp-techdata-header');
         this.headerBgEle = document.querySelector('#cmp-techdata-header > .aem-Grid > .container > .cmp-container');
         this.headerBgColor = this.headerBgEle.style.backgroundColor;
+        if (!this.header) return;
         this.authorColor = this.header.style.backgroundColor;
 
         this.setComponentToStick();

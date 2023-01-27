@@ -1,5 +1,6 @@
 import { Drawer } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import usePositionBelowSubheader from '../../hooks/usePositionBelowSubheader';
 
 function BaseFlyout({
   children,
@@ -8,29 +9,9 @@ function BaseFlyout({
   width = '350px',
   anchor = 'right',
 }) {
-  const GAP = 7;
-  const topReference = useRef();
-  const [positioning, setPositioning] = useState({ top: '', height: '' });
-  const [DOMLoaded, setDOMLoaded] = useState(false);
+
+  const { positioning, calculatePosition } = usePositionBelowSubheader({unmountedFn:false});
   const { top, height } = positioning;
-  function calcPositionBelowSubheader() {
-    const subHeaderElement = document.querySelector('.subheader > div > div');
-    if (!subHeaderElement) return;
-    const { top, height } = document
-      .querySelector('.subheader > div > div')
-      .getBoundingClientRect();
-    if (top > 0) topReference.current = { top, height };  
-    let topCalculation = top + GAP + height;
-    document.body.style.overflow = 'hidden';
-    setPositioning({
-      top: `${topCalculation}px`,
-      height: `calc(100vh - ${topCalculation}px)`,
-    });
-  }
-  useEffect(() => {
-    window.addEventListener('load', calcPositionBelowSubheader);
-    return () => window.removeEventListener('load', calcPositionBelowSubheader);
-  }, []);
 
   return (
     <Drawer

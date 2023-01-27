@@ -221,6 +221,7 @@
     const subHeader = document?.getElementsByClassName('subheader')[0];
     const header = document.getElementById('cmp-techdata-header');
     const  subHeaderHeight = subHeader?.offsetHeight ? subHeader?.offsetHeight : 0;
+    if (!header) return;
     const  headerHeight = header.offsetHeight;
     const totalHeight = subHeaderHeight + headerHeight;
     document.getElementsByClassName('cmp-s-code-popup__modal__content')[0].style['top'] = `${totalHeight}px`;

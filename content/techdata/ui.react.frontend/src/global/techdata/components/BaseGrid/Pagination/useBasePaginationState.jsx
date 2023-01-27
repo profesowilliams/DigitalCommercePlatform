@@ -14,14 +14,14 @@ function useBasePaginationState({ store, onQueryChanged }) {
   const paginationData = store(st => st.pagination);
   const effects = store( st => st.effects);
 
-  useEffect(()=>updatePaginationCounter(),[pageNumber]);
-
   const {
     totalCounter,
     currentResultsInPage,
     pageCount,
     pageNumber,
   } = paginationData;
+  
+  useEffect(()=>updatePaginationCounter(),[pageNumber]);
 
   const { setCustomState, closeAndCleanToaster } = effects;
   

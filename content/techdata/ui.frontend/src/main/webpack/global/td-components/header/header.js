@@ -15,6 +15,7 @@ export default class Header {
         window.addEventListener('scroll', () => this.handleStickyHeader());
 
         this.header = document.getElementById('cmp-techdata-header');
+        if (!this.header) return;
         this.authorColor = this.header.style.backgroundColor;
 
         if(this.masthead !== undefined) {
