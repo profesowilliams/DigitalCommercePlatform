@@ -12,26 +12,12 @@ function FilterHeader({ onQueryChanged }) {
   const handleClearFilter = () => {
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
-        const open = false;
-        const checked = false;
-        const applied = false;
-        return {...filter,open,checked,applied};
+        return {...filter,open:false,checked:false,applied:false};
       }
       return filter;
     });
     setFilterList(filtersCopy);
-    clearDateFilters();
-    toggleFilterModal();
-    onQueryChanged({reset:true});
-    setAppliedFilterCount();
-    effects.setCustomState(
-      { key: "pagination", value: { ...paginationData, pageNumber: 1 } },
-      {
-        key: PAGINATION_LOCAL_STORAGE_KEY,
-        saveToLocal: true,
-      }
-    );
-    localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
+    clearDateFilters();  
   };
   return (
     <div className="filter-modal-content__header">

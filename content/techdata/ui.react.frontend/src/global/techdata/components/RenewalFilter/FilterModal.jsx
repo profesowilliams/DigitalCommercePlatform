@@ -6,7 +6,7 @@ import {
   getLocalStorageData,
   setLocalStorageData,
 } from "../RenewalsGrid/utils/renewalUtils";
-import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
+import { getLocalValueOrDefault, useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
 import FilterList from "./components/FilterList";
@@ -37,7 +37,12 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
 
   const appliedFilterCount = useRenewalGridState(
     (state) => state.appliedFilterCount
-  );
+  ); 
+
+  useEffect(() => {    
+    const value = getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "filterList", null)
+    effects.setCustomState({key:'filterList',value});
+  },[])
 
   const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState); 
 
