@@ -11,7 +11,7 @@ function CopyFlyout({ store, copyFlyout }) {
     <BaseFlyout
       open={showCopyFlyout}
       onClose={closeFlyout}
-      width="39%"
+      width="425px"
       anchor="right"
     >
       <div className="cmp-renewals-copy-flyout">

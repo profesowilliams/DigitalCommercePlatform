@@ -41,6 +41,9 @@ function BaseFlyout({
         '& .MuiPaper-root': {
           width,
           ...(top && height ? { top, height } : {}),
+          '@media (max-width: 600px)': {
+            width: '100%',
+          }
         },
       }}
     >
