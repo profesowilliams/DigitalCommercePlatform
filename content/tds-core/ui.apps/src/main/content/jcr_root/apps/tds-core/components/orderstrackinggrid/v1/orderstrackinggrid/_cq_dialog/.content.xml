@@ -268,7 +268,7 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                 fieldLabel="Details URL"
                                                 name="./detailUrl"
-                                                rootPath="/content/techdata"/>
+                                                rootPath="/content"/>
 											<detailUrlSuffix
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

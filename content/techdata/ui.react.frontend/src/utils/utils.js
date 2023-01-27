@@ -552,3 +552,5 @@ export const removeDashboardSeparator = (originComponentDomStr = '') => {
    const filterData = localStorage.getItem(FILTER_LOCAL_STORAGE_KEY);
    return filterData && JSON.parse(filterData).count > 0 || searchData && JSON.parse(searchData).value !== '';
  }
+
+export const isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\n\t]*a[\r\n\t]*s[\r\n\t]*c[\r\n\t]*r[\r\n\t]*i[\r\n\t]*p[\r\n\t]*t[\r\n\t]*\:/i;
