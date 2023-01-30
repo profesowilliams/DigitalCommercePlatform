@@ -173,10 +173,7 @@
       categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
       categoryObject.pageType = pageType;
       const dataLayerObject = {
-        eventInfo: {
-            event: "pageView"
-        },
-        page: {
+       page: {
           pageInfo: {
             pageName: pageName.substring(1), // pull from ACDL
             url: url, // pull from window.location
@@ -197,7 +194,7 @@
           }
         },
       };
-      window.dataLayer.push({page: dataLayerObject.page});
+      window.dataLayer.push({event: "pageView",page: dataLayerObject.page});
       window.adobeDataLayer.push(dataLayerObject);
     }
       
