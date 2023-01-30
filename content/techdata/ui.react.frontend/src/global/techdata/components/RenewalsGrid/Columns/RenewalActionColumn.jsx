@@ -18,6 +18,7 @@ import Dialog from "@mui/material/Dialog";
 import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 import { fileExtensions, generateFileFromPost } from '../../../../../utils/utils';
 import useOutsideClick from '../../../hooks/useOutsideClick';
+import ActionsMenu from './ActionsMenu';
 
 function _RenewalActionColumn({ eventProps }) {
   const { value, data } = eventProps;
@@ -212,46 +213,16 @@ function _RenewalActionColumn({ eventProps }) {
         <span className="cmp-renewals-ellipsis" ref={divRef}>
           <EllipsisIcon onClick={handleShowActionMenu} style={iconStyle} />
         </span>
-        <Dialog 
+        <ActionsMenu 
           onClose={() => setShowActionsMenu(false)}
-          ref={dialogRef}
-          hideBackdrop
           open={showActionsMenu}
+          menuOptions={productGrid}
           sx={dialogStyling}
-          >
-          <div className="cmp-renewals-actions-menu">
-            <div className="cmp-renewals-actions-menu__item" onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id)}>
-              <span className="cmp-renewals-actions-menu__item-icon">
-                <EyeLightIcon />
-              </span>
-              <span className="cmp-renewals-actions-menu__item-label">View details</span>
-            </div>
-            {canCopy ? (
-              <div className="cmp-renewals-actions-menu__item" onClick={triggerCopyFlyout}>
-              <span className="cmp-renewals-actions-menu__item-icon">
-                <CopyIcon width="16" height="16" />
-              </span>
-              <span className="cmp-renewals-actions-menu__item-label">Copy</span>
-            </div>
-            ) : null}
-            {productGrid?.showDownloadPDFButton ? (
-              <div className="cmp-renewals-actions-menu__item" onClick={downloadPDF}>
-                <span className="cmp-renewals-actions-menu__item-icon">
-                  <DownloadIcon />
-                </span>
-                <span className="cmp-renewals-actions-menu__item-label">Download PDF</span>
-              </div>
-            ) : null}
-            {productGrid?.showDownloadXLSButton ? (
-              <div className="cmp-renewals-actions-menu__item" onClick={downloadXLS}>
-                <span className="cmp-renewals-actions-menu__item-icon">
-                  <DownloadIcon />
-                </span>
-                <span className="cmp-renewals-actions-menu__item-label">Download XLS</span>
-              </div>
-            ) : null}         
-          </div>
-        </Dialog>
+          canCopy={canCopy}
+          detailUrl={detailUrl}
+          data={data}
+          endpoints={endpoints}
+          />
       </div>
     </>
   );
