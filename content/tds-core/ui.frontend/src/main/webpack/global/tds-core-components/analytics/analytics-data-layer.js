@@ -173,6 +173,9 @@
       categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
       categoryObject.pageType = pageType;
       const dataLayerObject = {
+        eventInfo: {
+            event: "pageView"
+        },
         page: {
           pageInfo: {
             pageName: pageName.substring(1), // pull from ACDL
