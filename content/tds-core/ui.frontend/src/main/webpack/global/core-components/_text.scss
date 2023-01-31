@@ -1,5 +1,9 @@
-.cmp-text {}
-.cmp-text__paragraph {}
+.cmp-text {
+    color: map-get($color-palette, "charcoal");
+}
+.cmp-text__paragraph {
+    color: map-get($color-palette, "charcoal");
+}
 
 $text-headings: (
 //  tag  size      weight line-height
