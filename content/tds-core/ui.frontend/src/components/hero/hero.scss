@@ -1,8 +1,41 @@
+
+
 .hero {
     @include mobile {
         height: 32rem;
         position: relative;
     }
+
+    /*
+        Okay below flavors are based on what you can do in AEM
+        unfortunately I believe you can only put CSS class on the parent
+        so below code is a wrapper to the already existing class declaration in L83.
+
+        That way the footer text is seperatly configured on the AEM side.
+
+        Justification: Waiting for AEM to add a functionality 
+        to customize multiple elements inside a component
+
+    */
+
+    &.cmp-tds-footer-font-arial {
+        .cmp-teaser__footer {
+            font-family: 'Arial';
+        }
+    }
+
+    &.cmp-tds-footer-font-everett {
+        .cmp-teaser__footer {
+            font-family: 'TWKEverett-Regular-web';
+        }
+    }
+
+    &.cmp-tds-footer-font-everett-bold {
+        .cmp-teaser__footer {
+            font-family: 'TWKEverett-Medium-web';
+        }
+    }
+
     .cmp-teaser {
         position: relative;
         @include mobile {
@@ -19,6 +52,7 @@
             @include mobile {
                 width: 70%;
                 font-size: 2rem;
+                margin-bottom: 0;
             }
         }
 
@@ -39,7 +73,7 @@
             left: 0;
             height: 100%;
             width: 100%;
-            overflow-x: hidden;
+            overflow: hidden;
             padding: 2rem 6rem;     
             @include mobile {
                 padding: 3.5rem 2rem !important;  
@@ -145,6 +179,9 @@
         img {
             width: 100%;
             overflow: hidden;
+            @include mobile {
+                min-height: 520px;
+            }
         }
     }
 
