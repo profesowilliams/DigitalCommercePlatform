@@ -34,7 +34,7 @@ $primary-active-opacity: 80%;
 $primary-active-color-opacity: rgb(000, 000, 000);
 $primary-background-disabled-color: #e4e5e6;
 
-$secondary-border-size: 2px;
+$secondary-border-size: 1px;
 $secondary-background-color: rgba(255, 255, 255, 0.9);
 $secondary-opacity: 00%;
 $secondary-hover-color-opacity: rgba(0, 87, 88, 0.1);
@@ -161,7 +161,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 }
 
 .cmp-button {
-  border: unset;
+  outline: unset;
   padding: rem(1px) rem(6px);
   color: unset;
   text-decoration: none;
@@ -177,8 +177,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &:active,
   &:focus {
-    outline: none;
     border: none;
+    outline: none;
   }
 
   &__disabled {
@@ -293,7 +293,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     box-sizing: border-box;
     height: rem(60px);
     width: rem(60px);
-    border: rem(1px) solid get-color(brand-light-gray2);
+    outline: rem(1px) solid get-color(brand-light-gray2);
     background-color: get-color(brand-white);
     box-shadow: 0 rem(2px) rem(4px) 0 get-color(brand-box-shadow);
     text-align: center;
@@ -328,7 +328,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   font-size: rem(16px);
   padding: 0px;
   gap: rem(10px);
-  border: 0;
+  outline: 0;
   transition: all 0.24s;
   text-decoration: none;
 
@@ -338,7 +338,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     font-size: rem(16px);
     padding: rem(16px) rem(57.5px);
     gap: rem(10px);
-    border: 0;
+    outline: 0;
     font-family: 'Arial', sans-serif;
     transition: all 0.24s;
     text-decoration: none;
@@ -430,7 +430,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       width: auto;
       color: $color;
       box-sizing: content-box;
-      border: $border-size solid $color;
+      outline: $border-size solid $color;
+      outline-offset: -1px;
       font-weight: 400;
       font-size: 16px;
       align-content: center;
@@ -476,7 +477,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       width: auto;
       color: $color;
       box-sizing: content-box;
-      border: $border-size solid $color;
+      outline: $border-size solid $color;
+      outline-offset: -1px;
       font-weight: 400;
       font-size: 16px;
       align-content: center;
@@ -570,7 +572,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       width: auto;
       color: $color;
       box-sizing: content-box;
-      border: $border-size solid $color;
+      outline: $border-size solid $color;
+      outline-offset: -1px;
       font-weight: 400;
       font-size: 16px;
       align-content: center;
@@ -601,7 +604,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       width: auto;
       color: $color;
       box-sizing: content-box;
-      border: $border-size solid $color;
+      outline: $border-size solid $color;
+      outline-offset: -1px;
       font-weight: 400;
       font-size: 16px;
       align-content: center;
@@ -4555,7 +4559,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 @mixin practice_builder_button_action_style {
   &:hover {
     background-color: get-color('aqua');
-    border: 1px solid get-color('aqua');
+    outline: 1px solid get-color('aqua');
+    outline-offset: -1px;
 
     & span.cmp-button__text {
       color: #262626;
@@ -4563,7 +4568,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   }
 
   &:focus {
-    border: 3px solid get-color('aqua');
+    outline: 3px solid get-color('aqua');
   }
 
   &:disabled {
@@ -4624,7 +4629,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       height: unset;
       padding-top: 7px!important;
       padding-bottom: 7px!important;
-      border: 1px solid get-color('teal');
+      outline: 1px solid get-color('teal');
+      outline-offset: -1px;
       font-size: 12px!important;
       @include practice_builder_button_action_style;
 
@@ -4655,7 +4661,8 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
         height: unset;
         padding-top: 8px!important;
         padding-bottom: 8px!important;
-        border: 1px solid get-color('teal');
+        outline: 1px solid get-color('teal');
+        outline-offset: -1px;
         font-size: 12px;
         line-height:16px;
         @include practice_builder_button_action_style;
