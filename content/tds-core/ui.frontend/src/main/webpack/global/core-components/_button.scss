@@ -4559,8 +4559,6 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 @mixin practice_builder_button_action_style {
   &:hover {
     background-color: get-color('aqua');
-    outline: 1px solid get-color('aqua');
-    outline-offset: -1px;
 
     & span.cmp-button__text {
       color: #262626;
