@@ -35,14 +35,13 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     _generateFilterFields,
   } = useMultiFilterSelected();
 
-  const appliedFilterCount = useRenewalGridState(
-    (state) => state.appliedFilterCount
-  ); 
+  const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount); 
+  const isFilterModalOpen = useRenewalGridState( state => state.isFilterModalOpen);
 
   useEffect(() => {    
     const value = getLocalValueOrDefault(FILTER_LOCAL_STORAGE_KEY, "filterList", null)
-    effects.setCustomState({key:'filterList',value});
-  },[])
+    value && effects.setCustomState({key:'filterList',value});
+  },[resetFilter, filterData, appliedFilterCount, isFilterModalOpen])
 
   const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState); 
 
