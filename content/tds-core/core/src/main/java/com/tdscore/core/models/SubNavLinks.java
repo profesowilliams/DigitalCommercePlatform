@@ -260,6 +260,7 @@ public class SubNavLinks {
     public ComponentData getData() {
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getParentID()+"-"+this.getMenuID())
+            .withType(() -> "tds-site/components/megamenu/item")
             .withTitle(() -> this.getPageTitle())
             .withParentId(() -> this.getParentID()+"-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
             .withLinkUrl(() -> this.getPagePath())

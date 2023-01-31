@@ -90,6 +90,9 @@ public class LinkItem {
     @Inject
     private String randomID;
 
+//    @Inject
+//    private Date modifiedDate;
+
     private static final String VIEW_ALL_KEY = "megamenu.common.viewAll";
 
     List<SubNavLinks> subLinks = new ArrayList<>();
@@ -115,7 +118,7 @@ public class LinkItem {
         }
 
         if(resolver != null && navigationRoot != null){
-            log.debug("page root also present. path is {}", navigationRoot);
+            log.error("page root also present. path is {}", navigationRoot);
             Page rootPage = resolver.adaptTo(PageManager.class).getPage(navigationRoot);
             if(rootPage != null){
                 Iterator<Page> children = rootPage.listChildren(new PageFilter());
@@ -243,10 +246,10 @@ public class LinkItem {
       
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getParentID()+"-"+this.getPlatformMenuID())
+            .withType(() -> "tds-site/components/megamenu/item")
             .withTitle(() -> this.getMobilePlatformLevel())
+            .withLinkUrl(() -> this.navigationRoot)
             .withParentId(() -> this.getParentID())
-            .withLinkUrl(() -> this.getLinkUrl())
-            .build();
-        
+            .build();      
     }
 }
