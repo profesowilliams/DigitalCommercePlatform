@@ -1,10 +1,10 @@
 import axios from "axios";
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
 import { isObject } from ".";
 import { usPost } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
 import { getHeaderInfoFromUrl } from "./index";
-import {intouchHeaderAPIUrl, intouchFooterAPIUrl} from "./featureFlagUtils";
+import { intouchHeaderAPIUrl, intouchFooterAPIUrl } from "./featureFlagUtils";
 import { SEARCH_LOCAL_STORAGE_KEY, FILTER_LOCAL_STORAGE_KEY } from "./constants";
 
 export const fileExtensions = {
@@ -310,60 +310,59 @@ window.onload = function() {
 
 }
 
-$( document ).ready(function() {
-// load intouch header/footer
-    renderIntouchHeaderHTML();
-    renderIntouchFooterHTML();
-});
+// START OF HEADER/FOOTER
+// dynamic header & footer loaded from InTouch
+// TODO: it should be moved from here
+renderIntouchHeaderHTML();
+renderIntouchFooterHTML();
+
+const renderIntouchComponent = (url, loadToElement, loadend) => {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.setRequestHeader('content-type', 'application/json');
+
+    xhr.onload = function () {
+        if (xhr.status != 200) {
+            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
+        } else { // show the result
+            console.log(xhr.responseText);
+            loadToElement.innerHTML = JSON.parse(xhr.responseText).body;
+        }
+    };
+
+    xhr.loadend = loadend;
+
+    xhr.send();
+};
 
 const renderIntouchHeaderHTML = () => {
-    const headerEle = document.querySelector('#intouch-headerhtml');
+    const url = intouchHeaderAPIUrl();
+    const element = document.getElementById('intouch-headerhtml');
     const sessionId = localStorage.getItem('sessionId');
-    if (headerEle && sessionId) {
-    	const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', intouchHeaderAPIUrl());
-        xhr.setRequestHeader('Site', headerInfo.site);
-        xhr.setRequestHeader('SessionId', sessionId);
-        xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.send();
 
-        xhr.onload = function() {
-          if (xhr.status != 200) {
-            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
-          } else { // show the result
-            console.log(xhr.responseText);
-            headerEle.innerHTML = JSON.parse(xhr.responseText).body;
-          }
-        };
-    }
+    if (!(element && sessionId)) return;
+
+    renderIntouchComponent(
+        url,
+        element,
+        function () { angular.bootstrap(element, ["tdInTouch"]); }
+    );
 };
 
 const renderIntouchFooterHTML = () => {
-    const footerEle = document.querySelector('#intouch-footerhtml');
+    const url = intouchFooterAPIUrl();
+    const element = document.getElementById('intouch-footerhtml');
     const sessionId = localStorage.getItem('sessionId');
-    if (footerEle && sessionId) {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', intouchFooterAPIUrl());
-        const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-        xhr.setRequestHeader('Site', headerInfo.site);
-        xhr.setRequestHeader('SessionId', sessionId);
-        xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-        xhr.setRequestHeader('content-type', 'application/json');
-        xhr.send();
 
-        xhr.onload = function() {
-          if (xhr.status != 200) {
-            console.error(`Error ${xhr.status}: ${xhr.statusText}`);
-          } else { // show the result
-            console.log(xhr.responseText);
-            footerEle.innerHTML = JSON.parse(xhr.responseText).body;
-          }
-        };
-    }
+    if (!(element && sessionId)) return;
+
+    renderIntouchComponent(
+        url,
+        element,
+        function () { angular.bootstrap(element, ["tdInTouch"]); }
+    );
 };
-
+// END OF HEADER/FOOTER
 
 export const getDictionaryValue = (dictionaryKey, defaultValue) => {
     let dictionaryValue = Granite?.I18n?.get(dictionaryKey);
