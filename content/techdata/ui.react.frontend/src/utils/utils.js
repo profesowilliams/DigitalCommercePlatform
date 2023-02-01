@@ -330,9 +330,10 @@ const renderIntouchComponent = (url, loadToElement, loadend) => {
         }
     };
 
-    xhr.loadend = loadend;
+    xhr.onloadend = loadend;
 
-    xhr.send();
+    xhr.withCredentials = true;
+    xhr.send(null);
 };
 
 const renderIntouchHeaderHTML = () => {
