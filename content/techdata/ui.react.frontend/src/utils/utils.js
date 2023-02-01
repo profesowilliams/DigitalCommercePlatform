@@ -313,9 +313,6 @@ window.onload = function() {
 // START OF HEADER/FOOTER
 // dynamic header & footer loaded from InTouch
 // TODO: it should be moved from here
-renderIntouchHeaderHTML();
-renderIntouchFooterHTML();
-
 const renderIntouchComponent = (url, loadToElement, loadend) => {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -326,7 +323,7 @@ const renderIntouchComponent = (url, loadToElement, loadend) => {
             console.error(`Error ${xhr.status}: ${xhr.statusText}`);
         } else { // show the result
             console.log(xhr.responseText);
-            loadToElement.innerHTML = JSON.parse(xhr.responseText).body;
+            loadToElement.innerHTML = xhr.responseText;
         }
     };
 
@@ -363,6 +360,9 @@ const renderIntouchFooterHTML = () => {
         function () { angular.bootstrap(element, ["tdInTouch"]); }
     );
 };
+
+renderIntouchHeaderHTML();
+renderIntouchFooterHTML();
 // END OF HEADER/FOOTER
 
 export const getDictionaryValue = (dictionaryKey, defaultValue) => {
