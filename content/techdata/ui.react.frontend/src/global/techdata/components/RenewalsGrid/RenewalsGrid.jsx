@@ -347,7 +347,10 @@ function RenewalsGrid(props) {
         onClose={onCloseToaster}
         store={useRenewalGridState} 
         message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
-      <CopyFlyout store={useRenewalGridState} copyFlyout={gridConfig.copyFlyout} />
+      <CopyFlyout 
+        store={useRenewalGridState}
+        copyFlyout={gridConfig.copyFlyout}
+        subheaderReference={document.querySelector('.subheader > div > div')} />
     </section>
   );
 }

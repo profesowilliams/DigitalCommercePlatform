@@ -8,9 +8,10 @@ function BaseFlyout({
   onClose,
   width = '350px',
   anchor = 'right',
+  subheaderReference
 }) {
 
-  const { positioning, calculatePosition } = usePositionBelowSubheader({unmountedFn:false});
+  const { positioning, calculatePosition } = usePositionBelowSubheader({unmountedFn:false}, subheaderReference);
   const { top, height } = positioning;
   useEffect(() => {
     let timer;

@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 const GAP = 7;
 
-function usePositionBelowSubheader({ unmountedFn = false }) {
+function usePositionBelowSubheader({ unmountedFn = false }, subheaderReference = null ) {
 
   const [positioning, setPositioning] = useState({ top: '', height: '' });
 
   function calculatePosition() {
-    const subHeaderElement = document.querySelector('.subheader > div > div');
+    const subHeaderElement = !subheaderReference ? document.querySelector('.subheader > div > div') : subheaderReference;
     if (!subHeaderElement) return;
-    const { top, height } = document
-      .querySelector('.subheader > div > div')
-      .getBoundingClientRect();
+    const { top, height } = subHeaderElement.getBoundingClientRect();
     let topCalculation = top + GAP + height;   
     return topCalculation;   
   }

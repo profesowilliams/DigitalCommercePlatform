@@ -2,7 +2,7 @@ import React from 'react';
 import { DismissFilledIcon } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 
-function CopyFlyout({ store, copyFlyout }) {
+function CopyFlyout({ store, copyFlyout, subheaderReference }) {
   const showCopyFlyout = store( st => st.showCopyFlyout);
   const effects = store( st => st.effects);
   const { title = '', description = '', button = '' } = copyFlyout;
@@ -13,6 +13,7 @@ function CopyFlyout({ store, copyFlyout }) {
       onClose={closeFlyout}
       width="425px"
       anchor="right"
+      subheaderReference={subheaderReference}
     >
       <div className="cmp-renewals-copy-flyout">
         <section className="cmp-renewals-copy-flyout__header">
