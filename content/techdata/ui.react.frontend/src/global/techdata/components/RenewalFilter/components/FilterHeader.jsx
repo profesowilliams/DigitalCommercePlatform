@@ -12,7 +12,7 @@ function FilterHeader({ onQueryChanged }) {
   const handleClearFilter = () => {
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
-        return {...filter,open:false,checked:false,applied:false};
+        return {...filter,open:false,checked:false};
       }
       return filter;
     });
