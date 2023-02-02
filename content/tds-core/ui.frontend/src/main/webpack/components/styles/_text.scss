@@ -1,8 +1,13 @@
 @import "../../global/_mixins.scss";
 @import "../../global/styles/helpers/colors.scss";
 
+.text {
+  color: map-get($color-palette, "charcoal");
+}
 
 .cmp-text {
+  color: map-get($color-palette, "charcoal");
+
   sup, sub {
     font-size: initial;
   }

@@ -237,6 +237,8 @@
 }
 
 .dp-title {
+    color: map-get($color-palette, "charcoal");
+
     @include typewriter-animation;
 
     &__text {

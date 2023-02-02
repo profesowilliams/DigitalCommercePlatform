@@ -4565,10 +4565,6 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
     }
   }
 
-  &:focus {
-    outline: 3px solid get-color('aqua');
-  }
-
   &:disabled {
     background-color: get-color(cool-gray-1);
     border: none;
@@ -4630,7 +4626,6 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       outline: 1px solid get-color('teal');
       outline-offset: -1px;
       font-size: 12px!important;
-      @include practice_builder_button_action_style;
 
       & .cmp-image {
         width: 16px;
