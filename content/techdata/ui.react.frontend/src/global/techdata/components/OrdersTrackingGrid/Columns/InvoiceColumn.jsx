@@ -1,10 +1,24 @@
 import React from 'react';
 
+const getInvoiceStatus = (invoices) => {
+  if (!invoices) return '-';
+  const invoiceLength = invoices.length;
+
+  if (invoiceLength === 1) {
+    return invoices[0]?.id;
+  }
+
+  if (invoiceLength > 1) {
+    return 'multiple';
+  }
+
+  return '-';
+}
+
 function InvoiceColumn({ invoices = [] }) {
-  const hasMultiple = invoices.length > 1;
   return (
     <a>
-      {invoices.length ? (hasMultiple ? 'multiple' : invoices[0]?.id) : null}
+      {getInvoiceStatus(invoices)}
     </a>
   );
 }
