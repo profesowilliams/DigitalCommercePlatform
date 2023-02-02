@@ -77,6 +77,11 @@
         ${configData.intouchCSSScriptsData @ context='scriptComment'}
         <!-- End Intouch CSS scripts in Head -->
     </sly>
+    <sly data-sly-test="${configData.intouchJSScriptsData}">
+        <!-- Intouch JS scripts in Head -->
+        ${configData.intouchJSScriptsData @ context='scriptComment'}
+        <!-- End Intouch JS scripts in Head -->
+    </sly>
 </sly>
 
 <script type="text/javascript" src="${configData.typeAheadDomain}${configData.typeAheadXDomainScript}" slave="${configData.typeAheadDomain}${configData.typeAheadProxyScript}"></script>
