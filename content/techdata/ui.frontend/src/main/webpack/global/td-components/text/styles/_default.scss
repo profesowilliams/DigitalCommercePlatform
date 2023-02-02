@@ -85,15 +85,15 @@
   }
 }
 
-.dp-text--white {
+.dp-text--white * {
   color: get-color(brand-white);
 }
 
-.dp-text--light-blue {
+.dp-text--light-blue * {
   color: get-color(td-lightblue);
 }
 
-.dp-text--dark-blue {
+.dp-text--dark-blue * {
   color: get-color(brand-blue);
 }
 

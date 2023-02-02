@@ -273,7 +273,7 @@ p {
   box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue) !important;
 }
 
-.dp-text--white {
+.dp-text--white * {
   color: #fff;
 
     @include mobile {
@@ -281,23 +281,23 @@ p {
     }
   }
 
-.dp-text--light-blue {
+.dp-text--light-blue * {
   color: #00b1e2;
 }
 
-.dp-text--dark-blue {
+.dp-text--dark-blue * {
   color: #000c21;
 }
 
-.dp-text--deep-teal {
+.dp-text--deep-teal * {
   @include text-deep-teal;
 }
 
-.dp-text--teal {
+.dp-text--teal * {
   @include text-teal;
 }
 
-.dp-text--aqua {
+.dp-text--aqua * {
   @include text-aqua;
 }
 

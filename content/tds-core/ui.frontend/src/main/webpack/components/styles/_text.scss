@@ -257,7 +257,7 @@ h6 {
   box-shadow: 0px 0px rem(5px) 0px get-color(td-primary-blue) !important;
 }
 
-.dp-text--white {
+.dp-text--white * {
   color: #fff;
 
     @include mobile {
@@ -265,23 +265,23 @@ h6 {
     }
   }
 
-.dp-text--light-blue {
+.dp-text--light-blue * {
   color: #00b1e2;
 }
 
-.dp-text--dark-blue {
+.dp-text--dark-blue * {
   color: #000c21;
 }
 
-.dp-text--deep-teal {
+.dp-text--deep-teal * {
   @include text-deep-teal;
 }
 
-.dp-text--teal {
+.dp-text--teal * {
   @include text-teal;
 }
 
-.dp-text--aqua {
+.dp-text--aqua * {
   @include text-aqua;
 }
 
@@ -346,69 +346,69 @@ h6 {
 
       .cmp-tds {
         &-link {
-          &--teal {
+          &--teal * {
             @include text-teal;
             text-decoration: underline;
           }
 
-          &--deep-teal {
+          &--deep-teal * {
             @include text-deep-teal;
             text-decoration: underline;
           }
 
-          &--aqua {
+          &--aqua * {
             @include text-aqua;
             text-decoration: underline;
           }
 
-          &--chartreuse {
+          &--chartreuse * {
             @include text-chartreuse;
             text-decoration: underline;
           }
 
-          &--cool-gray-8 {
+          &--cool-gray-8 * {
             @include text-cool-gray-8;
             text-decoration: underline;
           }
 
-          &--cool-gray-10 {
+          &--cool-gray-10 * {
             @include text-cool-gray-10;
             text-decoration: underline;
           }
 
-          &--green {
+          &--green * {
             @include text-green;
             text-decoration: underline;
           }
 
-          &--black {
+          &--black * {
             @include text-black;
             text-decoration: underline;
           }
 
-          &--white {
+          &--white * {
             @include text-white;
             text-decoration: underline;
             width:auto;
           }
 
           //TDS Secondary background colors
-          &--steel-blue {
+          &--steel-blue * {
             @include text-steel-blue;
             text-decoration: underline;
           }
 
-          &--navy {
+          &--navy * {
             @include text-navy;
             text-decoration: underline;
           }
 
-          &--copper {
+          &--copper * {
             @include text-copper;
             text-decoration: underline;
           }
 
-          &--stone {
+          &--stone * {
             @include text-stone;
             text-decoration: underline;
           }
@@ -419,58 +419,58 @@ h6 {
           }
 
           //TDS Digital background colors
-          &--cherry {
+          &--cherry * {
             @include text-cherry;
             text-decoration: underline;
           }
 
-          &--amber {
+          &--amber * {
             @include text-amber;
             text-decoration: underline;
           }
 
-          &--forest {
+          &--forest * {
             @include text-forest;
             text-decoration: underline;
           }
 
-          &--charcoal {
+          &--charcoal * {
             @include text-charcoal;
             text-decoration: underline;
           }
 
-          &--cool-gray-9 {
+          &--cool-gray-9 * {
             @include text-cool-gray-9;
             text-decoration: underline;
           }
 
-          &--cobalt {
+          &--cobalt * {
             @include text-cobalt;
             text-decoration: underline;
           }
 
-          &--neutral-gray-1 {
+          &--neutral-gray-1 * {
             @include text-neutral-gray-1;
             text-decoration: underline;
           }
 
-          &--neutral-gray-2 {
+          &--neutral-gray-2 * {
             @include text-neutral-gray-2;
             text-decoration: underline;
           }
 
           //Legacy background colors
-          &--dark-blue {
+          &--dark-blue * {
             @include text-dark-blue;
             text-decoration: underline;
           }
 
-          &--sky-blue {
+          &--sky-blue * {
             @include text-sky-blue;
             text-decoration: underline;
           }
 
-          &--legacy-gray {
+          &--legacy-gray * {
             @include text-legacy-gray;
             text-decoration: underline;
           }
