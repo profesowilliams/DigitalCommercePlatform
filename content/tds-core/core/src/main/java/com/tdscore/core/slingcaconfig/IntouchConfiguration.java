@@ -15,16 +15,8 @@ public @interface IntouchConfiguration {
     String jsAPIUrl() default "https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/JS";
 
     @Property(label = "Header API Url", description = "API url that provides the Header HTML Fragment.")
-    String headerAPIUrl() default "https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Header";
+    String headerAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header";
 
     @Property(label = "Footer API Url", description = "API url that provides the Footer HTML Fragment.")
-    String footerAPIUrl() default "https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/Footer";
-
-    @Property(label = "Background Login Enabled", description = "Flag to enable or disable snippet")
-    boolean backgroundLoginEnabled() default false;
-
-    @Property(label = "Background Login Snippet", description = "Provides script that will be embedded in Body section of the page.")
-    String backgroundLoginSnippet() default
-            "<iframe src=\"https://intouch.integration.tdsynnex.com/intouch/MiscFE/SSO/ServiceLogin?service=IntouchClient&SessForm=1&relogin=false&ContinueUrl=https%3a%2f%2fintouch.integration.tdsynnex.com%2fintouch%2fHome.aspx\"style=\"display:\n" +
-                    "none\"></iframe>";
+    String footerAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Footer";
 }
