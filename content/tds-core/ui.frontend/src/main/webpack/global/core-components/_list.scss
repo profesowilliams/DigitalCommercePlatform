@@ -1,4 +1,6 @@
 .dp-list {
+  color: map-get($color-palette,"charcoal");
+
   &--teaser {
     .cmp-list {
       display: flex;

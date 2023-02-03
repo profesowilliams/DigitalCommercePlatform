@@ -29,6 +29,8 @@
 
 .cmp-teaser,
 .dp-teaser {
+	color: map-get($color-palette,"teal");
+	
 	&__card {
 		padding: 3.18rem 0.5rem;
 
