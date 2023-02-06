@@ -94,6 +94,10 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.configurationsEndpoint()).thenReturn("configurationsEndpoint");
         when(serviceEndPointsConfiguration.consumerRequestHeader()).thenReturn("consumerRequestHeader");
         when(serviceEndPointsConfiguration.exportPDFRenewalsEndpoint()).thenReturn("exportPDFRenewalsEndpoint");
+        when(serviceEndPointsConfiguration.accountLookUpEndpoint()).thenReturn("accountLookUpEndpoint");
+        when(serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint()).thenReturn("checkQuoteExitsforResellerEndpoint");
+        when(serviceEndPointsConfiguration.copyQuoteEndpoint()).thenReturn("copyQuoteEndpoint");
+
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
         when(mcConfiguration.expressCheckoutRedirectUrl()).thenReturn("expressCheckoutRedirectUrl");
@@ -187,5 +191,8 @@ class CaConfigReaderTest {
         assertEquals("productEmptyImageUrl", underTest.getProductEmptyImageUrl());
         assertEquals("agGridLicenseKey", underTest.getAgGridLicenseKey());
         assertEquals("exportPDFRenewalsEndpoint", underTest.getExportPDFRenewalsEndpoint());
+        assertEquals("accountLookUpEndpoint", underTest.getAccountLookUpEndpoint());
+        assertEquals("checkQuoteExitsforResellerEndpoint", underTest.getCheckQuoteExitsforResellerEndpoint());
+        assertEquals("copyQuoteEndpoint", underTest.getCopyQuoteEndpoint());
     }
 }

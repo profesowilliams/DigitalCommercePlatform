@@ -309,6 +309,18 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["orderRenewalEndpoint"] = this.serviceData.uiServiceDomain + this.orderRenewalEndpoint;
     }
 
+    if (this.accountLookUpEndpoint && this.serviceData.uiServiceDomain) {
+        copyFlyout["accountLookUpEndpoint"] = this.serviceData.uiServiceDomain + this.accountLookUpEndpoint;
+    }
+
+    if (this.checkQuoteExitsforResellerEndpoint && this.serviceData.uiServiceDomain) {
+        copyFlyout["checkQuoteExitsforResellerEndpoint"] = this.serviceData.uiServiceDomain + this.checkQuoteExitsforResellerEndpoint;
+    }
+
+    if (this.copyQuoteEndpoint && this.serviceData.uiServiceDomain) {
+        copyFlyout["copyQuoteEndpoint"] = this.serviceData.uiServiceDomain + this.copyQuoteEndpoint;
+    }
+
     const orderingProperties = ["showOrderingIcon","placeOrderDialogTitle","termsAndConditions","termsAndConditionsLink","successSubmission","failedSubmission", "noResponseMessage"]
 
     if (properties) {
@@ -330,6 +342,46 @@ use(['../common/utils.js'], function(utils) {
 
     if (properties && properties["copyFlyoutDescription"]) {
         copyFlyout.description = properties["copyFlyoutDescription"];
+    }
+
+    if (properties && properties["searchLabel"]) {
+        copyFlyout.searchLabel = properties["searchLabel"];
+    }
+
+    if (properties && properties["searchPlaceholder"]) {
+        copyFlyout.searchPlaceholder = properties["searchPlaceholder"];
+    }
+
+    if (properties && properties["selectedAccountLabel"]) {
+        copyFlyout.selectedAccountLabel = properties["selectedAccountLabel"];
+    }
+
+    if (properties && properties["accountNumberLabel"]) {
+        copyFlyout.accountNumberLabel = properties["accountNumberLabel"];
+    }
+
+    if (properties && properties["accountNameLabel"]) {
+        copyFlyout.accountNameLabel = properties["accountNameLabel"];
+    }
+
+    if (properties && properties["cityLabel"]) {
+        copyFlyout.cityLabel = properties["cityLabel"];
+    }
+
+    if (properties && properties["permissionsWarning"]) {
+        copyFlyout.permissionsWarning = properties["permissionsWarning"];
+    }
+
+    if (properties && properties["unknownError"]) {
+        copyFlyout.unknownError = properties["unknownError"];
+    }
+
+    if (properties && properties["copySuccessMessage"]) {
+        copyFlyout.copySuccessMessage = properties["copySuccessMessage"];
+    }
+
+    if (properties && properties["copyFailureMessage"]) {
+        copyFlyout.copyFailureMessage = properties["copyFailureMessage"];
     }
 
     if (properties && properties["copyFlyoutButton"]) {

@@ -167,6 +167,56 @@
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                         fieldLabel="Copy Flyout Description"
                                                         name="./copyFlyoutDescription"/>
+                                                    <searchLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Search Label"
+                                                        name="./searchLabel"/>
+                                                    <searchPlaceholder
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Search Placeholder"
+                                                        name="./searchPlaceholder"/>
+                                                    <selectedAccountLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Selected Account Label"
+                                                        name="./selectedAccountLabel"/>
+                                                    <accountNumberLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Account Number Label"
+                                                        name="./accountNumberLabel"/>
+                                                    <accountNameLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Account Name Label"
+                                                        name="./accountNameLabel"/>
+                                                    <cityLabel
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="City Label"
+                                                        name="./cityLabel"/>
+                                                    <permissionsWarning
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Permissions Warning"
+                                                        name="./permissionsWarning"/>
+                                                    <unknownError
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Unknown Error"
+                                                        name="./unknownError"/>
+                                                    <copySuccessMessage
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Copy Success Message"
+                                                        name="./copySuccessMessage"/>
+                                                    <copyFailureMessage
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        fieldLabel="Copy Failure Message"
+                                                        name="./copyFailureMessage"/>
                                                     <copyFlyoutButton
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

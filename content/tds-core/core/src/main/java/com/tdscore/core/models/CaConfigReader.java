@@ -219,6 +219,12 @@ public class CaConfigReader {
 
     private String renewalGetStatusEndpoint;
 
+    private String accountLookUpEndpoint;
+
+    private String checkQuoteExitsforResellerEndpoint;
+
+    private String copyQuoteEndpoint;
+
     private String gtmBodyJSScript;
 
     private String intouchCSSAPIUrl;
@@ -289,6 +295,10 @@ public class CaConfigReader {
         renewalGetStatusEndpoint = serviceEndPointsConfiguration.renewalGetStatusEndpoint();
         exportXLSRenewalsEndpoint = serviceEndPointsConfiguration.exportXLSRenewalsEndpoint();
         exportPDFRenewalsEndpoint = serviceEndPointsConfiguration.exportPDFRenewalsEndpoint();
+     
+        accountLookUpEndpoint = serviceEndPointsConfiguration.accountLookUpEndpoint();
+        checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
+        copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
         cartURL = mcConfiguration.cartURL();
         expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
         checkoutRedirectUrl = mcConfiguration.checkoutRedirectUrl();
@@ -717,15 +727,27 @@ public class CaConfigReader {
 
     public String getRenewalOrderEndpoint(){
         return renewalOrderEndpoint;
-    };
+    }
 
     public String getRenewalUpdateQuoteEndpoint(){
         return renewalUpdateQuoteEndpoint;
-    };
+    }
 
     public String getRenewalGetStatusEndpoint(){
         return renewalGetStatusEndpoint;
-    };
+    }
+
+    public String getAccountLookUpEndpoint(){
+        return accountLookUpEndpoint;
+    }
+
+    public String getCheckQuoteExitsforResellerEndpoint(){
+        return checkQuoteExitsforResellerEndpoint;
+    }
+
+    public String getCopyQuoteEndpoint(){
+        return copyQuoteEndpoint;
+    }
 
     public String getGtmBodyJSScript() {
         return gtmBodyJSScript;

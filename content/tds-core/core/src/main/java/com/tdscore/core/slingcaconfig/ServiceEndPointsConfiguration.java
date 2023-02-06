@@ -163,5 +163,14 @@ public @interface ServiceEndPointsConfiguration {
     
     @Property(label = "Renewal GetStatus Endpoint", description = "Renewal GetStatus Endpoint")
     String renewalGetStatusEndpoint();
+
+    @Property(label = "Account LookUp Endpoint", description = "Account LookUp Endpoint")
+    String accountLookUpEndpoint();
+
+    @Property(label = "Check Quote Exits for Reseller Endpoint", description = "Check Quote Exits for Reseller Endpoint")
+    String checkQuoteExitsforResellerEndpoint();
+
+    @Property(label = "Copy Quote Endpoint", description = "Copy Quote Endpoint")
+    String copyQuoteEndpoint();
     
 }

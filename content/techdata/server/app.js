@@ -4502,7 +4502,8 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterRange4":"90+ days",
     "grids.common.label.filterCustom":"Custom date range",
     "grids.common.label.filterSearch": "Show results",
-    "grids.common.label.filterDate": "Date"
+    "grids.common.label.filterDate": "Date",
+    "flyout.renewal.label.close": "Let's Close it!",
   });
 });
 
@@ -4626,6 +4627,86 @@ app.post("/ui-renewal/v1/order", function (req, res) {
       code: 400,
       messages: ["Renewals Quote Update failed"],
       isError: true,
+    },
+  };
+  return res.status(200).json(success);
+});
+
+app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
+  console.log("AccountLookUp");
+  const success = {
+    content: [
+      {
+        quoteId: "123456",
+        resellerId: "123456",
+        accountNumber: "123456",
+        accountName: "Tech Data1",
+        title: "Tech Data2",
+        address: "1234 Main Street",
+        city: "Clearwater",
+      },
+      {
+        quoteId: "123457",
+        resellerId: "123457",
+        accountNumber: "123457",
+        accountName: "Tech Data2",
+        title: "Tech Data2",
+        address: "1235 Main Street",
+        city: "Miami",
+      },
+      {
+        quoteId: "123458",
+        resellerId: "123458",
+        accountNumber: "123458",
+        accountName: "Tech Data3",
+        title: "Tech Data3",
+        address: "1236 Main Street",
+        city: "Orlando",
+      },
+    ],
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  return res.status(200).json(success);
+});
+
+app.get("/ui-renewal/v1/CheckQuoteExitsforReseller", function (req, res) {
+  const success = {
+    content: {
+      quoteExists: false,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  const fail = {
+    content: {
+      quoteExists: false, 
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  return res.status(200).json(success);
+});
+
+app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
+  const success = {
+    content: {
+      quoteExists: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
     },
   };
   return res.status(200).json(success);
