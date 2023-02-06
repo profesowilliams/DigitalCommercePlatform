@@ -39,11 +39,7 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
             CloseableHttpClient httpClient =
                     httpUtil.buildHttpClient(httpClientBuilderFactory, CONNECTION_TIMEOUT_IN_MILLIS, SOCKET_TIMEOUT_IN_MILLIS);
             try {
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode rootNode = mapper.readTree(callAPI(httpClient, intouchRequest));
-                if(rootNode != null && rootNode.get("body") != null) {
-                    return rootNode.get("body").asText();
-                }
+                return callAPI(httpClient, intouchRequest);
             } catch (Exception e) {
                 LOGGER.error("Exception occurred during intouch request call", e);
             }
