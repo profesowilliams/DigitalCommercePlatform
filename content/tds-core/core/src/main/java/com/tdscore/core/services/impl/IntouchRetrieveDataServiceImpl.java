@@ -63,8 +63,8 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
         return StringUtils.EMPTY;
     }
 
-    public static final int CONNECTION_TIMEOUT_IN_MILLIS = 3000;
-    public static final int SOCKET_TIMEOUT_IN_MILLIS = 3000;
+    public static final int CONNECTION_TIMEOUT_IN_MILLIS = 30000;
+    public static final int SOCKET_TIMEOUT_IN_MILLIS = 30000;
     public static final String ACCEPT_LANGUAGE_LABEL = "Accept-Language";
     public static final String SITE_LABEL = "Site";
     private static final Logger LOGGER = LoggerFactory.getLogger(IntouchRetrieveDataServiceImpl.class);
