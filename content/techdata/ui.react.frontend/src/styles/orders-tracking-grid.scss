@@ -1,0 +1,17 @@
+.orderstrackinggrid {
+  .cmp-order-tracking-grid .cmp-base-grid .cmp-grid.ag-theme-alpine .ag-header {
+    background-color: $brand-white;
+    border-top: 3px solid $brand-charcoal;
+    border-bottom: 1px solid $brand-charcoal;
+  }
+
+  .cmp-order-tracking-grid .cmp-base-grid .cmp-grid.ag-theme-alpine .ag-row {
+    @include font-arial-normal($size: 14px);
+
+    .ag-cell .ag-react-container a {
+      color: $brand-cobalt;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
