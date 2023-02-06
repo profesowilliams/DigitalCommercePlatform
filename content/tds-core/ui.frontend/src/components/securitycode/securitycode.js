@@ -224,7 +224,10 @@
     if (!header) return;
     const  headerHeight = header.offsetHeight;
     const totalHeight = subHeaderHeight + headerHeight;
-    document.getElementsByClassName('cmp-s-code-popup__modal__content')[0].style['top'] = `${totalHeight}px`;
+    const popup = document.getElementsByClassName('cmp-s-code-popup__modal__content')[0];
+    if (popup) {
+      popup.style['top'] = `${totalHeight}px`;
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {

@@ -138,7 +138,7 @@
 
   function pageShownHandler(event) {
     const dataObject = getDataObjectHelper(event, {
-      '@type': 'tds-site/components/page',
+      '@type': window.adobeDataLayer.getState(event.eventInfo.path)['@type'],
     });
     if (dataObject != null) {
       /**@type String */
@@ -197,8 +197,57 @@
       window.dataLayer.push({event: "pageView",page: dataLayerObject.page});
       window.adobeDataLayer.push(dataLayerObject);
     }
-      
-      
+  }
+
+  function clickHandler(event) {
+    const typeString = window.adobeDataLayer.getState(event.eventInfo.path)['@type'];
+    const dataObject = getDataObjectHelper(event, {
+      '@type': typeString,
+    });
+    const componentType = typeString.match(/\/([^\/]+)\/?$/)[1].toLowerCase();
+
+    switch (componentType) {
+      case 'button':
+        window.dataLayer.push({
+          "event": "click",
+          "category": "cta",
+          "item_name": dataObject['dc:title'],
+          "item_type": "link",
+          "click_url": dataObject['xdm:linkURL'],
+        });
+        break;
+      case 'alertcarousel':
+        const shownItem = window.adobeDataLayer.getState(`component.${dataObject.shownItems[0]}`);
+        window.dataLayer.push({
+          "event": "click",
+          "category": "cta",
+          "item_name": shownItem['dc:title'],
+          "item_type": "carousel",
+        });
+        break;
+      case 'title':
+      case 'teaser':
+        window.dataLayer.push({
+          "event": "click",
+          "category": "cta",
+          "item_name": dataObject['dc:title'],
+          "item_type": componentType,
+          "click_url": dataObject['xdm:linkURL'],
+        });
+        break;
+      default:
+        let dlObject = {
+          "event": "click",
+          "category": "cta",
+          "item_name": dataObject['dc:title'],
+          "item_type": typeString,
+        };
+        if (dataObject.hasOwnProperty('xdm:linkURL')) {
+          dlObject.click_url = dataObject['xdm:linkURL'];
+        }
+        window.dataLayer.push(dlObject);
+        break;
+    };
   }
 
   function initDataLayer() {
@@ -206,6 +255,9 @@
     window.adobeDataLayer = window.adobeDataLayer || [];
     window.adobeDataLayer.push(function (dl) {
       dl.addEventListener('cmp:show', pageShownHandler);
+    });
+    window.adobeDataLayer.push(function (dl) {
+      dl.addEventListener('cmp:click', clickHandler);
     });
   }
 

@@ -9,6 +9,8 @@
      data-sly-use.actionsTemplate="actions.html"
      data-sly-test.hasContent="${teaser.imageResource || teaser.pretitle || teaser.title || teaser.description || teaser.actions.size > 0}"
      id="${component.id}"
+     data-cmp-data-layer="${dataLayer.dataLayerJson}"
+	   data-sly-use.dataLayer="${'teaser.js' @ data=teaser.data.json, text=text}"
      class="cmp-teaser${!wcmmode.disabled && teaser.imageResource ? ' cq-dd-image' : ''}"
 >
     <sly data-sly-call="${imageTemplate.image @ teaser=teaser}"></sly>
