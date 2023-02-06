@@ -9,10 +9,10 @@ import org.apache.sling.caconfig.annotation.Property;
 public @interface IntouchConfiguration {
 
     @Property(label = "CSS API Url", description = "API url that provides the CSS urls.")
-    String cssAPIUrl() default "https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/CSS";
+    String cssAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header/CSS";
 
     @Property(label = "JS API Url", description = "API url that provides the JS urls.")
-    String jsAPIUrl() default "https://westeu-sit-ui.dc.tdebusiness.cloud/ui-intouch/v1/JS";
+    String jsAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header/JS";
 
     @Property(label = "Header API Url", description = "API url that provides the Header HTML Fragment.")
     String headerAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header";
