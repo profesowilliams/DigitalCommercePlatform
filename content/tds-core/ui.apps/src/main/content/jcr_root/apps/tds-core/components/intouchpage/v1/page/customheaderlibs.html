@@ -62,11 +62,14 @@
     <sly data-sly-call="${clientlib.css @ categories='tds-core.base'}"> </sly>
 </sly>
 
+<!--
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css" />
-
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-
 <script src="https://kit.fontawesome.com/e1e12a4c06.js" crossorigin="anonymous"></script>
+-->
+<!-- not able to load Material Icons from CSS - CORS error - Incapsula -->
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Material+Icons" />
+
 <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
     <sly data-sly-test="${configData.analyticsSnippet}">
         <script src="${configData.analyticsSnippet @ context='unsafe'}" async></script>
@@ -75,13 +78,13 @@
     <sly data-sly-test="${configData.intouchCSSScriptsData}">
         <!-- Intouch CSS scripts in Head -->
         ${configData.intouchCSSScriptsData @ context='scriptComment'}
-        <!-- End Intouch CSS scripts in Head -->
+<!-- End Intouch CSS scripts in Head -->
     </sly>
-    <sly data-sly-test="${configData.intouchJSScriptsData}">
-        <!-- Intouch JS scripts in Head -->
-        ${configData.intouchJSScriptsData @ context='scriptComment'}
-        <!-- End Intouch JS scripts in Head -->
-    </sly>
+<sly data-sly-test="${configData.intouchJSScriptsData}">
+    <!-- Intouch JS scripts in Head -->
+    ${configData.intouchJSScriptsData @ context='scriptComment'}
+    <!-- End Intouch JS scripts in Head -->
+</sly>
 </sly>
 
 <script type="text/javascript" src="${configData.typeAheadDomain}${configData.typeAheadXDomainScript}" slave="${configData.typeAheadDomain}${configData.typeAheadProxyScript}"></script>
