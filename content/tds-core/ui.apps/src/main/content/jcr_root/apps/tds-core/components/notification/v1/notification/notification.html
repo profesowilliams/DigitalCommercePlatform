@@ -1,12 +1,16 @@
-<div 
+<div
+    data-sly-use.model="com.tdscore.core.models.Notification"
     class="cmp-notification"
     data-sly-test=${properties.message}
+    data-cmp-data-layer="${model.dataJson}"
 >
     <div class="cmp-notification-message-container" data-cmp-icon="${properties.icon}" data-cmp-icon-dam="${properties.iconUrl}">
         <span class="cmp-notification_icon" ></span>
         <span class="cmp-notification_text">${properties.message}</span>    
     </div>
-    <a target="${properties.linkTarget == 'true' ? '_blank' : '_self'}" href="${properties.linkUrl}" class="cmp-notification-link ${properties.linkEnable == 'true' ? '' : 'nolink'}">
+    <a target="${properties.linkTarget == 'true' ? '_blank' : '_self'}" href="${properties.linkUrl}"
+       class="cmp-notification-link ${properties.linkEnable == 'true' ? '' : 'nolink'}"
+       data-cmp-clickable="true" data-cmp-data-layer="${model.dataJson}">
         <span data-sly-test="${properties.linkLabel}" class="cmp-notification_text">${properties.linkLabel}</span>
     </a>
     <sly data-sly-test="${properties.closeNotification}">
