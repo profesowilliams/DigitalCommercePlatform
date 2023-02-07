@@ -22,7 +22,25 @@ import events from '../../utils/events';
         const langEle = event.target.closest('.languagenavigation');
         langEle.querySelector(".regionSelectDropdown").classList.add("cmp-show");
       } else {
-        document.querySelector(".regionSelectDropdown").classList.add("cmp-show");
+        // 02/07/2023 ryan.williams@tdsynnex.com: I added the setTimeout to fix an issue where a global click event removes all of the classes
+        // after the classes are set. It's not pretty, but it works. The global click event for the language selector should only fire when 
+        // the user clicks outside of the language selector when it's active, but it's firing when anything is clicked.
+        setTimeout(function() {
+          var header = document.getElementsByClassName("cmp-experiencefragment--header-mobile")[0];
+
+          const masthead = header.querySelector("[id^='masthead-']");
+          masthead.classList.add("header-active")
+      
+          const hamburger = header.querySelector(".cmp-td-hamburgerMenu");
+          hamburger.classList.add("active");
+          
+          const megamenu = header.querySelector(".megamenu");
+          megamenu.classList.add("megamenu--open")
+          
+          // specifically select the second regionSelectDropdown, which is the one that is used for the mobile menu
+          const region = document.querySelectorAll(".regionSelectDropdown")[1];
+          region.classList.add("cmp-show");
+        }, 100);
       }
   }
 
