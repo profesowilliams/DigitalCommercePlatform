@@ -946,12 +946,23 @@ svg {
     &-description {
       margin: 2.5rem 0;
     }
+    &--error {
+      color: $td-error-red;
+      font-size: 0.75rem;
+    }
     .cmp-autocomplete__button-section, .MuiInput-root {
       padding-right: 0;
     }
+    .cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote {
+      background-color: $td-neutral-gray;
+
+      &__label {
+        font-weight: 700;
+      }
+    }
   }
   &__footer {
-    button{
+    button {
       display: block;
       position: absolute;
       bottom: 0;
@@ -961,6 +972,11 @@ svg {
       text-align: center;
       color: $brand-text-lightgray;
       padding: 1.4rem 2rem;
+
+      &.cmp-renewals-copy-flyout__footer-button--enabled {
+        background-color: $td-dark-blue;
+        color: white;
+      }
     }
   }
 }

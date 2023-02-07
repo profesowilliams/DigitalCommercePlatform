@@ -1,116 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   DismissFilledIcon,
+  LoaderIcon,
   SearchIcon,
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
-import { get, post } from '../../../../utils/api';
 import { Autocomplete, Button, TextField } from '@mui/material';
-import Toaster from '../Widgets/Toaster';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
-import { getDictionaryValue } from '../../../../utils/utils';
-
-const resellerLookUp = async (resellerId, endpoint) => {
-  const response = await get(
-    endpoint.replace('{reseller-id}', resellerId)
-  );
-  return response.data.content;
-};
-
-const checkQuoteExitsforReseller = async (
-  resellerId,
-  agreementNo,
-  endpoint
-) => {
-  const response = await get(
-    endpoint.replace('{reseller-id}', resellerId).replace('{agreement-number}', agreementNo)
-  );
-  return response.data.content;
-};
-
-const copyQuote = async (quoteId, resellerId, endpoint) => {
-  const response = await post(
-    endpoint.replace('{quote-id}', quoteId).replace('{reseller-id}', resellerId)
-  );
-  return response.data.content;
-};
-
-const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
-  const { accountNumber, accountName, city } = quote;
-
-  const AccountNumberWithHighlight = () => {
-    const wordToHighlight = accountNumber.split(currentlyTypedWord);
-    if (wordToHighlight.length === 1) {
-      return <span>{accountNumber}</span>;
-    }
-    return (
-      <>
-        <span style={{ backgroundColor: 'yellow' }}>{currentlyTypedWord}</span>
-        <span>{wordToHighlight[1]}</span>
-      </>
-    );
-  };
-  return (
-    <div>
-      <div>
-        {/*Selected account */}
-        {labels && (
-          <span>
-            {getDictionaryValue(
-              labels.selectedAccountLabel,
-              labels.selectedAccountLabel || 'Selected account'
-            )}
-          </span>
-        )}
-      </div>
-      <div>
-        {labels && (
-          <span>
-            {getDictionaryValue(
-              labels.accountNumberLabel,
-              labels.accountNumberLabel || 'Account number:'
-            )}
-          </span>
-        )}
-        <AccountNumberWithHighlight />
-      </div>
-      <div>
-        {labels && (
-          <span>
-            {getDictionaryValue(
-              labels.accountNameLabel,
-              labels.accountNameLabel || 'Account name:'
-            )}
-          </span>
-        )}
-        {accountName}
-      </div>
-      <div>
-        {labels && (
-          <span>
-            {getDictionaryValue(labels.cityLabel, labels.cityLabel || 'City:')}
-          </span>
-        )}
-        {city}
-      </div>
-    </div>
-  );
-};
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { QuoteDetails } from './QuoteDetails';
+import { checkQuoteExitsforReseller, copyQuote, resellerLookUp } from './api';
 
 function CopyFlyout({ store, copyFlyout, subheaderReference }) {
-  const showCopyFlyout = store((st) => st.showCopyFlyout);
+  const copyFlyoutConfig = store((st) => st.copyFlyout);
   const effects = store((st) => st.effects);
   const [accountNumber, setAccountNumber] = useState('');
   const [autocompleteTitle, setAutocompleteTitle] = useState(
-    getDictionaryValue(
-      copyFlyout.searchPlaceholder,
+    getDictionaryValueOrKey(
       copyFlyout.searchPlaceholder
     )
   );
   const [quotes, setQuotes] = useState([]);
   const [selectedQuote, setSelectedQuote] = useState(null);
   const [enableCopy, setEnableCopy] = useState(false);
-  const closeFlyout = () => effects.setCustomState({ key: 'showCopyFlyout', value: false });
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const closeFlyout = () => effects.setCustomState({ key: 'copyFlyout', value: {show:false} });
+
+  useEffect(() => {
+    setSelectedQuote(null);
+    setAccountNumber('');
+    setQuotes([]);
+    setEnableCopy(false);
+    setErrorMessage('');
+  }, [copyFlyoutConfig?.data.agreementNumber]);
 
   const handleResellerIdChange = async (event) => {
     const resellerId = event.target.value;
@@ -126,44 +49,58 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
   };
 
   const handleQuoteSelectedChange = async (event, newInput) => {
-    setSelectedQuote(newInput);
-    const response = await checkQuoteExitsforReseller(
+    const quoteExists = await checkQuoteExitsforReseller(
       newInput.resellerId,
-      newInput.agreementNo,
+      copyFlyoutConfig?.data.agreementNumber,
       copyFlyout.checkQuoteExitsforResellerEndpoint
     );
-    setEnableCopy(!response.quoteExists);
+    setEnableCopy(!quoteExists);
+
+    if (quoteExists) {
+      setErrorMessage(copyFlyout.quoteExistsError);
+    }
+    else {
+      setSelectedQuote(newInput);
+      setErrorMessage('');
+    }
   };
 
   const handleCopy = async () => {
+    setIsLoading(true);
     const response = await copyQuote(
       selectedQuote.quoteId,
       selectedQuote.resellerId,
       copyFlyout.copyQuoteEndpoint
     );
+    setIsLoading(false);
+
+    let toaster;
+
+    if(response.isError) {
+      toaster = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: false,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(
+          copyFlyout.copyFailureMessage
+        ),
+      };
+    }
+    else {
+      toaster = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: false,
+        isSuccess: true,
+        message: getDictionaryValueOrKey(
+          copyFlyout.copySuccessMessage
+        ),
+      };
+    }
+
     closeFlyout();
-    const toaster = {
-      isOpen: true,
-      origin: 'fromUpdate',
-      isAutoClose: false,
-      isSuccess: true,
-      message: getDictionaryValue(
-        copyFlyout.copySuccessMessage,
-        copyFlyout.copySuccessMessage
-      ),
-    };
-    const toaster1 = {
-      isOpen: true,
-      origin: 'fromUpdate',
-      isAutoClose: false,
-      isSuccess: false,
-      title: 'errorTitle',
-      message: getDictionaryValue(
-        copyFlyout.copyFailureMessage,
-        copyFlyout.copyFailureMessage
-      ),
-    };
-    effects.setCustomState({ key: 'toaster', value: { ...toaster1 } });
+    effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
 
   const onCloseToaster = () => {
@@ -172,15 +109,14 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
 
   const handleFocusIn = () => {
     setAutocompleteTitle(
-      getDictionaryValue(copyFlyout.searchLabel, copyFlyout.searchLabel)
+      getDictionaryValueOrKey(copyFlyout.searchLabel)
     );
   };
 
   const handleFocusOut = () => {
-    if (resellerId.length === 0) {
+    if (accountNumber.length === 0) {
       setAutocompleteTitle(
-        getDictionaryValue(
-          copyFlyout.searchPlaceholder,
+        getDictionaryValueOrKey(
           copyFlyout.searchPlaceholder
         )
       );
@@ -189,7 +125,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
 
   return (
     <BaseFlyout
-      open={showCopyFlyout}
+      open={copyFlyoutConfig?.show}
       onClose={closeFlyout}
       width="425px"
       anchor="right"
@@ -198,7 +134,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
       <div className="cmp-renewals-copy-flyout">
         <section className="cmp-renewals-copy-flyout__header">
           <h4 className="cmp-renewals-copy-flyout__header-title">
-            {getDictionaryValue(copyFlyout.title, copyFlyout.title || 'Copy')}
+            {getDictionaryValueOrKey(copyFlyout.title || 'Copy')}
           </h4>
           <div
             className="cmp-renewals-copy-flyout__header-icon"
@@ -209,7 +145,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
         </section>
         <section className="cmp-renewals-copy-flyout__content">
           <div className="cmp-renewals-copy-flyout__content-description">
-            {getDictionaryValue(copyFlyout.description, copyFlyout.description)}
+            {getDictionaryValueOrKey(copyFlyout.description)}
           </div>
           <div className="cmp-renewals-copy-flyout__content-search">
             <Autocomplete
@@ -236,13 +172,14 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  error={!!errorMessage}
                   label={autocompleteTitle}
+                  value={accountNumber}
                   variant="standard"
                   onChange={handleResellerIdChange}
                   onBlur={handleFocusOut}
                   onFocus={handleFocusIn}
-                  placeholder={getDictionaryValue(
-                    copyFlyout.searchPlaceholder,
+                  placeholder={getDictionaryValueOrKey(
                     copyFlyout.searchPlaceholder
                   )}
                   InputProps={{
@@ -261,37 +198,28 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
                 />
               )}
             />
+            {errorMessage && <div className="cmp-renewals-copy-flyout__content--error">
+              {errorMessage}
+            </div>}
             {selectedQuote && (
-              <QuoteDetails quote={selectedQuote} labels={copyFlyout} />
+              <>
+                <QuoteDetails quote={selectedQuote} labels={copyFlyout} />
+
+                <div>
+                  {copyFlyout.permissionsWarning}
+                </div>
+              </>
             )}
 
-            <div>
-              <Toaster
-                onClose={onCloseToaster}
-                store={(state) => ({
-                  isOpen: false,
-                  Child: <div>manu</div>,
-                  isSuccess: true,
-                  origin: 'fromUpdate',
-                  title: 'YAY!',
-                  message: 'manu1',
-                  isAutoClose: false,
-                })}
-                message={'manu'}
-                MuiDrawerProps={{
-                  variant: 'persistent',
-                }}
-              />
-            </div>
           </div>
         </section>
         <section className="cmp-renewals-copy-flyout__footer">
           <button
-            className="cmp-renewals-copy-flyout__footer-cancel--enabled"
+            className={`cmp-renewals-copy-flyout__footer-button ${enableCopy ? 'cmp-renewals-copy-flyout__footer-button--enabled' : ''}`}
             enabled={!enableCopy}
             onClick={handleCopy}
           >
-            {getDictionaryValue(copyFlyout.button, copyFlyout.button || 'Copy')}
+            {!isLoading && getDictionaryValueOrKey(copyFlyout.button || 'Copy')} {isLoading && <LoaderIcon />}
           </button>
         </section>
       </div>

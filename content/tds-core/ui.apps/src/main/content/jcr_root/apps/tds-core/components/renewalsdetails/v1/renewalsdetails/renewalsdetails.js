@@ -376,6 +376,10 @@ use(['../common/utils.js'], function(utils) {
         copyFlyout.unknownError = properties["unknownError"];
     }
 
+    if (properties && properties["quoteExistsError"]) {
+        copyFlyout.quoteExistsError = properties["quoteExistsError"];
+    }
+
     if (properties && properties["copySuccessMessage"]) {
         copyFlyout.copySuccessMessage = properties["copySuccessMessage"];
     }

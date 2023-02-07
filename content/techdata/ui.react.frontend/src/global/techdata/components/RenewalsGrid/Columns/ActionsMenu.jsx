@@ -79,7 +79,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
 
     const triggerCopyFlyout = () => {
         onClose();
-        setCustomState({ key: 'showCopyFlyout', value: true });
+        setCustomState({ key: 'copyFlyout', value: { data, show:true} });
     };
 
     return (

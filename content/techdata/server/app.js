@@ -4980,8 +4980,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filterRange4":"90+ days",
     "grids.common.label.filterCustom":"Custom date range",
     "grids.common.label.filterSearch": "Show results",
-    "grids.common.label.filterDate": "Date",
-    "flyout.renewal.label.close": "Let's Close it!",
+    "grids.common.label.filterDate": "Date"
   });
 });
 
@@ -5115,12 +5114,8 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
   const success = {
     content: [
       {
-        quoteId: "123456",
-        resellerId: "123456",
         accountNumber: "123456",
-        accountName: "Tech Data1",
-        title: "Tech Data2",
-        address: "1234 Main Street",
+        name: "Tech Data1",
         city: "Clearwater",
       },
       {
@@ -5149,30 +5144,6 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
     },
   };
 
-  return res.status(200).json(success);
-});
-
-app.get("/ui-renewal/v1/CheckQuoteExitsforReseller", function (req, res) {
-  const success = {
-    content: {
-      quoteExists: false,
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
-  const fail = {
-    content: {
-      quoteExists: false, 
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
   return res.status(200).json(success);
 });
 
@@ -5245,8 +5216,49 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               price: 21.53,
               created: null,
             },
+          ],
+        },
+        {
+          trackings: [],
+          deliveryNotes: [
+              {
+                  "packageCount": null,
+                  "billOfLading": null,
+                  "soldToParty": null,
+                  "deliveryType": null,
+                  "goodsArrivalDate": null,
+                  "deliveryNoteNumber": null,
+                  "recordCreatedDates": null,
+                  "quantityDelivered": null,
+                  "warehouseNumber": null,
+                  "storageLocation": null,
+                  "material": null,
+                  "plant": null,
+                  "id": "7108712174",
+                  "line": "10",
+                  "quantity": 5,
+                  "created": "02-09-2022",
+                  "shippedFrom": null,
+                  "actualShipDate": "02-09-2022",
+                  "shippedFromText": "Aalst"
+              }
+          ],
+          id: "S000402930",
+          reseller: "4674524412",
+          vendor: [{ vendorName: "MICROSOFT" }],
+          created: "11/19/22",
+          shipTo: "vivek GB INT",
+          type: "Manual",
+          price: "21.53",
+          priceFormatted: "21.53",
+          currency: "USD",
+          currencySymbol: "$",
+          status: "Open",
+          invoice: null,
+          isReturn: false,
+          invoices: [
             {
-              id: "3424556",
+              id: "Pending",
               line: "",
               quantity: 0,
               price: 21.53,
@@ -5292,49 +5304,9 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           status: "Open",
           invoice: null,
           isReturn: false,
-          invoices: null,
-        },
-        {
-          trackings: [],
-          deliveryNotes: [
-              {
-                  "packageCount": null,
-                  "billOfLading": null,
-                  "soldToParty": null,
-                  "deliveryType": null,
-                  "goodsArrivalDate": null,
-                  "deliveryNoteNumber": null,
-                  "recordCreatedDates": null,
-                  "quantityDelivered": null,
-                  "warehouseNumber": null,
-                  "storageLocation": null,
-                  "material": null,
-                  "plant": null,
-                  "id": "7108712174",
-                  "line": "10",
-                  "quantity": 5,
-                  "created": "02-09-2022",
-                  "shippedFrom": null,
-                  "actualShipDate": "02-09-2022",
-                  "shippedFromText": "Aalst"
-              }
-          ],
-          id: "S000402930",
-          reseller: "4674524412",
-          vendor: [{ vendorName: "MICROSOFT" }],
-          created: "11/19/22",
-          shipTo: "vivek GB INT",
-          type: "Manual",
-          price: "21.53",
-          priceFormatted: "21.53",
-          currency: "USD",
-          currencySymbol: "$",
-          status: "Open",
-          invoice: null,
-          isReturn: false,
           invoices: [
             {
-              id: "123443",
+              id: "Pending",
               line: "",
               quantity: 0,
               price: 21.53,

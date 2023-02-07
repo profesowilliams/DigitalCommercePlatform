@@ -367,6 +367,10 @@ $(document).ready(function () {
 });
 // END OF HEADER/FOOTER
 
+export const getDictionaryValueOrKey = (dictionaryKey) => {
+  return getDictionaryValue(dictionaryKey, dictionaryKey);
+}
+
 export const getDictionaryValue = (dictionaryKey, defaultValue) => {
     let dictionaryValue = Granite?.I18n?.get(dictionaryKey);
     return dictionaryValue != dictionaryKey ? dictionaryValue : defaultValue;

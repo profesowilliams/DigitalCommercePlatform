@@ -84,7 +84,7 @@ function Toaster({
           </div>
           <div className="cmp-toaster-content__message">
             <p>{isSuccess ? message : (<>
-              <span className="cmp-toaster-content__error-title">{title}</span>
+              {title && <span className="cmp-toaster-content__error-title">{title}</span>}
               {message}
             </>)}</p>
             {isSuccess && !!Child &&  <br />}
