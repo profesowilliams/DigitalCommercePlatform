@@ -66,15 +66,14 @@
     position: absolute;
     margin-left: 0rem;
     margin-right: 1rem;
-    left: 90%;
+    left: 78%;
     top: 85px;
   }
   .cmp-searchbar__remove-icon--mobile{
-    position: absolute;
-    margin-left: 0rem;
-    margin-right: 1rem;
-    left: 90%;
-    top: 85px;
+    position: relative;
+    margin: unset;
+    top: 0;
+    left: 0;
   }
   .cmp-searchbar__context-menu {
     box-shadow: 0px;
@@ -90,17 +89,29 @@
       margin-left: rem(61px);
     }
   }
-  .cmp-searchbar__button {
-    z-index: 999999999999999999999999999999999999999;
-  }
-  .cmp-searchbar__button--mobile {
-    display: none;
-  }
+  
+  .cmp-searchbar__arrow {
+    height: 24px;
+    width: 24px;
 
-  .cmp-searchbar__input{
-    :focus{
-
+    &::before {
+      content: "";
+      mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg');
+      -webkit-mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg');
+      background: no-repeat;
+      height: 16.67px;
+      width: 20px;
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      background-color: map-get($color-palette, 'black');
+      display: inline-block;
+      align-items: center;
+      vertical-align: middle
     }
+  }
+
+  .cmp-searchbar__button {
+    z-index: 1;
   }
 
   .cmp-searchbar__input--mobile {
@@ -118,9 +129,9 @@
 }
 
 .cmp-searchbar__remove-icon {
-  position: absolute;
-  left: 70%;
-  top: 34%;
+  position: relative;
+  top: 5px;
+  right: 25px;
 }
 //Search Bar styles
 .cmp-searchbar {
@@ -496,7 +507,7 @@
 #cmp-techdata-header.cmp-container .aem-Grid .search {
   width: 30%;
   @include mobile {
-    width: auto !important;
+    width: 80% !important;
   }
 }
 

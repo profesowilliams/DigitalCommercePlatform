@@ -20,24 +20,6 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
     }
 }
 
-.searchbar {
-    .cmp-searchbar__mobile-container--mobile {
-        .cmp-searchbar__button {
-            content: '';
-            -webkit-mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg') no-repeat;
-            mask: url('/content/dam/global-shared/icons/regular/back-arrow.svg') no-repeat;
-            background: no-repeat;
-            height: 16px;
-            width: 20px;
-            -webkit-mask-size: cover;
-            mask-size: cover;
-            background-color: map-get($color-palette, 'black');
-            padding: 0;
-            vertical-align: middle
-        }
-    }     
-}
-
 //Fluent UI icons
 .cmp-button__icon {
     &--fluent, .fluent {
@@ -91,6 +73,12 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                     -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     background-color: map-get($color-palette, 'cobalt');
+
+                    @include mobile {
+                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        background-color: map-get($color-palette, 'charcoal');
+                    }
                 }
             }
 
@@ -99,6 +87,12 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                     -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     background-color: map-get($color-palette, 'cobalt');
+
+                    @include mobile {
+                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        background-color: map-get($color-palette, 'charcoal');
+                    }
                 }
             }
         }  
@@ -115,6 +109,12 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                     -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     filter: $aqua;
+
+                    @include mobile {
+                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        filter: $white;
+                    }
                 }
             }
 
@@ -123,6 +123,12 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                     -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
                     filter: $aqua;
+
+                    @include mobile {
+                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        filter: $white;
+                    }
                 }
             }
         }  

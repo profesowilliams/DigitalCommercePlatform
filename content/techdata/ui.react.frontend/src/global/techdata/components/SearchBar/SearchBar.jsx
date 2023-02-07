@@ -353,19 +353,7 @@ const SearchBar = ({ data, componentProp }) => {
           <span
             onClick={handleCloseSearchBar}
             className={
-               'cmp-searchbar__button'}>
-            <svg
-              width="20"
-              height="17"
-              viewBox="0 0 20 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19.1667 9.5C19.6269 9.5 20 9.1269 20 8.66667C20 8.20643 19.6269 7.83333 19.1667 7.83333L3.00497 7.83333L9.72414 1.78608C10.0662 1.4782 10.094 0.951294 9.78608 0.609203C9.4782 0.267113 8.95129 0.23938 8.60919 0.547262L0.275864 8.04726C0.100269 8.20529 0 8.43043 0 8.66667C0 8.9029 0.100267 9.12804 0.275864 9.28608L8.6092 16.7861C8.95129 17.094 9.4782 17.0662 9.78608 16.7241C10.094 16.382 10.0662 15.8551 9.72414 15.5472L3.00496 9.5L19.1667 9.5Z"
-                fill="#005758"
-              />
-            </svg>
+               'cmp-searchbar__arrow'}>
           </span>
         )}
         <div className="input-icon">
@@ -419,35 +407,6 @@ const SearchBar = ({ data, componentProp }) => {
           ref={searchRef}
           onClick={handleOpenSearchBar}
         >
-          <svg
-            className={
-              !isClicked
-                ? 'cmp-searchbar__icon cmp-searchbar__icon--checked'
-                : 'cmp-searchbar__icon'
-            }
-            width="26px"
-            height="26px"
-            viewBox="0 0 28 28"
-            version="1.1"
-          >
-            <g id="Symbols" fill="none">
-              <g id="Icon---Search">
-                <g id="Group-5" transform="translate(1.000000, 1.000000)">
-                  <path
-                    d="M10.0000394,0 C15.5228817,0 20.0000789,4.53561095 20.0000789,10.1309296 C20.0000789,15.7259892 15.5228817,20.2616001 10.0000394,20.2616001 C4.47719715,20.2616001 0,15.7259892 0,10.1309296 C0,4.53561095 4.47719715,0 10.0000394,0 Z"
-                    id="Stroke-1"
-                  ></path>
-                  <line
-                    x1="18.9999724"
-                    y1="18.9096442"
-                    x2="26"
-                    y2="26"
-                    id="Stroke-3"
-                  ></line>
-                </g>
-              </g>
-            </g>
-          </svg>
         </button>
       </>
     );
