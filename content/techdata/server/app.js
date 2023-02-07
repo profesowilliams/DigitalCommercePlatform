@@ -4419,7 +4419,485 @@ app.get("/ui-account/v1/topActions", function (req, res) {
   res.json(response);
 });
 app.get("/ui-renewal/v1/Details", function (req, res) {
-  const response = {"content":{"details":[{"source":{"salesOrg":"IN96","targetSystem":"R3","key":"U100000001314","system":"RQ","type":null,"id":"U100000001314"},"published":"2022-10-21T09:16:12.279Z","reseller":{"id":"2000760","isValid":false,"canEdit":true,"vendorAccountName":null,"vendorAccountNumber":{"text":"6964658","isValid":true,"isMandatory":false,"isDisplay":true,"canEdit":false,"allowedLength":100000},"name":"TD SYNNEX House Account for DCP","nameUpper":"TD SYNNEX HOUSE ACCOUNT FOR DCP","contact":[{"name":{"text":null,"isValid":false,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":100000},"email":{"text":"Abhishek.Malhotra@softwareone.com","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":100000},"phone":{"text":"9899000045","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":100000}}],"address":{"id":null,"line1":"TOWER B,3RD FLOOR","line2":"GLOBAL TECHNOLOGY PARK","line3":"DEVARABEESANAHALLI VILLAGE","city":"BANGALORE","state":null,"postalCode":"560103","country":"India","county":null,"countryCode":"IN"}},"endUser":{"id":null,"isValid":false,"canEdit":true,"name":{"text":"HURIX SYSTEMS PVT LTD","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":40},"nameUpper":"HURIX SYSTEMS PVT LTD","eaNumber":{"text":"58473977","isValid":true,"isMandatory":false,"isDisplay":false,"canEdit":false,"allowedLength":100000},"contact":[{"name":{"text":"","isValid":false,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":40},"email":{"text":"Abhishek.Malhotra@softwareone.com","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":120},"phone":{"text":"9899000045","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":30}}],"address":{"id":null,"line1":{"text":"HURIX HOUSE NEW NO 34 OLD NO 10","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":40},"line2":{"text":null,"isValid":true,"isMandatory":false,"isDisplay":true,"canEdit":true,"allowedLength":40},"line3":{"text":null,"isValid":true,"isMandatory":false,"isDisplay":false,"canEdit":false,"allowedLength":100000},"city":{"text":"CHENNAI","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":40},"state":null,"postalCode":{"text":"600010","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":true,"allowedLength":10},"country":{"text":"India","isValid":true,"isMandatory":true,"isDisplay":true,"canEdit":false,"allowedLength":100000},"county":null,"countryCode":{"text":"IN","isValid":true,"isMandatory":false,"isDisplay":false,"canEdit":false,"allowedLength":100000}}},"shipTo":null,"alternateIdentifier":null,"vendorSalesRep":null,"vendorSalesAssociate":null,"items":[{"id":"1","group":null,"solution":null,"parent":null,"product":[{"type":"TECHDATA","id":"VRT13811M123","name":null,"manufacturer":null,"manufacturerId":null,"localManufacturer":null,"classification":null,"family":null},{"type":"MANUFACTURER","id":"13811-M1-23","name":"Veritas Essential Support - Technical support (renewal) - for VERITAS Backup Exec Server Edition - On-Premise licence - 1 server - corporate - CLP - phone consulting - 1 year - 24x7 - response time: 30 min","manufacturer":"Veritas","manufacturerId":"11","localManufacturer":null,"classification":null,"family":null}],"quantity":1.0,"confirmedQuantity":0.0,"contractNumber":null,"contractType":null,"license":null,"references":[],"status":null,"statusNotes":null,"updated":"0001-01-01T00:00:00","unitPrice":11656.41,"unitCost":10665.62,"totalPrice":11656.41,"unitListPrice":19392.49,"unitPriceCurrency":"INR","unitCostCurrency":"INR","unitListPriceCurrency":"INR","extendedListPrice":0.0,"requested":"0001-01-01T00:00:00","shippingCondition":null,"shippingFrom":null,"businessManager":null,"divisionManager":null,"director":null,"rejectionCode":null,"rejectionDescription":null,"femAmount":0.0,"pomAmount":0.0,"samAmount":0.0,"nsmAmount":0.0,"femPercentage":0.0,"pomPercentage":0.0,"samPercentage":0.0,"nsmPercentage":0.0,"agreements":[],"attributes":[],"dealRegNumber":null,"reinstatementFeeCost":null,"reinstatementFeeSell":null,"serialNumbers":[null],"instance":"4256884","discounts":[{"type":"Standard","value":"39.89"}],"contract":{"id":"SG000000080975","duration":"1 Year","renewedDuration":"1 Year","startDate":"2021-11-10T00:00:00Z","endDate":"2022-11-09T00:00:00Z","newAgreementStartDate":"2022-11-10T00:00:00Z","newAgreementEndDate":"2023-11-09T00:00:00Z","newUsagePeriodStartDate":null,"newUsagePeriodEndDate":null,"supportLevel":null,"serviceLevel":null,"usagePeriod":null,"formattedStartDate":"10-11-2021","formattedEndDate":"09-11-2022","formattedNewAgreementStartDate":"10-11-2022","formattedNewAgreementEndDate":"09-11-2023","formattedNewUsagePeriodStartDate":null,"formattedNewUsagePeriodEndDate":null,"formattedUsagePeriod":null},"tdNumber":null,"mfrNumber":null,"shortDescription":null,"manufacturer":null,"vendorPartNo":null,"formattedUpdated":null,"formattedRequested":null}],"attributes":[],"programName":"Corporate Program","quoteCurrent":false,"firstAvailableOrderDate":"2022-10-21T00:00:00Z","lastOrderDate":"2023-01-08T00:00:00Z","statusText":null,"amountSaved":0.0,"linkedRenewals":[],"renewalGroupId":null,"dueDate":"2022-11-09T00:00:00Z","incumbent":null,"totalReinstatementFeeCost":null,"totalReinstatementFeeSell":null,"endUserType":"Corporate","vendorLogo":"https://dit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-veritas.svg","previousEndUserPO":null,"previousResellerPO":"PO-185521","isValid":false,"canOrder":false,"canEditQty":false,"canEditResellerPrice":true,"canEditLines":true,"customerPO":{"text":"SG000000080975","isValid":true,"isMandatory":false,"isDisplay":true,"canEdit":true,"allowedLength":25},"formattedPublished":"21-10-2022","formattedFirstAvailableOrderDate":"21-10-2022","formattedLastOrderDate":"08-01-2023","formattedDueDate":"09-11-2022","formattedCreated":"21-10-2022","formattedUpdated":"21-10-2022","formattedExpiry":"09-11-2022","revision":1.0,"subRevision":0.0,"description":null,"activeFlag":"Y","request":null,"endUserPO":null,"price":11656.41,"currency":"INR","documentType":null,"quoteType":"Renewal","type":null,"level":null,"creator":null,"created":"2022-10-21T09:16:12.279Z","updated":"2022-10-21T09:16:12.279Z","expiry":"2022-11-09T00:00:00Z","status":"Active","statusNotes":null,"accountOwner":null,"orders":[],"vendorReference":[{"type":"QuoteId","value":"SG000000080975"}],"salesTeam":null,"salesArea":null,"superSalesArea":null,"lastUpdatedBy":null,"femAmount":0.0,"pomAmount":0.0,"samAmount":0.0,"nsmAmount":0.0,"femPercentage":0.0,"pomPercentage":0.0,"samPercentage":0.0,"nsmPercentage":0.0}]},"error":{"code":0,"messages":[],"isError":false}}
+  const response = {
+    "content": {
+        "details": [
+            {
+                "source": {
+                    "salesOrg": "IN96",
+                    "targetSystem": "R3",
+                    "key": "U100000000011",
+                    "system": "RQ",
+                    "type": null,
+                    "id": "U100000000011"
+                },
+                "published": "2023-01-24T04:35:37.463Z",
+                "reseller": {
+                    "id": "116387",
+                    "isValid": false,
+                    "canEdit": true,
+                    "incumbent": false,
+                    "vendorAccountName": null,
+                    "vendorAccountNumber": {
+                        "text": "7916113",
+                        "isValid": true,
+                        "isMandatory": false,
+                        "isDisplay": true,
+                        "canEdit": false,
+                        "allowedLength": 100000
+                    },
+                    "name": "Ingenius Technologies Pvt. Ltd",
+                    "nameUpper": "INGENIUS TECHNOLOGIES PVT. LTD",
+                    "contact": [
+                        {
+                            "name": {
+                                "text": null,
+                                "isValid": false,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 100000
+                            },
+                            "email": {
+                                "text": "yuvaraj@ingeniusindia.com",
+                                "isValid": true,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 100000
+                            },
+                            "phone": {
+                                "text": "9962190451",
+                                "isValid": true,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 100000
+                            }
+                        }
+                    ],
+                    "address": {
+                        "id": null,
+                        "line1": "OLD #6, NEW # 7 ; 8",
+                        "line2": "SOUTH STREET,, WEST C I TNAGAR,, CHENNAI",
+                        "line3": null,
+                        "city": "CHENNAI",
+                        "state": null,
+                        "postalCode": "600035",
+                        "country": "India",
+                        "county": null,
+                        "countryCode": "IN"
+                    }
+                },
+                "endUser": {
+                    "id": null,
+                    "isValid": false,
+                    "canEdit": true,
+                    "name": {
+                        "text": "LOGITRANS TECHNOLOGY PRIVATE LTD",
+                        "isValid": true,
+                        "isMandatory": true,
+                        "isDisplay": true,
+                        "canEdit": true,
+                        "allowedLength": 40
+                    },
+                    "nameUpper": "LOGITRANS TECHNOLOGY PRIVATE LTD",
+                    "eaNumber": {
+                        "text": "60813216",
+                        "isValid": true,
+                        "isMandatory": false,
+                        "isDisplay": false,
+                        "canEdit": false,
+                        "allowedLength": 100000
+                    },
+                    "contact": [
+                        {
+                            "name": {
+                                "text": "",
+                                "isValid": false,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 40
+                            },
+                            "email": {
+                                "text": "deebhan@logitranstech.net",
+                                "isValid": true,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 120
+                            },
+                            "phone": {
+                                "text": "",
+                                "isValid": false,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 30
+                            }
+                        }
+                    ],
+                    "address": {
+                        "id": null,
+                        "line1": {
+                            "text": "SPL GUINDY HOUSE",
+                            "isValid": true,
+                            "isMandatory": true,
+                            "isDisplay": true,
+                            "canEdit": true,
+                            "allowedLength": 40
+                        },
+                        "line2": {
+                            "text": "95 MOUNT ROAD",
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": true,
+                            "canEdit": true,
+                            "allowedLength": 40
+                        },
+                        "line3": {
+                            "text": "GST ROAD",
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": false,
+                            "canEdit": false,
+                            "allowedLength": 100000
+                        },
+                        "city": {
+                            "text": "CHENNAI",
+                            "isValid": true,
+                            "isMandatory": true,
+                            "isDisplay": true,
+                            "canEdit": true,
+                            "allowedLength": 40
+                        },
+                        "state": null,
+                        "postalCode": {
+                            "text": "600032",
+                            "isValid": true,
+                            "isMandatory": true,
+                            "isDisplay": true,
+                            "canEdit": true,
+                            "allowedLength": 10
+                        },
+                        "country": {
+                            "text": "India",
+                            "isValid": true,
+                            "isMandatory": true,
+                            "isDisplay": true,
+                            "canEdit": false,
+                            "allowedLength": 100000
+                        },
+                        "county": null,
+                        "countryCode": {
+                            "text": "IN",
+                            "isValid": true,
+                            "isMandatory": false,
+                            "isDisplay": false,
+                            "canEdit": false,
+                            "allowedLength": 100000
+                        }
+                    }
+                },
+                "shipTo": null,
+                "alternateIdentifier": null,
+                "vendorSalesRep": null,
+                "vendorSalesAssociate": null,
+                "items": [
+                    {
+                        "id": "1",
+                        "group": null,
+                        "solution": null,
+                        "parent": null,
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "VRT12593M123",
+                                "name": null,
+                                "manufacturer": null,
+                                "manufacturerId": null,
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": "BACKUP EXEC"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "12593-M1-23",
+                                "name": "Veritas Essential Support - technical support (renewal) - for Veritas Backup Exec Agent for Application and Databases - 1 year",
+                                "manufacturer": "Veritas",
+                                "manufacturerId": "11",
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": null
+                            }
+                        ],
+                        "quantity": 4,
+                        "confirmedQuantity": 0,
+                        "contractNumber": null,
+                        "contractType": null,
+                        "license": null,
+                        "references": [],
+                        "status": null,
+                        "statusNotes": null,
+                        "updated": "0001-01-01T00:00:00",
+                        "unitPrice": 11670.38,
+                        "unitCost": 129.5,
+                        "totalPrice": 46681.52,
+                        "unitListPrice": 19415.73,
+                        "unitPriceCurrency": "INR",
+                        "unitCostCurrency": "USD",
+                        "unitListPriceCurrency": "INR",
+                        "extendedListPrice": 0,
+                        "requested": "0001-01-01T00:00:00",
+                        "shippingCondition": null,
+                        "shippingFrom": null,
+                        "businessManager": null,
+                        "divisionManager": null,
+                        "director": null,
+                        "rejectionCode": null,
+                        "rejectionDescription": null,
+                        "femAmount": 0,
+                        "pomAmount": 0,
+                        "samAmount": 0,
+                        "nsmAmount": 0,
+                        "femPercentage": 0,
+                        "pomPercentage": 0,
+                        "samPercentage": 0,
+                        "nsmPercentage": 0,
+                        "agreements": [],
+                        "attributes": [],
+                        "dealRegNumber": null,
+                        "reinstatementFeeCost": null,
+                        "reinstatementFeeSell": null,
+                        "serialNumbers": [
+                            null
+                        ],
+                        "instance": "47750864",
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "39.89"
+                            }
+                        ],
+                        "contract": {
+                            "id": "711440823",
+                            "duration": "1 Year",
+                            "renewedDuration": "1 Year",
+                            "startDate": "2021-12-10T00:00:00Z",
+                            "endDate": "2022-12-09T00:00:00Z",
+                            "newAgreementStartDate": "2022-12-10T00:00:00Z",
+                            "newAgreementEndDate": "2023-12-09T00:00:00Z",
+                            "newUsagePeriodStartDate": null,
+                            "newUsagePeriodEndDate": null,
+                            "supportLevel": null,
+                            "serviceLevel": null,
+                            "usagePeriod": null,
+                            "formattedStartDate": "10-12-2021",
+                            "formattedEndDate": "09-12-2022",
+                            "formattedNewAgreementStartDate": "10-12-2022",
+                            "formattedNewAgreementEndDate": "09-12-2023",
+                            "formattedNewUsagePeriodStartDate": null,
+                            "formattedNewUsagePeriodEndDate": null,
+                            "formattedUsagePeriod": null
+                        },
+                        "tdNumber": null,
+                        "mfrNumber": null,
+                        "shortDescription": null,
+                        "manufacturer": null,
+                        "vendorPartNo": null,
+                        "formattedUpdated": null,
+                        "formattedRequested": null
+                    },
+                    {
+                        "id": "2",
+                        "group": null,
+                        "solution": null,
+                        "parent": null,
+                        "product": [
+                            {
+                                "type": "TECHDATA",
+                                "id": "VRT13811M123",
+                                "name": null,
+                                "manufacturer": null,
+                                "manufacturerId": null,
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": "BACKUP EXEC"
+                            },
+                            {
+                                "type": "MANUFACTURER",
+                                "id": "13811-M1-23",
+                                "name": "Veritas Essential Support - technical support (renewal) - for VERITAS Backup Exec Server Edition - 1 year",
+                                "manufacturer": "Veritas",
+                                "manufacturerId": "11",
+                                "localManufacturer": null,
+                                "classification": null,
+                                "family": null
+                            }
+                        ],
+                        "quantity": 1,
+                        "confirmedQuantity": 0,
+                        "contractNumber": null,
+                        "contractType": null,
+                        "license": null,
+                        "references": [],
+                        "status": null,
+                        "statusNotes": null,
+                        "updated": "0001-01-01T00:00:00",
+                        "unitPrice": 11670.38,
+                        "unitCost": 129.5,
+                        "totalPrice": 11670.38,
+                        "unitListPrice": 19415.73,
+                        "unitPriceCurrency": "INR",
+                        "unitCostCurrency": "USD",
+                        "unitListPriceCurrency": "INR",
+                        "extendedListPrice": 0,
+                        "requested": "0001-01-01T00:00:00",
+                        "shippingCondition": null,
+                        "shippingFrom": null,
+                        "businessManager": null,
+                        "divisionManager": null,
+                        "director": null,
+                        "rejectionCode": null,
+                        "rejectionDescription": null,
+                        "femAmount": 0,
+                        "pomAmount": 0,
+                        "samAmount": 0,
+                        "nsmAmount": 0,
+                        "femPercentage": 0,
+                        "pomPercentage": 0,
+                        "samPercentage": 0,
+                        "nsmPercentage": 0,
+                        "agreements": [],
+                        "attributes": [],
+                        "dealRegNumber": null,
+                        "reinstatementFeeCost": null,
+                        "reinstatementFeeSell": null,
+                        "serialNumbers": [
+                            null
+                        ],
+                        "instance": "47750846",
+                        "discounts": [
+                            {
+                                "type": "Standard",
+                                "value": "39.89"
+                            }
+                        ],
+                        "contract": {
+                            "id": "711440823",
+                            "duration": "1 Year",
+                            "renewedDuration": "1 Year",
+                            "startDate": "2021-12-10T00:00:00Z",
+                            "endDate": "2022-12-09T00:00:00Z",
+                            "newAgreementStartDate": "2022-12-10T00:00:00Z",
+                            "newAgreementEndDate": "2023-12-09T00:00:00Z",
+                            "newUsagePeriodStartDate": null,
+                            "newUsagePeriodEndDate": null,
+                            "supportLevel": null,
+                            "serviceLevel": null,
+                            "usagePeriod": null,
+                            "formattedStartDate": "10-12-2021",
+                            "formattedEndDate": "09-12-2022",
+                            "formattedNewAgreementStartDate": "10-12-2022",
+                            "formattedNewAgreementEndDate": "09-12-2023",
+                            "formattedNewUsagePeriodStartDate": null,
+                            "formattedNewUsagePeriodEndDate": null,
+                            "formattedUsagePeriod": null
+                        },
+                        "tdNumber": null,
+                        "mfrNumber": null,
+                        "shortDescription": null,
+                        "manufacturer": null,
+                        "vendorPartNo": null,
+                        "formattedUpdated": null,
+                        "formattedRequested": null
+                    }
+                ],
+                "attributes": [],
+                "programName": "Corporate Program",
+                "quoteCurrent": false,
+                "firstAvailableOrderDate": "2023-01-24T00:00:00Z",
+                "lastOrderDate": "2023-02-07T00:00:00Z",
+                "statusText": " PriceChangedCustomerMapping",
+                "amountSaved": 0,
+                "linkedRenewals": [],
+                "renewalGroupId": null,
+                "dueDate": "2022-12-09T00:00:00Z",
+                "totalReinstatementFeeCost": null,
+                "totalReinstatementFeeSell": null,
+                "endUserType": "Corporate",
+                "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-veritas.svg",
+                "previousEndUserPO": null,
+                "previousResellerPO": "CHN-PO-2122-129",
+                "isValid": false,
+                "canOrder": false,
+                "canEditQty": false,
+                "canEditResellerPrice": true,
+                "canEditLines": true,
+                "canCopy": true,
+                "customerPO": {
+                    "text": "711440823",
+                    "isValid": true,
+                    "isMandatory": false,
+                    "isDisplay": true,
+                    "canEdit": true,
+                    "allowedLength": 25
+                },
+                "formattedPublished": "24-01-2023",
+                "formattedFirstAvailableOrderDate": "24-01-2023",
+                "formattedLastOrderDate": "07-02-2023",
+                "formattedDueDate": "09-12-2022",
+                "formattedCreated": "24-01-2023",
+                "formattedUpdated": "24-01-2023",
+                "formattedExpiry": "09-12-2022",
+                "revision": 1,
+                "subRevision": 0,
+                "description": null,
+                "activeFlag": "Y",
+                "request": null,
+                "endUserPO": null,
+                "price": 58351.9,
+                "currency": "INR",
+                "documentType": null,
+                "quoteType": "Renewal",
+                "type": null,
+                "level": null,
+                "creator": null,
+                "created": "2023-01-24T04:35:37.463Z",
+                "updated": "2023-01-24T04:35:37.463Z",
+                "expiry": "2022-12-09T00:00:00Z",
+                "status": "Active",
+                "statusNotes": null,
+                "accountOwner": null,
+                "orders": [],
+                "vendorReference": [
+                    {
+                        "type": "QuoteId",
+                        "value": "711440823"
+                    }
+                ],
+                "salesTeam": null,
+                "salesArea": null,
+                "superSalesArea": null,
+                "lastUpdatedBy": null,
+                "femAmount": 0,
+                "pomAmount": 0,
+                "samAmount": 0,
+                "nsmAmount": 0,
+                "femPercentage": 0,
+                "pomPercentage": 0,
+                "samPercentage": 0,
+                "nsmPercentage": 0
+            }
+        ]
+    },
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+}
   res.json(response);
 });
 

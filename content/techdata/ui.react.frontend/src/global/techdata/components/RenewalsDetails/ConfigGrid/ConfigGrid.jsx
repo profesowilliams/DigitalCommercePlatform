@@ -5,12 +5,13 @@ import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
-import { DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
+import { CopyIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
+import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
+import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 
 function GridHeader({ gridProps, data }) {
-  const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] =
-    useState(false);
-  
+  const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] = useState(false);
+  const effects = useRenewalGridState(state => state.effects);   
 
   const downloadXLS = () => {
     try {
@@ -39,9 +40,13 @@ function GridHeader({ gridProps, data }) {
     } catch (error) {
       console.error("error", error);
     }
-    }
+  };
 
-    <button onClick={() => setPDFDownloadableOnDemand(true)}>
+  const openCopyFlyOut = () => {
+    effects.setCustomState({ key: 'showCopyFlyout', value: true });
+  }; 
+
+  <button onClick={() => setPDFDownloadableOnDemand(true)}>
     <span className="separator">{gridProps.pdf || "Export PDF"}</span>
   </button>
 
@@ -51,6 +56,14 @@ function GridHeader({ gridProps, data }) {
         {gridProps.lineItemDetailsLabel}
       </span>
       <div className="cmp-renewal-preview__download">
+        {
+          data?.canCopy && (
+          <button onClick={openCopyFlyOut}>
+            <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) && 'separator'}>
+              <CopyIcon className="cmp-renewal-preview__download--icon"/>Copy
+            </span>
+          </button>
+        )}
         {
           gridProps?.productLines?.showDownloadXLSButton && (
           <button onClick={downloadXLS}>
@@ -70,6 +83,11 @@ function GridHeader({ gridProps, data }) {
           </button>
         )}
       </div>
+      <CopyFlyout 
+        store={useRenewalGridState}
+        copyFlyout={gridProps.copyFlyout}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        />
     </div>
   );
 }
