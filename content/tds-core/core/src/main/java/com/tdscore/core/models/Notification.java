@@ -17,6 +17,7 @@ import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,14 +43,21 @@ public class Notification {
     @Inject
     private ResourceResolver resolver;
 
-    @Self
     private Resource resource;
 
+    private String id;
+
+    @PostConstruct
+    protected void initModel() {
+        id = "notification-" + UUID.randomUUID().toString().split("-", 0)[0];
+        LOG.debug("inside notif");
+    }
     public String getDataJson() {
         try {
             //Create a map of properties we want to expose
             Map<String, Object> analyticsProperties = new HashMap<>();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            resource = request.getResource();
             ValueMap props = resource.adaptTo(ValueMap.class);
             if(props != null) {
                 analyticsProperties.put("@type", resource.getResourceType());
@@ -59,7 +67,6 @@ public class Notification {
                 analyticsProperties.put("dc:description", props.get("message", StringUtils.EMPTY));
                 analyticsProperties.put("xdm:text", props.get("linkLabel", StringUtils.EMPTY));
                 analyticsProperties.put("xdm:linkURL", props.get("linkUrl", StringUtils.EMPTY));
-                String id = UUID.randomUUID().toString().split("-", 0)[0];
                 analyticsProperties.put("parentId", id);
 
                 String jsonString = String.format("{\"%s\":%s}",
@@ -73,5 +80,9 @@ public class Notification {
         }
 
         return null;
+    }
+
+    public String getId() {
+        return id;
     }
 }

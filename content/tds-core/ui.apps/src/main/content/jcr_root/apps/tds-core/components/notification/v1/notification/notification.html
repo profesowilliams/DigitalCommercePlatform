@@ -2,8 +2,17 @@
     data-sly-use.model="com.tdscore.core.models.Notification"
     class="cmp-notification"
     data-sly-test=${properties.message}
-    data-cmp-data-layer="${model.dataJson}"
 >
+    <script data-sly-test.dataLayerEnabled="${model.dataJson}">
+          window.adobeDataLayer = window.adobeDataLayer || [];
+          adobeDataLayer.push({
+              notification: JSON.parse("${model.dataJson @ context='scriptString'}"),
+              event:'cmp:show',
+              eventInfo: {
+                  path: 'notification.${model.id @ context="scriptString"}'
+              }
+          });
+    </script>
     <div class="cmp-notification-message-container" data-cmp-icon="${properties.icon}" data-cmp-icon-dam="${properties.iconUrl}">
         <span class="cmp-notification_icon" ></span>
         <span class="cmp-notification_text">${properties.message}</span>    
@@ -14,7 +23,7 @@
         <span data-sly-test="${properties.linkLabel}" class="cmp-notification_text">${properties.linkLabel}</span>
     </a>
     <sly data-sly-test="${properties.closeNotification}">
-		<a class="close-notification">
+		<a class="close-notification" data-cmp-data-layer="${model.dataJson}" data-cmp-id="${model.id}">
         </a>
 	</sly>
 </div>
