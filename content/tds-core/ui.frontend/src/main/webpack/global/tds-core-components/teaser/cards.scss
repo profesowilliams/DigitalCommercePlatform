@@ -29,7 +29,7 @@
 
 .cmp-teaser,
 .dp-teaser {
-	color: map-get($color-palette,"teal");
+	color: map-get($color-palette, "charcoal");
 	
 	&__card {
 		padding: 3.18rem 0.5rem;
@@ -51,7 +51,6 @@
 			background-color: get-color(brand-white);
 			-webkit-background-clip: border-box;
 			background-clip: border-box;
-			color: get-color(text-dark-grey) !important;
 			cursor: default;
 
 			@include mobile {

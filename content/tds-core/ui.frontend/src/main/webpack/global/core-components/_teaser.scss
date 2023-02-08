@@ -1,4 +1,6 @@
 .cmp-teaser--default {
+    color: map-get($color-palette, "charcoal");
+
     .cmp-teaser__content {
         float: left;
     }
@@ -6,12 +8,6 @@
     .cmp-teaser__title {
         font-family: Asar, Georgia, Times New Roman, Times, serif;
         margin: 0.5em 0;
-    }
-    .cmp-teaser__title-link {
-        color: #202020;
-    }
-    .cmp-teaser__title-link:after {
-        content: none;
     }
     .cmp-teaser__description {
         font-size: 18px;

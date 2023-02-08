@@ -37,6 +37,7 @@
     }
 
     .cmp-teaser {
+        color: map-get($color-palette, "charcoal");
         position: relative;
         @include mobile {
             height: 100%;
