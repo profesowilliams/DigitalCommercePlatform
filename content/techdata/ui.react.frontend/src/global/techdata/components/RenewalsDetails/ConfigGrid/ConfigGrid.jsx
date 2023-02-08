@@ -43,7 +43,7 @@ function GridHeader({ gridProps, data }) {
   };
 
   const openCopyFlyOut = () => {
-    effects.setCustomState({ key: 'showCopyFlyout', value: true });
+    effects.setCustomState({ key: 'copyFlyout', value: { data, show: true } });
   }; 
 
   <button onClick={() => setPDFDownloadableOnDemand(true)}>
