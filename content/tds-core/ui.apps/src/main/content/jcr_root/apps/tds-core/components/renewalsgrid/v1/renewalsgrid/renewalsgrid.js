@@ -351,6 +351,10 @@ use(['../common/utils.js'], function(utils) {
         copyFlyout.quoteExistsError = properties["quoteExistsError"];
     }
 
+    if (properties && properties["timeoutError"]) {
+        copyFlyout.timeoutError = properties["timeoutError"];
+    }
+
     if (properties && properties["copySuccessMessage"]) {
         copyFlyout.copySuccessMessage = properties["copySuccessMessage"];
     }

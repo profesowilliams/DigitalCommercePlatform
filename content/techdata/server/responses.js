@@ -4427,8 +4427,20 @@ const renewalSearchResponse = {
     }
 };
 
+const failedResponse = {
+    "content": null,
+    "error": {
+        "code": 500,
+        "messages": [
+        "UserId : 702936 for TraceId : NA Something went wrong"
+        ],
+        "isError": true
+    }
+}
+
 module.exports = {
 catalogResponse: catalogServiceResponse,
 shortResponse: shortCatalogServiceResponse,
 renewalSearchResponse,
+failedResponse,
 };

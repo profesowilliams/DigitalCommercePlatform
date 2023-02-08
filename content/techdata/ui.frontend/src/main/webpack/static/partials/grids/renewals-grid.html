@@ -239,12 +239,13 @@
       permissionsWarning: "Ensure you have the appropriate permissions before copying this quote to another customer. It contains sensitive contact and commercial information. If you have any doubt please speak with you manager.",
       unknownError: "Unknown error has occurred. Please try again.",
       quoteExistsError: "Quote exists, please try again with another account.",
+      timeoutError: "Request timed out. Please try again.",
       copySuccessMessage: "Copy quote successfully requested. You will receive an email when new quote is ready.",
       copyFailureMessage: "Your quote failed to copy. Open a ticket for further investigation.",
       button: "Copy",
       accountLookUpEndpoint:"http://localhost:3000/ui-renewal/v1/AccountLookUp?resellerId={reseller-id}",
-      checkQuoteExitsforResellerEndpoint:"http://localhost:3000/ui-renewal/v1/Search?ResellerId={reseller-id}&WithPaginationInfo=true&ContractID={agreement-number}",
-      copyQuoteEndpoint:"http://localhost:3000/ui-renewal/v1/CopyQuote?quoteId={quote-id}&resellerId={reseller-id}",
+      checkQuoteExitsforResellerEndpoint:"http://localhost:3000/ui-renewal/v1/SearchCheck?ResellerId={reseller-id}&WithPaginationInfo=true&ContractID={agreement-number}",
+      copyQuoteEndpoint:"http://localhost:3000/ui-renewal/v1/CopyQuote",
     }
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);

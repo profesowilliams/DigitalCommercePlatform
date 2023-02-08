@@ -28,12 +28,14 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
   const closeFlyout = () => effects.setCustomState({ key: 'copyFlyout', value: {show:false} });
 
   useEffect(() => {
-    setSelectedQuote(null);
-    setAccountNumber('');
-    setQuotes([]);
-    setEnableCopy(false);
-    setErrorMessage('');
-  }, [copyFlyoutConfig?.data.agreementNumber]);
+    if (!copyFlyoutConfig?.show) {
+      setSelectedQuote(null);
+      setAccountNumber('');
+      setQuotes([]);
+      setEnableCopy(false);
+      setErrorMessage('');
+    }
+  }, [copyFlyoutConfig?.show]);
 
   const handleResellerIdChange = async (event) => {
     const resellerId = event.target.value;
@@ -44,19 +46,26 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
         resellerId,
         copyFlyout.accountLookUpEndpoint
       );
-      setQuotes(response);
+      if (response.isError) {
+        setErrorMessage(copyFlyout.unknownError);
+        setQuotes([]);
+      }
+      else {
+        setQuotes(response);
+      }
     }
   };
 
   const handleQuoteSelectedChange = async (event, newInput) => {
     const quoteExists = await checkQuoteExitsforReseller(
-      newInput.resellerId,
+      newInput.accountNumber,
       copyFlyoutConfig?.data.agreementNumber,
       copyFlyout.checkQuoteExitsforResellerEndpoint
     );
     setEnableCopy(!quoteExists);
 
     if (quoteExists) {
+      setSelectedQuote(null);
       setErrorMessage(copyFlyout.quoteExistsError);
     }
     else {
@@ -66,17 +75,25 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
   };
 
   const handleCopy = async () => {
+    if (!enableCopy) {
+      return;
+    }
+
     setIsLoading(true);
+
     const response = await copyQuote(
-      selectedQuote.quoteId,
-      selectedQuote.resellerId,
+      copyFlyoutConfig?.data.source.id,
+      selectedQuote.accountNumber,
       copyFlyout.copyQuoteEndpoint
     );
     setIsLoading(false);
 
-    let toaster;
+    let toaster = null;
 
-    if(response.isError) {
+    if (response.isError && response.code === 408) {
+      setErrorMessage(getDictionaryValueOrKey(copyFlyout.timeoutError));
+    }
+    else if(response.isError) {
       toaster = {
         isOpen: true,
         origin: 'fromUpdate',
@@ -99,8 +116,10 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
       };
     }
 
-    closeFlyout();
-    effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+    if (toaster) {
+      closeFlyout();
+      effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+    }
   };
 
   const onCloseToaster = () => {

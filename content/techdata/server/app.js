@@ -5110,31 +5110,28 @@ app.post("/ui-renewal/v1/order", function (req, res) {
 });
 
 app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
-  console.log("AccountLookUp");
+  const { resellerId } = req.query;
   const success = {
     content: [
       {
         accountNumber: "123456",
-        name: "Tech Data1",
+        accountName: "Tech Data1",
         city: "Clearwater",
       },
       {
-        quoteId: "123457",
-        resellerId: "123457",
         accountNumber: "123457",
         accountName: "Tech Data2",
-        title: "Tech Data2",
-        address: "1235 Main Street",
-        city: "Miami",
+        city: "San Antonio",
       },
       {
-        quoteId: "123458",
-        resellerId: "123458",
         accountNumber: "123458",
         accountName: "Tech Data3",
-        title: "Tech Data3",
-        address: "1236 Main Street",
-        city: "Orlando",
+        city: "San Diego",
+      },
+      {
+        accountNumber: "123459",
+        accountName: "Tech Data4",
+        city: "San Francisco",
       },
     ],
     error: {
@@ -5144,13 +5141,43 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
     },
   };
 
-  return res.status(200).json(success);
+  const fail = {"content":null,"error":{"code":400,"messages":["Error connecting to http://app-customer/v1/Lookup. Reported an error: BadRequest."],"isError":true}}
+
+  return res.status(200).json(resellerId.includes("err") ? fail : success);
+});
+
+app.get("/ui-renewal/v1/SearchCheck", (req, res) => {
+  const { ResellerId } = req.query;
+  const response = mockResponses.renewalSearchResponse;
+
+  console.log("SearchCheck", ResellerId, req.query);
+
+  const empty = {
+    "content": {
+      "totalItems": 0,
+      "pageCount": 0,
+      "pageNumber": 0,
+      "pageSize": 0,
+      "items": []
+    },
+    "error": {
+      "code": 0,
+      "messages": [],
+      "isError": false
+    }
+  }
+
+  //mockResponses.failedResponse
+
+  return res.status(200).json(ResellerId === "123456" ? empty : response);
 });
 
 app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
+  const { QuoteId, ResellerId } = req.body;
+  console.log("CopyQuote", QuoteId, ResellerId, req.body);
   const success = {
     content: {
-      quoteExists: true,
+      status: "OK",
     },
     error: {
       code: 0,
@@ -5158,7 +5185,25 @@ app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
       isError: false,
     },
   };
-  return res.status(200).json(success);
+
+  const notFound = {
+    "content": {
+      "status": "NotOK"
+    },
+    "error": {
+      "code": 404,
+      "messages": [
+          "Reseller not found"
+      ],
+      "isError": true
+    }
+  };
+
+  //mockResponses.failedResponse
+
+  setTimeout(() => {
+    return res.status(200).json(success);
+  }, 1000);
 });
 
 app.get("/ui-commerce/v2/orders", (req, res) => {
