@@ -68,23 +68,21 @@
                 const parent = c.parentNode;
                 const container = parent.parentNode;
                 c.addEventListener('click', () => {
-                    container.remove()
+                    var closeElementDataAttr = c.getAttribute("data-cmp-data-layer");
+                    var compId = c.getAttribute("data-cmp-id");
+                    if(closeElementDataAttr) {
+                        window.adobeDataLayer = window.adobeDataLayer || [];
+                        adobeDataLayer.push({
+                          notification: JSON.parse(closeElementDataAttr),
+                          event:'cmp:hide',
+                          eventInfo: {
+                              path: 'notification.' + compId
+                          }
+                      });
+                  }
+                container.remove();
                 }, false);
             })
-            var closeElement = document.getElementsByClassName(CLASS_NOTIFICATION_CLOSE_BUTTON);
-            if(closeElement && closeElement[0]) {
-                var closeElementDataAttr = closeElement[0].getAttribute("data-cmp-data-layer");
-                var compId = closeElement[0].getAttribute("data-cmp-id");
-                if(closeElementDataAttr) {
-                    window.adobeDataLayer = window.adobeDataLayer || [];
-                    adobeDataLayer.push({
-                      notification: JSON.parse(closeElementDataAttr),
-                      event:'cmp:hide',
-                      eventInfo: {
-                          path: 'notification.' + compId
-                      }
-                  });
-              }
-          }
+
     });
 })();
