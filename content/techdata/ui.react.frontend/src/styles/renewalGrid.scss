@@ -943,8 +943,17 @@ svg {
   }
   &__content{
     padding: 0 1.5rem;
+    height: 100%;
     &-description {
       margin: 2.5rem 0;
+    }
+    &-search {
+      height: 100%;
+      position: relative;
+      &:last-child {
+        position: absolute;
+        bottom: 274px;
+      }
     }
     &--error {
       color: $td-error-red;
@@ -952,8 +961,16 @@ svg {
     }
     .cmp-autocomplete__button-section, .MuiInput-root {
       padding-right: 0;
+      .cmp-button__autocomplete-search {
+        position: relative;
+        svg {
+          position: absolute;
+          right: 0;
+        }
+      }
     }
     .cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote {
+      margin-top: 30px;
       background-color: $td-neutral-gray;
 
       &__label {
