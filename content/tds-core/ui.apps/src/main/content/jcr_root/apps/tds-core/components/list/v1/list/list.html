@@ -22,7 +22,9 @@
     id="${component.id}"
     data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}"
     class="cmp-list"
+    data-cmp-data-layer="${list.data.json}"
     style="color: ${properties.fontColor @ context='styleToken'}">
-    <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"></li>
+    <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"
+        data-cmp-data-layer="${item.data.json}" ></li>
 </ul>
 <sly data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cmp-list'}"></sly>

@@ -235,6 +235,18 @@
           "click_url": dataObject['xdm:linkURL'],
         });
         break;
+       case 'item':
+       case 'articlelist':
+           window.dataLayer.push({
+             "event": "click",
+             "clickInfo": {
+                "category": "list",
+                "title": dataObject['dc:title'],
+                "url": dataObject['xdm:linkURL'],
+                "type": "list"
+              }
+           });
+           break;
       default:
         let dlObject = {
           "event": "click",

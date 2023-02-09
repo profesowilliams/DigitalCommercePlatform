@@ -49,7 +49,10 @@
     data-sly-use.template="core/wcm/components/commons/v1/templates.html"
     data-sly-use.itemTemplate="item.html"
     data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}"
+    id="${component.id}"
+    data-cmp-data-layer="${list.data.json}"
     class="cmp-list">
-    <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"></li>
+    <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"
+        data-cmp-data-layer="${list.data.json}"></li>
 </ul>
 <sly data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cmp-list'}"></sly>

@@ -1,6 +1,6 @@
 <template data-sly-template.item="${@ list, item}">
     <article>
-        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}" data-cmp-clickable="true">
 
             <span class="cmp-list__item-title">${item.title}</span>
             <span data-sly-test="${list.showModificationDate}"
@@ -11,7 +11,7 @@
 </template>
 <template data-sly-template.article="${@ list, item}">
     <article data-sly-use.tmpl="${'articlelist.js' @ item=item}">
-        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}" data-cmp-clickable="true">
             <sly data-sly-test=${tmpl.imagePath}>
                 <figure class="cmp-image__image-figure">
                     <img class="cmp-image__image" src=${tmpl.imagePath}>
@@ -27,7 +27,7 @@
 </template>
 <template data-sly-template.articleListView="${@ list, item}">
     <article data-sly-use.tmpl="${'articlelist.js' @ item=item}">
-        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}">
+        <a class="cmp-list__item-link" href="${item.URL}" data-sly-unwrap="${!list.linkItems}" data-cmp-clickable="true">
             <sly data-sly-test=${tmpl.imagePath}>
                 <figure class="cmp-image__image-figure">
                     <img class="cmp-image__image" src=${tmpl.imagePath}>
