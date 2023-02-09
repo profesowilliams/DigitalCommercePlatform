@@ -14,9 +14,19 @@ export const checkQuoteExitsforReseller = async (
   agreementNumber,
   endpoint
 ) => {
-  const response = await get(
+  let response = await get(
     endpoint.replace('{reseller-id}', resellerId).replace('{agreement-number}', agreementNumber)
   );
+
+  if (response.status === 204) {
+    response = {
+        data: {
+            content: {
+                totalItems: 0
+            }
+        }
+    };
+  }
   return response.data.content.totalItems > 0;
 };
 

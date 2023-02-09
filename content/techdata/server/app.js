@@ -5169,7 +5169,7 @@ app.get("/ui-renewal/v1/SearchCheck", (req, res) => {
 
   //mockResponses.failedResponse
 
-  return res.status(200).json(ResellerId === "123456" ? empty : response);
+  return res.status(ResellerId === "123456" ? 204 : 200).json(ResellerId === "123456" ? empty : response);
 });
 
 app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
@@ -5203,7 +5203,7 @@ app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(success);
-  }, 1000);
+  }, 10000);
 });
 
 app.get("/ui-commerce/v2/orders", (req, res) => {
