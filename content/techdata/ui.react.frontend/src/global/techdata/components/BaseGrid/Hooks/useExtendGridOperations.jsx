@@ -12,6 +12,9 @@ export default function useExtendGridOperations(store) {
     const isOnSearchAction = useRef(false);
     const effects = store(state => state.effects);
 
+    function resetGrid(){
+        if (resetCallback.current) resetCallback.current();
+    }
 
     function onAfterGridInit(config) {
         resetCallback.current = config.gridResetRequest;
@@ -32,5 +35,5 @@ export default function useExtendGridOperations(store) {
         return {onFiltersClear, onSearchAction:isOnSearchAction.current};
     }
 
-    return { onAfterGridInit, onQueryChanged, handleQueryFlowLogic };
+    return { onAfterGridInit, onQueryChanged, handleQueryFlowLogic, resetGrid };
 }

@@ -52,7 +52,7 @@ function ToolTip() {
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function RenewalsGrid(props) {
-  const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic } = useExtendGridOperations(useRenewalGridState);
+  const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic, resetGrid } = useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
@@ -350,7 +350,8 @@ function RenewalsGrid(props) {
       <CopyFlyout 
         store={useRenewalGridState}
         copyFlyout={gridConfig.copyFlyout}
-        subheaderReference={document.querySelector('.subheader > div > div')} />
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        resetGrid={resetGrid} />
     </section>
   );
 }

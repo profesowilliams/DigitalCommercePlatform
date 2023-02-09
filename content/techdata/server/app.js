@@ -5203,7 +5203,7 @@ app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(success);
-  }, 10000);
+  }, 1000);
 });
 
 app.get("/ui-commerce/v2/orders", (req, res) => {

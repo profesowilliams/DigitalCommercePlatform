@@ -950,10 +950,10 @@ svg {
     &-search {
       height: 100%;
       position: relative;
-      &:last-child {
+      /*&:last-child {
         position: absolute;
         bottom: 274px;
-      }
+      }*/
     }
     &--error {
       color: $td-error-red;

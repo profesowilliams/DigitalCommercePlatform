@@ -11,7 +11,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { QuoteDetails } from './QuoteDetails';
 import { checkQuoteExitsforReseller, copyQuote, resellerLookUp } from './api';
 
-function CopyFlyout({ store, copyFlyout, subheaderReference }) {
+function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
   const copyFlyoutConfig = store((st) => st.copyFlyout);
   const effects = store((st) => st.effects);
   const [accountNumber, setAccountNumber] = useState('');
@@ -114,6 +114,8 @@ function CopyFlyout({ store, copyFlyout, subheaderReference }) {
           copyFlyout.copySuccessMessage
         ),
       };
+
+      resetGrid();
     }
 
     if (toaster) {
