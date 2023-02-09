@@ -27,8 +27,6 @@ use(function () {
       }
   }
 
-
-
   return {
     dataLayerJson: jsonObject.toString()
   };

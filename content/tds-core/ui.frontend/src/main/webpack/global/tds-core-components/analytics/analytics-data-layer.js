@@ -136,65 +136,100 @@
     }
   }
 
+  function getComponentType(componentString) {
+    return componentString?.match(/\/([^\/]+)\/?$/)[1]?.toLowerCase();
+  }
+
   function pageShownHandler(event) {
     const dataObject = getDataObjectHelper(event, {
       '@type': window.adobeDataLayer.getState(event.eventInfo.path)['@type'],
     });
+    let dataLayerObject = {};
     if (dataObject != null) {
-      /**@type String */
-      let errorCode = dataObject['repo:path'];
-      const errorName = dataObject['dc:title'];
-      const pathnamePage = window.location.pathname;
-      const errorObject = setErrorFlag(errorCode);
-      const flagError = errorObject.flagError;
-      const url = window.location.href;
-      const server = window.location.hostname;
-      
-      let categoryObject = { pageType: ''};
-      const language = dataObject['xdm:language'];
-      const flagLanguage = setFlagHomeLanguagePage(language, pathnamePage);
-      const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
-      const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
-      const pageInfo = cmpShowAdobeDataLayer.page[pageObjectName];
-      const pageType = pageInfo['xdm:pageType'];
-      const siteSectionName = [];
-      pathnamePage.split('/').forEach((item, index) => index > 0 && siteSectionName.push(item));
-      const returnObject  = getCountry(siteSectionName, language, flagLanguage);
-      const country = returnObject.country;
-      const countryIndex = returnObject.index;
-      const pageName = setPageName(siteSectionName, countryIndex, flagLanguage, pageType);
-      const pageCurrency = pageInfo['xdm:currency'];
-      let cont = 0;
-      siteSectionName.forEach((siteSection, index) => {
-        if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
-          categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
-        }
-      });
-      categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
-      categoryObject.pageType = pageType;
-      const dataLayerObject = {
-       page: {
-          pageInfo: {
-            pageName: pageName.substring(1), // pull from ACDL
-            url: url, // pull from window.location
-            server: server, // pull from window.location
-            country: country,  // pull from ACDL
-            language: language, // pull from ACDL
-            currencyCode: pageCurrency  // pull from ACDL
-          },
-          category: categoryObject,
-          errorDetails: {
-            errorCode: flagError ? errorCode : '',
-            errorName: flagError ? errorName : ''
-          },
-          visitor: {
-            ecID: userIsLoggedIn && userData?.id ? userData.id : null,
-            sapID: userIsLoggedIn && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-            loginStatus: userIsLoggedIn ? "Logged in" : "Logged out"
+      const componentType = getComponentType(dataObject['@type']);
+      if (componentType === 'page') {
+        // Handle page view show event
+        let errorCode = dataObject['repo:path'];
+        const errorName = dataObject['dc:title'];
+        const pathnamePage = window.location.pathname;
+        const errorObject = setErrorFlag(errorCode);
+        const flagError = errorObject.flagError;
+        const url = window.location.href;
+        const server = window.location.hostname;
+
+        let categoryObject = { pageType: '' };
+        const language = dataObject['xdm:language'];
+        const flagLanguage = setFlagHomeLanguagePage(language, pathnamePage);
+        const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
+        const pageObjectName = Object.keys(cmpShowAdobeDataLayer.page)[0];
+        const pageInfo = cmpShowAdobeDataLayer.page[pageObjectName];
+        const pageType = pageInfo['xdm:pageType'];
+        const siteSectionName = [];
+        pathnamePage.split('/').forEach((item, index) => index > 0 && siteSectionName.push(item));
+        const returnObject = getCountry(siteSectionName, language, flagLanguage);
+        const country = returnObject.country;
+        const countryIndex = returnObject.index;
+        const pageName = setPageName(siteSectionName, countryIndex, flagLanguage, pageType);
+        const pageCurrency = pageInfo['xdm:currency'];
+        let cont = 0;
+        siteSectionName.forEach((siteSection, index) => {
+          if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
+            categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
           }
-        },
-      };
-      window.dataLayer.push({event: "pageView",page: dataLayerObject.page});
+        });
+        categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
+        categoryObject.pageType = pageType;
+        dataLayerObject = {
+          page: {
+            pageInfo: {
+              pageName: pageName.substring(1), // pull from ACDL
+              url: url, // pull from window.location
+              server: server, // pull from window.location
+              country: country,  // pull from ACDL
+              language: language, // pull from ACDL
+              currencyCode: pageCurrency  // pull from ACDL
+            },
+            category: categoryObject,
+            errorDetails: {
+              errorCode: flagError ? errorCode : '',
+              errorName: flagError ? errorName : ''
+            },
+            visitor: {
+              ecID: userIsLoggedIn && userData?.id ? userData.id : null,
+              sapID: userIsLoggedIn && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+              loginStatus: userIsLoggedIn ? "Logged in" : "Logged out"
+            }
+          },
+        };
+        window.dataLayer.push({ event: "pageView", page: dataLayerObject.page });
+      } else {
+        // Handle all other component show events here
+        switch (componentType) {
+          case 'item':
+            if (dataObject['@type'].includes('alertcarousel')) {
+              let targetObject = window.adobeDataLayer.getState(event.eventInfo.path);
+              dataLayerObject = {
+                event: "show",
+                title: targetObject['dc:title'],
+                eventInfo: event.eventInfo
+              };
+            } else {
+              // Some other item type
+              dataLayerObject = {
+                event: "show",
+                eventInfo: event.eventInfo
+              };
+            }
+            break;
+          default:
+            dataLayerObject = {
+              event: "show",
+              eventInfo: event.eventInfo
+            };
+            break;
+        }
+        window.dataLayer.push(dataLayerObject);
+      }
       window.adobeDataLayer.push(dataLayerObject);
     }
   }
@@ -204,7 +239,7 @@
     const dataObject = getDataObjectHelper(event, {
       '@type': typeString,
     });
-    const componentType = typeString.match(/\/([^\/]+)\/?$/)[1].toLowerCase();
+    const componentType = getComponentType(typeString);
 
     switch (componentType) {
       case 'button':

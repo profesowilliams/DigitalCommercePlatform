@@ -11,8 +11,7 @@
      id="${component.id}"
      data-cmp-data-layer="${dataLayer.dataLayerJson}"
 	   data-sly-use.dataLayer="${'teaser.js' @ data=teaser.data.json, text=text}"
-     class="cmp-teaser${!wcmmode.disabled && teaser.imageResource ? ' cq-dd-image' : ''}"
->
+     class="cmp-teaser${!wcmmode.disabled && teaser.imageResource ? ' cq-dd-image' : ''}">
     <sly data-sly-call="${imageTemplate.image @ teaser=teaser}"></sly>
 
     <div class="cmp-teaser__content"
