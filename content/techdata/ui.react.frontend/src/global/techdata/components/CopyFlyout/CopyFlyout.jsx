@@ -108,14 +108,14 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       toaster = {
         isOpen: true,
         origin: 'fromUpdate',
-        isAutoClose: false,
+        isAutoClose: true,
         isSuccess: true,
         message: getDictionaryValueOrKey(
           copyFlyout.copySuccessMessage
         ),
       };
 
-      resetGrid();
+      resetGrid && resetGrid();
     }
 
     if (toaster) {
@@ -225,16 +225,19 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
             {selectedQuote && (
               <>
                 <QuoteDetails quote={selectedQuote} labels={copyFlyout} />
-
-                <div>
-                  {copyFlyout.permissionsWarning}
-                </div>
               </>
             )}
 
           </div>
         </section>
         <section className="cmp-renewals-copy-flyout__footer">
+          {selectedQuote && (
+            <>
+              <div className="cmp-renewals-copy-flyout__footer__warning">
+                {copyFlyout.permissionsWarning}
+              </div>
+            </>
+          )}
           <button
             className={`cmp-renewals-copy-flyout__footer-button ${enableCopy ? 'cmp-renewals-copy-flyout__footer-button--enabled' : ''}`}
             enabled={!enableCopy}

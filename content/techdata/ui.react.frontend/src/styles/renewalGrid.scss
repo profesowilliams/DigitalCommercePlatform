@@ -943,17 +943,11 @@ svg {
   }
   &__content{
     padding: 0 1.5rem;
-    height: 100%;
     &-description {
       margin: 2.5rem 0;
     }
     &-search {
-      height: 100%;
       position: relative;
-      /*&:last-child {
-        position: absolute;
-        bottom: 274px;
-      }*/
     }
     &--error {
       color: $td-error-red;
@@ -979,6 +973,11 @@ svg {
     }
   }
   &__footer {
+    .cmp-renewals-copy-flyout__footer__warning {
+      position: absolute;
+      bottom: 79px;
+      padding: 0 1.5rem;
+    }
     button {
       display: block;
       position: absolute;
