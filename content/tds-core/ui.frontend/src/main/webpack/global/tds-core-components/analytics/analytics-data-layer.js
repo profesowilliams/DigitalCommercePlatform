@@ -252,6 +252,7 @@
         });
         break;
       case 'alertcarousel':
+      case 'carousel':
         const shownItem = window.adobeDataLayer.getState(`component.${dataObject.shownItems[0]}`);
         window.dataLayer.push({
           "event": "click",

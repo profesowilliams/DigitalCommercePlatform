@@ -14,7 +14,7 @@
       data-cmp-data-layer="${item.data.json}" data-cmp-hook-carousel="item"></div>
     <div class="cmp-carousel-slide">
       <div class="cmp-carousel__actions">
-        <button class="cmp-carousel__action cmp-carousel__action--previous" type="button" aria-label="Previous"
+        <button class="cmp-carousel__action cmp-carousel__action--previous" data-cmp-clickable type="button" aria-label="Previous"
           data-cmp-hook-carousel="previous">
           <span class="cmp-carousel__action-icon"></span>
           <span class="cmp-carousel__action-text">Previous</span>
@@ -23,7 +23,7 @@
           class="cmp-carousel__indicators dp-carousel__nav dp-carousel__nav-labels">
           <sly data-sly-repeat.item="${carousel.items}">
             <a role="tab" aria-controls="${carousel.id}-item-${itemList.index}"
-              aria-label="${'Slide {0}' @ format=[itemList.count], i18n}" data-cmp-hook-carousel="indicator"
+              aria-label="${'Slide {0}' @ format=[itemList.count], i18n}" data-cmp-clickable data-cmp-hook-carousel="indicator"
               class="dp-carousel__nav-label ${properties.navigationColor} ${properties.navigationSize}${itemList.first ? ' cmp-carousel__indicator--active' : ''}">
               <span data-sly-test="${!itemList.first}" class="dp-carousel__nav-label-separator">|</span>
               ${item.title}
@@ -31,7 +31,7 @@
           </sly>
         </div>
         <button class="cmp-carousel__action cmp-carousel__action--next" type="button" aria-label="Next"
-          data-cmp-hook-carousel="next">
+          data-cmp-hook-carousel="next" data-cmp-clickable>
           <span class="cmp-carousel__action-icon"></span>
           <span class="cmp-carousel__action-text">Next</span>
         </button>
