@@ -13,7 +13,6 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
       <>
         <span
           className="cmp-renewals-copy-flyout__content-search__quote--highlighted"
-          style={{ backgroundColor: 'yellow' }}
         >
           {currentlyTypedWord}
         </span>

@@ -3,7 +3,7 @@
     jcr:primaryType="nt:unstructured"
     jcr:title="Hero"
     sling:resourceType="cq/gui/components/authoring/dialog"
-    extraClientlibs="[core.wcm.components.teaser.v1.editor,tds.authoring.components.editor.colorswatches]"
+    extraClientlibs="[core.wcm.components.teaser.v1.editor,tds.authoring.components.editor.colorswatches,tds.authoring.components.hero]"
     helpPath="https://www.adobe.com/go/aem_cmp_teaser_v1"
     trackingFeature="core-components:teaser:v1">
     <content
@@ -28,6 +28,7 @@
                                             <actions
                                                 jcr:primaryType="nt:unstructured">
                                                 <field
+                                                    granite:class="cmp-teaser__editor-action cmp-hero__editor-action"
                                                     jcr:primaryType="nt:unstructured">
                                                     <items jcr:primaryType="nt:unstructured">
                                                         <id
