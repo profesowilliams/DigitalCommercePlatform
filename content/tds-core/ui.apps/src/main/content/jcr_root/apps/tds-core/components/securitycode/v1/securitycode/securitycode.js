@@ -12,7 +12,6 @@
   const dataset = document.querySelector('[data-cmp-security-code]');
   const {cmpSecurityCode, cmpSecurityCodeEnabled} = dataset.dataset;
   let flagSubmitCode = false;
-  disableScrolling();
   inputs.forEach(input =>{
     input.addEventListener('keydown', function(e) {
       input.value = null;
@@ -47,20 +46,9 @@
     const formatValue = arrayString.replace(/,/g, '');
     if (formatValue === cmpSecurityCode) {
       console.log(true);
-      enableScrolling();
     } else {
       console.log(false);
     }
-  }
-
-  function disableScrolling(){
-      var x=window.scrollX;
-      var y=window.scrollY;
-      window.onscroll=function(){window.scrollTo(x, y);};
-  }
-
-  function enableScrolling(){
-      window.onscroll=function(){};
   }
 
   function focusNextElement() {

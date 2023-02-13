@@ -195,12 +195,24 @@
   function closeModal() {
     const tempModal = document.getElementsByClassName(CLASS_MODAL)[0];
     tempModal.style.display = 'none';
+    enableScrolling();
   }
 
   function hideModal(modals) {
     for (let element of modals) {
       element.style["display"] = "none";
     }
+    enableScrolling();
+  }
+
+  function disableScrolling(){
+    var x=window.scrollX;
+    var y=window.scrollY;
+    window.onscroll=function(){window.scrollTo(x, y);};
+  }
+
+  function enableScrolling(){
+    window.onscroll=function(){};
   }
 
   function handlerModalEnable(modals) {
@@ -209,6 +221,7 @@
           for (let element of modals) {
             openModal(element);
           }
+          disableScrolling();
       } else {
         hideModal(modals);
       }
