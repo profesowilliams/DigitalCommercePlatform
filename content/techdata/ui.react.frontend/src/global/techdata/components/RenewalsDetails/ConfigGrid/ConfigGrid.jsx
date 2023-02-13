@@ -43,7 +43,8 @@ function GridHeader({ gridProps, data }) {
   };
 
   const openCopyFlyOut = () => {
-    effects.setCustomState({ key: 'copyFlyout', value: { data, show: true } });
+    const flyoutData = {...data, agreementNumber: data?.items[0]?.contract?.id};
+    effects.setCustomState({ key: 'copyFlyout', value: { data: flyoutData, show: true } });
   }; 
 
   <button onClick={() => setPDFDownloadableOnDemand(true)}>
