@@ -1,4 +1,4 @@
 
 #base=css
 
-hero.css
+hero.less
