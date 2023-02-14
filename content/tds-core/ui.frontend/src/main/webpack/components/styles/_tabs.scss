@@ -196,7 +196,7 @@
     .cmp-tabs__tab {
       background: $color-foreground;
       border-radius: 50%;
-      color: map-get($color-map, "charcoal");
+      color: map-get($color-palette, "charcoal");
       font-weight: $font-weight-bold;
       height: rem(60px);
       line-height: rem(60px);
