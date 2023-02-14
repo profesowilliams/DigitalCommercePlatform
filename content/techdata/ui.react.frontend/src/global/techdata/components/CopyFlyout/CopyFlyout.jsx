@@ -3,7 +3,6 @@ import {
   DismissFilledIcon,
   LoaderIcon,
   SearchIcon,
-  WarningIcon,
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Autocomplete, Button, TextField } from '@mui/material';
@@ -98,7 +97,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       toaster = {
         isOpen: true,
         origin: 'fromUpdate',
-        isAutoClose: true,
+        isAutoClose: false,
         isSuccess: false,
         message: getDictionaryValueOrKey(
           copyFlyout.copyFailureMessage
@@ -233,12 +232,11 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
         </section>
         <section className="cmp-renewals-copy-flyout__footer">
           {selectedQuote && (
-            <div className="cmp-renewals-copy-flyout__footer__warning__container">
-              <WarningIcon />
-              <div className="cmp-renewals-copy-flyout__footer__warning__content">
+            <>
+              <div className="cmp-renewals-copy-flyout__footer__warning">
                 {copyFlyout.permissionsWarning}
               </div>
-            </div>
+            </>
           )}
           <button
             className={`cmp-renewals-copy-flyout__footer-button ${enableCopy ? 'cmp-renewals-copy-flyout__footer-button--enabled' : ''}`}
