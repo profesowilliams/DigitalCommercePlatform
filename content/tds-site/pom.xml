@@ -279,6 +279,16 @@ Bundle-DocURL:
                                 </options>
                             </jackrabbit-nodetypes>
                         </validatorsSettings>
+                        <filters>
+                            <!-- /apps root -->
+                            <filter><root>/apps</root></filter>
+                            <filter><root>/apps/tds-site</root></filter>
+
+                            <!-- Common overlay roots -->
+                            <filter><root>/apps/msm</root></filter>
+
+                        </filters>
+
                     </configuration>
                     <dependencies>
                         <dependency>
