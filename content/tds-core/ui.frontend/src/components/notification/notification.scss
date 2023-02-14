@@ -52,7 +52,7 @@
     }
 
     .cmp-notification_text {
-      color: get-color(charcoal);
+      color: map-get($color-palette, "charcoal");
     }
 
     a > span.cmp-notification_text {

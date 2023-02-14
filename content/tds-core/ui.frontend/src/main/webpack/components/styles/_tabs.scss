@@ -196,7 +196,7 @@
     .cmp-tabs__tab {
       background: $color-foreground;
       border-radius: 50%;
-      color: $color-background;
+      color: map-get($color-map, "charcoal");
       font-weight: $font-weight-bold;
       height: rem(60px);
       line-height: rem(60px);
@@ -413,7 +413,7 @@
       .text p {
         font-family: $open-sans;
         font-size: 14px;
-        color: get-color(brand-black);
+        color: map-get($color-palette, "charcoal");
         height: 137px;
         letter-spacing: 0;
       }

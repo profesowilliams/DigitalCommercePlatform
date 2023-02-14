@@ -1,7 +1,10 @@
 .dp-list {
     list-style: none;
     .cmp-list {
-        color: map-get($color-palette, "charcoal");
+        * {
+            color: map-get($color-palette, "charcoal");
+        }
+        
         padding: 0 40px;
         
         @include mobile {

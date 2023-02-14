@@ -6,7 +6,10 @@
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      color: map-get($color-palette, "charcoal");
+
+      * {
+        color: map-get($color-palette, "charcoal");
+      }
   }
 
   .cmp-list__item {
