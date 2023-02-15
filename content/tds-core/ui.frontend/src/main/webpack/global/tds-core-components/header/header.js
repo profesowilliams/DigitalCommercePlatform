@@ -32,11 +32,11 @@ export default class Header {
 
     setComponentToStick(){
         const masthead =  document.querySelector('.masthead');
-        const mastheadContainer = masthead.querySelector('.cmp-container');
-        this.stickyHeaderFlag = mastheadContainer.dataset.stickyHeaderflag;
+        const mastheadContainer = masthead?.querySelector('.cmp-container');
+        this.stickyHeaderFlag = mastheadContainer?.dataset?.stickyHeaderflag || false;
 
         this.isSubheaderTransparency = false;
-        this.componentToStick = document.getElementById(mastheadContainer.dataset.stickyComponentid);
+        this.componentToStick = document.getElementById(mastheadContainer?.dataset?.stickyComponentid);
         this.componentToStickTop = this.componentToStick ? this.componentToStick.getBoundingClientRect().top : null;
 
         if(this.stickyHeaderFlag === "true"){

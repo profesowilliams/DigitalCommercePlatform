@@ -55,6 +55,8 @@ public class SubNavLinks {
 
     private String parentID;
 
+    private String tenant;
+
     SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink){
         this.navPage = page;
         this.pageTitle = page.getTitle();
@@ -257,10 +259,18 @@ public class SubNavLinks {
         this.parentID = parentId;
     }
 
+    private String getTenant() {
+        String pathString = "";
+        if (this.getPagePath() != null) {
+            pathString = this.getPagePath().split("/", 0)[2];
+        }
+        return pathString;
+    }
+
     public ComponentData getData() {
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getParentID()+"-"+this.getMenuID())
-            .withType(() -> "tds-site/components/megamenu/item")
+            .withType(() -> this.getTenant() + "/components/megamenu/item")
             .withTitle(() -> this.getPageTitle())
             .withParentId(() -> this.getParentID()+"-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
             .withLinkUrl(() -> this.getPagePath())

@@ -230,7 +230,6 @@
         }
         window.dataLayer.push(dataLayerObject);
       }
-      window.adobeDataLayer.push(dataLayerObject);
     }
   }
 
@@ -242,12 +241,14 @@
     const componentType = getComponentType(typeString);
 
     switch (componentType) {
+      case 'linkitem':
+      case 'dropdownbutton':  
       case 'button':
         window.dataLayer.push({
           "event": "click",
           "category": "cta",
           "item_name": dataObject['dc:title'],
-          "item_type": "link",
+          "item_type": dataObject["@type"],
           "click_url": dataObject['xdm:linkURL'],
         });
         break;

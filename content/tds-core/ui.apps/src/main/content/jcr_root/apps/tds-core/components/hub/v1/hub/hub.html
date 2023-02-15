@@ -12,13 +12,16 @@
 	href="${button.link}"
 	aria-label="${button.accessibilityLabel}"
 	data-cmp-clickable="${button.data ? true : false}"
-	data-cmp-data-layer="${button.data.json}"
->
+	data-cmp-data-layer="${button.data.json}">
 	<span data-sly-test="${button.text}" class="cmp-button__text" style="color: ${properties.fontColor @ context='styleToken'}">${button.text}</span>
 </button>
 
-<sly data-sly-use.dropdownLinks="com.tdscore.core.models.Hub">
+<sly data-sly-use.dropdownLinks="com.tdscore.core.models.LinkList">
 	<div data-sly-list.item="${dropdownLinks.links}" class="cmp-button__dropdown">
-		<a href=" ${item.linkUrl}" target="${item.linkTarget == 'true' ? '_blank':''}">${item.platformName}</a>
+		<a href=" ${item.linkUrl}"
+			 target="${item.linkTarget == 'true' ? '_blank':''}"
+			 data-cmp-clickable="true"
+			 data-cmp-data-layer="${dataLayer.dataLayerJson}"
+			 data-sly-use.dataLayer="${'hub.js' @ data=item.data.json, parent=component.id}">${item.platformName}</a>
 	</div>
 </sly>

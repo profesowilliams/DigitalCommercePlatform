@@ -18,7 +18,7 @@ export default class Header {
         if (!this.header) return;
         this.authorColor = this.header.style.backgroundColor;
 
-        if(this.masthead !== undefined) {
+        if(this.masthead !== undefined && this.masthead !== null) {
             this.setComponentToStick();
             this.checkSubheaderContainer();
             this.setSubheaderMargin();

@@ -48,6 +48,8 @@ public class MegaMenu {
 
     private static final String VIEW_ALL_KEY = "megamenu.common.viewAll";
 
+    private String tenant;
+
     @PostConstruct
     protected void initModel() {
         if (menuList != null) {
@@ -55,7 +57,10 @@ public class MegaMenu {
             for (Resource item : menuList.getChildren()) {
                 log.debug("item is {}", item.getPath());
                 LinkItem link =  item.adaptTo(LinkItem.class);
+                this.tenant = getTenant(item);
                 link.setParentID(this.menuID);
+                link.setTenant(this.tenant);
+                link.setComponentType("/components/megamenu/item");
 
                 if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
@@ -86,6 +91,12 @@ public class MegaMenu {
                 menuLinkList.add(link);
             }
         }
+    }
+
+    private String getTenant(Resource item) {
+        log.error("getting Tenant for {}", item.getPath());
+        String pathString = item.getPath().split("/", 0)[3];
+        return pathString;
     }
 
     private I18n getI18n(Page currentPage) {
@@ -124,7 +135,7 @@ public class MegaMenu {
       
         return DataLayerBuilder.forComponent()
             .withId(() -> this.getID())
-            .withType(() -> "tds-site/components/megamenu/")
+            .withType(() -> this.tenant + "/components/megamenu/")
             .withLastModifiedDate(() -> this.getLastModified())
             .build();
         

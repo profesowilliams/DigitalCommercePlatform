@@ -289,11 +289,11 @@
         });
     }
 
-    if (document.readyState !== "loading") {
-        clickEventHandler();
-    } else {
-        document.addEventListener("DOMContentLoaded", () =>{
-            clickEventHandler();
-        });
-    }        
+    //if (document.readyState !== "loading") {
+    //    clickEventHandler();
+    //} else {
+    //    document.addEventListener("DOMContentLoaded", () =>{
+    //        clickEventHandler();
+    //    });
+    //}        
 })();

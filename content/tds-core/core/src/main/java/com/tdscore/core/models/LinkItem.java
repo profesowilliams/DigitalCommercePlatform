@@ -90,6 +90,10 @@ public class LinkItem {
     @Inject
     private String randomID;
 
+    private String componentType = "/components/linkitem";
+
+    private String tenant = "tds-site";
+
 //    @Inject
 //    private Date modifiedDate;
 
@@ -125,7 +129,7 @@ public class LinkItem {
                 while(children.hasNext()){
                     Page childPage = children.next();
                     SubNavLinks link = new SubNavLinks(childPage, resolver, platformName, linkUrl);
-                    
+
                     if (link.getSubNavLinkslist().size() > 0) {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
                         if (currentPage != null && 
@@ -211,7 +215,7 @@ public class LinkItem {
     }
 
     public String getRandomID() {
-        return UUID.randomUUID().toString();
+        return UUID.randomUUID().toString().split("-",0)[0];
     }
 
     public void addSubNavLink(SubNavLinks link) {
@@ -220,14 +224,36 @@ public class LinkItem {
 
     public void setParentID(String parentId) {
         this.parentID = parentId;
-        updateSublinkParent();
+        updateSublinks();
     }
 
     public String getParentID() {
         return this.parentID;
     }   
 
-    private void updateSublinkParent() {
+    public void setTenant(String tenant) {
+        this.tenant = tenant;
+    }
+
+    public void setComponentType(String componentType) {
+        this.componentType = componentType;
+    }
+
+    public String getComponentType() {
+        return this.tenant + this.componentType;
+    }
+
+    public String getType(String componentString) {
+        int index = componentString.lastIndexOf("/");
+        
+        return componentString.substring(index+1).toLowerCase(Locale.ROOT);
+    }
+
+    public String getLinkId() {
+        return getType(this.componentType) + "-" + getRandomID();
+    }
+
+    private void updateSublinks() {
         for(SubNavLinks link : this.subLinks) {
             link.setParentID(this.getParentID());
             for(SubNavLinks subLevel1 : link.getSubNavLinkslist()) {
@@ -245,10 +271,10 @@ public class LinkItem {
     public ComponentData getData() {
       
         return DataLayerBuilder.forComponent()
-            .withId(() -> this.getParentID()+"-"+this.getPlatformMenuID())
-            .withType(() -> "tds-site/components/megamenu/item")
+            .withId(() -> this.getParentID() != null ? this.getParentID()+"-"+this.getPlatformMenuID() : getLinkId())//this.getPlatformMenuID())
+            .withType(() -> this.getComponentType())
             .withTitle(() -> this.getMobilePlatformLevel())
-            .withLinkUrl(() -> this.navigationRoot)
+            .withLinkUrl(() -> this.getLinkUrl() != null ? this.getLinkUrl() : this.navigationRoot)
             .withParentId(() -> this.getParentID())
             .build();      
     }
