@@ -54,6 +54,12 @@
                     <group>com.tdssite</group>
                     <name>tds-site.ui.apps</name>
                     <packageType>application</packageType>
+                    <repositoryStructurePackages>
+                        <repositoryStructurePackage>
+                            <groupId>com.tdssite</groupId>
+                            <artifactId>tds-site.ui.apps.structure</artifactId>
+                        </repositoryStructurePackage>
+                    </repositoryStructurePackages>
                     <dependencies>
                         <dependency>
                             <groupId>com.adobe.cq</groupId>
@@ -157,6 +163,13 @@
         <dependency>
             <groupId>com.day.cq.wcm</groupId>
             <artifactId>cq-wcm-taglib</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tdssite</groupId>
+            <artifactId>tds-site.ui.apps.structure</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
         </dependency>
 
         <!-- HTL dependencies needed for the HTL Maven Plugin source code generation -->
