@@ -552,11 +552,11 @@
 }
 
 .cmp-text-color--onLight-theme {
-    color: get-color(text-light-gray) !important;
+    color: map-get($color-palette, "charcoal") !important;
 
     .cmp-teaser__desc-link,
     .cmp-teaser__title-link {
-        color: get-color(text-light-gray) !important;
+        color: map-get($color-palette, "charcoal") !important;
         text-decoration: none;
         &:hover {
             text-decoration: none;
