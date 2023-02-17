@@ -3,7 +3,7 @@
 
 .cmp-tds {
   .cmp-tabs {
-    @include text-cool-gray-9;
+    color: map-get($color-palette, 'charcoal');
     box-sizing: border-box;
     line-height: rem(25px);
 

@@ -22,7 +22,7 @@
                 min-height: rem(304px);
                 -webkit-background-clip: border-box;
                 background-clip: border-box;
-                color: get-color(text-dark-grey) !important;
+                color: map-get($color-palette, "charcoal");
                 cursor: default;
 
                 @include mobile {
@@ -153,7 +153,7 @@
 
                         &__description {
                             padding: 0;
-                            color: get-color(stone);
+                            color: map-get($color-palette, "charcoal");
 
                             p {
                                 line-height: 1.5;
@@ -215,7 +215,7 @@
                     text-align: left;
                     display: flex;
                     justify-content: center;
-                    color: get-color(brand-black);
+                    color: map-get($color-palette, "charcoal");
                     padding: 0 rem(30px);
                     p {
                         width: auto;

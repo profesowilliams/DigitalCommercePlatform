@@ -107,7 +107,7 @@
 }
 .cmp-teaser--list .cmp-teaser__description {
     font-size: 14px;
-    color: #696969;
+    color: map-get($color-palette, "charcoal");
     text-transform: uppercase;
 }
 .cmp-teaser--list .cmp-teaser__description p {

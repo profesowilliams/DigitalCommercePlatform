@@ -4,19 +4,19 @@
 
     .cmp-teaser {
         &__pretitle {
-            color: get-color(text-light-gray);
+            color: map-get($color-palette, "charcoal");
         }
 
         &__title {
             text-shadow: none;
 
             &-link {
-                color: get-color(text-light-gray);
+                color: map-get($color-palette, "charcoal");
             }
         }
 
         &__description {
-            color: get-color(text-light-gray);
+            color: map-get($color-palette, "charcoal");
             text-shadow: none;
         }
     }
