@@ -22,7 +22,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
   };
   return (
     <div className="cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote">
-      <div className="cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__label">
+      <div className="cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__label-header">
         {labels &&
           getDictionaryValueOrKey(
             labels.selectedAccountLabel || 'Selected account'

@@ -70,8 +70,11 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       setErrorMessage(copyFlyout.quoteExistsError);
     }
     else {
-      setSelectedQuote(newInput);
+      console.log('yay!');
+      setQuotes([]);
       setErrorMessage('');
+      setAccountNumber('');
+      setSelectedQuote(newInput);
     }
   };
 

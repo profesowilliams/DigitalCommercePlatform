@@ -923,18 +923,27 @@ svg {
   }
 }
 
+$flyout-padding: 1.4rem;
+
+.MuiDrawer-root.MuiDrawer-modal .MuiPaper-root {
+  width: 434px;
+}
 .cmp-renewals-copy-flyout {
+  font-family: $font-family-arial;
   position: relative;
   height: 100%;
   &__header {
     display: flex;
     justify-content: space-between;
-    padding: 2rem;
+    padding: $flyout-padding;
     align-items: center;
-    border-bottom: 3px solid $brand-charcoal;
-    padding-bottom: 1.44rem;
+    border-bottom: 2px solid $brand-charcoal;
+    padding-bottom: 1rem;
     &-title{
-      font-size: 1.8rem;
+      font-family: $font-family-everett;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 26px;
     }
     &-icon{
       font-size: 2rem;
@@ -942,43 +951,65 @@ svg {
     }    
   }
   &__content{
-    padding: 0 1.5rem;
+    padding: 0 $flyout-padding;
     &-description {
-      margin: 2.5rem 0;
+      margin: 2rem 0 2.9rem 0;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 18px;
     }
     &-search {
       position: relative;
+      .MuiAutocomplete-root .MuiFormControl-root{
+        .MuiInput-root.MuiInputLabel-formControl, .Mui-error, .Mui-focused, .MuiInputLabel-shrink {
+          color: $brand-text-gray;
+          font-family: $font-family-arial;
+          font-size: 1rem;
+          bottom: 35px;
+          top: unset;
+          .Mui-focused, .MuiInputLabel-shrink {
+            color: $td-dark-blue;
+          }
+        }
+        .MuiInput-root.MuiInput-root.MuiAutocomplete-inputRoot, .MuiInput-root.MuiAutocomplete-inputRoot.Mui-focused {
+          font-family: $font-family-arial;
+          bottom: 4px;
+          padding-bottom: 4px;
+          line-height: 16px;
+        }
+      }
+
+      .MuiInput-root.MuiInput-root.MuiInputBase-adornedEnd {
+        padding-right: 0;
+        .cmp-autocomplete__button-section, .MuiInput-root {
+          padding-right: 0;
+          .cmp-button__autocomplete-search {
+            height: 24px;
+            position: relative;
+            svg {
+              position: absolute;
+              right: 0;
+            }
+          }
+        }
+      }
     }
     &--error {
       color: $td-error-red;
       font-size: 0.75rem;
     }
-    .MuiAutocomplete-root .MuiFormControl-root{
-      .MuiInput-root.MuiInputLabel-formControl, .Mui-error, .Mui-focused, .MuiInputLabel-shrink {
-        color: $brand-text-gray;
-      }
-    }
-
-    .MuiInput-root.MuiInput-root.MuiInputBase-adornedEnd {
-      padding-right: 0;
-      .cmp-autocomplete__button-section, .MuiInput-root {
-        padding-right: 0;
-        .cmp-button__autocomplete-search {
-          height: 24px;
-          position: relative;
-          svg {
-            position: absolute;
-            right: 0;
-          }
-        }
-      }
-    }
     .cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote {
       margin-top: 30px;
+      padding: 13px;
       background-color: $td-neutral-gray;
+      font-size: 0.875rem;
 
-      &__label {
+      &__label, &__label-header {
         font-weight: 700;
+        padding-bottom: 7px;
+      }
+      &__label-header {
+        font-size: 1rem;
       }
     }
   }
@@ -987,10 +1018,10 @@ svg {
       position: absolute;
       display: flex;
       bottom: 79px;
-      margin: 0 1.5rem;
+      margin: 0 $flyout-padding;
       color: $brand-charcoal;
       font-weight: 400;
-      font-size: 14px;
+      font-size: 0.875rem;
       line-height: 18px;
       border-left: 4px solid $brand-amber;
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.12);
@@ -998,9 +1029,10 @@ svg {
       padding: 20px;
       svg {
         flex-shrink: 0;
+        margin-left: -2px;
       }
       .cmp-renewals-copy-flyout__footer__warning__content {
-        padding-left: 20px;
+        padding-left: 21px;
       }
     }
     button {
@@ -1012,7 +1044,9 @@ svg {
       background-color: $td-neutral-gray-2;
       text-align: center;
       color: $brand-text-lightgray;
-      padding: 1.4rem 2rem;
+      padding: 0 2rem;
+      height: 48px;
+      font-family: $font-family-arial;
 
       &.cmp-renewals-copy-flyout__footer-button--enabled {
         background-color: $td-dark-blue;
