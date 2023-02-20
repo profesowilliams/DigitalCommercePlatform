@@ -2,7 +2,7 @@ import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
-  const { accountNumber, accountName, city } = quote;
+  const { accountNumber, name, city } = quote;
 
   const AccountNumberWithHighlight = () => {
     const wordToHighlight = accountNumber?.split(currentlyTypedWord);
@@ -46,7 +46,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
             )}
           </span>
         )}
-        {accountName}
+        {name}
       </div>
       <div className='cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__city'>
         {labels && (

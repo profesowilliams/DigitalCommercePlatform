@@ -5115,22 +5115,22 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
     content: [
       {
         accountNumber: "123456",
-        accountName: "Tech Data1",
+        name: "Tech Data1",
         city: "Clearwater",
       },
       {
         accountNumber: "123457",
-        accountName: "Tech Data2",
+        name: "Tech Data2",
         city: "San Antonio",
       },
       {
         accountNumber: "123458",
-        accountName: "Tech Data3",
+        name: "Tech Data3",
         city: "San Diego",
       },
       {
         accountNumber: "123459",
-        accountName: "Tech Data4",
+        name: "Tech Data4",
         city: "San Francisco",
       },
     ],
