@@ -28,7 +28,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
             labels.selectedAccountLabel || 'Selected account'
           )}
       </div>
-      <div>
+      <div className='cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__account-number'>
         {labels && (
           <span className="cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__label">
             {getDictionaryValueOrKey(
@@ -38,7 +38,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
         )}
         <AccountNumberWithHighlight />
       </div>
-      <div>
+      <div className='cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__account-name'>
         {labels && (
           <span className="cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__label">
             {getDictionaryValueOrKey(
@@ -48,7 +48,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
         )}
         {accountName}
       </div>
-      <div>
+      <div className='cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__city'>
         {labels && (
           <span className="cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote__label">
             {getDictionaryValueOrKey(labels.cityLabel || 'City:')}

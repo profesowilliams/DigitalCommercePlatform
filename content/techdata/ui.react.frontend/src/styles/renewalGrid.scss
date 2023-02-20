@@ -923,11 +923,12 @@ svg {
   }
 }
 
-$flyout-padding: 1.4rem;
+$flyout-padding: 1.3rem;
 
 .MuiDrawer-root.MuiDrawer-modal .MuiPaper-root {
   width: 434px;
 }
+
 .cmp-renewals-copy-flyout {
   font-family: $font-family-arial;
   position: relative;
@@ -999,10 +1000,11 @@ $flyout-padding: 1.4rem;
       font-size: 0.75rem;
     }
     .cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote {
-      margin-top: 30px;
-      padding: 13px;
+      margin-top: 24px;
+      padding: 16px 15px 16px 15px;
       background-color: $td-neutral-gray;
       font-size: 0.875rem;
+      font-family: $font-family-arial;
 
       &__label, &__label-header {
         font-weight: 700;
@@ -1029,10 +1031,15 @@ $flyout-padding: 1.4rem;
       padding: 20px;
       svg {
         flex-shrink: 0;
-        margin-left: -2px;
+        margin-left: -1px;
       }
       .cmp-renewals-copy-flyout__footer__warning__content {
-        padding-left: 21px;
+        padding-left: 19px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        font-family: $font-family-arial;
+        letter-spacing: -0.175px;
       }
     }
     button {
@@ -1056,6 +1063,33 @@ $flyout-padding: 1.4rem;
   }
 }
 
-.cmp-renewals-copy-flyout__content-search__quote--highlighted {
-  color: $brand-cobalt;
+
+
+.MuiAutocomplete-option .cmp-renewals-copy-flyout-autocomplete__option-name .cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote {
+  font-family: $font-family-arial;
+  font-size: 0.875rem;
+  line-height: 20px;
+  font-weight: 400;
+  color: $text-darker-grey;
+  .cmp-renewals__quotecmp-renewals-copy-flyout__selected-quote {
+    &__account-number {
+      font-size: 1rem;
+      line-height: 21px;
+      color: $td-dark-blue;
+      font-family: $font-family-arial;
+
+      .cmp-renewals-copy-flyout__content-search__quote--highlighted {
+        color: $brand-cobalt;
+        font-weight: 700;
+        font-family: $font-family-arial;
+      }
+      span {
+        font-family: $font-family-arial;
+      }
+    }
+
+    &__account-number, &__account-name, &__city {
+      font-family: $font-family-arial;
+    }
+  }
 }

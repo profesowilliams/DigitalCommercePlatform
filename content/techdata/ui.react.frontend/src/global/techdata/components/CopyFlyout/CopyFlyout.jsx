@@ -184,7 +184,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
                 return (
                   <li {...props}>
                     <div>
-                      <div className="cmp-autocomplete__option-name">
+                      <div className="cmp-renewals-copy-flyout-autocomplete__option-name">
                         <QuoteDetails
                           quote={option}
                           currentlyTypedWord={accountNumber}
