@@ -32,12 +32,7 @@ export const checkQuoteExitsforReseller = async (
 
 export const copyQuote = async (quoteId, resellerId, endpoint) => {
   let response;
-  console.log('quoteId', quoteId);
-    console.log('resellerId', resellerId);
-    console.log({
-        QuoteId: quoteId,
-        ResellerId: resellerId
-    });
+
   try {
     response = await post(
       endpoint,

@@ -63,14 +63,15 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       copyFlyoutConfig?.data.agreementNumber,
       copyFlyout.checkQuoteExitsforResellerEndpoint
     );
-    setEnableCopy(!quoteExists);
+
+    if(!selectedQuote) {
+      setEnableCopy(!quoteExists);
+    }
 
     if (quoteExists) {
-      setSelectedQuote(null);
       setErrorMessage(copyFlyout.quoteExistsError);
     }
     else {
-      console.log('yay!');
       setQuotes([]);
       setErrorMessage('');
       setAccountNumber('');
@@ -177,7 +178,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
               id="combo-box-demo"
               freeSolo={true}
               options={quotes}
-              getOptionLabel={(option) => option.accountNumber}
+              getOptionLabel={(option) => option.accountNumber ?? accountNumber}
               onChange={handleQuoteSelectedChange}
               value={selectedQuote}
               renderOption={(props, option) => {
