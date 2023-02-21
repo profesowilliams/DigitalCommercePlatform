@@ -171,6 +171,10 @@
         const countryIndex = returnObject.index;
         const pageName = setPageName(siteSectionName, countryIndex, flagLanguage, pageType);
         const pageCurrency = pageInfo['xdm:currency'];
+        const noCustomerNumber = { customerNumber: '' };
+        const accountDetail = userIsLoggedIn ? userData?.customersV2.length ?
+          userData?.customersV2[0] : noCustomerNumber :
+          noCustomerNumber;
         let cont = 0;
         siteSectionName.forEach((siteSection, index) => {
           if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
@@ -180,28 +184,23 @@
         categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
         categoryObject.pageType = pageType;
         dataLayerObject = {
-          page: {
-            pageInfo: {
-              pageName: pageName.substring(1), // pull from ACDL
-              url: url, // pull from window.location
-              server: server, // pull from window.location
-              country: country,  // pull from ACDL
-              language: language, // pull from ACDL
-              currencyCode: pageCurrency  // pull from ACDL
-            },
-            category: categoryObject,
-            errorDetails: {
-              errorCode: flagError ? errorCode : '',
-              errorName: flagError ? errorName : ''
-            },
-            visitor: {
-              ecID: userIsLoggedIn && userData?.id ? userData.id : null,
-              sapID: userIsLoggedIn && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-              loginStatus: userIsLoggedIn ? "Logged in" : "Logged out"
-            }
-          },
+          event: 'pageView',
+          country: country,
+          pageCategory: pageType === 'dcpPage' ? 'commerce' : 'content',
+          pageName: pageName.substring(1),
+          pageType: pageType,
+          userID: userIsLoggedIn && userData?.id ? userData.id : '',
+          customerID: accountDetail.customerNumber,
+          currencyCode: pageCurrency,
+          internalTraffic: userIsLoggedIn ? userData?.isInternal.toString() : 'false',
+          language: language,
+          loginStatus: userIsLoggedIn ? 'Logged in' : 'Logged out',
+          url: url, 
+          server: server,
+          errorCode: flagError ? errorCode : '',
+          errorName: flagError ? errorName : ''
         };
-        window.dataLayer.push({ event: "pageView", page: dataLayerObject.page });
+        window.dataLayer.push(dataLayerObject);
       } else {
         // Handle all other component show events here
         switch (componentType) {
