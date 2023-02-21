@@ -57,14 +57,23 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     }
   };
 
-  const handleQuoteSelectedChange = async (event, newInput) => {
+  const checkQuoteInList = (quote) =>
+    quotes.find((q) => q.accountNumber === quote.accountNumber);
+
+  const findSelectedQuote = async (newInput) => {
+    if(!checkQuoteInList(newInput)) {
+
+      setErrorMessage(getDictionaryValueOrKey(copyFlyout.accountDoesntExistError));
+      return;
+    }
+
     const quoteExists = await checkQuoteExitsforReseller(
-      newInput.accountNumber,
+      newInput.accountNumber ?? accountNumber,
       copyFlyoutConfig?.data.agreementNumber,
       copyFlyout.checkQuoteExitsforResellerEndpoint
     );
 
-    if(!selectedQuote) {
+    if (!selectedQuote) {
       setEnableCopy(!quoteExists);
     }
 
@@ -77,6 +86,10 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       setAccountNumber('');
       setSelectedQuote(newInput);
     }
+  }
+
+  const handleQuoteSelectedChange = (event, newInput) => {
+    findSelectedQuote(newInput);
   };
 
   const handleCopy = async () => {
@@ -149,6 +162,16 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      const newInput = quotes.find((quote) => quote.accountNumber === accountNumber);
+      setSelectedQuote(newInput);
+      findSelectedQuote(newInput);
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
   return (
     <BaseFlyout
       open={copyFlyoutConfig?.show}
@@ -181,6 +204,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
               getOptionLabel={(option) => option.accountNumber ?? accountNumber}
               onChange={handleQuoteSelectedChange}
               value={selectedQuote}
+              onKeyDown={handleKeyDown}
               renderOption={(props, option) => {
                 return (
                   <li {...props}>
@@ -215,6 +239,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
                         <Button
                           className="cmp-button__autocomplete-search"
                           variant="standard"
+                          onClick={handleKeyDown}
                         >
                           <SearchIcon />
                         </Button>

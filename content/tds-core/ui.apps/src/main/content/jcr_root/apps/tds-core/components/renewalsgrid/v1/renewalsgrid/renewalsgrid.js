@@ -355,6 +355,10 @@ use(['../common/utils.js'], function(utils) {
         copyFlyout.timeoutError = properties["timeoutError"];
     }
 
+    if (properties && properties["accountDoesntExistError"]) {
+        copyFlyout.accountDoesntExistError = properties["accountDoesntExistError"];
+    }
+
     if (properties && properties["copySuccessMessage"]) {
         copyFlyout.copySuccessMessage = properties["copySuccessMessage"];
     }
