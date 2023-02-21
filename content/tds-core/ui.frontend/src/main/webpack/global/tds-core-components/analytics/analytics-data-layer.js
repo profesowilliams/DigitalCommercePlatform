@@ -192,7 +192,7 @@
           userID: userIsLoggedIn && userData?.id ? userData.id : '',
           customerID: accountDetail.customerNumber,
           currencyCode: pageCurrency,
-          internalTraffic: userIsLoggedIn ? userData?.isInternal.toString() : 'false',
+          internalTraffic: userIsLoggedIn ? userData?.isInternal?.toString() ?? 'false' : 'false',
           language: language,
           loginStatus: userIsLoggedIn ? 'Logged in' : 'Logged out',
           url: url, 
