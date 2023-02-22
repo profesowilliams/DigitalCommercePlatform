@@ -234,65 +234,154 @@
     const dataObject = getDataObjectHelper(event, {
       '@type': typeString,
     });
+    const parentId = dataObject['parentId'];
     const componentType = getComponentType(typeString);
+    const parentObject = parentId ?
+      (window.adobeDataLayer.getState(`component.${parentId}`) ??
+      window.adobeDataLayer.getState(`page.${parentId}`)) ?? 
+      new Object() :
+      new Object();
+    let dlObject = {};
 
     switch (componentType) {
       case 'linkitem':
+        if (parentObject.hasOwnProperty('@type') && parentObject['@type'].indexOf('hub') > -1) {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+              "category": "Masthead",
+              "title": dataObject['dc:title'],
+              "type": dataObject['@type'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+            }
+          };
+        } else if (parentObject.hasOwnProperty('@type') && parentObject['@type'].indexOf('dropdownbutton') > -1) {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+              "category": "button",
+              "title": dataObject['dc:title'],
+              "type": "dropdown-button-item",
+              "url": dataObject['xdm:linkURL'] ?? "",
+            }
+          };
+        } else {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+              "category": "",
+              "title": dataObject['dc:title'],
+              "type": dataObject['@type'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+            }
+          };
+        }
+        break;
       case 'dropdownbutton':  
-      case 'button':
-        window.dataLayer.push({
+        dlObject = {
           "event": "click",
-          "category": "cta",
-          "item_name": dataObject['dc:title'],
-          "item_type": dataObject["@type"],
-          "click_url": dataObject['xdm:linkURL'],
-        });
+          "clickInfo": {
+            "category": "button",
+            "title": dataObject['dc:title'],
+            "type": "dropdown-button",
+            "url": "",
+          }
+        };
+        break;
+      case 'button':
+        dlObject = {
+          "event": "click",
+          "clickInfo": {
+            "category": "button",
+            "title": dataObject['dc:title'],
+            "type": dataObject['@type'],
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
+        };
+        break;
+      case 'hub':
+        dlObject = {
+          "event": "click",
+          "clickInfo": {
+            "category": "Masthead",
+            "title": dataObject['dc:title'],
+            "type": dataObject['@type'],
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
+        };
         break;
       case 'alertcarousel':
       case 'carousel':
         const shownItem = window.adobeDataLayer.getState(`component.${dataObject.shownItems[0]}`);
-        window.dataLayer.push({
+        dlObject = {
           "event": "click",
-          "category": "cta",
-          "item_name": shownItem['dc:title'],
-          "item_type": "carousel",
-        });
+          "clickInfo": {
+            "category": "cta",
+            "title": shownItem['dc:title'],
+            "type": "carousel",
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
+        };
         break;
       case 'title':
       case 'teaser':
-        window.dataLayer.push({
+        dlObject = {
           "event": "click",
-          "category": "cta",
-          "item_name": dataObject['dc:title'],
-          "item_type": componentType,
-          "click_url": dataObject['xdm:linkURL'],
-        });
-        break;
-       case 'item':
-       case 'articlelist':
-           window.dataLayer.push({
-             "event": "click",
-             "clickInfo": {
-                "category": "list",
-                "title": dataObject['dc:title'],
-                "url": dataObject['xdm:linkURL'],
-                "type": "list"
-              }
-           });
-           break;
-      default:
-        let dlObject = {
-          "event": "click",
-          "category": "cta",
-          "item_name": dataObject['dc:title'],
-          "item_type": typeString,
+          "clickInfo": {
+            "category": "cta",
+            "title": dataObject['dc:title'],
+            "type": componentType,
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
         };
-        if (dataObject.hasOwnProperty('xdm:linkURL')) {
-          dlObject.click_url = dataObject['xdm:linkURL'];
+        break;
+      case 'item':
+        if (parentObject.hasOwnProperty('@type') && parentObject['@type'].indexOf('megamenu') > -1) {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+              "category": "Masthead",
+              "title": dataObject['dc:title'],
+              "type": dataObject['@type'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+            }
+          };
+        } else {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+              "category": "",
+              "title": dataObject['dc:title'],
+              "type": dataObject['@type'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+            }
+          };
         }
-        window.dataLayer.push(dlObject);
+        break;
+      case 'articlelist':
+        dlObject = {
+          "event": "click",
+          "clickInfo": {
+            "category": "list",
+            "title": dataObject['dc:title'],
+            "type": dataObject['@type'],
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
+        };
+        break;
+      default:
+        dlObject = {
+          "event": "click",
+          "clickInfo": {
+            "category": "link",
+            "title": dataObject['dc:title'],
+            "type": typeString,
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
+        };
         break;
     };
+    window.dataLayer.push(dlObject);
   }
 
   function initDataLayer() {
