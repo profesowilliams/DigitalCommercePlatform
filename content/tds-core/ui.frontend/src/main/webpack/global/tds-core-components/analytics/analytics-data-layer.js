@@ -184,7 +184,6 @@
         categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
         categoryObject.pageType = pageType;
         dataLayerObject = {
-          event: 'pageView',
           country: country,
           pageCategory: pageType === 'dcpPage' ? 'commerce' : 'content',
           pageName: pageName.substring(1),
@@ -196,9 +195,7 @@
           language: language,
           loginStatus: userIsLoggedIn ? 'Logged in' : 'Logged out',
           url: url, 
-          server: server,
-          errorCode: flagError ? errorCode : '',
-          errorName: flagError ? errorName : ''
+          server: server
         };
         window.dataLayer.push(dataLayerObject);
       } else {
