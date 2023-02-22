@@ -35,8 +35,7 @@ export default class MegamenuMobile {
 
     handleBackBtnClick(event, el) {
       const backBtn =
-        event.target.closest('.cmp-megamenu__back') ||
-        event.target.closest('.cmp-megamenu2__back');
+        event.target.closest('.cmp-megamenu__back');
 
         if (!backBtn) {
           return;
@@ -45,15 +44,12 @@ export default class MegamenuMobile {
         backBtn.style.opacity = 0;
 
       const allSecondaryMenu =
-        el.querySelectorAll('.cmp-megamenu__secondary') ||
-        el.querySelectorAll('.cmp-megamenu2__secondary');
+        el.querySelectorAll('.cmp-megamenu__secondary');
         allSecondaryMenu?.forEach(menu => {
             this.toggleClass(menu, 'hide');
         })
         this.toggleClass(el.querySelector('.cmp-megamenu__primary'), 'show');
-        this.toggleClass(el.querySelector('.cmp-megamenu2__primary'), 'show');
         this.toggleClass(el.querySelector('.cmp-megamenu__title'), 'show');
-        this.toggleClass(el.querySelector('.cmp-megamenu2__title'), 'show');
         this.removeOpenedMenus(el, this.primary);
     }
 
@@ -63,11 +59,9 @@ export default class MegamenuMobile {
         }
 
         const secondary = 
-          el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`) || 
-          el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu2__secondary`);
+          el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`);
         const navGroup = 
-          secondary?.querySelector('.cmp-navigation__group') || 
-          secondary?.querySelector('.cmp-navigation2__group');
+          secondary?.querySelector('.cmp-navigation__group');
 
         if (navGroup) {
             this.removeActiveClass(navGroup);
@@ -82,8 +76,7 @@ export default class MegamenuMobile {
             }
 
             const navGroup = 
-              item.querySelector('.cmp-navigation__group') ||
-              item.querySelector('.cmp-navigation2__group');
+              item.querySelector('.cmp-navigation__group');
             if(navGroup) {
                 if (navGroup.classList.contains('active-md')) {
                     navGroup.classList.remove('active-md');
@@ -95,25 +88,21 @@ export default class MegamenuMobile {
 
     handlePrimary(el) {
         const mmPrimaryList = 
-          el?.querySelectorAll('.cmp-megamenu__primary li') || 
-          el?.querySelectorAll('.cmp-megamenu2__primary li');
+          el?.querySelectorAll('.cmp-megamenu__primary li');
         mmPrimaryList.forEach(list => {
             list.addEventListener('click', () => {
                 // capturing primary as I need a reference later to close by opened menu
                 const primary = this.primary = list.querySelector('[data-cmp-children]')?.dataset.cmpChildren;
                 this.toggleClass(list.parentNode, 'hide');
                 this.toggleClass(el.querySelector('.cmp-megamenu__title'), 'hide');
-                this.toggleClass(el.querySelector('.cmp-megamenu2__title'), 'hide');
 
                 // grab chevron and show it.
                 const backBtn = 
-                  el.querySelector('.cmp-megamenu__back') || 
-                  el.querySelector('.cmp-megamenu2__back');
+                  el.querySelector('.cmp-megamenu__back');
                 backBtn.style.opacity = 1;
 
                 // show secondary
                 this.toggleClass(el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu__secondary`), 'show');
-                this.toggleClass(el.querySelector(`[data-cmp-parent="${primary}"] .cmp-megamenu2__secondary`), 'show');
                 this.appendTitleAndSubTitle(el, primary);
                 this.checkSubMenu(el, primary);
             })
@@ -122,27 +111,19 @@ export default class MegamenuMobile {
 
     appendTitleAndSubTitle(el, type) {
         const secondaryEl = 
-          el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary`) ||
-          el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu2__secondary`);
-        const isAccessibleMenu = !!el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu2__secondary`);
+          el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary`);
 
-        if ((el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--title`) ||
-            el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu2__secondary--title`)) ||
-            el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--sub-title`) ||
-            el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu2__secondary--sub-title`)) {
+        if (el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--title`) ||
+            el.querySelector(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary--sub-title`)) {
             return;
         }
 
         const title = document.createElement('div');
-      title.className = isAccessibleMenu ?
-        'cmp-megamenu2__secondary--title' :
-        'cmp-megamenu__secondary--title';
+        title.className = 'cmp-megamenu__secondary--title';
         title.innerHTML = type;
 
         const subTitle = document.createElement('div');
-        subTitle.className = isAccessibleMenu ? 
-          'cmp-megamenu2__secondary--sub-title' :
-          'cmp-megamenu__secondary--sub-title';
+        subTitle.className = 'cmp-megamenu__secondary--sub-title';
         subTitle.innerHTML = `${type} home`;
 
         secondaryEl.insertBefore(subTitle, secondaryEl.firstChild);
@@ -152,7 +133,6 @@ export default class MegamenuMobile {
     checkSubMenu(el, type) {
       const secMenu =
         el.querySelectorAll(`[data-cmp-parent="${type}"] .cmp-megamenu__secondary >.cmp-navigation__group`)[0] ||
-        el.querySelectorAll(`[data-cmp-parent="${type}"] .cmp-megamenu2__secondary >.cmp-navigation2__group`)[0];
         this.appendChevron(secMenu);
     }
 
@@ -160,8 +140,7 @@ export default class MegamenuMobile {
         const listArray = Array.from(el?.children);
         listArray.forEach(item => {
             const navGroup = 
-              item.querySelector('.cmp-navigation__group') || 
-              item.querySelector('.cmp-navigation2__group');
+              item.querySelector('.cmp-navigation__group');
             if(navGroup) {
                 item.classList.add('has-child');
                 this.appendChevron(navGroup);
@@ -171,19 +150,16 @@ export default class MegamenuMobile {
 
     handleNavigationClick(event) {
         let isList =
-          event.target.closest('.cmp-navigation__item') ||
-          event.target.closest('.cmp-navigation2__item');
+          event.target.closest('.cmp-navigation__item');
         const ACTIVE_CLASS = 'active';
 
         if (!isList) return;
-      if (!isList.classList.contains('cmp-navigation__item') &&
-        !isList.classList.contains('cmp-navigation2__item')) {
+      if (!isList.classList.contains('cmp-navigation__item')) {
         return;
       }
 
         const subMenu = 
-          isList.querySelector('.cmp-navigation__group') ||
-          isList.querySelector('.cmp-navigation2__group');
+          isList.querySelector('.cmp-navigation__group');
 
         if (subMenu) {
             event.preventDefault();

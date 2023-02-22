@@ -380,7 +380,6 @@ subMenuEleheading && subMenuEleheading.forEach((ele) => {
 hasSubMenuEle && hasSubMenuEle.forEach((ele) => {
     ele.addEventListener('click', (e) => {
         if (e.target.closest('li')?.querySelector('ul') !== null) {
-            e.preventDefault();
             removeActiveSiblingMenu(e);
             e.target.closest('.cmp-has-submenu').classList.contains('active') ?
                 e.target.closest('.cmp-has-submenu').classList.remove('active') :

@@ -222,8 +222,6 @@
         if (mastheadlevel === 'L4' && elemClicked.getAttribute('data-mobile') !== 'true') {
           const level3EleHier =
             document.querySelector('.cmp-megamenu__tertiary .cmp-megamenu__item--active')
-              .getAttribute('data-hier') ||
-            document.querySelector('.cmp-megamenu2__tertiary .cmp-megamenu2__item--active')
               .getAttribute('data-hier');
             clickHier = level3EleHier + '>' + titleVal;
         }
