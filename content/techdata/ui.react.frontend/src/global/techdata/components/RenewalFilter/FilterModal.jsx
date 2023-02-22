@@ -65,7 +65,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     aemFilterData = normaliseState(aemData.filterListValues);
   }
 
-  const { setFilterList, toggleFilterModal, setAppliedCustomDateRange, clearUnappliedDateRange, setCustomState } = effects;
+  const { setFilterList, toggleFilterModal, setAppliedCustomDateRange, clearUnappliedDateRange, setCustomState, resetFilterToState } = effects;
 
   useEffect(() => {
     setAppliedCustomDateRange();
@@ -150,16 +150,8 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
   };
 
   const handleCloseModalClick = () => {
-    const filtersCopy = [...filterList].map((filter, index) => {
-      if (index !== 0) {
-        const checked = filter.applied;
-        return {...filter,checked};
-      }
-      return filter;
-    });
-    setFilterList(filtersCopy);
+    resetFilterToState();
     handleFilterCloseClick();    
-    clearUnappliedDateRange();   
   };
 
   if (!filterList) return null;

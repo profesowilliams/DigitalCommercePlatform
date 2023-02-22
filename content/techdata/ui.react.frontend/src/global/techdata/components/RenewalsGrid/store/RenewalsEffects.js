@@ -28,11 +28,14 @@ export const renewalsEffects = (set, get) => {
     })
   }
 
-  function closeAllSections() {
-    const keepOpenList = ['date'];
+  function closeAllSections(focusedInput) {
+    const { dateSelected } = get();
+    const keepOpenList = dateSelected ? ['date'] : [];
     const keepOpened = ({ field }) => keepOpenList.includes(field);
     const filterList = get().filterList.map(filter => ({ ...filter, open: keepOpened(filter) }));
-    set({ filterList })
+    if(focusedInput) {
+      set({ filterList });
+    }
   }
 
   function setDateOptionsList(itemIndex) {
@@ -130,6 +133,19 @@ export const renewalsEffects = (set, get) => {
     }
   }
 
+  function resetFilterToState () {
+    const {filterList} = get();
+    const filtersCopy = [...filterList].map((filter, index) => {
+      if (index !== 0) {
+        const checked = filter.applied;
+        return {...filter,checked};
+      }
+      return filter;
+    });
+    setFilterList(filtersCopy);
+    clearUnappliedDateRange();
+  }
+
   return {
     setFilterList,
     toggleFilterModal,
@@ -145,6 +161,7 @@ export const renewalsEffects = (set, get) => {
     closeAndCleanToaster,
     checkOptionListSelected,
     clearUnappliedDateRange,
-    setAppliedCustomDateRange
+    setAppliedCustomDateRange,
+    resetFilterToState,
   };
 };
