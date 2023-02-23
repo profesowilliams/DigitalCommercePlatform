@@ -22,6 +22,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     )
   );
   const [quotes, setQuotes] = useState([]);
+  const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [selectedQuote, setSelectedQuote] = useState(null);
   const [enableCopy, setEnableCopy] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -43,6 +44,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     setAccountNumber(resellerId);
 
     if (resellerId.length >= 3) {
+      setIsAutocompleteOpen(true);
       const response = await resellerLookUp(
         resellerId,
         copyFlyout.accountLookUpEndpoint
@@ -54,6 +56,9 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       else {
         setQuotes(response);
       }
+    }
+    else {
+      setIsAutocompleteOpen(false);
     }
   };
 
@@ -86,6 +91,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       setAccountNumber('');
       setSelectedQuote(newInput);
     }
+    setIsAutocompleteOpen(false);
   }
 
   const handleQuoteSelectedChange = (event, newInput) => {
@@ -164,11 +170,17 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      const newInput = quotes.find((quote) => quote.accountNumber === accountNumber);
-      setSelectedQuote(newInput);
-      findSelectedQuote(newInput);
+      selectQuoteForCopying();
       event.preventDefault();
       event.stopPropagation();
+    }
+  };
+
+  const selectQuoteForCopying = () => {
+    const newInput = quotes.find((quote) => quote.accountNumber === accountNumber);
+
+    if (newInput) {
+      findSelectedQuote(newInput);
     }
   };
 
@@ -199,6 +211,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
           <div className="cmp-renewals-copy-flyout__content-search">
             <Autocomplete
               id="combo-box-demo"
+              open={isAutocompleteOpen}
               freeSolo={true}
               options={quotes}
               getOptionLabel={(option) => option.accountNumber ?? accountNumber}
@@ -239,7 +252,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
                         <Button
                           className="cmp-button__autocomplete-search"
                           variant="standard"
-                          onClick={handleKeyDown}
+                          onClick={selectQuoteForCopying}
                         >
                           <SearchIcon />
                         </Button>
