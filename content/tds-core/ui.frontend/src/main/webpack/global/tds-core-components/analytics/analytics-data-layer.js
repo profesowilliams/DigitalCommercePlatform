@@ -83,19 +83,18 @@
   function setPageName(siteSectionName, countryIndex, flagLanguage, pageType) {
     let pageName = '';
     if (flagLanguage) {
-      countryIndex = 0;
       siteSectionName.forEach((element, index) => {
         if (index > (countryIndex+1)) {
-          pageName += ':' + element;
+          pageName += '>' + element;
         }
       })
       pageName = pageName.replace('.html', '');
-      pageName += ':' + pageType;
+      pageName += '>' + pageType;
       return pageName;
     }
     siteSectionName.forEach((element, index) => {
-      if (index > (countryIndex-2)) { // countryIndex less 2 sites that mean language and country
-        pageName += ':' + element;
+      if (index > (countryIndex)) { 
+        pageName += '>' + element;
       }
     })
     pageName = pageName.replace('.html', '');
@@ -185,17 +184,15 @@
         categoryObject.pageType = pageType;
         dataLayerObject = {
           country: country,
-          pageCategory: pageType === 'dcpPage' ? 'commerce' : 'content',
+          pageCategory: pageType,
           pageName: pageName.substring(1),
-          pageType: pageType,
           userID: userIsLoggedIn && userData?.id ? userData.id : '',
           customerID: accountDetail.customerNumber,
           currencyCode: pageCurrency,
-          internalTraffic: userIsLoggedIn ? userData?.isInternal?.toString() ?? 'false' : 'false',
+          internalTraffic: userIsLoggedIn ? userData?.isInternal?.toString() : null,
           language: language,
           loginStatus: userIsLoggedIn ? 'Logged in' : 'Logged out',
           url: url, 
-          server: server
         };
         window.dataLayer.push(dataLayerObject);
       } else {
