@@ -8,6 +8,7 @@ import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../
 import { CopyIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
+import Toaster from "../../Widgets/Toaster";
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] = useState(false);
@@ -47,6 +48,10 @@ function GridHeader({ gridProps, data }) {
     effects.setCustomState({ key: 'copyFlyout', value: { data: flyoutData, show: true } });
   }; 
 
+  function onCloseToaster() {
+    effects.closeAndCleanToaster();    
+  }
+
   <button onClick={() => setPDFDownloadableOnDemand(true)}>
     <span className="separator">{gridProps.pdf || "Export PDF"}</span>
   </button>
@@ -84,6 +89,11 @@ function GridHeader({ gridProps, data }) {
           </button>
         )}
       </div>
+      <Toaster
+        onClose={onCloseToaster}
+        store={useRenewalGridState} 
+        message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}          
+        />
       <CopyFlyout 
         store={useRenewalGridState}
         copyFlyout={gridProps.copyFlyout}
