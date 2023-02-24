@@ -136,7 +136,7 @@
   }
 
   function getComponentType(componentString) {
-    return componentString?.match(/\/([^\/]+)\/?$/)[1]?.toLowerCase();
+    return componentString.indexOf('/') > -1 ? componentString?.match(/\/([^\/]+)\/?$/)[1]?.toLowerCase() : componentString;
   }
 
   function pageShownHandler(event) {
@@ -248,7 +248,7 @@
             "clickInfo": {
               "category": "Masthead",
               "title": dataObject['dc:title'],
-              "type": dataObject['@type'],
+              "type": 'hub-item',
               "url": dataObject['xdm:linkURL'] ?? "",
             }
           };
@@ -268,7 +268,7 @@
             "clickInfo": {
               "category": "",
               "title": dataObject['dc:title'],
-              "type": dataObject['@type'],
+              "type": componentType,
               "url": dataObject['xdm:linkURL'] ?? "",
             }
           };
@@ -291,7 +291,7 @@
           "clickInfo": {
             "category": "button",
             "title": dataObject['dc:title'],
-            "type": dataObject['@type'],
+            "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
           }
         };
@@ -302,7 +302,18 @@
           "clickInfo": {
             "category": "Masthead",
             "title": dataObject['dc:title'],
-            "type": dataObject['@type'],
+            "type": componentType,
+            "url": dataObject['xdm:linkURL'] ?? "",
+          }
+        };
+        break;
+      case 'alertcarousel-alert-action':
+        dlObject = {
+          "event": "click",
+          "clickInfo": {
+            "category": dataObject['analyticsCategory'],
+            "title": dataObject['dc:title'],
+            "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
           }
         };
@@ -315,7 +326,7 @@
           "clickInfo": {
             "category": "cta",
             "title": shownItem['dc:title'],
-            "type": "carousel",
+            "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
           }
         };
@@ -339,7 +350,7 @@
             "clickInfo": {
               "category": "Masthead",
               "title": dataObject['dc:title'],
-              "type": dataObject['@type'],
+              "type": 'megamenu-item',
               "url": dataObject['xdm:linkURL'] ?? "",
             }
           };
@@ -349,7 +360,7 @@
             "clickInfo": {
               "category": "",
               "title": dataObject['dc:title'],
-              "type": dataObject['@type'],
+              "type": componentType,
               "url": dataObject['xdm:linkURL'] ?? "",
             }
           };
@@ -361,7 +372,7 @@
           "clickInfo": {
             "category": "list",
             "title": dataObject['dc:title'],
-            "type": dataObject['@type'],
+            "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
           }
         };
@@ -372,7 +383,7 @@
           "clickInfo": {
             "category": "link",
             "title": dataObject['dc:title'],
-            "type": typeString,
+            "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
           }
         };

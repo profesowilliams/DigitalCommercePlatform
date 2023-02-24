@@ -10,6 +10,7 @@ use(function () {
 
   return {
     titles: titles,
+    title: title,
     linkUrl: parsedLinkUrl
   };
 });

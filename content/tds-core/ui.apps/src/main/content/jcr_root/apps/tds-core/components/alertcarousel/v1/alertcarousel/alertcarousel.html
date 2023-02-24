@@ -52,7 +52,7 @@
       </sly>
     </div>
     <div data-sly-test="${properties.enableAlert}" data-sly-unwrap data-sly-use.alertTemplate="alert.html">
-      <div data-sly-unwrap data-sly-call="${alertTemplate}"></div>
+      <div data-sly-unwrap data-sly-call="${alertTemplate.alert @ parent=carousel.id}"></div>
     </div>
   </div>
   <sly
