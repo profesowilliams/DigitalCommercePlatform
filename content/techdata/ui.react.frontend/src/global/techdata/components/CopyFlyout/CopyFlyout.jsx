@@ -66,8 +66,11 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     quotes.find((q) => q.accountNumber === quote.accountNumber);
 
   const findSelectedQuote = async (newInput) => {
-    if(!checkQuoteInList(newInput)) {
+    if(!newInput) {
+      return;
+    }
 
+    if(!checkQuoteInList(newInput)) {
       setErrorMessage(getDictionaryValueOrKey(copyFlyout.accountDoesntExistError));
       return;
     }
@@ -178,10 +181,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
 
   const selectQuoteForCopying = () => {
     const newInput = quotes.find((quote) => quote.accountNumber === accountNumber);
-
-    if (newInput) {
-      findSelectedQuote(newInput);
-    }
+    findSelectedQuote(newInput || accountNumber);    
   };
 
   return (
