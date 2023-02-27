@@ -274,6 +274,30 @@
           };
         }
         break;
+      case 'cta':
+        if (parentObject.hasOwnProperty('@type') && parentObject['@type'].indexOf('hero') > -1) {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+            "category": "",
+            "title": dataObject['dc:title'],
+            "type": "hero-cta",
+            "url": dataObject['xdm:linkURL'] ?? "",
+            }
+           };
+         }
+         break;
+      case 'hero':
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+            "category": "",
+            "title": dataObject['dc:title'],
+            "type": "hero",
+            "url": dataObject['xdm:linkURL'] ?? "",
+            }
+           };
+           break;
       case 'dropdownbutton':  
         dlObject = {
           "event": "click",
@@ -332,7 +356,6 @@
         };
         break;
       case 'title':
-      case 'teaser':
         dlObject = {
           "event": "click",
           "clickInfo": {
@@ -342,6 +365,17 @@
             "url": dataObject['xdm:linkURL'] ?? "",
           }
         };
+        break;
+      case 'teaser':
+        dlObject = {
+          "event": "click",
+          "clickInfo": {
+          "category": "",
+          "title": dataObject['dc:title'],
+          "type": 'teaser',
+          "url": dataObject['xdm:linkURL'] ?? "",
+          }
+         };
         break;
       case 'item':
         if (parentObject.hasOwnProperty('@type') && parentObject['@type'].indexOf('megamenu') > -1) {
