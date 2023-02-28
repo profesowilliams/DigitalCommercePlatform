@@ -161,8 +161,9 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     );
   };
 
-  const handleFocusOut = () => {
-    if (accountNumber.length === 0) {
+  const handleFocusOut = (event) => {
+    const resellerId = event.target.value;
+    if (resellerId.length === 0) {
       setAutocompleteTitle(
         getDictionaryValueOrKey(
           copyFlyout.searchPlaceholder
