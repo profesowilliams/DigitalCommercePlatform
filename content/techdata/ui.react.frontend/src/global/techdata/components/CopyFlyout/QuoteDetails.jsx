@@ -5,10 +5,6 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
   const { accountNumber, name, city } = quote;
 
   const AccountNumberWithHighlight = () => {
-      const wordToHighlight = accountNumber?.split(currentlyTypedWord);
-    if (wordToHighlight?.length === 1) {
-      return <span>{accountNumber}</span>;
-    }
     return (
       <>
         <span
@@ -16,7 +12,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
         >
           {currentlyTypedWord}
         </span>
-        <span>{wordToHighlight[1]}</span>
+        <span>{accountNumber?.substring(currentlyTypedWord.length)}</span>
       </>
     );
   };
