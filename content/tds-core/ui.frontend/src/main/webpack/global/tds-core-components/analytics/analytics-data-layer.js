@@ -285,6 +285,16 @@
             "url": dataObject['xdm:linkURL'] ?? "",
             }
            };
+         } else if (parentObject.hasOwnProperty('@type') && parentObject['@type'].indexOf('teaser') > -1) {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+            "category": "",
+            "title": dataObject['dc:title'],
+            "type": "teaser-cta",
+            "url": dataObject['xdm:linkURL'] ?? "",
+            }
+           };
          }
          break;
       case 'hero':
