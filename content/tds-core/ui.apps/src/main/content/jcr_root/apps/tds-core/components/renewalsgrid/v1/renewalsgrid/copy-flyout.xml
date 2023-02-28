@@ -62,11 +62,6 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Quote Exists Error"
                     name="./quoteExistsError"/>
-                <timeoutError
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldLabel="Timeout Error"
-                    name="./timeoutError"/>
                 <accountDoesntExistError
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

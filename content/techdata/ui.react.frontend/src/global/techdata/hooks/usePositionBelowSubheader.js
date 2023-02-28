@@ -9,7 +9,12 @@ function usePositionBelowSubheader({ unmountedFn = false }, subheaderReference =
     const subHeaderElement = !subheaderReference ? document.querySelector('.subheader > div > div') : subheaderReference;
     if (!subHeaderElement) return;
     const { top, height } = subHeaderElement.getBoundingClientRect();
-    let topCalculation = top + GAP + height;   
+    let topCalculation = top + GAP + height;
+    
+    if(topCalculation < 0) {
+      topCalculation = 0;
+    }
+
     return topCalculation;   
   }
   function updateStatePosition(){

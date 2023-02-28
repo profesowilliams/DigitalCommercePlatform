@@ -117,10 +117,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
 
     let toaster = null;
 
-    if (response.isError && response.code === 408) {
-      setErrorMessage(getDictionaryValueOrKey(copyFlyout.timeoutError));
-    }
-    else if(response.isError) {
+    if(response.isError) {
       toaster = {
         isOpen: true,
         origin: 'fromUpdate',
