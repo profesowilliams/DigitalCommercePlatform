@@ -166,6 +166,7 @@
   }
 
   .cmp-notification_text {
+    color: map-get($color-palette, "charcoal");
     margin-left: rem(18px);
   }
 }
