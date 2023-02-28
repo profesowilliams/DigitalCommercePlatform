@@ -160,7 +160,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
 
   const handleFocusOut = (event) => {
     const resellerId = event.target.value;
-    if (resellerId.length === 0) {
+    if (resellerId?.length === 0) {
       setAutocompleteTitle(
         getDictionaryValueOrKey(
           copyFlyout.searchPlaceholder

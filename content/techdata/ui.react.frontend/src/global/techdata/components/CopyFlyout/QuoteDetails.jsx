@@ -12,7 +12,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
         >
           {currentlyTypedWord}
         </span>
-        <span>{accountNumber?.substring(currentlyTypedWord.length)}</span>
+        <span>{accountNumber?.substring(currentlyTypedWord?.length)}</span>
       </>
     );
   };
