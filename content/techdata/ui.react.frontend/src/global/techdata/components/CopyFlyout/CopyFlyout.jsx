@@ -182,6 +182,18 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
     findSelectedQuote(newInput || accountNumber);    
   };
 
+  const WarningMessage = ({classNameSuffix}) => {
+    if(selectedQuote) {
+      return (<div className={`cmp-renewals-copy-flyout__footer__warning__container cmp-renewals-copy-flyout__footer__warning__container__section-${classNameSuffix}`}>
+        <WarningIcon />
+        <div className="cmp-renewals-copy-flyout__footer__warning__content">
+          {copyFlyout.permissionsWarning}
+        </div>
+      </div>)
+    }
+    return null;
+  };
+
   return (
     <BaseFlyout
       open={copyFlyoutConfig?.show}
@@ -268,18 +280,11 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
                 <QuoteDetails quote={selectedQuote} labels={copyFlyout} />
               </>
             )}
-
+            <WarningMessage classNameSuffix="content" />
           </div>
         </section>
         <section className="cmp-renewals-copy-flyout__footer">
-          {selectedQuote && (
-            <div className="cmp-renewals-copy-flyout__footer__warning__container">
-              <WarningIcon />
-              <div className="cmp-renewals-copy-flyout__footer__warning__content">
-                {copyFlyout.permissionsWarning}
-              </div>
-            </div>
-          )}
+          <WarningMessage classNameSuffix="footer" />
           <button
             className={`cmp-renewals-copy-flyout__footer-button ${enableCopy ? 'cmp-renewals-copy-flyout__footer-button--enabled' : ''}`}
             enabled={!enableCopy}
