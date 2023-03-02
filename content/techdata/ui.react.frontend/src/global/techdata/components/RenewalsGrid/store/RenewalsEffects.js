@@ -134,16 +134,23 @@ export const renewalsEffects = (set, get) => {
   }
 
   function resetFilterToState () {
-    const {filterList} = get();
+    const {filterList, dateOptionsList} = get();
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
         const checked = filter.applied;
-        return {...filter,checked};
+        let open = checked;
+        if(filter.field==='date') {
+          const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+          open = appliedFilters?.dateSelected === null ? false : true;          
+          const isChecked = (field) => field === appliedFilters?.dateSelected;
+          const options = dateOptionsList.slice().map(item => ({...item,checked:isChecked(item.field)}));
+          set({dateSelected:appliedFilters?.dateSelected,dateOptionsList:options,customStartDate: appliedFilters?.customStartDate, customEndDate: appliedFilters?.customEndDate});
+        }
+        return {...filter,checked,open};
       }
       return filter;
     });
     setFilterList(filtersCopy);
-    clearUnappliedDateRange();
   }
 
   return {
