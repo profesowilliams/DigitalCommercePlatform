@@ -129,11 +129,11 @@ export const renewalsEffects = (set, get) => {
     const {filterList, dateOptionsList} = get();
     const filtersCopy = [...filterList].map((filter, index) => {
       if (index !== 0) {
-        const checked = filter.applied;
+        const checked = !!filter.applied;
         let open = checked;
         if(filter.field==='date') {
           const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
-          open = appliedFilters?.dateSelected === null ? false : true;          
+          open = !!appliedFilters?.dateSelected;          
           const isChecked = (field) => field === appliedFilters?.dateSelected;
           const options = dateOptionsList.slice().map(item => ({...item,checked:isChecked(item.field)}));
           setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
