@@ -65,10 +65,9 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
     aemFilterData = normaliseState(aemData.filterListValues);
   }
 
-  const { setFilterList, toggleFilterModal, setAppliedCustomDateRange, clearUnappliedDateRange, setCustomState, resetFilterToState } = effects;
+  const { setFilterList, toggleFilterModal, clearUnappliedDateRange, setCustomState, resetFilterToState } = effects;
 
   useEffect(() => {
-    setAppliedCustomDateRange();
     if (!filterList) {
       setFilterList(aemFilterData);
     }

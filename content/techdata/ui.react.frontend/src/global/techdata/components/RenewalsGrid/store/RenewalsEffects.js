@@ -125,14 +125,6 @@ export const renewalsEffects = (set, get) => {
     }
   }
 
-  function setAppliedCustomDateRange(){ 
-    const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
-    if(appliedFilters) {
-      setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
-      set({customStartDate: appliedFilters?.customStartDate, customEndDate: appliedFilters?.customEndDate});
-    }
-  }
-
   function resetFilterToState () {
     const {filterList, dateOptionsList} = get();
     const filtersCopy = [...filterList].map((filter, index) => {
@@ -144,6 +136,7 @@ export const renewalsEffects = (set, get) => {
           open = appliedFilters?.dateSelected === null ? false : true;          
           const isChecked = (field) => field === appliedFilters?.dateSelected;
           const options = dateOptionsList.slice().map(item => ({...item,checked:isChecked(item.field)}));
+          setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
           set({dateSelected:appliedFilters?.dateSelected,dateOptionsList:options,customStartDate: appliedFilters?.customStartDate, customEndDate: appliedFilters?.customEndDate});
         }
         return {...filter,checked,open};
@@ -168,7 +161,6 @@ export const renewalsEffects = (set, get) => {
     closeAndCleanToaster,
     checkOptionListSelected,
     clearUnappliedDateRange,
-    setAppliedCustomDateRange,
     resetFilterToState,
   };
 };
