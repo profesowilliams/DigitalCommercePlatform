@@ -24,9 +24,9 @@ function CustomDatePill({ clearDateFilters }) {
   return customStartDate && customEndDate ? (
     <div className={computeClassName("filter-tags")}>
       <span className="filter-tags__title">
-        {dateToString(startDate,"MMM d',' y")}
+        {dateToString(startDate.replace(/[zZ]/g, ''),"MMM d',' y")}
         {"  -  "}
-        {dateToString(endDate,"MMM d',' y")}{" "}
+        {dateToString(endDate.replace(/[zZ]/g, ''),"MMM d',' y")}{" "}
       </span>
       <span onClick={handleClearCustomDate}>
         <i className="fas fa-times filter-tags__close"></i>
