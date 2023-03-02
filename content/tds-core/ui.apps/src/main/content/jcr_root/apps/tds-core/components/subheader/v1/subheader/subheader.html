@@ -5,8 +5,8 @@
      style="background-color: ${properties.backgroundColor @ context='styleToken'}"
      class="cmp-tabs"
      data-cmp-is="tabs"
-     data-cmp-data-layer="${tabs.data.json}">
-
+     data-cmp-data-layer="${dataLayer.dataLayerJson}"
+     data-sly-use.dataLayer="${'tabdata.js' @ data=tabs.data.json}">
      <div>
           <div class="cmp-sub-header--sub-nav new-sub" data-current-page-path="${currentPage.path}">
 
@@ -34,12 +34,18 @@
                               <sly data-sly-list.container="${resource.listChildren}">
                                         <sly data-sly-test="${container.name == tab.name}">
                                    <sly data-sly-test.isLink="${container.link}">
-                                        <span class="cmp-sub-header__span" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=container.linkPath}">
+                                        <span class="cmp-sub-header__span" 
+                                              data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=container.linkPath}"
+                                              data-cmp-data-layer="${itemDataLayer.dataLayerJson}"
+                                              data-sly-use.itemDataLayer="${'tabitemdata.js' @ data=tab.data.json, link=container.linkPath}">
                                              <a href="${urlHelper.url @ context='html'}" style="color: ${properties.tabsColor @ context='styleToken'}" target="${container.tabTarget ? '_blank' : '_self'}">${container.cq:panelTitle}</a>
                                         </span>
                                    </sly>
                                    <sly data-sly-test="${!isLink}">
-                                                  <span class="cmp-sub-header__span" style="color: ${properties.tabsColor @ context='styleToken'}">${container.cq:panelTitle}</span>
+                                        <span class="cmp-sub-header__span" 
+                                              style="color: ${properties.tabsColor @ context='styleToken'}"
+                                              data-cmp-data-layer="${itemDataLayer.dataLayerJson}"
+                                              data-sly-use.itemDataLayer="${'tabitemdata.js' @ data=tab.data.json, link=''}">${container.cq:panelTitle}</span>
                                    </sly>
 
                               </sly>
@@ -62,7 +68,9 @@
           tabindex="0"
           class="cmp-tabs__tabpanel${item.name == tabs.activeItem ? ' cmp-tabs__tabpanel--active' : ''}"
           data-cmp-hook-tabs="tabpanel"
-          data-cmp-data-layer="${item.data.json}"></div>
+          data-cmp-data-layer="${item.data.json}"
+          
+          ></div>
      <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
           data-sly-test="${(wcmmode.edit || wcmmode.preview) && tabs.items.size < 1}"></sly>
 </div>

@@ -139,6 +139,11 @@
     return componentString.indexOf('/') > -1 ? componentString?.match(/\/([^\/]+)\/?$/)[1]?.toLowerCase() : componentString;
   }
 
+  function getFullComponentType(componentString) {
+    const index = componentString.indexOf('/components/') + 12;
+    return componentString.substring(index);
+  }
+
   function pageShownHandler(event) {
     const dataObject = getDataObjectHelper(event, {
       '@type': window.adobeDataLayer.getState(event.eventInfo.path)['@type'],
@@ -146,6 +151,7 @@
     let dataLayerObject = {};
     if (dataObject != null) {
       const componentType = getComponentType(dataObject['@type']);
+      const componentTypeName = getFullComponentType(dataObject['@type']);
       if (componentType === 'page') {
         // Handle page view show event
         let errorCode = dataObject['repo:path'];
@@ -197,27 +203,51 @@
         window.dataLayer.push(dataLayerObject);
       } else {
         // Handle all other component show events here
+        const parentObject = dataObject['parentId'] ? window.adobeDataLayer.getState('component.' + dataObject['parentId']) : null;
         switch (componentType) {
           case 'item':
             if (dataObject['@type'].includes('alertcarousel')) {
-              let targetObject = window.adobeDataLayer.getState(event.eventInfo.path);
               dataLayerObject = {
-                event: "show",
-                title: targetObject['dc:title'],
-                eventInfo: event.eventInfo
+                "event": "show",
+                "showInfo": {
+                  "category": parentObject ? parentObject['analyticsCategory'] ?? "carousel" : "carousel",
+                  "title": dataObject['dc:title'],
+                  "url": dataObject['xdm:linkURL'] ?? "",
+                  "type": componentTypeName
+                }
+              };
+            } else if (dataObject['@type'].includes('subheader')) {
+              dataLayerObject = {
+                "event": "show",
+                "showInfo": {
+                  "category": parentObject ? parentObject['analyticsCategory'] ?? "subheader" : "subheader",
+                  "title": dataObject['dc:title'],
+                  "url": dataObject['xdm:linkURL'] ?? "",
+                  "type": componentTypeName
+                }
               };
             } else {
               // Some other item type
               dataLayerObject = {
-                event: "show",
-                eventInfo: event.eventInfo
+                "event": "show",
+                "showInfo": {
+                  "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+                  "title": dataObject['dc:title'],
+                  "url": dataObject['xdm:linkURL'] ?? "",
+                  "type": componentTypeName
+                }
               };
             }
             break;
           default:
             dataLayerObject = {
-              event: "show",
-              eventInfo: event.eventInfo
+              "event": "show",
+              "showInfo": {
+                "category": dataObject['analyticsCategory'] ?? "",
+                "title": dataObject['dc:title'],
+                "url": dataObject['xdm:linkURL'] ?? "",
+                "type": componentTypeName// (Required)-the type of component-- Tab, Carousel, Alert carousel, Accordion, Honeycomb, Notification
+              }
             };
             break;
         }
@@ -436,11 +466,72 @@
     window.dataLayer.push(dlObject);
   }
 
+  function hideHandler(event) {
+    const dataObject = getDataObjectHelper(event, {
+      '@type': window.adobeDataLayer.getState(event.eventInfo.path)['@type'],
+    });
+    const componentType = getComponentType(dataObject['@type']);
+    const componentTypeName = getFullComponentType(dataObject['@type']);
+    const parentObject = dataObject['parentId'] ? window.adobeDataLayer.getState('component.' + dataObject['parentId']) : null;
+    let dataLayerObject = {};
+    switch (componentType) {
+      case 'item':
+        if (dataObject['@type'].includes('alertcarousel')) {
+          dataLayerObject = {
+            "event": "hide",
+            "hideInfo": {
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "carousel" : "carousel",
+              "title": dataObject['dc:title'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+              "type": componentTypeName
+            }
+          };
+        } else if (dataObject['@type'].includes('subheader')) {
+          dataLayerObject = {
+            "event": "hide",
+            "hideInfo": {
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "subheader" : "subheader",
+              "title": dataObject['dc:title'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+              "type": componentTypeName
+            }
+          };
+        } else {
+          // Some other item type
+          dataLayerObject = {
+            "event": "hide",
+            "hideInfo": {
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+              "title": dataObject['dc:title'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+              "type": componentTypeName
+            }
+          };
+        }
+        break;
+      default:
+        dataLayerObject = {
+          "event": "hide",
+          "hideInfo": {
+            "category": dataObject['analyticsCategory'] ?? "",
+            "title": dataObject['dc:title'],
+            "url": dataObject['xdm:linkURL'] ?? "",
+            "type": componentTypeName// (Required)-the type of component-- Tab, Carousel, Alert carousel, Accordion, Honeycomb, Notification
+          }
+        };
+        break;
+    }
+    window.dataLayer.push(dataLayerObject);
+  }
+
   function initDataLayer() {
     window.dataLayer = window.dataLayer || [];
     window.adobeDataLayer = window.adobeDataLayer || [];
     window.adobeDataLayer.push(function (dl) {
       dl.addEventListener('cmp:show', pageShownHandler);
+    });
+    window.adobeDataLayer.push(function (dl) {
+      dl.addEventListener('cmp:hide', hideHandler);
     });
     window.adobeDataLayer.push(function (dl) {
       dl.addEventListener('cmp:click', clickHandler);

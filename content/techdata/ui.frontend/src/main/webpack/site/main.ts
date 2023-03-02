@@ -24,7 +24,6 @@ import "../global/td-components/button/buttons";
 import {Initializer} from "../global/initializer";
 new Initializer();
 import "../global/td-components/filmstrip-carousel/filmstrip-carousel";
-import "../global/td-components/analytics/analytics-tracking";
 import "../global/td-components/authentication/authentication";
 import "../global/td-components/form-options/brand-filter/brandFilter";
 import "../../../../../../tds-core/ui.frontend/src/components/hub/hub";

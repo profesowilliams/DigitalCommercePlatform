@@ -19,7 +19,8 @@
      id="${tabs.id}"
      class="cmp-tabs"
      data-cmp-is="tabs"
-     data-cmp-data-layer="${tabs.data.json}">
+     data-cmp-data-layer="${dataLayer.dataLayerJson}"
+     data-sly-use.dataLayer="${'tabdata.js' @ data=tabs.data.json}">
     <ol data-sly-test="${tabs.items && tabs.items.size > 0}"
         data-sly-list.tab="${tabs.items}"
         role="tablist"
