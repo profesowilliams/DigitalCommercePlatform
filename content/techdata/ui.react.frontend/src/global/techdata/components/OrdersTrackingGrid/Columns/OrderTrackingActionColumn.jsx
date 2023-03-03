@@ -9,7 +9,11 @@ function OrderTrackingActionColumn() {
     fontSize: '1.2rem',
     width: '1.3rem',
   };
-  return <EllipsisIcon style={iconStyle} />;
+  return (
+    <div className="cmp-order-tracking-grid__action-column">
+      <EllipsisIcon style={iconStyle} />
+    </div>
+  );
 }
 
 export default OrderTrackingActionColumn;
