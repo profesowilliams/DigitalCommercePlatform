@@ -226,6 +226,26 @@
                   "type": componentTypeName
                 }
               };
+            } else if (dataObject['@type'].includes('honeycomb')) {
+              dataLayerObject = {
+                "event": "show",
+                "showInfo": {
+                  "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+                  "title": dataObject['dc:title'],
+                  "url": dataObject['xdm:linkURL'] ?? "",
+                  "type": "honeycomb"
+                }
+              };
+            } else if (dataObject['@type'].includes('accordion')) {
+              dataLayerObject = {
+                "event": "show",
+                "showInfo": {
+                  "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+                  "title": dataObject['dc:title'],
+                  "url": dataObject['xdm:linkURL'] ?? "",
+                  "type": "accordion"
+                }
+              };
             } else {
               // Some other item type
               dataLayerObject = {
@@ -428,11 +448,22 @@
               "url": dataObject['xdm:linkURL'] ?? "",
             }
           };
+        } else if (parentObject.hasOwnProperty('@type') &&
+          (parentObject['@type'].indexOf('honeycomb') > -1 || parentObject['@type'].indexOf('accordion') > -1)) {
+          dlObject = {
+            "event": "click",
+            "clickInfo": {
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+              "title": dataObject['dc:title'],
+              "type": getComponentType(parentObject['@type']),
+              "url": dataObject['xdm:linkURL'] ?? "",
+            }
+          };
         } else {
           dlObject = {
             "event": "click",
             "clickInfo": {
-              "category": "",
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
               "title": dataObject['dc:title'],
               "type": componentType,
               "url": dataObject['xdm:linkURL'] ?? "",
@@ -494,6 +525,26 @@
               "title": dataObject['dc:title'],
               "url": dataObject['xdm:linkURL'] ?? "",
               "type": componentTypeName
+            }
+          };
+        } else if (dataObject['@type'].includes('honeycomb')) {
+          dataLayerObject = {
+            "event": "hide",
+            "hideInfo": {
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+              "title": dataObject['dc:title'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+              "type": "honeycomb"
+            }
+          };
+        } else if (dataObject['@type'].includes('accordion')) {
+          dataLayerObject = {
+            "event": "hide",
+            "hideInfo": {
+              "category": parentObject ? parentObject['analyticsCategory'] ?? "" : "",
+              "title": dataObject['dc:title'],
+              "url": dataObject['xdm:linkURL'] ?? "",
+              "type": "accordion"
             }
           };
         } else {

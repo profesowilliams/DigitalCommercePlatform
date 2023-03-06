@@ -4,10 +4,10 @@
   id="${accordion.id}"
   class="cmp-accordion ${accordion.items.size <= 3 ? 'cmp-honeycomb__two-rows' : 'cmp-honeycomb__three-rows'}"
   data-cmp-is="accordion"
-  data-cmp-data-layer="${accordion.data.json}"
+  data-cmp-data-layer="${dataLayer.dataLayerJson}"
+  data-sly-use.dataLayer="${'honeycomb.js' @ data=accordion.data.json}"
   data-cmp-single-expansion="${accordion.singleExpansion}"
-  data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}"
->
+  data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}">
   <div
     data-sly-test="${accordion.items.size > 0}"
     data-sly-repeat.item="${accordion.items}"
@@ -15,35 +15,30 @@
     data-cmp-hook-accordion="item"
     data-cmp-data-layer="${item.data.json}"
     id="${item.id}"
-    data-cmp-expanded="${item.name in accordion.expandedItems}"
-  >
+    data-cmp-expanded="${item.name in accordion.expandedItems}">
     <h3
       data-sly-element="${accordion.headingElement @ context='elementName'}"
-      class="cmp-accordion__header"
-    >
+      class="cmp-accordion__header">
       <button
         id="${item.id}-button"
         class="cmp-accordion__button${item.name in accordion.expandedItems ? ' cmp-accordion__button--expanded' : ''}"
         aria-controls="${item.id}-panel"
         data-cmp-hook-accordion="button"
-      >
+        data-cmp-clickable="true">
         <div
           class="cmp-honeycomb-svg"
-          data-sly-use.backgroundIcon="${'com.tdscore.core.models.AssetUtilities' @ path=properties.iconFileReference}"
-        >
+          data-sly-use.backgroundIcon="${'com.tdscore.core.models.AssetUtilities' @ path=properties.iconFileReference}">
           ${backgroundIcon.binary @ context='unsafe'}
         </div>
         <div
           class="cmp-honeycomb-expanded-svg"
-          data-sly-use.backgroundIconSelected="${'com.tdscore.core.models.AssetUtilities' @ path=properties.selectedIconFileReference}"
-        >
+          data-sly-use.backgroundIconSelected="${'com.tdscore.core.models.AssetUtilities' @ path=properties.selectedIconFileReference}">
           ${backgroundIconSelected.binary @ context='unsafe'}
         </div>
         <span
           class="cmp-accordion__title"
           style="color: ${properties.fontColor @ context='styleToken'}"
-          >${item.title}</span
-        >
+          >${item.title}</span>
       </button>
     </h3>
     <div
@@ -52,11 +47,11 @@
       id="${item.id}-panel"
       class="cmp-accordion__panel${item.name in accordion.expandedItems ? ' cmp-accordion__panel--expanded' : ' cmp-accordion__panel--hidden'}"
       role="region"
-      aria-labelledby="${item.id}-button"
-    ></div>
+      aria-labelledby="${item.id}-button">
+    </div>
   </div>
   <sly
     data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
-    data-sly-test="${(wcmmode.edit || wcmmode.preview) && accordion.items.size < 1}"
-  ></sly>
+    data-sly-test="${(wcmmode.edit || wcmmode.preview) && accordion.items.size < 1}">
+  </sly>
 </div>
