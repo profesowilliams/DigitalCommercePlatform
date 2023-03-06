@@ -248,4 +248,24 @@
             }
         }
     }
+
+    &-home-page {
+        .cmp-teaser {
+            text-align: center;
+        }
+        .cmp-teaser__image {
+            margin-bottom: 10px;
+        }
+        .cmp-teaser__content {
+            margin-bottom: 15px;
+            .cmp-teaser__title,
+            .cmp-teaser__title a {
+                color: #000C21;
+                font-weight: 400;
+                font-size: 32px;
+                line-height: 40px;
+                text-decoration: none;
+            }
+        }
+    }
 }
