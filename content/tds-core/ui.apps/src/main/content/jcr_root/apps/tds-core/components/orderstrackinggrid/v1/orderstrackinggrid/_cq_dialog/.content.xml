@@ -513,41 +513,9 @@
                                                                     fieldLabel="Enter Search Key"
                                                                     name="./searchKey">
 																	<items jcr:primaryType="nt:unstructured">
-																		<contractId
+																		<orderId
                                                                             jcr:primaryType="nt:unstructured"
-                                                                            text="ContractID"
-                                                                            value="ContractID"/>
-																		<vendorId
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="VendorQuoteID"
-                                                                            value="VendorQuoteID"/>
-																		<serialNumber
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="SerialNumber"
-                                                                            value="SerialNumber"/>
-																		<instanceNumber
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="Instance"
-                                                                            value="Instance"/>
-																		<enduserName
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="EndUser"
-                                                                            value="EndUser"/>
-																		<endUserEmail
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="EndUserEmail"
-                                                                            value="EndUserEmail"/>
-																		<resellerName
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="ResellerName"
-                                                                            value="ResellerName"/>
-																		<resellerId
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="ResellerId"
-                                                                            value="ResellerId"/>
-																		<distiQuoteId
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="Disti Quote Id"
+                                                                            text="Order Nº"
                                                                             value="Id"/>
 																	</items>
 																</searchKey>

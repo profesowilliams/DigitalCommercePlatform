@@ -1,4 +1,4 @@
-use(["../common/utils.js"], function (utils) {
+use([], function () {
   var msgDebugMsg = "";
   function logger(condition, msg) {
     log.info(">>>>>>>>>>>>>>>>>>>> " + msg + " <<<<<<<<<<<<<<<<<<<<<<<");

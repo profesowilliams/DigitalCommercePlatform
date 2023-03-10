@@ -102,11 +102,11 @@ export function priceDescendingByDefaultHandle(sortingFields, mappedResponse) {
     return [...multiSorting];
 }
 
-function urlStrToMapStruc(urlStri = ''){
+export function urlStrToMapStruc(urlStri = ''){
     return new Map(urlStri.split("&").map(e => e.split("=")));
 }
 
-function mapStrucToUrlStr(urlMapStruc = new Map()){
+export function mapStrucToUrlStr(urlMapStruc = new Map()){
     return Array.from(urlMapStruc)
       .map((e) => e.join('='))
       .join('&')
@@ -146,7 +146,7 @@ function compareMaps(map1, map2) {
     return true;
 }
 
-function isSameFilterRepeated(previousFilter, newFilter){   
+export function isSameFilterRepeated(previousFilter, newFilter){   
 
     const prevMap = new Map(Object.entries(previousFilter));
     prevMap.delete('sortBy');
@@ -196,7 +196,7 @@ function sortListToUrlStr (sortList){
     return sortList.map(c => `SortBy=${c.colId}:${c.sort ?? ''}`).join('&');
 }
 
-function extractSortColAndDirection(sortDataRef = []){
+export function extractSortColAndDirection(sortDataRef = []){
     const [sortParam] = sortDataRef;   
     return {
         isColReseted: !sortParam?.colId || !sortParam?.sort,
@@ -204,13 +204,13 @@ function extractSortColAndDirection(sortDataRef = []){
     }
 }
 
-function calcSecondLevelSorting(sortList){
+export function calcSecondLevelSorting(sortList){
     if (!Array.isArray(sortList) && !sortList.length == 2) return false;
     const [_, sortParam] = sortList;
     return `${sortParam?.colId}:${sortParam?.sort}`
 }
 
-function isRepeatedSortAction(previusSort, newSort){ 
+export function isRepeatedSortAction(previusSort, newSort){ 
     if (!previusSort || !newSort) return false;
     const previusSortList = previusSort.map(({colId, sort}) => ({colId, sort}));
     const newSortList = newSort.map(({colId, sort}) => ({colId, sort}));

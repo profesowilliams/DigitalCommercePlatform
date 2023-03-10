@@ -1,16 +1,11 @@
 import Create from "zustand";
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { getFromQueryString, getLocalValueOrDefault } from "../../RenewalsGrid/store/RenewalsStore";
+import { basicGridState, paginationState } from "../../BaseGrid/store/GridStore";
 import { orderTrackingEffects } from "./OrderTrackingStoreEffects";
-const INITIAL_STATE = {  
-  resetGrid:null,
-  pagination: {
-    totalCounter: 0,
-    stepBy: 25,
-    currentPage: 1,
-    currentResultsInPage: getLocalValueOrDefault(ORDER_PAGINATION_LOCAL_STORAGE_KEY, "currentResultsInPage", 0),
-    pageNumber: getLocalValueOrDefault(ORDER_PAGINATION_LOCAL_STORAGE_KEY, "pageNumber", getFromQueryString('page=') || 1),
-  },
+
+const INITIAL_STATE = {
+  ...basicGridState,
+  ...paginationState,
 };
 
 const store = (set,get) => ({

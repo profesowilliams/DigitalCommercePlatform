@@ -1,14 +1,13 @@
 import React from "react";
 import { If } from "../../../helpers/If";
-import { CloseIconWeighted } from "./RenewalSearch";
+import { CloseIconWeighted } from "./Search";
 import { CloseIcon } from "../../../../../fluentIcons/FluentIcons";
 import useComputeBranding from "../../../hooks/useComputeBranding";
-import { useRenewalGridState } from "../store/RenewalsStore";
 
-export function SearchField({ chosenFilter = '', inputRef, triggerSearchOnEnter, searchTerm, setSearchTerm }) {
+export function SearchField({ chosenFilter = '', inputRef, triggerSearchOnEnter, searchTerm, setSearchTerm, store }) {
   const capitalizeContainedID = (searchTermText) => searchTermText.replace(/\bid(?:$|\b)/g,'ID');  
   const formatChosenFilter = (searchTermText) => `Enter ${capitalizeContainedID(searchTermText?.toLowerCase())}`
-  const { isTDSynnex } = useComputeBranding(useRenewalGridState);
+  const { isTDSynnex } = useComputeBranding(store);
   return (
     <div className="cmp-search-select-container__box-search-field">
       <input

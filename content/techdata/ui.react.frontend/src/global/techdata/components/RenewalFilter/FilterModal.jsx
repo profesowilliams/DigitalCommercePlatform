@@ -6,7 +6,7 @@ import {
   getLocalStorageData,
   setLocalStorageData,
 } from "../RenewalsGrid/utils/renewalUtils";
-import { getLocalValueOrDefault, useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
+import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
 import FilterList from "./components/FilterList";
@@ -21,6 +21,7 @@ import useFilteringSelected from "./hooks/useIsFilteringSelected";
 
 import { RenewalErrorBoundary } from "./renewalErrorBoundary";
 import { getDictionaryValue } from "../../../../utils/utils";
+import { getLocalValueOrDefault } from "../BaseGrid/store/GridStore";
 
 const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;

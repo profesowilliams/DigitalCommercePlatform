@@ -30,7 +30,7 @@ import TransactionNumber from "./Orders/TransactionNumber";
 import { renewalsDefinitions } from "./utils/renewalsDefinitions";
 import BaseGrid from "../BaseGrid/BaseGrid";
 import BaseGridHeader from "../BaseGrid/BaseGridHeader";
-import RenewalSearch from "./Search/RenewalSearch";
+import RenewalSearch from "../BaseGrid/Search/Search";
 import CopyFlyout from "../CopyFlyout/CopyFlyout";
 import BaseGridPagination from "../BaseGrid/Pagination/BaseGridPagination";
 import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
@@ -309,6 +309,7 @@ function RenewalsGrid(props) {
             options={searchOptionsList}
             onQueryChanged={onQueryChanged}
             ref={searchCriteria}
+            store={useRenewalGridState}
           />,
           <VerticalSeparator />,
           <RenewalFilter

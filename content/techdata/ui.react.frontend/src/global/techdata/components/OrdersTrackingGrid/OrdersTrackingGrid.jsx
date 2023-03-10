@@ -1,25 +1,35 @@
-import React, {useRef} from 'react';
-import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
+import React, {useEffect, useRef} from 'react';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import BaseGridPagination from '../BaseGrid/Pagination/BaseGridPagination';
-import { addCurrentPageNumber, mapServiceData, setPaginationData, updateQueryString } from '../RenewalsGrid/utils/renewalUtils';
+import { addCurrentPageNumber, getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, mapServiceData, setPaginationData, updateQueryString } from '../RenewalsGrid/utils/renewalUtils';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
 import OpenOrders from './OpenOrders/OpenOrders';
-import OrderSearch from './Search/OrderSearch';
+import OrderSearch from "../BaseGrid/Search/Search";
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
-import { setDefaultSearchDateRange } from './utils/orderTrackingUtils';
+import { fetchData, setDefaultSearchDateRange } from './utils/orderTrackingUtils';
+import { ANALYTICS_TYPES } from '../../../../utils/dataLayerUtils';
+import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 
 function OrdersTrackingGrid(props) {
+  const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
+  const previousFilter = useRef(false);
+  const hasSortChanged = useRef(false);
+  const previousSortChanged = useRef(false);
+  const searchCriteria = useRef({field:'',value:''});
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore(st => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(useOrderTrackingStore);
   const componentProp = JSON.parse(props.componentProp);
+
+  const { searchOptionsList, shopURL, icons } = componentProp;
   const gridApiRef = useRef();
+  const firstAPICall = useRef(true);
   const gridConfig = {
     ...componentProp,
     paginationStyle: 'custom',
@@ -29,7 +39,7 @@ function OrdersTrackingGrid(props) {
   const defaultSearchDateRange = setDefaultSearchDateRange(
     componentProp?.defaultSearchDateRange
   );  
-  const {setCustomState} = effects;
+  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
   const _onAfterGridInit = (config) => {
     onAfterGridInit(config);
@@ -38,8 +48,25 @@ function OrdersTrackingGrid(props) {
 
   const customRequestInterceptor = async (request) => { 
     const gridApi = gridApiRef?.current?.api;
+    const queryOperations = {
+      hasSortChanged,
+      isFilterDataPopulated,
+      optionFieldsRef,
+      customPaginationRef,
+      componentProp,
+      //onSearchAction,
+      searchCriteria,
+      previousFilter,
+      request,
+      previousSortChanged,
+      //onFiltersClear,
+      firstAPICall,
+      //isPriceColumnClicked,
+      gridApiRef
+    }
     request.url = addCurrentPageNumber(customPaginationRef, request);
-    const response = await request.get(request.url);
+    //const response = await request.get(request.url);
+    const response = await fetchData(queryOperations);
     const mappedResponse = mapServiceData(response);
     const paginationValue = setPaginationData(mappedResponse?.data?.content, gridConfig.itemsPerPage);
     const responseContent = response?.data?.content;
@@ -54,6 +81,31 @@ function OrdersTrackingGrid(props) {
     return mappedResponse;
   }
 
+  const onSortChanged = (evt) => {
+    const sortModelList = evt.columnApi.getColumnState();
+    const sortedModel = sortModelList.filter(o => !!o.sort).map( ({colId, sort }) => ({colId, sort}));
+    const renewalPlanItem = sortedModel.find(x => x.colId === 'renewedduration');
+    if(renewalPlanItem) {
+      sortedModel.push({...renewalPlanItem, colId: 'support'});
+    }
+    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;  
+    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current); 
+    const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
+    if (sortingEventFilter.length === 1) {
+      pushEvent(ANALYTICS_TYPES.events.click, {
+        type: ANALYTICS_TYPES.types.button,
+        category: ANALYTICS_TYPES.category.renewalsTableInteraction,
+        name: sortingEventFilter?.[0]?.colId,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
+      hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+    }
+  }, [])
+
   return (
     <div className='cmp-order-tracking-grid'>
       <BaseGridHeader
@@ -67,7 +119,12 @@ function OrdersTrackingGrid(props) {
           />
         ]}
         rightComponents={[
-          <OrderSearch /> ,
+          <OrderSearch
+            options={searchOptionsList}
+            onQueryChanged={onQueryChanged}
+            ref={searchCriteria}
+            store={useOrderTrackingStore}
+          />,
           <VerticalSeparator />,
           <OrderFilter />,
           <VerticalSeparator />,
@@ -81,6 +138,8 @@ function OrdersTrackingGrid(props) {
         gridConfig={gridConfig}
         defaultSearchDateRange={defaultSearchDateRange}
         requestInterceptor={customRequestInterceptor}
+        mapServiceData={mapServiceData}
+        onSortChanged={onSortChanged}
         onAfterGridInit={_onAfterGridInit}
       />
     </div>

@@ -15,8 +15,7 @@ import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import Capsule from "../../Widgets/Capsule";
-import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../utils/renewalUtils";
-import { useRenewalGridState } from "../store/RenewalsStore";
+import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 import { SearchField } from "./SearchField";
 
 export const CloseIconWeighted = (props) => (
@@ -25,8 +24,8 @@ export const CloseIconWeighted = (props) => (
   </svg>
 );
 
-function _RenewalSearch(
-  { styleProps, options, callback, inputType, filterCounter, onQueryChanged },
+function _GridSearch(
+  { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store },
   ref
 ) {
   const customSearchValues = {
@@ -50,8 +49,8 @@ function _RenewalSearch(
   const [searchTerm, setSearchTerm] = useState(getInitialValueState());
   const [capsuleSearchValue, setCapsuleSearchValue] = useState(getInitialValueState());
   const [searchTriggered, setSearchTriggered] = useState(false);
-  const effects = useRenewalGridState((state) => state.effects);
-  const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState);
+  const effects = store((state) => state.effects);
+  const { computeClassName, isTDSynnex } = useComputeBranding(store);
   const { closeAndCleanToaster } = effects;  
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
@@ -149,7 +148,7 @@ function _RenewalSearch(
   }
 
   const handleDropdownSwitch = useCallback(() => {
-    closeAndCleanToaster();
+    closeAndCleanToaster && closeAndCleanToaster();
     if (isSearchCapsuleVisible) {
       handleCapsuleTextClick();
     }
@@ -274,6 +273,7 @@ function _RenewalSearch(
                searchTerm={searchTerm}
                setSearchTerm={setSearchTerm}
                triggerSearchOnEnter={triggerSearchOnEnter}
+               store={store}
               />
               <button
                 className={computeClassName("cmp-search-tooltip__button")}
@@ -342,12 +342,12 @@ function _RenewalSearch(
   );
 }
 
-const RenewalSearch = React.memo(forwardRef(_RenewalSearch));
+const GridSearch = React.memo(forwardRef(_GridSearch));
 
-export default RenewalSearch;
+export default GridSearch;
 
 
-_RenewalSearch.propTypes = {
+_GridSearch.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       searchLabel: PropTypes.string,
