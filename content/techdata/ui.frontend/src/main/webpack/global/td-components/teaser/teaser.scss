@@ -812,8 +812,9 @@
                             height: auto;
 
                             .cmp-teaser {
-                                display: block;
+                                display: inline-flex;
                                 width: inherit;
+                                height: auto;
 
                                 &__image {
                                     display: none;
@@ -844,7 +845,7 @@
                                 }
 
                                 &__description {
-                                    display: block;
+                                    display: inline-block;
                                     padding: 0;
 
                                     p {
