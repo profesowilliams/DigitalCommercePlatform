@@ -255,8 +255,8 @@
   padding: 5px 0;
   border-bottom: 2px solid #030f24;
   align-items: center;
-  height:45px;
-  margin-top: 2.5rem;
+  height:60px;
+  margin-top: 1.5rem;
   &-left{
     display: flex;
     gap: .5rem;
@@ -693,38 +693,46 @@ button.icon-box {
       }
       & .cmp-navigation__actions {
         font-size: 14px;
-        align-items: center;
         color: #003031;
-         button {
-          display: flex;
-          margin: unset;
-          width: 20px;
-          svg {
-            height: 10px;
-          }
+        button{
+          margin: 0px;
         }
         & .move-button {
+          padding-top: 4px;
           svg {
             fill:#08bed5;
             height: 16px;
           }
           &__disabled {
+            padding-top: 4px;
+            cursor: default;
             svg {
-              fill: #c6c6c6;
               height: 16px;
+              path{
+                fill: #c6c6c6;
+              }
             }
           }
         }
         & .cmp-navigation__actions-labels {
+          padding: 0px 8px;
           font-family: 'Arial', sans-serif;
-          input, span {
-            font-family: 'Arial', sans-serif;
-            color: #003031;
+          color: #003031;
+          & .cmp-input-underline {
+            height: 29px;
+            border-bottom: 1px solid #75716E;
+          }
+          span {
+            margin-top: 6px;
+          }
+          input{
+            margin-bottom: 0px;
+            margin-top: 6px;
+            border-bottom: 0px;
           }
         }
       }
     }
-
     & .renewal-filters {
       & .cmp-renewal-search {
         span {

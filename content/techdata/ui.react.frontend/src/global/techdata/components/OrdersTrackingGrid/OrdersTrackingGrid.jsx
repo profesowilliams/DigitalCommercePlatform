@@ -142,6 +142,13 @@ function OrdersTrackingGrid(props) {
         onSortChanged={onSortChanged}
         onAfterGridInit={_onAfterGridInit}
       />
+      <div className="cmp-renewals__pagination--bottom">
+        <BaseGridPagination
+          ref={customPaginationRef}
+          store={useOrderTrackingStore}
+          onQueryChanged={onQueryChanged}
+        />
+      </div>
     </div>
   );
 }

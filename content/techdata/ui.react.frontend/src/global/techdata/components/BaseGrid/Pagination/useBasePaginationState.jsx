@@ -110,8 +110,8 @@ function useBasePaginationState({ store, onQueryChanged }) {
   const getUpperLimitShownItemsNumber = () => {
     const upperLimit = paginationCounter.maxCounter > 0
                         ? paginationCounter.maxCounter
-                        : maxPaginationCounter();
-    return upperLimit > totalCounter ? totalCounter : upperLimit;
+                        : maxPaginationCounter();                    
+    return totalCounter ? upperLimit : 0
   }
 
   const getPaginationMinCounter = () => {
@@ -121,8 +121,9 @@ function useBasePaginationState({ store, onQueryChanged }) {
   }
 
   const processPaginationString = () => {
-    const dictionaryLabel = getDictionaryValue("grids.common.label.results", "{0} - {1} of {2} results");
-    return dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter || '');
+    const dictionaryLabel = getDictionaryValue("grids.common.label.results", "{0}-{1} of {2} results");
+    const labelWithResults = dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter || '');
+    return totalCounter ? labelWithResults : labelWithResults.replace('1-', '').replace('of', '');
   }
 
   const handleInputchange = (event) => {

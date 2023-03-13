@@ -4964,7 +4964,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "details.renewal.label.backTo": "Back to all Renewals",
     "details.renewal.label.title": "Quote Preview",
 
-    "grids.common.label.results": "{0} - {1} of {2} results",
+    "grids.common.label.results": "{0}-{1} of {2} results",
     "grids.common.label.of": "of",
     "grids.renewal.label.selectedPlan": "Selected Plan",
     "grids.renewal.label.currentPlan": "Current Plan",

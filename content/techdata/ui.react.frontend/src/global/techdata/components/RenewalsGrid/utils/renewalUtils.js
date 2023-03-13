@@ -46,7 +46,7 @@ export function mapServiceData(response) {
         ? items.map((data) => ({ ...data, actions: true }))
         : [];
     const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
-    const pageCount = mappedResponse?.data?.content?.pageCount ?? 0;
+    const pageCount = mappedResponse?.data?.content?.pageCount ?? 1;
     const pageNumber = mappedResponse?.data?.content?.pageNumber ?? 0;
     const refinementGroups =
         mappedResponse?.data?.content?.refinementGroups;

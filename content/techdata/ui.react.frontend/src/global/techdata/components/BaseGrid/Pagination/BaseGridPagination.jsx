@@ -23,47 +23,44 @@ function BaseGridPagination({onQueryChanged, store}, ref) {
       </div>
       <div className="cmp-navigation__actions">
         <button
+          className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
           disabled={pageNumber === 1}
           onClick={goToFirstPage}
         >
-        <ChevronDoubleLeftIcon/>  
-           
+        <ChevronDoubleLeftIcon/>            
         </button>
         <button
           className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
-          style={{ cursor: pageNumber !== 1 && "pointer" }}
           disabled={pageNumber === 1}
           onClick={decrementHandler}
         >
-        <ChevronLeftIcon/>
-          
+        <ChevronLeftIcon/>          
         </button>
         <div className="cmp-navigation__actions-labels">
-          <input
-            className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
-            ref={pageInputRef}
-            type="number"
-            onKeyDown={handleInputchange}
-            onChange={handleInputchange}
-            onBlur={handleInputchange}
-            defaultValue={pageNumber}
-            key={Math.random()}
-          />
+          <div className="cmp-input-underline">          
+            <input
+              className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
+              ref={pageInputRef}
+              type="number"
+              onKeyDown={handleInputchange}
+              onChange={handleInputchange}
+              onBlur={handleInputchange}
+              defaultValue={pageNumber}
+              key={Math.random()}
+            />
+          </div>
           <span>{getDictionaryValue("grids.common.label.of", "of")}</span>
           <span>{pageCount}</span>
         </div>      
         <button
-          className={`move-button${
-            pageNumber === pageCount ? "__disabled" : ""
-          }`}
+          className={`move-button${pageNumber === pageCount ? "__disabled" : ""}`}
           disabled={pageNumber === pageCount}
           onClick={incrementHandler}
-          style={{ cursor: pageNumber !== pageCount && "pointer" }}
         >
-       <ChevronRightIcon/>
-          
+       <ChevronRightIcon/>          
         </button>
         <button
+          className={`move-button${pageNumber === pageCount ? "__disabled" : ""}`}
           disabled={pageNumber === pageCount}
           onClick={gotToLastPage}
         >
