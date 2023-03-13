@@ -1,13 +1,14 @@
 use(function () {
   const ANALYTICS_REGION_PN = "analyticsRegion";
   const ANALYTICS_CATEGORY_PN = "analyticsCategory";
-  const ANALYTICS_NAME_PN = "accordion";
+  const ANALYTICS_NAME_PN = this.componentName;
   var dataJson = JSON.parse(this.data);
   var jsonObject = new Packages.org.json.JSONObject();
 
 
   if (dataJson) {
     var keys = Object.keys(dataJson);
+    console.log(keys);
     if (keys && keys.length > 0) {
       var firstKey = keys[0];
       jsonObject.put(firstKey, dataJson[firstKey]);

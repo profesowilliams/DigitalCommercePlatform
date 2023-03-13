@@ -1,7 +1,4 @@
 use(function () {
-  const ANALYTICS_REGION_PN = "analyticsRegion";
-  const ANALYTICS_CATEGORY_PN = "analyticsCategory";
-  const ANALYTICS_NAME_PN = "DropdownButton";
   var dataJson = JSON.parse(this.data);
   var parentId = this.parent;
   var jsonObject = new Packages.org.json.JSONObject();
@@ -11,17 +8,6 @@ use(function () {
     if (keys && keys.length > 0) {
       var firstKey = keys[0];
       jsonObject.put(firstKey, dataJson[firstKey]);
-      if (properties.get(ANALYTICS_REGION_PN) != null) {
-        jsonObject.getJSONObject(firstKey).put(ANALYTICS_REGION_PN, properties.get(ANALYTICS_REGION_PN));
-      }
-
-      if (properties.get(ANALYTICS_CATEGORY_PN) != null) {
-        jsonObject.getJSONObject(firstKey).put(ANALYTICS_CATEGORY_PN, properties.get(ANALYTICS_CATEGORY_PN));
-      }
-
-      if (properties.get(ANALYTICS_NAME_PN) != null) {
-        jsonObject.getJSONObject(firstKey).put(ANALYTICS_NAME_PN, properties.get(ANALYTICS_NAME_PN));
-      }
 
       if (parentId) {
         jsonObject.getJSONObject(firstKey).put("parentId", parentId);

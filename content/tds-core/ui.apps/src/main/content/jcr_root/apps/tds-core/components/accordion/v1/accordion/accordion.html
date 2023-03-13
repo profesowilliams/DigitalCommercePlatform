@@ -19,7 +19,7 @@
      class="cmp-accordion"
      data-cmp-is="accordion"
      data-cmp-data-layer="${dataLayer.dataLayerJson}"
-     data-sly-use.dataLayer="${'accordion.js' @ data=accordion.data.json}"     
+     data-sly-use.dataLayer="${'../../../common/commonAnalytics.js' @ data=accordion.data.json, componentName='accordion'}"     
      data-cmp-single-expansion="${accordion.singleExpansion}"
      data-placeholder-text="${wcmmode.edit && 'Please drag Accordion item components here' @ i18n}">
     <div data-sly-test="${accordion.items.size > 0}"

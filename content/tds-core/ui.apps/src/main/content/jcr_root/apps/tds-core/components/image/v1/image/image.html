@@ -34,7 +34,8 @@
 		itemtype="http://schema.org/ImageObject"
 		id="${component.id}"
 		data-cmp-clickable="${image.link ? true : false}"
-    data-cmp-data-layer="${image.data.json}">
+		data-cmp-data-layer="${dataLayer.dataLayerJson}"
+		data-sly-use.dataLayer="${'../../../common/commonAnalytics.js' @ data=image.data.json, componentName='image'}">
 	<a data-sly-unwrap="${!image.link}"
 		 class="cmp-image__link"
 		 href="${image.link}"

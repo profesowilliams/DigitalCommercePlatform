@@ -22,7 +22,8 @@
     id="${component.id}"
     data-sly-test.itemType="${properties.itemType ? properties.itemType : 'item'}"
     class="cmp-list"
-    data-cmp-data-layer="${list.data.json}"
+		data-cmp-data-layer="${dataLayer.dataLayerJson}"
+		data-sly-use.dataLayer="${'../../../common/commonAnalytics.js' @ data=list.data.json, componentName='list'}"
     style="color: ${properties.fontColor @ context='styleToken'}">
     <li class="cmp-list__item" data-sly-call="${itemTemplate[itemType] @ list = list, item = item}"
         data-cmp-data-layer="${item.data.json}" ></li>

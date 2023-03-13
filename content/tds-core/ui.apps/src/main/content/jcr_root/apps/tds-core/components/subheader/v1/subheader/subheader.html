@@ -6,7 +6,7 @@
      class="cmp-tabs"
      data-cmp-is="tabs"
      data-cmp-data-layer="${dataLayer.dataLayerJson}"
-     data-sly-use.dataLayer="${'tabdata.js' @ data=tabs.data.json}">
+     data-sly-use.dataLayer="${'../../../common/commonAnalytics.js' @ data=tabs.data.json, componentName='subheader'}">
      <div>
           <div class="cmp-sub-header--sub-nav new-sub" data-current-page-path="${currentPage.path}">
 

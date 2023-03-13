@@ -12,7 +12,7 @@
   data-cmp-delay="${carousel.delay}"
   data-cmp-autopause-disabled="${carousel.autopauseDisabled}" 
   data-cmp-data-layer="${dataLayer.dataLayerJson}"
-  data-sly-use.dataLayer="${'carouselHelper.js' @ data=carousel.data.json}"
+  data-sly-use.dataLayer="${'../../../common/commonAnalytics.js' @ data=carousel.data.json, componentName='alertCarousel'}"
   data-panelcontainer="${wcmmode.edit && 'carousel'}"
   data-placeholder-text="${wcmmode.edit && 'Please add Carousel components here' @ i18n}">
   <div
