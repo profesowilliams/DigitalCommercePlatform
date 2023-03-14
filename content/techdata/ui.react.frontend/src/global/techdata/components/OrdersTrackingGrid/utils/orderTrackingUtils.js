@@ -45,13 +45,6 @@ export async function fetchData(config) {
           mapUrl.set('SortBySecondLevelComposite', renewedWithSupport);
         }
       }
-      
-      mapUrl.set('SortBy', sortStrValue);
-      if (isColReseted) {
-        mapUrl.delete('SortBy');
-      }
-
-      mapUrl.delete('SortDirection');
   
       const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
       const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData);
