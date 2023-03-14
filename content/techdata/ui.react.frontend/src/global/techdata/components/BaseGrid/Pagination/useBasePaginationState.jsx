@@ -122,8 +122,9 @@ function useBasePaginationState({ store, onQueryChanged }) {
 
   const processPaginationString = () => {
     const dictionaryLabel = getDictionaryValue("grids.common.label.results", "{0}-{1} of {2} results");
-    const labelWithResults = dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter || '');
-    return totalCounter ? labelWithResults : labelWithResults.replace('1-', '').replace('of', '');
+    const labelWithResults = dictionaryLabel.replace("{0}", getPaginationMinCounter())?.replace("{1}", getUpperLimitShownItemsNumber())?.replace("{2}", totalCounter || '');    
+    const defaultString = `0 ${dictionaryLabel?.split(" ")?.pop()}`;
+    return totalCounter ? labelWithResults : defaultString;
   }
 
   const handleInputchange = (event) => {
