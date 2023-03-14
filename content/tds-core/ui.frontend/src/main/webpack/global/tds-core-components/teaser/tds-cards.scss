@@ -269,3 +269,76 @@
         }
     }
 }
+
+
+.cmp-container-triple-teaser {
+    .cmp-container {
+        & > .aem-Grid {
+            display: flex;
+            flex-direction: row;
+
+             @include mobile {
+                display: block;
+             }
+
+            .cmp-tds-triple-teaser {
+                flex: 33.33% 0 0;
+                padding-left: 17px;
+                padding-right: 17px;
+
+                .cmp-teaser {
+                    height: 100%;
+                    justify-content: unset;
+                    background-color: #F8F8F8;
+
+                    &:hover {
+                        box-shadow: none;
+                        outline: none !important;
+                        border: none;
+
+                        .cmp-teaser__title .cmp-teaser__title-link {
+                            color: #00558c !important;
+                            font-weight: 400;
+                        }
+                    }
+
+                    .cmp-teaser__content {
+                        width: calc(100% - 80px);
+                        margin-top: -40px;
+                        background-color: white;
+                        padding: 0 20px;
+                        margin-bottom: 40px;
+                        height: 100%;
+
+                        .cmp-teaser__description {
+                            padding: 0;
+
+                            ul {
+                                padding-left: 15px;
+
+                                li {
+                                    font-size: 16px;
+                                    line-height: 24px;
+                                    color: #262626;
+                                }
+                            }
+                        }
+                    }
+
+                    .cmp-teaser__title,
+                    .cmp-teaser__title a {
+                        background-color: white;
+                        color: #00558C;
+                        font-size: 28px;
+                        line-height: 36px;
+                    }
+
+                    .cmp-teaser__title {
+                        padding: 40px 0;
+                        min-height: 152px;
+                    }
+                }
+            }
+        }
+    }
+}
