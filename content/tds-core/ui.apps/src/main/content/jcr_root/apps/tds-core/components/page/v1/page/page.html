@@ -20,91 +20,90 @@
       data-sly-use.footer="footer.html"
       data-sly-use.props="${'check_private_page.js'}"
       data-sly-use.redirect="redirect.html">
-<head data-sly-call="${head.head @ page = page, pwa = pwa}"></head>
-<body class="${page.cssClassNames}"
-      id="${page.id}"
-      data-authormode="${wcmmode.edit || wcmmode.preview}"
-      data-cmp-data-layer-enabled="${page.data ? true : false}"
-      data-signin-httponly="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].httpOnlyEnabled}"
-      data-disable-extra-reload="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].extraReloadDisabled}"
-      data-sec-code-enabled="${pageProperties.securityCodeEnabled ? true : false}"
-      data-sec-code="${pageProperties.securityCode}"
-      data-disable-check-for-dcp-access="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableChecksForDCPAccess}"
-      data-disable-entitlements-list="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableEntitlementsList}"
-      data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}"
-      data-sly-attribute.data-environment-request-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].environmentEnabled ? caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].environmentRequestHeader : ''}"
-      data-disable-impersonation-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableImpersonateAccountRequestHeader}">
-        <script data-sly-test.dataLayerEnabled="${page.dataJson}">
-          window.adobeDataLayer = window.adobeDataLayer || [];
-          adobeDataLayer.push({
-              page: JSON.parse("${page.dataJson @ context='scriptString'}"),
-              event:'cmp:show',
-              eventInfo: {
-                  path: 'page.${page.id @ context="scriptString"}'
-              }
-          });
-        </script>
+  <head data-sly-call="${head.head @ page = page, pwa = pwa}"></head>
+  <body class="${page.cssClassNames}"
+        id="${page.id}"
+        data-authormode="${wcmmode.edit || wcmmode.preview}"
+        data-cmp-data-layer-enabled="${page.data ? true : false}"
+        data-sec-code-enabled="${pageProperties.securityCodeEnabled ? true : false}"
+        data-sec-code="${pageProperties.securityCode}"
+        data-signin-httponly="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].httpOnlyEnabled}"
+        data-disable-extra-reload="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].extraReloadDisabled}"
+        data-disable-check-for-dcp-access="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableChecksForDCPAccess}"
+        data-disable-entitlements-list="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableEntitlementsList}"
+        data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}"
+        data-sly-attribute.data-environment-request-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].environmentEnabled ? caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].environmentRequestHeader : ''}"
+        data-disable-impersonation-header="${caconfig['com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration'].disableImpersonateAccountRequestHeader}">
+    <script data-sly-test.dataLayerEnabled="${page.dataJson}">
+      window.adobeDataLayer = window.adobeDataLayer || [];
+      adobeDataLayer.push({
+        page: JSON.parse("${page.dataJson @ context='scriptString'}"),
+        event:'cmp:show',
+        eventInfo: {
+          path: 'page.${page.id @ context="scriptString"}'
+        }
+      });
+    </script>
     <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
-        <!-- Google Tag Manager in Body -->
-        ${configData.gtmBodyJSScript @ context='scriptComment'}
-        <!-- End Google Tag Manager in Body -->
+      <!-- Google Tag Manager in Body -->
+      ${configData.gtmBodyJSScript @ context='scriptComment'}
+      <!-- End Google Tag Manager in Body -->
     </sly>
+    <div id="top"></div>
+    <script data-sly-test.dataLayerEnabled="${page.dataJson}">
+      window.adobeDataLayer = window.adobeDataLayer || [];
 
-<div id="top"></div>
-<script data-sly-test.dataLayerEnabled="${page.dataJson}">
-  window.adobeDataLayer = window.adobeDataLayer || [];
-
-  let sessionId = window.localStorage.getItem("sessionId");
-  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-  if (isExtraReloadDisabled()) {
-    window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
-    window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
-  }
-  let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-
-  adobeDataLayer.push({
-    event: 'page view',
-    page: {
-      pageInfo: {
-        pageName: '${page.analyticsPageName @ context='unsafe'}',
-        url: '${page.pageUrl @ context='unsafe'}',
-        server: '${page.pageHost @ context='unsafe'}',
-        country: '${page.country @ context='unsafe'}',
-        language: '${page.language @ context='unsafe'}',
-        currencyCode: '${page.currencyCode @ context='unsafe'}'
-                },
-      category: {
-        pageType: '${page.pageType  @ context='unsafe'}',
-        siteSection1: '${page.siteSections[0]  @ context='unsafe'}',
-        siteSection2: '${page.siteSections[1]  @ context='unsafe'}',
-        siteSection3: '${page.siteSections[2]  @ context='unsafe'}',
-        siteSection4: '${page.siteSections[3]  @ context='unsafe'}'
-                },
-      error: {
-        errorCode: '${page.errorCode @ context='unsafe'}',
-        errorName: '${page.errorName @ context='unsafe'}'
-               },
-      visitor: {
-        ecID: sessionId && userData?.id ? userData.id : null,
-        sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-        loginStatus: sessionId ? "Logged in" : "Logged out"
+      let sessionId = window.localStorage.getItem("sessionId");
+      const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+      let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+      if (isExtraReloadDisabled()) {
+        window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
+        window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
       }
-    }
-  });
-</script>
-<sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
-     data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
-    <script type="text/javascript">
+      let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+
+      adobeDataLayer.push({
+        "event": "page view",
+        "page": {
+          "pageInfo": {
+            "pageName": "${page.analyticsPageName @ context='unsafe'}",
+            "url": "${page.pageUrl @ context='unsafe'}",
+            "server": "${page.pageHost @ context='unsafe'}",
+            "country": "${page.country @ context='unsafe'}",
+            "language": "${page.language @ context='unsafe'}",
+            "currencyCode": "${page.currencyCode @ context='unsafe'}"
+          },
+          "category": {
+            "pageType": "${page.pageType  @ context='unsafe'}",
+            "siteSection1": "${page.siteSections[0]  @ context='unsafe'}",
+            "siteSection2": "${page.siteSections[1]  @ context='unsafe'}",
+            "siteSection3": "${page.siteSections[2]  @ context='unsafe'}",
+            "siteSection4": "${page.siteSections[3]  @ context='unsafe'}"
+          },
+          "error": {
+            "errorCode": "${page.errorCode @ context='unsafe'}",
+            "errorName": "${page.errorName @ context='unsafe'}"
+                    },
+          "visitor": {
+            "ecID": sessionId && userData?.id ? userData.id : null,
+            "sapID": sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+            "loginStatus": sessionId ? "Logged in" : "Logged out"
+          }
+        }
+      });
+    </script>
+    <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
+         data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
+      <script type="text/javascript">
         if(typeof QSI === "undefined") {
-            // QSI object populated only for logged in user
-            const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-            let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-            if (isExtraReloadDisabled()) {
-                window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
-                window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
-            }
-            let userInfo = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+          // QSI object populated only for logged in user
+          const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+          let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+          if (isExtraReloadDisabled()) {
+              window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
+              window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+          }
+          let userInfo = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
           if (userIsLoggedIn && userInfo) {
             QSI = {
               config: {
@@ -113,16 +112,16 @@
             };
           }
         }
-    </script>
-</sly>
-<sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
-     data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
-<sly data-sly-test="${!isRedirectPage}">
-    <sly data-sly-include="body.skiptomaincontent.html"></sly>
-    <sly data-sly-include="body.socialmedia_begin.html"></sly>
-    <sly data-sly-include="body.html"></sly>
-    <sly data-sly-call="${footer.footer @ page = page, pwa = pwa}"></sly>
-    <sly data-sly-include="body.socialmedia_end.html"></sly>
-</sly>
-</body>
+      </script>
+    </sly>
+    <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
+         data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
+    <sly data-sly-test="${!isRedirectPage}">
+      <sly data-sly-include="body.skiptomaincontent.html"></sly>
+      <sly data-sly-include="body.socialmedia_begin.html"></sly>
+      <sly data-sly-include="body.html"></sly>
+      <sly data-sly-call="${footer.footer @ page = page, pwa = pwa}"></sly>
+      <sly data-sly-include="body.socialmedia_end.html"></sly>
+    </sly>
+  </body>
 </html>
