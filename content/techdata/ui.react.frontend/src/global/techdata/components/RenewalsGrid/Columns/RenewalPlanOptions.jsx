@@ -20,7 +20,7 @@ function RenewalPlanOptions({ labels, data, node }) {
     const [optionIdSelected, setOptionIdSelected] = useState();
     const rowIndexRef = useRef(node?.rowIndex)
     const { detailUrl = "", exportXLSRenewalsEndpoint = "", exportPDFRenewalsEndpoint = "" } = aemConfig;
-    const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint };
+    const orderEndpoints = { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint };
     const { handleCartIconClick, details, toggleOrderDialog, closeDialog } = useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
     const { computeClassName: computeTDSynnexClass, isTDSynnex } = useComputeBranding(useRenewalGridState);
     const isIconEnabled = useIsIconEnabled(data?.firstAvailableOrderDate, data?.canPlaceOrder, orderingFromDashboard?.showOrderingIcon);
