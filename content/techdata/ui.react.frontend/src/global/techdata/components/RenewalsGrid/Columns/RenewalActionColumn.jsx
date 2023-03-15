@@ -61,6 +61,7 @@ function _RenewalActionColumn({ eventProps }) {
     updateRenewalOrderEndpoint,
     getStatusEndpoint,
     orderRenewalEndpoint,
+    renewalDetailsEndpoint,
   };
 
   const iconStyle = {

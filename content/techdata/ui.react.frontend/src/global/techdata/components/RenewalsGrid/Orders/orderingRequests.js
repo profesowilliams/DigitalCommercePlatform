@@ -10,7 +10,7 @@ const awaitRequest = (fetch, delay) =>
 const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 
 const setAdditionalHeaders = (impersonationAccount) => {
-  return (headerInfo.site?.toUpperCase() === "HK" || headerInfo.site?.toUpperCase() === "IN" || headerInfo.site?.toUpperCase() === "ID") && isHouseAccount() ? {headers: {impersonateAccount: impersonationAccount}, validateStatus: false } : {validateStatus: false};
+  return isHouseAccount() ? {headers: {impersonateAccount: impersonationAccount}, validateStatus: false } : {validateStatus: false};
 }
 
 export const getStatusLoopUntilStatusIsActive = async ({
@@ -160,8 +160,8 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   }
 }
 
-export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber }) {
-  const { updateRenewalOrderEndpoint = "", getStatusEndpoint = "", orderRenewalEndpoint = "", } = orderEndpoints;
+export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber, isDetails }) {
+  const { updateRenewalOrderEndpoint = "", getStatusEndpoint = "", orderRenewalEndpoint = "", renewalDetailsEndpoint="" } = orderEndpoints;
   if (!updateRenewalOrderEndpoint || !getStatusEndpoint || !orderRenewalEndpoint) {
     console.log("⚠ please author renewal order endpoints");
     return {
@@ -169,12 +169,21 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     };
   }
   try {
-    const { source, reseller, endUser, EANumber } = renewalData;  
-    const impersonationAccount = renewalData.reseller.id;
+    let quoteForOrdering = renewalData;
+    if (!isDetails) {
+      const quoteDetails = await fetchQuoteRenewalDetails(
+        renewalDetailsEndpoint,
+        renewalData.source.id
+      );
+      quoteForOrdering = mapRenewalForUpdateDetails(quoteDetails.content.details[0]);
+    }
+
+    const { source, reseller, endUser, EANumber } = quoteForOrdering;  
+    const impersonationAccount = quoteForOrdering.reseller.id;
     const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber, EANumber };
-    if (renewalData?.items) payload.items = renewalData.items;
-    const updateresponse = await post(updateRenewalOrderEndpoint, payload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
-    if (updateresponse.status === 200) {
+    if (quoteForOrdering?.items) payload.items = quoteForOrdering.items;
+    const updateresponse = await post(updateRenewalOrderEndpoint, quoteForOrdering, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
+    if (updateresponse.status === 200 || updateresponse.status === 204) {
       const isError = updateresponse.data?.error?.isError;
       if (isError) throw UPDATE_FAILED
       const getStatusConf = { getStatusEndpoint, id: source.id, delay: 1000, iterations: 8 };

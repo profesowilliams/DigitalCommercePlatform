@@ -73,7 +73,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
       if(resellerState) renewalData.reseller = resellerState;
       if(itemsState) renewalData.items = itemsState;  
     }
-    const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber});
+    const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber, isDetails});
     handleToggleToaster({...operationResponse});   
     typeof resetGrid === 'function' && operationResponse?.isSuccess && setTimeout(() => resetGrid(), 1600);
   }
