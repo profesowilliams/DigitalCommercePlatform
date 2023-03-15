@@ -180,12 +180,6 @@
                 order: 3;
             }
 
-            .cmp-td-hamburgerMenu {
-                order: 4;
-                margin-right: 24px;
-                border: none;
-            }
-
             .masthead .header-active .masthead {
                 display: block;
             }
@@ -215,15 +209,6 @@
             .header-active.cmp-container .masthead .cmp-container .cmp-dropbtn {
                 margin: 0;
                 min-height: auto;
-            }
-
-            .masthead  .header-active .cmp-td-hamburgerMenu {
-                position: absolute ;
-                right: 38px;
-                top: 15px;
-                color: #fff;
-                margin: 0;
-                width: 16px;
             }
 
             .cmp-container {
@@ -431,24 +416,6 @@
                 padding-left: 8px;
             }
 
-            &.cmp-container .cmp-td-hamburgerMenu:after,
-            &.cmp-container .cmp-td-hamburgerMenu:before {
-                content: '';
-                width: 100%;
-                position: absolute;
-                height: 1px;
-                background-color: black;
-                top: 0;
-            }
-
-            &.cmp-container .cmp-td-hamburgerMenu i {
-                display: none;
-            }
-
-            &.cmp-container .cmp-td-hamburgerMenu:before {
-                top: 12px;
-            }
-
            &.cmp-container .header-active .headerutility .signin button svg {
                 margin-right: 10px;
                 text-align: center;
@@ -468,28 +435,6 @@
                 display: flex;
                 align-items: center;
                 text-decoration: none;
-            }
-
-            &.cmp-container .cmp-td-hamburgerMenu {
-                color: black;
-                position: relative;
-                width: 16px;
-                height: 15px;
-            }
-
-            &.cmp-container .cmp-td-hamburgerMenu.active:before,
-            &.cmp-container .cmp-td-hamburgerMenu.active:after {
-                background-color: white;
-            }
-
-            &.cmp-container .cmp-td-hamburgerMenu.active:before {
-                transform: rotate(45deg);
-                top: 6px;
-            }
-
-            &.cmp-container .cmp-td-hamburgerMenu.active:after {
-                transform: rotate(-45deg);
-                top: 6px;
             }
         }
     }

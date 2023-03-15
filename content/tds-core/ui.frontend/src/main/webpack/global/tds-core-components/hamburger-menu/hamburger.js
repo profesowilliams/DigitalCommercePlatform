@@ -20,23 +20,44 @@ export default class Hamburger {
     }
 
     injectHamburger() {
+        // Get the elements we need from the DOM
         const figure = document.querySelector('.dp-figure');
         const navbar = document.querySelector('#cmp-techdata-header');
-
+      
+        // If the elements are not found, return early
         if (!figure || !navbar) return;
-
-        const hamburgerBtn = document.createElement('button');
-        hamburgerBtn.type = 'button';
-        hamburgerBtn.ariaLabel = 'hamburger menu';
-        hamburgerBtn.classList.add('cmp-td-hamburgerMenu');
-
-        const hamIcon = document.createElement('i');
-        hamIcon.classList.add('fas', 'fa-bars');
-        hamburgerBtn.append(hamIcon);
-
-        figure.parentNode.insertBefore(hamburgerBtn, figure);
-        return hamburgerBtn;
-    }
+      
+        // Create the menu icon element
+        const menuIcon = document.createElement('div');
+        // Add the "menu-icon" class to the element
+        menuIcon.classList.add('menu-icon');
+      
+        // Create the input element for the checkbox
+        const inputCheckbox = document.createElement('input');
+        // Add the "menu-icon__checkbox" class to the input element
+        inputCheckbox.classList.add('menu-icon__checkbox');
+        // Set the type of the input element to "checkbox"
+        inputCheckbox.type = 'checkbox';
+      
+        // Create the inner div element for the two span elements
+        const innerDiv = document.createElement('div');
+        const span1 = document.createElement('span');
+        const span2 = document.createElement('span');
+        innerDiv.appendChild(span1);
+        innerDiv.appendChild(span2);
+      
+        // Append the input and inner div elements to the menu icon element
+        menuIcon.appendChild(inputCheckbox);
+        menuIcon.appendChild(innerDiv);
+      
+        // Insert the menu icon element into the DOM before the figure element
+        figure.parentNode.insertBefore(menuIcon, figure);
+      
+        // Return the menu icon element
+        return menuIcon;
+      }
+      
+      
 
     hideMegaMenu(active, open) {
         this.el?.classList.remove(active);

@@ -1,12 +1,83 @@
-.cmp-td-hamburgerMenu {
-    background: transparent;
-    font-size: rem(21px);
-    margin-top: rem(2.4px);
-    &:hover {
-        cursor: pointer;
-    }
-
-    &.active {
-        color: get-color(td-lightblue);
+@include desktop {
+    .menu-icon {
+        display: none;
     }
 }
+
+  
+:root {
+    // Note that without the #{} syntax, the resulting CSS would contain the string representation of the Sass variables, instead of their values. 
+    --bar-bg: #{map-get($color-palette, "charcoal")};
+    --bar-bg-active: #{map-get($color-palette, "white")};
+}
+  
+  .menu-icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    order: 4;
+    margin-right: 24px;
+    cursor: pointer;
+
+    &.active {
+        position: absolute;
+        right: 13px;
+        top: 11px;
+
+        span {
+            background-color: var(--bar-bg-active, #fff);
+        }
+    }
+  
+    .menu-icon__checkbox {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      cursor: pointer;
+      z-index: 2;
+      -webkit-touch-callout: none;
+      position: absolute;
+      opacity: 0;
+    }
+    div {
+      margin: auto;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 16px;
+      height: 12px;
+    }
+    span {
+      position: absolute;
+      display: block;
+      width: 16px;
+      height: 2px;
+      background-color: var(--bar-bg, #000);
+      border-radius: 1px;
+      transition: all 0.2s cubic-bezier(0.1, 0.82, 0.76, 0.965);
+  
+      &:first-of-type {
+        top: 0;
+      }
+      &:last-of-type {
+        bottom: 0;
+      }
+    }
+    &.active,
+    .menu-icon__checkbox:checked + div {
+      span {         
+        &:first-of-type {
+          transform: rotate(45deg);
+          top: 5px;
+        }
+        &:last-of-type {
+          transform: rotate(-45deg);
+          bottom: 5px;
+        }
+      }
+    }
+  }
+  
