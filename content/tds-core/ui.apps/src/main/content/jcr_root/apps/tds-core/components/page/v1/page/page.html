@@ -51,26 +51,67 @@
     </sly>
 
 <div id="top"></div>
+<script data-sly-test.dataLayerEnabled="${page.dataJson}">
+  window.adobeDataLayer = window.adobeDataLayer || [];
 
+  let sessionId = window.localStorage.getItem("sessionId");
+  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+  if (isExtraReloadDisabled()) {
+    window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
+    window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+  }
+  let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+
+  adobeDataLayer.push({
+    event: 'page view',
+    page: {
+      pageInfo: {
+        pageName: '${page.analyticsPageName @ context='unsafe'}',
+        url: '${page.pageUrl @ context='unsafe'}',
+        server: '${page.pageHost @ context='unsafe'}',
+        country: '${page.country @ context='unsafe'}',
+        language: '${page.language @ context='unsafe'}',
+        currencyCode: '${page.currencyCode @ context='unsafe'}'
+                },
+      category: {
+        pageType: '${page.pageType  @ context='unsafe'}',
+        siteSection1: '${page.siteSections[0]  @ context='unsafe'}',
+        siteSection2: '${page.siteSections[1]  @ context='unsafe'}',
+        siteSection3: '${page.siteSections[2]  @ context='unsafe'}',
+        siteSection4: '${page.siteSections[3]  @ context='unsafe'}'
+                },
+      error: {
+        errorCode: '${page.errorCode @ context='unsafe'}',
+        errorName: '${page.errorName @ context='unsafe'}'
+               },
+      visitor: {
+        ecID: sessionId && userData?.id ? userData.id : null,
+        sapID: sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+        loginStatus: sessionId ? "Logged in" : "Logged out"
+      }
+    }
+  });
+</script>
 <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
      data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
     <script type="text/javascript">
         if(typeof QSI === "undefined") {
             // QSI object populated only for logged in user
-            let sessionId = window.localStorage.getItem("sessionId");
             const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
             let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-             if (isExtraReloadDisabled()) {
+            if (isExtraReloadDisabled()) {
                 window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
                 window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
             }
-            let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-            if(userIsLoggedIn && userData) {
-                QSI = {};
-                QSI.config = {
-                  externalReference: userIsLoggedIn && userData?.id ? userData.id : null
-                    };
-            }
+            let userInfo = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+          if (userIsLoggedIn && userInfo) {
+            QSI = {
+              config: {
+                externalReference: userIsLoggedIn && userInfo?.id ? userInfo.id : null
+              }
+            };
+          }
         }
     </script>
 </sly>

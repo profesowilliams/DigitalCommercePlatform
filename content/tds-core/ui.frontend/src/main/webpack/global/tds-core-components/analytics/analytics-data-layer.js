@@ -39,16 +39,21 @@
       country: '',
       index: 0
     }
-    siteSectionName.find((s, index) => {
-      if (flagLanguage && s.includes(language)) {
-        elementReturn.country = siteSectionName[index - 1];
-        elementReturn.index = index;
-      }
-      if (s == language) {
-        elementReturn.country = siteSectionName[index - 1];
-        elementReturn.index = index;
-      }
-    });
+    const pageInfo = window.adobeDataLayer.getState('page')?.pageInfo;
+    if (pageInfo) {
+      elementReturn.country = pageInfo.country;
+    } else {
+      siteSectionName.find((s, index) => {
+        if (flagLanguage && s.includes(language)) {
+          elementReturn.country = siteSectionName[index - 1];
+          elementReturn.index = index;
+        }
+        if (s == language) {
+          elementReturn.country = siteSectionName[index - 1];
+          elementReturn.index = index;
+        }
+      });
+    }
     return elementReturn
   }
     
