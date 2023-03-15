@@ -14,8 +14,14 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
   const handleCartIconClick = async (_event, planOption) => {
     const renewalsId = planOption ? planOption.id : data.source.id;
     const isDefaultQuote = !planOption || planOption.id === data.source.id;
-    return setToggleOrderDialog((toggle) => !toggle);
-    if (isDefaultQuote && !data.isValid) {
+
+    if (!data.isValid) {
+      redirectToRenewalDetail(detailUrl, renewalsId);
+    }
+    else {
+      return setToggleOrderDialog((toggle) => !toggle);
+    }
+    /*if (isDefaultQuote && !data.isValid) {
       redirectToRenewalDetail(detailUrl, renewalsId);
       return ;
     }
@@ -35,7 +41,7 @@ function useTriggerOrdering({renewalDetailsEndpoint, data, detailUrl }) {
       if (content?.details[0])
         return setDetails(mapRenewalForUpdateDetails(content.details[0]));
       setDetails(mapRenewalForUpdateDashboard(data));
-    }
+    }*/
   };
 
   const closeDialog = () => setToggleOrderDialog(false);

@@ -308,7 +308,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                 isDialogOpen={toggleOrderDialog}
                 onClose={closeDialog}
                 orderingFromDashboard={orderingFromDashboard}
-                renewalData={details}
+                renewalData={data}
                 closeOnBackdropClick={false}
                 orderEndpoints={orderEndpoints}
                 store={useRenewalGridState}             
