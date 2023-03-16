@@ -366,7 +366,7 @@ const renewalSearchResponse = {
                     "id": "U100000010256"
                 },
                 "canPlaceOrder": true,
-                "isValid": false,
+                "isValid": true,
                 "reseller": {
                     "incumbent": false,
                     "vendorAccountName": "Dell Technologies India",
