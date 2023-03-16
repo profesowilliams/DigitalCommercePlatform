@@ -176,6 +176,7 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
         renewalData.source.id
       );
       quoteForOrdering = mapRenewalForUpdateDetails(quoteDetails.content.details[0]);
+      quoteForOrdering.customerPO = purchaseOrderNumber;
     }
 
     const { source, reseller, endUser, EANumber } = quoteForOrdering;  
