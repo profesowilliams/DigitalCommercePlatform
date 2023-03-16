@@ -31,6 +31,21 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["columnList"] = columnListValues;
     }
 
+    //Report options
+
+    let reportOptionsValues = utils.getDataFromMultifield(resourceResolver, "reportOptions", function(childResource) {
+        let itemData = {};
+
+        itemData.label = childResource.properties["label"];
+        itemData.key = childResource.properties["key"];
+
+        return itemData;
+    });
+
+    if (reportOptionsValues != null) {
+        jsonObject["reportOptions"] = reportOptionsValues;
+    }
+
     //Search Options
     let searchOptionsValues = utils.getDataFromMultifield(resourceResolver, "searchOptionsList", function(childResource) {
         let itemData = {};

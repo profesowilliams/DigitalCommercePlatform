@@ -9,6 +9,7 @@ import VerticalSeparator from '../Widgets/VerticalSeparator';
 import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
 import OpenOrders from './OpenOrders/OpenOrders';
+import Report from './Report/Report';
 import OrderSearch from "../BaseGrid/Search/Search";
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
@@ -127,6 +128,11 @@ function OrdersTrackingGrid(props) {
           />,
           <VerticalSeparator />,
           <OrderFilter />,
+          <VerticalSeparator />,
+          <Report
+            options={componentProp.reportOptions}
+            onQueryChanged={onQueryChanged}
+          />,
           <VerticalSeparator />,
           <OrderExport />,
         ]}

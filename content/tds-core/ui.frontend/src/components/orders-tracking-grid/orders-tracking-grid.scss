@@ -40,6 +40,34 @@
     &__filter {
         @extend %clickable-action;
     }
+    &__report {
+        @extend %clickable-action;
+        position: relative;
+    }
+    &__report-dropdown {
+      position: absolute;
+      width: 192px;
+      top: 25px;
+      left: -14px;
+      box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
+      background-color: get-color(brand-white);
+      z-index: 10;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        line-height: 36px;
+        margin: 0;
+
+        > li {
+          padding: 0 14px;
+        }
+        > li:hover {
+          background-color: get-color(neutral-gray-2);
+        }
+
+      }
+    }
     &__export {
         @extend %clickable-action;
     }
