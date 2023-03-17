@@ -3,4 +3,4 @@
     jcr:primaryType="cq:Component"
     jcr:title="Action Items"
     sling:resourceSuperType="tds-core/components/actionitems/v1/actionitems"
-    componentGroup="Tech Data - Commerce"/>
+    componentGroup="TDS Site - Commerce"/>
