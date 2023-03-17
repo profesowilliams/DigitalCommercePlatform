@@ -159,15 +159,15 @@
       const componentTypeName = getFullComponentType(dataObject['@type']);
       if (componentType === 'page') {
         // Handle page view show event
-        let errorCode = dataObject['repo:path'];
-        const errorName = dataObject['dc:title'];
+        //let errorCode = dataObject['repo:path'];
+        //const errorName = dataObject['dc:title'];
+        //const errorObject = setErrorFlag(errorCode);
+        //const flagError = errorObject.flagError;
+        //const server = window.location.hostname;
         const pathnamePage = window.location.pathname;
-        const errorObject = setErrorFlag(errorCode);
-        const flagError = errorObject.flagError;
         const url = window.location.href;
-        const server = window.location.hostname;
 
-        let categoryObject = { pageType: '' };
+        //let categoryObject = { pageType: '' };
         const language = dataObject['xdm:language'];
         const flagLanguage = setFlagHomeLanguagePage(language, pathnamePage);
         const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
@@ -185,25 +185,26 @@
         const accountDetail = userIsLoggedIn ? userData?.customersV2.length ?
           userData?.customersV2[0] : noCustomerNumber :
           noCustomerNumber;
-        let cont = 0;
-        siteSectionName.forEach((siteSection, index) => {
-          if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
-            categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
-          }
-        });
-        categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
-        categoryObject.pageType = pageType;
+        //let cont = 0;
+        //siteSectionName.forEach((siteSection, index) => {
+        //  if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
+        //    categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
+        //  }
+        //});
+        //categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
+        //categoryObject.pageType = pageType;
         dataLayerObject = {
-          country: country,
-          pageCategory: pageType,
-          pageName: pageName.substring(1),
-          userID: userIsLoggedIn && userData?.id ? userData.id : '',
-          customerID: accountDetail.customerNumber,
-          currencyCode: pageCurrency,
-          internalTraffic: userIsLoggedIn ? userData?.isInternal?.toString() : null,
-          language: language,
-          loginStatus: userIsLoggedIn ? 'Logged in' : 'Logged out',
-          url: url, 
+          "event": "show",
+          "country": country,
+          "pageCategory": pageType,
+          "pageName": pageName.substring(1),
+          "userID": userIsLoggedIn && userData?.id ? userData.id : '',
+          "customerID": accountDetail.customerNumber,
+          "currencyCode": pageCurrency,
+          "internalTraffic": userIsLoggedIn ? userData?.isInternal?.toString() : null,
+          "language": language,
+          "loginStatus": userIsLoggedIn ? 'Logged in' : 'Logged out',
+          "url": url, 
         };
         window.dataLayer.push(dataLayerObject);
       } else {
