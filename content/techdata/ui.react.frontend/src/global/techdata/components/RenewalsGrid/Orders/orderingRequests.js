@@ -161,6 +161,7 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
 }
 
 export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber, isDetails }) {
+  let currentResponse = {};
   const { updateRenewalOrderEndpoint = "", getStatusEndpoint = "", orderRenewalEndpoint = "", renewalDetailsEndpoint="" } = orderEndpoints;
   if (!updateRenewalOrderEndpoint || !getStatusEndpoint || !orderRenewalEndpoint) {
     console.log("⚠ please author renewal order endpoints");
@@ -184,15 +185,18 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber, EANumber };
     if (quoteForOrdering?.items) payload.items = quoteForOrdering.items;
     const updateresponse = await post(updateRenewalOrderEndpoint, quoteForOrdering, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
+    currentResponse = updateresponse;
     if (updateresponse.status === 200 || updateresponse.status === 204) {
       const isError = updateresponse.data?.error?.isError;
       if (isError) throw UPDATE_FAILED
       const getStatusConf = { getStatusEndpoint, id: source.id, delay: 1000, iterations: 8 };
       const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
+      currentResponse = getStatusResponse;
       if (getStatusResponse) {
         const orderPayload = { id: source.id };
         const orderResponse = await post(orderRenewalEndpoint, orderPayload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
-        if (orderResponse.status === 200) {
+        currentResponse = orderResponse;
+        if (orderResponse.status === 200 && !orderResponse.data?.error.isError) {
           const transactionNumber =
             orderResponse.data.content.confirmationNumber;
           return {
@@ -208,8 +212,9 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
       throw UPDATE_FAILED
     }
   } catch (error) {      
-    const response = error?.response?.data;
-    const salesContentEmail = response?.salesContactEmail;  
+    const response = currentResponse?.data;
+    const salesContentEmail = response?.salesContactEmail;
+
     if (salesContentEmail && error === PROCESS_ORDER_FAILED) {
       console.log("error.response >> ", error.response);
       return {

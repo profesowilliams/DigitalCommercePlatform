@@ -515,7 +515,7 @@ const renewalSearchResponse = {
                     "id": "U100000001277"
                 },
                 "canPlaceOrder": true,
-                "isValid": false,
+                "isValid": true,
                 "reseller": {
                     "incumbent": false,
                     "vendorAccountName": "MAGNAMIOUS SYSTEMS PVT LTD",

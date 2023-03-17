@@ -192,8 +192,8 @@ function RenewalsDetails(props) {
     } catch (ex) {      
       const errorTitle = "Could not save changes.";
       let errorMessage = 'We are sorry, your update could not be processed, please try again later.';
-      if(ex.status === 200 && ex?.data?.content?.salesContentEmail) {
-        errorMessage = componentProp.quoteEditing?.failedUpdate?.replace('{email}', ex.data.content.salesContentEmail)
+      if(ex.status === 200 && ex?.data?.salesContentEmail) {
+        errorMessage = componentProp.quoteEditing?.failedUpdate?.replace('{email}', ex.data.salesContentEmail)
       }
       const errorToaster = {isOpen:true, origin:'fromUpdate', isSuccess: false, title: errorTitle, message: errorMessage}
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });

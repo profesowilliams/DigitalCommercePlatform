@@ -4419,6 +4419,7 @@ app.get("/ui-account/v1/topActions", function (req, res) {
   res.json(response);
 });
 app.get("/ui-renewal/v1/Details", function (req, res) {
+  const { id } = req.query;
   const response = {
     "content": {
         "details": [
@@ -4426,10 +4427,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "source": {
                     "salesOrg": "IN96",
                     "targetSystem": "R3",
-                    "key": "U100000000011",
+                    "key": id === "U100000001277" ? "U100000000011": "U100000001277",
                     "system": "RQ",
                     "type": null,
-                    "id": "U100000000011"
+                    "id": id === "U100000001277" ? "U100000000011": "U100000001277"
                 },
                 "published": "2023-01-24T04:35:37.463Z",
                 "reseller": {
@@ -5085,7 +5086,8 @@ app.get("/ui-renewal/v1/getStatus/:id", function (req, res) {
 });
 
 app.post("/ui-renewal/v1/order", function (req, res) {
-  const { id } = req.params;
+  const { id } = req.body;
+
   const success = {
     content: {
       confirmationNumber: "1234566",
@@ -5106,7 +5108,7 @@ app.post("/ui-renewal/v1/order", function (req, res) {
       isError: true,
     },
   };
-  return res.status(200).json(success);
+  return res.status(200).json(id === "U100000000011" ? fail : success);
 });
 
 app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {

@@ -42,7 +42,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
   function handleToggleToaster({ transactionNumber, isSuccess = false, failedReason = '', salesContentEmail }) {
     const replaceEmail = (messageStr) => messageStr.replace(/\({email}\)/igm, salesContentEmail);
     const title = 'Your order submission has failed.'
-    let toaster = {isOpen:true, isSuccess, isAutoClose:false, title };
+    let toaster = {isOpen:true, isSuccess, isAutoClose:false, title, Child: null };
     let message;   
     if(isSuccess) {
       const toasterChild = <TransactionNumber data={transactionNumber}/>
@@ -50,6 +50,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
       toaster = {...toaster, message, Child: toasterChild};    
       if (isDetails) return onClose({toaster,isSuccess})   
     }
+
     if (failedReason == GET_STATUS_FAILED){
       message = noResponseMessage;
     }
