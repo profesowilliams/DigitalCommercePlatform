@@ -158,16 +158,8 @@
       const componentType = getComponentType(dataObject['@type']);
       const componentTypeName = getFullComponentType(dataObject['@type']);
       if (componentType === 'page') {
-        // Handle page view show event
-        //let errorCode = dataObject['repo:path'];
-        //const errorName = dataObject['dc:title'];
-        //const errorObject = setErrorFlag(errorCode);
-        //const flagError = errorObject.flagError;
-        //const server = window.location.hostname;
         const pathnamePage = window.location.pathname;
         const url = window.location.href;
-
-        //let categoryObject = { pageType: '' };
         const language = dataObject['xdm:language'];
         const flagLanguage = setFlagHomeLanguagePage(language, pathnamePage);
         const cmpShowAdobeDataLayer = window.adobeDataLayer[0];
@@ -185,14 +177,7 @@
         const accountDetail = userIsLoggedIn ? userData?.customersV2.length ?
           userData?.customersV2[0] : noCustomerNumber :
           noCustomerNumber;
-        //let cont = 0;
-        //siteSectionName.forEach((siteSection, index) => {
-        //  if (index > 0 && index > (countryIndex) && index < siteSectionName.length) {
-        //    categoryObject['siteSection' + (cont += 1)] = siteSection.replace('.html', '');
-        //  }
-        //});
-        //categoryObject = fillCategorySiteSections(categoryObject, flagLanguage);
-        //categoryObject.pageType = pageType;
+
         dataLayerObject = {
           "event": "show",
           "country": country,
