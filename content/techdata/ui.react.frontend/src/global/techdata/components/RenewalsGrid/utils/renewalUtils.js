@@ -178,7 +178,7 @@ export async function fetchRenewalsFilterByPost(config){
             const {field, value} = searchCriteria.current;
             params[field] = value;
         }
-        const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
+        const isSameFilter = isSameFilterRepeated(previousFilter.current, params) || isFromRenewalDetailsPage();       
         if (!isSameFilter) params.PageNumber = 1;
         try {
             const result = await usPost(componentProp.uiServiceEndPoint, params);

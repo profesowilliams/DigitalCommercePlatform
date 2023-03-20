@@ -5212,8 +5212,8 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
   const response = {
     content: {
       totalItems: 60,
-      pageCount: 5,
-      pageNumber: 3,
+      pageCount: 3,
+      pageNumber: 1,
       pageSize: 25,
       items: [
         {
