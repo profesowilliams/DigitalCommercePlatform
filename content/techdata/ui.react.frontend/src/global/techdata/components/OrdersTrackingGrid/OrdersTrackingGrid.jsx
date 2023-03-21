@@ -8,7 +8,6 @@ import { addCurrentPageNumber, getLocalStorageData, hasLocalStorageData, isFromR
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
-import OpenOrders from './OpenOrders/OpenOrders';
 import Report from './Report/Report';
 import OrderSearch from "../BaseGrid/Search/Search";
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
@@ -111,7 +110,6 @@ function OrdersTrackingGrid(props) {
     <div className='cmp-order-tracking-grid'>
       <BaseGridHeader
         leftComponents={[
-          <OpenOrders />,
           <VerticalSeparator />,
           <BaseGridPagination
             ref={customPaginationRef}
