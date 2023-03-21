@@ -118,6 +118,12 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy Label"
                                                 name="./menuCopy" />
+                                            <multiple
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Multiple Label"
+                                                name="./multiple"
+                                            />
                                             <menuCopyWithHeaders
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -564,14 +570,15 @@
                                                                     fieldDescription="This key will match with the service request"
                                                                     fieldLabel="Enter Search Key"
                                                                     name="./searchKey">
-																	<items jcr:primaryType="nt:unstructured">
-																		<orderId
+                                                                    <items
+                                                                        jcr:primaryType="nt:unstructured">
+                                                                        <orderId
                                                                             jcr:primaryType="nt:unstructured"
                                                                             text="Order Nº"
-                                                                            value="Id"/>
-																	</items>
-																</searchKey>
-																<isHouseAccount
+                                                                            value="Id" />
+                                                                    </items>
+                                                                </searchKey>
+                                                                <isHouseAccount
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                                     name="./showIfIsHouseAccount"

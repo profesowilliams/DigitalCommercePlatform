@@ -31,6 +31,13 @@ use(['../common/utils.js'], function(utils) {
         jsonObject["columnList"] = columnListValues;
     }
 
+
+    //Multiple translation
+
+    if (properties && properties["multiple"]) {
+        jsonObject["multiple"] = properties["multiple"];
+      }
+
     //Report options
 
     let reportOptionsValues = utils.getDataFromMultifield(resourceResolver, "reportOptions", function(childResource) {

@@ -8,11 +8,11 @@ import OrderTrackingActionColumn from "../Columns/OrderTrackingActionColumn";
 import SelectColumn from "../Columns/SelectColumn";
 import TotalColumn from "../Columns/TotalColumn";
 
-export const ordersTrackingDefinition = ({ detailUrl }) => {
+export const ordersTrackingDefinition = ({ detailUrl, multiple}) => {
 
   const createColumnComponent = (eventProps, aemDefinition) => {  
     const { columnKey } = aemDefinition;
-    const { value, data } = eventProps;   
+    const { value, data } = eventProps; 
     const columnComponents = {
       // US 399164: We will update the field mapping later when the UI service is ready.
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
@@ -20,8 +20,8 @@ export const ordersTrackingDefinition = ({ detailUrl }) => {
       updated: data?.updated ?? data?.created,
       select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
-      invoices: <InvoiceColumn invoices={data?.invoices} />,
-      deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} />,
+      invoices: <InvoiceColumn invoices={data?.invoices} multiple={multiple}/>,
+      deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} multiple={multiple}/>,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
       actions: <OrderTrackingActionColumn />
     };

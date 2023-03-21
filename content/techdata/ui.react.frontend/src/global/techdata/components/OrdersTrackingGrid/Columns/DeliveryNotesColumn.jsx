@@ -1,11 +1,13 @@
 import React from 'react';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-function DeliveryNotesColumn({ deliveryNotes = [] }) {
+
+function DeliveryNotesColumn({ deliveryNotes = [], multiple}) {
   const hasMultiple = deliveryNotes.length > 1;
   return (
     deliveryNotes.length == 0 ? "-" :
       <a href="#">
-        {(hasMultiple ? 'multiple' : deliveryNotes[0]?.id)}
+        {(hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0]?.id)}
       </a>
   );
 }

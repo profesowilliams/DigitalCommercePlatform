@@ -1,6 +1,8 @@
 import React from 'react';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-const getInvoiceStatus = (invoices) => {
+
+const getInvoiceStatus = (invoices, multiple) => {
   if (!invoices) return '-';
   const invoiceLength = invoices.length;
 
@@ -9,16 +11,18 @@ const getInvoiceStatus = (invoices) => {
   }
 
   if (invoiceLength > 1) {
-    return 'multiple';
+    return getDictionaryValueOrKey(
+      multiple
+    );
   }
 
   return '-';
 }
 
-function InvoiceColumn({ invoices = [] }) {
+function InvoiceColumn({ invoices = [] ,multiple}) {
   return (
     <a>
-      {getInvoiceStatus(invoices)}
+      {getInvoiceStatus(invoices, multiple)}
     </a>
   );
 }
