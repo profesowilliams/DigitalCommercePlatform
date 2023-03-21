@@ -33,7 +33,7 @@ public class AzureAppInsightsModelTest {
         when(insightsConfiguration.getInstrumentationKey()).thenReturn("appinsight");
         when(insightsConfiguration.getEnableAjaxErrorStatusText()).thenReturn(true);
         when(insightsConfiguration.getEnableCorsCorrelation()).thenReturn(true);
-        when(insightsConfiguration.getCoorelationHeaderExcludedDomains()).thenReturn(coorelation);
+        when(insightsConfiguration.getCorrelationHeaderExcludedDomains()).thenReturn(coorelation);
         when(insightsConfiguration.getEnableAjaxPerfTracking()).thenReturn(true);
         azureAppInsightsModel.init();
     }
@@ -47,7 +47,7 @@ public class AzureAppInsightsModelTest {
     }
     @Test
     void testcoorelationHeaderExcludedDomains(){
-        azureAppInsightsModel.getCoorelationHeaderExcludedDomains();
+        azureAppInsightsModel.getCorrelationHeaderExcludedDomains();
     }
     @Test
     void testinstrumentationKey(){

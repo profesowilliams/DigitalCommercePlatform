@@ -21,7 +21,7 @@ public class AzureAppInsightsModel {
 
     private String appInsightsSdkLocation;
     private String cookieDomain;
-    private String[] coorelationHeaderExcludedDomains;
+    private String[] correlationHeaderExcludedDomains;
     private boolean enableAjaxErrorStatusText;
     private boolean enableAjaxPerfTracking;
     private boolean enableApplicationInsights;
@@ -33,7 +33,7 @@ public class AzureAppInsightsModel {
         final AzureAppInsightsConfiguration config = azureAppInsightsService.getConfig();
         this.appInsightsSdkLocation = config.getAppInsightsSdkLocation();
         this.cookieDomain = config.getCookieDomain();
-        this.coorelationHeaderExcludedDomains = config.getCoorelationHeaderExcludedDomains();
+        this.correlationHeaderExcludedDomains = config.getCorrelationHeaderExcludedDomains();
         this.enableAjaxErrorStatusText = config.getEnableAjaxErrorStatusText();
         this.enableAjaxPerfTracking = config.getEnableAjaxPerfTracking();
         this.enableApplicationInsights = config.getEnableApplicationInsights();

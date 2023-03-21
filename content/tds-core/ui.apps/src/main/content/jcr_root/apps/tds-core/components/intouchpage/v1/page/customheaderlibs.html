@@ -21,6 +21,7 @@
             crossOrigin: "anonymous",
             cfg: {
                 instrumentationKey: "${model.instrumentationKey @ context='scriptString'}",
+                correlationHeaderExcludedDomains: "${model.correlationHeaderExcludedDomains @ context='scriptString'}",
                 cookieDomain: "${model.cookieDomain @ context='scriptString'}",
                 enableCorsCorrelation: "${model.enableCorsCorrelation @ context='scriptString'}",
                 enableAjaxErrorStatusText: "${model.enableAjaxErrorStatusText @ context='scriptString'}",

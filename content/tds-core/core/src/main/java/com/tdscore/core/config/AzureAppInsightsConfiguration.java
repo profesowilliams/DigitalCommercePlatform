@@ -22,7 +22,7 @@ public @interface AzureAppInsightsConfiguration {
     @AttributeDefinition(
 			name = "Correlation Header Excluded Domains", 
 			type = AttributeType.STRING)
-	public String[] getCoorelationHeaderExcludedDomains();
+	public String[] getCorrelationHeaderExcludedDomains();
 
     @AttributeDefinition(
 			name = "Enable Ajax Error Status Text", 

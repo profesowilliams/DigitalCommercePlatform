@@ -21,7 +21,7 @@ public class AzureAppInsightsModelTest {
     @Mock
     AzureAppInsightsConfiguration insightsConfiguration;
 
-    String[] coorelation = new String[]{"techdata","aem"};
+    String[] correlation = new String[]{"techdata","aem"};
 
     @Test
     void testInit(){
@@ -32,7 +32,7 @@ public class AzureAppInsightsModelTest {
         when(insightsConfiguration.getInstrumentationKey()).thenReturn("appinsight");
         when(insightsConfiguration.getEnableAjaxErrorStatusText()).thenReturn(true);
         when(insightsConfiguration.getEnableCorsCorrelation()).thenReturn(true);
-        when(insightsConfiguration.getCoorelationHeaderExcludedDomains()).thenReturn(coorelation);
+        when(insightsConfiguration.getCorrelationHeaderExcludedDomains()).thenReturn(correlation);
         when(insightsConfiguration.getEnableAjaxPerfTracking()).thenReturn(true);
         azureAppInsightsModel.init();
     }
@@ -45,8 +45,8 @@ public class AzureAppInsightsModelTest {
         azureAppInsightsModel.getCookieDomain();
     }
     @Test
-    void testcoorelationHeaderExcludedDomains(){
-        azureAppInsightsModel.getCoorelationHeaderExcludedDomains();
+    void testCorrelationHeaderExcludedDomains(){
+        azureAppInsightsModel.getCorrelationHeaderExcludedDomains();
     }
     @Test
     void testinstrumentationKey(){
