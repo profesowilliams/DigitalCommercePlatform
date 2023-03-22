@@ -14,7 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+		  xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" 
+		  xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
     jcr:primaryType="nt:unstructured"
     jcr:title="Alert Carousel"
     sling:resourceType="cq/gui/components/authoring/dialog"
@@ -36,56 +38,7 @@
                         sling:resourceType="granite/ui/components/coral/foundation/container"
                         margin="{Boolean}true">
                         <items jcr:primaryType="nt:unstructured">
-                            <autoplay
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                checked="false"
-                                fieldDescription="If checked, automatically transition between carousel slides."
-                                name="./autoplay"
-                                text="Automatically transition slides"
-                                uncheckedValue="false"
-                                value="true">
-                                <granite:data
-                                    jcr:primaryType="nt:unstructured"
-                                    cmp-carousel-v1-dialog-hook="autoplay"/>
-                            </autoplay>
-                            <autoplayGroup
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="granite/ui/components/coral/foundation/well">
-                                <items jcr:primaryType="nt:unstructured">
-                                    <delay
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
-                                        fieldDescription="The delay (in milliseconds) before automatically transitioning to the next slide."
-                                        fieldLabel="Transition Delay (milliseconds)"
-                                        min="0"
-                                        max="600000"
-                                        name="./delay"
-                                        step="100"
-                                        value="5000">
-                                        <granite:data
-                                            jcr:primaryType="nt:unstructured"
-                                            cmp-carousel-v1-dialog-hook="delay"/>
-                                    </delay>
-                                    <autopauseDisabled
-                                        jcr:primaryType="nt:unstructured"
-                                        sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
-                                        checked="false"
-                                        fieldDescription="If checked, automatic pause when hovering the carousel is disabled."
-                                        name="./autopauseDisabled"
-                                        text="Disable automatic pause on hover"
-                                        uncheckedValue="false"
-                                        value="true">
-                                        <granite:data
-                                            jcr:primaryType="nt:unstructured"
-                                            cmp-carousel-v1-dialog-hook="autopauseDisabled"/>
-                                    </autopauseDisabled>
-                                </items>
-                                <granite:data
-                                    jcr:primaryType="nt:unstructured"
-                                    cmp-carousel-v1-dialog-hook="autoplayGroup"/>
-                            </autoplayGroup>
-                          <enableAlert
+                           <enableAlert
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                 checked="false"
@@ -97,18 +50,6 @@
                             </enableAlert>
                         </items>
                     </properties>
-                    <allowedcomponents
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Allowed Components"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
-                            <components
-                                jcr:primaryType="nt:unstructured"
-                                sling:resourceType="cq/gui/components/authoring/allowedcomponents"
-                                name="./components"/>
-                        </items>
-                    </allowedcomponents>
                     <styletab
                         jcr:primaryType="nt:unstructured"
                         sling:resourceType="granite/ui/components/coral/foundation/include"
