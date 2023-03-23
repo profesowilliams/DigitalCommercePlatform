@@ -167,6 +167,7 @@
 					width: 75pt;
 					margin: auto;
 					white-space: nowrap;
+					color: map-get($color-palette, "charcoal");
 				}
 			}
 			margin: 0;
@@ -179,7 +180,7 @@
 }
 
 // Navigation component for APJ region
-.cmp-navigation--us {
+.cmp-navigation--apj {
 	#navigation {
 		display: table;
 		width: -webkit-fit-content;
@@ -196,12 +197,12 @@
 		}
 		a {
 			text-decoration: none;
-			color: map-get($color-palette, "white");
+			color: map-get($color-palette, "charcoal");
 			display: block;
 			padding: 0;
 		}
 		.current {
-			color: map-get($color-palette, "white");
+			color: map-get($color-palette, "charcoal");
 			display: block;
 			padding: 0;
 		}
@@ -338,6 +339,7 @@
 					width: 75pt;
 					margin: auto;
 					white-space: nowrap;
+					color: map-get($color-palette, "white");
 				}
 			}
 			margin: 0;
