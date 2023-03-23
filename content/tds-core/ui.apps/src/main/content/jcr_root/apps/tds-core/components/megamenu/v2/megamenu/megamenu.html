@@ -1,79 +1,145 @@
-<sly data-sly-use.model="com.tdscore.core.models.MegaMenu"
-  data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}">
+<sly
+  data-sly-use.model="com.tdscore.core.models.MegaMenu"
+  data-sly-test.hasContent="${model.menuLinkList ? model.menuLinkList.size > 0 : false}"
+>
   <div>
-    <div id="ssoLoginRedirectUrl" data-ssoLoginRedirectUrl="${properties.ssoLoginRedirectUrl}"></div>
-    <div id="aemSSOLoginRedirectUrl" data-aemSSOLoginRedirectUrl="${properties.aemSSOLoginRedirectUrl}"></div>
-    
-    <nav role="menu" id="navigation" role="navigation" aria-label="Main" itemscope="" itemtype="http://schema.org/SiteNavigationElement"
-         data-cmp-data-layer="${model.data.json}">
+    <div
+      id="ssoLoginRedirectUrl"
+      data-ssoLoginRedirectUrl="${properties.ssoLoginRedirectUrl}"
+    ></div>
+    <div
+      id="aemSSOLoginRedirectUrl"
+      data-aemSSOLoginRedirectUrl="${properties.aemSSOLoginRedirectUrl}"
+    ></div>
+
+    <nav
+      role="menu"
+      id="navigation"
+      role="navigation"
+      aria-label="Main"
+      itemscope=""
+      itemtype="http://schema.org/SiteNavigationElement"
+      data-cmp-data-layer="${model.data.json}"
+    >
       <!-- Level 1 -->
-      <ul role="menubar" data-sly-list.nav="${model.firstLevelMenuItems}" data-level="1">
-        <li role="menuitem" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=nav.linkUrl}" class="cmp-has-submenu" 
-            data-cmp-data-layer="${nav.data.json}">
+      <ul
+        role="menubar"
+        data-sly-list.nav="${model.firstLevelMenuItems}"
+        data-level="1"
+      >
+        <li
+          role="menuitem"
+          data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=nav.linkUrl}"
+          class="cmp-has-submenu"
+          data-cmp-data-layer="${nav.data.json}"
+        >
           <!-- Navigation -->
-          <a href="${urlHelper.url @ context='uri'}" aria-haspopup="true" aria-expanded="false" 
-            data-cmp-clickable="true" data-level="L1" data-hier="${nav.platformName}"
+          <a
+            href="${urlHelper.url @ context='uri'}"
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-cmp-clickable="true"
+            data-level="L1"
+            data-hier="${nav.platformName}"
             data-cmp-isprivate="${nav.isPrivate ? 'true' : 'false'}"
-            style="display: ${nav.isprivate? 'none' : '' @context= 'styleToken'}"
-            data-cmp-children="${nav.platformMenuID}" title="${nav.platformName}">
+            style="
+              display: $ {
+                nav.isprivate?'none' : '' @context= 'styleToken';
+              }
+            "
+            data-cmp-children="${nav.platformMenuID}"
+            title="${nav.platformName}"
+          >
             ${nav.platformName}
           </a>
 
-              <ul data-sly-list.slnk="${nav.secondaryMenuItems}">
-                <span class="cmp-sub-menu-heading">${nav.platformName}</span>
-                <li role="menuitem" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}" 
-                    data-cmp-data-layer="${slnk.data.json}"
-                    class="cmp-has-submenu" 
-                    data-view-all="${slnk.isViewAll}">
-                  
-                  <!-- Level 3 -->
+          <ul data-sly-list.slnk="${nav.secondaryMenuItems}">
+            <span class="cmp-sub-menu-heading">${nav.platformName}</span>
+            <li
+              role="menuitem"
+              data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=slnk.pagePath}"
+              data-cmp-data-layer="${slnk.data.json}"
+              class="cmp-has-submenu"
+              data-view-all="${slnk.isViewAll}"
+            >
+              <!-- Level 3 -->
+              <a
+                href="${urlHelper.url  @ context='uri'}"
+                title="${slnk.pageTitle}"
+                data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
+                data-sly-set.hier2="${nav.mobilePlatformLevel}>${slnk.pageTitle}"
+                data-level="L2"
+                data-cmp-clickable=""
+                data-cmp-children="${slnk.hasChildPages ? slnk.menuID : ''}"
+                aria-expanded="false"
+              >
+                ${slnk.pageTitle}
+                <div>
+                  <i
+                    data-sly-test="${slnk.hasChildPages == 'true'}"
+                    class="fas fa-chevron-right"
+                  ></i>
+                </div>
+              </a>
 
-                    <ul class="" data-sly-list.sec="${slnk.subNavLinkslist}">
-                      <span class="cmp-sub-menu-heading">${slnk.pageTitle}</span>
-                      <li role="menuitem" class="cmp-has-submenu" 
-                        data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}"
-                        data-view-all="${sec.isViewAll}"
-                        data-cmp-data-layer="${sec.data.json}">
-
-                        <!-- Level 4 -->
-                          <ul class="" data-sly-list.subSec="${sec.subNavLinkslist}">
-                            <span class="cmp-sub-menu-heading">${sec.pageTitle}</span>
-                            <li role="menuitem" data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
-                                data-cmp-data-layer="${subsec.data.json}">
-                              <a href="${urlHelper.url  @ context='html'}" title="${subSec.pageTitle}"
-                                data-cmp-clickable data-hier="${hier3}>${subSec.pageTitle}" data-mobile="true"
-                                data-level="L4" class="" 
-                                aria-expanded="false">
-                                ${subSec.pageTitle}
-                              </a>
-                            </li>
-                          </ul>
-
-                          <a href="${urlHelper.url  @ context='html'}" title="${sec.pageTitle}"
-                          data-hier="${hier2}>${sec.pageTitle}" data-sly-set.hier3="${hier2}>${sec.pageTitle}"
-                          data-level="L3" data-cmp-clickable
-                          data-cmp-children="${sec.hasChildPages ? sec.menuID : ''}"
-                          aria-expanded="false">
-                          ${sec.pageTitle}<div><i data-sly-test="${sec.hasChildPages == 'true'}"
-                          class="fas fa-chevron-right"></i></div>
-                        </a>
-                      </li>
-                    </ul>
-                    
-                    <a href="${urlHelper.url  @ context='uri'}" title="${slnk.pageTitle}"
-                    data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
-                    data-sly-set.hier2="${nav.mobilePlatformLevel}>${slnk.pageTitle}" data-level="L2"
-                    data-cmp-clickable="" data-cmp-children="${slnk.hasChildPages ? slnk.menuID : ''}"
-                    aria-expanded="false">
-                    ${slnk.pageTitle}<div><i data-sly-test="${slnk.hasChildPages == 'true'}"
-                    class="fas fa-chevron-right"></i></div>
+              <ul class="" data-sly-list.sec="${slnk.subNavLinkslist}">
+                <span class="cmp-sub-menu-heading">${slnk.pageTitle}</span>
+                <li
+                  role="menuitem"
+                  class="cmp-has-submenu"
+                  data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=sec.pagePath}"
+                  data-view-all="${sec.isViewAll}"
+                  data-cmp-data-layer="${sec.data.json}"
+                >
+                  <!-- Level 4 -->
+                  <a
+                    href="${urlHelper.url  @ context='html'}"
+                    title="${sec.pageTitle}"
+                    data-hier="${hier2}>${sec.pageTitle}"
+                    data-sly-set.hier3="${hier2}>${sec.pageTitle}"
+                    data-level="L3"
+                    data-cmp-clickable
+                    data-cmp-children="${sec.hasChildPages ? sec.menuID : ''}"
+                    aria-expanded="false"
+                  >
+                    ${sec.pageTitle}
+                    <div>
+                      <i
+                        data-sly-test="${sec.hasChildPages == 'true'}"
+                        class="fas fa-chevron-right"
+                      ></i>
+                    </div>
                   </a>
+
+                  <ul class="" data-sly-list.subSec="${sec.subNavLinkslist}">
+                    <span class="cmp-sub-menu-heading">${sec.pageTitle}</span>
+                    <li
+                      role="menuitem"
+                      data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=subSec.pagePath}"
+                      data-cmp-data-layer="${subsec.data.json}"
+                    >
+                      <a
+                        href="${urlHelper.url  @ context='html'}"
+                        title="${subSec.pageTitle}"
+                        data-cmp-clickable
+                        data-hier="${hier3}>${subSec.pageTitle}"
+                        data-mobile="true"
+                        data-level="L4"
+                        class=""
+                        aria-expanded="false"
+                      >
+                        ${subSec.pageTitle}
+                      </a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
+            </li>
+          </ul>
 
           <!-- Navigation -->
         </li>
       </ul>
-      </nav>
-      </div>
+    </nav>
+  </div>
 </sly>

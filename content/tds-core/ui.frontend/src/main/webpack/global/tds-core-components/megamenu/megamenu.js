@@ -397,4 +397,51 @@ hasSubMenuEle && hasSubMenuEle.forEach((ele) => {
 });
 
 
-console.log('Mega menu loaded')
+const menuItems = document.querySelectorAll('li.cmp-has-submenu');
+const mainNav = document.querySelector('nav[aria-label="Main"]');
+
+function handleMenuEvent(event) {
+  const el = event.target.closest('li.cmp-has-submenu');
+  if (!el) return;
+
+  const link = el.querySelector('a');
+  const subMenu = link.querySelector('a');
+
+  if (event.type === 'keydown') {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      const isMenuOpen = el.classList.contains('open');
+      el.classList.toggle('open', !isMenuOpen);
+      link.setAttribute('aria-expanded', !isMenuOpen);
+    } else if (event.code === 'Escape') {
+      event.preventDefault();
+      const parent = el.parentElement.closest('li.cmp-has-submenu');
+      if (parent) {
+        parent.classList.remove('open');
+        parent.querySelector('a').setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  if (event.type === 'keyup' && subMenu) {
+    if (event.keyCode === 27 || event.keyCode === 9) {
+      el.classList.remove('open');
+      link.setAttribute('aria-expanded', 'false');
+    }
+  }
+}
+
+function handleCloseMenu() {
+  menuItems.forEach((el) => {
+    el.classList.remove('open');
+    el.querySelector('a').setAttribute('aria-expanded', 'false');
+  });
+}
+
+mainNav.addEventListener('keydown', handleMenuEvent);
+mainNav.addEventListener('keyup', handleMenuEvent);
+document.addEventListener('click', (event) => {
+  if (event.target.closest('nav[aria-label="Main"]') === null) {
+    handleCloseMenu();
+  }
+});
