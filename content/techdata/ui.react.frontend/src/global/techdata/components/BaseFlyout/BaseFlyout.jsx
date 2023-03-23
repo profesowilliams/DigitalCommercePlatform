@@ -1,16 +1,25 @@
 import { Drawer } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import usePositionBelowSubheader from '../../hooks/usePositionBelowSubheader';
-
+import { DismissFilledIcon, LoaderIcon} from '../../../../fluentIcons/FluentIcons';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 function BaseFlyout({
   children,
   open,
   onClose,
   width = '350px',
   anchor = 'right',
-  subheaderReference
+  subheaderReference,
+  titleLabel,
+  buttonLabel,
+  isLoading,
+  enableButton,
+  disabledButton,
+  onClickButton,
+  bottomContent
 }) {
-
+  
+  const BottomContent = () => bottomContent("footer")
   const { positioning, calculatePosition } = usePositionBelowSubheader({unmountedFn:false}, subheaderReference);
   const { top, height } = positioning;
   useEffect(() => {
@@ -41,7 +50,30 @@ function BaseFlyout({
         },
       }}
     >
-      {children}
+      <div className="cmp-flyout">
+        <section className="cmp-flyout__header">
+          <h4 className="cmp-flyout__header-title">
+            {getDictionaryValueOrKey(titleLabel)}
+          </h4>
+          <div
+            className="cmp-flyout__header-icon"
+            onClick={onClose}
+          >
+            <DismissFilledIcon width="30" height="30" />
+          </div>
+        </section>
+          {children}
+        <section className="cmp-flyout__footer">
+          {bottomContent && <BottomContent />}
+          <button
+            className={`cmp-flyout__footer-button ${enableButton ? 'cmp-flyout__footer-button--enabled' : ''}`}
+            disabled={disabledButton}
+            onClick={onClickButton}
+          >
+            {!isLoading && getDictionaryValueOrKey(buttonLabel)} {isLoading && <LoaderIcon />}
+          </button>
+        </section>
+      </div>
     </Drawer>
   );
 }

@@ -1,0 +1,68 @@
+$flyout-padding: 1.3rem;
+$flyout-small-height: 780px;
+$flyout-small-height-formax: 779px;
+
+.cmp-flyout {
+  font-family: $font-family-arial;
+  position: relative;
+  height: 100%;
+
+  @media (max-height: $flyout-small-height) {
+    overflow: hidden;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: $flyout-padding;
+    align-items: center;
+    border-bottom: 2px solid $brand-charcoal;
+    padding-bottom: 1rem;
+    &-title {
+      font-family: $font-family-everett;
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 26px;
+    }
+    &-icon {
+      font-size: 2rem;
+      cursor: pointer;
+    }
+  }
+  &__content {
+    padding: 0 $flyout-padding;
+
+    @media (max-height: $flyout-small-height) {
+      height: calc(100% - 100px);
+      overflow-y: scroll;
+    }
+    &-description {
+      margin: 2rem 0 2.9rem 0;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 18px;
+    }
+    &-bold {
+      font-weight: 700;
+    }
+  }
+  &__footer {
+    button {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: $td-neutral-gray-2;
+      text-align: center;
+      color: $brand-text-lightgray;
+      padding: 0 2rem;
+      height: 48px;
+      font-family: $font-family-arial;
+
+      &.cmp-renewals-copy-flyout__footer-button--enabled {
+        background-color: $td-dark-blue;
+        color: white;
+      }
+    }
+  }
+}

@@ -1,18 +1,16 @@
-import React from "react";
-import DeliveryNotesColumn from "../Columns/DeliveryNotesColumn";
-import InvoiceColumn from "../Columns/InvoiceColumn";
-import OrderNoColumn from "../Columns/OrderNoColumn";
-import OrderTrackingActionColumn from "../Columns/OrderTrackingActionColumn";
+import React from 'react';
+import DeliveryNotesColumn from '../Columns/DeliveryNotesColumn';
+import InvoiceColumn from '../Columns/InvoiceColumn';
+import OrderNoColumn from '../Columns/OrderNoColumn';
+import OrderTrackingActionColumn from '../Columns/OrderTrackingActionColumn';
 
+import SelectColumn from '../Columns/SelectColumn';
+import TotalColumn from '../Columns/TotalColumn';
 
-import SelectColumn from "../Columns/SelectColumn";
-import TotalColumn from "../Columns/TotalColumn";
-
-export const ordersTrackingDefinition = ({ detailUrl, multiple}) => {
-
-  const createColumnComponent = (eventProps, aemDefinition) => {  
+export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
+  const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
-    const { value, data } = eventProps; 
+    const { value, data } = eventProps;
     const columnComponents = {
       // US 399164: We will update the field mapping later when the UI service is ready.
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
@@ -20,10 +18,10 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple}) => {
       updated: data?.updated ?? data?.created,
       select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
-      invoices: <InvoiceColumn invoices={data?.invoices} multiple={multiple}/>,
-      deliveryNotes: <DeliveryNotesColumn deliveryNotes={data?.deliveryNotes} multiple={multiple}/>,
+      invoices: <InvoiceColumn id={data?.id} invoices={data?.invoices} multiple={multiple} />,
+      deliveryNotes: <DeliveryNotesColumn id={data?.id} deliveryNotes={data?.deliveryNotes} multiple={multiple} />,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
-      actions: <OrderTrackingActionColumn />
+      actions: <OrderTrackingActionColumn />,
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';
     return columnComponents[columnKey] || defaultValue();
@@ -66,15 +64,22 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple}) => {
 
   const fieldsWithCellStyle = ['Id'];
 
-  const cellStyle = {'text-overflow':'initial','white-space':'nowrap', 'overflow': 'visible', 'padding': 0};
+  const cellStyle = {
+    'text-overflow': 'initial',
+    'white-space': 'nowrap',
+    overflow: 'visible',
+    padding: 0,
+  };
 
-  const columnOverrides = aemDefinition => ({
+  const columnOverrides = (aemDefinition) => ({
     hoverable: hoverableList.includes(aemDefinition?.columnKey),
     ...(aemDefinition?.type === 'plainText' ? { cellHeight: () => 45 } : {}),
     minWidth: columnsMinWidth[aemDefinition?.columnKey] || null,
     width: columnsWidth[aemDefinition?.columnKey] || null,
-    resizable: false, 
-    ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey) ? {cellStyle} : {})
+    resizable: false,
+    ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey)
+      ? { cellStyle }
+      : {}),
   });
 
   return {

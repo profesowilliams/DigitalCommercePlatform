@@ -1,163 +1,166 @@
 <div data-observe-mutation>
-    <div
-      data-component="OrdersTrackingGrid"
-      data-cmp-type="react"
-      className="cmp-orders-tracking-grid"
-    ></div>
-  </div>
-  <script>
-    const renewalsGridDom = document.querySelector(
-      "[data-component='OrdersTrackingGrid']"
-    );
-    const AEM_DATA = {
-      detailUrl:
-        "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
-      menuCopy:'Copy',
-      reportOptions: [{label: "Last 7 Days Orders", key: "report1"}, {label: "Last 30 Days Orders", key: "report2"} ],
-      menuCopyWithHeaders:'Copy with headers',
-      menuExport:'Export',
-      columnList: [
-        {
-          columnLabel: "Select",
-          columnKey: "select",
-          sortable: false,
-          type: "buttonList",
-        },
-        {
-          columnLabel: "Updated",
-          columnKey: "updated",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Ship to",
-          columnKey: "shipTo",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Status",
-          columnKey: "status",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Order Date",
-          columnKey: "created",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Order Nº",
-          columnKey: "id",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "PO Nº",
-          columnKey: "reseller",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Total",
-          columnKey: "priceFormatted",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Invoices",
-          columnKey: "invoices",
-          sortable: false,
-          type: "plainText",
-        },
-        {
-          columnLabel: "D-Notes",
-          columnKey: "deliveryNotes",
-          sortable: false,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Actions",
-          columnKey: "actions",
-          sortable: false,
-          type: "buttonList",
-        },
-      ],
-      searchOptionsList: [
-        {
-          searchLabel: "Order Nº",
-          searchKey: "Id",
-          showIfIsHouseAccount: false,
-        },  
-      ],
-      uiServiceEndPoint:"http://localhost:3000/ui-commerce/v2/orders",
-      shopURL: "https://shop.cstenet.com/renewals",
-      agGridLicenseKey:
-        "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
-      itemsPerPage: "25",
-      paginationStyle: "scroll",
-      options: {
-        defaultSortingColumnKey: "dueDate",
-        defaultSortingDirection: "asc",
+  <div
+    data-component="OrdersTrackingGrid"
+    data-cmp-type="react"
+    className="cmp-orders-tracking-grid"
+  ></div>
+</div>
+<script>
+  const renewalsGridDom = document.querySelector(
+    "[data-component='OrdersTrackingGrid']"
+  );
+  const AEM_DATA = {
+    detailUrl:
+      "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
+    menuCopy: "Copy",
+    reportOptions: [
+      { label: "Last 7 Days Orders", key: "report1" },
+      { label: "Last 30 Days Orders", key: "report2" },
+    ],
+    menuCopyWithHeaders: "Copy with headers",
+    menuExport: "Export",
+    columnList: [
+      {
+        columnLabel: "Select",
+        columnKey: "select",
+        sortable: false,
+        type: "buttonList",
       },
-      showResultLabel: "Show Result",
-      filterType: "dynamic",
-      filterListValues: [
-        {
-          accordionLabel: "Vendors and Program",
-          filterField: "ProgramName",
-          filterOptionsValues: [
-            {
-              filterOptionLabel: "Veeam",
-              subFilterOptionsValues: [
-                { subFilterOptionsLabel: "Pro Partner" },
-                { subFilterOptionsLabel: "Pro Partner Subscriber" },
-              ],
-            },
-            {
-              filterOptionLabel: "VMWare",
-              subFilterOptionsValues: [
-                { subFilterOptionsLabel: "Support and Subscriber" },
-                { subFilterOptionsLabel: "Standard" },
-              ],
-            },
-          ],
-        },
-        {
-          accordionLabel: "End User Type",
-          filterField: "endUserType",
-          filterOptionsValues: [
-            { filterOptionLabel: "Academic" },
-            { filterOptionLabel: "Educational" },
-          ],
-        },
-        { accordionLabel: "Date", filterField: "date" },
-      ],
-      productGrid: {
-        quoteIdLabel: "Quote ID:",
-        refNoLabel: "Ref No:",
-        expiryDateLabel: "Expiry Date:",
-        downloadPDFLabel: "Download PDF",
-        showDownloadPDFButton: true,
-        downloadXLSLabel: "Download XLS",
-        showDownloadXLSButton: true,
-        seeDetailsLabel: "See details",
-        showSeeDetailsButton: true
+      {
+        columnLabel: "Updated",
+        columnKey: "updated",
+        sortable: true,
+        type: "plainText",
       },
-      icons: {
-        overdue: { overdueIcon: "fas fa-bell", overdueIconColor: "#CD163F" },
-        "0-30": {
-          afterZeroIcon: "fas fa-alarm-clock",
-          afterZeroIconColor: "#F7B500",
-        },
-        "31-60": {
-          afterThirtyIcon: "fas fa-clock",
-          afterThirtyIconColor: "#38853C",
-        },
-        "61+": { sixtyPlusIcon: "calendar", sixtyPlusIconColor: "#006FBA" },
+      {
+        columnLabel: "Ship to",
+        columnKey: "shipTo",
+        sortable: true,
+        type: "plainText",
       },
-      dateOptionValues: [
+      {
+        columnLabel: "Status",
+        columnKey: "status",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Order Date",
+        columnKey: "created",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Order Nº",
+        columnKey: "id",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "PO Nº",
+        columnKey: "reseller",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Total",
+        columnKey: "priceFormatted",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Invoices",
+        columnKey: "invoices",
+        sortable: false,
+        type: "plainText",
+      },
+      {
+        columnLabel: "D-Notes",
+        columnKey: "deliveryNotes",
+        sortable: false,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Actions",
+        columnKey: "actions",
+        sortable: false,
+        type: "buttonList",
+      },
+    ],
+    searchOptionsList: [
+      {
+        searchLabel: "Order Nº",
+        searchKey: "Id",
+        showIfIsHouseAccount: false,
+      },
+    ],
+    uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/orders",
+    shopURL: "https://shop.cstenet.com/renewals",
+    agGridLicenseKey:
+      "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    itemsPerPage: "25",
+    paginationStyle: "scroll",
+    options: {
+      defaultSortingColumnKey: "dueDate",
+      defaultSortingDirection: "asc",
+    },
+    showResultLabel: "Show Result",
+    filterType: "dynamic",
+    filterListValues: [
+      {
+        accordionLabel: "Vendors and Program",
+        filterField: "ProgramName",
+        filterOptionsValues: [
+          {
+            filterOptionLabel: "Veeam",
+            subFilterOptionsValues: [
+              { subFilterOptionsLabel: "Pro Partner" },
+              { subFilterOptionsLabel: "Pro Partner Subscriber" },
+            ],
+          },
+          {
+            filterOptionLabel: "VMWare",
+            subFilterOptionsValues: [
+              { subFilterOptionsLabel: "Support and Subscriber" },
+              { subFilterOptionsLabel: "Standard" },
+            ],
+          },
+        ],
+      },
+      {
+        accordionLabel: "End User Type",
+        filterField: "endUserType",
+        filterOptionsValues: [
+          { filterOptionLabel: "Academic" },
+          { filterOptionLabel: "Educational" },
+        ],
+      },
+      { accordionLabel: "Date", filterField: "date" },
+    ],
+    productGrid: {
+      quoteIdLabel: "Quote ID:",
+      refNoLabel: "Ref No:",
+      expiryDateLabel: "Expiry Date:",
+      downloadPDFLabel: "Download PDF",
+      showDownloadPDFButton: true,
+      downloadXLSLabel: "Download XLS",
+      showDownloadXLSButton: true,
+      seeDetailsLabel: "See details",
+      showSeeDetailsButton: true,
+    },
+    icons: {
+      overdue: { overdueIcon: "fas fa-bell", overdueIconColor: "#CD163F" },
+      "0-30": {
+        afterZeroIcon: "fas fa-alarm-clock",
+        afterZeroIconColor: "#F7B500",
+      },
+      "31-60": {
+        afterThirtyIcon: "fas fa-clock",
+        afterThirtyIconColor: "#38853C",
+      },
+      "61+": { sixtyPlusIcon: "calendar", sixtyPlusIconColor: "#006FBA" },
+    },
+    dateOptionValues: [
       { label: "Overdue", field: "overdue" },
       { label: "Today", field: "today" },
       { label: "0 - 30 days", field: "30" },
@@ -165,30 +168,49 @@
       { label: "61 - 90 days", field: "90" },
       { label: "91+ days", field: "91" },
       { label: "Custom date range", field: "custom" },
-      ],
-      displayCurrencyName: true,
-      orderingFromDashboard:{
-        showOrderingIcon: true,
-        placeOrderDialogTitle:'To continue placing your order for ({enduser-companyname}) please provide the following information.',
-        termsAndConditions:"I have read and accept Terms & Conditions",
-        termsAndConditionsLink:"https://www.techdata.com/content/visitor/abouttd/conditions.aspx",     
-        successSubmission:"Your order has been successfully submitted for processing. You will receive an email once processing is complete",
-        failedSubmission:"Please try again. If the error persists please contact us at ({email})",
-        noResponseMessage: "We are sorry, your order could not be processed, please try again later."
-      },
-      hideExportOption: false,
-      hideCopyHeaderOption: false,
-      searchResultsError: {
-        noResultsTitle: "No Results Found",
-        noResultsDescription: "There are no results for your search criteria. Adjust your search and filter choices to improve results.",
-        noResultsImage: "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",
-        noDataTitle: "No Results Found",
-        noDataDescription: "There are no active renewals quotes at this time.",
-        noDataImage: "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png"
-      },
-      defaultSearchDateRange: "90",
-      multiple: "multiple"
-    };
-    renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
-  </script>
-  
+    ],
+    displayCurrencyName: true,
+    orderingFromDashboard: {
+      showOrderingIcon: true,
+      placeOrderDialogTitle:
+        "To continue placing your order for ({enduser-companyname}) please provide the following information.",
+      termsAndConditions: "I have read and accept Terms & Conditions",
+      termsAndConditionsLink:
+        "https://www.techdata.com/content/visitor/abouttd/conditions.aspx",
+      successSubmission:
+        "Your order has been successfully submitted for processing. You will receive an email once processing is complete",
+      failedSubmission:
+        "Please try again. If the error persists please contact us at ({email})",
+      noResponseMessage:
+        "We are sorry, your order could not be processed, please try again later.",
+    },
+    hideExportOption: false,
+    hideCopyHeaderOption: false,
+    searchResultsError: {
+      noResultsTitle: "No Results Found",
+      noResultsDescription:
+        "There are no results for your search criteria. Adjust your search and filter choices to improve results.",
+      noResultsImage:
+        "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",
+      noDataTitle: "No Results Found",
+      noDataDescription: "There are no active renewals quotes at this time.",
+      noDataImage:
+        "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",
+    },
+    defaultSearchDateRange: "90",
+    multiple: "multiple",
+    dNotesFlyout: {
+      title: "D-notes",
+      description: "Click a link to view or select items to download.",
+      orderNo: "Order №:",
+      button: "Download selected",
+    },
+    invoicesFlyout: {
+      title: "Invoices",
+      description: "Click a link to view or select items to download.",
+      orderNo: "Order №:",
+      button: "Download selected",
+    },
+  };
+  renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
+</script>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  DismissFilledIcon,
-  LoaderIcon,
   SearchIcon,
   WarningIcon,
 } from '../../../../fluentIcons/FluentIcons';
@@ -12,7 +10,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { QuoteDetails } from './QuoteDetails';
 import { checkQuoteExitsforReseller, copyQuote, resellerLookUp } from './api';
 
-function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
+export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
   const copyFlyoutConfig = store((st) => st.copyFlyout);
   const effects = store((st) => st.effects);
   const [accountNumber, setAccountNumber] = useState('');
@@ -102,6 +100,7 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
   };
 
   const handleCopy = async () => {
+    console.log("HandleCopy")
     if (!enableCopy) {
       return;
     }
@@ -201,99 +200,83 @@ function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
+      titleLabel={copyFlyout.title || 'Copy'}
+      buttonLabel={copyFlyout.button || 'Copy'}
+      isLoading={isLoading}
+      enableButton={enableCopy}
+      disabledButton={!enableCopy}
+      onClickButton={handleCopy}
+      bottomContent={(classNameSuffix) => WarningMessage({classNameSuffix})}
     >
-      <div className="cmp-renewals-copy-flyout">
-        <section className="cmp-renewals-copy-flyout__header">
-          <h4 className="cmp-renewals-copy-flyout__header-title">
-            {getDictionaryValueOrKey(copyFlyout.title || 'Copy')}
-          </h4>
-          <div
-            className="cmp-renewals-copy-flyout__header-icon"
-            onClick={closeFlyout}
-          >
-            <DismissFilledIcon width="30" height="30" />
-          </div>
-        </section>
-        <section className="cmp-renewals-copy-flyout__content">
-          <div className="cmp-renewals-copy-flyout__content-description">
-            {getDictionaryValueOrKey(copyFlyout.description)}
-          </div>
-          <div className="cmp-renewals-copy-flyout__content-search">
-            <Autocomplete
-              id="combo-box-demo"
-              open={isAutocompleteOpen}
-              freeSolo={true}
-              options={quotes}
-              getOptionLabel={(option) => option.accountNumber ?? accountNumber}
-              onChange={handleQuoteSelectedChange}
-              value={selectedQuote}
-              onKeyDown={handleKeyDown}
-              renderOption={(props, option) => {
-                return (
-                  <li {...props}>
-                    <div>
-                      <div className="cmp-renewals-copy-flyout-autocomplete__option-name">
-                        <QuoteDetails
-                          quote={option}
-                          currentlyTypedWord={accountNumber}
-                        />
-                      </div>
+      <section className="cmp-renewals-copy-flyout__content">
+        <div className="cmp-renewals-copy-flyout__content-description">
+          {getDictionaryValueOrKey(copyFlyout.description)}
+        </div>
+        <div className="cmp-renewals-copy-flyout__content-search">
+          <Autocomplete
+            id="combo-box-demo"
+            open={isAutocompleteOpen}
+            freeSolo={true}
+            options={quotes}
+            getOptionLabel={(option) => option.accountNumber ?? accountNumber}
+            onChange={handleQuoteSelectedChange}
+            value={selectedQuote}
+            onKeyDown={handleKeyDown}
+            renderOption={(props, option) => {
+              return (
+                <li {...props}>
+                  <div>
+                    <div className="cmp-renewals-copy-flyout-autocomplete__option-name">
+                      <QuoteDetails
+                        quote={option}
+                        currentlyTypedWord={accountNumber}
+                      />
                     </div>
-                  </li>
-                );
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  error={!!errorMessage}
-                  label={autocompleteTitle}
-                  value={accountNumber}
-                  variant="standard"
-                  onChange={handleResellerIdChange}
-                  onBlur={handleFocusOut}
-                  onFocus={handleFocusIn}
-                  placeholder={getDictionaryValueOrKey(
-                    copyFlyout.searchPlaceholder
-                  )}
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <div className="cmp-autocomplete__button-section">
-                        <Button
-                          className="cmp-button__autocomplete-search"
-                          variant="standard"
-                          onClick={selectQuoteForCopying}
-                        >
-                          <SearchIcon />
-                        </Button>
-                      </div>
-                    ),
-                  }}
-                />
-              )}
-            />
-            {errorMessage && <div className="cmp-renewals-copy-flyout__content--error">
-              {errorMessage}
-            </div>}
-            {selectedQuote && (
-              <>
-                <QuoteDetails quote={selectedQuote} labels={copyFlyout} />
-              </>
+                  </div>
+                </li>
+              );
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                error={!!errorMessage}
+                label={autocompleteTitle}
+                value={accountNumber}
+                variant="standard"
+                onChange={handleResellerIdChange}
+                onBlur={handleFocusOut}
+                onFocus={handleFocusIn}
+                placeholder={getDictionaryValueOrKey(
+                  copyFlyout.searchPlaceholder
+                )}
+                InputProps={{
+                  ...params.InputProps,
+                  endAdornment: (
+                    <div className="cmp-autocomplete__button-section">
+                      <Button
+                        className="cmp-button__autocomplete-search"
+                        variant="standard"
+                        onClick={selectQuoteForCopying}
+                      >
+                        <SearchIcon />
+                      </Button>
+                    </div>
+                  ),
+                }}
+              />
             )}
-            <WarningMessage classNameSuffix="content" />
-          </div>
-        </section>
-        <section className="cmp-renewals-copy-flyout__footer">
-          <WarningMessage classNameSuffix="footer" />
-          <button
-            className={`cmp-renewals-copy-flyout__footer-button ${enableCopy ? 'cmp-renewals-copy-flyout__footer-button--enabled' : ''}`}
-            enabled={!enableCopy}
-            onClick={handleCopy}
-          >
-            {!isLoading && getDictionaryValueOrKey(copyFlyout.button || 'Copy')} {isLoading && <LoaderIcon />}
-          </button>
-        </section>
-      </div>
+          />
+          {errorMessage && <div className="cmp-renewals-copy-flyout__content--error">
+            {errorMessage}
+          </div>}
+          {selectedQuote && (
+            <>
+              <QuoteDetails quote={selectedQuote} labels={copyFlyout} />
+            </>
+          )}
+          <WarningMessage classNameSuffix="content" />
+        </div>
+      </section>
     </BaseFlyout>
   );
 }

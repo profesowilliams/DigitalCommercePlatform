@@ -1076,26 +1076,6 @@ $flyout-small-height-formax: 779px;
       }
     }
   }
-  &__footer {
-    button {
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: $td-neutral-gray-2;
-      text-align: center;
-      color: $brand-text-lightgray;
-      padding: 0 2rem;
-      height: 48px;
-      font-family: $font-family-arial;
-
-      &.cmp-renewals-copy-flyout__footer-button--enabled {
-        background-color: $td-dark-blue;
-        color: white;
-      }
-    }
-  }
 }
 
 
