@@ -25,7 +25,7 @@ export const CloseIconWeighted = (props) => (
 );
 
 function _GridSearch(
-  { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store },
+  { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store, hideLabel=false },
   ref
 ) {
   const customSearchValues = {
@@ -34,7 +34,7 @@ function _GridSearch(
     option: getInitialFieldState(),
     label: getInitialLabelState()
   }
-  const [values, setValues] = useState({...customSearchValues}); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
+  const [values, setValues] = useState({ ...customSearchValues }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setSwitchDropdown] = useState(false);
   const [isResetVisible, setResetVisible] = useState(true);
@@ -51,9 +51,9 @@ function _GridSearch(
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = store((state) => state.effects);
   const { computeClassName, isTDSynnex } = useComputeBranding(store);
-  const { closeAndCleanToaster } = effects;  
+  const { closeAndCleanToaster } = effects;
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
-  const [capsuleValues, setCapsuleValues] = useState({...customSearchValues});
+  const [capsuleValues, setCapsuleValues] = useState({ ...customSearchValues });
 
   function getInitialValueState() {
     if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
@@ -116,9 +116,9 @@ function _GridSearch(
   const onReset = () => {
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
-    if (searchTriggered) {      
+    if (searchTriggered) {
       setSwitchDropdown(true);
-      onQueryChanged({onSearchAction:true});
+      onQueryChanged({ onSearchAction: true });
     }
     setSearchTriggered(false);
     setSearchTerm("");
@@ -202,18 +202,18 @@ function _GridSearch(
       field: option,
       value: inputValue,
     });
-    onQueryChanged({onSearchAction:true});
+    onQueryChanged({ onSearchAction: true });
     pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
       renewal: {
         searchTerm: inputValue,
         searchType: option,
       },
     });
-    setCapsuleValues({...values});
+    setCapsuleValues({ ...values });
   }
 
   function fetchAll() {
-    onQueryChanged({onSearchAction:true});
+    onQueryChanged({ onSearchAction: true });
     onReset();
   }
 
@@ -224,7 +224,7 @@ function _GridSearch(
     }
   };
 
-  const RenderWithPermissions = ({option}) => {
+  const RenderWithPermissions = ({ option }) => {
     const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount();
     if (hasNotPrivilege) return <></>;
     return (
@@ -254,7 +254,7 @@ function _GridSearch(
   }
 
   const handleMouseLeave = (e) => {
-    if (isSearchCapsuleVisible) return 
+    if (isSearchCapsuleVisible) return
     setSwitchDropdown(false);
     onReset();
   }
@@ -268,18 +268,18 @@ function _GridSearch(
           <div className="cmp-search-select-container">
             <div className="cmp-search-select-container__box">
               <SearchField
-               chosenFilter={values.label}
-               inputRef={inputRef}
-               searchTerm={searchTerm}
-               setSearchTerm={setSearchTerm}
-               triggerSearchOnEnter={triggerSearchOnEnter}
-               store={store}
+                chosenFilter={values.label}
+                inputRef={inputRef}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                triggerSearchOnEnter={triggerSearchOnEnter}
+                store={store}
               />
               <button
                 className={computeClassName("cmp-search-tooltip__button")}
                 onClick={() => triggerSearch()}
               >
-              <SearchIcon className="search-icon__light"/>
+                <SearchIcon className="search-icon__light" />
               </button>
             </div>
             <If condition={isResetVisible}>
@@ -288,20 +288,20 @@ function _GridSearch(
                 style={!isTDSynnex ? { padding: "5px 10px" } : {}}
               >
                 <div className="cmp-search-options__reset">
-                  <label style={{pointerEvents:'none'}}>
+                  <label style={{ pointerEvents: 'none' }}>
                     {callbackExecuted && !filterCounter ? (
                       <p>Sorry, no rows to display</p>
                     ) : (
                       <p>Search by {chosenFilter}</p>
                     )}
                   </label>
-                    <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
-                      <ChevronDownIcon onClick={onReset}/>
-                    </div>     
+                  <div className="cmp-search-options__reset__icon-container" onClick={onReset}>
+                    <ChevronDownIcon onClick={onReset} />
+                  </div>
                 </div>
               </div>
             </If>
-            <div className="cmp-search-select-container__filler"></div> 
+            <div className="cmp-search-select-container__filler"></div>
           </div>
         </div>
       </>
@@ -310,26 +310,26 @@ function _GridSearch(
 
   return (
     <>
-      <SearchCapsule />    
+      <SearchCapsule />
       <div className="cmp-renewal-search" onMouseLeave={handleMouseLeave}>
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
-            <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone"/>}>
-                <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
-            </If>
-            <SearchIcon className="search-icon__dark"/>
-            
+            {!hideLabel && <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone" />}>
+              <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
+            </If>}
+            <SearchIcon className="search-icon__dark" />
+
           </div>
         </If>
         <If condition={isDropdownVisible}>
           <div className="cmp-search-select-container" ref={node}>
             <div className="cmp-search-select-container__box">
-              <input className={computeClassName("inputStyle")} placeholder={getDictionaryValue("grids.common.label.search", "Search") } disabled />
+              <input className={computeClassName("inputStyle")} placeholder={getDictionaryValue("grids.common.label.search", "Search")} disabled />
               <button className={computeClassName("cmp-search-tooltip__button")}>
-              <SearchIcon className="search-icon__light"/>
+                <SearchIcon className="search-icon__light" />
               </button>
             </div>
-            <div className="cmp-search-select-container__filler"></div> 
+            <div className="cmp-search-select-container__filler"></div>
             <If condition={true}>
               <div className={computeClassName("cmp-search-options")}>
                 {options.map((option) => <RenderWithPermissions option={option} key={option.searchKey} />)}
@@ -358,4 +358,5 @@ _GridSearch.propTypes = {
   filterCounter: PropTypes.number,
   inputType: PropTypes.string,
   styleProps: PropTypes.object,
+  hideLabel: PropTypes.bool,
 };

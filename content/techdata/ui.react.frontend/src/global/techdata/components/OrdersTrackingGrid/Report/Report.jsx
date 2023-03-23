@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { ChevronDownIcon } from '../../../../../fluentIcons/FluentIcons'
+import { ReportIcon } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 
 function Report({options}) {
@@ -24,8 +24,7 @@ function Report({options}) {
 
   return (
     <div onClick={handleDropdownClick} className='cmp-order-tracking-grid__report'>
-        <label>Report</label>
-        <ChevronDownIcon fill="#262626" />
+        <ReportIcon fill="#262626" />
         {isDropDownOpen && <ReportDropdown ref={wrapperRef} reportOptions={options} />}
     </div>
 

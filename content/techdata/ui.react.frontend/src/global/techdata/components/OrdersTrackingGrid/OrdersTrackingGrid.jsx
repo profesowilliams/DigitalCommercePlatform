@@ -123,6 +123,7 @@ function OrdersTrackingGrid(props) {
             onQueryChanged={onQueryChanged}
             ref={searchCriteria}
             store={useOrderTrackingStore}
+            hideLabel={true}
           />,
           <VerticalSeparator />,
           <OrderFilter />,
