@@ -307,7 +307,7 @@
           dlObject = {
             "event": "click",
             "clickInfo": {
-              "category": "",
+              "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "",
               "title": dataObject['dc:title'],
               "type": componentType,
               "url": dataObject['xdm:linkURL'] ?? "",
@@ -320,7 +320,7 @@
           dlObject = {
             "event": "click",
             "clickInfo": {
-            "category": "",
+            "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "",
             "title": dataObject['dc:title'],
             "type": "hero-cta",
             "url": dataObject['xdm:linkURL'] ?? "",
@@ -330,7 +330,7 @@
           dlObject = {
             "event": "click",
             "clickInfo": {
-            "category": "",
+            "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "",
             "title": dataObject['dc:title'],
             "type": "teaser-cta",
             "url": dataObject['xdm:linkURL'] ?? "",
@@ -342,7 +342,7 @@
           dlObject = {
             "event": "click",
             "clickInfo": {
-            "category": "",
+            "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "",
             "title": dataObject['dc:title'],
             "type": "hero",
             "url": dataObject['xdm:linkURL'] ?? "",
@@ -386,7 +386,7 @@
         dlObject = {
           "event": "click",
           "clickInfo": {
-            "category": dataObject['analyticsCategory'],
+            "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "",
             "title": dataObject['dc:title'],
             "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
@@ -399,7 +399,7 @@
         dlObject = {
           "event": "click",
           "clickInfo": {
-            "category": "cta",
+            "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "cta",
             "title": shownItem['dc:title'],
             "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
@@ -410,7 +410,7 @@
         dlObject = {
           "event": "click",
           "clickInfo": {
-            "category": "cta",
+            "category": dataObject['analyticsCategory'] ? dataObject['analyticsCategory'] : "cta",
             "title": dataObject['dc:title'],
             "type": componentType,
             "url": dataObject['xdm:linkURL'] ?? "",
