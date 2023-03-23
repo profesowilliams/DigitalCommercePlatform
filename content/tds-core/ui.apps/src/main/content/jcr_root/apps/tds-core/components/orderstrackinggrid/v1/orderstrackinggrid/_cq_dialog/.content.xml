@@ -503,6 +503,12 @@
                                                 composite="{Boolean}true"
                                                 fieldDescription="Click 'Add' to add labels"
                                                 fieldLabel="Report Options">
+                                                <reportFilterKey
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="This key will match with the service request"
+                                                    fieldLabel="Enter Report Filter Key"
+                                                    name="./reportFilterKey" />
                                                 <field
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/container"
@@ -522,12 +528,18 @@
                                                                     jcr:primaryType="nt:unstructured"
                                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldLabel="Key"
+                                                                    fieldDescription="This key will match with the service request"
                                                                     name="./key"
                                                                     required="{Boolean}true" />
                                                             </items>
                                                         </column>
                                                     </items>
                                                 </field>
+                                                <reportPillLabel
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Report Pill Label"
+                                                    name="./reportPillLabel" />
                                             </reportOptions>
                                         </items>
                                     </column>

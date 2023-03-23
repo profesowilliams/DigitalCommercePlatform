@@ -68,6 +68,22 @@
 
       }
     }
+    &__report-pill {
+      background-color: #005758;
+      padding: 0 20px;
+      color: get-color(brand-white);
+      border-radius: 20px;
+
+      span {
+        font-size: 14px;
+        line-height: 29px;
+        padding-right: 14px;
+      }
+
+      svg {
+        cursor: pointer;
+      }
+    }
     &__export {
         @extend %clickable-action;
     }

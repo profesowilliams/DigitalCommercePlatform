@@ -27,39 +27,48 @@ export async function fetchData(config) {
       optionFieldsRef,
       componentProp,
       previousFilter,
+      reportFilterValue,
+      reportFilterKey,
     } = config;
-  
+
     const { url } = request;
     const mapUrl = urlStrToMapStruc(url);
-    
+
     if (hasSortChanged.current) {
       const { sortData } = hasSortChanged.current;
-      const { sortStrValue, isColReseted } = extractSortColAndDirection(sortData);
+      const { sortStrValue, isColReseted } =
+        extractSortColAndDirection(sortData);
       const secondLevelSort = calcSecondLevelSorting(sortData);
-      
-      if (secondLevelSort && !secondLevelSort.includes("undefined")) {
+
+      if (secondLevelSort && !secondLevelSort.includes('undefined')) {
         mapUrl.set('SortBySecondLevel', secondLevelSort);
-        
-        if (secondLevelSort.includes("renewedduration")) {
-          const renewedWithSupport = secondLevelSort.replace('renewedduration', 'support');
+
+        if (secondLevelSort.includes('renewedduration')) {
+          const renewedWithSupport = secondLevelSort.replace(
+            'renewedduration',
+            'support'
+          );
           mapUrl.set('SortBySecondLevelComposite', renewedWithSupport);
         }
       }
-  
+
       const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
-      const isEqual = isRepeatedSortAction(previousSortChanged.current?.sortData, hasSortChanged.current?.sortData);
+      const isEqual = isRepeatedSortAction(
+        previousSortChanged.current?.sortData,
+        hasSortChanged.current?.sortData
+      );
       const pageNumber = customPaginationRef.current?.pageNumber;
       const isNotFirstAPICall = firstAPICall.current === false;
-  
+
       if (pageNumber !== 1 && !isDefaultSort && isNotFirstAPICall) {
         if (!isEqual) mapUrl.set('PageNumber', 1);
       }
     }
-  
+
     if (searchCriteria.current?.field) {
       const { field, value } = searchCriteria.current;
       mapUrl.set(field, value);
-      
+
       if (customPaginationRef.current?.pageNumber !== 1 && onSearchAction) {
         mapUrl.set('PageNumber', 1);
       }
@@ -68,7 +77,11 @@ export async function fetchData(config) {
         mapUrl.set('PageNumber', 1);
       }
     }
-  
+
+    if (reportFilterValue.current?.value) {
+      mapUrl.set(reportFilterKey, reportFilterValue.current?.value);
+    }
+
     if (onFiltersClear) {
       mapUrl.set('PageNumber', 1);
     }

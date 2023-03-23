@@ -14,9 +14,14 @@ import { isHouseAccount } from "../../../../../utils/user-utils";
 import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";
-import Capsule from "../../Widgets/Capsule";
-import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
-import { SearchField } from "./SearchField";
+import Pill from '../../Widgets/Pill';
+import {
+  getLocalStorageData,
+  hasLocalStorageData,
+  isFromRenewalDetailsPage,
+  setLocalStorageData,
+} from '../../RenewalsGrid/utils/renewalUtils';
+import { SearchField } from './SearchField';
 
 export const CloseIconWeighted = (props) => (
   <svg viewBox="0 0 24 24" {...props}>
@@ -244,11 +249,13 @@ function _GridSearch(
 
     return (
       <If condition={isSearchCapsuleVisible}>
-        <Capsule closeClick={handleCapsuleClose} hasCloseBtn={true}>
+        <Pill closeClick={handleCapsuleClose} hasCloseButton>
           <span onClick={handleCapsuleTextClick} className="td-capsule__text">
-            {`${capsuleValues.label}: ${capsuleSearchValue || inputRef?.current?.value}`}
+            {`${capsuleValues.label}: ${
+              capsuleSearchValue || inputRef?.current?.value
+            }`}
           </span>
-        </Capsule>
+        </Pill>
       </If>
     );
   }

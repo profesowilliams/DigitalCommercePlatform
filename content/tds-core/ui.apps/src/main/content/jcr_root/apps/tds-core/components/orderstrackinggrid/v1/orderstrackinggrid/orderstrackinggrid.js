@@ -106,6 +106,29 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["reportOptions"] = reportOptionsValues;
   }
 
+  if (properties && properties['reportFilterKey']) {
+    jsonObject['reportFilterKey'] = properties['reportFilterKey'];
+  }
+
+  if (properties && properties['pillLabel']) {
+    jsonObject['pillLabel'] = properties['pillLabel'];
+  }
+
+  let dateOptionValues = utils.getDataFromMultifield(
+    resourceResolver,
+    "dateOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.field = childResource.properties["field"];
+      return itemData;
+    }
+  );
+    
+  if (dateOptionValues != null) {
+    jsonObject["dateOptionValues"] = dateOptionValues;
+  }
+
   //Search Options
   let searchOptionsValues = utils.getDataFromMultifield(
     resourceResolver,
@@ -119,21 +142,6 @@ use(["../common/utils.js"], function (utils) {
       return itemData;
     }
   );
-
-  let dateOptionValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "dateOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.label = childResource.properties["label"];
-      itemData.field = childResource.properties["field"];
-      return itemData;
-    }
-  );
-
-  if (dateOptionValues != null) {
-    jsonObject["dateOptionValues"] = dateOptionValues;
-  }
 
   if (searchOptionsValues != null) {
     jsonObject["searchOptionsList"] = searchOptionsValues;

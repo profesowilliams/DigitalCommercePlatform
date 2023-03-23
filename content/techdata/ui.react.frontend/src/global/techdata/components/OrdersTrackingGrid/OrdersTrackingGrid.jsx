@@ -1,8 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import {
-  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-  SORT_LOCAL_STORAGE_KEY,
-} from '../../../../utils/constants';
+import React, { useEffect, useRef, useState } from 'react';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
@@ -38,14 +35,23 @@ function OrdersTrackingGrid(props) {
   const hasSortChanged = useRef(false);
   const previousSortChanged = useRef(false);
   const searchCriteria = useRef({ field: '', value: '' });
+  const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore
   );
   const componentProp = JSON.parse(props.componentProp);
+  const [pill, setPill] = useState(null);
 
-  const { searchOptionsList, shopURL, icons } = componentProp;
+  const {
+    searchOptionsList,
+    shopURL,
+    icons,
+    reportOptions,
+    reportPillLabel,
+    reportFilterKey,
+  } = componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
@@ -81,6 +87,8 @@ function OrdersTrackingGrid(props) {
       firstAPICall,
       //isPriceColumnClicked,
       gridApiRef,
+      reportFilterValue,
+      reportFilterKey,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     //const response = await request.get(request.url);
@@ -130,6 +138,16 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  const onReportChange = (option) => {
+    setPill({ key: option.key, label: option.label });
+    onQueryChanged();
+  };
+
+  const handleDeletePill = () => {
+    setPill();
+    onQueryChanged();
+  };
+
   useEffect(() => {
     if (
       hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
@@ -138,6 +156,7 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
+
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
@@ -150,6 +169,19 @@ function OrdersTrackingGrid(props) {
           />,
         ]}
         rightComponents={[
+          ...(pill
+            ? [
+                <Pill
+                  children={
+                    <span className="td-capsule__text">
+                      {reportPillLabel}: {pill.label}
+                    </span>
+                  }
+                  closeClick={handleDeletePill}
+                  hasCloseButton
+                />,
+              ]
+            : []),
           <OrderSearch
             options={searchOptionsList}
             onQueryChanged={onQueryChanged}
@@ -160,10 +192,16 @@ function OrdersTrackingGrid(props) {
           <VerticalSeparator />,
           <OrderFilter />,
           <VerticalSeparator />,
-          <Report
-            options={componentProp.reportOptions}
-            onQueryChanged={onQueryChanged}
-          />,
+          ...(reportOptions.length
+            ? [
+                <Report
+                  options={reportOptions}
+                  selectOption={onReportChange}
+                  ref={reportFilterValue}
+                  selectedKey={pill?.key}
+                />,
+              ]
+            : []),
           <VerticalSeparator />,
           <OrderExport />,
         ]}
