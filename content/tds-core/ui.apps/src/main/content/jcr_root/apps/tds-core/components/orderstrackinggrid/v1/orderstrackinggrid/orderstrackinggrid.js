@@ -110,8 +110,8 @@ use(["../common/utils.js"], function (utils) {
     jsonObject['reportFilterKey'] = properties['reportFilterKey'];
   }
 
-  if (properties && properties['pillLabel']) {
-    jsonObject['pillLabel'] = properties['pillLabel'];
+  if (properties && properties['reportPillLabel']) {
+    jsonObject['reportPillLabel'] = properties['reportPillLabel'];
   }
 
   let dateOptionValues = utils.getDataFromMultifield(
