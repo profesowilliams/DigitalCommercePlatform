@@ -31,15 +31,20 @@ export default class Header {
     setComponentToStick(){
         const mastheadContainer = this.masthead.querySelector('.cmp-container');
         this.stickyHeaderFlag = mastheadContainer.dataset.stickyHeaderflag;
-
+    
         this.isSubheaderTransparency = false;
         this.componentToStick = document.getElementById(mastheadContainer.dataset.stickyComponentid);
-        this.componentToStickTop = this.componentToStick ? this.componentToStick.getBoundingClientRect().top : null;
-
+    
+        if (this.componentToStick) {
+            this.componentToStickTop = this.componentToStick.getBoundingClientRect().top;
+        } else {
+            this.componentToStickTop = null;
+        }
+    
         if(this.stickyHeaderFlag === "true"){
             this.header.classList.add('cmp-experiencefragment__header--sticky');
         }
-    }
+    }    
 
     checkSubheaderContainer(){
         const aemGrid = document.querySelector(".aem-Grid");
@@ -146,18 +151,21 @@ export default class Header {
     }
 
     checkHeaderComponent(){
-        if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
-            if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight)){
-                this.componentToStick.classList.remove('sticky');
-                this.isComponentStuck = false;
-            }
-            else{
-                this.componentToStick.style.top = this.header.clientHeight + "px";
-                this.componentToStick.classList.add('sticky');
-                this.isComponentStuck = true;
+        if (this.componentToStick) {
+            if(this.header.getBoundingClientRect().bottom >= this.componentToStick.getBoundingClientRect().top){
+                if(this.isComponentStuck && window.pageYOffset <= this.componentToStickTop - (2*this.header.clientHeight)){
+                    this.componentToStick.classList.remove('sticky');
+                    this.isComponentStuck = false;
+                }
+                else{
+                    this.componentToStick.style.top = this.header.clientHeight + "px";
+                    this.componentToStick.classList.add('sticky');
+                    this.isComponentStuck = true;
+                }
             }
         }
     }
+    
 
     checkHeaderSubheader(){
         if(this.componentToStick){
