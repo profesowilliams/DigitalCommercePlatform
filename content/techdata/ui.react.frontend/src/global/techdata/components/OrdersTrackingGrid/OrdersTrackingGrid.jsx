@@ -162,7 +162,6 @@ function OrdersTrackingGrid(props) {
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
         leftComponents={[
-          <VerticalSeparator />,
           <BaseGridPagination
             ref={customPaginationRef}
             store={useOrderTrackingStore}
