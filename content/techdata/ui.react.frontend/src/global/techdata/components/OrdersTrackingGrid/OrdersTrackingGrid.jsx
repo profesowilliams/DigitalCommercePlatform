@@ -17,6 +17,7 @@ import VerticalSeparator from '../Widgets/VerticalSeparator';
 import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
 import Report from './Report/Report';
+import Pill from '../Widgets/Pill';
 import OrderSearch from '../BaseGrid/Search/Search';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
