@@ -193,7 +193,7 @@ function OrdersTrackingGrid(props) {
           <VerticalSeparator />,
           <OrderFilter />,
           <VerticalSeparator />,
-          ...(reportOptions.length
+          ...(reportOptions?.length
             ? [
                 <Report
                   options={reportOptions}
@@ -201,9 +201,9 @@ function OrdersTrackingGrid(props) {
                   ref={reportFilterValue}
                   selectedKey={pill?.key}
                 />,
+                <VerticalSeparator />,
               ]
             : []),
-          <VerticalSeparator />,
           <OrderExport />,
         ]}
       />
