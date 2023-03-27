@@ -14,7 +14,7 @@ function DeliveryNotesColumn({ deliveryNotes = [], multiple, id }) {
   return deliveryNotes.length == 0 ? (
     '-'
   ) : (
-    <div onClick={triggerDNotesFlyout}>
+    <div onClick={hasMultiple ? triggerDNotesFlyout : null}>
       <a href="#">
         {hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0]?.id}
       </a>

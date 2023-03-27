@@ -4,6 +4,7 @@ import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 
 const getInvoiceStatus = (invoices, multiple) => {
+
   if (!invoices) return '-';
   const invoiceLength = invoices.length;
 
@@ -21,6 +22,7 @@ const getInvoiceStatus = (invoices, multiple) => {
 }
 
 function InvoiceColumn({ invoices = [] ,multiple, id}) {
+  const hasMultiple = invoices.length > 1;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const triggerInvoicesFlyout = () => {
     setCustomState({
@@ -29,7 +31,7 @@ function InvoiceColumn({ invoices = [] ,multiple, id}) {
     });
   };
   return (
-    <div onClick={triggerInvoicesFlyout}>
+    <div onClick={hasMultiple ? triggerInvoicesFlyout : null}>
       <a>
         {getInvoiceStatus(invoices, multiple)}
       </a>
