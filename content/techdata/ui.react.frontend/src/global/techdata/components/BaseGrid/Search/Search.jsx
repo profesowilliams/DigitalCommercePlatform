@@ -22,6 +22,7 @@ import {
   setLocalStorageData,
 } from '../../RenewalsGrid/utils/renewalUtils';
 import { SearchField } from './SearchField';
+import "../../../../../../src/styles/TopIconsBar.scss";
 
 export const CloseIconWeighted = (props) => (
   <svg viewBox="0 0 24 24" {...props}>
@@ -324,7 +325,7 @@ function _GridSearch(
             {!hideLabel && <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone" />}>
               <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
             </If>}
-            <SearchIcon className="search-icon__dark" />
+            <SearchIcon className="search-icon__dark icon-hover" />
 
           </div>
         </If>

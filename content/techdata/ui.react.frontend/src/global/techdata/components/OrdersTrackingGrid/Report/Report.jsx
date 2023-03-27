@@ -8,6 +8,7 @@ import React, {
 import { ChevronDownIcon } from '../../../../../fluentIcons/FluentIcons';
 import { ReportIcon } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
+import "../../../../../../src/styles/TopIconsBar.scss"
 
 function Report({ options, selectOption, selectedKey }, ref) {
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
@@ -48,7 +49,7 @@ function Report({ options, selectOption, selectedKey }, ref) {
       onClick={handleDropdownClick}
       className="cmp-order-tracking-grid__report"
     >
-      <ReportIcon fill="#262626" />
+      <ReportIcon fill="#262626" className="icon-hover"/>
       {isDropDownOpen && (
         <ReportDropdown
           ref={wrapperRef}
