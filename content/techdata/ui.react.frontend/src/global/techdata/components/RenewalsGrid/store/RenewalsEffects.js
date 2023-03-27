@@ -73,7 +73,7 @@ export const renewalsEffects = (set, get) => {
     });
 
     set({
-      appliedFilterCount: dateSelected !== null ? count += 1 : count,
+      appliedFilterCount: dateSelected ? count += 1 : count,
     });
 
     let filterObj = { ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY), ...{count} };
@@ -125,14 +125,19 @@ export const renewalsEffects = (set, get) => {
     }
   }
 
+  function isParentStateOpen(list, id) {
+    const parent = list.find(x => x.id === id);
+    return parent && parent?.applied && parent?.open;
+  }
+  
   function resetFilterToState () {
     const {filterList, dateOptionsList} = get();
     const filtersCopy = [...filterList].map((filter, index) => {
+      const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
       if (index !== 0) {
         const checked = !!filter.applied;
-        let open = checked;
+        let open = appliedFilters && isParentStateOpen(filterList, filter?.parentId || filter.id);
         if(filter.field==='date') {
-          const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
           open = !!appliedFilters?.dateSelected;          
           const isChecked = (field) => field === appliedFilters?.dateSelected;
           const options = dateOptionsList.slice().map(item => ({...item,checked:isChecked(item.field)}));
@@ -144,6 +149,46 @@ export const renewalsEffects = (set, get) => {
       return filter;
     });
     setFilterList(filtersCopy);
+  }
+
+  function closeSections(keepOpenList) {
+    const {filterList} = get();
+    const keepOpened = ({ field }) => {
+      return keepOpenList.includes(field);
+    };
+    const filterListCopy = filterList.map(filter => ({ ...filter, open: keepOpened(filter) }));
+    return filterListCopy;
+  }
+
+  function setAppliedFilter(optionFields) {    
+    const {filterList, dateSelected, customStartDate, customEndDate} = get();
+    setAppliedFilterCount();
+    const activeSections = filterList.map(item => {
+      if(item.field==='date' && dateSelected) {
+        return item.field;
+      }
+      if(item.checked && item.hasOwnProperty('parentId')) {
+        return item.field;
+      }
+    }).filter((element, index, arr) => {
+      return element && arr.indexOf(element) === index
+    })
+    const filtersCopy = closeSections(activeSections).map((filter, index) => {
+      if (index !== 0) {
+        const applied = filter.checked;
+        return {...filter,applied};
+      }
+      return filter;
+    });
+    setFilterList(filtersCopy); 
+    setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
+      ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
+      optionFields,
+      dateSelected,
+      customStartDate: dateSelected==='custom' ? customStartDate : null,
+      customEndDate: dateSelected==='custom' ? customEndDate : null,
+      filterList: filtersCopy
+    });
   }
 
   return {
@@ -162,5 +207,6 @@ export const renewalsEffects = (set, get) => {
     checkOptionListSelected,
     clearUnappliedDateRange,
     resetFilterToState,
+    setAppliedFilter,
   };
 };

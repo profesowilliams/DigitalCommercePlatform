@@ -2,18 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { pushEvent } from "../../../../utils/dataLayerUtils";
-import {
-  getLocalStorageData,
-  setLocalStorageData,
-} from "../RenewalsGrid/utils/renewalUtils";
 import { useRenewalGridState } from "../RenewalsGrid/store/RenewalsStore";
 import Button from "../Widgets/Button";
 import FilterHeader from "./components/FilterHeader";
 import FilterList from "./components/FilterList";
 import FilterTags from "./components/FilterTags";
 import useComputeBranding from "../../hooks/useComputeBranding";
-
-import { generateFilterFields } from "./filterUtils/filterUtils";
 import normaliseAPIData from "./filterUtils/normaliseAPIData";
 import normaliseState from "./filterUtils/normaliseData";
 import { useMultiFilterSelected } from "./hooks/useFilteringState";
@@ -46,9 +40,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
 
   const { computeClassName, isTDSynnex } = useComputeBranding(useRenewalGridState); 
 
-  const { setAppliedFilterCount } = useRenewalGridState(
-    (state) => state.effects
-  );
+  const { setAppliedFilter } = useRenewalGridState( (state) => state.effects );
 
   const { hasFilterChangeAvailable, dateSelected } = useFilteringSelected();
 
@@ -125,23 +117,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
    */
   const showResult = () => {
     const [optionFields] = _generateFilterFields();
-    setAppliedFilterCount();
-    const filtersCopy = [...filterList].map((filter, index) => {
-      if (index !== 0) {
-        const applied = filter.checked;
-        return {...filter,applied};
-      }
-      return filter;
-    });
-    setFilterList(filtersCopy);
-    setLocalStorageData(FILTER_LOCAL_STORAGE_KEY, {
-      ...getLocalStorageData(FILTER_LOCAL_STORAGE_KEY),
-      optionFields,
-      dateSelected,
-      customStartDate: dateSelected==='custom' ? customStartDate : null,
-      customEndDate: dateSelected==='custom' ? customEndDate : null,
-      filterList: filtersCopy,
-    });
+    setAppliedFilter(optionFields);
     toggleFilterModal();
     if (resetFilter)
       setCustomState({ key: "resetFilter", value: false });
