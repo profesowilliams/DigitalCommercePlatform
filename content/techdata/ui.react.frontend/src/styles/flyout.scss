@@ -18,8 +18,9 @@ $flyout-small-height-formax: 779px;
     border-bottom: 2px solid $brand-charcoal;
     padding-bottom: 1rem;
     &-title {
-      font-family: $font-family-everett;
-      font-weight: 500;
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
+      font-weight: 700;
       font-size: 1.25rem;
       line-height: 26px;
     }
@@ -40,9 +41,13 @@ $flyout-small-height-formax: 779px;
       font-weight: 400;
       font-size: 1rem;
       line-height: 18px;
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
     }
     &-bold {
       font-weight: 700;
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
     }
   }
   &__footer {
