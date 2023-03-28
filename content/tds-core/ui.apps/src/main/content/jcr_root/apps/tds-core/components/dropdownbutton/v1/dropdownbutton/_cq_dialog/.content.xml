@@ -31,42 +31,20 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <text
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="The text to display on the button."
-                                                fieldLabel="Text"
-                                                name="./jcr:title"/>
                                             <fontcolor
                                                 jcr:primaryType="nt:unstructured"
+												sling:orderBefore="link"
                                                 sling:resourceType="granite/ui/components/coral/foundation/include"
                                                 path="tds-core/components/authoring/dialog/colorswatches/tab_dialog/container"/>
-                                            <link
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="cq/gui/components/coral/common/form/pagefield"
-                                                fieldDescription="Link to a content page, external URL or page anchor."
-                                                fieldLabel="Link"
-                                                name="./link"/>
-                                            <icon
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Icon identifier for displaying an icon in the button."
-                                                fieldLabel="Icon"
-                                                name="./icon"/>
                                             <hideDropDown
                                                     jcr:primaryType="nt:unstructured"
+													sling:orderBefore="id"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                                     fieldDescription="Check this to hide Header Dropdown in logged in state, else visible by default."
                                                     name="./hideDropDown"
                                                     text="Hide Header Dropdown in logged in state"
                                                     uncheckedValue="false"
                                                     value="true"/>
-                                            <id
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="HTML ID attribute to apply to the component."
-                                                fieldLabel="ID"
-                                                name="./id"/>
                                             <dropdownList
                                                 jcr:primaryType="nt:unstructured"
                                                 jcr:title="Configure Dropdown List"
