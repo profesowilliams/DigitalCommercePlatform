@@ -343,8 +343,7 @@ const renderIntouchHeaderHTML = () => {
         element,
         function () {
             console.log("Intouch header loaded");
-            console.log("Angular bootstrap");
-            angular.bootstrap(element, ["tdInTouch"]);
+            window.td.rootScope.$htmlLoaded.resolve();
         }
     );
 };
@@ -358,16 +357,14 @@ const renderIntouchFooterHTML = () => {
     renderIntouchComponent(
         url,
         element,
-        function () {
-            console.log("Intouch footer loaded");
-        }
+        function () { angular.bootstrap(element, ["tdInTouch"]); }
     );
 };
 
-$(document).ready(function () {
-    renderIntouchHeaderHTML();
-    renderIntouchFooterHTML();
-});
+//$(document).ready(function () {
+renderIntouchHeaderHTML();
+renderIntouchFooterHTML();
+//});
 // END OF HEADER/FOOTER
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {
