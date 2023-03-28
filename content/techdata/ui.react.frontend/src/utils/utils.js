@@ -341,7 +341,11 @@ const renderIntouchHeaderHTML = () => {
     renderIntouchComponent(
         url,
         element,
-        function () { angular.bootstrap(element, ["tdInTouch"]); }
+        function () {
+            console.log("Intouch header loaded");
+            console.log("Angular bootstrap");
+            angular.bootstrap(element, ["tdInTouch"]);
+        }
     );
 };
 
@@ -354,7 +358,9 @@ const renderIntouchFooterHTML = () => {
     renderIntouchComponent(
         url,
         element,
-        function () { angular.bootstrap(element, ["tdInTouch"]); }
+        function () {
+            console.log("Intouch footer loaded");
+        }
     );
 };
 
