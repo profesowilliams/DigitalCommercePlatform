@@ -322,7 +322,6 @@ const renderIntouchComponent = (url, loadToElement, loadend) => {
         if (xhr.status != 200) {
             console.error(`Error ${xhr.status}: ${xhr.statusText}`);
         } else { // show the result
-            console.log(xhr.responseText);
             loadToElement.innerHTML = xhr.responseText;
         }
     };
@@ -336,9 +335,8 @@ const renderIntouchComponent = (url, loadToElement, loadend) => {
 const renderIntouchHeaderHTML = () => {
     const url = intouchHeaderAPIUrl();
     const element = document.getElementById('intouch-headerhtml');
-    const sessionId = localStorage.getItem('sessionId');
 
-    if (!(element && sessionId)) return;
+    if (!element) return;
 
     renderIntouchComponent(
         url,
@@ -350,9 +348,8 @@ const renderIntouchHeaderHTML = () => {
 const renderIntouchFooterHTML = () => {
     const url = intouchFooterAPIUrl();
     const element = document.getElementById('intouch-footerhtml');
-    const sessionId = localStorage.getItem('sessionId');
 
-    if (!(element && sessionId)) return;
+    if (!element) return;
 
     renderIntouchComponent(
         url,
