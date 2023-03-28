@@ -3,25 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 
-const getInvoiceStatus = (invoices, multiple) => {
-
-  if (!invoices) return '-';
-  const invoiceLength = invoices.length;
-
-  if (invoiceLength === 1) {
-    return invoices[0]?.id;
-  }
-
-  if (invoiceLength > 1) {
-    return getDictionaryValueOrKey(
-      multiple
-    );
-  }
-
-  return '-';
-}
-
-function InvoiceColumn({ invoices = [] ,multiple, id}) {
+function InvoiceColumn({ invoices = [] , multiple, id}) {
   const hasMultiple = invoices.length > 1;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const triggerInvoicesFlyout = () => {
@@ -30,10 +12,12 @@ function InvoiceColumn({ invoices = [] ,multiple, id}) {
       value: { data: invoices, show: true, id: id },
     });
   };
-  return (
+  return invoices.length == 0 ? (
+    '-'
+  ) : (
     <div onClick={hasMultiple ? triggerInvoicesFlyout : null}>
       <a>
-        {getInvoiceStatus(invoices, multiple)}
+        {hasMultiple ? getDictionaryValueOrKey(multiple) : invoices[0]?.id}
       </a>
     </div>
   );
