@@ -1,15 +1,31 @@
 import { usGet } from "../../../../../utils/api";
-import { formateDatePicker } from "../../../../../utils/utils";
+import { formatDatePicker } from "../../../../../utils/utils";
 import { calcSecondLevelSorting, extractSortColAndDirection, isFirstTimeSortParameters, isRepeatedSortAction, isSameFilterRepeated, mapStrucToUrlStr, urlStrToMapStruc } from "../../RenewalsGrid/utils/renewalUtils";
 
-export function setDefaultSearchDateRange(dateRange = '30') {
-    const createdFrom = new Date();
-    const createdTo = new Date();
-    createdFrom.setDate(createdTo.getDate() - (parseInt(dateRange, 10) + 1));
-    const createdFromString =  formateDatePicker(createdFrom);
-    const createdToString =  formateDatePicker(createdTo);
-    return `&createdFrom=${createdFromString}&createdTo=${createdToString}`;
+function createdFromDate(dateRange) {
+  const createdFrom = new Date();
+  const createdTo = new Date();
+  createdFrom.setDate(createdTo.getDate() - (parseInt(dateRange, 10)));
+  return createdFrom;
 }
+
+export function setDefaultSearchDateRange(dateRange = '30') {
+  const createdFromString = formatDatePicker(createdFromDate(dateRange));
+  const createdToString =  formatDatePicker(new Date());
+  return `&createdFrom=${createdFromString}&createdTo=${createdToString}`;
+}
+
+const reportOptionsConfig = {
+  last7Days: [
+    ['createdFrom', formatDatePicker(createdFromDate(7))],
+    ['createdTo', formatDatePicker(new Date())],
+  ],
+  last30Days: [
+    ['createdFrom', formatDatePicker(createdFromDate(30))],
+    ['createdTo', formatDatePicker(new Date())],
+  ],
+  allOutstanding: [['status', 'all']],
+};
 
 export async function fetchData(config) {
     const {
@@ -28,7 +44,6 @@ export async function fetchData(config) {
       componentProp,
       previousFilter,
       reportFilterValue,
-      reportFilterKey,
     } = config;
 
     const { url } = request;
@@ -77,9 +92,11 @@ export async function fetchData(config) {
         mapUrl.set('PageNumber', 1);
       }
     }
-
     if (reportFilterValue.current?.value) {
-      mapUrl.set(reportFilterKey, reportFilterValue.current?.value);
+      reportOptionsConfig[reportFilterValue.current?.value].map((params => {
+        mapUrl.set(...params);
+      }));
+
     }
 
     if (onFiltersClear) {

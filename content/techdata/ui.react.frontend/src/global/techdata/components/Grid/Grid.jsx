@@ -3,7 +3,7 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formateDatePicker, fromExceptionToErrorObject, normalizeErrorCode, stringifyValue, hasSearchOrFilterPresent } from "../../../../utils/utils";
+import { formatDatePicker, fromExceptionToErrorObject, normalizeErrorCode, stringifyValue, hasSearchOrFilterPresent } from "../../../../utils/utils";
 import { getDictionaryValue } from '../../../../utils/utils';
 import {useStore} from "../../../../utils/useStore"
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
@@ -393,8 +393,8 @@ function Grid(props) {
       let createdFrom = new Date();
       createdFrom.setDate(createdTo.getDate() - 31);
 
-      const createdToString = formateDatePicker(createdTo);
-      const createdFromString = formateDatePicker(createdFrom);
+      const createdToString = formatDatePicker(createdTo);
+      const createdFromString = formatDatePicker(createdFrom);
 
       const _createdParam = !omitCreatedQuery 
         ? `&createdFrom=${createdFromString}&createdTo=${createdToString}`

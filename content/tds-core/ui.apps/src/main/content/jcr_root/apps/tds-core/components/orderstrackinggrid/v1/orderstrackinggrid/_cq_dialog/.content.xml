@@ -479,45 +479,42 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                            <reportOptions
+                                           <column
                                                 jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                composite="{Boolean}true"
-                                                fieldDescription="Click 'Add' to add labels"
-                                                fieldLabel="Report Options">
-                                                <field
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                    name="./reportOptions">
-                                                    <items jcr:primaryType="nt:unstructured">
-                                                        <column
-                                                            jcr:primaryType="nt:unstructured"
-                                                            sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                            <items jcr:primaryType="nt:unstructured">
-                                                                <columnLabel
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                    fieldLabel="Label"
-                                                                    name="./label"
-                                                                    required="{Boolean}true" />
-                                                                <columnKey
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                    fieldLabel="Key"
-                                                                    fieldDescription="This key will match with the service request"
-                                                                    name="./key"
-                                                                    required="{Boolean}true" />
-                                                            </items>
-                                                        </column>
-                                                    </items>
-                                                </field>
-                                            </reportOptions>
-                                            <reportFilterKey
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="This key will match with the service request"
-                                                fieldLabel="Enter Report Filter Key"
-                                                name="./reportFilterKey" />
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <overdueGroup
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <column
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                                <items jcr:primaryType="nt:unstructured">
+                                                                    <reportOptionLast7Days
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel='Label for "Last 7 Days Orders"'
+                                                                        name="./reportOptionLast7Days"
+                                                                        required="{Boolean}true" />
+                                                                    <reportOptionLast30Days
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel='Label for "Last 30 Days Orders"'
+                                                                        name="./reportOptionLast30Days"
+                                                                        required="{Boolean}true" />
+                                                                    <reportOptionAllOutstanding
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel='Label for "All Outstanding'
+                                                                        name="./reportOptionAllOutstanding"
+                                                                        required="{Boolean}true" />
+                                                                </items>
+                                                            </column>
+                                                        </items>
+                                                    </overdueGroup>
+                                                </items>
+                                            </column>
                                             <reportPillLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

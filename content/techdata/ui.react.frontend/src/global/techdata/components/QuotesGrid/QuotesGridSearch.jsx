@@ -4,7 +4,7 @@ import SimpleDropDown from "../Widgets/SimpleDropDown";
 import SimpleDatePicker from "../Widgets/SimpleDatePicker";
 import isNotEmpty from "../../helpers/IsNotNullOrEmpty";
 import {
-  formateDatePicker,
+  formatDatePicker,
   validateDatePicker,
   isQueryValid, 
   isNotEmptyValue,
@@ -77,11 +77,11 @@ function QuotesGridSearch({ componentProp, onQueryChanged, onKeyPress, onSearchR
         : "";
     let from =
       query.from?.key && query.from?.value
-        ? formateDatePicker(query.from.value, '&createdFrom=')
+        ? formatDatePicker(query.from.value, '&createdFrom=')
         : "";
     let to =
       query.to?.key && query.to?.value
-        ? formateDatePicker(query.to.value, '&createdTo=')
+        ? formatDatePicker(query.to.value, '&createdTo=')
         : "";
 
     // From DatePicker Validation

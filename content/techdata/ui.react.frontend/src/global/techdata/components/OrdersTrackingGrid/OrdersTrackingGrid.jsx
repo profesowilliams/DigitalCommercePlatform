@@ -75,7 +75,6 @@ function OrdersTrackingGrid(props) {
     icons,
     reportOptions,
     reportPillLabel,
-    reportFilterKey,
   } = componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
@@ -113,7 +112,6 @@ function OrdersTrackingGrid(props) {
       //isPriceColumnClicked,
       gridApiRef,
       reportFilterValue,
-      reportFilterKey,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     //const response = await request.get(request.url);

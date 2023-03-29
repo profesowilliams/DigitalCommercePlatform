@@ -259,7 +259,7 @@ export const validateDatePicker = (value, partnerValue, setStateParam) =>
  * @param {string} filterTag 
  * @returns 
  */
-export const formateDatePicker = (dateValue, filterTag = '') => filterTag + getDateValue(dateValue);
+export const formatDatePicker = (dateValue, filterTag = '') => filterTag + getDateValue(dateValue);
 
 export const isQueryValid = (query) => {
   const from = query.from?.value;

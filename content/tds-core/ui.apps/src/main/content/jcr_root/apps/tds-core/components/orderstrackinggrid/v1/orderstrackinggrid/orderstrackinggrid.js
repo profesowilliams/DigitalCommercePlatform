@@ -8,6 +8,7 @@ use(["../common/utils.js"], function (utils) {
   let noResultsValues = {};
   let dNotesFlyout = {};
   let invoicesFlyout = {};
+  let reportOptions = [];
 
   if (properties && properties["detailUrl"]) {
     jsonObject["detailUrl"] = properties["detailUrl"];
@@ -89,25 +90,20 @@ use(["../common/utils.js"], function (utils) {
 
   //Report options
 
-  let reportOptionsValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "reportOptions",
-    function (childResource) {
-      let itemData = {};
-
-      itemData.label = childResource.properties["label"];
-      itemData.key = childResource.properties["key"];
-
-      return itemData;
-    }
-  );
-
-  if (reportOptionsValues != null) {
-    jsonObject["reportOptions"] = reportOptionsValues;
+  if (properties && properties['reportOptionLast7Days']) {
+    reportOptions.push({ key: "last7Days", label: properties['reportOptionLast7Days'] });
   }
 
-  if (properties && properties['reportFilterKey']) {
-    jsonObject['reportFilterKey'] = properties['reportFilterKey'];
+  if (properties && properties['reportOptionLast30Days']) {
+    reportOptions.push({ key: "last30Days", label: properties['reportOptionLast30Days'] });
+  }
+
+   if (properties && properties['reportOptionAllOutstanding']) {
+    reportOptions.push({ key: "allOutstanding", label: properties['reportOptionAllOutstanding'] });
+  }
+
+  if (reportOptions.length) {
+    jsonObject["reportOptions"] = reportOptions;
   }
 
   if (properties && properties['reportPillLabel']) {
