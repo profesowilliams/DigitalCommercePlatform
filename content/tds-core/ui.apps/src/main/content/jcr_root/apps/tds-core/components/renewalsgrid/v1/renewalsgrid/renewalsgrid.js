@@ -1,5 +1,5 @@
 "use strict";
-use(['../common/utils.js'], function(utils) {
+use(['../../../common/utils.js'], function(utils) {
     let jsonObject = {};
     let resourceResolver = resource.getResourceResolver();
     let optionData = {};
@@ -9,8 +9,9 @@ use(['../common/utils.js'], function(utils) {
     let copyFlyout = {};
 
     if (properties && properties["detailUrl"]) {
-        jsonObject["detailUrl"] = properties["detailUrl"];
+        jsonObject["detailUrl"] = utils.addHtmlIfNeeded(properties["detailUrl"]);
     }
+
     if (properties && properties["displayCurrencyName"]) {
       jsonObject["displayCurrencyName"] = properties["displayCurrencyName"];
     }

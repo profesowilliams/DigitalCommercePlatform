@@ -85,6 +85,16 @@ use(function () {
         }
     }
 
+    if (this.ecommerceAuthenticationLoginEndpoint !== null)
+    {
+        jsonObject.put("ecommerceAuthenticationLoginEndpoint", this.uiServiceDomain + this.ecommerceAuthenticationLoginEndpoint);
+    }
+
+    if (this.userEndpoint !== null)
+    {
+        jsonObject.put("userEndpoint", this.uiServiceDomain + this.userEndpoint);
+    }
+
     if (properties.get("clientId") !== null)
     {
         jsonObject.put("clientId", properties.get("clientId"));

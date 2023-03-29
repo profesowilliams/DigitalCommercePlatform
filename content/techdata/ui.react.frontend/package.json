@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "webpack -d --env dev --config ./webpack.dev.js && clientlib --verbose",
         "prod": "webpack -p --config ./webpack.prod.js && clientlib --verbose",
-        "start": "webpack-dev-server --open --config ./webpack.dev.js"
+        "start": "webpack-dev-server --open --config ./webpack.dev.js",
+        "test": "jest --watchAll"
     },
     "keywords": [],
     "author": {
@@ -26,6 +27,7 @@
         "@iconify/icons-fa-solid": "^1.2.4",
         "@iconify/icons-fluent": "^1.2.18",
         "@iconify/react": "^4.0.1",
+        "@testing-library/jest-dom": "^5.16.5",
         "aem-clientlib-generator": "^1.7.1",
         "autoprefixer": "^9.7.6",
         "babel-eslint": "^10.0.1",

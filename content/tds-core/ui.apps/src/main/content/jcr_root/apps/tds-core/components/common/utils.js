@@ -56,11 +56,18 @@ use(function () {
         const populated = fillFieldsDialogProperties(fieldList);
         if (populated) {obj[property] = populated};
     }
+    function addHtmlIfNeeded(url) {
+        if (url && !url.includes('https:') && !url.includes('http:') && !url.includes('www.') && !url.includes('.html')) {
+            url = url + '.html';
+        }
+        return url;
+    }
     return {
         getDataFromMultifield: getDataFromMultifield,
         populateCommonConfigurations: populateCommonConfigurations,
         getCheckoutConfigurations: getCheckoutConfigurations,
         fillFieldsDialogProperties:fillFieldsDialogProperties,
-        populateOutterProperty:populateOutterProperty
+        populateOutterProperty:populateOutterProperty,
+        addHtmlIfNeeded: addHtmlIfNeeded
     }
 });

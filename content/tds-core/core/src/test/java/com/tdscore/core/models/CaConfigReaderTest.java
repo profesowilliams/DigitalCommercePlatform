@@ -47,6 +47,9 @@ class CaConfigReaderTest {
     @Mock
     private FormConfigurations formConfigurations;
 
+    @Mock
+    private EcommerceAuthenticationConfiguration ecommerceAuthenticationConfiguration;
+
     @BeforeEach
     void setUp() {
         underTest = new CaConfigReader();
@@ -70,7 +73,7 @@ class CaConfigReaderTest {
         when(configurationBuilder.as(RedirectConfiguration.class)).thenReturn(redirectConfiguration);
         when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
         when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
-
+        when(configurationBuilder.as(EcommerceAuthenticationConfiguration.class)).thenReturn(ecommerceAuthenticationConfiguration);
 
         when(serviceEndPointsConfiguration.uiServiceDomain()).thenReturn("uiServiceDomain");
         when(serviceEndPointsConfiguration.catalogEndpoint()).thenReturn("catalogEndpoint");
@@ -135,6 +138,9 @@ class CaConfigReaderTest {
         when(commonConfigurations.agGridLicenseKey()).thenReturn("agGridLicenseKey");
         when(formConfigurations.allowedFileExtensions()).thenReturn(new String[]{".pdf", ".zip"});
 
+        when(ecommerceAuthenticationConfiguration.getUserEndpoint()).thenReturn("getUserEndpoint");
+        when(ecommerceAuthenticationConfiguration.loginEndpoint()).thenReturn("loginEndpoint");
+
 
         underTest.init();
         assertEquals("uiServiceDomain", underTest.getUiServiceDomain());
@@ -194,5 +200,8 @@ class CaConfigReaderTest {
         assertEquals("accountLookUpEndpoint", underTest.getAccountLookUpEndpoint());
         assertEquals("checkQuoteExitsforResellerEndpoint", underTest.getCheckQuoteExitsforResellerEndpoint());
         assertEquals("copyQuoteEndpoint", underTest.getCopyQuoteEndpoint());
+
+        assertEquals("getUserEndpoint", underTest.getUserEndpoint());
+        assertEquals("loginEndpoint", underTest.getEcommerceAuthenticationLoginEndpoint());
     }
 }

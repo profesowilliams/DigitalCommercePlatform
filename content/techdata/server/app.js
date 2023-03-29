@@ -1,6 +1,7 @@
 const express = require("express");
+const app = require("./server/server");
+
 const fileUpload = require("express-fileupload");
-const app = express();
 const port = 3000;
 const { URLSearchParams } = require("url");
 const fetch = require("node-fetch");
@@ -66,6 +67,8 @@ app.use(function (req, res, next) {
 
 app.use("/", express.static("public"));
 
+require("./services/ecommerce-authentication");
+
 app.post("/auth", function (req, res) {
   let userid = req.body.userid;
   let password = req.body.password;
@@ -84,7 +87,17 @@ app.post("/auth", function (req, res) {
 
   if (checkCreds(userid, password)) {
     const queryStringAppend = redirect.indexOf("?") >= 0 ? "&" : "?";
-    res.redirect(redirect + queryStringAppend + "code=" + codeValue);
+
+    if (isHttpOnlyEnabled) {
+      res.cookie(SESSION_COOKIE, "secret-session-id", {
+        expires: new Date(Date.now() + 9999999),
+        httpOnly: true,
+      });
+      res.redirect(redirect);
+    }
+    else {
+      res.redirect(redirect + queryStringAppend + "code=" + codeValue);
+    }
   } else {
     res.set("Content-Type", "text/html");
     res.write("<html>");
@@ -120,13 +133,6 @@ app.post("/login", function (req, res) {
   let code = req.body.code;
   let redirectUrl = req.body.RedirectUri;
   let applicationName = req.body.applicationName;
-  
-  if (isHttpOnlyEnabled) {
-    res.cookie(SESSION_COOKIE, "secret-session-id", {
-      expires: new Date(Date.now() + 9999999),
-      httpOnly: true,
-    });
-  }
 
   let resJsonSuccess = {
     content: {
@@ -270,7 +276,7 @@ app.post("/ui-account/v1/logout", function (req, res) {
   };
 
   //res.redirect(redirectUrl);
-
+  res.clearCookie(SESSION_COOKIE);
   res.json(resJsonSuccess);
 });
 

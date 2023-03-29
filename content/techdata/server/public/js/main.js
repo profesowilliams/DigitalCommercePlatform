@@ -1,5 +1,5 @@
 
-var redirectValue = getQueryStringValue("redirect_uri");
+var redirectValue = getQueryStringValue("redirect_uri") || getQueryStringValue("continue_url");
 
 function getQueryStringValue (key) {
     return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));

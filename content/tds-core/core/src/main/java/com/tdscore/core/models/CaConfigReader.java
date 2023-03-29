@@ -235,6 +235,10 @@ public class CaConfigReader {
 
     private String intouchFooterAPIUrl;
 
+    private String ecommerceAuthenticationLoginEndpoint;
+
+    private String getUserEndpoint;
+
     @PostConstruct
     public void init() {
 
@@ -320,6 +324,9 @@ public class CaConfigReader {
         quoteDetailsXLSEndpoint = serviceEndPointsConfiguration.quoteDetailsXLSEndpoint();
 
         buildComonConfigurationsConfigs();
+
+        buildEcommerceAuthenticationLoginEndpoint();
+
         buildIntouchHeaderConfigurationConfigs();
     }
 
@@ -331,6 +338,12 @@ public class CaConfigReader {
             intouchHeaderAPIUrl = intouchConfiguration.headerAPIUrl();
             intouchFooterAPIUrl = intouchConfiguration.footerAPIUrl();
         }
+    }
+
+    private void buildEcommerceAuthenticationLoginEndpoint() {
+        EcommerceAuthenticationConfiguration ecommerceAuthenticationConfiguration = page.adaptTo(ConfigurationBuilder.class).as(EcommerceAuthenticationConfiguration.class);
+        ecommerceAuthenticationLoginEndpoint = ecommerceAuthenticationConfiguration.loginEndpoint();
+        getUserEndpoint = ecommerceAuthenticationConfiguration.getUserEndpoint();
     }
 
     private void buildSearchConfigurations() {
@@ -779,5 +792,13 @@ public class CaConfigReader {
 
     public String getIntouchJSAPIUrl() {
         return intouchJSAPIUrl;
+    }
+
+    public String getEcommerceAuthenticationLoginEndpoint() {
+        return ecommerceAuthenticationLoginEndpoint;
+    }
+
+    public String getUserEndpoint() {
+        return getUserEndpoint;
     }
 }

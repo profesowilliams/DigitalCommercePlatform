@@ -26,6 +26,7 @@ import {useStore} from "../../../../utils/useStore";
 import { triggerEvent } from "../../../../utils/events";
 import axios from 'axios';
 import Modal from '../Modal/Modal';
+import { initializeSession } from "./ecommerceAuthentication";
 
 const FA = require("react-fontawesome");
 
@@ -80,7 +81,9 @@ const SignIn = (props) => {
     errorMessage,
     shopLogoutRedirectUrl,
     hideWhenNotLoggedIn,
-    showLabel
+    showLabel,
+    userEndpoint,
+    ecommerceAuthenticationLoginEndpoint,
   } = configDataAEM;
   const requested = props.data.auth.requested;
   const isError = props.data.auth.showError;
@@ -311,15 +314,26 @@ const SignIn = (props) => {
         }
     }
 
+  const checkSessionStatus = (shouldLogin) => {
+    if(initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin)) {
+      handleLoginResponse();
+      handleLoginRedirection();
+    }
+  }
 
   useEffect(() => {
-    handleLoginRedirection();
-    const originalURL = window.location.href;
-
-    if (isExtraReloadDisabled() && originalURL.indexOf(codeQueryParam) > -1) {
-      const originalURL = window.location.href;
-      removeParam(codeQueryParam, originalURL);
+    if(isExtraReloadDisabled() || isHttpOnlyEnabled()) {
+      checkSessionStatus(isPrivatePage);
+    }
+    else {
       handleLoginRedirection();
+      const originalURL = window.location.href;
+
+      if (isExtraReloadDisabled() && originalURL.indexOf(codeQueryParam) > -1) {
+        const originalURL = window.location.href;
+        removeParam(codeQueryParam, originalURL);
+        handleLoginRedirection();
+      }
     }
   }, []);
 
@@ -355,7 +369,12 @@ const SignIn = (props) => {
       type: DataLayerUtils.ANALYTICS_TYPES.types.button,
       category: DataLayerUtils.ANALYTICS_TYPES.category.logIn,
     });
-    redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
+    if(isExtraReloadDisabled() || isHttpOnlyEnabled()) {
+      checkSessionStatus(true);
+    }
+    else {
+      redirectUnauthenticatedUser(authUrl, clientId, shopLoginRedirectUrl);
+    }
   };
 
   const routeChange = (handleLoginResponse) => {
