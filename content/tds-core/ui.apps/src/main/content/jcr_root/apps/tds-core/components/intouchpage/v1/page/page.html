@@ -76,14 +76,12 @@
      data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
 <sly data-sly-test="${!isRedirectPage}">
 
-    <!-- Intouch header HTML ends here -->
     <sly data-sly-include="body.skiptomaincontent.html"></sly>
     <sly data-sly-include="body.socialmedia_begin.html"></sly>
     <div id="intouch-headerhtml"></div>
     <sly data-sly-include="body.html"></sly>
     <div id="intouch-footerhtml"></div>
     <sly data-sly-call="${footer.footer @ page = page, pwa = pwa}"></sly>
-    <!-- Intouch footer HTML ends here -->
 
     <sly data-sly-include="body.socialmedia_end.html"></sly>
 </sly>

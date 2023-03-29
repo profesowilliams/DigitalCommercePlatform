@@ -361,10 +361,10 @@ const renderIntouchFooterHTML = () => {
     );
 };
 
-//$(document).ready(function () {
-renderIntouchHeaderHTML();
-renderIntouchFooterHTML();
-//});
+$(document).ready(function () {
+    renderIntouchHeaderHTML();
+    renderIntouchFooterHTML();
+});
 // END OF HEADER/FOOTER
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {
