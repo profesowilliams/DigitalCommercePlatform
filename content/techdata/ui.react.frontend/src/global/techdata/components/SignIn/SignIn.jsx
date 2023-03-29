@@ -89,7 +89,7 @@ const SignIn = (props) => {
   const isError = props.data.auth.showError;
   const isLoading = props.data.auth.loading;
   const userData = props.data.auth.userData;
-  let userDataCheck = populateLoginData();
+  const [userDataCheck, setUserDataCheck] = useState(populateLoginData());
 
   function removeParam(key) {
     const newUrl = new URL(window.location);
@@ -314,10 +314,13 @@ const SignIn = (props) => {
         }
     }
 
-  const checkSessionStatus = (shouldLogin) => {
-    if(initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin)) {
+  const checkSessionStatus = async (shouldLogin) => {
+    const userData = await initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin);
+
+    if(userData) {
       handleLoginResponse();
       handleLoginRedirection();
+      setUserDataCheck(userData);
     }
   }
 

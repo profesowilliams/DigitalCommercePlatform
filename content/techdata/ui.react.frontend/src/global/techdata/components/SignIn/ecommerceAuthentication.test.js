@@ -218,7 +218,7 @@ describe('Ecommerce Authentication', () => {
 
     it('calls performLogin with the loginEndpoint and continueUrl', async () => {
       usPost.mockResolvedValue({ data: successfulLoginResponse });
-      const expectedArgs = [loginEndpoint, { successfulLoginResponse }];
+      const expectedArgs = [loginEndpoint, { continueUrl: "http://localhost:3000/dashboard" }];
 
       await initializeSession(userEndpoint, loginEndpoint, isLogin);
 
