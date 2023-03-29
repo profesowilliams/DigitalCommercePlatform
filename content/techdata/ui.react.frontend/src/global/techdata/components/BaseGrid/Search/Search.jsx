@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { useEffect } from "react";
-import { ChevronDownIcon, SearchIcon } from "../../../../../fluentIcons/FluentIcons";
+import { ChevronDownIcon, SearchIcon, SearchIconFilled } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
@@ -43,6 +43,7 @@ function _GridSearch(
   const [values, setValues] = useState({ ...customSearchValues }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setSwitchDropdown] = useState(false);
+  const [isSearchHovered, setIsSearchHovered] = useState(false);
   const [isResetVisible, setResetVisible] = useState(true);
   const { dropdown, input, option } = values;
   const node = useRef();
@@ -316,6 +317,14 @@ function _GridSearch(
     );
   }
 
+  const handleMouseOverSearch = () => {
+    setIsSearchHovered(true);
+  }
+
+  const handleMouseLeaveSearch = () => {
+    setIsSearchHovered(false);
+  }
+
   return (
     <>
       <SearchCapsule />
@@ -325,8 +334,10 @@ function _GridSearch(
             {!hideLabel && <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone" />}>
               <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
             </If>}
-            <SearchIcon className="search-icon__dark icon-hover" />
-
+            <div onMouseOver={handleMouseOverSearch} onMouseLeave={handleMouseLeaveSearch}>            
+              {isSearchHovered ? <SearchIconFilled className="search-icon__dark icon-hover" /> 
+              : <SearchIcon className="search-icon__dark"/>}
+            </div>
           </div>
         </If>
         <If condition={isDropdownVisible}>
