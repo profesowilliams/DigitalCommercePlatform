@@ -28,8 +28,15 @@
                                             fieldDescription="Toggle whether to display a View All Link in the submenu for this page"
                                             text="Show View All Link?"
                                             value="true"
-                                            name="./isViewAllEnabled"/>										
-                                    <isPrivatePage
+                                            name="./isViewAllEnabled"/>
+									<isGlobalPage
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                            fieldDescription="Toggle whether this page is a global page and will trigger a popup for TechData"
+                                            text="Is this a global page?"
+                                            value="true"
+                                            name="./isGlobalPage"/>
+									<isPrivatePage
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
                                             fieldDescription="Toggle for whether this is a Private Page or Public Page"
