@@ -40,6 +40,7 @@
             aria-expanded="false"
             data-cmp-clickable="true"
             data-level="L1"
+            data-is-global="${nav.isGlobalPage}"
             data-hier="${nav.platformName}"
             data-cmp-isprivate="${nav.isPrivate ? 'true' : 'false'}"
             style="
@@ -69,7 +70,8 @@
                 data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
                 data-sly-set.hier2="${nav.mobilePlatformLevel}>${slnk.pageTitle}"
                 data-level="L2"
-                data-cmp-clickable=""
+                data-is-global="${slnk.isGlobalPage}"
+                data-cmp-clickable="true"
                 data-cmp-children="${slnk.hasChildPages ? slnk.menuID : ''}"
                 aria-expanded="false"
               >
@@ -98,7 +100,8 @@
                     data-hier="${hier2}>${sec.pageTitle}"
                     data-sly-set.hier3="${hier2}>${sec.pageTitle}"
                     data-level="L3"
-                    data-cmp-clickable
+                    data-is-global="${sec.isGlobalPage}"
+                    data-cmp-clickable="true"
                     data-cmp-children="${sec.hasChildPages ? sec.menuID : ''}"
                     aria-expanded="false"
                   >
@@ -121,9 +124,10 @@
                       <a
                         href="${urlHelper.url  @ context='html'}"
                         title="${subSec.pageTitle}"
-                        data-cmp-clickable
+                        data-cmp-clickable="true"
                         data-hier="${hier3}>${subSec.pageTitle}"
                         data-mobile="true"
+                        data-is-global="${subSec.isGlobalPage}"
                         data-level="L4"
                         class=""
                         aria-expanded="false"

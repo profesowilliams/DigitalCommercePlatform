@@ -64,27 +64,31 @@ public class MegaMenu {
 
                 if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
-                    if (currentPage != null && 
-                        currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
-                        I18n i18n = getI18n(currentPage);
-                        String viewAllText = i18n.getVar(VIEW_ALL_KEY);
-                        viewAllText = (viewAllText != null && 
-                            !viewAllText.trim().isEmpty() && 
-                            !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All "; 
+                    if (currentPage != null) { 
+                        if (currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
+                            I18n i18n = getI18n(currentPage);
+                            String viewAllText = i18n.getVar(VIEW_ALL_KEY);
+                            viewAllText = (viewAllText != null && 
+                                !viewAllText.trim().isEmpty() && 
+                                !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All "; 
 
-                        link.addSubNavLink(new SubNavLinks(
-                            new StringBuilder()
-                                .append(viewAllText)
-                                .append(link.getPlatformName())
-                                .toString(),
-                            link.getLinkUrl(),
-                            link.getPlatformName(), 
-                            new JsonArray(), 
-                            link.getLinkUrl(), 
-                            "0",
-                            "true",
-                            this.menuID)
-                        );
+                            link.addSubNavLink(new SubNavLinks(
+                                new StringBuilder()
+                                    .append(viewAllText)
+                                    .append(link.getPlatformName())
+                                    .toString(),
+                                link.getLinkUrl(),
+                                link.getPlatformName(), 
+                                new JsonArray(), 
+                                link.getLinkUrl(), 
+                                "0",
+                                "true",
+                                this.menuID)
+                            );
+                        }
+                        if (currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                            link.setIsGlobalPage("true");
+                        }
                     }
                 }
 
@@ -94,7 +98,7 @@ public class MegaMenu {
     }
 
     private String getTenant(Resource item) {
-        log.error("getting Tenant for {}", item.getPath());
+        // log.error("getting Tenant for {}", item.getPath());
         String pathString = item.getPath().split("/", 0)[3];
         return pathString;
     }

@@ -94,6 +94,8 @@ public class LinkItem {
 
     private String tenant = "tds-site";
 
+    private String isGlobalPage = "false";
+
 //    @Inject
 //    private Date modifiedDate;
 
@@ -132,30 +134,34 @@ public class LinkItem {
 
                     if (link.getSubNavLinkslist().size() > 0) {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
-                        if (currentPage != null && 
-                            currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
-                            I18n i18n = getI18n(currentPage);
-                            String viewAllText = "View All ";
-                            if(i18n != null) {
-                                viewAllText = i18n.getVar(VIEW_ALL_KEY);
-                                viewAllText = (viewAllText != null &&
-                                        !viewAllText.trim().isEmpty() &&
-                                        !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All ";
-                            }
+                        if (currentPage != null) { 
+                            if (currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
+                                I18n i18n = getI18n(currentPage);
+                                String viewAllText = "View All ";
+                                if(i18n != null) {
+                                    viewAllText = i18n.getVar(VIEW_ALL_KEY);
+                                    viewAllText = (viewAllText != null &&
+                                            !viewAllText.trim().isEmpty() &&
+                                            !viewAllText.equals(VIEW_ALL_KEY)) ? viewAllText : "View All ";
+                                }
 
-                            link.addSubNavLink(new SubNavLinks(
-                                new StringBuilder()
-                                    .append(viewAllText)
-                                    .append(link.getPageTitle())
-                                    .toString(),
-                                link.getPagePath(),
-                                link.getPageTitle(), 
-                                new JsonArray(), 
-                                link.getPagePath(), 
-                                "0",
-                                "true",
-                                this.parentID)
-                            );
+                                link.addSubNavLink(new SubNavLinks(
+                                    new StringBuilder()
+                                        .append(viewAllText)
+                                        .append(link.getPageTitle())
+                                        .toString(),
+                                    link.getPagePath(),
+                                    link.getPageTitle(), 
+                                    new JsonArray(), 
+                                    link.getPagePath(), 
+                                    "0",
+                                    "true",
+                                    this.parentID)
+                                );
+                            }
+                            if (currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                                link.setIsGlobalPage("true");
+                            }
                         }
                     }
                     subLinks.add(link);
@@ -176,6 +182,11 @@ public class LinkItem {
         if (ContentFragmentHelper.isContentFragment(child)) {
             log.debug("processing resource at path {}", child.getPath());
             SubNavLinks link = new SubNavLinks(child, platformName, rootPage, rootParentLink);
+            Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
+            if (currentPage != null && currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                link.setIsGlobalPage("true");
+            }
+
             this.subLinks.add(link);
             tertiarySubNavLinks.addAll(link.getSubNavLinkslist());
         }
@@ -233,6 +244,14 @@ public class LinkItem {
 
     public void setTenant(String tenant) {
         this.tenant = tenant;
+    }
+
+    public void setIsGlobalPage(String isGlobalPage) {
+        this.isGlobalPage = isGlobalPage;
+    }
+
+    public String getIsGlobalPage() {
+        return this.isGlobalPage;
     }
 
     public void setComponentType(String componentType) {

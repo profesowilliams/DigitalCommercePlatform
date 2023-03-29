@@ -57,6 +57,8 @@ public class SubNavLinks {
 
     private String tenant;
 
+    private String isGlobalPage = "false";
+
     SubNavLinks(Page page, ResourceResolver resolver, String rootParentTitle, String rootParentLink){
         this.navPage = page;
         this.pageTitle = page.getTitle();
@@ -104,6 +106,11 @@ public class SubNavLinks {
                     this.hasChildPages = "true";
                     log.debug("processing resource at path {}", child.getPath());
                     SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage, rootParentLink);
+                    // Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
+                    if (currentPage != null && currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                        link.setIsGlobalPage("true");
+                    }
+
 
                     Resource masterResource = resourceResolver.getResource(child.getPath() + "/jcr:content/data/master");
                     if(masterResource != null) {
@@ -257,6 +264,14 @@ public class SubNavLinks {
 
     public void setParentID(String parentId) {
         this.parentID = parentId;
+    }
+
+    public void setIsGlobalPage(String isGlobalPage) {
+        this.isGlobalPage = isGlobalPage;
+    }
+
+    public String getIsGlobalPage() {
+        return this.isGlobalPage;
     }
 
     private String getTenant() {

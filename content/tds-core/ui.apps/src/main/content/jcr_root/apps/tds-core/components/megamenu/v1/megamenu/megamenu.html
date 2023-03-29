@@ -9,6 +9,7 @@
       <ol class="cmp-megamenu__primary" data-sly-list="${model.firstLevelMenuItems}">
         <li data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.linkUrl}">
           <a href="${urlHelper.url  @ context='html'}" data-cmp-clickable="true" data-level="L1"
+             data-is-global="${item.isGlobalPage}"
              data-hier="${item.platformName}" data-cmp-isprivate="${item.isPrivate ? 'true' : 'false'}"
              style="display: ${item.isPrivate ? 'none' : '' @ context='styleToken'};"
              data-cmp-children="${item.platformMenuID}" title="${item.platformName}"
@@ -30,6 +31,7 @@
                      class="cmp-megamenu__analytics-link cmp-navigation__item-link ${itemList.first ? 'cmp-megamenu__wrapper-item--active' : ''}"
                      data-hier="${nav.mobilePlatformLevel}>${item.pageTitle}"
                      data-sly-set.hier2="${nav.mobilePlatformLevel}>${item.pageTitle}"
+                     data-is-global="${item.isGlobalPage}"
                      data-level="L2"
                      data-cmp-clickable="true"
                      data-cmp-children="menu ${item.menuID}">
@@ -41,6 +43,7 @@
                       <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" class="cmp-megamenu__analytics-link cmp-navigation__item-link"
                          data-hier="${hier2}>${item.pageTitle}"
                          data-sly-set.hier3="${hier2}>${item.pageTitle}"
+                         data-is-global="${item.isGlobalPage}"
                          data-level="L3"
                          data-cmp-clickable="true"
                          data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
@@ -55,6 +58,7 @@
                              data-cmp-clickable="true"
                              data-hier="${hier3}>${item.pageTitle}"
                              data-mobile="true"
+                             data-is-global="${item.isGlobalPage}"
                              data-level="L4">
                             ${item.pageTitle}
                           </a>
@@ -79,6 +83,7 @@
                      data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.rootParentLink}"
                      data-cmp-clickable="true"
                      data-hier="${item.rootParentTitle}"
+                     data-is-global="${item.isGlobalPage}"
                      data-level="L1">
                     ${item.rootParentTitle} Home
                   </a>
@@ -92,6 +97,7 @@
                       data-sly-use.urlHelper="${'urlHelper.js' @ destinationPage=item.pagePath}">
                     <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" class="cmp-megamenu__analytics-link cmp-navigation__item-link"
                        data-hier="${hier}>${item.pageTitle}"
+                       data-is-global="${item.isGlobalPage}"
                        data-level="L3"
                        data-cmp-clickable="true"
                        data-cmp-children="menu ${item.hasChildPages ? item.menuID : ''}">
@@ -118,6 +124,7 @@
                     <a href="${urlHelper.url  @ context='html'}" title="${item.pageTitle}" class="cmp-megamenu__analytics-link cmp-navigation__item-link"
                        data-hier="${hier2}>${item.pageTitle}"
                        data-cmp-clickable="true"
+                       data-is-global="${item.isGlobalPage}"
                        data-level="L4">
                       ${item.pageTitle}
                     </a>
