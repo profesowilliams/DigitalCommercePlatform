@@ -30,6 +30,30 @@ import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 
+const ToolTip = () => {
+  const toolTipData = useOrderTrackingStore(st => st.toolTipData);
+    return (
+          toolTipData.value && <div
+            style={{  
+                position: "absolute",
+                height: "32px",
+                top: `${toolTipData.y}px`, 
+                left: `${toolTipData.x}px`,
+                padding: "0 12px",
+                borderRadius: "2px",
+                backgroundColor: "#30343B",
+                color: "white",
+                fontSize: "12px",
+                letterSpacing: 0,
+                lineHeight: "32px",
+                textAlign: "center",
+             }}
+          >
+            {toolTipData.value}
+          </div>
+    )
+};
+
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
   const previousFilter = useRef(false);
@@ -63,8 +87,8 @@ function OrdersTrackingGrid(props) {
   };
   const defaultSearchDateRange = setDefaultSearchDateRange(
     componentProp?.defaultSearchDateRange
-  );
-  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
+  );  
+  const { setToolTipData, setCustomState } = effects;
 
   const _onAfterGridInit = (config) => {
     onAfterGridInit(config);
@@ -139,6 +163,35 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  function cellMouseOver(event) {
+    const offset = 2;
+    setToolTipData({
+      value: tootltipVal(event),
+      x: event?.event?.pageX + offset,
+      y: event?.event?.pageY + offset,
+      show: event?.colDef?.hoverable,
+    });
+  }
+
+  function cellMouseOut() {
+    setToolTipData({
+      value: '',
+      x: 0,
+      y: 0,
+      show: false,
+    });
+  }
+
+  function tootltipVal(event) {
+    switch(event.colDef.headerName){
+      case "PO Nº":
+        return event.value;
+      case "Ship to":
+        return event.value;
+      default:
+        return null;
+    }
+  }
   const onReportChange = (option) => {
     setPill({ key: option.key, label: option.label });
     onQueryChanged();
@@ -216,7 +269,10 @@ function OrdersTrackingGrid(props) {
         mapServiceData={mapServiceData}
         onSortChanged={onSortChanged}
         onAfterGridInit={_onAfterGridInit}
+        onCellMouseOver={cellMouseOver}
+        onCellMouseOut={cellMouseOut}
       />
+      <ToolTip/>
       <div className="cmp-renewals__pagination--bottom">
         <BaseGridPagination
           ref={customPaginationRef}
