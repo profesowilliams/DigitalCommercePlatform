@@ -125,38 +125,33 @@ export const renewalsEffects = (set, get) => {
     }
   }
 
-  function isParentStateOpen(list, id) {
-    const parent = list.find(x => x.id === id);
-    return parent && parent?.applied && parent?.open;
-  }
-  
   function resetFilterToState () {
-    const {filterList, dateOptionsList} = get();
-    const filtersCopy = [...filterList].map((filter, index) => {
-      const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+    const appliedFilters = getLocalStorageData(FILTER_LOCAL_STORAGE_KEY);
+    const filtersDefault = closeSections([]).map((filter, index) => {
       if (index !== 0) {
-        const checked = !!filter.applied;
-        let open = appliedFilters && isParentStateOpen(filterList, filter?.parentId || filter.id);
-        if(filter.field==='date') {
-          open = !!appliedFilters?.dateSelected;          
-          const isChecked = (field) => field === appliedFilters?.dateSelected;
-          const options = dateOptionsList.slice().map(item => ({...item,checked:isChecked(item.field)}));
-          setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
-          set({dateSelected:appliedFilters?.dateSelected,dateOptionsList:options,customStartDate: appliedFilters?.customStartDate, customEndDate: appliedFilters?.customEndDate});
-        }
-        return {...filter,checked,open};
+        return {...filter,applied:false,checked:false,open:false};
       }
       return filter;
+    });      
+    setDatePickerState(appliedFilters?.customStartDate, appliedFilters?.customEndDate);
+    set({
+      filterList: appliedFilters?.filterList || filtersDefault,
+      dateSelected: appliedFilters?.dateSelected,
+      customStartDate: appliedFilters?.customStartDate,
+      customEndDate: appliedFilters?.customEndDate,
     });
-    setFilterList(filtersCopy);
   }
 
   function closeSections(keepOpenList) {
     const {filterList} = get();
-    const keepOpened = ({ field }) => {
-      return keepOpenList.includes(field);
-    };
-    const filterListCopy = filterList.map(filter => ({ ...filter, open: keepOpened(filter) }));
+    const keepOpened = ({ field }) => keepOpenList.includes(field);
+    const filterListCopy = filterList.map(filter => { 
+      let isOpen = false;
+      if(keepOpened(filter)) {
+        isOpen = filter.open;
+      }
+      return ({ ...filter, open: isOpen })
+    });
     return filterListCopy;
   }
 
