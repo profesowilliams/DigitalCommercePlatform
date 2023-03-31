@@ -65,7 +65,7 @@ public class MegaMenu {
                 if (link.getLinkUrl() != null && link.getHasSecondaryMenuItems()) {
                     Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getLinkUrl());
                     if (currentPage != null) { 
-                        if (currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
+                        if ("true".equals(currentPage.getProperties().get("isViewAllEnabled", ""))) {
                             I18n i18n = getI18n(currentPage);
                             String viewAllText = i18n.getVar(VIEW_ALL_KEY);
                             viewAllText = (viewAllText != null && 
@@ -86,7 +86,7 @@ public class MegaMenu {
                                 this.menuID)
                             );
                         }
-                        if (currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                        if ("true".equals(currentPage.getProperties().get("isGlobalPage", ""))) {
                             link.setIsGlobalPage("true");
                         }
                     }

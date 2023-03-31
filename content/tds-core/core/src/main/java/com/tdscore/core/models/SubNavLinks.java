@@ -106,8 +106,7 @@ public class SubNavLinks {
                     this.hasChildPages = "true";
                     log.debug("processing resource at path {}", child.getPath());
                     SubNavLinks link = new SubNavLinks(child, rootParentTitle, currentPage, rootParentLink);
-                    // Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
-                    if (currentPage != null && currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                    if (currentPage != null && "true".equals(currentPage.getProperties().get("isGlobalPage", ""))) {
                         link.setIsGlobalPage("true");
                     }
 

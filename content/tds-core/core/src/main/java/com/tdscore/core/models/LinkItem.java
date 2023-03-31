@@ -135,7 +135,7 @@ public class LinkItem {
                     if (link.getSubNavLinkslist().size() > 0) {
                         Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
                         if (currentPage != null) { 
-                            if (currentPage.getProperties().get("isViewAllEnabled", "").equals("true")) {
+                            if ("true".equals(currentPage.getProperties().get("isViewAllEnabled", ""))) {
                                 I18n i18n = getI18n(currentPage);
                                 String viewAllText = "View All ";
                                 if(i18n != null) {
@@ -159,7 +159,7 @@ public class LinkItem {
                                     this.parentID)
                                 );
                             }
-                            if (currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+                            if ("true".equals(currentPage.getProperties().get("isGlobalPage", ""))) {
                                 link.setIsGlobalPage("true");
                             }
                         }
@@ -183,7 +183,7 @@ public class LinkItem {
             log.debug("processing resource at path {}", child.getPath());
             SubNavLinks link = new SubNavLinks(child, platformName, rootPage, rootParentLink);
             Page currentPage = resolver.adaptTo(PageManager.class).getPage(link.getPagePath());
-            if (currentPage != null && currentPage.getProperties().get("isGlobalPage", "").equals("true")) {
+            if (currentPage != null && "true".equals(currentPage.getProperties().get("isGlobalPage", ""))) {
                 link.setIsGlobalPage("true");
             }
 
