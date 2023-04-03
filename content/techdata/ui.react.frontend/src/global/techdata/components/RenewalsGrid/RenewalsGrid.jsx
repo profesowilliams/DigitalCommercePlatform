@@ -34,20 +34,7 @@ import RenewalSearch from "../BaseGrid/Search/Search";
 import CopyFlyout from "../CopyFlyout/CopyFlyout";
 import BaseGridPagination from "../BaseGrid/Pagination/BaseGridPagination";
 import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
-
-function ToolTip() {
-  const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
-  return (
-    toolTipData.show ? (
-      <div
-        style={{ top: toolTipData.y, left: toolTipData.x }}
-        className="renewals-grid__custom-tooltip"
-      >
-        {toolTipData.value || ''}
-      </div>
-    ) : <div></div>
-  );
-}
+import ToolTip from './../BaseGrid/ToolTip';
 
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
@@ -78,6 +65,8 @@ function RenewalsGrid(props) {
   const renewalsRef = useRef();
 
   const searchCriteria = useRef({field:'',value:''});
+
+  const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
 
   let options = {
     defaultSortingColumnKey: "dueDate",
@@ -336,7 +325,7 @@ function RenewalsGrid(props) {
         omitCreatedQuery={true}
         contextMenuItems={contextMenuItems}
         noContextMenuItemsWhenColumnNull={true} />
-      <ToolTip />
+      <ToolTip toolTipData={toolTipData}/>
       <div className="cmp-renewals__pagination--bottom">
         <BaseGridPagination
             onQueryChanged={onQueryChanged}

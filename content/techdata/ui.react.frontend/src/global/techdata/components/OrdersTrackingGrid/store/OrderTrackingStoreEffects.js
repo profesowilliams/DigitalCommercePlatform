@@ -9,4 +9,14 @@ export const orderTrackingEffects = ( set, get ) =>  ({
     if (typeof value === "object" && !Array.isArray(value)) return set({[key]:{...currentState,...value}})
     set({[key]:value})
   },
+  setToolTipData(data = {}) {
+    set({
+      toolTipData: {
+        value: data.value,
+        x: data.x,
+        y: data.y,
+        show: data.show,
+      }
+    })
+  }
 })

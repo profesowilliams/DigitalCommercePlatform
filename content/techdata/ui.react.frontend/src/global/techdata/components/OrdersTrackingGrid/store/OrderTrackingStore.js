@@ -6,6 +6,12 @@ import { orderTrackingEffects } from "./OrderTrackingStoreEffects";
 const INITIAL_STATE = {
   ...basicGridState,
   ...paginationState,
+  toolTipData: {
+    value: '',
+    x: 0,
+    y: 0,
+    show: false,
+  }
 };
 
 const store = (set,get) => ({

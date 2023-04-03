@@ -29,6 +29,7 @@ import { ANALYTICS_TYPES } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
+import ToolTip from '../BaseGrid/ToolTip';
 
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
@@ -62,8 +63,10 @@ function OrdersTrackingGrid(props) {
   };
   const defaultSearchDateRange = setDefaultSearchDateRange(
     componentProp?.defaultSearchDateRange
-  );
-  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
+  );  
+  const { setToolTipData, setCustomState } = effects;
+
+  const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
   const _onAfterGridInit = (config) => {
     onAfterGridInit(config);
@@ -137,6 +140,33 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  function cellMouseOver(event) {
+    const offset = 2;
+    setToolTipData({
+      value: tootltipVal(event),
+      x: event?.event?.pageX + offset,
+      y: event?.event?.pageY + offset,
+    });
+  }
+
+  function cellMouseOut() {
+    setToolTipData({
+      value: '',
+      x: 0,
+      y: 0,
+    });
+  }
+
+  function tootltipVal(event) {
+    switch(event.colDef.headerName){
+      case "PO Nº":
+        return event.value;
+      case "Ship to":
+        return event.value;
+      default:
+        return null;
+    }
+  }
   const onReportChange = (option) => {
     setPill({ key: option.key, label: option.label });
     onQueryChanged();
@@ -214,7 +244,10 @@ function OrdersTrackingGrid(props) {
         mapServiceData={mapServiceData}
         onSortChanged={onSortChanged}
         onAfterGridInit={_onAfterGridInit}
+        onCellMouseOver={cellMouseOver}
+        onCellMouseOut={cellMouseOut}
       />
+      <ToolTip toolTipData={toolTipData}/>
       <div className="cmp-renewals__pagination--bottom">
         <BaseGridPagination
           ref={customPaginationRef}
