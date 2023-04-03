@@ -64,6 +64,7 @@ const SignIn = (props) => {
     return state;
   });
 
+  const setUserData = useStore((state) => state.setUserData);
   const changeLoggedInState = useStore((state) => state.changeLoggedInState)
 
   const codeQueryParam = "code";
@@ -321,6 +322,7 @@ const SignIn = (props) => {
       handleLoginResponse();
       handleLoginRedirection();
       setUserDataCheck(userData);
+      setUserData(userData);
     }
   }
 

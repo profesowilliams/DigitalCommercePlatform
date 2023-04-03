@@ -14,7 +14,7 @@ app.post("/ui-account/v1/login/par", (req, res) => {
   });
 });
 
-app.get("/ui-account/v1/GetUser", (req, res) => {
+app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
   const sessionId = req.cookies["session-id"];
 
   if (!sessionId) {

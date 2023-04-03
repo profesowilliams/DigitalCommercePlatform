@@ -7,7 +7,6 @@ import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../../utils/constants";
-import { getUserDataInitialState } from "../../../../../utils/user-utils";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};

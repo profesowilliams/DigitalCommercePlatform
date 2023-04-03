@@ -7,8 +7,11 @@ import { hasDCPAccess } from "../../../../utils/user-utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { triggerEvent } from "../../../../utils/events";
+import { useStore } from "../../../../utils/useStore";
+import { isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
+  const isLoggedIn = useStore(state => state.isLoggedIn);
   const [showSecondary, setShowSecondary] = useState(false);
   const [secondaryItems, setSecondaryItems] = useState(null);
   const { id: userId, firstName: userName } = userDataCheck;
@@ -195,7 +198,8 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       config?.errorPageUrl ?? null,
       config?.shopLogoutRedirectUrl ?? null,
       config?.aemAuthUrl ?? null,
-      config?.isPrivatePage ?? null
+      config?.isPrivatePage ?? null,
+      isHttpOnlyEnabled() ? isLoggedIn : localStorage.getItem("sessionId"),
     );
 
     triggerEvent('user:loggedOut');

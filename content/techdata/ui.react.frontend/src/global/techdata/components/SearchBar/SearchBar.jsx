@@ -10,7 +10,7 @@ import {
 import * as DataLayerUtils from '../../../../utils/dataLayerUtils';
 import { ADOBE_DATA_LAYER_SEARCH_BAR_EVENT } from '../../../../utils/constants';
 import { useStore } from '../../../../utils/useStore';
-import { isExtraReloadDisabled } from '../../../../utils/featureFlagUtils';
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from '../../../../utils/featureFlagUtils';
 
 function getShopLoginUrlPrefix(isLoggedIn) {
   let prefixShopAuthUrl = '';
@@ -67,7 +67,9 @@ const SearchBar = ({ data, componentProp }) => {
 
   const searchRef = useRef(null);
   const searchContainerRef = useRef(null);
-  const [userData, setUserData] = useState(getUserDataInitialState);
+  const [userDataLS, setUserData] = useState(getUserDataInitialState);
+  
+  const userData = useStore(state => state.userData);
 
   const [searchTermText, setSearchTermText] = useState(getSearchTermFromUrl());
   const [searchInputFocused, setSearchInputFocused] = useState(false);
@@ -177,7 +179,7 @@ const SearchBar = ({ data, componentProp }) => {
     handlerAnalyticsSearchEvent(searchTerm, selectedArea.area, 0);
     // if the user have DCP Access can search by the DCP domain
     if (
-      hasDCPAccess(userData) &&
+      hasDCPAccess(isHttpOnlyEnabled() ? userData : userDataLS) &&
       (selectedArea.area === 'quote' || selectedArea.area === 'order')
     ) {
       const urlResponse = await getURLToSearchInGrid(searchTerm);

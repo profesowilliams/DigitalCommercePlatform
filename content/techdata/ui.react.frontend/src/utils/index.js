@@ -15,9 +15,7 @@ export const createMaxTimeout = () => {
 export const setSessionId = (sessionId) =>
   localStorage.setItem('sessionId', sessionId)
 
-export const getSessionId = () => localStorage.getItem('sessionId')
-
-export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage) => {
+export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage, isLoggedIn) => {
     /**
      * 2 step logout process:
      *  - initiate UI service logout
@@ -27,10 +25,10 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
       // {"content":{"message":"User logged out successfully"},"error":{"code":0,"messages":[],"isError":false}}
 
       try {
-        if(!getSessionId()) {
+        if(!isLoggedIn) {
             cleanupLocalStorage(shopLogoutRedirectUrl);
         } else {
-            const response = await usPost(redirectURL, { });
+          const response = await usPost(redirectURL, { });
             if( response.status == 200 || response.status == 401 ) {
                 handleLogout(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage);
             }
@@ -80,9 +78,8 @@ export const signOutForExpiredSession = (authUrl, clientId) => {
     cleanupLocalStorage(window.location.href, authUrl, clientId);
 }
 
-export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage) => {
+export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage, isLoggedIn) => {
   const { protocol, hostname, port, pathname } = window.location;
-  let sessionId = localStorage.getItem('sessionId');
 
   if(window.SHOP && window.SHOP.authentication) {
     /**cleaning up localstorage for logout*/
@@ -92,7 +89,7 @@ export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedi
     let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
     window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
   } else {
-    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage) ;
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage, isLoggedIn) ;
   }
 }
 

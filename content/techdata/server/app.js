@@ -259,6 +259,11 @@ app.post("/ui-account/v1/logout", function (req, res) {
   console.log("post submit");
   //console.log(errorPage);
   console.log(redirectUrl);
+
+  if(isHttpOnlyEnabled){
+    res.clearCookie(SESSION_COOKIE);
+  }
+    
   let resJsonSuccess = {
     content: {
       message: "User logged out successfully",
