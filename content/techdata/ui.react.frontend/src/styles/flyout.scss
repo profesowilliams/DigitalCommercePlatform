@@ -6,10 +6,8 @@ $flyout-small-height-formax: 779px;
   font-family: $font-family-arial;
   position: relative;
   height: 100%;
-
-  @media (max-height: $flyout-small-height) {
-    overflow: hidden;
-  }
+  overflow: hidden;
+  
   &__header {
     display: flex;
     justify-content: space-between;
@@ -30,14 +28,12 @@ $flyout-small-height-formax: 779px;
     }
   }
   &__content {
-    padding: 0 $flyout-padding;
+    padding: 0 $flyout-padding $flyout-padding $flyout-padding;
+    overflow-y: auto;
+    height: calc(100% - 117px);
 
-    @media (max-height: $flyout-small-height) {
-      height: calc(100% - 100px);
-      overflow-y: scroll;
-    }
     &-description {
-      margin: 2rem 0 2.9rem 0;
+      margin: 2rem 0 30px 0;
       font-weight: 400;
       font-size: 1rem;
       line-height: 18px;
@@ -51,12 +47,9 @@ $flyout-small-height-formax: 779px;
     }
   }
   &__footer {
+    display:flex;
     button {
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      width: 100%;
       background-color: $td-neutral-gray-2;
       text-align: center;
       color: $brand-text-lightgray;
@@ -64,10 +57,52 @@ $flyout-small-height-formax: 779px;
       height: 48px;
       font-family: $font-family-arial;
 
-      &.cmp-renewals-copy-flyout__footer-button--enabled {
-        background-color: $td-dark-blue;
+      &.cmp-flyout__footer-button--enabled {
+        background-color: $brand-green;
         color: white;
+        cursor: pointer;
+      }
+      &.cmp-flyout__footer-button--secondary {
+        border: 1px solid $brand-green;
+        background-color: white;
+        color: $brand-green;
+        cursor: pointer;
       }
     }
+  }
+}
+
+.cmp-flyout-table {
+  .MuiTableHead-root{
+    border-top: 3px solid $brand-charcoal;
+    th {
+      font-weight: 700;
+      border-bottom: 1px solid $brand-charcoal;
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+  }
+  .MuiTableBody-root{
+    .MuiTableRow-root{
+      .MuiTableCell-root{
+        padding-top: 20px;
+      } 
+    }
+  }
+  .MuiTableCell-root{
+    border: transparent;
+  } 
+  
+  .MuiTableCell-paddingCheckbox[class^='MuiTableCell-root']{
+    padding: 7px 0px 7px 15px
+  }
+  .Mui-selected[class^='MuiTableRow-root']{
+    background-color: transparent;
+    &:hover {
+    background-color: transparent;
+    }
+  }
+  .MuiTableRow-hover[class^='MuiTableRow-root']:hover{
+    background-color: transparent;
   }
 }

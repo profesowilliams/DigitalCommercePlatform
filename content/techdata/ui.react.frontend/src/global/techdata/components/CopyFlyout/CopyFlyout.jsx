@@ -208,7 +208,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       onClickButton={handleCopy}
       bottomContent={(classNameSuffix) => WarningMessage({classNameSuffix})}
     >
-      <section className="cmp-renewals-copy-flyout__content">
+      <section className="cmp-flyout__content">
         <div className="cmp-renewals-copy-flyout__content-description">
           {getDictionaryValueOrKey(copyFlyout.description)}
         </div>

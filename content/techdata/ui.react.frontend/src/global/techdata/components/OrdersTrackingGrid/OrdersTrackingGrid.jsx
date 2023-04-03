@@ -185,7 +185,6 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
-
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader

@@ -67,6 +67,21 @@ use(["../common/utils.js"], function (utils) {
   }
 
   //D-notes flyout options
+  let dNoteColumnList = utils.getDataFromMultifield(
+    resourceResolver,
+    "dNoteColumnList",
+    function (childResource) {
+      let itemData = {};
+
+      itemData.columnLabel = childResource.properties["columnLabel"];
+      itemData.columnKey = childResource.properties["columnKey"];
+      return itemData;
+    }
+  );
+
+  if (dNoteColumnList != null) {
+    jsonObject["dNoteColumnList"] = dNoteColumnList;
+  }
 
   if (properties && properties["dNotesFlyoutTitle"]) {
     dNotesFlyout.title = properties["dNotesFlyoutTitle"];
@@ -82,6 +97,10 @@ use(["../common/utils.js"], function (utils) {
 
   if (properties && properties["dNotesFlyoutButton"]) {
     dNotesFlyout.button = properties["dNotesFlyoutButton"];
+  }
+
+  if (properties && properties["dNotesFlyoutClearAllButton"]) {
+    dNotesFlyout.clearAllButton = properties["dNotesFlyoutClearAllButton"];
   }
 
   if (dNotesFlyout != null) {

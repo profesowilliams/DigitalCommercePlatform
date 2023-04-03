@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import usePositionBelowSubheader from '../../hooks/usePositionBelowSubheader';
 import { DismissFilledIcon, LoaderIcon} from '../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
+
 function BaseFlyout({
   children,
   open,
@@ -12,14 +13,17 @@ function BaseFlyout({
   subheaderReference,
   titleLabel,
   buttonLabel,
+  secondaryButtonLabel,
   isLoading,
   enableButton,
   disabledButton,
   onClickButton,
-  bottomContent
+  bottomContent,
+  selected,
+  secondaryButton,
 }) {
-  
   const BottomContent = () => bottomContent("footer")
+  const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel)
   const { positioning, calculatePosition } = usePositionBelowSubheader({unmountedFn:false}, subheaderReference);
   const { top, height } = positioning;
   useEffect(() => {
@@ -34,7 +38,6 @@ function BaseFlyout({
       clearTimeout(timer);
     }
   },[open])
-
   return (
     <Drawer
       anchor={anchor}
@@ -65,6 +68,7 @@ function BaseFlyout({
           {children}
         <section className="cmp-flyout__footer">
           {bottomContent && <BottomContent />}
+          {enableButton && <SecondaryButton/>}
           <button
             className={`cmp-flyout__footer-button ${enableButton ? 'cmp-flyout__footer-button--enabled' : ''}`}
             disabled={disabledButton}
