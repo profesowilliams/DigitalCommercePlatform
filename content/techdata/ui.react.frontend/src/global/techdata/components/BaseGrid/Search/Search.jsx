@@ -155,6 +155,7 @@ function _GridSearch(
   }
 
   const handleDropdownSwitch = useCallback(() => {
+    setIsSearchHovered(false);
     closeAndCleanToaster && closeAndCleanToaster();
     if (isSearchCapsuleVisible) {
       handleCapsuleTextClick();
@@ -335,7 +336,7 @@ function _GridSearch(
               <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
             </If>}
             <div onMouseOver={handleMouseOverSearch} onMouseLeave={handleMouseLeaveSearch}>            
-              {isSearchHovered ? <SearchIconFilled className="search-icon__dark icon-hover" /> 
+              {isSearchHovered ? <SearchIconFilled className="search-icon__dark" /> 
               : <SearchIcon className="search-icon__dark"/>}
             </div>
           </div>
