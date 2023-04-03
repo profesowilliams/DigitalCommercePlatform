@@ -343,7 +343,7 @@ const renderIntouchHeaderHTML = () => {
         element,
         function () {
             console.log("Intouch header loaded");
-            window.td.rootScope.$htmlLoaded.resolve();
+            window.td.deferred.$htmlLoaded.resolve();
         }
     );
 };
