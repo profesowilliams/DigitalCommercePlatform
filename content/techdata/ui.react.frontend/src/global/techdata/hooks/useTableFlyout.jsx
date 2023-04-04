@@ -43,7 +43,7 @@ function useTableFlyout({selected, setSelected, columnList, config}) {
       );
   };
 
-  const headTags = columnList.map((e) => e.columnKey);
+  const headTags = columnList ? columnList.map((e) => e.columnKey) : [];
   const rows = getRows(config, ...headTags);
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -54,7 +54,7 @@ function useTableFlyout({selected, setSelected, columnList, config}) {
     setSelected([]);
   };
   const useHeadCells = (list) =>
-    list.map((e) => ({
+    list?.map((e) => ({
       id: e.columnKey,
       label: e.columnLabel,
     }));

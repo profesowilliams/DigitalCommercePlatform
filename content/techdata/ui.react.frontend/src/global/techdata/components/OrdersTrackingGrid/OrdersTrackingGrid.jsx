@@ -10,6 +10,7 @@ import {
   hasLocalStorageData,
   isFromRenewalDetailsPage,
   mapServiceData,
+  setLocalStorageData,
   setPaginationData,
   updateQueryString,
 } from '../RenewalsGrid/utils/renewalUtils';
@@ -25,7 +26,7 @@ import {
   fetchData,
   setDefaultSearchDateRange,
 } from './utils/orderTrackingUtils';
-import { ANALYTICS_TYPES } from '../../../../utils/dataLayerUtils';
+import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
