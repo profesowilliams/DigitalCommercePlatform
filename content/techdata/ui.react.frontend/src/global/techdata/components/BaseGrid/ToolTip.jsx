@@ -2,7 +2,7 @@ import React from 'react';
 
 const ToolTip = ({toolTipData}) => {
   return (
-    toolTipData.value && (
+    toolTipData.show ? (
       <div
         style={{
           top: `${toolTipData.y}px`,
@@ -12,7 +12,7 @@ const ToolTip = ({toolTipData}) => {
       >
         {toolTipData.value}
       </div>
-    )
+    ) : <div></div>
   );
 };
 export default ToolTip;
