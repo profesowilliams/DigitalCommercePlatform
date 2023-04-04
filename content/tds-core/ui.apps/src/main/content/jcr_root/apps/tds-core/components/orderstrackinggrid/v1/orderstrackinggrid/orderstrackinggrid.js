@@ -45,6 +45,21 @@ use(["../common/utils.js"], function (utils) {
   }
 
   //Invoices flyout options
+  let invoiceColumnList = utils.getDataFromMultifield(
+    resourceResolver,
+    "invoiceColumnList",
+    function (childResource) {
+      let itemData = {};
+
+      itemData.columnLabel = childResource.properties["columnLabel"];
+      itemData.columnKey = childResource.properties["columnKey"];
+      return itemData;
+    }
+  );
+
+  if (invoiceColumnList != null) {
+    jsonObject["invoiceColumnList"] = invoiceColumnList;
+  }
 
   if (properties && properties["invoicesFlyoutTitle"]) {
     invoicesFlyout.title = properties["invoicesFlyoutTitle"];
@@ -60,6 +75,10 @@ use(["../common/utils.js"], function (utils) {
 
   if (properties && properties["invoicesFlyoutButton"]) {
     invoicesFlyout.button = properties["invoicesFlyoutButton"];
+  }
+
+  if (properties && properties["invoicesFlyoutClearAllButton"]) {
+    invoicesFlyout.clearAllButton = properties["invoicesFlyoutClearAllButton"];
   }
 
   if (invoicesFlyout != null) {

@@ -7,21 +7,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
-import { red } from '@mui/material/colors';
 
 export default function FlyoutTable({
   dataTable, 
-  dNotesFlyout,
   selected,
   handleClick,
   handleSelectAllClick,
+  headCells
 }) {
   const rows = dataTable
-  const isSelected = (name) => selected.indexOf(name) !== -1;
-  const headCells = dNotesFlyout.dNoteColumnList.map((e) => ({
-    id: e.columnKey,
-    label: e.columnLabel
-  }))
+  const isSelected = (name) => selected.indexOf(name) !== -1;  
 
   const EnhancedTableHead = (props) => {
     const { onSelectAllClick, numSelected, rowCount } = props;

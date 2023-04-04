@@ -27,6 +27,11 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Invoices Flyout Button Label"
                     name="./invoicesFlyoutButton"/>
+                <invoicesFlyoutClearAllButton
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Invoices Flyout Clear All Button Label"
+                    name="./invoicesFlyoutClearAllButton"/>
             </items>
         </invoicesFlyoutGroup>
     </items>

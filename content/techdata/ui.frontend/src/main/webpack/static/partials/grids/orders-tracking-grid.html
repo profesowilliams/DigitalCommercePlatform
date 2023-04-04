@@ -220,7 +220,18 @@
       title: "Invoices",
       description: "Click a link to view or select items to download.",
       orderNo: "Order №:",
+      invoicesColumnList: [
+        {
+          columnLabel: "Invoice №",
+          columnKey: "id"
+        },
+        {
+          columnLabel: "Ship Date",
+          columnKey: "created"
+        }
+      ],
       button: "Download selected",
+      clearAllButton: "Clear all",
     },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
