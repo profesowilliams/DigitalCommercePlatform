@@ -1,13 +1,18 @@
 package com.techdata.core.models;
 
-import com.techdata.core.config.AzureAppInsightsConfiguration;
-import com.techdata.core.services.AzureAppInsights;
+import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.AzureAppInsightsConfiguration;
 import io.wcm.testing.mock.aem.junit5.AemContextExtension;
+import org.apache.sling.caconfig.ConfigurationBuilder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.lang.reflect.Field;
+
 import static org.mockito.Mockito.when;
 
 @ExtendWith({AemContextExtension.class, MockitoExtension.class})
@@ -16,23 +21,41 @@ public class AzureAppInsightsModelTest {
     AzureAppInsightsModel azureAppInsightsModel;
 
     @Mock
-    AzureAppInsights azureAppInsightsService;
+    private Page currentPage;
 
     @Mock
     AzureAppInsightsConfiguration insightsConfiguration;
 
-    String[] correlation = new String[]{"techdata","aem"};
+    @Mock
+    private ConfigurationBuilder configurationBuilder;
+
+    String[] coorelation = new String[]{"tdscore","aem"};
+
+    @BeforeEach
+    void setUp() {
+        azureAppInsightsModel = new AzureAppInsightsModel();
+
+        Field pageField = null;
+        try {
+            pageField = azureAppInsightsModel.getClass().getDeclaredField("currentPage");
+            pageField.setAccessible(true);
+            pageField.set(azureAppInsightsModel, currentPage);
+        } catch (NoSuchFieldException | IllegalAccessException ignored) {
+        }
+    }
+
 
     @Test
     void testInit(){
-        when(azureAppInsightsService.getConfig()).thenReturn(insightsConfiguration);
+        when(currentPage.adaptTo(ConfigurationBuilder.class)).thenReturn(configurationBuilder);
+        when(configurationBuilder.as(AzureAppInsightsConfiguration.class)).thenReturn(insightsConfiguration);
         when(insightsConfiguration.getAppInsightsSdkLocation()).thenReturn("/content");
         when(insightsConfiguration.getCookieDomain()).thenReturn("cookies");
         when(insightsConfiguration.getEnableApplicationInsights()).thenReturn(true);
         when(insightsConfiguration.getInstrumentationKey()).thenReturn("appinsight");
         when(insightsConfiguration.getEnableAjaxErrorStatusText()).thenReturn(true);
         when(insightsConfiguration.getEnableCorsCorrelation()).thenReturn(true);
-        when(insightsConfiguration.getCorrelationHeaderExcludedDomains()).thenReturn(correlation);
+        when(insightsConfiguration.getCorrelationHeaderExcludedDomains()).thenReturn(coorelation);
         when(insightsConfiguration.getEnableAjaxPerfTracking()).thenReturn(true);
         azureAppInsightsModel.init();
     }
@@ -45,7 +68,7 @@ public class AzureAppInsightsModelTest {
         azureAppInsightsModel.getCookieDomain();
     }
     @Test
-    void testCorrelationHeaderExcludedDomains(){
+    void testcoorelationHeaderExcludedDomains(){
         azureAppInsightsModel.getCorrelationHeaderExcludedDomains();
     }
     @Test
