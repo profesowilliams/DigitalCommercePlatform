@@ -28,6 +28,8 @@ import "../global/td-components/authentication/authentication";
 import "../global/td-components/form-options/brand-filter/brandFilter";
 import "../../../../../../tds-core/ui.frontend/src/components/hub/hub";
 import "../../../../../../tds-core/ui.frontend/src/main/webpack/global/tds-core-components/analytics/analytics-data-layer";
+import "../../../../../../tds-core/ui.frontend/src/components/teaser/teaser";
+
 
 //include fortawesome library bundle
 import "fortawesome/js/fontawesome"

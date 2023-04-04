@@ -30,4 +30,5 @@ import "../global/tds-core-components/form-options/brand-filter/brandFilter";
 import "../../../../../../tds-core/ui.frontend/src/components/hamburger-menu/hamburger";
 import "../../../../../../tds-core/ui.frontend/src/components/hub/hub";
 import "../../../../../../tds-core/ui.frontend/src/components/icons/svg-icon";
+import "../../../../../../tds-core/ui.frontend/src/components/teaser/teaser";
 

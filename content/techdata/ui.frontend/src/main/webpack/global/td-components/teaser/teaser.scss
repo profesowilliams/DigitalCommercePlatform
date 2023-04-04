@@ -899,7 +899,7 @@
                         width: calc(100% - 80px);
                         margin-top: -40px;
                         background-color: white;
-                        padding: 0 20px;
+                        padding: 0 20px 20px;
                         margin-bottom: 40px;
                         height: 100%;
 
@@ -924,11 +924,15 @@
                         color: #00558C;
                         font-size: 28px;
                         line-height: 36px;
+                        font-weight: 400;
+                        text-align: left;
+                        font-family: 'Arial', sans-serif;
                     }
 
                     .cmp-teaser__title {
-                        padding: 40px 0;
-                        min-height: 152px;
+                        padding: 40px 0 10px;
+                        text-align: left;
+                        font-family: 'Arial', sans-serif;
                     }
                 }
             }

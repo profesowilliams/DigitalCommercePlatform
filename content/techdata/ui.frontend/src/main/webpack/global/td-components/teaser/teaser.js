@@ -1,21 +1,28 @@
-export default function Teaser(el) {
-    this.el = el;
-    console.log(el);
-    this.initEventHandlers();
-}
+(function() {
+    "use strict";
+    function onDocumentReady() {
 
-Object.assign(Teaser.prototype, {
-    initEventHandlers() {
-        
-        this.el.querySelectorAll('.cmp-teaser__action-link')
-            .forEach(el => el.addEventListener('click', (e) => {
-                this.sampleFunction(e);
-            }
-        ));
-    },
-    
-    sampleFunction(e){
-        e.preventDefault();
-        alert("I am clicked");
-    }
-});
+        function setTeaserHeight() {
+            document.querySelectorAll('.cmp-container-triple-teaser').forEach((val) => {
+                let maxHeight = 0;
+                val.querySelectorAll('.cmp-teaser__title').forEach((ele) => {
+                    ele.style.height = 'auto';
+                    let eleHeight = ele.offsetHeight;
+                    maxHeight = eleHeight > maxHeight ? eleHeight : maxHeight;
+                });
+                val.querySelectorAll('.cmp-teaser__title').forEach((ele) => {
+                    ele.style.height = `${maxHeight}px`;
+                });
+            })
+        };
+
+
+        setTeaserHeight();
+        window.addEventListener('resize', () => {
+            setTeaserHeight();
+        });
+
+
+    };
+    document.addEventListener("DOMContentLoaded", onDocumentReady);
+})();
