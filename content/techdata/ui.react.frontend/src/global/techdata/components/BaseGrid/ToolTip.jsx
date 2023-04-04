@@ -1,7 +1,6 @@
 import React from 'react';
-import "ToolTip.scss";
 
-const ToolTip = (toolTipData) => {
+const ToolTip = ({toolTipData}) => {
   return (
     toolTipData.value && (
       <div
