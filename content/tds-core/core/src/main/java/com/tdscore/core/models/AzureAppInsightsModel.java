@@ -1,23 +1,21 @@
 package com.tdscore.core.models;
 
-import javax.annotation.PostConstruct;
-
-import com.tdscore.core.config.AzureAppInsightsConfiguration;
-
-
-import com.tdscore.core.services.AzureAppInsights;
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.OSGiService;
-
+import com.day.cq.wcm.api.Page;
+import com.tdscore.core.slingcaconfig.AzureAppInsightsConfiguration;
 import lombok.Getter;
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.caconfig.ConfigurationBuilder;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
+
+import javax.annotation.PostConstruct;
 
 @Getter
 @Model(adaptables = SlingHttpServletRequest.class)
 public class AzureAppInsightsModel {
 
-    @OSGiService
-    private AzureAppInsights azureAppInsightsService;
+    @ScriptVariable
+    private Page currentPage;
 
     private String appInsightsSdkLocation;
     private String cookieDomain;
@@ -30,7 +28,8 @@ public class AzureAppInsightsModel {
 
     @PostConstruct
     protected void init() {
-        final AzureAppInsightsConfiguration config = azureAppInsightsService.getConfig();
+        AzureAppInsightsConfiguration config =
+                currentPage.adaptTo(ConfigurationBuilder.class).as(AzureAppInsightsConfiguration.class);
         this.appInsightsSdkLocation = config.getAppInsightsSdkLocation();
         this.cookieDomain = config.getCookieDomain();
         this.correlationHeaderExcludedDomains = config.getCorrelationHeaderExcludedDomains();

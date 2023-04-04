@@ -44,7 +44,7 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
-Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration,com.tdscore.core.slingcaconfig.MiniCartConfiguration,com.tdscore.core.slingcaconfig.IntouchConfiguration,com.tdscore.core.slingcaconfig.AnalyticsConfiguration,com.tdscore.core.slingcaconfig.CatalogServiceConfiguration,com.tdscore.core.slingcaconfig.SearchBarConfiguration,com.tdscore.core.slingcaconfig.RedirectConfiguration,com.tdscore.core.slingcaconfig.CommonConfigurations,com.tdscore.core.slingcaconfig.FormConfigurations,com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration,com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration
+Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration,com.tdscore.core.slingcaconfig.MiniCartConfiguration,com.tdscore.core.slingcaconfig.IntouchConfiguration,com.tdscore.core.slingcaconfig.AzureAppInsightsConfiguration,com.tdscore.core.slingcaconfig.AnalyticsConfiguration,com.tdscore.core.slingcaconfig.CatalogServiceConfiguration,com.tdscore.core.slingcaconfig.SearchBarConfiguration,com.tdscore.core.slingcaconfig.RedirectConfiguration,com.tdscore.core.slingcaconfig.CommonConfigurations,com.tdscore.core.slingcaconfig.FormConfigurations,com.tdscore.core.slingcaconfig.FeatureFlagsConfiguration,com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration
                                 ]]></bnd>
                         </configuration>
                     </execution>

@@ -2,21 +2,22 @@ package com.techdata.core.models;
 
 import javax.annotation.PostConstruct;
 
-import com.techdata.core.config.AzureAppInsightsConfiguration;
-import com.techdata.core.services.AzureAppInsights;
+import com.day.cq.wcm.api.Page;
+import com.techdata.core.slingcaconfig.AzureAppInsightsConfiguration;
 
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 
 import lombok.Getter;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
 
 @Getter
 @Model(adaptables = SlingHttpServletRequest.class)
 public class AzureAppInsightsModel {
 
-    @OSGiService
-    private AzureAppInsights azureAppInsightsService;
+    @ScriptVariable
+    private Page currentPage;
 
     private String appInsightsSdkLocation;
     private String cookieDomain;
@@ -29,7 +30,8 @@ public class AzureAppInsightsModel {
 
     @PostConstruct
     protected void init() {
-        final AzureAppInsightsConfiguration config = azureAppInsightsService.getConfig();
+        AzureAppInsightsConfiguration config =
+                currentPage.adaptTo(ConfigurationBuilder.class).as(AzureAppInsightsConfiguration.class);
         this.appInsightsSdkLocation = config.getAppInsightsSdkLocation();
         this.cookieDomain = config.getCookieDomain();
         this.correlationHeaderExcludedDomains = config.getCorrelationHeaderExcludedDomains();
