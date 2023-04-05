@@ -143,10 +143,12 @@ function OrdersTrackingGrid(props) {
 
   function cellMouseOver(event) {
     const offset = 2;
+    const val = tootltipVal(event);
     setToolTipData({
-      value: tootltipVal(event),
+      value: val,
       x: event?.event?.pageX + offset,
       y: event?.event?.pageY + offset,
+      show: val? true : false,
     });
   }
 
@@ -155,6 +157,7 @@ function OrdersTrackingGrid(props) {
       value: '',
       x: 0,
       y: 0,
+      show: false,
     });
   }
 
