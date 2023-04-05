@@ -1,0 +1,16 @@
+<sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader">
+  <sly data-sly-test="${(wcmmode.edit || wcmmode.design)}">
+      <div class="cq-placeholder" data-emptyText="${component.title}"></div>
+  </sly>
+
+  <sly data-sly-use.model="${'orderstrackingdetail.js' @ serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,shopDomainPage=serviceData.searchDomain,orderGridEndpoint=serviceData.orderGridEndpoint,downloadAllInvoicesEndpoint=serviceData.downloadAllInvoicesEndpoint}">
+
+  <div data-observe-mutation>
+    <div
+        data-component="OrdersTrackingDetail"
+        data-cmp-type="react"
+        className="cmp-order-tracking-detail"
+        data-config="${model.configJson}"
+    ></div>
+  </div>
+</sly>

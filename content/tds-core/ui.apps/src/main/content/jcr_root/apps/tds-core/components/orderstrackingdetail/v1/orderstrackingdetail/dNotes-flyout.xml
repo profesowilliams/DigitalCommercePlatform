@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    sling:resourceType="granite/ui/components/coral/foundation/container">
+    <items jcr:primaryType="nt:unstructured">
+        <dNotesFlyoutGroup
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/well">
+            <items jcr:primaryType="nt:unstructured">
+                <dNotesFlyoutTitle
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="D-notes Flyout Title"
+                    name="./dNotesFlyoutTitle"/>
+                <dNotesFlyoutDescription
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="D-notes Flyout Description"
+                    name="./dNotesFlyoutDescription"/>
+                <dNotesFlyoutOrderNo
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="D-notes Flyout Order No Label"
+                    name="./dNotesFlyoutOrderNo"/>
+                <dNotesFlyoutButton
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="D-notes Flyout Button Label"
+                    name="./dNotesFlyoutButton"/>
+            </items>
+        </dNotesFlyoutGroup>
+    </items>
+</jcr:root>

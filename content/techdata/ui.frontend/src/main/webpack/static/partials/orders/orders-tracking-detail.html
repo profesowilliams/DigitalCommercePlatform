@@ -1,0 +1,71 @@
+<div data-observe-mutation>
+    <div
+      data-component="OrdersTrackingDetail"
+      data-cmp-type="react"
+      className="cmp-orders-tracking-detail"
+    ></div>
+  </div>
+  <script>
+    const renewalsGridDom = document.querySelector(
+      "[data-component='OrdersTrackingDetail']"
+    );
+    const AEM_DATA = {
+      ordersUrl:"/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-grid",
+      menuCopy:'Copy',
+      menuCopyWithHeaders:'Copy with headers',
+      menuExport:'Export',
+      columnList: [
+        {
+          columnLabel: "Line No.",
+          columnKey: "id",
+          sortable: false,
+          type: "buttonList",
+        },
+        {
+          columnLabel: "Description & PN",
+          columnKey: "description",//mapped items.displayName, items.manufacturerPart, items.tdNumber
+          sortable: false,
+          type: "plainText",
+        },
+        {
+          columnLabel: "Line Status",
+          columnKey: "status",
+          sortable: false,
+          type: "plainText",
+        },
+        {
+          columnLabel: "Ship date",
+          columnKey: "xxxxxxxxx",//pending backend
+          sortable: false,
+          type: "plainText",
+        },
+        {
+          columnLabel: "Unit cost (EUR)",//unitPriceCurrency
+          columnKey: "unitPriceFormatted",
+          sortable: false,
+          type: "plainText",
+        },
+        {
+          columnLabel: "Qty",
+          columnKey: "quantity ",
+          sortable: false,
+          type: "plainText",
+        },
+        {
+          columnLabel: "Line  total (EUR)",
+          columnKey: "totalPriceFormatted",
+          sortable: false,
+          type: "plainText",
+        },
+      ],
+    uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/order",
+    agGridLicenseKey:
+      "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    options: {
+      defaultSortingColumnKey: "id",
+      defaultSortingDirection: "asc",
+    },
+    displayCurrencyName: true,
+  };
+  renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
+</script>
