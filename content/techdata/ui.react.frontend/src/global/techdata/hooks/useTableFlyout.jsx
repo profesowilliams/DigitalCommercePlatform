@@ -29,7 +29,7 @@ function useTableFlyout({selected, setSelected, columnList, config}) {
     if (!config?.data || !Array.isArray(config.data)) {
       return [];
     }
-    return config.data
+    return config?.data
       .filter(
         (e) =>
           e &&

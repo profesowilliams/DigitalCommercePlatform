@@ -43,13 +43,15 @@ function DNotesFlyout({
         <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(dNotesFlyout.description)}
         </div>
-        <FlyoutTable 
-          dataTable={rows}
-          selected={selected}
-          handleClick={handleClick}
-          handleSelectAllClick={handleSelectAllClick}
-          headCells={headCells}
-        />
+        {columnList && (
+          <FlyoutTable
+            dataTable={rows}
+            selected={selected}
+            handleClick={handleClick}
+            handleSelectAllClick={handleSelectAllClick}
+            headCells={headCells}
+          />
+        )}
       </section>
     </BaseFlyout>
   );
