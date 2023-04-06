@@ -60,6 +60,20 @@
       display: block;
     }
   }
+  &.techdatastyle {
+    .cmp-button__dropdown {
+        a {
+            &:hover {
+                background-color: #e4e5e6;
+            }
+            &:active,
+            &:focus {
+                background-color: #000c21;
+                color: white;
+            }
+        }
+    }
+  }
 }
 
 #cmp-techdata-header {
