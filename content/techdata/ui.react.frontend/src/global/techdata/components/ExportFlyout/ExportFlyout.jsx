@@ -35,7 +35,9 @@ function ExportFlyout({ store, exportFlyout, subheaderReference }) {
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
-    exportFlyout.exportOptionsList[0].label
+    exportFlyout?.exportOptionsList
+      ? exportFlyout.exportOptionsList[0].label
+      : []
   );
   const [secondarySelected, setSecondarySelected] = useState(null);
 
