@@ -16,44 +16,44 @@
       menuExport:'Export',
       columnList: [
         {
-          columnLabel: "Line No.",
-          columnKey: "id",
+          headerName: "Line No.",
+          field: "id",
           sortable: false,
           type: "buttonList",
         },
         {
-          columnLabel: "Description & PN",
-          columnKey: "description",//mapped items.displayName, items.manufacturerPart, items.tdNumber
+          headerName: "Description & PN",
+          field: "description",//mapped items.displayName, items.manufacturerPart, items.tdNumber
           sortable: false,
           type: "plainText",
         },
         {
-          columnLabel: "Line Status",
-          columnKey: "status",
+          headerName: "Line Status",
+          field: "status",
           sortable: false,
           type: "plainText",
         },
         {
-          columnLabel: "Ship date",
-          columnKey: "xxxxxxxxx",//pending backend
+          headerName: "Ship date",
+          field: "xxxxxxxxx",//pending backend
           sortable: false,
           type: "plainText",
         },
         {
-          columnLabel: "Unit cost (EUR)",//unitPriceCurrency
-          columnKey: "unitPriceFormatted",
+          headerName: "Unit cost (EUR)",//unitPriceCurrency
+          field: "unitPriceFormatted",
           sortable: false,
           type: "plainText",
         },
         {
-          columnLabel: "Qty",
-          columnKey: "quantity ",
+          headerName: "Qty",
+          field: "quantity ",
           sortable: false,
           type: "plainText",
         },
         {
-          columnLabel: "Line  total (EUR)",
-          columnKey: "totalPriceFormatted",
+          headerName: "Line  total (EUR)",
+          field: "totalPriceFormatted",
           sortable: false,
           type: "plainText",
         },
@@ -62,7 +62,7 @@
     agGridLicenseKey:
       "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
     options: {
-      defaultSortingColumnKey: "id",
+      defaultSortingfield: "id",
       defaultSortingDirection: "asc",
     },
     displayCurrencyName: true,

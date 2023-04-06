@@ -11227,7 +11227,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
     "content": {
         "shipTo": {
             "id": null,
-            "companyName": null,
+            "companyName": 'My Co Name',
             "name": null,
             "line1": null,
             "line2": null,
