@@ -51,6 +51,12 @@ export async function fetchData(config) {
 
     if (hasSortChanged.current) {
       const { sortData } = hasSortChanged.current;
+
+      if (sortData[0]) {
+        mapUrl.set('SortDirection', sortData[0].sort);
+        mapUrl.set('SortBy', sortData[0].colId);
+      }
+
       const { sortStrValue, isColReseted } =
         extractSortColAndDirection(sortData);
       const secondLevelSort = calcSecondLevelSorting(sortData);
@@ -93,10 +99,9 @@ export async function fetchData(config) {
       }
     }
     if (reportFilterValue.current?.value) {
-      reportOptionsConfig[reportFilterValue.current?.value].map((params => {
+      reportOptionsConfig[reportFilterValue.current?.value].map((params) => {
         mapUrl.set(...params);
-      }));
-
+      });
     }
 
     if (onFiltersClear) {
