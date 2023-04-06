@@ -68,7 +68,7 @@ function BaseFlyout({
           {children}
         <section className="cmp-flyout__footer">
           {bottomContent && <BottomContent />}
-          {enableButton && <SecondaryButton/>}
+          {enableButton && secondaryButton && <SecondaryButton/>}
           <button
             className={`cmp-flyout__footer-button ${enableButton ? 'cmp-flyout__footer-button--enabled' : ''}`}
             disabled={disabledButton}

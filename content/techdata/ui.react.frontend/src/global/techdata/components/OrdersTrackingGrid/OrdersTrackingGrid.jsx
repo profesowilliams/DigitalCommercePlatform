@@ -30,6 +30,7 @@ import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
+import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import ToolTip from '../BaseGrid/ToolTip';
 
 function OrdersTrackingGrid(props) {
@@ -266,6 +267,11 @@ function OrdersTrackingGrid(props) {
       <InvoicesFlyout
         store={useOrderTrackingStore}
         invoicesFlyout={gridConfig.invoicesFlyout}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      <ExportFlyout
+        store={useOrderTrackingStore}
+        exportFlyout={gridConfig.exportFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
     </div>

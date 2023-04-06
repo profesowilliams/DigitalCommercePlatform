@@ -233,6 +233,20 @@
       button: "Download selected",
       clearAllButton: "Clear all",
     },
+    exportFlyout: {
+      title: "Export",
+      description: "Send to",
+      secondaryDscription: "Details to include",
+      button: "Export",
+      exportOptionsList: [
+        { label: "Exel (.xlxs)", key: '1'},
+      ],
+      exportSecondaryOptionsList: [
+        { label: "Export all order lines", key: '2' },
+        { label: "Export lines with serial numbers only", key: '3' },
+      ],
+      
+    }
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

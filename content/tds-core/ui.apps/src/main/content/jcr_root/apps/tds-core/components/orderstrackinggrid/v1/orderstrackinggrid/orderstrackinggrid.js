@@ -8,6 +8,7 @@ use(["../common/utils.js"], function (utils) {
   let noResultsValues = {};
   let dNotesFlyout = {};
   let invoicesFlyout = {};
+  let exportFlyout = {};
   let reportOptions = [];
 
   if (properties && properties["detailUrl"]) {
@@ -42,6 +43,56 @@ use(["../common/utils.js"], function (utils) {
 
   if (properties && properties["multiple"]) {
     jsonObject["multiple"] = properties["multiple"];
+  }
+
+   //Export flyout options
+  let exportOptionsList = utils.getDataFromMultifield(
+    resourceResolver,
+    "exportOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.key = childResource.properties["key"];
+      return itemData;
+    }
+  );
+
+  if (exportOptionsList != null) {
+    jsonObject["exportOptionsList"] = exportOptionsList;
+  }
+
+  let exportSecondaryOptionsList = utils.getDataFromMultifield(
+    resourceResolver,
+    "exportSecondaryOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.key = childResource.properties["key"];
+      return itemData;
+    }
+  );
+
+  if (exportSecondaryOptionsList != null) {
+    jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
+  }
+
+  if (properties && properties["exportFlyoutTitle"]) {
+    exportFlyout.title = properties["exportFlyoutTitle"];
+  }
+
+  if (properties && properties["exportFlyoutDescription"]) {
+    exportFlyout.description = properties["exportFlyoutDescription"];
+  }
+  if (properties && properties["exportFlyoutSecondaryDescription"]) {
+    exportFlyout.secondaryDscription = properties["exportFlyoutSecondaryDescription"];
+  }
+
+  if (properties && properties["exportFlyoutButton"]) {
+    exportFlyout.button = properties["exportFlyoutButton"];
+  }
+
+  if (exportFlyout != null) {
+    jsonObject["exportFlyout"] = exportFlyout;
   }
 
   //Invoices flyout options
