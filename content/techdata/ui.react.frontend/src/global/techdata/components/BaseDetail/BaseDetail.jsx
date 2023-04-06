@@ -5,6 +5,9 @@ import BasicCard from './BasicCard';
 import SoldToCard from './SoldToCard';
 import Grid from '../Grid/Grid';
 import useGet from '../../hooks/useGet';
+import OrderAcknowledgementCard from './OrderAcknowledgementCard';
+import ContactCard from './ContactCard';
+
 function BaseDetail(props) {
   const [gridData, setGridData] = useState(null);
   const gridConfig = {
@@ -19,10 +22,10 @@ function BaseDetail(props) {
 
   useEffect(() => {
     if (apiResponse) {
-      setGridData(apiResponse?.content.items);      
+      setGridData(apiResponse?.content.items);
     }
   }, [apiResponse]);
-
+  console.log('apiResponse?.content', apiResponse?.content);
   return (
     <div className="cmp-quote-preview cmp-renewal-preview">
       <section>
@@ -48,8 +51,10 @@ function BaseDetail(props) {
           </div>
           <div className="info-container">
             <SoldToCard soldTo={apiResponse?.content?.shipTo || {}} />
-            <BasicCard />
-            <BasicCard />
+            <OrderAcknowledgementCard
+              soldTo={apiResponse?.content?.shipTo || {}}
+            />
+            <ContactCard soldTo={apiResponse?.content?.shipTo || {}} />
           </div>
         </div>
         <div className="details-container">

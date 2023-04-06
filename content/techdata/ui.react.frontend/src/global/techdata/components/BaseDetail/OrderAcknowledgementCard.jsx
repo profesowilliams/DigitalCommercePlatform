@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 
-function SoldToCard(props) {
+function OrderAcknowledgementCard(props) {
   const { soldTo } = props;
   return (
     <Card
@@ -16,7 +16,7 @@ function SoldToCard(props) {
       variant="outlined"
     >
       <Typography sx={{ fontWeight: '700' }} variant="body1">
-        Sold to
+        Order acknowledgement
       </Typography>
       <Typography variant="body2">
         {soldTo.companyName}
@@ -40,4 +40,4 @@ function SoldToCard(props) {
   );
 }
 
-export default SoldToCard;
+export default OrderAcknowledgementCard;

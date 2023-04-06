@@ -2,21 +2,16 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 
-function SoldToCard(props) {
+function ContactCard(props) {
   const { soldTo } = props;
   return (
     <Card
       className="card-container"
-      sx={{
-        minWidth: 275,
-        padding: '18px 25px',
-        marginRight: '16px',
-        color: '#000000',
-      }}
+      sx={{ minWidth: 275, padding: '18px 25px', color: '#000000' }}
       variant="outlined"
     >
       <Typography sx={{ fontWeight: '700' }} variant="body1">
-        Sold to
+        Contact
       </Typography>
       <Typography variant="body2">
         {soldTo.companyName}
@@ -40,4 +35,4 @@ function SoldToCard(props) {
   );
 }
 
-export default SoldToCard;
+export default ContactCard;
