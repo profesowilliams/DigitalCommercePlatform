@@ -9,7 +9,7 @@ use(['../../../common/utils.js'], function(utils) {
     let copyFlyout = {};
 
     if (properties && properties["detailUrl"]) {
-        jsonObject["detailUrl"] = utils.addHtmlIfNeeded(properties["detailUrl"]);
+        jsonObject["detailUrl"] = properties["detailUrl"];
     }
 
     if (properties && properties["displayCurrencyName"]) {

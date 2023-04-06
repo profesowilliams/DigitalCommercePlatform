@@ -15,7 +15,7 @@ export const createMaxTimeout = () => {
 export const setSessionId = (sessionId) =>
   localStorage.setItem('sessionId', sessionId)
 
-export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage, isLoggedIn) => {
+export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage, isLoggedIn, isNewLoginEnabled) => {
     /**
      * 2 step logout process:
      *  - initiate UI service logout
@@ -30,7 +30,7 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
         } else {
           const response = await usPost(redirectURL, { });
             if( response.status == 200 || response.status == 401 ) {
-                handleLogout(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage);
+                handleLogout(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage, isNewLoginEnabled);
             }
         }
       } catch(e){
@@ -41,7 +41,7 @@ export const signOutUser = async (redirectURL, pingLogoutUrl, errorPageUrl, shop
       }
 }
 
-export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage) => {
+export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, ignoreAEMRoundTrip, isPrivatePage, isNewLoginEnabled) => {
     if(!ignoreAEMRoundTrip) {
         var logoutReturnUrl = window.location.href;
         if(isPrivatePage) {
@@ -54,7 +54,8 @@ export const handleLogout = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogou
         shopLogoutRedirectUrl = shopLogoutRedirectUrl + "?returnUrl=" + encodeURIComponent(logoutReturnUrl);
     }
     pingLogoutUrl = pingLogoutUrl + "?TargetResource=" + shopLogoutRedirectUrl + "&InErrorResource=" + encodeURIComponent(errorPageUrl);
-    cleanupLocalStorage(pingLogoutUrl);
+
+    cleanupLocalStorage(isNewLoginEnabled ? shopLogoutRedirectUrl : pingLogoutUrl);
 }
 
 export const cleanupLocalStorage = (logoutRedirectUrl, authUrl, clientId) => {
@@ -78,7 +79,7 @@ export const signOutForExpiredSession = (authUrl, clientId) => {
     cleanupLocalStorage(window.location.href, authUrl, clientId);
 }
 
-export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage, isLoggedIn) => {
+export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, aemAuthUrl, isPrivatePage, isLoggedIn, isNewLoginEnabled) => {
   const { protocol, hostname, port, pathname } = window.location;
 
   if(window.SHOP && window.SHOP.authentication) {
@@ -89,7 +90,7 @@ export const signOut = (redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedi
     let returnUrl = encodeURIComponent(aemAuthUrl + "|"+ window.location.href);
     window.location.replace(shopLogoutRedirectUrl + "?returnUrl=" + returnUrl);
   } else {
-    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage, isLoggedIn) ;
+    signOutUser(redirectURL, pingLogoutUrl, errorPageUrl, shopLogoutRedirectUrl, false /*redirect back to current url*/, isPrivatePage, isLoggedIn, isNewLoginEnabled) ;
   }
 }
 

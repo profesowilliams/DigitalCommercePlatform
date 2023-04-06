@@ -127,7 +127,7 @@ use(['../../../common/utils.js'], function(utils) {
         quotePreview["renewalsUrlLabel"] = properties["renewalsUrlLabel"];
     }
     if (properties && properties["renewalsUrl"]) {
-        quotePreview["renewalsUrl"] = utils.addHtmlIfNeeded(properties["renewalsUrl"]);
+        quotePreview["renewalsUrl"] = properties["renewalsUrl"];
     }
 
     if (properties && properties["resellerLabel"]) {
@@ -243,7 +243,7 @@ use(['../../../common/utils.js'], function(utils) {
     }
 
     if (properties && properties["errorLoadingPageRedirect"]) {
-        errorMessages["errorLoadingPageRedirect"] = utils.addHtmlIfNeeded(properties["errorLoadingPageRedirect"]);
+        errorMessages["errorLoadingPageRedirect"] = properties["errorLoadingPageRedirect"];
     }
 
     if (properties && properties["cancelDialogTitle"]) {

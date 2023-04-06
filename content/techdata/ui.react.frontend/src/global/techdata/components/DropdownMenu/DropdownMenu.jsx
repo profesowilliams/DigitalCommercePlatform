@@ -8,7 +8,7 @@ import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { triggerEvent } from "../../../../utils/events";
 import { useStore } from "../../../../utils/useStore";
-import { isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 
 const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
   const isLoggedIn = useStore(state => state.isLoggedIn);
@@ -200,6 +200,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
       config?.aemAuthUrl ?? null,
       config?.isPrivatePage ?? null,
       isHttpOnlyEnabled() ? isLoggedIn : localStorage.getItem("sessionId"),
+      isExtraReloadDisabled() || isHttpOnlyEnabled(),
     );
 
     triggerEvent('user:loggedOut');
