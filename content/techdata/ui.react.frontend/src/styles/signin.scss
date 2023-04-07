@@ -319,3 +319,41 @@
     }
 }
 
+.signin.techdatastyle {
+    .cmp-sign-in .cmp-sign-in-list {
+        padding: 0;
+
+        & > p,
+        & > ul li {
+            padding-left: 10px;
+            padding-right: 10px;
+
+            &:hover {
+                background-color: #E4E5E6;
+            }
+
+            &:active,
+            &:focus {
+                background-color: #000C21;
+
+                span {
+                    color: white;
+                }
+            }
+        }
+
+        & > ul {
+            margin: 0;
+
+            li {
+                padding: 10px;
+                margin: 0;
+            }
+        }
+        .cmp-sign-in-signout {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
+
