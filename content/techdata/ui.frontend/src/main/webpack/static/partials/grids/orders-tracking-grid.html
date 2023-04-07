@@ -203,50 +203,49 @@
       title: "D-notes",
       description: "Click a link to view or select items to download.",
       orderNo: "Order №:",
-      dNoteColumnList: [
-        {
-          columnLabel: "D-note №",
-          columnKey: "id"
-        },
-        {
-          columnLabel: "Ship Date",
-          columnKey: "actualShipDate"
-        }
-      ],
       button: "Download selected",
       clearAllButton: "Clear all",
     },
+    dNoteColumnList: [
+      {
+        columnLabel: "D-note №",
+        columnKey: "id"
+      },
+      {
+        columnLabel: "Ship Date",
+        columnKey: "actualShipDate"
+      }
+    ],
     invoicesFlyout: {
       title: "Invoices",
       description: "Click a link to view or select items to download.",
       orderNo: "Order №:",
-      invoicesColumnList: [
-        {
-          columnLabel: "Invoice №",
-          columnKey: "id"
-        },
-        {
-          columnLabel: "Ship Date",
-          columnKey: "created"
-        }
-      ],
       button: "Download selected",
       clearAllButton: "Clear all",
     },
+    invoicesColumnList: [
+      {
+        columnLabel: "Invoice №",
+        columnKey: "id"
+      },
+      {
+        columnLabel: "Ship Date",
+        columnKey: "created"
+      }
+    ],
     exportFlyout: {
       title: "Export",
       description: "Send to",
       secondaryDscription: "Details to include",
       button: "Export",
-      exportOptionsList: [
-        { label: "Exel (.xlxs)", key: '1'},
-      ],
-      exportSecondaryOptionsList: [
-        { label: "Export all order lines", key: '2' },
-        { label: "Export lines with serial numbers only", key: '3' },
-      ],
-      
-    }
+    },
+    exportOptionsList: [
+      { label: "Exel (.xlxs)", key: '1'},
+    ],
+    exportSecondaryOptionsList: [
+      { label: "Export all order lines", key: '2' },
+      { label: "Export lines with serial numbers only", key: '3' },
+    ],
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

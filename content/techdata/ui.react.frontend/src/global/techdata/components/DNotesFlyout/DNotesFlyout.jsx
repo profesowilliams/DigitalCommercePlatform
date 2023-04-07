@@ -4,18 +4,26 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
 
-function DNotesFlyout({ 
-  store, 
-  dNotesFlyout, 
+function DNotesFlyout({
+  store,
+  dNotesFlyout,
+  dNoteColumnList,
   subheaderReference,
 }) {
   const dNoteFlyoutConfig = store((st) => st.dNotesFlyout);
   const effects = store((st) => st.effects);
-  const closeFlyout = () => effects.setCustomState({ key: 'dNotesFlyout', value: { show: false } });
-  const columnList = dNotesFlyout.dNoteColumnList;
-  const config = dNoteFlyoutConfig
+  const closeFlyout = () =>
+    effects.setCustomState({ key: 'dNotesFlyout', value: { show: false } });
+  const columnList = dNoteColumnList;
+  const config = dNoteFlyoutConfig;
   const [selected, setSelected] = React.useState([]);
-  const {rows, headCells, handleClick, handleSelectAllClick, SecondaryButton} = useTableFlyout({selected, setSelected, columnList, config})
+  const {
+    rows,
+    headCells,
+    handleClick,
+    handleSelectAllClick,
+    SecondaryButton,
+  } = useTableFlyout({ selected, setSelected, columnList, config });
 
   return (
     <BaseFlyout

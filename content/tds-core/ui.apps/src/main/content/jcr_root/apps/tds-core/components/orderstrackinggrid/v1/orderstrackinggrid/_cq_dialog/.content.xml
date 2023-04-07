@@ -604,74 +604,6 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/include"
                                                 path="tds-core/components/orderstrackinggrid/v1/orderstrackinggrid/export-flyout"/>
-                                                <radioConfigurations
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                    composite="{Boolean}true"
-                                                    fieldDescription="Click 'Add' to add labels"
-                                                    fieldLabel="Section 1 Description">
-                                                    <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./exportOptionsList">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <column
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <label
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter label"
-                                                                        fieldLabel="Label"
-                                                                        name="./label"
-                                                                        required="{Boolean}true" />
-                                                                    <key
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter key"
-                                                                        fieldLabel="Key"
-                                                                        name="./key"
-                                                                        required="{Boolean}true" />
-                                                                </items>
-                                                            </column>
-                                                        </items>
-                                                    </field>
-                                                </radioConfigurations>
-                                                <radioConfigurations2
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                    composite="{Boolean}true"
-                                                    fieldDescription="Click 'Add' to add labels"
-                                                    fieldLabel="Section 2 Description">
-                                                    <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./exportSecondaryOptionsList">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <column
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <label
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter label"
-                                                                        fieldLabel="Label"
-                                                                        name="./label"
-                                                                        required="{Boolean}true" />
-                                                                    <key
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter key"
-                                                                        fieldLabel="Key"
-                                                                        name="./key"
-                                                                        required="{Boolean}true" />
-                                                                </items>
-                                                            </column>
-                                                        </items>
-                                                    </field>
-                                                </radioConfigurations2>
                                         </items>
                                     </column>
                                 </items>
@@ -690,40 +622,6 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/include"
                                                 path="tds-core/components/orderstrackinggrid/v1/orderstrackinggrid/invoices-flyout"/> 
-                                                <columnsConfigurations
-                                                    jcr:primaryType="nt:unstructured"
-                                                    sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                    composite="{Boolean}true"
-                                                    fieldDescription="Click 'Add' to add labels"
-                                                    fieldLabel="Invoice Columns Definition">
-                                                    <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./invoiceColumnList">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <column
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <columnLabel
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter column label"
-                                                                        fieldLabel="Column Label"
-                                                                        name="./columnLabel"
-                                                                        required="{Boolean}true" />
-                                                                    <columnKey
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter Column key for the column"
-                                                                        fieldLabel="Column Key"
-                                                                        name="./columnKey"
-                                                                        required="{Boolean}true" />
-                                                                </items>
-                                                            </column>
-                                                        </items>
-                                                    </field>
-                                                </columnsConfigurations>
                                         </items>
                                     </column>
                                 </items>
@@ -742,40 +640,6 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/include"
                                                 path="tds-core/components/orderstrackinggrid/v1/orderstrackinggrid/dNotes-flyout"/>
-                                                <columnsConfigurations
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                composite="{Boolean}true"
-                                                fieldDescription="Click 'Add' to add labels"
-                                                fieldLabel="D-Note Columns Definition">
-                                                    <field
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                        name="./dNoteColumnList">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <column
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <columnLabel
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter column label"
-                                                                        fieldLabel="Column Label"
-                                                                        name="./columnLabel"
-                                                                        required="{Boolean}true" />
-                                                                    <columnKey
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldDescription="Enter Column key for the column"
-                                                                        fieldLabel="Column Key"
-                                                                        name="./columnKey"
-                                                                        required="{Boolean}true" />
-                                                                </items>
-                                                            </column>
-                                                        </items>
-                                                    </field>
-                                                </columnsConfigurations>
                                         </items>
                                     </column>
                                 </items>

@@ -4,16 +4,27 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
 
-function InvoicesFlyout({ store, invoicesFlyout, subheaderReference }) {
+function InvoicesFlyout({
+  store,
+  invoicesFlyout,
+  invoicesColumnList,
+  subheaderReference,
+}) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
   const effects = store((st) => st.effects);
 
   const closeFlyout = () =>
     effects.setCustomState({ key: 'invoicesFlyout', value: { show: false } });
-  const columnList = invoicesFlyout.invoicesColumnList;
-  const config = invoicesFlyoutConfig
+  const columnList = invoicesColumnList;
+  const config = invoicesFlyoutConfig;
   const [selected, setSelected] = React.useState([]);
-  const {rows, headCells, handleClick, handleSelectAllClick, SecondaryButton} = useTableFlyout({selected, setSelected, columnList, config})
+  const {
+    rows,
+    headCells,
+    handleClick,
+    handleSelectAllClick,
+    SecondaryButton,
+  } = useTableFlyout({ selected, setSelected, columnList, config });
 
   return (
     <BaseFlyout

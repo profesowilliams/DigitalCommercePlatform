@@ -31,13 +31,17 @@ const styleOverrideDivider = {
   },
 };
 
-function ExportFlyout({ store, exportFlyout, subheaderReference }) {
+function ExportFlyout({
+  store,
+  exportFlyout,
+  exportOptionsList,
+  exportSecondaryOptionsList,
+  subheaderReference,
+}) {
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
-    exportFlyout?.exportOptionsList
-      ? exportFlyout.exportOptionsList[0].label
-      : []
+    exportOptionsList ? exportOptionsList[0].label : []
   );
   const [secondarySelected, setSecondarySelected] = useState(null);
 
@@ -75,7 +79,7 @@ function ExportFlyout({ store, exportFlyout, subheaderReference }) {
             value={selected}
             onChange={handleSelectChange}
           >
-            {exportFlyout.exportOptionsList?.map((e) => (
+            {exportOptionsList?.map((e) => (
               <FormControlLabel
                 sx={styleOverrideFormControlLabel}
                 key={e.key}
@@ -97,7 +101,7 @@ function ExportFlyout({ store, exportFlyout, subheaderReference }) {
             value={secondarySelected}
             onChange={handleSecondarySelectChange}
           >
-            {exportFlyout.exportSecondaryOptionsList?.map((e) => (
+            {exportSecondaryOptionsList?.map((e) => (
               <FormControlLabel
                 sx={styleOverrideFormControlLabel}
                 key={e.key}

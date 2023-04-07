@@ -251,7 +251,7 @@ function OrdersTrackingGrid(props) {
         onCellMouseOver={cellMouseOver}
         onCellMouseOut={cellMouseOut}
       />
-      <ToolTip toolTipData={toolTipData}/>
+      <ToolTip toolTipData={toolTipData} />
       <div className="cmp-renewals__pagination--bottom">
         <BaseGridPagination
           ref={customPaginationRef}
@@ -262,16 +262,20 @@ function OrdersTrackingGrid(props) {
       <DNotesFlyout
         store={useOrderTrackingStore}
         dNotesFlyout={gridConfig.dNotesFlyout}
+        dNoteColumnList={gridConfig.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
       <InvoicesFlyout
         store={useOrderTrackingStore}
         invoicesFlyout={gridConfig.invoicesFlyout}
+        invoicesColumnList={gridConfig.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
       <ExportFlyout
         store={useOrderTrackingStore}
         exportFlyout={gridConfig.exportFlyout}
+        exportOptionsList={gridConfig.exportOptionsList}
+        exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
         subheaderReference={document.querySelector('.subheader > div > div')}
       />
     </div>
