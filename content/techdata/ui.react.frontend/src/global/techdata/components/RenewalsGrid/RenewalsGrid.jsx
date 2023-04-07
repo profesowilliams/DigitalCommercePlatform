@@ -22,6 +22,7 @@ import {
 import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow';
 import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
+import { setDefaultSearchDateRange } from "../../../../utils/utils";
 import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./utils/renewalUtils";
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
@@ -59,6 +60,8 @@ function RenewalsGrid(props) {
   const previousFilter = useRef(false);
 
   const { searchOptionsList, shopURL, icons } = componentProp;
+
+  const defaultSearchDateRange = setDefaultSearchDateRange(30);
 
   const customPaginationRef = useRef();
 
@@ -324,6 +327,7 @@ function RenewalsGrid(props) {
         onCellMouseOut={cellMouseOut}
         omitCreatedQuery={true}
         contextMenuItems={contextMenuItems}
+        defaultSearchDateRange={defaultSearchDateRange}
         noContextMenuItemsWhenColumnNull={true} />
       <ToolTip toolTipData={toolTipData}/>
       <div className="cmp-renewals__pagination--bottom">

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ORDER_PAGINATION_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY, SEARCH_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
@@ -8,6 +8,7 @@ import {
   addCurrentPageNumber,
   getLocalStorageData,
   hasLocalStorageData,
+  removeLocalStorageData,
   isFromRenewalDetailsPage,
   mapServiceData,
   setLocalStorageData,
@@ -22,10 +23,8 @@ import Pill from '../Widgets/Pill';
 import OrderSearch from '../BaseGrid/Search/Search';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
-import {
-  fetchData,
-  setDefaultSearchDateRange,
-} from './utils/orderTrackingUtils';
+import { fetchData } from './utils/orderTrackingUtils';
+import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
@@ -47,14 +46,13 @@ function OrdersTrackingGrid(props) {
   );
   const componentProp = JSON.parse(props.componentProp);
   const [pill, setPill] = useState(null);
+  const formattedDateRange = setDefaultSearchDateRange(
+    componentProp?.defaultSearchDateRange
+  );
+  const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const {
-    searchOptionsList,
-    shopURL,
-    icons,
-    reportOptions,
-    reportPillLabel,
-  } = componentProp;
+  const { searchOptionsList, shopURL, icons, reportOptions, reportPillLabel } =
+    componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
@@ -63,10 +61,7 @@ function OrdersTrackingGrid(props) {
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
-  const defaultSearchDateRange = setDefaultSearchDateRange(
-    componentProp?.defaultSearchDateRange
-  );  
-  const { setToolTipData, setCustomState } = effects;
+  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
@@ -93,6 +88,7 @@ function OrdersTrackingGrid(props) {
       //isPriceColumnClicked,
       gridApiRef,
       reportFilterValue,
+      defaultSearchDateRange: dateRange,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     //const response = await request.get(request.url);
@@ -142,6 +138,10 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  const removeDefaultDateRange = () => {
+    setDateRange(null);
+  };
+
   function cellMouseOver(event) {
     const offset = 2;
     const val = tootltipVal(event);
@@ -149,7 +149,7 @@ function OrdersTrackingGrid(props) {
       value: val,
       x: event?.event?.pageX + offset,
       y: event?.event?.pageY + offset,
-      show: val? true : false,
+      show: val ? true : false,
     });
   }
 
@@ -163,10 +163,10 @@ function OrdersTrackingGrid(props) {
   }
 
   function tootltipVal(event) {
-    switch(event.colDef.headerName){
-      case "PO Nº":
+    switch (event.colDef.headerName) {
+      case 'PO Nº':
         return event.value;
-      case "Ship to":
+      case 'Ship to':
         return event.value;
       default:
         return null;
@@ -174,12 +174,29 @@ function OrdersTrackingGrid(props) {
   }
   const onReportChange = (option) => {
     setPill({ key: option.key, label: option.label });
+    removeDefaultDateRange();
     onQueryChanged();
   };
 
   const handleDeletePill = () => {
     setPill();
     onQueryChanged();
+  };
+
+  const onSearchChange = () => {
+    removeDefaultDateRange();
+    onQueryChanged();
+  };
+
+  const doesCurrentSearchMatchResult = (result) =>
+    searchCriteria.current.field === 'Id' &&
+    searchCriteria.current.value === result;
+
+  const onDataLoad = (response) => {
+    if (response.length >= 1 && doesCurrentSearchMatchResult(response[0].id)) {
+      removeLocalStorageData(SEARCH_LOCAL_STORAGE_KEY);
+      window.location.href = `${componentProp.detailUrl}.html?id=${response[0].id}`;
+    }
   };
 
   useEffect(() => {
@@ -216,7 +233,7 @@ function OrdersTrackingGrid(props) {
             : []),
           <OrderSearch
             options={searchOptionsList}
-            onQueryChanged={onQueryChanged}
+            onQueryChanged={onSearchChange}
             ref={searchCriteria}
             store={useOrderTrackingStore}
             hideLabel={true}
@@ -243,11 +260,12 @@ function OrdersTrackingGrid(props) {
         definitions={ordersTrackingDefinition(componentProp)}
         config={gridConfig}
         gridConfig={gridConfig}
-        defaultSearchDateRange={defaultSearchDateRange}
+        defaultSearchDateRange={dateRange}
         requestInterceptor={customRequestInterceptor}
         mapServiceData={mapServiceData}
         onSortChanged={onSortChanged}
         onAfterGridInit={_onAfterGridInit}
+        onDataLoad={onDataLoad}
         onCellMouseOver={cellMouseOver}
         onCellMouseOut={cellMouseOut}
       />

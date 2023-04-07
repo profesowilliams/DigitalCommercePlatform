@@ -261,6 +261,19 @@ export const validateDatePicker = (value, partnerValue, setStateParam) =>
  */
 export const formatDatePicker = (dateValue, filterTag = '') => filterTag + getDateValue(dateValue);
 
+export function setDefaultSearchDateRange(dateRange = '30') {
+  const createdFromString = formatDatePicker(createdFromDate(dateRange));
+  const createdToString = formatDatePicker(new Date());
+  return `createdFrom=${createdFromString}&createdTo=${createdToString}`;
+}
+
+export function createdFromDate(dateRange) {
+  const createdFrom = new Date();
+  const createdTo = new Date();
+  createdFrom.setDate(createdTo.getDate() - (parseInt(dateRange, 10)));
+  return createdFrom;
+}
+
 export const isQueryValid = (query) => {
   const from = query.from?.value;
   const to = query.to?.value;

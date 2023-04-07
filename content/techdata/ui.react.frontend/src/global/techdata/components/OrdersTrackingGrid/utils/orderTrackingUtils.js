@@ -1,19 +1,6 @@
 import { usGet } from "../../../../../utils/api";
-import { formatDatePicker } from "../../../../../utils/utils";
+import { formatDatePicker, createdFromDate } from "../../../../../utils/utils";
 import { calcSecondLevelSorting, extractSortColAndDirection, isFirstTimeSortParameters, isRepeatedSortAction, isSameFilterRepeated, mapStrucToUrlStr, urlStrToMapStruc } from "../../RenewalsGrid/utils/renewalUtils";
-
-function createdFromDate(dateRange) {
-  const createdFrom = new Date();
-  const createdTo = new Date();
-  createdFrom.setDate(createdTo.getDate() - (parseInt(dateRange, 10)));
-  return createdFrom;
-}
-
-export function setDefaultSearchDateRange(dateRange = '30') {
-  const createdFromString = formatDatePicker(createdFromDate(dateRange));
-  const createdToString =  formatDatePicker(new Date());
-  return `&createdFrom=${createdFromString}&createdTo=${createdToString}`;
-}
 
 const reportOptionsConfig = {
   last7Days: [
@@ -44,10 +31,21 @@ export async function fetchData(config) {
       componentProp,
       previousFilter,
       reportFilterValue,
+      defaultSearchDateRange
     } = config;
 
     const { url } = request;
     const mapUrl = urlStrToMapStruc(url);
+    const isFirstAPICall = firstAPICall.current === true;
+
+    if (defaultSearchDateRange && isFirstAPICall) {
+      const dateRange = urlStrToMapStruc(defaultSearchDateRange).entries();
+      mapUrl.set(...dateRange.next().value);
+      mapUrl.set(...dateRange.next().value);
+    } else {
+      mapUrl.delete('createdFrom');
+      mapUrl.delete('createdTo');
+    }
 
     if (hasSortChanged.current) {
       const { sortData } = hasSortChanged.current;
@@ -57,8 +55,6 @@ export async function fetchData(config) {
         mapUrl.set('SortBy', sortData[0].colId);
       }
 
-      const { sortStrValue, isColReseted } =
-        extractSortColAndDirection(sortData);
       const secondLevelSort = calcSecondLevelSorting(sortData);
 
       if (secondLevelSort && !secondLevelSort.includes('undefined')) {
@@ -79,9 +75,8 @@ export async function fetchData(config) {
         hasSortChanged.current?.sortData
       );
       const pageNumber = customPaginationRef.current?.pageNumber;
-      const isNotFirstAPICall = firstAPICall.current === false;
 
-      if (pageNumber !== 1 && !isDefaultSort && isNotFirstAPICall) {
+      if (pageNumber !== 1 && !isDefaultSort && !isFirstAPICall) {
         if (!isEqual) mapUrl.set('PageNumber', 1);
       }
     }
@@ -98,6 +93,7 @@ export async function fetchData(config) {
         mapUrl.set('PageNumber', 1);
       }
     }
+
     if (reportFilterValue.current?.value) {
       reportOptionsConfig[reportFilterValue.current?.value].map((params) => {
         mapUrl.set(...params);

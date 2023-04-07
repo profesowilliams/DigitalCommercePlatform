@@ -3,10 +3,17 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-enterprise";
 import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
-import { formatDatePicker, fromExceptionToErrorObject, normalizeErrorCode, stringifyValue, hasSearchOrFilterPresent } from "../../../../utils/utils";
-import { getDictionaryValue } from '../../../../utils/utils';
-import {useStore} from "../../../../utils/useStore"
-import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils"
+import {
+  getDictionaryValue,
+  setDefaultSearchDateRange,
+  fromExceptionToErrorObject,
+  normalizeErrorCode,
+  stringifyValue,
+  hasSearchOrFilterPresent,
+} from '../../../../utils/utils';
+
+import { useStore } from '../../../../utils/useStore';
+import { isExtraReloadDisabled } from '../../../../utils/featureFlagUtils';
 import { isObject } from '../../../../utils';
 import useAuth from "../../hooks/useAuth";
 
@@ -37,7 +44,8 @@ function Grid(props) {
     getDefaultCopyValue,
     suppressPaginationPanel = false,
     getRowId,
-    defaultSearchDateRange = false
+    defaultSearchDateRange = setDefaultSearchDateRange(30),
+    onDataLoad,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = "1.3.0";
@@ -231,7 +239,6 @@ function Grid(props) {
       onGridReady={onGridReady}
       serverSideDatasource={serverSide && createDataSource()}
       serverSideStoreType={serverSide ? "partial" : "full"}
-      rowSelection="single"
       rowHeight={DEFAULT_ROW_HEIGHT}
       onViewportChanged={onViewportChanged}
       blockLoadDebounceMillis={100}
@@ -385,34 +392,27 @@ function Grid(props) {
   }
 
   async function getGridData(pageSize, pageNumber, sortKey, sortDir) {
+    const dateRangeUrlParam =
+      defaultSearchDateRange && !omitCreatedQuery
+        ? `&${defaultSearchDateRange}`
+        : '';
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiServiceEndPoint);
       const pages = `PageSize=${pageSize}&PageNumber=${pageNumber}`;
-      const createdTo = new Date();
-      let createdFrom = new Date();
-      createdFrom.setDate(createdTo.getDate() - 31);
-
-      const createdToString = formatDatePicker(createdTo);
-      const createdFromString = formatDatePicker(createdFrom);
-
-      const _createdParam = !omitCreatedQuery 
-        ? `&createdFrom=${createdFromString}&createdTo=${createdToString}`
-        : "";
-      const createdParam = !defaultSearchDateRange ? _createdParam : defaultSearchDateRange;
       const sortParams =
         sortKey && sortDir
-          ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${createdParam}`
-          : `&SortDirection=desc&SortBy=id&WithPaginationInfo=true${createdParam}`; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
-      let pathName = url.pathname ?? "";
-      pathName.slice(-1) === "/" && (pathName = pathName.slice(0, -1));
-      const apiUrl = `${url.origin}${pathName ?? ""}${url.search ?? ""}${
-        url.search !== "" ? "&" : "?"
+          ? `&SortDirection=${sortDir}&SortBy=${sortKey}&WithPaginationInfo=true${dateRangeUrlParam}`
+          : `&SortDirection=desc&SortBy=id&WithPaginationInfo=true${dateRangeUrlParam}`; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
+      let pathName = url.pathname ?? '';
+      pathName.slice(-1) === '/' && (pathName = pathName.slice(0, -1));
+      const apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}${
+        url.search !== '' ? '&' : '?'
       }${pages}${sortParams}`;
       let response = null;
       // check if request interceptor is attached and use it.
       // otherwise get data according to grid state
-      if (typeof requestInterceptor === "function") {
+      if (typeof requestInterceptor === 'function') {
         response = await requestInterceptor({
           url: apiUrl,
           get: async (_url) => {
@@ -431,6 +431,7 @@ function Grid(props) {
           response = fromExceptionToErrorObject(error);
         }
       }
+      onDataLoad && onDataLoad(response.data.content.items);
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
 
       return postProcessResponse(response);
