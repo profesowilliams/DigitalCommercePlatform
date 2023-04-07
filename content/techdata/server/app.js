@@ -11443,7 +11443,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         },
       ],
       orderNumber: "I537882022",
-      poNumber: null,
+      poNumber: "TDS - 10004089452",
       endUserPO: null,
       created: "03/15/23",
       poDate: "03/15/23",

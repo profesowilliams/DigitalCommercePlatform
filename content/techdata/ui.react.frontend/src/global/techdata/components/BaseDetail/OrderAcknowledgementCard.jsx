@@ -1,40 +1,28 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function OrderAcknowledgementCard(props) {
-  const { soldTo } = props;
+  const { content, config } = props;
   return (
-    <Card
-      className="card-container"
-      sx={{
-        minWidth: 275,
-        padding: '18px 25px',
-        marginRight: '16px',
-        color: '#000000',
-      }}
-      variant="outlined"
-    >
-      <Typography sx={{ fontWeight: '700' }} variant="body1">
-        Order acknowledgement
+    <Card className="card-container" variant="outlined">
+      <Typography className="card-container__title" variant="body1">
+        {getDictionaryValueOrKey(config.orderAcknowledgement)}
       </Typography>
       <Typography variant="body2">
-        {soldTo.companyName}
-        <br />
-        {soldTo.line1}
-        <br />
-        {soldTo.line2 && (
-          <>
-            {soldTo.line2}
-            <br />
-          </>
+        {content.created && (
+          <div className="card-container__contentGrid">
+            <span>{getDictionaryValueOrKey(config.orderDate)}</span>
+            <span>{content.created}</span>
+          </div>
         )}
-        {soldTo.city} {soldTo.state} {soldTo.postalCode} {soldTo.country}
-      </Typography>
-      <Typography variant="body2">
-        Phone: {soldTo.phoneNumber}
-        <br />
-        Email: {soldTo.contactEmail}
+        {content.poNumber && (
+          <div className="card-container__contentGrid">
+            <span>{getDictionaryValueOrKey(config.purchaseOrderNo)}</span>
+            <span>{content.poNumber}</span>
+          </div>
+        )}
       </Typography>
     </Card>
   );

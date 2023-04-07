@@ -1,0 +1,219 @@
+.cmp-orders-details__tds {
+    *:not([class*="fas"]) {
+      @include font-arial-normal();
+    }
+  
+    .cmp-orders-qp__config-grid {
+      .header-container {
+        .image-container {
+          .back-to-renewal {
+            @include font-arial-normal($line-height: 22px);
+            color: map-get($color-palette, 'charcoal');
+          }
+        }
+      }
+  
+      .export-container {
+        button span {
+          color: map-get($color-palette, 'teal');
+          font-weight: 400;
+        }
+        .quote-preview {
+          @include font-arial-medium-bold($size: 20px, $line-height: 18px);
+          color: map-get($color-palette, 'deep-teal');
+        }
+      } 
+  
+      .cmp-orders-qp__reseller-info,
+      .cmp-orders-qp__agreement-info,
+      .cmp-orders-qp__enduser-info {
+        @include font-arial-medium-bold();
+  
+        &--title {
+          @include font-arial-medium-bold($size: 16px);
+        }
+  
+        &--address-group {
+          span {
+            @include font-arial-normal($line-height: 24px);
+            color: map-get($color-palette, 'charcoal');
+          }
+        }
+      }
+    }
+  
+    .cmp-order-preview {
+      .details-container {
+        .details-preview {
+          color: $brand-green;
+          @include font-arial-medium-bold();
+        }
+      }
+  
+      .cmp-grid.ag-theme-alpine {
+        .ag-header-cell {
+          padding-bottom: 0;
+        }
+  
+        .ag-row .cmp-order-preview__prod-details span {
+          color: map-get($color-palette, 'cool-gray-9');
+          font-weight: 400;
+          font-size: 14px;
+          font-family: "Arial", sans-serif;
+        }
+      }
+  
+      .cmp-product-lines-grid__item-information__box-text a p {
+        margin-top: 0;
+        text-align: left;
+      }
+  
+      .cmp-order-preview__download {
+        &--icon {
+          display: inline-block;
+          margin-right: 14px;
+        }
+        button{
+          &:hover span, &:hover svg path{
+            color: map-get($color-palette, td-lightblue);
+            fill: map-get($color-palette, td-lightblue);
+          } 
+        }
+      }
+  
+      .cmp-order-preview__subtotal {
+        background-color: map-get($color-palette, neutral-gray-1);
+        &--note, &--note * {
+          b {
+            font-weight: bolder;
+          }
+          color: map-get($color-palette, 'charcoal');
+          @include font-arial-normal($weight: unset, $size: 14px, $line-height: 16px);
+        }
+        &--description, &--value >span {
+          color: map-get($color-palette, 'charcoal');
+          @include font-arial-normal($size: 20px, $line-height: 23px);
+        }
+      }
+      
+      .cmp-product-lines-grid {
+        .ag-root-wrapper-body {
+          .ag-header-container {
+            background-color: map-get($color-palette, 'cool-gray-1');
+    
+            .ag-header-cell-text {
+              color: map-get($color-palette, 'charcoal');
+              @include font-arial-normal($weight: 700, $size: 14px);
+            }
+          }
+        }
+      }
+    }
+  
+    .cmp-place-order-actions {
+      button {
+        background-color: $brand-green;
+        height: 48px;
+        width: -moz-fit-content;
+        width: fit-content;
+        align-items: center;
+        text-transform: unset;
+        &:disabled {
+          background-color: map-get($color-palette, 'neutral-gray-2');
+        }
+      }
+    }
+  
+    .cmp-grid.ag-theme-alpine {
+      .ag-row * {
+        @include font-arial-normal($size: 14px, $line-height:16px);
+        color: map-get($color-palette, 'charcoal');
+      }
+  
+      .ag-header {
+        border: none;
+      }
+    }
+  }
+  
+  /**
+  **  Tech Data Branding version of cmp-orders-details__tds
+  **/
+  
+  .cmp-grid-techdata {
+      .cmp-orders-qp__reseller-info,
+      .cmp-orders-qp__agreement-info,
+      .cmp-orders-qp__enduser-info
+       {
+        &--title {
+          color: $brand-blue;
+        }
+      }
+      
+    .cmp-orders-qp__config-grid {
+      .export-container {
+        .quote-preview {
+          color: $brand-blue;
+        }
+  
+        button span {
+          color: $brand-blue;
+        }
+      }    
+    }
+  
+    .cmp-order-preview {
+      .details-container {
+        .details-preview {
+          color: $brand-blue;
+        }
+      }
+      .icon-button {
+        svg {
+          stroke: $brand-blue;
+         }
+         &__default {
+          color: $brand-blue;
+         }
+      }
+    }
+    
+    .icon-button {
+      
+      svg {
+       stroke: $brand-blue;
+      }
+      &__default {
+        color: $brand-blue;
+      }
+    }
+  
+    p {
+      &.cmp-place-order-actions {
+  
+        button {
+          background-color: $brand-blue;
+          &:disabled {
+            background-color: map-get($color-palette, 'neutral-gray-2');
+          }
+        }
+      }
+  
+      &.cmp-orders-qp__missing-info--text {
+        color: $brand-blue;
+      }
+    }
+  
+    .cmp-orders-details .cmp-quantity-column__btn {
+      background-color: $brand-blue;
+    }
+  
+    .MuiInput-underline {
+      &.Mui-focused {
+        &:after {
+          border-bottom-color: $brand-blue;
+        }
+      }
+    }
+  }
+  

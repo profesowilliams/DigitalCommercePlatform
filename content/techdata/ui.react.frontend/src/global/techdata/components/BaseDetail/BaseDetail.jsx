@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDictionaryValue } from '../../../../utils/utils';
 import Link from '../Widgets/Link';
-import BasicCard from './BasicCard';
 import SoldToCard from './SoldToCard';
 import Grid from '../Grid/Grid';
 import useGet from '../../hooks/useGet';
 import OrderAcknowledgementCard from './OrderAcknowledgementCard';
 import ContactCard from './ContactCard';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function BaseDetail(props) {
   const [gridData, setGridData] = useState(null);
@@ -27,52 +27,60 @@ function BaseDetail(props) {
   }, [apiResponse]);
   console.log('apiResponse?.content', apiResponse?.content);
   return (
-    <div className="cmp-quote-preview cmp-renewal-preview">
+    <div className="cmp-quote-preview cmp-order-preview">
       <section>
-        <div className="cmp-renewals-qp__config-grid">
+        <div className="cmp-orders-qp__config-grid">
           <div className="header-container">
             <div className="image-container">
               <Link variant="back-to-renewal" href={'#'} underline="none">
                 <i className="fas fa-chevron-left"></i>
-                {getDictionaryValue('details.renewal.label.backToXXX', 'Back')}
+                {getDictionaryValueOrKey(gridConfig.back)}
               </Link>
-              <img className="vendorLogo" src={''} alt="vendor logo" />
             </div>
             <div className="export-container">
               <span className="quote-preview">
-                {getDictionaryValue(
-                  'details.renewal.label.titleXXX',
-                  'Open  |  Order №:   01234597201'
-                )}
+                {getDictionaryValueOrKey(gridConfig.openNo)}{' '}
+                {apiResponse?.content.orderNumber}
               </span>
-              Actions
+              <span className="quote-actions">
+                {getDictionaryValueOrKey(gridConfig.actions)}
+              </span>
               {/* <GridHeader data={data} gridProps={gridProps} /> */}
             </div>
           </div>
           <div className="info-container">
-            <SoldToCard soldTo={apiResponse?.content?.shipTo || {}} />
-            <OrderAcknowledgementCard
+            <SoldToCard
               soldTo={apiResponse?.content?.shipTo || {}}
+              config={gridConfig}
             />
-            <ContactCard soldTo={apiResponse?.content?.shipTo || {}} />
+            <OrderAcknowledgementCard
+              content={apiResponse?.content || {}}
+              config={gridConfig}
+            />
+            <ContactCard
+              soldTo={apiResponse?.content?.shipTo || {}}
+              config={gridConfig}
+            />
           </div>
         </div>
-        <div className="details-container">
-          <span className="details-preview">
-            Line Item Details
-            {/* {componentProp?.productLines?.lineItemDetailsLabel || 'Details'} */}
-          </span>
+        <div className="cmp-orders-qp__grid">
+          <div className="details-container">
+            <span className="details-preview">
+              Line Item Details
+              {/* {componentProp?.productLines?.lineItemDetailsLabel || 'Details'} */}
+            </span>
+          </div>
+          {apiResponse && (
+            <Grid
+              //onAfterGridInit={onAfterGridInit}
+              columnDefinition={props.columnList}
+              config={gridConfig}
+              data={gridData}
+              //getDefaultCopyValue={getDefaultCopyValue}
+              //contextMenuItems={contextMenuItems}
+            />
+          )}
         </div>
-        {apiResponse && (
-          <Grid
-            //onAfterGridInit={onAfterGridInit}
-            columnDefinition={props.columnList}
-            config={gridConfig}
-            data={gridData}
-            //getDefaultCopyValue={getDefaultCopyValue}
-            //contextMenuItems={contextMenuItems}
-          />
-        )}
       </section>
     </div>
   );
