@@ -1,5 +1,5 @@
-import React from 'react'
-import { ArrowExitIcon } from '../../../../../fluentIcons/FluentIcons'
+import React, {useState} from 'react'
+import { ArrowExitIcon, ArrowExitIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import "../../../../../../src/styles/TopIconsBar.scss"
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
@@ -11,11 +11,22 @@ function OrderExport() {
       value: {show: true},
     });
   };
+  const [isExportHovered, setIsExportHovered] = useState(false);
+  const handleMouseOverSearch = () => {
+    setIsExportHovered(true);
+  }
+  const handleMouseLeaveSearch = () => {
+    setIsExportHovered(false);
+  }
   return (
-    <div onClick={triggerInvoicesFlyout} className='cmp-order-tracking-grid__export'>
-        <ArrowExitIcon className="icon-hover"/>
+    <div className='cmp-order-tracking-grid__export' 
+      onClick={triggerInvoicesFlyout} 
+      onMouseOver={handleMouseOverSearch} 
+      onMouseLeave={handleMouseLeaveSearch}
+    >
+        {isExportHovered ? <ArrowExitIconFilled className="icon-hover"/> 
+        : <ArrowExitIcon className="icon-hover"/>}
     </div>
-
   )
 }
 

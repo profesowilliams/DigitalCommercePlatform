@@ -5,8 +5,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react';
-import { ChevronDownIcon } from '../../../../../fluentIcons/FluentIcons';
-import { ReportIcon } from '../../../../../fluentIcons/FluentIcons'
+import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 import "../../../../../../src/styles/TopIconsBar.scss"
 
@@ -14,7 +13,13 @@ function Report({ options, selectOption, selectedKey }, ref) {
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(selectedKey);
   const wrapperRef = useRef(null);
-
+  const [isReportHovered, setIsReportHovered] = useState(false);
+  const handleMouseOverSearch = () => {
+    setIsReportHovered(true);
+  }
+  const handleMouseLeaveSearch = () => {
+    setIsReportHovered(false);
+  }
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropDownOpen);
   };
@@ -22,6 +27,7 @@ function Report({ options, selectOption, selectedKey }, ref) {
   const handleSelectOption = (option) => {
     setCurrentValue(option.key);
     selectOption(option);
+    setIsReportHovered(false);
   };
 
   useEffect(() => {
@@ -48,8 +54,10 @@ function Report({ options, selectOption, selectedKey }, ref) {
     <div
       onClick={handleDropdownClick}
       className="cmp-order-tracking-grid__report"
+      onMouseOver={handleMouseOverSearch} 
+      onMouseLeave={handleMouseLeaveSearch}
     >
-      <ReportIcon fill="#262626" className="icon-hover"/>
+      {isReportHovered ? <ReportIconFilled fill="#262626" className="icon-hover"/> :<ReportIcon fill="#262626" className="icon-hover"/>}
       {isDropDownOpen && (
         <ReportDropdown
           ref={wrapperRef}
