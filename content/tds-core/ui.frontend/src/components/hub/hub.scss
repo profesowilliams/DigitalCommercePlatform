@@ -60,7 +60,8 @@
       display: block;
     }
   }
-  &.techdatastyle {
+  }
+  .techdata-header-style .hub {
     .cmp-button__dropdown {
         a {
             &:hover {
@@ -74,7 +75,7 @@
         }
     }
   }
-}
+
 
 #cmp-techdata-header {
     &.cmp-experiencefragment--header-mobile.cmp-container {

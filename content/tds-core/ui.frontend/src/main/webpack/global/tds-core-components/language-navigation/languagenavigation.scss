@@ -43,7 +43,7 @@
   display: flex !important;
 }
 
-.languagenavigation.techdatastyle .cmp-radio-btn input {
+.techdata-header-style .languagenavigation .cmp-radio-btn input {
     width: 1rem;
     height: 1rem;
     left: -0.125rem;
@@ -57,12 +57,12 @@
   flex-direction: column;
 }
 
-.languagenavigation.techdatastyle .cmp-form-options--radio {
+.techdata-header-style .languagenavigation .cmp-form-options--radio {
   padding: 0;
   padding-top: rem(5px);
 }
 
-.languagenavigation.techdatastyle .cmp-radio-btn {
+.techdata-header-style .languagenavigation .cmp-radio-btn {
     padding-left: 1.9375rem;
     padding-top: rem(5px);
     &:hover {
@@ -78,7 +78,7 @@
     }
 }
 
-.languagenavigation.techdatastyle .cmp-radio-btn .checkmark {
+.techdata-header-style .languagenavigation .cmp-radio-btn .checkmark {
     top: 21px;
     left: 12px;
     height: 0.875rem;
