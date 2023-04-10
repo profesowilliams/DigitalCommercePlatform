@@ -43,11 +43,7 @@
             data-is-global="${nav.isGlobalPage}"
             data-hier="${nav.platformName}"
             data-cmp-isprivate="${nav.isPrivate ? 'true' : 'false'}"
-            style="
-              display: $ {
-                nav.isprivate?'none' : '' @context= 'styleToken';
-              }
-            "
+            style="display: ${nav.isprivate ? ' none' : '' @context= 'styleToken'}"
             data-cmp-children="${nav.platformMenuID}"
             title="${nav.platformName}"
           >

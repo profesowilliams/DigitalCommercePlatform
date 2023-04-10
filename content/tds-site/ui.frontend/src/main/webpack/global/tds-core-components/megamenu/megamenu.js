@@ -1,16 +1,32 @@
 import bp from '../../../common-utils/js/media-match';
+import events from '../../../common-utils/js/events';
 
 (function(bp) {
   "use strict";
+
+  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
+
+  if (isExtraReloadDisabled()) {
+    const listener = (isLoggedIn) => {
+      userIsLoggedIn = isLoggedIn;
+
+      changeShopLoginUrlPrefix();
+      prefixAEMAuthUrlForAEMLinks();
+    };
+
+    events.addLoginListener(listener);
+  }
+   
   function enableIfNotPrivate(navPrimaryItems=[]){
-   let sessionId = localStorage.getItem('sessionId');
-   if (!sessionId) return;
+    if (!userIsLoggedIn) return;
     for (const navItem of navPrimaryItems){
       if (navItem.dataset.cmpIsprivate === "true"){
         navItem.style.display = "";
       }
     }
   }
+
   function Navigation({navigation}){
     // var that = this;
     var MenuPrimary = '.cmp-megamenu__primary';
