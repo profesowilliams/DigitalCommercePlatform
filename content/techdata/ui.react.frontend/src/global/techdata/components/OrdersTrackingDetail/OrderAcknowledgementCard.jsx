@@ -8,18 +8,18 @@ function OrderAcknowledgementCard(props) {
   return (
     <Card className="card-container" variant="outlined">
       <Typography className="card-container__title" variant="body1">
-        {getDictionaryValueOrKey(config.detailsOrderAcknowledgement)}
+        {getDictionaryValueOrKey(config?.labels?.detailsOrderAcknowledgement)}
       </Typography>
       <Typography variant="body2">
         {content.created && (
           <div className="card-container__contentGrid">
-            <span>{getDictionaryValueOrKey(config.detailsOrderDate)}</span>
+            <span>{getDictionaryValueOrKey(config?.labels?.detailsOrderDate)}</span>
             <span>{content.created}</span>
           </div>
         )}
         {content.poNumber && (
           <div className="card-container__contentGrid">
-            <span>{getDictionaryValueOrKey(config.detailsPurchaseOrderNo)}</span>
+            <span>{getDictionaryValueOrKey(config?.labels?.detailsPurchaseOrderNo)}</span>
             <span>{content.poNumber}</span>
           </div>
         )}

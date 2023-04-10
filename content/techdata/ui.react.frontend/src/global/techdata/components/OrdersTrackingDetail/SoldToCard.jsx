@@ -8,7 +8,7 @@ function SoldToCard(props) {
   return (
     <Card className="card-container" variant="outlined">
       <Typography className="card-container__title" variant="body1">
-        {getDictionaryValueOrKey(config.detailsSoldTo)}
+        {getDictionaryValueOrKey(config?.labels?.detailsSoldTo)}
       </Typography>
       <Typography variant="body2">
         {soldTo.companyName && (
@@ -34,13 +34,13 @@ function SoldToCard(props) {
       <Typography className="card-container__bottom" variant="body2">
         {soldTo.phoneNumber && (
           <>
-            {getDictionaryValueOrKey(config.detailsSoldToPhone)} {soldTo.phoneNumber}
+            {getDictionaryValueOrKey(config?.labels?.detailsSoldToPhone)} {soldTo.phoneNumber}
             <br />
           </>
         )}
         {soldTo.contactEmail && (
           <>
-            {getDictionaryValueOrKey(config.detailsSoldToEmail)} {soldTo.contactEmail}
+            {getDictionaryValueOrKey(config?.labels?.detailsSoldToEmail)} {soldTo.contactEmail}
           </>
         )}
       </Typography>

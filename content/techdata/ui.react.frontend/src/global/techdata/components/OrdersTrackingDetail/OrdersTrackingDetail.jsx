@@ -36,19 +36,19 @@ function OrdersTrackingDetail(props) {
         <div className="cmp-orders-qp__config-grid">
           <div className="header-container">
             <div className="image-container">
-              <Link variant="back-to-renewal" href={config.ordersUrl} underline="none">
+              <Link variant="back-to-renewal" href={config?.labels?.ordersUrl} underline="none">
                 <i className="fas fa-chevron-left"></i>
-                {getDictionaryValueOrKey(config.detailsBack)}
+                {getDictionaryValueOrKey(config?.labels?.detailsBack)}
               </Link>
             </div>
             <div className="export-container">
               <span className="quote-preview">
-                {/* {getDictionaryValueOrKey(config.detailsOrderNo)}{' '} */}
+                {/* {getDictionaryValueOrKey(config?.labels?.detailsOrderNo)}{' '} */}
                 Open  |  Order №:
                 {apiResponse?.content.orderNumber}
               </span>
               <span className="quote-actions">
-                {getDictionaryValueOrKey(config.detailsActions)}
+                {getDictionaryValueOrKey(config?.labels?.detailsActions)}
               </span>
               {/* <GridHeader data={data} gridProps={gridProps} /> */}
             </div>

@@ -1,46 +1,45 @@
 <div data-observe-mutation>
-    <div
-      data-component="OrdersTrackingDetail"
-      data-cmp-type="react"
-      className="cmp-orders-tracking-detail"
-    ></div>
-  </div>
-  <script>
+    <div data-component="OrdersTrackingDetail"
+         data-cmp-type="react"
+         className="cmp-orders-tracking-detail"></div>
+</div>
+<script>
     const renewalsGridDom = document.querySelector(
-      "[data-component='OrdersTrackingDetail']"
+        "[data-component='OrdersTrackingDetail']"
     );
-      const AEM_DATA = {
+    const AEM_DATA = {
         ordersUrl: "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-grid",
         uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/order",
-          agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+        agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+        labels: {
+            menuCopy: 'Copy',
+            menuCopyWithHeaders: 'Copy with headers',
+            menuExport: 'Export',
 
-        menuCopy: 'Copy',
-        menuCopyWithHeaders: 'Copy with headers',
-        menuExport: 'Export',
+            lineNo: 'Line No.',
+            lineDescription: 'Description & PN',
+            lineStatus: 'Line Status',
+            lineShipDate: 'Ship date',
+            lineUnitPrice: 'Unit cost (EUR)',
+            lineQuantity: 'Qty',
+            lineTotalPrice: 'Line  total (EUR)',
+            lineMfgPartNo: 'Mfg №:',
+            lineTdsPartNo: 'TDS №:',
 
-        lineNo: 'Line No.',
-        lineDescription: 'Description & PN',
-        lineStatus: 'Line Status',
-        lineShipDate: 'Ship date',
-        lineUnitPrice: 'Unit cost (EUR)',
-        lineQuantity: 'Qty',
-        lineTotalPrice: 'Line  total (EUR)',
-        lineMfgPartNo: 'Mfg №:',
-        lineTdsPartNo: 'TDS №:',
-
-        detailsBack: "Back",
-        detailsOrderNo: "Order №",
-        detailsActions: "Actions",
-        detailsSoldTo: "Sold to", 
-        detailsSoldToPhone: "Phone:",
-        detailsSoldToEmail: "Email:",
-        detailsOrderAcknowledgement: "Order Acknowledgement",
-        detailsOrderDate: "Order date:",
-        detailsPurchaseOrderNo: "Purchase order №:",
-        detailsContact: "Contact",
-        detailsContactName: "Name",
-        detailsContactPhone: "Phone",
-        detailsContactEmail: "Email"
-  };
-  renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
+            detailsBack: "Back",
+            detailsOrderNo: "Order №",
+            detailsActions: "Actions",
+            detailsSoldTo: "Sold to",
+            detailsSoldToPhone: "Phone:",
+            detailsSoldToEmail: "Email:",
+            detailsOrderAcknowledgement: "Order Acknowledgement",
+            detailsOrderDate: "Order date:",
+            detailsPurchaseOrderNo: "Purchase order №:",
+            detailsContact: "Contact",
+            detailsContactName: "Name",
+            detailsContactPhone: "Phone",
+            detailsContactEmail: "Email"
+        }
+    };
+    renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

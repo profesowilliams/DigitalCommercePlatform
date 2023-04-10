@@ -33,12 +33,12 @@ const gridColumnWidths = Object.freeze({
   const columnDefinitionsOverride = [ 
     {
       field: "id",
-      headerName: gridProps?.lineNo,
+      headerName: gridProps?.labels?.lineNo,
       width: gridColumnWidths.id,
     },
     {
       field: "description",
-      headerName: gridProps?.lineDescription,
+      headerName: gridProps?.labels?.lineDescription,
       cellHeight: () => 80,
       cellRenderer: ({ data }) => (
         <DescriptionColumn
@@ -50,20 +50,20 @@ const gridColumnWidths = Object.freeze({
     },
     {
       field: "status",
-      headerName: gridProps?.lineStatus,
+      headerName: gridProps?.labels?.lineStatus,
     //   valueGetter: ({ data }) =>
     //     data.product.find((p) => p.family)?.family ?? "N/A",
       width: gridColumnWidths.status,
     },
     {
       field: "shipDate",
-      headerName: gridProps?.lineShipDate,
+      headerName: gridProps?.labels?.lineShipDate,
       cellRenderer: (props) => 'TBD', // Pending backend changes that are not ready yet
       width: gridColumnWidths.shipDate,
     },
     {
       field:'unitPriceFormatted',
-      headerName: gridProps?.lineUnitPrice,
+      headerName: gridProps?.labels?.lineUnitPrice,
     //   headerName: gridProps.unitPrice?.replace(
     //     "{currency-code}",
     //     data?.currency || ""
@@ -77,7 +77,7 @@ const gridColumnWidths = Object.freeze({
     },
     {
       field:'quantity',
-      headerName: gridProps?.lineQuantity,
+      headerName: gridProps?.labels?.lineQuantity,
     //   cellRenderer: (props) =>{
     //     const isEditing = isEditingRef.current && data?.canEditQty;
     //     return QuantityColumn({ ...props, isEditing })
@@ -86,7 +86,7 @@ const gridColumnWidths = Object.freeze({
     },
     {
       field:'totalPriceFormatted',
-      headerName: gridProps?.lineTotalPrice,
+      headerName: gridProps?.labels?.lineTotalPrice,
     //   headerName: gridProps.totalPrice?.replace(
     //     "{currency-code}",
     //     data?.currency || ""
