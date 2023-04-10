@@ -1,0 +1,65 @@
+const columnDefs = [
+  {
+    headerName: 'Line No.',
+    field: 'id',
+    width: '100px',
+    sortable: false,
+    cellStyle: {
+      'justify-content': 'flex-end',
+      'white-space': 'normal',
+      padding: '10px',
+    },
+    autoHeight: true,
+    headerClass: 'right-aligned',
+  },
+  {
+    headerName: 'Description & PN',
+    field: 'description',
+    sortable: false,
+    width: '500px',
+    cellStyle: { 'white-space': 'normal', padding: '10px' },
+    autoHeight: true,
+  },
+  {
+    headerName: 'Line Status',
+    field: 'status',
+    sortable: false,
+    cellStyle: { 'white-space': 'normal', padding: '10px' },
+    autoHeight: true,
+  },
+  {
+    headerName: 'Ship date',
+    field: 'shipDate',
+    sortable: false,
+    cellStyle: { 'justify-content': 'flex-end', padding: '10px' },
+    autoHeight: true,
+    headerClass: 'right-aligned',
+  },
+  {
+    headerName: 'Unit cost (EUR)',
+    field: 'unitPriceFormatted',
+    sortable: false,
+    cellStyle: { 'justify-content': 'flex-end', padding: '10px' },
+    autoHeight: true,
+    headerClass: 'right-aligned',
+  },
+  {
+    headerName: 'Qty',
+    field: 'quantity',
+    sortable: false,
+    cellStyle: { 'justify-content': 'center', padding: '10px' },
+    autoHeight: true,
+    headerClass: 'center-aligned',
+  },
+  {
+    headerName: 'Line  total (EUR)',
+    field: 'totalPriceFormatted',
+    width: '150px',
+    sortable: false,
+    cellStyle: { 'justify-content': 'flex-end', padding: '10px' },
+    autoHeight: true,
+    headerClass: 'right-aligned',
+  },
+];
+
+export default columnDefs;

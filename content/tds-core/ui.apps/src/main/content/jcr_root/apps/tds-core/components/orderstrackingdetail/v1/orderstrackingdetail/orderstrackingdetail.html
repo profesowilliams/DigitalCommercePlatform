@@ -3,7 +3,7 @@
       <div class="cq-placeholder" data-emptyText="${component.title}"></div>
   </sly>
 
-  <sly data-sly-use.model="${'orderstrackingdetail.js' @ serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,shopDomainPage=serviceData.searchDomain,orderGridEndpoint=serviceData.orderGridEndpoint,downloadAllInvoicesEndpoint=serviceData.downloadAllInvoicesEndpoint}">
+  <sly data-sly-use.model="${'orderstrackingdetail.js' @ serviceData=serviceData,agGridLicenseKey=serviceData.agGridLicenseKey,orderDetailEndpoint=serviceData.orderDetailEndpoint}">
 
   <div data-observe-mutation>
     <div

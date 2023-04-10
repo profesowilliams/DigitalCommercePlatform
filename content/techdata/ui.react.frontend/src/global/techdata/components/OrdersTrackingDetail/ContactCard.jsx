@@ -8,7 +8,7 @@ function ContactCard(props) {
   return (
     <Card className="card-container" variant="outlined">
       <Typography className="card-container__title" variant="body1">
-        {getDictionaryValueOrKey(config.contact)}
+        {getDictionaryValueOrKey(config.detailsContact)}
       </Typography>
       <Typography variant="body2">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem ea
