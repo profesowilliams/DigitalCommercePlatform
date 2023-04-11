@@ -13,6 +13,7 @@ const styleOverrideFormControlLabel = {
   },
   '& .MuiTypography-root': {
     fontSize: '14px',
+    color: '#262626',
   },
 };
 const styleOverrideRadio = {
