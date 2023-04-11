@@ -96,9 +96,9 @@ use(["../common/utils.js"], function (utils) {
   }
 
   //Invoices flyout options
-  let invoiceColumnList = utils.getDataFromMultifield(
+  let invoicesColumnList = utils.getDataFromMultifield(
     resourceResolver,
-    "invoiceColumnList",
+    "invoicesColumnList",
     function (childResource) {
       let itemData = {};
 
@@ -108,8 +108,8 @@ use(["../common/utils.js"], function (utils) {
     }
   );
 
-  if (invoiceColumnList != null) {
-    jsonObject["invoiceColumnList"] = invoiceColumnList;
+  if (invoicesColumnList != null) {
+    jsonObject["invoicesColumnList"] = invoicesColumnList;
   }
 
   if (properties && properties["invoicesFlyoutTitle"]) {
