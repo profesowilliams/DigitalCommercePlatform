@@ -181,14 +181,18 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
     findSelectedQuote(newInput || accountNumber);    
   };
 
-  const WarningMessage = ({classNameSuffix}) => {
-    if(selectedQuote) {
-      return (<div className={`cmp-renewals-copy-flyout__footer__warning__container cmp-renewals-copy-flyout__footer__warning__container__section-${classNameSuffix}`}>
-        <WarningIcon />
-        <div className="cmp-renewals-copy-flyout__footer__warning__content">
-          {copyFlyout.permissionsWarning}
+  const WarningMessage = ({ classNameSuffix }) => {
+    if (selectedQuote) {
+      return (
+        <div
+          className={`cmp-flyout__footer__warning__container cmp-flyout__footer__warning__container__section-${classNameSuffix}`}
+        >
+          <WarningIcon />
+          <div className="cmp-flyout__footer__warning__content">
+            <p>{copyFlyout.permissionsWarning}</p>
+          </div>
         </div>
-      </div>)
+      );
     }
     return null;
   };
@@ -206,13 +210,13 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       enableButton={enableCopy}
       disabledButton={!enableCopy}
       onClickButton={handleCopy}
-      bottomContent={(classNameSuffix) => WarningMessage({classNameSuffix})}
+      bottomContent={(classNameSuffix) => WarningMessage({ classNameSuffix })}
     >
       <section className="cmp-flyout__content">
-        <div className="cmp-renewals-copy-flyout__content-description">
+        <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(copyFlyout.description)}
         </div>
-        <div className="cmp-renewals-copy-flyout__content-search">
+        <div className="cmp-flyout__content-search">
           <Autocomplete
             id="combo-box-demo"
             open={isAutocompleteOpen}
@@ -226,7 +230,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
               return (
                 <li {...props}>
                   <div>
-                    <div className="cmp-renewals-copy-flyout-autocomplete__option-name">
+                    <div className="cmp-flyout-autocomplete__option-name">
                       <QuoteDetails
                         quote={option}
                         currentlyTypedWord={accountNumber}
@@ -266,9 +270,9 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
               />
             )}
           />
-          {errorMessage && <div className="cmp-renewals-copy-flyout__content--error">
-            {errorMessage}
-          </div>}
+          {errorMessage && (
+            <div className="cmp-flyout__content--error">{errorMessage}</div>
+          )}
           {selectedQuote && (
             <>
               <QuoteDetails quote={selectedQuote} labels={copyFlyout} />

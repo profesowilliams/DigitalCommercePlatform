@@ -49,7 +49,7 @@ function BaseFlyout({
           ...(top && height ? { top, height } : {}),
           '@media (max-width: 600px)': {
             width: '100%',
-          }
+          },
         },
       }}
     >
@@ -58,24 +58,26 @@ function BaseFlyout({
           <h4 className="cmp-flyout__header-title">
             {getDictionaryValueOrKey(titleLabel)}
           </h4>
-          <div
-            className="cmp-flyout__header-icon"
-            onClick={onClose}
-          >
+          <div className="cmp-flyout__header-icon" onClick={onClose}>
             <DismissFilledIcon width="30" height="30" />
           </div>
         </section>
-          {children}
+        {children}
         <section className="cmp-flyout__footer">
           {bottomContent && <BottomContent />}
-          {enableButton && secondaryButton && <SecondaryButton/>}
-          <button
-            className={`cmp-flyout__footer-button ${enableButton ? 'cmp-flyout__footer-button--enabled' : ''}`}
-            disabled={disabledButton}
-            onClick={onClickButton}
-          >
-            {!isLoading && getDictionaryValueOrKey(buttonLabel)} {isLoading && <LoaderIcon />}
-          </button>
+          <div className="cmp-flyout__footer-buttons">
+            {enableButton && secondaryButton && <SecondaryButton />}
+            <button
+              className={`cmp-flyout__footer-button ${
+                enableButton ? 'cmp-flyout__footer-button--enabled' : ''
+              }`}
+              disabled={disabledButton}
+              onClick={onClickButton}
+            >
+              {!isLoading && getDictionaryValueOrKey(buttonLabel)}{' '}
+              {isLoading && <LoaderIcon />}
+            </button>
+          </div>
         </section>
       </div>
     </Drawer>
