@@ -1,7 +1,7 @@
 import React from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 
-function OrderTrackingActionColumn() {
+function ActionsColumn() {
 
   const iconStyle = {
     color: '#21314D',
@@ -16,4 +16,4 @@ function OrderTrackingActionColumn() {
   );
 }
 
-export default OrderTrackingActionColumn;
+export default ActionsColumn;

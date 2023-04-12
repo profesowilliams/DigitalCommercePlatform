@@ -90,6 +90,13 @@
                                                 name="./lineTdsPartNo"
                                                 required="{Boolean}true"/>
 
+											<detailsLineHeader
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Line Details Header Label"
+                                                fieldLabel="Line Details Header Label"
+                                                name="./detailsLineHeader"
+                                                required="{Boolean}true"/>
 											<detailsBack
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

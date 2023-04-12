@@ -1,8 +1,8 @@
 import React from 'react'
 
-function QuantityColumn({data}) {
+function QuantityColumn({line}) {
   return (
-    <div className="cmp-order-tracking-grid__quantity-column">{`${data?.quantity}`}</div>
+    <div className="cmp-order-tracking-grid__quantity-column">{`${line?.quantity}`}</div>
   );
 }
 

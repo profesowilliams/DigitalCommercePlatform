@@ -1,29 +1,28 @@
 import React, { useState, useEffect, useRef, useMemo, useImperativeHandle, forwardRef } from "react";
 import Grid from "../../Grid/Grid";
-// import QuantityColumn from "../Columns/QuantityColumn.jsx";
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from "./buildColumnDefinitions";
-
 import DescriptionColumn from '../Columns/DescriptionColumn'
-// import UnitPriceColumn from "../Columns/UnitPriceColumn";
-// import { getContextMenuItems, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
-
+import ActionsColumn from '../Columns/ActionsColumn'
+import QuantityColumn from '../Columns/QuantityColumn'
+import ShipDateColumn from '../Columns/ShipDateColumn'
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getContextMenuItems } from "../../RenewalsGrid/utils/renewalUtils";
 
 function OrdersTrackingDetailGrid({ data, gridProps }) {
   const gridData = data.items ?? [];
-  const gridConfig = {
+  const config = {
     ...gridProps,
     columnList: columnDefs,
     serverSide: false,
     paginationStyle: "none",
   };
-;
 
 const gridColumnWidths = Object.freeze({
-    actions: '100px',
+    actions: '50px',
     description: '191px',
     id: '66px',
-    quantity: '40px',
+    quantity: '100px',
     shipDate: '99px',
     status: '173x',
     totalPriceFormatted: '100px',
@@ -33,12 +32,12 @@ const gridColumnWidths = Object.freeze({
   const columnDefinitionsOverride = [ 
     {
       field: "id",
-      headerName: gridProps?.labels?.lineNo,
+      headerName: getDictionaryValueOrKey(config?.labels?.lineNo),
       width: gridColumnWidths.id,
     },
     {
       field: "description",
-      headerName: gridProps?.labels?.lineDescription,
+      headerName: getDictionaryValueOrKey(config?.labels?.lineDescription),
       cellHeight: () => 80,
       cellRenderer: ({ data }) => (
         <DescriptionColumn
@@ -50,67 +49,62 @@ const gridColumnWidths = Object.freeze({
     },
     {
       field: "status",
-      headerName: gridProps?.labels?.lineStatus,
-    //   valueGetter: ({ data }) =>
-    //     data.product.find((p) => p.family)?.family ?? "N/A",
+      headerName: getDictionaryValueOrKey(config?.labels?.lineStatus),
       width: gridColumnWidths.status,
     },
     {
       field: "shipDate",
-      headerName: gridProps?.labels?.lineShipDate,
-      cellRenderer: (props) => 'TBD', // Pending backend changes that are not ready yet
+      headerName: getDictionaryValueOrKey(config?.labels?.lineShipDate),
+      cellRenderer: ({ data }) => (
+        <ShipDateColumn
+          line={data}
+          config={gridProps}
+        />),
       width: gridColumnWidths.shipDate,
     },
     {
       field:'unitPriceFormatted',
-      headerName: gridProps?.labels?.lineUnitPrice,
+      headerName: getDictionaryValueOrKey(config?.labels?.lineUnitPrice),
     //   headerName: gridProps.unitPrice?.replace(
     //     "{currency-code}",
     //     data?.currency || ""
     //   ),
-    //   suppressKeyboardEvent: (params) => suppressNavigation(params),
-    //   cellRenderer: (props) => {
-    //     const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-    //     return UnitPriceColumn({...props, isEditing})
-    //   },
       width: gridColumnWidths.unitPriceFormatted,
     },
     {
       field:'quantity',
-      headerName: gridProps?.labels?.lineQuantity,
-    //   cellRenderer: (props) =>{
-    //     const isEditing = isEditingRef.current && data?.canEditQty;
-    //     return QuantityColumn({ ...props, isEditing })
-    //   },
+      headerName: getDictionaryValueOrKey(config?.labels?.lineQuantity),
+      cellRenderer: ({ data }) => (
+        <QuantityColumn
+          line={data}
+          config={gridProps}
+        />),
       width: gridColumnWidths.quantity,     
     },
     {
       field:'totalPriceFormatted',
-      headerName: gridProps?.labels?.lineTotalPrice,
+      headerName: getDictionaryValueOrKey(config?.labels?.lineTotalPrice),
     //   headerName: gridProps.totalPrice?.replace(
     //     "{currency-code}",
     //     data?.currency || ""
     //   ),
-    //   cellRenderer: (props) => Price(props),
-    //   valueGetter:'data.quantity * data.unitPrice',
-    //   // Use sum aggFunc to also update subtotal value.
-    //   // Function is triggered on internal grid updates.
-    //   aggFunc: params => {
-    //     let total = 0;
-    //     params.values.forEach(value => total += value);
-    //     setSubtotal(total);
-    //     return total;
-    //   },
       width: gridColumnWidths.totalPriceFormatted,
-    }
+    },
+    {
+      field: "actions",
+      headerName: "",
+      cellRenderer: ({ data }) => (
+        <ActionsColumn
+          line={data}
+          config={gridProps}
+        />
+      ),
+      width: gridColumnWidths.actions,
+    },
   ];
 
   const myColumnDefs = useMemo(() => buildColumnDefinitions(columnDefinitionsOverride),[]); 
-
-//   console.log('myColumnDefs',myColumnDefs)
-//   console.log('columnDefinitionsOverride',columnDefinitionsOverride)
-
-  //const contextMenuItems = (params) => getContextMenuItems(params, compProps);
+  const contextMenuItems = (params) => getContextMenuItems(myColumnDefs, config?.labels);
 
   return (
     <div className="">
@@ -118,10 +112,10 @@ const gridColumnWidths = Object.freeze({
         <Grid
           //onAfterGridInit={onAfterGridInit}
           columnDefinition={myColumnDefs}
-          config={gridConfig}
+          config={config}
           data={gridData}
           //getDefaultCopyValue={getDefaultCopyValue}
-          //contextMenuItems={contextMenuItems}
+          contextMenuItems={contextMenuItems}
         />
       </section>
     </div>
