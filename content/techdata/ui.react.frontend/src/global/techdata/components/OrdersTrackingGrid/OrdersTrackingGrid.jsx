@@ -13,6 +13,7 @@ import {
   mapServiceData,
   setLocalStorageData,
   setPaginationData,
+  isFirstTimeSortParameters,
   updateQueryString,
 } from '../RenewalsGrid/utils/renewalUtils';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
@@ -65,9 +66,29 @@ function OrdersTrackingGrid(props) {
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
+  const dueDateKey = componentProp.options.defaultSortingColumnKey;
+  const dueDateDir = componentProp.options.defaultSortingDirection;
+  let options = {
+    defaultSortingColumnKey: 'created',
+    defaultSortingDirection: 'desc',
+  };
+
   const _onAfterGridInit = (config) => {
     onAfterGridInit(config);
     gridApiRef.current = config;
+    const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
+    const columnState = {
+      state: isDefaultSort
+        ? [
+            {
+              colId: dueDateKey,
+              sort: dueDateDir,
+            },
+          ]
+        : [...hasSortChanged.current.sortData],
+      defaultState: { sort: null },
+    };
+    config.columnApi.applyColumnState({ ...columnState });
   };
 
   const customRequestInterceptor = async (request) => {
@@ -207,6 +228,7 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
+
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
@@ -259,6 +281,7 @@ function OrdersTrackingGrid(props) {
         columnList={componentProp.columnList}
         definitions={ordersTrackingDefinition(componentProp)}
         config={gridConfig}
+        options={options}
         gridConfig={gridConfig}
         defaultSearchDateRange={dateRange}
         requestInterceptor={customRequestInterceptor}
