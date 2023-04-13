@@ -119,14 +119,14 @@ $flyout-small-height-formax: 779px;
       font-family: $font-family-arial;
 
       &.cmp-flyout__footer-button--enabled {
-        background-color: $brand-green;
+        background-color: $td-dark-blue;
         color: white;
         cursor: pointer;
       }
       &.cmp-flyout__footer-button--secondary {
-        border: 1px solid $brand-green;
+        border: 1px solid $td-dark-blue;
         background-color: white;
-        color: $brand-green;
+        color: $td-dark-blue;
         cursor: pointer;
       }
     }
