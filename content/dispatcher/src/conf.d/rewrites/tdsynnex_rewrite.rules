@@ -11,20 +11,18 @@ RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr
 RewriteCond %{REQUEST_URI} !(/|.jpe?g|.html|.svg|.json|.png|.txt|.xml|.cache)$
 
 # apj
-RewriteRule ^/jp/ja$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apac/jp/ja.html [PT,L,NC]
-RewriteRule ^/(apj|au|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1/en.html [PT,L,NC]
-RewriteRule ^/(cn)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1/zh.html [PT,L,NC]
+RewriteRule ^/(apj|au|cn|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)/(en|ja|zh)/?$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1/$2.html [PT,L,NC]
+RewriteRule ^/(apj|au|cn|hk|hk_tdcs|id|in|my|nz|sg|th|vn|jp)/?$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/apj/$1/en.html [PT,L,NC]
 
 # americas
-RewriteRule ^/(br/en|ca/fr|mx/en|mca/es|ssa/es|cca/es)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1.html [PT,L,NC]
-RewriteRule ^/(ar|ca|cl|co|ec|pe|us|mca|cca|ssa)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1/en.html [PT,L,NC]
+RewriteRule ^/(ar|br|ca|cl|co|ec|pe|us|mca|mx|cca|ssa)/(en|fr|es|pt)/?$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1/$2.html [PT,L,NC]
+RewriteRule ^/(ar|ca|cl|co|ec|pe|us|mca|cca|ssa)/?$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1/en.html [PT,L,NC]
 RewriteRule ^/(br)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1/pt.html [PT,L,NC]
 RewriteRule ^/(mx)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/americas/$1/es.html [PT,L,NC]
 
 # europe
-RewriteRule ^/(cz/en|fr/en|it/en)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/europe/$1.html [PT,L,NC]
-RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk|gb|ba|al|bg|xk|mk|md|me|sl)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/europe/$1/en.html [PT,L,NC]
-RewriteRule ^/(cz|fr|it)$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/europe/$1/$1.html [PT,L,NC]
+RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk|gb|ba|al|bg|xk|mk|md|me|sl)/(en|cz|fr|it)/?$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/europe/$1/$2.html [PT,L,NC]
+RewriteRule ^/(at|be|ch|cs|cz|de|dk|es|fi|fr|hr|hu|ie|it|nl|no|pl|pt|ro|se|sk|tr|uk|gb|ba|al|bg|xk|mk|md|me|sl)/?$ /content/${CONTENT_FOLDER_NAME_TDSYNNEX}/europe/$1/en.html [PT,L,NC]
 
 RewriteCond %{REQUEST_URI} !^/apps
 RewriteCond %{REQUEST_URI} !^/bin
