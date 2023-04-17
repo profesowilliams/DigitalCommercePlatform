@@ -557,17 +557,10 @@
                                                                     name="./searchLabel" />
                                                                 <searchKey
                                                                     jcr:primaryType="nt:unstructured"
-                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                     fieldDescription="This key will match with the service request"
                                                                     fieldLabel="Enter Search Key"
                                                                     name="./searchKey">
-                                                                    <items
-                                                                        jcr:primaryType="nt:unstructured">
-                                                                        <orderId
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="Order Nº"
-                                                                            value="Id" />
-                                                                    </items>
                                                                 </searchKey>
                                                                 <isHouseAccount
                                                                     jcr:primaryType="nt:unstructured"

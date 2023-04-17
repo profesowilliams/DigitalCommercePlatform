@@ -209,12 +209,24 @@ function OrdersTrackingGrid(props) {
     onQueryChanged();
   };
 
-  const doesCurrentSearchMatchResult = (result) =>
-    searchCriteria.current.field === 'Id' &&
-    searchCriteria.current.value === result;
+  const doesMatchById = (searchId, orderId) => searchId === orderId;
+
+  const doesMatchByInvoiceId = (searchInvoice, orderInvoices) =>
+    orderInvoices.some((invoice) => invoice.id == searchInvoice);
+
+  const doesCurrentSearchMatchResult = (result) => {
+    if (searchCriteria.current.field === 'Id') {
+      return doesMatchById(searchCriteria.current.value, result.id);
+    } else if (searchCriteria.current.field === 'invoiceId') {
+      return doesMatchByInvoiceId(
+        searchCriteria.current.value,
+        result.invoices
+      );
+    }
+  };
 
   const onDataLoad = (response) => {
-    if (response.length >= 1 && doesCurrentSearchMatchResult(response[0].id)) {
+    if (response.length >= 1 && doesCurrentSearchMatchResult(response[0])) {
       removeLocalStorageData(SEARCH_LOCAL_STORAGE_KEY);
       window.location.href = `${componentProp.detailUrl}.html?id=${response[0].id}`;
     }
