@@ -167,6 +167,9 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["previousOrderNoLabel"]) {
         reseller["previousOrderNoLabel"] = properties["previousOrderNoLabel"];
     }
+    if (properties && properties["shipToLabel"]) {
+        reseller["shipToLabel"] = properties["shipToLabel"];
+    }
 
     if (reseller != null) {
         quotePreview["reseller"] = reseller;

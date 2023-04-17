@@ -4438,102 +4438,40 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "source": {
                     "salesOrg": "IN96",
                     "targetSystem": "R3",
-                    "key": id === "U100000001277" ? "U100000000011": "U100000001277",
+                    "key": "U100000001953",
                     "system": "RQ",
                     "type": null,
-                    "id": id === "U100000001277" ? "U100000000011": "U100000001277"
+                    "id": "U100000001953"
                 },
-                "published": "2023-01-24T04:35:37.463Z",
+                "published": "2023-04-13T14:31:29.277Z",
                 "reseller": {
-                    "id": "116387",
-                    "isValid": false,
+                    "id": "93245",
+                    "isValid": true,
                     "canEdit": true,
                     "incumbent": false,
                     "vendorAccountName": null,
                     "vendorAccountNumber": {
-                        "text": "7916113",
+                        "text": "13188679",
                         "isValid": true,
                         "isMandatory": false,
                         "isDisplay": true,
                         "canEdit": false,
                         "allowedLength": 100000
                     },
-                    "name": "Ingenius Technologies Pvt. Ltd",
-                    "nameUpper": "INGENIUS TECHNOLOGIES PVT. LTD",
+                    "name": "Fore Solutions (P) Ltd",
+                    "nameUpper": "FORE SOLUTIONS (P) LTD",
                     "contact": [
                         {
                             "name": {
-                                "text": null,
-                                "isValid": false,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 100000
-                            },
-                            "email": {
-                                "text": "yuvaraj@ingeniusindia.com",
+                                "text": "test again",
                                 "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 100000
-                            },
-                            "phone": {
-                                "text": "9962190451",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 100000
-                            }
-                        }
-                    ],
-                    "address": {
-                        "id": null,
-                        "line1": "OLD #6, NEW # 7 ; 8",
-                        "line2": "SOUTH STREET,, WEST C I TNAGAR,, CHENNAI",
-                        "line3": null,
-                        "city": "CHENNAI",
-                        "state": null,
-                        "postalCode": "600035",
-                        "country": "India",
-                        "county": null,
-                        "countryCode": "IN"
-                    }
-                },
-                "endUser": {
-                    "id": null,
-                    "isValid": false,
-                    "canEdit": true,
-                    "name": {
-                        "text": "LOGITRANS TECHNOLOGY PRIVATE LTD",
-                        "isValid": true,
-                        "isMandatory": true,
-                        "isDisplay": true,
-                        "canEdit": true,
-                        "allowedLength": 40
-                    },
-                    "nameUpper": "LOGITRANS TECHNOLOGY PRIVATE LTD",
-                    "eaNumber": {
-                        "text": "60813216",
-                        "isValid": true,
-                        "isMandatory": false,
-                        "isDisplay": false,
-                        "canEdit": false,
-                        "allowedLength": 100000
-                    },
-                    "contact": [
-                        {
-                            "name": {
-                                "text": "",
-                                "isValid": false,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true,
                                 "allowedLength": 40
                             },
                             "email": {
-                                "text": "deebhan@logitranstech.net",
+                                "text": "mkumar@ccscomputers.co.in",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4541,8 +4479,71 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "allowedLength": 120
                             },
                             "phone": {
-                                "text": "",
-                                "isValid": false,
+                                "text": "324324234",
+                                "isValid": true,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 30
+                            }
+                        }
+                    ],
+                    "address": {
+                        "id": null,
+                        "line1": "skipper house, 3rd floor, 62-63 ",
+                        "line2": "Nehru Place",
+                        "line3": null,
+                        "city": "new delhi",
+                        "state": "30",
+                        "postalCode": "110019",
+                        "country": "IN",
+                        "county": null,
+                        "countryCode": "IN",
+                        "stateName": null
+                    }
+                },
+                "endUser": {
+                    "id": null,
+                    "isValid": true,
+                    "canEdit": true,
+                    "name": {
+                        "text": "Accenture Solutions Pvt. Ltd",
+                        "isValid": true,
+                        "isMandatory": true,
+                        "isDisplay": true,
+                        "canEdit": true,
+                        "allowedLength": 40
+                    },
+                    "nameUpper": "ACCENTURE SOLUTIONS PVT. LTD",
+                    "eaNumber": {
+                        "text": "345061542",
+                        "isValid": true,
+                        "isMandatory": true,
+                        "isDisplay": true,
+                        "canEdit": true,
+                        "allowedLength": 40
+                    },
+                    "contact": [
+                        {
+                            "name": {
+                                "text": "Bindu Basavaraj",
+                                "isValid": true,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 40
+                            },
+                            "email": {
+                                "text": "bindu.basavaraj@accenture.com",
+                                "isValid": true,
+                                "isMandatory": true,
+                                "isDisplay": true,
+                                "canEdit": true,
+                                "allowedLength": 120
+                            },
+                            "phone": {
+                                "text": "234324324",
+                                "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
                                 "canEdit": true,
@@ -4553,7 +4554,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "address": {
                         "id": null,
                         "line1": {
-                            "text": "SPL GUINDY HOUSE",
+                            "text": "C/O- Schenker India Private Lim",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4561,7 +4562,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                             "allowedLength": 40
                         },
                         "line2": {
-                            "text": "95 MOUNT ROAD",
+                            "text": "Logodrome, Bldng No. B4, Padgha-",
                             "isValid": true,
                             "isMandatory": false,
                             "isDisplay": true,
@@ -4569,7 +4570,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                             "allowedLength": 40
                         },
                         "line3": {
-                            "text": "GST ROAD",
+                            "text": null,
                             "isValid": true,
                             "isMandatory": false,
                             "isDisplay": false,
@@ -4577,7 +4578,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                             "allowedLength": 100000
                         },
                         "city": {
-                            "text": "CHENNAI",
+                            "text": "Mum-Nasik H.Way,BhiwandiThane",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4586,7 +4587,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         },
                         "state": null,
                         "postalCode": {
-                            "text": "600032",
+                            "text": "421302",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4605,14 +4606,36 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "countryCode": {
                             "text": "IN",
                             "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
+                            "isMandatory": true,
+                            "isDisplay": true,
+                            "canEdit": true,
                             "allowedLength": 100000
                         }
                     }
                 },
-                "shipTo": null,
+                "shipTo": {
+                    "id": "12345",
+                    "name": "Informatics Technologies Pvt Ltd",
+                    "nameUpper": "INFORMATICS TECHNOLOGIES PVT LTD",
+                    "contact": [],
+                    "address": {
+                        "id": "54321",
+                        "line1": "303 Harmony Complex, 28 Nutan",
+                        "line2": "resellerLine2",
+                        "line3": "resellerLine3",
+                        "address1": null,
+                        "address2": null,
+                        "address3": null,
+                        "city": "Vadodara",
+                        "state": "25",
+                        "stateName": "Andra Pradesh",
+                        "postalCode": "390005",
+                        "country": "India",
+                        "county": null,
+                        "countryCode": "IN"
+                    },
+                    "alternateIdentifier": null
+                },
                 "alternateIdentifier": null,
                 "vendorSalesRep": null,
                 "vendorSalesAssociate": null,
@@ -4625,26 +4648,26 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "product": [
                             {
                                 "type": "TECHDATA",
-                                "id": "VRT12593M123",
+                                "id": "VMNXDCADVPSSSC",
                                 "name": null,
                                 "manufacturer": null,
                                 "manufacturerId": null,
                                 "localManufacturer": null,
                                 "classification": null,
-                                "family": "BACKUP EXEC"
+                                "family": "NSX"
                             },
                             {
                                 "type": "MANUFACTURER",
-                                "id": "12593-M1-23",
-                                "name": "Veritas Essential Support - technical support (renewal) - for Veritas Backup Exec Agent for Application and Databases - 1 year",
-                                "manufacturer": "Veritas",
-                                "manufacturerId": "11",
+                                "id": "NX-DC-ADV-P-SSS-C",
+                                "name": "Production Support/Subscription for VMware NSX Data Center Advanced per Processor for 3 year 3 months",
+                                "manufacturer": "VMware",
+                                "manufacturerId": "21",
                                 "localManufacturer": null,
                                 "classification": null,
                                 "family": null
                             }
                         ],
-                        "quantity": 4,
+                        "quantity": 16,
                         "confirmedQuantity": 0,
                         "contractNumber": null,
                         "contractType": null,
@@ -4653,10 +4676,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "status": null,
                         "statusNotes": null,
                         "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 11670.38,
-                        "unitCost": 129.5,
-                        "totalPrice": 46681.52,
-                        "unitListPrice": 19415.73,
+                        "unitPrice": 118037.16,
+                        "unitCost": 1359.9,
+                        "totalPrice": 1888594.56,
+                        "unitListPrice": 124034.21,
                         "unitPriceCurrency": "INR",
                         "unitCostCurrency": "USD",
                         "unitListPriceCurrency": "INR",
@@ -4685,134 +4708,30 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "serialNumbers": [
                             null
                         ],
-                        "instance": "47750864",
+                        "instance": "172937681",
                         "discounts": [
                             {
                                 "type": "Standard",
-                                "value": "39.89"
+                                "value": "4.83"
                             }
                         ],
                         "contract": {
-                            "id": "711440823",
-                            "duration": "1 Year",
+                            "id": "465440507MN",
+                            "duration": null,
                             "renewedDuration": "1 Year",
-                            "startDate": "2021-12-10T00:00:00Z",
-                            "endDate": "2022-12-09T00:00:00Z",
-                            "newAgreementStartDate": "2022-12-10T00:00:00Z",
-                            "newAgreementEndDate": "2023-12-09T00:00:00Z",
+                            "startDate": "2021-12-24T00:00:00Z",
+                            "endDate": "2022-12-23T00:00:00Z",
+                            "newAgreementStartDate": "2022-12-24T00:00:00Z",
+                            "newAgreementEndDate": "2023-12-23T00:00:00Z",
                             "newUsagePeriodStartDate": null,
                             "newUsagePeriodEndDate": null,
                             "supportLevel": null,
-                            "serviceLevel": null,
+                            "serviceLevel": "Production",
                             "usagePeriod": null,
-                            "formattedStartDate": "10-12-2021",
-                            "formattedEndDate": "09-12-2022",
-                            "formattedNewAgreementStartDate": "10-12-2022",
-                            "formattedNewAgreementEndDate": "09-12-2023",
-                            "formattedNewUsagePeriodStartDate": null,
-                            "formattedNewUsagePeriodEndDate": null,
-                            "formattedUsagePeriod": null
-                        },
-                        "tdNumber": null,
-                        "mfrNumber": null,
-                        "shortDescription": null,
-                        "manufacturer": null,
-                        "vendorPartNo": null,
-                        "formattedUpdated": null,
-                        "formattedRequested": null
-                    },
-                    {
-                        "id": "2",
-                        "group": null,
-                        "solution": null,
-                        "parent": null,
-                        "product": [
-                            {
-                                "type": "TECHDATA",
-                                "id": "VRT13811M123",
-                                "name": null,
-                                "manufacturer": null,
-                                "manufacturerId": null,
-                                "localManufacturer": null,
-                                "classification": null,
-                                "family": "BACKUP EXEC"
-                            },
-                            {
-                                "type": "MANUFACTURER",
-                                "id": "13811-M1-23",
-                                "name": "Veritas Essential Support - technical support (renewal) - for VERITAS Backup Exec Server Edition - 1 year",
-                                "manufacturer": "Veritas",
-                                "manufacturerId": "11",
-                                "localManufacturer": null,
-                                "classification": null,
-                                "family": null
-                            }
-                        ],
-                        "quantity": 1,
-                        "confirmedQuantity": 0,
-                        "contractNumber": null,
-                        "contractType": null,
-                        "license": null,
-                        "references": [],
-                        "status": null,
-                        "statusNotes": null,
-                        "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 11670.38,
-                        "unitCost": 129.5,
-                        "totalPrice": 11670.38,
-                        "unitListPrice": 19415.73,
-                        "unitPriceCurrency": "INR",
-                        "unitCostCurrency": "USD",
-                        "unitListPriceCurrency": "INR",
-                        "extendedListPrice": 0,
-                        "requested": "0001-01-01T00:00:00",
-                        "shippingCondition": null,
-                        "shippingFrom": null,
-                        "businessManager": null,
-                        "divisionManager": null,
-                        "director": null,
-                        "rejectionCode": null,
-                        "rejectionDescription": null,
-                        "femAmount": 0,
-                        "pomAmount": 0,
-                        "samAmount": 0,
-                        "nsmAmount": 0,
-                        "femPercentage": 0,
-                        "pomPercentage": 0,
-                        "samPercentage": 0,
-                        "nsmPercentage": 0,
-                        "agreements": [],
-                        "attributes": [],
-                        "dealRegNumber": null,
-                        "reinstatementFeeCost": null,
-                        "reinstatementFeeSell": null,
-                        "serialNumbers": [
-                            null
-                        ],
-                        "instance": "47750846",
-                        "discounts": [
-                            {
-                                "type": "Standard",
-                                "value": "39.89"
-                            }
-                        ],
-                        "contract": {
-                            "id": "711440823",
-                            "duration": "1 Year",
-                            "renewedDuration": "1 Year",
-                            "startDate": "2021-12-10T00:00:00Z",
-                            "endDate": "2022-12-09T00:00:00Z",
-                            "newAgreementStartDate": "2022-12-10T00:00:00Z",
-                            "newAgreementEndDate": "2023-12-09T00:00:00Z",
-                            "newUsagePeriodStartDate": null,
-                            "newUsagePeriodEndDate": null,
-                            "supportLevel": null,
-                            "serviceLevel": null,
-                            "usagePeriod": null,
-                            "formattedStartDate": "10-12-2021",
-                            "formattedEndDate": "09-12-2022",
-                            "formattedNewAgreementStartDate": "10-12-2022",
-                            "formattedNewAgreementEndDate": "09-12-2023",
+                            "formattedStartDate": "24-12-2021",
+                            "formattedEndDate": "23-12-2022",
+                            "formattedNewAgreementStartDate": "24-12-2022",
+                            "formattedNewAgreementEndDate": "23-12-2023",
                             "formattedNewUsagePeriodStartDate": null,
                             "formattedNewUsagePeriodEndDate": null,
                             "formattedUsagePeriod": null
@@ -4827,21 +4746,21 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     }
                 ],
                 "attributes": [],
-                "programName": "Corporate Program",
-                "quoteCurrent": false,
-                "firstAvailableOrderDate": "2023-01-24T00:00:00Z",
-                "lastOrderDate": "2023-02-07T00:00:00Z",
-                "statusText": " PriceChangedCustomerMapping",
+                "programName": "Standard",
+                "quoteCurrent": true,
+                "firstAvailableOrderDate": "2023-04-13T00:00:00Z",
+                "lastOrderDate": "2023-12-26T00:00:00Z",
+                "statusText": "CustomerMappingCustomerMappingCustomerMapping",
                 "amountSaved": 0,
                 "linkedRenewals": [],
-                "renewalGroupId": null,
-                "dueDate": "2022-12-09T00:00:00Z",
+                "renewalGroupId": "null",
+                "dueDate": "2022-12-23T00:00:00Z",
                 "totalReinstatementFeeCost": null,
                 "totalReinstatementFeeSell": null,
-                "endUserType": "Corporate",
-                "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-veritas.svg",
+                "endUserType": "Commercial",
+                "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-vmware.svg",
                 "previousEndUserPO": null,
-                "previousResellerPO": "CHN-PO-2122-129",
+                "previousResellerPO": null,
                 "isValid": true,
                 "canOrder": true,
                 "canEditQty": false,
@@ -4849,36 +4768,36 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "canEditLines": true,
                 "canCopy": true,
                 "customerPO": {
-                    "text": "711440823",
+                    "text": "test1",
                     "isValid": true,
                     "isMandatory": false,
                     "isDisplay": true,
                     "canEdit": true,
                     "allowedLength": 25
                 },
-                "formattedPublished": "24-01-2023",
-                "formattedFirstAvailableOrderDate": "24-01-2023",
-                "formattedLastOrderDate": "07-02-2023",
-                "formattedDueDate": "09-12-2022",
-                "formattedCreated": "24-01-2023",
-                "formattedUpdated": "24-01-2023",
-                "formattedExpiry": "09-12-2022",
+                "formattedPublished": "13-04-2023",
+                "formattedFirstAvailableOrderDate": "13-04-2023",
+                "formattedLastOrderDate": "26-12-2023",
+                "formattedDueDate": "23-12-2022",
+                "formattedCreated": "13-04-2023",
+                "formattedUpdated": "13-04-2023",
+                "formattedExpiry": "23-12-2023",
                 "revision": 1,
                 "subRevision": 0,
                 "description": null,
                 "activeFlag": "Y",
                 "request": null,
                 "endUserPO": null,
-                "price": 58351.9,
+                "price": 1888594.56,
                 "currency": "INR",
                 "documentType": null,
                 "quoteType": "Renewal",
                 "type": null,
                 "level": null,
                 "creator": null,
-                "created": "2023-01-24T04:35:37.463Z",
-                "updated": "2023-01-24T04:35:37.463Z",
-                "expiry": "2022-12-09T00:00:00Z",
+                "created": "2023-04-13T14:31:29.277Z",
+                "updated": "2023-04-13T14:31:29.277Z",
+                "expiry": "2023-12-23T00:00:00Z",
                 "status": "Active",
                 "statusNotes": null,
                 "accountOwner": null,
@@ -4886,7 +4805,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "vendorReference": [
                     {
                         "type": "QuoteId",
-                        "value": "711440823"
+                        "value": "465440507MN-R:1C:23AUG22 00:30:58"
                     }
                 ],
                 "salesTeam": null,

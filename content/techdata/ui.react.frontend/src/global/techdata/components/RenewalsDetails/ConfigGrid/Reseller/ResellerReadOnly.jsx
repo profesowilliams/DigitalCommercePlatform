@@ -1,7 +1,8 @@
 import React from "react";
+import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
 import { getDictionaryValue } from "../../../../../../utils/utils";
 import Info from "../../../common/quotes/DisplayItemInfo";
-export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) {  
+export default function ResellerReadOnly({ resellerData = {}, resellerLabels, shipToData = {} }) {  
   const { 
     id,
     contact,
@@ -12,6 +13,7 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
   const {
     resellerSAPaccNoLabel,
     resellerVendorAccountNoLabel,
+    shipToLabel,
   } = resellerLabels;
 
   const addSeparator = (items) => {
@@ -37,7 +39,16 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels }) 
       <p>
         <Info label={getDictionaryValue("details.renewal.label.resellerAccountNo",'Account Nº') } >{id}</Info>
         <Info label={ getDictionaryValue("details.renewal.label.vendorAccountNo",'Vendor account Nº') } >{vendorAccountNumber}</Info>
-      </p>
+      </p>        
+      {shipToData?.address?.id &&
+      <p>
+        <span className="cmp-renewals-qp__reseller-info--sub-title">
+          {getDictionaryValueOrKey(shipToLabel)}
+        </span>
+        <Info>{shipToData?.name}</Info>
+        <Info>{shipToData?.address?.line1}</Info>
+        <Info>{addSeparator([shipToData?.address?.postalCode, shipToData?.address?.city, shipToData?.address?.stateName])}</Info>  
+      </p>}
     </div>
   );
 }

@@ -50,4 +50,5 @@
     menuCsvExport="CSV Export"
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
-    menuCopyLink="Copy link"/>
+    menuCopyLink="Copy link"
+    soldToLabel="SHIP-TO ADDRESS"/>

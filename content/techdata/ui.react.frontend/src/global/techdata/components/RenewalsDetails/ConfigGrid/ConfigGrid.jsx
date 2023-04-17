@@ -104,7 +104,7 @@ function GridHeader({ gridProps, data }) {
 }
 
 function ConfigGrid({ data, gridProps, updateDetails }) {
-  const { reseller, endUser, items, programName, formattedDueDate, endUserType, source, formattedExpiry, vendorLogo, EANumber, vendorReference } = data;
+  const { reseller, endUser, items, programName, formattedDueDate, endUserType, source, formattedExpiry, vendorLogo, EANumber, vendorReference, shipTo } = data;
   const { quotePreview } = gridProps;
   Object.keys(quotePreview).forEach(key => {
     if (typeof quotePreview[key] === 'string') {
@@ -142,6 +142,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           resellerLabels={quotePreview.reseller}
           reseller={reseller}
           updateDetails={updateDetails}
+          shipTo={shipTo}
         />
         <EndUserInfo
           productLines={quotePreview.productLines}

@@ -15,6 +15,7 @@ function ResellerInfo({
   reseller,
   resellerLabels,
   updateDetails,
+  shipTo,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -68,7 +69,7 @@ function ResellerInfo({
       effects.clearReseller();
     }
   }, [resellerDetails])
-
+  
   return (
     <div className={`cmp-renewals-qp__reseller-info ${showError && `error-feedback`}`}>
       <span className="cmp-renewals-qp__reseller-info--title">
@@ -96,6 +97,7 @@ function ResellerInfo({
         <ResellerReadOnly 
           resellerData={resellerData}
           resellerLabels={resellerLabels} 
+          shipToData={shipTo}
         />
       )}
     </div>
