@@ -9,16 +9,17 @@
 }
 
 .cmp-order-preview {
+  font-family: 'Arial';
   .details-container {
     display: flex;
-    padding: 27px 15px 0 15px;
+    padding: 27px 15px 0 0;
     justify-content: space-between;
     .details-preview {
-        color: rgba(0, 12, 33, 1);
-        font-size: 24px;
-        font-weight: 600;
+        color: $brand-charcoal;
+        font-size: 20px;
+        font-weight: 400;
         letter-spacing: 0;
-        line-height: 33px;
+        line-height: 30px;
     }
   }
   .loader-rotate {
@@ -148,23 +149,37 @@
 
   .ag-header-container .ag-header-row {
     .ag-cell-label-container span.ag-header-cell-text {
-      font-size: 15px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1rem;
+      min-width: 150px;
     }
   }
 
   .cmp-grid.ag-theme-alpine {
+    min-width: 0 !important;
     .ag-header {
-      height: 72px !important;
+      height: 42px !important;
+      background-color: transparent;
       &-row {
-        height: 50px !important;
-      }
-      &-cell {
-        padding: 0 10px 10px;
-        min-width: 90px;
+        color:$brand-charcoal;
       }
     }
     .ag-root-wrapper {
       border: none;
+    }
+    .ag-cell{
+      font-size: 16px;
+      font-family: 'Arial' !important;
+      line-height: 1.5rem;
+      color: $brand-charcoal;
+    }
+    .ag-row{
+      border-bottom: 1px solid $brand-cool-gray-1;
+      background-color: transparent;
+    }
+    .ag-row-odd{
+      background-color: transparent;
     }
   }
   

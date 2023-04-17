@@ -28,19 +28,32 @@ function OrdersTrackingDetail(props) {
         <div className="cmp-orders-qp__config-grid">
           <div className="header-container">
             <div className="image-container">
-              <Link variant="back-to-renewal" href={config?.labels?.ordersUrl} underline="none">
+              <Link
+                variant="back-to-renewal"
+                href={config?.ordersUrl || '#'}
+                underline="none"
+              >
                 <i className="fas fa-chevron-left"></i>
                 {getDictionaryValueOrKey(config?.labels?.detailsBack)}
               </Link>
             </div>
             <div className="export-container">
-              <span className="quote-preview">
-                {/* {getDictionaryValueOrKey(config?.labels?.detailsOrderNo)}{' '} */}
-                Open  |  Order №:
-                {apiResponse?.content.orderNumber}
-              </span>
+              <div>
+                <span className="quote-preview-bold">
+                  {apiResponse?.content.status}
+                </span>
+                <span className="quote-preview-bold">
+                  {apiResponse?.content.orderNumber &&
+                    ` | ${getDictionaryValueOrKey(
+                      config.labels?.detailsOrderNo
+                    )}: `}
+                </span>
+                <span className="quote-preview">
+                  {apiResponse?.content.orderNumber}
+                </span>
+              </div>
               <span className="quote-actions">
-                {getDictionaryValueOrKey(config?.labels?.detailsActions)}
+                {/* {getDictionaryValueOrKey(config?.labels?.detailsActions)} */}
               </span>
             </div>
           </div>
@@ -53,21 +66,21 @@ function OrdersTrackingDetail(props) {
               content={apiResponse?.content || {}}
               config={config}
             />
-            <ContactCard
-              soldTo={apiResponse?.content?.shipTo || {}}
-              config={config}
-            />
+            <ContactCard content={apiResponse?.content || {}} config={config} />
           </div>
         </div>
-        <div className="cmp-orders-qp__grid">
+        <div className="cmp-orders-qp__grid cmp-order-preview">
           <div className="details-container">
             <span className="details-preview">
-                {getDictionaryValueOrKey(config?.labels?.detailsLineHeader)}
+              {getDictionaryValueOrKey(config?.labels?.detailsLineHeader)}
             </span>
           </div>
-          {apiResponse &&
-            <OrdersTrackingDetailGrid data={apiResponse.content} gridProps={config} />
-          }
+          {apiResponse && (
+            <OrdersTrackingDetailGrid
+              data={apiResponse.content}
+              gridProps={config}
+            />
+          )}
         </div>
       </section>
     </div>

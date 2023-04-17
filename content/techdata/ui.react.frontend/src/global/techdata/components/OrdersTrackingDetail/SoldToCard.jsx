@@ -1,16 +1,15 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function SoldToCard(props) {
   const { soldTo, config } = props;
   return (
     <Card className="card-container" variant="outlined">
-      <Typography className="card-container__title" variant="body1">
+      <div className="card-container__title">
         {getDictionaryValueOrKey(config?.labels?.detailsSoldTo)}
-      </Typography>
-      <Typography variant="body2">
+      </div>
+      <div>
         {soldTo.companyName && (
           <>
             {soldTo.companyName}
@@ -30,20 +29,22 @@ function SoldToCard(props) {
           </>
         )}
         {soldTo.city} {soldTo.state} {soldTo.postalCode} {soldTo.country}
-      </Typography>
-      <Typography className="card-container__bottom" variant="body2">
+      </div>
+      <div className="card-container__bottom">
         {soldTo.phoneNumber && (
           <>
-            {getDictionaryValueOrKey(config?.labels?.detailsSoldToPhone)} {soldTo.phoneNumber}
+            {getDictionaryValueOrKey(config?.labels?.detailsSoldToPhone)}{' '}
+            {soldTo.phoneNumber}
             <br />
           </>
         )}
         {soldTo.contactEmail && (
           <>
-            {getDictionaryValueOrKey(config?.labels?.detailsSoldToEmail)} {soldTo.contactEmail}
+            {getDictionaryValueOrKey(config?.labels?.detailsSoldToEmail)}{' '}
+            {soldTo.contactEmail}
           </>
         )}
-      </Typography>
+      </div>
     </Card>
   );
 }

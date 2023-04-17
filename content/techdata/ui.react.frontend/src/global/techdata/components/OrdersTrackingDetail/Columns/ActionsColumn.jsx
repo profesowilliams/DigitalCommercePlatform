@@ -10,7 +10,7 @@ function ActionsColumn() {
     width: '1.3rem',
   };
   return (
-    <div className="cmp-order-tracking-grid__action-column">
+    <div className="cmp-order-tracking-grid-details__action-column">
       <EllipsisIcon style={iconStyle} />
     </div>
   );

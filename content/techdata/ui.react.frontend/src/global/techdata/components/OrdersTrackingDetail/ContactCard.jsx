@@ -1,21 +1,40 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function ContactCard(props) {
-  const { soldTo, config } = props;
+  const { content, config } = props;
   return (
     <Card className="card-container" variant="outlined">
-      <Typography className="card-container__title" variant="body1">
-        {getDictionaryValueOrKey(config.detailsContact)}
-      </Typography>
-      <Typography variant="body2">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem ea
-        fugit voluptas beatae repellendus iure similique provident. Suscipit
-        quibusdam id iste, hic, fuga quis perspiciatis maiores numquam aliquam
-        eius a?
-      </Typography>
+      <div className="card-container__title">
+        {getDictionaryValueOrKey(config?.labels?.detailsContact)}
+      </div>
+      <div>
+        {content.created && (
+          <div className="card-container__contentGridContact">
+            <span>
+              {getDictionaryValueOrKey(config?.labels?.detailsContactName)}
+            </span>
+            <span>...Name...</span>
+          </div>
+        )}
+        {content.poNumber && (
+          <div className="card-container__contentGridContact">
+            <span>
+              {getDictionaryValueOrKey(config?.labels?.detailsContactPhone)}
+            </span>
+            <span>...Phone...</span>
+          </div>
+        )}
+        {content.poNumber && (
+          <div className="card-container__contentGridContact">
+            <span>
+              {getDictionaryValueOrKey(config?.labels?.detailsContactEmail)}
+            </span>
+            <span>...Email...</span>
+          </div>
+        )}
+      </div>
     </Card>
   );
 }
