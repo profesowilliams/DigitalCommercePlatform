@@ -889,12 +889,14 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 }
 
                 &.authenticated {
+                    color: map-get($color-palette, 'white');
                     &::before {
                         filter: $white;
                     }
                 }
 
                 &:hover {
+                    color: map-get($color-palette, 'brand-light-blue');
                     &::before {
                         -webkit-mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
                         mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
