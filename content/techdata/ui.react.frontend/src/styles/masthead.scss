@@ -66,36 +66,36 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         @extend .searchbar;
 
         .searchbar {
-            .cmp-searchbar__button {
-                background-color: map-get($color-palette, 'charcoal');
+                       .cmp-searchbar__button {
+                           background-color: map-get($color-palette, 'charcoal');
 
-                &:hover {
-                    -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
-                    mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
-                    background-color: map-get($color-palette, 'cobalt');
+                           &:hover {
+                               -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                               mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                               background-color: map-get($color-palette, 'cobalt');
 
-                    @include mobile {
-                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
-                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
-                        background-color: map-get($color-palette, 'charcoal');
-                    }
-                }
-            }
+                               @include mobile {
+                                   -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                                   mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                                   background-color: map-get($color-palette, 'charcoal');
+                               }
+                           }
+                       }
 
-            .cmp-searchbar--checked {
-                .cmp-searchbar__button {
-                    -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
-                    mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
-                    background-color: map-get($color-palette, 'cobalt');
+                       .cmp-searchbar--checked {
+                           .cmp-searchbar__button {
+                               -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                               mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                               background-color: map-get($color-palette, 'cobalt');
 
-                    @include mobile {
-                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
-                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
-                        background-color: map-get($color-palette, 'charcoal');
-                    }
-                }
-            }
-        }  
+                               @include mobile {
+                                   -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                                   mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                                   background-color: map-get($color-palette, 'charcoal');
+                               }
+                           }
+                       }
+                   }
     }
 
     &.light {
@@ -652,4 +652,392 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
             }
         }
     }
+
+    &.techdata-dark {
+        .hub {
+            .cmp-button {
+
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
+
+                    @media (max-width: 1024px) {
+                        background-color: map-get($color-palette, 'white');
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        background-color: map-get($color-palette, 'brand-button-blue');
+                    }
+                }
+            }
+        }
+
+        .signin {
+            .cmp-sign-in {
+                .cmp-sign-in-list {
+                    border-top: 2px solid map-get($color-palette, 'brand-button-blue');
+                }
+            }
+            .cmp-sign-in-button {
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
+
+                    @media (max-width: 1024px) {
+                        background-color: map-get($color-palette, 'white');
+                    }
+
+                    &.authenticated {
+                        background-color: map-get($color-palette, 'charcoal');
+
+                        @media (max-width: 1024px) {
+                            background-color: map-get($color-palette, 'white');
+                        }
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        -webkit-mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
+                        background-color: map-get($color-palette, 'brand-button-blue');
+                    }
+
+                    &.authenticated {
+                        &::before {
+                            content: '';
+                            -webkit-mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
+                            mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
+                            background: no-repeat;
+                            height: 24px;
+                            width: 24px;
+                            -webkit-mask-size: cover;
+                            mask-size: cover;
+                            background-color: map-get($color-palette, 'cobalt');
+                            padding: 0;
+                            vertical-align: middle
+                        }
+                    }
+
+                    span {
+                        color: map-get($color-palette, 'brand-button-blue');
+                    }
+                }
+            }
+        }
+
+        .minicart {
+            .cmp-cart__icon {
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
+
+                    &.active {
+                        background-color: map-get($color-palette, 'charcoal');
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        background-color: map-get($color-palette, 'brand-button-blue');
+                    }
+
+                    &.active {
+                        &::before {
+                            background-color: map-get($color-palette, 'brand-button-blue');
+                        }
+                    }
+                }
+            }
+
+            @media (max-width: 1024px) {
+                .cmp-cart__icon {
+                    &::before {
+                        background-color: map-get($color-palette, 'white');
+                    }
+
+                    &.active {
+                        &::before {
+                            background-color: map-get($color-palette, 'white');
+                        }
+                    }
+                }
+            }
+        }
+
+        .languagenavigation {
+            .cmp-dropbtn {
+                &::before {
+                    background-color: map-get($color-palette, 'charcoal');
+
+                    @media (max-width: 1024px) {
+                        background-color: map-get($color-palette, 'white');
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        content: '';
+                        mask: url('/content/dam/global-shared/icons/blended/globe.svg');
+                        -webkit-mask: url('/content/dam/global-shared/icons/blended/globe.svg');
+                        background: no-repeat;
+                        height: 24px;
+                        width: 24px;
+                        -webkit-mask-size: cover;
+                        mask-size: cover;
+                        background-color: map-get($color-palette, 'brand-button-blue');
+                    }
+
+                    span {
+                        color: map-get($color-palette, 'brand-button-blue');
+                    }
+                }
+            }
+        }
+
+        .button {
+            .extrabutton {
+                .cmp-button {
+                    .cmp-button__icon {
+                        .fluent {
+                            &::before {
+                                background-color: map-get($color-palette, 'charcoal');
+                            }
+
+                            @media (max-width: 1024px) {
+                                &::before {
+                                    background-color: map-get($color-palette, 'white');
+                                }
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        .cmp-button__icon {
+                            .fluent {
+                                &::before {
+                                    background-color: map-get($color-palette, 'brand-button-blue');
+                                }
+                            }
+                        }
+
+                        .cmp-button__text {
+                            color: map-get($color-palette, 'brand-button-blue');
+                        }
+                    }
+                }
+            }
+        }
+        .searchbar {
+           .cmp-searchbar__button {
+               background-color: map-get($color-palette, 'charcoal');
+
+               &:hover {
+                   -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                   mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                   background-color: map-get($color-palette, 'brand-button-blue');
+
+                   @include mobile {
+                       -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                       mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                       background-color: map-get($color-palette, 'brand-button-blue');
+                   }
+               }
+           }
+
+           .cmp-searchbar--checked {
+               .cmp-searchbar__button {
+                   -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                   mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                   background-color: map-get($color-palette, 'cobalt');
+
+                   @include mobile {
+                       -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                       mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                       background-color: map-get($color-palette, 'charcoal');
+                   }
+               }
+           }
+       }
+    }
+
+    &.techdata-light {
+        @extend .headerutility;
+
+        .hub {
+            .cmp-button {
+                &::before {
+                    filter: $white;
+                }
+
+                &:hover {
+                    &::before {
+                        filter: $aqua;
+                    }
+                }
+            }
+        }
+
+        .signin {
+            .cmp-sign-in {
+                .cmp-sign-in-list {
+                    border-top: 2px solid map-get($color-palette, 'brand-light-blue');
+                }
+            }
+            .cmp-sign-in-button {
+                &::before {
+                    filter: $white;
+                }
+
+                &.authenticated {
+                    &::before {
+                        filter: $white;
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        -webkit-mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
+                        filter: $aqua;
+                    }
+
+                    &.authenticated {
+                        &::before {
+                            filter: $aqua;
+                        }
+                    }
+
+                    span {
+                        color: map-get($color-palette, 'aqua');
+                    }
+                }
+
+                span {
+                    color: map-get($color-palette, 'white');
+                }
+            }
+        }
+
+        .minicart {
+            .cmp-cart__icon {
+                &::before {
+                    filter: $white;
+                }
+
+                &.active {
+                    &::before {
+                        filter: $white;
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        filter: $aqua;
+                    }
+
+                    &.active {
+                        &::before {
+                            filter: $aqua;
+                        }
+                    }
+
+                    .cmp-button__text {
+                        color: map-get($color-palette, 'aqua');
+                    }
+                }
+
+                span {
+                    color: map-get($color-palette, 'white');
+                }
+            }
+        }
+
+        .languagenavigation {
+            .cmp-dropbtn {
+                &::before {
+                    filter: $white;
+                }
+
+                &:hover {
+                    &::before {
+                        mask: url('/content/dam/global-shared/icons/blended/globe.svg');
+                        -webkit-mask: url('/content/dam/global-shared/icons/blended/globe.svg');
+                        filter: $aqua;
+                    }
+
+                    span {
+                        color: map-get($color-palette, 'cobalt');
+                    }
+                }
+
+                span {
+                    color: map-get($color-palette, 'white');
+                }
+            }
+        }
+
+        .button {
+            .extrabutton {
+                .cmp-button {
+                    .cmp-button__icon {
+                        .fluent {
+                            &::before {
+                                filter: $white;
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        .cmp-button__icon {
+                            .fluent {
+                                &::before {
+                                    filter: $aqua;
+                                }
+                            }
+                        }
+
+                        .cmp-button__text {
+                            color: map-get($color-palette, 'aqua');
+                        }
+                    }
+
+                    span {
+                        color: map-get($color-palette, 'white');
+                    }
+                }
+            }
+        }
+        .searchbar {
+            .cmp-searchbar__button {
+                filter: $white;
+
+                &:hover {
+                    -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    filter: $aqua;
+
+                    @include mobile {
+                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        filter: $white;
+                    }
+                }
+            }
+
+            .cmp-searchbar--checked {
+                .cmp-searchbar__button {
+                    -webkit-mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    mask: url('/content/dam/global-shared/icons/blended/search.svg') no-repeat;
+                    filter: $aqua;
+
+                    @include mobile {
+                        -webkit-mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        mask: url('/content/dam/global-shared/icons/regular/search.svg') no-repeat;
+                        filter: $white;
+                    }
+                }
+            }
+        }
+    }
+
 }
