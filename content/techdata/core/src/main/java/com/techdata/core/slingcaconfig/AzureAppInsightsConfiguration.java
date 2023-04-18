@@ -4,7 +4,7 @@ import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
 @Configuration(
-		name = "TD Azure Application Insight Configuration",
+		label = "TD Azure Application Insight Configuration",
 		description = "This configuration reads the configurations necessary for Azure AppInsights connection.")
 public @interface AzureAppInsightsConfiguration {
 
