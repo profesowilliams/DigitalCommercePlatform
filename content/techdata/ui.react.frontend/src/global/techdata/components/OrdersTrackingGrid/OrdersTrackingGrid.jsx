@@ -32,6 +32,7 @@ import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import ToolTip from '../BaseGrid/ToolTip';
+import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
 
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
@@ -232,6 +233,22 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  const addCurrencyToTotalColumn = (list) => {
+    const userData = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA);
+    const activeCustomer = userData
+      ? JSON.parse(userData).activeCustomer
+      : null;
+    const defaultCurrency = activeCustomer?.defaultCurrency || '';
+    return list.map((el) => {
+      if (el.columnKey === 'priceFormatted') {
+        const newColumn = el;
+        newColumn.columnLabel = `Total (${defaultCurrency})`;
+        return newColumn;
+      } else {
+        return el;
+      }
+    });
+  };
   useEffect(() => {
     if (
       hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
@@ -290,7 +307,7 @@ function OrdersTrackingGrid(props) {
         ]}
       />
       <BaseGrid
-        columnList={componentProp.columnList}
+        columnList={addCurrencyToTotalColumn(componentProp.columnList)}
         definitions={ordersTrackingDefinition(componentProp)}
         config={gridConfig}
         options={options}

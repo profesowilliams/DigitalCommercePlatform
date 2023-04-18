@@ -18,8 +18,20 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
       updated: data?.updated ?? data?.created,
       select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
-      invoices: <InvoiceColumn id={data?.id} invoices={data?.invoices} multiple={multiple} />,
-      deliveryNotes: <DeliveryNotesColumn id={data?.id} deliveryNotes={data?.deliveryNotes} multiple={multiple} />,
+      invoices: (
+        <InvoiceColumn
+          id={data?.id}
+          invoices={data?.invoices}
+          multiple={multiple}
+        />
+      ),
+      deliveryNotes: (
+        <DeliveryNotesColumn
+          id={data?.id}
+          deliveryNotes={data?.deliveryNotes}
+          multiple={multiple}
+        />
+      ),
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
       actions: <OrderTrackingActionColumn />,
     };
@@ -71,17 +83,18 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
     padding: 0,
   };
 
-  const columnOverrides = (aemDefinition) => ({
-    hoverable: hoverableList.includes(aemDefinition?.columnKey),
-    ...(aemDefinition?.type === 'plainText' ? { cellHeight: () => 45 } : {}),
-    minWidth: columnsMinWidth[aemDefinition?.columnKey] || null,
-    width: columnsWidth[aemDefinition?.columnKey] || null,
-    resizable: false,
-    ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey)
-      ? { cellStyle }
-      : {}),
-  });
-
+  const columnOverrides = (aemDefinition) => {
+    return {
+      hoverable: hoverableList.includes(aemDefinition?.columnKey),
+      ...(aemDefinition?.type === 'plainText' ? { cellHeight: () => 45 } : {}),
+      minWidth: columnsMinWidth[aemDefinition?.columnKey] || null,
+      width: columnsWidth[aemDefinition?.columnKey] || null,
+      resizable: false,
+      ...(fieldsWithCellStyle.includes(aemDefinition?.columnKey)
+        ? { cellStyle }
+        : {}),
+    };
+  };
   return {
     columnOverrides,
     createColumnComponent,
