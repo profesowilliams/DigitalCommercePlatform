@@ -1,0 +1,11 @@
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+ /* push header to the bottom of the page */ 
+#intouch-footerhtml {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
