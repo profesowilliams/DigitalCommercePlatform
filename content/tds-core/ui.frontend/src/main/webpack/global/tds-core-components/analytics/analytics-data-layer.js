@@ -1,12 +1,5 @@
-(function () {
-  const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-  let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-  if (isExtraReloadDisabled()) {
-    window.addEventListener('user:loggedIn' , () => userIsLoggedIn = true);
-    window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
-  }
-  let sessionId = window.localStorage.getItem("sessionId");
-  let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+(async function () {
+  const [userIsLoggedIn, userData] = await window.getSessionInfo();
 
   function validateDataObject(dataObject, filter) {
     if (dataObject != null) {

@@ -3,9 +3,12 @@ import { getHeaderInfoFromUrl, getConsumerRequestHeader, isEnvironmentEnabled, g
 
 const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
 
+export const generateTraceId = (userData) => 
+  `${userData?.id}_${new Date().toISOString()}`;
+
 const sessionId = localStorage.getItem('sessionId');
 const userData = JSON.parse(localStorage.getItem('userData') || '{ "id": "NoAuth" }');
-const traceId = `${userData.id}_${new Date().toISOString()}`;
+const traceId = generateTraceId(userData);
 const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 const consumer = getConsumerRequestHeader();
 const envHeader = getEnvironmentHeader();

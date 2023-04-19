@@ -21,25 +21,37 @@ const NewSubheader = ({ componentProp }) => {
 	const disableVendorConnectionLink = vendorConnectionsModal.disableVendorConnectionLink;
   
 	const isLoggedIn = useStore(state => state.isLoggedIn);
+	const userDataZustand = useStore(state => state.userData);
 
 	useEffect(() => {
-        var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
-        if(window.SHOP && window.SHOP.authentication && window.SHOP.authentication.isAuthenticated()) {
-            if(!localStorage.getItem("userData")) {
-                var userData = prepareUserData();
-                userDataJsonStr = JSON.stringify(userData);
-                localStorage.setItem("userData", userDataJsonStr);
-                window.location.reload();
-            }
-        } else if (window.SHOP && userDataJsonStr) {
-			localStorage.removeItem("userData");
-			userDataJsonStr = "";
+		if(!isExtraReloadDisabled() && !isHttpOnlyEnabled()) {
+			var userDataJsonStr = JSON.parse(localStorage.getItem("userData"));
+			if(window.SHOP && window.SHOP.authentication && window.SHOP.authentication.isAuthenticated()) {
+				if(!localStorage.getItem("userData")) {
+					var userData = prepareUserData();
+					userDataJsonStr = JSON.stringify(userData);
+					localStorage.setItem("userData", userDataJsonStr);
+					window.location.reload();
+				}
+			} else if (window.SHOP && userDataJsonStr) {
+				localStorage.removeItem("userData");
+				userDataJsonStr = "";
+			}
+			if (userDataJsonStr) {
+				setUserData(userDataJsonStr);
+			}
+			checkIfVendorSignedIn();
 		}
-        if (userDataJsonStr) {
-            setUserData(userDataJsonStr);
-        }
-		checkIfVendorSignedIn();
-  }, [isExtraReloadDisabled(), isLoggedIn]);
+  	}, [isExtraReloadDisabled(), isLoggedIn]);
+
+	useEffect(() => {
+		if(isExtraReloadDisabled() || isHttpOnlyEnabled()) {
+			if (userDataZustand) {
+				setUserData(userDataZustand);
+			}
+			//checkIfVendorSignedIn();
+		}
+	}, [userDataZustand]);
 
     const prepareUserData = () => {
         // fetch user entitlement data from datalayer and populate localStorage

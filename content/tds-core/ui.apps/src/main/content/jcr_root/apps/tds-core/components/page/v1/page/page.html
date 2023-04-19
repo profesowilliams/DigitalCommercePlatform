@@ -50,68 +50,63 @@
       <!-- End Google Tag Manager in Body -->
     </sly>
     <div id="top"></div>
+    <sly data-sly-include="get-user-script.html" data-sly-unwrap/>
+
     <script data-sly-test.dataLayerEnabled="${page.dataJson}">
       window.adobeDataLayer = window.adobeDataLayer || [];
 
-      let sessionId = window.localStorage.getItem("sessionId");
-      const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-      let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-      if (isExtraReloadDisabled()) {
-        window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
-        window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
-      }
-      let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+      (async function() {
+        const [sessionId, userData] = await getSessionInfo();
 
-      adobeDataLayer.push({
-        "event": "page view",
-        "page": {
-          "pageInfo": {
-            "pageName": "${page.analyticsPageName @ context='unsafe'}",
-            "url": "${page.pageUrl @ context='unsafe'}",
-            "server": "${page.pageHost @ context='unsafe'}",
-            "country": "${page.country @ context='unsafe'}",
-            "language": "${page.language @ context='unsafe'}",
-            "currencyCode": "${page.currencyCode @ context='unsafe'}"
-          },
-          "category": {
-            "pageType": "${page.pageType  @ context='unsafe'}",
-            "siteSection1": "${page.siteSections[0]  @ context='unsafe'}",
-            "siteSection2": "${page.siteSections[1]  @ context='unsafe'}",
-            "siteSection3": "${page.siteSections[2]  @ context='unsafe'}",
-            "siteSection4": "${page.siteSections[3]  @ context='unsafe'}"
-          },
-          "error": {
-            "errorCode": "${page.errorCode @ context='unsafe'}",
-            "errorName": "${page.errorName @ context='unsafe'}"
-                    },
-          "visitor": {
-            "ecID": sessionId && userData?.id ? userData.id : null,
-            "sapID": sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-            "loginStatus": sessionId ? "Logged in" : "Logged out"
+        adobeDataLayer.push({
+          "event": "page view",
+          "page": {
+            "pageInfo": {
+              "pageName": "${page.analyticsPageName @ context='unsafe'}",
+              "url": "${page.pageUrl @ context='unsafe'}",
+              "server": "${page.pageHost @ context='unsafe'}",
+              "country": "${page.country @ context='unsafe'}",
+              "language": "${page.language @ context='unsafe'}",
+              "currencyCode": "${page.currencyCode @ context='unsafe'}"
+            },
+            "category": {
+              "pageType": "${page.pageType  @ context='unsafe'}",
+              "siteSection1": "${page.siteSections[0]  @ context='unsafe'}",
+              "siteSection2": "${page.siteSections[1]  @ context='unsafe'}",
+              "siteSection3": "${page.siteSections[2]  @ context='unsafe'}",
+              "siteSection4": "${page.siteSections[3]  @ context='unsafe'}"
+            },
+            "error": {
+              "errorCode": "${page.errorCode @ context='unsafe'}",
+              "errorName": "${page.errorName @ context='unsafe'}"
+                      },
+            "visitor": {
+              "ecID": sessionId && userData?.id ? userData.id : null,
+              "sapID": sessionId && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+              "loginStatus": sessionId ? "Logged in" : "Logged out"
+            }
           }
-        }
-      });
+        });
+      })();
     </script>
     <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
          data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
       <script type="text/javascript">
-        if(typeof QSI === "undefined") {
-          // QSI object populated only for logged in user
-          const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-          let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-          if (isExtraReloadDisabled()) {
-              window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
-              window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+        (async function() {
+          if(typeof QSI === "undefined") {
+            // QSI object populated only for logged in user
+
+            const [userIsLoggedIn, userInfo] = await getSessionInfo();
+
+            if (userIsLoggedIn && userInfo) {
+              QSI = {
+                config: {
+                  externalReference: userIsLoggedIn && userInfo?.id ? userInfo.id : null
+                }
+              };
+            }
           }
-          let userInfo = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-          if (userIsLoggedIn && userInfo) {
-            QSI = {
-              config: {
-                externalReference: userIsLoggedIn && userInfo?.id ? userInfo.id : null
-              }
-            };
-          }
-        }
+        })();
       </script>
     </sly>
     <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"

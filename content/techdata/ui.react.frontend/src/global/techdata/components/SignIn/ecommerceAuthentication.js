@@ -6,11 +6,6 @@ export const getUser = async (endpoint) => {
     data = await usGet(endpoint);
 
     data = data?.data?.content.user;
-
-    //TODO: temporary, there is a ticket on handling the user data in zustand
-    if (data) {
-      localStorage.setItem('userData', JSON.stringify(data));
-    }
   } catch (error) {
     if (error.response.status !== 401) {
       throw error;
@@ -32,7 +27,8 @@ export const initializeSession = async (
   let userData = null;
 
   try {
-    const userResponse = await getUser(userEndpoint);
+    const getUserFunctionToUse = window.getUserData ?? getUser;
+    const userResponse = await getUserFunctionToUse(userEndpoint);
     if (userResponse) {
       userData = userResponse;
     } else if (shouldLogin) {

@@ -28,6 +28,7 @@ app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
         firstName: "DAYNA",
         lastName: "KARAPHILLIS",
         name: "516514",
+        country: "",
         email: "daniel.vogt@techdata.com",
         phone: null,
         customers: ["0038048612", "0009000325", "0009000325"],

@@ -33,6 +33,8 @@
       data-intouch-header-api-url="${caconfig['com.tdscore.core.slingcaconfig.IntouchConfiguration'].headerAPIUrl}"
       data-intouch-footer-api-url="${caconfig['com.tdscore.core.slingcaconfig.IntouchConfiguration'].footerAPIUrl}"
       data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}">
+
+    <sly data-sly-include="../../../page/v1/page/get-user-script.html" data-sly-unwrap/>
     <script data-sly-test.dataLayerEnabled="${page.dataJson}">
         window.adobeDataLayer = window.adobeDataLayer || [];
         adobeDataLayer.push({
@@ -55,23 +57,19 @@
         <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
              data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
             <script type="text/javascript">
-                if (typeof QSI === "undefined") {
-                    // QSI object populated only for logged in user
-                    let sessionId = window.localStorage.getItem("sessionId");
-                    const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-                    let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-                    if (isExtraReloadDisabled()) {
-                        window.addEventListener('user:loggedIn', () => userIsLoggedIn = true);
-                        window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
+                (async function() {
+                    if (typeof QSI === "undefined") {
+                        // QSI object populated only for logged in user
+                        const [userIsLoggedIn, userData] = await getSessionInfo();
+
+                        if (userIsLoggedIn && userData) {
+                            QSI = {};
+                            QSI.config = {
+                                externalReference: userIsLoggedIn && userData?.id ? userData.id : null
+                            };
+                        }
                     }
-                    let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-                    if (userIsLoggedIn && userData) {
-                        QSI = {};
-                        QSI.config = {
-                            externalReference: userIsLoggedIn && userData?.id ? userData.id : null
-                        };
-                    }
-                }
+                })();
             </script>
         </sly>
         <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"

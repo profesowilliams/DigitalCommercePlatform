@@ -16,7 +16,7 @@ import {
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import SpinnerCode from "../spinner/spinner";
-import { usPost, USaxios } from "../../../../utils/api";
+import { usPost, USaxios, generateTraceId } from "../../../../utils/api";
 import {
   signOutBasedOnParam,
   signOutForExpiredSession,
@@ -27,14 +27,19 @@ import { triggerEvent } from "../../../../utils/events";
 import axios from 'axios';
 import Modal from '../Modal/Modal';
 import { initializeSession } from "./ecommerceAuthentication";
+import { hasDCPAccess } from "../../../../utils/user-utils";
 
 const FA = require("react-fontawesome");
 
 const ExposeSigninStatus = forwardRef((props, ref) => {
   const isLoggedIn = useStore(state => state.isLoggedIn);
+  const userData = useStore(state => state.userData);
   useImperativeHandle(ref, () => ({
       getLoginStatus() {
         return isLoggedIn;
+      },
+      getUserId() {
+        return userData.id;
       }
   }));
   return (
@@ -64,6 +69,7 @@ const SignIn = (props) => {
     return state;
   });
 
+  const isLoggedIn = useStore(state => state.isLoggedIn);
   const setUserData = useStore((state) => state.setUserData);
   const changeLoggedInState = useStore((state) => state.changeLoggedInState)
 
@@ -89,7 +95,8 @@ const SignIn = (props) => {
   const requested = props.data.auth.requested;
   const isError = props.data.auth.showError;
   const isLoading = props.data.auth.loading;
-  const userData = props.data.auth.userData;
+  const userDataLS = props.data.auth.userData;
+  const userData = useStore(state => state.userData);
   const [userDataCheck, setUserDataCheck] = useState(populateLoginData());
 
   function removeParam(key) {
@@ -101,8 +108,8 @@ const SignIn = (props) => {
   }
 
   function populateLoginData() {
-    let userDataCheck = Object.keys(userData).length
-      ? userData
+    let userDataCheck = Object.keys(userDataLS).length
+      ? userDataLS
       : JSON.parse(localStorage.getItem("userData"));
     if (window.SHOP && window.SHOP.authentication) {
       // call SHOP redirectAuth API on load to makesure to refresh login in SHOP
@@ -213,7 +220,7 @@ const SignIn = (props) => {
   };
 
   function showHideElements() {
-    toggleLangNavigation(isAlreadySignedIn());
+    toggleLangNavigation(isAlreadySignedIn(userData));
   }
 
   function hideDropdownButton() {
@@ -223,12 +230,17 @@ const SignIn = (props) => {
     })
   }
 
-  const handleLoginResponse = () => {
+  const handleLoginResponse = (userData) => {
     changeLoggedInState(true);
 
     triggerEvent('user:loggedIn');
     // handle country redirection
-    redirectBasedOnCountry();
+    redirectBasedOnCountry(userData);
+  }
+
+  const updateLoginStyles = () => {
+    document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
+    hideDropdownButton();
   }
 
   const handleLoginRedirection = () => {
@@ -240,11 +252,18 @@ const SignIn = (props) => {
     localStorage.setItem("signin", constructSignInURL());
     isCodePresent();
     routeChange(handleLoginResponse);
-    const isLoggedIn = isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
 
-    if (isLoggedIn === null  && localStorage.getItem("sessionId")) {
-      document.querySelector('.cmp-tds-site-header')?.classList.add('loggedin');
-      hideDropdownButton();
+    if (isHttpOnlyEnabled() || isExtraReloadDisabled()) {
+      if (isLoggedIn) {
+        updateLoginStyles();
+      }
+    }
+    else {
+      const isLoggedInLS = isAuthenticated(authUrl, clientId, isPrivatePage, shopLoginRedirectUrl);
+
+      if (isLoggedInLS === null  && localStorage.getItem("sessionId")) {
+        updateLoginStyles();
+      }
     }
 
     if(isExtraReloadDisabled()){
@@ -254,15 +273,17 @@ const SignIn = (props) => {
         axios.defaults.headers.common['SessionId'] = sessionId;
         USaxios.defaults.headers.common['SessionId'] = sessionId;
       }
-
-      if(sessionId && localStorage.getItem("userData")){
-        handleLoginResponse();
-      }
     }
 
+    //if isExtraReloadDisabled or isHttpOnlyEnabled is true then use the isloggedin and userData from the store, if not then use the localstorage
+    const currentLoggedInState = isExtraReloadDisabled() || isHttpOnlyEnabled() ? isLoggedIn : localStorage.getItem("isLoggedIn");
+    const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : localStorage.getItem("userData") ? JSON.parse(localStorage.getItem('userData')) : null;
+
     // redirecting the non-dcp logged in user to home page
-    if(isPrivatePage && localStorage.getItem("sessionId") && localStorage.getItem("userData")) {
-        if(localStorage.getItem("userData").indexOf('"dcpAccess":true') < 0) {
+    if(isPrivatePage && currentLoggedInState && currentUserData) {
+      console.log("LOGIN_>", currentUserData, hasDCPAccess(currentUserData));
+        if(hasDCPAccess(currentUserData)) {
+            //  ----.indexOf('"dcpAccess":true') < 0) {
             window.location.replace(window.location.origin);
         }
     }
@@ -270,9 +291,18 @@ const SignIn = (props) => {
     redirectBasedOnCountry();
     showHideElements();
   }
-    const redirectBasedOnCountry = () => {
-      if(localStorage.getItem('userData') &&  JSON.parse(localStorage.getItem('userData')).country) {
-          let countryCodeFromAPI = "/" + JSON.parse(localStorage.getItem('userData')).country.toLowerCase() + '/' + "en";
+    const redirectBasedOnCountry = (userData) => {
+      let currentUserData;
+
+      if (isExtraReloadDisabled() || isHttpOnlyEnabled()) {
+        currentUserData = userData;
+      }
+      else {
+        currentUserData = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem('userData')) : null
+      }
+
+      if(currentUserData?.country) {
+          let countryCodeFromAPI = "/" + currentUserData?.country.toLowerCase() + '/' + "en";
           if(window.location.href.indexOf(countryCodeFromAPI) < 0) {
               validateCountryFromUrlAndAPI(countryCodeFromAPI);
           }
@@ -319,10 +349,15 @@ const SignIn = (props) => {
     const userData = await initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin);
 
     if(userData) {
-      handleLoginResponse();
+      handleLoginResponse(userData);
       handleLoginRedirection();
       setUserDataCheck(userData);
       setUserData(userData);
+
+      const traceId = generateTraceId(userData);
+
+      axios.defaults.headers.common['TraceId'] = traceId;
+      USaxios.defaults.headers.common['TraceId'] = traceId;
     }
   }
 
@@ -386,7 +421,7 @@ const SignIn = (props) => {
     let params = getQueryStringValue(codeQueryParam);
     if (params) {
       localStorage.setItem("signin", constructSignInURL());
-      if (!isAlreadySignedIn()) {
+      if (!isAlreadySignedIn(userData)) {
         dispatch(signInAsynAction(constructSignInURL(), handleLoginResponse));
       }
     }

@@ -140,9 +140,7 @@ describe('Ecommerce Authentication', () => {
 
       expect(usGet).toHaveBeenCalledWith('/ui-account/v1/GetUser');
       expect(result).toEqual(userData.content.user);
-      expect(localStorage.getItem('userData')).toEqual(
-        JSON.stringify(userData.content.user)
-      );
+      expect(localStorage.getItem('userData')).toBeNull();
     });
 
     it('returns null if there is an error and response status is 401', async () => {

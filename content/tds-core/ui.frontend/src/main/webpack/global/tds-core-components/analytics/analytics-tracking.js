@@ -1,4 +1,4 @@
-(function(){
+(async function(){
     var dataLayer;
     const ALERT_CAROUSEL_COMPONENT_NAME = "alertcarousel";
     const CAROUSEL_COMPONENT_NAME= "carousel";
@@ -32,13 +32,8 @@
     const ANALYTICS_EVENTINFO_CLICKHEIR_PN = "clickHier";
     const LIST_CLASSNAME = "cmp-list__item-link-analytics";
 
-    const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-    let userIsLoggedIn = !isExtraReloadDisabled() && localStorage.getItem("sessionId") ? true : false;
-    if (isExtraReloadDisabled()) {
-        window.addEventListener('user:loggedIn' , () => userIsLoggedIn = true);
-        window.addEventListener('user:loggedOut', () => userIsLoggedIn = false);
-    }
-    let userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+
+    const [userIsLoggedIn, userData] = await getSessionInfo();
 
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
