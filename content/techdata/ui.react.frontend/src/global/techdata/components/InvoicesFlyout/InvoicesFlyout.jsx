@@ -9,6 +9,7 @@ function InvoicesFlyout({
   invoicesFlyout,
   invoicesColumnList,
   subheaderReference,
+  isTDSynnex,
 }) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
   const effects = store((st) => st.effects);
@@ -25,7 +26,6 @@ function InvoicesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-
   return (
     <BaseFlyout
       open={invoicesFlyoutConfig?.show}
@@ -40,6 +40,7 @@ function InvoicesFlyout({
       disabledButton={!selected}
       selected={selected}
       secondaryButton={SecondaryButton}
+      isTDSynnex={isTDSynnex}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">

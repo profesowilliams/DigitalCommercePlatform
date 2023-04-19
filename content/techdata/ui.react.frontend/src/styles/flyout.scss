@@ -205,6 +205,11 @@ $flyout-small-height-formax: 779px;
 }
 
 .cmp-flyout-table {
+  &__header {
+    &-headCell{
+      color: $brand-black !important
+    }
+  }
   .MuiTableHead-root{
     border-top: 3px solid $brand-charcoal;
     th {
@@ -236,5 +241,21 @@ $flyout-small-height-formax: 779px;
   }
   .MuiTableRow-hover[class^='MuiTableRow-root']:hover{
     background-color: transparent;
+  }
+}
+
+.cmp-flyout-td-synnex{
+  & .cmp-flyout__footer {
+    &-buttons {
+    button {
+      &.cmp-flyout__footer-button--enabled {
+        background-color: $brand-green;
+      }
+      &.cmp-flyout__footer-button--secondary {
+        border: 1px solid $brand-green;
+        color: $brand-green;
+      }
+    }
+    }
   }
 }

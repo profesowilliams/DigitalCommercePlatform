@@ -9,6 +9,7 @@ function DNotesFlyout({
   dNotesFlyout,
   dNoteColumnList,
   subheaderReference,
+  isTDSynnex,
 }) {
   const dNoteFlyoutConfig = store((st) => st.dNotesFlyout);
   const effects = store((st) => st.effects);
@@ -24,7 +25,6 @@ function DNotesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-
   return (
     <BaseFlyout
       open={dNoteFlyoutConfig?.show}
@@ -39,6 +39,7 @@ function DNotesFlyout({
       disabledButton={!selected}
       selected={selected}
       secondaryButton={SecondaryButton}
+      isTDSynnex={isTDSynnex}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">

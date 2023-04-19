@@ -43,6 +43,7 @@ function OrdersTrackingGrid(props) {
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
+  const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore
   );
@@ -63,6 +64,9 @@ function OrdersTrackingGrid(props) {
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
+
+  // const { isTDSynnex } = useComputeBranding(useOrderTrackingStore);
+
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
@@ -269,7 +273,6 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
-
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
@@ -346,12 +349,14 @@ function OrdersTrackingGrid(props) {
         dNotesFlyout={gridConfig.dNotesFlyout}
         dNoteColumnList={gridConfig.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
+        isTDSynnex={isTDSynnex}
       />
       <InvoicesFlyout
         store={useOrderTrackingStore}
         invoicesFlyout={gridConfig.invoicesFlyout}
         invoicesColumnList={gridConfig.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
+        isTDSynnex={isTDSynnex}
       />
       <ExportFlyout
         store={useOrderTrackingStore}
@@ -359,6 +364,7 @@ function OrdersTrackingGrid(props) {
         exportOptionsList={gridConfig.exportOptionsList}
         exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
         subheaderReference={document.querySelector('.subheader > div > div')}
+        isTDSynnex={isTDSynnex}
       />
     </div>
   );

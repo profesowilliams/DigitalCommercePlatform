@@ -11,7 +11,9 @@ const INITIAL_STATE = {
     x: 0,
     y: 0,
     show: false,
-  }
+  },
+  isTDSynnex: true,
+  branding: '',
 };
 
 const store = (set,get) => ({

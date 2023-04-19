@@ -38,6 +38,7 @@ function ExportFlyout({
   exportOptionsList,
   exportSecondaryOptionsList,
   subheaderReference,
+  isTDSynnex,
 }) {
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
@@ -56,6 +57,7 @@ function ExportFlyout({
     effects.setCustomState({ key: 'exportFlyout', value: { show: false } });
     setSecondarySelected(null);
   };
+
   return (
     <BaseFlyout
       open={exportFlyoutConfig?.show}
@@ -68,6 +70,7 @@ function ExportFlyout({
       enableButton={secondarySelected}
       disabledButton={!secondarySelected}
       selected={secondarySelected}
+      isTDSynnex={isTDSynnex}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">

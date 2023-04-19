@@ -21,7 +21,7 @@ export default function FlyoutTable({
   const EnhancedTableHead = (props) => {
     const { onSelectAllClick, numSelected, rowCount } = props;
     return (
-      <TableHead className={'cmp-flyout-table__header'}>
+      <TableHead className={'cmp-flyout-table'}>
         <TableRow>
           <TableCell padding="checkbox">
             <Checkbox
@@ -44,7 +44,12 @@ export default function FlyoutTable({
             />
           </TableCell>
           {headCells?.map((headCell) => (
-            <TableCell key={headCell.id} align={'left'} padding={'normal'}>
+            <TableCell
+              className={'cmp-flyout-table__header-headCell'}
+              key={headCell.id}
+              align={'left'}
+              padding={'normal'}
+            >
               {headCell.label}
             </TableCell>
           ))}

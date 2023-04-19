@@ -21,23 +21,27 @@ function BaseFlyout({
   bottomContent,
   selected,
   secondaryButton,
+  isTDSynnex,
 }) {
-  const BottomContent = () => bottomContent("footer")
-  const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel)
-  const { positioning, calculatePosition } = usePositionBelowSubheader({unmountedFn:false}, subheaderReference);
+  const BottomContent = () => bottomContent('footer');
+  const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
+  const { positioning, calculatePosition } = usePositionBelowSubheader(
+    { unmountedFn: false },
+    subheaderReference
+  );
   const { top, height } = positioning;
   useEffect(() => {
     let timer;
-    if(open) {
-      timer = setTimeout(() => document.body.style.paddingRight = '0px', 333);
+    if (open) {
+      timer = setTimeout(() => (document.body.style.paddingRight = '0px'), 333);
     } else {
       document.body.style.removeProperty('padding-right');
-    };
+    }
     return () => {
       document.body.style.removeProperty('padding-right');
       clearTimeout(timer);
-    }
-  },[open])
+    };
+  }, [open]);
   return (
     <Drawer
       anchor={anchor}
@@ -53,7 +57,7 @@ function BaseFlyout({
         },
       }}
     >
-      <div className="cmp-flyout">
+      <div className={`cmp-flyout ${isTDSynnex && 'cmp-flyout-td-synnex'}`}>
         <section className="cmp-flyout__header">
           <h4 className="cmp-flyout__header-title">
             {getDictionaryValueOrKey(titleLabel)}

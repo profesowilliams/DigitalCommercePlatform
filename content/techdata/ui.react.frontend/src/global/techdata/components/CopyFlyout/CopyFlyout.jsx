@@ -211,6 +211,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       disabledButton={!enableCopy}
       onClickButton={handleCopy}
       bottomContent={(classNameSuffix) => WarningMessage({ classNameSuffix })}
+      store={store}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
