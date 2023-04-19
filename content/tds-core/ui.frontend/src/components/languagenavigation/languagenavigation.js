@@ -17,32 +17,50 @@ import events from '../../utils/events';
     events.addLoginListener(listener);
   }
 
-  function showRegionSelectDropdown(event) {
-      if (event && event.target.closest('.languagenavigation')) {
-        const langEle = event.target.closest('.languagenavigation');
-        langEle.querySelector(".regionSelectDropdown").classList.add("cmp-show");
-      } else {
-        // 02/07/2023 ryan.williams@tdsynnex.com: I added the setTimeout to fix an issue where a global click event removes all of the classes
-        // after the classes are set. It's not pretty, but it works. The global click event for the language selector should only fire when 
-        // the user clicks outside of the language selector when it's active, but it's firing when anything is clicked.
-        setTimeout(function() {
-          var header = document.getElementsByClassName("cmp-experiencefragment--header-mobile")[0];
+  /**
+ * Shows the region select dropdown when the user clicks on the menu icon or the language selector.
+ * @param {Event} event - The click event.
+ */
+function showRegionSelectDropdown(event) {
+  // If the event was triggered by clicking on the language selector, show the region select dropdown.
+  if (event && event.target.closest('.languagenavigation')) {
+    const langEle = event.target.closest('.languagenavigation');
+    langEle.querySelector(".regionSelectDropdown").classList.add("cmp-show");
+  } else {
+    // If the event was triggered by clicking on the menu icon or outside of the language selector, show the mobile menu.
+    setTimeout(function() {
+      // Select the header element.
+      const header = document.getElementsByClassName("cmp-experiencefragment--header-mobile")[0];
 
-          const masthead = header.querySelector("[id^='masthead-']");
-          masthead.classList.add("header-active")
-      
-          const hamburger = header.querySelector(".cmp-td-hamburgerMenu");
-          hamburger.classList.add("active");
-          
-          const megamenu = header.querySelector(".megamenu");
-          megamenu.classList.add("megamenu--open")
-          
-          // specifically select the second regionSelectDropdown, which is the one that is used for the mobile menu
-          const region = document.querySelectorAll(".regionSelectDropdown")[1];
-          region.classList.add("cmp-show");
-        }, 100);
+      // Add the header-active class to the masthead element.
+      const masthead = header.querySelector("[id^='masthead-']");
+      masthead.classList.add("header-active");
+
+      // Add the active class to the hamburger menu icon or the language modal, depending on the header state.
+      const hamburger = header.querySelector(".cmp-td-hamburgerMenu");
+      if (hamburger) {
+        hamburger.classList.add("active");
+      } else {
+        const languageModal = document.querySelector(".language-modal__content");
+        languageModal.classList.add("language-modal--open");
+        const checkbox = document.querySelector(".menu-icon__checkbox");
+        checkbox.checked = true;
+        const menuIcon = document.querySelector(".menu-icon");
+        menuIcon.classList.add("active");
+        menuIcon.dispatchEvent(new Event('click'));
       }
+      
+      // Add the megamenu--open class to the megamenu element.
+      const megamenu = header.querySelector(".megamenu");
+      megamenu.classList.add("megamenu--open");
+      
+      // Add the cmp-show class to the region select dropdown element.
+      // Specifically select the second regionSelectDropdown, which is the one that is used for the mobile menu.
+      const region = document.querySelectorAll(".regionSelectDropdown")[1];
+      region.classList.add("cmp-show");
+    }, 100);
   }
+}
 
   function hideRegionSelectDropdown() {
     if (userIsLoggedIn) {
