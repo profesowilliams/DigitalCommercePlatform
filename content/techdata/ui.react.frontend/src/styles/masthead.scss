@@ -697,6 +697,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                 }
 
                 &:hover {
+                    color: map-get($color-palette, 'brand-button-blue');
                     &::before {
                         -webkit-mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
                         mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
@@ -704,6 +705,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                     }
 
                     &.authenticated {
+                         color: map-get($color-palette, 'brand-button-blue');
                         &::before {
                             content: '';
                             -webkit-mask: url('/content/dam/global-shared/icons/filled/person.svg') no-repeat;
@@ -713,7 +715,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
                             width: 24px;
                             -webkit-mask-size: cover;
                             mask-size: cover;
-                            background-color: map-get($color-palette, 'cobalt');
+                            background-color: map-get($color-palette, 'brand-button-blue');
                             padding: 0;
                             vertical-align: middle
                         }

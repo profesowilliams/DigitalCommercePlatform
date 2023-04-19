@@ -882,15 +882,20 @@
                 .cmp-teaser {
                     height: 100%;
                     justify-content: unset;
-                    background-color: #F8F8F8;
+                    background-color: map-get($color-palette, "neutral-gray-1");
+                    box-shadow: none;
 
                     &:hover {
                         box-shadow: none;
                         outline: none !important;
                         border: none;
 
+                        .cmp-teaser__title {
+                            color: map-get($color-palette, 'brand-button-blue') !important;
+                        }
+
                         .cmp-teaser__title .cmp-teaser__title-link {
-                            color: #00558c !important;
+                            color: map-get($color-palette, 'brand-light-blue') !important;
                             font-weight: 400;
                         }
                     }
