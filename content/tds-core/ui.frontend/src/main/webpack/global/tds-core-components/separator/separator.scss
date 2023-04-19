@@ -30,6 +30,7 @@
 
   &--white {
     .cmp-separator__horizontal-rule {
+      opacity: 0.3;
       color: get-color(brand-white);
       border-color: get-color(brand-white);
     }
