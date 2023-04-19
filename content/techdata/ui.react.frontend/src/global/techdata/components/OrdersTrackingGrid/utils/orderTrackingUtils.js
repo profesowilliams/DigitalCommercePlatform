@@ -125,3 +125,14 @@ export async function fetchData(config) {
       console.error('🚀error on orders tracking grid >>', error);
     }
 }
+
+export function setPaginationData(response, pageNumber, pageSize = 25) {
+  const pageCount = Math.ceil(response.totalItems / pageSize);
+
+  return {
+    currentResultsInPage: pageSize,
+    totalCounter: response.totalItems,
+    pageCount,
+    pageNumber: parseInt(pageNumber) || 1,
+  };
+}

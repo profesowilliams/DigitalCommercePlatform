@@ -12,10 +12,10 @@ import {
   isFromRenewalDetailsPage,
   mapServiceData,
   setLocalStorageData,
-  setPaginationData,
   isFirstTimeSortParameters,
   updateQueryString,
 } from '../RenewalsGrid/utils/renewalUtils';
+import { get } from '../../../../utils/api';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
@@ -24,7 +24,7 @@ import Pill from '../Widgets/Pill';
 import OrderSearch from '../BaseGrid/Search/Search';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
-import { fetchData } from './utils/orderTrackingUtils';
+import { fetchData, setPaginationData } from './utils/orderTrackingUtils';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
@@ -53,7 +53,7 @@ function OrdersTrackingGrid(props) {
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const { searchOptionsList, shopURL, icons, reportOptions, reportPillLabel } =
+  const { searchOptionsList, icons, reportOptions, reportPillLabel } =
     componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
@@ -92,6 +92,15 @@ function OrdersTrackingGrid(props) {
     config.columnApi.applyColumnState({ ...columnState });
   };
 
+  const getPaginationValue = (response, ordersCountResponse) => {
+    const paginationValue = setPaginationData(
+      ordersCountResponse?.data?.content,
+      response?.data?.content?.pageNumber,
+      gridConfig.itemsPerPage
+    );
+    return paginationValue;
+  };
+
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
     const queryOperations = {
@@ -113,13 +122,16 @@ function OrdersTrackingGrid(props) {
       defaultSearchDateRange: dateRange,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
-    //const response = await request.get(request.url);
+    const ordersCountUrl = new URL(componentProp.ordersCountEndpoint);
+    const ordersCountResponse = await get(ordersCountUrl);
     const response = await fetchData(queryOperations);
+
     const mappedResponse = mapServiceData(response);
-    const paginationValue = setPaginationData(
-      mappedResponse?.data?.content,
-      gridConfig.itemsPerPage
+    const paginationValue = getPaginationValue(
+      mappedResponse,
+      ordersCountResponse
     );
+
     const responseContent = response?.data?.content;
     const pageNumber = responseContent?.pageNumber;
     if (responseContent?.pageCount === pageNumber)
