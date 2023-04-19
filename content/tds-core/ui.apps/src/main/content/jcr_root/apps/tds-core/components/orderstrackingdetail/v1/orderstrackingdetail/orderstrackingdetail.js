@@ -4,11 +4,11 @@ use(['../../../common/utils.js'], function (utils) {
     var labels = {};
 
     // Settings
+    if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
+        jsonObject["uiServiceEndPoint"] = this.uiServiceDomain + this.orderDetailEndpoint;
+    }
     if (properties && properties["ordersUrl"]) {
         jsonObject["ordersUrl"] = properties["ordersUrl"];
-    }
-    if (properties && properties["uiServiceEndPoint"]) {
-        jsonObject["uiServiceEndPoint"] = properties["uiServiceEndPoint"];
     }
     if (properties && properties["agGridLicenseKey"]) {
         jsonObject["agGridLicenseKey"] = properties["agGridLicenseKey"];
