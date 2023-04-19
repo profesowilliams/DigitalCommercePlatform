@@ -402,38 +402,45 @@
                 }
             }
         }
+
         &.cmp-container.cmp-tds-site-header {
             .header-active .megamenu #navigation ul li {
                 position: unset;
             }
-            .header-active .megamenu #navigation>ul > .cmp-has-submenu > ul {
+
+            .header-active .megamenu #navigation > ul > .cmp-has-submenu > ul {
                 width: 100%;
                 left: 0;
-                background-color: #005758;
+                background-color: get-color("teal");
                 padding: 0 16px;
                 border-top: none;
                 top: 0;
             }
+
             .header-active .megamenu #navigation .cmp-has-submenu.active > ul {
                 display: block;
                 z-index: 999;
                 height: 100%;
             }
-            #navigation>ul>li:hover {
+
+            #navigation > ul > li:hover {
                 font-weight: normal;
             }
+
             #navigation ul a:focus,
             #navigation ul li ul a:hover,
-            #navigation>ul>li>ul li:hover {
+            #navigation > ul > li > ul li:hover {
                 background-color: transparent;
             }
+
             .header-active .megamenu #navigation > ul > .cmp-has-submenu > ul ul {
                 width: 100%;
                 left: 0;
-                background-color: #005758;
+                background-color: get-color("teal");
                 padding: 0 1pc;
                 border-top: none;
             }
+
             .header-active .megamenu #navigation .cmp-has-submenu .cmp-sub-menu-heading:first-child {
                 display: block;
                 padding: 0 13px;
@@ -456,22 +463,27 @@
                     transform: translateY(-50%);
                 }
             }
+
             &.mega-menu-active {
-                .header-active .aem-Grid>.headerutility {
+                .header-active .aem-Grid > .headerutility {
                     display: none !important;
                 }
+
                 .megamenu {
                     border-top: 1px solid white;
                     height: calc(100vh - 60px);
                     max-height: calc(100vh - 60px);
                     overflow-y: auto;
+
                     #navigation > ul {
                         border-top: none;
                     }
+
                     .cmp-has-submenu.active {
                         border-bottom: 1px solid white;
                     }
                 }
+
                 .header-active.cmp-container .masthead {
                     display: none;
                 }
