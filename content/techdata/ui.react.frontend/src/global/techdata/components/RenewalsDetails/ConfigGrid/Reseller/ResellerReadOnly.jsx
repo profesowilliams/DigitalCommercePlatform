@@ -40,7 +40,7 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels, sh
         <Info label={getDictionaryValue("details.renewal.label.resellerAccountNo",'Account Nº') } >{id}</Info>
         <Info label={ getDictionaryValue("details.renewal.label.vendorAccountNo",'Vendor account Nº') } >{vendorAccountNumber}</Info>
       </p>        
-      {shipToData?.address?.id &&
+      {shipToData?.id &&
       <p>
         <span className="cmp-renewals-qp__reseller-info--sub-title">
           {getDictionaryValueOrKey(shipToLabel)}
