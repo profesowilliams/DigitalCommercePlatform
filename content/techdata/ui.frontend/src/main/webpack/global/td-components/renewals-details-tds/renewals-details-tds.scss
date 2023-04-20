@@ -27,6 +27,7 @@
     .cmp-renewals-qp__reseller-info,
     .cmp-renewals-qp__agreement-info,
     .cmp-renewals-qp__enduser-info {
+      height: 100%;
       @include font-arial-medium-bold();
 
       &--title {

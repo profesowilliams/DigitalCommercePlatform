@@ -86,7 +86,7 @@
   .info-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 0;
+    padding: 0 0 30px 0;
     .cmp-loader-roller {
       display: flex;
       flex-basis: 33.33%;
