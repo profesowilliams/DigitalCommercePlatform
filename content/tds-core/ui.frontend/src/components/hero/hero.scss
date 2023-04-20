@@ -2,7 +2,7 @@
 
 .hero {
     @include mobile {
-        height: 32rem;
+        height: auto;
         position: relative;
     }
 
@@ -47,38 +47,33 @@
         }
 
         &__title {
-            font-size: clamp(1rem, 0.4178rem + 2.7397vw, 3.5rem);
-            font-weight: 500;
-            width: 46%;
+           font-size: 66px;
+           line-height: 82px;
+           text-align: center;
+           margin: 0 auto;
+           width: 100%;
             @include mobile {
-                width: 70%;
-                font-size: 2rem;
-                margin-bottom: 0;
+                font-size: 52px;
+                line-height: 78px;
             }
         }
 
         &__image-container {
             position: relative;
-            @include mobile{
-                position: absolute;
-                bottom: 0;
-                top: 0;
-                left: 0;
-                right: 0; 
-            }
         }
 
         &__content[data-cmp-hasimage] {
             position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 100%;
-            overflow: hidden;
-            padding: 2rem 6rem;     
+
             @include mobile {
-                padding: 3.5rem 2rem !important;  
-            }      
+                top: 35%;
+                padding: 0;
+                width: 100%;
+            }
             .cmp-item {
                 color: inherit;
             }
@@ -173,6 +168,7 @@
 }
 
 .hero {
+    font-family: 'Arial', sans-serif;
   &.cmp-dpb-hero {
     position: relative;
 
@@ -287,4 +283,63 @@
         }
     }
   }
+}
+
+.cmp-teaser {
+    &__bottom-section {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        max-width: 716px;
+
+        @include mobile {
+            position: unset;
+            width: 100%;
+            max-width: none;
+        }
+
+        &--wrapper {
+            display: flex;
+            padding: 25px 22px;
+            gap: 20px;
+
+            @include mobile {
+                display: block;
+                flex-basis: 50%;
+            }
+
+            &:first-child {
+                background-color: rgba(204, 216, 20, 0.5);
+            }
+
+            &:last-child {
+                background-color: rgba(0, 177, 226, 0.5);
+            }
+
+            img {
+                width: 48px;
+            }
+        }
+
+        &--title {
+            color: map-get($color-palette, 'td-dark-blue');
+            font-size: 20px;
+            line-height: 26px;
+            font-weight: 700;
+            margin-bottom: 22px;
+            padding-top: 6px;
+        }
+
+        &--link {
+            display: block;
+            color: map-get($color-palette, 'td-dark-blue');
+            font-size: 16px;
+            line-height: 24px;
+            padding-bottom: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 400;
+        }
+    }
 }
