@@ -27,7 +27,7 @@ export const initializeSession = async (
   let userData = null;
 
   try {
-    const getUserFunctionToUse = window.getUserData ?? getUser;
+    const getUserFunctionToUse = getUser;//window.getUserData ?? getUser;
     const userResponse = await getUserFunctionToUse(userEndpoint);
     if (userResponse) {
       userData = userResponse;

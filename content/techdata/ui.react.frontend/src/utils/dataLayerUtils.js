@@ -14,18 +14,17 @@
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 import { getUserDataInitialState } from './user-utils';
-import { isExtraReloadDisabled } from "./featureFlagUtils"; 
 
 let dataLayerEnabled = null;
 let dataLayer = null;
 
-let userIsLoggedIn = () => {
-  if (isExtraReloadDisabled()) {
-      return window.exposeSigninStatus && window.exposeSigninStatus.getLoginStatus();
-  }
-  return window.localStorage.getItem("sessionId");
-};
+let userIsLoggedIn = window.localStorage.getItem("sessionId");
 let userData = getUserDataInitialState();
+
+window.getSessionInfo && window.getSessionInfo().then((data) => {
+  userIsLoggedIn = data[0];
+  userData = data[1];
+});
 
 const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';
 const ADOBE_DATA_LAYER_CLICKINFO_TYPE = 'link';
@@ -163,9 +162,9 @@ const setVisitorData = (object) => {
   object.page = object.page || {};
 
   object.page.visitor = {
-    ecID: userIsLoggedIn() && userData?.id ? userData.id : null,
-    sapID: userIsLoggedIn() && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
-    loginStatus: userIsLoggedIn() ? "Logged in" : "Logged out"
+    ecID: userIsLoggedIn && userData?.id ? userData.id : null,
+    sapID: userIsLoggedIn && userData?.activeCustomer?.customerNumber ? userData.activeCustomer.customerNumber : null,
+    loginStatus: userIsLoggedIn ? "Logged in" : "Logged out"
   }
 
   return object;
