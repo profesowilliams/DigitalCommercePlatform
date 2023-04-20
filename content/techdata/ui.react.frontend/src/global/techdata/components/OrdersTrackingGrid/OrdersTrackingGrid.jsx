@@ -65,7 +65,6 @@ function OrdersTrackingGrid(props) {
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
 
-  // const { isTDSynnex } = useComputeBranding(useOrderTrackingStore);
 
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
