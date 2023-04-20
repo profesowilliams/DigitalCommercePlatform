@@ -1,5 +1,11 @@
-(async function () {
-  const [userIsLoggedIn, userData] = await window.getSessionInfo();
+(function () {
+  let userIsLoggedIn;
+  let userData;
+
+  window.getSessionInfo().then((data) => {
+    userIsLoggedIn = data[0];
+    userData = data[1];
+  });
 
   function validateDataObject(dataObject, filter) {
     if (dataObject != null) {
@@ -560,16 +566,21 @@
   }
 
   function initDataLayer() {
-    window.dataLayer = window.dataLayer || [];
-    window.adobeDataLayer = window.adobeDataLayer || [];
-    window.adobeDataLayer.push(function (dl) {
-      dl.addEventListener('cmp:show', pageShownHandler);
-    });
-    window.adobeDataLayer.push(function (dl) {
-      dl.addEventListener('cmp:hide', hideHandler);
-    });
-    window.adobeDataLayer.push(function (dl) {
-      dl.addEventListener('cmp:click', clickHandler);
+    window.getSessionInfo().then((data) => {
+      userIsLoggedIn = data[0];
+      userData = data[1];
+
+      window.dataLayer = window.dataLayer || [];
+      window.adobeDataLayer = window.adobeDataLayer || [];
+      window.adobeDataLayer.push(function (dl) {
+        dl.addEventListener('cmp:show', pageShownHandler);
+      });
+      window.adobeDataLayer.push(function (dl) {
+        dl.addEventListener('cmp:hide', hideHandler);
+      });
+      window.adobeDataLayer.push(function (dl) {
+        dl.addEventListener('cmp:click', clickHandler);
+      });
     });
   }
 

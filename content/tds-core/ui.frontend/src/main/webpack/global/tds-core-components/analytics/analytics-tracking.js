@@ -1,4 +1,4 @@
-(async function(){
+(function(){
     var dataLayer;
     const ALERT_CAROUSEL_COMPONENT_NAME = "alertcarousel";
     const CAROUSEL_COMPONENT_NAME= "carousel";
@@ -33,7 +33,13 @@
     const LIST_CLASSNAME = "cmp-list__item-link-analytics";
 
 
-    const [userIsLoggedIn, userData] = await getSessionInfo();
+    let userIsLoggedIn;
+    let userData;
+  
+    window.getSessionInfo().then((data) => {
+      userIsLoggedIn = data[0];
+      userData = data[1];
+    });
 
     function parseNameFromElement(elementClicked) {
         var linkText = elementClicked.text.trim();
