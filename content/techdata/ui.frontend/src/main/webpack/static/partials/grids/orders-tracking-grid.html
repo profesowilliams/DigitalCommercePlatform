@@ -107,37 +107,12 @@
     },
     showResultLabel: "Show Result",
     filterType: "dynamic",
-    filterListValues: [
-      {
-        accordionLabel: "Vendors and Program",
-        filterField: "ProgramName",
-        filterOptionsValues: [
-          {
-            filterOptionLabel: "Veeam",
-            subFilterOptionsValues: [
-              { subFilterOptionsLabel: "Pro Partner" },
-              { subFilterOptionsLabel: "Pro Partner Subscriber" },
-            ],
-          },
-          {
-            filterOptionLabel: "VMWare",
-            subFilterOptionsValues: [
-              { subFilterOptionsLabel: "Support and Subscriber" },
-              { subFilterOptionsLabel: "Standard" },
-            ],
-          },
-        ],
-      },
-      {
-        accordionLabel: "End User Type",
-        filterField: "endUserType",
-        filterOptionsValues: [
-          { filterOptionLabel: "Academic" },
-          { filterOptionLabel: "Educational" },
-        ],
-      },
-      { accordionLabel: "Date", filterField: "date" },
+    filterListItems: [
+      { accordionLabel: "Date Range", filterField: "date" },
+      { accordionLabel: "Order Status", filterField: "order" },
+      { accordionLabel: "Order Type", filterField: "order" },
     ],
+    filterListValues: [],
     productGrid: {
       quoteIdLabel: "Quote ID:",
       refNoLabel: "Ref No:",

@@ -44,7 +44,7 @@ function OrdersTrackingGrid(props) {
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
-  const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
+  const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore
   );
   const componentProp = JSON.parse(props.componentProp);
@@ -304,7 +304,10 @@ function OrdersTrackingGrid(props) {
             hideLabel={true}
           />,
           <VerticalSeparator />,
-          <OrderFilter />,
+          <OrderFilter 
+            aemData={componentProp}
+            onQueryChanged={onOrderQueryChanged}
+          />,
           <VerticalSeparator />,
           ...(reportOptions?.length
             ? [

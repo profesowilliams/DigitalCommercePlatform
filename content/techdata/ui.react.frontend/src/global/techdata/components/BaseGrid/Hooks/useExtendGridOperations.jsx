@@ -10,6 +10,7 @@ export default function useExtendGridOperations(store) {
     const resetCallback = useRef(null);
     const shouldGoToFirstPage =useRef(false);
     const isOnSearchAction = useRef(false);
+    const defaultConfig = {goToFirstPage: false, onSearchAction: false};   
     const effects = store(state => state.effects);
 
     function resetGrid(){
@@ -23,9 +24,15 @@ export default function useExtendGridOperations(store) {
     }
 
     function onQueryChanged(config) {
-        const defaultConfig = {goToFirstPage: false, onSearchAction: false};        
         const {goToFirstPage, onSearchAction} = config || defaultConfig;
         if (goToFirstPage) shouldGoToFirstPage.current = true; 
+        isOnSearchAction.current = onSearchAction;              
+        if (resetCallback.current) resetCallback.current();        
+    } 
+
+    function onOrderQueryChanged() {    
+        const {onSearchAction} = store || defaultConfig;
+        shouldGoToFirstPage.current = true; 
         isOnSearchAction.current = onSearchAction;              
         if (resetCallback.current) resetCallback.current();        
     } 
@@ -35,5 +42,5 @@ export default function useExtendGridOperations(store) {
         return {onFiltersClear, onSearchAction:isOnSearchAction.current};
     }
 
-    return { onAfterGridInit, onQueryChanged, handleQueryFlowLogic, resetGrid };
+    return { onAfterGridInit, onQueryChanged, handleQueryFlowLogic, resetGrid, onOrderQueryChanged };
 }

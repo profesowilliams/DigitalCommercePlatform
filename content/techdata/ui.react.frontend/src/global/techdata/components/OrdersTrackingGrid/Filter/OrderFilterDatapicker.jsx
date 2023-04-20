@@ -1,0 +1,113 @@
+import React, { useState } from 'react';
+import moment from 'moment';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/initialize';
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '../../../../../fluentIcons/FluentIcons';
+import { useOrderTrackingStore } from './../store/OrderTrackingStore';
+import '../../RenewalFilter/components/datePicker.scss';
+import OrderFilterDateType from './OrderFilterDateType';
+
+function CustomStartEndText() {
+  return (
+    <div className="customStartEndLabel">
+      <div>Start</div>
+      <div>End</div>
+    </div>
+  );
+}
+
+export default function OrderFilterDatePicker() {
+  const [focusedInput, setFocusedInput] = useState('startDate');
+  const { setDateType, setCustomState, setDateRangeFiltersChecked } =
+    useOrderTrackingStore((state) => state.effects);
+  const dateType = useOrderTrackingStore((state) => state.dateType);
+  const customStartDate = useOrderTrackingStore(
+    (state) => state.customStartDate
+  );
+  const customEndDate = useOrderTrackingStore((state) => state.customEndDate);
+  const dark_teal = '#003031';
+  const navIcons = {
+    navPrev: <ChevronLeftIcon fill={dark_teal} />,
+    navNext: <ChevronRightIcon fill={dark_teal} />,
+  };
+
+  const momentCustomStartDate = customStartDate
+    ? moment(customStartDate)
+    : null;
+  const momentCustomEndDate = customEndDate ? moment(customEndDate) : null;
+
+  const onChangeRadio = (ev) => {
+    setDateType(ev.target.value);
+  };
+
+  const setFilterDate = (startDate, endDate) => {
+    const formattedStartDate = startDate?.toDate().toLocaleDateString();
+    const formattedEndDate = endDate?.toDate().toLocaleDateString();
+    const newDate = [
+      {
+        id: 1,
+        label: `${formattedStartDate}-${formattedEndDate}`,
+        group: 'date',
+        createdFrom: startDate?.toDate(),
+        createdTo: endDate?.toDate(),
+      },
+    ];
+    setDateRangeFiltersChecked(newDate);
+  };
+
+  const onDatesChange = ({ startDate, endDate }) => {
+    setCustomState(
+      {
+        key: 'customStartDate',
+        value: startDate?.toISOString() || undefined,
+      }
+    );
+    setCustomState(
+      {
+        key: 'customEndDate',
+        value: endDate?.toISOString() || undefined,
+      }
+    );
+    if ((startDate, endDate)) {
+      setFilterDate(startDate, endDate);
+    }
+  };
+
+  return (
+    <>
+      <OrderFilterDateType onChangeRadio={onChangeRadio} dateType={dateType} />
+      <CustomStartEndText />
+      <div className="order_datapicker">
+        <DateRangePicker
+          startDate={momentCustomStartDate}
+          startDateId="start-date"
+          startDatePlaceholderText="Add date"
+          endDatePlaceholderText="Add date"
+          endDate={momentCustomEndDate}
+          {...navIcons}
+          endDateId="end-date"
+          verticalHeight={280}
+          showDefaultInputIcon={true}
+          customArrowIcon={<div className="customHyphen"></div>}
+          reopenPickerOnClearDates
+          keepOpenOnDateSelect={true}
+          onDatesChange={onDatesChange}
+          isOutsideRange={() => false}
+          numberOfMonths={1}
+          displayFormat="MMM D, YYYY"
+          noBorder={true}
+          regular={false}
+          transitionDuration={300}
+          daySize={30}
+          focusedInput={focusedInput}
+          onFocusChange={(focusedInput) => {
+            setFocusedInput(focusedInput || 'startDate');
+          }}
+        />
+      </div>
+    </>
+  );
+}

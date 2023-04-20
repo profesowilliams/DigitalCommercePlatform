@@ -3,6 +3,7 @@ $gray-light: #ebebeb;
 $brand-green--dark: #003031;
 $brand-text-gray: #555555;
 $brand-charcoal: #262626;
+
 .filter-modal-container {
   position: fixed;
   background: rgba(0, 12, 33, .28);
@@ -12,13 +13,16 @@ $brand-charcoal: #262626;
   width: 100vw;
   top: 0;
   left: 0;
-  z-index: 2; 
-   &__popup{    
+  z-index: 2;
+
+  &__popup {
     height: 100%;
-   }
+  }
 }
-.filter-modal-content.td-synnex{
+
+.filter-modal-content.td-synnex {
   top: 220px;
+
   .filter-modal-container {
     &__popup {
       *:not([class*="fas"]) {
@@ -27,7 +31,8 @@ $brand-charcoal: #262626;
     }
   }
 }
-.filter-modal-content{
+
+.filter-modal-content {
   all: initial;
   font-family: Arial;
   transition: all .3s ease;
@@ -39,37 +44,43 @@ $brand-charcoal: #262626;
   border-radius: 4px 0 0 4px;
   background-color: #ffffff;
   z-index: 9999;
+
   &__body {
     display: flex;
-    flex-direction: column;     
+    flex-direction: column;
   }
+
   &__popup {
     // box-shadow: 0 2px 15px 0 rgb(0 0 0 / 26%);
     position: absolute;
     right: 0;
     top: 0;
-    padding-top: 20px;   
+    padding-top: 20px;
     display: flex;
-    flex-direction: column;   
+    flex-direction: column;
   }
-  .filter-modal-bottom{
+
+  .filter-modal-bottom {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
   }
+
   &__close {
     position: absolute;
     top: 15px;
     z-index: 1;
     left: -21px;
     background-color: transparent;
+
     &:before {
       content: "\f057";
       @include font-awesome;
       font-weight: 900;
       font-size: 30px;
     }
+
     &:after {
       content: "";
       width: 2.2rem;
@@ -84,20 +95,24 @@ $brand-charcoal: #262626;
       padding: 1px;
     }
   }
-  &__close.td-synnex{
+
+  &__close.td-synnex {
     top: 15px;
-    left: -18px;    
+    left: -18px;
     position: absolute;
+
     &:before {
-     color: $brand-green;
+      color: $brand-green;
     }
   }
+
   &__header {
     display: flex;
     justify-content: space-between;
     padding: 35px 25px;
     padding-bottom: 15px;
     border-bottom: 2px solid #000c21;
+
     h3 {
       color: #000c21;
       font-size: 23px;
@@ -106,6 +121,7 @@ $brand-charcoal: #262626;
       line-height: 32px;
       margin: 0;
     }
+
     &--clear-all {
       background: transparent;
       border: 0;
@@ -116,14 +132,27 @@ $brand-charcoal: #262626;
       letter-spacing: 0;
       line-height: 17px;
     }
+
+    &--close-button {
+      background: transparent;
+      border: 0;
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      cursor: pointer;
+      letter-spacing: 0;
+      line-height: 17px;
+    }
   }
+
   &__header.td-synnex {
     border-bottom: 2px solid $brand-green;
+
     h3 {
       color: $brand-green;
     }
   }
- 
+
   &__results {
     position: relative;
     bottom: 0;
@@ -133,27 +162,32 @@ $brand-charcoal: #262626;
     padding: 12px 0;
     border: 1px solid #000c21;
     border-radius: 0 0 0 4px;
-    background-color: #000c21;  
+    background-color: #000c21;
   }
-  &__results.td-synnex{
-    background-color: $brand-green; 
+
+  &__results.td-synnex {
+    background-color: $brand-green;
     color: white;
   }
+
   .cmp-quote-button {
     height: 52px;
     align-items: center;
   }
-  .cmp-quote-button:disabled{
+
+  .cmp-quote-button:disabled {
     opacity: 0.8;
     background-color: #000c21;
     color: white;
     cursor: none;
   }
+
   .cmp-quote-button.td-synnex {
     background-color: $brand-green;
     height: 52px;
     align-items: center;
   }
+
   .cmp-quote-button.td-synnex:disabled {
     background-color: $brand-green;
     color: $brand-text-gray;
@@ -169,41 +203,50 @@ $brand-charcoal: #262626;
     margin-right: 6px;
     vertical-align: middle;
   }
+
   &__checkbox.td-synnex {
     accent-color: $brand-green;
   }
+
   &__label {
     color: $brand-charcoal;
     font-size: 14px;
     cursor: pointer;
     user-select: none;
   }
+
   &__label.td-synnex {
     color: $brand-green--dark;
   }
+
   &__options {
     all: initial;
     border-bottom: 1px solid #d8d8d8;
     display: block !important;
     padding-left: 40px;
-    > ul,
-    > li {
+
+    >ul,
+    >li {
       margin-bottom: .45rem;
-      label{
+
+      label {
         text-transform: capitalize;
         font-family: Open Sans, sans-serif;
       }
+
       &:last-child {
         padding-bottom: 10px;
       }
     }
-    ul.sub-filter{
+
+    ul.sub-filter {
       justify-content: start;
-      padding-left: 2rem; 
-      margin: 0;  
+      padding-left: 2rem;
+      margin: 0;
+
       li {
         margin: 0.4rem 0;
-      }   
+      }
     }
   }
 }
@@ -218,30 +261,34 @@ div.filter-accordion {
   padding: 0;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll; 
+  overflow-y: scroll;
   font-family: 'TWKEverett-Regular-web';
-  
+
   div.filter-option__options li {
     list-style: none;
     padding-left: 21px !important;
   }
-  
+
   &__item {
     list-style: none;
+
     &--group {
       padding: 8px 0;
       padding-left: 42px !important;
       position: relative;
+
       .count {
         position: absolute;
         right: 47px;
         top: 21px;
       }
-      .count.td-synnex{
+
+      .count.td-synnex {
         background-color: $brand-green;
       }
     }
   }
+
   h3 {
     color: $brand-charcoal;
     font-size: 14px;
@@ -250,16 +297,20 @@ div.filter-accordion {
     cursor: pointer;
     font-weight: normal;
     margin: 14px 0;
+
     &.active {
       color: #001d44;
       font-weight: bold;
+
       &:before {
         content: "\f078";
       }
     }
+
     &.active.td-synnex {
-      color: $brand-charcoal;     
+      color: $brand-charcoal;
     }
+
     &:before {
       content: "\f054";
       @include font-awesome;
@@ -267,6 +318,22 @@ div.filter-accordion {
       font-weight: 900;
     }
   }
+}
+
+.filter-order-tags-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 0px;
+  gap: 20px;
+  height: 83px;
+  background: #FFFFFF;
+  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
 .filter-tags-container {
@@ -281,9 +348,11 @@ div.filter-accordion {
   padding: 25px 12px 0;
   display: flex;
   flex-wrap: wrap;
+
   &.active {
     height: 80%;
   }
+
   .filter-tags-more {
     height: 1px;
     width: 60px;
@@ -297,6 +366,7 @@ div.filter-accordion {
     cursor: pointer;
     border-radius: 10px;
   }
+
   .filter-tags {
     border-radius: 14px;
     background-color: #001d44;
@@ -310,13 +380,15 @@ div.filter-accordion {
     gap: 6px;
     width: max-content;
     max-height: 17px;
-    & > span:nth-child(2) {
+
+    &>span:nth-child(2) {
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0;
       padding: 1px 0 0;
     }
+
     &__title {
       color: #ffffff;
       font-size: 12px;
@@ -325,6 +397,7 @@ div.filter-accordion {
       line-height: 17px;
       text-align: center;
     }
+
     &__close {
       color: #ffffff;
       font-family: "Font Awesome 5 Free";
@@ -334,6 +407,7 @@ div.filter-accordion {
       cursor: pointer;
     }
   }
+
   .filter-tags.td-synnex {
     background-color: $brand-green;
     padding: 11px;
@@ -343,19 +417,22 @@ div.filter-accordion {
 .filter-datepicker-container {
   padding-left: 40px;
   margin-bottom: 19rem;
+
   .datepicker-checks {
     li {
       list-style: none;
       padding-left: 21px;
       margin-bottom: .45rem;
+
       label {
         color: #555555;
         font-size: 14px;
         letter-spacing: 0;
         line-height: 19px;
         cursor: pointer;
-        user-select: none;  
+        user-select: none;
       }
+
       input[type="radio"] {
         accent-color: black;
         margin-right: 6px;
@@ -363,15 +440,17 @@ div.filter-accordion {
         margin-top: 0;
         cursor: pointer;
       }
+
       input[type="radio"].td-synnex {
         accent-color: $brand-green;
       }
     }
-    
+
   }
 }
-.cmp-vertical-space-separator{
-  height:4rem;
+
+.cmp-vertical-space-separator {
+  height: 4rem;
 }
 
 .count {
@@ -396,6 +475,7 @@ div.filter-accordion {
         color: $brand-blue
       }
     }
+
     .filter-datepicker-container {
       .datepicker-checks {
         li {
@@ -405,16 +485,18 @@ div.filter-accordion {
         }
       }
     }
+
     .cmp-quote-button {
       background-color: $brand-blue;
       color: $td-neutral-gray;
+
       &:disabled {
         background-color: $brand-cool-gray-1;
         color: $brand-charcoal;
       }
     }
   }
-  
+
 
   .filter-modal-bottom {
     .filter-tags-container {
@@ -423,4 +505,45 @@ div.filter-accordion {
       }
     }
   }
+}
+
+.tag_teal {
+  background-color: #005758 !important;
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+.tag_dark_teal {
+  background-color: rgba(0, 48, 49, 1) !important;
+}
+
+.scrollbar_y_none {
+  overflow-y: hidden !important;
+}
+
+.height_order_filters {
+  height: calc(100vh - 310px) !important;
+}
+
+.height_1000 {
+  height: 1000px !important;
+}
+
+.teal_scroll {
+  overflow-y: scroll !important;
+}
+
+.teal_scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.teal_scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.teal_scroll::-webkit-scrollbar-thumb {
+  background: #005758;
+}
+
+.datepicker-wrapper {
+  height: 480px !important;
 }
