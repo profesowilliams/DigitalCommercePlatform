@@ -141,15 +141,6 @@
   **/
   
   .cmp-grid-techdata {
-      .cmp-orders-qp__reseller-info,
-      .cmp-orders-qp__agreement-info,
-      .cmp-orders-qp__enduser-info
-       {
-        &--title {
-          color: $brand-blue;
-        }
-      }
-      
     .cmp-orders-qp__config-grid {
       .export-container {
         .quote-preview {
