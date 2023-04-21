@@ -143,24 +143,28 @@ export const extractDetailResellerData = (quote) => {
   }
 }
 
-export const extractDetailShipToData = (quote) => {
-  const { id, name, address } = quote;
-  return {
-    id,
-    name,
-    address: {
-      line1: address?.line1,
-      line2: address?.line2,
-      line3: address?.line3,
-      city: address?.city,
-      state: address?.state,
-      postalCode: address?.postalCode,
-      country: address?.country,
-      county: address?.county,
-      countryCode: address?.countryCode
-    }
+export const extractDetailShipToData = (shipTo) => {
+  if (shipTo) {
+    const { id, name, address } = shipTo;
+    return {
+      id,
+      name,
+      address: {
+        line1: address?.line1,
+        line2: address?.line2,
+        line3: address?.line3,
+        city: address?.city,
+        state: address?.state,
+        postalCode: address?.postalCode,
+        country: address?.country,
+        county: address?.county,
+        countryCode: address?.countryCode,
+      },
+    };
   }
-}
+  return null;
+};
+
 export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const items = mapRenewalItemProducts(renewalQuote.items);
   const { endUser, reseller, shipTo, customerPO, source } = renewalQuote;
