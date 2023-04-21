@@ -9,13 +9,13 @@
         grid-template-columns: 1fr 1fr 1fr;
 
         .cmp-contentfragment__element--hero-image {
-            height: 230px;
+            height: auto;
             width: 100%;
             background-color: map-get($color-palette, "cool-gray-8");
         }
 
         .cmp-contentfragment {
-            max-width: 356.266px;
+            width: 356.266px;
 
             a {
                 &:visited, &:link, &:hover {
