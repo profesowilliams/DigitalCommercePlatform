@@ -33,6 +33,8 @@ import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import ToolTip from '../BaseGrid/ToolTip';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from '../../../../utils/featureFlagUtils';
+import { useStore } from '../../../../utils/useStore';
 
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
@@ -44,6 +46,7 @@ function OrdersTrackingGrid(props) {
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
+  const userData = useStore((state) => state.userData);
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore
   );
@@ -249,10 +252,10 @@ function OrdersTrackingGrid(props) {
   };
 
   const addCurrencyToTotalColumn = (list) => {
-    const userData = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA);
-    const activeCustomer = userData
-      ? JSON.parse(userData).activeCustomer
-      : null;
+    const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA) ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)) : null;
+    const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
+
+    const activeCustomer = currentUserData?.activeCustomer;
     const defaultCurrency = activeCustomer?.defaultCurrency || '';
     return list.map((el) => {
       if (el.columnKey === 'priceFormatted') {

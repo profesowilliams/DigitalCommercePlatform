@@ -8,7 +8,7 @@ import { getUrlParams } from "../../../../utils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { useStore } from "../../../../utils/useStore"
-import { isAuthormodeAEM, isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
+import { isAuthormodeAEM, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { If } from "../../helpers/If";
 import Edit from "./Edit";
@@ -31,6 +31,7 @@ function RenewalsDetails(props) {
   const [apiResponse, isLoading, error] = useGet(
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
+  const userData = useStore((state) => state.userData);
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
   const shopURL = componentProp.shopURL;
   const { isUserLoggedIn:isLoggedIn } = useAuth();
@@ -71,11 +72,17 @@ function RenewalsDetails(props) {
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
     if(isAuthormodeAEM()) return; // Validation for Author ENV
-    (!hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
-    !hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS }))
-    && redirectToShop()
+
+    const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
+
+    if(!!currentUserData &&
+       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
+       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
+      redirectToShop();
+    }
   }, [
     USER_DATA,
+    userData,
     ACCESS_TYPES,
     isAuthormodeAEM,
     hasAccess,

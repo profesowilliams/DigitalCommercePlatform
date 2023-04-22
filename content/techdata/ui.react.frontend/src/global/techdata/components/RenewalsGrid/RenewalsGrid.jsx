@@ -25,7 +25,7 @@ import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../.
 import { setDefaultSearchDateRange } from "../../../../utils/utils";
 import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./utils/renewalUtils";
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
-import { isAuthormodeAEM } from "../../../../utils/featureFlagUtils";
+import { isAuthormodeAEM, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import Toaster from "../Widgets/Toaster";
 import TransactionNumber from "./Orders/TransactionNumber";
 import { renewalsDefinitions } from "./utils/renewalsDefinitions";
@@ -36,6 +36,7 @@ import CopyFlyout from "../CopyFlyout/CopyFlyout";
 import BaseGridPagination from "../BaseGrid/Pagination/BaseGridPagination";
 import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
 import ToolTip from './../BaseGrid/ToolTip';
+import { useStore } from "../../../../utils/useStore";
 
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
@@ -44,6 +45,7 @@ function RenewalsGrid(props) {
   const effects = useRenewalGridState(state => state.effects);
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
+  const userData = useStore((state) => state.userData);
   
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
@@ -129,12 +131,18 @@ function RenewalsGrid(props) {
     // In case of don't have access redirect to shop
     if(process.env.NODE_ENV === "development") return;
     if(isAuthormodeAEM()) return; // Validation for Author ENV
+
+    const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
+
     // Only redirect if the user has logged in and lacks the access. Otherwise wait for the login to finish before evaluating
-    (!hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
-    !hasAccess({ user: USER_DATA, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS }))
-    && (!!USER_DATA && redirectToShop())
+    if(!!currentUserData &&
+       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
+       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
+      redirectToShop();
+    }
   }, [
     USER_DATA,
+    userData,
     ACCESS_TYPES,
     hasAccess,
     isAuthormodeAEM

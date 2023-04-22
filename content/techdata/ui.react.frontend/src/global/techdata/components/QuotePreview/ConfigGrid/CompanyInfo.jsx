@@ -7,6 +7,8 @@ import { If } from "../../../helpers/If";
 import Info from "../../common/quotes/DisplayItemInfo";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../../utils/constants";
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../../utils/featureFlagUtils";
+import { useStore } from "../../../../../utils/useStore";
 
 function CompanyInfo({ reseller, info, url, companyInfoChange }) {
   const initialAddress = reseller != null ? reseller[0] : {};
@@ -31,6 +33,7 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
     "phoneNumber": "",
     "salesOrganization": "",
   };
+  const userData = useStore((state) => state.userData);
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
   useEffect(() => {
@@ -89,12 +92,13 @@ function CompanyInfo({ reseller, info, url, companyInfoChange }) {
       const res = await usGet(
         `${url}?criteria=CUS&ignoreSalesOrganization=false`
       );
-      const userName = `${USER_DATA?.firstName} ${USER_DATA?.lastName}`
+      const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
+      const userName = `${currentUserData?.firstName} ${currentUserData?.lastName}`
       const data = res?.data?.content?.items[0];
       data.addresses.forEach(address => {
         address.companyName = data.name;
         address.name = userName;
-        address.email = USER_DATA.email;
+        address.email = currentUserData.email;
       });
       setAddresses(data["addresses"]);
     } catch (err) {
