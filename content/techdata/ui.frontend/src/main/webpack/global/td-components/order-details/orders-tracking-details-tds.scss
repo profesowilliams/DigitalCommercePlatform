@@ -6,7 +6,7 @@
     .cmp-orders-qp__config-grid {
       .header-container {
         .image-container {
-          .back-to-renewal {
+          .back-to-orders {
             @include font-arial-normal($line-height: 22px);
             color: map-get($color-palette, 'charcoal');
           }

@@ -29,7 +29,7 @@ function OrdersTrackingDetail(props) {
           <div className="header-container">
             <div className="image-container">
               <Link
-                variant="back-to-renewal"
+                variant="back-to-orders"
                 href={config?.ordersUrl || '#'}
                 underline="none"
               >

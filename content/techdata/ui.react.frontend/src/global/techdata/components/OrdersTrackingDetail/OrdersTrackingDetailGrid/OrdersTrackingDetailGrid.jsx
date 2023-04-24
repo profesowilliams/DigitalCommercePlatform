@@ -21,7 +21,7 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
   const gridColumnWidths = Object.freeze({
     actions: '50px',
     description: '287px',
-    id: '66px',
+    id: '95px',
     quantity: '58px',
     shipDate: '99px',
     status: '173x',
