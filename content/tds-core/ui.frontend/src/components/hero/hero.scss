@@ -6,6 +6,14 @@
         position: relative;
     }
 
+    .cmp-teaser__image {
+        img {
+            @include mobile {
+                min-height: 597px;
+            }
+        }
+    }
+
     /*
         Okay below flavors are based on what you can do in AEM
         unfortunately I believe you can only put CSS class on the parent
