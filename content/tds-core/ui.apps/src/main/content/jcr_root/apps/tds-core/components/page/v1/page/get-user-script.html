@@ -26,20 +26,25 @@
 
     let userDataPromise = null;
     let cachedUserData = null;
+    let cachedResponseStatus = null;
     let cacheExpiration = null;
     const CACHE_DURATION = 600;
 
     async function getUserData() {
-        if (cachedUserData && Date.now() < cacheExpiration) {
+        if ((cachedUserData || !!cachedResponseStatus) && Date.now() < cacheExpiration) {
+            if (cachedResponseStatus === 401) {
+                throw(new Error(401));
+            }
+
             return cachedUserData;
         }
 
         if (userDataPromise) {
-            return userDataPromise;
+            return await userDataPromise;
         }
 
-        userDataPromise = new Promise(async (resolve, reject) => {
-            const response = await fetch(
+        try {
+            userDataPromise = fetch(
                 "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
                 "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
                 "headers": {
@@ -54,18 +59,27 @@
                 "credentials": "include"
             });
 
+            const response = await userDataPromise;
+            cachedResponseStatus = response.status;
+            cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+
             if (response.ok) {
                 const data = await response.json();
                 cachedUserData = data.content.user;
-                cacheExpiration = Date.now() + CACHE_DURATION * 1000;
-                resolve(cachedUserData);
+                return cachedUserData;
             } else {
                 console.log('HTTP-Error: ' + response.status);
-                reject(response.status);
+                throw(new Error(response.status));
             }
-        });
+        }
+        catch (error) {
+            throw(new Error(401));
+        }
+        finally {
+            userDataPromise = null;
+        }
 
-        return userDataPromise;
+        return null;
     }
 
     const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
