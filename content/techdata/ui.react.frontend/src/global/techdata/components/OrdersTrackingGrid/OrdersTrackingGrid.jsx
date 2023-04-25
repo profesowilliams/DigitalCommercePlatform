@@ -21,7 +21,6 @@ import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
 import Report from './Report/Report';
 import Pill from '../Widgets/Pill';
-import OrderSearch from '../BaseGrid/Search/Search';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import { fetchData, setPaginationData } from './utils/orderTrackingUtils';
@@ -33,6 +32,7 @@ import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import ToolTip from '../BaseGrid/ToolTip';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
+import OrderSearch from './Search/OrderSearch';
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from '../../../../utils/featureFlagUtils';
 import { useStore } from '../../../../utils/useStore';
 

@@ -67,6 +67,7 @@ export const LOCAL_STORAGE_KEY_USER_DATA = 'userData';
 export const SORT_LOCAL_STORAGE_KEY = 'sortLocalStorageData';
 export const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
 export const SEARCH_LOCAL_STORAGE_KEY = 'searchLocalStorageData';
+export const ORDER_SEARCH_LOCAL_STORAGE_KEY = 'orderSearchLocalStorageData';
 export const PLANS_ACTIONS_LOCAL_STORAGE_KEY = 'plansActionsLocalStorageData';
 export const FILTER_LOCAL_STORAGE_KEY = 'filterLocalStorageData';
 export const ORDER_FILTER_LOCAL_STORAGE_KEY = 'orderFilterLocalStorageData';

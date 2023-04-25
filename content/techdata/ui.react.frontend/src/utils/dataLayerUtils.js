@@ -37,6 +37,7 @@ export const ANALYTICS_TYPES = {
     editConfigStart: "editConfigStart",
     configStart: "configStart",
     configSearch: "configSearch",
+    orderSearch: "orderSearch",
     renewalSearch: "renewalSearch",
     orderDaysSelected: "orderDaysSelected",
     quoteStart: "quoteStart",

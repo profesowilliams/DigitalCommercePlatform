@@ -24,12 +24,6 @@ import {
 import { SearchField } from './SearchField';
 import "../../../../../../src/styles/TopIconsBar.scss";
 
-export const CloseIconWeighted = (props) => (
-  <svg viewBox="0 0 24 24" {...props}>
-    <path d="M6.35 20.025 4 17.65 9.625 12 4 6.35l2.35-2.4L12 9.6l5.65-5.65L20 6.35 14.375 12 20 17.65l-2.35 2.375-5.65-5.65Z" />
-  </svg>
-);
-
 function _GridSearch(
   { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store, hideLabel=false },
   ref
