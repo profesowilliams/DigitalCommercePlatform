@@ -31,7 +31,7 @@ function OrdersTrackingDetail(props) {
               <Link
                 variant="back-to-orders"
                 href={config?.ordersUrl || '#'}
-                underline="none"
+                underline="underline-none"
               >
                 <i className="fas fa-chevron-left"></i>
                 {getDictionaryValueOrKey(config?.labels?.detailsBack)}
