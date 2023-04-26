@@ -52,6 +52,9 @@ use(['../../../common/utils.js'], function (utils) {
     if (properties && properties["lineTdsPartNo"]) {
         labels["lineTdsPartNo"] = properties["lineTdsPartNo"];
     }
+    if (properties && properties["detailsLineHeader"]) {
+      labels["detailsLineHeader"] = properties["detailsLineHeader"];
+    }
 
     if (properties && properties["detailsBack"]) {
         labels["detailsBack"] = properties["detailsBack"];
