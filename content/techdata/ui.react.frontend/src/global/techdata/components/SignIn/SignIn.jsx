@@ -88,6 +88,7 @@ const SignIn = (props) => {
     errorMessage,
     shopLogoutRedirectUrl,
     hideWhenNotLoggedIn,
+    hideWhenLoggedIn,
     showLabel,
     userEndpoint,
     ecommerceAuthenticationLoginEndpoint,
@@ -439,7 +440,8 @@ const SignIn = (props) => {
   }
 
   const signInButton = () => {
-    if(hideWhenNotLoggedIn === "true" && !localStorage.getItem("sessionId")) {
+    const currentLoggedInState = isHttpOnlyEnabled() || isExtraReloadDisabled() ? isLoggedIn : localStorage.getItem("sessionId");
+    if(hideWhenNotLoggedIn === "true" && !currentLoggedInState) {
         return;
     } else
     return (
@@ -458,7 +460,7 @@ const SignIn = (props) => {
         {requested ? (
           "Loading..."
         ) : userDataCheck !== null ? (
-          <DropdownMenu
+          !hideWhenLoggedIn && <DropdownMenu
             userDataCheck={userDataCheck}
             dropDownData={dropDownData}
             items={items}

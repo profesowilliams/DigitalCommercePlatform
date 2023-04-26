@@ -108,6 +108,10 @@ use(function () {
         jsonObject.put("hideWhenNotLoggedIn", properties.get("hideWhenNotLoggedIn"));
     }
 
+    if (properties.get("hideWhenLoggedIn") !== null) {
+        jsonObject.put("hideWhenLoggedIn", properties["hideWhenLoggedIn"]);
+    }
+
     if (properties.get("logoutURL") !== null) {
 
         var logoutUrl = parseLinkURL(properties.get("logoutURL"))

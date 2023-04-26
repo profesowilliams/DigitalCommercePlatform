@@ -11,6 +11,8 @@
 			"authenticationURL":"http://localhost:3000/",
 			"uiServiceEndPoint": "http://localhost:3000/login",
 			"clientId":"testciendID",
+			"hideWhenNotLoggedIn": "false",
+			"hideWhenLoggedIn": false,
 			"myEcId":"testECID",
 			"errorMessage":"Failed to login",
 			"pingLogoutURL":"http://localhost:3000",
@@ -23,4 +25,115 @@
 			"ecommerceAuthenticationLoginEndpoint": "http://localhost:3000/ui-account/v1/login/par"
 		}'
 	></div>
+	<script>
+		//script copied from DigitalCommercePlatform/content/tds-core/ui.apps/src/main/content/jcr_root/apps/tds-core/components/page/v1/page/get-user-script.html for testing purposes so that react dev server has a similar behavior to the AEM server
+		function resolveAcceptLanguage (language, country) {
+			const collectiveCountry = country === 'UK' ? 'GB' : country;
+			return language + '-' + collectiveCountry;
+		}
+	
+		function getHeaderInfoFromUrl(pathName) {
+			let countryIndex = 1; // uat/stage/prod
+			let languageIndex = 2
+			const pathArray = pathName?.split('/');
+	
+			if (pathArray && pathArray.length >= 5 && pathArray[1] === 'content') {
+				countryIndex = 4; // dit/sit
+				languageIndex = 5;
+			}
+	
+			const country = pathArray[countryIndex]?.toUpperCase() || '';
+			const language = pathArray[languageIndex]?.replace('.html', '') || country === 'US' ? 'en' : '';
+			return {
+				site: country,
+				acceptLanguage: resolveAcceptLanguage(language, country)
+			};
+		}
+	
+		const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+	
+		let userDataPromise = null;
+		let cachedUserData = null;
+		let cachedResponseStatus = null;
+		let cacheExpiration = null;
+		const CACHE_DURATION = 600;
+	
+		async function getUserData() {
+			if ((cachedUserData || !!cachedResponseStatus) && Date.now() < cacheExpiration) {
+				if (cachedResponseStatus === 401) {
+					throw(new Error(401));
+				}
+	
+				return cachedUserData;
+			}
+	
+			if (userDataPromise) {
+				return await userDataPromise;
+			}
+	
+			try {
+				userDataPromise = fetch(
+                "http://localhost:3000" +
+                "/ui-account/v1/GetUser/AEM", {
+					"headers": {
+						"accept": "application/json, text/plain, */*",
+						"accept-language": headerInfo.acceptLanguage,
+						"consumer": "AEM",
+						"site": headerInfo.site,
+						"traceid": new Date().toISOString()
+					},
+					"body": null,
+					"method": "GET",
+					"credentials": "include"
+				});
+	
+				const response = await userDataPromise;
+				cachedResponseStatus = response.status;
+				cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+	
+				if (response.ok) {
+					const data = await response.json();
+					cachedUserData = data.content.user;
+					return cachedUserData;
+				} else {
+					console.log('HTTP-Error: ' + response.status);
+					throw(new Error(response.status));
+				}
+			}
+			catch (error) {
+				throw(new Error(401));
+			}
+			finally {
+				userDataPromise = null;
+			}
+	
+			return null;
+		}
+	
+		const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
+		const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
+		async function getSessionInfo() {
+			let isLoggedIn;
+			let userData;
+	
+			if (isHttpOnlyEnabled() || isExtraReloadDisabled()) {
+				let  data;
+	
+				try {
+					data = await getUserData();
+				} catch (error) {
+					data = null;
+				}
+	
+				isLoggedIn = !!data;
+				userData = data;
+			} else {
+				isLoggedIn = window.localStorage.getItem("sessionId");
+				userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+			}
+	
+			return [isLoggedIn, userData];
+		}
+	</script>
+	
 </div>

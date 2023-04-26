@@ -10,13 +10,19 @@ export const RENEWALS_TYPE = {
     resellerName: 'resellerName'
 }
 
-export const getUserDataInitialState = () => JSON.parse(localStorage.getItem("userData"));
+let userIsLoggedIn = window.localStorage.getItem("sessionId");
+let userData = JSON.parse(localStorage.getItem("userData"));
 
-export const getSessionId = () => window.localStorage.getItem("sessionId");
+window.getSessionInfo && window.getSessionInfo().then((data) => {
+  userIsLoggedIn = data[0];
+  userData = data[1];
+});
 
-export const isInternalUser = getUserDataInitialState()?.isInternal ?? false;
+export const getUserDataInitialState = () => userData;
 
-export const isHouseAccount = () => getUserDataInitialState()?.isHouseAccount ?? false;
+export const isHouseAccount = () => {
+    return getUserDataInitialState()?.isHouseAccount ?? false;
+}
 
 export const hasDCPAccess = (user) => {
     const HAS_DCP_ACCESS = ACCESS_TYPES.DCP_ACCESS;
