@@ -43,11 +43,22 @@ function DNotesFlyout({
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
-          <span className="cmp-flyout__content-bold">
-            {getDictionaryValueOrKey(dNotesFlyout.orderNo)}
-            {'  '}
-          </span>
-          {dNoteFlyoutConfig?.id}
+          <div className="cmp-flyout__content__contentGrid">
+            <span className="cmp-flyout__content-bold">
+              {getDictionaryValueOrKey(dNotesFlyout.orderNo)}
+              {'  '}
+            </span>
+            <span>{dNoteFlyoutConfig?.id}</span>
+          </div>
+          <div className="cmp-flyout__content__contentGrid">
+            <span className="cmp-flyout__content-bold">
+              {getDictionaryValueOrKey(dNotesFlyout.poNo)}
+              {'  '}
+            </span>
+            <span className="cmp-flyout__content-description--ellipsis">
+              {dNoteFlyoutConfig?.reseller}
+            </span>
+          </div>
         </div>
         <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(dNotesFlyout.description)}

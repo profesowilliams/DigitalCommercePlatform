@@ -165,6 +165,10 @@ use(["../common/utils.js"], function (utils) {
     dNotesFlyout.orderNo = properties["dNotesFlyoutOrderNo"];
   }
 
+  if (properties && properties["dNotesFlyoutPoNo"]) {
+    dNotesFlyout.poNo = properties["dNotesFlyoutPoNo"];
+  }
+
   if (properties && properties["dNotesFlyoutButton"]) {
     dNotesFlyout.button = properties["dNotesFlyoutButton"];
   }
