@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ORDER_PAGINATION_LOCAL_STORAGE_KEY, SORT_LOCAL_STORAGE_KEY, SEARCH_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
+import {
+  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+  SORT_LOCAL_STORAGE_KEY,
+  SEARCH_LOCAL_STORAGE_KEY,
+} from '../../../../utils/constants';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
@@ -23,7 +27,11 @@ import Report from './Report/Report';
 import Pill from '../Widgets/Pill';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
-import { fetchData, setPaginationData } from './utils/orderTrackingUtils';
+import {
+  fetchData,
+  fetchOrdersCount,
+  setPaginationData,
+} from './utils/orderTrackingUtils';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
@@ -33,7 +41,10 @@ import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import ToolTip from '../BaseGrid/ToolTip';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
 import OrderSearch from './Search/OrderSearch';
-import { isExtraReloadDisabled, isHttpOnlyEnabled } from '../../../../utils/featureFlagUtils';
+import {
+  isExtraReloadDisabled,
+  isHttpOnlyEnabled,
+} from '../../../../utils/featureFlagUtils';
 import { useStore } from '../../../../utils/useStore';
 
 function OrdersTrackingGrid(props) {
@@ -46,10 +57,10 @@ function OrdersTrackingGrid(props) {
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
+  const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
+    useExtendGridOperations(useOrderTrackingStore);
   const userData = useStore((state) => state.userData);
-  const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } = useExtendGridOperations(
-    useOrderTrackingStore
-  );
+
   const componentProp = JSON.parse(props.componentProp);
   const [pill, setPill] = useState(null);
   const formattedDateRange = setDefaultSearchDateRange(
@@ -67,7 +78,6 @@ function OrdersTrackingGrid(props) {
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
-
 
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
@@ -129,7 +139,11 @@ function OrdersTrackingGrid(props) {
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     const ordersCountUrl = new URL(componentProp.ordersCountEndpoint);
-    const ordersCountResponse = await get(ordersCountUrl);
+    const ordersCountResponse = await fetchOrdersCount(
+      ordersCountUrl.href,
+      reportFilterValue.current?.value,
+      dateRange
+    );
     const response = await fetchData(queryOperations);
 
     const mappedResponse = mapServiceData(response);
@@ -252,8 +266,11 @@ function OrdersTrackingGrid(props) {
   };
 
   const addCurrencyToTotalColumn = (list) => {
-    const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA) ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)) : null;
-    const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
+    const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
+      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
+      : null;
+    const currentUserData =
+      isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
 
     const activeCustomer = currentUserData?.activeCustomer;
     const defaultCurrency = activeCustomer?.defaultCurrency || '';
@@ -307,7 +324,7 @@ function OrdersTrackingGrid(props) {
             hideLabel={true}
           />,
           <VerticalSeparator />,
-          <OrderFilter 
+          <OrderFilter
             aemData={componentProp}
             onQueryChanged={onOrderQueryChanged}
           />,
