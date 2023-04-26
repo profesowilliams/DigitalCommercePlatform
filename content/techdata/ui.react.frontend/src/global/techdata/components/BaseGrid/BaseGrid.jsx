@@ -1,4 +1,5 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
+import { useStore } from '../../../../utils/useStore';
 import Grid from '../Grid/Grid';
 import ErrorBoundaryBaseGrid from './utils/ErrorBoundaryBaseGrid';
 import { getBaseColumnDefinitions } from './utils/GenericColumnTypes';
@@ -9,10 +10,17 @@ const _BaseGrid = ({
   DetailRenderers,
   ...extendedConfig
 }) => {
+  const [gridKey, setGridKey] = React.useState(0);
+  const userData = useStore(state => state.userData);
   const columnDefs = getBaseColumnDefinitions(columnList, definitions);
+
+  useEffect(() => {
+    setGridKey(gridKey + 1);
+  }, [userData]);
+
   return (
     <div className="cmp-base-grid">
-      <Grid
+      <Grid key={gridKey}
         columnDefinition={columnDefs}
         customizedDetailedRender={DetailRenderers}
         suppressPaginationPanel={true}
