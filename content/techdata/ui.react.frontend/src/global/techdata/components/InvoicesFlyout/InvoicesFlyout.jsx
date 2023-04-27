@@ -44,11 +44,22 @@ function InvoicesFlyout({
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
-          <span className="cmp-flyout__content-bold">
-            {getDictionaryValueOrKey(invoicesFlyout.orderNo)}
-            {'  '}
-          </span>
-          {invoicesFlyoutConfig?.id}
+          <div className="cmp-flyout__content__contentGrid">
+            <span className="cmp-flyout__content-bold">
+              {getDictionaryValueOrKey(invoicesFlyout.orderNo)}
+              {'  '}
+            </span>
+            <span>{invoicesFlyoutConfig?.id}</span>
+          </div>
+          <div className="cmp-flyout__content__contentGrid">
+            <span className="cmp-flyout__content-bold">
+              {getDictionaryValueOrKey(invoicesFlyout.poNo)}
+              {'  '}
+            </span>
+            <span className="cmp-flyout__content-description--ellipsis">
+              {invoicesFlyoutConfig?.reseller}
+            </span>
+          </div>
         </div>
         <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(invoicesFlyout.description)}

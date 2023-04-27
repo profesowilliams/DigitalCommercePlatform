@@ -23,6 +23,7 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
           id={data?.id}
           invoices={data?.invoices}
           multiple={multiple}
+          reseller={data?.reseller}
         />
       ),
       deliveryNotes: (

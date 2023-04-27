@@ -124,6 +124,10 @@ use(["../common/utils.js"], function (utils) {
     invoicesFlyout.orderNo = properties["invoicesFlyoutOrderNo"];
   }
 
+  if (properties && properties["invoicesFlyoutPoNo"]) {
+    invoicesFlyout.poNo = properties["invoicesFlyoutPoNo"];
+  }
+
   if (properties && properties["invoicesFlyoutButton"]) {
     invoicesFlyout.button = properties["invoicesFlyoutButton"];
   }
