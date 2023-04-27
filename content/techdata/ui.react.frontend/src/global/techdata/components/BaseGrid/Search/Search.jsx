@@ -23,6 +23,7 @@ import {
 } from '../../RenewalsGrid/utils/renewalUtils';
 import { SearchField } from './SearchField';
 import "../../../../../../src/styles/TopIconsBar.scss";
+import { useStore } from "../../../../../utils/useStore";
 
 function _GridSearch(
   { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store, hideLabel=false },
@@ -55,6 +56,7 @@ function _GridSearch(
   const { closeAndCleanToaster } = effects;
   const [inputValueState, setInputValueState] = useState(getInitialValueState());
   const [capsuleValues, setCapsuleValues] = useState({ ...customSearchValues });
+  const userData = useStore(state => state.userData);
 
   function getInitialValueState() {
     if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {

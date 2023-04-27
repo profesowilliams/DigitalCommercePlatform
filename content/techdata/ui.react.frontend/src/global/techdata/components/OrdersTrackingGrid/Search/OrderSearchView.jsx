@@ -7,6 +7,7 @@ import { getDictionaryValue } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 import OrderSearchCapsule from './OrderSearchCapsule';
 import useComputeBranding from './../../../hooks/useComputeBranding';
+import { useStore } from '../../../../../utils/useStore';
 
 const OrderSearchView = ({
   isSearchCapsuleVisible,
@@ -28,6 +29,7 @@ const OrderSearchView = ({
   store,
 }) => {
   const { computeClassName } = useComputeBranding(store);
+  const userData = useStore(state => state.userData);
 
   return (
     <>

@@ -354,6 +354,7 @@ const SignIn = (props) => {
       handleLoginRedirection();
       setUserDataCheck(userData);
       setUserData(userData);
+      updateLoginStyles();
 
       const traceId = generateTraceId(userData);
 
