@@ -1,62 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Link from '../Widgets/Link';
+import React from 'react';
 import SoldToCard from './SoldToCard';
 import OrdersTrackingDetailGrid from './OrdersTrackingDetailGrid/OrdersTrackingDetailGrid';
 import useGet from '../../hooks/useGet';
 import OrderAcknowledgementCard from './OrderAcknowledgementCard';
 import ContactCard from './ContactCard';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
-import { getUrlParams } from "../../../../utils";
-
+import { getUrlParams } from '../../../../utils';
+import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
+import OrderTrackingContainer from './OrderTrackingContainer';
 
 function OrdersTrackingDetail(props) {
-  const { id = "" } = getUrlParams();
+  const { id = '' } = getUrlParams();
   const componentProps = JSON.parse(props.componentProp);
   const config = {
     ...componentProps,
+    productLines: { agGridLicenseKey: componentProps?.agGridLicenseKey },
     serverSide: false,
     paginationStyle: 'none',
   };
-
-  const [apiResponse, isLoading, error] = useGet(
+  const [apiResponse] = useGet(
     `${config.uiServiceEndPoint}?id=${id}`
   );
- 
   return (
     <div className="cmp-quote-preview cmp-order-preview">
       <section>
         <div className="cmp-orders-qp__config-grid">
-          <div className="header-container">
-            <div className="image-container">
-              <Link
-                variant="back-to-orders"
-                href={config?.ordersUrl || '#'}
-                underline="underline-none"
-              >
-                <i className="fas fa-chevron-left"></i>
-                {getDictionaryValueOrKey(config?.labels?.detailsBack)}
-              </Link>
-            </div>
-            <div className="export-container">
-              <div>
-                <span className="quote-preview-bold">
-                  {apiResponse?.content.status}
-                </span>
-                <span className="quote-preview-bold">
-                  {apiResponse?.content.orderNumber &&
-                    ` | ${getDictionaryValueOrKey(
-                      config.labels?.detailsOrderNo
-                    )}: `}
-                </span>
-                <span className="quote-preview">
-                  {apiResponse?.content.orderNumber}
-                </span>
-              </div>
-              <span className="quote-actions">
-                {/* {getDictionaryValueOrKey(config?.labels?.detailsActions)} */}
-              </span>
-            </div>
-          </div>
+          <OrderTrackingDetailHeader config={config} apiResponse={apiResponse}/>
           <div className="info-container">
             <SoldToCard
               soldTo={apiResponse?.content?.shipTo || {}}
@@ -70,11 +38,7 @@ function OrdersTrackingDetail(props) {
           </div>
         </div>
         <div className="cmp-orders-qp__grid cmp-order-preview">
-          <div className="details-container">
-            <span className="details-preview">
-              {getDictionaryValueOrKey(config?.labels?.detailsLineHeader)}
-            </span>
-          </div>
+          <OrderTrackingContainer config={config}/>
           {apiResponse && (
             <OrdersTrackingDetailGrid
               data={apiResponse.content}
@@ -86,5 +50,4 @@ function OrdersTrackingDetail(props) {
     </div>
   );
 }
-
 export default OrdersTrackingDetail;
