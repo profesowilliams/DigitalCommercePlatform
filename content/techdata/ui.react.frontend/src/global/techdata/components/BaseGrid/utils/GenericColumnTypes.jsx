@@ -48,6 +48,10 @@ const columnTypes = {
   plainResellerColumn: withTryCatch(createPlainResellerColumn),
 };
 
+window.getSessionInfo && window.getSessionInfo().then((data) => {
+  columnTypes.plainResellerColumn = withTryCatch(createPlainResellerColumn);
+});
+
 export const getBaseColumnDefinitions = (originalDefinitions, bussinesConfig) =>
   originalDefinitions
     .map((definition) => columnTypes[definition.type](definition, bussinesConfig))
