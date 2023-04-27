@@ -2,13 +2,13 @@ import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
-function DeliveryNotesColumn({ deliveryNotes = [], multiple, id }) {
+function DeliveryNotesColumn({ deliveryNotes = [], multiple, id, reseller }) {
   const hasMultiple = deliveryNotes.length > 1;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
-      value: { data: deliveryNotes, show: true, id: id },
+      value: { data: deliveryNotes, show: true, id: id, reseller: reseller },
     });
   };
   return deliveryNotes.length == 0 ? (

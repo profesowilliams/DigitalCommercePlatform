@@ -31,6 +31,7 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
           id={data?.id}
           deliveryNotes={data?.deliveryNotes}
           multiple={multiple}
+          reseller={data?.reseller}
         />
       ),
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
