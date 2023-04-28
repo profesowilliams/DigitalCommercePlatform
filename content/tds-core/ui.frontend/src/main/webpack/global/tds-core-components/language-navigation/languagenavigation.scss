@@ -43,11 +43,22 @@
   display: flex !important;
 }
 
+.techdata-header-style .languagenavigation {
+    .cmp-region-select-dropdown {
+        box-shadow : inset 0 0.125rem 0.0625rem 0 map-get($color-palette, 'brand-light-blue');
+    }
+}
+.techdata-header-style .languagenavigation .cmp-button__region-select {
+   background-color: map-get($color-palette, 'td-dark-blue');
+}
 .techdata-header-style .languagenavigation .cmp-radio-btn input {
     width: 1rem;
     height: 1rem;
     left: -0.125rem;
     top: 0.875rem;
+}
+.techdata-header-style .languagenavigation .regionSelectDropdown {
+    top: 49px !important;
 }
 
 .cmp-form-options--radio {
@@ -93,7 +104,7 @@
   left: rem(20px);
 }
 
-.languagenavigation.techdatastyle .cmp-form-options__field-description {
+.techdata-header-style .languagenavigation .cmp-form-options__field-description {
     top: unset;
     left: unset;
     padding-left: rem(15px);

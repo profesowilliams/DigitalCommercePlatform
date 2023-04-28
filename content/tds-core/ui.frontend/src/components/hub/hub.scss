@@ -74,6 +74,10 @@
             }
         }
     }
+    .cmp-button__dropdown{
+       top: 62px !important;
+       border-top: 2px solid map-get($color-palette, 'brand-light-blue');
+    }
   }
 
 

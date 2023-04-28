@@ -677,11 +677,13 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
             .cmp-sign-in {
                 .cmp-sign-in-list {
                     border-top: 2px solid map-get($color-palette, 'brand-button-blue');
+                    top : 48px;
                 }
             }
             .cmp-sign-in-button {
                 &::before {
                     background-color: map-get($color-palette, 'charcoal');
+                    top : 48px;
 
                     @media (max-width: 1024px) {
                         background-color: map-get($color-palette, 'white');
@@ -883,6 +885,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
             .cmp-sign-in {
                 .cmp-sign-in-list {
                     border-top: 2px solid map-get($color-palette, 'brand-light-blue');
+                    top : 48px;
                 }
             }
             .cmp-sign-in-button {
@@ -899,6 +902,7 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
 
                 &:hover {
                     color: map-get($color-palette, 'brand-light-blue');
+                    top : 48px;
                     &::before {
                         -webkit-mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
                         mask: url('/content/dam/global-shared/icons/blended/person.svg') no-repeat;
