@@ -187,3 +187,13 @@ export function setPaginationData(response, pageNumber, pageSize = 25) {
     pageNumber: parseInt(pageNumber) || 1,
   };
 }
+
+export function addCurrentPageNumber(customPaginationRef, request) {
+  const INITIAL_PAGE = 1;
+  const urlMap = urlStrToMapStruc(request.url);
+  const pageNumber =
+    customPaginationRef.current?.pageNumber ||
+    INITIAL_PAGE; /** to take care of 0 value */
+  urlMap.set('PageNumber', pageNumber);
+  return mapStrucToUrlStr(urlMap);
+}

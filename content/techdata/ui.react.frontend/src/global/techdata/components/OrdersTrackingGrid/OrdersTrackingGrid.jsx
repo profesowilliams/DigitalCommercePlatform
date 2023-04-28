@@ -9,7 +9,6 @@ import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import BaseGridPagination from '../BaseGrid/Pagination/BaseGridPagination';
 import {
-  addCurrentPageNumber,
   getLocalStorageData,
   hasLocalStorageData,
   removeLocalStorageData,
@@ -19,7 +18,6 @@ import {
   isFirstTimeSortParameters,
   updateQueryString,
 } from '../RenewalsGrid/utils/renewalUtils';
-import { get } from '../../../../utils/api';
 import VerticalSeparator from '../Widgets/VerticalSeparator';
 import OrderExport from './Export/OrderExport';
 import OrderFilter from './Filter/OrderFilter';
@@ -31,6 +29,7 @@ import {
   fetchData,
   fetchOrdersCount,
   setPaginationData,
+  addCurrentPageNumber,
 } from './utils/orderTrackingUtils';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
