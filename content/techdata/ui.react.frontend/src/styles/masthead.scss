@@ -655,6 +655,11 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
 
     &.techdata-dark {
         .hub {
+
+            .cmp-button__dropdown {
+                border-color: map-get($color-palette, 'brand-button-blue') !important;
+            }
+
             .cmp-button {
 
                 &::before {
@@ -769,6 +774,11 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         }
 
         .languagenavigation {
+
+            .cmp-region-select-dropdown {
+                box-shadow : inset 0 0.125rem 0.0625rem 0 map-get($color-palette, 'brand-button-blue');
+            }
+
             .cmp-dropbtn {
                 &::before {
                     background-color: map-get($color-palette, 'charcoal');
@@ -868,6 +878,10 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         @extend .headerutility;
 
         .hub {
+
+            .cmp-button__dropdown {
+                border-top: 2px solid map-get($color-palette, 'brand-light-blue');
+            }
             .cmp-button {
                 &::before {
                     filter: $white;
@@ -961,6 +975,11 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
         }
 
         .languagenavigation {
+
+            .cmp-region-select-dropdown {
+                box-shadow : inset 0 0.125rem 0.0625rem 0 map-get($color-palette, 'brand-light-blue');
+            }
+
             .cmp-dropbtn {
                 &::before {
                     filter: $white;

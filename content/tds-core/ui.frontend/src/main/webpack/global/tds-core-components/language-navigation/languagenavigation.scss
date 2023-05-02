@@ -43,11 +43,6 @@
   display: flex !important;
 }
 
-.techdata-header-style .languagenavigation {
-    .cmp-region-select-dropdown {
-        box-shadow : inset 0 0.125rem 0.0625rem 0 map-get($color-palette, 'brand-light-blue');
-    }
-}
 .techdata-header-style .languagenavigation .cmp-button__region-select {
    background-color: map-get($color-palette, 'td-dark-blue');
 }

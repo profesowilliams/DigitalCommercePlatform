@@ -202,12 +202,12 @@ export default class Header {
                 this.header.style.backgroundColor = this.authorColor;
             }
             else {
-                this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
+                this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0).join(',')).concat(",1)");
                 this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
             }
         }
         else{
-            this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0, -1).join(',')).concat(",1)");
+            this.header.style.backgroundColor = "rgba(".concat(rgb.slice(0).join(',')).concat(",1)");
             this.header.classList.remove('cmp-experiencefragment__header--sticky--opaque');
         }
     }
