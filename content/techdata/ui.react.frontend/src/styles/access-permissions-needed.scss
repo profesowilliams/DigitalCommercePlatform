@@ -1,0 +1,48 @@
+div.access-permissions_wrapper{
+    position: absolute;
+    width: 1280px;
+    height: 402px;
+    left: 80px;
+    top: 156px;
+}
+
+div.access-permissions_div{
+    position: absolute;
+    width: 456px;
+    height: 329px;
+    left: 412px;
+    top: 40px;
+    text-align: center;
+}
+
+h2.access-permissions_header{
+    position: absolute;
+    width: 456px;
+    height: 46px;
+    left: 0;
+    top: 163px;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: $brand-charcoal;
+}
+
+h5.access-permissions_content{
+    position: absolute;
+    width: 431px;
+    height: 120px;
+    left: 12px;
+    top: 209px;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: $brand-charcoal;
+}
