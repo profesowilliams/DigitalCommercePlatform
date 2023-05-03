@@ -3,15 +3,17 @@ const app = require("../server/server");
 app.post("/ui-account/v1/login/par", (req, res) => {
   const { continueUrl } = req.body;
   const requestUriString = `http://localhost:3000/?continue_url=${continueUrl}`;
-  res.json({
-    requestUri: requestUriString,
-    expiresIn: 60,
-    isError: false,
-    errorCode: null,
-    errorType: 0,
-    errorDescription: null,
-    exception: null,
-  });
+  setTimeout(() => {
+    res.status(200).json({
+      requestUri: requestUriString,
+      expiresIn: 60,
+      isError: false,
+      errorCode: null,
+      errorType: 0,
+      errorDescription: null,
+      exception: null,
+    });
+  }, 2000);
 });
 
 app.get("/ui-account/v1/GetUser/AEM", (req, res) => {

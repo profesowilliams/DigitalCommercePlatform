@@ -8,7 +8,7 @@ export const getUser = async (endpoint) => {
     data = data?.data?.content.user;
   } catch (error) {
     if (error.response.status !== 401) {
-      throw error;
+      throw new Error(response.status);
     }
   }
   return data;
@@ -42,6 +42,7 @@ export const initializeSession = async (
     }
   } catch (error) {
     userData = null;
+    throw new Error(error);
   }
 
   return userData;

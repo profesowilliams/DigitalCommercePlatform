@@ -94,11 +94,24 @@ const SignIn = (props) => {
     ecommerceAuthenticationLoginEndpoint,
   } = configDataAEM;
   const requested = props.data.auth.requested;
-  const isError = props.data.auth.showError;
-  const isLoading = props.data.auth.loading;
+  const [isError, setIsError] = useState(isHttpOnlyEnabled() || isExtraReloadDisabled() ? false : props.data.auth.showError);
+  const [isLoading, setIsLoading] = useState(isHttpOnlyEnabled() || isExtraReloadDisabled() ? false : props.data.auth.loading);
   const userDataLS = props.data.auth.userData;
   const userData = useStore(state => state.userData);
   const [userDataCheck, setUserDataCheck] = useState(populateLoginData());
+
+  useEffect(() => {
+    if (!isHttpOnlyEnabled() && !isExtraReloadDisabled()) {
+      setIsError(props.data.auth.showError);
+    }
+  }, [props.data.auth.showError]);
+
+  useEffect(() => {
+    if (!isHttpOnlyEnabled() && !isExtraReloadDisabled()) {
+      setIsLoading(props.data.auth.loading);
+    }
+  }, [props.data.auth.loading]);
+
 
   function removeParam(key) {
     const newUrl = new URL(window.location);
@@ -347,19 +360,27 @@ const SignIn = (props) => {
     }
 
   const checkSessionStatus = async (shouldLogin) => {
-    const userData = await initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin);
+    try {
+      setIsLoading(true);
+      setIsError(false);
+      const userData = await initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin);
 
-    if(userData) {
-      handleLoginResponse(userData);
-      handleLoginRedirection();
-      setUserDataCheck(userData);
-      setUserData(userData);
-      updateLoginStyles();
+      if(userData) {
+        handleLoginResponse(userData);
+        handleLoginRedirection();
+        setUserDataCheck(userData);
+        setUserData(userData);
+        updateLoginStyles();
 
-      const traceId = generateTraceId(userData);
+        const traceId = generateTraceId(userData);
 
-      axios.defaults.headers.common['TraceId'] = traceId;
-      USaxios.defaults.headers.common['TraceId'] = traceId;
+        axios.defaults.headers.common['TraceId'] = traceId;
+        USaxios.defaults.headers.common['TraceId'] = traceId;
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      setIsError(true);
     }
   }
 
