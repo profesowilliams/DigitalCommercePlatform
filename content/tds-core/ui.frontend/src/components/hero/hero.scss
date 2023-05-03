@@ -60,6 +60,7 @@
            text-align: center;
            margin: 0 auto;
            width: 100%;
+           color: white;
             @include mobile {
                 font-size: 52px;
                 line-height: 78px;
@@ -78,7 +79,7 @@
             width: 100%;
 
             @include mobile {
-                top: 35%;
+                bottom: 0;
                 padding: 0;
                 width: 100%;
             }
@@ -294,6 +295,26 @@
 }
 
 .cmp-teaser {
+
+    .mobile-image {
+        display: none;
+        min-height: 597px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 65%;
+         @include mobile {
+            display: block;
+         }
+    }
+
+    &__image-container {
+        .cmp-teaser__image {
+            @include mobile {
+                display: none;
+            }
+        }
+    }
+
     &__bottom-section {
         position: absolute;
         bottom: 0;
