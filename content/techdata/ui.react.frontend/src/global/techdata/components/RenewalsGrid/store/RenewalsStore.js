@@ -40,7 +40,8 @@ const INITIAL_STATE = {
   },
   isTDSynnex:false,
   branding:'',
-  showCopyFlyout:false
+  showCopyFlyout: false,
+  analyticsCategory: "renewals"
 };
 
 const store = (set, get, a) => ({

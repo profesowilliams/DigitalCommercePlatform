@@ -1,15 +1,18 @@
 import React, { forwardRef, useEffect, useImperativeHandle } from 'react'
+import Button from '../../Widgets/Button'
 import { ChevronDoubleLeftIcon, ChevronDoubleRightIcon, ChevronLeftIcon, ChevronRightIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValue } from '../../../../../utils/utils';
+import { getPaginationAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
 import useBasePaginationState from './useBasePaginationState';
 
 const PAGINATION_LOCAL_STORAGE_KEY = 'paginationLocalStorageData';
 
 function BaseGridPagination({onQueryChanged, store}, ref) {
 
-  const {paginationStates, paginationHandlers, processPaginationString} = useBasePaginationState({store, onQueryChanged});
+  const {paginationStates, paginationHandlers, processPaginationString, analyticsCategory} = useBasePaginationState({store, onQueryChanged});
   const {pageNumber, pageInputRef, pageCount} = paginationStates;
-  const {goToFirstPage, incrementHandler, decrementHandler, gotToLastPage, handleInputchange} = paginationHandlers;
+  const { goToFirstPage, incrementHandler, decrementHandler, gotToLastPage, handleInputchange } = paginationHandlers;
+
    /**
    * The useImperativeHandle hook exposes the paginationData state to external references, 
    * enabling the custom interceptor to make the proper request to the service on changes. 
@@ -22,20 +25,22 @@ function BaseGridPagination({onQueryChanged, store}, ref) {
         {processPaginationString()}
       </div>
       <div className="cmp-navigation__actions">
-        <button
-          className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
+        <Button
+          btnClass={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
           disabled={pageNumber === 1}
           onClick={goToFirstPage}
+          analyticsCallback={getPaginationAnalytics.bind(null, analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin, pageNumber)}
         >
-        <ChevronDoubleLeftIcon/>            
-        </button>
-        <button
-          className={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
+          <ChevronDoubleLeftIcon />
+        </Button>
+        <Button
+          btnClass={`move-button${pageNumber === 1 ? "__disabled" : ""}`}
           disabled={pageNumber === 1}
           onClick={decrementHandler}
+          analyticsCallback={getPaginationAnalytics.bind(null, analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack, pageNumber)}
         >
         <ChevronLeftIcon/>          
-        </button>
+        </Button>
         <div className="cmp-navigation__actions-labels">
           <div className="cmp-input-underline">          
             <input
@@ -52,20 +57,22 @@ function BaseGridPagination({onQueryChanged, store}, ref) {
           <span>{getDictionaryValue("grids.common.label.of", "of")}</span>
           <span>{pageCount}</span>
         </div>      
-        <button
-          className={`move-button${pageNumber === pageCount ? "__disabled" : ""}`}
+        <Button
+          btnClass={`move-button${pageNumber === pageCount ? "__disabled" : ""}`}
           disabled={pageNumber === pageCount}
           onClick={incrementHandler}
+          analyticsCallback={getPaginationAnalytics.bind(null, analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward, pageNumber)}
         >
        <ChevronRightIcon/>          
-        </button>
-        <button
-          className={`move-button${pageNumber === pageCount ? "__disabled" : ""}`}
+        </Button>
+        <Button
+          btnClass={`move-button${pageNumber === pageCount ? "__disabled" : ""}`}
           disabled={pageNumber === pageCount}
           onClick={gotToLastPage}
+          analyticsCallback={getPaginationAnalytics.bind(null, analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd, pageNumber)}
         >
         <ChevronDoubleRightIcon/>
-        </button>
+        </Button>
       </div>
     </div>
   );

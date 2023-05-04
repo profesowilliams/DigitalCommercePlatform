@@ -4,6 +4,7 @@ import {
   SORT_LOCAL_STORAGE_KEY,
   SEARCH_LOCAL_STORAGE_KEY,
   ORDER_SEARCH_LOCAL_STORAGE_KEY,
+  LOCAL_STORAGE_KEY_USER_DATA,
 } from '../../../../utils/constants';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
@@ -31,21 +32,20 @@ import {
   fetchOrdersCount,
   setPaginationData,
   addCurrentPageNumber,
+  compareSort,
 } from './utils/orderTrackingUtils';
-import { setDefaultSearchDateRange } from '../../../../utils/utils';
-import { ANALYTICS_TYPES, pushEvent } from '../../../../utils/dataLayerUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import ToolTip from '../BaseGrid/ToolTip';
-import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
 import OrderSearch from './Search/OrderSearch';
 import {
   isExtraReloadDisabled,
   isHttpOnlyEnabled,
 } from '../../../../utils/featureFlagUtils';
 import { useStore } from '../../../../utils/useStore';
+import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
 
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
@@ -56,6 +56,7 @@ function OrdersTrackingGrid(props) {
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
+  const category = useOrderTrackingStore(state => state.analyticsCategory);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
     useExtendGridOperations(useOrderTrackingStore);
@@ -168,6 +169,7 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSortChanged = (evt) => {
+    const currentSortState = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     const sortModelList = evt.columnApi.getColumnState();
     const sortedModel = sortModelList
       .filter((o) => !!o.sort)
@@ -183,12 +185,8 @@ function OrdersTrackingGrid(props) {
     const sortingEventFilter = evt?.columnApi
       ?.getColumnState()
       .filter((val) => val.sort);
-    if (sortingEventFilter.length === 1) {
-      pushEvent(ANALYTICS_TYPES.events.click, {
-        type: ANALYTICS_TYPES.types.button,
-        category: ANALYTICS_TYPES.category.renewalsTableInteraction,
-        name: sortingEventFilter?.[0]?.colId,
-      });
+    if (sortingEventFilter.length === 1 && !compareSort(currentSortState, hasSortChanged.current)) {
+      pushDataLayer(getSortAnalytics(category, sortedModel));
     }
   };
 

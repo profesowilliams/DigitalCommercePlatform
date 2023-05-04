@@ -3,6 +3,7 @@ import { PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { maxCounterCalculator, minCounterCalculator } from '../../../../../utils/paginationUtil';
 import { getDictionaryValue } from '../../../../../utils/utils';
 import { updateQueryString } from '../../RenewalsGrid/utils/renewalUtils';
+import { pushDataLayer, getPaginationAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
 
 //store can either be renewalsStore or ordertrackingStore
 function useBasePaginationState({ store, onQueryChanged }) {
@@ -12,7 +13,8 @@ function useBasePaginationState({ store, onQueryChanged }) {
   });  
   const pageInputRef = useRef();
   const paginationData = store(st => st.pagination);
-  const effects = store( st => st.effects);
+  const effects = store(st => st.effects);
+  const analyticsCategory = store(st => st.analyticsCategory);
 
   const {
     totalCounter,
@@ -74,7 +76,8 @@ function useBasePaginationState({ store, onQueryChanged }) {
   };
 
   const goToSpecificPage = (specificNumber) => {
-    const value = { ...paginationData, pageNumber:specificNumber+1};
+    const value = { ...paginationData, pageNumber: specificNumber + 1 };
+    pushDataLayer(getPaginationAnalytics(analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo, value.pageNumber));
     saveAndUpdatePagination(value);   
   }
 
@@ -146,7 +149,7 @@ function useBasePaginationState({ store, onQueryChanged }) {
   const paginationHandlers = {goToFirstPage, incrementHandler, decrementHandler, gotToLastPage, handleInputchange};
   const paginationStates = {pageNumber, pageInputRef, pageCount};
 
-  return {paginationStates, paginationHandlers, processPaginationString};
+  return { paginationStates, paginationHandlers, processPaginationString, analyticsCategory };
 }
 
 export default useBasePaginationState;

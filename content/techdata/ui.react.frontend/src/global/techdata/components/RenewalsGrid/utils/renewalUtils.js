@@ -535,3 +535,12 @@ export const getContextMenuItems = (params, config) => [
       }] : [])
 
 ]
+
+export const compareSort = (oldSort, newSort) => {
+  let retValue = false;
+  if (oldSort?.sortData?.length && newSort?.sortData?.length) {
+    retValue = (oldSort.sortData[0].colId == newSort.sortData[0].colId &&
+      oldSort.sortData[0].sort == newSort.sortData[0].sort);
+  }
+  return retValue;
+}

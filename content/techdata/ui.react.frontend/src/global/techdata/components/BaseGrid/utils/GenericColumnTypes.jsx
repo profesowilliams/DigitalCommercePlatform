@@ -1,13 +1,13 @@
 import React from 'react';
 import { isHouseAccount } from '../../../../../utils/user-utils';
 
-const createColumn = (definition, bussinesConfig = {}) => {
+const createColumn = (definition, businessConfig = {}) => {
   const { columnLabel, columnKey, sortable = false } = definition;
-  if (!bussinesConfig?.createColumnComponent) {
+  if (!businessConfig?.createColumnComponent) {
     console.log('Object is missing required properties');
     return null;
   }
-  const { columnOverrides = '', createColumnComponent = '' } = bussinesConfig;
+  const { columnOverrides = '', createColumnComponent = '' } = businessConfig;
   return {
     headerName: columnLabel,
     field: columnKey,
@@ -30,13 +30,13 @@ const withTryCatch = (fn) => (...args) => {
   }
 };
 
-const createPlainTextColumn = (definition, bussinesConfig = {}) => createColumn(definition, bussinesConfig);
+const createPlainTextColumn = (definition, businessConfig = {}) => createColumn(definition, businessConfig);
 
-const createButtonListColumn = (definition, bussinesConfig = {}) => createColumn(definition, bussinesConfig);
+const createButtonListColumn = (definition, businessConfig = {}) => createColumn(definition, businessConfig);
 
-const createPlainResellerColumn = (definition, bussinesConfig = {}) => {
+const createPlainResellerColumn = (definition, businessConfig = {}) => {
   if (isHouseAccount()) {
-    return createColumn(definition, bussinesConfig);
+    return createColumn(definition, businessConfig);
   } else {
     return null;
   }
@@ -52,7 +52,7 @@ window.getSessionInfo && window.getSessionInfo().then((data) => {
   columnTypes.plainResellerColumn = withTryCatch(createPlainResellerColumn);
 });
 
-export const getBaseColumnDefinitions = (originalDefinitions, bussinesConfig) =>
+export const getBaseColumnDefinitions = (originalDefinitions, businessConfig) =>
   originalDefinitions
-    .map((definition) => columnTypes[definition.type](definition, bussinesConfig))
+    .map((definition) => columnTypes[definition.type](definition, businessConfig))
     .filter((c) => c !== null);

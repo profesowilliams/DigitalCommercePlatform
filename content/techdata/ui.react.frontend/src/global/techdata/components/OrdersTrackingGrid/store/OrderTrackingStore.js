@@ -35,6 +35,7 @@ const INITIAL_STATE = {
   orderFilterCounter: 0,
   isTDSynnex: true,
   branding: '',
+  analyticsCategory: "order tracking"
 };
 
 const store = (set,get) => ({

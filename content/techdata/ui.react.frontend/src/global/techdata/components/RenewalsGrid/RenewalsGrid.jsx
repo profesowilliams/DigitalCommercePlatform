@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { LOCAL_STORAGE_KEY_USER_DATA, TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
-import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
@@ -23,7 +22,7 @@ import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow';
 import { SORT_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { setDefaultSearchDateRange } from "../../../../utils/utils";
-import { setLocalStorageData, hasLocalStorageData, getLocalStorageData } from "./utils/renewalUtils";
+import { setLocalStorageData, hasLocalStorageData, getLocalStorageData, compareSort } from "./utils/renewalUtils";
 import useRenewalFiltering from "../RenewalFilter/hooks/useRenewalFiltering";
 import { isAuthormodeAEM, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 import Toaster from "../Widgets/Toaster";
@@ -37,12 +36,14 @@ import BaseGridPagination from "../BaseGrid/Pagination/BaseGridPagination";
 import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
 import ToolTip from './../BaseGrid/ToolTip';
 import { useStore } from "../../../../utils/useStore";
+import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
 
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic, resetGrid } = useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState(state => state.effects);
+  const category = useRenewalGridState(state => state.analyticsCategory);
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const userData = useStore((state) => state.userData);
@@ -201,6 +202,7 @@ function RenewalsGrid(props) {
   }
 
   const onSortChanged = (evt) => {
+    const currentSortState = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     const sortModelList = evt.columnApi.getColumnState();
     const sortedModel = sortModelList.filter(o => !!o.sort).map( ({colId, sort }) => ({colId, sort}));
     const renewalPlanItem = sortedModel.find(x => x.colId === 'renewedduration');
@@ -210,12 +212,8 @@ function RenewalsGrid(props) {
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;  
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current); 
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
-    if (sortingEventFilter.length === 1) {
-      pushEvent(ANALYTICS_TYPES.events.click, {
-        type: ANALYTICS_TYPES.types.button,
-        category: ANALYTICS_TYPES.category.renewalsTableInteraction,
-        name: sortingEventFilter?.[0]?.colId,
-      });
+    if (sortingEventFilter.length === 1 && !compareSort(currentSortState, hasSortChanged.current)) {
+      pushDataLayer(getSortAnalytics(category, sortedModel));
     }
   };
 

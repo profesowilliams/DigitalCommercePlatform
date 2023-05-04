@@ -2,11 +2,13 @@ import { usGet } from "../../../../../utils/api";
 import { formatDatePicker, createdFromDate } from "../../../../../utils/utils";
 import {
   calcSecondLevelSorting,
+  extractSortColAndDirection,
   isFirstTimeSortParameters,
   isRepeatedSortAction,
   isSameFilterRepeated,
   mapStrucToUrlStr,
   urlStrToMapStruc,
+  compareSort,
 } from '../../RenewalsGrid/utils/renewalUtils';
 
 const reportOptionsConfig = {
@@ -197,3 +199,5 @@ export function addCurrentPageNumber(customPaginationRef, request) {
   urlMap.set('PageNumber', pageNumber);
   return mapStrucToUrlStr(urlMap);
 }
+
+export { compareSort };
