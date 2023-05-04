@@ -22,3 +22,5 @@ extends:
   template: pullrequest-template-aem-v1.yml@DCP
   parameters:
           pomFile: 'content/tds-site/pom.xml'
+          projectKey: 'DC-AEM-TDS-SITE'
+          projectName: 'DC-AEM-TDS-SITE'
