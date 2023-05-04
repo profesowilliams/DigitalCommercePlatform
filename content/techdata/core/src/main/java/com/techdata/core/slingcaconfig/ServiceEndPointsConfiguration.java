@@ -82,6 +82,9 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Orders Count Endpoint", description = "Orders Count Endpoint")
     String ordersCountEndpoint();
+    
+    @Property(label = "Orders Download Documents Endpoint", description = "Orders Download Documents Endpoint")
+    String ordersDownloadDocumentsEndpoint();
 
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();

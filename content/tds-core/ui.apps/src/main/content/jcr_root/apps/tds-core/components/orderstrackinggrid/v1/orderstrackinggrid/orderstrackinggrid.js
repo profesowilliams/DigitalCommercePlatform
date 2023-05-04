@@ -247,6 +247,10 @@ use(["../common/utils.js"], function (utils) {
     this.serviceData.uiServiceDomain + this.serviceData.ordersCountEndpoint ||
     "";
 
+  jsonObject["ordersDownloadDocumentsEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.ordersDownloadDocumentsEndpoint || "";
+
   if (this.uiServiceDomain && this.downloadAllInvoicesEndpoint) {
     jsonObject["downloadAllInvoicesEndpoint"] =
       this.uiServiceDomain + this.downloadAllInvoicesEndpoint;

@@ -387,6 +387,7 @@ function OrdersTrackingGrid(props) {
         invoicesColumnList={gridConfig.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
+        componentProp={componentProp}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

@@ -117,16 +117,51 @@ const validateBlobResponse = async (response, modalPDFErrorHandler) => {
   }
 };
 
+const validateBlobResponseWithoutModal = async (response) => {
+  try {
+    const responseData = await response?.data?.text();
+    const responseJson = JSON.parse(responseData); // validate if is a json to get the error message
+    const titleError = 'Error code ' + responseJson?.error?.code;
+    console.log(titleError, responseJson.error.messages[0]);
+    return false;
+  } catch (error) {
+    // Not a json so is a BLOB and sucecss response
+    return true;
+  }
+};
+
 /**
- * 
+ *
  * @param {string} url
  * @param {string} name
- * @param {{redirect: boolean}} options 
- * @param {(title: string, message: string) => void} modalPDFErrorHandler 
+ * @param {{redirect: boolean}} options
+ * @param {(title: string, message: string) => void} modalPDFErrorHandler
  */
-export const requestFileBlob = async (url, name = '', options = { redirect: false }, modalPDFErrorHandler) => {
-    const response = await axios.get(url, { responseType: 'blob' });
-    await validateBlobResponse(response, modalPDFErrorHandler) && generateFile(response, name, options);
+export const requestFileBlob = async (
+  url,
+  name = '',
+  options = { redirect: false },
+  modalPDFErrorHandler
+) => {
+  const response = await axios.get(url, { responseType: 'blob' });
+  (await validateBlobResponse(response, modalPDFErrorHandler)) &&
+    generateFile(response, name, options);
+};
+
+/**
+ *
+ * @param {string} url
+ * @param {string} name
+ * @param {{redirect: boolean}} options
+ */
+export const requestFileBlobWithoutModal = async (
+  url,
+  name = '',
+  options = { redirect: false }
+) => {
+  const response = await axios.get(url, { responseType: 'blob' });
+  (await validateBlobResponseWithoutModal(response)) &&
+    generateFile(response, name, options);
 };
 
 const currentDate = new Date();

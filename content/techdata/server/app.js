@@ -11783,3 +11783,12 @@ app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
     return res.status(200).json(success);
   }, 1000);
 });
+
+app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
+  const { orderId } = req.query;
+  if (orderId && orderId.length === 1) {
+    return res.download("invoice.pdf");
+  } else {
+    return res.download("file.zip");
+  }
+});
