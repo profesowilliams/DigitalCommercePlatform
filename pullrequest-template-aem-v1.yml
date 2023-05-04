@@ -1,11 +1,29 @@
 parameters:
 - name: pomFile  
   default: 'content/tds-site/pom.xml'
+- name: projectKey  
+  default: 'DC-AEM-*'
+- name: projectName  
+  default: 'DC-AEM-*'
+- name: sonarExclusions  
+  default: ''
 
 variables:
 - group: DF-GateBuilds
 - name: Agent.Source.Git.ShallowFetchDepth
   value: 0
+
+- task: SonarCloudPrepare@1
+  displayName: 'Prepare analysis on SonarCloud'
+  continueOnError: true   
+  inputs:
+    SonarCloud: 'DC-SonarCloud'
+    organization: 'techdatacorp'
+    projectKey: ${{ parameters.projectKey }} 
+    projectName: ${{ parameters.projectName }}
+    extraProperties: |
+      sonar.ws.timeout=60
+      sonar.exclusions=${{ parameters.sonarExclusions }}
 
 steps:
 - task: Maven@4
@@ -14,6 +32,19 @@ steps:
     mavenPomFile: ${{ parameters.pomFile }}
     goals: 'clean install'
     publishJUnitResults: false
+
+- task: SonarCloudAnalyze@1
+  displayName: 'Run Code Analysis'
+  continueOnError: true
+  inputs:
+    extraProperties: |
+      sonar.ws.timeout=120
+
+- task: SonarCloudPublish@1
+  displayName: 'Publish Quality Gate Result'
+  continueOnError: true
+  inputs:
+    pollingTimeoutSec: '120'
 
 - task: ms-omex.prmetrics.prmetrics.PRMetrics@1
   displayName: 'PR Metrics'
