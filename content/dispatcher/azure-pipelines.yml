@@ -1,0 +1,24 @@
+resources:
+  repositories:
+    - repository: DCP
+      type: git
+      name: 'WW Digital Commerce/DigitalCommercePlatform'
+      
+trigger: none
+
+schedules:
+- cron: "20 1 * * *"
+  displayName: 'Daily night build'
+  branches:
+    include:
+    - develop
+
+pool:
+  name: 'DC-Buildpool-Linux'
+  workspace:
+    clean: all
+
+extends:
+  template: pullrequest-template-aem-v1.yml@DCP
+  parameters:
+          pomFile: 'content/dispatcher/pom.xml'
