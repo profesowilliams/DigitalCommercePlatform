@@ -2,6 +2,9 @@ parameters:
 - name: pomFile  
   default: 'content/tds-site/pom.xml'
 
+variables:
+- group: DF-GateBuilds
+
 steps:
 - task: Maven@4
   displayName: 'Build'
