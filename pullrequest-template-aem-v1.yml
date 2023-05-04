@@ -1,0 +1,13 @@
+steps:
+- task: Maven@4
+  displayName: 'Maven content/tds-site/pom.xml'
+  inputs:
+    mavenPomFile: 'content/tds-site/pom.xml'
+    goals: 'clean install'
+    publishJUnitResults: false
+- task: Maven@3
+  displayName: 'Dispatcher Optimizer Build'
+  inputs:
+    mavenPomFile: content/dispatcher/pom.xml
+    goals: 'dispatcher-optimizer:analyze'
+    publishJUnitResults: false
