@@ -33,6 +33,9 @@ steps:
     goals: 'clean install'
     publishJUnitResults: false
     checkStyleRunAnalysis: true
+    pmdRunAnalysis: true
+    findBugsRunAnalysis: true
+    spotBugsRunAnalysis: true
 #    sonarQubeRunAnalysis: true    
 
 
