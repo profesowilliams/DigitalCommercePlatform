@@ -32,7 +32,7 @@ steps:
     mavenPomFile: ${{ parameters.pomFile }}
     goals: 'clean install'
     publishJUnitResults: false
-    sonarQubeRunAnalysis: true    
+#    sonarQubeRunAnalysis: true    
 
 
 - task: SonarCloudPublish@1
