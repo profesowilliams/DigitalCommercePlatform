@@ -25,20 +25,15 @@ steps:
     extraProperties: |
       sonar.ws.timeout=60
       sonar.exclusions=${{ parameters.sonarExclusions }}
-      
+
 - task: Maven@4
   displayName: 'Build'
   inputs:
     mavenPomFile: ${{ parameters.pomFile }}
     goals: 'clean install'
     publishJUnitResults: false
+    sonarQubeRunAnalysis: true    
 
-- task: SonarCloudAnalyze@1
-  displayName: 'Run Code Analysis'
-  continueOnError: true
-  inputs:
-    extraProperties: |
-      sonar.ws.timeout=120
 
 - task: SonarCloudPublish@1
   displayName: 'Publish Quality Gate Result'
