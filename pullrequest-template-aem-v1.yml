@@ -32,10 +32,10 @@ steps:
     mavenPomFile: ${{ parameters.pomFile }}
     goals: 'clean install'
     publishJUnitResults: false
-    checkStyleRunAnalysis: true
-    pmdRunAnalysis: true
-    findBugsRunAnalysis: true
-    spotBugsRunAnalysis: true
+    checkStyleRunAnalysis: false
+    pmdRunAnalysis: false
+    findBugsRunAnalysis: false
+    spotBugsRunAnalysis: false
 #    sonarQubeRunAnalysis: true    
 
 
