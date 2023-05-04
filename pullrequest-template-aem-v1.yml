@@ -13,6 +13,7 @@ variables:
 - name: Agent.Source.Git.ShallowFetchDepth
   value: 0
 
+steps:
 - task: SonarCloudPrepare@1
   displayName: 'Prepare analysis on SonarCloud'
   continueOnError: true   
@@ -24,8 +25,7 @@ variables:
     extraProperties: |
       sonar.ws.timeout=60
       sonar.exclusions=${{ parameters.sonarExclusions }}
-
-steps:
+      
 - task: Maven@4
   displayName: 'Build'
   inputs:
