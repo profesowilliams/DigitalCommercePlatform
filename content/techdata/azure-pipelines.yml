@@ -7,7 +7,7 @@ resources:
 trigger: none
 
 schedules:
-- cron: "20 1 * * *"
+- cron: "50 1 * * *"
   displayName: 'Daily night build'
   branches:
     include:
@@ -22,3 +22,5 @@ extends:
   template: pullrequest-template-aem-v1.yml@DCP
   parameters:
           pomFile: 'content/techdata/pom.xml'
+          projectKey: 'DC-AEM-TECHDATA'
+          projectName: 'DC-AEM-TECHDATA'  
