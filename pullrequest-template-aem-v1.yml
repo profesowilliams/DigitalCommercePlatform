@@ -4,6 +4,8 @@ parameters:
 
 variables:
 - group: DF-GateBuilds
+- name: Agent.Source.Git.ShallowFetchDepth
+  value: 0
 
 steps:
 - task: Maven@4
