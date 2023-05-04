@@ -9,3 +9,19 @@ steps:
     mavenPomFile: ${{ parameters.pomFile }}
     goals: 'clean install'
     publishJUnitResults: false
+
+- task: ms-omex.prmetrics.prmetrics.PRMetrics@1
+  displayName: 'PR Metrics'
+  inputs:
+    BaseSize: 200
+    GrowthRate: 2.0
+    TestFactor: 0.7
+    FileMatchingPatterns: |
+      **/*
+      !Ignore.cs
+    CodeFileExtensions: |
+      cs
+      ps1
+  continueOnError: true       
+  env:
+    PR_Metrics_Access_Token: $(repotoken) 
