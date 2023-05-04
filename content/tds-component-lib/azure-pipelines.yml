@@ -7,7 +7,7 @@ resources:
 trigger: none
 
 schedules:
-- cron: "20 1 * * *"
+- cron: "10 1 * * *"
   displayName: 'Daily night build'
   branches:
     include:
@@ -22,3 +22,5 @@ extends:
   template: pullrequest-template-aem-v1.yml@DCP
   parameters:
           pomFile: 'content/tds-component-lib/pom.xml'
+          projectKey: 'DC-AEM-TDS-COMPONENT-LIB'
+          projectName: 'DC-AEM-TDS-COMPONENT-LIB'           
