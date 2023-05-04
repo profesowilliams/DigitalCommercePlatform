@@ -3,6 +3,7 @@ import {
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
   SORT_LOCAL_STORAGE_KEY,
   SEARCH_LOCAL_STORAGE_KEY,
+  ORDER_SEARCH_LOCAL_STORAGE_KEY,
 } from '../../../../utils/constants';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
@@ -226,6 +227,11 @@ function OrdersTrackingGrid(props) {
     }
   }
   const onReportChange = (option) => {
+    setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
+      field: '',
+      value: '',
+    });
+    searchCriteria.current = { field: '', value: '' };
     setPill({ key: option.key, label: option.label });
     removeDefaultDateRange();
     onQueryChanged();
@@ -237,6 +243,7 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSearchChange = () => {
+    setPill(null);
     removeDefaultDateRange();
     onQueryChanged();
   };
@@ -283,6 +290,7 @@ function OrdersTrackingGrid(props) {
       }
     });
   };
+
   useEffect(() => {
     if (
       hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
@@ -291,6 +299,7 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
+
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader

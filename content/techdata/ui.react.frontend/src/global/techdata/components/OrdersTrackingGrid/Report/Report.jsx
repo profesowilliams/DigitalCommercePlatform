@@ -54,10 +54,14 @@ function Report({ options, selectOption, selectedKey }, ref) {
     <div
       onClick={handleDropdownClick}
       className="cmp-order-tracking-grid__report"
-      onMouseOver={handleMouseOverSearch} 
+      onMouseOver={handleMouseOverSearch}
       onMouseLeave={handleMouseLeaveSearch}
     >
-      {isReportHovered ? <ReportIconFilled fill="#262626" className="icon-hover"/> :<ReportIcon fill="#262626" className="icon-hover"/>}
+      {isReportHovered ? (
+        <ReportIconFilled fill="#262626" className="icon-hover" />
+      ) : (
+        <ReportIcon fill="#262626" className="icon-hover" />
+      )}
       {isDropDownOpen && (
         <ReportDropdown
           ref={wrapperRef}
