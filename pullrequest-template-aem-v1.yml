@@ -32,6 +32,7 @@ steps:
     mavenPomFile: ${{ parameters.pomFile }}
     goals: 'clean install'
     publishJUnitResults: false
+    checkStyleRunAnalysis: true
 #    sonarQubeRunAnalysis: true    
 
 
