@@ -47,6 +47,7 @@ import {
 import { useStore } from '../../../../utils/useStore';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
+import { setDefaultSearchDateRange } from '../../../../utils/utils';
 
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
