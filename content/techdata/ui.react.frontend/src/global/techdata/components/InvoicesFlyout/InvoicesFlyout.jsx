@@ -3,7 +3,6 @@ import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
-import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 
 function InvoicesFlyout({
   store,
@@ -11,11 +10,11 @@ function InvoicesFlyout({
   invoicesColumnList,
   subheaderReference,
   isTDSynnex,
-  componentProp,
+  downloadAllFile,
+  openFilePdf,
 }) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
   const effects = store((st) => st.effects);
-  const flyoutTypeProp = 'Invoice';
   const closeFlyout = () =>
     effects.setCustomState({ key: 'invoicesFlyout', value: { show: false } });
   const columnList = invoicesColumnList;
@@ -29,37 +28,11 @@ function InvoicesFlyout({
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
 
-  const downloadFileBlob = async (flyoutType, orderId) => {
-    try {
-      const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
-      const mapIds = orderId.map((ids) => `&id=${ids}`).join('');
-      const downloadOrderInvoicesUrl = url + `?Type=${flyoutType}${mapIds}`;
-      const name = `${flyoutType}.zip`;
-      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
-        redirect: false,
-      });
-    } catch (error) {
-      console.error('Error', error);
-    }
-  };
-
-  function downloadAllInvoice(flyoutType, orderId) {
-    return downloadFileBlob(flyoutType, orderId);
-  }
-
-  async function openInvoicePdf(flyoutType, orderId) {
-    const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
-    const singleDownloadUrl = url + `?Type=${flyoutType}&id=${orderId[0]}`;
-    const name = `${orderId[0]}.pdf`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
-      redirect: true,
-    });
-  }
   const handleDownload = () => {
     if (selected.length === 1) {
-      return openInvoicePdf(flyoutTypeProp, selected);
+      return openFilePdf('Invoice', selected);
     } else {
-      return downloadAllInvoice(flyoutTypeProp, selected);
+      return downloadAllFile('Invoice', selected);
     }
   };
   return (

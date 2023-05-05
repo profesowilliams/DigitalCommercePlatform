@@ -11787,7 +11787,7 @@ app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
 app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
   const { orderId } = req.query;
   if (orderId && orderId.length === 1) {
-    return res.download("invoice.pdf");
+    return res.download("file.pdf");
   } else {
     return res.download("file.zip");
   }

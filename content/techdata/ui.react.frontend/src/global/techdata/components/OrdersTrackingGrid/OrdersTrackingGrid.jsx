@@ -45,6 +45,7 @@ import {
   isHttpOnlyEnabled,
 } from '../../../../utils/featureFlagUtils';
 import { useStore } from '../../../../utils/useStore';
+import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
 
 function OrdersTrackingGrid(props) {
@@ -289,6 +290,33 @@ function OrdersTrackingGrid(props) {
     });
   };
 
+  const downloadFileBlob = async (flyoutType, orderId) => {
+    try {
+      const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
+      const mapIds = orderId.map((ids) => `&id=${ids}`).join('');
+      const downloadOrderInvoicesUrl = url + `?Type=${flyoutType}${mapIds}`;
+      const name = `${flyoutType}.zip`;
+      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
+        redirect: false,
+      });
+    } catch (error) {
+      console.error('Error', error);
+    }
+  };
+
+  function downloadAllFlie(flyoutType, orderId) {
+    return downloadFileBlob(flyoutType, orderId);
+  }
+
+  async function openFilePdf(flyoutType, orderId) {
+    const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
+    const singleDownloadUrl = url + `?Type=${flyoutType}&id=${orderId[0]}`;
+    const name = `${orderId[0]}.pdf`;
+    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
+      redirect: true,
+    });
+  }
+
   useEffect(() => {
     if (
       hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
@@ -378,6 +406,10 @@ function OrdersTrackingGrid(props) {
         dNoteColumnList={gridConfig.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
+        downloadAllFile={(flyoutType, orderId) =>
+          downloadAllFile(flyoutType, orderId)
+        }
+        openFilePdf={(flyoutType, orderId) => openFilePdf(flyoutType, orderId)}
       />
       <InvoicesFlyout
         store={useOrderTrackingStore}
@@ -385,7 +417,10 @@ function OrdersTrackingGrid(props) {
         invoicesColumnList={gridConfig.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
-        componentProp={componentProp}
+        downloadAllFile={(flyoutType, orderId) =>
+          downloadAllFile(flyoutType, orderId)
+        }
+        openFilePdf={(flyoutType, orderId) => openFilePdf(flyoutType, orderId)}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

@@ -10,6 +10,8 @@ function DNotesFlyout({
   dNoteColumnList,
   subheaderReference,
   isTDSynnex,
+  downloadAllFile,
+  openFilePdf,
 }) {
   const dNoteFlyoutConfig = store((st) => st.dNotesFlyout);
   const effects = store((st) => st.effects);
@@ -25,6 +27,14 @@ function DNotesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
+
+  const handleDownload = () => {
+    if (selected.length === 1) {
+      return openFilePdf('Invoice', selected);
+    } else {
+      return downloadAllFile('Invoice', selected);
+    }
+  };
   return (
     <BaseFlyout
       open={dNoteFlyoutConfig?.show}
@@ -40,6 +50,7 @@ function DNotesFlyout({
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}
+      onClickButton={handleDownload}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
