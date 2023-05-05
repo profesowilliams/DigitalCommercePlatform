@@ -63,6 +63,7 @@ function OrdersTrackingGrid(props) {
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
     useExtendGridOperations(useOrderTrackingStore);
   const userData = useStore((state) => state.userData);
+  const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
   const [pill, setPill] = useState(null);
@@ -231,7 +232,6 @@ function OrdersTrackingGrid(props) {
       field: '',
       value: '',
     });
-    searchCriteria.current = { field: '', value: '' };
     setPill({ key: option.key, label: option.label });
     removeDefaultDateRange();
     onQueryChanged();
@@ -243,7 +243,7 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSearchChange = () => {
-    setPill(null);
+    setPill();
     removeDefaultDateRange();
     onQueryChanged();
   };
@@ -269,6 +269,7 @@ function OrdersTrackingGrid(props) {
       removeLocalStorageData(SEARCH_LOCAL_STORAGE_KEY);
       window.location.href = `${componentProp.detailUrl}.html?id=${response[0].id}`;
     }
+    setIsLoading(false);
   };
 
   const addCurrencyToTotalColumn = (list) => {
@@ -335,6 +336,7 @@ function OrdersTrackingGrid(props) {
             ref={customPaginationRef}
             store={useOrderTrackingStore}
             onQueryChanged={onQueryChanged}
+            disabled={isLoading}
           />,
         ]}
         rightComponents={[
@@ -399,6 +401,7 @@ function OrdersTrackingGrid(props) {
           ref={customPaginationRef}
           store={useOrderTrackingStore}
           onQueryChanged={onQueryChanged}
+          disabled={isLoading}
         />
       </div>
       <DNotesFlyout
