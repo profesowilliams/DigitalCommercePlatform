@@ -18,6 +18,7 @@ export const ordersTrackingDefinition = (
       // US 399164: We will update the field mapping later when the UI service is ready.
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
       // and will render order date on DIT and SIT env
+      //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
       updated: data?.updated ?? data?.created,
       select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
@@ -34,8 +35,10 @@ export const ordersTrackingDefinition = (
         <DeliveryNotesColumn
           id={data?.id}
           deliveryNotes={data?.deliveryNotes}
+          invoices={data?.invoices}
           multiple={multiple}
           reseller={data?.reseller}
+          openFilePdf={openFilePdf}
         />
       ),
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
