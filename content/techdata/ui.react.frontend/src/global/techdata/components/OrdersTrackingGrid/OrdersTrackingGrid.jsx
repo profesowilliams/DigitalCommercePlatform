@@ -188,7 +188,10 @@ function OrdersTrackingGrid(props) {
     const sortingEventFilter = evt?.columnApi
       ?.getColumnState()
       .filter((val) => val.sort);
-    if (sortingEventFilter.length === 1 && !compareSort(currentSortState, hasSortChanged.current)) {
+    if (
+      sortingEventFilter.length === 1 &&
+      !compareSort(currentSortState, hasSortChanged.current)
+    ) {
       pushDataLayer(getSortAnalytics(category, sortedModel));
     }
   };
@@ -327,7 +330,6 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
-
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
@@ -382,7 +384,7 @@ function OrdersTrackingGrid(props) {
       />
       <BaseGrid
         columnList={addCurrencyToTotalColumn(componentProp.columnList)}
-        definitions={ordersTrackingDefinition(componentProp)}
+        definitions={ordersTrackingDefinition(componentProp, openFilePdf)}
         config={gridConfig}
         options={options}
         gridConfig={gridConfig}

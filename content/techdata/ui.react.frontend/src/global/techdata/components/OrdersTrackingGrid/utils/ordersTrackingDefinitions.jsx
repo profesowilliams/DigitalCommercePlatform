@@ -7,7 +7,10 @@ import OrderTrackingActionColumn from '../Columns/OrderTrackingActionColumn';
 import SelectColumn from '../Columns/SelectColumn';
 import TotalColumn from '../Columns/TotalColumn';
 
-export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
+export const ordersTrackingDefinition = (
+  { detailUrl, multiple },
+  openFilePdf
+) => {
   const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
     const { value, data } = eventProps;
@@ -24,6 +27,7 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
           invoices={data?.invoices}
           multiple={multiple}
           reseller={data?.reseller}
+          openFilePdf={openFilePdf}
         />
       ),
       deliveryNotes: (
