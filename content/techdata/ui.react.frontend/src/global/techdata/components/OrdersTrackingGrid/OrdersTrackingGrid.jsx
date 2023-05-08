@@ -71,6 +71,8 @@ function OrdersTrackingGrid(props) {
     componentProp?.defaultSearchDateRange
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
+  
+  const hasAIORights = true;
 
   const { searchOptionsList, icons, reportOptions, reportPillLabel } =
     componentProp;
@@ -309,7 +311,7 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  function downloadAllFlie(flyoutType, orderId) {
+  function downloadAllFile(flyoutType, orderId) {
     return downloadFileBlob(flyoutType, orderId);
   }
 
@@ -427,6 +429,7 @@ function OrdersTrackingGrid(props) {
           downloadAllFile(flyoutType, orderId)
         }
         openFilePdf={(flyoutType, orderId) => openFilePdf(flyoutType, orderId)}
+        hasAIORights={hasAIORights}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

@@ -9,13 +9,14 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function FlyoutTable({
-  dataTable, 
+  dataTable,
   selected,
   handleClick,
   handleSelectAllClick,
-  headCells
+  headCells,
+  hasAIORights,
 }) {
-  const rows = dataTable
+  const rows = dataTable;
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const EnhancedTableHead = (props) => {
@@ -28,7 +29,10 @@ export default function FlyoutTable({
               color="primary"
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
+              onChange={() => {
+                hasAIORights ? onSelectAllClick() : undefined;
+              }}
+              disabled={!hasAIORights}
               inputProps={{
                 'aria-label': 'select all',
               }}
@@ -78,7 +82,9 @@ export default function FlyoutTable({
               return (
                 <TableRow
                   hover
-                  onClick={(event) => handleClick(event, row.id)}
+                  onClick={(event) => {
+                    hasAIORights ? handleClick(event, row.id) : undefined;
+                  }}
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
@@ -93,6 +99,7 @@ export default function FlyoutTable({
                       color="primary"
                       checked={isItemSelected}
                       padding={'normal'}
+                      disabled={!hasAIORights}
                       inputProps={{
                         'aria-labelledby': labelId,
                       }}

@@ -12,6 +12,7 @@ function InvoicesFlyout({
   isTDSynnex,
   downloadAllFile,
   openFilePdf,
+  hasAIORights,
 }) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
   const effects = store((st) => st.effects);
@@ -50,7 +51,7 @@ function InvoicesFlyout({
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}
-      onClickButton={handleDownload}
+      onClickButton={hasAIORights ? handleDownload : undefined}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
@@ -81,6 +82,7 @@ function InvoicesFlyout({
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
+            hasAIORights={hasAIORights}
           />
         )}
       </section>
