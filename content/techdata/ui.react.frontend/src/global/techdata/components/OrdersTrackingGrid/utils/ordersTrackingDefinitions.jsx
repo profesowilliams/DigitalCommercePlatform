@@ -9,7 +9,8 @@ import TotalColumn from '../Columns/TotalColumn';
 
 export const ordersTrackingDefinition = (
   { detailUrl, multiple },
-  openFilePdf
+  openFilePdf,
+  hasAIORights
 ) => {
   const createColumnComponent = (eventProps, aemDefinition) => {
     const { columnKey } = aemDefinition;
@@ -29,6 +30,7 @@ export const ordersTrackingDefinition = (
           multiple={multiple}
           reseller={data?.reseller}
           openFilePdf={openFilePdf}
+          hasAIORights={hasAIORights}
         />
       ),
       deliveryNotes: (

@@ -3,7 +3,14 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 
-function InvoiceColumn({ invoices = [], multiple, id, reseller, openFilePdf }) {
+function InvoiceColumn({
+  invoices = [],
+  multiple,
+  id,
+  reseller,
+  openFilePdf,
+  hasAIORights,
+}) {
   const hasMultiple = invoices.length > 1;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const triggerInvoicesFlyout = () => {
@@ -13,7 +20,7 @@ function InvoiceColumn({ invoices = [], multiple, id, reseller, openFilePdf }) {
     });
   };
   const handleDownload = () => {
-    openFilePdf('Invoice', invoices[0]?.id);
+    hasAIORights && openFilePdf('Invoice', invoices[0]?.id);
   };
   return invoices.length == 0 ? (
     '-'

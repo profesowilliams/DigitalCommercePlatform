@@ -390,7 +390,11 @@ function OrdersTrackingGrid(props) {
       />
       <BaseGrid
         columnList={addCurrencyToTotalColumn(componentProp.columnList)}
-        definitions={ordersTrackingDefinition(componentProp, openFilePdf)}
+        definitions={ordersTrackingDefinition(
+          componentProp,
+          openFilePdf,
+          hasAIORights
+        )}
         config={gridConfig}
         options={options}
         gridConfig={gridConfig}
