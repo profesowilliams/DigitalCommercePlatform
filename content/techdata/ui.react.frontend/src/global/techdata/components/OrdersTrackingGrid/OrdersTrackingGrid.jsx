@@ -46,7 +46,7 @@ import {
 } from '../../../../utils/featureFlagUtils';
 import { useStore } from '../../../../utils/useStore';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
-import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
+import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 
 function OrdersTrackingGrid(props) {
@@ -58,11 +58,15 @@ function OrdersTrackingGrid(props) {
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
   const effects = useOrderTrackingStore((st) => st.effects);
-  const category = useOrderTrackingStore(state => state.analyticsCategory);
+  const category = useOrderTrackingStore((state) => state.analyticsCategory);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
     useExtendGridOperations(useOrderTrackingStore);
   const userData = useStore((state) => state.userData);
+  const hasAIORights = userData?.roleList?.some(
+    (role) => role.entitlement === 'AIO'
+  );
+  console.log('hasAIORights', hasAIORights); // temporary log for testing purposes, will be deleted soon
   const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
@@ -71,8 +75,6 @@ function OrdersTrackingGrid(props) {
     componentProp?.defaultSearchDateRange
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
-  
-  const hasAIORights = true;
 
   const { searchOptionsList, icons, reportOptions, reportPillLabel } =
     componentProp;
@@ -232,6 +234,7 @@ function OrdersTrackingGrid(props) {
         return null;
     }
   }
+
   const onReportChange = (option) => {
     setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
       field: '',
@@ -248,9 +251,10 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSearchChange = () => {
-    setPill();
-    removeDefaultDateRange();
-    onQueryChanged();
+    setPill(null, () => {
+      removeDefaultDateRange();
+      onQueryChanged();
+    });
   };
 
   const doesMatchById = (searchId, orderId) => searchId === orderId;
