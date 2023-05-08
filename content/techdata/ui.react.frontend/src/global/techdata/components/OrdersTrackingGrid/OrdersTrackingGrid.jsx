@@ -66,7 +66,6 @@ function OrdersTrackingGrid(props) {
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
-  console.log('hasAIORights', hasAIORights); // temporary log for testing purposes, will be deleted soon
   const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
@@ -336,6 +335,7 @@ function OrdersTrackingGrid(props) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
   }, []);
+
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader

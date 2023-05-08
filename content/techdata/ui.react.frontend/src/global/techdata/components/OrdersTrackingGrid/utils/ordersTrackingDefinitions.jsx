@@ -20,7 +20,8 @@ export const ordersTrackingDefinition = (
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
       // and will render order date on DIT and SIT env
       //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
-      updated: data?.updated ?? data?.created,
+      updated: data?.formattedUpdated ?? data?.created,
+      created: data?.formattedCreated ?? data?.created,
       select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: (

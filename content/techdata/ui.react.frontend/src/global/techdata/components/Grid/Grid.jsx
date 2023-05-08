@@ -431,7 +431,9 @@ function Grid(props) {
           response = fromExceptionToErrorObject(error);
         }
       }
-      onDataLoad && onDataLoad(response.data.content.items);
+      onDataLoad &&
+        response?.data?.content?.items &&
+        onDataLoad(response.data.content.items);
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
 
       return postProcessResponse(response);
