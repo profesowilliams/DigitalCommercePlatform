@@ -422,6 +422,7 @@ function OrdersTrackingGrid(props) {
           downloadAllFile(flyoutType, orderId)
         }
         openFilePdf={(flyoutType, orderId) => openFilePdf(flyoutType, orderId)}
+        hasAIORights={hasAIORights}
       />
       <InvoicesFlyout
         store={useOrderTrackingStore}

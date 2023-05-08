@@ -12,6 +12,7 @@ function DNotesFlyout({
   isTDSynnex,
   downloadAllFile,
   openFilePdf,
+  hasAIORights,
 }) {
   const dNoteFlyoutConfig = store((st) => st.dNotesFlyout);
   const effects = store((st) => st.effects);
@@ -50,7 +51,8 @@ function DNotesFlyout({
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}
-      onClickButton={handleDownload}
+      onClickButton={hasAIORights ? handleDownload : undefined}
+      hasAIORights={hasAIORights}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
@@ -81,6 +83,7 @@ function DNotesFlyout({
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
+            hasAIORights={hasAIORights}
           />
         )}
       </section>

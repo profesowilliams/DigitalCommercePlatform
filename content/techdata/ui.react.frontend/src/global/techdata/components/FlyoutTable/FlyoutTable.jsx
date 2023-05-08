@@ -29,9 +29,7 @@ export default function FlyoutTable({
               color="primary"
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
-              onChange={() => {
-                hasAIORights ? onSelectAllClick() : undefined;
-              }}
+              onChange={hasAIORights ? onSelectAllClick : undefined}
               disabled={!hasAIORights}
               inputProps={{
                 'aria-label': 'select all',
