@@ -10,7 +10,6 @@ function DeliveryNotesColumn({
   id,
   reseller,
   openFilePdf,
-  hasAIORights,
 }) {
   const hasMultiple = deliveryNotes.length > 1;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
@@ -23,7 +22,7 @@ function DeliveryNotesColumn({
 
   //TODO: change to use Denotes after BE create mock request for downloading dnotes
   const handleDownload = () => {
-    hasAIORights && openFilePdf('Invoice', invoices[0]?.id);
+    openFilePdf('Invoice', invoices[0]?.id);
   };
   return deliveryNotes.length == 0 ? (
     '-'

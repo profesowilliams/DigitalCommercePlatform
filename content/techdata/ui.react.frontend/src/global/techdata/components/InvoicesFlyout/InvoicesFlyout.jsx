@@ -82,7 +82,7 @@ function InvoicesFlyout({
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
-            hasAIORights={hasAIORights}
+            checkboxEnabled={hasAIORights}
           />
         )}
       </section>

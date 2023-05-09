@@ -14,7 +14,7 @@ export default function FlyoutTable({
   handleClick,
   handleSelectAllClick,
   headCells,
-  hasAIORights,
+  checkboxEnabled,
 }) {
   const rows = dataTable;
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -29,8 +29,8 @@ export default function FlyoutTable({
               color="primary"
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
-              onChange={hasAIORights ? onSelectAllClick : undefined}
-              disabled={!hasAIORights}
+              onChange={checkboxEnabled ? onSelectAllClick : undefined}
+              disabled={!checkboxEnabled}
               inputProps={{
                 'aria-label': 'select all',
               }}
@@ -81,7 +81,7 @@ export default function FlyoutTable({
                 <TableRow
                   hover
                   onClick={(event) => {
-                    hasAIORights ? handleClick(event, row.id) : undefined;
+                    checkboxEnabled ? handleClick(event, row.id) : undefined;
                   }}
                   role="checkbox"
                   aria-checked={isItemSelected}
@@ -97,7 +97,7 @@ export default function FlyoutTable({
                       color="primary"
                       checked={isItemSelected}
                       padding={'normal'}
-                      disabled={!hasAIORights}
+                      disabled={!checkboxEnabled}
                       inputProps={{
                         'aria-labelledby': labelId,
                       }}

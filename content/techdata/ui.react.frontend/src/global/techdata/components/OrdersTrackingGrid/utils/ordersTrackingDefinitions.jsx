@@ -42,7 +42,6 @@ export const ordersTrackingDefinition = (
           multiple={multiple}
           reseller={data?.reseller}
           openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
         />
       ),
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
