@@ -5,7 +5,7 @@ import OrderCount from './OrderCount';
 import OrderFilterDatePicker from './OrderFilterDatapicker';
 import OrderFilterItems from './OrderFilterItems';
 
-function OrderFilterListItem({ id, open, title, field }) {
+function OrderFilterListItem({ id, open, title, field, filtersRefs }) {
   const filterList = useOrderTrackingStore((state) => state.filterList);
   const { setFilterList } = useOrderTrackingStore((state) => state.effects);
 
@@ -48,11 +48,11 @@ function OrderFilterListItem({ id, open, title, field }) {
       case 'date':
         return (
           <div className="datepicker-wrapper">
-            <OrderFilterDatePicker />
+            <OrderFilterDatePicker filtersRefs={filtersRefs} />
           </div>
         );
       case 'order':
-        return <OrderFilterItems itemKey={title} />;
+        return <OrderFilterItems itemKey={title} filtersRefs={filtersRefs} />;
       default:
         return <></>;
     }

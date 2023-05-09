@@ -6,7 +6,7 @@ import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
-const OrderFilterItems = ({ itemKey }) => {
+const OrderFilterItems = ({ itemKey, filtersRefs }) => {
   const orderStatusFilters = useOrderTrackingStore(
     (state) => state.orderStatusFilters
   );
@@ -40,6 +40,7 @@ const OrderFilterItems = ({ itemKey }) => {
           ...orderStatusFiltersChecked,
           ...orderStatusFilters.filter((x) => x.id === id),
         ];
+    filtersRefs.status.current = newList.map(x=>x.label).join();
     effects.setOrderStatusFiltersChecked(newList);
   };
 
@@ -54,6 +55,7 @@ const OrderFilterItems = ({ itemKey }) => {
           ...orderTypeFiltersChecked,
           ...orderTypeFilters.filter((x) => x.id === id),
         ];
+    filtersRefs.type.current = newList.map(x=>x.label).join();
     effects.setOrderTypeFiltersChecked(newList);
   };
 

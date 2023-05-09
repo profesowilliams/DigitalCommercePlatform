@@ -5,7 +5,7 @@ import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import BaseFlyout from './../../BaseFlyout/BaseFlyout';
 
-const OrderFilterModal = ({ onQueryChanged }) => {
+const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.orderFilterCounter
   );
@@ -47,7 +47,7 @@ const OrderFilterModal = ({ onQueryChanged }) => {
     >
       <section className="cmp-flyout__content teal_scroll height_order_filters">
         <div className={'filter-accordion scrollbar_y_none height_1000'}>
-          <OrderFilterList />
+          <OrderFilterList filtersRefs={filtersRefs} />
         </div>
       </section>
       <section className="filter-order-tags-container">

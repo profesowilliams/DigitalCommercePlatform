@@ -1,8 +1,7 @@
-import { usGet } from "../../../../../utils/api";
-import { formatDatePicker, createdFromDate } from "../../../../../utils/utils";
+import { usGet } from '../../../../../utils/api';
+import { formatDatePicker, createdFromDate } from '../../../../../utils/utils';
 import {
   calcSecondLevelSorting,
-  extractSortColAndDirection,
   isFirstTimeSortParameters,
   isRepeatedSortAction,
   isSameFilterRepeated,
@@ -79,14 +78,11 @@ export async function fetchData(config) {
     onFiltersClear,
     firstAPICall,
     onSearchAction,
-    isPriceColumnClicked,
-    gridApiRef,
-    isFilterDataPopulated,
     optionFieldsRef,
-    componentProp,
     previousFilter,
     reportFilterValue,
     defaultSearchDateRange,
+    filtersRefs,
   } = config;
 
   const { url } = request;
@@ -101,6 +97,16 @@ export async function fetchData(config) {
     mapUrl.delete('createdFrom');
     mapUrl.delete('createdTo');
   }
+
+  const fromRef = filtersRefs.createdFrom?.current;
+  const toRef = filtersRefs.createdTo?.current;
+  const typeRef = filtersRefs.type?.current;
+  const statusRef = filtersRefs.status?.current;
+
+  fromRef && mapUrl.set('createdFrom', fromRef);
+  toRef && mapUrl.set('createdTo', toRef);
+  typeRef && mapUrl.set('Type', typeRef);
+  statusRef && mapUrl.set('Status', statusRef);
 
   if (hasSortChanged.current) {
     const { sortData } = hasSortChanged.current;
@@ -200,4 +206,17 @@ export function addCurrentPageNumber(customPaginationRef, request) {
   return mapStrucToUrlStr(urlMap);
 }
 
+export const getDateRangeLabel = (startDate, endDate) => {
+  const shortStartDateMonth = startDate.format('MMMM').substring(0, 3);
+  const startDateMonth = startDate.format('M');
+  const startDateDay = startDate.format('D');
+
+  const shortEndDateMonth = endDate.format('MMMM').substring(0, 3);
+  const endDateMonth = endDate.format('M');
+  const endDateDay = endDate.format('D');
+
+  return startDateMonth === endDateMonth
+    ? `${shortStartDateMonth} ${startDateDay}-${endDateDay}`
+    : `${shortStartDateMonth} ${startDateDay}-${shortEndDateMonth} ${endDateDay}`;
+};
 export { compareSort };

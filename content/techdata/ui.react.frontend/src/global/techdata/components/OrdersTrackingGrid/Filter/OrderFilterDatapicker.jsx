@@ -9,6 +9,7 @@ import {
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import '../../RenewalFilter/components/datePicker.scss';
 import OrderFilterDateType from './OrderFilterDateType';
+import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 
 function CustomStartEndText() {
   return (
@@ -19,7 +20,7 @@ function CustomStartEndText() {
   );
 }
 
-export default function OrderFilterDatePicker() {
+export default function OrderFilterDatePicker({ filtersRefs }) {
   const [focusedInput, setFocusedInput] = useState('startDate');
   const { setDateType, setCustomState, setDateRangeFiltersChecked } =
     useOrderTrackingStore((state) => state.effects);
@@ -44,33 +45,39 @@ export default function OrderFilterDatePicker() {
   };
 
   const setFilterDate = (startDate, endDate) => {
-    const formattedStartDate = startDate?.toDate().toLocaleDateString();
-    const formattedEndDate = endDate?.toDate().toLocaleDateString();
+    const startDateMonth = startDate.format('M');
+    const startDateDay = startDate.format('D');
+    const startDateYear = startDate.format('YYYY');
+
+    const endDateMonth = endDate.format('M');
+    const endDateDay = endDate.format('D');
+    const endDateYear = endDate.format('YYYY');
+
+    const dateLabel = getDateRangeLabel(startDate, endDate);
+
     const newDate = [
       {
         id: 1,
-        label: `${formattedStartDate}-${formattedEndDate}`,
+        label: dateLabel,
         group: 'date',
         createdFrom: startDate?.toDate(),
         createdTo: endDate?.toDate(),
       },
     ];
+    filtersRefs.createdFrom.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
+    filtersRefs.createdTo.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
     setDateRangeFiltersChecked(newDate);
   };
 
   const onDatesChange = ({ startDate, endDate }) => {
-    setCustomState(
-      {
-        key: 'customStartDate',
-        value: startDate?.toISOString() || undefined,
-      }
-    );
-    setCustomState(
-      {
-        key: 'customEndDate',
-        value: endDate?.toISOString() || undefined,
-      }
-    );
+    setCustomState({
+      key: 'customStartDate',
+      value: startDate?.toISOString() || undefined,
+    });
+    setCustomState({
+      key: 'customEndDate',
+      value: endDate?.toISOString() || undefined,
+    });
     if ((startDate, endDate)) {
       setFilterDate(startDate, endDate);
     }

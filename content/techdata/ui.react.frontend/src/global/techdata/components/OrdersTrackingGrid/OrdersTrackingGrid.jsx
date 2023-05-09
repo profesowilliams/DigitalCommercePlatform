@@ -57,6 +57,16 @@ function OrdersTrackingGrid(props) {
   const searchCriteria = useRef({ field: '', value: '' });
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
+  const createdFrom = useRef();
+  const createdTo = useRef();
+  const type = useRef();
+  const status = useRef();
+  const filtersRefs = {
+    createdFrom,
+    createdTo,
+    type,
+    status,
+  };
   const effects = useOrderTrackingStore((st) => st.effects);
   const category = useOrderTrackingStore((state) => state.analyticsCategory);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
@@ -143,6 +153,7 @@ function OrdersTrackingGrid(props) {
       gridApiRef,
       reportFilterValue,
       defaultSearchDateRange: dateRange,
+      filtersRefs,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     const ordersCountUrl = new URL(componentProp.ordersCountEndpoint);
@@ -370,6 +381,7 @@ function OrdersTrackingGrid(props) {
           <OrderFilter
             aemData={componentProp}
             onQueryChanged={onOrderQueryChanged}
+            filtersRefs={filtersRefs}
           />,
           <VerticalSeparator />,
           ...(reportOptions?.length

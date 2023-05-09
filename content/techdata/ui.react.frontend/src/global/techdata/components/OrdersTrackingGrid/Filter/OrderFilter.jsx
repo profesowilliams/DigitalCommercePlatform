@@ -8,7 +8,7 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterModal from './OrderFilterModal';
 import OrderCount from './OrderCount';
 
-function OrderFilter({ aemData, onQueryChanged }) {
+function OrderFilter({ aemData, onQueryChanged, filtersRefs }) {
   const isFilterModalOpen = useOrderTrackingStore((st) => st.isFilterModalOpen);
   const effects = useOrderTrackingStore((st) => st.effects);
   const orderFilterCounter = useOrderTrackingStore( state => state.orderFilterCounter);
@@ -40,6 +40,7 @@ function OrderFilter({ aemData, onQueryChanged }) {
         <OrderFilterModal
           onQueryChanged={onQueryChanged}
           topReference={topReference}
+          filtersRefs={filtersRefs}
         />
       )}
     </>
