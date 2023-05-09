@@ -102,6 +102,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.accountLookUpEndpoint()).thenReturn("accountLookUpEndpoint");
         when(serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint()).thenReturn("checkQuoteExitsforResellerEndpoint");
         when(serviceEndPointsConfiguration.copyQuoteEndpoint()).thenReturn("copyQuoteEndpoint");
+        when(serviceEndPointsConfiguration.addressesEndpoint()).thenReturn("addressesEndpoint");
 
         when(mcConfiguration.shopDomain()).thenReturn("shopDomain");
         when(mcConfiguration.cartURL()).thenReturn("cartURL");
@@ -204,6 +205,7 @@ class CaConfigReaderTest {
         assertEquals("accountLookUpEndpoint", underTest.getAccountLookUpEndpoint());
         assertEquals("checkQuoteExitsforResellerEndpoint", underTest.getCheckQuoteExitsforResellerEndpoint());
         assertEquals("copyQuoteEndpoint", underTest.getCopyQuoteEndpoint());
+        assertEquals("addressesEndpoint", underTest.getAddressesEndpoint());
 
         assertEquals("getUserEndpoint", underTest.getUserEndpoint());
         assertEquals("loginEndpoint", underTest.getEcommerceAuthenticationLoginEndpoint());

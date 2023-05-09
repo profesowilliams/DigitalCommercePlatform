@@ -147,7 +147,7 @@ export const extractDetailShipToData = (shipTo) => {
   if (shipTo) {
     const { id, name, address } = shipTo;
     return {
-      id,
+      id: id?.text,
       name,
       address: {
         line1: address?.line1,
@@ -155,6 +155,7 @@ export const extractDetailShipToData = (shipTo) => {
         line3: address?.line3,
         city: address?.city,
         state: address?.state,
+        stateName: address?.stateName,
         postalCode: address?.postalCode,
         country: address?.country,
         county: address?.county,
@@ -164,6 +165,24 @@ export const extractDetailShipToData = (shipTo) => {
   }
   return null;
 };
+
+export const mapAddressToShipTo = (address) => {  
+  return {
+    name: address?.name,
+    address: {
+      line1: address?.line1,
+      line2: address?.line2,
+      line3: address?.line3,
+      city: address?.city,
+      state: address?.state,
+      stateName: address?.stateName,
+      postalCode: address?.postalCode,
+      country: address?.country,
+      county: address?.county,
+      countryCode: address?.countryCode,
+    },
+  };
+}
 
 export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const items = mapRenewalItemProducts(renewalQuote.items);

@@ -1862,6 +1862,101 @@ app.get("/ui-account/v1/getAddress", (req, res) => {
   }, 2000);
 });
 
+app.get("/ui-renewal/v1/getAddresses", function (req, res) {
+  const { id } = req.query;
+  const response = {
+    "content": [
+        {
+            "line1": "Eros Corporate Tower, 15th ",
+            "line2": "Floor Nehru Place SEZ zonw",
+            "line3": null,
+            "city": "New Delhi",
+            "state": "30",
+            "stateName": "Delhi",
+            "postalCode": "110019",
+            "country": "IN",
+            "county": null,
+            "countryCode": null,
+            "name": "SoftwareONE India"
+        },
+        {
+            "line1": "Level-6, Chennai City Centre ",
+            "line2": null,
+            "line3": null,
+            "city": "Chennai",
+            "state": "22",
+            "stateName": "Tamil Nadu",
+            "postalCode": "600004",
+            "country": "IN",
+            "county": null,
+            "countryCode": null,
+            "name": "MyTech India"
+        },
+        {
+            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
+            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
+            "line3": null,
+            "city": "Mumbai",
+            "state": "13",
+            "stateName": "Maharashtra",
+            "postalCode": "410209",
+            "country": "IN",
+            "county": null,
+            "countryCode": null,
+            "name": "SoftwareTWO India Pvt. Ltd"
+        },
+        {
+            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
+            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
+            "line3": null,
+            "city": "Mumbai",
+            "state": "13",
+            "stateName": "Maharashtra",
+            "postalCode": "410201",
+            "country": "IN",
+            "county": null,
+            "countryCode": null,
+            "name": "SoftwareTRE India Pvt. Ltd"
+        },
+        {
+            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
+            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
+            "line3": null,
+            "city": "Mumbai",
+            "state": "13",
+            "stateName": "Maharashtra",
+            "postalCode": "410202",
+            "country": "IN",
+            "county": null,
+            "countryCode": null,
+            "name": "SoftwareFOR India Pvt. Ltd"
+        },
+        {
+            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
+            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
+            "line3": null,
+            "city": "Mumbai",
+            "state": "13",
+            "stateName": "Maharashtra",
+            "postalCode": "410209",
+            "country": "IN",
+            "county": null,
+            "countryCode": null,
+            "name": "SoftwareFIV India Pvt. Ltd"
+        }
+    ],
+    "error": {
+        "code": 0,
+        "messages": [],
+        "isError": false
+    }
+  };
+  
+  setTimeout(() => {
+    res.json(response);
+  }, 1000);
+});
+
 app.get("/pricingConditions", (req, res) => {
   if (!validateSession(req, res))
     return res.status(500).json({
@@ -4443,10 +4538,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "type": null,
                     "id": "U100000001953"
                 },
-                "published": "2023-04-13T14:31:29.277Z",
+                "published": "2023-04-27T07:32:04.307Z",
                 "reseller": {
                     "id": "93245",
-                    "isValid": true,
+                    "isValid": false,
                     "canEdit": true,
                     "incumbent": false,
                     "vendorAccountName": null,
@@ -4463,7 +4558,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "contact": [
                         {
                             "name": {
-                                "text": "test again",
+                                "text": "test user",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4471,7 +4566,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "allowedLength": 40
                             },
                             "email": {
-                                "text": "mkumar@ccscomputers.co.in",
+                                "text": "john.doe@mail.com",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4479,7 +4574,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "allowedLength": 120
                             },
                             "phone": {
-                                "text": "324324234",
+                                "text": "1234567890",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4507,14 +4602,14 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "isValid": true,
                     "canEdit": true,
                     "name": {
-                        "text": "Accenture Solutions Pvt. Ltd",
+                        "text": "TechData",
                         "isValid": true,
                         "isMandatory": true,
                         "isDisplay": true,
                         "canEdit": true,
                         "allowedLength": 40
                     },
-                    "nameUpper": "ACCENTURE SOLUTIONS PVT. LTD",
+                    "nameUpper": "TECHDATA",
                     "eaNumber": {
                         "text": "345061542",
                         "isValid": true,
@@ -4526,7 +4621,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "contact": [
                         {
                             "name": {
-                                "text": "Bindu Basavaraj",
+                                "text": "Sean Timothy",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4534,7 +4629,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "allowedLength": 40
                             },
                             "email": {
-                                "text": "bindu.basavaraj@accenture.com",
+                                "text": "test@mail.com",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4542,7 +4637,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                                 "allowedLength": 120
                             },
                             "phone": {
-                                "text": "234324324",
+                                "text": "1111567890",
                                 "isValid": true,
                                 "isMandatory": true,
                                 "isDisplay": true,
@@ -4554,7 +4649,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     "address": {
                         "id": null,
                         "line1": {
-                            "text": "C/O- Schenker India Private Lim",
+                            "text": "G1,Neel Kanth,Enclave",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4578,7 +4673,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                             "allowedLength": 100000
                         },
                         "city": {
-                            "text": "Mum-Nasik H.Way,BhiwandiThane",
+                            "text": "Delhi",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4587,7 +4682,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         },
                         "state": null,
                         "postalCode": {
-                            "text": "421302",
+                            "text": "110092",
                             "isValid": true,
                             "isMandatory": true,
                             "isDisplay": true,
@@ -4614,23 +4709,30 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                     }
                 },
                 "shipTo": {
-                    "id": "12345",
-                    "name": "Informatics Technologies Pvt Ltd",
-                    "nameUpper": "INFORMATICS TECHNOLOGIES PVT LTD",
+                    "id": {
+                        "text": "123123",
+                        "isValid": false,
+                        "isMandatory": true,
+                        "isDisplay": true,
+                        "canEdit": true,
+                        "allowedLength": 10
+                    },
+                    "name": "shipTo.name",
+                    "nameUpper": "",
                     "contact": [],
                     "address": {
-                        "id": "54321",
-                        "line1": "303 Harmony Complex, 28 Nutan",
-                        "line2": "resellerLine2",
-                        "line3": "resellerLine3",
+                        "id": null,
+                        "line1": "address line1",
+                        "line2": null,
+                        "line3": null,
                         "address1": null,
                         "address2": null,
                         "address3": null,
-                        "city": "Vadodara",
-                        "state": "25",
-                        "stateName": "Andra Pradesh",
-                        "postalCode": "390005",
-                        "country": "India",
+                        "city": "address cIty",
+                        "state": null,
+                        "stateName": "address state name",
+                        "postalCode": "9874-667",
+                        "country": null,
                         "county": null,
                         "countryCode": "IN"
                     },
@@ -4676,10 +4778,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "status": null,
                         "statusNotes": null,
                         "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 118037.16,
+                        "unitPrice": 118047.16,
                         "unitCost": 1359.9,
-                        "totalPrice": 1888594.56,
-                        "unitListPrice": 124034.21,
+                        "totalPrice": 1888754.56,
+                        "unitListPrice": 123775.53,
                         "unitPriceCurrency": "INR",
                         "unitCostCurrency": "USD",
                         "unitListPriceCurrency": "INR",
@@ -4712,7 +4814,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                         "discounts": [
                             {
                                 "type": "Standard",
-                                "value": "4.83"
+                                "value": "4.63"
                             }
                         ],
                         "contract": {
@@ -4748,9 +4850,9 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "attributes": [],
                 "programName": "Standard",
                 "quoteCurrent": true,
-                "firstAvailableOrderDate": "2023-04-13T00:00:00Z",
+                "firstAvailableOrderDate": "2023-04-27T00:00:00Z",
                 "lastOrderDate": "2023-12-26T00:00:00Z",
-                "statusText": "CustomerMappingCustomerMappingCustomerMapping",
+                "statusText": "Ordered",
                 "amountSaved": 0,
                 "linkedRenewals": [],
                 "renewalGroupId": "null",
@@ -4761,26 +4863,26 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-vmware.svg",
                 "previousEndUserPO": null,
                 "previousResellerPO": null,
-                "isValid": true,
-                "canOrder": true,
+                "isValid": false,
+                "canOrder": false,
                 "canEditQty": false,
                 "canEditResellerPrice": true,
                 "canEditLines": true,
                 "canCopy": true,
                 "customerPO": {
-                    "text": "test1",
+                    "text": "test po",
                     "isValid": true,
                     "isMandatory": false,
                     "isDisplay": true,
                     "canEdit": true,
                     "allowedLength": 25
                 },
-                "formattedPublished": "13-04-2023",
-                "formattedFirstAvailableOrderDate": "13-04-2023",
+                "formattedPublished": "27-04-2023",
+                "formattedFirstAvailableOrderDate": "27-04-2023",
                 "formattedLastOrderDate": "26-12-2023",
                 "formattedDueDate": "23-12-2022",
-                "formattedCreated": "13-04-2023",
-                "formattedUpdated": "13-04-2023",
+                "formattedCreated": "27-04-2023",
+                "formattedUpdated": "27-04-2023",
                 "formattedExpiry": "23-12-2023",
                 "revision": 1,
                 "subRevision": 0,
@@ -4788,17 +4890,17 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 "activeFlag": "Y",
                 "request": null,
                 "endUserPO": null,
-                "price": 1888594.56,
+                "price": 1888754.56,
                 "currency": "INR",
                 "documentType": null,
                 "quoteType": "Renewal",
                 "type": null,
                 "level": null,
                 "creator": null,
-                "created": "2023-04-13T14:31:29.277Z",
-                "updated": "2023-04-13T14:31:29.277Z",
+                "created": "2023-04-27T07:32:04.307Z",
+                "updated": "2023-04-27T07:32:07.257Z",
                 "expiry": "2023-12-23T00:00:00Z",
-                "status": "Active",
+                "status": "CLSD",
                 "statusNotes": null,
                 "accountOwner": null,
                 "orders": [],

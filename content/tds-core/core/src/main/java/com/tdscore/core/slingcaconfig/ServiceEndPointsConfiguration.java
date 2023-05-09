@@ -179,4 +179,6 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Copy Quote Endpoint", description = "Copy Quote Endpoint")
     String copyQuoteEndpoint();
     
+    @Property(label = "Get Addresses Endpoint", description = "Get Addresses Endpoint")
+    String addressesEndpoint();
 }

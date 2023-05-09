@@ -16,13 +16,16 @@ function ResellerInfo({
   resellerLabels,
   updateDetails,
   shipTo,
+  addressesEndpoint,
 }) {
   const [editMode, setEditMode] = useState(false);
   const [saving, setSaving] = useState(false);
   const [resellerDetails, setResellerDetails] = useState(reseller);
+  const [shipToDetails, setShipToDetails] = useState(shipTo);
 
   const effects = useRenewalsDetailsStore(state => state.effects);
   const isEditingDetails = useRenewalsDetailsStore( state => state.isEditingDetails);
+  const branding = useRenewalsDetailsStore(state => state.branding || '');
 
   // Changes reseller check to vendorAccountNumber
   const resellerResponseAsObj = isObject(reseller.vendorAccountNumber);
@@ -44,9 +47,13 @@ function ResellerInfo({
     }
   };
 
+  function handleShipToOnChange (shipTo) {
+    setShipToDetails(shipTo);
+  }
+
   const saveHandler = () => {
     setSaving(true);
-    updateDetails(null, resellerDetails)
+    updateDetails(null, resellerDetails, shipToDetails)
       .then((result) => {
         if(result) {
           setLockedEdit(false);
@@ -89,9 +96,15 @@ function ResellerInfo({
       {saving && <Saving customClass="saving__absolute" />}
       {editMode ? (
         <ResellerEdit
+          branding={branding}
+          addressesEndpoint={addressesEndpoint}
           resellerDetails={resellerDetails} 
+          resellerLabels={resellerLabels}
           isEmailValid={isEmailValid}
           handlers={editHandlers}
+          shipToDetails={shipToDetails}
+          shipToOnChange={handleShipToOnChange}
+          //onShiptToUpdated={saveHandler}
         />
       ) : (
         <ResellerReadOnly 

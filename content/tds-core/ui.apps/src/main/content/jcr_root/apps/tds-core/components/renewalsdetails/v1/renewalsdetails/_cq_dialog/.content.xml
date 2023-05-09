@@ -550,6 +550,11 @@
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                 fieldLabel="Ship to Label"
                                                                 name="./shipToLabel"/>
+															<shipToEditLabel
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                fieldLabel="Ship to Edit Label"
+                                                                name="./shipToEditLabel"/>
 														</items>
 													</resellerGroup>
 												</items>

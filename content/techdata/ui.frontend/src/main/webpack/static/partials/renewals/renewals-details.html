@@ -13,8 +13,7 @@
     agGridLicenseKey:
       "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
     shopDomainPage: "https://shop.cstenet.com/products",
-    uiServiceEndPoint:
-      "http://localhost:3000/ui-renewal/v1/Details",
+    uiServiceEndPoint: "http://localhost:3000/ui-renewal/v1/Details",
     exportPDFRenewalsEndpoint: 'http://localhost:3000/ui-export/v1/downloadRenewalQuotePdf',
     shopURL: "https://shop.cstenet.com/renewals",
     updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
@@ -50,6 +49,7 @@
     },
     quotePreview: {
       renewalsUrl: "http://localhost:8080/renewals-grid.html",
+      addressesEndpoint:"http://localhost:3000/ui-renewal/v1/getAddresses",
       renewalsUrlLabel: "Back to all Renewals",
       quotePreviewlabel: "Quote Preview",
       reseller: {
@@ -63,7 +63,8 @@
         vendorAccountNoResLabel: "Reseller vendor account No:",
         previousPurchaseOrderNoEndLabel: "Previous purchase order No:",
         previousOrderNoLabel: "Previous order number",
-        shipToLabel: "SOLD-TO ADDRESS"
+        shipToLabel: "SOLD-TO ADDRESS",
+        shipToEditLabel: "Ship-to address"
       },
       productLines: {
         endCustomerLabel: "End Customer",

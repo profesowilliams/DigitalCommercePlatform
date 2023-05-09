@@ -229,6 +229,8 @@ public class CaConfigReader {
 
     private String copyQuoteEndpoint;
 
+    private String addressesEndpoint;
+
     private String gtmBodyJSScript;
 
     private String intouchCSSAPIUrl;
@@ -309,6 +311,7 @@ public class CaConfigReader {
         accountLookUpEndpoint = serviceEndPointsConfiguration.accountLookUpEndpoint();
         checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
         copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
+        addressesEndpoint = serviceEndPointsConfiguration.addressesEndpoint();
         cartURL = mcConfiguration.cartURL();
         expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
         checkoutRedirectUrl = mcConfiguration.checkoutRedirectUrl();
@@ -774,6 +777,10 @@ public class CaConfigReader {
 
     public String getCopyQuoteEndpoint(){
         return copyQuoteEndpoint;
+    }
+
+    public String getAddressesEndpoint(){
+        return addressesEndpoint;
     }
 
     public String getGtmBodyJSScript() {

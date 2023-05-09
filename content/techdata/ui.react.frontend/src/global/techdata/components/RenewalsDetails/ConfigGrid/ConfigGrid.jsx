@@ -139,6 +139,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
       </div>
       <div className="info-container">
         <ResellerInfo
+          {...quotePreview}
           resellerLabels={quotePreview.reseller}
           reseller={reseller}
           updateDetails={updateDetails}

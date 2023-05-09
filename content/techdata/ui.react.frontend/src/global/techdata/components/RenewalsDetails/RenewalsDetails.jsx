@@ -167,11 +167,12 @@ function RenewalsDetails(props) {
     effects.setCustomState({ key: 'isEditingDetails', value: flag });
   };
 
-  const updateDetails = async (endUserDetails, resellerDetails) => {
+  const updateDetails = async (endUserDetails, resellerDetails, shipToDetails) => {
     try {      
       effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
       renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
+      renewalsDetails.shipTo = shipToDetails || renewalsDetails.shipTo;
       renewalsDetails.items = gridRef.current.getMutableGridData();
       
       if (renewalsDetails.endUser?.eaNumber?.text) {

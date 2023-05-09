@@ -119,6 +119,10 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["uiServiceEndPoint"] = this.serviceData.uiServiceDomain + this.serviceData.renewalDetailLineItemEndpoint || '';
     }
 
+    if (this.addressesEndpoint && this.serviceData.uiServiceDomain) {
+        quotePreview["addressesEndpoint"] = this.serviceData.uiServiceDomain + this.addressesEndpoint;
+    }
+
     if (properties && properties["quotePreviewlabel"]) {
         quotePreview["quotePreviewlabel"] = properties["quotePreviewlabel"];
     }
@@ -169,6 +173,9 @@ use(['../../../common/utils.js'], function(utils) {
     }
     if (properties && properties["shipToLabel"]) {
         reseller["shipToLabel"] = properties["shipToLabel"];
+    }
+    if (properties && properties["shipToEditLabel"]) {
+        reseller["shipToEditLabel"] = properties["shipToEditLabel"];
     }
 
     if (reseller != null) {
