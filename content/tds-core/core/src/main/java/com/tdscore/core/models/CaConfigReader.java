@@ -241,6 +241,8 @@ public class CaConfigReader {
 
     private String intouchFooterAPIUrl;
 
+    private String intouchUserCheckAPIUrl;
+
     private String ecommerceAuthenticationLoginEndpoint;
 
     private String getUserEndpoint;
@@ -346,6 +348,7 @@ public class CaConfigReader {
             intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
             intouchHeaderAPIUrl = intouchConfiguration.headerAPIUrl();
             intouchFooterAPIUrl = intouchConfiguration.footerAPIUrl();
+            intouchUserCheckAPIUrl = intouchConfiguration.userCheckAPIUrl();
         }
     }
 
@@ -805,6 +808,10 @@ public class CaConfigReader {
 
     public String getIntouchFooterAPIUrl() {
         return intouchFooterAPIUrl;
+    }
+
+    public String getIntouchUserCheckAPIUrl() {
+        return intouchUserCheckAPIUrl;
     }
 
     public String getIntouchCSSAPIUrl() {
