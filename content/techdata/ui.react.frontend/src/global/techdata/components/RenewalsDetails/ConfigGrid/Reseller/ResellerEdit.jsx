@@ -89,7 +89,7 @@ export default function ResellerEdit({
   const contactName = contact[0].name;
   const [accountName, setAccountName] = useState('');
   const [addresses, setAddresses] = useState([]);
-  const [defaultAddressName] = useState(shipToDetails.name ? JSON.parse(JSON.stringify({name: shipToDetails?.name})) : undefined);
+  const [defaultAddressName] = useState(shipToDetails?.name ? JSON.parse(JSON.stringify({name: shipToDetails?.name})) : undefined);
   const [resetValue, setResetValue] = useState(defaultAddressName);
   
   const isMountedRef = useRef(true);
