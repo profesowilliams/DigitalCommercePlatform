@@ -250,10 +250,8 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSearchChange = () => {
-    setPill(null, () => {
-      removeDefaultDateRange();
-      onQueryChanged();
-    });
+    removeDefaultDateRange();
+    onQueryChanged();
   };
 
   const doesMatchById = (searchId, orderId) => searchId === orderId;
