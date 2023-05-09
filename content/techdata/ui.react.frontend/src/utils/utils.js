@@ -401,9 +401,6 @@ const renderIntouchComponent = (url, loadToElement, loadend) => {
 };
 
 const renderIntouchHeaderHTML = () => {
-    const userIsValid = checkIntouchUser();
-    if (!userIsValid) return;
-
     const url = intouchHeaderAPIUrl();
     const element = document.getElementById('intouch-headerhtml');
 
