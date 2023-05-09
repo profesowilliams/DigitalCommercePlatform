@@ -160,7 +160,8 @@ function OrdersTrackingGrid(props) {
     const ordersCountResponse = await fetchOrdersCount(
       ordersCountUrl.href,
       reportFilterValue.current?.value,
-      dateRange
+      dateRange,
+      filtersRefs
     );
     const response = await fetchData(queryOperations);
 

@@ -45,12 +45,12 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
   };
 
   const setFilterDate = (startDate, endDate) => {
-    const startDateMonth = startDate.format('M');
-    const startDateDay = startDate.format('D');
+    const startDateMonth = startDate.format('MM');
+    const startDateDay = startDate.format('DD');
     const startDateYear = startDate.format('YYYY');
 
-    const endDateMonth = endDate.format('M');
-    const endDateDay = endDate.format('D');
+    const endDateMonth = endDate.format('MM');
+    const endDateDay = endDate.format('DD');
     const endDateYear = endDate.format('YYYY');
 
     const dateLabel = getDateRangeLabel(startDate, endDate);
