@@ -16,7 +16,7 @@ $amber: get-color(amber);
 $forest: map-get($color-palette, 'forest');
 $cool-gray-9: get-color(cool-gray-9);
 $cobalt: get-color(cobalt);
-$dark-blue: get-color(dark-blue);
+$dark-blue: #000C21;
 $sky-blue: get-color(sky-blue);
 $legacy-gray: get-color(legacy-gray);
 $neutral-gray-2: get-color(neutral-gray-2);
@@ -4123,7 +4123,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   //Legacy background colors
   &.btn-dark-blue {
     .cmp-button {
-      background-color: get-color(dark-blue);
+      background-color: #000C21;
     }
   }
 
@@ -4145,17 +4145,17 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
 
   &.btn-dark-blue.cmp-tds-button-secondary {
     @include type-button-handler(
-      $dark-blue,
-      $secondary-background-color,
-      $secondary-background-color,
-      $secondary-border-size,
-      #ffffffff,
-      $secondary-opacity,
-      #ffffffff,
-      $secondary-hover-opacity,
-      $secondary-active-color-opacity,
-      $secondary-active-opacity,
-      $secondary-background-disabled-color
+      $dark-blue, //color
+      $secondary-background-color, //background-color
+      #ffffff, //degraded-background-color
+      $secondary-border-size, //border-size
+      #ffffffff, //degraded-color
+      $secondary-opacity, //opacity
+      rgba(0, 12, 33, 0.1), //degraded-color-hover
+      $secondary-hover-opacity, //opacity-hover
+      rgba(0, 12, 33, 0.2), //pressed-opacity-color
+      $secondary-active-opacity, //pressed-opacity-value
+      #ffffff //disabled-background-color
     );
   }
 
