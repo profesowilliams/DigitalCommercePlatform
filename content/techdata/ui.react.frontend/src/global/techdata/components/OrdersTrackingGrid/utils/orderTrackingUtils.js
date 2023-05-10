@@ -58,9 +58,9 @@ export const fetchOrdersCount = async (
   const { createdFrom, createdTo } = filtersRefs;
   const fromRef = createdFrom?.current;
   const toRef = createdTo?.current;
-  if (fromRef || createdTo) {
-    fromRef && mapUrl.set('createdFrom', fromRef);
-    toRef && mapUrl.set('createdTo', toRef);
+  if (fromRef && toRef) {
+    mapUrl.set('createdFrom', fromRef);
+    mapUrl.set('createdTo', toRef);
   } else {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
