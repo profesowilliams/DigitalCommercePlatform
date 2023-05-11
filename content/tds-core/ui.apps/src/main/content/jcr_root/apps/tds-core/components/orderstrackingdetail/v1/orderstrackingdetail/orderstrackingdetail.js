@@ -11,7 +11,7 @@ use(['../../../common/utils.js'], function (utils) {
         jsonObject["ordersUrl"] = properties["ordersUrl"];
     }
     if (properties && properties["agGridLicenseKey"]) {
-        jsonObject["agGridLicenseKey"] = properties["agGridLicenseKey"];
+        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
 
     // Labels
