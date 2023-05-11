@@ -1,78 +1,12 @@
 import React, { useLayoutEffect, useState, useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import { styled } from "@mui/material/styles";
-import { Autocomplete, TextField } from '@mui/material';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
 import { handleValidation, populateFieldConfigsFromService, getFieldMessage, handleEmailHelperText } from '../Common/utils';
-import { getDictionaryValue } from '../../../../../../utils/utils';
-import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
+import { getDictionaryValue, getDictionaryValueOrKey } from '../../../../../../utils/utils';
+import { mapAddressToShipTo } from "../../../RenewalsGrid/Orders/orderingRequests"
 import { AddressDetails } from './AddressDetails';
 import { get } from '../../../../../../utils/api' 
-import { mapAddressToShipTo } from "../../../RenewalsGrid/Orders/orderingRequests"
-
-const StyledAutocomplete = styled(Autocomplete)({
-    "& + .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected='true']": {
-      color: '#FFFFFF',
-      backgroundColor: '#000C21',//computeBrandColor
-    },
-    "& + .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected='true'].Mui-focused": {
-      color: '#FFFFFF',
-      backgroundColor: '#000C21',
-    },
-    "& + .MuiAutocomplete-root .MuiInput-root .MuiInput-input": {
-      color: '#E02020',
-    },
-
-  
-    // "&.Mui-focused .MuiInputLabel-outlined": {
-    //   color: "purple"
-    // },
-    "& .MuiAutocomplete-inputRoot": {
-      color: "purple",
-      // // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
-      // '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-of-type': {
-      //   // Default left padding is 6px
-      //   paddingLeft: 26
-      // },
-      // "& .MuiOutlinedInput-notchedOutline": {
-      //   borderColor: "green"
-      // },
-      // "&:hover .MuiOutlinedInput-notchedOutline": {
-      //   borderColor: "red"
-      // },
-      // "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      //   borderColor: "purple"
-      // }
-    }
-
-  // "& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)": {
-  //   // Default transform is "translate(14px, 20px) scale(1)""
-  //   // This lines up the label with the initial cursor position in the input
-  //   // after changing its padding-left.
-  //   transform: "translate(34px, 20px) scale(1);"
-  // },
-  // "&.Mui-focused .MuiInputLabel-outlined": {
-  //   color: "purple"
-  // },
-  // "& .MuiAutocomplete-inputRoot": {
-  //   color: "purple",
-  //   // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
-  //   '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-of-type': {
-  //     // Default left padding is 6px
-  //     paddingLeft: 26
-  //   },
-  //   "& .MuiOutlinedInput-notchedOutline": {
-  //     borderColor: "green"
-  //   },
-  //   "&:hover .MuiOutlinedInput-notchedOutline": {
-  //     borderColor: "red"
-  //   },
-  //   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-  //     borderColor: "purple"
-  //   }
-  // }
-});
-
+import { StyledDetailsAutocomplete } from '../../MuiStyledComponents/StyledDetailsAutocomplete';
 
 export default function ResellerEdit({
   resellerDetails,
@@ -90,8 +24,7 @@ export default function ResellerEdit({
   const [accountName, setAccountName] = useState('');
   const [addresses, setAddresses] = useState([]);
   const [defaultAddressName] = useState(shipToDetails?.name ? JSON.parse(JSON.stringify({name: shipToDetails?.name})) : undefined);
-  const [resetValue, setResetValue] = useState(defaultAddressName);
-  
+  const [shipToCurrentValue, setShipToCurrentValue] = useState(defaultAddressName);
   const isMountedRef = useRef(true);
   const contactNameRef = useRef();
 
@@ -104,7 +37,7 @@ export default function ResellerEdit({
 
   useEffect(() => {
     getAddresses().then((result) => {
-      setAddresses(result?.data?.content);
+      setAddresses(result?.data?.content || []);
     })
   }, []);
 
@@ -123,19 +56,20 @@ export default function ResellerEdit({
 
   const handleShipToOnChange = (event, newInput) => {
     shipToOnChange(mapAddressToShipTo(newInput));
+    setShipToCurrentValue(newInput?.name || null)
   };
 
   const handleShipToNameOnChange = async (event) => {
     setAccountName(event.target.value);
   };
 
-  const computeBrandColor = () => {
-    return branding === 'cmp-grid-techdata' ? '#000C21' : '#005758';
-  }
+  // const computeBrandColor = () => {
+  //   return branding === 'cmp-grid-techdata' ? '#000C21' : '#005758';
+  // }
 
   return (
     <Box
-      className="cmp-renewals-qp__edit-planel"
+      className="cmp-renewals-qp__edit-panel"
       component="form"
       sx={formBoxStyle}
       noValidate
@@ -187,24 +121,27 @@ export default function ResellerEdit({
           {...populateFieldConfigsFromService(contact[0]['phone'])}
         />
       )}
-      {
-        <StyledAutocomplete
-          id="combo-box-addresses"       
+      {//shipToDetails?.id?.canEdit &&
+        <StyledDetailsAutocomplete
+          id="combo-box-addresses"   
+          //open={isAutocompleteOpen}   
+          autoHighlight 
           disablePortal
+          disableClearable 
           options={addresses}
           defaultValue={defaultAddressName}
           renderInput={(params) => (
             <CustomTextField
               id="ship-to"
               {...params}
-              value={undefined}
+              //value={shiptToCurrentValue}
               label={getDictionaryValueOrKey(resellerLabels.shipToEditLabel)}
               variant="standard"
               onChange={handleShipToNameOnChange}   
               helperText={getFieldMessage(shipToDetails?.id)}  
-              InputLabelProps={{ className: "autocompleteErrorLabel" }}  
+              InputLabelProps={{ className: shipToCurrentValue ? '' : "autocompleteErrorLabel"}}  
               {...handleValidation(shipToDetails?.id)}      
-              //{...populateFieldConfigsFromService(shipToDetails?.name)} 
+              //{...populateFieldConfigsFromService(shipToDetails?.id)} 
             />
           )
           }

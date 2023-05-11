@@ -62,10 +62,10 @@
         border-top: 1px solid #d8d8d8 !important;
     }
     .autocompleteErrorLabel {
-        color:#E02020 !important;
+        color:$brand-cherry !important;
     }
     .info-container {
-        .cmp-renewals-qp__edit-planel {
+        .cmp-renewals-qp__edit-panel {
             .MuiFormHelperText-root {
                 margin: 0;
                 &.Mui-error {
@@ -85,6 +85,16 @@
                     }
                 }
             }
+            &__ship-to {
+                &--item {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                }
+                &--name {
+                    font-weight: 600;   
+                    color: $brand-charcoal;
+                }
+            }            
         }
     }
 }

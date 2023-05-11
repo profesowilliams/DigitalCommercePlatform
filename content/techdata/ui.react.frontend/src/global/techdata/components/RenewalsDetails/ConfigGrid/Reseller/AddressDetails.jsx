@@ -1,38 +1,23 @@
 import React from 'react';
-
-import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
+import { addSeparator } from '../../../../../../utils/utils';
 
 export const AddressDetails = ({ address, labels, currentlyTypedWord }) => {
-  const { name, line1, postalCode } = address;
-  const hasMatch = address?.name?.toLowerCase()?.startsWith(currentlyTypedWord.toLowerCase());
-
+  const { name, line1, postalCode, city, stateName } = address;
   
   return (
-    <div className="cmp-flyout__quotecmp-flyout__selected-quote">
+    <div className="cmp-renewals-qp__edit-panel__ship-to">
       {name && (
-        <>
-          <div className="cmp-flyout__quotecmp-flyout__selected-quote__account-number">
-            {name}
+        <div className="cmp-renewals-qp__edit-panel__ship-to--item">
+          <div className="cmp-renewals-qp__edit-panel__ship-to--name">
+            <label>{name}</label>
           </div>
-          <div className="cmp-flyout__quotecmp-flyout__selected-quote__account-name">
-            {labels && (
-              <span className="cmp-flyout__quotecmp-flyout__selected-quote__label">
-                {getDictionaryValueOrKey(
-                  labels.accountNameLabel || 'Account name:'
-                )}
-              </span>
-            )}
+          <div>
             {line1}
           </div>
-          <div className="cmp-flyout__quotecmp-flyout__selected-quote__city">
-            {labels && (
-              <span className="cmp-flyout__quotecmp-flyout__selected-quote__label">
-                {getDictionaryValueOrKey(labels.cityLabel || 'City:')}
-              </span>
-            )}
-            {postalCode}
+          <div>
+            {addSeparator([postalCode, city, stateName])}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

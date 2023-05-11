@@ -45,7 +45,7 @@ export default function EndUserEdit({
   };
 
   return (
-    <Box className="cmp-renewals-qp__edit-planel" component="form" sx={formBoxStyle} noValidate autoComplete="off">
+    <Box className="cmp-renewals-qp__edit-panel" component="form" sx={formBoxStyle} noValidate autoComplete="off">
       {endUserDetails?.name.canEdit && <CustomTextField
         autoFocus={true}
         id="end-user-name"
