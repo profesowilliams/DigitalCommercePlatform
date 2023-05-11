@@ -16,12 +16,13 @@ import useFilteringSelected from "./hooks/useIsFilteringSelected";
 import { RenewalErrorBoundary } from "./renewalErrorBoundary";
 import { getDictionaryValue } from "../../../../utils/utils";
 import { getLocalValueOrDefault } from "../BaseGrid/store/GridStore";
+import { getFilterAnalytics } from "../Analytics/analytics";
 
 const FilterDialog = ({ children }) => {
   return <div className="filter-modal-container__popup">{children}</div>;
 };
 
-const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topReference }) => {
+const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topReference, analyticsCategory }) => {
   const {
     filterList,
     resetFilter,
@@ -153,6 +154,7 @@ const FilterModal = ({ aemData, handleFilterCloseClick, onQueryChanged, topRefer
                   btnClass={computeClassName("cmp-quote-button filter-modal-content__results")}
                   onClick={showResult}
                   disabled={!hasFilterChangeAvailable()}
+                  analyticsCallback={getFilterAnalytics.bind(null, analyticsCategory, _generateFilterFields())}
                 >
                   {getDictionaryValue("grids.common.label.filterSearch", "Show results")}
                 </Button>

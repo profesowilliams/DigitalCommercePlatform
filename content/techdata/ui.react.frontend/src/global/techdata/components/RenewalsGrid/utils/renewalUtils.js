@@ -376,7 +376,6 @@ export const analyticsColumnDataToPush = (name) => ({
 });
 
 export const redirectToRenewalDetail = (detailUrl, id = "") => {
-    pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.seeDetails));
     const renewalDetailsURL = encodeURI(
       `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
     );

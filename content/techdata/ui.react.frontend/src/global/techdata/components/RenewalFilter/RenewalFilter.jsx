@@ -15,14 +15,15 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
   const effects = useRenewalGridState((state) => state.effects);
   const appliedFilterCount = useRenewalGridState(state => state.appliedFilterCount);
   const topReference = useRef();
+  const analyticsCategory = useRenewalGridState((st) => st.analyticsCategory);
 
   const { toggleFilterModal, closeAndCleanToaster } = effects;
   const handleFilterClick = () => {
-    pushEvent(ANALYTICS_TYPES.events.click, {
-      type: ANALYTICS_TYPES.types.button,
-      category: ANALYTICS_TYPES.category.renewalsTableInteraction,
-      name: ANALYTICS_TYPES.name.filterIcon,
-    });
+    //pushEvent(ANALYTICS_TYPES.events.click, {
+    //  type: ANALYTICS_TYPES.types.button,
+    //  category: ANALYTICS_TYPES.category.renewalsTableInteraction,
+    //  name: ANALYTICS_TYPES.name.filterIcon,
+    //});
     toggleFilterModal();
     window.scrollTo(0,0);
     closeAndCleanToaster();
@@ -49,6 +50,7 @@ export default function RenewalFilter({ aemData, onQueryChanged }) {
           handleFilterCloseClick={handleFilterCloseClick}
           onQueryChanged={onQueryChanged}
           topReference={topReference}
+          analyticsCategory={analyticsCategory}
         />
       )}
     </div>

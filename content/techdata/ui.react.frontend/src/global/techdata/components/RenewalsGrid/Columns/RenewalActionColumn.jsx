@@ -6,7 +6,6 @@ import useIsIconEnabled from '../Orders/hooks/useIsIconEnabled';
 import PlaceOrderDialog from '../Orders/PlaceOrderDialog';
 import useTriggerOrdering from '../Orders/hooks/useTriggerOrdering';
 import {
-  analyticsColumnDataToPush,
   getLocalStorageData,
   hasLocalStorageData,
   isFromRenewalDetailsPage,
@@ -15,10 +14,11 @@ import {
 } from '../utils/renewalUtils';
 import { useRenewalGridState } from '../store/RenewalsStore';
 import Dialog from "@mui/material/Dialog";
-import { ANALYTICS_TYPES, pushEvent } from '../../../../../utils/dataLayerUtils';
 import { fileExtensions, generateFileFromPost } from '../../../../../utils/utils';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import ActionsMenu from './ActionsMenu';
+import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
+import Button from '../../Widgets/Button';
 
 function _RenewalActionColumn({ eventProps }) {
   const { value, data } = eventProps;
@@ -36,6 +36,7 @@ function _RenewalActionColumn({ eventProps }) {
     productGrid,
     ...endpoints
   } = useRenewalGridState((state) => state.aemConfig);
+  const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
 
   const isIconEnabled = useIsIconEnabled(
     data?.firstAvailableOrderDate,
@@ -152,7 +153,6 @@ function _RenewalActionColumn({ eventProps }) {
 
   const downloadXLS = () => {
     try {
-      pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadXLS));
       generateFileFromPost({
         url: exportXLSRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.xlsx`,
@@ -167,7 +167,6 @@ function _RenewalActionColumn({ eventProps }) {
 
   const downloadPDF = () => {
     try {      
-      pushEvent(ANALYTICS_TYPES.events.click, analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadPDF));
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.pdf`,
@@ -190,9 +189,16 @@ function _RenewalActionColumn({ eventProps }) {
     <>
       <div className="cmp-renewal-action-container" style={{position:'relative'}} key={Math.random()}>
         {isIconEnabled ? (
-          <span className="cmp-renewals-cart-icon">
-            <CartIcon onClick={handleCartIconClick} />
-          </span>
+          <Button onClick={handleCartIconClick}
+            analyticsCallback={getRowAnalytics.bind(null,
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.RowActions.Order,
+              data)}
+          >
+            <span className="cmp-renewals-cart-icon">
+              <CartIcon />
+            </span>
+          </Button>
         ) : (
           <CartIcon
             className="disabled"

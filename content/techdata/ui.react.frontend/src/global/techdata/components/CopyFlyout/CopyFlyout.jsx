@@ -9,6 +9,7 @@ import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { QuoteDetails } from './QuoteDetails';
 import { checkQuoteExitsforReseller, copyQuote, resellerLookUp } from './api';
+import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 
 export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
   const copyFlyoutConfig = store((st) => st.copyFlyout);
@@ -19,6 +20,12 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       copyFlyout.searchPlaceholder
     )
   );
+  const analyticsCategory = store((st) => st.analyticsCategory);
+  let { source, reseller, vendor } = copyFlyoutConfig ?
+    copyFlyoutConfig?.data :
+    { source: undefined, reseller: undefined, vendor: undefined };
+  let analyticsData = { analyticsCategory, source, reseller, vendor };
+
   const [quotes, setQuotes] = useState([]);
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [selectedQuote, setSelectedQuote] = useState(null);
@@ -210,7 +217,12 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       enableButton={enableCopy}
       disabledButton={!enableCopy}
       onClickButton={handleCopy}
+      analyticsData={analyticsData}
       bottomContent={(classNameSuffix) => WarningMessage({ classNameSuffix })}
+      analyticsCallback={getRowAnalytics.bind(null,
+        analyticsData.analyticsCategory,
+        ANALYTIC_CONSTANTS.Grid.RowActions.Copy,
+        analyticsData)}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">

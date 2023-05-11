@@ -7,21 +7,15 @@ import {
     EyeLightIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import useOutsideClick from '../../../hooks/useOutsideClick';
-import {
-    analyticsColumnDataToPush,
-    redirectToRenewalDetail,
-} from '../utils/renewalUtils';
-import {
-    ANALYTICS_TYPES,
-    pushEvent,
-} from '../../../../../utils/dataLayerUtils';
+import { redirectToRenewalDetail } from '../utils/renewalUtils';
+import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from '../../../../../utils/utils';
 
 function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, detailUrl }) {
 
     const dialogRef = useRef();
     const { setCustomState } = useRenewalGridState(st => st.effects);
-
+    const analyticsCategory = useRenewalGridState(st => st.analyticsCategory);
 
     useOutsideClick(dialogRef, onClose, 'mousedown', [onClose]);
 
@@ -41,11 +35,13 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
       },[open])
 
     const downloadPDF = () => {
-        try {
-            pushEvent(
-                ANALYTICS_TYPES.events.click,
-                analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadPDF)
-            );
+      try {
+          data['link'] = exportPDFRenewalsEndpoint;
+          pushDataLayer(
+            getRowAnalytics(
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdf,
+              data));
             generateFileFromPost({
                 url: exportPDFRenewalsEndpoint,
                 name: `Renewals Quote ${data?.source?.id}.pdf`,
@@ -61,10 +57,12 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
 
     const downloadXLS = () => {
         try {
-            pushEvent(
-                ANALYTICS_TYPES.events.click,
-                analyticsColumnDataToPush(ANALYTICS_TYPES.name.downloadXLS)
-            );
+          data['link'] = exportXLSRenewalsEndpoint;
+          pushDataLayer(
+            getRowAnalytics(
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.RowActions.DownloadXls,
+              data));
             generateFileFromPost({
                 url: exportXLSRenewalsEndpoint,
                 name: `Renewals Quote ${data?.source?.id}.xlsx`,
@@ -77,7 +75,8 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
         }
     };
 
-    const triggerCopyFlyout = () => {
+  const triggerCopyFlyout = () => {
+        data['link'] = '';
         onClose();
         setCustomState({ key: 'copyFlyout', value: { data, show:true} });
     };

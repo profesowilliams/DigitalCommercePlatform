@@ -1,5 +1,6 @@
 import { Drawer } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import Button from "../Widgets/Button";
 import usePositionBelowSubheader from '../../hooks/usePositionBelowSubheader';
 import { DismissFilledIcon, LoaderIcon} from '../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
@@ -22,6 +23,8 @@ function BaseFlyout({
   selected,
   secondaryButton,
   isTDSynnex,
+  analyticsData,
+  analyticsCallback
 }) {
   const BottomContent = () => bottomContent('footer');
   const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
@@ -71,16 +74,16 @@ function BaseFlyout({
           {bottomContent && <BottomContent />}
           <div className="cmp-flyout__footer-buttons">
             {enableButton && secondaryButton && <SecondaryButton />}
-            <button
-              className={`cmp-flyout__footer-button ${
-                enableButton ? 'cmp-flyout__footer-button--enabled' : ''
-              }`}
+            <Button
+              className={`cmp-flyout__footer-button ${enableButton ? 'cmp-flyout__footer-button--enabled' : ''
+                }`}
               disabled={disabledButton}
               onClick={onClickButton}
+              analyticsCallback={analyticsCallback}
             >
               {!isLoading && getDictionaryValueOrKey(buttonLabel)}{' '}
               {isLoading && <LoaderIcon />}
-            </button>
+            </Button>
           </div>
         </section>
       </div>

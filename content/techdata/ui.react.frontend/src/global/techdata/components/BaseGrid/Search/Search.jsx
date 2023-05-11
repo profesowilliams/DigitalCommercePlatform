@@ -9,7 +9,6 @@ import React, {
 import { useEffect } from "react";
 import { ChevronDownIcon, SearchIcon, SearchIconFilled } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { ANALYTICS_TYPES, pushEvent } from "../../../../../utils/dataLayerUtils";
 import { isHouseAccount } from "../../../../../utils/user-utils";
 import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
@@ -24,6 +23,7 @@ import {
 import { SearchField } from './SearchField';
 import "../../../../../../src/styles/TopIconsBar.scss";
 import { useStore } from "../../../../../utils/useStore";
+import { pushDataLayer, getSearchAnalytics } from '../../Analytics/analytics'
 
 function _GridSearch(
   { styleProps, options, callback, inputType, filterCounter, onQueryChanged, store, hideLabel=false },
@@ -35,6 +35,7 @@ function _GridSearch(
     option: getInitialFieldState(),
     label: getInitialLabelState()
   }
+  const analyticsCategory = store((state) => state.analyticsCategory);
   const [values, setValues] = useState({ ...customSearchValues }); /** TODO: Get rid of states and move to Zustand for less boilerplate. */
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setSwitchDropdown] = useState(false);
@@ -207,12 +208,7 @@ function _GridSearch(
       value: inputValue,
     });
     onQueryChanged({ onSearchAction: true });
-    pushEvent(ANALYTICS_TYPES.events.renewalSearch, null, {
-      renewal: {
-        searchTerm: inputValue,
-        searchType: option,
-      },
-    });
+    pushDataLayer(getSearchAnalytics(analyticsCategory, { field: option, value: inputValue}));
     setCapsuleValues({ ...values });
   }
 
