@@ -5,9 +5,16 @@ import buildColumnDefinitions from './buildColumnDefinitions';
 import DescriptionColumn from '../Columns/DescriptionColumn';
 import ActionsColumn from '../Columns/ActionsColumn';
 import QuantityColumn from '../Columns/QuantityColumn';
+import LineStatusColumn from '../Columns/LineStatusColumn';
 import ShipDateColumn from '../Columns/ShipDateColumn';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { getContextMenuItems } from '../../RenewalsGrid/utils/renewalUtils';
+import {
+  isExtraReloadDisabled,
+  isHttpOnlyEnabled,
+} from '../../../../../utils/featureFlagUtils';
+import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../../utils/constants';
+import { useStore } from '../../../../../utils/useStore';
 
 function OrdersTrackingDetailGrid({ data, gridProps }) {
   const gridData = data.items ?? [];
@@ -17,6 +24,16 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
     serverSide: false,
     paginationStyle: 'none',
   };
+
+  const userData = useStore((state) => state.userData);
+  const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
+    ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
+    : null;
+  const currentUserData =
+    isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
+
+  const activeCustomer = currentUserData?.activeCustomer;
+  const defaultCurrency = activeCustomer?.defaultCurrency || '';
 
   const gridColumnWidths = Object.freeze({
     actions: '50px',
@@ -47,6 +64,7 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
     {
       field: 'status',
       headerName: getDictionaryValueOrKey(config?.labels?.lineStatus),
+      cellRenderer: ({ data }) => <LineStatusColumn line={data} />,
       width: gridColumnWidths.status,
     },
     {
@@ -61,7 +79,10 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
       field: 'unitPriceFormatted',
       headerName: getDictionaryValueOrKey(
         config?.labels?.lineUnitPrice
-      )?.replace('{currency-code}', data?.paymentDetails.currency || ''),
+      )?.replace(
+        '{currency-code}',
+        data?.currency ? data?.currency : defaultCurrency
+      ),
       width: gridColumnWidths.unitPriceFormatted,
     },
     {
@@ -76,7 +97,10 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
       field: 'totalPriceFormatted',
       headerName: getDictionaryValueOrKey(
         config?.labels?.lineTotalPrice
-      )?.replace('{currency-code}', data?.paymentDetails.currency || ''),
+      )?.replace(
+        '{currency-code}',
+        data?.currency ? data?.currency : defaultCurrency
+      ),
       width: gridColumnWidths.totalPriceFormatted,
     },
     {

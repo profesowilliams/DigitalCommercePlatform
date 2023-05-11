@@ -1,6 +1,6 @@
 const columnDefs = [
   {
-    headerName: 'Line No.',
+    headerName: 'Line №',
     field: 'id',
     width: '100px',
     sortable: false,
@@ -13,12 +13,13 @@ const columnDefs = [
     headerClass: 'right-aligned',
   },
   {
-    headerName: 'Description & PN',
+    headerName: 'Description',
     field: 'description',
     sortable: false,
     width: '500px',
     cellStyle: { 'white-space': 'normal', padding: '32px 18px' },
     autoHeight: true,
+    headerClass: 'center-aligned',
   },
   {
     headerName: 'Line Status',

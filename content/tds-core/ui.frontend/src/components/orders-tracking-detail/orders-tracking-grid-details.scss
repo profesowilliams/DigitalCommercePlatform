@@ -107,6 +107,21 @@
         padding-right: 12px;
     }
     &__description{
+      &-column{
+        display: flex;
+      }
+
+      &-image{
+        width: 80px;
+        &-child{
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+      }
+      &-right{
+        margin-left: 1rem;
+      }
       &-link{
         color: get-color(cobalt);
         max-height: 3em; 

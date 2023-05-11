@@ -11516,6 +11516,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
 app.get("/ui-commerce/v2/order", (req, res) => {
   const response = {
     content: {
+      currency: "EUR",
       shipTo: {
         id: null,
         companyName: "My Co Name",
@@ -11589,7 +11590,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               quantity: 5,
               created: "01-18-2022",
               shippedFrom: null,
-              actualShipDate: "02-04-2022",
+              actualShipDate: "03-04-2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -11610,7 +11611,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               quantity: 7,
               created: "02-04-2022",
               shippedFrom: null,
-              actualShipDate: "02-04-2022",
+              actualShipDate: "05-04-2022",
               shippedFromText: "Fort Worth",
             },
           ],
@@ -11694,7 +11695,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           extendedPriceFormatted: "",
           availability: null,
           rebateValue: null,
-          urlProductImage: null,
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/3d/f2/3df2bd21-ef1a-45a4-896f-249fcbc9bb11.jpg",
           urlProductSpecs: null,
           agreements: null,
           ancillaryChargesWithTitles: null,
@@ -11840,7 +11842,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           updateDate: "15/03/2023 16:54:13",
           velocity: 0,
           weightUnit: "KG",
-          id: "1",
+          id: "2",
           parent: "0",
           vendorPartNo: "Unavailable",
           manufacturer: "Unavailable",
@@ -11879,7 +11881,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           extendedPriceFormatted: "",
           availability: null,
           rebateValue: null,
-          urlProductImage: null,
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/3d/f2/3df2bd21-ef1a-45a4-896f-249fcbc9bb11.jpg",
           urlProductSpecs: null,
           agreements: null,
           ancillaryChargesWithTitles: null,
@@ -12025,7 +12028,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           updateDate: "15/03/2023 16:54:13",
           velocity: 0,
           weightUnit: "KG",
-          id: "1",
+          id: "3",
           parent: "0",
           vendorPartNo: "Unavailable",
           manufacturer: "Unavailable",
@@ -12064,7 +12067,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           extendedPriceFormatted: "",
           availability: null,
           rebateValue: null,
-          urlProductImage: null,
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/3d/f2/3df2bd21-ef1a-45a4-896f-249fcbc9bb11.jpg",
           urlProductSpecs: null,
           agreements: null,
           ancillaryChargesWithTitles: null,
