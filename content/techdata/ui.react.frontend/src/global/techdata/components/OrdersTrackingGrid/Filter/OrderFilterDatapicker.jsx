@@ -58,7 +58,7 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
     const newDate = [
       {
         id: 1,
-        label: dateLabel,
+        filterOptionLabel: dateLabel,
         group: 'date',
         createdFrom: startDate?.toDate(),
         createdTo: endDate?.toDate(),

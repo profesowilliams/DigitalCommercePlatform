@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
-function OrderFilterTags() {
+function OrderFilterTags({ filtersRefs }) {
   const [showMore, setShowMore] = useState(false);
   const {
     setOrderStatusFiltersChecked,
@@ -27,10 +27,12 @@ function OrderFilterTags() {
   const handleFilterCloseClick = (id, group) => {
     if (group === 'status') {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
+      filtersRefs.status.current = newList.join();
       setOrderStatusFiltersChecked(newList);
     }
     if (group === 'type') {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
+      filtersRefs.type.current = newList.join();
       setOrderTypeFiltersChecked(newList);
     }
     if (group === 'date') {
@@ -43,6 +45,8 @@ function OrderFilterTags() {
         key: 'customEndDate',
         value: undefined,
       });
+      filtersRefs.createdFrom.current = undefined;
+      filtersRefs.createdTo.current = undefined;
     }
   };
 
@@ -55,10 +59,10 @@ function OrderFilterTags() {
           ...orderTypeFiltersChecked,
           ...dateRangeFiltersChecked,
         ].map((filter, index) => (
-          <div className={"filter-tags tag_dark_teal"} key={index}>
+          <div className={'filter-tags tag_dark_teal'} key={index}>
             <span className="filter-tags__title" key={index}>
-              {(filter?.group === 'date' && dateType) && `${dateType} : `}
-              {`${filter.label}`}
+              {filter?.group === 'date' && dateType && `${dateType} : `}
+              {`${filter.filterOptionLabel}`}
             </span>
             <span
               onClick={() => handleFilterCloseClick(filter.id, filter?.group)}

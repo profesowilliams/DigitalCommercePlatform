@@ -21,6 +21,10 @@ const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
   };
 
   const handleClearFilter = () => {
+    filtersRefs.type.current = undefined;
+    filtersRefs.status.current = undefined;
+    filtersRefs.createdFrom.current = undefined;
+    filtersRefs.createdTo.current = undefined;
     clearAllOrderFilters();
     toggleFilterModal();
   };
@@ -51,7 +55,7 @@ const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
         </div>
       </section>
       <section className="filter-order-tags-container">
-        <OrderFilterTags />
+        <OrderFilterTags filtersRefs={filtersRefs} />
       </section>
     </BaseFlyout>
   );

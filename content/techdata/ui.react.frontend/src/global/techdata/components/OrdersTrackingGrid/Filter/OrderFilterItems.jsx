@@ -7,12 +7,13 @@ import FormControl from '@mui/material/FormControl';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
 const OrderFilterItems = ({ itemKey, filtersRefs }) => {
-  const orderStatusFilters = useOrderTrackingStore(
-    (state) => state.orderStatusFilters
-  );
-  const orderTypeFilters = useOrderTrackingStore(
-    (state) => state.orderTypeFilters
-  );
+  const filterList = useOrderTrackingStore((state) => state.filterList);
+  const orderStatusFilters = filterList.find(
+    (filter) => filter.accordionLabel === 'Order Status'
+  ).filterOptionList;
+  const orderTypeFilters = filterList.find(
+    (filter) => filter.accordionLabel === 'Order Type'
+  ).filterOptionList;
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.orderStatusFiltersChecked
   );
@@ -40,7 +41,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
           ...orderStatusFiltersChecked,
           ...orderStatusFilters.filter((x) => x.id === id),
         ];
-    filtersRefs.status.current = newList.map(x=>x.label).join();
+    filtersRefs.status.current = newList.map((x) => x.filterOptionLabel).join();
     effects.setOrderStatusFiltersChecked(newList);
   };
 
@@ -55,7 +56,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
           ...orderTypeFiltersChecked,
           ...orderTypeFilters.filter((x) => x.id === id),
         ];
-    filtersRefs.type.current = newList.map(x=>x.label).join();
+    filtersRefs.type.current = newList.map((x) => x.filterOptionLabel).join();
     effects.setOrderTypeFiltersChecked(newList);
   };
 
@@ -77,7 +78,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
                     checked={isStatusFilterChecked(x.id)}
                   />
                 }
-                label={x.label}
+                label={x.filterOptionKey}
                 onChange={() => onChangeStatusFilter(x.id)}
               />
             ))}
@@ -95,7 +96,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
                     checked={isTypeFilterChecked(x.id)}
                   />
                 }
-                label={x.label}
+                label={x.filterOptionKey}
                 onChange={() => onChangeTypeFilter(x.id)}
               />
             ))}

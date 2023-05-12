@@ -11,7 +11,9 @@ import OrderCount from './OrderCount';
 function OrderFilter({ aemData, onQueryChanged, filtersRefs }) {
   const isFilterModalOpen = useOrderTrackingStore((st) => st.isFilterModalOpen);
   const effects = useOrderTrackingStore((st) => st.effects);
-  const orderFilterCounter = useOrderTrackingStore( state => state.orderFilterCounter);
+  const orderFilterCounter = useOrderTrackingStore(
+    (state) => state.orderFilterCounter
+  );
   const topReference = useRef();
   const { toggleFilterModal } = effects;
   const [isFilterHovered, setIsFilterHovered] = useState(false);
@@ -21,6 +23,7 @@ function OrderFilter({ aemData, onQueryChanged, filtersRefs }) {
   const handleMouseLeaveFilter = () => {
     setIsFilterHovered(false);
   };
+
   return (
     <>
       <div
@@ -34,7 +37,9 @@ function OrderFilter({ aemData, onQueryChanged, filtersRefs }) {
         ) : (
           <OptionsIcon fill="#262626" className="icon-hover" />
         )}
-        {orderFilterCounter > 0 && <OrderCount>{orderFilterCounter}</OrderCount>}
+        {orderFilterCounter > 0 && (
+          <OrderCount>{orderFilterCounter}</OrderCount>
+        )}
       </div>
       {isFilterModalOpen && (
         <OrderFilterModal

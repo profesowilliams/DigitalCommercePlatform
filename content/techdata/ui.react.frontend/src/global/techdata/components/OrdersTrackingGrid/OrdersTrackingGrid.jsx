@@ -96,7 +96,12 @@ function OrdersTrackingGrid(props) {
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
 
-  const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
+  const {
+    setToolTipData,
+    setCustomState,
+    closeAndCleanToaster,
+    setFilterList,
+  } = effects;
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
@@ -344,6 +349,7 @@ function OrdersTrackingGrid(props) {
     ) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
+    setFilterList(componentProp?.filterListItems);
   }, []);
 
   return (

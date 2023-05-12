@@ -5,7 +5,13 @@ import OrderCount from './OrderCount';
 import OrderFilterDatePicker from './OrderFilterDatapicker';
 import OrderFilterItems from './OrderFilterItems';
 
-function OrderFilterListItem({ id, open, title, field, filtersRefs }) {
+function OrderFilterListItem({
+  id,
+  open,
+  accordionLabel,
+  filterField,
+  filtersRefs,
+}) {
   const filterList = useOrderTrackingStore((state) => state.filterList);
   const { setFilterList } = useOrderTrackingStore((state) => state.effects);
 
@@ -41,7 +47,7 @@ function OrderFilterListItem({ id, open, title, field, filtersRefs }) {
         return 0;
     }
   };
-  const counter = showCounter(title);
+  const counter = showCounter(accordionLabel);
 
   const showField = (fieldType) => {
     switch (fieldType) {
@@ -52,12 +58,17 @@ function OrderFilterListItem({ id, open, title, field, filtersRefs }) {
           </div>
         );
       case 'order':
-        return <OrderFilterItems itemKey={title} filtersRefs={filtersRefs} />;
+        return (
+          <OrderFilterItems
+            itemKey={accordionLabel}
+            filtersRefs={filtersRefs}
+          />
+        );
       default:
         return <></>;
     }
   };
-  const orderField = showField(field);
+  const orderField = showField(filterField);
 
   return (
     <>
@@ -67,7 +78,7 @@ function OrderFilterListItem({ id, open, title, field, filtersRefs }) {
       >
         <div className="filter-accordion__item--group">
           <h3 className={`${open ? computeClassName('active') : ''}`}>
-            {title}
+            {accordionLabel}
           </h3>
           <OrderCount>{counter > 0 ? counter : ''}</OrderCount>
         </div>

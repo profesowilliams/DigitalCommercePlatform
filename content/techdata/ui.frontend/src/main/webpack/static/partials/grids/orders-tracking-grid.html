@@ -1,122 +1,125 @@
 <div data-observe-mutation>
-    <div
-      data-component="OrdersTrackingGrid"
-      data-cmp-type="react"
-      className="cmp-orders-tracking-grid"
-    ></div>
-  </div>
-  <script>
-    const renewalsGridDom = document.querySelector(
-      "[data-component='OrdersTrackingGrid']"
-    );
-    const AEM_DATA = {
-      detailUrl:
-        "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
-      menuCopy:'Copy',
-      reportOptions: [{ label: "Last 7 Days Orders", key: "last7Days" },
-        { label: "Last 30 Days Orders", key: "last30Days" },
-        { label: "All Outstanding", key: "allOutstanding" }],
-      reportPillLabel: "Report",
-      menuCopyWithHeaders:'Copy with headers',
-      menuExport:'Export',
-      columnList: [
-        {
-          columnLabel: "Select",
-          columnKey: "select",
-          sortable: false,
-          type: "buttonList",
-        },
-        {
-          columnLabel: "Updated",
-          columnKey: "updated",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Ship to",
-          columnKey: "shipTo",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Status",
-          columnKey: "status",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Order Date",
-          columnKey: "created",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Order Nº",
-          columnKey: "id",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "PO Nº",
-          columnKey: "reseller",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Total",
-          columnKey: "priceFormatted",
-          sortable: true,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Invoices",
-          columnKey: "invoices",
-          sortable: false,
-          type: "plainText",
-        },
-        {
-          columnLabel: "D-Notes",
-          columnKey: "deliveryNotes",
-          sortable: false,
-          type: "plainText",
-        },
-        {
-          columnLabel: "Actions",
-          columnKey: "actions",
-          sortable: false,
-          type: "buttonList",
-        },
-      ],
-      searchOptionsList: [
-        {
-          searchLabel: "Order Nº",
-          searchKey: "Id_Order_No",
-          showIfIsHouseAccount: false,
-        },  
-        {
-          searchLabel: "D-note №",
-          searchKey: "Id_D_Note_No",
-          showIfIsHouseAccount: false,
-        },
-        {
-          searchLabel: "Invoice №",
-          searchKey: "Id_Invoice_No",
-          showIfIsHouseAccount: false,
-        },
-        {
-          searchLabel: "PO Nº",
-          searchKey: "Id_PO_No",
-          showIfIsHouseAccount: false,
-        },
-        {
-          searchLabel: "Serial Nº",
-          searchKey: "Id_Serial_No",
-          showIfIsHouseAccount: false,
-        },
-      ],
+  <div
+    data-component="OrdersTrackingGrid"
+    data-cmp-type="react"
+    className="cmp-orders-tracking-grid"
+  ></div>
+</div>
+<script>
+  const renewalsGridDom = document.querySelector(
+    "[data-component='OrdersTrackingGrid']"
+  );
+  const AEM_DATA = {
+    detailUrl:
+      "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
+    menuCopy: "Copy",
+    reportOptions: [
+      { label: "Last 7 Days Orders", key: "last7Days" },
+      { label: "Last 30 Days Orders", key: "last30Days" },
+      { label: "All Outstanding", key: "allOutstanding" },
+    ],
+    reportPillLabel: "Report",
+    menuCopyWithHeaders: "Copy with headers",
+    menuExport: "Export",
+    columnList: [
+      {
+        columnLabel: "Select",
+        columnKey: "select",
+        sortable: false,
+        type: "buttonList",
+      },
+      {
+        columnLabel: "Updated",
+        columnKey: "updated",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Ship to",
+        columnKey: "shipTo",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Status",
+        columnKey: "status",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Order Date",
+        columnKey: "created",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Order Nº",
+        columnKey: "id",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "PO Nº",
+        columnKey: "reseller",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Total",
+        columnKey: "priceFormatted",
+        sortable: true,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Invoices",
+        columnKey: "invoices",
+        sortable: false,
+        type: "plainText",
+      },
+      {
+        columnLabel: "D-Notes",
+        columnKey: "deliveryNotes",
+        sortable: false,
+        type: "plainText",
+      },
+      {
+        columnLabel: "Actions",
+        columnKey: "actions",
+        sortable: false,
+        type: "buttonList",
+      },
+    ],
+    searchOptionsList: [
+      {
+        searchLabel: "Order Nº",
+        searchKey: "Id_Order_No",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "D-note №",
+        searchKey: "Id_D_Note_No",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Invoice №",
+        searchKey: "Id_Invoice_No",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "PO Nº",
+        searchKey: "Id_PO_No",
+        showIfIsHouseAccount: false,
+      },
+      {
+        searchLabel: "Serial Nº",
+        searchKey: "Id_Serial_No",
+        showIfIsHouseAccount: false,
+      },
+    ],
     uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/orders",
     ordersCountEndpoint: "http://localhost:3000/ui-commerce/v2/OrdersCount",
-    ordersDownloadDocumentsEndpoint: "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
+    ordersDownloadDocumentsEndpoint:
+      "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
     shopURL: "https://shop.cstenet.com/renewals",
     agGridLicenseKey:
       "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
@@ -129,9 +132,62 @@
     showResultLabel: "Show Result",
     filterType: "dynamic",
     filterListItems: [
-      { accordionLabel: "Date Range", filterField: "date" },
-      { accordionLabel: "Order Status", filterField: "order" },
-      { accordionLabel: "Order Type", filterField: "order" },
+      { id: 1, accordionLabel: "Date Range", filterField: "date", open: false },
+      {
+        id: 2,
+        accordionLabel: "Order Status",
+        filterField: "order",
+        filterOptionList: [
+          { id: 1, filterOptionLabel: "Open", filterOptionKey: "open", group: "status" },
+          {
+            id: 2,
+            filterOptionLabel: "Cancelled",
+            filterOptionKey: "cancelled",
+            group: "status",
+          },
+          { id: 3, filterOptionLabel: "On_Hold", filterOptionKey: "onHold", group: "status" },
+          { id: 4, filterOptionLabel: "Shipped", filterOptionKey: "shipped", group: "status" },
+          {
+            id: 5,
+            filterOptionLabel: "In_Process",
+            filterOptionKey: "inProcess",
+            group: "status",
+          },
+        ],
+        open: false,
+      },
+      {
+        id: 3,
+        accordionLabel: "Order Type",
+        filterField: "order",
+        open: false,
+        filterOptionList: [
+          {
+            id: 1,
+            filterOptionLabel: "Lorem_Ipsum1",
+            filterOptionKey: "loremIpsum1",
+            group: "type",
+          },
+          {
+            id: 2,
+            filterOptionLabel: "Lorem_Ipsum2",
+            filterOptionKey: "loremIpsum2",
+            group: "type",
+          },
+          {
+            id: 3,
+            filterOptionLabel: "Lorem_Ipsum3",
+            filterOptionKey: "loremIpsum3",
+            group: "type",
+          },
+          {
+            id: 4,
+            filterOptionLabel: "Lorem_Ipsum4",
+            filterOptionKey: "loremIpsum4",
+            group: "type",
+          },
+        ],
+      },
     ],
     filterListValues: [],
     productGrid: {
@@ -207,12 +263,12 @@
     dNoteColumnList: [
       {
         columnLabel: "D-note №",
-        columnKey: "id"
+        columnKey: "id",
       },
       {
         columnLabel: "Ship Date",
-        columnKey: "actualShipDate"
-      }
+        columnKey: "actualShipDate",
+      },
     ],
     invoicesFlyout: {
       title: "Invoices",
@@ -225,12 +281,12 @@
     invoicesColumnList: [
       {
         columnLabel: "Invoice №",
-        columnKey: "id"
+        columnKey: "id",
       },
       {
         columnLabel: "Ship Date",
-        columnKey: "created"
-      }
+        columnKey: "created",
+      },
     ],
     exportFlyout: {
       title: "Export",
@@ -238,12 +294,10 @@
       secondaryDscription: "Details to include",
       button: "Export",
     },
-    exportOptionsList: [
-      { label: "Exel (.xlxs)", key: '1'},
-    ],
+    exportOptionsList: [{ label: "Exel (.xlxs)", key: "1" }],
     exportSecondaryOptionsList: [
-      { label: "Export all order lines", key: '2' },
-      { label: "Export lines with serial numbers only", key: '3' },
+      { label: "Export all order lines", key: "2" },
+      { label: "Export lines with serial numbers only", key: "3" },
     ],
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
