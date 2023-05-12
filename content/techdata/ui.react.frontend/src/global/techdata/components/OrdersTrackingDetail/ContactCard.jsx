@@ -10,28 +10,28 @@ function ContactCard(props) {
         {getDictionaryValueOrKey(config?.labels?.detailsContact)}
       </div>
       <div>
-        {content.created && (
+        {content.created && content.shipTo.contact?.name && (
           <div className="card-container__contentGridContact">
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsContactName)}
             </span>
-            <span>...Name...</span>
+            <span>{content.shipTo.contact?.name}</span>
           </div>
         )}
-        {content.poNumber && (
+        {content.poNumber && content.shipTo.contact?.phone && (
           <div className="card-container__contentGridContact">
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsContactPhone)}
             </span>
-            <span>...Phone...</span>
+            <span>{content.shipTo.contact?.phone}</span>
           </div>
         )}
-        {content.poNumber && (
+        {content.poNumber && content.shipTo.contact?.phone && (
           <div className="card-container__contentGridContact">
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsContactEmail)}
             </span>
-            <span>...Email...</span>
+            <span>{content.shipTo.contact?.email}</span>
           </div>
         )}
       </div>
