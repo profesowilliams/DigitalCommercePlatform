@@ -11517,6 +11517,10 @@ app.get("/ui-commerce/v2/order", (req, res) => {
   const response = {
     content: {
       currency: "EUR",
+      docType: "Third Party",
+      reseller: {
+        id: "0038000315",
+      },
       shipTo: {
         id: null,
         companyName: "My Co Name",

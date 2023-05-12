@@ -10,6 +10,16 @@ function OrderAcknowledgementCard(props) {
         {getDictionaryValueOrKey(config?.labels?.detailsOrderAcknowledgement)}
       </div>
       <div>
+        {content.reseller?.id && (
+          <div className="card-container__contentGrid">
+            <span>
+              {getDictionaryValueOrKey(
+                config?.labels?.detailsCustomerAccountCode
+              )}
+            </span>
+            <span>{content.reseller?.id}</span>
+          </div>
+        )}
         {content.created && (
           <div className="card-container__contentGrid">
             <span>
@@ -24,6 +34,14 @@ function OrderAcknowledgementCard(props) {
               {getDictionaryValueOrKey(config?.labels?.detailsPurchaseOrderNo)}
             </span>
             <span>{content.poNumber}</span>
+          </div>
+        )}
+        {content.docType && (
+          <div className="card-container__contentGrid">
+            <span>
+              {getDictionaryValueOrKey(config?.labels?.detailsOrderType)}
+            </span>
+            <span>{content.docType}</span>
           </div>
         )}
       </div>

@@ -77,11 +77,18 @@ use(['../../../common/utils.js'], function (utils) {
     if (properties && properties["detailsOrderAcknowledgement"]) {
         labels["detailsOrderAcknowledgement"] = properties["detailsOrderAcknowledgement"];
     }
+    if (properties && properties["detailsCustomerAccountCode"]) {
+      labels["detailsCustomerAccountCode"] =
+        properties["detailsCustomerAccountCode"];
+    }
     if (properties && properties["detailsOrderDate"]) {
-        labels["detailsOrderDate"] = properties["detailsOrderDate"];
+      labels["detailsOrderDate"] = properties["detailsOrderDate"];
     }
     if (properties && properties["detailsPurchaseOrderNo"]) {
-        labels["detailsPurchaseOrderNo"] = properties["detailsPurchaseOrderNo"];
+      labels["detailsPurchaseOrderNo"] = properties["detailsPurchaseOrderNo"];
+    }
+    if (properties && properties["detailsOrderType"]) {
+      labels["detailsOrderType"] = properties["detailsOrderType"];
     }
     if (properties && properties["detailsContact"]) {
         labels["detailsContact"] = properties["detailsContact"];
