@@ -438,11 +438,25 @@
                                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                                                 fieldLabel="Filter Option Label"
                                                                                 name="./filterOptionLabel" />
-                                                                            <title
+                                                                            <subfiltersOptions
                                                                                 jcr:primaryType="nt:unstructured"
-                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                                fieldLabel="Filter Option Key"
-                                                                                name="./filterOptionKey"/>
+                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                                                composite="{Boolean}true"
+                                                                                fieldLabel="Sub Filter Options">
+                                                                                <field
+                                                                                    jcr:primaryType="nt:unstructured"
+                                                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                                                    name="./subFilterOptionList">
+                                                                                    <items
+                                                                                        jcr:primaryType="nt:unstructured">
+                                                                                        <options
+                                                                                            jcr:primaryType="nt:unstructured"
+                                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                                            fieldLabel="Option Label"
+                                                                                            name="./subFilterOptionsLabel" />
+                                                                                    </items>
+                                                                                </field>
+                                                                            </subfiltersOptions>
                                                                         </items>
                                                                     </field>
                                                                 </filtersOptions>

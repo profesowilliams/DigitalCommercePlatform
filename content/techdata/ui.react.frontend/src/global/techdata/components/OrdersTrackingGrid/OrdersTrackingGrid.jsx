@@ -67,6 +67,7 @@ function OrdersTrackingGrid(props) {
     type,
     status,
   };
+  console.log('VERSION TO TEST DIT');
   const effects = useOrderTrackingStore((st) => st.effects);
   const category = useOrderTrackingStore((state) => state.analyticsCategory);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
