@@ -24,7 +24,10 @@ function OrdersTrackingDetail(props) {
     <div className="cmp-quote-preview cmp-order-preview">
       <section>
         <div className="cmp-orders-qp__config-grid">
-          <OrderTrackingDetailHeader config={config} apiResponse={apiResponse}/>
+          <OrderTrackingDetailHeader
+            config={config}
+            apiResponse={apiResponse}
+          />
           <div className="info-container">
             <SoldToCard
               soldTo={apiResponse?.content?.shipTo || {}}
@@ -38,7 +41,7 @@ function OrdersTrackingDetail(props) {
           </div>
         </div>
         <div className="cmp-orders-qp__grid cmp-order-preview">
-          <OrderTrackingContainer config={config}/>
+          <OrderTrackingContainer config={config} />
           {apiResponse && (
             <OrdersTrackingDetailGrid
               data={apiResponse.content}

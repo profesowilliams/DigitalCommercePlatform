@@ -2,7 +2,7 @@ import React from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 
-const OrderTrackingDetailHeader = ({apiResponse, config}) => {
+const OrderTrackingDetailHeader = ({ config, apiResponse }) => {
   return (
     <div className="header-container">
       <div className="image-container">
@@ -21,11 +21,11 @@ const OrderTrackingDetailHeader = ({apiResponse, config}) => {
             {apiResponse?.content.status}
           </span>
           <span className="quote-preview-bold">
-            {apiResponse?.content.orderNumber &&
+            {apiResponse?.content?.orderNumber &&
               ` | ${getDictionaryValueOrKey(config.labels?.detailsOrderNo)}: `}
           </span>
           <span className="quote-preview">
-            {apiResponse?.content.orderNumber}
+            {apiResponse?.content?.orderNumber}
           </span>
         </div>
         <span className="quote-actions"></span>
