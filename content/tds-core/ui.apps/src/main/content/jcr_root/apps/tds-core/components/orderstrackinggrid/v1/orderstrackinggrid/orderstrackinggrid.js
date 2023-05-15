@@ -9,7 +9,6 @@ use(["../common/utils.js"], function (utils) {
   let dNotesFlyout = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
-  let reportOptions = [];
 
   if (properties && properties["detailUrl"]) {
     jsonObject["detailUrl"] = properties["detailUrl"];
@@ -185,24 +184,6 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
 
-  //Report options
-
-  if (properties && properties['reportOptionLast7Days']) {
-    reportOptions.push({ key: "last7Days", label: properties['reportOptionLast7Days'] });
-  }
-
-  if (properties && properties['reportOptionLast30Days']) {
-    reportOptions.push({ key: "last30Days", label: properties['reportOptionLast30Days'] });
-  }
-
-   if (properties && properties['reportOptionAllOutstanding']) {
-    reportOptions.push({ key: "allOutstanding", label: properties['reportOptionAllOutstanding'] });
-  }
-
-  if (reportOptions.length) {
-    jsonObject["reportOptions"] = reportOptions;
-  }
-
   if (properties && properties['reportPillLabel']) {
     jsonObject['reportPillLabel'] = properties['reportPillLabel'];
   }
@@ -246,6 +227,14 @@ use(["../common/utils.js"], function (utils) {
   jsonObject["ordersCountEndpoint"] =
     this.serviceData.uiServiceDomain + this.serviceData.ordersCountEndpoint ||
     "";
+
+  jsonObject["ordersReportEndpoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.ordersReportEndpoint ||
+    "";
+
+  jsonObject["ordersReportCountEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.ordersReportCountEndpoint || "";
 
   jsonObject["ordersDownloadDocumentsEndpoint"] =
     this.serviceData.uiServiceDomain +

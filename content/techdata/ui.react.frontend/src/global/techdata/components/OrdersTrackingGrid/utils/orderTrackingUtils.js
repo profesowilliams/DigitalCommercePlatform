@@ -10,36 +10,6 @@ import {
   compareSort,
 } from '../../RenewalsGrid/utils/renewalUtils';
 
-const reportOptionsConfig = {
-  last7Days: [
-    ['createdFrom', formatDatePicker(createdFromDate(7))],
-    ['createdTo', formatDatePicker(new Date())],
-  ],
-  last30Days: [
-    ['createdFrom', formatDatePicker(createdFromDate(30))],
-    ['createdTo', formatDatePicker(new Date())],
-  ],
-  allOutstanding: [['status', 'all']],
-};
-
-const reporstDefaultDateRangeConfig = [
-  ['createdFrom', formatDatePicker(createdFromDate(90))],
-  ['createdTo', formatDatePicker(new Date())],
-];
-
-const addReportDateRangeToUrl = (mapUrl, reportFilterValue) => {
-  reportOptionsConfig[reportFilterValue].map((params) => {
-    mapUrl.set(...params);
-  });
-};
-
-const addMapUrlParamsForReports = (mapUrl, reportFilterValue) => {
-  reporstDefaultDateRangeConfig.map((params) => {
-    mapUrl.set(...params);
-  });
-  addReportDateRangeToUrl(mapUrl, reportFilterValue);
-};
-
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   if (defaultDateRange) {
     const dateRange = urlStrToMapStruc(defaultDateRange).entries();
@@ -50,7 +20,6 @@ export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
 
 export const fetchOrdersCount = async (
   url,
-  reportFilterValue,
   defaultSearchDateRange,
   filtersRefs
 ) => {
@@ -64,9 +33,6 @@ export const fetchOrdersCount = async (
   } else {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
-  if (reportFilterValue) {
-    addReportDateRangeToUrl(mapUrl, reportFilterValue);
-  }
 
   try {
     const result = await usGet(mapStrucToUrlStr(mapUrl));
@@ -75,6 +41,19 @@ export const fetchOrdersCount = async (
     console.error('error on orders count >>', error);
   }
 };
+
+export async function fetchReport(reportUrl, reportName) {
+  const mapUrl = urlStrToMapStruc(reportUrl + '?PageNumber=1');
+  mapUrl.set('Report', reportName);
+  const finalUrl = mapStrucToUrlStr(mapUrl);
+
+  try {
+    const result = await usGet(finalUrl);
+    return result;
+  } catch (error) {
+    console.error('🚀error on orders tracking grid >>', error);
+  }
+}
 
 export async function fetchData(config) {
   const {
@@ -88,7 +67,6 @@ export async function fetchData(config) {
     onSearchAction,
     optionFieldsRef,
     previousFilter,
-    reportFilterValue,
     defaultSearchDateRange,
     filtersRefs,
   } = config;
@@ -161,10 +139,6 @@ export async function fetchData(config) {
     if (onSearchAction) {
       mapUrl.set('PageNumber', 1);
     }
-  }
-
-  if (reportFilterValue.current?.value) {
-    addMapUrlParamsForReports(mapUrl, reportFilterValue.current.value);
   }
 
   if (onFiltersClear) {

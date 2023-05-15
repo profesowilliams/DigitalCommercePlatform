@@ -451,42 +451,6 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
-                                           <column
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                <items jcr:primaryType="nt:unstructured">
-                                                    <overdueGroup
-                                                        jcr:primaryType="nt:unstructured"
-                                                        sling:resourceType="granite/ui/components/coral/foundation/well">
-                                                        <items jcr:primaryType="nt:unstructured">
-                                                            <column
-                                                                jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/container">
-                                                                <items jcr:primaryType="nt:unstructured">
-                                                                    <reportOptionLast7Days
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldLabel='Label for "Last 7 Days Orders"'
-                                                                        name="./reportOptionLast7Days"
-                                                                        required="{Boolean}true" />
-                                                                    <reportOptionLast30Days
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldLabel='Label for "Last 30 Days Orders"'
-                                                                        name="./reportOptionLast30Days"
-                                                                        required="{Boolean}true" />
-                                                                    <reportOptionAllOutstanding
-                                                                        jcr:primaryType="nt:unstructured"
-                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                        fieldLabel='Label for "All Outstanding'
-                                                                        name="./reportOptionAllOutstanding"
-                                                                        required="{Boolean}true" />
-                                                                </items>
-                                                            </column>
-                                                        </items>
-                                                    </overdueGroup>
-                                                </items>
-                                            </column>
                                             <reportPillLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

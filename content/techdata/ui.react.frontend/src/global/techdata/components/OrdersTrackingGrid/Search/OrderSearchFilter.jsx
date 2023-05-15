@@ -4,7 +4,8 @@ import useComputeBranding from "../../../hooks/useComputeBranding";
 
 export function OrderSearchField({ chosenFilter = '', inputRef, triggerSearchOnEnter, searchTerm, setSearchTerm, store }) {
   const capitalizeContainedID = (searchTermText) => searchTermText.replace(/\bid(?:$|\b)/g,'ID');  
-  const formatChosenFilter = (searchTermText) => `Enter ${capitalizeContainedID(searchTermText?.toLowerCase())}`
+  const formatChosenFilter = (searchTermText) =>
+    `Enter ${capitalizeContainedID(searchTermText)}`;
   const { isTDSynnex } = useComputeBranding(store);
   return (
     <div className="cmp-search-select-container__box-search-field">

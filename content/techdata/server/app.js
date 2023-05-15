@@ -12179,3 +12179,136 @@ app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
     return res.download("file.zip");
   }
 });
+
+app.get("/ui-commerce/v2/ReportOrders", function (req, res) {
+  const response = {
+    content: {
+      items: [
+        {
+          trackings: [
+            {
+              batchNumber: "Item_Shipment_BatchNumber",
+              distributionChannel: "Item_Shipment_DistributionChannel",
+              documentCategory: "Item_Shipment_DocumentCategory",
+              externalHandlingUnit: "Item_Shipment_ExternalHandlingUnit",
+              handlingUnitItem: 1,
+              keyHandlingUnit: "Item_Shipment_KeyHandlingUnit",
+              handlingUnitContent: "Item_Shipment_HandlingUnitContent",
+              internalHandlingUnit: "Item_Shipment_InternalHandlingUnit",
+              loadingPoint: "Item_Shipment_LoadingPoint",
+              material1: "Item_Shipment_Material1",
+              material2: "Item_Shipment_Material2",
+              numberPackingMaterials: 1,
+              packingObject: "Item_Shipment_PackingObject",
+              plannedGoodsDate: "05-11-2023",
+              plant: "Item_Shipment_Plant",
+              quantityHandlingUnit: 1,
+              serialNumbers: 1,
+              serialProfile: "Item_Shipment_SerialProfile",
+              shippingConditions: "Item_Shipment_ShippingConditions",
+              shippingPoint: "Item_Shipment_ShippingPoint",
+              totalHandlingUnit: 1,
+              unitMeasure: "Item_Shipment_UnitMeasure",
+              weightUnit: "Item_Shipment_WeightUnit",
+              orderNumber: "Source_Id",
+              invoiceNumber: null,
+              id: "Item_Shipment_Id",
+              carrier: "Item_Shipment_Carrier",
+              serviceLevel: "Item_Shipment_ServiceLevel",
+              trackingNumber: "Item_Shipment_TrackingNumber",
+              trackingLink: "",
+              type: "Item_Shipment_Type",
+              description: "Item_Shipment_Description",
+              date: "05-11-2023",
+              dNote: "Item_Shipment_DNote",
+              dNoteLineNumber: "Item_Shipment_DNoteLineNumber",
+              goodsReceiptNo: "Item_Shipment_GoodsReceiptNor",
+            },
+          ],
+          deliveryNotes: [
+            {
+              packageCount: null,
+              billOfLading: null,
+              soldToParty: null,
+              deliveryType: null,
+              goodsArrivalDate: null,
+              deliveryNoteNumber: null,
+              recordCreatedDates: null,
+              quantityDelivered: null,
+              warehouseNumber: null,
+              storageLocation: null,
+              material: null,
+              plant: null,
+              id: "Item_DeliveryNotes_Id",
+              line: "Item_DeliveryNotes_Line",
+              quantity: 1,
+              created: "05-11-2023",
+              shippedFrom: "Item_DeliveryNotes_ShippedFrom",
+              actualShipDate: "05-12-2023",
+              shippedFromText: "Item_DeliveryNotes_ShippedFromText",
+              formatedActualShipDate: "05/12/23",
+            },
+          ],
+          formattedCreated: "5/11/2023",
+          formattedUpdated: "5/11/2023",
+          id: "Source_Id",
+          reseller: "CustomerPO",
+          vendor: [
+            {
+              vendorName: "Item_Product_Manufacturer",
+            },
+          ],
+          created: "05/11/23",
+          shipTo: "ShipTo_Name",
+          type: "OrderMethod",
+          price: "1,000,000.00",
+          priceFormatted: "1,000,000.00",
+          currency: "Currency",
+          currencySymbol: "$",
+          status: "Open",
+          invoice: null,
+          isReturn: false,
+          invoices: [
+            {
+              id: "Item_Invoices_Id",
+              line: "Item_Invoices_Line",
+              quantity: 1,
+              price: 1,
+              created: "05-11-2023",
+              formatedCreated: "05/11/23",
+            },
+          ],
+          updated: "05-11-2023",
+        },
+      ],
+      pageNumber: 0,
+      pageSize: 0,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 2000);
+});
+
+app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
+  const response = {
+    content: {
+      totalItems: 1
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 2000);
+});

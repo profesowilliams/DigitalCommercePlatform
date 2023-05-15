@@ -7,19 +7,28 @@ import React, {
 } from 'react';
 import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
-import "../../../../../../src/styles/TopIconsBar.scss"
+import '../../../../../../src/styles/TopIconsBar.scss';
 
-function Report({ options, selectOption, selectedKey }, ref) {
+function Report({ selectOption, selectedKey }, ref) {
+  const reportOptions = [
+    { key: 'OpenOrders', label: 'Open Orders' },
+    { key: 'NewBacklog', label: 'New Backlog' },
+    { key: 'TodaysShipmentsDeliveries', label: 'Todays Shipments Deliveries' },
+    { key: 'Last7DaysOrders', label: 'Last 7 Days Orders' },
+    { key: 'Last30DaysOrders', label: 'Last 30 Days Orders' },
+    { key: 'Last7DaysShipments', label: 'Last 7 Days Shipments' },
+    { key: 'Last30DaysShipments', label: 'Last 30 Days Shipments' },
+  ];
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(selectedKey);
   const wrapperRef = useRef(null);
   const [isReportHovered, setIsReportHovered] = useState(false);
   const handleMouseOverSearch = () => {
     setIsReportHovered(true);
-  }
+  };
   const handleMouseLeaveSearch = () => {
     setIsReportHovered(false);
-  }
+  };
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropDownOpen);
   };
@@ -65,7 +74,7 @@ function Report({ options, selectOption, selectedKey }, ref) {
       {isDropDownOpen && (
         <ReportDropdown
           ref={wrapperRef}
-          reportOptions={options}
+          reportOptions={reportOptions}
           selectOption={handleSelectOption}
         />
       )}

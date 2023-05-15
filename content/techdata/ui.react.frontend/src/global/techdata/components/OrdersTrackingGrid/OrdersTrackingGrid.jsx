@@ -30,6 +30,7 @@ import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import {
   fetchData,
   fetchOrdersCount,
+  fetchReport,
   setPaginationData,
   addCurrentPageNumber,
   compareSort,
@@ -87,7 +88,7 @@ function OrdersTrackingGrid(props) {
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const { searchOptionsList, icons, reportOptions, reportPillLabel } =
+  const { searchOptionsList, icons, reportPillLabel } =
     componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
@@ -158,19 +159,25 @@ function OrdersTrackingGrid(props) {
       firstAPICall,
       //isPriceColumnClicked,
       gridApiRef,
-      reportFilterValue,
       defaultSearchDateRange: dateRange,
       filtersRefs,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
+    const ordersReportUrl = new URL(componentProp.ordersReportEndpoint);
+    const ordersReportCountUrl = new URL(
+      componentProp.ordersReportCountEndpoint
+    );
     const ordersCountUrl = new URL(componentProp.ordersCountEndpoint);
     const ordersCountResponse = await fetchOrdersCount(
-      ordersCountUrl.href,
-      reportFilterValue.current?.value,
+      reportFilterValue.current?.value
+        ? ordersReportCountUrl.href
+        : ordersCountUrl.href,
       dateRange,
       filtersRefs
     );
-    const response = await fetchData(queryOperations);
+    const response = reportFilterValue.current?.value
+      ? await fetchReport(ordersReportUrl, reportFilterValue.current.value)
+      : await fetchData(queryOperations);
 
     const mappedResponse = mapServiceData(response);
     const paginationValue = getPaginationValue(
@@ -269,6 +276,7 @@ function OrdersTrackingGrid(props) {
   };
 
   const onSearchChange = () => {
+    setPill();
     removeDefaultDateRange();
     onQueryChanged();
   };
@@ -389,17 +397,12 @@ function OrdersTrackingGrid(props) {
           <VerticalSeparator />,
           <OrderFilter />,
           <VerticalSeparator />,
-          ...(reportOptions?.length
-            ? [
-                <Report
-                  options={reportOptions}
-                  selectOption={onReportChange}
-                  ref={reportFilterValue}
-                  selectedKey={pill?.key}
-                />,
-                <VerticalSeparator />,
-              ]
-            : []),
+          <Report
+            selectOption={onReportChange}
+            ref={reportFilterValue}
+            selectedKey={pill?.key}
+          />,
+          <VerticalSeparator />,
           <OrderExport />,
         ]}
       />
