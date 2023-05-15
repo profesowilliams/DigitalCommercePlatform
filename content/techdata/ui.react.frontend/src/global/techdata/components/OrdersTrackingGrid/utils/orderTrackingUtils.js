@@ -181,6 +181,7 @@ export async function fetchData(config) {
   }
 
   const filterUrl = mapStrucToUrlStr(mapUrl);
+  console.log('filterUrl JUST FOR TEST', filterUrl);
   previousSortChanged.current = hasSortChanged.current;
   firstAPICall.current = false;
 
@@ -228,3 +229,77 @@ export const getDateRangeLabel = (startDate, endDate) => {
     : `${shortStartDateMonth} ${startDateDay}-${shortEndDateMonth} ${endDateDay}`;
 };
 export { compareSort };
+
+export const filterFlyoutMocked = [
+  { id: 1, accordionLabel: 'Date Range', filterField: 'date', open: false },
+  {
+    id: 2,
+    accordionLabel: 'Order Status',
+    filterField: 'order',
+    filterOptionList: [
+      {
+        id: 1,
+        filterOptionLabel: 'Open',
+        filterOptionKey: 'open',
+        group: 'status',
+      },
+      {
+        id: 2,
+        filterOptionLabel: 'Cancelled',
+        filterOptionKey: 'cancelled',
+        group: 'status',
+      },
+      {
+        id: 3,
+        filterOptionLabel: 'On_Hold',
+        filterOptionKey: 'onHold',
+        group: 'status',
+      },
+      {
+        id: 4,
+        filterOptionLabel: 'Shipped',
+        filterOptionKey: 'shipped',
+        group: 'status',
+      },
+      {
+        id: 5,
+        filterOptionLabel: 'In_Process',
+        filterOptionKey: 'inProcess',
+        group: 'status',
+      },
+    ],
+    open: false,
+  },
+  {
+    id: 3,
+    accordionLabel: 'Order Type',
+    filterField: 'order',
+    open: false,
+    filterOptionList: [
+      {
+        id: 1,
+        filterOptionLabel: 'Lorem_Ipsum1',
+        filterOptionKey: 'loremIpsum1',
+        group: 'type',
+      },
+      {
+        id: 2,
+        filterOptionLabel: 'Lorem_Ipsum2',
+        filterOptionKey: 'loremIpsum2',
+        group: 'type',
+      },
+      {
+        id: 3,
+        filterOptionLabel: 'Lorem_Ipsum3',
+        filterOptionKey: 'loremIpsum3',
+        group: 'type',
+      },
+      {
+        id: 4,
+        filterOptionLabel: 'Lorem_Ipsum4',
+        filterOptionKey: 'loremIpsum4',
+        group: 'type',
+      },
+    ],
+  },
+];

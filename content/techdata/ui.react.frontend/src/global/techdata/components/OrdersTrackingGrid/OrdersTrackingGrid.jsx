@@ -33,6 +33,7 @@ import {
   setPaginationData,
   addCurrentPageNumber,
   compareSort,
+  filterFlyoutMocked,
 } from './utils/orderTrackingUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
@@ -48,6 +49,7 @@ import { useStore } from '../../../../utils/useStore';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
+import OrderFilterFlyout from './Filter/OrderFilterFlyout';
 
 function OrdersTrackingGrid(props) {
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
@@ -67,7 +69,6 @@ function OrdersTrackingGrid(props) {
     type,
     status,
   };
-  console.log('VERSION TO TEST DIT');
   const effects = useOrderTrackingStore((st) => st.effects);
   const category = useOrderTrackingStore((state) => state.analyticsCategory);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
@@ -350,7 +351,7 @@ function OrdersTrackingGrid(props) {
     ) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
-    setFilterList(componentProp?.filterListItems);
+    setFilterList(filterFlyoutMocked); //componentProp?.filterListItems
   }, []);
 
   return (
@@ -386,11 +387,7 @@ function OrdersTrackingGrid(props) {
             hideLabel={true}
           />,
           <VerticalSeparator />,
-          <OrderFilter
-            aemData={componentProp}
-            onQueryChanged={onOrderQueryChanged}
-            filtersRefs={filtersRefs}
-          />,
+          <OrderFilter />,
           <VerticalSeparator />,
           ...(reportOptions?.length
             ? [
@@ -464,6 +461,12 @@ function OrdersTrackingGrid(props) {
         exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
+      />
+      <OrderFilterFlyout
+        onQueryChanged={onQueryChanged}
+        filtersRefs={filtersRefs}
+        isTDSynnex={isTDSynnex}
+        aemData={componentProp}
       />
     </div>
   );

@@ -317,10 +317,6 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Static"
                                                         value="static" />
-                                                    <dynamic
-                                                        jcr:primaryType="nt:unstructured"
-                                                        text="Dynamic"
-                                                        value="dynamic" />
                                                 </items>
                                             </filterType>
                                             <dateOptions
@@ -356,30 +352,6 @@
                                                                     required="{Boolean}true">
                                                                     <items
                                                                         jcr:primaryType="nt:unstructured">
-                                                                        <overdue
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="Overdue"
-                                                                            value="overdue" />
-                                                                        <today
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="Today"
-                                                                            value="today" />
-                                                                        <zeroplus
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="0 - 30 days"
-                                                                            value="30" />
-                                                                        <thirtyplus
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="31 - 60 days"
-                                                                            value="60" />
-                                                                        <sixtyplus
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="61 - 90 days"
-                                                                            value="90" />
-                                                                        <ninetyplus
-                                                                            jcr:primaryType="nt:unstructured"
-                                                                            text="91+ days"
-                                                                            value="91" />
                                                                         <custom
                                                                             jcr:mixinTypes="[]"
                                                                             jcr:primaryType="nt:unstructured"

@@ -10,8 +10,8 @@ use(['../../../common/utils.js'], function (utils) {
     if (properties && properties["ordersUrl"]) {
         jsonObject["ordersUrl"] = properties["ordersUrl"];
     }
-    if (properties && properties["agGridLicenseKey"]) {
-        jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
+    if (this.agGridLicenseKey) {
+      jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
 
     // Labels

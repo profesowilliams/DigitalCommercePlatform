@@ -2,13 +2,19 @@ import React from 'react';
 import { getDictionaryValue } from '../../../../../utils/utils';
 import OrderFilterList from './OrderFilterList';
 import OrderFilterTags from './OrderFilterTags';
-import { useOrderTrackingStore } from './../store/OrderTrackingStore';
-import BaseFlyout from './../../BaseFlyout/BaseFlyout';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 
-const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
+const OrderFilterFlyout = ({
+  aemData,
+  onQueryChanged,
+  filtersRefs,
+  isTDSynnex,
+}) => {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.orderFilterCounter
   );
+  const enabled = orderFilterCounter !== 0;
   const effects = useOrderTrackingStore((state) => state.effects);
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.isFilterModalOpen
@@ -31,7 +37,6 @@ const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
 
   return (
     <BaseFlyout
-      className={''}
       open={isFilterModalOpen}
       onClose={handleClearFilter}
       width="425px"
@@ -45,9 +50,10 @@ const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
         'grids.common.label.showResults',
         'Show results'
       )}
-      enableButton={orderFilterCounter !== 0}
-      disabledButton={orderFilterCounter === 0}
+      enableButton={enabled}
+      disabledButton={!enabled}
       onClickButton={showResult}
+      isTDSynnex={isTDSynnex}
     >
       <section className="cmp-flyout__content teal_scroll height_order_filters">
         <div className={'filter-accordion scrollbar_y_none height_1000'}>
@@ -60,4 +66,4 @@ const OrderFilterModal = ({ onQueryChanged, filtersRefs }) => {
     </BaseFlyout>
   );
 };
-export default OrderFilterModal;
+export default OrderFilterFlyout;
