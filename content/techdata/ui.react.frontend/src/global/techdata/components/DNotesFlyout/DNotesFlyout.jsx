@@ -31,7 +31,7 @@ function DNotesFlyout({
   const handleDownload = () => {
     if (selected.length === 1) {
       return openFilePdf('Invoice', selected);
-    } else {
+    } else if (selected.length > 1) {
       return downloadAllFile('Invoice', selected);
     }
   };

@@ -75,8 +75,9 @@ function BaseFlyout({
           <div className="cmp-flyout__footer-buttons">
             {enableButton && secondaryButton && <SecondaryButton />}
             <Button
-              className={`cmp-flyout__footer-button ${enableButton ? 'cmp-flyout__footer-button--enabled' : ''
-                }`}
+              btnClass={`cmp-flyout__footer-button ${
+                enableButton ? 'cmp-flyout__footer-button--enabled' : ''
+              }`}
               disabled={disabledButton}
               onClick={onClickButton}
               analyticsCallback={analyticsCallback}
