@@ -13,30 +13,30 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
-<template data-sly-template.head="${ @ page, pwa }"
+<template data-sly-template.head="${ @ page, pwa, wcmmode }"
           data-sly-use.headlibRenderer="headlibs.html"
           data-sly-use.headResources="head.resources.html">
     <meta charset="UTF-8">
     <base href="">
     <title>${page.title}${page.brandSlug ? ' | ' : ''}${page.brandSlug}</title>
-    <meta data-sly-test.keywords="${page.keywords}" name="keywords" content="${keywords}"/>
-    <meta data-sly-test.description="${properties['jcr:description']}" name="description" content="${description}"/>
-    <meta data-sly-test.templateName="${page.templateName}" name="template" content="${templateName}"/>
+    <meta data-sly-test.keywords="${page.keywords}" name="keywords" content="${keywords}" />
+    <meta data-sly-test.description="${properties['jcr:description']}" name="description" content="${description}" />
+    <meta data-sly-test.templateName="${page.templateName}" name="template" content="${templateName}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <sly data-sly-test="${pwa.enabled}">
-        <link rel="manifest" href="${pwa.manifestPath}" crossorigin="use-credentials"/>
-        <meta name="theme-color" content="${pwa.themeColor}"/>
-        <link rel="apple-touch-icon" href="${pwa.iconPath}"/>
+        <link rel="manifest" href="${pwa.manifestPath}" crossorigin="use-credentials" />
+        <meta name="theme-color" content="${pwa.themeColor}" />
+        <link rel="apple-touch-icon" href="${pwa.iconPath}" />
         <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
              data-sly-call="${clientlib.css @ categories='core.wcm.components.page.v2.pwa'}"></sly>
-        <meta name="cq:sw_path" content="${pwa.serviceWorkerPath @ context ='text'}"/>
+        <meta name="cq:sw_path" content="${pwa.serviceWorkerPath @ context ='text'}" />
     </sly>
     <sly data-sly-test="${page.pageType == 'errorPage'}">
         <!-- adding cache header for error pages -->
-        <meta http-equip="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-        <meta http-equip="Pragma" content="no-cache"/>
-        <meta http-equip="Expires" content="0"/>
+        <meta http-equip="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equip="Pragma" content="no-cache" />
+        <meta http-equip="Expires" content="0" />
     </sly>
     <sly data-sly-include="head.links.html"></sly>
     <sly data-sly-include="head.socialmedia.html"></sly>
@@ -50,12 +50,114 @@
     <sly data-sly-test.appResourcesPath=${page.appResourcesPath} data-sly-call="${headResources.favicons @ path = appResourcesPath}"></sly>
     <sly data-sly-list="${page.htmlPageItems}">
         <script data-sly-test="${item.location.name == 'header'}"
-                                                       data-sly-element="${item.element.name @ context='unsafe'}" data-sly-attribute="${item.attributes}"></script>
+                data-sly-element="${item.element.name @ context='unsafe'}" data-sly-attribute="${item.attributes}"></script>
     </sly>
-    
+
     <!-- added custom CSS/JS scripts -->
     <sly data-sly-test="${pageProperties.embedJSCSSScript}">
         ${pageProperties.embedJSCSSScript @ context='scriptComment'}
+    </sly>
+
+    <!--
+        TODO: create "get user module"
+        - Country & Language validation and redirect
+        - UnHide body when user data are available
+        - Redirect to login page when returns 401
+    -->
+    <sly data-sly-include="../../../page/v1/page/get-user-script.html" data-sly-unwrap />
+    <script type="text/javascript">
+        const [userIsLoggedIn, userData] = await getSessionInfo();
+
+        const redirectBasedOnCountry = (userData) => {
+            let currentUserData = userData;
+
+            if (currentUserData?.country) {
+                let countryCodeFromAPI = "/" + currentUserData?.country.toLowerCase() + '/' + currentUserData?.language.toLowerCase();
+                if (window.location.href.indexOf(countryCodeFromAPI) < 0) {
+                    validateCountryFromUrlAndAPI(countryCodeFromAPI);
+                }
+            }
+        }
+
+        const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
+            let urlSplitStrings = window.location.href.replace(window.location.origin, "").split('/');
+            if (window.location.href.indexOf("/content") >= 0) { // added this to support sit/dit envs
+                performRedirectForCmsPath(countryCodeFromAPI, urlSplitStrings);
+            } else {
+                performRedirectForAbsPath(countryCodeFromAPI, urlSplitStrings);
+            }
+        }
+
+        const performRedirectForAbsPath = (countryCodeFromAPI, urlSplitStrings) => {
+            let countryCodeFromUrl;
+            if (urlSplitStrings.length <= 3) { // add .html to the url
+                if (urlSplitStrings[2] === undefined) {
+                    countryCodeFromUrl = "/" + urlSplitStrings[1];
+                }
+                countryCodeFromAPI = countryCodeFromAPI + ".html";
+            }
+            performRedirect(countryCodeFromUrl, countryCodeFromAPI);
+        }
+
+        const performRedirectForCmsPath = (countryCodeFromAPI, urlSplitStrings) => {
+            let countryCodeFromUrl = "/" + urlSplitStrings[4] + "/" + urlSplitStrings[5];
+            if (urlSplitStrings.length === 6) { // add .html to the url
+                countryCodeFromAPI = countryCodeFromAPI + ".html";
+            }
+            performRedirect(countryCodeFromUrl, countryCodeFromAPI);
+        }
+
+        const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
+            console.log("countryCodeFromUrl == " + countryCodeFromUrl);
+            console.log("countryCodeFromAPI == " + countryCodeFromAPI);
+            if (countryCodeFromAPI.indexOf(countryCodeFromUrl) < 0) {
+                let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
+                window.location.href = resultantRedirectUrl;
+            }
+        }
+
+        // handle country redirection
+        redirectBasedOnCountry();
+
+        if (userIsLoggedIn && userData) {
+            document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
+        }
+    </script>
+
+    <script data-sly-test.dataLayerEnabled="${page.dataJson}">
+        window.adobeDataLayer = window.adobeDataLayer || [];
+        adobeDataLayer.push({
+            page: JSON.parse("${page.dataJson @ context='scriptString'}"),
+            event: 'cmp:show',
+            eventInfo: {
+                path: 'page.${page.id @ context="scriptString"}'
+            }
+        });
+    </script>
+
+    <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
+        <!-- Google Tag Manager in Body -->
+        ${configData.gtmBodyJSScript @ context='scriptComment'}
+        <!-- End Google Tag Manager in Body -->
+    </sly>
+
+    <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
+         data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
+        <script type="text/javascript">
+            (async function () {
+                if (typeof QSI === "undefined") {
+                    // QSI object populated only for logged in user
+                    const [userIsLoggedIn, userData] = await getSessionInfo();
+
+                    if (userIsLoggedIn && userData) {
+                        var QSI = {};
+                        QSI.config = {
+                            externalReference: userData.id
+                        };
+                    }
+                }
+            })();
+        </script>
     </sly>
 
 </template>

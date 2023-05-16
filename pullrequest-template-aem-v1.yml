@@ -36,8 +36,8 @@ steps:
     pmdRunAnalysis: false
     findBugsRunAnalysis: false
     spotBugsRunAnalysis: false
-    sonarQubeRunAnalysis: true    
-    options: "-e"
+    sonarQubeRunAnalysis: true
+    options: "-e"    
 
 
 - task: SonarCloudPublish@1

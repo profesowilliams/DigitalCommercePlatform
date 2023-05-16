@@ -99,10 +99,11 @@
 
             isLoggedIn = !!data;
             userData = data;
-        } else {
-            isLoggedIn = window.localStorage.getItem("sessionId");
-            userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
         }
+        //else {
+        //    isLoggedIn = window.localStorage.getItem("sessionId");
+        //    userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
+        //}
 
         return [isLoggedIn, userData];
     }

@@ -20,7 +20,7 @@
       data-sly-use.footer="footer.html"
       data-sly-use.props="${'check_private_page.js'}"
       data-sly-use.redirect="redirect.html">
-<head data-sly-call="${head.head @ page = page, pwa = pwa}">
+<head data-sly-call="${head.head @ page = page, pwa = pwa, wcmmode = wcmmode}">
 </head>
 <body class="${page.cssClassNames}"
       id="${page.id}"
@@ -34,57 +34,14 @@
       data-intouch-footer-api-url="${caconfig['com.tdscore.core.slingcaconfig.IntouchConfiguration'].footerAPIUrl}"
       data-intouch-user-check-api-url="${caconfig['com.tdscore.core.slingcaconfig.IntouchConfiguration'].userCheckAPIUrl}"
       data-consumer-request-header="${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].consumerRequestHeader}">
-
-    <sly data-sly-include="../../../page/v1/page/get-user-script.html" data-sly-unwrap/>
-    <script data-sly-test.dataLayerEnabled="${page.dataJson}">
-        window.adobeDataLayer = window.adobeDataLayer || [];
-        adobeDataLayer.push({
-            page: JSON.parse("${page.dataJson @ context='scriptString'}"),
-            event: 'cmp:show',
-            eventInfo: {
-                path: 'page.${page.id @ context="scriptString"}'
-            }
-        });
-    </script>
-
     <div id="page-container">
         <div id="top"></div>
-        <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
-            <!-- Google Tag Manager in Body -->
-            ${configData.gtmBodyJSScript @ context='scriptComment'}
-            <!-- End Google Tag Manager in Body -->
-        </sly>
-
-        <sly data-sly-use.serviceData="com.tdscore.core.models.CaConfigReader"
-             data-sly-test="${!wcmmode.edit && serviceData.enableQualtricsCode}">
-            <script type="text/javascript">
-                (async function() {
-                    if (typeof QSI === "undefined") {
-                        // QSI object populated only for logged in user
-                        const [userIsLoggedIn, userData] = await getSessionInfo();
-
-                        if (userIsLoggedIn && userData) {
-                            QSI = {};
-                            QSI.config = {
-                                externalReference: userIsLoggedIn && userData?.id ? userData.id : null
-                            };
-                        }
-                    }
-                })();
-            </script>
-        </sly>
         <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
              data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
         <sly data-sly-test="${!isRedirectPage}">
-
-            <sly data-sly-include="body.skiptomaincontent.html"></sly>
-            <sly data-sly-include="body.socialmedia_begin.html"></sly>
             <div id="intouch-headerhtml"></div>
             <sly data-sly-include="body.html"></sly>
             <div id="intouch-footerhtml"></div>
-            <sly data-sly-call="${footer.footer @ page = page, pwa = pwa}"></sly>
-
-            <sly data-sly-include="body.socialmedia_end.html"></sly>
         </sly>
     </div>
 </body>
