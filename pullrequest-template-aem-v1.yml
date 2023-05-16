@@ -37,6 +37,7 @@ steps:
     findBugsRunAnalysis: false
     spotBugsRunAnalysis: false
     sonarQubeRunAnalysis: true    
+    options: "-e"
 
 
 - task: SonarCloudPublish@1
