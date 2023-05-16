@@ -82,28 +82,20 @@
         return null;
     }
 
-    const isExtraReloadDisabled = () => document.body.hasAttribute("data-disable-extra-reload");
-    const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
     async function getSessionInfo() {
         let isLoggedIn;
         let userData;
 
-        if (isHttpOnlyEnabled() || isExtraReloadDisabled()) {
-            let  data;
+        let  data;
 
-            try {
-                data = await getUserData();
-            } catch (error) {
-                data = null;
-            }
-
-            isLoggedIn = !!data;
-            userData = data;
+        try {
+            data = await getUserData();
+        } catch (error) {
+            data = null;
         }
-        //else {
-        //    isLoggedIn = window.localStorage.getItem("sessionId");
-        //    userData = window.localStorage.getItem("userData") ? JSON.parse(window.localStorage.userData) : null;
-        //}
+
+        isLoggedIn = !!data;
+        userData = data;
 
         return [isLoggedIn, userData];
     }
