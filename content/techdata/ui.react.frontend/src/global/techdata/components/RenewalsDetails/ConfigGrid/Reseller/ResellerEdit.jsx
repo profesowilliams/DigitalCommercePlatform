@@ -22,12 +22,14 @@ export default function ResellerEdit({
   const { contact } = resellerDetails;
   const contactName = contact[0].name;
   const [accountName, setAccountName] = useState('');
+  const [shipToEditLabel] = useState(getDictionaryValueOrKey(resellerLabels.shipToEditLabel));
   const [addresses, setAddresses] = useState([]);
-  const [defaultAddressName] = useState(shipToDetails?.name ? JSON.parse(JSON.stringify({name: shipToDetails?.name})) : undefined);
-  const [shipToCurrentValue, setShipToCurrentValue] = useState(defaultAddressName);
+  const [defaultAddressName] = useState(shipToDetails?.id?.text ? JSON.parse(JSON.stringify({name: shipToDetails?.name})) : undefined);
+  const [shipTo, setShipTo] = useState(shipToDetails);
   const isMountedRef = useRef(true);
   const contactNameRef = useRef();
-
+  //const shipToNameRef = useRef();
+  
   useLayoutEffect(() => {
     if (isMountedRef.current) {
       contactNameRef.current?.focus();
@@ -55,17 +57,22 @@ export default function ResellerEdit({
   };
 
   const handleShipToOnChange = (event, newInput) => {
-    shipToOnChange(mapAddressToShipTo(newInput));
-    setShipToCurrentValue(newInput?.name || null)
+    const newShipTo = mapAddressToShipTo(newInput);
+    setShipTo({...shipTo, ...newShipTo});
+    shipToOnChange(newShipTo);
   };
 
   const handleShipToNameOnChange = async (event) => {
     setAccountName(event.target.value);
   };
 
-  // const computeBrandColor = () => {
-  //   return branding === 'cmp-grid-techdata' ? '#000C21' : '#005758';
-  // }
+  const computeErrorClass = () => {
+    if(shipTo?.id?.isMandatory && !shipTo?.id?.isValid)
+    {
+      return 'autocompleteErrorLabel';
+    }
+    return '';
+  }
 
   return (
     <Box
@@ -121,10 +128,9 @@ export default function ResellerEdit({
           {...populateFieldConfigsFromService(contact[0]['phone'])}
         />
       )}
-      {//shipToDetails?.id?.canEdit &&
+      {shipTo?.id?.canEdit &&
         <StyledDetailsAutocomplete
           id="combo-box-addresses"   
-          //open={isAutocompleteOpen}   
           autoHighlight 
           disablePortal
           disableClearable 
@@ -134,20 +140,19 @@ export default function ResellerEdit({
             <CustomTextField
               id="ship-to"
               {...params}
-              //value={shiptToCurrentValue}
-              label={getDictionaryValueOrKey(resellerLabels.shipToEditLabel)}
+              //inputRef={shipToNameRef}
+              label={shipToEditLabel}
               variant="standard"
               onChange={handleShipToNameOnChange}   
-              helperText={getFieldMessage(shipToDetails?.id)}  
-              InputLabelProps={{ className: shipToCurrentValue ? '' : "autocompleteErrorLabel"}}  
-              {...handleValidation(shipToDetails?.id)}      
+              helperText={getFieldMessage(shipTo?.id)}  
+              InputLabelProps={{ className: computeErrorClass()}}  
+              {...handleValidation(shipTo?.id)}      
               //{...populateFieldConfigsFromService(shipToDetails?.id)} 
             />
           )
           }
           getOptionLabel={(option) => option.name}
           onChange={handleShipToOnChange}
-          //value={resetValue}
           renderOption={(props, option) => {
             return (
               <li {...props} key={Math.floor(1000 * Math.random()).toString()}>

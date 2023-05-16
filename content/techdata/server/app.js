@@ -4710,14 +4710,14 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 },
                 "shipTo": {
                     "id": {
-                        "text": "123123",
-                        "isValid": false,
+                        "text": "999999",
+                        "isValid": true,
                         "isMandatory": true,
                         "isDisplay": true,
                         "canEdit": true,
                         "allowedLength": 10
                     },
-                    "name": "shipTo.name",
+                    "name": "shiptTo...name",
                     "nameUpper": "",
                     "contact": [],
                     "address": {
@@ -4936,10 +4936,10 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
 
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
   res.json({
-    "details.common.validation.invalidEmail": "Enter a valid email address. For example, name@email.com from apps",
-    "details.common.validation.requiredField": "This is a required field. from apps",
-    "details.common.validation.requiredFieldMaxChars": "This is a required field, max {max-length} characters. from apps",
-    "details.common.validation.maxLength": "Max {max-length} characters. from apps",
+    "details.common.validation.invalidEmail": "Enter a valid email address. For example, name@email.com",
+    "details.common.validation.requiredField": "This is a required field.",
+    "details.common.validation.requiredFieldMaxChars": "This is a required field, max {max-length} characters.",
+    "details.common.validation.maxLength": "Max {max-length} characters.",
     "button.common.label.save": "Save",
     "button.common.label.cancel": "Cancel",
     "button.common.label.edit": "Edit",

@@ -47,8 +47,8 @@ function ResellerInfo({
     }
   };
 
-  function handleShipToOnChange (shipTo) {
-    setShipToDetails(shipTo);
+  const handleShipToOnChange = (newShipTo) => {
+    setShipToDetails(newShipTo);
   }
 
   const saveHandler = () => {
@@ -67,6 +67,7 @@ function ResellerInfo({
     effects.clearEndUser()
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
     setResellerDetails(({...reseller}));
+    setShipToDetails(({...shipTo}));
   };
 
   useEffect(() => {
@@ -104,7 +105,6 @@ function ResellerInfo({
           handlers={editHandlers}
           shipToDetails={shipToDetails}
           shipToOnChange={handleShipToOnChange}
-          //onShiptToUpdated={saveHandler}
         />
       ) : (
         <ResellerReadOnly 
