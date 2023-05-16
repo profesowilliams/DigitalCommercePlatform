@@ -118,7 +118,7 @@
             const [userIsLoggedIn, userData] = await getSessionInfo();
 
             // handle country redirection
-            redirectBasedOnCountry();
+            redirectBasedOnCountry(userData);
 
             if (userIsLoggedIn && userData) {
                 document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
