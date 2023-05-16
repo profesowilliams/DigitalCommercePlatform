@@ -66,8 +66,6 @@
     -->
     <sly data-sly-include="../../../page/v1/page/get-user-script.html" data-sly-unwrap />
     <script type="text/javascript">
-        const [userIsLoggedIn, userData] = await getSessionInfo();
-
         const redirectBasedOnCountry = (userData) => {
             let currentUserData = userData;
 
@@ -116,12 +114,16 @@
             }
         }
 
-        // handle country redirection
-        redirectBasedOnCountry();
+        (async function () {
+            const [userIsLoggedIn, userData] = await getSessionInfo();
 
-        if (userIsLoggedIn && userData) {
-            document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
-        }
+            // handle country redirection
+            redirectBasedOnCountry();
+
+            if (userIsLoggedIn && userData) {
+                document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
+            }
+        })();
     </script>
 
     <script data-sly-test.dataLayerEnabled="${page.dataJson}">
