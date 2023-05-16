@@ -27,10 +27,9 @@ const OrderFilterFlyout = ({
   };
 
   const handleClearFilter = () => {
-    filtersRefs.type.current = undefined;
-    filtersRefs.status.current = undefined;
-    filtersRefs.createdFrom.current = undefined;
-    filtersRefs.createdTo.current = undefined;
+    Object.keys(filtersRefs).map(
+      (filter) => (filtersRefs[filter].current = undefined)
+    );
     clearAllOrderFilters();
     toggleFilterModal();
   };
@@ -51,7 +50,6 @@ const OrderFilterFlyout = ({
         'Show results'
       )}
       enableButton={enabled}
-      disabledButton={!enabled}
       onClickButton={showResult}
       isTDSynnex={isTDSynnex}
     >

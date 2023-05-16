@@ -29,13 +29,11 @@ function OrderFilterTags({ filtersRefs }) {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.status.current = newList.join();
       setOrderStatusFiltersChecked(newList);
-    }
-    if (group === 'type') {
+    } else if (group === 'type') {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.type.current = newList.join();
       setOrderTypeFiltersChecked(newList);
-    }
-    if (group === 'date') {
+    } else if (group === 'date') {
       setDateRangeFiltersChecked([]);
       setCustomState({
         key: 'customStartDate',
@@ -45,8 +43,16 @@ function OrderFilterTags({ filtersRefs }) {
         key: 'customEndDate',
         value: undefined,
       });
-      filtersRefs.createdFrom.current = undefined;
-      filtersRefs.createdTo.current = undefined;
+      Object.keys(filtersRefs)
+        .filter(
+          (filter) =>
+            filter !== 'type' &&
+            filter !== 'status' &&
+            filtersRefs[filter]?.current
+        )
+        .map((filter) => {
+          filtersRefs[filter].current = undefined;
+        });
     }
   };
 

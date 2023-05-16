@@ -4,7 +4,13 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
-const OrderFilterDateType = ({ onChangeRadio, dateType }) => {
+const OrderFilterDateType = ({
+  onChangeRadio,
+  dateType,
+  orderDate,
+  shipDate,
+  invoiceDate,
+}) => {
   const styleLabel = {
     '& .MuiSvgIcon-root': {
       fontSize: '18px',
@@ -34,21 +40,21 @@ const OrderFilterDateType = ({ onChangeRadio, dateType }) => {
         >
           <FormControlLabel
             sx={styleLabel}
-            value="Order date"
+            value={orderDate}
             control={<Radio sx={styleRadio} />}
-            label="Order date"
+            label={orderDate}
           />
           <FormControlLabel
             sx={styleLabel}
-            value="Ship date"
+            value={shipDate}
             control={<Radio sx={styleRadio} />}
-            label="Ship date"
+            label={shipDate}
           />
           <FormControlLabel
             sx={styleLabel}
-            value="Invoice date"
+            value={invoiceDate}
             control={<Radio sx={styleRadio} />}
-            label="Invoice date"
+            label={invoiceDate}
           />
         </RadioGroup>
       </FormControl>

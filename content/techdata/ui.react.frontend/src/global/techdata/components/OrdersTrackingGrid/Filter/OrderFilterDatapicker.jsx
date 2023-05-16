@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import moment from 'moment';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/initialize';
@@ -10,6 +10,7 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import '../../RenewalFilter/components/datePicker.scss';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
+import { getDictionaryValue } from '../../../../../utils/utils';
 
 function CustomStartEndText() {
   return (
@@ -35,6 +36,20 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
     navNext: <ChevronRightIcon fill={dark_teal} />,
   };
 
+  const startDateFormatted = useRef('');
+  const endDateFormatted = useRef('');
+  const orderDate = getDictionaryValue(
+    'grids.common.label.orderDate',
+    'Order date'
+  );
+  const shipDate = getDictionaryValue(
+    'grids.common.label.shipDate',
+    'Ship date'
+  );
+  const invoiceDate = getDictionaryValue(
+    'grids.common.label.invoiceDate',
+    'Invoice date'
+  );
   const momentCustomStartDate = customStartDate
     ? moment(customStartDate)
     : null;
@@ -42,19 +57,40 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
 
   const onChangeRadio = (ev) => {
     setDateType(ev.target.value);
+    setDateRefs(
+      startDateFormatted.current,
+      endDateFormatted.current,
+      ev.target.value
+    );
+  };
+
+  const resetFilters = () => {
+    filtersRefs.createdFrom.current = undefined;
+    filtersRefs.createdTo.current = undefined;
+    filtersRefs.shippedDateFrom.current = undefined;
+    filtersRefs.shippedDateTo.current = undefined;
+    filtersRefs.invoiceDateFrom.current = undefined;
+    filtersRefs.invoiceDateTo.current = undefined;
+  };
+
+  const setDateRefs = (startDateFormatted, endDateFormatted, typeOfDate) => {
+    if (typeOfDate === orderDate) {
+      resetFilters();
+      filtersRefs.createdFrom.current = startDateFormatted;
+      filtersRefs.createdTo.current = endDateFormatted;
+    } else if (typeOfDate === shipDate) {
+      resetFilters();
+      filtersRefs.shippedDateFrom.current = startDateFormatted;
+      filtersRefs.shippedDateTo.current = endDateFormatted;
+    } else if (typeOfDate === invoiceDate) {
+      resetFilters();
+      filtersRefs.invoiceDateFrom.current = startDateFormatted;
+      filtersRefs.invoiceDateTo.current = endDateFormatted;
+    }
   };
 
   const setFilterDate = (startDate, endDate) => {
-    const startDateMonth = startDate.format('MM');
-    const startDateDay = startDate.format('DD');
-    const startDateYear = startDate.format('YYYY');
-
-    const endDateMonth = endDate.format('MM');
-    const endDateDay = endDate.format('DD');
-    const endDateYear = endDate.format('YYYY');
-
     const dateLabel = getDateRangeLabel(startDate, endDate);
-
     const newDate = [
       {
         id: 1,
@@ -64,8 +100,17 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
         createdTo: endDate?.toDate(),
       },
     ];
-    filtersRefs.createdFrom.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
-    filtersRefs.createdTo.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
+    const startDateMonth = startDate.format('MM');
+    const startDateDay = startDate.format('DD');
+    const startDateYear = startDate.format('YYYY');
+
+    const endDateMonth = endDate.format('MM');
+    const endDateDay = endDate.format('DD');
+    const endDateYear = endDate.format('YYYY');
+    startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
+    endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
+
+    setDateRefs(startDateFormatted.current, endDateFormatted.current, dateType);
     setDateRangeFiltersChecked(newDate);
   };
 
@@ -85,7 +130,13 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
 
   return (
     <>
-      <OrderFilterDateType onChangeRadio={onChangeRadio} dateType={dateType} />
+      <OrderFilterDateType
+        onChangeRadio={onChangeRadio}
+        dateType={dateType}
+        orderDate={orderDate}
+        shipDate={shipDate}
+        invoiceDate={invoiceDate}
+      />
       <CustomStartEndText />
       <div className="order_datapicker">
         <DateRangePicker

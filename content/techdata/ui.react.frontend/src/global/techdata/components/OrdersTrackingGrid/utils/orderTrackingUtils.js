@@ -84,15 +84,10 @@ export async function fetchData(config) {
     mapUrl.delete('createdTo');
   }
 
-  const fromRef = filtersRefs.createdFrom?.current;
-  const toRef = filtersRefs.createdTo?.current;
-  const typeRef = filtersRefs.type?.current;
-  const statusRef = filtersRefs.status?.current;
-
-  fromRef && mapUrl.set('createdFrom', fromRef);
-  toRef && mapUrl.set('createdTo', toRef);
-  typeRef && mapUrl.set('Type', typeRef);
-  statusRef && mapUrl.set('Status', statusRef);
+  Object.keys(filtersRefs).map((filter) => {
+    const filterValue = filtersRefs[filter]?.current;
+    filterValue && mapUrl.set(filter, filterValue);
+  });
 
   if (hasSortChanged.current) {
     const { sortData } = hasSortChanged.current;

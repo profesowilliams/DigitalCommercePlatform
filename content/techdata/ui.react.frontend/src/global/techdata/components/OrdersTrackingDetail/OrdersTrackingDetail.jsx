@@ -11,6 +11,10 @@ import OrderTrackingContainer from './OrderTrackingContainer';
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
   const componentProps = JSON.parse(props.componentProp);
+  console.log(
+    'JUST FOR TESTS: componentProps OrdersTrackingDetail',
+    componentProps
+  );
   const config = {
     ...componentProps,
     productLines: { agGridLicenseKey: componentProps?.agGridLicenseKey },

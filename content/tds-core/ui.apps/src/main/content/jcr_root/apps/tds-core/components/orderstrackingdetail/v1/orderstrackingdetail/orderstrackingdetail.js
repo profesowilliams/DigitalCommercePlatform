@@ -13,7 +13,7 @@ use(['../../../common/utils.js'], function (utils) {
     if (this.agGridLicenseKey) {
       jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
-
+    console.log("this.agGridLicenseKey", this.agGridLicenseKey ?? "not exist");
     // Labels
     if (properties && properties["menuCopy"]) {
         labels["menuCopy"] = properties["menuCopy"];

@@ -62,11 +62,19 @@ function OrdersTrackingGrid(props) {
   const customPaginationRef = useRef();
   const createdFrom = useRef();
   const createdTo = useRef();
+  const shippedDateFrom = useRef();
+  const shippedDateTo = useRef();
+  const invoiceDateFrom = useRef();
+  const invoiceDateTo = useRef();
   const type = useRef();
   const status = useRef();
   const filtersRefs = {
     createdFrom,
     createdTo,
+    shippedDateFrom,
+    shippedDateTo,
+    invoiceDateFrom,
+    invoiceDateTo,
     type,
     status,
   };
