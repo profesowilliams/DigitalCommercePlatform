@@ -11521,6 +11521,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       reseller: {
         id: "0038000315",
       },
+      totalCharge: "888,888,888,888.00",
       shipTo: {
         id: null,
         companyName: "My Co Name",

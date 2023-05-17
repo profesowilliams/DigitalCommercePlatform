@@ -102,6 +102,13 @@ use(['../../../common/utils.js'], function (utils) {
     if (properties && properties["detailsContactEmail"]) {
         labels["detailsContactEmail"] = properties["detailsContactEmail"];
     }
+    if (properties && properties["detailsOrderSubtotal"]) {
+        labels["detailsOrderSubtotal"] = properties["detailsOrderSubtotal"];
+    }
+    if (properties && properties["detailsTotalOrderNetPrice"]) {
+      labels["detailsTotalOrderNetPrice"] =
+        properties["detailsTotalOrderNetPrice"];
+    }
 
     if (labels != null) {
         jsonObject["labels"] = labels;

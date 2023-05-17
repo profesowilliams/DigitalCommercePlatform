@@ -6,6 +6,7 @@ import OrderAcknowledgementCard from './OrderAcknowledgementCard';
 import ContactCard from './ContactCard';
 import { getUrlParams } from '../../../../utils';
 import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
+import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
 import OrderTrackingContainer from './OrderTrackingContainer';
 
 function OrdersTrackingDetail(props) {
@@ -21,9 +22,7 @@ function OrdersTrackingDetail(props) {
     serverSide: false,
     paginationStyle: 'none',
   };
-  const [apiResponse] = useGet(
-    `${config.uiServiceEndPoint}?id=${id}`
-  );
+  const [apiResponse] = useGet(`${config.uiServiceEndPoint}?id=${id}`);
   return (
     <div className="cmp-quote-preview cmp-order-preview">
       <section>
@@ -52,6 +51,12 @@ function OrdersTrackingDetail(props) {
               gridProps={config}
             />
           )}
+        </div>
+        <div className="footer-container">
+          <OrderTrackingDetailFooter
+            config={config}
+            apiResponse={apiResponse}
+          />
         </div>
       </section>
     </div>
