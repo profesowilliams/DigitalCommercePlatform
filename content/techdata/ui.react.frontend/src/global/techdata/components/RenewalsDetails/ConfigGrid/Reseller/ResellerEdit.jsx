@@ -57,8 +57,10 @@ export default function ResellerEdit({
   };
 
   const handleShipToOnChange = (event, newInput) => {
-    const newShipTo = mapAddressToShipTo(newInput);
-    setShipTo({...shipTo, ...newShipTo});
+    const newShipTo = {...shipTo, ...mapAddressToShipTo(newInput)};
+    newShipTo.id.text = resellerDetails?.id;
+    delete newShipTo.nameUpper;
+    setShipTo(newShipTo);
     shipToOnChange(newShipTo);
   };
 
