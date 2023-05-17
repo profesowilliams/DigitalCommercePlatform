@@ -21,13 +21,16 @@ export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
 export const fetchOrdersCount = async (
   url,
   defaultSearchDateRange,
-  filtersRefs
+  filtersRefs,
+  reportValue = null
 ) => {
   const mapUrl = urlStrToMapStruc(url + '?PageSize=25');
   const { createdFrom, createdTo } = filtersRefs;
   const fromRef = createdFrom?.current;
   const toRef = createdTo?.current;
-  if (fromRef && toRef) {
+  if (filterValue) {
+    mapUrl.set('repotrName', reportValue);
+  } else if (fromRef && toRef) {
     mapUrl.set('createdFrom', fromRef);
     mapUrl.set('createdTo', toRef);
   } else {
@@ -44,7 +47,7 @@ export const fetchOrdersCount = async (
 
 export async function fetchReport(reportUrl, reportName) {
   const mapUrl = urlStrToMapStruc(reportUrl + '?PageNumber=1');
-  mapUrl.set('Report', reportName);
+  mapUrl.set('ReportName', reportName);
   const finalUrl = mapStrucToUrlStr(mapUrl);
 
   try {

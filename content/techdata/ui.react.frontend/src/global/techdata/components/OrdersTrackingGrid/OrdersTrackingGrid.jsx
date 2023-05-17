@@ -181,7 +181,8 @@ function OrdersTrackingGrid(props) {
         ? ordersReportCountUrl.href
         : ordersCountUrl.href,
       dateRange,
-      filtersRefs
+      filtersRefs,
+      reportFilterValue.current?.value
     );
     const response = reportFilterValue.current?.value
       ? await fetchReport(ordersReportUrl, reportFilterValue.current.value)
