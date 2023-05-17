@@ -216,56 +216,92 @@ export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) =
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.open),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.open),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.open ?? 'Open'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.open ?? 'Open'
+        ),
         group: 'status',
       },
       {
         id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.investigation),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.investigation),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.investigation ?? 'investigation'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.investigation ?? 'investigation'
+        ),
         group: 'status',
       },
       {
         id: 3,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.shipping),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.shipping),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.shipping ?? 'Shipping'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.shipping ?? 'Shipping'
+        ),
         group: 'status',
       },
       {
         id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.rejected),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.rejected),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.rejected ?? 'Reject'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.rejected ?? 'Reject'
+        ),
         group: 'status',
       },
       {
         id: 5,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.complete),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.complete),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.complete ?? 'Complete'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.complete ?? 'Complete'
+        ),
         group: 'status',
       },
       {
         id: 6,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.cancelled),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.cancelled),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.cancelled ?? 'Cancelled'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.cancelled ?? 'Cancelled'
+        ),
         group: 'status',
       },
       {
         id: 7,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.onHold),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.onHold),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.onHold ?? 'OnHold'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.onHold ?? 'OnHold'
+        ),
         group: 'status',
       },
       {
         id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.shipped),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.shipped),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.shipped ?? 'Shipped'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.shipped ?? 'Shipped'
+        ),
         group: 'status',
       },
       {
         id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.inProcess),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.inProcess),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterStatus?.inProcess ?? 'InProcess'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterStatus?.inProcess ?? 'InProcess'
+        ),
         group: 'status',
       },
     ],
@@ -279,98 +315,162 @@ export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) =
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzcc.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzcc.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzcc?.label ?? 'InTouch'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzcc?.key ?? 'ZZCC'
+        ),
         group: 'type',
       },
       {
         id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzct.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzct.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzct?.label ?? ''
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzct?.key ?? 'ZZCT'
+        ),
         group: 'type',
       },
       {
         id: 3,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzed.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzed.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzed?.label ?? 'EDI or XML'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzed?.key ?? 'ZZED'
+        ),
         group: 'type',
       },
       {
         id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzit.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzit.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzit?.label ?? 'InTouch'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzit?.key ?? 'ZZIT'
+        ),
         group: 'type',
       },
       {
         id: 5,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzkb.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzkb.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzkb?.label ?? 'Consignment Fill-Up'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzkb?.key ?? 'ZZKB'
+        ),
         group: 'type',
       },
       {
         id: 6,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzlv.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzlv.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzlv?.label ?? 'License'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzlv?.key ?? 'ZZLV'
+        ),
         group: 'type',
       },
       {
         id: 7,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzmr.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzmr.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzmr?.label ?? 'TDMRS Project'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzmr?.key ?? 'ZZMR'
+        ),
         group: 'type',
       },
       {
         id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzor.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzor.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzor?.label ?? 'Manual'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzor?.key ?? 'ZZOR'
+        ),
         group: 'type',
       },
       {
         id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzpb.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzpb.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzpb?.label ?? 'Manual'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzpb?.key ?? 'ZZPB'
+        ),
         group: 'type',
       },
       {
         id: 10,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzpe.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzpe.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzpe?.label ?? 'TD Staff purchase'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzpe?.key ?? 'ZZPE'
+        ),
         group: 'type',
       },
       {
         id: 11,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzpt.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzpt.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzpt?.label ?? 'Project order'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzpt?.key ?? 'ZZPT'
+        ),
         group: 'type',
       },
       {
         id: 12,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzqt.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzqt.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzqt?.label ?? 'Quotation'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzqt?.key ?? 'ZZQT'
+        ),
         group: 'type',
       },
       {
         id: 13,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzsb.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzsb.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzsb?.label ?? 'Third Party'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzsb?.key ?? 'ZZSB'
+        ),
         group: 'type',
       },
       {
         id: 14,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzsl.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzsl.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzsl?.label ?? 'Licensing'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzsl?.key ?? 'ZZSL'
+        ),
         group: 'type',
       },
       {
         id: 15,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzso.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzso.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzso?.label ?? 'Stocking Order'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzso?.key ?? 'ZZSO'
+        ),
         group: 'type',
       },
       {
         id: 16,
-        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzst.label),
-        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzst.key),
+        filterOptionLabel: getDictionaryValueOrKey(
+          orderFilterTypes?.zzst?.label ?? 'StreamOne'
+        ),
+        filterOptionKey: getDictionaryValueOrKey(
+          orderFilterTypes?.zzst?.key ?? 'ZZST'
+        ),
         group: 'type',
       },
     ],
