@@ -28,7 +28,7 @@ export const fetchOrdersCount = async (
   const { createdFrom, createdTo } = filtersRefs;
   const fromRef = createdFrom?.current;
   const toRef = createdTo?.current;
-  if (filterValue) {
+  if (reportValue) {
     mapUrl.set('repotrName', reportValue);
   } else if (fromRef && toRef) {
     mapUrl.set('createdFrom', fromRef);
