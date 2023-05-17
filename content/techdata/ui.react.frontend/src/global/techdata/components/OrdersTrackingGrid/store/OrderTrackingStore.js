@@ -49,29 +49,12 @@ const INITIAL_STATE = {
   orderTypeFilters: getLocalValueOrDefault(
     ORDER_FILTER_LOCAL_STORAGE_KEY,
     'orderTypeFilters',
-    [
-      getDictionaryValue('ZZCC', 'InTouch'),
-      getDictionaryValue('ZZCT', 'Manual'),
-      getDictionaryValue('ZZED', 'EDI or XML'),
-      getDictionaryValue('ZZIT', 'InTouch'),
-      getDictionaryValue('ZZKB', 'Consignment Fill-Up'),
-      getDictionaryValue('ZZLV', 'License'),
-      getDictionaryValue('ZZMR', 'TDMRS Project'),
-      getDictionaryValue('ZZOR', 'Manual'),
-      getDictionaryValue('ZZPB', 'Manual'),
-      getDictionaryValue('ZZPE', 'TD Staff purchase'),
-      getDictionaryValue('ZZPT', 'Project order'),
-      getDictionaryValue('ZZQT', 'Quotation'),
-      getDictionaryValue('ZZSB', 'Third Party'),
-      getDictionaryValue('ZZSL', 'Licensing'),
-      getDictionaryValue('ZZSO', 'Stocking Order'),
-      getDictionaryValue('ZZST', 'StreamOne'),
-    ]
+    []
   ),
   orderStatusFilters: getLocalValueOrDefault(
     ORDER_FILTER_LOCAL_STORAGE_KEY,
     'orderStatusFilters',
-    ['Open', 'Investigation', 'Shipping', 'Rejected', 'Complete']
+    []
   ),
   orderTypeFiltersChecked: getLocalValueOrDefault(
     ORDER_FILTER_LOCAL_STORAGE_KEY,

@@ -34,7 +34,7 @@ import {
   setPaginationData,
   addCurrentPageNumber,
   compareSort,
-  filterFlyoutMocked,
+  getFilterFlyoutPredefined,
 } from './utils/orderTrackingUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
@@ -96,8 +96,7 @@ function OrdersTrackingGrid(props) {
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const { searchOptionsList, icons, reportPillLabel } =
-    componentProp;
+  const { searchOptionsList, icons, reportPillLabel } = componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
@@ -333,7 +332,7 @@ function OrdersTrackingGrid(props) {
       }
     });
   };
-  
+
   const downloadFileBlob = async (flyoutType, orderId) => {
     try {
       const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
@@ -368,7 +367,12 @@ function OrdersTrackingGrid(props) {
     ) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
-    setFilterList(filterFlyoutMocked); //componentProp?.filterListItems
+    setFilterList(
+      getFilterFlyoutPredefined(
+        gridConfig.orderFilterTypes,
+        gridConfig.orderFilterStatus
+      )
+    ); //componentProp?.filterListItems - function should connect both filters
   }, []);
   console.log('userData', userData);
   return (

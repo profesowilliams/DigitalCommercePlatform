@@ -525,7 +525,8 @@ div.filter-accordion {
 }
 
 .height_1000 {
-  height: 1000px !important;
+  min-height: 1000px !important;
+  height: auto;
 }
 
 .teal_scroll {
@@ -546,4 +547,17 @@ div.filter-accordion {
 
 .datepicker-wrapper {
   height: 480px !important;
+  min-height: 480px;
+  }
+  
+  div.DateRangePicker.DateRangePicker_1 {
+    width: 339px;
+  }
+  
+  div.DateRangePickerInput.DateRangePickerInput_1 {
+    width: 255px;
+  }
+  
+  div.DateRangePickerInput_arrow.DateRangePickerInput_arrow_1 {
+    margin-right: 10px;
 }

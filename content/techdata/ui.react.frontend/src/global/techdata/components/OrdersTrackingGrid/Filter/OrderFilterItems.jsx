@@ -36,32 +36,36 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
 
   const onChangeStatusFilter = (id) => {
     const newList = isStatusFilterChecked(id)
-      ? orderStatusFiltersChecked.filter((x) => x.id !== id)
+      ? orderStatusFiltersChecked.filter((status) => status.id !== id)
       : [
           ...orderStatusFiltersChecked,
-          ...orderStatusFilters.filter((x) => x.id === id),
+          ...orderStatusFilters.filter((status) => status.id === id),
         ];
-    filtersRefs.status.current = newList.map((x) => x.filterOptionLabel).join();
+    filtersRefs.status.current = newList
+      .map((element) => element.filterOptionKey)
+      .join();
     effects.setOrderStatusFiltersChecked(newList);
   };
 
   const isStatusFilterChecked = (id) => {
-    return orderStatusFiltersChecked.some((x) => x.id === id);
+    return orderStatusFiltersChecked.some((status) => status.id === id);
   };
 
   const onChangeTypeFilter = (id) => {
     const newList = isTypeFilterChecked(id)
-      ? orderTypeFiltersChecked.filter((x) => x.id !== id)
+      ? orderTypeFiltersChecked.filter((type) => type.id !== id)
       : [
           ...orderTypeFiltersChecked,
-          ...orderTypeFilters.filter((x) => x.id === id),
+          ...orderTypeFilters.filter((type) => type.id === id),
         ];
-    filtersRefs.type.current = newList.map((x) => x.filterOptionLabel).join();
+    filtersRefs.type.current = newList
+      .map((element) => element.filterOptionKey)
+      .join();
     effects.setOrderTypeFiltersChecked(newList);
   };
 
   const isTypeFilterChecked = (id) => {
-    return orderTypeFiltersChecked.some((x) => x.id === id);
+    return orderTypeFiltersChecked.some((type) => type.id === id);
   };
 
   return (
@@ -69,17 +73,17 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
       <If condition={itemKey === 'Order Status'}>
         <FormControl>
           {orderStatusFilters &&
-            orderStatusFilters.map((x) => (
+            orderStatusFilters.map((status) => (
               <FormControlLabel
-                key={x.id}
+                key={status.id}
                 control={
                   <Checkbox
                     sx={styleCheckbox}
-                    checked={isStatusFilterChecked(x.id)}
+                    checked={isStatusFilterChecked(status.id)}
                   />
                 }
-                label={x.filterOptionKey}
-                onChange={() => onChangeStatusFilter(x.id)}
+                label={status.filterOptionLabel}
+                onChange={() => onChangeStatusFilter(status.id)}
               />
             ))}
         </FormControl>
@@ -87,17 +91,17 @@ const OrderFilterItems = ({ itemKey, filtersRefs }) => {
       <If condition={itemKey === 'Order Type'}>
         <FormControl>
           {orderTypeFilters &&
-            orderTypeFilters.map((x) => (
+            orderTypeFilters.map((type) => (
               <FormControlLabel
-                key={x.id}
+                key={type.id}
                 control={
                   <Checkbox
                     sx={styleCheckbox}
-                    checked={isTypeFilterChecked(x.id)}
+                    checked={isTypeFilterChecked(type.id)}
                   />
                 }
-                label={x.filterOptionKey}
-                onChange={() => onChangeTypeFilter(x.id)}
+                label={type.filterOptionLabel}
+                onChange={() => onChangeTypeFilter(type.id)}
               />
             ))}
         </FormControl>

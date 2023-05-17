@@ -32,6 +32,7 @@ const OrderFilterFlyout = ({
     );
     clearAllOrderFilters();
     toggleFilterModal();
+    onQueryChanged();
   };
 
   return (

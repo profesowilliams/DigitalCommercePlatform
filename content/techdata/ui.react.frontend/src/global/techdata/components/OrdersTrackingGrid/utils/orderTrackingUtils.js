@@ -1,5 +1,10 @@
 import { usGet } from '../../../../../utils/api';
-import { formatDatePicker, createdFromDate } from '../../../../../utils/utils';
+import {
+  formatDatePicker,
+  createdFromDate,
+  getDictionaryValue,
+  getDictionaryValueOrKey,
+} from '../../../../../utils/utils';
 import {
   calcSecondLevelSorting,
   isFirstTimeSortParameters,
@@ -202,7 +207,7 @@ export const getDateRangeLabel = (startDate, endDate) => {
 };
 export { compareSort };
 
-export const filterFlyoutMocked = [
+export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) => [
   { id: 1, accordionLabel: 'Date Range', filterField: 'date', open: false },
   {
     id: 2,
@@ -211,32 +216,56 @@ export const filterFlyoutMocked = [
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: 'Open',
-        filterOptionKey: 'open',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.open),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.open),
         group: 'status',
       },
       {
         id: 2,
-        filterOptionLabel: 'Cancelled',
-        filterOptionKey: 'cancelled',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.investigation),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.investigation),
         group: 'status',
       },
       {
         id: 3,
-        filterOptionLabel: 'On_Hold',
-        filterOptionKey: 'onHold',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.shipping),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.shipping),
         group: 'status',
       },
       {
         id: 4,
-        filterOptionLabel: 'Shipped',
-        filterOptionKey: 'shipped',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.rejected),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.rejected),
         group: 'status',
       },
       {
         id: 5,
-        filterOptionLabel: 'In_Process',
-        filterOptionKey: 'inProcess',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.complete),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.complete),
+        group: 'status',
+      },
+      {
+        id: 6,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.cancelled),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.cancelled),
+        group: 'status',
+      },
+      {
+        id: 7,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.onHold),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.onHold),
+        group: 'status',
+      },
+      {
+        id: 8,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.shipped),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.shipped),
+        group: 'status',
+      },
+      {
+        id: 9,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterStatus.inProcess),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterStatus.inProcess),
         group: 'status',
       },
     ],
@@ -250,26 +279,98 @@ export const filterFlyoutMocked = [
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: 'Lorem_Ipsum1',
-        filterOptionKey: 'loremIpsum1',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzcc.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzcc.key),
         group: 'type',
       },
       {
         id: 2,
-        filterOptionLabel: 'Lorem_Ipsum2',
-        filterOptionKey: 'loremIpsum2',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzct.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzct.key),
         group: 'type',
       },
       {
         id: 3,
-        filterOptionLabel: 'Lorem_Ipsum3',
-        filterOptionKey: 'loremIpsum3',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzed.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzed.key),
         group: 'type',
       },
       {
         id: 4,
-        filterOptionLabel: 'Lorem_Ipsum4',
-        filterOptionKey: 'loremIpsum4',
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzit.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzit.key),
+        group: 'type',
+      },
+      {
+        id: 5,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzkb.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzkb.key),
+        group: 'type',
+      },
+      {
+        id: 6,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzlv.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzlv.key),
+        group: 'type',
+      },
+      {
+        id: 7,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzmr.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzmr.key),
+        group: 'type',
+      },
+      {
+        id: 8,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzor.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzor.key),
+        group: 'type',
+      },
+      {
+        id: 9,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzpb.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzpb.key),
+        group: 'type',
+      },
+      {
+        id: 10,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzpe.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzpe.key),
+        group: 'type',
+      },
+      {
+        id: 11,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzpt.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzpt.key),
+        group: 'type',
+      },
+      {
+        id: 12,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzqt.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzqt.key),
+        group: 'type',
+      },
+      {
+        id: 13,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzsb.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzsb.key),
+        group: 'type',
+      },
+      {
+        id: 14,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzsl.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzsl.key),
+        group: 'type',
+      },
+      {
+        id: 15,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzso.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzso.key),
+        group: 'type',
+      },
+      {
+        id: 16,
+        filterOptionLabel: getDictionaryValueOrKey(orderFilterTypes.zzst.label),
+        filterOptionKey: getDictionaryValueOrKey(orderFilterTypes.zzst.key),
         group: 'type',
       },
     ],
