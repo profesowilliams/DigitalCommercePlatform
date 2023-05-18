@@ -2,6 +2,7 @@ import React from 'react';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { useStore } from '../../../../utils/useStore';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
+import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
 
 //TODO: Add or delete the left part of footer
 const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
