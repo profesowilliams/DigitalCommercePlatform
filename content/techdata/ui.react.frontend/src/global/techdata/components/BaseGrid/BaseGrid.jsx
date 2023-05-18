@@ -12,7 +12,7 @@ const _BaseGrid = ({
 }) => {
   const [gridKey, setGridKey] = React.useState(0);
   const userData = useStore(state => state.userData);
-  const columnDefs = getBaseColumnDefinitions(columnList, definitions);
+  const columnDefs = getBaseColumnDefinitions(columnList, definitions, userData);
 
   useEffect(() => {
     setGridKey(gridKey + 1);

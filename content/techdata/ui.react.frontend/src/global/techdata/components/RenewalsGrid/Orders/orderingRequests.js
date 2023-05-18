@@ -9,8 +9,8 @@ const awaitRequest = (fetch, delay) =>
 
 const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 
-const setAdditionalHeaders = (impersonationAccount) => {
-  return isHouseAccount() ? {headers: {impersonateAccount: impersonationAccount}, validateStatus: false } : {validateStatus: false};
+const setAdditionalHeaders = (impersonationAccount, userData) => {
+  return isHouseAccount(userData) ? {headers: {impersonateAccount: impersonationAccount}, validateStatus: false } : {validateStatus: false};
 }
 
 export const getStatusLoopUntilStatusIsActive = async ({
@@ -204,7 +204,7 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
   }
 }
 
-export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber, isDetails }) {
+export async function handleOrderRequesting({ orderEndpoints, renewalData, purchaseOrderNumber, isDetails, userData }) {
   let currentResponse = {};
   const { updateRenewalOrderEndpoint = "", getStatusEndpoint = "", orderRenewalEndpoint = "", renewalDetailsEndpoint="" } = orderEndpoints;
   if (!updateRenewalOrderEndpoint || !getStatusEndpoint || !orderRenewalEndpoint) {
@@ -228,17 +228,17 @@ export async function handleOrderRequesting({ orderEndpoints, renewalData, purch
     const impersonationAccount = quoteForOrdering.reseller.id;
     const payload = { source, reseller, endUser, customerPO: purchaseOrderNumber, EANumber };
     if (quoteForOrdering?.items) payload.items = quoteForOrdering.items;
-    const updateresponse = await post(updateRenewalOrderEndpoint, quoteForOrdering, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
+    const updateresponse = await post(updateRenewalOrderEndpoint, quoteForOrdering, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount, userData));
     currentResponse = updateresponse;
     if (updateresponse.status === 200 || updateresponse.status === 204) {
       const isError = updateresponse.data?.error?.isError;
       if (isError) throw UPDATE_FAILED
       const getStatusConf = { getStatusEndpoint, id: source.id, delay: 1000, iterations: 8 };
-      const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
+      const getStatusResponse = await getStatusLoopUntilStatusIsActive(getStatusConf, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount, userData));
       currentResponse = getStatusResponse;
       if (getStatusResponse) {
         const orderPayload = { id: source.id };
-        const orderResponse = await post(orderRenewalEndpoint, orderPayload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount));
+        const orderResponse = await post(orderRenewalEndpoint, orderPayload, !isImpersonateAccountHeaderDisabled() && setAdditionalHeaders(impersonationAccount, userData));
         currentResponse = orderResponse;
         if (orderResponse.status === 200 && !orderResponse.data?.error.isError) {
           const transactionNumber =

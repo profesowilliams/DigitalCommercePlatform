@@ -20,8 +20,9 @@ window.getSessionInfo && window.getSessionInfo().then((data) => {
 
 export const getUserDataInitialState = () => userData;
 
-export const isHouseAccount = () => {
-    return getUserDataInitialState()?.isHouseAccount ?? false;
+export const isHouseAccount = (userData) => {
+    const currentUserData = userData ?? getUserDataInitialState();
+    return currentUserData?.isHouseAccount ?? false;
 }
 
 export const hasDCPAccess = (user) => {

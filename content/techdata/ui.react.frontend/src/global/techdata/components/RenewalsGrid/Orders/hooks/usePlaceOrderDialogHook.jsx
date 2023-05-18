@@ -8,6 +8,7 @@ import TransactionNumber from "../TransactionNumber";
 import { handleOrderRequesting } from "../orderingRequests";
 import useComputeBranding from "../../../../hooks/useComputeBranding";
 import { AutoRenewIcon } from "../../../../../../fluentIcons/FluentIcons";
+import { useStore } from "../../../../../../utils/useStore";
 
 const CustomOrderButton = (properties) => ({ children }) =>
   <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>
@@ -25,6 +26,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
   const resellerState = store( state => state.reseller || false);
   const itemsState = store( state => state.items || false);
   const { computeClassName, isTDSynnex } = useComputeBranding(store);
+  const userData = useStore(state => state.userData);
 
   function resetDialogStates() {
     setSubmitted(false);
@@ -74,7 +76,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
       if(resellerState) renewalData.reseller = resellerState;
       if(itemsState) renewalData.items = itemsState;  
     }
-    const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber, isDetails});
+    const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber, isDetails, userData});
     handleToggleToaster({...operationResponse});   
     typeof resetGrid === 'function' && operationResponse?.isSuccess && setTimeout(() => resetGrid(), 1600);
   }

@@ -59,6 +59,38 @@ function _GridSearch(
   const [capsuleValues, setCapsuleValues] = useState({ ...customSearchValues });
   const userData = useStore(state => state.userData);
 
+  const getOptionGivenQueryString = (options, userData) => {
+    let searchTerm = null;
+    const urlParams = new URLSearchParams(window.location.search);
+
+    for (const [key, value] of urlParams) {
+      const option = options.find((option) => option.searchKey.toLowerCase() === "id" && option.searchKey.toLowerCase() === key.toLowerCase() && (!option?.showIfIsHouseAccount || (option?.showIfIsHouseAccount && isHouseAccount(userData))));
+      if (option) {
+        searchTerm = {value, option};
+        break;
+      }
+    }
+    return searchTerm;
+  };
+
+
+  useEffect(() => {
+    const searchTerm = getOptionGivenQueryString(options, userData);
+
+    if (searchTerm) {
+      setSearchTerm(searchTerm.value);
+      setCapsuleSearchValue(searchTerm.value);
+      setValues({ ...values, input: searchTerm.value });
+      setCapsuleValues({ ...customSearchValues, option: searchTerm.option.searchKey, label: searchTerm.option.searchLabel });
+      setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
+        field: searchTerm.option.searchKey,
+        value: searchTerm.value,
+      });
+      onQueryChanged({ onSearchAction: true });
+    }
+  }, [userData]);
+
+
   function getInitialValueState() {
     if (hasLocalStorageData(SEARCH_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
       return getLocalStorageData(SEARCH_LOCAL_STORAGE_KEY)?.value;
@@ -225,7 +257,7 @@ function _GridSearch(
   };
 
   const RenderWithPermissions = ({ option }) => {
-    const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount();
+    const hasNotPrivilege = option?.showIfIsHouseAccount && !isHouseAccount(userData);
     if (hasNotPrivilege) return <></>;
     return (
       <>

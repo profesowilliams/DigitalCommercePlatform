@@ -1,7 +1,7 @@
 import React from 'react';
 import { isHouseAccount } from '../../../../../utils/user-utils';
 
-const createColumn = (definition, businessConfig = {}) => {
+const createColumn = (definition, businessConfig = {}, userData) => {
   const { columnLabel, columnKey, sortable = false } = definition;
   if (!businessConfig?.createColumnComponent) {
     console.log('Object is missing required properties');
@@ -30,13 +30,13 @@ const withTryCatch = (fn) => (...args) => {
   }
 };
 
-const createPlainTextColumn = (definition, businessConfig = {}) => createColumn(definition, businessConfig);
+const createPlainTextColumn = (definition, businessConfig = {}, userData) => createColumn(definition, businessConfig, userData);
 
-const createButtonListColumn = (definition, businessConfig = {}) => createColumn(definition, businessConfig);
+const createButtonListColumn = (definition, businessConfig = {}, userData) => createColumn(definition, businessConfig, userData);
 
-const createPlainResellerColumn = (definition, businessConfig = {}) => {
-  if (isHouseAccount()) {
-    return createColumn(definition, businessConfig);
+const createPlainResellerColumn = (definition, businessConfig = {}, userData) => {
+  if (isHouseAccount(userData)) {
+    return createColumn(definition, businessConfig, userData);
   } else {
     return null;
   }
@@ -48,11 +48,7 @@ const columnTypes = {
   plainResellerColumn: withTryCatch(createPlainResellerColumn),
 };
 
-window.getSessionInfo && window.getSessionInfo().then((data) => {
-  columnTypes.plainResellerColumn = withTryCatch(createPlainResellerColumn);
-});
-
-export const getBaseColumnDefinitions = (originalDefinitions, businessConfig) =>
+export const getBaseColumnDefinitions = (originalDefinitions, businessConfig, userData) =>
   originalDefinitions
-    .map((definition) => columnTypes[definition.type](definition, businessConfig))
+    .map((definition) => columnTypes[definition.type](definition, businessConfig, userData))
     .filter((c) => c !== null);
