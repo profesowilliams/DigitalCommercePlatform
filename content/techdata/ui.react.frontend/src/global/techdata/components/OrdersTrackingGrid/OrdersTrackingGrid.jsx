@@ -84,6 +84,7 @@ function OrdersTrackingGrid(props) {
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
     useExtendGridOperations(useOrderTrackingStore);
   const userData = useStore((state) => state.userData);
+  const setUserData = useStore((state) => state.setUserData);
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
@@ -373,8 +374,9 @@ function OrdersTrackingGrid(props) {
         gridConfig.orderFilterStatus
       )
     ); //componentProp?.filterListItems - function should connect both filters
+    setUserData();
   }, []);
-  console.log('userData', userData);
+
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader

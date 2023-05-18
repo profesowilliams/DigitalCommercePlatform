@@ -363,9 +363,12 @@ const SignIn = (props) => {
     try {
       setIsLoading(true);
       setIsError(false);
-      const userData = await initializeSession(userEndpoint, ecommerceAuthenticationLoginEndpoint, shouldLogin);
-      console.log('checkSessionStatus userData', userData);
-      if(userData) {
+      const userData = await initializeSession(
+        userEndpoint,
+        ecommerceAuthenticationLoginEndpoint,
+        shouldLogin
+      );
+      if (userData) {
         handleLoginResponse(userData);
         handleLoginRedirection();
         setUserDataCheck(userData);
@@ -382,20 +385,12 @@ const SignIn = (props) => {
     } catch (error) {
       setIsError(true);
     }
-  }
+  };
 
   useEffect(() => {
-    console.log('isPrivatePage', isPrivatePage);
-    console.log('isExtraReloadDisabled()', isExtraReloadDisabled());
-    console.log('isHttpOnlyEnabled()', isHttpOnlyEnabled());
-    if(isExtraReloadDisabled() || isHttpOnlyEnabled()) {
+    if (isExtraReloadDisabled() || isHttpOnlyEnabled()) {
       checkSessionStatus(isPrivatePage);
-      console.log(
-        'checkSessionStatus useEffect isPrivatePage',
-        checkSessionStatus(isPrivatePage)
-      );
-    }
-    else {
+    } else {
       handleLoginRedirection();
       const originalURL = window.location.href;
 
