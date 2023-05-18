@@ -521,16 +521,12 @@ div.filter-accordion {
 }
 
 .height_order_filters {
-  height: calc(100vh - 310px) !important;
+    overflow-y: scroll !important;
+      overflow: auto;
 }
 
 .height_1000 {
-  min-height: 1000px !important;
-  height: auto;
-}
-
-.teal_scroll {
-  overflow-y: scroll !important;
+  min-height: 1500px !important;
 }
 
 .teal_scroll::-webkit-scrollbar-track {

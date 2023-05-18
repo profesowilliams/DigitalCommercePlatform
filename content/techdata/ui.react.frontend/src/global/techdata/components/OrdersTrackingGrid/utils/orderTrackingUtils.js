@@ -227,10 +227,10 @@ export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) =
       {
         id: 2,
         filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.investigation ?? 'investigation'
+          orderFilterStatus?.investigation ?? 'Investigation'
         ),
         filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.investigation ?? 'investigation'
+          orderFilterStatus?.investigation ?? 'Investigation'
         ),
         group: 'status',
       },
@@ -326,7 +326,7 @@ export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) =
       {
         id: 2,
         filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzct?.label ?? ''
+          orderFilterTypes?.zzct?.label ?? 'Manual'
         ),
         filterOptionKey: getDictionaryValueOrKey(
           orderFilterTypes?.zzct?.key ?? 'ZZCT'
