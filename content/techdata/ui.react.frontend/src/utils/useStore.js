@@ -11,7 +11,10 @@ export const useStore = create((set) => ({
       refreshRenewalDetailApi: !state.refreshRenewalDetailApi,
     })),
   setUserData: async () => {
-    const [userIsLoggedIn, userData] = await getSessionInfo();
-    set((state) => ({ userData: userData }));
+    console.log('setting user data');
+    await getSessionInfo().then((data) => {
+      console.log('user data: ', data[1]);
+      set((state) => ({ userData: data[1] }));
+    });
   },
 }));

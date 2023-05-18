@@ -376,7 +376,7 @@ function OrdersTrackingGrid(props) {
     ); //componentProp?.filterListItems - function should connect both filters
     setUserData();
   }, []);
-
+  console.log('OT userData', userData);
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
