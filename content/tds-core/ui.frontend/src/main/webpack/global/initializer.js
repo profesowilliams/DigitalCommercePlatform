@@ -5,6 +5,7 @@ import Tabs from './tds-core-components/tabs/tabs';
 import Hamburger from './tds-core-components/hamburger-menu/hamburger';
 import Header from './tds-core-components/header/header';
 import MegamenuMobile from './tds-core-components/megamenu/megamenu-mobile';
+import PopupExit from './tds-core-components/popup/exit';
 import bp from '../common-utils/js/media-match';
 import {subHeader} from './tds-core-components/sub-header/subHeader';
 
@@ -41,6 +42,9 @@ Initializer.prototype.initComponents = function () {
 
 // manually initialized components - ones without data-component attribute
 Initializer.prototype.manualInitComponents = function () {
+    const popupExit = new PopupExit();
+    popupExit.initialize();
+
     new Hamburger();
     new Header();
     subHeader();
