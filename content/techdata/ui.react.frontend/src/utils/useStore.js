@@ -11,11 +11,6 @@ export const useStore = create((set) => ({
       refreshRenewalDetailApi: !state.refreshRenewalDetailApi,
     })),
   setUserData: () => {
-    console.log("window.getSessionInfo",window.getSessionInfo())
-    console.log('setting user data');
-    window.getSessionInfo && window.getSessionInfo().then((data) => {
-      console.log('user data: ', data[1]);
-      set((state) => ({ userData: data[1] }));
-    });
+      set((state) => ({ userData: userData }));
   },
 }));

@@ -53,6 +53,7 @@ import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import OrderFilterFlyout from './Filter/OrderFilterFlyout';
 
 function OrdersTrackingGrid(props) {
+  const [userData, setUserData] = useState(null);
   const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
   const previousFilter = useRef(false);
   const hasSortChanged = useRef(false);
@@ -83,8 +84,7 @@ function OrdersTrackingGrid(props) {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
     useExtendGridOperations(useOrderTrackingStore);
-  const userData = useStore((state) => state.userData);
-  const setUserData = useStore((state) => state.setUserData);
+
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
@@ -374,9 +374,13 @@ function OrdersTrackingGrid(props) {
         gridConfig.orderFilterStatus
       )
     ); //componentProp?.filterListItems - function should connect both filters
-    setUserData();
+    window.getSessionInfo &&
+      window.getSessionInfo().then((data) => {
+        setUserData(data[1]);
+      });
   }, []);
-  console.log('OT userData', userData);
+  console.log('userData', userData);
+  
   return (
     <div className="cmp-order-tracking-grid">
       <BaseGridHeader
