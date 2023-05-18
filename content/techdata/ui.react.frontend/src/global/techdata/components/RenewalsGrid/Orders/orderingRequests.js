@@ -168,6 +168,7 @@ export const extractDetailShipToData = (shipTo) => {
 
 export const mapAddressToShipTo = (address) => {  
   return {
+    id: address?.id,
     name: address?.name,
     address: {
       line1: address?.line1,

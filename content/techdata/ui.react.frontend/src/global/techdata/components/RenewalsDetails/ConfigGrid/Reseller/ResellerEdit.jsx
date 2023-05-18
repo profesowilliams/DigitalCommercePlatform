@@ -57,8 +57,8 @@ export default function ResellerEdit({
   };
 
   const handleShipToOnChange = (event, newInput) => {
-    const newShipTo = {...shipTo, ...mapAddressToShipTo(newInput)};
-    newShipTo.id.text = resellerDetails?.id;
+    const id = {...shipTo?.id, text: resellerDetails?.id};
+    const newShipTo = {...shipTo, ...mapAddressToShipTo({...newInput, id: id})};
     delete newShipTo.nameUpper;
     setShipTo(newShipTo);
     shipToOnChange(newShipTo);
@@ -67,14 +67,6 @@ export default function ResellerEdit({
   const handleShipToNameOnChange = async (event) => {
     setAccountName(event.target.value);
   };
-
-  const computeErrorClass = () => {
-    if(shipTo?.id?.isMandatory && !shipTo?.id?.isValid)
-    {
-      return 'autocompleteErrorLabel';
-    }
-    return '';
-  }
 
   return (
     <Box
@@ -146,8 +138,7 @@ export default function ResellerEdit({
               label={shipToEditLabel}
               variant="standard"
               onChange={handleShipToNameOnChange}   
-              helperText={getFieldMessage(shipTo?.id)}  
-              InputLabelProps={{ className: computeErrorClass()}}  
+              helperText={getFieldMessage(shipTo?.id)}   
               {...handleValidation(shipTo?.id)}      
               //{...populateFieldConfigsFromService(shipToDetails?.id)} 
             />
