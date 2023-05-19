@@ -72,6 +72,14 @@ export default function ResellerEdit({
     return branding === 'cmp-grid-techdata';
   }
 
+  const filterOptions = (options, params) => {
+    const filtered = options.filter((option) => {
+      const value = option.name + option.line1 + option.postalCode + option.city + option.stateName;
+      return value.toUpperCase().indexOf(params.inputValue.toUpperCase()) !== -1;
+    });
+    return filtered;
+  };
+
   return (
     <Box
       className="cmp-renewals-qp__edit-panel"
@@ -132,6 +140,7 @@ export default function ResellerEdit({
           autoHighlight 
           disablePortal
           disableClearable 
+          filterOptions={filterOptions}
           isTdBrand={isTdBranding()}
           options={addresses}
           defaultValue={defaultAddressName}
