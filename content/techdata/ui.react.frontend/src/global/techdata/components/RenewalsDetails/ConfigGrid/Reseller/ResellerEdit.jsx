@@ -5,7 +5,7 @@ import { handleValidation, populateFieldConfigsFromService, getFieldMessage, han
 import { getDictionaryValue, getDictionaryValueOrKey } from '../../../../../../utils/utils';
 import { mapAddressToShipTo } from "../../../RenewalsGrid/Orders/orderingRequests"
 import { AddressDetails } from './AddressDetails';
-import { get } from '../../../../../../utils/api' 
+import { get } from '../../../../../../utils/api';
 import { StyledDetailsAutocomplete } from '../../MuiStyledComponents/StyledDetailsAutocomplete';
 
 export default function ResellerEdit({
@@ -29,7 +29,7 @@ export default function ResellerEdit({
   const isMountedRef = useRef(true);
   const contactNameRef = useRef();
   //const shipToNameRef = useRef();
-  
+
   useLayoutEffect(() => {
     if (isMountedRef.current) {
       contactNameRef.current?.focus();
@@ -67,6 +67,10 @@ export default function ResellerEdit({
   const handleShipToNameOnChange = async (event) => {
     setAccountName(event.target.value);
   };
+
+  const isTdBranding = () => {
+    return branding === 'cmp-grid-techdata';
+  }
 
   return (
     <Box
@@ -128,6 +132,7 @@ export default function ResellerEdit({
           autoHighlight 
           disablePortal
           disableClearable 
+          isTdBrand={isTdBranding()}
           options={addresses}
           defaultValue={defaultAddressName}
           renderInput={(params) => (
