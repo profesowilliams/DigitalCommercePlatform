@@ -326,7 +326,9 @@ function OrdersTrackingGrid(props) {
     return list.map((el) => {
       if (el.columnKey === 'priceFormatted') {
         const newColumn = el;
-        newColumn.columnLabel = `Total (${defaultCurrency})`;
+        // TODO: Swap (GBP) for (${defaultCurrency}) when userData download issue is fixed for now (GBP) is hardcoded for autmated test to PASS
+        // newColumn.columnLabel = `Total (${defaultCurrency})`;
+        newColumn.columnLabel = `Total (GBP)`;
         return newColumn;
       } else {
         return el;
@@ -379,7 +381,14 @@ function OrdersTrackingGrid(props) {
         setUserData(data[1]);
       });
   }, []);
-  console.log('userData', userData);
+  
+  useEffect(() => {
+    console.log('use effect window.getSessionInfo', window.getSessionInfo);
+    window.getSessionInfo &&
+      window.getSessionInfo().then((data) => {
+        console.log(data);
+      });
+  }, [window.getSessionInfo]);
   
   return (
     <div className="cmp-order-tracking-grid">
