@@ -1867,82 +1867,74 @@ app.get("/ui-renewal/v1/getAddresses", function (req, res) {
   const response = {
     "content": [
         {
-            "line1": "Eros Corporate Tower, 15th ",
-            "line2": "Floor Nehru Place SEZ zonw",
+            "line1": "GODREJ WATERSIDE TOWER II,UNIT NO ",
+            "line2": "706 &707 7TH FLOOR,PLOT NO-5 BLOCK-",
             "line3": null,
-            "city": "New Delhi",
-            "state": "30",
-            "stateName": "Delhi",
-            "postalCode": "110019",
-            "country": "IN",
+            "city": "DP SECTOR-V SALTLAKE CITY KOLKATA",
+            "state": "25",
+            "stateName": "West Bengal",
+            "postalCode": "700091",
+            "country": null,
             "county": null,
-            "countryCode": null,
-            "name": "SoftwareONE India"
+            "countryCode": "IN",
+            "name": "PRIMETALS TECHNOLOGIES",
+            "id": "0000175776"
         },
         {
-            "line1": "Level-6, Chennai City Centre ",
+            "line1": "C/O RASHTRIYA ISPAT NIGAM LTD VISAKHAPATNAM ",
+            "line2": "Project Office, D-Block,",
+            "line3": null,
+            "city": "Andhra Pradesh",
+            "state": "01",
+            "stateName": "Andra Pradesh",
+            "postalCode": "530031",
+            "country": null,
+            "county": null,
+            "countryCode": "IN",
+            "name": "Primetalsï¿½Technologies India",
+            "id": "0000179854"
+        },
+        {
+            "line1": "C/O  DY GENERAL MANAGER STEEL AND POWER SAIL ",
+            "line2": "BOKARO",
+            "line3": null,
+            "city": "JHARKHAND",
+            "state": null,
+            "stateName": null,
+            "postalCode": "827001",
+            "country": null,
+            "county": null,
+            "countryCode": "IN",
+            "name": "Primetalsï¿½Technologies India",
+            "id": "0000179866"
+        },
+        {
+            "line1": "C/O General Manager(P)I/C(Projects-Steel Zone Authority of ",
+            "line2": "Kursipar Gate BHILAI",
+            "line3": null,
+            "city": "Durg Chhattisgarh",
+            "state": "33",
+            "stateName": "Chhaattisgarh",
+            "postalCode": "490001",
+            "country": null,
+            "county": null,
+            "countryCode": "IN",
+            "name": "Primetalsï¿½Technologies India",
+            "id": "0000179871"
+        },
+        {
+            "line1": "Stage II, Qtr No M/54, Durgapur Foothill Housing Project ",
             "line2": null,
             "line3": null,
-            "city": "Chennai",
-            "state": "22",
-            "stateName": "Tamil Nadu",
-            "postalCode": "600004",
-            "country": "IN",
+            "city": "Odisha",
+            "state": "18",
+            "stateName": "Odisha",
+            "postalCode": "769012",
+            "country": null,
             "county": null,
-            "countryCode": null,
-            "name": "MyTech India"
-        },
-        {
-            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
-            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
-            "line3": null,
-            "city": "Mumbai",
-            "state": "13",
-            "stateName": "Maharashtra",
-            "postalCode": "410209",
-            "country": "IN",
-            "county": null,
-            "countryCode": null,
-            "name": "SoftwareTWO India Pvt. Ltd"
-        },
-        {
-            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
-            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
-            "line3": null,
-            "city": "Mumbai",
-            "state": "13",
-            "stateName": "Maharashtra",
-            "postalCode": "410201",
-            "country": "IN",
-            "county": null,
-            "countryCode": null,
-            "name": "SoftwareTRE India Pvt. Ltd"
-        },
-        {
-            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
-            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
-            "line3": null,
-            "city": "Mumbai",
-            "state": "13",
-            "stateName": "Maharashtra",
-            "postalCode": "410202",
-            "country": "IN",
-            "county": null,
-            "countryCode": null,
-            "name": "SoftwareFOR India Pvt. Ltd"
-        },
-        {
-            "line1": "Shop No.17, Gr.Flr.Swastik Plaza, ",
-            "line2": "Sec-11, Panvel, J C I E KAMOTHE",
-            "line3": null,
-            "city": "Mumbai",
-            "state": "13",
-            "stateName": "Maharashtra",
-            "postalCode": "410209",
-            "country": "IN",
-            "county": null,
-            "countryCode": null,
-            "name": "SoftwareFIV India Pvt. Ltd"
+            "countryCode": "IN",
+            "name": "Primetals Technologies India",
+            "id": "0000181643"
         }
     ],
     "error": {
@@ -1950,7 +1942,7 @@ app.get("/ui-renewal/v1/getAddresses", function (req, res) {
         "messages": [],
         "isError": false
     }
-  };
+};
   
   setTimeout(() => {
     res.json(response);
@@ -4710,27 +4702,27 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
                 },
                 "shipTo": {
                     "id": {
-                        "text": "999999",
+                        "text": "0000179854",
                         "isValid": true,
                         "isMandatory": true,
                         "isDisplay": true,
                         "canEdit": true,
                         "allowedLength": 10
                     },
-                    "name": "shiptTo...name",
+                    "name": "Primetalsï¿½Technologies India",
                     "nameUpper": "",
                     "contact": [],
                     "address": {
                         "id": null,
-                        "line1": "address line1",
-                        "line2": null,
+                        "line1": "C/O RASHTRIYA ISPAT NIGAM LTD VISAKHAPATNAM ",
+                        "line2": "Project Office, D-Block,",
                         "line3": null,
                         "address1": null,
                         "address2": null,
                         "address3": null,
-                        "city": "address cIty",
-                        "state": null,
-                        "stateName": "address state name",
+                        "city": "Andhra Pradesh",
+                        "state": "01",
+                        "stateName": "Andra Pradesh",
                         "postalCode": "9874-667",
                         "country": null,
                         "county": null,

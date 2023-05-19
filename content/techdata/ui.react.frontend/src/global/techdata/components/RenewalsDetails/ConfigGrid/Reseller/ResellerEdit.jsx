@@ -57,7 +57,7 @@ export default function ResellerEdit({
   };
 
   const handleShipToOnChange = (event, newInput) => {
-    const id = {...shipTo?.id, text: resellerDetails?.id};
+    const id = {...shipTo?.id, text: newInput?.id};
     const newShipTo = {...shipTo, ...mapAddressToShipTo({...newInput, id: id})};
     delete newShipTo.nameUpper;
     setShipTo(newShipTo);
@@ -153,7 +153,7 @@ export default function ResellerEdit({
           onChange={handleShipToOnChange}
           renderOption={(props, option) => {
             return (
-              <li {...props} key={Math.floor(1000 * Math.random()).toString()}>
+              <li {...props} key={option?.id}>
                 <div>
                   <div>
                     <AddressDetails
