@@ -35,7 +35,7 @@
         >
           <!-- Navigation -->
           <a
-            href="${urlHelper.url @ context='uri'}"
+            href="${urlHelper.url @ context='uri'}" target="${nav.linkTarget == 'true' ? '_blank':''}"
             aria-haspopup="true"
             aria-expanded="false"
             data-cmp-clickable="true"

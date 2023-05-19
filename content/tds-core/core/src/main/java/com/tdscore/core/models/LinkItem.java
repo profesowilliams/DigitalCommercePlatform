@@ -225,6 +225,10 @@ public class LinkItem {
         return this.linkUrl;
     }
 
+    public String getLinkTarget() {
+        return this.linkTarget;
+    }
+
     public String getRandomID() {
         return UUID.randomUUID().toString().split("-",0)[0];
     }
