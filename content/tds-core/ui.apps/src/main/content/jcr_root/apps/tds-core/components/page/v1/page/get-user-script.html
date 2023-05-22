@@ -1,5 +1,71 @@
-<script>
-    function resolveAcceptLanguage (language, country) {
+<script type="text/javascript">
+    const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+
+    let cachedUserData = null;
+    let cacheExpiration = null;
+    const CACHE_DURATION = 600; // TODO: value should be configurable
+
+    async function getUserData() {
+        if (cachedUserData && Date.now() < cacheExpiration) {
+            console.log('Returning user data from local cache cacheExpiration = ' + new Date(cacheExpiration));
+            return cachedUserData;
+        }
+
+        try {
+            let userDataPromise = fetch(
+                "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
+                "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
+                "headers": {
+                    "accept": "application/json, text/plain, */*",
+                    "accept-language": headerInfo.acceptLanguage,
+                    "consumer": "AEM",
+                    "site": headerInfo.site,
+                    "traceid": new Date().toISOString()
+                },
+                "body": null,
+                "method": "GET",
+                "credentials": "include"
+            });
+
+            const response = await userDataPromise;
+
+            if (response.ok) {
+                const data = await response.json();
+                cachedUserData = data.content.user;
+                cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+                return cachedUserData;
+            } else {
+                console.log('HTTP-Error: ' + response.status);
+                throw (new Error(response.status));
+            }
+        }
+        catch (error) {
+            console.log('Exception while getting user data: ' + error);
+            throw (new Error(401));
+        }
+
+        throw (new Error(401));
+    }
+
+    async function getSessionInfo() {
+        let isLoggedIn;
+        let userData;
+
+        let data;
+
+        try {
+            data = await getUserData();
+        } catch (error) {
+            data = null;
+        }
+
+        isLoggedIn = !!data;
+        userData = data;
+
+        return [isLoggedIn, userData];
+    }
+
+    function resolveAcceptLanguage(language, country) {
         const collectiveCountry = country === 'UK' ? 'GB' : country;
         return language + '-' + collectiveCountry;
     }
@@ -20,83 +86,5 @@
             site: country,
             acceptLanguage: resolveAcceptLanguage(language, country)
         };
-    }
-
-    const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-
-    let userDataPromise = null;
-    let cachedUserData = null;
-    let cachedResponseStatus = null;
-    let cacheExpiration = null;
-    const CACHE_DURATION = 600;
-
-    async function getUserData() {
-        if ((cachedUserData || !!cachedResponseStatus) && Date.now() < cacheExpiration) {
-            if (cachedResponseStatus === 401) {
-                throw(new Error(401));
-            }
-
-            return cachedUserData;
-        }
-
-        if (userDataPromise) {
-            return await userDataPromise;
-        }
-
-        try {
-            userDataPromise = fetch(
-                "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
-                "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
-                "headers": {
-                    "accept": "application/json, text/plain, */*",
-                    "accept-language": headerInfo.acceptLanguage,
-                    "consumer": "AEM",
-                    "site": headerInfo.site,
-                    "traceid": new Date().toISOString()
-                },
-                "body": null,
-                "method": "GET",
-                "credentials": "include"
-            });
-
-            const response = await userDataPromise;
-            cachedResponseStatus = response.status;
-            cacheExpiration = Date.now() + CACHE_DURATION * 1000;
-
-            if (response.ok) {
-                const data = await response.json();
-                cachedUserData = data.content.user;
-                return cachedUserData;
-            } else {
-                console.log('HTTP-Error: ' + response.status);
-                throw(new Error(response.status));
-            }
-        }
-        catch (error) {
-            throw(new Error(401));
-        }
-        finally {
-            userDataPromise = null;
-        }
-
-        return null;
-    }
-
-    async function getSessionInfo() {
-        let isLoggedIn;
-        let userData;
-
-        let  data;
-
-        try {
-            data = await getUserData();
-        } catch (error) {
-            data = null;
-        }
-
-        isLoggedIn = !!data;
-        userData = data;
-
-        return [isLoggedIn, userData];
     }
 </script>

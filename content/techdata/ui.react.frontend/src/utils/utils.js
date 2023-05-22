@@ -355,7 +355,6 @@ window.onload = function () {
     if (localStorage.getItem('sessionId') !== null) {
         document.getElementsByClassName('basicpage')[0].setAttribute('style', '');
     }
-
 }
 
 // START OF HEADER/FOOTER
@@ -363,6 +362,8 @@ window.onload = function () {
 // TODO: it should be moved from here
 const checkIntouchUser = (loadend) => {
     const url = intouchUserCheckAPIUrl();
+    if (!url) return;
+
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url + window.location.href);
     xhr.setRequestHeader('content-type', 'application/json');
