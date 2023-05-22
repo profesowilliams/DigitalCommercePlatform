@@ -35,6 +35,7 @@ import {
   addCurrentPageNumber,
   compareSort,
   getFilterFlyoutPredefined,
+  getFilterFlyoutCustomized,
 } from './utils/orderTrackingUtils';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
@@ -97,7 +98,24 @@ function OrdersTrackingGrid(props) {
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const { searchOptionsList, icons, reportPillLabel } = componentProp;
+  const {
+    searchOptionsList,
+    icons,
+    reportPillLabel,    
+    filterTitle,
+    showResultLabel,
+    filterListValues,
+    dateOptionsList,
+  } = componentProp;
+
+  const filterAEM = {
+    filterTitle,
+    showResults: showResultLabel,
+  };
+
+  const customFilters = getFilterFlyoutCustomized(dateOptionsList, filterListValues);
+  console.log("customFilters", customFilters, "filterListValues", filterListValues, "dateOptionsList", dateOptionsList); // forgive me for this console.log, I really need it  
+
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
@@ -486,7 +504,7 @@ function OrdersTrackingGrid(props) {
         onQueryChanged={onQueryChanged}
         filtersRefs={filtersRefs}
         isTDSynnex={isTDSynnex}
-        aemData={componentProp}
+        aemData={filterAEM}
       />
     </div>
   );

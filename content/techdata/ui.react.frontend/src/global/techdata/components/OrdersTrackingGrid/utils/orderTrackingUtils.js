@@ -476,3 +476,35 @@ export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) =
     ],
   },
 ];
+
+export const getFilterFlyoutCustomized = (
+  dateOptionsList,
+  filterListValues
+) => {
+  let customizedFilters = [];
+  if (dateOptionsList) {
+    customizedFilters.push(
+      dateOptionsList.map((date, index) => ({
+        id: index,
+        accordionLabel: date.itemData.label,
+        filterField: date.itemData.label,
+        open: false,
+      }))
+    );
+  }
+  if (filterListValues) {
+    customizedFilters.push(
+      filterListValues.map((filter, index) => ({
+        id: index,
+        filterOptionLabel: filter.accordionLabel,
+        filterOptionKey: filter.filterField,
+        group: 'custom',
+        filterOptionsValues: filter.filterOptionsValues.map((value) => ({
+          label: value.filterOptionLabel,
+          key: value.filterOptionKey,
+        })),
+      }))
+    );
+  }
+  return customizedFilters;
+};

@@ -297,11 +297,6 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Filter Title"
                                                 name="./filterTitle" />
-                                            <clearallFilter
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Clear All Filter Title"
-                                                name="./clearAllFilterTitle" />
                                             <showresultbtn
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -405,30 +400,20 @@
                                                                         name="./filtersOptionsList">
                                                                         <items
                                                                             jcr:primaryType="nt:unstructured">
-                                                                            <title
+                                                                            <columnLabel
                                                                                 jcr:primaryType="nt:unstructured"
                                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                                fieldDescription="Filter Option Label"
                                                                                 fieldLabel="Filter Option Label"
-                                                                                name="./filterOptionLabel" />
-                                                                            <subfiltersOptions
+                                                                                name="./filterOptionLabel"
+                                                                                required="{Boolean}true" />
+                                                                            <columnKey
                                                                                 jcr:primaryType="nt:unstructured"
-                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                                                                composite="{Boolean}true"
-                                                                                fieldLabel="Sub Filter Options">
-                                                                                <field
-                                                                                    jcr:primaryType="nt:unstructured"
-                                                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                                                    name="./subFilterOptionList">
-                                                                                    <items
-                                                                                        jcr:primaryType="nt:unstructured">
-                                                                                        <options
-                                                                                            jcr:primaryType="nt:unstructured"
-                                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                                                            fieldLabel="Option Label"
-                                                                                            name="./subFilterOptionsLabel" />
-                                                                                    </items>
-                                                                                </field>
-                                                                            </subfiltersOptions>
+                                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                                fieldDescription="Filter Option Key"
+                                                                                fieldLabel="Filter Option Key"
+                                                                                name="./filterOptionKey"
+                                                                                required="{Boolean}true" />
                                                                         </items>
                                                                     </field>
                                                                 </filtersOptions>
