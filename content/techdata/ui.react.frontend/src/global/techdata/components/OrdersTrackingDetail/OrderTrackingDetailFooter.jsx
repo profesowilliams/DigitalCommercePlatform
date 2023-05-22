@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
-import { useStore } from '../../../../utils/useStore';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
-import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";
+import {
+  isExtraReloadDisabled,
+  isHttpOnlyEnabled,
+} from '../../../../utils/featureFlagUtils';
 
 //TODO: Add or delete the left part of footer
 const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
-  const userData = useStore((state) => state.userData);
+  const [userData, setUserData] = useState(null);
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
     : null;
@@ -14,8 +16,15 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
     isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
   const activeCustomer = currentUserData?.activeCustomer;
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
-  const currency = apiResponse?.content?.currency;
+  const currency = apiResponse?.content?.paymentDetails?.currency;
   const multiplePages = apiResponse?.content?.items.length > 25;
+  useEffect(() => {
+    window.getSessionInfo &&
+      window.getSessionInfo().then((data) => {
+        setUserData(data[1]);
+      });
+  }, []);
+
   return (
     <div className="box-container">
       <div className="box-container__leftPart">
@@ -37,7 +46,8 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
               )}: `}
         </span>
         <span className="box-container__rightPart-subtotalValue">
-          {apiResponse?.content?.totalCharge} {currency ?? defaultCurrency}
+          {apiResponse?.content?.paymentDetails?.totalChargeFormatted}
+          {currency ?? defaultCurrency}
         </span>
       </div>
     </div>

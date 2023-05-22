@@ -58,7 +58,7 @@ app.use(function (req, res, next) {
   //intercepts OPTIONS method
   if ("OPTIONS" === req.method) {
     //respond with 200
-    res.send(200);
+    res.sendStatus(200);
   } else {
     //move on
     next();
@@ -94,8 +94,7 @@ app.post("/auth", function (req, res) {
         httpOnly: true,
       });
       res.redirect(redirect);
-    }
-    else {
+    } else {
       res.redirect(redirect + queryStringAppend + "code=" + codeValue);
     }
   } else {
@@ -260,10 +259,10 @@ app.post("/ui-account/v1/logout", function (req, res) {
   //console.log(errorPage);
   console.log(redirectUrl);
 
-  if(isHttpOnlyEnabled){
+  if (isHttpOnlyEnabled) {
     res.clearCookie(SESSION_COOKIE);
   }
-    
+
   let resJsonSuccess = {
     content: {
       message: "User logged out successfully",
@@ -316,7 +315,7 @@ app.options("/*", function (req, res, next) {
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization, Content-Length, X-Requested-With"
   );
-  res.send(200);
+  res.sendStatus(200);
 });
 
 app.listen(port, () => {
@@ -3667,7 +3666,7 @@ app.get("/ui-config/v1/configurations", function (req, res) {
   }
 
   if (flag) {
-    res.status(400).send({
+    res.status(400).sendStatus({
       errors: {
         ConfigurationType: [
           "The value 'Deal' is not valid for ConfigurationType.",
@@ -4519,418 +4518,421 @@ app.get("/ui-account/v1/topActions", function (req, res) {
 app.get("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
   const response = {
-    "content": {
-        "details": [
-            {
-                "source": {
-                    "salesOrg": "IN96",
-                    "targetSystem": "R3",
-                    "key": "U100000001953",
-                    "system": "RQ",
-                    "type": null,
-                    "id": "U100000001953"
+    content: {
+      details: [
+        {
+          source: {
+            salesOrg: "IN96",
+            targetSystem: "R3",
+            key: "U100000001953",
+            system: "RQ",
+            type: null,
+            id: "U100000001953",
+          },
+          published: "2023-04-27T07:32:04.307Z",
+          reseller: {
+            id: "93245",
+            isValid: false,
+            canEdit: true,
+            incumbent: false,
+            vendorAccountName: null,
+            vendorAccountNumber: {
+              text: "13188679",
+              isValid: true,
+              isMandatory: false,
+              isDisplay: true,
+              canEdit: false,
+              allowedLength: 100000,
+            },
+            name: "Fore Solutions (P) Ltd",
+            nameUpper: "FORE SOLUTIONS (P) LTD",
+            contact: [
+              {
+                name: {
+                  text: "test user",
+                  isValid: true,
+                  isMandatory: true,
+                  isDisplay: true,
+                  canEdit: true,
+                  allowedLength: 40,
                 },
-                "published": "2023-04-27T07:32:04.307Z",
-                "reseller": {
-                    "id": "93245",
-                    "isValid": false,
-                    "canEdit": true,
-                    "incumbent": false,
-                    "vendorAccountName": null,
-                    "vendorAccountNumber": {
-                        "text": "13188679",
-                        "isValid": true,
-                        "isMandatory": false,
-                        "isDisplay": true,
-                        "canEdit": false,
-                        "allowedLength": 100000
-                    },
-                    "name": "Fore Solutions (P) Ltd",
-                    "nameUpper": "FORE SOLUTIONS (P) LTD",
-                    "contact": [
-                        {
-                            "name": {
-                                "text": "test user",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 40
-                            },
-                            "email": {
-                                "text": "john.doe@mail.com",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 120
-                            },
-                            "phone": {
-                                "text": "1234567890",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 30
-                            }
-                        }
-                    ],
-                    "address": {
-                        "id": null,
-                        "line1": "skipper house, 3rd floor, 62-63 ",
-                        "line2": "Nehru Place",
-                        "line3": null,
-                        "city": "new delhi",
-                        "state": "30",
-                        "postalCode": "110019",
-                        "country": "IN",
-                        "county": null,
-                        "countryCode": "IN",
-                        "stateName": null
-                    }
+                email: {
+                  text: "john.doe@mail.com",
+                  isValid: true,
+                  isMandatory: true,
+                  isDisplay: true,
+                  canEdit: true,
+                  allowedLength: 120,
                 },
-                "endUser": {
-                    "id": null,
-                    "isValid": true,
-                    "canEdit": true,
-                    "name": {
-                        "text": "TechData",
-                        "isValid": true,
-                        "isMandatory": true,
-                        "isDisplay": true,
-                        "canEdit": true,
-                        "allowedLength": 40
-                    },
-                    "nameUpper": "TECHDATA",
-                    "eaNumber": {
-                        "text": "345061542",
-                        "isValid": true,
-                        "isMandatory": true,
-                        "isDisplay": true,
-                        "canEdit": true,
-                        "allowedLength": 40
-                    },
-                    "contact": [
-                        {
-                            "name": {
-                                "text": "Sean Timothy",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 40
-                            },
-                            "email": {
-                                "text": "test@mail.com",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 120
-                            },
-                            "phone": {
-                                "text": "1111567890",
-                                "isValid": true,
-                                "isMandatory": true,
-                                "isDisplay": true,
-                                "canEdit": true,
-                                "allowedLength": 30
-                            }
-                        }
-                    ],
-                    "address": {
-                        "id": null,
-                        "line1": {
-                            "text": "G1,Neel Kanth,Enclave",
-                            "isValid": true,
-                            "isMandatory": true,
-                            "isDisplay": true,
-                            "canEdit": true,
-                            "allowedLength": 40
-                        },
-                        "line2": {
-                            "text": "Logodrome, Bldng No. B4, Padgha-",
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": true,
-                            "canEdit": true,
-                            "allowedLength": 40
-                        },
-                        "line3": {
-                            "text": null,
-                            "isValid": true,
-                            "isMandatory": false,
-                            "isDisplay": false,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "city": {
-                            "text": "Delhi",
-                            "isValid": true,
-                            "isMandatory": true,
-                            "isDisplay": true,
-                            "canEdit": true,
-                            "allowedLength": 40
-                        },
-                        "state": null,
-                        "postalCode": {
-                            "text": "110092",
-                            "isValid": true,
-                            "isMandatory": true,
-                            "isDisplay": true,
-                            "canEdit": true,
-                            "allowedLength": 10
-                        },
-                        "country": {
-                            "text": "India",
-                            "isValid": true,
-                            "isMandatory": true,
-                            "isDisplay": true,
-                            "canEdit": false,
-                            "allowedLength": 100000
-                        },
-                        "county": null,
-                        "countryCode": {
-                            "text": "IN",
-                            "isValid": true,
-                            "isMandatory": true,
-                            "isDisplay": true,
-                            "canEdit": true,
-                            "allowedLength": 100000
-                        }
-                    }
+                phone: {
+                  text: "1234567890",
+                  isValid: true,
+                  isMandatory: true,
+                  isDisplay: true,
+                  canEdit: true,
+                  allowedLength: 30,
                 },
-                "shipTo": {
-                    "id": {
-                        "text": "0000179854",
-                        "isValid": true,
-                        "isMandatory": true,
-                        "isDisplay": true,
-                        "canEdit": true,
-                        "allowedLength": 10
-                    },
-                    "name": "Primetalsï¿½Technologies India",
-                    "nameUpper": "",
-                    "contact": [],
-                    "address": {
-                        "id": null,
-                        "line1": "C/O RASHTRIYA ISPAT NIGAM LTD VISAKHAPATNAM ",
-                        "line2": "Project Office, D-Block,",
-                        "line3": null,
-                        "address1": null,
-                        "address2": null,
-                        "address3": null,
-                        "city": "Andhra Pradesh",
-                        "state": "01",
-                        "stateName": "Andra Pradesh",
-                        "postalCode": "9874-667",
-                        "country": null,
-                        "county": null,
-                        "countryCode": "IN"
-                    },
-                    "alternateIdentifier": null
+              },
+            ],
+            address: {
+              id: null,
+              line1: "skipper house, 3rd floor, 62-63 ",
+              line2: "Nehru Place",
+              line3: null,
+              city: "new delhi",
+              state: "30",
+              postalCode: "110019",
+              country: "IN",
+              county: null,
+              countryCode: "IN",
+              stateName: null,
+            },
+          },
+          endUser: {
+            id: null,
+            isValid: true,
+            canEdit: true,
+            name: {
+              text: "TechData",
+              isValid: true,
+              isMandatory: true,
+              isDisplay: true,
+              canEdit: true,
+              allowedLength: 40,
+            },
+            nameUpper: "TECHDATA",
+            eaNumber: {
+              text: "345061542",
+              isValid: true,
+              isMandatory: true,
+              isDisplay: true,
+              canEdit: true,
+              allowedLength: 40,
+            },
+            contact: [
+              {
+                name: {
+                  text: "Sean Timothy",
+                  isValid: true,
+                  isMandatory: true,
+                  isDisplay: true,
+                  canEdit: true,
+                  allowedLength: 40,
                 },
-                "alternateIdentifier": null,
-                "vendorSalesRep": null,
-                "vendorSalesAssociate": null,
-                "items": [
-                    {
-                        "id": "1",
-                        "group": null,
-                        "solution": null,
-                        "parent": null,
-                        "product": [
-                            {
-                                "type": "TECHDATA",
-                                "id": "VMNXDCADVPSSSC",
-                                "name": null,
-                                "manufacturer": null,
-                                "manufacturerId": null,
-                                "localManufacturer": null,
-                                "classification": null,
-                                "family": "NSX"
-                            },
-                            {
-                                "type": "MANUFACTURER",
-                                "id": "NX-DC-ADV-P-SSS-C",
-                                "name": "Production Support/Subscription for VMware NSX Data Center Advanced per Processor for 3 year 3 months",
-                                "manufacturer": "VMware",
-                                "manufacturerId": "21",
-                                "localManufacturer": null,
-                                "classification": null,
-                                "family": null
-                            }
-                        ],
-                        "quantity": 16,
-                        "confirmedQuantity": 0,
-                        "contractNumber": null,
-                        "contractType": null,
-                        "license": null,
-                        "references": [],
-                        "status": null,
-                        "statusNotes": null,
-                        "updated": "0001-01-01T00:00:00",
-                        "unitPrice": 118047.16,
-                        "unitCost": 1359.9,
-                        "totalPrice": 1888754.56,
-                        "unitListPrice": 123775.53,
-                        "unitPriceCurrency": "INR",
-                        "unitCostCurrency": "USD",
-                        "unitListPriceCurrency": "INR",
-                        "extendedListPrice": 0,
-                        "requested": "0001-01-01T00:00:00",
-                        "shippingCondition": null,
-                        "shippingFrom": null,
-                        "businessManager": null,
-                        "divisionManager": null,
-                        "director": null,
-                        "rejectionCode": null,
-                        "rejectionDescription": null,
-                        "femAmount": 0,
-                        "pomAmount": 0,
-                        "samAmount": 0,
-                        "nsmAmount": 0,
-                        "femPercentage": 0,
-                        "pomPercentage": 0,
-                        "samPercentage": 0,
-                        "nsmPercentage": 0,
-                        "agreements": [],
-                        "attributes": [],
-                        "dealRegNumber": null,
-                        "reinstatementFeeCost": null,
-                        "reinstatementFeeSell": null,
-                        "serialNumbers": [
-                            null
-                        ],
-                        "instance": "172937681",
-                        "discounts": [
-                            {
-                                "type": "Standard",
-                                "value": "4.63"
-                            }
-                        ],
-                        "contract": {
-                            "id": "465440507MN",
-                            "duration": null,
-                            "renewedDuration": "1 Year",
-                            "startDate": "2021-12-24T00:00:00Z",
-                            "endDate": "2022-12-23T00:00:00Z",
-                            "newAgreementStartDate": "2022-12-24T00:00:00Z",
-                            "newAgreementEndDate": "2023-12-23T00:00:00Z",
-                            "newUsagePeriodStartDate": null,
-                            "newUsagePeriodEndDate": null,
-                            "supportLevel": null,
-                            "serviceLevel": "Production",
-                            "usagePeriod": null,
-                            "formattedStartDate": "24-12-2021",
-                            "formattedEndDate": "23-12-2022",
-                            "formattedNewAgreementStartDate": "24-12-2022",
-                            "formattedNewAgreementEndDate": "23-12-2023",
-                            "formattedNewUsagePeriodStartDate": null,
-                            "formattedNewUsagePeriodEndDate": null,
-                            "formattedUsagePeriod": null
-                        },
-                        "tdNumber": null,
-                        "mfrNumber": null,
-                        "shortDescription": null,
-                        "manufacturer": null,
-                        "vendorPartNo": null,
-                        "formattedUpdated": null,
-                        "formattedRequested": null
-                    }
-                ],
-                "attributes": [],
-                "programName": "Standard",
-                "quoteCurrent": true,
-                "firstAvailableOrderDate": "2023-04-27T00:00:00Z",
-                "lastOrderDate": "2023-12-26T00:00:00Z",
-                "statusText": "Ordered",
-                "amountSaved": 0,
-                "linkedRenewals": [],
-                "renewalGroupId": "null",
-                "dueDate": "2022-12-23T00:00:00Z",
-                "totalReinstatementFeeCost": null,
-                "totalReinstatementFeeSell": null,
-                "endUserType": "Commercial",
-                "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-vmware.svg",
-                "previousEndUserPO": null,
-                "previousResellerPO": null,
-                "isValid": false,
-                "canOrder": false,
-                "canEditQty": false,
-                "canEditResellerPrice": true,
-                "canEditLines": true,
-                "canCopy": true,
-                "customerPO": {
-                    "text": "test po",
-                    "isValid": true,
-                    "isMandatory": false,
-                    "isDisplay": true,
-                    "canEdit": true,
-                    "allowedLength": 25
+                email: {
+                  text: "test@mail.com",
+                  isValid: true,
+                  isMandatory: true,
+                  isDisplay: true,
+                  canEdit: true,
+                  allowedLength: 120,
                 },
-                "formattedPublished": "27-04-2023",
-                "formattedFirstAvailableOrderDate": "27-04-2023",
-                "formattedLastOrderDate": "26-12-2023",
-                "formattedDueDate": "23-12-2022",
-                "formattedCreated": "27-04-2023",
-                "formattedUpdated": "27-04-2023",
-                "formattedExpiry": "23-12-2023",
-                "revision": 1,
-                "subRevision": 0,
-                "description": null,
-                "activeFlag": "Y",
-                "request": null,
-                "endUserPO": null,
-                "price": 1888754.56,
-                "currency": "INR",
-                "documentType": null,
-                "quoteType": "Renewal",
-                "type": null,
-                "level": null,
-                "creator": null,
-                "created": "2023-04-27T07:32:04.307Z",
-                "updated": "2023-04-27T07:32:07.257Z",
-                "expiry": "2023-12-23T00:00:00Z",
-                "status": "CLSD",
-                "statusNotes": null,
-                "accountOwner": null,
-                "orders": [],
-                "vendorReference": [
-                    {
-                        "type": "QuoteId",
-                        "value": "465440507MN-R:1C:23AUG22 00:30:58"
-                    }
-                ],
-                "salesTeam": null,
-                "salesArea": null,
-                "superSalesArea": null,
-                "lastUpdatedBy": null,
-                "femAmount": 0,
-                "pomAmount": 0,
-                "samAmount": 0,
-                "nsmAmount": 0,
-                "femPercentage": 0,
-                "pomPercentage": 0,
-                "samPercentage": 0,
-                "nsmPercentage": 0
-            }
-        ]
+                phone: {
+                  text: "1111567890",
+                  isValid: true,
+                  isMandatory: true,
+                  isDisplay: true,
+                  canEdit: true,
+                  allowedLength: 30,
+                },
+              },
+            ],
+            address: {
+              id: null,
+              line1: {
+                text: "G1,Neel Kanth,Enclave",
+                isValid: true,
+                isMandatory: true,
+                isDisplay: true,
+                canEdit: true,
+                allowedLength: 40,
+              },
+              line2: {
+                text: "Logodrome, Bldng No. B4, Padgha-",
+                isValid: true,
+                isMandatory: false,
+                isDisplay: true,
+                canEdit: true,
+                allowedLength: 40,
+              },
+              line3: {
+                text: null,
+                isValid: true,
+                isMandatory: false,
+                isDisplay: false,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              city: {
+                text: "Delhi",
+                isValid: true,
+                isMandatory: true,
+                isDisplay: true,
+                canEdit: true,
+                allowedLength: 40,
+              },
+              state: null,
+              postalCode: {
+                text: "110092",
+                isValid: true,
+                isMandatory: true,
+                isDisplay: true,
+                canEdit: true,
+                allowedLength: 10,
+              },
+              country: {
+                text: "India",
+                isValid: true,
+                isMandatory: true,
+                isDisplay: true,
+                canEdit: false,
+                allowedLength: 100000,
+              },
+              county: null,
+              countryCode: {
+                text: "IN",
+                isValid: true,
+                isMandatory: true,
+                isDisplay: true,
+                canEdit: true,
+                allowedLength: 100000,
+              },
+            },
+          },
+          
+          "shipTo": {
+              "id": {
+                  "text": "0000179854",
+                  "isValid": true,
+                  "isMandatory": true,
+                  "isDisplay": true,
+                  "canEdit": true,
+                  "allowedLength": 10
+              },
+              "name": "Primetalsï¿½Technologies India",
+              "nameUpper": "",
+              "contact": [],
+              "address": {
+                  "id": null,
+                  "line1": "C/O RASHTRIYA ISPAT NIGAM LTD VISAKHAPATNAM ",
+                  "line2": "Project Office, D-Block,",
+                  "line3": null,
+                  "address1": null,
+                  "address2": null,
+                  "address3": null,
+                  "city": "Andhra Pradesh",
+                  "state": "01",
+                  "stateName": "Andra Pradesh",
+                  "postalCode": "9874-667",
+                  "country": null,
+                  "county": null,
+                  "countryCode": "IN"
+              },
+              "alternateIdentifier": null
+          },
+          "alternateIdentifier": null,
+          "vendorSalesRep": null,
+          "vendorSalesAssociate": null,
+          "items": [
+              {
+                  "id": "1",
+                  "group": null,
+                  "solution": null,
+                  "parent": null,
+                  "product": [
+                      {
+                          "type": "TECHDATA",
+                          "id": "VMNXDCADVPSSSC",
+                          "name": null,
+                          "manufacturer": null,
+                          "manufacturerId": null,
+                          "localManufacturer": null,
+                          "classification": null,
+                          "family": "NSX"
+                      },
+                      {
+                          "type": "MANUFACTURER",
+                          "id": "NX-DC-ADV-P-SSS-C",
+                          "name": "Production Support/Subscription for VMware NSX Data Center Advanced per Processor for 3 year 3 months",
+                          "manufacturer": "VMware",
+                          "manufacturerId": "21",
+                          "localManufacturer": null,
+                          "classification": null,
+                          "family": null
+                      }
+                  ],
+                  "quantity": 16,
+                  "confirmedQuantity": 0,
+                  "contractNumber": null,
+                  "contractType": null,
+                  "license": null,
+                  "references": [],
+                  "status": null,
+                  "statusNotes": null,
+                  "updated": "0001-01-01T00:00:00",
+                  "unitPrice": 118047.16,
+                  "unitCost": 1359.9,
+                  "totalPrice": 1888754.56,
+                  "unitListPrice": 123775.53,
+                  "unitPriceCurrency": "INR",
+                  "unitCostCurrency": "USD",
+                  "unitListPriceCurrency": "INR",
+                  "extendedListPrice": 0,
+                  "requested": "0001-01-01T00:00:00",
+                  "shippingCondition": null,
+                  "shippingFrom": null,
+                  "businessManager": null,
+                  "divisionManager": null,
+                  "director": null,
+                  "rejectionCode": null,
+                  "rejectionDescription": null,
+                  "femAmount": 0,
+                  "pomAmount": 0,
+                  "samAmount": 0,
+                  "nsmAmount": 0,
+                  "femPercentage": 0,
+                  "pomPercentage": 0,
+                  "samPercentage": 0,
+                  "nsmPercentage": 0,
+                  "agreements": [],
+                  "attributes": [],
+                  "dealRegNumber": null,
+                  "reinstatementFeeCost": null,
+                  "reinstatementFeeSell": null,
+                  "serialNumbers": [
+                      null
+                  ],
+                  "instance": "172937681",
+                  "discounts": [
+                      {
+                          "type": "Standard",
+                          "value": "4.63"
+                      }
+                  ],
+                  "contract": {
+                      "id": "465440507MN",
+                      "duration": null,
+                      "renewedDuration": "1 Year",
+                      "startDate": "2021-12-24T00:00:00Z",
+                      "endDate": "2022-12-23T00:00:00Z",
+                      "newAgreementStartDate": "2022-12-24T00:00:00Z",
+                      "newAgreementEndDate": "2023-12-23T00:00:00Z",
+                      "newUsagePeriodStartDate": null,
+                      "newUsagePeriodEndDate": null,
+                      "supportLevel": null,
+                      "serviceLevel": "Production",
+                      "usagePeriod": null,
+                      "formattedStartDate": "24-12-2021",
+                      "formattedEndDate": "23-12-2022",
+                      "formattedNewAgreementStartDate": "24-12-2022",
+                      "formattedNewAgreementEndDate": "23-12-2023",
+                      "formattedNewUsagePeriodStartDate": null,
+                      "formattedNewUsagePeriodEndDate": null,
+                      "formattedUsagePeriod": null
+                  },
+                  "tdNumber": null,
+                  "mfrNumber": null,
+                  "shortDescription": null,
+                  "manufacturer": null,
+                  "vendorPartNo": null,
+                  "formattedUpdated": null,
+                  "formattedRequested": null
+              }
+          ],
+          "attributes": [],
+          "programName": "Standard",
+          "quoteCurrent": true,
+          "firstAvailableOrderDate": "2023-04-27T00:00:00Z",
+          "lastOrderDate": "2023-12-26T00:00:00Z",
+          "statusText": "Ordered",
+          "amountSaved": 0,
+          "linkedRenewals": [],
+          "renewalGroupId": "null",
+          "dueDate": "2022-12-23T00:00:00Z",
+          "totalReinstatementFeeCost": null,
+          "totalReinstatementFeeSell": null,
+          "endUserType": "Commercial",
+          "vendorLogo": "https://sit.dc.tdebusiness.cloud/content/dam/techdata/shared/vendors-logos/logo-vmware.svg",
+          "previousEndUserPO": null,
+          "previousResellerPO": null,
+          "isValid": false,
+          "canOrder": false,
+          "canEditQty": false,
+          "canEditResellerPrice": true,
+          "canEditLines": true,
+          "canCopy": true,
+          "customerPO": {
+              "text": "test po",
+              "isValid": true,
+              "isMandatory": false,
+              "isDisplay": true,
+              "canEdit": true,
+              "allowedLength": 25
+          },
+          "formattedPublished": "27-04-2023",
+          "formattedFirstAvailableOrderDate": "27-04-2023",
+          "formattedLastOrderDate": "26-12-2023",
+          "formattedDueDate": "23-12-2022",
+          "formattedCreated": "27-04-2023",
+          "formattedUpdated": "27-04-2023",
+          "formattedExpiry": "23-12-2023",
+          "revision": 1,
+          "subRevision": 0,
+          "description": null,
+          "activeFlag": "Y",
+          "request": null,
+          "endUserPO": null,
+          "price": 1888754.56,
+          "currency": "INR",
+          "documentType": null,
+          "quoteType": "Renewal",
+          "type": null,
+          "level": null,
+          "creator": null,
+          "created": "2023-04-27T07:32:04.307Z",
+          "updated": "2023-04-27T07:32:07.257Z",
+          "expiry": "2023-12-23T00:00:00Z",
+          "status": "CLSD",
+          "statusNotes": null,
+          "accountOwner": null,
+          "orders": [],
+          "vendorReference": [
+              {
+                  "type": "QuoteId",
+                  "value": "465440507MN-R:1C:23AUG22 00:30:58"
+              }
+          ],
+          "salesTeam": null,
+          "salesArea": null,
+          "superSalesArea": null,
+          "lastUpdatedBy": null,
+          "femAmount": 0,
+          "pomAmount": 0,
+          "samAmount": 0,
+          "nsmAmount": 0,
+          "femPercentage": 0,
+          "pomPercentage": 0,
+          "samPercentage": 0,
+          "nsmPercentage": 0
+        }
+      ]
     },
-    "error": {
-        "code": 0,
-        "messages": [],
-        "isError": false
-    }
-}
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
   res.json(response);
 });
 
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
   res.json({
-    "details.common.validation.invalidEmail": "Enter a valid email address. For example, name@email.com",
+    "details.common.validation.invalidEmail":
+      "Enter a valid email address. For example, name@email.com",
     "details.common.validation.requiredField": "This is a required field.",
-    "details.common.validation.requiredFieldMaxChars": "This is a required field, max {max-length} characters.",
+    "details.common.validation.requiredFieldMaxChars":
+      "This is a required field, max {max-length} characters.",
     "details.common.validation.maxLength": "Max {max-length} characters.",
     "button.common.label.save": "Save",
     "button.common.label.cancel": "Cancel",
@@ -4953,7 +4955,6 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "techdata.grids.message.error.500": "Into the unknown - 500 From i18n",
     "techdata.quotes.message.uanError":
       "You have reached your qty limit on the below products. Please contact your Cisco Sales Rep for further assistance.",
-
 
     "details.renewal.label.agreement": "Agreement",
     "details.renewal.label.endUser": "End user",
@@ -4982,7 +4983,7 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "details.renewal.label.usageDuration": "Usage Duration",
     "details.renewal.label.reseller": "Reseller",
     "button.common.label.downloadPDF": "Download PDF",
-    "button.common.label.downloadXLS": "Download XLS", 
+    "button.common.label.downloadXLS": "Download XLS",
     "details.renewal.label.endUserMissingInfo": "End user missing information",
     "details.renewal.label.resellerMissingInfo": "Reseller missing information",
     "details.renewal.label.subtotal": "Quote Subtotal",
@@ -4997,15 +4998,15 @@ app.get("/libs/cq/i18n/dictionary", function (req, res) {
     "grids.common.label.filter": "Filter",
     "grids.common.label.filterTitle": "Filters",
     "grids.common.label.clearAllFilters": "Clear all filters",
-    "grids.common.label.filterOverdue":"Overdue",
-    "grids.common.label.filterToday":"Today",
-    "grids.common.label.filterRange1":"0-30 days",
-    "grids.common.label.filterRange2":"31 - 60 days",
-    "grids.common.label.filterRange3":"61 - 90 days",
-    "grids.common.label.filterRange4":"90+ days",
-    "grids.common.label.filterCustom":"Custom date range",
+    "grids.common.label.filterOverdue": "Overdue",
+    "grids.common.label.filterToday": "Today",
+    "grids.common.label.filterRange1": "0-30 days",
+    "grids.common.label.filterRange2": "31 - 60 days",
+    "grids.common.label.filterRange3": "61 - 90 days",
+    "grids.common.label.filterRange4": "90+ days",
+    "grids.common.label.filterCustom": "Custom date range",
     "grids.common.label.filterSearch": "Show results",
-    "grids.common.label.filterDate": "Date"
+    "grids.common.label.filterDate": "Date",
   });
 });
 
@@ -5167,7 +5168,16 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
     },
   };
 
-  const fail = {"content":null,"error":{"code":400,"messages":["Error connecting to http://app-customer/v1/Lookup. Reported an error: BadRequest."],"isError":true}}
+  const fail = {
+    content: null,
+    error: {
+      code: 400,
+      messages: [
+        "Error connecting to http://app-customer/v1/Lookup. Reported an error: BadRequest.",
+      ],
+      isError: true,
+    },
+  };
 
   return res.status(200).json(resellerId.includes("err") ? fail : success);
 });
@@ -5179,23 +5189,25 @@ app.get("/ui-renewal/v1/SearchCheck", (req, res) => {
   console.log("SearchCheck", ResellerId, req.query);
 
   const empty = {
-    "content": {
-      "totalItems": 0,
-      "pageCount": 0,
-      "pageNumber": 0,
-      "pageSize": 0,
-      "items": []
+    content: {
+      totalItems: 0,
+      pageCount: 0,
+      pageNumber: 0,
+      pageSize: 0,
+      items: [],
     },
-    "error": {
-      "code": 0,
-      "messages": [],
-      "isError": false
-    }
-  }
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
   //mockResponses.failedResponse
 
-  return res.status(ResellerId === "123456" ? 204 : 200).json(ResellerId === "123456" ? empty : response);
+  return res
+    .status(ResellerId === "123456" ? 204 : 200)
+    .json(ResellerId === "123456" ? empty : response);
 });
 
 app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
@@ -5213,16 +5225,14 @@ app.post("/ui-renewal/v1/CopyQuote", function (req, res) {
   };
 
   const notFound = {
-    "content": {
-      "status": "NotOK"
+    content: {
+      status: "NotOK",
     },
-    "error": {
-      "code": 404,
-      "messages": [
-          "Reseller not found"
-      ],
-      "isError": true
-    }
+    error: {
+      code: 404,
+      messages: ["Reseller not found"],
+      isError: true,
+    },
   };
 
   //mockResponses.failedResponse
@@ -11508,12 +11518,13 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
 app.get("/ui-commerce/v2/order", (req, res) => {
   const response = {
     content: {
-      currency: "EUR",
-      docType: "Third Party",
+      docType: "ZZIT",
       reseller: {
         id: "0038000315",
+        contactEmail: null,
+        name: "Tech Data Limited",
+        phoneNumber: "01782 567 951",
       },
-      totalCharge: "888,888,888,888.00",
       shipTo: {
         id: null,
         companyName: "My Co Name",
@@ -11547,6 +11558,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         freight: 0,
         otherFees: 0,
         total: 383.78,
+        totalCharge: 9.48,
+        totalChargeFormatted: "9.48",
       },
       customer: "Tech Data Limited",
       items: [
