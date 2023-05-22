@@ -36,7 +36,7 @@ const userMenu = (props) => {
           <p>{props.email}</p>
           <p>{props.phone}</p>
           <button className='cmp-sign-in-signout' onClick={onSignOut}>
-            Log Out
+            Sign Out
           </button>
         </div>
         : ''

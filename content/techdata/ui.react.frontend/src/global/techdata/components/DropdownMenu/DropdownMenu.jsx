@@ -301,7 +301,7 @@ const DropdownMenu = ({ items, userDataCheck, config, dropDownData }) => {
                 handleKeyDown({e});
               }}
             >
-              Log Out
+              Sign Out
             </button>
           </>
         ) : (
