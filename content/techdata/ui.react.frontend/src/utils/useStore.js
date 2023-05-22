@@ -10,7 +10,7 @@ export const useStore = create((set) => ({
     set((state) => ({
       refreshRenewalDetailApi: !state.refreshRenewalDetailApi,
     })),
-  setUserData: () => {
-      set((state) => ({ userData: userData }));
+  setUserData: (userData) => {
+    set((state) => ({ userData: userData }));
   },
 }));

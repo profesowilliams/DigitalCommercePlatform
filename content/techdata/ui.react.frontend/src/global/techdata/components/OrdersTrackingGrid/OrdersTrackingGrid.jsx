@@ -379,6 +379,13 @@ function OrdersTrackingGrid(props) {
         setUserData(data[1]);
       });
   }, []);
+  useEffect(() => {
+    console.log('use effect window.getSessionInfo', window.getSessionInfo);
+    window.getSessionInfo &&
+      window.getSessionInfo().then((data) => {
+        console.log(data);
+      });
+  }, [window.getSessionInfo]);
   
   return (
     <div className="cmp-order-tracking-grid">
