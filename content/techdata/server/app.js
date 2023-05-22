@@ -11540,11 +11540,6 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         email: "johndoe@gmail.com",
         contactEmail: "johndoecontact@gmail.com",
         phoneNumber: 692454876,
-        contact: {
-          name: "TD SYNNEX Poland Sp. z o.o.",
-          phone: 225479200,
-          email: "intouch@tdsynnex.com",
-        },
       },
       endUser: [],
       paymentDetails: {

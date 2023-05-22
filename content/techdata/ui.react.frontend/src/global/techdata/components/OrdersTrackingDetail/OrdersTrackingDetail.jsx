@@ -20,42 +20,45 @@ function OrdersTrackingDetail(props) {
     };
     const [apiResponse] = useGet(`${config.uiServiceEndPoint}?id=${id}`);
     return (
-        <div className="cmp-quote-preview cmp-order-preview">
-            <section>
-                <div className="cmp-orders-qp__config-grid">
-                    <OrderTrackingDetailHeader
-                        config={config}
-                        apiResponse={apiResponse}
-                    />
-                    <div className="info-container">
-                        <SoldToCard
-                            soldTo={apiResponse?.content?.shipTo || {}}
-                            config={config}
-                        />
-                        <OrderAcknowledgementCard
-                            content={apiResponse?.content || {}}
-                            config={config}
-                        />
-                        <ContactCard content={apiResponse?.content || {}} config={config} />
-                    </div>
-                </div>
-                <div className="cmp-orders-qp__grid cmp-order-preview">
-                    <OrderTrackingContainer config={config} />
-                    {apiResponse && (
-                        <OrdersTrackingDetailGrid
-                            data={apiResponse.content}
-                            gridProps={config}
-                        />
-                    )}
-                </div>
-                <div className="footer-container">
-                    <OrderTrackingDetailFooter
-                        config={config}
-                        apiResponse={apiResponse}
-                    />
-                </div>
-            </section>
-        </div>
+      <div className="cmp-quote-preview cmp-order-preview">
+        <section>
+          <div className="cmp-orders-qp__config-grid">
+            <OrderTrackingDetailHeader
+              config={config}
+              apiResponse={apiResponse}
+            />
+            <div className="info-container">
+              <SoldToCard
+                shipTo={apiResponse?.content?.shipTo || {}}
+                config={config}
+              />
+              <OrderAcknowledgementCard
+                content={apiResponse?.content || {}}
+                config={config}
+              />
+              <ContactCard
+                content={apiResponse?.content || {}}
+                config={config}
+              />
+            </div>
+          </div>
+          <div className="cmp-orders-qp__grid cmp-order-preview">
+            <OrderTrackingContainer config={config} />
+            {apiResponse && (
+              <OrdersTrackingDetailGrid
+                data={apiResponse.content}
+                gridProps={config}
+              />
+            )}
+          </div>
+          <div className="footer-container">
+            <OrderTrackingDetailFooter
+              config={config}
+              apiResponse={apiResponse}
+            />
+          </div>
+        </section>
+      </div>
     );
 }
 export default OrdersTrackingDetail;

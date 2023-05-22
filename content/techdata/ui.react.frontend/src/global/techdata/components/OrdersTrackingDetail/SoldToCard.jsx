@@ -3,45 +3,45 @@ import Card from '@mui/material/Card';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function SoldToCard(props) {
-  const { soldTo, config } = props;
+  const { shipTo, config } = props;
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
         {getDictionaryValueOrKey(config?.labels?.detailsSoldTo)}
       </div>
       <div>
-        {soldTo.companyName && (
+        {shipTo.companyName && (
           <>
-            {soldTo.companyName}
+            {shipTo.companyName}
             <br />
           </>
         )}
-        {soldTo.line1 && (
+        {shipTo.line1 && (
           <>
-            {soldTo.line1}
+            {shipTo.line1}
             <br />
           </>
         )}
-        {soldTo.line2 && (
+        {shipTo.line2 && (
           <>
-            {soldTo.line2}
+            {shipTo.line2}
             <br />
           </>
         )}
-        {soldTo.city} {soldTo.state} {soldTo.postalCode} {soldTo.country}
+        {shipTo.city} {shipTo.state} {shipTo.postalCode} {shipTo.country}
       </div>
       <div className="card-container__bottom">
-        {soldTo.phoneNumber && (
+        {shipTo.phoneNumber && (
           <>
             {getDictionaryValueOrKey(config?.labels?.detailsSoldToPhone)}{' '}
-            {soldTo.phoneNumber}
+            {shipTo.phoneNumber}
             <br />
           </>
         )}
-        {soldTo.contactEmail && (
+        {shipTo.contactEmail && (
           <>
             {getDictionaryValueOrKey(config?.labels?.detailsSoldToEmail)}{' '}
-            {soldTo.contactEmail}
+            {shipTo.contactEmail}
           </>
         )}
       </div>
