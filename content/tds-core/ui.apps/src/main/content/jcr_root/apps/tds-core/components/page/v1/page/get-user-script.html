@@ -1,9 +1,26 @@
 <script type="text/javascript">
     const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-
+    let userDataPromise = null;
     let cachedUserData = null;
     let cacheExpiration = null;
     const CACHE_DURATION = 600; // TODO: value should be configurable
+
+    async function getSessionInfo() {
+        let isLoggedIn;
+        let userData;
+        let data;
+
+        try {
+            data = await getUserData();
+        } catch (error) {
+            data = null;
+        }
+
+        isLoggedIn = !!data;
+        userData = data;
+
+        return [isLoggedIn, userData];
+    }
 
     async function getUserData() {
         if (cachedUserData && Date.now() < cacheExpiration) {
@@ -11,8 +28,12 @@
             return cachedUserData;
         }
 
+        if (userDataPromise) {
+            return await userDataPromise;
+        }
+
         try {
-            let userDataPromise = fetch(
+            userDataPromise = fetch(
                 "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
                 "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
                 "headers": {
@@ -33,6 +54,7 @@
                 const data = await response.json();
                 cachedUserData = data.content.user;
                 cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+                console.log('Returned user data from API call');
                 return cachedUserData;
             } else {
                 console.log('HTTP-Error: ' + response.status);
@@ -45,24 +67,6 @@
         }
 
         throw (new Error(401));
-    }
-
-    async function getSessionInfo() {
-        let isLoggedIn;
-        let userData;
-
-        let data;
-
-        try {
-            data = await getUserData();
-        } catch (error) {
-            data = null;
-        }
-
-        isLoggedIn = !!data;
-        userData = data;
-
-        return [isLoggedIn, userData];
     }
 
     function resolveAcceptLanguage(language, country) {
