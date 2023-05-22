@@ -44,7 +44,7 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["multiple"] = properties["multiple"];
   }
 
-  //Export flyout options
+   //Export flyout options
   let exportOptionsList = utils.getDataFromMultifield(
     resourceResolver,
     "exportOptionsList",
@@ -83,8 +83,7 @@ use(["../common/utils.js"], function (utils) {
     exportFlyout.description = properties["exportFlyoutDescription"];
   }
   if (properties && properties["exportFlyoutSecondaryDescription"]) {
-    exportFlyout.secondaryDescription =
-      properties["exportFlyoutSecondaryDescription"];
+    exportFlyout.secondaryDscription = properties["exportFlyoutSecondaryDescription"];
   }
 
   if (properties && properties["exportFlyoutButton"]) {
@@ -185,8 +184,23 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
 
-  if (properties && properties["reportPillLabel"]) {
-    jsonObject["reportPillLabel"] = properties["reportPillLabel"];
+  if (properties && properties['reportPillLabel']) {
+    jsonObject['reportPillLabel'] = properties['reportPillLabel'];
+  }
+
+  let dateOptionValues = utils.getDataFromMultifield(
+    resourceResolver,
+    "dateOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.field = childResource.properties["field"];
+      return itemData;
+    }
+  );
+    
+  if (dateOptionValues != null) {
+    jsonObject["dateOptionValues"] = dateOptionValues;
   }
 
   //Search Options
@@ -258,6 +272,10 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["filterTitle"] = properties["filterTitle"];
   }
 
+  if (properties && properties["clearAllFilterTitle"]) {
+    jsonObject["clearAllFilterTitle"] = properties["clearAllFilterTitle"];
+  }
+
   if (properties && properties["showResultLabel"]) {
     jsonObject["showResultLabel"] = properties["showResultLabel"];
   }
@@ -294,23 +312,6 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["ofTextLabel"] = properties["ofTextLabel"];
   }
 
-  //Filter Options
-
-  let dateOptionValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "dateOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.label = childResource.properties["label"];
-      itemData.field = childResource.properties["field"];
-      return itemData;
-    }
-  );
-
-  if (dateOptionValues != null) {
-    jsonObject["dateOptionValues"] = dateOptionValues;
-  }
-
   if (properties && properties["filterType"]) {
     jsonObject["filterType"] = properties["filterType"];
   }
@@ -338,12 +339,26 @@ use(["../common/utils.js"], function (utils) {
       if (childNode != null) {
         itemData.filterOptionsValues = [];
         let childNodeList = childNode.getChildren();
-        for (let [childRes] in Iterator(childNodeList)) {
+        for (let [childkey, childRes] in Iterator(childNodeList)) {
           let childDataItem = {};
           let filterOptionLabel = childRes.properties["filterOptionLabel"];
-          let filterOptionKey = childRes.properties["filterOptionKey"];
           childDataItem.filterOptionLabel = filterOptionLabel;
-          childDataItem.filterOptionKey = filterOptionKey;
+          let subChildNode = resourceResolver.getResource(
+            childRes.getPath() + "/subFilterOptionList"
+          );
+
+          if (subChildNode != null) {
+            let subFilterOptionsValues = [];
+            let subChildNodeList = subChildNode.getChildren();
+
+            for (let [subChildKey, subChildRes] in Iterator(subChildNodeList)) {
+              let subChildDataItem = {};
+              subChildDataItem.subFilterOptionsLabel =
+                subChildRes.properties["subFilterOptionsLabel"];
+              subFilterOptionsValues.push(subChildDataItem);
+            }
+            childDataItem.subFilterOptionsValues = subFilterOptionsValues;
+          }
           itemData.filterOptionsValues.push(childDataItem);
         }
       }
