@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
 function OrderFilterTags({ filtersRefs }) {
+  const [showMore, setShowMore] = useState(false);
   const {
     setOrderStatusFiltersChecked,
     setOrderTypeFiltersChecked,
@@ -18,6 +19,10 @@ function OrderFilterTags({ filtersRefs }) {
     (state) => state.dateRangeFiltersChecked
   );
   const dateType = useOrderTrackingStore((state) => state.dateType);
+
+  const handleShowMore = () => {
+    setShowMore(!showMore);
+  };
 
   const handleFilterCloseClick = (id, group) => {
     if (group === 'status') {
@@ -52,25 +57,28 @@ function OrderFilterTags({ filtersRefs }) {
   };
 
   return (
-    <div className={`order-filter-tags-container teal_scroll`}>
-      {[
-        ...orderStatusFiltersChecked,
-        ...orderTypeFiltersChecked,
-        ...dateRangeFiltersChecked,
-      ].map((filter, index) => (
-        <div className={'filter-tags tag_dark_teal'} key={index}>
-          <span className="filter-tags__title" key={index}>
-            {filter?.group === 'date' && dateType && `${dateType} : `}
-            {`${filter.filterOptionLabel}`}
-          </span>
-          <span
-            onClick={() => handleFilterCloseClick(filter.id, filter?.group)}
-          >
-            <i className="fas fa-times filter-tags__close"></i>
-          </span>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className={`filter-tags-container ${showMore ? 'active' : ''}`}>
+        <span onClick={handleShowMore} className="filter-tags-more"></span>
+        {[
+          ...orderStatusFiltersChecked,
+          ...orderTypeFiltersChecked,
+          ...dateRangeFiltersChecked,
+        ].map((filter, index) => (
+          <div className={'filter-tags tag_dark_teal'} key={index}>
+            <span className="filter-tags__title" key={index}>
+              {filter?.group === 'date' && dateType && `${dateType} : `}
+              {`${filter.filterOptionLabel}`}
+            </span>
+            <span
+              onClick={() => handleFilterCloseClick(filter.id, filter?.group)}
+            >
+              <i className="fas fa-times filter-tags__close"></i>
+            </span>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 export default OrderFilterTags;

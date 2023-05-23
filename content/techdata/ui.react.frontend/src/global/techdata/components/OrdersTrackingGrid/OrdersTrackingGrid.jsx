@@ -45,7 +45,6 @@ import {
   fetchOrdersCount,
   fetchReport,
   getFilterFlyoutPredefined,
-  getFilterFlyoutCustomized,
   setPaginationData,
 } from './utils/orderTrackingUtils';
 
@@ -95,26 +94,7 @@ function OrdersTrackingGrid(props) {
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const {
-    searchOptionsList,
-    icons,
-    reportPillLabel,    
-    filterTitle,
-    showResultLabel,
-    filterListValues,
-    dateOptionsList,
-  } = componentProp;
-
-  const filterAEM = {
-    filterTitle,
-    showResults: showResultLabel,
-  };
-
-  const customFilters = getFilterFlyoutCustomized(
-    dateOptionsList,
-    filterListValues
-  );
-
+  const { searchOptionsList, icons, reportPillLabel } = componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
