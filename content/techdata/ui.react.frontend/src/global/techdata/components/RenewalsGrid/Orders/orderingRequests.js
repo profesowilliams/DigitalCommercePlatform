@@ -185,6 +185,23 @@ export const mapAddressToShipTo = (address) => {
   };
 }
 
+export const mapShipToDetailsToAddress = (shipTo) => {  
+  return {
+    id: shipTo?.id?.text,
+    name: shipTo?.name,
+    line1: shipTo?.address?.line1,
+    line2: shipTo?.address?.line2,
+    line3: shipTo?.address?.line3,
+    city: shipTo?.address?.city,
+    state: shipTo?.address?.state,
+    stateName: shipTo?.address?.stateName,
+    postalCode: shipTo?.address?.postalCode,
+    country: shipTo?.address?.country,
+    county: shipTo?.address?.county,
+    countryCode: shipTo?.address?.countryCode,
+  };
+}
+
 export const mapRenewalForUpdateDetails = (renewalQuote) => {
   const items = mapRenewalItemProducts(renewalQuote.items);
   const { endUser, reseller, shipTo, customerPO, source } = renewalQuote;

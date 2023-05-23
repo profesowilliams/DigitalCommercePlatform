@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { CustomTextField } from '../../../Widgets/CustomTextField';
 import { handleValidation, populateFieldConfigsFromService, getFieldMessage, handleEmailHelperText } from '../Common/utils';
 import { getDictionaryValue, getDictionaryValueOrKey } from '../../../../../../utils/utils';
-import { mapAddressToShipTo } from "../../../RenewalsGrid/Orders/orderingRequests"
+import { mapAddressToShipTo, mapShipToDetailsToAddress } from "../../../RenewalsGrid/Orders/orderingRequests"
 import { AddressDetails } from './AddressDetails';
 import { get } from '../../../../../../utils/api';
 import { StyledDetailsAutocomplete } from '../../MuiStyledComponents/StyledDetailsAutocomplete';
@@ -21,11 +21,10 @@ export default function ResellerEdit({
 }) {
   const { contact } = resellerDetails;
   const contactName = contact[0].name;
-  const [accountName, setAccountName] = useState('');
   const [shipToEditLabel] = useState(getDictionaryValueOrKey(resellerLabels.shipToEditLabel));
   const [addresses, setAddresses] = useState([]);
-  const [defaultAddressName] = useState(shipToDetails?.id?.text ? JSON.parse(JSON.stringify({name: shipToDetails?.name})) : undefined);
   const [shipTo, setShipTo] = useState(shipToDetails);
+  const [currentAddress, setCurrentAddress] = useState(mapShipToDetailsToAddress(shipToDetails));
   const isMountedRef = useRef(true);
   const contactNameRef = useRef();
 
@@ -61,10 +60,7 @@ export default function ResellerEdit({
     delete newShipTo.nameUpper;
     setShipTo(newShipTo);
     shipToOnChange(newShipTo);
-  };
-
-  const handleShipToNameOnChange = async (event) => {
-    setAccountName(event.target.value);
+    setCurrentAddress(mapShipToDetailsToAddress(newShipTo));
   };
 
   const isTdBranding = () => {
@@ -142,22 +138,22 @@ export default function ResellerEdit({
           filterOptions={filterOptions}
           isTdBrand={isTdBranding()}
           options={addresses}
-          defaultValue={defaultAddressName}
           renderInput={(params) => (
             <CustomTextField
               id="ship-to"
               {...params}
               variant="standard"
               label={shipToEditLabel}
-              required={shipTo?.id?.isMandatory}
-              onChange={handleShipToNameOnChange}   
+              required={shipTo?.id?.isMandatory} 
               helperText={getFieldMessage(shipTo?.id)}   
               {...handleValidation(shipTo?.id)}
             />
           )
           }
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => option.name || ''}
           onChange={handleShipToOnChange}
+          value={currentAddress}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           renderOption={(props, option) => {
             return (
               <li {...props} key={option?.id}>
