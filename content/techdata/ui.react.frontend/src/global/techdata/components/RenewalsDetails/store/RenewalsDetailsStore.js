@@ -14,7 +14,8 @@ const INITIAL_STATE = {
   reseller: null,
   items: null,
   savedItems: null,
-  showCopyFlyout:false
+  showCopyFlyout: false,
+  analyticsCategory: "renewals"
 };
 
 const store = (set,get) => ({

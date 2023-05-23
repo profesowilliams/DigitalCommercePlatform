@@ -217,7 +217,8 @@ export const mapRenewalForUpdateDetails = (renewalQuote) => {
     shipTo: { ...shipToData },
     items,  
     POAllowedLength: customerPO?.allowedLength,
-    EANumber 
+    EANumber,
+    orderSource: 'Details',
   }
 }
 

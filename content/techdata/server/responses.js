@@ -4029,7 +4029,7 @@ const renewalSearchResponse = {
                     "id": "U100000010280"
                 },
                 "canPlaceOrder": true,
-                "isValid": false,
+                "isValid": true,
                 "reseller": {
                     "incumbent": false,
                     "vendorAccountName": "Unified Data-Tech Solutions Pvt. Ltd.",
@@ -4205,7 +4205,7 @@ const renewalSearchResponse = {
                     "id": "U100000010282"
                 },
                 "canPlaceOrder": true,
-                "isValid": false,
+                "isValid": true,
                 "reseller": {
                     "incumbent": false,
                     "vendorAccountName": "Fourth Dimension Technologies Private Limited",

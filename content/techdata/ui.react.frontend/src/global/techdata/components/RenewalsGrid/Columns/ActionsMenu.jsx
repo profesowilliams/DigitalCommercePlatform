@@ -16,7 +16,17 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
     const dialogRef = useRef();
     const { setCustomState } = useRenewalGridState(st => st.effects);
     const analyticsCategory = useRenewalGridState(st => st.analyticsCategory);
+    const getDetailUrl = (id) => `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`;
 
+    let analyticsData = {
+      source: data.source,
+      vendor: data.vendor,
+      reseller: data.reseller,
+      link: getDetailUrl(data.source.id),
+      analyticsCategory: analyticsCategory,
+      analyticsAction: ANALYTIC_CONSTANTS.Grid.RowActions.ViewDetail,
+    };
+    
     useOutsideClick(dialogRef, onClose, 'mousedown', [onClose]);
 
     const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint } = endpoints;
@@ -36,20 +46,20 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
 
     const downloadPDF = () => {
       try {
-          data['link'] = exportPDFRenewalsEndpoint;
-          pushDataLayer(
-            getRowAnalytics(
-              analyticsCategory,
-              ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdf,
-              data));
-            generateFileFromPost({
-                url: exportPDFRenewalsEndpoint,
-                name: `Renewals Quote ${data?.source?.id}.pdf`,
-                postData: {
-                    Id: data?.source?.id,
-                },
-                fileTypeExtension: fileExtensions.pdf,
-            });
+        data['link'] = exportPDFRenewalsEndpoint;
+        pushDataLayer(
+          getRowAnalytics(
+            analyticsCategory,
+            ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdf,
+            data));
+        generateFileFromPost({
+          url: exportPDFRenewalsEndpoint,
+          name: `Renewals Quote ${data?.source?.id}.pdf`,
+          postData: {
+            Id: data?.source?.id,
+          },
+          fileTypeExtension: fileExtensions.pdf,
+        });
         } catch (error) {
             console.error('error', error);
         }
@@ -73,7 +83,9 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
         } catch (error) {
             console.error('error', error);
         }
-    };
+  };
+
+  
 
   const triggerCopyFlyout = () => {
         data['link'] = '';
@@ -93,7 +105,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
             <div className="cmp-renewals-actions-menu">
                 <div
                     className="cmp-renewals-actions-menu__item"
-                    onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id)}
+                    onClick={() => redirectToRenewalDetail(detailUrl, data?.source?.id, analyticsData)}
                 >
                     <span className="cmp-renewals-actions-menu__item-icon">
                         <EyeLightIcon />

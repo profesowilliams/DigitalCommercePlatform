@@ -9,6 +9,7 @@ import { handleOrderRequesting } from "../orderingRequests";
 import useComputeBranding from "../../../../hooks/useComputeBranding";
 import { AutoRenewIcon } from "../../../../../../fluentIcons/FluentIcons";
 import { useStore } from "../../../../../../utils/useStore";
+import { pushDataLayer, getRowAnalytics, ANALYTIC_CONSTANTS } from '../../../Analytics/analytics.js';
 
 const CustomOrderButton = (properties) => ({ children }) =>
   <Button {...PlaceOrderMaterialUi.orderButtonProps} {...properties}>
@@ -27,6 +28,7 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
   const itemsState = store( state => state.items || false);
   const { computeClassName, isTDSynnex } = useComputeBranding(store);
   const userData = useStore(state => state.userData);
+  const analyticsCategory = store(state => state.analyticsCategory);
 
   function resetDialogStates() {
     setSubmitted(false);
@@ -74,8 +76,16 @@ function usePlaceOrderDialogHook({ successSubmission, failedSubmission, noRespon
     if(isDetails) {
       if(endUserState) renewalData.endUser = endUserState;
       if(resellerState) renewalData.reseller = resellerState;
-      if(itemsState) renewalData.items = itemsState;  
+      if (itemsState) renewalData.items = itemsState;  
     }
+    pushDataLayer(
+      getRowAnalytics(
+        analyticsCategory,
+        renewalData.orderSource === 'Grid' ? ANALYTIC_CONSTANTS.Grid.RowActions.Order :
+          renewalData.orderSource === 'Details' ? ANALYTIC_CONSTANTS.Detail.Actions.OrderDetail :
+            ANALYTIC_CONSTANTS.Grid.RowActions.OrderExpanded,
+        renewalData));
+
     const operationResponse = await handleOrderRequesting({orderEndpoints, renewalData, purchaseOrderNumber, isDetails, userData});
     handleToggleToaster({...operationResponse});   
     typeof resetGrid === 'function' && operationResponse?.isSuccess && setTimeout(() => resetGrid(), 1600);

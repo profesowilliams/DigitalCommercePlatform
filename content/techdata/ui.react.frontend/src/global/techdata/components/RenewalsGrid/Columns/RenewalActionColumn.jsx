@@ -45,6 +45,7 @@ function _RenewalActionColumn({ eventProps }) {
   );
 
   const canCopy = data?.canCopy;
+  data.orderSource = 'Grid';
 
   const { handleCartIconClick, details, toggleOrderDialog, closeDialog } =
     useTriggerOrdering({ renewalDetailsEndpoint, data, detailUrl });
@@ -190,10 +191,6 @@ function _RenewalActionColumn({ eventProps }) {
       <div className="cmp-renewal-action-container" style={{position:'relative'}} key={Math.random()}>
         {isIconEnabled ? (
           <Button onClick={handleCartIconClick}
-            analyticsCallback={getRowAnalytics.bind(null,
-              analyticsCategory,
-              ANALYTIC_CONSTANTS.Grid.RowActions.Order,
-              data)}
           >
             <span className="cmp-renewals-cart-icon">
               <CartIcon />

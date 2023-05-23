@@ -12,6 +12,7 @@ import { pushEvent, ANALYTICS_TYPES } from "../../../../../utils/dataLayerUtils"
 import { isObject } from "../../../../../utils";
 import { thousandSeparator } from "../../../helpers/formatting";
 import { getRenewalManufacturer } from "../../RenewalsDetails/RenewalPreviewGrid/RenewalManufacturer";
+import { pushDataLayer, getRowAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics.js';
 
 export  const secondLevelOptions = {
     colId: 'total',
@@ -375,11 +376,16 @@ export const analyticsColumnDataToPush = (name) => ({
     name,
 });
 
-export const redirectToRenewalDetail = (detailUrl, id = "") => {
+export const redirectToRenewalDetail = (detailUrl, id = "", analyticsData = null) => {
     const renewalDetailsURL = encodeURI(
       `${window.location.origin}${detailUrl}.html?id=${id ?? ""}`
-    );
-    window.location.href = renewalDetailsURL;
+  );
+
+  if (isObject(analyticsData)) {
+    console.log(analyticsData);
+    pushDataLayer(getRowAnalytics(analyticsData.analyticsCategory, analyticsData.analyticsAction, analyticsData));
+  }
+  window.location.href = renewalDetailsURL;
 };
 
 export const formatRenewedDuration = (type, renewed, support) => {

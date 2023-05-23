@@ -9,13 +9,20 @@ import { CopyIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 import Toaster from "../../Widgets/Toaster";
+import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 
 function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] = useState(false);
   const effects = useRenewalGridState(state => state.effects);   
+  const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
 
   const downloadXLS = () => {
     try {
+      pushDataLayer(
+        getRowAnalytics(
+          analyticsCategory,
+          ANALYTIC_CONSTANTS.Detail.Actions.DownloadXlsDetail,
+          data));
       generateExcelFileFromPost({
         url: gridProps?.excelFileUrl,
         name: `Renewals quote ${data?.source?.id}.xlsx`,
@@ -30,6 +37,11 @@ function GridHeader({ gridProps, data }) {
 
   const downloadPDF = () => {
     try {      
+      pushDataLayer(
+        getRowAnalytics(
+          analyticsCategory,
+          ANALYTIC_CONSTANTS.Detail.Actions.DownloadPdfDetail,
+          data));
       generateFileFromPost({
         url: gridProps.exportPDFRenewalsEndpoint,
         name: `Renewals Quote ${data?.source?.id}.pdf`,
@@ -44,7 +56,10 @@ function GridHeader({ gridProps, data }) {
   };
 
   const openCopyFlyOut = () => {
-    const flyoutData = {...data, agreementNumber: data?.items[0]?.contract?.id};
+    const flyoutData = {
+      ...data,
+      agreementNumber: data?.items[0]?.contract?.id,
+      analyticsAction: ANALYTIC_CONSTANTS.Detail.Actions.CopyDetail};
     effects.setCustomState({ key: 'copyFlyout', value: { data: flyoutData, show: true } });
   }; 
 

@@ -25,6 +25,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
     copyFlyoutConfig?.data :
     { source: undefined, reseller: undefined, vendor: undefined };
   let analyticsData = { analyticsCategory, source, reseller, vendor };
+  let analyticsAction = copyFlyoutConfig?.data?.analyticsAction;
 
   const [quotes, setQuotes] = useState([]);
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
@@ -221,7 +222,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       bottomContent={(classNameSuffix) => WarningMessage({ classNameSuffix })}
       analyticsCallback={getRowAnalytics.bind(null,
         analyticsData.analyticsCategory,
-        ANALYTIC_CONSTANTS.Grid.RowActions.Copy,
+        analyticsAction ? analyticsAction : ANALYTIC_CONSTANTS.Grid.RowActions.Copy,
         analyticsData)}
     >
       <section className="cmp-flyout__content">

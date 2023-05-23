@@ -62,6 +62,8 @@ function RenewalPlanOptions({ labels, data, node }) {
     reseller: data.reseller,
     link: getDetailUrl(data.source.id),
   };
+  data.orderSource = 'GridExpanded';
+
   useEffect(() => setOptionIdSelected(findAndReturnCurrentPlanId(data?.options)), [])
 
   const exportXlsPlan = (id) => {
@@ -308,10 +310,7 @@ function RenewalPlanOptions({ labels, data, node }) {
                           {isIconEnabled ? (
                             <Button onClick={(event) =>
                               handleCartIconClick(event, option)}
-                              analyticsCallback={getRowAnalytics.bind(null,
-                                analyticsCategory,
-                                ANALYTIC_CONSTANTS.Grid.RowActions.OrderExpanded,
-                                analyticsData)}>
+                              >
                               <span className="cmp-renewals-cart-icon">
                                 <CartIcon />{' '}
                                 <span>{getDictionaryValue("button.common.label.order", "Order")}</span>

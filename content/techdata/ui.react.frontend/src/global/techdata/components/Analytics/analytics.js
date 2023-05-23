@@ -144,6 +144,14 @@ const ANALYTIC_CONSTANTS = {
       "ViewDetail": "View Detail",
       "ViewDetailExpanded": "View Detail from Expanded",
     }
+  },
+  "Detail": {
+    "Actions": {
+      "CopyDetail": "Copy from Detail",
+      "DownloadPdfDetail": "Download PDF from Detail",
+      "DownloadXlsDetail": "Download XLS from Detail",
+      "OrderDetail": "Place Order from Detail"
+    },
   }
 };
 

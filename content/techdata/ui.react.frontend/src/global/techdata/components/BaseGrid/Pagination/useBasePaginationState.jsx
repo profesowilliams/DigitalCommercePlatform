@@ -77,7 +77,6 @@ function useBasePaginationState({ store, onQueryChanged }) {
 
   const goToSpecificPage = (specificNumber) => {
     const value = { ...paginationData, pageNumber: specificNumber + 1 };
-    pushDataLayer(getPaginationAnalytics(analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo, value.pageNumber));
     saveAndUpdatePagination(value);   
   }
 
@@ -85,6 +84,7 @@ function useBasePaginationState({ store, onQueryChanged }) {
     const value = parseInt(target.value) - 1;
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
+    pushDataLayer(getPaginationAnalytics(analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo, value.pageNumber));
     goToSpecificPage(value);    
   };
 
@@ -93,6 +93,7 @@ function useBasePaginationState({ store, onQueryChanged }) {
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
     if (target.value.length >= 3) {
+      pushDataLayer(getPaginationAnalytics(analyticsCategory, ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo, value.pageNumber));
       goToSpecificPage(value);
       pageInputRef.current.blur();
     }
