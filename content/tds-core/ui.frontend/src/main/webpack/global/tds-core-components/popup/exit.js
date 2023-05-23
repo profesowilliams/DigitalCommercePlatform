@@ -11,9 +11,10 @@ export default class PopupExit {
     /** @type {Element} */
     this.modal = document.querySelector('.cmp-popup__modal');
     /** @type {NodeList} */
-    this.buttons = this.modal.querySelectorAll('.cmp-popup__modal button');
+    this.buttons = this.modal ? this.modal.querySelectorAll('.cmp-popup__modal button') : null;
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleFirstButtonClick = this.handleFirstButtonClick.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
@@ -24,23 +25,39 @@ export default class PopupExit {
   handleClick(event) {
     event.preventDefault();
     const href = event.target.getAttribute('href');
-    const firstButton = this.buttons[0];
-    firstButton.addEventListener('click', function handleFirstButtonClick() {
-      window.location.href = href;
-    });
-    this.modal.classList.add('cmp-popup__modal--open');
+    const firstButton = this.buttons ? this.buttons[0] : null;
+
+    if (firstButton) {
+      firstButton.addEventListener('click', this.handleFirstButtonClick);
+    }
+
+    if (this.modal) {
+      this.modal.classList.add('cmp-popup__modal--open');
+    }
+  }
+
+  /**
+   * Handles the click event on the first button.
+   */
+  handleFirstButtonClick() {
+    const href = this.buttons[0].getAttribute('data-href');
+    window.location.href = href;
   }
 
   /**
    * Closes the modal and removes event listeners.
    */
   closeModal() {
-    const firstButton = this.buttons[0];
-    const lastButton = this.buttons[this.buttons.length - 1];
+    const firstButton = this.buttons ? this.buttons[0] : null;
 
-    firstButton.removeEventListener('click', handleFirstButtonClick);
-    firstButton.removeAttribute('data-href');
-    this.modal.classList.remove('cmp-popup__modal--open');
+    if (firstButton) {
+      firstButton.removeEventListener('click', this.handleFirstButtonClick);
+      firstButton.removeAttribute('data-href');
+    }
+
+    if (this.modal) {
+      this.modal.classList.remove('cmp-popup__modal--open');
+    }
   }
 
   /**
@@ -53,7 +70,9 @@ export default class PopupExit {
       }
     }
 
-    const closeButton = this.buttons[this.buttons.length - 1];
-    closeButton.addEventListener('click', this.closeModal);
+    if (this.buttons) {
+      const closeButton = this.buttons[this.buttons.length - 1];
+      closeButton.addEventListener('click', this.closeModal);
+    }
   }
 }

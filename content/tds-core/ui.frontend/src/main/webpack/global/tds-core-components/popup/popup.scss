@@ -1,25 +1,32 @@
+/// Sizes for the popup modal.
 $popup-modal-sizes: (
-  small: 360px,
-  medium: 768px,
-  large: 896px
+  small: 360px,    // Small size width
+  medium: 768px,   // Medium size width
+  large: 896px     // Large size width
 );
 
+/// Styles for the button in the popup modal.
 $cmp-popup-button-styles: (
-  width: unset !important,
-  float: right !important,
-  margin-left: 20px !important
+  width: unset !important,      // Button width
+  float: right !important,     // Button float
+  margin-left: 20px !important // Button margin left
 );
 
+/// Popup modal component.
 .cmp-popup__modal {
+  /// Generates different size modifiers for the popup modal.
   @each $size, $width in $popup-modal-sizes {
     &--#{$size} {
+      /// Content inside the popup modal.
       .cmp-popup__modal__content {
-        width: $width; // Set width based on the map value
+        width: $width; // Set width based on the size specified in the map.
       }
 
+      /// Button inside the popup modal.
       .button {
+        /// Apply button styles.
         @each $property, $value in $cmp-popup-button-styles {
-          #{$property}: $value; // Apply each property-value pair to the .button class
+          #{$property}: $value; // Apply each property-value pair to the .button class.
         }
       }
     }
