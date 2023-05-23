@@ -1,7 +1,7 @@
 import React from 'react';
 import { addSeparator } from '../../../../../../utils/utils';
 
-export const AddressDetails = ({ address, labels, currentlyTypedWord }) => {
+export const AddressDetails = ({ address }) => {
   const { name, line1, postalCode, city, stateName } = address;
   
   return (

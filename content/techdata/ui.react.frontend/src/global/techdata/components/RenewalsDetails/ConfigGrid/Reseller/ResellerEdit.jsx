@@ -28,7 +28,6 @@ export default function ResellerEdit({
   const [shipTo, setShipTo] = useState(shipToDetails);
   const isMountedRef = useRef(true);
   const contactNameRef = useRef();
-  //const shipToNameRef = useRef();
 
   useLayoutEffect(() => {
     if (isMountedRef.current) {
@@ -148,13 +147,12 @@ export default function ResellerEdit({
             <CustomTextField
               id="ship-to"
               {...params}
-              //inputRef={shipToNameRef}
-              label={shipToEditLabel}
               variant="standard"
+              label={shipToEditLabel}
+              required={shipTo?.id?.isMandatory}
               onChange={handleShipToNameOnChange}   
               helperText={getFieldMessage(shipTo?.id)}   
-              {...handleValidation(shipTo?.id)}      
-              //{...populateFieldConfigsFromService(shipToDetails?.id)} 
+              {...handleValidation(shipTo?.id)}
             />
           )
           }
@@ -165,10 +163,7 @@ export default function ResellerEdit({
               <li {...props} key={option?.id}>
                 <div>
                   <div>
-                    <AddressDetails
-                      address={option}
-                      currentlyTypedWord={accountName}
-                    />
+                    <AddressDetails address={option} />
                   </div>
                 </div>
               </li>
