@@ -5,8 +5,8 @@ export const StyledDetailsAutocomplete = styled(Autocomplete, {
   shouldForwardProp: (prop) => prop !== "isTdBrand"
 })(({ isTdBrand }) => ({
     "& + .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected='true']": {
-      color: '#FFFFFF',
-      backgroundColor: `${isTdBrand ? '#000c21' : '#005758'}`
+      color: '#FFFFFF',//$white
+      backgroundColor: `${isTdBrand ? '#000c21' : '#005758'}`//$brand-blue : $brand-green
     },
     "& + .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected='true'].Mui-focused": {
       color: '#FFFFFF',
@@ -20,4 +20,10 @@ export const StyledDetailsAutocomplete = styled(Autocomplete, {
       color: '#FFFFFF',
       backgroundColor: `${isTdBrand ? '#000c21' : '#005758'}`
     },     
+    "& label.Mui-focused": {
+      borderBottomColor: `${isTdBrand ? '#006FBA' : ''} !important`//$brand-cobalt
+    },
+    "& .MuiInput-underline:after": {
+      borderBottomColor: `${isTdBrand ? '#006FBA' : ''} !important`
+    },
 }));
