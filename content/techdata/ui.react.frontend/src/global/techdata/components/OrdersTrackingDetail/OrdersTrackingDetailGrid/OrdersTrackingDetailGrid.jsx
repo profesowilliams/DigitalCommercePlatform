@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import Grid from '../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
@@ -14,9 +14,9 @@ import {
   isHttpOnlyEnabled,
 } from '../../../../../utils/featureFlagUtils';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../../utils/constants';
-import { useStore } from '../../../../../utils/useStore';
 
 function OrdersTrackingDetailGrid({ data, gridProps }) {
+  const [userData, setUserData] = useState(null);
   const gridData = data.items ?? [];
   const config = {
     ...gridProps,
@@ -25,7 +25,6 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
     paginationStyle: 'none',
   };
 
-  const userData = useStore((state) => state.userData);
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
     : null;
@@ -81,7 +80,7 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
         config?.labels?.lineUnitPrice
       )?.replace(
         '{currency-code}',
-        data?.currency ? data?.currency : defaultCurrency
+        data?.paymentDetails?.currency || defaultCurrency
       ),
       width: gridColumnWidths.unitPriceFormatted,
     },
@@ -99,7 +98,7 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
         config?.labels?.lineTotalPrice
       )?.replace(
         '{currency-code}',
-        data?.currency ? data?.currency : defaultCurrency
+        data?.paymentDetails?.currency || defaultCurrency
       ),
       width: gridColumnWidths.totalPriceFormatted,
     },
@@ -119,6 +118,13 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
   );
   const contextMenuItems = (params) =>
     getContextMenuItems(myColumnDefs, config?.labels);
+
+  useEffect(() => {
+    window.getSessionInfo &&
+      window.getSessionInfo().then((data) => {
+        setUserData(data[1]);
+      });
+  }, []);
 
   return (
     <section>

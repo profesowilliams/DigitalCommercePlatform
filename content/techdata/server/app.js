@@ -11559,6 +11559,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       customer: "Tech Data Limited",
       items: [
         {
+          estimatedShipDate: "02-04-2022",
+          estimatedShipDateFormatted: "02-04-2022",
           children: [],
           deliveryNotes: [
             {
@@ -11745,6 +11747,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           trackings: [],
         },
         {
+          estimatedShipDate: "02-04-2022",
+          estimatedShipDateFormatted: "02-04-2022",
           children: [],
           deliveryNotes: [
             {
@@ -11931,6 +11935,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           trackings: [],
         },
         {
+          estimatedShipDate: "02-04-2022",
+          estimatedShipDateFormatted: "02-04-2022",
           children: [],
           deliveryNotes: [
             {
