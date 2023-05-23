@@ -1,5 +1,4 @@
-import React from 'react';
-import { getDictionaryValue } from '../../../../../utils/utils';
+import React, { useState } from 'react';
 import OrderFilterList from './OrderFilterList';
 import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
@@ -14,12 +13,17 @@ const OrderFilterFlyout = ({
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.orderFilterCounter
   );
+  const [showLess, setShowLess] = useState(true);
   const enabled = orderFilterCounter !== 0;
   const effects = useOrderTrackingStore((state) => state.effects);
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.isFilterModalOpen
   );
   const { toggleFilterModal, clearAllOrderFilters } = effects;
+  const { filterTitle, showResults } = aemData;
+  const toggleShowLess = () => {
+    setShowLess(!showLess);
+  };
 
   const showResult = () => {
     toggleFilterModal();
@@ -42,24 +46,25 @@ const OrderFilterFlyout = ({
       width="425px"
       anchor="right"
       subheaderReference={document.querySelector('.subheader > div > div')}
-      titleLabel={getDictionaryValue(
-        'grids.common.label.filterTitle',
-        'Filters'
-      )}
-      buttonLabel={getDictionaryValue(
-        'grids.common.label.showResults',
-        'Show results'
-      )}
+      titleLabel={filterTitle ?? 'Filters'}
+      buttonLabel={showResults ?? 'Show results'}
       enableButton={enabled}
+      disabledButton={!enabled}
       onClickButton={showResult}
       isTDSynnex={isTDSynnex}
     >
       <section className="cmp-flyout__content teal_scroll height_order_filters">
-        <div className={'filter-accordion scrollbar_y_none height_1000'}>
+        <div className={'order-filter-accordion'}>
           <OrderFilterList filtersRefs={filtersRefs} />
         </div>
       </section>
-      <section className="filter-order-tags-container">
+      <section
+        className={`filter-order-tags-container ${showLess ? 'activated' : ''}`}
+      >
+        <span
+          onClick={toggleShowLess}
+          className="order-filter-tags-more"
+        ></span>
         <OrderFilterTags filtersRefs={filtersRefs} />
       </section>
     </BaseFlyout>
