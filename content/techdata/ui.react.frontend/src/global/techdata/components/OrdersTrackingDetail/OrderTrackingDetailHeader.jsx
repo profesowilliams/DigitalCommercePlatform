@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
+import MenuActions from './MenuActions';
 
-const OrderTrackingDetailHeader = ({ config, apiResponse }) => {
+const OrderTrackingDetailHeader = ({
+  config,
+  apiResponse,
+  hasAIORights,
+  hasOrderModificationRights,
+}) => {
+  const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+
+  const handleActionMouseOver = () => {
+    setActionsDropdownVisible(true);
+  };
+
+  const handleActionMouseLeave = () => {
+    setActionsDropdownVisible(false);
+  };
+
   return (
     <div className="header-container">
-      <div className="image-container">
+      <div className="navigation-container">
         <Link
           variant="back-to-orders"
           href={config?.ordersUrl || '#'}
@@ -15,7 +31,7 @@ const OrderTrackingDetailHeader = ({ config, apiResponse }) => {
           {getDictionaryValueOrKey(config?.labels?.detailsBack)}
         </Link>
       </div>
-      <div className="export-container">
+      <div className="title-container">
         <div>
           <span className="quote-preview-bold">
             {apiResponse?.content.status}
@@ -28,7 +44,29 @@ const OrderTrackingDetailHeader = ({ config, apiResponse }) => {
             {apiResponse?.content?.orderNumber}
           </span>
         </div>
-        <span className="quote-actions"></span>
+        <div
+          className="actions-container"
+          onMouseOver={handleActionMouseOver}
+          onMouseLeave={handleActionMouseLeave}
+        >
+          <span className="quote-actions">
+            {getDictionaryValueOrKey(config.labels?.actions)}
+          </span>
+          {actionsDropdownVisible && (
+            <div
+              className="actions-dropdown"
+              onMouseOver={handleActionMouseOver}
+              onMouseLeave={handleActionMouseLeave}
+            >
+              <MenuActions
+                hasAIORights={hasAIORights}
+                hasOrderModificationRights={hasOrderModificationRights}
+                items={apiResponse?.content?.items}
+                labels={config?.labels}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

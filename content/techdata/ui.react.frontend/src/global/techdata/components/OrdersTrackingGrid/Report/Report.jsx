@@ -13,7 +13,7 @@ function Report({ selectOption, selectedKey }, ref) {
   const reportOptions = [
     { key: 'OpenOrders', label: 'Open Orders' },
     { key: 'NewBacklog', label: 'New Backlog' },
-    { key: 'TodaysShipmentsDeliveries', label: 'Todays Shipments Deliveries' },
+    { key: 'TodaysShipmentsDeliveries', label: `Today's Shipments/Deliveries` },
     { key: 'Last7DaysOrders', label: 'Last 7 Days Orders' },
     { key: 'Last30DaysOrders', label: 'Last 30 Days Orders' },
     { key: 'Last7DaysShipments', label: 'Last 7 Days Shipments' },

@@ -372,6 +372,7 @@ function OrdersTrackingGrid(props) {
         setUserData(data[1]);
       });
   }, []);
+
   return (
     <>
       {userData?.activeCustomer ? (
