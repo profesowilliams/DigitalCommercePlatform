@@ -1,6 +1,6 @@
 <script type="text/javascript">
     const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-    let userDataPromise = null;
+    //let userDataPromise = null;
     let cachedUserData = null;
     let cacheExpiration = null;
     const CACHE_DURATION = 600; // TODO: value should be configurable
@@ -28,12 +28,12 @@
             return cachedUserData;
         }
 
-        if (userDataPromise) {
-            return await userDataPromise;
-        }
+        //if (userDataPromise) {
+        //    return await userDataPromise;
+        //}
 
         try {
-            userDataPromise = fetch(
+            let userDataPromise = fetch(
                 "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
                 "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}", {
                 "headers": {
