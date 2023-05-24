@@ -8,9 +8,9 @@ export default class PopupExit {
   constructor() {
     /** @type {NodeList} */
     this.links = document.querySelectorAll('a[data-is-global="true"]');
-    /** @type {Element} */
+    /** @type {Element|null} */
     this.modal = document.querySelector('.cmp-popup__modal');
-    /** @type {NodeList} */
+    /** @type {NodeList|null} */
     this.buttons = this.modal ? this.modal.querySelectorAll('.cmp-popup__modal button') : null;
 
     this.handleClick = this.handleClick.bind(this);
@@ -28,6 +28,7 @@ export default class PopupExit {
     const firstButton = this.buttons ? this.buttons[0] : null;
 
     if (firstButton) {
+      firstButton.setAttribute('data-href', href);
       firstButton.addEventListener('click', this.handleFirstButtonClick);
     }
 
@@ -40,8 +41,10 @@ export default class PopupExit {
    * Handles the click event on the first button.
    */
   handleFirstButtonClick() {
-    const href = this.buttons[0].getAttribute('data-href');
-    window.location.href = href;
+    const href = this.buttons ? this.buttons[0].getAttribute('data-href') : null;
+    if (href) {
+      window.location.href = href;
+    }
   }
 
   /**
