@@ -19,11 +19,8 @@ export const StyledDetailsAutocomplete = styled(Autocomplete, {
     "& + .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected='true'].Mui-focused div div label": {
       color: '#FFFFFF',
       backgroundColor: `${isTdBrand ? '#000c21' : '#005758'}`
-    },     
-    "& label.Mui-focused": {
-      borderBottomColor: `${isTdBrand ? '#006FBA' : ''} !important`//$brand-cobalt
     },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: `${isTdBrand ? '#006FBA' : ''} !important`
+    "& .Mui-focused.MuiInput-underline:after": {
+      borderBottomColor: `${isTdBrand ? '#006FBA' : ''}`
     },
 }));

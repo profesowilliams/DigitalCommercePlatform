@@ -145,7 +145,8 @@ export default function ResellerEdit({
               variant="standard"
               label={shipToEditLabel}
               required={shipTo?.id?.isMandatory} 
-              helperText={getFieldMessage(shipTo?.id)}   
+              helperText={getFieldMessage(shipTo?.id)}  
+              InputLabelProps={{ className: currentAddress?.id ? '' : "autocompleteErrorLabel"}}  
               {...handleValidation(shipTo?.id)}
             />
           )
