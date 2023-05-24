@@ -1,9 +1,19 @@
-.notification {
+/**
+ * Notification component.
+ *
+ * @class notification
+ */
+ .notification {
   margin: 1rem;
   display: flex;
   align-items: center;
 }
 
+/**
+ * Notification component.
+ *
+ * @class cmp-notification
+ */
 .cmp-notification {
   display: flex;
   flex-direction: row;
@@ -12,14 +22,26 @@
   justify-items: center;
   align-items: center;
 
+  /**
+   * Link container within the notification component.
+   *
+   * @class cmp-notification-link-container
+   */
   .cmp-notification-link-container {
     display: flex;
     align-items: center;
+
     a {
       margin: 0 rem(10px);
     }
   }
 
+  /**
+   * Mixin for notification types.
+   *
+   * @mixin notification-type
+   * @param {string} $color - The color value for the notification.
+   */
   @mixin notification-type($color) {
     .cmp-notification {
       width: 100%;
@@ -39,6 +61,11 @@
     padding: 10px 0;
     display: flex;
 
+    /**
+     * Close notification icon.
+     *
+     * @class close-notification
+     */
     .close-notification:after {
       display: inline-block;
       content: '\00d7'; /* This will render the 'X' */
@@ -51,6 +78,11 @@
       margin: 0px;
     }
 
+    /**
+     * Notification text.
+     *
+     * @class cmp-notification_text
+     */
     .cmp-notification_text {
       color: map-get($color-palette, "charcoal");
     }
@@ -60,6 +92,11 @@
       margin: 0px;
     }
 
+    /**
+     * Notification icon.
+     *
+     * @class cmp-notification_icon
+     */
     .cmp-notification_icon {
       color: $color;
       width: rem(20px);
@@ -71,7 +108,7 @@
       margin-left: auto;
     }
 
-    // Tablet scree
+    // Tablet screen
     @media only screen and (min-width: 768px) and (max-width: 1023px) {  
       width: 96% !important;
       margin-left: rem(16px) !important;
@@ -82,6 +119,7 @@
       }
     }
 
+    // Mobile screen
     @media only screen and (min-width: 5px) and (max-width: 767px) {  
       height: auto;
       width: 92% !important;
@@ -95,14 +133,12 @@
       .cmp-notification .cmp-notification_text {
         text-align: justify;
         width: 80%;
-        
       }
-  
 
       .cmp-notification-message-container {
         display: flex;
         align-items: flex-start !important; 
-        margin-right: rem(40px)
+        margin-right: rem(40px);
       }
 
       .cmp-notification-link-container {
@@ -126,41 +162,89 @@
     }
   }
 
+  /**
+   * Primary notification variant.
+   *
+   * @class cmp-notification-primary
+   */
   &-primary {
     @include notification-type(get-color(cobalt));
   }
 
+  /**
+   * Secondary notification variant.
+   *
+   * @class cmp-notification-secondary
+   */
   &-secondary {
     @include notification-type(get-color(forest));
   }
 
+  /**
+   * Alert notification variant.
+   *
+   * @class cmp-notification-alert
+   */
   &-alert {
     @include notification-type(get-color(cherry));
   }
 
+  /**
+   * Warning notification variant.
+   *
+   * @class cmp-notification-warning
+   */
   &-warning {
     @include notification-type(get-color(amber));
   }
 
+  /**
+   * Small size variant.
+   *
+   * @class cmp-notification-small
+   */
   &-small {
     width: 40%;
   }
+
+  /**
+   * Medium size variant.
+   *
+   * @class cmp-notification-medium
+   */
   &-medium {
     width: 40%;
   }
+
+  /**
+   * Large size variant.
+   *
+   * @class cmp-notification-large
+   */
   &-large {
     width: auto;
   }
+
   a {
     text-decoration: none;
   }
 
+  /**
+   * Message container within the notification component.
+   *
+   * @class cmp-notification-message-container
+   */
   .cmp-notification-message-container {
     margin-left: rem(22px);
     display: flex;
     align-items: center;
   }
 
+  /**
+   * CSS class for disabling link interaction.
+   *
+   * @class nolink
+   */
   .nolink {
     pointer-events: none;
   }

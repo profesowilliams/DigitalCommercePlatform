@@ -1,7 +1,17 @@
-.cmp-sign-in--container {
+/**
+ * Container for the sign-in component.
+ */
+ .cmp-sign-in--container {
+    /**
+     * Sign-in component within the container.
+     */
     .cmp-sign-in {
-        &-signout {
-            background-color: get-color(deep-teal);
-        }
+      /**
+       * Sign-out variant of the sign-in component.
+       */
+      &-signout {
+        background-color: get-color(deep-teal);
+      }
     }
-}
+  }
+  

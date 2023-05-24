@@ -1,138 +1,255 @@
-.cmp-article-list{
-  .cmp-list {
+/**
+ * Article List component.
+ *
+ * @class cmp-article-list
+ */
+ .cmp-article-list {
+    /**
+     * List component within the Article List.
+     *
+     * @class cmp-list
+     */
+    .cmp-list {
       list-style: none;
       padding: 0;
       margin: 0;
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-
+  
       * {
         color: map-get($color-palette, "charcoal");
       }
-  }
-
-  .cmp-list__item {
+    }
+  
+    /**
+     * List item within the List component.
+     *
+     * @class cmp-list__item
+     */
+    .cmp-list__item {
       position: relative;
       width: 30%;
       margin-bottom: 1.87rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
-  }
-
-  .cmp-list__item-title {
+    }
+  
+    /**
+     * Title element within the List item.
+     *
+     * @class cmp-list__item-title
+     */
+    .cmp-list__item-title {
       box-sizing: border-box;
       position: absolute;
       width: 100%;
       left: 0;
       bottom: 0;
-      background-color: rgba(0,12,33,0.6);
+      background-color: rgba(0, 12, 33, 0.6);
       color: #ffffff;
       font-size: 0.81rem;
       line-height: 1.12rem;
       padding: 1.125rem 0.313rem 0.75rem 0.688rem;
-
+  
       span {
-          word-wrap: break-word;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-      }   
-  }
-
-  .cmp-image__image-figure {
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  
+    /**
+     * Image component within the Article List.
+     *
+     * @class cmp-image__image-figure
+     */
+    .cmp-image__image-figure {
       padding: 0;
       margin: 0;
-  }
-
-  .cmp-image__image {
+    }
+  
+    .cmp-image__image {
       width: 100%;
-  }
-
-  .cmp-article-list__header {
+  
+      &__image-figure {
+        width: rem(195px);
+        height: rem(110px);
+        margin: 0;
+        display: inline-block;
+      }
+    }
+  
+    /**
+     * Header section within the Article List.
+     *
+     * @class cmp-article-list__header
+     */
+    .cmp-article-list__header {
       display: flex;
       align-items: center;
       margin-bottom: 1.87rem;
-  }
-
-  .cmp-article-list__header-title {
+    }
+  
+    /**
+     * Title element within the Article List header.
+     *
+     * @class cmp-article-list__header-title
+     */
+    .cmp-article-list__header-title {
       font-size: 1.5rem;
       margin: 0;
-  }
-
-  .cmp-article-list__header-separator {
+    }
+  
+    /**
+     * Separator element within the Article List header.
+     *
+     * @class cmp-article-list__header-separator
+     */
+    .cmp-article-list__header-separator {
       flex: 1;
-  }
-
-  .cmp-article-list__header-link {
+    }
+  
+    /**
+     * Link element within the Article List header.
+     *
+     * @class cmp-article-list__header-link
+     */
+    .cmp-article-list__header-link {
       font-size: 0.87rem;
       color: #6f6f6f;
       text-decoration: none;
-
+  
       i {
-          vertical-align: middle;
-          padding-left: 0.5rem;
+        vertical-align: middle;
+        padding-left: 0.5rem;
       }
-  }
-
-  &--fixed-items {
+    }
+  
+    /**
+     * Fixed items variant for the Article List.
+     *
+     * @class cmp-article-list--fixed-items
+     */
+    &--fixed-items {
+      /**
+       * List item within the Article List.
+       *
+       * @class cmp-list__item
+       */
       .cmp-list__item {
-          width: 10.62rem;
-          height: 10.62rem;
+        width: 10.62rem;
+        height: 10.62rem;
       }
-  }
-
-  &__header {
+    }
+  
+    /**
+     * Header section within the Article List.
+     *
+     * @class cmp-article-list__header
+     */
+    &__header {
       display: flex;
       align-items: center;
       margin-left: rem(25px);
       margin-right: rem(25px);
       margin-bottom: rem(30px);
-  }
-  .cmp-image__image {
+    }
+  
+    /**
+     * Image component within the Article List.
+     *
+     * @class cmp-image__image
+     */
+    .cmp-image__image {
       width: 100%;
+  
       &__image-figure {
-          width: rem(195px);
-          height: rem(110px);
-          margin: 0;
-          display: inline-block;
+        width: rem(195px);
+        height: rem(110px);
+        margin: 0;
+        display: inline-block;
       }
-  }
-  &.cmp-article-article{    
-    &__list-view{
-
-      .cmp-list {
-          &__item-description{
-              display: none;
+    }
+  
+    /**
+     * Article variant for the Article List.
+     *
+     * @class cmp-article-article
+     */
+    &.cmp-article-article {
+      /**
+       * List view section within the Article List.
+       *
+       * @class cmp-article-list__list-view
+       */
+      &__list-view {
+        /**
+         * List component within the Article List.
+         *
+         * @class cmp-list
+         */
+        .cmp-list {
+          &__item-description {
+            display: none;
           }
-          &__item{
-              box-shadow: 0 0 0 rem(1px)  get-color(secondary-light-grey);
-              margin-bottom: rem(18px);
-              margin-left: rem(25px);
-              margin-right: rem(25px);
-              height: rem(110px);
-              width: 100%;
-          }
-
-          &__item-info{
+  
+          /**
+           * List item within the Article List.
+           *
+           * @class cmp-list__item
+           */
+          &__item {
+            box-shadow: 0 0 0 rem(1px) get-color(secondary-light-grey);
+            margin-bottom: rem(18px);
+            margin-left: rem(25px);
+            margin-right: rem(25px);
+            height: rem(110px);
+            width: 100%;
+  
+            /**
+             * Info section within the List item.
+             *
+             * @class cmp-list__item-info
+             */
+            &__item-info {
               display: flex;
               flex-direction: column;
               padding: rem(10px) rem(24px);
               line-height: rem(24px);
-          }
-          &__item-link{
+            }
+  
+            /**
+             * Link element within the List item.
+             *
+             * @class cmp-list__item-link
+             */
+            &__item-link {
               display: flex;
               align-items: center;
               text-decoration: none;
-          }
-          &__item-date{
+            }
+  
+            /**
+             * Date element within the List item.
+             *
+             * @class cmp-list__item-date
+             */
+            &__item-date {
               font-size: rem(12px);
               color: get-color(brand-text-gray);
-          }
-          &__item-title{
+            }
+  
+            /**
+             * Title element within the List item.
+             *
+             * @class cmp-list__item-title
+             */
+            &__item-title {
               font-size: rem(20px);
               font-weight: 500;
               color: get-color(brand-blue);
@@ -141,21 +258,29 @@
               bottom: auto;
               padding: 0;
               position: relative;
-          }        
-          .cmp-image__image {
-            min-width: 100%;
-            min-height: 100%;
-            &-figure {
+            }
+  
+            /**
+             * Image component within the List item.
+             *
+             * @class cmp-image__image
+             */
+            .cmp-image__image {
+              min-width: 100%;
+              min-height: 100%;
+  
+              &-figure {
                 width: rem(195px);
                 min-width: rem(195px);
                 height: rem(110px);
                 margin: 0;
                 display: inline-block;
                 overflow: hidden;
+              }
             }
+          }
         }
       }
     }
-}
-
-}
+  }
+  

@@ -1,14 +1,22 @@
-.intouchpage {
-    /*display: none;*/
-
+/**
+ * Styles for the intouch page.
+ *
+ * @class intouchpage
+ * @classdesc Styles for the intouch page.
+ */
+ .intouchpage {
+    /* display: none; */
+  
     #page-container {
-        position: relative;
-        min-height: 100vh;
+      position: relative;
+      min-height: 100vh;
     }
-    /* push header to the bottom of the page */
+  
+    /* Push header to the bottom of the page */
     #intouch-footerhtml {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
     }
-}
+  }
+  

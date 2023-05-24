@@ -1,125 +1,168 @@
 @import "../../variables";
 @import "../../../site/variables";
 
+/**
+ * Bar chart component styles.
+ */
 .cmp-barChart {
-	font-family: "Open Sans", sans-serif;
-	justify-content: space-between;
-	display: flex;
-	width: 100%;
-	height: auto; 
-	margin: 0 !important;
+  font-family: "Open Sans", sans-serif;
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+  height: auto;
+  margin: 0 !important;
 
-	&__body {
-		display: grid;
-		grid-template-columns: 60% 40%;
-	}
+  /**
+   * Body section of the bar chart.
+   */
+  &__body {
+    display: grid;
+    grid-template-columns: 60% 40%;
+  }
 
-	&__title {
-		font-size: $font-size-small;
-		text-transform: uppercase;
-		color: get-color(text-mid-gray);
-		width: 100%;
-		padding-bottom: 10px;
-	}
+  /**
+   * Title section of the bar chart.
+   */
+  &__title {
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    color: get-color(text-mid-gray);
+    width: 100%;
+    padding-bottom: 10px;
+  }
 
-	&__container {
-		font-size: $font-size-xxsmall;
-		color: get-color(text-mid-gray);
-		width: 100%;
-	}
+  /**
+   * Container section of the bar chart.
+   */
+  &__container {
+    font-size: $font-size-xxsmall;
+    color: get-color(text-mid-gray);
+    width: 100%;
+  }
 
-	&__chart {
-		& canvas {
-			padding-bottom: 0 !important;
-			height: rem(116px) !important;
-			width: rem(154px) !important;
-		}
-	}
+  /**
+   * Chart section of the bar chart.
+   */
+  &__chart {
+    /**
+     * Canvas element within the chart section.
+     */
+    & canvas {
+      padding-bottom: 0 !important;
+      height: rem(116px) !important;
+      width: rem(154px) !important;
+    }
+  }
 
-	&__legend-row {
-		display: flex;
-		flex-direction: row;
-		overflow: hidden;
-		white-space: nowrap;
-		height: rem(15px);
-		margin-bottom: rem(2px);
-	} 
+  /**
+   * Legend row section of the bar chart.
+   */
+  &__legend-row {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    white-space: nowrap;
+    height: rem(15px);
+    margin-bottom: rem(2px);
+  }
 
-	&__legend {
-		display: flex;
-		flex-direction: column;
-		height: rem(15px);
-		margin-bottom: rem(2px);
+  /**
+   * Legend section of the bar chart.
+   */
+  &__legend {
+    display: flex;
+    flex-direction: column;
+    height: rem(15px);
+    margin-bottom: rem(2px);
 
-		@include mobile {
-			height: auto;
-			grid-row: 2; 
-			margin-top: rem(15px);
-			padding-left: rem(10px);
-		}
+    @include mobile {
+      height: auto;
+      grid-row: 2;
+      margin-top: rem(15px);
+      padding-left: rem(10px);
+    }
 
-		div {
-			display: flex;
-			justify-content: flex-start;
-			flex-direction: row;
-			margin-bottom: rem(6px);
-		}
-	}
+    div {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: row;
+      margin-bottom: rem(6px);
+    }
+  }
 
-	&__sub-title {
-		font-size: $font-size-xxsmall;
-		color: get-color(text-light-charcoal);
-		padding: 0 0 0 rem(5px) !important;
-		width: rem(105px);
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		text-transform: capitalize;
+  /**
+   * Sub-title section of the bar chart.
+   */
+  &__sub-title {
+    font-size: $font-size-xxsmall;
+    color: get-color(text-light-charcoal);
+    padding: 0 0 0 rem(5px) !important;
+    width: rem(105px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: capitalize;
 
-		&-digits {
-			font-size: $font-size-xxsmall;
-			color: get-color(text-light-charcoal);
-			text-align: right;
-			padding-left: rem(40px);
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
+    /**
+     * Digits sub-title within the sub-title section.
+     */
+    &-digits {
+      font-size: $font-size-xxsmall;
+      color: get-color(text-light-charcoal);
+      text-align: right;
+      padding-left: rem(40px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-		&-currency {
-			font-size: $font-size-xxsmall;
-			color: get-color(text-light-charcoal);
-			text-align: right;
-			padding-left: rem(5px);
-		}
+    /**
+     * Currency sub-title within the sub-title section.
+     */
+    &-currency {
+      font-size: $font-size-xxsmall;
+      color: get-color(text-light-charcoal);
+      text-align: right;
+      padding-left: rem(5px);
+    }
 
-		&-color-1 {
-			border-right: rem(6px) solid get-color(brand-primary-text);
-			// padding-left: rem(32px);
-			padding-left: rem(16px);
-		}
+    /**
+     * Color variant 1 of the sub-title section.
+     */
+    &-color-1 {
+      border-right: rem(6px) solid get-color(brand-primary-text);
+      padding-left: rem(16px);
+    }
 
-		&-color-2 {
-			border-right: rem(6px) solid get-color(brand-blue);
-			// padding-left: rem(32px);
-			padding-left: rem(16px);
-		}
+    /**
+     * Color variant 2 of the sub-title section.
+     */
+    &-color-2 {
+      border-right: rem(6px) solid get-color(brand-blue);
+      padding-left: rem(16px);
+    }
 
-		&-color-3 {
-			border-right: rem(6px) solid get-color(tertiary-dark-blue);
-			// padding-left: rem(32px);
-			padding-left: rem(16px);
-		}
+    /**
+     * Color variant 3 of the sub-title section.
+     */
+    &-color-3 {
+      border-right: rem(6px) solid get-color(tertiary-dark-blue);
+      padding-left: rem(16px);
+    }
 
-		&-color-4 {
-			border-right: rem(6px) solid get-color(td-primary-blue);
-			// padding-left: rem(32px);
-			padding-left: rem(16px);
-		}
+    /**
+     * Color variant 4 of the sub-title section.
+     */
+    &-color-4 {
+      border-right: rem(6px) solid get-color(td-primary-blue);
+      padding-left: rem(16px);
+    }
 
-		&-color-5 {
-			border-right: rem(6px) solid get-color(td-lightblue);
-			// padding-left: rem(32px);
-			padding-left: rem(16px);
-		}
-	}
+    /**
+     * Color variant 5 of the sub-title section.
+     */
+    &-color-5 {
+      border-right: rem(6px) solid get-color(td-lightblue);
+      padding-left: rem(16px);
+    }
+  }
 }

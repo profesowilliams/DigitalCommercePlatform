@@ -1,33 +1,53 @@
-#cmp-techdata-header {
-    &.cmp-experiencefragment__header--sticky {
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      background-color: inherit;
-      width: 100%;
-      left: 0;
-    }
-    &.cmp-experiencefragment__header--sticky--opaque {
-      position: fixed;
-      z-index: 9999;
-      top: 0;
-      width: 100%;
-      left: 0;
-    }
-
+/**
+ * Styles for the cmp-techdata-header component.
+ *
+ * @class cmp-techdata-header
+ * @classdesc Styles for the cmp-techdata-header component.
+ */
+ #cmp-techdata-header {
+  /**
+   * Styles for the cmp-experiencefragment__header--sticky modifier.
+   */
+  &.cmp-experiencefragment__header--sticky {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    background-color: inherit;
+    width: 100%;
+    left: 0;
   }
-#cmp-techdata-header:hover {
-  background: rgba(255,255,255,1);
+
+  /**
+   * Styles for the cmp-experiencefragment__header--sticky--opaque modifier.
+   */
+  &.cmp-experiencefragment__header--sticky--opaque {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    width: 100%;
+    left: 0;
+  }
 }
 
-.sticky{
+/**
+ * Hover styles for the cmp-techdata-header component.
+ */
+#cmp-techdata-header:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/**
+ * Styles for the sticky class.
+ */
+.sticky {
   position: fixed;
   z-index: 9998;
   opacity: 1;
   width: 100%;
   top: 0;
   margin-top: 80px;
-   @include mobile {
-     margin-top: 47px;
-   }
+
+  @include mobile {
+    margin-top: 47px;
+  }
 }

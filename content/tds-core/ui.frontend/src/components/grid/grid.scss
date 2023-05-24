@@ -1,16 +1,31 @@
-.cmp-grid.ag-theme-alpine {
+/**
+ * Styles for the cmp-grid component with the ag-theme-alpine.
+ *
+ * @class cmp-grid
+ * @classdesc Styles for the cmp-grid component.
+ */
+ .cmp-grid.ag-theme-alpine {
   position: relative;
   height: 100%;
   width: 100%;
   min-width: rem(1376px);
   overflow: auto;
 
+  /**
+   * Styles for the ag-root-wrapper.
+   */
   .ag-root-wrapper {}
 
+  /**
+   * Styles for the ag-root.
+   */
   .ag-root {
     font-size: $font-size-xsmall;
   }
 
+  /**
+   * Styles for the ag-header.
+   */
   .ag-header {
     border-top: 2px solid get-color(brand-blue);
     border-bottom: 1px solid get-color(brand-blue);
@@ -23,6 +38,9 @@
 
   .ag-header-container {}
 
+  /**
+   * Styles for the ag-header-row.
+   */
   .ag-header-row {
     height: rem(34px) !important;
     color: get-color(td-dark-blue);
@@ -35,6 +53,9 @@
 
   .ag-body {}
 
+  /**
+   * Styles for the ag-row.
+   */
   .ag-row {
     color: get-color(brand-text-gray);
     font-weight: normal;
@@ -74,6 +95,9 @@
     color: get-color(brand-light-blue-icon);
   }
 
+  /**
+   * Styles for URLs in the cmp-grid component.
+   */
   .cmp-grid-url-underlined {
     text-decoration: underline;
     color: get-color(brand-button-blue);
@@ -102,7 +126,9 @@
     color: get-color(brand-light-blue-icon);
   }
 
-  // *** custom sorting arrows *** //
+  /**
+   * Custom sorting arrows styles.
+   */
   .ag-header-cell-sortable {
 
     .ag-icon,
@@ -136,12 +162,13 @@
     }
   }
 
-  // *** horizontal scrollbar fix on column auto width *** //
   .ag-body-horizontal-scroll {
     display: none;
   }
 
-  // *** custom page info *** //
+  /**
+   * Custom page info styles.
+   */
   .hidden {
     display: none;
   }
@@ -154,8 +181,9 @@
     color: get-color(brand-text-gray);
   }
 
-  // *** custom expand/collapse/checked/unchecked for child rows *** //
-
+  /**
+   * Custom expand/collapse/checked/unchecked styles for child rows.
+   */
   .ag-icon-tree-open {
     color: get-color(brand-light-blue-icon);
 
@@ -233,4 +261,3 @@
     }
   }
 }
- 

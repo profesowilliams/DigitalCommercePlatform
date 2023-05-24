@@ -1,4 +1,10 @@
-.honeycomb {
+/**
+ * Styles for the honeycomb component.
+ *
+ * @class honeycomb
+ * @classdesc Styles for the honeycomb component.
+ */
+ .honeycomb {
   &.cmp-honeycomb__dpb {
     .cmp-accordion__item {
       .cmp-honeycomb-svg {
@@ -16,6 +22,7 @@
           font-weight: 500;
         }
       }
+
       .cmp-accordion__panel {
         .cmp-text {
           color: map-get($color-palette, 'white');
@@ -42,6 +49,7 @@
     display: flex;
     flex-wrap: wrap;
   }
+
   .cmp-accordion__title {
     position: relative;
     bottom: 77px;
@@ -49,6 +57,7 @@
     font-size: 16px;
     font-family: $font-family-everett;
   }
+
   .cmp-accordion__button {
     width: unset;
     background-color: unset;
@@ -56,14 +65,17 @@
     flex-direction: column;
     cursor: pointer;
   }
+
   & > .cmp-accordion .cmp-accordion__button[aria-expanded='false']:after,
   & > .cmp-accordion .cmp-accordion__button[aria-expanded='true']:after {
     content: '' !important;
   }
+
   .cmp-accordion__item {
     width: 123px;
     height: 127px;
     margin: -9px 3px;
+
     .cmp-accordion__header {
       .cmp-accordion__title {
         font-weight: normal;
@@ -76,6 +88,7 @@
       margin-top: -6px;
       margin-left: -3px;
     }
+
     .cmp-honeycomb-svg {
       height: 126px;
     }
@@ -88,6 +101,7 @@
         display: block;
       }
     }
+
     .cmp-accordion__panel {
       position: relative;
       bottom: 141px;
@@ -100,6 +114,7 @@
         width: 314px;
         text-align: center;
         align-items: start;
+
         .text {
           display: flex;
           width: 100%;
@@ -112,16 +127,19 @@
       }
     }
   }
+
   .cmp-accordion__item:nth-child(even) {
     .cmp-accordion__panel {
       right: 192px;
       justify-content: right;
+
       .text {
         position: absolute;
         right: 22px;
       }
     }
   }
+
   .cmp-accordion__item:nth-child(odd) {
     .cmp-accordion__panel {
       left: 143px;
@@ -132,6 +150,7 @@
   .cmp-accordion__item:nth-child(4) {
     margin-left: 94px;
   }
+
   .cmp-accordion__item:nth-child(2) {
     margin-left: 31px;
   }

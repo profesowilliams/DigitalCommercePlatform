@@ -1,85 +1,161 @@
-// .dp-figure ported from ui.frontend/src/main/webpack/components/_image.scss
-// TODO: Cleanup important with proper CSS specificity, correct indentation.
+/**
+ * .dp-figure ported from ui.frontend/src/main/webpack/components/_image.scss
+ * TODO: Cleanup important with proper CSS specificity, correct indentation.
+ */
 
-.dp-figure,
-.cmp-image {
-	margin: 0;
-
-	&--spacing-header {
-		padding: rem(17px) rem(20px) rem(16px) rem(10px);
-	}
-
-	&--spacing-footer {
-		padding: rem(6px) 0 rem(8px);
-	}
-
-  &--auto-resize {
-    svg {
-      height: 100%;
-      width: 100%;
-    }
-  }
-}
-
-.cmp-teaser__image{
-  .cmp-image {
-    display: block;
-  }
-}
-
-.cmp-image {
-  margin: 0;
-  display: flex;
-  width: 100%;
-
-  &__image {
-    width: 100%;
-  }
-  
-  &-left {
-    .cmp-image {
-    display: flex;
-    justify-content: flex-start;
-    }
-  }
-  &-right {
-    .cmp-image {
-      display: flex;
-      justify-content: flex-end;
-    }
-  }    
-  &-center {
-    .cmp-image {
-      display: flex;
-      justify-content: center;
-    }
-  }
-}
-
-.cmp-td-logo{
-    &--header{
-      width: rem(196px) !important;
-      padding: rem(21px) rem(26px) rem(21px) rem(10px);
-  
-      @include mobile {
-        width: rem(132px) !important;
-        padding: rem(8px)
-      }
-    }
-
-    &--header-without-left{
-      width: rem(186px) !important;
-      padding: rem(21px) rem(26px) rem(21px) rem(0px);
-      box-sizing: border-box;
-
-      @include mobile {
-        width: rem(132px) !important;
-        padding: rem(8px) rem(8px) rem(8px) rem(0px);
-      }
-    }
-
-    &--footer{
-      width: rem(128px) !important;
-      padding: rem(0px) rem(0px) rem(8px);
-    }
-  }
+/**
+ * Main figure component for displaying images.
+ *
+ * @class dp-figure
+ * @class cmp-image
+ */
+ .dp-figure,
+ .cmp-image {
+   margin: 0;
+ 
+   /**
+    * Header spacing variant.
+    *
+    * @class cmp-image--spacing-header
+    */
+   &--spacing-header {
+     padding: rem(17px) rem(20px) rem(16px) rem(10px);
+   }
+ 
+   /**
+    * Footer spacing variant.
+    *
+    * @class cmp-image--spacing-footer
+    */
+   &--spacing-footer {
+     padding: rem(6px) 0 rem(8px);
+   }
+ 
+   /**
+    * Auto-resize variant.
+    *
+    * @class cmp-image--auto-resize
+    */
+   &--auto-resize {
+     svg {
+       height: 100%;
+       width: 100%;
+     }
+   }
+ }
+ 
+ /**
+  * Teaser image variant.
+  *
+  * @class cmp-teaser__image
+  */
+ .cmp-teaser__image {
+   .cmp-image {
+     display: block;
+   }
+ }
+ 
+ /**
+  * Image component.
+  *
+  * @class cmp-image
+  */
+ .cmp-image {
+   margin: 0;
+   display: flex;
+   width: 100%;
+ 
+   /**
+    * Image element.
+    *
+    * @class cmp-image__image
+    */
+   &__image {
+     width: 100%;
+   }
+ 
+   /**
+    * Left alignment variant.
+    *
+    * @class cmp-image-left
+    */
+   &-left {
+     .cmp-image {
+       display: flex;
+       justify-content: flex-start;
+     }
+   }
+ 
+   /**
+    * Right alignment variant.
+    *
+    * @class cmp-image-right
+    */
+   &-right {
+     .cmp-image {
+       display: flex;
+       justify-content: flex-end;
+     }
+   }
+ 
+   /**
+    * Center alignment variant.
+    *
+    * @class cmp-image-center
+    */
+   &-center {
+     .cmp-image {
+       display: flex;
+       justify-content: center;
+     }
+   }
+ }
+ 
+ /**
+  * TD logo component.
+  *
+  * @class cmp-td-logo
+  */
+ .cmp-td-logo {
+   /**
+    * Header variant.
+    *
+    * @class cmp-td-logo--header
+    */
+   &--header {
+     width: rem(196px) !important;
+     padding: rem(21px) rem(26px) rem(21px) rem(10px);
+ 
+     @include mobile {
+       width: rem(132px) !important;
+       padding: rem(8px);
+     }
+   }
+ 
+   /**
+    * Header variant without left padding.
+    *
+    * @class cmp-td-logo--header-without-left
+    */
+   &--header-without-left {
+     width: rem(186px) !important;
+     padding: rem(21px) rem(26px) rem(21px) rem(0px);
+     box-sizing: border-box;
+ 
+     @include mobile {
+       width: rem(132px) !important;
+       padding: rem(8px) rem(8px) rem(8px) rem(0px);
+     }
+   }
+ 
+   /**
+    * Footer variant.
+    *
+    * @class cmp-td-logo--footer
+    */
+   &--footer {
+     width: rem(128px) !important;
+     padding: rem(0px) rem(0px) rem(8px);
+   }
+ }
+ 

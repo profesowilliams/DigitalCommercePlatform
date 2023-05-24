@@ -1,4 +1,14 @@
-.cmp-list {
+/**
+ * List component.
+ *
+ * @class cmp-list
+ */
+ .cmp-list {
+  /**
+   * Link list component within the list.
+   *
+   * @class cmp-link-list
+   */
   .cmp-link-list {
     display: flex;
     flex-wrap: wrap;
@@ -12,6 +22,11 @@
       border-right: rem(1px) solid get-color(brand-white);
     }
 
+    /**
+     * Link list item within the link list component.
+     *
+     * @class cmp-link-list__item
+     */
     .cmp-link-list__item {
       padding: 0 rem(10px);
 
@@ -20,6 +35,11 @@
         color: get-color(brand-white);
         cursor: pointer;
 
+        /**
+         * CSS class for disabling link interaction.
+         *
+         * @class nolink
+         */
         &.nolink {
           cursor: default;
 
@@ -36,15 +56,30 @@
       }
     }
 
+    /**
+     * Image component within the link list component.
+     *
+     * @class cmp-image
+     */
     .cmp-image {
       margin-right: rem(4px);
     }
 
+    /**
+     * Image element within the image component.
+     *
+     * @class cmp-image__image
+     */
     .cmp-image__image {
       width: rem(14.4px);
       margin-top: 0.5vh;
     }
 
+    /**
+     * Title element within the link list item.
+     *
+     * @class cmp-link-list__item-title
+     */
     .cmp-link-list__item-title {
       padding-top: rem(2px);
     }

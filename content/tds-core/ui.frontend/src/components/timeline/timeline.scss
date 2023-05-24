@@ -1,28 +1,63 @@
-.cmp-timeline {
+/**
+ * Container for the timeline component.
+ */
+ .cmp-timeline {
   background-color: transparent;
+
+  /**
+   * List of steps in the timeline.
+   */
   .cmp-timeline-steps {
     list-style: none;
     padding: 0;
+
+    /**
+     * First step item in the timeline.
+     */
     .cmp-timeline-steps__first-item {
+      /**
+       * Info container within the first step item.
+       */
       .cmp-timeline-steps__item--infocontainer {
+        /**
+         * Title text within the info container.
+         */
         .dp-title__text {
           font-weight: 400;
         }
       }
     }
+
+    /**
+     * Last step item in the timeline.
+     */
     .cmp-timeline-steps__last-item {
+      /**
+       * Info container within the last step item.
+       */
       .cmp-timeline-steps__item--infocontainer {
+        /**
+         * Title text within the info container.
+         */
         .dp-title__text {
           font-weight: 500;
           line-height: 17px;
         }
       }
     }
+
+    /**
+     * First and last step items in the timeline.
+     */
     .cmp-timeline-steps__first-item,
     .cmp-timeline-steps__last-item {
       position: relative;
       display: flex;
       justify-content: center;
+
+      /**
+       * Info container within the step item.
+       */
       .cmp-timeline-steps__item--infocontainer {
         display: flex;
         position: absolute;
@@ -31,9 +66,17 @@
         justify-content: center;
         width: 60px;
         flex-direction: column;
+
+        /**
+         * Icon within the info container.
+         */
         svg {
           margin-bottom: 9px;
         }
+
+        /**
+         * Title text within the info container.
+         */
         .dp-title__text {
           margin: 0;
           text-align: center;
@@ -44,23 +87,42 @@
         }
       }
     }
+
+    /**
+     * Step item in the timeline.
+     */
     .cmp-timeline-steps__item {
       display: flex;
       background-color: white;
 
+      /**
+       * Image container within the step item.
+       */
       .cmp-timeline-steps__item--imagecontainer {
         background-color: #003031;
         width: 100px;
         display: flex;
         align-items: center;
+
+        /**
+         * Image within the image container.
+         */
         .cmp-image {
           width: 46px;
           margin: auto;
         }
       }
+
+      /**
+       * Info container within the step item.
+       */
       .cmp-timeline-steps__item--infocontainer {
         padding: 20px 0 28px 17px;
         flex: 0 0 82%;
+
+        /**
+         * Title text within the info container.
+         */
         .dp-title__text {
           font-weight: 400;
           font-size: rem(16px);
@@ -69,6 +131,10 @@
           color: map-get($color-palette, 'deep-teal');
           margin: 0px 0px 10px 0px;
         }
+
+        /**
+         * Description within the info container.
+         */
         .dp-description {
           font-weight: 400;
           font-size: rem(16px);
@@ -78,6 +144,10 @@
         }
       }
     }
+
+    /**
+     * Image divider within the step item.
+     */
     .cmp-timeline-steps__item--imagedivider .cmp-image {
       display: flex;
       justify-content: center;

@@ -1,16 +1,38 @@
+// Import site variables, mixins and font-face styles
 @import '../../site/_variables.scss';
 @import '../_mixins.scss';
 @import '../styles/_font-face.scss';
 
+/**
+ * Text alignment component.
+ *
+ * This component provides classes to align text to the left, right or center.
+ */
 .cmp-text-alignment {
+
+    /**
+     * Left aligned text
+     *
+     * Apply this class to align text to the left.
+     */
     &--left {
         text-align: left;
     }
 
+    /**
+     * Right aligned text
+     *
+     * Apply this class to align text to the right.
+     */
     &--right {
         text-align: right;
     }
 
+    /**
+     * Center aligned text
+     *
+     * Apply this class to align text in the center.
+     */
     &--center {
         text-align: center;
     }

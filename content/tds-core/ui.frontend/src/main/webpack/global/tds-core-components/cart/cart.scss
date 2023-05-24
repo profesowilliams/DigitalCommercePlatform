@@ -1,6 +1,11 @@
 @import '../../variables';
 @import '../../../site/variables';
-.cmp-cart{
+
+/**
+ * The .cmp-cart class.
+ * Represents a cart icon in the navbar.
+ */
+.cmp-cart {
     width: rem(36px);
     height: rem(36px);
     display: flex;
@@ -9,7 +14,10 @@
     text-decoration: none;
     margin-top: 0.4rem;
 
-    &__icon{
+    /**
+     * The cart icon.
+     */
+    &__icon {
         position: absolute;
         color: get_color('brand-blue');
         display: flex;
@@ -18,14 +26,25 @@
         width: rem(36px);
         height: rem(32px);
         margin-bottom: rem(4px);
-
     }
-    &__number{
+
+    /**
+     * The number of items in the cart.
+     * Hidden by default.
+     */
+    &__number {
         display: none;
     }
 
-    &__active{
-        .cmp-cart__icon{
+    /**
+     * Styles when the cart is active.
+     */
+    &__active {
+
+        /**
+         * Color and positioning of the cart icon when active.
+         */
+        .cmp-cart__icon {
             color: get_color('brand-blue');
             display: flex;
             justify-content: space-around;
@@ -33,7 +52,11 @@
             width: rem(36px);
             height: rem(32px);
         }
-        .cmp-cart__number{
+
+        /**
+         * Styles and positioning of the number of items when the cart is active.
+         */
+        .cmp-cart__number {
             position: relative;
             width: 0.9rem;
             height: 0.9rem;
@@ -46,6 +69,10 @@
             color: #ffffff;
             text-align: center;
             font-size: 11px;
+            
+            /**
+             * Styles for the span that displays the number of items in the cart.
+             */
             span {
                 margin-left: 100%;
                 text-decoration: none;
