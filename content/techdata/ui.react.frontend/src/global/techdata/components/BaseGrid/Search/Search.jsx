@@ -73,20 +73,30 @@ function _GridSearch(
     return searchTerm;
   };
 
-
-  useEffect(() => {
+  const setSearchOptionGivenQueryString = async (options, userData) => {
     const searchTerm = getOptionGivenQueryString(options, userData);
 
-    if (searchTerm) {
-      setSearchTerm(searchTerm.value);
-      setCapsuleSearchValue(searchTerm.value);
-      setValues({ ...values, input: searchTerm.value });
-      setCapsuleValues({ ...customSearchValues, option: searchTerm.option.searchKey, label: searchTerm.option.searchLabel });
+    if (!!searchTerm) {
+      setSearchTriggered(true);
       setLocalStorageData(SEARCH_LOCAL_STORAGE_KEY, {
         field: searchTerm.option.searchKey,
         value: searchTerm.value,
       });
+      setSwitchDropdown(false);
+      setIsSearchCapsuleVisible(true);
+      setSearchTerm(searchTerm.value);
+      setCapsuleSearchValue(searchTerm.value);
+      setIsEditView(false);
+      setInputValueState(searchTerm.value);
       onQueryChanged({ onSearchAction: true });
+      setValues({ ...values, option: searchTerm.option.searchKey, label: searchTerm.option.searchLabel });
+      setCapsuleValues({ ...customSearchValues, option: searchTerm.option.searchKey, label: searchTerm.option.searchLabel });
+    }
+  };
+
+  useEffect(() => {
+    if (userData) {
+      setSearchOptionGivenQueryString(options, userData);
     }
   }, [userData]);
 
