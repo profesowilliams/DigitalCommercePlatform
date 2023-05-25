@@ -51,6 +51,23 @@ use(['../../../common/utils.js'], function (utils) {
     if (properties && properties["lineTdsPartNo"]) {
         labels["lineTdsPartNo"] = properties["lineTdsPartNo"];
     }
+
+    if (properties && properties["detailsActionViewDNotes"]) {
+      labels["detailsActionViewDNotes"] = properties["detailsActionViewDNotes"];
+    }
+    if (properties && properties["detailsActionViewInvoices"]) {
+      labels["detailsActionViewInvoices"] =
+        properties["detailsActionViewInvoices"];
+    }
+    if (properties && properties["detailsActionModifyOrder"]) {
+      labels["detailsActionModifyOrder"] =
+        properties["detailsActionModifyOrder"];
+    }
+    if (properties && properties["detailsActionExportSerialNumbers"]) {
+      labels["detailsActionExportSerialNumbers"] =
+        properties["detailsActionExportSerialNumbers"];
+    }
+
     if (properties && properties["detailsLineHeader"]) {
       labels["detailsLineHeader"] = properties["detailsLineHeader"];
     }

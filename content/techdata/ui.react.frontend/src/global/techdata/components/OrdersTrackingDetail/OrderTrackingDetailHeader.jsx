@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './MenuActions';
+import OrderTrackingDetailTitle from './OrderTrackingDetailTitle';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -32,25 +33,19 @@ const OrderTrackingDetailHeader = ({
         </Link>
       </div>
       <div className="title-container">
-        <div>
-          <span className="quote-preview-bold">
-            {apiResponse?.content.status}
-          </span>
-          <span className="quote-preview-bold">
-            {apiResponse?.content?.orderNumber &&
-              ` | ${getDictionaryValueOrKey(config.labels?.detailsOrderNo)}: `}
-          </span>
-          <span className="quote-preview">
-            {apiResponse?.content?.orderNumber}
-          </span>
-        </div>
+        {apiResponse?.content && (
+          <OrderTrackingDetailTitle
+            content={apiResponse.content}
+            label={config.labels?.detailsOrderNo}
+          />
+        )}
         <div
           className="actions-container"
           onMouseOver={handleActionMouseOver}
           onMouseLeave={handleActionMouseLeave}
         >
           <span className="quote-actions">
-            {getDictionaryValueOrKey(config.labels?.actions)}
+            {getDictionaryValueOrKey(config.labels?.detailsActions)}
           </span>
           {actionsDropdownVisible && (
             <div

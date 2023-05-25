@@ -58,7 +58,7 @@
       line-height: 20px;
     }
     .quote-actions {
-      color: get-color(teal);
+      color:  map-get($color-palette,"teal");
       cursor: pointer;
     }
     .actions-container {

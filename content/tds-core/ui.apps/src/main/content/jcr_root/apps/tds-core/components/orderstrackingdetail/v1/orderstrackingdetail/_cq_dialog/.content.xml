@@ -90,6 +90,35 @@
                                                 name="./lineTdsPartNo"
                                                 required="{Boolean}true"/>
 
+                                            <detailsActionViewDNotes
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter View D-Notes"
+                                                fieldLabel="View D-Notes"
+                                                name="./detailsActionViewDNotes"
+                                                required="{Boolean}true"/>
+                                            <detailsActionViewInvoices
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter View Invoices"
+                                                fieldLabel="View Invoices"
+                                                name="./detailsActionViewInvoices"
+                                                required="{Boolean}true"/>
+                                            <detailsActionModifyOrder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Modify Order"
+                                                fieldLabel="Modify Order"
+                                                name="./detailsActionModifyOrder"
+                                                required="{Boolean}true"/>
+                                            <detailsActionExportSerialNumbers
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Export Serial Numbers"
+                                                fieldLabel="Export Serial Numbers"
+                                                name="./detailsActionExportSerialNumbers"
+                                                required="{Boolean}true"/>
+
 											<detailsLineHeader
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
