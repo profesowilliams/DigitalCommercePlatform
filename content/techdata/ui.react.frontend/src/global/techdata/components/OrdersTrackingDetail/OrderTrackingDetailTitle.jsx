@@ -7,7 +7,7 @@ const OrderTrackingDetailTitle = ({ content, label }) => {
     <div>
       <span className="quote-preview-bold">{status}</span>
       <span className="quote-preview-bold">
-        ` | ${getDictionaryValueOrKey(label)}: `
+        {` | ${getDictionaryValueOrKey(label)}: `}
       </span>
       <span className="quote-preview">{orderNumber}</span>
     </div>
