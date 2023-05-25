@@ -27,7 +27,6 @@ function OrdersTrackingDetail(props) {
   const hasOrderModificationRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderModification'
   );
-
   return (
     <div className="cmp-quote-preview cmp-order-preview">
       <section>
@@ -40,7 +39,7 @@ function OrdersTrackingDetail(props) {
           />
           <div className="info-container">
             <SoldToCard
-              soldTo={apiResponse?.content?.shipTo || {}}
+              shipTo={apiResponse?.content?.shipTo || {}}
               config={config}
             />
             <OrderAcknowledgementCard
