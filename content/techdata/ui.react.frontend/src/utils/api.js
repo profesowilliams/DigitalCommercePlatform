@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getHeaderInfoFromUrl, getConsumerRequestHeader, isEnvironmentEnabled, getEnvironmentHeader } from '../utils';
+import { getConsumerRequestHeader, isEnvironmentEnabled, getEnvironmentHeader } from '../utils';
 
 const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
 
@@ -9,10 +9,8 @@ export const generateTraceId = (userData) =>
 const sessionId = localStorage.getItem('sessionId');
 const userData = JSON.parse(localStorage.getItem('userData') || '{ "id": "NoAuth" }');
 const traceId = generateTraceId(userData);
-const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 const consumer = getConsumerRequestHeader();
 const envHeader = getEnvironmentHeader();
-
 
 const headers = {
   common: { 
