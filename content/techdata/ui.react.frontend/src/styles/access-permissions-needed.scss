@@ -13,23 +13,23 @@ div.access-permissions_div{
     left: 412px;
     top: 40px;
     text-align: center;
+    justify-content: center;
 }
 
 h2.access-permissions_header{
-    position: absolute;
-    width: 456px;
+    width: 100%;
+        min-width: 456px;
     height: 46px;
-    left: 0;
     top: 163px;
+    left: 10px;
+        right: 10px;
     font-family: 'Arial';
     font-style: normal;
     font-weight: 400;
     font-size: 32px;
     line-height: 40px;
-    display: flex;
-    align-items: center;
-    text-align: center;
     color: $brand-charcoal;
+    margin: auto;
 }
 
 h5.access-permissions_content{

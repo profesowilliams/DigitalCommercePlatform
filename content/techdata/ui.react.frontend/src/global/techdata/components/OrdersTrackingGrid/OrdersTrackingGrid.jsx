@@ -38,6 +38,7 @@ import Report from './Report/Report';
 import OrderSearch from './Search/OrderSearch';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
+import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import {
   addCurrentPageNumber,
   compareSort,
@@ -85,6 +86,12 @@ function OrdersTrackingGrid(props) {
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
+  const hasCanViewOrdersRights = userData?.roleList?.some(
+    (role) => role.entitlement === 'CanViewOrders'
+  );
+  const hasOrderTrackingRights = userData?.roleList?.some(
+    (role) => role.entitlement === 'OrderTracking'
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
@@ -94,7 +101,8 @@ function OrdersTrackingGrid(props) {
   );
   const [dateRange, setDateRange] = useState(formattedDateRange);
 
-  const { searchOptionsList, icons, reportPillLabel } = componentProp;
+  const { searchOptionsList, icons, reportPillLabel, noAccessProps } =
+    componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
@@ -354,6 +362,11 @@ function OrdersTrackingGrid(props) {
     });
   }
 
+  const hasAccess =
+    userData?.activeCustomer &&
+    hasCanViewOrdersRights &&
+    hasOrderTrackingRights;
+
   useEffect(() => {
     if (
       hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
@@ -375,7 +388,7 @@ function OrdersTrackingGrid(props) {
 
   return (
     <>
-      {userData?.activeCustomer ? (
+      {hasAccess ? (
         <div className="cmp-order-tracking-grid">
           <BaseGridHeader
             leftComponents={[
@@ -496,7 +509,7 @@ function OrdersTrackingGrid(props) {
           />
         </div>
       ) : (
-        <></>
+        <AccessPermissionsNeeded noAccessProps={noAccessProps} />
       )}
     </>
   );

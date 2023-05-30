@@ -9,6 +9,7 @@ use(["../common/utils.js"], function (utils) {
   let dNotesFlyout = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
+  let noAccessProps = {};
 
   if (properties && properties["detailUrl"]) {
     jsonObject["detailUrl"] = properties["detailUrl"];
@@ -44,7 +45,7 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["multiple"] = properties["multiple"];
   }
 
-   //Export flyout options
+  //Export flyout options
   let exportOptionsList = utils.getDataFromMultifield(
     resourceResolver,
     "exportOptionsList",
@@ -83,7 +84,8 @@ use(["../common/utils.js"], function (utils) {
     exportFlyout.description = properties["exportFlyoutDescription"];
   }
   if (properties && properties["exportFlyoutSecondaryDescription"]) {
-    exportFlyout.secondaryDscription = properties["exportFlyoutSecondaryDescription"];
+    exportFlyout.secondaryDscription =
+      properties["exportFlyoutSecondaryDescription"];
   }
 
   if (properties && properties["exportFlyoutButton"]) {
@@ -184,8 +186,23 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
 
-  if (properties && properties['reportPillLabel']) {
-    jsonObject['reportPillLabel'] = properties['reportPillLabel'];
+  // No Access Screen
+  if (properties && properties["noAccessTitle"]) {
+    noAccessProps.noAccessTitle = properties["noAccessTitle"];
+  }
+  if (properties && properties["noAccessMessage"]) {
+    noAccessProps.noAccessMessage = properties["noAccessMessage"];
+  }
+  if (properties && properties["noAccessBack"]) {
+    noAccessProps.noAccessBack = properties["noAccessBack"];
+  }
+  if (noAccessProps != null) {
+    jsonObject["noAccessProps"] = noAccessProps;
+  }
+
+
+  if (properties && properties["reportPillLabel"]) {
+    jsonObject["reportPillLabel"] = properties["reportPillLabel"];
   }
 
   let dateOptionValues = utils.getDataFromMultifield(
@@ -198,7 +215,7 @@ use(["../common/utils.js"], function (utils) {
       return itemData;
     }
   );
-    
+
   if (dateOptionValues != null) {
     jsonObject["dateOptionValues"] = dateOptionValues;
   }
