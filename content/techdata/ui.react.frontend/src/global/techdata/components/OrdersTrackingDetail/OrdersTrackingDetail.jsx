@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SoldToCard from './SoldToCard';
 import OrdersTrackingDetailGrid from './OrdersTrackingDetailGrid/OrdersTrackingDetailGrid';
 import useGet from '../../hooks/useGet';
@@ -12,6 +12,7 @@ import OrderTrackingContainer from './OrderTrackingContainer';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
+  const [userData, setUserData] = useState(null);
   const componentProps = JSON.parse(props.componentProp);
   const config = {
     ...componentProps,
@@ -20,13 +21,20 @@ function OrdersTrackingDetail(props) {
     paginationStyle: 'none',
   };
   const [apiResponse] = useGet(`${config.uiServiceEndPoint}?id=${id}`);
-  const userData = useStore((state) => state.userData);
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
   const hasOrderModificationRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderModification'
   );
+
+  useEffect(() => {
+    window.getSessionInfo &&
+      window.getSessionInfo().then((data) => {
+        setUserData(data[1]);
+      });
+  }, []);
+
   return (
     <div className="cmp-quote-preview cmp-order-preview">
       <section>

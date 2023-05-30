@@ -60,6 +60,7 @@
     .quote-actions {
       color:  map-get($color-palette,"teal");
       cursor: pointer;
+      font-size: 16px;
     }
     .actions-container {
       position: relative;
@@ -84,6 +85,7 @@
 
           > li {
             padding: 0 14px;
+            font-size: 16px;
           }
           > li:hover {
             background-color: get-color(neutral-gray-2);
