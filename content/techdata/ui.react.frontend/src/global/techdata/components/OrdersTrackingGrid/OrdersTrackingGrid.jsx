@@ -364,8 +364,7 @@ function OrdersTrackingGrid(props) {
 
   const hasAccess =
     userData?.activeCustomer &&
-    hasCanViewOrdersRights &&
-    hasOrderTrackingRights;
+    (hasCanViewOrdersRights || hasOrderTrackingRights);
 
   useEffect(() => {
     if (
