@@ -82,16 +82,22 @@
 
     function getHeaderInfoFromUrl(pathName) {
         try {
-        const countryIndex = 4;
-        const languageIndex = 5;
-        const pathArray = pathName.split("/");
-        const country = pathArray[countryIndex].toUpperCase();
-        const language = pathArray[languageIndex];
+            let countryIndex = 1; // uat/stage/prod
+            let languageIndex = 2;
+            const pathArray = pathName?.split("/");
+            if (pathArray && pathArray.length >= 5 && pathArray[1] === "content") {
+                countryIndex = 4; // dit/sit
+                languageIndex = 5;
+            }
 
-        return {
-            site: country,
-            acceptLanguage: resolveAcceptLanguage(language, country),
-            };
+            const pathArray = pathName.split("/");
+            const country = pathArray[countryIndex].toUpperCase();
+            const language = pathArray[languageIndex];
+
+            return {
+                site: country,
+                acceptLanguage: resolveAcceptLanguage(language, country),
+                };
         } catch (error) {
             console.log("Exception while getting country and language from url: " + error);
         }
