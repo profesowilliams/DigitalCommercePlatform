@@ -193,115 +193,90 @@ export function addCurrentPageNumber(customPaginationRef, request) {
 }
 
 export const getDateRangeLabel = (startDate, endDate) => {
-  const shortStartDateMonth = startDate.format('MMMM').substring(0, 3);
-  const startDateMonth = startDate.format('M');
-  const startDateDay = startDate.format('D');
+  if (startDate && endDate) {
+    const shortStartDateMonth = startDate.format('MMMM').substring(0, 3);
+    const startDateMonth = startDate.format('M');
+    const startDateDay = startDate.format('D');
 
-  const shortEndDateMonth = endDate.format('MMMM').substring(0, 3);
-  const endDateMonth = endDate.format('M');
-  const endDateDay = endDate.format('D');
+    const shortEndDateMonth = endDate.format('MMMM').substring(0, 3);
+    const endDateMonth = endDate.format('M');
+    const endDateDay = endDate.format('D');
 
-  return startDateMonth === endDateMonth
-    ? `${shortStartDateMonth} ${startDateDay}-${endDateDay}`
-    : `${shortStartDateMonth} ${startDateDay}-${shortEndDateMonth} ${endDateDay}`;
+    return startDateMonth === endDateMonth
+      ? `${shortStartDateMonth} ${startDateDay}-${endDateDay}`
+      : `${shortStartDateMonth} ${startDateDay}-${shortEndDateMonth} ${endDateDay}`;
+  } else {
+    return '';
+  }
 };
 export { compareSort };
 
-export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) => [
-  { id: 1, accordionLabel: 'Date Range', filterField: 'date', open: false },
+export const getFilterFlyoutPredefined = (filterLabels) => [
+  {
+    id: 1,
+    accordionLabel: getDictionaryValueOrKey(filterLabels.dateRange),
+    filterField: 'date',
+    group: 'date',
+    open: false,
+  },
   {
     id: 2,
-    accordionLabel: 'Order Status',
+    accordionLabel: getDictionaryValueOrKey(filterLabels.orderStatus),
     filterField: 'order',
+    group: 'order',
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.open ?? 'Open'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.open ?? 'Open'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.open),
+        filterOptionKey: 'Open',
         group: 'status',
       },
       {
         id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.investigation ?? 'Investigation'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.investigation ?? 'Investigation'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.investigation),
+        filterOptionKey: 'Investigation',
         group: 'status',
       },
       {
         id: 3,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.shipping ?? 'Shipping'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.shipping ?? 'Shipping'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.shipping),
+        filterOptionKey: 'Shipping',
         group: 'status',
       },
       {
         id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.rejected ?? 'Reject'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.rejected ?? 'Reject'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.reject),
+        filterOptionKey: 'Reject',
         group: 'status',
       },
       {
         id: 5,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.complete ?? 'Complete'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.complete ?? 'Complete'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.complete),
+        filterOptionKey: 'Complete',
         group: 'status',
       },
       {
         id: 6,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.cancelled ?? 'Cancelled'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.cancelled ?? 'Cancelled'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.cancelled),
+        filterOptionKey: 'Cancelled',
         group: 'status',
       },
       {
         id: 7,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.onHold ?? 'OnHold'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.onHold ?? 'OnHold'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.onHold),
+        filterOptionKey: 'OnHold',
         group: 'status',
       },
       {
         id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.shipped ?? 'Shipped'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.shipped ?? 'Shipped'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.shipped),
+        filterOptionKey: 'Shipped',
         group: 'status',
       },
       {
         id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterStatus?.inProcess ?? 'InProcess'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterStatus?.inProcess ?? 'InProcess'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inProcess),
+        filterOptionKey: 'InProcess',
         group: 'status',
       },
     ],
@@ -309,170 +284,153 @@ export const getFilterFlyoutPredefined = (orderFilterTypes, orderFilterStatus) =
   },
   {
     id: 3,
-    accordionLabel: 'Order Type',
+    accordionLabel: getDictionaryValueOrKey(filterLabels.orderType),
     filterField: 'order',
+    group: 'order',
     open: false,
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzcc?.label ?? 'InTouch'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzcc?.key ?? 'ZZCC'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
+        filterOptionKey: 'ZZCC',
         group: 'type',
       },
       {
         id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzct?.label ?? 'Manual'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzct?.key ?? 'ZZCT'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
+        filterOptionKey: 'ZZCT',
         group: 'type',
       },
       {
         id: 3,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzed?.label ?? 'EDI or XML'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzed?.key ?? 'ZZED'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.ediOrXml),
+        filterOptionKey: 'ZZED',
         group: 'type',
       },
       {
         id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzit?.label ?? 'InTouch'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzit?.key ?? 'ZZIT'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
+        filterOptionKey: 'ZZIT',
         group: 'type',
       },
       {
         id: 5,
         filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzkb?.label ?? 'Consignment Fill-Up'
+          filterLabels.consignmentFillUp
         ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzkb?.key ?? 'ZZKB'
-        ),
+        filterOptionKey: 'ZZKB',
         group: 'type',
       },
       {
         id: 6,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzlv?.label ?? 'License'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzlv?.key ?? 'ZZLV'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.license),
+        filterOptionKey: 'ZZLV',
         group: 'type',
       },
       {
         id: 7,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzmr?.label ?? 'TDMRS Project'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzmr?.key ?? 'ZZMR'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.tdmrsProject),
+        filterOptionKey: 'ZZMR',
         group: 'type',
       },
       {
         id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzor?.label ?? 'Manual'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzor?.key ?? 'ZZOR'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
+        filterOptionKey: 'ZZOR',
         group: 'type',
       },
       {
         id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzpb?.label ?? 'Manual'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzpb?.key ?? 'ZZPB'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
+        filterOptionKey: 'ZZPB',
         group: 'type',
       },
       {
         id: 10,
         filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzpe?.label ?? 'TD Staff purchase'
+          filterLabels.tdStaffPurchase
         ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzpe?.key ?? 'ZZPE'
-        ),
+        filterOptionKey: 'ZZPE',
         group: 'type',
       },
       {
         id: 11,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzpt?.label ?? 'Project order'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzpt?.key ?? 'ZZPT'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.projectOrder),
+        filterOptionKey: 'ZZPT',
         group: 'type',
       },
       {
         id: 12,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzqt?.label ?? 'Quotation'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzqt?.key ?? 'ZZQT'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.quotationLabel),
+        filterOptionKey: 'ZZQT',
         group: 'type',
       },
       {
         id: 13,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzsb?.label ?? 'Third Party'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzsb?.key ?? 'ZZSB'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.thirdParty),
+        filterOptionKey: 'ZZSB',
         group: 'type',
       },
       {
         id: 14,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzsl?.label ?? 'Licensing'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzsl?.key ?? 'ZZSL'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.licensing),
+        filterOptionKey: 'ZZSL',
         group: 'type',
       },
       {
         id: 15,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzso?.label ?? 'Stocking Order'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzso?.key ?? 'ZZSO'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.stockingOrder),
+        filterOptionKey: 'ZZSO',
         group: 'type',
       },
       {
         id: 16,
-        filterOptionLabel: getDictionaryValueOrKey(
-          orderFilterTypes?.zzst?.label ?? 'StreamOne'
-        ),
-        filterOptionKey: getDictionaryValueOrKey(
-          orderFilterTypes?.zzst?.key ?? 'ZZST'
-        ),
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.streamOne),
+        filterOptionKey: 'ZZST',
         group: 'type',
       },
     ],
   },
 ];
+
+export const getFilterFlyoutCustomized = (
+  dateOptionsList,
+  filterListValues,
+  startIndex = 0
+) => {
+  let customizedFilters = [];
+  if (dateOptionsList) {
+    dateOptionsList.map((date, index) =>
+      customizedFilters.push({
+        id: index + startIndex,
+        accordionLabel: date.label,
+        filterField: date.key,
+        group: 'customDate',
+        open: false,
+        startDate: null,
+        endDate: null,
+        dataRangeLabel: null,
+      })
+    );
+  }
+  if (filterListValues) {
+    const customFilterIndex =
+      startIndex + (dateOptionsList ? dateOptionsList.length : 0);
+
+    filterListValues.map((filter, index) =>
+      customizedFilters.push({
+        id: index + customFilterIndex,
+        accordionLabel: filter.accordionLabel,
+        filterField: filter.filterField,
+        group: 'custom',
+        filterOptionList: filter.filterOptionsValues.map((value, index) => ({
+          id: index,
+          filterOptionLabel: value.filterOptionLabel,
+          filterOptionKey: value.filterOptionKey,
+          checked: false,
+        })),
+      })
+    );
+  }
+  return customizedFilters;
+};
