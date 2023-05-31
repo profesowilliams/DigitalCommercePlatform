@@ -366,8 +366,7 @@ const checkIntouchUser = (loadend) => {
 
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url + window.location.href);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
+    xhr.setRequestHeader('content-type', 'application/json');
 
     xhr.onload = function () {
         if (xhr.status != 200) {
@@ -386,8 +385,7 @@ const checkIntouchUser = (loadend) => {
 const renderIntouchComponent = (url, loadToElement, loadend) => {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
+    xhr.setRequestHeader('content-type', 'application/json');
 
     xhr.onload = function () {
         if (xhr.status != 200) {
