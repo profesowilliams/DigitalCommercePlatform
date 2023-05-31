@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function DescriptionColumn({ line, config }) {
   return (
@@ -16,10 +17,14 @@ function DescriptionColumn({ line, config }) {
         )}
         <div className="cmp-order-tracking-grid-details__description-text">
           {line?.manufacturerPart && (
-            <div>{`${config?.labels?.lineMfgPartNo} ${line?.manufacturerPart}`}</div>
+            <div>{`${getDictionaryValueOrKey(config?.labels?.lineMfgPartNo)} ${
+              line?.manufacturerPart
+            }`}</div>
           )}
           {line?.tdNumber && (
-            <div>{`${config?.labels?.lineTdsPartNo} ${line?.tdNumber}`}</div>
+            <div>{`${getDictionaryValueOrKey(config?.labels?.lineTdsPartNo)} ${
+              line?.tdNumber
+            }`}</div>
           )}
         </div>
       </div>
