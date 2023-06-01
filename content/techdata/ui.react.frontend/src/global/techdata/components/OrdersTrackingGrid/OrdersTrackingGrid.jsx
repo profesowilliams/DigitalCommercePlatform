@@ -49,6 +49,7 @@ import {
   getFilterFlyoutCustomized,
   setPaginationData,
 } from './utils/orderTrackingUtils';
+import Toaster from '../Widgets/Toaster';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -380,6 +381,9 @@ function OrdersTrackingGrid(props) {
     });
   }
 
+  function onCloseToaster() {
+    closeAndCleanToaster();
+  }
   const hasAccess =
     userData?.activeCustomer &&
     (hasCanViewOrdersRights || hasOrderTrackingRights);
@@ -401,135 +405,142 @@ function OrdersTrackingGrid(props) {
 
   return (
     <>
-      {
-        //hasAccess
-        true ? (
-          <div className="cmp-order-tracking-grid">
-            <BaseGridHeader
-              leftComponents={[
-                <BaseGridPagination
-                  ref={customPaginationRef}
-                  store={useOrderTrackingStore}
-                  onQueryChanged={onQueryChanged}
-                  disabled={isLoading}
-                />,
-              ]}
-              rightComponents={[
-                ...(pill
-                  ? [
-                      <Pill
-                        children={
-                          <span className="td-capsule__text">
-                            {reportPillLabel}: {pill.label}
-                          </span>
-                        }
-                        closeClick={handleDeletePill}
-                        hasCloseButton
-                      />,
-                    ]
-                  : []),
-                <OrderSearch
-                  options={searchOptionsList}
-                  onQueryChanged={onSearchChange}
-                  ref={searchCriteria}
-                  store={useOrderTrackingStore}
-                  hideLabel={true}
-                />,
-                <VerticalSeparator />,
-                <OrderFilter />,
-                <VerticalSeparator />,
-                <Report
-                  selectOption={onReportChange}
-                  ref={reportFilterValue}
-                  selectedKey={pill?.key}
-                />,
-                <VerticalSeparator />,
-                <OrderExport />,
-              ]}
-            />
-            <BaseGrid
-              columnList={addCurrencyToTotalColumn(componentProp.columnList)}
-              definitions={ordersTrackingDefinition(
-                componentProp,
-                openFilePdf,
-                hasAIORights
-              )}
-              config={gridConfig}
-              options={options}
-              gridConfig={gridConfig}
-              defaultSearchDateRange={dateRange}
-              requestInterceptor={customRequestInterceptor}
-              mapServiceData={mapServiceData}
-              onSortChanged={onSortChanged}
-              onAfterGridInit={_onAfterGridInit}
-              onDataLoad={onDataLoad}
-              onCellMouseOver={cellMouseOver}
-              onCellMouseOut={cellMouseOut}
-            />
-            <ToolTip toolTipData={toolTipData} />
-            <div className="cmp-renewals__pagination--bottom">
+      {hasAccess ? (
+        <div className="cmp-order-tracking-grid">
+          <BaseGridHeader
+            leftComponents={[
               <BaseGridPagination
                 ref={customPaginationRef}
                 store={useOrderTrackingStore}
                 onQueryChanged={onQueryChanged}
                 disabled={isLoading}
-              />
-            </div>
-            <DNotesFlyout
+              />,
+            ]}
+            rightComponents={[
+              ...(pill
+                ? [
+                    <Pill
+                      children={
+                        <span className="td-capsule__text">
+                          {reportPillLabel}: {pill.label}
+                        </span>
+                      }
+                      closeClick={handleDeletePill}
+                      hasCloseButton
+                    />,
+                  ]
+                : []),
+              <OrderSearch
+                options={searchOptionsList}
+                onQueryChanged={onSearchChange}
+                ref={searchCriteria}
+                store={useOrderTrackingStore}
+                hideLabel={true}
+              />,
+              <VerticalSeparator />,
+              <OrderFilter />,
+              <VerticalSeparator />,
+              <Report
+                selectOption={onReportChange}
+                ref={reportFilterValue}
+                selectedKey={pill?.key}
+              />,
+              <VerticalSeparator />,
+              <OrderExport />,
+            ]}
+          />
+          <BaseGrid
+            columnList={addCurrencyToTotalColumn(componentProp.columnList)}
+            definitions={ordersTrackingDefinition(
+              componentProp,
+              openFilePdf,
+              hasAIORights
+            )}
+            config={gridConfig}
+            options={options}
+            gridConfig={gridConfig}
+            defaultSearchDateRange={dateRange}
+            requestInterceptor={customRequestInterceptor}
+            mapServiceData={mapServiceData}
+            onSortChanged={onSortChanged}
+            onAfterGridInit={_onAfterGridInit}
+            onDataLoad={onDataLoad}
+            onCellMouseOver={cellMouseOver}
+            onCellMouseOut={cellMouseOut}
+          />
+          <ToolTip toolTipData={toolTipData} />
+          <div className="cmp-renewals__pagination--bottom">
+            <BaseGridPagination
+              ref={customPaginationRef}
               store={useOrderTrackingStore}
-              dNotesFlyout={gridConfig.dNotesFlyout}
-              dNoteColumnList={gridConfig.dNoteColumnList}
-              subheaderReference={document.querySelector(
-                '.subheader > div > div'
-              )}
-              isTDSynnex={isTDSynnex}
-              downloadAllFile={(flyoutType, orderId) =>
-                downloadAllFile(flyoutType, orderId)
-              }
-              openFilePdf={(flyoutType, orderId) =>
-                openFilePdf(flyoutType, orderId)
-              }
-            />
-            <InvoicesFlyout
-              store={useOrderTrackingStore}
-              invoicesFlyout={gridConfig.invoicesFlyout}
-              invoicesColumnList={gridConfig.invoicesColumnList}
-              subheaderReference={document.querySelector(
-                '.subheader > div > div'
-              )}
-              isTDSynnex={isTDSynnex}
-              downloadAllFile={(flyoutType, orderId) =>
-                downloadAllFile(flyoutType, orderId)
-              }
-              openFilePdf={(flyoutType, orderId) =>
-                openFilePdf(flyoutType, orderId)
-              }
-              hasAIORights={hasAIORights}
-            />
-            <ExportFlyout
-              store={useOrderTrackingStore}
-              exportFlyout={gridConfig.exportFlyout}
-              exportOptionsList={gridConfig.exportOptionsList}
-              exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
-              subheaderReference={document.querySelector(
-                '.subheader > div > div'
-              )}
-              isTDSynnex={isTDSynnex}
-            />
-            <OrderFilterFlyout
               onQueryChanged={onQueryChanged}
-              filtersRefs={filtersRefs}
-              isTDSynnex={isTDSynnex}
-              filterLabels={filterLabels}
-              subheaderReference={document.querySelector(
-                '.subheader > div > div'
-              )}
+              disabled={isLoading}
             />
           </div>
-        ) : (
-          <AccessPermissionsNeeded noAccessProps={noAccessProps} />
-        )
-      }
+          <DNotesFlyout
+            store={useOrderTrackingStore}
+            dNotesFlyout={gridConfig.dNotesFlyout}
+            dNoteColumnList={gridConfig.dNoteColumnList}
+            subheaderReference={document.querySelector(
+              '.subheader > div > div'
+            )}
+            isTDSynnex={isTDSynnex}
+            downloadAllFile={(flyoutType, orderId) =>
+              downloadAllFile(flyoutType, orderId)
+            }
+            openFilePdf={(flyoutType, orderId) =>
+              openFilePdf(flyoutType, orderId)
+            }
+          />
+          <InvoicesFlyout
+            store={useOrderTrackingStore}
+            invoicesFlyout={gridConfig.invoicesFlyout}
+            invoicesColumnList={gridConfig.invoicesColumnList}
+            subheaderReference={document.querySelector(
+              '.subheader > div > div'
+            )}
+            isTDSynnex={isTDSynnex}
+            downloadAllFile={(flyoutType, orderId) =>
+              downloadAllFile(flyoutType, orderId)
+            }
+            openFilePdf={(flyoutType, orderId) =>
+              openFilePdf(flyoutType, orderId)
+            }
+            hasAIORights={hasAIORights}
+          />
+          <ExportFlyout
+            store={useOrderTrackingStore}
+            componentProp={gridConfig}
+            exportFlyout={gridConfig.exportFlyout}
+            exportOptionsList={gridConfig.exportOptionsList}
+            exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
+            subheaderReference={document.querySelector(
+              '.subheader > div > div'
+            )}
+            isTDSynnex={isTDSynnex}
+          />
+          <Toaster
+            classname="toaster-modal-otg"
+            onClose={onCloseToaster}
+            store={useOrderTrackingStore}
+            message={{
+              successSubmission: 'successSubmission',
+              failedSubmission: 'failedSubmission',
+            }}
+          />
+          <OrderFilterFlyout
+            onQueryChanged={onQueryChanged}
+            filtersRefs={filtersRefs}
+            isTDSynnex={isTDSynnex}
+            filterLabels={filterLabels}
+            subheaderReference={document.querySelector(
+              '.subheader > div > div'
+            )}
+          />
+        </div>
+      ) : (
+        <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+      )}
     </>
   );
 }

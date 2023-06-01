@@ -1,3 +1,5 @@
+/** @format */
+
 "use strict";
 use(["../common/utils.js"], function (utils) {
   let jsonObject = {};
@@ -92,6 +94,10 @@ use(["../common/utils.js"], function (utils) {
 
   if (properties && properties["exportFlyoutButton"]) {
     exportFlyout.button = properties["exportFlyoutButton"];
+  }
+
+  if (properties && properties["exportSuccessMessage"]) {
+    exportFlyout.exportSuccessMessage = properties["exportSuccessMessage"];
   }
 
   if (exportFlyout != null) {
@@ -205,7 +211,6 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["noAccessProps"] = noAccessProps;
   }
 
-
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
   }
@@ -246,6 +251,10 @@ use(["../common/utils.js"], function (utils) {
   jsonObject["ordersDownloadDocumentsEndpoint"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.ordersDownloadDocumentsEndpoint || "";
+
+  jsonObject["exportAllOrderLinesEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.exportAllOrderLinesEndpoint || "";
 
   if (this.uiServiceDomain && this.downloadAllInvoicesEndpoint) {
     jsonObject["downloadAllInvoicesEndpoint"] =

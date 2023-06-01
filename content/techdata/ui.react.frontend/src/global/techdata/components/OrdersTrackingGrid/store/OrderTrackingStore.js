@@ -77,6 +77,13 @@ const INITIAL_STATE = {
     []
   ),
   orderFilterCounter: 0,
+  toaster: {
+    isOpen: false,
+    title: '',
+    message: '',
+    origin: 'dashboard',
+    isSuccess: false,
+  },
   isTDSynnex: true,
   branding: '',
   analyticsCategory: 'order tracking',
