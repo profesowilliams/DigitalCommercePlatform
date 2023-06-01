@@ -78,6 +78,46 @@
   }
 }
 
+.tab-nav {
+    .nav {
+        border: none;
+    }
+
+    > .cmp-tabs > .cmp-tabs__tablist {
+        .li,
+        [role="tab"] {
+            color: get-color(cool-gray-8);
+            padding: 0;
+            margin: 0 2rem 0 2rem;
+            font-family: Arial;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 26px;
+            border-bottom: transparent 3px solid;
+
+            &:hover {
+                border-bottom: get-color(brand-button-blue) 2px solid;
+            }
+
+            min-height: 30px;
+        }
+
+        .cmp-tabs__tab--active {
+            color: get-color(brand-button-blue);
+            border-bottom: get-color(brand-button-blue) 2px solid;
+        }
+    }
+
+    .cmp-tabs__tabpanel {
+        padding: 2rem 0 0 rem(32px);
+    }
+
+    .cmp-tabs__tabpanel--active {
+        display: block;
+    }
+}
+
 .tab-icon {
   .cmp-tabs__tablist {
     margin-bottom: 4rem;
