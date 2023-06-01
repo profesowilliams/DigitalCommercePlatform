@@ -6,7 +6,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
-import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -35,7 +34,6 @@ const styleOverrideDivider = {
 
 function ExportFlyout({
   store,
-  componentProp,
   exportFlyout,
   exportOptionsList,
   exportSecondaryOptionsList,
@@ -45,7 +43,7 @@ function ExportFlyout({
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
-    exportOptionsList ? exportOptionsList[0].key : []
+    exportOptionsList ? exportOptionsList[0].label : []
   );
   const [secondarySelected, setSecondarySelected] = useState(null);
 
@@ -58,39 +56,6 @@ function ExportFlyout({
   const closeFlyout = () => {
     effects.setCustomState({ key: 'exportFlyout', value: { show: false } });
     setSecondarySelected(null);
-  };
-
-  async function getExportAllOrderLines() {
-    const url = componentProp.exportAllOrderLinesEndpoint || 'nourl';
-    const singleDownloadUrl = url;
-    const name = `file.xlsx`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
-      redirect: false,
-    });
-  }
-
-  const exportRequests = [
-    { key: '2', request: getExportAllOrderLines },
-    { key: '3', request: getExportAllOrderLines },
-  ];
-
-  const handleDownload = () => {
-    const matchingRequest = exportRequests.find(
-      (e) => e.key === secondarySelected
-    );
-    if (matchingRequest) {
-      const downloadRequest = matchingRequest.request;
-      downloadRequest();
-      const toaster = {
-        isOpen: true,
-        origin: 'fromUpdate',
-        isAutoClose: false,
-        isSuccess: true,
-        message: getDictionaryValueOrKey(exportFlyout.exportSuccessMessage),
-      };
-      closeFlyout();
-      effects.setCustomState({ key: 'toaster', value: { ...toaster } });
-    }
   };
 
   return (
@@ -106,7 +71,6 @@ function ExportFlyout({
       disabledButton={!secondarySelected}
       selected={secondarySelected}
       isTDSynnex={isTDSynnex}
-      onClickButton={handleDownload}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
@@ -123,7 +87,7 @@ function ExportFlyout({
               <FormControlLabel
                 sx={styleOverrideFormControlLabel}
                 key={e.key}
-                value={e.key}
+                value={e.label}
                 control={<Radio sx={styleOverrideRadio} />}
                 label={e.label}
               />
@@ -145,7 +109,7 @@ function ExportFlyout({
               <FormControlLabel
                 sx={styleOverrideFormControlLabel}
                 key={e.key}
-                value={e.key}
+                value={e.label}
                 control={<Radio sx={styleOverrideRadio} />}
                 label={e.label}
               />

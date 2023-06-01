@@ -27,11 +27,6 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Export Flyout Button Label"
                     name="./exportFlyoutButton"/>
-                <exportSuccessMessage
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldLabel="Expor Success Message Label"
-                    name="./exportSuccessMessage"/>
                 <exportOptionsList
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
