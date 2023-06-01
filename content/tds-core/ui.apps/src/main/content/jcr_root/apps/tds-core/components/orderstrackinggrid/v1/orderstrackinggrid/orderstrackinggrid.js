@@ -356,7 +356,7 @@ use(["../common/utils.js"], function (utils) {
       if (childNode != null) {
         itemData.filterOptionsValues = [];
         let childNodeList = childNode.getChildren();
-        for (let [childRes] in Iterator(childNodeList)) {
+        for (let [childkey, childRes] in Iterator(childNodeList)) {
           let childDataItem = {};
           let filterOptionLabel = childRes.properties["filterOptionLabel"];
           let filterOptionKey = childRes.properties["filterOptionKey"];
