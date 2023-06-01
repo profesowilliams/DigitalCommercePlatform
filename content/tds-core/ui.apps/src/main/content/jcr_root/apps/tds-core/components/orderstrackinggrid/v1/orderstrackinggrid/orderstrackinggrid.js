@@ -335,25 +335,21 @@ use(["../common/utils.js"], function (utils) {
   if (node !== null) {
     let childrenList = node.getChildren();
     for (let [key, res] in Iterator(childrenList)) {
-      let accordionLabel = res.properties["accordionLabel"];
-      let filterField = res.properties["filterField"];
       let itemData = {};
-      itemData.accordionLabel = accordionLabel;
-      itemData.filterField = filterField;
+      itemData.accordionLabel = res.properties["accordionLabel"];
+      itemData.filterField = res.properties["filterField"];
+      itemData.filterOptionsValues = [];
       let childNode = resourceResolver.getResource(
-        res.getPath() + "/filtersOptionsList"
+        res.getPath() + "/filterOptionsValues"
       );
 
       if (childNode != null) {
-        itemData.filterOptionsValues = [];
         let childNodeList = childNode.getChildren();
         for (let [childkey, childRes] in Iterator(childNodeList)) {
-          let childDataItem = {};
-          let filterOptionLabel = childRes.properties["filterOptionLabel"];
-          let filterOptionKey = childRes.properties["filterOptionKey"];
-          childDataItem.filterOptionLabel = filterOptionLabel;
-          childDataItem.filterOptionKey = filterOptionKey;
-          itemData.filterOptionsValues.push(childDataItem);
+          itemData.filterOptionsValues.push({
+            filterOptionLabel: childRes.properties["filterOptionLabel"],
+            filterOptionKey: childRes.properties["filterOptionKey"],
+          });
         }
       }
       filterListValues.push(itemData);

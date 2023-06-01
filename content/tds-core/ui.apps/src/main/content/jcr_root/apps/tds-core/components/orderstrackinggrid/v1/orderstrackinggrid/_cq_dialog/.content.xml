@@ -311,13 +311,13 @@
                                             <startLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add Date Label"
+fieldLabel="Add Start Label"
                                                 name="./startLabel"
                                             />
                                             <endLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add Date Label"
+fieldLabel="Add End Label"
                                                 name="./endLabel"
                                             />
                                             <dateRange
@@ -565,7 +565,7 @@
                                                                     <field
                                                                         jcr:primaryType="nt:unstructured"
                                                                         sling:resourceType="granite/ui/components/coral/foundation/container"
-                                                                        name="./filtersOptionsList">
+name="./filterOptionsValues">
                                                                         <items
                                                                             jcr:primaryType="nt:unstructured">
                                                                             <filterOptionLabel
