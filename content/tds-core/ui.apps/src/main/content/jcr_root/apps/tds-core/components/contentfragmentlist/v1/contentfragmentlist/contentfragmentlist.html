@@ -6,6 +6,6 @@
         <sly data-sly-call="${fragmentTemplate.contentFragment @ fragment=fragment, wcmmode=wcmmode}"></sly>
     </section>
 </sly>
-<a href="${properties.linkUrl}" target="">${properties.linkLabel}</a>
+<a data-sly-test="${list.listItems.size>3}" href="${properties.linkUrl}" target="">${properties.linkLabel}</a>
 <sly data-sly-use.template="core/wcm/components/commons/v1/templates.html"
      data-sly-call="${template.placeholder @ isEmpty=list.listItems.size == 0, classAppend='cq-dd-contentfragmentlist'}"></sly>
