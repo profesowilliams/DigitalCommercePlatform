@@ -96,7 +96,7 @@ function ExportFlyout({
         </FormControl>
         <Divider sx={styleOverrideDivider} />
         <div className="cmp-flyout__content-description">
-          {getDictionaryValueOrKey(exportFlyout.secondaryDscription)}
+          {getDictionaryValueOrKey(exportFlyout.secondaryDescription)}
         </div>
         <FormControl>
           <RadioGroup
