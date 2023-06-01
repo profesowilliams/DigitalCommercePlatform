@@ -11,8 +11,6 @@ use(["../common/utils.js"], function (utils) {
   let exportFlyout = {};
   let noAccessProps = {};
 
-  let filterLabels = {};
-
   if (properties && properties["detailUrl"]) {
     jsonObject["detailUrl"] = properties["detailUrl"];
   }
@@ -86,7 +84,7 @@ use(["../common/utils.js"], function (utils) {
     exportFlyout.description = properties["exportFlyoutDescription"];
   }
   if (properties && properties["exportFlyoutSecondaryDescription"]) {
-    exportFlyout.secondaryDescription =
+    exportFlyout.secondaryDscription =
       properties["exportFlyoutSecondaryDescription"];
   }
 
@@ -188,9 +186,6 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
 
-  if (properties && properties["reportPillLabel"]) {
-    jsonObject["reportPillLabel"] = properties["reportPillLabel"];
-  }
   // No Access Screen
   if (properties && properties["noAccessTitle"]) {
     noAccessProps.noAccessTitle = properties["noAccessTitle"];
@@ -208,6 +203,21 @@ use(["../common/utils.js"], function (utils) {
 
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
+  }
+
+  let dateOptionValues = utils.getDataFromMultifield(
+    resourceResolver,
+    "dateOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.field = childResource.properties["field"];
+      return itemData;
+    }
+  );
+
+  if (dateOptionValues != null) {
+    jsonObject["dateOptionValues"] = dateOptionValues;
   }
 
   //Search Options
@@ -275,6 +285,18 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["options"] = optionData;
   }
 
+  if (properties && properties["filterTitle"]) {
+    jsonObject["filterTitle"] = properties["filterTitle"];
+  }
+
+  if (properties && properties["clearAllFilterTitle"]) {
+    jsonObject["clearAllFilterTitle"] = properties["clearAllFilterTitle"];
+  }
+
+  if (properties && properties["showResultLabel"]) {
+    jsonObject["showResultLabel"] = properties["showResultLabel"];
+  }
+
   if (properties && properties["menuCopy"]) {
     jsonObject["menuCopy"] = properties["menuCopy"];
   }
@@ -307,21 +329,8 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["ofTextLabel"] = properties["ofTextLabel"];
   }
 
-  //Filter Options
-
-  let dateOptionValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "dateOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.label = childResource.properties["label"];
-      itemData.field = childResource.properties["field"];
-      return itemData;
-    }
-  );
-
-  if (dateOptionValues != null) {
-    jsonObject["dateOptionValues"] = dateOptionValues;
+  if (properties && properties["filterType"]) {
+    jsonObject["filterType"] = properties["filterType"];
   }
 
   if (properties && properties["defaultSearchDateRange"]) {
@@ -347,12 +356,26 @@ use(["../common/utils.js"], function (utils) {
       if (childNode != null) {
         itemData.filterOptionsValues = [];
         let childNodeList = childNode.getChildren();
-        for (let [childRes] in Iterator(childNodeList)) {
+        for (let [childkey, childRes] in Iterator(childNodeList)) {
           let childDataItem = {};
           let filterOptionLabel = childRes.properties["filterOptionLabel"];
-          let filterOptionKey = childRes.properties["filterOptionKey"];
           childDataItem.filterOptionLabel = filterOptionLabel;
-          childDataItem.filterOptionKey = filterOptionKey;
+          let subChildNode = resourceResolver.getResource(
+            childRes.getPath() + "/subFilterOptionList"
+          );
+
+          if (subChildNode != null) {
+            let subFilterOptionsValues = [];
+            let subChildNodeList = subChildNode.getChildren();
+
+            for (let [subChildKey, subChildRes] in Iterator(subChildNodeList)) {
+              let subChildDataItem = {};
+              subChildDataItem.subFilterOptionsLabel =
+                subChildRes.properties["subFilterOptionsLabel"];
+              subFilterOptionsValues.push(subChildDataItem);
+            }
+            childDataItem.subFilterOptionsValues = subFilterOptionsValues;
+          }
           itemData.filterOptionsValues.push(childDataItem);
         }
       }
@@ -362,108 +385,6 @@ use(["../common/utils.js"], function (utils) {
 
   if (filterListValues != null) {
     jsonObject["filterListValues"] = filterListValues;
-  }
-
-  if (properties && properties["dateRange"]) {
-    filterLabels.dateRange = properties["dateRange"];
-  }
-
-  if (properties && properties["endLabel"]) {
-    filterLabels.endLabel = properties["endLabel"];
-  }
-
-  if (properties && properties["startLabel"]) {
-    filterLabels.startLabel = properties["startLabel"];
-  }
-
-  if (properties && properties["addDateLabel"]) {
-    filterLabels.addDateLabel = properties["addDateLabel"];
-  }
-  if (properties && properties["filterTitle"]) {
-    filterLabels.filterTitle = properties["filterTitle"];
-  }
-  if (properties && properties["filterType"]) {
-    filterLabels.filterType = properties["filterType"];
-  }
-
-  if (properties && properties["showResultLabel"]) {
-    filterLabels.showResultLabel = properties["showResultLabel"];
-  }
-  if (properties && properties["orderStatus"]) {
-    filterLabels.orderStatus = properties["orderStatus"];
-  }
-  if (properties && properties["orderType"]) {
-    filterLabels.orderType = properties["orderType"];
-  }
-  if (properties && properties["open"]) {
-    filterLabels.open = properties["open"];
-  }
-  if (properties && properties["investigation"]) {
-    filterLabels.investigation = properties["investigation"];
-  }
-  if (properties && properties["shipping"]) {
-    filterLabels.shipping = properties["shipping"];
-  }
-  if (properties && properties["reject"]) {
-    filterLabels.reject = properties["reject"];
-  }
-  if (properties && properties["complete"]) {
-    filterLabels.complete = properties["complete"];
-  }
-  if (properties && properties["cancelled"]) {
-    filterLabels.cancelled = properties["cancelled"];
-  }
-  if (properties && properties["onHold"]) {
-    filterLabels.onHold = properties["onHold"];
-  }
-  if (properties && properties["shipped"]) {
-    filterLabels.shipped = properties["shipped"];
-  }
-  if (properties && properties["inProcess"]) {
-    filterLabels.inProcess = properties["inProcess"];
-  }
-  if (properties && properties["inTouch"]) {
-    filterLabels.inTouch = properties["inTouch"];
-  }
-  if (properties && properties["ediOrXml"]) {
-    filterLabels.ediOrXml = properties["ediOrXml"];
-  }
-  if (properties && properties["consignmentFillUp"]) {
-    filterLabels.consignmentFillUp = properties["consignmentFillUp"];
-  }
-  if (properties && properties["license"]) {
-    filterLabels.license = properties["license"];
-  }
-  if (properties && properties["tdmrsProject"]) {
-    filterLabels.tdmrsProject = properties["tdmrsProject"];
-  }
-  if (properties && properties["manual"]) {
-    filterLabels.manual = properties["manual"];
-  }
-  if (properties && properties["tdStaffPurchase"]) {
-    filterLabels.tdStaffPurchase = properties["tdStaffPurchase"];
-  }
-  if (properties && properties["projectOrder"]) {
-    filterLabels.projectOrder = properties["projectOrder"];
-  }
-  if (properties && properties["quotationLabel"]) {
-    filterLabels.quotationLabel = properties["quotationLabel"];
-  }
-  if (properties && properties["thirdParty"]) {
-    filterLabels.thirdParty = properties["thirdParty"];
-  }
-  if (properties && properties["licensing"]) {
-    filterLabels.licensing = properties["licensing"];
-  }
-  if (properties && properties["stockingOrder"]) {
-    filterLabels.stockingOrder = properties["stockingOrder"];
-  }
-  if (properties && properties["streamOne"]) {
-    filterLabels.streamOne = properties["streamOne"];
-  }
-
-  if (filterLabels != null) {
-    jsonObject["filterLabels"] = filterLabels;
   }
 
   if (properties && properties["quoteIdLabel"]) {

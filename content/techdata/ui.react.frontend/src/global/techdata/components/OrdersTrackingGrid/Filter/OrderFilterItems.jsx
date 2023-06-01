@@ -5,18 +5,14 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
+const OrderFilterItems = ({ itemKey, filtersRefs }) => {
   const filterList = useOrderTrackingStore((state) => state.filterList);
   const orderStatusFilters = filterList.find(
-    (filter) =>
-      filter.accordionLabel ===
-      getDictionaryValueOrKey(filterLabels.orderStatus)
+    (filter) => filter.accordionLabel === 'Order Status'
   ).filterOptionList;
   const orderTypeFilters = filterList.find(
-    (filter) =>
-      filter.accordionLabel === getDictionaryValueOrKey(filterLabels.orderType)
+    (filter) => filter.accordionLabel === 'Order Type'
   ).filterOptionList;
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.orderStatusFiltersChecked
@@ -25,6 +21,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
     (state) => state.orderTypeFiltersChecked
   );
   const effects = useOrderTrackingStore((state) => state.effects);
+  //temporary until we haven't data from another source
 
   const styleCheckbox = {
     color: '#262626',
@@ -73,11 +70,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
 
   return (
     <div className="check-order-wrapper">
-      <If
-        condition={
-          itemKey === getDictionaryValueOrKey(filterLabels.orderStatus)
-        }
-      >
+      <If condition={itemKey === 'Order Status'}>
         <FormControl>
           {orderStatusFilters &&
             orderStatusFilters.map((status) => (
@@ -95,9 +88,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
             ))}
         </FormControl>
       </If>
-      <If
-        condition={itemKey === getDictionaryValueOrKey(filterLabels.orderType)}
-      >
+      <If condition={itemKey === 'Order Type'}>
         <FormControl>
           {orderTypeFilters &&
             orderTypeFilters.map((type) => (

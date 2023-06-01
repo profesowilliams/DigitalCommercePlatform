@@ -2,7 +2,7 @@ import React from 'react';
 import OrderFilterListItem from './OrderFilterListItem';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
-function OrderFilterList({ filtersRefs, filterLabels }) {
+function OrderFilterList({ filtersRefs }) {
   const filterList = useOrderTrackingStore((state) => state.filterList);
   return filterList.map((x) => (
     <OrderFilterListItem
@@ -11,10 +11,8 @@ function OrderFilterList({ filtersRefs, filterLabels }) {
       open={x.open}
       accordionLabel={x.accordionLabel}
       filterField={x.filterField}
-      group={x.group}
       filtersRefs={filtersRefs}
       filterOptionList={x?.filterOptionList}
-      filterLabels={filterLabels}
     />
   ));
 }

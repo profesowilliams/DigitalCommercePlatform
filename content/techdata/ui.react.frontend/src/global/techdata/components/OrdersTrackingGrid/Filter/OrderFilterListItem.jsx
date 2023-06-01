@@ -4,19 +4,13 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCount from './OrderCount';
 import OrderFilterDatePicker from './OrderFilterDatapicker';
 import OrderFilterItems from './OrderFilterItems';
-import OrderFilterCustomItem from './OrderFilterCustomItem';
-import OrderFilterCustomDatapicker from './OrderFilterCustomDatapicker';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function OrderFilterListItem({
   id,
   open,
   accordionLabel,
   filterField,
-  group,
   filtersRefs,
-  filterOptionList,
-  filterLabels,
 }) {
   const filterList = useOrderTrackingStore((state) => state.filterList);
   const { setFilterList } = useOrderTrackingStore((state) => state.effects);
@@ -30,9 +24,6 @@ function OrderFilterListItem({
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.dateRangeFiltersChecked
   );
-  const customFiltersChecked = useOrderTrackingStore(
-    (state) => state.customFiltersChecked
-  );
   const { computeClassName } = useComputeBranding(useOrderTrackingStore);
 
   if (!filterList) return null;
@@ -44,38 +35,22 @@ function OrderFilterListItem({
     setFilterList(updateList);
   };
 
-  let customCounter = 0;
-  const increaseCounter = (filter) => {
-    filter?.filterOptionList
-      ? filter.filterOptionList.map(
-          (element) => element.checked && customCounter++
-        )
-      : filter?.dataRangeLabel && customCounter++;
-  };
-
-  const getCustomFilterCounter = () => {
-    customFiltersChecked.map(
-      (filter) => filter.id === id && increaseCounter(filter)
-    );
-    return customCounter;
-  };
-
   const showCounter = (labelType) => {
     switch (labelType) {
-      case getDictionaryValueOrKey(filterLabels.dateRange):
+      case 'Date Range':
         return dateRangeFiltersChecked.length;
-      case getDictionaryValueOrKey(filterLabels.orderStatus):
+      case 'Order Status':
         return orderStatusFiltersChecked.length;
-      case getDictionaryValueOrKey(filterLabels.orderType):
+      case 'Order Type':
         return orderTypeFiltersChecked.length;
       default:
-        return getCustomFilterCounter();
+        return 0;
     }
   };
   const counter = showCounter(accordionLabel);
 
-  const showField = (group) => {
-    switch (group) {
+  const showField = (fieldType) => {
+    switch (fieldType) {
       case 'date':
         return (
           <div className="datepicker-wrapper">
@@ -87,33 +62,13 @@ function OrderFilterListItem({
           <OrderFilterItems
             itemKey={accordionLabel}
             filtersRefs={filtersRefs}
-            filterLabels={filterLabels}
           />
-        );
-      case 'custom':
-        return (
-          <OrderFilterCustomItem
-            filterField={filterField}
-            filterOptionList={filterOptionList}
-            accordionLabel={accordionLabel}
-            customFilterId={id}
-          />
-        );
-      case 'customDate':
-        return (
-          <div className="datepicker-wrapper-custom">
-            <OrderFilterCustomDatapicker
-              filtersRefs={filtersRefs}
-              customDateId={id}
-              filterLabels={filterLabels}
-            />
-          </div>
         );
       default:
         return <></>;
     }
   };
-  const orderField = showField(group);
+  const orderField = showField(filterField);
 
   return (
     <>

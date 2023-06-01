@@ -1,31 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { getDictionaryValue } from '../../../../../utils/utils';
 import OrderFilterList from './OrderFilterList';
 import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const OrderFilterFlyout = ({
-  filterLabels,
+  aemData,
   onQueryChanged,
   filtersRefs,
   isTDSynnex,
-  subheaderReference,
 }) => {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.orderFilterCounter
   );
-  const [showLess, setShowLess] = useState(true);
   const enabled = orderFilterCounter !== 0;
   const effects = useOrderTrackingStore((state) => state.effects);
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.isFilterModalOpen
   );
   const { toggleFilterModal, clearAllOrderFilters } = effects;
-  const { filterTitle, showResultLabel } = filterLabels;
-  const toggleShowLess = () => {
-    setShowLess(!showLess);
-  };
 
   const showResult = () => {
     toggleFilterModal();
@@ -47,29 +41,25 @@ const OrderFilterFlyout = ({
       onClose={handleClearFilter}
       width="425px"
       anchor="right"
-      titleLabel={getDictionaryValueOrKey(filterTitle)}
-      buttonLabel={getDictionaryValueOrKey(showResultLabel)}
+      subheaderReference={document.querySelector('.subheader > div > div')}
+      titleLabel={getDictionaryValue(
+        'grids.common.label.filterTitle',
+        'Filters'
+      )}
+      buttonLabel={getDictionaryValue(
+        'grids.common.label.showResults',
+        'Show results'
+      )}
       enableButton={enabled}
-      disabledButton={!enabled}
       onClickButton={showResult}
       isTDSynnex={isTDSynnex}
-      subheaderReference={subheaderReference}
     >
       <section className="cmp-flyout__content teal_scroll height_order_filters">
-        <div className={'order-filter-accordion'}>
-          <OrderFilterList
-            filtersRefs={filtersRefs}
-            filterLabels={filterLabels}
-          />
+        <div className={'filter-accordion scrollbar_y_none height_1000'}>
+          <OrderFilterList filtersRefs={filtersRefs} />
         </div>
       </section>
-      <section
-        className={`filter-order-tags-container ${showLess ? 'activated' : ''}`}
-      >
-        <span
-          onClick={toggleShowLess}
-          className="order-filter-tags-more"
-        ></span>
+      <section className="filter-order-tags-container">
         <OrderFilterTags filtersRefs={filtersRefs} />
       </section>
     </BaseFlyout>

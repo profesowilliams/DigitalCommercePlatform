@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
-import OrderFilterTag from './OrderFilterTag';
 
 function OrderFilterTags({ filtersRefs }) {
+  const [showMore, setShowMore] = useState(false);
   const {
     setOrderStatusFiltersChecked,
     setOrderTypeFiltersChecked,
     setDateRangeFiltersChecked,
     setCustomState,
-    setCustomFiltersChecked,
   } = useOrderTrackingStore((state) => state.effects);
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.orderStatusFiltersChecked
@@ -19,10 +18,11 @@ function OrderFilterTags({ filtersRefs }) {
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.dateRangeFiltersChecked
   );
-  const customFiltersChecked = useOrderTrackingStore(
-    (state) => state.customFiltersChecked
-  );
   const dateType = useOrderTrackingStore((state) => state.dateType);
+
+  const handleShowMore = () => {
+    setShowMore(!showMore);
+  };
 
   const handleFilterCloseClick = (id, group) => {
     if (group === 'status') {
@@ -56,81 +56,29 @@ function OrderFilterTags({ filtersRefs }) {
     }
   };
 
-  const handleCustomFilterCloseClick = (customFilterId, id) => {
-    let newList = customFiltersChecked;
-    newList.map((filter) => {
-      filter.id === customFilterId &&
-        filter.filterOptionList.map((element) => {
-          element.id === id && (element.checked = false);
-        });
-    });
-    setCustomFiltersChecked([...newList]);
-  };
-
-  const handleCustomDateFilterCloseClick = (filter) => {
-    const clearDate = (customFilter) => {
-      customFilter.startDate = null;
-      customFilter.endDate = null;
-      customFilter.dataRangeLabel = null;
-    };
-    let newList = customFiltersChecked;
-    newList.map((_filter) => {
-      _filter.id === filter.id && clearDate(_filter);
-    });
-    setCustomFiltersChecked([...newList]);
-  };
-
-  const getCustomFiltersFromCheckboxes = (filter) =>
-    filter.filterOptionList.map(
-      (element) =>
-        element.checked && (
-          <OrderFilterTag
-            closeHandler={() =>
-              handleCustomFilterCloseClick(filter.id, element.id)
-            }
-            value={element?.filterOptionLabel}
-            id={element.id}
-            key={element.id}
-          />
-        )
-    );
-
-  const getCustomFiltersFromSelectedDate = (filter) =>
-    filter?.group === 'customDate' &&
-    filter?.dataRangeLabel && (
-      <OrderFilterTag
-        closeHandler={() => handleCustomDateFilterCloseClick(filter)}
-        value={filter?.dataRangeLabel}
-        id={filter.id}
-        key={filter.id}
-      />
-    );
-
   return (
-    <div className={`order-filter-tags-container teal_scroll`}>
-      {[
-        ...orderStatusFiltersChecked,
-        ...orderTypeFiltersChecked,
-        ...dateRangeFiltersChecked,
-      ].map((filter) => (
-        <OrderFilterTag
-          closeHandler={() => handleFilterCloseClick(filter.id, filter?.group)}
-          value={
-            filter?.group === 'date'
-              ? `${dateType} : ${filter.filterOptionLabel}`
-              : filter.filterOptionLabel
-          }
-          id={filter.id}
-          key={filter.id}
-        />
-      ))}
-
-      {customFiltersChecked.map((filter) =>
-        filter?.filterOptionList
-          ? getCustomFiltersFromCheckboxes(filter)
-          : getCustomFiltersFromSelectedDate(filter)
-      )}
-    </div>
+    <>
+      <div className={`filter-tags-container ${showMore ? 'active' : ''}`}>
+        <span onClick={handleShowMore} className="filter-tags-more"></span>
+        {[
+          ...orderStatusFiltersChecked,
+          ...orderTypeFiltersChecked,
+          ...dateRangeFiltersChecked,
+        ].map((filter, index) => (
+          <div className={'filter-tags tag_dark_teal'} key={index}>
+            <span className="filter-tags__title" key={index}>
+              {filter?.group === 'date' && dateType && `${dateType} : `}
+              {`${filter.filterOptionLabel}`}
+            </span>
+            <span
+              onClick={() => handleFilterCloseClick(filter.id, filter?.group)}
+            >
+              <i className="fas fa-times filter-tags__close"></i>
+            </span>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 export default OrderFilterTags;

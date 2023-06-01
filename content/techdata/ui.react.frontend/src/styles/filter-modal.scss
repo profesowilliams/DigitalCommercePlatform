@@ -1,3 +1,9 @@
+$brand-green: #005758;
+$gray-light: #ebebeb;
+$brand-green--dark: #003031;
+$brand-text-gray: #555555;
+$brand-charcoal: #262626;
+
 .filter-modal-container {
   position: fixed;
   background: rgba(0, 12, 33, .28);
@@ -36,7 +42,7 @@
   height: calc(100vh - 220px);
   width: 400px;
   border-radius: 4px 0 0 4px;
-  background-color: $brand-white;
+  background-color: #ffffff;
   z-index: 9999;
 
   &__body {
@@ -79,7 +85,7 @@
       content: "";
       width: 2.2rem;
       height: 2.2rem;
-      background: $brand-white;
+      background: white;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -161,7 +167,7 @@
 
   &__results.td-synnex {
     background-color: $brand-green;
-    color: $brand-white;
+    color: white;
   }
 
   .cmp-quote-button {
@@ -172,7 +178,7 @@
   .cmp-quote-button:disabled {
     opacity: 0.8;
     background-color: #000c21;
-    color: $brand-white;
+    color: white;
     cursor: none;
   }
 
@@ -249,70 +255,6 @@ div.filter-accordion {
   height: 100%;
 }
 
-.order-filter-accordion {
-  text-align: left;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  overflow-y: hidden;
-  font-family: 'TWKEverett-Regular-web';
-
-  div.filter-option__options li {
-    list-style: none;
-    padding-left: 21px !important;
-  }
-
-  &__item {
-    list-style: none;
-
-    &--group {
-      padding: 8px 0;
-      padding-left: 42px !important;
-      position: relative;
-
-      .count {
-        position: absolute;
-        right: 47px;
-        top: 21px;
-      }
-
-      .count.td-synnex {
-        background-color: $brand-green;
-      }
-    }
-  }
-
-  h3 {
-    color: $brand-charcoal;
-    font-size: 14px;
-    letter-spacing: 0;
-    line-height: 19px;
-    cursor: pointer;
-    font-weight: normal;
-    margin: 14px 0;
-
-    &.active {
-      color: $blue-dark;
-      font-weight: bold;
-
-      &:before {
-        content: "\f078";
-      }
-    }
-
-    &.active.td-synnex {
-      color: $brand-charcoal;
-    }
-
-    &:before {
-      content: "\f054";
-      @include font-awesome;
-      padding-right: 11px;
-      font-weight: 900;
-    }
-  }
-}
 .filter-accordion {
   text-align: left;
   margin: 0;
@@ -357,7 +299,7 @@ div.filter-accordion {
     margin: 14px 0;
 
     &.active {
-      color: $blue-dark;
+      color: #001d44;
       font-weight: bold;
 
       &:before {
@@ -378,42 +320,26 @@ div.filter-accordion {
   }
 }
 
-.order-filter-tags-more {
-  height: 1px;
-  width: 60px;
-  border: 2px solid #6d7278;
-  position: relative;
-  top: 10px;
-  left: 0;
-  box-sizing: border-box;
-  right: 0;
-  margin: 0 auto;
-  cursor: pointer;
-  border-radius: 10px;
-}
 .filter-order-tags-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding-top: 0;
-    padding-bottom: 0;
+  padding: 20px 0px;
   gap: 20px;
-  background: $brand-white;
+  height: 83px;
+  background: #FFFFFF;
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
   flex: none;
   order: 0;
   flex-grow: 0;
 }
 
-.activated {
-  height: 83px;
-}
 .filter-tags-container {
   height: 106px;
   width: 100%;
-  background-color: $brand-white;
+  background-color: #ffffff;
   // box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.27%);
   box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.106);
   position: relative;
@@ -443,69 +369,7 @@ div.filter-accordion {
 
   .filter-tags {
     border-radius: 14px;
-    background-color: $blue-dark;
-      color: $brand-white;
-    padding: 0 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    width: max-content;
-    max-height: 17px;
-
-    &>span:nth-child(2) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding: 1px 0 0;
-    }
-
-    &__title {
-      color: $brand-white;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: -0.07px;
-      line-height: 17px;
-      text-align: center;
-    }
-
-    &__close {
-      color: $brand-white;
-      font-family: "Font Awesome 5 Free";
-      font-size: 9px;
-      letter-spacing: 0;
-      line-height: 9px;
-      cursor: pointer;
-    }
-  }
-
-  .filter-tags.td-synnex {
-    background-color: $brand-green;
-    padding: 11px;
-  }
-}
-
-.order-filter-tags-container {
-  height: 106px;
-  width: 100%;
-  background-color: $brand-white;
-  // box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.27%);
-  box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.106);
-  position: relative;
-  bottom: 0;
-  z-index: 1;
-  padding: 5px 12px 0;
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: scroll;
-  justify-content: center;
-
-  .filter-tags {
-    border-radius: 14px;
-    background-color: $blue-dark;
+    background-color: #001d44;
     color: white;
     padding: 0 10px;
     margin-bottom: 10px;
@@ -526,7 +390,7 @@ div.filter-accordion {
     }
 
     &__title {
-      color: $brand-white;
+      color: #ffffff;
       font-size: 12px;
       font-weight: 400;
       letter-spacing: -0.07px;
@@ -535,7 +399,7 @@ div.filter-accordion {
     }
 
     &__close {
-      color: $brand-white;
+      color: #ffffff;
       font-family: "Font Awesome 5 Free";
       font-size: 9px;
       letter-spacing: 0;
@@ -549,6 +413,7 @@ div.filter-accordion {
     padding: 11px;
   }
 }
+
 .filter-datepicker-container {
   padding-left: 40px;
   margin-bottom: 19rem;
@@ -590,8 +455,8 @@ div.filter-accordion {
 
 .count {
   border-radius: 9.5px;
-  background-color: $blue-dark;
-    color: $brand-white;
+  background-color: #001d44;
+  color: white;
   text-align: center;
   padding: 0px 12px;
   font-size: 13px;
@@ -660,6 +525,10 @@ div.filter-accordion {
       overflow: auto;
 }
 
+.height_1000 {
+  min-height: 1500px !important;
+}
+
 .teal_scroll::-webkit-scrollbar-track {
   background-color: transparent;
 }
@@ -676,11 +545,7 @@ div.filter-accordion {
   height: 480px !important;
   min-height: 480px;
   }
-
-    .datepicker-wrapper-custom {
-      height: 380px !important;
-      min-height: 380px;
-    }
+  
   div.DateRangePicker.DateRangePicker_1 {
     width: 339px;
   }

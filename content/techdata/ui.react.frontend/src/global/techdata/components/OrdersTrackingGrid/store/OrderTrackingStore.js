@@ -71,11 +71,6 @@ const INITIAL_STATE = {
     'dateRangeFiltersChecked',
     []
   ),
-  customFiltersChecked: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'customFiltersChecked',
-    []
-  ),
   orderFilterCounter: 0,
   isTDSynnex: true,
   branding: '',
