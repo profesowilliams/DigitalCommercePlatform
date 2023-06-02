@@ -1,8 +1,14 @@
-import { ORDER_FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
+import {
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+  TOASTER_LOCAL_STORAGE_KEY,
+} from '../../../../../utils/constants';
+import {
+  getLocalStorageData,
+  setLocalStorageData,
+} from '../../RenewalsGrid/utils/renewalUtils';
 import { getLocalValueOrDefault } from './../../BaseGrid/store/GridStore';
 
-export const orderTrackingEffects = ( set, get ) =>  {
+export const orderTrackingEffects = (set, get) => {
   function setDatePickerState(fromDate = '', toDate = '') {
     const deleteTimeZoneRegex = /T((?:\d{2}:){2}.*)$/g;
     const fromDateNoTime = fromDate
@@ -135,5 +141,9 @@ export const orderTrackingEffects = ( set, get ) =>  {
       });
       updateOrderFilterCounter();
     },
+    closeAndCleanToaster() {
+      const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
+      setCustomState({ key: 'toaster', value: { isOpen: false } }, options);
+    },
   };
-}
+};

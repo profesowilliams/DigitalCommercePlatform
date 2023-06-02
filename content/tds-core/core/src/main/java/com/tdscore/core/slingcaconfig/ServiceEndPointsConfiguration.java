@@ -92,6 +92,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Orders Download Documents Endpoint", description = "Orders Download Documents Endpoint")
     String ordersDownloadDocumentsEndpoint();
 
+    @Property(label = "Export All Order Lines Endpoint", description = "Export All Order Lines Endpoint")
+    String exportAllOrderLinesEndpoint();
+
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
 

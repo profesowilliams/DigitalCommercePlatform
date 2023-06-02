@@ -49,6 +49,7 @@ import {
   getFilterFlyoutCustomized,
   setPaginationData,
 } from './utils/orderTrackingUtils';
+import Toaster from '../Widgets/Toaster';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -385,6 +386,9 @@ function OrdersTrackingGrid(props) {
     });
   }
 
+  function onCloseToaster() {
+    closeAndCleanToaster();
+  }
   const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
   const doesUserHaveViewRights =
@@ -515,6 +519,7 @@ function OrdersTrackingGrid(props) {
           />
           <ExportFlyout
             store={useOrderTrackingStore}
+            componentProp={gridConfig}
             exportFlyout={gridConfig.exportFlyout}
             exportOptionsList={gridConfig.exportOptionsList}
             exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
@@ -522,6 +527,15 @@ function OrdersTrackingGrid(props) {
               '.subheader > div > div'
             )}
             isTDSynnex={isTDSynnex}
+          />
+          <Toaster
+            classname="toaster-modal-otg"
+            onClose={onCloseToaster}
+            store={useOrderTrackingStore}
+            message={{
+              successSubmission: 'successSubmission',
+              failedSubmission: 'failedSubmission',
+            }}
           />
           <OrderFilterFlyout
             onQueryChanged={onQueryChanged}
