@@ -318,13 +318,21 @@ function OrdersTrackingGrid(props) {
   const doesMatchByInvoiceId = (searchInvoice, orderInvoices) =>
     orderInvoices.some((invoice) => invoice.id == searchInvoice);
 
+  const doesMatchByDeliveryNote = (searchDeliveryNote, deliveryNotes) =>
+    deliveryNotes.some((deliveryNote) => deliveryNote.id == searchDeliveryNote);
+
   const doesCurrentSearchMatchResult = (result) => {
     if (searchCriteria.current.field === 'Id') {
       return doesMatchById(searchCriteria.current.value, result.id);
-    } else if (searchCriteria.current.field === 'invoiceId') {
+    } else if (searchCriteria.current.field === 'InvoiceId') {
       return doesMatchByInvoiceId(
         searchCriteria.current.value,
         result.invoices
+      );
+    } else if (searchCriteria.current.field === 'DeliveryNote') {
+      return doesMatchByDeliveryNote(
+        searchCriteria.current.value,
+        result.deliveryNotes
       );
     }
   };
@@ -338,18 +346,15 @@ function OrdersTrackingGrid(props) {
   };
 
   const addCurrencyToTotalColumn = (list) => {
-    const currentUserData = userData;
-
-    const activeCustomer = currentUserData?.activeCustomer;
+    const activeCustomer = userData?.activeCustomer;
     const defaultCurrency = activeCustomer?.defaultCurrency || '';
-    return list.map((el) => {
-      if (el.columnKey === 'priceFormatted') {
-        const newColumn = el;
-        newColumn.columnLabel = `Total (${defaultCurrency})`;
-        return newColumn;
-      } else {
-        return el;
+
+    return list.map((column) => {
+      if (column.columnKey === 'priceFormatted') {
+        column.columnLabel = `Total (${defaultCurrency})`;
+        return column;
       }
+      return column;
     });
   };
 
@@ -380,9 +385,13 @@ function OrdersTrackingGrid(props) {
     });
   }
 
+  const isLocalDevelopment = window.origin === 'http://localhost:8080';
+
+  const doesUserHaveViewRights =
+    hasCanViewOrdersRights || hasOrderTrackingRights;
+
   const hasAccess =
-    userData?.activeCustomer &&
-    (hasCanViewOrdersRights || hasOrderTrackingRights);
+    (userData?.activeCustomer && doesUserHaveViewRights) || isLocalDevelopment;
 
   useEffect(() => {
     if (

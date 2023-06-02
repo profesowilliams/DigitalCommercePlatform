@@ -423,7 +423,7 @@ export const getFilterFlyoutCustomized = (
         accordionLabel: filter.accordionLabel,
         filterField: filter.filterField,
         group: 'custom',
-        filterOptionList: filter.filterOptionsValues.map((value, index) => ({
+        filterOptionList: filter.filterOptionsValues?.map((value, index) => ({
           id: index,
           filterOptionLabel: value.filterOptionLabel,
           filterOptionKey: value.filterOptionKey,
