@@ -84,11 +84,13 @@
     }
 
     > .cmp-tabs > .cmp-tabs__tablist {
+        margin: 40px 0 40px 0;
+
         .li,
         [role="tab"] {
             color: get-color(cool-gray-8);
             padding: 0;
-            margin: 0 2rem 0 2rem;
+            margin: 0 40px 0 40px;
             font-family: Arial;
             font-size: 20px;
             font-style: normal;
@@ -99,8 +101,6 @@
             &:hover {
                 border-bottom: get-color(brand-button-blue) 2px solid;
             }
-
-            min-height: 30px;
         }
 
         .cmp-tabs__tab--active {
@@ -110,7 +110,7 @@
     }
 
     .cmp-tabs__tabpanel {
-        padding: 2rem 0 0 rem(32px);
+        padding: 2rem 0 0 2rem;
     }
 
     .cmp-tabs__tabpanel--active {
