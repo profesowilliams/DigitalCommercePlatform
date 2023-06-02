@@ -28,7 +28,7 @@ function SoldToCard(props) {
             <br />
           </>
         )}
-        {shipTo.city} {shipTo.state} {shipTo.postalCode} {shipTo.country}
+        {shipTo.city} {shipTo.state} {shipTo.zip} {shipTo.country}
       </div>
       <div className="card-container__bottom">
         {shipTo.phoneNumber && (
@@ -38,10 +38,10 @@ function SoldToCard(props) {
             <br />
           </>
         )}
-        {shipTo.contactEmail && (
+        {shipTo.email && (
           <>
             {getDictionaryValueOrKey(config?.labels?.detailsSoldToEmail)}{' '}
-            {shipTo.contactEmail}
+            {shipTo.email}
           </>
         )}
       </div>
