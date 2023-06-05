@@ -20,12 +20,12 @@ function OrderAcknowledgementCard(props) {
             <span>{content.reseller?.id}</span>
           </div>
         )}
-        {content.created && (
+        {content.createdFormatted && (
           <div className="card-container__contentGrid">
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsOrderDate)}
             </span>
-            <span>{content.created}</span>
+            <span>{content.createdFormatted}</span>
           </div>
         )}
         {content.poNumber && (

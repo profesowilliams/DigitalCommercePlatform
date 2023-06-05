@@ -12267,6 +12267,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       poNumber: "TDS - 10004089452",
       endUserPO: null,
       created: "03/15/23",
+      createdFormatted: "02/04/2023",
       poDate: "03/15/23",
       blindPackaging: false,
       shipComplete: false,
