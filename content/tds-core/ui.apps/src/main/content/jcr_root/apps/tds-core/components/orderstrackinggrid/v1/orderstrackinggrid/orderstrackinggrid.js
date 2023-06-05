@@ -12,6 +12,7 @@ use(["../common/utils.js"], function (utils) {
   let invoicesFlyout = {};
   let exportFlyout = {};
   let noAccessProps = {};
+  let analyticsCategories = {};
 
   let filterLabels = {};
 
@@ -210,6 +211,31 @@ use(["../common/utils.js"], function (utils) {
   if (noAccessProps != null) {
     jsonObject["noAccessProps"] = noAccessProps;
   }
+
+  // Analytics Categories
+  if (properties && properties["sortAnalyticsCategories"]) {
+    analyticsCategories.sort = properties["sortAnalyticsCategories"];
+  }
+  if (properties && properties["searchAnalyticsCategories"]) {
+    analyticsCategories.search = properties["searchAnalyticsCategories"];
+  }
+  if (properties && properties["filterAnalyticsCategories"]) {
+    analyticsCategories.filter = properties["filterAnalyticsCategories"];
+  }
+  if (properties && properties["exportAnalyticsCategories"]) {
+    analyticsCategories.export = properties["exportAnalyticsCategories"];
+  }
+  if (properties && properties["reportAnalyticsCategories"]) {
+    analyticsCategories.report = properties["reportAnalyticsCategories"];
+  }
+  if (properties && properties["paginationAnalyticsCategories"]) {
+    analyticsCategories.pagination =
+      properties["paginationAnalyticsCategories"];
+  }
+  if (analyticsCategories != null) {
+    jsonObject["analyticsCategories"] = analyticsCategories;
+  }
+
 
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
