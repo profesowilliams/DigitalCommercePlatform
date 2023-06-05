@@ -11540,10 +11540,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         email: "johndoe@gmail.com",
         id: null,
         line1: "Calea Serban Voda",
-        line2: 
-        "Central Business Park,",
-        line3: 
-        "Building A, ground floor",
+        line2: "Central Business Park,",
+        line3: "Building A, ground floor",
         name: "John Doe",
         phoneNumber: 692454876,
         postalCode: "50-618",
@@ -11569,7 +11567,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       items: [
         {
           estimatedShipDate: "02-04-2022",
-          estimatedShipDateFormatted: "02-04-2022",
+          estimatedShipDateFormatted: "02/04/2022",
           children: [],
           deliveryNotes: [
             {
@@ -11591,6 +11589,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "02-04-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -11612,6 +11611,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "01-18-2022",
               shippedFrom: null,
               actualShipDate: "03-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -11633,6 +11633,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "02-04-2022",
               shippedFrom: null,
               actualShipDate: "05-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
           ],
@@ -11779,6 +11780,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "02-04-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -11800,6 +11802,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "01-18-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -11821,6 +11824,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "02-04-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
           ],
@@ -11967,6 +11971,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "02-04-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -11988,6 +11993,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "01-18-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
             {
@@ -12009,6 +12015,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               created: "02-04-2022",
               shippedFrom: null,
               actualShipDate: "02-04-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Fort Worth",
             },
           ],

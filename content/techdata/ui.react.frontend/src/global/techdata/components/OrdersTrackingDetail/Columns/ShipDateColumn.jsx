@@ -3,7 +3,9 @@ import React from 'react';
 function ShipDateColumn({ line }) {
   return (
     <div>
-      {line?.deliveryNotes[0]?.actualShipDate || line?.estimatedShipDate || ''}
+      {line?.deliveryNotes[0]?.actualShipDateFormatted ||
+        line?.estimatedShipDateFormatted ||
+        ''}
     </div>
   );
 }
