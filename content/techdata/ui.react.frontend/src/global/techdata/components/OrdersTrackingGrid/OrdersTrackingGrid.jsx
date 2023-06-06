@@ -9,11 +9,9 @@ import {
   requestFileBlobWithoutModal,
   setDefaultSearchDateRange,
 } from '../../../../utils/utils';
-import { getSortAnalytics, pushDataLayer } from '../Analytics/analytics';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
-import BaseGridPagination from '../BaseGrid/Pagination/BaseGridPagination';
 import ToolTip from '../BaseGrid/ToolTip';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import ExportFlyout from '../ExportFlyout/ExportFlyout';
@@ -50,6 +48,8 @@ import {
   setPaginationData,
 } from './utils/orderTrackingUtils';
 import Toaster from '../Widgets/Toaster';
+import { getSortAnalytics, pushDataLayer } from './utils/analyticsUtils';
+import OrderTrackingGridPagination from './Pagination/OrderTrackingGridPagination';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -80,7 +80,6 @@ function OrdersTrackingGrid(props) {
     status,
   };
   const effects = useOrderTrackingStore((st) => st.effects);
-  const category = useOrderTrackingStore((state) => state.analyticsCategory);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
     useExtendGridOperations(useOrderTrackingStore);
@@ -111,8 +110,9 @@ function OrdersTrackingGrid(props) {
     dateOptionsList,
     filterLabels,
     noAccessProps,
+    analyticsCategories,
+    paginationLabels,
   } = componentProp;
-
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const gridConfig = {
@@ -254,7 +254,7 @@ function OrdersTrackingGrid(props) {
       sortingEventFilter.length === 1 &&
       !compareSort(currentSortState, hasSortChanged.current)
     ) {
-      pushDataLayer(getSortAnalytics(category, sortedModel));
+      pushDataLayer(getSortAnalytics(analyticsCategories.sort, sortedModel));
     }
   };
 
@@ -391,11 +391,8 @@ function OrdersTrackingGrid(props) {
   }
   const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
-  const doesUserHaveViewRights =
-    hasCanViewOrdersRights || hasOrderTrackingRights;
-
   const hasAccess =
-    (userData?.activeCustomer && doesUserHaveViewRights) || isLocalDevelopment;
+    hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
   useEffect(() => {
     if (
@@ -414,141 +411,153 @@ function OrdersTrackingGrid(props) {
 
   return (
     <>
-      {hasAccess ? (
-        <div className="cmp-order-tracking-grid">
-          <BaseGridHeader
-            leftComponents={[
-              <BaseGridPagination
-                ref={customPaginationRef}
+      {(userData?.activeCustomer || isLocalDevelopment) && (
+        <>
+          {hasAccess ? (
+            <div className="cmp-order-tracking-grid">
+              <BaseGridHeader
+                leftComponents={[
+                  <OrderTrackingGridPagination
+                    ref={customPaginationRef}
+                    store={useOrderTrackingStore}
+                    onQueryChanged={onQueryChanged}
+                    disabled={isLoading}
+                    paginationAnalyticsLabel={analyticsCategories.pagination}
+                    resultsLabel={paginationLabels.resultsLabel}
+                    ofLabel={paginationLabels.ofLabel}
+                  />,
+                ]}
+                rightComponents={[
+                  ...(pill
+                    ? [
+                        <Pill
+                          children={
+                            <span className="td-capsule__text">
+                              {reportPillLabel}: {pill.label}
+                            </span>
+                          }
+                          closeClick={handleDeletePill}
+                          hasCloseButton
+                        />,
+                      ]
+                    : []),
+                  <OrderSearch
+                    options={searchOptionsList}
+                    onQueryChanged={onSearchChange}
+                    ref={searchCriteria}
+                    store={useOrderTrackingStore}
+                    hideLabel={true}
+                    searchAnalyticsLabel={analyticsCategories.search}
+                  />,
+                  <VerticalSeparator />,
+                  <OrderFilter />,
+                  <VerticalSeparator />,
+                  <Report
+                    selectOption={onReportChange}
+                    ref={reportFilterValue}
+                    selectedKey={pill?.key}
+                    reportAnalyticsLabel={analyticsCategories.report}
+                  />,
+                  <VerticalSeparator />,
+                  <OrderExport />,
+                ]}
+              />
+              <BaseGrid
+                columnList={addCurrencyToTotalColumn(componentProp.columnList)}
+                definitions={ordersTrackingDefinition(
+                  componentProp,
+                  openFilePdf,
+                  hasAIORights
+                )}
+                config={gridConfig}
+                options={options}
+                gridConfig={gridConfig}
+                defaultSearchDateRange={dateRange}
+                requestInterceptor={customRequestInterceptor}
+                mapServiceData={mapServiceData}
+                onSortChanged={onSortChanged}
+                onAfterGridInit={_onAfterGridInit}
+                onDataLoad={onDataLoad}
+                onCellMouseOver={cellMouseOver}
+                onCellMouseOut={cellMouseOut}
+              />
+              <ToolTip toolTipData={toolTipData} />
+              <div className="cmp-renewals__pagination--bottom">
+                <OrderTrackingGridPagination
+                  ref={customPaginationRef}
+                  store={useOrderTrackingStore}
+                  onQueryChanged={onQueryChanged}
+                  disabled={isLoading}
+                />
+              </div>
+              <DNotesFlyout
                 store={useOrderTrackingStore}
+                dNotesFlyout={gridConfig.dNotesFlyout}
+                dNoteColumnList={gridConfig.dNoteColumnList}
+                subheaderReference={document.querySelector(
+                  '.subheader > div > div'
+                )}
+                isTDSynnex={isTDSynnex}
+                downloadAllFile={(flyoutType, orderId) =>
+                  downloadAllFile(flyoutType, orderId)
+                }
+                openFilePdf={(flyoutType, orderId) =>
+                  openFilePdf(flyoutType, orderId)
+                }
+              />
+              <InvoicesFlyout
+                store={useOrderTrackingStore}
+                invoicesFlyout={gridConfig.invoicesFlyout}
+                invoicesColumnList={gridConfig.invoicesColumnList}
+                subheaderReference={document.querySelector(
+                  '.subheader > div > div'
+                )}
+                isTDSynnex={isTDSynnex}
+                downloadAllFile={(flyoutType, orderId) =>
+                  downloadAllFile(flyoutType, orderId)
+                }
+                openFilePdf={(flyoutType, orderId) =>
+                  openFilePdf(flyoutType, orderId)
+                }
+                hasAIORights={hasAIORights}
+              />
+              <ExportFlyout
+                store={useOrderTrackingStore}
+                exportFlyout={gridConfig.exportFlyout}
+                exportOptionsList={gridConfig.exportOptionsList}
+                exportSecondaryOptionsList={
+                  gridConfig.exportSecondaryOptionsList
+                }
+                subheaderReference={document.querySelector(
+                  '.subheader > div > div'
+                )}
+                isTDSynnex={isTDSynnex}
+                exportAnalyticsLabel={analyticsCategories.export}
+              />
+              <Toaster
+                classname="toaster-modal-otg"
+                onClose={onCloseToaster}
+                store={useOrderTrackingStore}
+                message={{
+                  successSubmission: 'successSubmission',
+                  failedSubmission: 'failedSubmission',
+                }}
+              />
+              <OrderFilterFlyout
                 onQueryChanged={onQueryChanged}
-                disabled={isLoading}
-              />,
-            ]}
-            rightComponents={[
-              ...(pill
-                ? [
-                    <Pill
-                      children={
-                        <span className="td-capsule__text">
-                          {reportPillLabel}: {pill.label}
-                        </span>
-                      }
-                      closeClick={handleDeletePill}
-                      hasCloseButton
-                    />,
-                  ]
-                : []),
-              <OrderSearch
-                options={searchOptionsList}
-                onQueryChanged={onSearchChange}
-                ref={searchCriteria}
-                store={useOrderTrackingStore}
-                hideLabel={true}
-              />,
-              <VerticalSeparator />,
-              <OrderFilter />,
-              <VerticalSeparator />,
-              <Report
-                selectOption={onReportChange}
-                ref={reportFilterValue}
-                selectedKey={pill?.key}
-              />,
-              <VerticalSeparator />,
-              <OrderExport />,
-            ]}
-          />
-          <BaseGrid
-            columnList={addCurrencyToTotalColumn(componentProp.columnList)}
-            definitions={ordersTrackingDefinition(
-              componentProp,
-              openFilePdf,
-              hasAIORights
-            )}
-            config={gridConfig}
-            options={options}
-            gridConfig={gridConfig}
-            defaultSearchDateRange={dateRange}
-            requestInterceptor={customRequestInterceptor}
-            mapServiceData={mapServiceData}
-            onSortChanged={onSortChanged}
-            onAfterGridInit={_onAfterGridInit}
-            onDataLoad={onDataLoad}
-            onCellMouseOver={cellMouseOver}
-            onCellMouseOut={cellMouseOut}
-          />
-          <ToolTip toolTipData={toolTipData} />
-          <div className="cmp-renewals__pagination--bottom">
-            <BaseGridPagination
-              ref={customPaginationRef}
-              store={useOrderTrackingStore}
-              onQueryChanged={onQueryChanged}
-              disabled={isLoading}
-            />
-          </div>
-          <DNotesFlyout
-            store={useOrderTrackingStore}
-            dNotesFlyout={gridConfig.dNotesFlyout}
-            dNoteColumnList={gridConfig.dNoteColumnList}
-            subheaderReference={document.querySelector(
-              '.subheader > div > div'
-            )}
-            isTDSynnex={isTDSynnex}
-            downloadAllFile={(flyoutType, orderId) =>
-              downloadAllFile(flyoutType, orderId)
-            }
-            openFilePdf={(flyoutType, orderId) =>
-              openFilePdf(flyoutType, orderId)
-            }
-          />
-          <InvoicesFlyout
-            store={useOrderTrackingStore}
-            invoicesFlyout={gridConfig.invoicesFlyout}
-            invoicesColumnList={gridConfig.invoicesColumnList}
-            subheaderReference={document.querySelector(
-              '.subheader > div > div'
-            )}
-            isTDSynnex={isTDSynnex}
-            downloadAllFile={(flyoutType, orderId) =>
-              downloadAllFile(flyoutType, orderId)
-            }
-            openFilePdf={(flyoutType, orderId) =>
-              openFilePdf(flyoutType, orderId)
-            }
-            hasAIORights={hasAIORights}
-          />
-          <ExportFlyout
-            store={useOrderTrackingStore}
-            componentProp={gridConfig}
-            exportFlyout={gridConfig.exportFlyout}
-            exportOptionsList={gridConfig.exportOptionsList}
-            exportSecondaryOptionsList={gridConfig.exportSecondaryOptionsList}
-            subheaderReference={document.querySelector(
-              '.subheader > div > div'
-            )}
-            isTDSynnex={isTDSynnex}
-          />
-          <Toaster
-            classname="toaster-modal-otg"
-            onClose={onCloseToaster}
-            store={useOrderTrackingStore}
-            message={{
-              successSubmission: 'successSubmission',
-              failedSubmission: 'failedSubmission',
-            }}
-          />
-          <OrderFilterFlyout
-            onQueryChanged={onQueryChanged}
-            filtersRefs={filtersRefs}
-            isTDSynnex={isTDSynnex}
-            filterLabels={filterLabels}
-            subheaderReference={document.querySelector(
-              '.subheader > div > div'
-            )}
-          />
-        </div>
-      ) : (
-        <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+                filtersRefs={filtersRefs}
+                isTDSynnex={isTDSynnex}
+                filterLabels={filterLabels}
+                analyticsCategories={analyticsCategories}
+                subheaderReference={document.querySelector(
+                  '.subheader > div > div'
+                )}
+              />
+            </div>
+          ) : (
+            <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+          )}
+        </>
       )}
     </>
   );

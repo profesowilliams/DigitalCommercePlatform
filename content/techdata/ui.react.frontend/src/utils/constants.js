@@ -75,6 +75,7 @@ export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to 
 export const ERROR_TITLE_DEFAULT = 'Error';
 
 export const ORDER_PAGINATION_LOCAL_STORAGE_KEY = 'orderPaginationLocalStorageData';
+export const ORDER_SORT_LOCAL_STORAGE_KEY = 'orderSortLocalStorageData';
 
 
 // Create Quote

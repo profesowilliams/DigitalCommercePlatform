@@ -4,6 +4,7 @@ import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getFilterAnalytics, pushDataLayer } from '../utils/analyticsUtils';
 
 const OrderFilterFlyout = ({
   filterLabels,
@@ -11,9 +12,19 @@ const OrderFilterFlyout = ({
   filtersRefs,
   isTDSynnex,
   subheaderReference,
+  analyticsCategories,
 }) => {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.orderFilterCounter
+  );
+  const orderStatusFiltersChecked = useOrderTrackingStore(
+    (state) => state.orderStatusFiltersChecked
+  );
+  const orderTypeFiltersChecked = useOrderTrackingStore(
+    (state) => state.orderTypeFiltersChecked
+  );
+  const dateRangeFiltersChecked = useOrderTrackingStore(
+    (state) => state.dateRangeFiltersChecked
   );
   const [showLess, setShowLess] = useState(true);
   const enabled = orderFilterCounter !== 0;
@@ -27,7 +38,24 @@ const OrderFilterFlyout = ({
     setShowLess(!showLess);
   };
 
+  const { dateRange, orderStatus, orderType } = filterLabels;
+
   const showResult = () => {
+    if (orderFilterCounter !== 0) {
+      let checkedFilters = [];
+      orderStatusFiltersChecked.length > 0 &&
+        checkedFilters.push(getDictionaryValueOrKey(orderStatus));
+      orderTypeFiltersChecked.length > 0 &&
+        checkedFilters.push(getDictionaryValueOrKey(orderType));
+      dateRangeFiltersChecked.length > 0 &&
+        checkedFilters.push(getDictionaryValueOrKey(dateRange));
+      pushDataLayer(
+        getFilterAnalytics(
+          getDictionaryValueOrKey(analyticsCategories.filter),
+          checkedFilters
+        )
+      );
+    }
     toggleFilterModal();
     onQueryChanged();
   };

@@ -8,8 +8,9 @@ import React, {
 import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
+import { getReportAnalytics, pushDataLayer } from '../utils/analyticsUtils';
 
-function Report({ selectOption, selectedKey }, ref) {
+function Report({ selectOption, selectedKey, reportAnalyticsLabel }, ref) {
   const reportOptions = [
     { key: 'OpenOrders', label: 'Open Orders' },
     { key: 'NewBacklog', label: 'New Backlog' },
@@ -34,6 +35,7 @@ function Report({ selectOption, selectedKey }, ref) {
   };
 
   const handleSelectOption = (option) => {
+    pushDataLayer(getReportAnalytics(reportAnalyticsLabel, option));
     setCurrentValue(option.key);
     selectOption(option);
     setIsReportHovered(false);

@@ -7,6 +7,10 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
+import {
+  getExportAnalytics,
+  pushDataLayer,
+} from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -41,6 +45,7 @@ function ExportFlyout({
   exportSecondaryOptionsList,
   subheaderReference,
   isTDSynnex,
+  exportAnalyticsLabel,
 }) {
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
@@ -61,7 +66,7 @@ function ExportFlyout({
   };
 
   async function getExportAllOrderLines() {
-    const url = componentProp.exportAllOrderLinesEndpoint || 'nourl';
+    const url = componentProp?.exportAllOrderLinesEndpoint || 'nourl';
     const singleDownloadUrl = url;
     const name = `file.xlsx`;
     await requestFileBlobWithoutModal(singleDownloadUrl, name, {
@@ -78,6 +83,7 @@ function ExportFlyout({
     const matchingRequest = exportRequests.find(
       (e) => e.key === secondarySelected
     );
+    pushDataLayer(getExportAnalytics(exportAnalyticsLabel, secondarySelected));
     if (matchingRequest) {
       const downloadRequest = matchingRequest.request;
       downloadRequest();

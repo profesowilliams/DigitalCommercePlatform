@@ -121,10 +121,9 @@ function OrderFilterTags({ filtersRefs }) {
               : filter.filterOptionLabel
           }
           id={filter.id}
-          key={filter.id}
+          key={`${filter.id}${filter?.group}`}
         />
       ))}
-
       {customFiltersChecked.map((filter) =>
         filter?.filterOptionList
           ? getCustomFiltersFromCheckboxes(filter)

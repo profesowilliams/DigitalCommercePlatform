@@ -13,6 +13,7 @@ use(["../common/utils.js"], function (utils) {
   let exportFlyout = {};
   let noAccessProps = {};
   let analyticsCategories = {};
+  let paginationLabels = {};
 
   let filterLabels = {};
 
@@ -236,9 +237,20 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["analyticsCategories"] = analyticsCategories;
   }
 
-
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
+  }
+
+  //Pagination Labels
+
+  if (properties && properties["ofLabel"]) {
+    paginationLabels.of = properties["ofLabel"];
+  }
+  if (properties && properties["resultsLabel"]) {
+    paginationLabels.results = properties["resultsLabel"];
+  }
+  if (paginationLabels != null) {
+    jsonObject["paginationLabels"] = paginationLabels;
   }
 
   //Search Options

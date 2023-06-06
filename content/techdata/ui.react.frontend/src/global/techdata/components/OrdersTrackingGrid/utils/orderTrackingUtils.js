@@ -192,6 +192,14 @@ export function addCurrentPageNumber(customPaginationRef, request) {
   return mapStrucToUrlStr(urlMap);
 }
 
+export function hasLocalStorageData(key) {
+  return localStorage.getItem(key) !== null;
+}
+
+export function getLocalStorageData(key) {
+  return hasLocalStorageData(key) && JSON.parse(localStorage.getItem(key));
+}
+
 export const getDateRangeLabel = (startDate, endDate) => {
   if (startDate && endDate) {
     const shortStartDateMonth = startDate.format('MMMM').substring(0, 3);
