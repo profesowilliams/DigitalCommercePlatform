@@ -1,0 +1,274 @@
+$flyout-padding: 1.3rem;
+$flyout-small-height: 780px;
+$flyout-small-height-formax: 779px;
+
+.cmp-flyout {
+  font-family: $font-family-arial;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: $flyout-padding;
+    align-items: center;
+    border-bottom: 2px solid $brand-charcoal;
+    padding-bottom: 1rem;
+    &-title {
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
+      font-weight: 700;
+      font-size: 1.25rem;
+      line-height: 26px;
+    }
+    &-icon {
+      height:30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  }
+  &__content {
+    padding: 0 $flyout-padding $flyout-padding $flyout-padding;
+    overflow-y: auto;
+    height: calc(100% - 117px);
+    &-description {
+      margin: 2rem 0 30px 0;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 24px;
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
+      &--ellipsis {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        max-width: 35ch;
+      }
+    }
+    &__contentGrid{
+      display: grid;
+      grid-template-columns: 75px 1fr;
+      grid-gap: 16px; 
+    }
+    &-bold {
+      font-weight: 700;
+      color: $brand-charcoal;
+      font-family: $font-family-arial;
+    }
+    &-search {
+      position: relative;
+      .MuiAutocomplete-root .MuiFormControl-root{
+        .MuiInput-root.MuiInputLabel-formControl, .Mui-error, .Mui-focused, .MuiInputLabel-shrink {
+          color: $brand-text-gray;
+          font-family: $font-family-arial;
+          font-size: 1rem;
+          bottom: 35px;
+          top: unset;
+          .Mui-focused, .MuiInputLabel-shrink {
+            color: $td-dark-blue;
+          }
+        }
+        .MuiInput-root.MuiInput-root.MuiAutocomplete-inputRoot, .MuiInput-root.MuiAutocomplete-inputRoot.Mui-focused {
+          font-family: $font-family-arial;
+          bottom: 4px;
+          padding-bottom: 4px;
+          line-height: 16px;
+        }
+      }
+
+      .MuiInput-root.MuiInput-root.MuiInputBase-adornedEnd {
+        padding-right: 0;
+        .cmp-autocomplete__button-section, .MuiInput-root {
+          padding-right: 0;
+          .cmp-button__autocomplete-search {
+            height: 24px;
+            position: relative;
+            svg {
+              position: absolute;
+              right: 0;
+            }
+          }
+        }
+      }
+    }
+    &--error {
+      color: $td-error-red;
+      font-size: 0.75rem;
+    }
+    .cmp-flyout__quotecmp-flyout__selected-quote  {
+      margin-top: 24px;
+      padding: 16px 15px 16px 15px;
+      background-color: $td-neutral-gray;
+      font-size: 0.875rem;
+      font-family: $font-family-arial;
+
+      &__label, &__label-header {
+        font-weight: 700;
+        padding-bottom: 7px;
+      }
+      &__label-header {
+        font-size: 1rem;
+      }
+    }
+  }
+  &__footer {
+    display:flex;
+    flex-direction: column;
+    &-buttons {
+    display:flex;
+    flex-direction: row;
+    button {
+      width: 100%;
+      background-color: $td-neutral-gray-2;
+      text-align: center;
+      color: $brand-text-lightgray;
+      padding: 0 2rem;
+      height: 48px;
+      font-family: $font-family-arial;
+
+      &.cmp-flyout__footer-button--enabled {
+        background-color: $td-dark-blue;
+        color: white;
+        cursor: pointer;
+      }
+      &.cmp-flyout__footer-button--secondary {
+        border: 1px solid $td-dark-blue;
+        background-color: white;
+        color: $td-dark-blue;
+        cursor: pointer;
+      }
+    }
+    }
+  }
+  .cmp-flyout__footer__warning__container {
+    position: absolute;
+    display: flex;
+    bottom: 79px;
+    margin: 0 $flyout-padding;
+    color: $brand-charcoal;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 18px;
+    border-left: 4px solid $brand-amber;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.12);
+    border-radius: 0px 4px 4px 0px;
+    padding: 20px;
+    svg {
+      flex-shrink: 0;
+      margin-left: -1px;
+    }
+    .cmp-flyout__footer__warning__content {
+      padding-left: 19px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      font-family: $font-family-arial;
+      letter-spacing: -0.175px;
+    }
+    @media (max-height:$flyout-small-height-formax){
+      &__section-footer {
+        display: none;
+      }
+      &__section-content {
+        position: unset;
+        margin: 0;
+        margin-top: 30px;
+        margin-bottom: 40px;
+      }
+    }
+    @media (min-height:$flyout-small-height){
+      &__section-content {
+        display: none;
+      }
+    }
+  }
+}
+.MuiAutocomplete-option .cmp-flyout-autocomplete__option-name .cmp-flyout__quotecmp-flyout__selected-quote  {
+  font-family: $font-family-arial;
+  font-size: 0.875rem;
+  line-height: 20px;
+  font-weight: 400;
+  color: $text-darker-grey;
+  .cmp-flyout__quotecmp-flyout__selected-quote  {
+    &__account-number {
+      font-size: 1rem;
+      line-height: 21px;
+      color: $td-dark-blue;
+      font-family: $font-family-arial;
+
+      .cmp-flyout__content-search__quote--highlighted {
+        color: $brand-cobalt;
+        font-weight: 700;
+        font-family: $font-family-arial;
+      }
+      span {
+        font-family: $font-family-arial;
+      }
+    }
+
+    &__account-number, &__account-name, &__city {
+      font-family: $font-family-arial;
+    }
+  }
+}
+
+.cmp-flyout-table {
+  &__header {
+    &-headCell{
+      color: $brand-black !important
+    }
+  }
+  .MuiTableHead-root{
+    border-top: 3px solid $brand-charcoal;
+    th {
+      font-weight: 700;
+      border-bottom: 1px solid $brand-charcoal;
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+  }
+  .MuiTableBody-root{
+    .MuiTableRow-root{
+      .MuiTableCell-root{
+        padding-top: 20px;
+      } 
+    }
+  }
+  .MuiTableCell-root{
+    border: transparent;
+  } 
+  
+  .MuiTableCell-paddingCheckbox[class^='MuiTableCell-root']{
+    padding: 7px 0px 7px 15px
+  }
+  .Mui-selected[class^='MuiTableRow-root']{
+    background-color: transparent;
+    &:hover {
+    background-color: transparent;
+    }
+  }
+  .MuiTableRow-hover[class^='MuiTableRow-root']:hover{
+    background-color: transparent;
+  }
+}
+
+.cmp-flyout-td-synnex{
+  & .cmp-flyout__footer {
+    &-buttons {
+    button {
+      &.cmp-flyout__footer-button--enabled {
+        background-color: $brand-green;
+      }
+      &.cmp-flyout__footer-button--secondary {
+        border: 1px solid $brand-green;
+        color: $brand-green;
+      }
+    }
+    }
+  }
+}

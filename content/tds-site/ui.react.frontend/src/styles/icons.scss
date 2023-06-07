@@ -1,0 +1,55 @@
+.fluent {
+    &.people-filled {
+
+        &::before {
+            content: "";
+            mask: url('/content/dam/global-shared/icons/filled/people.svg');
+            -webkit-mask: url('/content/dam/global-shared/icons/filled/people.svg');
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'black');
+            display: inline-block;
+            align-items: center;
+            vertical-align: middle
+        }
+    }
+
+    &.search-regular {
+
+        &::before {
+            content: "";
+            mask: url('/content/dam/global-shared/icons/regular/search.svg');
+            -webkit-mask: url('/content/dam/global-shared/regular/search.svg');
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'black');
+            display: inline-block;
+            align-items: center;
+            vertical-align: middle
+        }
+    }
+
+    &.handshake-regular {
+
+        &::before {
+            content: "";
+            mask: url('/content/dam/global-shared/icons/filled/handshake.svg');
+            -webkit-mask: url('/content/dam/global-shared/icons/filled/handshake.svg');
+            background: no-repeat;
+            height: 24px;
+            width: 24px;
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            background-color: map-get($color-palette, 'black');
+            display: inline-block;
+            align-items: center;
+            vertical-align: middle
+        }
+    }
+}

@@ -1,0 +1,29 @@
+.td-capsule {
+  background-color: $brand-blue;
+  min-width: 25px;
+  border-radius: 20px;
+  padding: 0 17px 0 17px;
+  height: 29px;
+  cursor: pointer;
+
+  &__text {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.07px;
+    line-height: 29px;
+    text-align: center;
+  }
+  & > svg {
+    fill: white;
+    margin-left: 14px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}
+
+.cmp-grid-td-synnex {
+  & .td-capsule {
+    background-color: $brand-green;
+  }
+}

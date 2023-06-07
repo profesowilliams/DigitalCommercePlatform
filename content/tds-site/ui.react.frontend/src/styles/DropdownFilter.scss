@@ -1,0 +1,307 @@
+$brand-blue: #000c21;
+$secondary-link-blue: #006bae;
+$font-family-search:"Open Sans", sans-serif;
+$brand-green: #005758;
+$brand-green-dark: #003031;
+.inputStyle {
+  position: relative;
+  padding: 0.25em;
+  border: 0;
+  border-bottom: 1px solid currentcolor;
+  border-radius: 0;
+  color: $brand-text-gray;
+  font-family: $font-family;
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0;
+  line-height: 16px;
+  width: 15rem;
+  padding-bottom: 7px;  
+}
+
+.inputStyle.searchText {
+  color: $brand-blue;
+  font-family: $font-family;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+  font-style: normal;
+}
+
+.inputStyle option {
+  height: 17.5px;
+  width: 170px;
+  color: rgba(0, 12, 33, 1);
+  font-family: $font-family-search;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 17.5px;
+}
+
+.inputStyle:focus,
+.inputStyle:active {
+  outline: 0;
+  border-bottom-color: $secondary-link-blue;
+}
+
+.inputStyle input {
+  display: inline-block;
+  width: 123px;
+  height: 21px;
+  background-repeat: no-repeat;
+  background-position: 96px 0;
+  vertical-align: middle;
+  // margin-bottom: 0;
+}
+
+.inputStyle option:hover {
+  background-color: #f2f2f2;
+}
+
+.cmp-search-tooltip {
+  // width: 100%;
+  height: 17.5px;
+  width: 170px;
+  color: rgba(0, 12, 33, 1);
+  font-family: "Open Sans";
+  top: 45px;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 17.5px;
+  display: none;
+  position: absolute;
+  background-color: white;
+  z-index: 10000;
+  padding: 0.5em;
+  height: 50px;
+  &__button {
+    background-color: $brand-blue;
+    cursor: pointer;
+    i, svg {
+      color: white !important;
+    }
+  }
+  &__button.td-synnex {
+    background-color: $brand-green;   
+    z-index: 20;
+  }
+}
+.tooltipContainer {
+  position: relative;
+}
+.tooltipContainer:hover > .tooltip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  margin-top: -17px;
+}
+
+.tooltip button {
+  background: none;
+  border: none;
+  padding: 0;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tooltip__button {
+  background-color: $secondary-link-blue;
+  color: white;
+}
+
+.cmp-search-select-container{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  &__box{
+    cursor: pointer;
+    display: flex;
+    &-search-field{
+      position: relative;
+      svg{
+        cursor: pointer;
+        fill: #555555;
+        width: 16px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 5px;
+      }
+
+    }
+  }  
+  &__filler {
+    min-height: 4px; 
+    pointer-events: none;
+    cursor: default; 
+    opacity: 0;
+  }
+}
+.cmp-search-select-container__box:hover + .hide {
+  display: flex;
+}
+.cmp-renewal-search {
+  cursor: pointer;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  &__text {
+    color: #555555;
+  }
+  &__icon {
+    color: $secondary-link-blue;
+  }
+  &-dnone{
+    display: none;
+  }
+  .inputStyle {
+    background: #fff;
+  }
+}
+.cmp-search-options.td-synnex {
+  box-shadow: 0px 0px 7px rgba(0,0,0,0.24);
+  top: 34px;
+  width: 16.75rem;
+}
+.cmp-search-options {
+  display: flex;
+  flex-direction: column; 
+  box-shadow: 0.5px 0.5px 8px #000000ad; 
+  position: absolute;
+  height: fit-content;
+  z-index: 5;
+  background: white;
+  top: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 17rem;
+  padding: .5rem 0;
+  label{
+    cursor: pointer;
+    padding: 7px;
+    padding-left: 1rem;
+    transition: all .4s ease;
+    flex: 1;
+    &:hover{
+      background-color: #f2f2f2;
+    }
+  }
+  &__reset{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    justify-content: space-between;
+    padding: 7px; 
+    label {
+      padding: 0;    
+    }
+    .cmp-search-options__reset__icon-container {
+      height: 30px;
+      width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+      transition: all .4s ease-out;
+      &:hover {
+        font-weight: bold;
+        transform: scale(1.065456);
+      }
+    }
+    a{
+      color: $secondary-link-blue;
+      text-decoration: underline;
+    }
+  }
+  &:hover{
+    display: flex;
+  }
+}
+.hide {
+  display: none;
+}
+
+.cmp-grid-td-synnex, .cmp-grid-techdata {
+  & .cmp-renewal-search {
+    & .search-icon {
+      &__dark {
+        fill: $brand-charcoal;
+      }
+    }
+  }
+  & .cmp-search-tooltip {
+    &__button {
+      display: flex;
+      align-items: center;
+      & .search-icon {
+        height: 24px;
+        &__dark {
+          fill: $brand-charcoal;
+        }
+        &__light {
+          fill: white;
+        }
+      }
+    }
+  }
+  & .cmp-search-options {
+    top: 34px;
+    width: 100%;
+    padding: 6px 0;
+    &__reset {
+     padding: unset;
+     font-size: 13px;
+
+     svg {
+      margin-right: 16px;
+      fill: $brand-charcoal;
+     }
+      .cmp-search-options__reset__icon-container {
+        svg {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+  & .cmp-search-options label {
+    padding: 6px 16px;
+    color: $brand-charcoal;
+    &:hover {
+      background-color: unset;
+    }
+  }
+
+  & .inputStyle {
+    &::placeholder {
+      color: #727679;
+    }
+    &.searchText {
+      color: $brand-charcoal;
+    }
+  }
+
+  & .cmp-search-select-container {
+    &__box-search-field {
+      svg {
+        fill: $brand-charcoal;
+      }
+    }
+  }
+}
+
+.cmp-grid-techdata {
+  .cmp-search-tooltip {
+    &__button {
+      background-color: $brand-blue;
+    }
+  }
+}

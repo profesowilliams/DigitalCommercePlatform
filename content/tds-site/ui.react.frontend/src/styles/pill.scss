@@ -1,0 +1,16 @@
+.pill {
+  display: inline-block;
+  border-radius: 26px;
+  padding: 0 8px;
+  font-size: 13px;
+  border: 1px solid;
+  margin-right: 4px;
+  &.error {
+    color: #942d2d;
+    background: #e7acac;
+  }
+  &.warn {
+    color: #515603;
+    background: #ffed92;
+  }
+}
