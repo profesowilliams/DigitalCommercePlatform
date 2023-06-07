@@ -80,9 +80,9 @@ const SearchBar = ({ data, componentProp }) => {
 
   const [width] = useWindowSize();
   const mobileState = width <= 767;
-  const removeIconClassMobile = mobileState ? 'cmp-searchbar__remove-icon--mobile' : 'cmp-searchbar__remove-icon';
+  const removeIconClassMobile = mobileState ? 'cmp-searchbar__remove-icon--mobile' : 'cmp-searchbar__remove-icon' || '';
 
-  const [selectedArea, setSelectedArea] = useState(areaList[0]);
+  const [selectedArea, setSelectedArea] = useState(areaList && areaList.length > 0 ? areaList[0] : null);
   const [typeAheadSuggestions, setTypeAheadSuggestions] = useState([]);
   const [areaSelectionOpen, setAreaSelectionOpen] = useState(false);
   const isLoggedIn = useStore((state) => state.isLoggedIn);
@@ -446,11 +446,11 @@ const SearchBar = ({ data, componentProp }) => {
   );
 
   const RenderDesktopView = (
-      <div
+    <div
         id={id}
         ref={searchContainerRef}
-        className={`cmp-searchbar ${isChecked && 'cmp-searchbar--checked'}`}
-      >
+        className={`cmp-searchbar ${isChecked ? 'cmp-searchbar--checked' : ''}`}
+    >
         <button className="cmp-searchbar__clear" data-cmp-hook-search="clear">
           <i className="cmp-searchbar__clear-icon"></i>
         </button>

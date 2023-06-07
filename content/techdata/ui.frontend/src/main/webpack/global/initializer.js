@@ -5,6 +5,7 @@ import Tabs from './td-components/tabs/tabs';
 import Hamburger from './td-components/hamburger-menu/hamburger';
 import Header from './td-components/header/header';
 import MegamenuMobile from './td-components/megamenu/megamenu-mobile';
+import PopupExit from './td-components/popup/exit';
 import bp from '../common-utils/js/media-match';
 import {subHeader} from './td-components/sub-header/subHeader';
 import './td-components/carousel/carousel';
@@ -42,6 +43,9 @@ Initializer.prototype.initComponents = function () {
 
 // manually initialized components - ones without data-component attribute
 Initializer.prototype.manualInitComponents = function () {
+    const popupExit = new PopupExit();
+    popupExit.initialize();
+
     new Hamburger();
     new Header();
     subHeader();
