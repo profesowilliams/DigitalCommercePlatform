@@ -27,9 +27,10 @@ const OrderSearchView = ({
   options,
   changeHandler,
   store,
+  gridConfig,
 }) => {
   const { computeClassName } = useComputeBranding(store);
-  const userData = useStore(state => state.userData);
+  const userData = useStore((state) => state.userData);
 
   return (
     <>
@@ -46,7 +47,7 @@ const OrderSearchView = ({
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
             {!hideLabel ? (
               <span className="cmp-renewal-search__text">
-                {getDictionaryValue('grids.common.label.search', 'Search')}
+                {getDictionaryValue(gridConfig?.searchTitleLabel)}
               </span>
             ) : (
               <span className="cmp-renewal-search-dnone" />
@@ -68,10 +69,7 @@ const OrderSearchView = ({
             <div className="cmp-search-select-container__box">
               <input
                 className={computeClassName('inputStyle')}
-                placeholder={getDictionaryValue(
-                  'grids.common.label.search',
-                  'Search'
-                )}
+                placeholder={getDictionaryValue(gridConfig?.searchTitleLabel)}
                 disabled
               />
               <button

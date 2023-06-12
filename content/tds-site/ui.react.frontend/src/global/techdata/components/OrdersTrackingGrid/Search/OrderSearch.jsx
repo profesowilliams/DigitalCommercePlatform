@@ -28,6 +28,7 @@ function _OrderSearch(
     onQueryChanged,
     store,
     hideLabel = false,
+    gridConfig,
     searchAnalyticsLabel,
   },
   ref
@@ -264,6 +265,7 @@ function _OrderSearch(
           searchCounter={searchCounter}
           onReset={onReset}
           callbackExecuted={callbackExecuted}
+          gridConfig={gridConfig}
         />
       ) : (
         <OrderSearchView
@@ -284,6 +286,7 @@ function _OrderSearch(
           store={store}
           options={options}
           changeHandler={changeHandler}
+          gridConfig={gridConfig}
         />
       )}
     </>

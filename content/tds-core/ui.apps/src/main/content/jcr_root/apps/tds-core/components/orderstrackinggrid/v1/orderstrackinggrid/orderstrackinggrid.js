@@ -199,6 +199,32 @@ use(["../common/utils.js"], function (utils) {
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
   }
+  if (properties && properties["reportOpenOrdersLabel"]) {
+    jsonObject["reportOpenOrdersLabel"] = properties["reportOpenOrdersLabel"];
+  }
+  if (properties && properties["reportNewBacklogLabel"]) {
+    jsonObject["reportNewBacklogLabel"] = properties["reportNewBacklogLabel"];
+  }
+  if (properties && properties["reportTodaysShipmentsDeliveriesLabel"]) {
+    jsonObject["reportTodaysShipmentsDeliveriesLabel"] =
+      properties["reportTodaysShipmentsDeliveriesLabel"];
+  }
+  if (properties && properties["reportLast7DaysOrdersLabel"]) {
+    jsonObject["reportLast7DaysOrdersLabel"] =
+      properties["reportLast7DaysOrdersLabel"];
+  }
+  if (properties && properties["reportLast30DaysOrdersLabel"]) {
+    jsonObject["reportLast30DaysOrdersLabel"] =
+      properties["reportLast30DaysOrdersLabel"];
+  }
+  if (properties && properties["reportLast7DaysShipmentsLabel"]) {
+    jsonObject["reportLast7DaysShipmentsLabel"] =
+      properties["reportLast7DaysShipmentsLabel"];
+  }
+  if (properties && properties["reportLast30DaysShipmentsLabel"]) {
+    jsonObject["reportLast30DaysShipmentsLabel"] =
+      properties["reportLast30DaysShipmentsLabel"];
+  }
   // No Access Screen
   if (properties && properties["noAccessTitle"]) {
     noAccessProps.noAccessTitle = properties["noAccessTitle"];
@@ -254,6 +280,20 @@ use(["../common/utils.js"], function (utils) {
   }
 
   //Search Options
+  if (properties && properties["searchTitleLabel"]) {
+    jsonObject["searchTitleLabel"] = properties["searchTitleLabel"];
+  }
+  if (properties && properties["searchEnterLabel"]) {
+    jsonObject["searchEnterLabel"] = properties["searchEnterLabel"];
+  }
+  if (properties && properties["searchSorryNoRowsToDisplayLabel"]) {
+    jsonObject["searchSorryNoRowsToDisplayLabel"] =
+      properties["searchSorryNoRowsToDisplayLabel"];
+  }
+  if (properties && properties["searchByLabel"]) {
+    jsonObject["searchByLabel"] = properties["searchByLabel"];
+  }
+
   let searchOptionsValues = utils.getDataFromMultifield(
     resourceResolver,
     "searchOptionsList",
@@ -503,6 +543,15 @@ use(["../common/utils.js"], function (utils) {
   }
   if (properties && properties["streamOne"]) {
     filterLabels.streamOne = properties["streamOne"];
+  }
+  if (properties && properties["orderDateLabel"]) {
+    filterLabels.orderDateLabel = properties["orderDateLabel"];
+  }
+  if (properties && properties["shipDateLabel"]) {
+    filterLabels.shipDateLabel = properties["shipDateLabel"];
+  }
+  if (properties && properties["invoiceDateLabel"]) {
+    filterLabels.invoiceDateLabel = properties["invoiceDateLabel"];
   }
 
   if (filterLabels != null) {

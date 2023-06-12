@@ -10,18 +10,21 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import '../../RenewalFilter/components/datePicker.scss';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
-import { getDictionaryValue } from '../../../../../utils/utils';
+import {
+  getDictionaryValue,
+  getDictionaryValueOrKey,
+} from '../../../../../utils/utils';
 
-function CustomStartEndText() {
+function CustomStartEndText({ filterLabels }) {
   return (
     <div className="customStartEndLabel">
-      <div>Start</div>
-      <div>End</div>
+      <div>{getDictionaryValueOrKey(filterLabels.startLabel)}</div>
+      <div>{getDictionaryValueOrKey(filterLabels.endLabel)}</div>
     </div>
   );
 }
 
-export default function OrderFilterDatePicker({ filtersRefs }) {
+export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   const [focusedInput, setFocusedInput] = useState('startDate');
   const { setDateType, setCustomState, setDateRangeFiltersChecked } =
     useOrderTrackingStore((state) => state.effects);
@@ -38,18 +41,9 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
 
   const startDateFormatted = useRef('');
   const endDateFormatted = useRef('');
-  const orderDate = getDictionaryValue(
-    'grids.common.label.orderDate',
-    'Order date'
-  );
-  const shipDate = getDictionaryValue(
-    'grids.common.label.shipDate',
-    'Ship date'
-  );
-  const invoiceDate = getDictionaryValue(
-    'grids.common.label.invoiceDate',
-    'Invoice date'
-  );
+  const orderDate = getDictionaryValueOrKey(filterLabels.orderDateLabel);
+  const shipDate = getDictionaryValueOrKey(filterLabels.shipDateLabel);
+  const invoiceDate = getDictionaryValueOrKey(filterLabels.invoiceDateLabel);
   const momentCustomStartDate = customStartDate
     ? moment(customStartDate)
     : null;
@@ -137,13 +131,17 @@ export default function OrderFilterDatePicker({ filtersRefs }) {
         shipDate={shipDate}
         invoiceDate={invoiceDate}
       />
-      <CustomStartEndText />
+      <CustomStartEndText filterLabels={filterLabels} />
       <div className="order_datapicker">
         <DateRangePicker
           startDate={momentCustomStartDate}
           startDateId="start-date"
-          startDatePlaceholderText="Add date"
-          endDatePlaceholderText="Add date"
+          startDatePlaceholderText={getDictionaryValueOrKey(
+            filterLabels.addDateLabel
+          )}
+          endDatePlaceholderText={getDictionaryValueOrKey(
+            filterLabels.addDateLabel
+          )}
           endDate={momentCustomEndDate}
           {...navIcons}
           endDateId="end-date"

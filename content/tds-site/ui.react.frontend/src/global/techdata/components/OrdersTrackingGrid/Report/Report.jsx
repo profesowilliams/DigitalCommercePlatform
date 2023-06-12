@@ -9,16 +9,42 @@ import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentI
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { getReportAnalytics, pushDataLayer } from '../utils/analyticsUtils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-function Report({ selectOption, selectedKey, reportAnalyticsLabel }, ref) {
+function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, ref) {
   const reportOptions = [
-    { key: 'OpenOrders', label: 'Open Orders' },
-    { key: 'NewBacklog', label: 'New Backlog' },
-    { key: 'TodaysShipmentsDeliveries', label: `Today's Shipments/Deliveries` },
-    { key: 'Last7DaysOrders', label: 'Last 7 Days Orders' },
-    { key: 'Last30DaysOrders', label: 'Last 30 Days Orders' },
-    { key: 'Last7DaysShipments', label: 'Last 7 Days Shipments' },
-    { key: 'Last30DaysShipments', label: 'Last 30 Days Shipments' },
+    {
+      key: 'OpenOrders',
+      label: getDictionaryValueOrKey(gridConfig?.reportOpenOrdersLabel),
+    },
+    {
+      key: 'NewBacklog',
+      label: getDictionaryValueOrKey(gridConfig?.reportNewBacklogLabel),
+    },
+    {
+      key: 'TodaysShipmentsDeliveries',
+      label: getDictionaryValueOrKey(
+        gridConfig?.reportTodaysShipmentsDeliveriesLabel
+      ),
+    },
+    {
+      key: 'Last7DaysOrders',
+      label: getDictionaryValueOrKey(gridConfig?.reportLast7DaysOrdersLabel),
+    },
+    {
+      key: 'Last30DaysOrders',
+      label: getDictionaryValueOrKey(gridConfig?.reportLast30DaysOrdersLabel),
+    },
+    {
+      key: 'Last7DaysShipments',
+      label: getDictionaryValueOrKey(gridConfig?.reportLast7DaysShipmentsLabel),
+    },
+    {
+      key: 'Last30DaysShipments',
+      label: getDictionaryValueOrKey(
+        gridConfig?.reportLast30DaysShipmentsLabel
+      ),
+    },
   ];
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(selectedKey);

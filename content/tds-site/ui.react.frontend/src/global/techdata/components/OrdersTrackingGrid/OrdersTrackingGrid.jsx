@@ -425,7 +425,7 @@ function OrdersTrackingGrid(props) {
                     paginationAnalyticsLabel={analyticsCategories.pagination}
                     resultsLabel={paginationLabels.resultsLabel}
                     ofLabel={paginationLabels.ofLabel}
-                  />,
+                    />,
                 ]}
                 rightComponents={[
                   ...(pill
@@ -447,6 +447,7 @@ function OrdersTrackingGrid(props) {
                     ref={searchCriteria}
                     store={useOrderTrackingStore}
                     hideLabel={true}
+                    gridConfig={gridConfig}
                     searchAnalyticsLabel={analyticsCategories.search}
                   />,
                   <VerticalSeparator />,
@@ -456,6 +457,7 @@ function OrdersTrackingGrid(props) {
                     selectOption={onReportChange}
                     ref={reportFilterValue}
                     selectedKey={pill?.key}
+                    gridConfig={gridConfig}
                     reportAnalyticsLabel={analyticsCategories.report}
                   />,
                   <VerticalSeparator />,
@@ -482,29 +484,29 @@ function OrdersTrackingGrid(props) {
                 onCellMouseOut={cellMouseOut}
               />
               <ToolTip toolTipData={toolTipData} />
-              <div className="cmp-renewals__pagination--bottom">
-                <OrderTrackingGridPagination
-                  ref={customPaginationRef}
-                  store={useOrderTrackingStore}
-                  onQueryChanged={onQueryChanged}
-                  disabled={isLoading}
-                />
-              </div>
+                  <div className="cmp-renewals__pagination--bottom">
+                    <OrderTrackingGridPagination
+                      ref={customPaginationRef}
+                      store={useOrderTrackingStore}
+                      onQueryChanged={onQueryChanged}
+                      disabled={isLoading}
+                    />
+                  </div>
               <DNotesFlyout
-                store={useOrderTrackingStore}
-                dNotesFlyout={gridConfig.dNotesFlyout}
-                dNoteColumnList={gridConfig.dNoteColumnList}
-                subheaderReference={document.querySelector(
-                  '.subheader > div > div'
-                )}
-                isTDSynnex={isTDSynnex}
-                downloadAllFile={(flyoutType, orderId) =>
-                  downloadAllFile(flyoutType, orderId)
-                }
-                openFilePdf={(flyoutType, orderId) =>
-                  openFilePdf(flyoutType, orderId)
-                }
-              />
+                    store={useOrderTrackingStore}
+                    dNotesFlyout={gridConfig.dNotesFlyout}
+                    dNoteColumnList={gridConfig.dNoteColumnList}
+                    subheaderReference={document.querySelector(
+                      '.subheader > div > div'
+                    )}
+                    isTDSynnex={isTDSynnex}
+                    downloadAllFile={(flyoutType, orderId) =>
+                      downloadAllFile(flyoutType, orderId)
+                    }
+                    openFilePdf={(flyoutType, orderId) =>
+                      openFilePdf(flyoutType, orderId)
+                    }
+                  />
               <InvoicesFlyout
                 store={useOrderTrackingStore}
                 invoicesFlyout={gridConfig.invoicesFlyout}
@@ -554,12 +556,13 @@ function OrdersTrackingGrid(props) {
                 )}
               />
             </div>
-          ) : (
-            <AccessPermissionsNeeded noAccessProps={noAccessProps} />
-          )}
+            ) : (
+              <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+            )
+          }
         </>
       )}
     </>
-  );
+  )
 }
 export default OrdersTrackingGrid;

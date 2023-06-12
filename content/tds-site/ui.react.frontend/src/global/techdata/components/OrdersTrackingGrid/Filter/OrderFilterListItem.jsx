@@ -79,7 +79,10 @@ function OrderFilterListItem({
       case 'date':
         return (
           <div className="datepicker-wrapper">
-            <OrderFilterDatePicker filtersRefs={filtersRefs} />
+            <OrderFilterDatePicker
+              filtersRefs={filtersRefs}
+              filterLabels={filterLabels}
+            />
           </div>
         );
       case 'order':
