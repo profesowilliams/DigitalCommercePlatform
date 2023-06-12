@@ -7,7 +7,7 @@ export default class PopupExit {
      */
     constructor() {
       /** @type {NodeList} */
-      this.links = document.querySelectorAll('a[data-is-global="false"]');
+      this.links = document.querySelectorAll('a[data-is-global="true"]');
       /** @type {Element|null} */
       this.modal = document.querySelector('.cmp-popup__modal');
       /** @type {NodeList|null} */

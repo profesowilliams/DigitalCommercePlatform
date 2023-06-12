@@ -20,6 +20,8 @@ $cmp-popup-button-styles: (
       /// Content inside the popup modal.
       .cmp-popup__modal__content {
         width: $width; // Set width based on the size specified in the map.
+        position: relative;
+        top: 25%;
       }
 
       /// Button inside the popup modal.

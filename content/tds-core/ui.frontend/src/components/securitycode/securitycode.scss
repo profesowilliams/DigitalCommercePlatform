@@ -4,12 +4,10 @@ $z-index-value-up-subheader: $z-index-value-up-of-popup + 2;
 
 @include mobile{
   .cmp-popup__modal {
-    top: 5vw;
   }
 }
 
 .cmp-popup__modal {
-  top: 5vw;
   z-index: 100;
 }
 .cmp-navigation--us #navigation {
