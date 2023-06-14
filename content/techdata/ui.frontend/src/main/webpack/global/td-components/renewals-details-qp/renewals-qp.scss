@@ -133,7 +133,7 @@
     line-height: 20px;
   }
   &--address-group {
-    color: #878787;
+    color: map-get($color-palette, 'charcoal');
     font-size: 16px;
     letter-spacing: 0;
     line-height: 22px;

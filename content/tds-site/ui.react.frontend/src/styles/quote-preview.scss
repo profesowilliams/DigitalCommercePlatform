@@ -206,13 +206,13 @@
             cursor: default;
     }
     &--sub-title {
-        color: $brand-text-gray;
+        color: map-get($color-palette, 'charcoal');
         font-size: 13px;
         font-weight: 600;
         line-height: 18px;
     }
     &--address-group {
-        color: $brand-text-gray;
+        color: map-get($color-palette, 'charcoal');
         font-size: 13px;
         line-height: 18px;
         span {
