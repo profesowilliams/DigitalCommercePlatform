@@ -1,0 +1,62 @@
+.newsroom-style {
+  .cmp-contentfragmentlist {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media only screen and (max-width: 768px) {
+       display: block;
+    }
+
+    .cmp-contentfragment {
+      flex-basis: calc(33.33333% - 34px);
+      margin: 0 17px;
+      margin-bottom: 95px;
+      box-sizing: border-box;
+      background-color: #F8F8F8;
+      padding-bottom: 40px;
+
+
+      &__elements {
+         background-color: white;
+          margin: auto;
+          padding: 40px 20px;
+          margin-top: -80px;
+          z-index: 99;
+          position: relative;
+          width: calc(100% - 120px);
+      }
+
+      &__element--articleImage,
+      &__title {
+        display: none;
+      }
+
+      &__element--headline {
+        .cmp-contentfragment__element-value {
+          font-size: 28px;
+          font-weight: 400;
+          line-height: 36px;
+          margin: 0;
+          margin-bottom: 30px;
+        }
+      }
+
+      &__image {
+         width: 100%;
+      }
+
+      &__element--press-release-date {
+         .cmp-contentfragment__element-value {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            margin: 0;
+         }
+      }
+
+      &__element-title {
+         display: none;
+      }
+    }
+  }
+}

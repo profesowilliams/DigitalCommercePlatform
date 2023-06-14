@@ -15,6 +15,7 @@ import "../global/tds-core-components/vendorlistings/vendorlistings";
 import "../global/tds-core-components/dropdownbutton/dropdownbutton";
 import "../global/tds-core-components/form-container/form-container";
 import "../global/tds-core-components/contentfragment-bio/contentfragment-bio";
+import "../global/tds-core-components/contentfragmentlist/newsroom";
 import "../../../../../../tds-core/ui.frontend/src/components/languagenavigation/languagenavigation";
 import "../../../../../../tds-core/ui.frontend/src/components/notification/notification";
 import "../../../../../../tds-core/ui.frontend/src/utils/text-enhancer/text-enhancer";
