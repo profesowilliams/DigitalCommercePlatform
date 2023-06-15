@@ -4,7 +4,11 @@ import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { getFilterAnalytics, pushDataLayer } from '../utils/analyticsUtils';
+import {
+  getFilterAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../utils/analyticsUtils';
+import { isEqual } from 'lodash';
 
 const OrderFilterFlyout = ({
   filterLabels,
@@ -26,13 +30,65 @@ const OrderFilterFlyout = ({
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.dateRangeFiltersChecked
   );
+  const customFiltersChecked = useOrderTrackingStore(
+    (state) => state.customFiltersChecked
+  );
+
   const [showLess, setShowLess] = useState(true);
-  const enabled = orderFilterCounter !== 0;
-  const effects = useOrderTrackingStore((state) => state.effects);
+
+  const predefinedFiltersSelectedBefore = useOrderTrackingStore(
+    (state) => state.predefinedFiltersSelectedBefore
+  );
+  const predefinedFiltersSelectedAfter = useOrderTrackingStore(
+    (state) => state.predefinedFiltersSelectedAfter
+  );
+  const customizedFiltersSelectedBefore = useOrderTrackingStore(
+    (state) => state.customizedFiltersSelectedBefore
+  );
+  const customizedFiltersSelectedAfter = useOrderTrackingStore(
+    (state) => state.customizedFiltersSelectedAfter
+  );
+
+  const areCustomFiltersEqual = (beforeFilters, afterFilters) => {
+    let counterBeforeFilters = 0;
+    beforeFilters?.map((element) => {
+      element?.filterOptionList?.map((filter) => {
+        filter?.checked === true && counterBeforeFilters++;
+      });
+    });
+    let counterAfterFilters = 0;
+    afterFilters?.map((element) => {
+      element?.filterOptionList?.map((filter) => {
+        filter?.checked === true && counterAfterFilters++;
+      });
+    });
+    if (counterBeforeFilters === 0 && counterAfterFilters === 0) {
+      return true;
+    }
+    return isEqual(beforeFilters, afterFilters);
+  };
+
+  const isChangeDetected =
+    !isEqual(predefinedFiltersSelectedBefore, predefinedFiltersSelectedAfter) ||
+    !areCustomFiltersEqual(
+      customizedFiltersSelectedBefore,
+      customizedFiltersSelectedAfter
+    );
+
+  const enabled = orderFilterCounter !== 0 && isChangeDetected;
+
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.isFilterModalOpen
   );
-  const { toggleFilterModal, clearAllOrderFilters } = effects;
+
+  const {
+    toggleFilterModal,
+    clearAllOrderFilters,
+    setPredefinedFiltersSelectedBefore,
+    setPredefinedFiltersSelectedAfter,
+    setCustomizedFiltersSelectedBefore,
+    setCustomizedFiltersSelectedAfter,
+  } = useOrderTrackingStore((state) => state.effects);
   const { filterTitle, showResultLabel } = filterLabels;
   const toggleShowLess = () => {
     setShowLess(!showLess);
@@ -49,14 +105,20 @@ const OrderFilterFlyout = ({
         checkedFilters.push(getDictionaryValueOrKey(orderType));
       dateRangeFiltersChecked.length > 0 &&
         checkedFilters.push(getDictionaryValueOrKey(dateRange));
-      pushDataLayer(
-        getFilterAnalytics(
+      pushDataLayerGoogle(
+        getFilterAnalyticsGoogle(
           getDictionaryValueOrKey(analyticsCategories.filter),
           checkedFilters
         )
       );
     }
     toggleFilterModal();
+    setPredefinedFiltersSelectedBefore([
+      ...orderStatusFiltersChecked,
+      ...orderTypeFiltersChecked,
+      ...dateRangeFiltersChecked,
+    ]);
+    setCustomizedFiltersSelectedBefore(structuredClone(customFiltersChecked));
     onQueryChanged();
   };
 
@@ -65,6 +127,10 @@ const OrderFilterFlyout = ({
       (filter) => (filtersRefs[filter].current = undefined)
     );
     clearAllOrderFilters();
+    setPredefinedFiltersSelectedBefore([]);
+    setPredefinedFiltersSelectedAfter([]);
+    setCustomizedFiltersSelectedBefore([]);
+    setCustomizedFiltersSelectedAfter([]);
     toggleFilterModal();
     onQueryChanged();
   };

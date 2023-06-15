@@ -107,6 +107,18 @@ export const orderTrackingEffects = (set, get) => {
       set({ customFiltersChecked });
       updateOrderFilterCounter();
     },
+    setPredefinedFiltersSelectedBefore(predefinedFiltersSelectedBefore) {
+      set({ predefinedFiltersSelectedBefore });
+    },
+    setPredefinedFiltersSelectedAfter(predefinedFiltersSelectedAfter) {
+      set({ predefinedFiltersSelectedAfter });
+    },
+    setCustomizedFiltersSelectedBefore(customizedFiltersSelectedBefore) {
+      set({ customizedFiltersSelectedBefore });
+    },
+    setCustomizedFiltersSelectedAfter(customizedFiltersSelectedAfter) {
+      set({ customizedFiltersSelectedAfter });
+    },
     clearAllOrderFilters() {
       const { customFiltersChecked } = get();
 

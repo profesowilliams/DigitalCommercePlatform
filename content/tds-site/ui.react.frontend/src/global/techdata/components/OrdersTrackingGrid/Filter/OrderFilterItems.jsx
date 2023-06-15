@@ -9,6 +9,15 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
   const filterList = useOrderTrackingStore((state) => state.filterList);
+  const orderStatusFiltersChecked = useOrderTrackingStore(
+    (state) => state.orderStatusFiltersChecked
+  );
+  const orderTypeFiltersChecked = useOrderTrackingStore(
+    (state) => state.orderTypeFiltersChecked
+  );
+  const dateRangeFiltersChecked = useOrderTrackingStore(
+    (state) => state.dateRangeFiltersChecked
+  );
   const orderStatusFilters = filterList.find(
     (filter) =>
       filter.accordionLabel ===
@@ -18,13 +27,11 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
     (filter) =>
       filter.accordionLabel === getDictionaryValueOrKey(filterLabels.orderType)
   ).filterOptionList;
-  const orderStatusFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderStatusFiltersChecked
-  );
-  const orderTypeFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderTypeFiltersChecked
-  );
-  const effects = useOrderTrackingStore((state) => state.effects);
+  const {
+    setOrderTypeFiltersChecked,
+    setOrderStatusFiltersChecked,
+    setPredefinedFiltersSelectedAfter,
+  } = useOrderTrackingStore((state) => state.effects);
 
   const styleCheckbox = {
     color: '#262626',
@@ -47,7 +54,12 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
     filtersRefs.status.current = newList
       .map((element) => element.filterOptionKey)
       .join();
-    effects.setOrderStatusFiltersChecked(newList);
+    setOrderStatusFiltersChecked(newList);
+    setPredefinedFiltersSelectedAfter([
+      ...newList,
+      ...orderTypeFiltersChecked,
+      ...dateRangeFiltersChecked,
+    ]);
   };
 
   const isStatusFilterChecked = (id) => {
@@ -64,7 +76,12 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
     filtersRefs.type.current = newList
       .map((element) => element.filterOptionKey)
       .join();
-    effects.setOrderTypeFiltersChecked(newList);
+    setOrderTypeFiltersChecked(newList);
+    setPredefinedFiltersSelectedAfter([
+      ...orderStatusFiltersChecked,
+      ...newList,
+      ...dateRangeFiltersChecked,
+    ]);
   };
 
   const isTypeFilterChecked = (id) => {

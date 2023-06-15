@@ -37,9 +37,8 @@ export default function OrderFilterCustomDatapicker({
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.customFiltersChecked
   );
-  const { setCustomFiltersChecked } = useOrderTrackingStore(
-    (state) => state.effects
-  );
+  const { setCustomFiltersChecked, setCustomizedFiltersSelectedAfter } =
+    useOrderTrackingStore((state) => state.effects);
 
   const startDateFormatted = useRef('');
   const endDateFormatted = useRef('');
@@ -77,6 +76,7 @@ export default function OrderFilterCustomDatapicker({
         updateDate(custom, dateLabel, startDate, endDate);
     });
     setCustomFiltersChecked([...newList]);
+    setCustomizedFiltersSelectedAfter(structuredClone(newList));
     if (startDate && endDate) {
       const startDateMonth = startDate.format('MM');
       const startDateDay = startDate.format('DD');

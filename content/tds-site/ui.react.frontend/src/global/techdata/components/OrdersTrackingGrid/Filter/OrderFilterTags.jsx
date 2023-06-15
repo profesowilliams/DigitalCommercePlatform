@@ -9,6 +9,8 @@ function OrderFilterTags({ filtersRefs }) {
     setDateRangeFiltersChecked,
     setCustomState,
     setCustomFiltersChecked,
+    setPredefinedFiltersSelectedAfter,
+    setCustomizedFiltersSelectedAfter,
   } = useOrderTrackingStore((state) => state.effects);
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.orderStatusFiltersChecked
@@ -29,12 +31,27 @@ function OrderFilterTags({ filtersRefs }) {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.status.current = newList.join();
       setOrderStatusFiltersChecked(newList);
+      setPredefinedFiltersSelectedAfter([
+        ...newList,
+        ...orderTypeFiltersChecked,
+        ...dateRangeFiltersChecked,
+      ]);
     } else if (group === 'type') {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.type.current = newList.join();
       setOrderTypeFiltersChecked(newList);
+      setPredefinedFiltersSelectedAfter([
+        ...orderStatusFiltersChecked,
+        ...newList,
+        ...dateRangeFiltersChecked,
+      ]);
     } else if (group === 'date') {
       setDateRangeFiltersChecked([]);
+      setPredefinedFiltersSelectedAfter([
+        ...orderStatusFiltersChecked,
+        ...orderTypeFiltersChecked,
+        ...dateRangeFiltersChecked,
+      ]);
       setCustomState({
         key: 'customStartDate',
         value: undefined,
@@ -65,6 +82,7 @@ function OrderFilterTags({ filtersRefs }) {
         });
     });
     setCustomFiltersChecked([...newList]);
+    setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };
 
   const handleCustomDateFilterCloseClick = (filter) => {
@@ -78,6 +96,7 @@ function OrderFilterTags({ filtersRefs }) {
       _filter.id === filter.id && clearDate(_filter);
     });
     setCustomFiltersChecked([...newList]);
+    setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };
 
   const getCustomFiltersFromCheckboxes = (filter) =>

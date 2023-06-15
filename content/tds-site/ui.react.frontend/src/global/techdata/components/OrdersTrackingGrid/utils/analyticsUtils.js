@@ -1,11 +1,11 @@
 import { getDictionaryValueOrKey } from "../../../../../utils/utils";
 
-const pushDataLayer = (analyticsData) => {
+export const pushDataLayerGoogle = (analyticsData) => {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(analyticsData);
 };
 
-const getSortAnalytics = (category, sortedModel) => {
+export const getSortAnalyticsGoogle = (category, sortedModel) => {
   const sortData = sortedModel.map((item) => `${item.colId}:${item.sort}`);
   return {
     event: 'Order tracking - Sort',
@@ -21,7 +21,11 @@ const getSortAnalytics = (category, sortedModel) => {
   };
 };
 
-const getPaginationAnalytics = (category, pageEvent, pageNumber) => {
+export const getPaginationAnalyticsGoogle = (
+  category,
+  pageEvent,
+  pageNumber
+) => {
   return {
     event: 'Order tracking - Pagination',
     type:
@@ -42,7 +46,7 @@ const getPaginationAnalytics = (category, pageEvent, pageNumber) => {
   };
 };
 
-const getFilterAnalytics = (category, filterData) => {
+export const getFilterAnalyticsGoogle = (category, filterData) => {
   const filters = filterData?.length > 0 ? filterData : [];
   return {
     event: 'Order tracking - Advanced Search',
@@ -57,7 +61,7 @@ const getFilterAnalytics = (category, filterData) => {
   };
 };
 
-const getReportAnalytics = (category, option) => {
+export const getReportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Reports',
     clickInfo: {
@@ -68,7 +72,7 @@ const getReportAnalytics = (category, option) => {
   };
 };
 
-const getExportAnalytics = (category, option) => {
+export const getExportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Export',
     type: 'button',
@@ -80,30 +84,11 @@ const getExportAnalytics = (category, option) => {
   };
 };
 
-const getRowAnalytics = (category, action, itemData) => {
-  const analyticsCategory = category.replace(/ /g, '');
-  const infoKey = `${analyticsCategory}Info`;
-  const retObject = {
-    event: 'Order tracking - Rows',
-    type: 'button',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      title: itemData?.source?.id,
-      id: itemData?.source?.id,
-      action: `${getDictionaryValueOrKey(action)} ${getDictionaryValueOrKey(category)}`,
-      linkInfo: {
-        url: itemData?.link ? itemData?.link : '',
-      },
-    },
-  };
-  retObject.clickInfo[infoKey] = {
-    vendor: itemData?.vendor?.name,
-    reseller: itemData?.reseller?.name,
-  };
-  return retObject;
-};
-
-const getSearchAnalytics = (category, dropdownOption, textInput) => {
+export const getSearchAnalyticsGoogle = (
+  category,
+  dropdownOption,
+  textInput
+) => {
   let retObject = {
     event: 'Order tracking - Search',
     type: 'button',
@@ -117,7 +102,7 @@ const getSearchAnalytics = (category, dropdownOption, textInput) => {
   return retObject;
 };
 
-const ANALYTIC_CONSTANTS = {
+export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],
     PaginationEvent: {
@@ -149,16 +134,4 @@ const ANALYTIC_CONSTANTS = {
       OrderDetail: 'Place Order from Detail',
     },
   },
-};
-
-export {
-  getFilterAnalytics,
-  getPaginationAnalytics,
-  getRowAnalytics,
-  getSearchAnalytics,
-  getSortAnalytics,
-  getReportAnalytics,
-  getExportAnalytics,
-  pushDataLayer,
-  ANALYTIC_CONSTANTS,
 };

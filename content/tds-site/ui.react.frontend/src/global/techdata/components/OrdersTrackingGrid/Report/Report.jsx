@@ -8,7 +8,10 @@ import React, {
 import { ReportIcon, ReportIconFilled } from '../../../../../fluentIcons/FluentIcons'
 import ReportDropdown from './ReportDropdown';
 import '../../../../../../src/styles/TopIconsBar.scss';
-import { getReportAnalytics, pushDataLayer } from '../utils/analyticsUtils';
+import {
+  getReportAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../utils/analyticsUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, ref) {
@@ -61,7 +64,7 @@ function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, 
   };
 
   const handleSelectOption = (option) => {
-    pushDataLayer(getReportAnalytics(reportAnalyticsLabel, option));
+    pushDataLayerGoogle(getReportAnalyticsGoogle(reportAnalyticsLabel, option));
     setCurrentValue(option.key);
     selectOption(option);
     setIsReportHovered(false);

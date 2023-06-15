@@ -8,8 +8,8 @@ import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import {
-  getExportAnalytics,
-  pushDataLayer,
+  getExportAnalyticsGoogle,
+  pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 const styleOverrideFormControlLabel = {
@@ -83,7 +83,9 @@ function ExportFlyout({
     const matchingRequest = exportRequests.find(
       (e) => e.key === secondarySelected
     );
-    pushDataLayer(getExportAnalytics(exportAnalyticsLabel, secondarySelected));
+    pushDataLayerGoogle(
+      getExportAnalyticsGoogle(exportAnalyticsLabel, secondarySelected)
+    );
     if (matchingRequest) {
       const downloadRequest = matchingRequest.request;
       downloadRequest();

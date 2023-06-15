@@ -9,9 +9,8 @@ const OrderFilterCustomItem = ({ filterOptionList, customFilterId }) => {
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.customFiltersChecked
   );
-  const { setCustomFiltersChecked } = useOrderTrackingStore(
-    (state) => state.effects
-  );
+  const { setCustomFiltersChecked, setCustomizedFiltersSelectedAfter } =
+    useOrderTrackingStore((state) => state.effects);
 
   const styleCheckbox = {
     color: '#262626',
@@ -39,8 +38,8 @@ const OrderFilterCustomItem = ({ filterOptionList, customFilterId }) => {
           })
         : filter;
     });
-
     setCustomFiltersChecked([...newList]);
+    setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };
 
   return (

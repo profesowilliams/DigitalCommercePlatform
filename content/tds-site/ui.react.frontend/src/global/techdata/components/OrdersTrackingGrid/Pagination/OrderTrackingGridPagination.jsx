@@ -10,7 +10,7 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import useOrderTrackingPaginationState from './useOrderTrackingPaginationState';
 import {
   ANALYTIC_CONSTANTS,
-  getPaginationAnalytics,
+  getPaginationAnalyticsGoogle,
 } from '../utils/analyticsUtils';
 
 function OrderTrackingGridPagination(
@@ -61,7 +61,7 @@ function OrderTrackingGridPagination(
           btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
           disabled={isGoBackDisabled}
           onClick={goToFirstPage}
-          analyticsCallback={getPaginationAnalytics.bind(
+          analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
             ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin,
@@ -74,7 +74,7 @@ function OrderTrackingGridPagination(
           btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
           disabled={isGoBackDisabled}
           onClick={decrementHandler}
-          analyticsCallback={getPaginationAnalytics.bind(
+          analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
             ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack,
@@ -103,7 +103,7 @@ function OrderTrackingGridPagination(
           btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
           disabled={isGoForwardDisabled}
           onClick={incrementHandler}
-          analyticsCallback={getPaginationAnalytics.bind(
+          analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
             ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward,
@@ -116,7 +116,7 @@ function OrderTrackingGridPagination(
           btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
           disabled={isGoForwardDisabled}
           onClick={gotToLastPage}
-          analyticsCallback={getPaginationAnalytics.bind(
+          analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
             ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd,

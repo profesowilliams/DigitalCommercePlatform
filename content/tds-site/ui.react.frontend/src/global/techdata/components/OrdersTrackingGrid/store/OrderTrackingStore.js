@@ -56,26 +56,14 @@ const INITIAL_STATE = {
     'orderStatusFilters',
     []
   ),
-  orderTypeFiltersChecked: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'orderTypeFiltersChecked',
-    []
-  ),
-  orderStatusFiltersChecked: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'orderStatusFiltersChecked',
-    []
-  ),
-  dateRangeFiltersChecked: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'dateRangeFiltersChecked',
-    []
-  ),
-  customFiltersChecked: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'customFiltersChecked',
-    []
-  ),
+  predefinedFiltersSelectedBefore: [],
+  predefinedFiltersSelectedAfter: [],
+  customizedFiltersSelectedBefore: [],
+  customizedFiltersSelectedAfter: [],
+  orderTypeFiltersChecked: [],
+  orderStatusFiltersChecked: [],
+  dateRangeFiltersChecked: [],
+  customFiltersChecked: [],
   orderFilterCounter: 0,
   toaster: {
     isOpen: false,

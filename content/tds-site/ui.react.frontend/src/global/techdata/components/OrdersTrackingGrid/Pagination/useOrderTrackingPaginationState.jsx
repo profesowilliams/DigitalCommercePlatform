@@ -8,8 +8,8 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { updateQueryString } from '../../RenewalsGrid/utils/renewalUtils';
 import {
   ANALYTIC_CONSTANTS,
-  getPaginationAnalytics,
-  pushDataLayer,
+  getPaginationAnalyticsGoogle,
+  pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
 
 function useOrderTrackingPaginationState({
@@ -94,8 +94,8 @@ function useOrderTrackingPaginationState({
     const value = parseInt(target.value) - 1;
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
-    pushDataLayer(
-      getPaginationAnalytics(
+    pushDataLayerGoogle(
+      getPaginationAnalyticsGoogle(
         paginationAnalyticsLabel,
         ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
         value.pageNumber
@@ -109,8 +109,8 @@ function useOrderTrackingPaginationState({
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
     if (target.value.length >= 3) {
-      pushDataLayer(
-        getPaginationAnalytics(
+      pushDataLayerGoogle(
+        getPaginationAnalyticsGoogle(
           paginationAnalyticsLabel,
           ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
           value.pageNumber

@@ -48,7 +48,10 @@ import {
   setPaginationData,
 } from './utils/orderTrackingUtils';
 import Toaster from '../Widgets/Toaster';
-import { getSortAnalytics, pushDataLayer } from './utils/analyticsUtils';
+import {
+  getSortAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from './utils/analyticsUtils';
 import OrderTrackingGridPagination from './Pagination/OrderTrackingGridPagination';
 
 function OrdersTrackingGrid(props) {
@@ -254,7 +257,9 @@ function OrdersTrackingGrid(props) {
       sortingEventFilter.length === 1 &&
       !compareSort(currentSortState, hasSortChanged.current)
     ) {
-      pushDataLayer(getSortAnalytics(analyticsCategories.sort, sortedModel));
+      pushDataLayerGoogle(
+        getSortAnalyticsGoogle(analyticsCategories.sort, sortedModel)
+      );
     }
   };
 

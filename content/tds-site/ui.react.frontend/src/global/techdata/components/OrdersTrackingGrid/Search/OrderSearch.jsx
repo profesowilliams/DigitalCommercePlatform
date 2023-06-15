@@ -19,7 +19,10 @@ import {
 import '../../../../../../src/styles/TopIconsBar.scss';
 import OrderSearchEditView from './OrderSearchEditView';
 import OrderSearchView from './OrderSearchView';
-import { getSearchAnalytics, pushDataLayer } from '../utils/analyticsUtils';
+import {
+  getSearchAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../utils/analyticsUtils';
 
 function _OrderSearch(
   {
@@ -201,7 +204,9 @@ function _OrderSearch(
     const { option } = values;
     const inputValue = inputRef.current.value;
     if (!inputValue) return fetchAll();
-    pushDataLayer(getSearchAnalytics(searchAnalyticsLabel, option, inputValue));
+    pushDataLayerGoogle(
+      getSearchAnalyticsGoogle(searchAnalyticsLabel, option, inputValue)
+    );
     setIsSearchCapsuleVisible(true);
     setSearchTerm(inputValue);
     setCapsuleSearchValue(inputValue);

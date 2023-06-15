@@ -26,13 +26,23 @@ function CustomStartEndText({ filterLabels }) {
 
 export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   const [focusedInput, setFocusedInput] = useState('startDate');
-  const { setDateType, setCustomState, setDateRangeFiltersChecked } =
-    useOrderTrackingStore((state) => state.effects);
+  const {
+    setDateType,
+    setCustomState,
+    setDateRangeFiltersChecked,
+    setPredefinedFiltersSelectedAfter,
+  } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.dateType);
   const customStartDate = useOrderTrackingStore(
     (state) => state.customStartDate
   );
   const customEndDate = useOrderTrackingStore((state) => state.customEndDate);
+  const orderStatusFiltersChecked = useOrderTrackingStore(
+    (state) => state.orderStatusFiltersChecked
+  );
+  const orderTypeFiltersChecked = useOrderTrackingStore(
+    (state) => state.orderTypeFiltersChecked
+  );
   const dark_teal = '#003031';
   const navIcons = {
     navPrev: <ChevronLeftIcon fill={dark_teal} />,
@@ -94,18 +104,29 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
         createdTo: endDate?.toDate(),
       },
     ];
-    const startDateMonth = startDate.format('MM');
-    const startDateDay = startDate.format('DD');
-    const startDateYear = startDate.format('YYYY');
-
-    const endDateMonth = endDate.format('MM');
-    const endDateDay = endDate.format('DD');
-    const endDateYear = endDate.format('YYYY');
-    startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
-    endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
-
-    setDateRefs(startDateFormatted.current, endDateFormatted.current, dateType);
     setDateRangeFiltersChecked(newDate);
+    setPredefinedFiltersSelectedAfter([
+      ...orderStatusFiltersChecked,
+      ...orderTypeFiltersChecked,
+      ...newDate,
+    ]);
+    if (startDate && endDate) {
+      const startDateMonth = startDate.format('MM');
+      const startDateDay = startDate.format('DD');
+      const startDateYear = startDate.format('YYYY');
+
+      const endDateMonth = endDate.format('MM');
+      const endDateDay = endDate.format('DD');
+      const endDateYear = endDate.format('YYYY');
+      startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
+      endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
+
+      setDateRefs(
+        startDateFormatted.current,
+        endDateFormatted.current,
+        dateType
+      );
+    }
   };
 
   const onDatesChange = ({ startDate, endDate }) => {
