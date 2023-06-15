@@ -11,8 +11,6 @@ module.exports = (env) => {
 
     return merge(common, {
         entry: {
-            // us: SOURCE_ROOT + '/international/us/main.ts',
-            // global: SOURCE_ROOT + '/global/main.js',
             site: SOURCE_ROOT + '/site/main.ts',
             devOnly: SOURCE_ROOT + '/static/js/devOnly.js',
         },
@@ -1010,6 +1008,20 @@ module.exports = (env) => {
                 template: path.resolve(
                     __dirname,
                     SOURCE_ROOT + "/static/orders-grid-demo.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "orders-tracking-grid",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/orders-tracking-grid.html"
+                ),
+            }),
+            new HtmlWebpackPlugin({
+                filename: "orders-tracking-detail",
+                template: path.resolve(
+                    __dirname,
+                    SOURCE_ROOT + "/static/orders-tracking-detail.html"
                 ),
             }),
             new HtmlWebpackPlugin({

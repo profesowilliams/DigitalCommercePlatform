@@ -1,24 +1,37 @@
 //== Font
 
-$font-family: "Open Sans", sans-serif, "Helvetica Neue", Helvetica, Arial,
-  sans-serif;
+$font-family: "Open Sans", sans-serif;
 $open-sans: "Open Sans", sans-serif;
-  
-$font-family-everett: 'TWKEverett-Regular-web', sans-serif;
-$font-family-everett-md: 'TWKEverett-Medium-web', Arial, sans-serif;
-  
+
 $font-family-marketing: 'TWKEverett-Regular-web', 'Arial Bold', sans-serif;
 $font-family-marketing-md: 'TWKEverett-Medium-web', Arial, sans-serif;
-  
-$font-family-arial: 'Arial', sans-serif;
+
+$font-family-everett: 'TWKEverett-Regular-web', sans-serif;
+$font-family-everett-md: 'TWKEverett-Medium-web', Arial, sans-serif;
+
+$font-size-marketing-h1: rem(40px);
+$font-size-marketing-h1-large: rem(66px);
+$font-size-marketing-h2: rem(32px);
+$font-size-marketing-h3: rem(28px);
+$font-size-marketing-h4: rem(20px);
+$font-size-marketing-h5: rem(16px);
+$font-size-marketing-h6: rem(14px);
+
 $font-family-digital: Arial, sans-serif;
+
+$font-size-digital-h1: rem(40px);
+$font-size-digital-h1-large: rem(66px);
+$font-size-digital-h2: rem(32px);
+$font-size-digital-h2-card: rem(28px);
+$font-size-digital-h3: rem(28px);
+$font-size-digital-h4: rem(20px);
+$font-size-digital-h5: rem(16px);
+$font-size-digital-h6: rem(14px);
+
 $font-family-georgia: "Georgia Pro", sans-serif;
-$font-family-georgia-itlc: "Georgia Pro Itlc", sans-serif;
-$font-family-georgia-bold: "Georgia Pro Bold", sans-serif;
-$font-family-georgiabold-itlc: "Georgia Pro Bold Itlc", sans-serif;
-  
+
 $font-size: 1rem;
-$font-height: 1.5;
+$font-height: 20px;
 $font-size-body: 1rem;
 
 //== Color
@@ -65,6 +78,9 @@ $yellow: #ffea00;
 $blue: #0045ff;
 $brand-blue: #000c21;
 $pink: #ff0058;
+$brand-green: #005758;
+$brand-green--dark: #003031;
+$brand-error: #CD163F;
 
 $brand-primary: $yellow;
 
@@ -106,31 +122,31 @@ $nav-link-inverse: $gray-light;
 //
 //## Font, line-height, and color for body text, headings, and more.
 
-$font-family-sans-serif:  "Open Sans", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif:       "Open Sans", "Asar",Georgia, "Times New Roman", Times, serif;
-$font-family-base:        $font-family-sans-serif;
+$font-family-sans-serif: "Open Sans", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: "Open Sans", "Asar",Georgia, "Times New Roman", Times, serif;
+$font-family-base: $font-family-sans-serif;
 
-$font-size-xxlarge:        50px;
-$font-size-xlarge:         48px;
-$font-size-large:          24px;
-$font-size-base:           18px;
-$font-size-medium:		     16px;
-$font-size-small:          14px;
-$font-size-xsmall:		     12px;
-$font-size-xxsmall:		     11px;
+$font-size-xxlarge: 50px;
+$font-size-xlarge: 48px;
+$font-size-large: 24px;
+$font-size-base: 18px;
+$font-size-medium: 16px;
+$font-size-small: 14px;
+$font-size-xsmall: 12px;
+$font-size-xxsmall: 11px;
 
-$font-size-h1:            40px;
-$font-size-h2:            36px;
-$font-size-h3:            24px;
-$font-size-h4:            16px;
-$font-size-h5:            14px;
-$font-size-h6:            10px;
+$font-size-h1: 40px;
+$font-size-h2: 36px;
+$font-size-h3: 24px;
+$font-size-h4: 16px;
+$font-size-h5: 14px;
+$font-size-h6: 10px;
 
 /*  FONT SIZE CUSTOM  */
 $font-size-custom-xxxlarge: rem(45px);
 $font-size-custom-xxlarge: rem(38px);
 $font-size-custom-xlarge: rem(30px);
-$font-size-custom-large:  rem(25px);
+$font-size-custom-large: rem(25px);
 $font-size-custom-medium: rem(22px);
 $font-size-custom-midi: rem(20px);
 $font-size-custom-xxsmall: rem(13px);
@@ -145,10 +161,10 @@ $line-height-base: 1.5;
 $line-height-computed: floor(($font-size-base * $line-height-base)); // ~20px
 
 $font-weight-extra-light: 100;
-$font-weight-light:      300;
-$font-weight-normal:     normal;
-$font-weight-semi-bold:  400;
-$font-weight-bold:       600;
+$font-weight-light: 300;
+$font-weight-normal: normal;
+$font-weight-semi-bold: 400;
+$font-weight-bold: 600;
 $font-weight-extra-bold: 700;
 
 //=== Page Layout
@@ -170,11 +186,11 @@ $unchecked-state-content: "\f0c8";
 
 //===common icons
 @mixin icon($color, $background) {
-  color: $color;
-  background: $background;
-  width: 14px;
-  height: 14px;
-  border-radius: 2.8px;
-  font-size: 10.27px;
-  padding: 2px;
+    color: $color;
+    background: $background;
+    width: 14px;
+    height: 14px;
+    border-radius: 2.8px;
+    font-size: 10.27px;
+    padding: 2px;
 }

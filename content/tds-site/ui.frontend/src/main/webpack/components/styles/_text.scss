@@ -1,85 +1,95 @@
+@import "../../global/_mixins.scss";
+@import "../../global/styles/helpers/colors.scss";
+
+
 .cmp-text {
-  ul, ol {
-    padding-top: rem(15px);
-    list-style: none;
-
-    li {
-      font-size: rem($font-size-medium);
-      text-align: left;
-      margin-left: rem(-40px);
-      &::before {
-        color: get-color(td-lightblue);
-        display: inline-block;
-      }
-    }
-  }
-
-  &__green_bullet {
     ul, ol {
-      margin-bottom: 0.0rem;
-      li {
-        &::before {
-          content: "" !important;
-          color: get-color(td-planet);
-          background-color: get-color(td-planet);
-          width: 15px !important;
-          height: 15px;
-          margin-right: 15px;
-          margin-top: 0.5vh;
-        }
-        ul, ol {
-          margin-left: -4.5vw;
-          li {
-            padding: 0.5vw;
-            padding-left: 1vw;
-            padding-bottom: 0rem;
-            padding-top: 1.5rem;
+        padding-top: rem(15px);
+        list-style: none;
+
+        li {
+            font-size: rem($font-size-medium);
+            text-align: left;
+            margin-left: rem(-40px);
+
             &::before {
-              content: "\2022" !important;
-              color: white;
-              background-color: get-color(container-transparent)!important;
+                color: get-color(td-lightblue);
+                display: inline-block;
             }
-          }
         }
-      }
-    }
-    p {
-      margin-left: 2rem
-    }
-  }
-
-  ol {
-    counter-reset: li;
-
-    li {
-      counter-increment: li;
-      line-height: rem(22px);
-      padding-bottom: rem(5.44px);
-
-      &::before {
-        content: counter(li);
-        width: rem(20.8px);
-      }
-    }
-  }
-  ul {
-    li {
-      line-height: rem(20px);
-      padding-bottom: rem(5.12px);
-
-      &::before {
-        content: "\2022";
-        font-weight: bold;
-        width: rem(20px);
-        font-size: $font-size-custom-medium;
-      }
     }
 
-  }
+    &__green_bullet {
+        ul, ol {
+            margin-bottom: 0.0rem;
 
-  .dp-text-icon::before {
-    padding-right: 10px;
-  }
+            li {
+                &::before {
+                    content: "" !important;
+                    color: get-color(td-planet);
+                    background-color: get-color(td-planet);
+                    width: 15px !important;
+                    height: 15px;
+                    margin-right: 15px;
+                    margin-top: 0.5vh;
+                }
+
+                ul, ol {
+                    margin-left: -4.5vw;
+
+                    li {
+                        padding: 0.5vw;
+                        padding-left: 1vw;
+                        padding-bottom: 0rem;
+                        padding-top: 1.5rem;
+
+                        &::before {
+                            content: "\2022" !important;
+                            color: white;
+                            background-color: get-color(container-transparent) !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        p {
+            margin-left: 2rem
+        }
+    }
+
+    ol {
+        counter-reset: li;
+
+        li {
+            counter-increment: li;
+            line-height: rem(22px);
+            padding-bottom: rem(5.44px);
+
+            &::before {
+                content: counter(li);
+                width: rem(20.8px);
+            }
+        }
+    }
+
+    ul {
+        li {
+            line-height: rem(20px);
+            padding-bottom: rem(5.12px);
+
+            &::before {
+                content: "\2022";
+                font-weight: bold;
+                width: rem(20px);
+                font-size: $font-size-custom-medium;
+            }
+        }
+    }
+
+    .dp-text-icon::before {
+        padding-right: 10px;
+    }
 }
 .cmp-text__paragraph {}
 

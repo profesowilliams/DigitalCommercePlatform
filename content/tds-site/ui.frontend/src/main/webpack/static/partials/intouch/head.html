@@ -1,0 +1,294 @@
+<!-- Intouch CSS scripts in Head -->
+<link href="https://intouch.staging.tdsynnex.eu/InTouch/MVC/css/common?v=oBxKkizo5YSCumi2Q7MSbOjJZKClWZpGnbF7qD1hvrg1" rel="stylesheet">
+
+<link href="https://intouch.staging.tdsynnex.eu/InTouch/MVC/css/app/product_search?v=2OPBAAih5flUNaaJwxW1IkBqzZbli8uxDiFsvKvuUdY1" rel="stylesheet">
+
+<link href="https://intouch.staging.tdsynnex.eu/InTouch/MVC/css/intouch-css?v=uGRnCwMi0tHjSv1fZhxs1G2DfS6autJ46JfEwbm4ySM1" rel="stylesheet">
+
+<link href="https://intouch.staging.tdsynnex.eu/InTouch/MVC/css/intouch-css?v=uGRnCwMi0tHjSv1fZhxs1G2DfS6autJ46JfEwbm4ySM1" rel="stylesheet">
+
+<style>
+    @font-face {
+        font-family: 'Material Icons';
+        font-style: normal;
+        font-weight: 400;
+        src: url('https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2') format('truetype')
+    }
+</style>
+<!-- End Intouch CSS scripts in Head -->
+
+
+<script type="text/javascript">
+    const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+    //let userDataPromise = null;
+    let cachedUserData = [
+        true,
+        {
+            "id": "2033643",
+            "firstName": "Adam",
+            "lastName": "Dobrzanski",
+            "name": "325009/adam.dobrzanski",
+            "email": "adam.dobrzanski@techdata.com",
+            "phone": null,
+            "customers": [
+                "325009"
+            ],
+            "roles": null,
+            "roleList": [
+                {
+                    "entitlement": "OrderTracking",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "exactquantity",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "Renewal Dashboard",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "MenuBuilder",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "Translations",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "Banner",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "IntouchSettings",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "DataSheet",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "SalesLogin",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "SuperAdmin",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "CategorySpecialistsStoreAdmin",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "CategoryContentEditor",
+                    "accountId": "325009"
+                },
+                {
+                    "entitlement": "MicrositeAdmin",
+                    "accountId": "325009"
+                }
+            ],
+            "customersV2": [
+                {
+                    "number": "325009",
+                    "name": "TD SYNNEX UK Limited",
+                    "customerNumber": "325009",
+                    "customerName": "TD SYNNEX UK Limited",
+                    "salesOrg": "0014",
+                    "system": "8",
+                    "dcpAccess": false,
+                    "defaultCurrency": "GBP"
+                }
+            ],
+            "activeCustomer": {
+                "number": "325009",
+                "name": "TD SYNNEX UK Limited",
+                "customerNumber": "325009",
+                "customerName": "TD SYNNEX UK Limited",
+                "salesOrg": "0014",
+                "system": "8",
+                "dcpAccess": false,
+                "defaultCurrency": "GBP"
+            },
+            "isInternal": false,
+            "isHouseAccount": true,
+            "country": "UK",
+            "language": "EN"
+        }
+    ];
+    let cacheExpiration = Date.now() + 600 * 1000;
+    const CACHE_DURATION = 600; // TODO: value should be configurable
+
+    async function getSessionInfo() {
+        let isLoggedIn;
+        let userData;
+        let data;
+
+        try {
+            data = await getUserData();
+        } catch (error) {
+            data = null;
+        }
+
+        isLoggedIn = !!data;
+        userData = data;
+
+        return [isLoggedIn, userData];
+    }
+
+    async function getUserData() {
+        if (cachedUserData && Date.now() < cacheExpiration) {
+            console.log(
+                "Returning user data from local cache cacheExpiration = " +
+                new Date(cacheExpiration)
+            );
+            return cachedUserData;
+        }
+
+        //if (userDataPromise) {
+        //    return await userDataPromise;
+        //}
+
+        try {
+            let userDataPromise = fetch(
+                "https:\/\/westeu\u002Ddit\u002Dui.dc.tdebusiness.cloud" +
+                "\/ui\u002Daccount\/v1\/GetUser\/AEM",
+                {
+                    headers: {
+                        accept: "application/json, text/plain, */*",
+                        "accept-language": headerInfo.acceptLanguage,
+                        consumer: "AEM",
+                        site: headerInfo.site,
+                        traceid: new Date().toISOString(),
+                    },
+                    body: null,
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+
+            const response = await userDataPromise;
+
+            if (response.ok) {
+                const data = await response.json();
+                cachedUserData = data.content.user;
+                cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+                console.log("Returned user data from API call");
+                return cachedUserData;
+            } else {
+                console.log("HTTP-Error: " + response.status);
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.log("Exception while getting user data: " + error);
+            throw new Error(401);
+        }
+
+        throw new Error(401);
+    }
+
+    function resolveAcceptLanguage(language, country) {
+        const collectiveCountry = country === "UK" ? "GB" : country;
+        return language + "-" + collectiveCountry;
+    }
+
+    function getHeaderInfoFromUrl(pathName) {
+        try {
+            let countryIndex = 1; // uat/stage/prod
+            let languageIndex = 2;
+            const pathArray = pathName?.split("/");
+            if (pathArray && pathArray.length >= 5 && pathArray[1] === "content") {
+                countryIndex = 4; // dit/sit
+                languageIndex = 5;
+            }
+
+            const country = pathArray[countryIndex].toUpperCase();
+            const language = pathArray[languageIndex];
+
+            return {
+                site: country,
+                acceptLanguage: resolveAcceptLanguage(language, country),
+            };
+        } catch (error) {
+            console.log("Exception while getting country and language from url: " + error);
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    const redirectBasedOnCountry = (userData) => {
+        let currentUserData = userData;
+
+        if (currentUserData?.country) {
+            let countryCodeFromAPI = "/" + currentUserData?.country.toLowerCase() + '/' + currentUserData?.language.toLowerCase();
+            if (window.location.href.indexOf(countryCodeFromAPI) < 0) {
+                validateCountryFromUrlAndAPI(countryCodeFromAPI);
+            }
+        }
+    }
+
+    const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
+        let urlSplitStrings = window.location.href.replace(window.location.origin, "").split('/');
+        if (window.location.href.indexOf("/content") >= 0) { // added this to support sit/dit envs
+            performRedirectForCmsPath(countryCodeFromAPI, urlSplitStrings);
+        } else {
+            performRedirectForAbsPath(countryCodeFromAPI, urlSplitStrings);
+        }
+    }
+
+    const performRedirectForAbsPath = (countryCodeFromAPI, urlSplitStrings) => {
+        let countryCodeFromUrl;
+        if (urlSplitStrings.length <= 3) { // add .html to the url
+            if (urlSplitStrings[2] === undefined) {
+                countryCodeFromUrl = "/" + urlSplitStrings[1];
+            }
+            countryCodeFromAPI = countryCodeFromAPI + ".html";
+        }
+        performRedirect(countryCodeFromUrl, countryCodeFromAPI);
+    }
+
+    const performRedirectForCmsPath = (countryCodeFromAPI, urlSplitStrings) => {
+        let countryCodeFromUrl = "/" + urlSplitStrings[4] + "/" + urlSplitStrings[5];
+        if (urlSplitStrings.length === 6) { // add .html to the url
+            countryCodeFromAPI = countryCodeFromAPI + ".html";
+        }
+        performRedirect(countryCodeFromUrl, countryCodeFromAPI);
+    }
+
+    const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
+        console.log("countryCodeFromUrl == " + countryCodeFromUrl);
+        console.log("countryCodeFromAPI == " + countryCodeFromAPI);
+        if (countryCodeFromAPI.indexOf(countryCodeFromUrl) < 0) {
+            let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
+            window.location.href = resultantRedirectUrl;
+        }
+    }
+
+    (async function () {
+        const [userIsLoggedIn, userData] = await getSessionInfo();
+
+        // handle country redirection
+        redirectBasedOnCountry(userData);
+
+        //if (userIsLoggedIn && userData) {
+        //    document.getElementById('intouchpage\u002D99333e9456').style.display = "block";
+        //}
+    })();
+</script>
+
+
+<script type="text/javascript">
+    (async function () {
+        if (typeof QSI === "undefined") {
+            // QSI object populated only for logged in user
+            const [userIsLoggedIn, userData] = await getSessionInfo();
+
+            if (userIsLoggedIn && userData) {
+                var QSI = {};
+                QSI.config = {
+                    externalReference: userData.id
+                };
+            }
+        }
+    })();
+</script>

@@ -46,7 +46,7 @@ module.exports = {
       ...libsBaseConfig,
       name: 'clientlib-dependencies',
       categories: ['tds-site.dependencies'],
-      dependencies:['tds-site.grid', 'tds-site.scene7.dynamicmedia'],
+      dependencies:['tds-site.grid'],
       embed: ['tds-core.dependencies'],
       assets: {
         // Copy entrypoint scripts and stylesheets into the respective ClientLib

@@ -1,50 +1,52 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<title>Static Frontend file</title>
-	<meta name="template" content="page-content" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<script type="text/javascript" src="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.js"></script>
-	<link rel="stylesheet" href="/etc.clientlibs/techdata/clientlibs/clientlib-dependencies.css" type="text/css" />
-	<link rel="stylesheet" href="http://localhost:9000/bundle.css" type="text/css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css" type="text/css" />
+    <meta charset="UTF-8" />
+    <base href="" />
+    <title>Order Tracking</title>
+    <meta name="template" content="page-content" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="/etc.clientlibs/tds-core/clientlibs/clientlib-base.css" type="text/css">
+    <link rel="stylesheet" href="http://localhost:9000/bundle.css" type="text/css" />
+
+    <style>
+        .test-dev-env-sticky {
+            position: fixed;
+            top: 0;
+            z-index: 999;
+            background: #ffffff;
+            width: 100%;
+        }
+
+        .aem-GridColumn--default--1--dev--test {
+            padding: 0 2rem;
+        }
+    </style>
+    <%= require('html-loader!./partials/intouch/head.html') %>
 </head>
 
-<body class="page basicpage" data-signin-httponly data-disable-extra-reload>
-	<div class="root container responsivegrid">
-		<div class="cmp-container">
-			<!-- Start teaser Box 1 -->
-			<div class="container responsivegrid">
-				<div id="maincontent" class="cmp-container">
-					<div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
-						<div class="signin-container">
-							<%= require('html-loader!./partials/signin/signin.html') %>
-						</div>
-						<!-- Box Start-->
-						<div id="experiencefragment-2e63ace05a"
-							 class="cmp-experiencefragment cmp-experiencefragment--test---header">
-							<div class="new-megamenu">
-								<%= require('html-loader!./partials/megamenu/megamenu.html') %>
-							</div>
-							<div class="subheader">
-								<%= require('html-loader!./partials/sub-header/common-subheader.html') %>
-							</div>
-						</div>
-						<div id="container-5facbc53d1" class="cmp-container">
-							<div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
-								<div id="ordersTrackingDetailContainers" class="orderstrackingdetail cmp-grid-techdata aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--1">
-									<%= require('html-loader!./partials/orders/orders-tracking-detail.html') %>
-								</div>
-							</div>
-						</div>
-
-						<!-- Box End-->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<%= require('html-loader!./partials/included-scripts/included-scripts.html') %>
+<body class="intouchpage page basicpage" id="intouchpage-99333e9456" data-signin-httponly data-disable-extra-reload data-cmp-data-layer-enabled>
+    <div class="page-container">
+        <div class="intouch-headerhtml">
+            <%= require('html-loader!./partials/intouch/header.html') %>
+        </div>
+        <div class="container responsivegrid">
+            <!-- Box Start-->
+            <div id="container-5facbc53d1" class="cmp-container">
+                <div class="aem-Grid aem-Grid--12 aem-Grid--default--12">
+                    <div id="ordersTrackingDetailContainers" class="orderstrackingdetail cmp-grid-techdata aem-GridColumn--default--none aem-GridColumn aem-GridColumn--offset--default--1">
+                        <%= require('html-loader!./partials/orders/orders-tracking-detail.html') %>
+                    </div>
+                </div>
+            </div>
+            <!-- Box End-->
+        </div>
+    </div>
+    <div class="intouch-footerhtml">
+        <%= require('html-loader!./partials/intouch/footer.html') %>
+    </div>
+    <%= require('html-loader!./partials/intouch/foot.html') %>
+    <%= require('html-loader!./partials/included-scripts/included-scripts.html') %>
 </body>
 </html>

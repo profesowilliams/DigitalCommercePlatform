@@ -14,7 +14,10 @@ module.exports = {
         extensions: ['.js', '.ts'],
         plugins: [new TSConfigPathsPlugin({
             configFile: './tsconfig.json'
-        })]
+        })],
+        alias: {
+            'fortawesome': path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free')
+        }
     },
     entry: {
         us: SOURCE_ROOT + '/international/us/main.ts',
@@ -24,7 +27,6 @@ module.exports = {
     output: {
         filename: (chunkData) => {
             return `clientlib-site-${chunkData.chunk.name}/[name].js`;
-            // return chunkData.chunk.name=== 'dependencies' ? 'clientlib-dependencies/[name].js' : 'clientlib-site/[name].js';
         },
         path: path.resolve(__dirname, 'dist')
     },
@@ -59,11 +61,6 @@ module.exports = {
                     presets: ['@babel/preset-env', '@babel/preset-typescript']
                 }
             },
-            // {
-            //     test: /\.js$/,
-            //     exclude: /node_modules/,
-            //     loader: 'eslint-loader',
-            // },
             {
                 test: /\.scss$/,
                 use: [
