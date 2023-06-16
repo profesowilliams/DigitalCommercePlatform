@@ -46,7 +46,7 @@ function InvoicesFlyout({
       titleLabel={invoicesFlyout.title || 'Invoices'}
       buttonLabel={invoicesFlyout.button || 'Download selected'}
       secondaryButtonLabel={invoicesFlyout.clearAllButton || 'Clear all'}
-      disabledButton={selected.length === 0}
+      disabledButton={!selected}
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}

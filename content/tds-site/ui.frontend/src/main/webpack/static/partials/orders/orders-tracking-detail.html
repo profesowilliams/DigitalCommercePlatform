@@ -10,8 +10,6 @@
     const AEM_DATA = {
         ordersUrl: "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-grid",
         uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/order",
-        ordersDownloadDocumentsEndpoint:
-      "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
         agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
         labels: {
             menuCopy: 'Copy',
@@ -54,31 +52,15 @@
             detailsContactEmail: "Email:",
             detailsOrderSubtotal: "Order Subtotal",
             detailsTotalOrderNetPrice: "Total Order Net Price",
+
             addNewItem: "Add new Item",
             editQuantities: "Edit quantities of eligible items",
             lineTotal: "Line total",
+
             modifyOrder: "Modify order",
             cancel: "Cancel",
             update: "Update"
-        },
-        dNotesFlyout: {
-            title: "D-notes",
-            description: "Click a link to view or select items to download.",
-            orderNo: "Order №:",
-            poNo: "PO №:",
-            button: "Download selected",
-            clearAllButton: "Clear all",
-        },
-        dNoteColumnList: [
-            {
-                columnLabel: "D-note №",
-                columnKey: "id",
-            },
-            {
-                columnLabel: "Ship Date",
-                columnKey: "actualShipDateFormatted",
-            },
-        ],
+        }
     };
     renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

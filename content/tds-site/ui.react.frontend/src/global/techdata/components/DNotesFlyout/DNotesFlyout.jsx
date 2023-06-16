@@ -45,7 +45,7 @@ function DNotesFlyout({
       titleLabel={dNotesFlyout.title || 'D-notes'}
       buttonLabel={dNotesFlyout.button || 'Download selected'}
       secondaryButtonLabel={dNotesFlyout.clearAllButton || 'Clear all'}
-      disabledButton={selected.length === 0}
+      disabledButton={!selected}
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}

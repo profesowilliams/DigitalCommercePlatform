@@ -10,7 +10,6 @@ const OrderTrackingDetailHeader = ({
   apiResponse,
   hasAIORights,
   hasOrderModificationRights,
-  openFilePdf,
 }) => {
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
