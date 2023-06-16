@@ -10,6 +10,7 @@ const OrderTrackingDetailHeader = ({
   apiResponse,
   hasAIORights,
   hasOrderModificationRights,
+  openFilePdf,
 }) => {
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
@@ -66,8 +67,10 @@ const OrderTrackingDetailHeader = ({
               <MenuActions
                 hasAIORights={hasAIORights}
                 hasOrderModificationRights={hasOrderModificationRights}
+                content={apiResponse?.content}
                 items={apiResponse?.content?.items}
                 labels={config?.labels}
+                openFilePdf={openFilePdf}
                 modifyOrder={handleOrderModification}
               />
             </div>
