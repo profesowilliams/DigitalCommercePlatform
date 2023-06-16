@@ -3,6 +3,7 @@ import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './MenuActions';
 import OrderTrackingDetailTitle from './OrderTrackingDetailTitle';
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -11,6 +12,8 @@ const OrderTrackingDetailHeader = ({
   hasOrderModificationRights,
 }) => {
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+  const effects = useOrderTrackingStore((state) => state.effects);
+  const { setCustomState } = effects;
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -18,6 +21,13 @@ const OrderTrackingDetailHeader = ({
 
   const handleActionMouseLeave = () => {
     setActionsDropdownVisible(false);
+  };
+
+  const handleOrderModification = () => {
+    setCustomState({
+      key: 'orderModificationFlyout',
+      value: { data: {}, show: true },
+    });
   };
 
   return (
@@ -58,6 +68,7 @@ const OrderTrackingDetailHeader = ({
                 hasOrderModificationRights={hasOrderModificationRights}
                 items={apiResponse?.content?.items}
                 labels={config?.labels}
+                modifyOrder={handleOrderModification}
               />
             </div>
           )}

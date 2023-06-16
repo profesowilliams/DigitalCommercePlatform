@@ -110,7 +110,6 @@ function ExportFlyout({
       subheaderReference={subheaderReference}
       titleLabel={exportFlyout.title || 'Export'}
       buttonLabel={exportFlyout.button || 'Export'}
-      enableButton={secondarySelected}
       disabledButton={!secondarySelected}
       selected={secondarySelected}
       isTDSynnex={isTDSynnex}

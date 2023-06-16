@@ -6,6 +6,7 @@ const MenuActions = ({
   hasOrderModificationRights,
   items = [],
   labels,
+  modifyOrder,
 }) => {
   const areDeliveryNotesAvailable = items.some(
     (item) => item.deliveryNotes.length > 0
@@ -24,7 +25,9 @@ const MenuActions = ({
         <li>{getDictionaryValueOrKey(labels?.detailsActionViewInvoices)}</li>
       )}
       {hasOrderModificationRights && (
-        <li>{getDictionaryValueOrKey(labels?.detailsActionModifyOrder)}</li>
+        <li onClick={modifyOrder}>
+          {getDictionaryValueOrKey(labels?.detailsActionModifyOrder)}
+        </li>
       )}
       {areSerialNumbersAvailable && (
         <li>

@@ -76,6 +76,14 @@ app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
               accountId: "0038048612",
             },
             {
+              entitlement: "OrderModification",
+              accountId: "0038048612",
+            },
+            {
+              entitlement: "AIO",
+              accountId: "0038048612",
+            },
+            {
               entitlement: "hasDCPAccess",
               accountId: "",
             },
@@ -97,6 +105,7 @@ app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
               salesOrg: "0101",
               system: "2",
               dcpAccess: true,
+              defaultCurrency: "GBP",
             },
             {
               number: "0009000325",
@@ -106,6 +115,7 @@ app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
               salesOrg: "1001",
               system: "3",
               dcpAccess: false,
+              defaultCurrency: "GBP",
             },
             {
               number: "0009000325",
@@ -115,6 +125,7 @@ app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
               salesOrg: null,
               system: null,
               dcpAccess: false,
+              defaultCurrency: "GBP",
             },
           ],
           activeCustomer: {
@@ -125,6 +136,7 @@ app.get("/ui-account/v1/GetUser/AEM", (req, res) => {
             salesOrg: "0101",
             system: "2",
             dcpAccess: true,
+            defaultCurrency: "GBP",
           },
         },
       },

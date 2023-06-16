@@ -46,7 +46,6 @@ function InvoicesFlyout({
       titleLabel={invoicesFlyout.title || 'Invoices'}
       buttonLabel={invoicesFlyout.button || 'Download selected'}
       secondaryButtonLabel={invoicesFlyout.clearAllButton || 'Clear all'}
-      enableButton={selected.length > 0}
       disabledButton={!selected}
       selected={selected}
       secondaryButton={SecondaryButton}

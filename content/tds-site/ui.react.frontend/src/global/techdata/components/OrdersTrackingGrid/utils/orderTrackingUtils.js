@@ -158,7 +158,6 @@ export async function fetchData(config) {
   }
 
   const filterUrl = mapStrucToUrlStr(mapUrl);
-  console.log('filterUrl JUST FOR TEST', filterUrl);
   previousSortChanged.current = hasSortChanged.current;
   firstAPICall.current = false;
 

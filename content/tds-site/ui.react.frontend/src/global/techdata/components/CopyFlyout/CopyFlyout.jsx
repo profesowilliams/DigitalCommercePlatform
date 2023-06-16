@@ -215,15 +215,18 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       titleLabel={copyFlyout.title || 'Copy'}
       buttonLabel={copyFlyout.button || 'Copy'}
       isLoading={isLoading}
-      enableButton={enableCopy}
       disabledButton={!enableCopy}
       onClickButton={handleCopy}
       analyticsData={analyticsData}
       bottomContent={(classNameSuffix) => WarningMessage({ classNameSuffix })}
-      analyticsCallback={getRowAnalytics.bind(null,
+      analyticsCallback={getRowAnalytics.bind(
+        null,
         analyticsData.analyticsCategory,
-        analyticsAction ? analyticsAction : ANALYTIC_CONSTANTS.Grid.RowActions.Copy,
-        analyticsData)}
+        analyticsAction
+          ? analyticsAction
+          : ANALYTIC_CONSTANTS.Grid.RowActions.Copy,
+        analyticsData
+      )}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">

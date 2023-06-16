@@ -16,7 +16,6 @@ function BaseFlyout({
   buttonLabel,
   secondaryButtonLabel,
   isLoading,
-  enableButton,
   disabledButton,
   onClickButton,
   bottomContent,
@@ -24,7 +23,8 @@ function BaseFlyout({
   secondaryButton,
   isTDSynnex,
   analyticsData,
-  analyticsCallback
+  analyticsCallback,
+  buttonsSection = null,
 }) {
   const BottomContent = () => bottomContent('footer');
   const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
@@ -33,6 +33,7 @@ function BaseFlyout({
     subheaderReference
   );
   const { top, height } = positioning;
+
   useEffect(() => {
     let timer;
     if (open) {
@@ -45,6 +46,7 @@ function BaseFlyout({
       clearTimeout(timer);
     };
   }, [open]);
+
   return (
     <Drawer
       anchor={anchor}
@@ -72,20 +74,22 @@ function BaseFlyout({
         {children}
         <section className="cmp-flyout__footer">
           {bottomContent && <BottomContent />}
-          <div className="cmp-flyout__footer-buttons">
-            {enableButton && secondaryButton && <SecondaryButton />}
-            <Button
-              btnClass={`cmp-flyout__footer-button ${
-                enableButton ? 'cmp-flyout__footer-button--enabled' : ''
-              }`}
-              disabled={disabledButton}
-              onClick={onClickButton}
-              analyticsCallback={analyticsCallback}
-            >
-              {!isLoading && getDictionaryValueOrKey(buttonLabel)}{' '}
-              {isLoading && <LoaderIcon />}
-            </Button>
-          </div>
+          {buttonsSection || (
+            <div className="cmp-flyout__footer-buttons">
+              {!disabledButton && secondaryButton && <SecondaryButton />}
+              <Button
+                btnClass={`cmp-flyout__footer-button ${
+                  !disabledButton && 'cmp-flyout__footer-button--enabled'
+                }`}
+                disabled={disabledButton}
+                onClick={onClickButton}
+                analyticsCallback={analyticsCallback}
+              >
+                {!isLoading && getDictionaryValueOrKey(buttonLabel)}{' '}
+                {isLoading && <LoaderIcon />}
+              </Button>
+            </div>
+          )}
         </section>
       </div>
     </Drawer>

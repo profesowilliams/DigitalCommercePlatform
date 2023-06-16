@@ -5,10 +5,10 @@ import useGet from '../../hooks/useGet';
 import OrderAcknowledgementCard from './OrderAcknowledgementCard';
 import ContactCard from './ContactCard';
 import { getUrlParams } from '../../../../utils';
-import { useStore } from '../../../../utils/useStore';
 import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
 import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
 import OrderTrackingContainer from './OrderTrackingContainer';
+import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -46,15 +46,12 @@ function OrdersTrackingDetail(props) {
             hasOrderModificationRights={hasOrderModificationRights}
           />
           <div className="info-container">
-            <SoldToCard
-              shipTo={apiResponse?.content?.shipTo || {}}
-              config={config}
-            />
+            <SoldToCard shipTo={apiResponse?.content?.shipTo} config={config} />
             <OrderAcknowledgementCard
-              content={apiResponse?.content || {}}
+              content={apiResponse?.content}
               config={config}
             />
-            <ContactCard content={apiResponse?.content || {}} config={config} />
+            <ContactCard content={apiResponse?.content} config={config} />
           </div>
         </div>
         <div className="cmp-orders-qp__grid cmp-order-preview">
@@ -73,6 +70,11 @@ function OrdersTrackingDetail(props) {
           />
         </div>
       </section>
+      <OrderModificationFlyout
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        items={apiResponse?.content?.items}
+        labels={config.labels}
+      />
     </div>
   );
 }

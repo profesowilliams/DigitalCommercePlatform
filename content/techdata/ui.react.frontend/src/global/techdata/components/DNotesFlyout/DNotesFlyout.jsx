@@ -45,7 +45,6 @@ function DNotesFlyout({
       titleLabel={dNotesFlyout.title || 'D-notes'}
       buttonLabel={dNotesFlyout.button || 'Download selected'}
       secondaryButtonLabel={dNotesFlyout.clearAllButton || 'Clear all'}
-      enableButton={selected.length > 0}
       disabledButton={!selected}
       selected={selected}
       secondaryButton={SecondaryButton}

@@ -257,6 +257,87 @@ $flyout-small-height-formax: 779px;
   }
 }
 
+.cmp-flyout__content.order-modification {
+  padding: 0;
+  .add-new {
+    display: block;
+    padding: 20px 30px;
+    font-size: 16px;
+    color: $brand-green;
+    border-bottom: 1px solid $v-divider-gray;
+  }
+  .edit-quantities {
+    font-size: 16px;
+    padding-left: 30px;
+  }
+}
+
+.cmp-flyout__footer-buttons.order-modification {
+  display: block;
+  padding: 16px 30px;
+  border-top: 1px solid $v-divider-gray;
+  > button {
+    width: 141px;
+    height: 48px;
+    float: right;
+    background-color: $brand-white;
+    padding: 12px 20px;
+    font-size: 14px;  
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .primary {
+    color: $brand-white;
+    background-color: $brand-green;
+   
+  }
+  .secondary {
+    color: $brand-green;
+    background-color: $brand-white;
+  }
+}
+
+.cmp-flyout-list {
+  padding: 20px 30px;
+
+  &__element {
+    height: 158px;
+    padding: 20px 0;
+    border-bottom: 1px solid $v-divider-gray;
+    display: grid;
+    grid-template-columns: 36px 110px 627px 106px;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    font-size: 14px;
+
+    &__number {
+      grid-area: 1 / 1 / 3 / 2;
+    }
+    &__picture {
+      grid-area: 1 / 2 / 3 / 3; 
+    }
+    &__title {
+      grid-area: 1 / 3 / 2 / 4;
+      p {
+        color: $brand-cobalt;
+        font-size: 16px;
+      }
+    }
+    &__counter {
+      grid-area: 2 / 3 / 3 / 4;
+    }
+    &__price {
+      grid-area: 2 / 4 / 3 / 5; 
+      text-align: right;
+      &-bold {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
 .cmp-flyout-td-synnex{
   & .cmp-flyout__footer {
     &-buttons {

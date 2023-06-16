@@ -2,22 +2,22 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
-function OrderAcknowledgementCard(props) {
-  const { content, config } = props;
+function OrderAcknowledgementCard({ content = {}, config }) {
+  const { reseller, createdFormatted, poNumber, docType } = content;
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
         {getDictionaryValueOrKey(config?.labels?.detailsOrderAcknowledgement)}
       </div>
       <div>
-        {content.reseller?.id && (
+        {reseller?.id && (
           <div className="card-container__contentGrid">
             <span>
               {getDictionaryValueOrKey(
                 config?.labels?.detailsCustomerAccountCode
               )}
             </span>
-            <span>{content.reseller?.id}</span>
+            <span>{reseller?.id}</span>
           </div>
         )}
         {content.createdFormatted && (
@@ -25,23 +25,23 @@ function OrderAcknowledgementCard(props) {
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsOrderDate)}
             </span>
-            <span>{content.createdFormatted}</span>
+            <span>{createdFormatted}</span>
           </div>
         )}
-        {content.poNumber && (
+        {poNumber && (
           <div className="card-container__contentGrid">
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsPurchaseOrderNo)}
             </span>
-            <span>{content.poNumber}</span>
+            <span>{poNumber}</span>
           </div>
         )}
-        {content.docType && (
+        {docType && (
           <div className="card-container__contentGrid">
             <span>
               {getDictionaryValueOrKey(config?.labels?.detailsOrderType)}
             </span>
-            <span>{content.docType}</span>
+            <span>{docType}</span>
           </div>
         )}
       </div>

@@ -2,10 +2,7 @@ import {
   ORDER_FILTER_LOCAL_STORAGE_KEY,
   TOASTER_LOCAL_STORAGE_KEY,
 } from '../../../../../utils/constants';
-import {
-  getLocalStorageData,
-  setLocalStorageData,
-} from '../../RenewalsGrid/utils/renewalUtils';
+import { setLocalStorageData } from '../../RenewalsGrid/utils/renewalUtils';
 import { getLocalValueOrDefault } from './../../BaseGrid/store/GridStore';
 
 export const orderTrackingEffects = (set, get) => {

@@ -2,9 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 // TODO: add fields and from accountManager when it's ready 
-function ContactCard(props) {
-  const { content, config } = props;
-
+function ContactCard({ content, config }) {
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">

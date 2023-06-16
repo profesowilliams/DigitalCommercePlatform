@@ -215,7 +215,6 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
       titleLabel={copyFlyout.title || 'Copy'}
       buttonLabel={copyFlyout.button || 'Copy'}
       isLoading={isLoading}
-      enableButton={enableCopy}
       disabledButton={!enableCopy}
       onClickButton={handleCopy}
       analyticsData={analyticsData}

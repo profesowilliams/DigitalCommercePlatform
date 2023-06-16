@@ -143,7 +143,6 @@ const OrderFilterFlyout = ({
       anchor="right"
       titleLabel={getDictionaryValueOrKey(filterTitle)}
       buttonLabel={getDictionaryValueOrKey(showResultLabel)}
-      enableButton={enabled}
       disabledButton={!enabled}
       onClickButton={showResult}
       isTDSynnex={isTDSynnex}
