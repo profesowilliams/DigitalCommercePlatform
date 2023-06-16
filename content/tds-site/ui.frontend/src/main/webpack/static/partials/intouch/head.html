@@ -21,9 +21,7 @@
 <script type="text/javascript">
     const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
     //let userDataPromise = null;
-    let cachedUserData = [
-        true,
-        {
+    let cachedUserData = {
             "id": "2033643",
             "firstName": "Adam",
             "lastName": "Dobrzanski",
@@ -86,7 +84,23 @@
                 {
                     "entitlement": "MicrositeAdmin",
                     "accountId": "325009"
-                }
+                },
+                {
+                    "entitlement": "CanViewOrders",
+                    "accountId": "0038048612",
+                },
+                {
+                    "entitlement": "OrderModification",
+                    "accountId": "0038048612",
+                },
+                {
+                    "entitlement": "AIO",
+                    "accountId": "0038048612",
+                },
+                {
+                    "entitlement": "CanViewInvoices",
+                    "accountId": "0038048612",
+                },
             ],
             "customersV2": [
                 {
@@ -114,8 +128,8 @@
             "isHouseAccount": true,
             "country": "UK",
             "language": "EN"
-        }
-    ];
+    };
+
     let cacheExpiration = Date.now() + 600 * 1000;
     const CACHE_DURATION = 600; // TODO: value should be configurable
 
@@ -258,7 +272,8 @@
     const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
         console.log("countryCodeFromUrl == " + countryCodeFromUrl);
         console.log("countryCodeFromAPI == " + countryCodeFromAPI);
-        if (countryCodeFromAPI.indexOf(countryCodeFromUrl) < 0) {
+        const isLocalDevelopment = window.origin === 'http://localhost:8080';
+        if (countryCodeFromAPI.indexOf(countryCodeFromUrl) < 0 && !isLocalDevelopment) {
             let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
             window.location.href = resultantRedirectUrl;
         }

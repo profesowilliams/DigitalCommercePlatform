@@ -31,6 +31,57 @@ const OrderTrackingDetailHeader = ({
     });
   };
 
+  const items = apiResponse?.content?.items || [];
+  const labels = config?.labels;
+
+  let deliveryNotes = [];
+  items.map((item) => {
+    deliveryNotes = deliveryNotes.concat(item.deliveryNotes);
+  });
+  let invoices = [];
+  items.map((item) => {
+    invoices = invoices.concat(item.invoices);
+  });
+
+  const areDeliveryNotesAvailable = deliveryNotes.length > 0;
+  const areInvoicesAvailable = invoices.length > 0;
+  const areSerialNumbersAvailable = items.some((item) => item.serialNumber);
+
+  const id = apiResponse?.content?.orderNumber;
+  const poNumber = apiResponse?.content?.poNumber;
+  const hasMultiple = deliveryNotes.length > 1;
+  const handleDownload = () => {
+    openFilePdf('Invoice', invoices[0]?.id);
+  };
+  const triggerDNotesFlyout = () => {
+    setCustomState({
+      key: 'dNotesFlyout',
+      value: { data: deliveryNotes, show: true, id: id, reseller: poNumber },
+    });
+  };
+  const menuActionsItems = [
+    {
+      condition: areDeliveryNotesAvailable,
+      label: labels?.detailsActionViewDNotes,
+      onClick: hasMultiple ? triggerDNotesFlyout : handleDownload,
+    },
+    {
+      condition: hasAIORights && areInvoicesAvailable,
+      label: labels?.detailsActionViewInvoices,
+      onClick: null,
+    },
+    {
+      condition: hasOrderModificationRights,
+      label: labels?.detailsActionModifyOrder,
+      onClick: handleOrderModification,
+    },
+    {
+      condition: areSerialNumbersAvailable,
+      label: labels?.detailsActionExportSerialNumbers,
+      onClick: null,
+    },
+  ];
+
   return (
     <div className="header-container">
       <div className="navigation-container">
@@ -64,15 +115,7 @@ const OrderTrackingDetailHeader = ({
               onMouseOver={handleActionMouseOver}
               onMouseLeave={handleActionMouseLeave}
             >
-              <MenuActions
-                hasAIORights={hasAIORights}
-                hasOrderModificationRights={hasOrderModificationRights}
-                content={apiResponse?.content}
-                items={apiResponse?.content?.items}
-                labels={config?.labels}
-                openFilePdf={openFilePdf}
-                modifyOrder={handleOrderModification}
-              />
+              <MenuActions items={menuActionsItems} />
             </div>
           )}
         </div>
