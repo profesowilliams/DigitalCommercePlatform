@@ -95,6 +95,7 @@
 
             return {
                 site: country,
+                language: language.toUpperCase(),
                 acceptLanguage: resolveAcceptLanguage(language, country),
                 };
         } catch (error) {

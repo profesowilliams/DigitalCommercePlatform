@@ -71,44 +71,20 @@
 
             if (currentUserData?.country) {
                 let countryCodeFromAPI = "/" + currentUserData?.country.toLowerCase() + '/' + currentUserData?.language.toLowerCase();
-                if (window.location.href.indexOf(countryCodeFromAPI) < 0) {
+                if (window.location.href.toLowerCase().indexOf(countryCodeFromAPI.toLowerCase()) < 0) {
                     validateCountryFromUrlAndAPI(countryCodeFromAPI);
                 }
             }
         }
 
         const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
-            let urlSplitStrings = window.location.href.replace(window.location.origin, "").split('/');
-            if (window.location.href.indexOf("/content") >= 0) { // added this to support sit/dit envs
-                performRedirectForCmsPath(countryCodeFromAPI, urlSplitStrings);
-            } else {
-                performRedirectForAbsPath(countryCodeFromAPI, urlSplitStrings);
-            }
-        }
-
-        const performRedirectForAbsPath = (countryCodeFromAPI, urlSplitStrings) => {
-            let countryCodeFromUrl;
-            if (urlSplitStrings.length <= 3) { // add .html to the url
-                if (urlSplitStrings[2] === undefined) {
-                    countryCodeFromUrl = "/" + urlSplitStrings[1];
-                }
-                countryCodeFromAPI = countryCodeFromAPI + ".html";
-            }
-            performRedirect(countryCodeFromUrl, countryCodeFromAPI);
-        }
-
-        const performRedirectForCmsPath = (countryCodeFromAPI, urlSplitStrings) => {
-            let countryCodeFromUrl = "/" + urlSplitStrings[4] + "/" + urlSplitStrings[5];
-            if (urlSplitStrings.length === 6) { // add .html to the url
-                countryCodeFromAPI = countryCodeFromAPI + ".html";
-            }
+            let infoFromUrl = getHeaderInfoFromUrl(window.location.pathname);
+            let countryCodeFromUrl = "/" + infoFromUrl.site + "/" + infoFromUrl.language;
             performRedirect(countryCodeFromUrl, countryCodeFromAPI);
         }
 
         const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
-            console.log("countryCodeFromUrl == " + countryCodeFromUrl);
-            console.log("countryCodeFromAPI == " + countryCodeFromAPI);
-            if (countryCodeFromAPI.indexOf(countryCodeFromUrl) < 0) {
+            if (countryCodeFromAPI.toLowerCase().indexOf(countryCodeFromUrl.toLowerCase()) < 0) {
                 let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
                 window.location.href = resultantRedirectUrl;
             }
