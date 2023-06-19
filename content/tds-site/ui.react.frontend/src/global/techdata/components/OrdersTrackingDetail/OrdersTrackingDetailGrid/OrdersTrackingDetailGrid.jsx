@@ -15,7 +15,7 @@ import {
 } from '../../../../../utils/featureFlagUtils';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../../utils/constants';
 
-function OrdersTrackingDetailGrid({ data, gridProps }) {
+function OrdersTrackingDetailGrid({ data, gridProps, openFilePdf }) {
   const [userData, setUserData] = useState(null);
   const gridData = data.items ?? [];
   const config = {
@@ -106,7 +106,11 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
       field: 'actions',
       headerName: '',
       cellRenderer: ({ data }) => (
-        <ActionsColumn line={data} config={gridProps} />
+        <ActionsColumn
+          line={data}
+          config={gridProps}
+          openFilePdf={openFilePdf}
+        />
       ),
       width: gridColumnWidths.actions,
     },
@@ -125,7 +129,6 @@ function OrdersTrackingDetailGrid({ data, gridProps }) {
         setUserData(data[1]);
       });
   }, []);
-
   return (
     <section>
       <Grid

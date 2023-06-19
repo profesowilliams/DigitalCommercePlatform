@@ -93,6 +93,7 @@ function OrdersTrackingDetail(props) {
             <OrdersTrackingDetailGrid
               data={apiResponse.content}
               gridProps={config}
+              openFilePdf={openFilePdf}
             />
           )}
         </div>

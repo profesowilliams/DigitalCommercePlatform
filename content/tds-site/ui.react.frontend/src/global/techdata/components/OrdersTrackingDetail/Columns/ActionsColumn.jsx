@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../MenuActions';
 
-const ActionsColumn = ({ line, config = {} }) => {
+const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
 
   const handleActionMouseOver = () => {
@@ -21,8 +21,16 @@ const ActionsColumn = ({ line, config = {} }) => {
 
   const labels = config?.labels;
 
+  const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
   const areInvoicesAvailable = line.invoices.length > 0;
   const isSerialNumberAvailable = Boolean(line.serialNumber);
+
+  let invoices = [];
+  invoices = line.invoices;
+
+  const handleDownload = () => {
+    openFilePdf('Invoice', invoices[0]?.id);
+  };
 
   const menuActionsItems = [
     {
@@ -31,9 +39,9 @@ const ActionsColumn = ({ line, config = {} }) => {
       onClick: null,
     },
     {
-      condition: true,
+      condition: areDeliveryNotesAvailable,
       label: labels?.detailsActionViewDNotes,
-      onClick: null,
+      onClick: handleDownload,
     },
     {
       condition: areInvoicesAvailable,
@@ -46,7 +54,6 @@ const ActionsColumn = ({ line, config = {} }) => {
       onClick: null,
     },
   ];
-
   return (
     <div
       className="cmp-order-tracking-grid-details__action-column actions-container"
