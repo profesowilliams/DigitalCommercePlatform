@@ -6,7 +6,7 @@ import useTableFlyout from '../../hooks/useTableFlyout';
 
 function DNotesFlyout({
   store,
-  dNotesFlyout,
+  dNotesFlyout = {},
   dNoteColumnList,
   subheaderReference,
   isTDSynnex,
@@ -45,7 +45,7 @@ function DNotesFlyout({
       titleLabel={dNotesFlyout.title || 'D-notes'}
       buttonLabel={dNotesFlyout.button || 'Download selected'}
       secondaryButtonLabel={dNotesFlyout.clearAllButton || 'Clear all'}
-      disabledButton={!selected}
+      disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}
