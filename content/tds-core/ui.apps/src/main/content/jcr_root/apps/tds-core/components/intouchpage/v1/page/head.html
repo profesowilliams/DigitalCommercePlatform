@@ -70,7 +70,7 @@
             let currentUserData = userData;
 
             if (currentUserData?.country) {
-                let countryCodeFromAPI = "/" + currentUserData?.country.toLowerCase() + '/' + currentUserData?.language.toLowerCase();
+                let countryCodeFromAPI = '/' + currentUserData?.country.toLowerCase() + '/' + currentUserData?.language.toLowerCase();
                 if (window.location.href.toLowerCase().indexOf(countryCodeFromAPI.toLowerCase()) < 0) {
                     validateCountryFromUrlAndAPI(countryCodeFromAPI);
                 }
@@ -79,13 +79,13 @@
 
         const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
             let infoFromUrl = getHeaderInfoFromUrl(window.location.pathname);
-            let countryCodeFromUrl = "/" + infoFromUrl.site + "/" + infoFromUrl.language;
+            let countryCodeFromUrl = '/' + infoFromUrl.site + '/' + infoFromUrl.language;
             performRedirect(countryCodeFromUrl, countryCodeFromAPI);
         }
 
         const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
             if (countryCodeFromAPI.toLowerCase().indexOf(countryCodeFromUrl.toLowerCase()) < 0) {
-                let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
+                let resultantRedirectUrl = window.location.href.toLowerCase().replace(countryCodeFromUrl.toLowerCase(), countryCodeFromAPI);
                 window.location.href = resultantRedirectUrl;
             }
         }
