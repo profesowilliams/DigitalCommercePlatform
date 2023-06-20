@@ -72,6 +72,7 @@ function OrdersTrackingGrid(props) {
   const invoiceDateTo = useRef();
   const type = useRef();
   const status = useRef();
+  const customFilterRef = useRef();
   const filtersRefs = {
     createdFrom,
     createdTo,
@@ -81,6 +82,7 @@ function OrdersTrackingGrid(props) {
     invoiceDateTo,
     type,
     status,
+    customFilterRef,
   };
   const effects = useOrderTrackingStore((st) => st.effects);
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
@@ -139,6 +141,7 @@ function OrdersTrackingGrid(props) {
     closeAndCleanToaster,
     setFilterList,
     setCustomFiltersChecked,
+    setDateType,
   } = effects;
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
@@ -412,6 +415,7 @@ function OrdersTrackingGrid(props) {
       window.getSessionInfo().then((data) => {
         setUserData(data[1]);
       });
+    setDateType(filterLabels.orderDateLabel);
   }, []);
 
   return (

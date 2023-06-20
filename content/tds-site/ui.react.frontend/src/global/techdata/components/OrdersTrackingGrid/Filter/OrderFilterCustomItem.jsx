@@ -5,7 +5,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 
-const OrderFilterCustomItem = ({ filterOptionList, customFilterId }) => {
+const OrderFilterCustomItem = ({
+  filterOptionList,
+  customFilterId,
+  filtersRefs,
+}) => {
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.customFiltersChecked
   );
@@ -38,6 +42,7 @@ const OrderFilterCustomItem = ({ filterOptionList, customFilterId }) => {
           })
         : filter;
     });
+    filtersRefs.customFilterRef.current = newList;
     setCustomFiltersChecked([...newList]);
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };

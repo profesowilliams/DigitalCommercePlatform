@@ -93,8 +93,17 @@ export async function fetchData(config) {
   }
 
   Object.keys(filtersRefs).map((filter) => {
-    const filterValue = filtersRefs[filter]?.current;
-    filterValue && mapUrl.set(filter, filterValue);
+    if (filter !== 'customFilterRef') {
+      const filterValue = filtersRefs[filter]?.current;
+      filterValue && mapUrl.set(filter, filterValue);
+    } else {
+      filtersRefs[filter].current?.map((ref) => {
+        ref?.filterOptionList?.map((option) => {
+          option?.checked &&
+            mapUrl.set(option.filterOptionLabel, option.filterOptionKey);
+        });
+      });
+    }
   });
 
   if (hasSortChanged.current) {

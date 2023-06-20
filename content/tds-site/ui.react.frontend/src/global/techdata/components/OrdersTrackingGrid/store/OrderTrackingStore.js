@@ -6,12 +6,6 @@ import {
   getLocalValueOrDefault,
 } from '../../BaseGrid/store/GridStore';
 import { orderTrackingEffects } from './OrderTrackingStoreEffects';
-import { getDictionaryValue } from '../../../../../utils/utils';
-
-const orderDate = getDictionaryValue(
-  'grids.common.label.orderDate',
-  'Order date'
-);
 
 const INITIAL_STATE = {
   ...basicGridState,
@@ -39,7 +33,7 @@ const INITIAL_STATE = {
     'count',
     0
   ),
-  dateType: orderDate,
+  dateType: null,
   toolTipData: {
     value: '',
     x: 0,

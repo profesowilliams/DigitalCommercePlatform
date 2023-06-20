@@ -10,10 +10,7 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import '../../RenewalFilter/components/datePicker.scss';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
-import {
-  getDictionaryValue,
-  getDictionaryValueOrKey,
-} from '../../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function CustomStartEndText({ filterLabels }) {
   return (

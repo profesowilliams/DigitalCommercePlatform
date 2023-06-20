@@ -99,6 +99,7 @@ function OrderFilterListItem({
             filterField={filterField}
             filterOptionList={filterOptionList}
             accordionLabel={accordionLabel}
+            filtersRefs={filtersRefs}
             customFilterId={id}
           />
         );
