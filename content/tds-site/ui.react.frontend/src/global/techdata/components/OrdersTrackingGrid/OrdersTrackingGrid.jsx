@@ -495,10 +495,13 @@ function OrdersTrackingGrid(props) {
               <ToolTip toolTipData={toolTipData} />
               <div className="cmp-renewals__pagination--bottom">
                 <OrderTrackingGridPagination
-                  ref={customPaginationRef}
-                  store={useOrderTrackingStore}
-                  onQueryChanged={onQueryChanged}
-                  disabled={isLoading}
+                    ref={customPaginationRef}
+                    store={useOrderTrackingStore}
+                    onQueryChanged={onQueryChanged}
+                    disabled={isLoading}
+                    paginationAnalyticsLabel={analyticsCategories.pagination}
+                    resultsLabel={paginationLabels.results}
+                    ofLabel={paginationLabels.of}
                 />
               </div>
               <DNotesFlyout
