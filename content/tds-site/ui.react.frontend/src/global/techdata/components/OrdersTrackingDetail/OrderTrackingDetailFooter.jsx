@@ -6,7 +6,6 @@ import {
   isHttpOnlyEnabled,
 } from '../../../../utils/featureFlagUtils';
 
-//TODO: Add or delete the left part of footer
 const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
   const [userData, setUserData] = useState(null);
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
@@ -29,10 +28,16 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
     <div className="box-container">
       <div className="box-container__leftPart">
         <span className="box-container__leftPart-line1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          {getDictionaryValueOrKey(config.labels?.detailsFooterLine1)}
         </span>
         <span className="box-container__leftPart-line2">
-          Lorem ipsum dolor, sit amet consectetur.
+          {getDictionaryValueOrKey(config.labels?.detailsFooterLine2)}
+        </span>
+        <span className="box-container__leftPart-line1">
+          {getDictionaryValueOrKey(config.labels?.detailsFooterLine3)}
+          <a href={config.labels?.detailsFooterLine3Link}>
+            {getDictionaryValueOrKey(config.labels?.detailsFooterLine3Link)}
+          </a>
         </span>
       </div>
       <div className="box-container__rightPart">
