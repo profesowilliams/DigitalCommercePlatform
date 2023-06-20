@@ -28,7 +28,11 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
   let invoices = [];
   invoices = line.invoices;
 
-  const handleDownload = () => {
+  //TODO: correct after invoice and dnote download request is ready
+  const handleDownloadDnote = () => {
+    openFilePdf('Invoice', invoices[0]?.id);
+  };
+  const handleDownloadInvoice = () => {
     openFilePdf('Invoice', invoices[0]?.id);
   };
 
@@ -41,12 +45,12 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
     {
       condition: areDeliveryNotesAvailable,
       label: labels?.detailsActionViewDNotes,
-      onClick: handleDownload,
+      onClick: handleDownloadDnote,
     },
     {
       condition: areInvoicesAvailable,
       label: labels?.detailsActionViewInvoices,
-      onClick: null,
+      onClick: handleDownloadInvoice,
     },
     {
       condition: isSerialNumberAvailable,
