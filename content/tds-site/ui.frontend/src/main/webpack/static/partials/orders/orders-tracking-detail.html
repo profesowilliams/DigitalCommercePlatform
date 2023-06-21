@@ -83,6 +83,24 @@
                 columnKey: "actualShipDateFormatted",
             },
         ],
+        invoicesFlyout: {
+            title: "Invoices",
+            description: "Click a link to view or select items to download.",
+            orderNo: "Order №:",
+            poNo: "PO №:",
+            button: "Download selected",
+            clearAllButton: "Clear all",
+        },
+        invoicesColumnList: [
+        {
+            columnLabel: "Invoice №",
+            columnKey: "id",
+        },
+        {
+            columnLabel: "Ship Date",
+            columnKey: "createdFormatted",
+        },
+    ],
     };
     renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

@@ -6,7 +6,7 @@ import useTableFlyout from '../../hooks/useTableFlyout';
 
 function InvoicesFlyout({
   store,
-  invoicesFlyout,
+  invoicesFlyout = {},
   invoicesColumnList,
   subheaderReference,
   isTDSynnex,

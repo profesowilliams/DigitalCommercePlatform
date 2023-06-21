@@ -12,6 +12,7 @@ import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
+import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -115,6 +116,20 @@ function OrdersTrackingDetail(props) {
           openFilePdf={(flyoutType, orderId) =>
             openFilePdf(flyoutType, orderId)
           }
+        />
+        <InvoicesFlyout
+          store={useOrderTrackingStore}
+          invoicesFlyout={config?.invoicesFlyout}
+          invoicesColumnList={config?.invoicesColumnList}
+          subheaderReference={document.querySelector('.subheader > div > div')}
+          isTDSynnex={isTDSynnex}
+          downloadAllFile={(flyoutType, orderId) =>
+            downloadAllFile(flyoutType, orderId)
+          }
+          openFilePdf={(flyoutType, orderId) =>
+            openFilePdf(flyoutType, orderId)
+          }
+          hasAIORights={hasAIORights}
         />
       </section>
       <OrderModificationFlyout

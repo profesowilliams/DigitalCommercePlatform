@@ -3,6 +3,7 @@ use(["../../../common/utils.js"], function (utils) {
   var jsonObject = {};
   var labels = {};
   let dNotesFlyout = {};
+  let invoicesFlyout = {};
 
   // Settings
   if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
@@ -73,6 +74,50 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["labels"] = labels;
   }
 
+  //Invoices flyout options
+  let invoicesColumnList = utils.getDataFromMultifield(
+    resourceResolver,
+    "invoicesColumnList",
+    function (childResource) {
+      let itemData = {};
+
+      itemData.columnLabel = childResource.properties["columnLabel"];
+      itemData.columnKey = childResource.properties["columnKey"];
+      return itemData;
+    }
+  );
+
+  if (invoicesColumnList != null) {
+    jsonObject["invoicesColumnList"] = invoicesColumnList;
+  }
+
+  if (properties && properties["invoicesFlyoutTitle"]) {
+    invoicesFlyout.title = properties["invoicesFlyoutTitle"];
+  }
+
+  if (properties && properties["invoicesFlyoutDescription"]) {
+    invoicesFlyout.description = properties["invoicesFlyoutDescription"];
+  }
+
+  if (properties && properties["invoicesFlyoutOrderNo"]) {
+    invoicesFlyout.orderNo = properties["invoicesFlyoutOrderNo"];
+  }
+
+  if (properties && properties["invoicesFlyoutPoNo"]) {
+    invoicesFlyout.poNo = properties["invoicesFlyoutPoNo"];
+  }
+
+  if (properties && properties["invoicesFlyoutButton"]) {
+    invoicesFlyout.button = properties["invoicesFlyoutButton"];
+  }
+
+  if (properties && properties["invoicesFlyoutClearAllButton"]) {
+    invoicesFlyout.clearAllButton = properties["invoicesFlyoutClearAllButton"];
+  }
+
+  if (invoicesFlyout != null) {
+    jsonObject["invoicesFlyout"] = invoicesFlyout;
+  }
   //D-notes flyout options
   let dNoteColumnList = utils.getDataFromMultifield(
     resourceResolver,

@@ -49,8 +49,12 @@ const OrderTrackingDetailHeader = ({
 
   const id = apiResponse?.content?.orderNumber;
   const poNumber = apiResponse?.content?.poNumber;
-  const hasMultiple = deliveryNotes.length > 1;
-  const handleDownload = () => {
+  const hasMultipleDNotes = deliveryNotes.length > 1;
+  const hasMultipleInvoices = invoices.length > 1;
+  const handleDownloadDNote = () => {
+    openFilePdf('Invoice', invoices[0]?.id);
+  };
+  const handleDownloadInvoice = () => {
     openFilePdf('Invoice', invoices[0]?.id);
   };
   const triggerDNotesFlyout = () => {
@@ -59,16 +63,24 @@ const OrderTrackingDetailHeader = ({
       value: { data: deliveryNotes, show: true, id: id, reseller: poNumber },
     });
   };
+  const triggerInvoicesFlyout = () => {
+    setCustomState({
+      key: 'invoicesFlyout',
+      value: { data: invoices, show: true, id: id, reseller: poNumber },
+    });
+  };
   const menuActionsItems = [
     {
       condition: areDeliveryNotesAvailable,
       label: labels?.detailsActionViewDNotes,
-      onClick: hasMultiple ? triggerDNotesFlyout : handleDownload,
+      onClick: hasMultipleDNotes ? triggerDNotesFlyout : handleDownloadDNote,
     },
     {
       condition: hasAIORights && areInvoicesAvailable,
       label: labels?.detailsActionViewInvoices,
-      onClick: null,
+      onClick: hasMultipleInvoices
+        ? triggerInvoicesFlyout
+        : handleDownloadInvoice,
     },
     {
       condition: hasOrderModificationRights,
@@ -106,16 +118,24 @@ const OrderTrackingDetailHeader = ({
           onMouseOver={handleActionMouseOver}
           onMouseLeave={handleActionMouseLeave}
         >
-          <span className="quote-actions">
+          <span
+            className="quote-actions"
+            onMouseOver={handleActionMouseOver}
+            onMouseLeave={handleActionMouseLeave}
+          >
             {getDictionaryValueOrKey(config.labels?.detailsActions)}
           </span>
           {actionsDropdownVisible && (
-            <div
-              className="actions-dropdown"
-              onMouseOver={handleActionMouseOver}
-              onMouseLeave={handleActionMouseLeave}
-            >
-              <MenuActions items={menuActionsItems} />
+            <div className="actions-dropdown">
+              <MenuActions
+                hasAIORights={hasAIORights}
+                hasOrderModificationRights={hasOrderModificationRights}
+                content={apiResponse?.content}
+                items={apiResponse?.content?.items}
+                labels={config?.labels}
+                openFilePdf={openFilePdf}
+                modifyOrder={handleOrderModification}
+              />
             </div>
           )}
         </div>
