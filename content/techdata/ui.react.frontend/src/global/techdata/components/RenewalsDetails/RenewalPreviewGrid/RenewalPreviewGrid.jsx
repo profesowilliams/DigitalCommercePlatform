@@ -293,7 +293,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
     }
   }
 
-  const contextMenuItems = (params) => getContextMenuItems(params, compProps);
+  const contextMenuItems = (params) => getContextMenuItems(params, compProps.productLines);
 
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
