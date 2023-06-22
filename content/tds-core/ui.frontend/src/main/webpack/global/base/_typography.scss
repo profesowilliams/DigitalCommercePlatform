@@ -1,0 +1,546 @@
+@use 'sass:map';
+
+// Import site variables, mixins and font-face styles
+@import '../../site/variables';
+@import '../abstracts/mixins';
+@import '../styles/font-face';
+
+/// Color map for typography
+/// @type Map
+/// @access public
+/// @prop {String} default - Default color variable
+/// @prop {String} quote - Color variable for quote
+/// @prop {String} link - Color variable for links
+$colors: (
+  'default': var(--charcoal, map.get($color-palette, 'charcoal')),
+  'tds-header': var(--deep-teal, map.get($color-palette, 'deep-teal')),
+  'td-header': var(--legacy-dark-blue, map.get($color-palette, 'legacy-dark-blue')),
+  'td-card-header': var(--legacy-ocean, map.get($color-palette, 'legacy-ocean')),
+  'quote': var(--cool-gray-9, map.get($color-palette, 'cool-gray-9')),
+  'link': var(--cobalt, map.get($color-palette, 'cobalt')),
+);
+
+/// Font family map for typography
+/// @type Map
+/// @access public
+/// @prop {String} default - Default font family
+/// @prop {String} paragraph - Font family for paragraph
+$fonts: (
+  'default': $font-family-arial,
+  'header': $font-family-everett,
+  'paragraph': $font-family-arial,
+);
+
+/// Font size and line-height map for large breakpoints
+/// @type Map
+/// @access public
+/// @prop {List} h1 - Font size and line-height for H1
+/// @prop {List} h2 - Font size and line-height for H2
+/// @prop {List} h3 - Font size and line-height for H3
+/// @prop {List} h4 - Font size and line-height for H4
+/// @prop {List} h5 - Font size and line-height for H5
+/// @prop {List} h6 - Font size and line-height for H6
+/// @prop {List} p - Font size and line-height for P
+/// @prop {List} blockquote - Font size and line-height for Blockquote
+/// @prop {List} inline-link - Font size and line-height for Inline link
+$typography: (
+  'h1': (
+    2.5rem,
+    3.25rem,
+    4.125rem,
+    5.125rem,
+  ),
+  'h2': (
+    2rem,
+    2.5rem,
+  ),
+  'h3': (
+    1.75rem,
+    2.25rem,
+  ),
+  'h4': (
+    1.25rem,
+    1.625rem,
+  ),
+  'h5': (
+    1rem,
+    1.3125rem,
+  ),
+  'h6': (
+    0.875rem,
+    1.5rem,
+  ),
+  'p': (
+    1rem,
+    1.5rem,
+    1.25rem,
+    1.875rem,
+    0.875rem,
+    1.5rem,
+    0.75rem,
+    1.5rem,
+  ),
+  'blockquote': (
+    1rem,
+    1.5rem,
+  ),
+  'inline-link': (
+    1rem,
+    1.5rem,
+    1.25rem,
+    1.875rem,
+    0.875rem,
+    1.5rem,
+  ),
+);
+
+/// Font size and line-height map for small breakpoints
+/// @type Map
+/// @access public
+/// @prop {List} h1 - Font size and line-height for H1
+/// @prop {List} h2 - Font size and line-height for H2
+/// @prop {List} h3 - Font size and line-height for H3
+/// @prop {List} h4 - Font size and line-height for H4
+/// @prop {List} h5 - Font size and line-height for H5
+/// @prop {List} h6 - Font size and line-height for H6
+/// @prop {List} p - Font size and line-height for P
+/// @prop {List} blockquote - Font size and line-height for Blockquote
+/// @prop {List} inline-link - Font size and line-height for Inline link
+$typography-mobile: (
+  'h1': (
+    2rem,
+    2.5rem,
+    3.25rem,
+    4.25rem,
+  ),
+  'h2': (
+    1.75rem,
+    2.625rem,
+  ),
+  'h3': (
+    1.25rem,
+    1.875rem,
+  ),
+  'h4': (
+    1rem,
+    1.3125rem,
+  ),
+  'h5': (
+    1rem,
+    1.3125rem,
+  ),
+  'h6': (
+    0.875rem,
+    0.88rem,
+  ),
+  'p': (
+    1rem,
+    1.5rem,
+    1.25rem,
+    1.875rem,
+    0.875rem,
+    1.5rem,
+    0.75rem,
+    1.5rem,
+  ),
+  'blockquote': (
+    1rem,
+    1.5rem,
+  ),
+  'inline-link': (
+    1rem,
+    1.5rem,
+    1.25rem,
+    1.875rem,
+    0.875rem,
+    1.5rem,
+  ),
+);
+
+/// Mixin for applying typography styles.
+/// @access public
+/// @param {String} $element - The HTML element (e.g., 'h1', 'p')
+/// @param {String} $font - The font for the element (e.g., 'default')
+/// @param {String} $color - The color for the element (e.g., 'default')
+/// @param {Map} $typography-map - The map containing the font sizes and line heights for the element. Default is $typography.
+/// @example scss - Using the typography mixin
+///   .element {
+///     @include typography('h1', 'default', 'default');
+///   }
+// stylelint-disable scss/no-global-function-names
+@mixin typography($element, $font, $color, $typography-map: $typography) {
+  font-family: map.get($fonts, $font);
+  color: map.get($colors, $color);
+  font-size: nth(map.get($typography-map, $element), 1);
+  line-height: nth(map.get($typography-map, $element), 2);
+
+  @if $element == 'h1' or $element == 'p' {
+    /// Styles for .large variant of the element.
+    /// @access public
+    &.large {
+      font-size: nth(map.get($typography-map, $element), 3);
+      line-height: nth(map.get($typography-map, $element), 4);
+    }
+  }
+
+  @if $element == 'p' {
+    /// Styles for .small variant of the element.
+    /// @access public
+    &.small {
+      font-size: nth(map.get($typography-map, $element), 5);
+      line-height: nth(map.get($typography-map, $element), 6);
+    }
+
+    /// Styles for .extra-small variant of the element.
+    /// @access public
+    &.extra-small {
+      font-size: nth(map.get($typography-map, $element), 7);
+      line-height: nth(map.get($typography-map, $element), 8);
+    }
+  }
+}
+// stylelint-enable scss/no-global-function-names
+
+/* stylelint-disable no-descending-specificity */
+
+/// Main styles for <body>
+/// @access public
+body {
+  /// Styles for h1 inside <body>
+  /// @access public
+  h1 {
+    @include typography('h1', 'default', 'default');
+  }
+
+  /// Styles for h2 inside <body>
+  /// @access public
+  h2 {
+    @include typography('h2', 'default', 'default');
+  }
+
+  /// Styles for h3 inside <body>
+  /// @access public
+  h3 {
+    @include typography('h3', 'default', 'default');
+  }
+
+  /// Styles for h4 inside <body>
+  /// @access public
+  h4 {
+    @include typography('h4', 'default', 'default');
+  }
+
+  /// Styles for h5 inside <body>
+  /// @access public
+  h5 {
+    @include typography('h5', 'default', 'default');
+  }
+
+  /// Styles for h6 inside <body>
+  /// @access public
+  h6 {
+    @include typography('h6', 'default', 'default');
+  }
+
+  /// Styles for p inside <body>
+  /// @access public
+  p {
+    @include typography('p', 'paragraph', 'default');
+
+    /// Styles for inline link inside <p> in <body>
+    /// @access public
+    a {
+      @include typography('inline-link', 'paragraph', 'link');
+
+      /// Styles for hover state of inline link inside <p> in <body>
+      /// @access public
+      &:hover {
+        text-decoration-line: underline;
+      }
+    }
+  }
+
+  /// Styles for blockquote inside <body>
+  /// @access public
+  blockquote {
+    @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for small breakpoints
+  /// @access public
+  @media (width <= 992px) {
+    /// Styles for h1 at small breakpoints
+    h1 {
+      @include typography('h1', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h2 at small breakpoints
+    h2 {
+      @include typography('h2', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h3 at small breakpoints
+    h3 {
+      @include typography('h3', 'default', 'td-card-header', $typography-mobile);
+    }
+
+    /// Styles for h4 at small breakpoints
+    h4 {
+      @include typography('h4', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h5 at small breakpoints
+    h5 {
+      @include typography('h5', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h6 at small breakpoints
+    h6 {
+      @include typography('h6', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for p at small breakpoints
+    p {
+      @include typography('p', 'default', 'default', $typography-mobile);
+
+      a {
+        @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
+        /// Styles for hover state of inline link inside <p> in .td at small breakpoints
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    /// Styles for blockquote at small breakpoints
+    blockquote {
+      @include typography('blockquote', 'default', 'default', $typography-mobile);
+    }
+  }
+}
+
+/// Generate styles for td
+/// @access public
+.td {
+  /// Styles for h1 inside .td
+  h1 {
+    @include typography('h1', 'default', 'td-header');
+  }
+
+  /// Styles for h2 inside .td
+  h2 {
+    @include typography('h2', 'default', 'td-header');
+  }
+
+  /// Styles for h3 inside .td
+  h3 {
+    @include typography('h3', 'default', 'td-card-header');
+  }
+
+  /// Styles for h4 inside .td
+  h4 {
+    @include typography('h4', 'default', 'td-header');
+  }
+
+  /// Styles for h5 inside .td
+  h5 {
+    @include typography('h5', 'default', 'td-header');
+  }
+
+  /// Styles for h6 inside .td
+  h6 {
+    @include typography('h6', 'default', 'td-header');
+  }
+
+  /// Styles for p inside .td
+  p {
+    @include typography('p', 'paragraph', 'default');
+
+    /// Styles for inline link inside <p> in .td
+    a {
+      @include typography('inline-link', 'paragraph', 'link');
+
+      /// Styles for hover state of inline link inside <p> in .td
+      &:hover {
+        text-decoration-line: underline;
+      }
+    }
+  }
+
+  /// Styles for blockquote inside .td
+  blockquote {
+    @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for small breakpoints
+  @media (width <= 992px) {
+    /// Styles for h1 at small breakpoints
+    h1 {
+      @include typography('h1', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h2 at small breakpoints
+    h2 {
+      @include typography('h2', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h3 at small breakpoints
+    h3 {
+      @include typography('h3', 'default', 'td-card-header', $typography-mobile);
+    }
+
+    /// Styles for h4 at small breakpoints
+    h4 {
+      @include typography('h4', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h5 at small breakpoints
+    h5 {
+      @include typography('h5', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for h6 at small breakpoints
+    h6 {
+      @include typography('h6', 'default', 'td-header', $typography-mobile);
+    }
+
+    /// Styles for p at small breakpoints
+    p {
+      @include typography('p', 'default', 'default', $typography-mobile);
+
+      a {
+        @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
+        /// Styles for hover state of inline link inside <p> in .td at small breakpoints
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    /// Styles for blockquote at small breakpoints
+    blockquote {
+      @include typography('blockquote', 'default', 'default', $typography-mobile);
+    }
+  }
+}
+
+/// Block of typography styles for `.tds` class.
+/// @access public
+.tds {
+  /// Styles for `h1` tag in `.tds` class.
+  h1 {
+    @include typography('h1', 'header', 'tds-header');
+  }
+
+  /// Styles for `h2` tag in `.tds` class.
+  h2 {
+    @include typography('h2', 'header', 'tds-header');
+  }
+
+  /// Styles for `h3` tag in `.tds` class.
+  h3 {
+    @include typography('h3', 'header', 'tds-header');
+  }
+
+  /// Styles for `h4` tag in `.tds` class.
+  h4 {
+    @include typography('h4', 'header', 'tds-header');
+  }
+
+  /// Styles for `h5` tag in `.tds` class.
+  h5 {
+    @include typography('h5', 'header', 'tds-header');
+  }
+
+  /// Styles for `h6` tag in `.tds` class.
+  h6 {
+    @include typography('h6', 'header', 'tds-header');
+  }
+
+  /// Styles for `p` tag in `.tds` class.
+  p {
+    @include typography('p', 'paragraph', 'default');
+
+    /// Styles for `a` tag in `p` of `.tds` class.
+    a {
+      @include typography('inline-link', 'paragraph', 'link');
+
+      /// Hover styles for `a` tag in `p` of `.tds` class.
+      &:hover {
+        text-decoration-line: underline;
+      }
+    }
+  }
+
+  /// Styles for `blockquote` tag in `.tds` class.
+  blockquote {
+    @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for .tds elements at small breakpoints (max-width: 992px)
+  /// @access public
+  /// @requires {mixin} typography
+  /// @requires {map} $typography-mobile
+  @media (width <= 992px) {
+    /// Styles for h1 elements at small breakpoints for `.tds` class.
+    /// @access public
+    h1 {
+      @include typography('h1', 'default', 'tds-header', $typography-mobile);
+    }
+
+    /// Styles for h2 elements at small breakpoints for `.tds` class.
+    /// @access public
+    h2 {
+      @include typography('h2', 'default', 'tds-header', $typography-mobile);
+    }
+
+    /// Styles for h3 elements at small breakpoints for `.tds` class.
+    /// @access public
+    h3 {
+      @include typography('h3', 'default', 'tds-header', $typography-mobile);
+    }
+
+    /// Styles for h4 elements at small breakpoints for `.tds` class.
+    /// @access public
+    h4 {
+      @include typography('h4', 'default', 'tds-header', $typography-mobile);
+    }
+
+    /// Styles for h5 elements at small breakpoints for `.tds` class.
+    /// @access public
+    h5 {
+      @include typography('h5', 'default', 'tds-header', $typography-mobile);
+    }
+
+    /// Styles for h6 elements at small breakpoints for `.tds` class.
+    /// @access public
+    h6 {
+      @include typography('h6', 'default', 'tds-header', $typography-mobile);
+    }
+
+    /// Styles for p elements at small breakpoints for `.tds` class.
+    /// @access public
+    p {
+      @include typography('p', 'default', 'default', $typography-mobile);
+
+      /// Styles for `a` tag at small breakpoints in `p` of `.tds` class.
+      a {
+        @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
+        /// Hover styles for `a` tag at small breakpoints in `p` of `.tds` class.
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    /// Styles for `blockquote` at small breakpoints in `.tds` class.
+    blockquote {
+      @include typography('blockquote', 'default', 'default', $typography-mobile);
+    }
+  }
+}
+
+/* stylelint-enable no-descending-specificity */

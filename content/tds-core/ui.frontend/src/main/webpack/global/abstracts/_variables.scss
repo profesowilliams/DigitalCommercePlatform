@@ -1,0 +1,23 @@
+@import '../../site/variables';
+@import './colors';
+@import './mixins';
+
+// $OpenSansVersion: "1.101" !default;
+// == REM SASS Mixin
+$rem-baseline: 16px;
+
+// == Font
+$font-base-path: '../resources/fonts';
+$fontawesome-font-family: 'fontawesome';
+$fontawesome-font-path: '../resources/fonts/fontawesome';
+$font-family: 'Open Sans', -apple-system, blinkmacsystemfont, segoe ui, roboto, helvetica neue, arial, noto sans, sans-serif;
+$font-marketing-path: '../resources/fonts/everett';
+$font-digital-path: '../resources/fonts/GeorgiaPro';
+$font-primary-path: '../resources/fonts/OpenSans';
+$open-sans: 'Open Sans', sans-serif;
+$container-max-width: 1170px;
+$container-padding: 64px;
+$breakpoints: (
+  'lg': 1024px,
+  'md': 768px,
+);

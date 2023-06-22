@@ -1,8 +1,11 @@
 @import 'scss-reset/reset';
-@import 'variables';
-@import 'variables/colors';
-@import 'variables/typography';
-@import 'mixins';
+@import 'abstracts/variables';
+@import 'abstracts/colors';
+@import 'abstracts/utility';
+@import 'abstracts/mixins';
+
+@import 'base/typography';
+
 @import 'include-media/dist/_include-media.scss';
 @import 'sass-rem/_rem.scss';
 @import './styles/helpers/*.scss';

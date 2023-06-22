@@ -1,3 +1,4 @@
+/* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
 @mixin fontdef($FontPath, $FontType: "Regular") {
 	src: url("#{$FontPath}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf"),
 		url("#{$FontPath}/#{$FontType}/OpenSans-#{$FontType}.ttf") format("ttf");

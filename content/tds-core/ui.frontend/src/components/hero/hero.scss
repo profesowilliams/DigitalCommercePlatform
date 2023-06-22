@@ -321,6 +321,7 @@
         right: 0;
         display: flex;
         min-width: 616px;
+        justify-content: flex-end;
 
         @include mobile {
             position: unset;
