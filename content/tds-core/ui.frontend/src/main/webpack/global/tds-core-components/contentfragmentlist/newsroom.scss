@@ -17,6 +17,13 @@
       display: flex;
       flex-direction: column;
 
+      a {
+        color: inherit;
+        text-decoration: none;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
 
       &__elements {
          background-color: white;
@@ -33,7 +40,8 @@
       }
 
       &__element--articleImage,
-      &__title {
+      &__title,
+      &__element--articlePageReference {
         display: none;
       }
 
