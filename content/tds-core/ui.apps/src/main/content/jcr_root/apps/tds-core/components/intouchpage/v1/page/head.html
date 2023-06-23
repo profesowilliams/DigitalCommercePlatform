@@ -64,43 +64,8 @@
         - UnHide body when user data are available
         - Redirect to login page when returns 401
     -->
-    <sly data-sly-include="get-user-script.html" data-sly-unwrap />
-    <script type="text/javascript">
-        const redirectBasedOnCountry = (userData) => {
-            let currentUserData = userData;
-
-            if (currentUserData?.country) {
-                let countryCodeFromAPI = '/' + currentUserData?.country.toLowerCase() + '/' + currentUserData?.language.toLowerCase();
-                if (window.location.href.toLowerCase().indexOf(countryCodeFromAPI.toLowerCase()) < 0) {
-                    validateCountryFromUrlAndAPI(countryCodeFromAPI);
-                }
-            }
-        }
-
-        const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
-            let infoFromUrl = getHeaderInfoFromUrl(window.location.pathname);
-            let countryCodeFromUrl = '/' + infoFromUrl.site + '/' + infoFromUrl.language;
-            performRedirect(countryCodeFromUrl, countryCodeFromAPI);
-        }
-
-        const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
-            if (countryCodeFromAPI.toLowerCase().indexOf(countryCodeFromUrl.toLowerCase()) < 0) {
-                let resultantRedirectUrl = window.location.href.toLowerCase().replace(countryCodeFromUrl.toLowerCase(), countryCodeFromAPI);
-                window.location.href = resultantRedirectUrl;
-            }
-        }
-
-        (async function () {
-            const [userIsLoggedIn, userData] = await getSessionInfo();
-
-            // handle country redirection
-            redirectBasedOnCountry(userData);
-
-            if (userIsLoggedIn && userData) {
-                document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
-            }
-        })();
-    </script>
+    <sly data-sly-include="inlinescripts/get-user-script.html" data-sly-unwrap />
+    <sly data-sly-include="inlinescripts/validate-url-script.html" data-sly-unwrap />
 
     <script data-sly-test.dataLayerEnabled="${page.dataJson}">
         window.adobeDataLayer = window.adobeDataLayer || [];

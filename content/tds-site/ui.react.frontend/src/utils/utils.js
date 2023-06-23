@@ -1,10 +1,8 @@
 import axios from "axios";
-import { nanoid } from "nanoid";
 import { isObject } from ".";
 import { usPost } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
-import { getHeaderInfoFromUrl } from "./index";
-import { intouchHeaderAPIUrl, intouchFooterAPIUrl, intouchUserCheckAPIUrl } from "./featureFlagUtils";
+import { intouchHeaderAPIUrl, intouchFooterAPIUrl, intouchUserCheckAPIUrl } from "./intouchUtils";
 import { SEARCH_LOCAL_STORAGE_KEY, FILTER_LOCAL_STORAGE_KEY } from "./constants";
 
 export const fileExtensions = {
@@ -373,7 +371,9 @@ const checkIntouchUser = (loadend) => {
         if (xhr.status != 200) {
             console.error('Error ${xhr.status}: ${xhr.statusText}');
         } else if (xhr.response) { // follow redirect
-            window.location = JSON.parse(xhr.response).Location;
+            let response = JSON.parse(xhr.response);
+            if (!response.Status)
+                window.location = response.LoginPageUrl;
         }
     };
 
