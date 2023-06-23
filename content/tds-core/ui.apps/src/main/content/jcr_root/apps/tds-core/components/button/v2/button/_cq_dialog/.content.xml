@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="Button"
+    sling:resourceType="cq/gui/components/authoring/dialog"
+    extraClientlibs="[tds.authoring.components.editor.colorswatches]"
+    helpPath="https://www.adobe.com/go/aem_cmp_button_v1"
+    trackingFeature="core-components:button:v1">
+    <content
+        granite:class="cmp-dialog-swatches__editor"
+        jcr:primaryType="nt:unstructured"
+        sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <properties
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Properties"
+                        sling:resourceType="granite/ui/components/coral/foundation/container"
+                        margin="{Boolean}true">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <text
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                sling:orderBefore="theme"
+                                                text="Open the link in a new tab"
+                                                fieldLabel="Text"
+                                                fieldDescription="The text to display on the button."
+                                                name="./jcr:title"
+                                                value="{Boolean}true"/>
+                                            <theme
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/select"
+												sling:orderBefore="variant"
+                                                fieldLabel="Theme"
+                                                fieldDescription="The theme of the button"
+                                                name="./theme"
+                                                value="{String}[Dark,Light]">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <dark
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Dark"
+                                                        value="dark"/>
+                                                    <light
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Light"
+                                                        value="light"/>
+                                                </items>
+                                            </theme>
+                                            <variant
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												sling:orderBefore="link"
+                                                fieldLabel="Variant"
+                                                fieldDescription="The button variation type"
+                                                name="./variant"
+                                                value="{String}[Primary,Secondary,Tertiary,Link,Affirmative,Destructive]">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <primary
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Primary"
+                                                        value="primary"/>
+                                                    <secondary
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Secondary"
+                                                        value="secondary"/>
+                                                    <tertiary
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Tertiary"
+                                                        value="tartiary"/>
+                                                    <link
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Link"
+                                                        value="link"/>
+                                                    <affirmative
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Affirmative"
+                                                        value="affirmative"/>
+                                                    <destructive
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Destructive"
+                                                        value="destructive"/>
+                                                </items>
+                                            </variant>
+                                            <link
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												sling:orderBefore="linkTarget"
+                                                fieldLabel="Link"
+                                                fieldDescription="Link to a content page, external URL or page anchor."
+                                                name="./link"/>
+                                            <linkTarget
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												sling:orderBefore="fill"
+                                                text="Open the link in a new tab"
+                                                fieldLabel="Open the link in a new tab"
+                                                fieldDescription="Open the link in a new tab or window"
+                                                name="./linkTarget"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
+                                            <fill
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												sling:orderBefore="minimal"
+                                                text="Fill Button"
+                                                fieldLabel="Fill"
+                                                fieldDescription="Fill for secondary button"
+                                                name="./fill"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
+                                            <minimal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												sling:orderBefore="disabled"
+                                                text="Minimalize Button"
+                                                fieldLabel="Minimalize Button"
+                                                fieldDescription="Minimalize the button"
+                                                name="./minimal"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
+                                            <disabled
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												sling:orderBefore="id"
+                                                text="Disabled Button"
+                                                fieldLabel="Disabled Button"
+                                                fieldDescription="Disabled the button"
+                                                name="./disabled"
+                                                uncheckedValue="{Boolean}false"
+                                                value="{Boolean}true"/>
+                                            <id
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                                                text="ID"
+                                                fieldLabel="ID"
+                                                fieldDescription="HTML ID attribute to apply to the component."
+                                                name="./id"
+                                                value="{Boolean}true"/>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </properties>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

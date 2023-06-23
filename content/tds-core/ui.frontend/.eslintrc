@@ -16,5 +16,6 @@
   ],
   "rules": {
     "no-tabs": 0
-  }
+  },
+  "ignorePatterns": ["**/node_modules/**"]
 }

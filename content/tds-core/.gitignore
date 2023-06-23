@@ -99,6 +99,25 @@ node/
 coverage/
 reports/
 
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # Others
 dispatcher/src/conf.d/variables/default.vars
 ui.tests/test-module/assets/form/themes/**/*diff.png
