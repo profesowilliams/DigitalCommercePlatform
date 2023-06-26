@@ -1642,15 +1642,15 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       //border-size
       #ffffffff,
       //degraded-color
-      $secondary-opacity,
+      1,
       //opacity
       rgba(0, 85, 140, 0.1),
       //degraded-color-hover
-      $secondary-hover-opacity,
+      1,
       //opacity-hover
       rgba(0, 177, 226, 0.1),
       //pressed-opacity-color
-      $secondary-active-opacity,
+      1,
       //pressed-opacity-value
       #ffffff //disabled-background-color
     );
@@ -1668,15 +1668,15 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       //border-size
       #ffffffff,
       //degraded-color
-      $secondary-opacity,
+      1,
       //opacity
       rgba(0, 85, 140, 0.1),
       //degraded-color-hover
-      $secondary-hover-opacity,
+      1,
       //opacity-hover
       rgba(0, 177, 226, 0.1),
       //pressed-opacity-color
-      $secondary-active-opacity,
+      1,
       //pressed-opacity-value
       #ffffff //disabled-background-color
     );

@@ -1,20 +1,23 @@
-
-
+/* stylelint-disable -- This file needs to be refactored. */
+/// Hero styles with mobile responsiveness, image configurations and font settings.
+/// @group Hero
 .hero {
-    @include mobile {
-        height: auto;
-        position: relative;
-    }
+  /// Provides mobile specific styles for hero
+  /// @access public
+  @include mobile {
+    height: auto;
+    position: relative;
+  }
 
-    .cmp-teaser__image {
-        img {
-            @include mobile {
-                min-height: 597px;
-            }
-        }
+  .cmp-teaser__image {
+    img {
+      @include mobile {
+        min-height: 597px;
+      }
     }
+  }
 
-    /*
+  /*
         Okay below flavors are based on what you can do in AEM
         unfortunately I believe you can only put CSS class on the parent
         so below code is a wrapper to the already existing class declaration in L83.
@@ -26,357 +29,377 @@
 
     */
 
-    &.cmp-tds-footer-font-arial {
-        .cmp-teaser__footer {
-            font-family: 'Arial';
-        }
+  /// Style overrides for .cmp-teaser__footer based on parent class
+  /// @access public
+  /// @group Hero.Teaser
+  &.cmp-tds-footer-font-arial {
+    .cmp-teaser__footer {
+      font-family: 'Arial';
     }
+  }
 
-    &.cmp-tds-footer-font-everett {
-        .cmp-teaser__footer {
-            font-family: 'TWKEverett-Regular-web';
-        }
+  &.cmp-tds-footer-font-everett {
+    .cmp-teaser__footer {
+      font-family: 'TWKEverett-Regular-web';
     }
+  }
 
-    &.cmp-tds-footer-font-everett-bold {
-        .cmp-teaser__footer {
-            font-family: 'TWKEverett-Medium-web';
-        }
+  &.cmp-tds-footer-font-everett-bold {
+    .cmp-teaser__footer {
+      font-family: 'TWKEverett-Medium-web';
     }
+  }
 
-    .cmp-teaser {
-        color: map-get($color-palette, "charcoal");
-        position: relative;
-        @include mobile {
-            height: 100%;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: top;
-        }
-
-        &__title {
-           font-size: 66px;
-           line-height: 82px;
-           text-align: center;
-           margin: 0 auto;
-           width: 100%;
-           color: white;
-            @include mobile {
-                font-size: 52px;
-                line-height: 78px;
-            }
-        }
-
-        &__image-container {
-            position: relative;
-        }
-
-        &__content[data-cmp-hasimage] {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-
-            @include mobile {
-                bottom: 0;
-                padding: 0;
-                width: 100%;
-            }
-            .cmp-item {
-                color: inherit;
-            }
-            .cmp-teaser__footer {
-                color: inherit;
-            }
-        }
-
-        &__footer {
-            font-size: rem(20px);
-            @include mobile {
-                font-size: .89rem;   
-            }
-        }
-
-        .cmp-hero-items-description-list {
-            display: flex;
-            margin: 2rem 0;
-            width: 46%;
-            justify-content: space-between;
-            color: get-color(brand-white);
-            @include mobile {
-                width: 100% !important;
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-    }
-
-    .cmp-item {
-        font-size: rem(20px);
-        @include mobile {
-            font-size: .89rem;
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-start;
-        }
-    }
-
-    .cmp-item>p:first-child {
-        display: flex;
-        justify-content: center;
-        img {
-            @include mobile {
-                width: 1.2rem;       
-            }
-        }
-    }
-
-    .cmp-item>p:nth-child(2) {
-        text-align: center;
-        width: 10rem;
-        margin-top: 1rem;
-        @include mobile {
-            width: max-content;
-            margin-top: 0;
-        }
-    }
-
-    .cmp-item img,
-    picture {
-        max-width: 100%;
-        display: block;
-        width: 2rem;
-    }
-
-    .cmp-teaser__action-container {
-        a {
-            padding: rem(12.8px) rem(24px);
-            display: inline-block;
-            background: $white;
-            border-radius: rem(1px);
-            text-align: center;
-            font-family: $font-family;
-            font-style: normal;
-            font-weight: 400;
-            font-size: rem(20px);
-            line-height: rem(18px);
-            color: $brand-green;
-            margin-top: rem(24px);          
-            text-transform: capitalize;
-
-            @include mobile {
-                padding: rem(12px) rem(20px);
-                font-family: $font-family-everett;
-                font-size: rem(16px);
-                line-height: rem(24px);
-                width: 100%;
-            }
-        }
-    }
-}
-
-.hero {
-    font-family: 'Arial', sans-serif;
-  &.cmp-dpb-hero {
+  /// Describes the overall teaser component within a Hero section
+  /// @access public
+  /// @group Hero.Teaser
+  .cmp-teaser {
+    color: map-get($color-palette, 'charcoal');
     position: relative;
-
-    .cmp-teaser__image {
-        img {
-            width: 100%;
-            overflow: hidden;
-            @include mobile {
-                min-height: 520px;
-            }
-        }
+    @include mobile {
+      height: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: top;
     }
 
-    .cmp-teaser__content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
+    &__title {
+      font-size: 66px;
+      line-height: 82px;
+      text-align: center;
+      margin: 0 auto;
+      width: 100%;
+      color: white;
+      @include mobile {
+        font-size: 52px;
+        line-height: 78px;
+      }
+    }
+
+    &__image-container {
+      position: relative;
+    }
+
+    &__content[data-cmp-hasimage] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+
+      @include mobile {
+        bottom: 0;
         padding: 0;
-
-        @include tablet {
-            top: 40%;
-        }
-
-        @include mobile {
-            margin-left: 0;
-            border-left: 0 solid get-color(brand-white);
-            font-size: rem(20px);
-            align-content: flex-start;
-            padding: 2rem;
-        }
+        width: 100%;
+      }
+      .cmp-item {
+        color: inherit;
+      }
+      .cmp-teaser__footer {
+        color: inherit;
+      }
     }
 
-    .cmp-teaser__pretitle {
-        display: none;
+    &__footer {
+      font-size: rem(20px);
+      @include mobile {
+        font-size: 0.89rem;
+      }
     }
 
-    .cmp-teaser__description {
-        max-width: rem(570px);
-        text-shadow: 0 0 0 #919599;
-        font-weight: normal;
-        font-size: rem(35px);
-        letter-spacing: normal;
-        line-height: normal;
-        padding: 0 0 0 rem(55px);
-        margin-bottom: 0;
-
-        @include desktop {
-            margin-top: 0;
-            margin-left: rem(55px);
-            border-left: rem(5px) solid get-color(brand-white);
-        }
-
-        @include tablet {
-            margin-top: 0;
-            margin-left: rem(55px);
-            border-left: rem(5px) solid transparent;
-            font-size: rem(26px);
-            width: 90%;
-        }
-
-        @include mobile {
-            margin-top: rem(20px);
-            margin-left: 0;
-            border-left: rem(5px) solid transparent;
-            font-size: rem(20px);
-        }
-
-        @include desktop-l {
-            margin-top: 0;
-            margin-left: rem(55px);
-            border-left: rem(5px) solid transparent;
-            font-size: rem(26px);
-            width: 90%;
-        }
-
+    .cmp-hero-items-description-list {
+      display: flex;
+      margin: 2rem 0;
+      width: 46%;
+      justify-content: space-between;
+      color: get-color(brand-white);
+      @include mobile {
+        width: 100% !important;
+        flex-direction: column;
+        gap: 1rem;
+      }
     }
+  }
 
-
-    .cmp-teaser__desc-link {
-        text-decoration: none;
-        color: unset;
-
-        &:hover {
-            text-decoration: none;
-        }
+  .cmp-item {
+    font-size: rem(20px);
+    @include mobile {
+      font-size: 0.89rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-start;
     }
-    .cmp-teaser__action-container {
-        a {
-            padding: rem(8px) rem(12px);
-            display: inline-block;
-            background: $white;
-            border-radius: rem(2px);
-            text-align: center;
-            font-family: $font-family;
-            font-style: normal;
-            font-weight: 400;
-            font-size: rem(12px);
-            line-height: rem(18px);
-            color: $brand-green;
+  }
 
-            @include mobile {
-                padding: rem(12px) rem(20px);
-                font-family: $font-family-everett;
-                font-size: rem(16px);
-                line-height: rem(24px);
-                width: 100%;
-            }
-        }
+  .cmp-item > p:first-child {
+    display: flex;
+    justify-content: center;
+    img {
+      @include mobile {
+        width: 1.2rem;
+      }
+    }
+  }
+
+  .cmp-item > p:nth-child(2) {
+    text-align: center;
+    width: 10rem;
+    margin-top: 1rem;
+    @include mobile {
+      width: max-content;
+      margin-top: 0;
+    }
+  }
+
+  .cmp-item img,
+  picture {
+    max-width: 100%;
+    display: block;
+    width: 2rem;
+  }
+
+  .cmp-teaser__action-container {
+    a {
+      padding: rem(12.8px) rem(24px);
+      display: inline-block;
+      background: $white;
+      border-radius: rem(1px);
+      text-align: center;
+      font-family: $font-family;
+      font-style: normal;
+      font-weight: 400;
+      font-size: rem(20px);
+      line-height: rem(18px);
+      color: $brand-green;
+      margin-top: rem(24px);
+      text-transform: capitalize;
+
+      @include mobile {
+        padding: rem(12px) rem(20px);
+        font-family: $font-family-everett;
+        font-size: rem(16px);
+        line-height: rem(24px);
+        width: 100%;
+      }
     }
   }
 }
 
-.cmp-teaser {
+/// Variant of hero component with unique styling and structure
+/// @group Hero
+.hero {
+  font-family: 'Arial', sans-serif;
+  &.cmp-dpb-hero {
+    position: relative;
 
-    .mobile-image {
-        display: none;
-        min-height: 597px;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: 65%;
-         @include mobile {
-            display: block;
-         }
-    }
-
-    &__image-container {
-        .cmp-teaser__image {
-            @include mobile {
-                display: none;
-            }
+    .cmp-teaser__image {
+      img {
+        width: 100%;
+        overflow: hidden;
+        @include mobile {
+          min-height: 520px;
         }
+      }
     }
 
-    &__bottom-section {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        display: flex;
-        min-width: 616px;
-        justify-content: flex-end;
+    .cmp-teaser__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 0;
+
+      @include tablet {
+        top: 40%;
+      }
+
+      @include mobile {
+        margin-left: 0;
+        border-left: 0 solid get-color(brand-white);
+        font-size: rem(20px);
+        align-content: flex-start;
+        padding: 2rem;
+      }
+    }
+
+    .cmp-teaser__pretitle {
+      display: none;
+    }
+
+    .cmp-teaser__description {
+      max-width: rem(570px);
+      text-shadow: 0 0 0 #919599;
+      font-weight: normal;
+      font-size: rem(35px);
+      letter-spacing: normal;
+      line-height: normal;
+      padding: 0 0 0 rem(55px);
+      margin-bottom: 0;
+
+      @include desktop {
+        margin-top: 0;
+        margin-left: rem(55px);
+        border-left: rem(5px) solid get-color(brand-white);
+      }
+
+      @include tablet {
+        margin-top: 0;
+        margin-left: rem(55px);
+        border-left: rem(5px) solid transparent;
+        font-size: rem(26px);
+        width: 90%;
+      }
+
+      @include mobile {
+        margin-top: rem(20px);
+        margin-left: 0;
+        border-left: rem(5px) solid transparent;
+        font-size: rem(20px);
+      }
+
+      @include desktop-l {
+        margin-top: 0;
+        margin-left: rem(55px);
+        border-left: rem(5px) solid transparent;
+        font-size: rem(26px);
+        width: 90%;
+      }
+    }
+
+    .cmp-teaser__desc-link {
+      text-decoration: none;
+      color: unset;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .cmp-teaser__action-container {
+      a {
+        padding: rem(8px) rem(12px);
+        display: inline-block;
+        background: $white;
+        border-radius: rem(2px);
+        text-align: center;
+        font-family: $font-family;
+        font-style: normal;
+        font-weight: 400;
+        font-size: rem(12px);
+        line-height: rem(18px);
+        color: $brand-green;
 
         @include mobile {
-            position: unset;
-            width: 100%;
-            min-width: auto;
+          padding: rem(12px) rem(20px);
+          font-family: $font-family-everett;
+          font-size: rem(16px);
+          line-height: rem(24px);
+          width: 100%;
         }
-
-        &--wrapper {
-            display: flex;
-            padding: 25px 22px;
-            gap: 20px;
-            flex-basis: 50%;
-
-            @include mobile {
-                display: block;
-                padding: 20px 16px;
-            }
-
-            &:first-child {
-                background-color: rgba(204, 216, 20, 0.5);
-            }
-
-            &:last-child {
-                background-color: rgba(0, 177, 226, 0.5);
-            }
-
-            img {
-                width: 48px;
-            }
-        }
-
-        &--title {
-            color: map-get($color-palette, 'td-dark-blue');
-            font-size: 20px;
-            line-height: 26px;
-            font-weight: 700;
-            margin-bottom: 22px;
-            padding-top: 6px;
-
-            @include mobile {
-                font-size: 16px;
-                line-height: 21px;
-                margin-bottom: 16px;
-            }
-        }
-
-        &--link {
-            display: block;
-            color: map-get($color-palette, 'td-dark-blue');
-            font-size: 16px;
-            line-height: 24px;
-            padding-bottom: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 400;
-        }
+      }
     }
+  }
+}
+
+/// Describes the teaser component's configurations for mobile display
+/// @access public
+/// @group Teaser
+.cmp-teaser {
+  .mobile-image {
+    display: none;
+    min-height: 597px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 65%;
+    @include mobile {
+      display: block;
+    }
+  }
+
+  &__image-container {
+    .cmp-teaser__image {
+      @include mobile {
+        display: none;
+      }
+    }
+  }
+
+  &__bottom-section {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    min-width: 616px;
+    justify-content: flex-end;
+
+    @include mobile {
+      position: unset;
+      width: 100%;
+      min-width: auto;
+      display: block;
+    }
+
+    &--wrapper {
+      display: flex;
+      padding: 25px 22px;
+      gap: 20px;
+      flex-basis: 50%;
+
+      @include mobile {
+        display: flex;
+        padding: 20px 16px;
+      }
+
+      &:first-child {
+        background-color: rgba(204, 216, 20, 0.5);
+      }
+
+      &:last-child {
+        background-color: rgba(0, 177, 226, 0.5);
+      }
+
+      img {
+        width: 48px;
+      }
+    }
+
+    &--title {
+      color: map-get($color-palette, 'td-dark-blue');
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 700;
+      margin-bottom: 22px;
+      padding-top: 6px;
+
+      @include mobile {
+        font-size: 16px;
+        line-height: 21px;
+        margin-bottom: 16px;
+      }
+    }
+
+    &--link {
+      display: block;
+      color: map-get($color-palette, 'td-dark-blue');
+      font-size: 16px;
+      line-height: 24px;
+      padding-bottom: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 400;
+    }
+  }
+}
+
+/// Handles cursor pointer style for .cmp-teaser__bottom-section--wrapper
+/// @access public
+/// @group Teaser
+.cmp-teaser__bottom-section--wrapper {
+  cursor: pointer;
+
+  &:hover .cmp-teaser__bottom-section--link {
+    text-decoration: underline;
+  }
 }
