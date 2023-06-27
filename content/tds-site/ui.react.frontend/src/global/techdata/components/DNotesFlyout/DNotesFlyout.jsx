@@ -66,7 +66,7 @@ function DNotesFlyout({
               {'  '}
             </span>
             <span className="cmp-flyout__content-description--ellipsis">
-              {dNoteFlyoutConfig?.reseller}
+              {dNoteFlyoutConfig?.reseller?.id}
             </span>
           </div>
         </div>

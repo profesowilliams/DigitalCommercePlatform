@@ -67,7 +67,7 @@ function InvoicesFlyout({
               {'  '}
             </span>
             <span className="cmp-flyout__content-description--ellipsis">
-              {invoicesFlyoutConfig?.reseller}
+              {invoicesFlyoutConfig?.reseller?.id}
             </span>
           </div>
         </div>
