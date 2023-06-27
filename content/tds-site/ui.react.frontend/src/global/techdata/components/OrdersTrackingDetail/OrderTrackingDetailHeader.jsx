@@ -127,15 +127,7 @@ const OrderTrackingDetailHeader = ({
           </span>
           {actionsDropdownVisible && (
             <div className="actions-dropdown">
-              <MenuActions
-                hasAIORights={hasAIORights}
-                hasOrderModificationRights={hasOrderModificationRights}
-                content={apiResponse?.content}
-                items={apiResponse?.content?.items}
-                labels={config?.labels}
-                openFilePdf={openFilePdf}
-                modifyOrder={handleOrderModification}
-              />
+              <MenuActions items={menuActionsItems} />
             </div>
           )}
         </div>
