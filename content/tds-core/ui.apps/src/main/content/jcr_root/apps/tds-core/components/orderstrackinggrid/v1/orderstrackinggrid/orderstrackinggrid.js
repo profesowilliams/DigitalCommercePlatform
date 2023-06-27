@@ -334,6 +334,10 @@ use(["../common/utils.js"], function (utils) {
     this.serviceData.uiServiceDomain +
       this.serviceData.exportAllOrderLinesEndpoint || "";
 
+  jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
+
   if (this.uiServiceDomain && this.downloadAllInvoicesEndpoint) {
     jsonObject["downloadAllInvoicesEndpoint"] =
       this.uiServiceDomain + this.downloadAllInvoicesEndpoint;

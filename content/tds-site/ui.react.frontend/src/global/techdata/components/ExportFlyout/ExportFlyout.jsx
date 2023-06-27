@@ -73,10 +73,23 @@ function ExportFlyout({
       redirect: false,
     });
   }
+  async function getExportLinesWithSerialNumbersOnly() {
+    const url =
+      componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
+    const singleDownloadUrl =
+      url + `?ReportName=OpenOrders&OnlyWithSerialNumbers=true`;
+    const name = `file.xlsx`;
+    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
+      redirect: false,
+    });
+  }
 
   const exportRequests = [
     { key: 'exportAllOrderLinesKey', request: getExportAllOrderLines },
-    { key: 'exportLinesWithSerialNumbersKey', request: getExportAllOrderLines },
+    {
+      key: 'exportLinesWithSerialNumbersKey',
+      request: getExportLinesWithSerialNumbersOnly,
+    },
   ];
 
   const handleDownload = () => {

@@ -88,6 +88,8 @@ public class CaConfigReader {
 
     private String exportAllOrderLinesEndpoint;
 
+    private String exportLinesWithSerialNumbersOnlyEndpoint;
+
     private String quotesPreviewEndPoint;
 
     private String quickQuoteEndpoint;
@@ -271,6 +273,7 @@ public class CaConfigReader {
         ordersReportCountEndpoint = serviceEndPointsConfiguration.ordersReportCountEndpoint();
         ordersDownloadDocumentsEndpoint = serviceEndPointsConfiguration.ordersDownloadDocumentsEndpoint();
         exportAllOrderLinesEndpoint = serviceEndPointsConfiguration.exportAllOrderLinesEndpoint();
+        exportLinesWithSerialNumbersOnlyEndpoint = serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
         quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
@@ -476,6 +479,10 @@ public class CaConfigReader {
 
     public String getExportAllOrderLinesEndpoint() {
         return exportAllOrderLinesEndpoint;
+    }
+
+    public String getExportLinesWithSerialNumbersOnlyEndpoint() {
+        return exportLinesWithSerialNumbersOnlyEndpoint;
     }
 
     public String getQuotesPreviewEndPoint() {

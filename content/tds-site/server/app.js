@@ -12467,6 +12467,9 @@ app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
 app.get("/ui-commerce/v2/OrdersExport", function (req, res) {
   return res.download("exportOrderDetail.xlsx");
 });
+app.get("/ui-commerce/v2/ReportOrdersExport", function (req, res) {
+  return res.download("exportOrderDetail.xlsx");
+});
 
 app.get("/ui-commerce/v2/ReportOrders", function (req, res) {
   const response = {
