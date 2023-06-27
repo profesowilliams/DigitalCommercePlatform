@@ -13,6 +13,7 @@
 /// @prop {String} link - Color variable for links
 $colors: (
   'default': var(--charcoal, map.get($color-palette, 'charcoal')),
+  'apj-header': var(--legacy-ocean, map.get($color-palette, 'legacy-ocean')),
   'tds-header': var(--deep-teal, map.get($color-palette, 'deep-teal')),
   'td-header': var(--legacy-dark-blue, map.get($color-palette, 'legacy-dark-blue')),
   'td-card-header': var(--legacy-ocean, map.get($color-palette, 'legacy-ocean')),
@@ -244,7 +245,8 @@ body {
 
   /// Styles for p inside <body>
   /// @access public
-  p {
+  p,
+  li {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for inline link inside <p> in <body>
@@ -300,7 +302,116 @@ body {
     }
 
     /// Styles for p at small breakpoints
-    p {
+    p,
+    li {
+      @include typography('p', 'default', 'default', $typography-mobile);
+
+      a {
+        @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
+        /// Styles for hover state of inline link inside <p> in .td at small breakpoints
+        &:hover {
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    /// Styles for blockquote at small breakpoints
+    blockquote {
+      @include typography('blockquote', 'default', 'default', $typography-mobile);
+    }
+  }
+}
+
+/// Generate styles for apj
+/// @access public
+.apj {
+  /// Styles for h1 inside .apj
+  h1 {
+    @include typography('h1', 'default', 'apj-header');
+  }
+
+  /// Styles for h2 inside .apj
+  h2 {
+    @include typography('h2', 'default', 'apj-header');
+  }
+
+  /// Styles for h3 inside .apj
+  h3 {
+    @include typography('h3', 'default', 'apj-header');
+  }
+
+  /// Styles for h4 inside .apj
+  h4 {
+    @include typography('h4', 'default', 'apj-header');
+  }
+
+  /// Styles for h5 inside .apj
+  h5 {
+    @include typography('h5', 'default', 'apj-header');
+  }
+
+  /// Styles for h6 inside .apj
+  h6 {
+    @include typography('h6', 'default', 'apj-header');
+  }
+
+  /// Styles for p inside .apj
+  p,
+  li {
+    @include typography('p', 'paragraph', 'default');
+
+    /// Styles for inline link inside <p> in .apj
+    a {
+      @include typography('inline-link', 'paragraph', 'link');
+
+      /// Styles for hover state of inline link inside <p> in .apj
+      &:hover {
+        text-decoration-line: underline;
+      }
+    }
+  }
+
+  /// Styles for blockquote inside .apj
+  blockquote {
+    @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for small breakpoints
+  @media (width <= 992px) {
+    /// Styles for h1 at small breakpoints
+    h1 {
+      @include typography('h1', 'default', 'apj-header', $typography-mobile);
+    }
+
+    /// Styles for h2 at small breakpoints
+    h2 {
+      @include typography('h2', 'default', 'apj-header', $typography-mobile);
+    }
+
+    /// Styles for h3 at small breakpoints
+    h3 {
+      @include typography('h3', 'default', 'apj-header', $typography-mobile);
+    }
+
+    /// Styles for h4 at small breakpoints
+    h4 {
+      @include typography('h4', 'default', 'apj-header', $typography-mobile);
+    }
+
+    /// Styles for h5 at small breakpoints
+    h5 {
+      @include typography('h5', 'default', 'apj-header', $typography-mobile);
+    }
+
+    /// Styles for h6 at small breakpoints
+    h6 {
+      @include typography('h6', 'default', 'apj-header', $typography-mobile);
+    }
+
+    /// Styles for p at small breakpoints
+    p,
+    li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
       a {
@@ -354,7 +465,8 @@ body {
   }
 
   /// Styles for p inside .td
-  p {
+  p,
+  li {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for inline link inside <p> in .td
@@ -406,7 +518,8 @@ body {
     }
 
     /// Styles for p at small breakpoints
-    p {
+    p,
+    li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
       a {
@@ -460,7 +573,8 @@ body {
   }
 
   /// Styles for `p` tag in `.tds` class.
-  p {
+  p,
+  li {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for `a` tag in `p` of `.tds` class.
@@ -522,7 +636,8 @@ body {
 
     /// Styles for p elements at small breakpoints for `.tds` class.
     /// @access public
-    p {
+    p,
+    li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
       /// Styles for `a` tag at small breakpoints in `p` of `.tds` class.

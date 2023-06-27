@@ -15,7 +15,8 @@
     "import"
   ],
   "rules": {
-    "no-tabs": 0
+    "no-tabs": 0,
+    "import/prefer-default-export": "off"
   },
-  "ignorePatterns": ["**/node_modules/**"]
+  "ignorePatterns": ["**/node_modules/**", "**/dist/**"]
 }

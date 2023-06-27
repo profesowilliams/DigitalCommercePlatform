@@ -1,4 +1,4 @@
-// test commit
+/* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -11,9 +11,11 @@ const SOURCE_ROOT = `${__dirname}/src/main/webpack`;
 module.exports = {
   resolve: {
     extensions: ['.js', '.ts'],
-    plugins: [new TSConfigPathsPlugin({
-      configFile: './tsconfig.json',
-    })],
+    plugins: [
+      new TSConfigPathsPlugin({
+        configFile: './tsconfig.json',
+      }),
+    ],
     alias: {
       fortawesome: path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free'),
     },
@@ -32,27 +34,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            options: {
-              eslintPath: require.resolve('eslint'),
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-          {
-            loader: 'ts-loader',
-          },
-          {
-            loader: 'webpack-import-glob-loader',
-            options: {
-              url: false,
-            },
-          },
-        ],
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
@@ -60,11 +41,6 @@ module.exports = {
           presets: ['@babel/preset-env', '@babel/preset-typescript'],
         },
       },
-      // {
-      //     test: /\.js$/,
-      //     exclude: /node_modules/,
-      //     loader: 'eslint-loader',
-      // },
       {
         test: /\.scss$/,
         use: [
@@ -79,9 +55,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins() {
-                return [
-                  require('autoprefixer'),
-                ];
+                return [require('autoprefixer')];
               },
             },
           },
@@ -110,6 +84,7 @@ module.exports = {
     ],
   },
   plugins: [
+    // new ESLintPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -119,9 +94,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'clientlib-site-[name]/css/[name].css',
     }),
-    new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, `${SOURCE_ROOT}/resources`), to: './clientlib-site-global/resources' },
-    ]),
+    new CopyWebpackPlugin([{ from: path.resolve(__dirname, `${SOURCE_ROOT}/resources`), to: './clientlib-site-global/resources' }]),
   ],
   stats: {
     assetsSort: 'chunks',

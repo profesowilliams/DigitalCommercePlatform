@@ -1,18 +1,18 @@
 @use 'sass:map';
 @use '../../../../abstracts' as *;
 
-$tdsynnex: (
+$apj: (
   'light': (
     'primary': (
       'standard': (
-        'background': $teal,
+        'background': $legacy-ocean,
         'hover': (
           $gradient-primary-hover,
-          $teal,
+          $legacy-ocean,
         ),
         'active': (
           $gradient-primary-active,
-          $teal,
+          $legacy-ocean,
         ),
         'color': $white,
       ),
@@ -24,10 +24,10 @@ $tdsynnex: (
     'secondary': (
       'standard': (
         'background': transparent,
-        'hover': rgb(0 87 88 / 10%),
-        'active': rgb(0 87 88 / 20%),
-        'color': $teal,
-        'outline-color': $teal,
+        'hover': rgb(0 85 140 / 10%),
+        'active': rgb(0 177 226 / 10%),
+        'color': $legacy-ocean,
+        'outline-color': $legacy-ocean,
         'outline-width': 1px,
         'outline-offset': -1px,
         'outline-style': solid,
@@ -39,10 +39,19 @@ $tdsynnex: (
     ),
     'filled': (
       'standard': (
-        'background': $white,
-        'hover': rgb(0 85 140 / 10%),
-        'active': rgb(0 177 226 / 10%),
-        'color': $teal,
+        'background': (
+          $gradient-filled-bg,
+          $legacy-ocean,
+        ),
+        'hover': (
+          $gradient-filled-hover,
+          $legacy-ocean,
+        ),
+        'active': (
+          $gradient-filled-active,
+          $legacy-ocean,
+        ),
+        'color': $legacy-ocean,
       ),
       'disabled': (
         'background': $neutral-gray-2,
@@ -54,7 +63,7 @@ $tdsynnex: (
         'background': transparent,
         'hover': rgb(0 85 140 / 10%),
         'active': rgb(0 85 140 / 20%),
-        'color': $teal,
+        'color': $legacy-ocean,
       ),
       'disabled': (
         'background': transparent,
@@ -66,12 +75,10 @@ $tdsynnex: (
         'background': transparent,
         'hover': transparent,
         'active': transparent,
-        'color': $teal,
-        'color-hover': tint($teal, 20%),
-        'color-active': shade($teal, 20%),
+        'color': $legacy-ocean,
+        'color-hover': tint($legacy-ocean, 20%),
+        'color-active': shade($legacy-ocean, 20%),
         'text-decoration': underline,
-        'background-clip': text,
-        'text-fill-color': transparent,
       ),
       'disabled': (
         'background': transparent,
@@ -119,10 +126,10 @@ $tdsynnex: (
         'background': $white,
         'hover': rgb(255 255 255 / 85%),
         'active': rgb(255 255 255 / 70%),
-        'color': $teal,
+        'color': $legacy-ocean,
       ),
       'disabled': (
-        'background': $neutral-gray-2,
+        'background': rgb(228 229 230 / 80%),
         'color': $cool-gray-8,
       ),
     ),
@@ -140,29 +147,26 @@ $tdsynnex: (
       'disabled': (
         'background': transparent,
         'color': $cool-gray-8,
-        'outline-color': $cool-gray-8,
-        'outline-width': 1px,
-        'outline-offset': -1px,
-        'outline-style': solid,
+        'background-border': 1px solid $cool-gray-8,
       ),
     ),
     'filled': (
       'standard': (
-        'background': rgb(255 255 255 / 20%),
-        'hover': rgb(255 255 255 / 10%),
-        'active': rgb(255 255 255 / 30%),
-        'color': $teal,
+        'background': $white,
+        'hover': rgb(255 255 255 / 70%),
+        'active': rgb(255 255 255 / 10%),
+        'color': $white,
       ),
       'disabled': (
-        'background': $neutral-gray-2,
+        'background': rgb(228 229 230 / 20%),
         'color': $cool-gray-8,
       ),
     ),
     'tertiary': (
       'standard': (
         'background': transparent,
-        'hover': rgb(255 255 255 / 10%),
-        'active': rgb(255 255 255 / 20%),
+        'hover': $gradient-tertiary-hover,
+        'active': $gradient-tertiary-active,
         'color': $white,
       ),
       'disabled': (
@@ -179,6 +183,8 @@ $tdsynnex: (
         'color-hover': rgb(255 255 255 / 85%),
         'color-active': rgb(255 255 255 / 70%),
         'text-decoration': underline,
+        'background-clip': text,
+        'text-fill-color': transparent,
       ),
       'disabled': (
         'background': transparent,

@@ -1,0 +1,38 @@
+/// This function changes the opacity of a background color.
+/// @access public
+/// @param {Color} $color - The original color.
+/// @param {Number} $opacity - The desired opacity from 0 to 1.
+/// @return {Color} - The color with the new opacity.
+/// @example scss - Usage
+///   .element {
+///     background-color: background-opacity(#000, 0.5);
+///   }
+@function background-opacity($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+
+/// This function tints a color by mixing it with white.
+/// @access public
+/// @param {Color} $color - The original color.
+/// @param {Number} $opacity - The percentage of white to be mixed in.
+/// @return {Color} - The tinted color.
+/// @example scss - Usage
+///   .element {
+///     color: tint(#000, 20%);
+///   }
+@function tint($color, $opacity) {
+  @return mix(#fff, $color, $opacity);
+}
+
+/// This function shades a color by mixing it with black.
+/// @access public
+/// @param {Color} $color - The original color.
+/// @param {Number} $opacity - The percentage of black to be mixed in.
+/// @return {Color} - The shaded color.
+/// @example scss - Usage
+///   .element {
+///     color: shade(#FFF, 20%);
+///   }
+@function shade($color, $opacity) {
+  @return mix(#000, $color, $opacity);
+}

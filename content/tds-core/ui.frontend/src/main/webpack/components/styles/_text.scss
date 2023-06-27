@@ -1,18 +1,24 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
-@import "../../global/abstracts/mixins";
-@import "../../global/styles/helpers/colors.scss";
+@import '../../global/abstracts/mixins';
+@import '../../global/styles/helpers/colors.scss';
 
 .text {
-  color: map-get($color-palette, "charcoal");
+  color: map-get($color-palette, 'charcoal');
 }
 
 .cmp-text {
-  color: map-get($color-palette, "charcoal");
+  color: map-get($color-palette, 'charcoal');
 
-  sup, sub {
+  sup,
+  sub {
     font-size: initial;
   }
-  h1,h2,h3,h4,h5,h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 300;
   }
 
@@ -21,72 +27,72 @@
     line-height: rem(61px);
 
     &.large {
-        font-size: rem(66px);
-        line-height: rem(82px);
+      font-size: rem(66px);
+      line-height: rem(82px);
     }
-}
+  }
 
-h2 {
+  h2 {
     font-size: rem(32px);
     line-height: rem(48px);
-}
+  }
 
-h3 {
+  h3 {
     font-size: rem(28px);
     line-height: rem(42px);
-}
+  }
 
-h4 {
+  h4 {
     font-size: rem(20px);
     line-height: rem(30px);
-}
+  }
 
-h5 {
+  h5 {
     font-size: rem(16px);
     line-height: rem(24px);
-}
+  }
 
-h6 {
+  h6 {
     font-size: rem(14px);
     line-height: rem(19.92px);
-}
+  }
 
-@include mobile {
-    h1  {
-        font-size: rem(32px);
-        line-height: rem(40px);
+  @include mobile {
+    h1 {
+      font-size: rem(32px);
+      line-height: rem(40px);
 
-        &.large {
-            font-size: rem(52px);
-            line-height: rem(68px);
-        }
+      &.large {
+        font-size: rem(52px);
+        line-height: rem(68px);
+      }
     }
 
     h2 {
-        font-size: rem(28px);
-        line-height: rem(42px);
+      font-size: rem(28px);
+      line-height: rem(42px);
     }
 
     h3 {
-        font-size: rem(20px);
-        line-height: rem(30px);
+      font-size: rem(20px);
+      line-height: rem(30px);
     }
 
     h4 {
-        font-size: rem(16px);
-        line-height: rem(21px);
+      font-size: rem(16px);
+      line-height: rem(21px);
     }
 
     h5 {
-        font-size: rem(16px);
-        line-height: rem(21px);
-    } 
+      font-size: rem(16px);
+      line-height: rem(21px);
+    }
 
     h6 {
-        font-size: rem(14px);
-        line-height: rem(21px);
+      font-size: rem(14px);
+      line-height: rem(21px);
     }
-}
+  }
 
   ul,
   ol {
@@ -96,7 +102,6 @@ h6 {
     li {
       font-size: inherit;
       text-align: left;
-      margin-left: rem(-40px);
 
       &::before {
         color: inherit;
@@ -106,23 +111,25 @@ h6 {
   }
 
   &__green_bullet {
-    ul, ol {
-      margin-bottom: 0rem;   
+    ul,
+    ol {
+      margin-bottom: 0rem;
       display: flex;
       flex-direction: column;
 
       li {
         display: inline !important;
         &::before {
-          content: "" !important;
-          color: map-get($color-palette, "chartreuse");
+          content: '' !important;
+          color: map-get($color-palette, 'chartreuse');
           @include background-chartreuse;
           width: 15px !important;
           height: 15px;
           margin-right: 15px;
           margin-top: 0.5vh;
         }
-        ul, ol {
+        ul,
+        ol {
           line-height: 0rem !important;
           margin-left: 0;
 
@@ -135,17 +142,16 @@ h6 {
             position: relative;
             line-height: rem(24px);
 
-            
             b {
               width: auto;
               display: contents;
             }
-            
+
             &::before {
-              content: "\2022" !important;
+              content: '\2022' !important;
               color: inherit !important;
-              background-color: get-color(container-transparent)!important;
-              position: absolute;    
+              background-color: get-color(container-transparent) !important;
+              position: absolute;
               left: 25px;
               top: 20px;
             }
@@ -180,7 +186,7 @@ h6 {
       display: flex;
 
       &::before {
-        content: "\2022";
+        content: '\2022';
         font-weight: bold;
         width: auto;
         font-size: $font-size-custom-medium;
@@ -192,18 +198,22 @@ h6 {
   .dp-text-icon::before {
     padding-right: 10px;
   }
-  
+
   &--default {
-    h1,h2,h3,h4,h5 { 
-      &::before { 
-        content:'\25A0  '; 
-        font-size:30px;
-        color: #CCD814;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      &::before {
+        content: '\25A0  ';
+        font-size: 30px;
+        color: #ccd814;
         vertical-align: sub;
         margin-left: -22px;
       }
     }
-    
+
     ul {
       padding-left: 0px;
 
@@ -218,37 +228,38 @@ h6 {
   }
 
   &--default-feature {
-      ul {
-        padding-left: 25px;
+    ul {
+      padding-left: 25px;
 
-        li {
-          margin-left: 0px;
-          display: block;
+      li {
+        margin-left: 0px;
+        display: block;
 
-          b {
-            padding-bottom: 10px;
-            line-height: 50px;
-            @include text-deep-teal;
+        b {
+          padding-bottom: 10px;
+          line-height: 50px;
+          @include text-deep-teal;
 
-            @include mobile {
-              line-height: 25px;
-              padding-bottom: 0;
-            }
+          @include mobile {
+            line-height: 25px;
+            padding-bottom: 0;
           }
         }
+      }
 
-      li::before { 
-        content:'\25A0'; 
-        font-size:30px;
-        color: #CCD814;
+      li::before {
+        content: '\25A0';
+        font-size: 30px;
+        color: #ccd814;
         vertical-align: sub;
-        margin-left: -26px; 
+        margin-left: -26px;
       }
     }
   }
 }
 
-.cmp-text__paragraph {}
+.cmp-text__paragraph {
+}
 
 .cmp-aem-alert {
   border: rem(1px) solid get-color(td-primary-blue);
@@ -261,10 +272,10 @@ h6 {
 .dp-text--white * {
   color: #fff;
 
-    @include mobile {
-      width: auto!important;
-    }
+  @include mobile {
+    width: auto !important;
   }
+}
 
 .dp-text--light-blue * {
   color: #00b1e2;
@@ -286,9 +297,7 @@ h6 {
   @include text-aqua;
 }
 
-
 .dp-text--xsmall {
-
   &,
   .cmp-text li {
     font-size: rem($font-size-xxsmall);
@@ -296,7 +305,6 @@ h6 {
 }
 
 .dp-text--small {
-
   &,
   .cmp-text li {
     font-size: rem($font-size-small);
@@ -304,7 +312,6 @@ h6 {
 }
 
 .dp-text--big {
-
   &,
   .cmp-text li {
     font-size: $font-size-custom-midi;
@@ -315,7 +322,6 @@ h6 {
   text-align: center;
 
   .cmp-text {
-
     ul,
     ol {
       margin: auto;
@@ -328,7 +334,6 @@ h6 {
   text-align: right;
 
   .cmp-text {
-
     ul,
     ol {
       float: right;
@@ -390,7 +395,7 @@ h6 {
           &--white * {
             @include text-white;
             text-decoration: underline;
-            width:auto;
+            width: auto;
           }
 
           //TDS Secondary background colors

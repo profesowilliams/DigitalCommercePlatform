@@ -1,1 +1,152 @@
-@import '../../global/core-components/_button.scss'
+/* stylelint-disable */
+
+@use 'sass:map';
+@use '../../../webpack/global/abstracts' as *;
+@use '../../../webpack/global/themes' as *;
+
+@import '../../global/core-components/_button.scss';
+
+/// Basic button styles for a and button elements.
+/// @access public
+.button {
+  a,
+  button {
+    background: transparent;
+    border: none;
+    border-radius: none;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 1rem;
+    height: 3rem;
+    line-height: unset;
+    min-width: 8.8125rem;
+    outline-color: transparent;
+    outline-style: solid;
+    outline-width: 1px;
+    outline-offset: 0;
+    padding: 12px 20px;
+    -webkit-appearance: button;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-decoration-thickness: inherit;
+    text-underline-offset: inherit;
+    text-transform: none;
+    vertical-align: middle;
+    width: auto;
+  }
+
+  /// Minimal style for link elements
+  /// @access public
+  a.minimal {
+    line-height: inherit;
+    height: 32px;
+  }
+
+  /// Focus style for button and a elements
+  /// @access public
+  button:focus::before,
+  a:focus::before {
+    content: '';
+    border-radius: 0.25rem;
+    box-sizing: inherit;
+    display: block;
+    position: absolute;
+    height: calc(100% - 0.8rem);
+    top: 0.4rem;
+    left: 0.4rem;
+    visibility: visible;
+    width: calc(100% - 0.8rem);
+  }
+}
+
+/// Map storing styles for tenants
+/// @type Map
+/// @access public
+$maps: (
+  'tdsynnex': $tdsynnex,
+  'apj': $apj,
+  'techdata': $techdata,
+);
+
+/// A mixin to generate styles for buttons based on a specific tenant
+/// @access public
+/// @param {String} $tenant - The tenant to generate styles for.
+/// @throws
+///   Will throw an error if the tenant is unknown.
+/// @example scss - Usage
+///   @include btn-styles('apj');
+@mixin btn-styles($tenant) {
+  $tenantMap: map.get($maps, $tenant);
+
+  @if not $tenantMap {
+    @error "Unknown tenant: #{$tenant}.";
+  }
+
+  @each $theme, $themeMap in $tenantMap {
+    @each $type, $typeMap in $themeMap {
+      $standardStyles: map.get($typeMap, 'standard');
+      $disabledStyles: map.get($typeMap, 'disabled');
+
+      .cmp-#{$tenant}-button.btn-#{$theme}.btn-type__#{$type} {
+        .cmp-button {
+          @each $prop, $value in $standardStyles {
+            // Ignore hover and active here, we will handle them separately
+            @if $prop != 'hover' and $prop != 'active' {
+              @if type-of($value) == 'list' {
+                #{$prop}: nth($value, 1), nth($value, 2);
+              } @else {
+                #{$prop}: $value;
+              }
+            }
+          }
+        }
+
+        &:hover .cmp-button {
+          $hoverValue: map.get($standardStyles, 'hover');
+          $hoverColor: map.get($standardStyles, 'color-hover');
+          @if type-of($hoverValue) == 'list' {
+            background: nth($hoverValue, 1), nth($hoverValue, 2);
+          } @else {
+            background: $hoverValue;
+          }
+
+          color: $hoverColor;
+        }
+
+        &:active .cmp-button {
+          $activeValue: map.get($standardStyles, 'active');
+          $activeColor: map.get($standardStyles, 'color-active');
+          @if type-of($activeValue) == 'list' {
+            background: nth($activeValue, 1), nth($activeValue, 2);
+          } @else {
+            background: $activeValue;
+          }
+
+          color: $activeColor;
+        }
+
+        &.disabled .cmp-button {
+          @each $prop, $value in $disabledStyles {
+            #{$prop}: $value;
+          }
+        }
+      }
+    }
+  }
+}
+
+/// Generate styles for the 'apj' tenant
+/// @access public
+@include btn-styles('apj');
+
+/// Generate styles for the 'techdata' tenant
+/// @access public
+@include btn-styles('techdata');
+
+/// Generate styles for the 'tdsynnex' tenant
+/// @access public
+@include btn-styles('tdsynnex');

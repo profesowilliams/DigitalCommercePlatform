@@ -29,10 +29,7 @@
 
         &__title {
             margin: 0;
-            font-size: rem(24px);
-            font-weight: bold;
             letter-spacing: 0;
-            line-height: rem(30px);
             text-shadow: 0 2px 4px get-color(brand-black);
             margin-bottom: rem(30px);
 
@@ -42,17 +39,13 @@
                 position: relative;
                 top: -8px;
                 text-shadow: none;
-                font-size: 15px;
                 letter-spacing: 0;
             }
 
             @include desktop {
-                font-size: rem(40px);
-                line-height: rem(60px);
 
                 &:after {
                     padding: rem(1px 9px);
-                    font-size: 20px;
                     top: -27px;
                 }
             }
@@ -65,15 +58,11 @@
 
         &__description {
             color: get-color(brand-white);
-            font-size: 16px;
             letter-spacing: 0;
-            line-height: 20px;
             margin-bottom: rem(30px);
             text-shadow: 0 2px 4px #000000;
 
             @include desktop {
-                font-size: rem(22px);
-                line-height: rem(33px);
                 max-width: 400px;
             }
 
@@ -197,7 +186,6 @@
         &__title {
             background-color: get-color(brand-blue);
             color: get-color(brand-white);
-            font-size: $font-size-custom-medium;
             text-align: center;
             display: flex;
             align-items: center;
@@ -255,7 +243,6 @@
         &__title {
             background-color: get-color(light-see-through-background);
             color: get-color(brand-blue);
-            font-size: $font-size-custom-medium;
             text-align: center;
             display: flex;
             align-items: center;
@@ -335,7 +322,6 @@
             background-color: get-color(brand-blue);
             color: get-color(brand-white);
             text-align: center;
-            font-size: $font-size-custom-medium;
             font-weight: $font-weight-bold;
             padding-top: rem(5px);
 
@@ -346,19 +332,13 @@
         }
 
         .cmp-teaser__content {
-            font-size: $font-size-custom-xxsmall;
-            color: map-get($color-palette, "charcoal");
-            //   min-height: rem(390px);
             min-height: auto;
 
             &-title {
-                font-size: $font-size-medium;
-                font-weight: bold;
             }
 
             .cmp-teaser__description {
                 padding: rem(25px);
-                line-height: rem(16px);
             }
         }
 
@@ -393,24 +373,17 @@
 
         &__title,
         h2 {
-            color: get-color(brand-blue);
-            font-size: $font-size-small !important;
             margin-bottom: rem(8px);
             padding: rem(14px) rem(18px);
-            font-weight: 600 !important;
             margin: 0 !important;
 
             a {
-                font-size: $font-size-small !important;
                 color: get-color(brand-blue);
                 text-decoration: none;
             }
         }
 
         &__description {
-            color: get-color(text-light-charcoal);
-            font-size: $font-size-xsmall;
-            font-weight: normal;
             padding: 0 rem(18px);
         }
 
@@ -431,7 +404,6 @@
         &__action-container {
             background-color: get-color(brand-blue);
             color: get-color(brand-white);
-            font-size: $font-size-medium;
             text-align: center;
             display: flex;
             align-items: center;
@@ -503,9 +475,6 @@
             }
 
             &__title {
-                font-size: rem(22px);
-                line-height: rem(45px);
-                font-weight: normal;
                 padding: 0;
             }
 
@@ -618,8 +587,6 @@
             background-color: get-color(brand-blue);
             color: get-color(brand-white);
             text-align: center;
-            font-size: $font-size-custom-medium;
-            font-weight: $font-weight-bold;
             padding-top: rem(5px);
             margin: 0;
 
@@ -630,19 +597,13 @@
         }
 
         .cmp-teaser__content {
-            font-size: $font-size-custom-xxsmall;
-            color: map-get($color-palette, "charcoal");
-            //   min-height: rem(390px);
             min-height: auto;
 
             &-title {
-                font-size: $font-size-medium;
-                font-weight: bold;
             }
 
             .cmp-teaser__description {
                 padding: rem(20px) rem(30px);
-                line-height: rem(16px);
             }
         }
 
@@ -851,8 +812,6 @@
                                     p {
                                         width: 100%;
                                         padding: 0;
-                                        font-size: 14px;
-                                        line-height: 21px;
                                     }
                                 }
 
@@ -915,10 +874,6 @@
                                 padding-left: 15px;
 
                                 li {
-                                    font-size: 16px;
-                                    line-height: 24px;
-                                    color: #262626;
-                                    font-family: 'Arial', sans-serif;
                                 }
                             }
                         }
@@ -928,8 +883,6 @@
                     .cmp-teaser__title a {
                         background-color: white;
                         color: #00558C;
-                        font-size: 28px;
-                        line-height: 36px;
                         font-weight: 400;
                         text-align: left;
                         font-family: 'Arial', sans-serif;
@@ -986,8 +939,6 @@
             .cmp-teaser__title a {
                 color: #000C21;
                 font-weight: 400;
-                font-size: 32px;
-                line-height: 40px;
                 text-decoration: none;
                 font-family: 'Arial', sans-serif;
             }

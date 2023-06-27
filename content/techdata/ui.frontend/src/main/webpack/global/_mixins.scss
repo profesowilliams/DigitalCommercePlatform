@@ -1,5 +1,4 @@
 /* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
-@import '../../../../../../tds-core/ui.frontend/src/main/webpack/global/abstracts/mixins';
 @mixin fontdef($font-path, $font-type: 'Regular', $font-name: 'OpenSans') {
   src: url('#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf') format('ttf'), url('#{$font-path}/#{$font-type}/#{$font-name}-#{$font-type}.ttf') format('ttf');
 }

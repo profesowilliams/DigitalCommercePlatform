@@ -1,0 +1,225 @@
+@use 'sass:map';
+@use '../../../../abstracts' as *;
+
+$techdata: (
+  'light': (
+    'primary': (
+      'standard': (
+        'background': $legacy-dark-blue,
+        'hover': (
+          $gradient-primary-hover,
+          $legacy-dark-blue,
+        ),
+        'active': (
+          $gradient-primary-active,
+          $legacy-dark-blue,
+        ),
+        'color': $white,
+      ),
+      'disabled': (
+        'background': $neutral-gray-2,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'secondary': (
+      'standard': (
+        'background': transparent,
+        'hover': rgb(0 12 33 / 10%),
+        'active': rgb(0 12 33 / 20%),
+        'color': $legacy-dark-blue,
+        'outline-color': $legacy-dark-blue,
+        'outline-width': 1px,
+        'outline-offset': -1px,
+        'outline-style': solid,
+      ),
+      'disabled': (
+        'background': transparent,
+        'color': $cool-gray-8,
+        'outline-color': $cool-gray-8,
+        'outline-width': 1px,
+        'outline-offset': -1px,
+        'outline-style': solid,
+      ),
+    ),
+    'filled': (
+      'standard': (
+        'background': (
+          $gradient-filled-bg,
+          $legacy-dark-blue,
+        ),
+        'hover': (
+          $gradient-filled-hover,
+          $legacy-dark-blue,
+        ),
+        'active': (
+          $gradient-filled-active,
+          $legacy-dark-blue,
+        ),
+        'color': $legacy-dark-blue,
+      ),
+      'disabled': (
+        'background': $neutral-gray-2,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'tertiary': (
+      'standard': (
+        'background': transparent,
+        'hover': rgb(0 12 33 / 10%),
+        'active': rgb(0 12 33 / 20%),
+        'color': $legacy-dark-blue,
+      ),
+      'disabled': (
+        'background': transparent,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'link': (
+      'standard': (
+        'background': transparent,
+        'hover': transparent,
+        'active': transparent,
+        'color': $legacy-dark-blue,
+        'color-hover': tint($legacy-dark-blue, 20%),
+        'color-active': shade($legacy-dark-blue, 20%),
+        'text-decoration': underline,
+        'background-clip': text,
+        'text-fill-color': transparent,
+      ),
+      'disabled': (
+        'background': transparent,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'affirmative': (
+      'standard': (
+        'background': $forest,
+        'hover': (
+          $gradient-affirmative-destructive-hover,
+          $forest,
+        ),
+        'active': (
+          $gradient-affirmative-destructive-active,
+          $forest,
+        ),
+      ),
+      'disabled': (
+        'background': $neutral-gray-2,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'destructive': (
+      'standard': (
+        'background': $cherry,
+        'hover': (
+          $gradient-affirmative-destructive-hover,
+          $cherry,
+        ),
+        'active': (
+          $gradient-affirmative-destructive-active,
+          $cherry,
+        ),
+      ),
+      'disabled': (
+        'background': $neutral-gray-2,
+        'color': $cool-gray-8,
+      ),
+    ),
+  ),
+  'dark': (
+    'primary': (
+      'standard': (
+        'background': $white,
+        'hover': rgb(255 255 255 / 85%),
+        'active': rgb(255 255 255 / 70%),
+        'color': $legacy-dark-blue,
+      ),
+      'disabled': (
+        'background': rgb(228 229 230 / 80%),
+        'color': $cool-gray-8,
+      ),
+    ),
+    'secondary': (
+      'standard': (
+        'background': transparent,
+        'hover': rgb(255 255 255 / 10%),
+        'active': rgb(255 255 255 / 20%),
+        'color': $white,
+        'outline-color': $white,
+        'outline-width': 1px,
+        'outline-offset': -1px,
+        'outline-style': solid,
+      ),
+      'disabled': (
+        'background': transparent,
+        'color': $cool-gray-8,
+        'background-border': 1px solid $cool-gray-8,
+      ),
+    ),
+    'filled': (
+      'standard': (
+        'background': $white,
+        'hover': rgb(255 255 255 / 70%),
+        'active': rgb(255 255 255 / 10%),
+        'color': $white,
+      ),
+      'disabled': (
+        'background': rgb(228 229 230 / 20%),
+        'color': $cool-gray-8,
+      ),
+    ),
+    'tertiary': (
+      'standard': (
+        'background': transparent,
+        'hover': $gradient-tertiary-hover,
+        'active': $gradient-tertiary-active,
+        'color': $white,
+      ),
+      'disabled': (
+        'background': transparent,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'link': (
+      'standard': (
+        'background': transparent,
+        'hover': transparent,
+        'active': transparent,
+        'color': $white,
+        'color-hover': rgb(255 255 255 / 85%),
+        'color-active': rgb(255 255 255 / 70%),
+        'text-decoration': underline,
+        'background-clip': text,
+        'text-fill-color': transparent,
+      ),
+      'disabled': (
+        'background': transparent,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'affirmative': (
+      'standard': (
+        'background': $white,
+        'hover': rgb(255 255 255 / 85%),
+        'active': rgb(255 255 255 / 70%),
+        'color': $forest,
+      ),
+      'disabled': (
+        'background': $neutral-gray-2,
+        'color': $cool-gray-8,
+      ),
+    ),
+    'destructive': (
+      'standard': (
+        'background': $white,
+        'hover': rgb(255 255 255 / 85%),
+        'active': rgb(255 255 255 / 70%),
+        'color': $cherry,
+      ),
+      'disabled': (
+        'background': $neutral-gray-2,
+        'color': $cool-gray-8,
+      ),
+    ),
+  ),
+);

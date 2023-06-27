@@ -49,7 +49,6 @@
 			background-color: get-color(container-transparent) !important;
 			-webkit-background-clip: border-box;
 			background-clip: border-box;
-			color: get-color(text-dark-grey) !important;
 			cursor: default;
 
 			@include mobile {
@@ -57,11 +56,9 @@
 			}
 
 			&:hover {
-				color: get-color(brand-blue) !important;
 				cursor: default;
 
 				.cmp-teaser__title-link {
-					color: get-color(brand-blue) !important;
 					font-weight: 600;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
@@ -69,7 +66,6 @@
 				}
 
 				.cmp-teaser__title {
-					color: get-color(brand-blue) !important;
 					font-weight: 600;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
@@ -95,18 +91,13 @@
 				-ms-flex-direction: column;
 				flex-direction: column;
 				justify-content: center;
-				font-size: 1.375rem;
 				margin: 0;
-				line-height: 1.5rem;
 				font-weight: $font-weight-normal;
 				display: flex;
 				align-items: center;
 				align-content: center;
 				&-link {
 					text-decoration: none;
-					line-height: 1.5rem;
-					color: get-color(text-mid-charcoal);
-					font-weight: 500;
 					-webkit-font-smoothing: antialiased;
 					-moz-osx-font-smoothing: grayscale;
 					word-wrap: break-word;
@@ -144,11 +135,9 @@
 				}
 
 				p {
-					font-size: 0.875rem;
 					font-weight: 300;
 					margin-top: 0;
 					margin-bottom: 0.875rem;
-					line-height: 1.18rem;
 					-webkit-line-clamp: unset !important;
 					display: block !important;
 					overflow: unset !important;
@@ -216,14 +205,11 @@
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
-					font-size: $font-size-medium;
 					font-weight: 600;
 					margin: 0;
-					line-height: 1.5rem;
 					color: #fff;
 					&-link {
 						text-decoration: none;
-						line-height: 1.5rem;
 						color: get-color(brand-white);
 						max-width: 15rem;
 					}
@@ -284,8 +270,6 @@
 						align-content: center;
 						&-link {
 							color: get-color(text-dark-grey);
-							font-size: $font-size-custom-medium;
-							line-height: rem(24px);
 							font-weight: $font-weight-semi-bold;
 							word-wrap: break-word;
 							width: 15rem;
@@ -454,16 +438,13 @@
 					-ms-flex-direction: column;
 					flex-direction: column;
 					justify-content: center;
-					font-size: 1.357rem;
 					margin: 0;
-					line-height: 1.5rem;
 					font-weight: $font-weight-normal;
 					display: flex;
 					align-items: center;
 					align-content: center;
 					&-link {
 						text-decoration: none;
-						line-height: 1.5rem;
 						color: get-color(text-mid-charcoal);
 						font-weight: 500;
 						-webkit-font-smoothing: antialiased;
@@ -505,11 +486,9 @@
 					}
 
 					p {
-						font-size: 0.87rem;
 						font-weight: 300;
 						margin-top: 0;
 						margin-bottom: 0.875rem;
-						line-height: 1.18rem;
 						-webkit-line-clamp: unset !important;
 						display: block !important;
 						overflow: unset !important;
@@ -569,16 +548,13 @@
 						display: flex;
 						flex-direction: column;
 						justify-content: center;
-						font-size: $font-size-medium;
 						font-weight: 600;
 						margin: 0;
-						line-height: 1.5rem;
 						color: #fff;
 						min-height: 11rem;
 
 						&-link {
 							text-decoration: none;
-							line-height: 1.5rem;
 							color: get-color(brand-white);
 							word-break: break-word;
 							max-width: 15rem;
@@ -629,7 +605,6 @@
 							}
 
 							.cmp-teaser__description {
-								color: get-color(text-dark-grey);
 							}
 						}
 
@@ -638,9 +613,6 @@
 							align-items: center;
 							align-content: center;
 							&-link {
-								color: get-color(text-dark-grey);
-								font-size: $font-size-custom-medium;
-								line-height: rem(24px);
 								font-weight: $font-weight-semi-bold;
 								word-wrap: break-word
 							}
@@ -706,7 +678,6 @@
 			}
 
 			.cmp-teaser__title-link {
-				color: get-color(brand-black);
 				text-decoration: none;
 				font-weight: 100;
 				transition: all .3s;

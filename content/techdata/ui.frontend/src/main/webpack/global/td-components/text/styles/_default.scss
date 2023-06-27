@@ -10,7 +10,7 @@
     li {
       font-size: rem($font-size-medium);
       text-align: left;
-      margin-left: rem(-40px);
+
       &::before {
         color: get-color(td-lightblue);
         display: inline-block;

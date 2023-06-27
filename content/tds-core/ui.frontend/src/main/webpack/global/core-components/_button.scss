@@ -672,11 +672,12 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   }
 
   &.btn-teal.cmp-tds-button-primary {
+    @include type-button-handler(#ffffff, $teal-color, $teal-color, $primary-border-size, $primary-icon-color, $primary-opacity, #ffffff33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
     @include type-button-handler(#ffffff, $teal-color, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #ffffff33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
   }
 
   &.btn-teal.cmp-tds-button-tertiary {
-    @include type-button-handler($teal-color, get-color(container-transparent), get-color(container-transparent), $primary-border-size, #ffffffff, $secondary-opacity, $secondary-hover-color-opacity, $tertiary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($teal-color, get-color(container-transparent), $teal-color, $primary-border-size, #ffffff33, $secondary-opacity, $secondary-hover-color-opacity, $tertiary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
   }
 
   &.btn-teal.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {

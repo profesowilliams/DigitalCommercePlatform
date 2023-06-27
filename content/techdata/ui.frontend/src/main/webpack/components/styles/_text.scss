@@ -116,7 +116,6 @@
     li {
       font-size: inherit;
       text-align: left;
-      margin-left: rem(-40px);
 
       &::before {
         color: inherit;
@@ -285,7 +284,7 @@
 }
 
 .dp-text--white * {
-  color: #fff;
+  color: #fff!important;
 
   @include mobile {
     width: auto !important;
