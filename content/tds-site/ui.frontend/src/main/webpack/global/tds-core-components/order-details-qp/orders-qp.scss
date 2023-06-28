@@ -1,6 +1,6 @@
 .cmp-orders-qp__config-grid {
   * {
-    font-family: Arial !important;
+    font-family: Arial;
   }
 }
 
@@ -178,23 +178,23 @@
 }
 .footer-container {
   * {
-    font-family: Arial !important;
+    font-family: Arial;
     color: get-color(black);;
   }
   margin: 0 2rem;
   .box-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     padding: 16px 20px;
     background-color: get-color(neutral-gray-1);
     &__leftPart{
       display: flex;
       flex-direction: column;
-      max-width: 50rem;
+      max-width: 35rem;
       font-size: 14px;
       &-line1{
-        line-height: 24px;     
+        line-height: 24px;
       }
       &-line2{
         font-weight: 700;
@@ -203,12 +203,18 @@
     }
     &__rightPart{
       display: flex;
+      justify-content: end;
       align-items: center;
+      margin-left: 100px;
       &-subtotalLabel {
+        display: flex;
+        justify-content: end;
         font-weight: 700;
         font-size: 20px
       }
       &-subtotalValue {
+        display: flex;
+        justify-content: end;
         margin-left: 35px;
         font-weight: 400;
         font-size: 28px
