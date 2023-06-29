@@ -51,7 +51,7 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
               )}: `}
         </span>
         <span className="box-container__rightPart-subtotalValue">
-          {apiResponse?.content?.paymentDetails?.totalChargeFormatted}
+          {apiResponse?.content?.paymentDetails?.totalChargeFormatted}{' '}
           {currency ?? defaultCurrency}
         </span>
       </div>
