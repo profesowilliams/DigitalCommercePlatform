@@ -249,6 +249,14 @@ div.filter-accordion {
   height: 100%;
 }
 
+.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0;
+  text-align: left;
+}
 .order-filter-accordion {
   text-align: left;
   margin: 0;
@@ -268,7 +276,7 @@ div.filter-accordion {
 
     &--group {
       padding: 8px 0;
-      padding-left: 42px !important;
+      padding-left: 30px !important;
       position: relative;
 
       .count {
@@ -285,12 +293,13 @@ div.filter-accordion {
 
   h3 {
     color: $brand-charcoal;
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 0;
-    line-height: 19px;
+    line-height: 24px;
     cursor: pointer;
-    font-weight: normal;
+    font-weight: 400;
     margin: 14px 0;
+    text-align: left;
 
     &.active {
       color: $blue-dark;
@@ -332,7 +341,7 @@ div.filter-accordion {
 
     &--group {
       padding: 8px 0;
-      padding-left: 42px !important;
+      padding-left: 0px !important;
       position: relative;
 
       .count {
@@ -401,7 +410,6 @@ div.filter-accordion {
     padding-bottom: 0;
   gap: 20px;
   background: $brand-white;
-  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -414,8 +422,6 @@ div.filter-accordion {
   height: 106px;
   width: 100%;
   background-color: $brand-white;
-  // box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.27%);
-  box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.106);
   position: relative;
   bottom: 0;
   z-index: 1;
@@ -492,8 +498,6 @@ div.filter-accordion {
   height: 106px;
   width: 100%;
   background-color: $brand-white;
-  // box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.27%);
-  box-shadow: -6px 1px 14px 0px rgba(0, 0, 0, 0.106);
   position: relative;
   bottom: 0;
   z-index: 1;

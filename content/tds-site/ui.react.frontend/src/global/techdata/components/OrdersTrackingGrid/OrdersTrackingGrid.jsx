@@ -57,7 +57,6 @@ import OrderTrackingGridPagination from './Pagination/OrderTrackingGridPaginatio
 function OrdersTrackingGrid(props) {
     const [userData, setUserData] = useState(null);
     const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
-    const [columnDefinition, setColumnDefinition] = useState();
     const previousFilter = useRef(false);
     const hasSortChanged = useRef(false);
     const previousSortChanged = useRef(false);
@@ -86,7 +85,7 @@ function OrdersTrackingGrid(props) {
     };
     const effects = useOrderTrackingStore((st) => st.effects);
     const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
-    const { onAfterGridInit, onQueryChanged, onOrderQueryChanged } =
+    const { onAfterGridInit, onQueryChanged } =
         useExtendGridOperations(useOrderTrackingStore);
 
     const hasAIORights = userData?.roleList?.some(

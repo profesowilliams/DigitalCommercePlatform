@@ -158,7 +158,9 @@ export async function fetchData(config) {
   }
 
   const { sortData } = hasSortChanged.current || {};
-  const sortBy = sortData?.map((c) => `${c.colId}:${c.sort ?? ''}`);
+  const sortBy = sortData?.map(
+    (c) => `${c.colId === 'reseller' ? 'poNumber' : c.colId}:${c.sort ?? ''}`
+  );
   const params = { ...optionFieldsRef.current, sortBy };
 
   const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
