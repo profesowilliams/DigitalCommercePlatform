@@ -1,6 +1,6 @@
 .cmp-orders-qp__config-grid {
   * {
-    font-family: Arial !important;
+    font-family: Arial;
   }
 }
 
@@ -178,7 +178,7 @@
 }
 .footer-container {
   * {
-    font-family: Arial !important;
+    font-family: Arial;
     color: get-color(black);;
   }
   margin: 0 2rem;
@@ -187,14 +187,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
+    height: 80px;
     background-color: get-color(neutral-gray-1);
     &__leftPart{
       display: flex;
       flex-direction: column;
-      max-width: 50rem;
-      font-size: 14px;
       &-line1{
-        line-height: 24px;     
+        line-height: 24px;
       }
       &-line2{
         font-weight: 700;
