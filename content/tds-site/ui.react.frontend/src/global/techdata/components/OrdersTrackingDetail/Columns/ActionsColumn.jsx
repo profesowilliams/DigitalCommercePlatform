@@ -71,11 +71,7 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
           onMouseOver={handleActionMouseOver}
           onMouseLeave={handleActionMouseLeave}
         >
-          <MenuActions
-            hasAIORights={true}
-            hasOrderModificationRights={true}
-            items={menuActionsItems}
-          />
+          <MenuActions items={menuActionsItems} />
         </div>
       )}
     </div>

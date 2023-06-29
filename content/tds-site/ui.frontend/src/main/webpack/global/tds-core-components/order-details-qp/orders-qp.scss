@@ -62,37 +62,6 @@
       cursor: pointer;
       font-size: 16px;
     }
-    .actions-container {
-      position: relative;
-      display: inline-block;
-      height: 25px;
-
-      .actions-dropdown {
-        position: absolute;
-        width: 192px;
-        top: 25px;
-        right: 0;
-        box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
-        background-color: get-color(brand-white);
-        z-index: 10;
-        cursor: pointer;
-
-        ul {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-          line-height: 36px;
-
-          > li {
-            padding: 0 14px;
-            font-size: 16px;
-          }
-          > li:hover {
-            background-color: get-color(neutral-gray-2);
-          }
-        }
-      }
-    }
     button {
       background-color: inherit;
       border: none;
@@ -243,6 +212,39 @@
       }
     }
 }
+}
+
+/* Actions container styling */
+.actions-container {
+  position: relative;
+  display: inline-block;
+  height: 25px;
+
+  .actions-dropdown {
+    position: absolute;
+    width: 192px;
+    top: 25px;
+    right: 0;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
+    background-color: get-color(brand-white);
+    z-index: 10;
+    cursor: pointer;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      line-height: 36px;
+
+      > li {
+        padding: 0 14px;
+        font-size: 16px;
+      }
+      > li:hover {
+        background-color: get-color(neutral-gray-2);
+      }
+    }
+  }
 }
 
 .cmp-orders-grid, .cmp-base-grid {
