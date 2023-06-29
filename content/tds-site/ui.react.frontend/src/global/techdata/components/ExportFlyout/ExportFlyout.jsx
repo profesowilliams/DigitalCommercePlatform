@@ -113,7 +113,6 @@ function ExportFlyout({
       effects.setCustomState({ key: 'toaster', value: { ...toaster } });
     }
   };
-
   return (
     <BaseFlyout
       open={exportFlyoutConfig?.show}
