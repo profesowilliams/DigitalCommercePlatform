@@ -1,27 +1,24 @@
+/* stylelint-disable -- resolving would break current code */
 .hero-style-6 {
-    @include teaser-default();
-}
+  @include teaser-default();
+  position: relative;
 
-.hero-style-6 {
-    position: relative;
+  .cmp-teaser__content {
+    padding: 40px;
+    position: absolute;
+    left: 200px !important;
+    right: auto;
+    bottom: auto;
+    top: 105px !important;
+    background: #fff;
+    opacity: 0.8;
+    width: unset !important;
+    margin: 0px 0px 0px 40px !important;
+    flex-wrap: nowrap;
+  }
 
-    .cmp-teaser__content {
-        padding: 40px;
-        position: absolute;
-        left: 200px !important;
-        right: auto;
-        bottom: auto;
-        top: 105px !important;
-        background: #FFF;
-        opacity: 0.8;
-        width: unset !important;
-        margin: 0px 0px 0px 40px !important;
-        flex-wrap: nowrap;
-    }
-
-    h2.cmp-teaser__title {
-        font-style: normal;
-        color: #000;
-        text-shadow: none;
-    }
+  h2.cmp-teaser__title {
+    font-style: normal;
+    text-shadow: none;
+  }
 }

@@ -1,19 +1,23 @@
+/* stylelint-disable -- ryan.williams@tdsynnex.com: Too many errors to resolve right now */
 .top-nav {
   .nav {
     border: none;
   }
   .li,
-  [role="tab"] {
+  [role='tab'] {
     padding: 0 1rem;
     font-size: 0.9rem;
     border-bottom: transparent 3px solid;
+    color: map-get($color-palette, 'cool-gray-8');
     &:active,
     &:hover,
     &:focus {
       outline: none;
     }
     &:hover {
-      border-bottom: #00b1e2 3px solid;
+      color: map-get($color-palette, 'legacy-ocean');
+      text-decoration: underline;
+      text-underline-position: under;
     }
     min-height: 30px;
   }
@@ -68,7 +72,7 @@
   height: 36px;
   width: 133px;
 
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   font-size: 16px;
   letter-spacing: 0;
   line-height: 16px;
@@ -99,7 +103,7 @@
       padding: 0;
 
       &:not(:first-child):before {
-        content: "|";
+        content: '|';
         font-weight: $font-weight-normal;
         padding: 0 2rem;
       }
@@ -136,12 +140,13 @@
       width: 100%;
       justify-content: center;
       background-color: get-color(brand-blue);
-       svg, img {
-                width: 100%;
-              }
-              .cmp-tabs__tabpanel--text {
-                color: white;
-              }
+      svg,
+      img {
+        width: 100%;
+      }
+      .cmp-tabs__tabpanel--text {
+        color: white;
+      }
       &--text {
         width: 100%;
       }

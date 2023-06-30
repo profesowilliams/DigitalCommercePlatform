@@ -78,20 +78,17 @@
         }
 
         .cmp-teaser__content {
-            font-size: rem(16px);
             color: get-color(stone);
             //   min-height: rem(390px);
             min-height: auto;
 
             &-title {
-                font-size: $font-size-medium;
                 font-weight: bold;
             }
 
             .cmp-teaser__description {
                 font-family: $font-family-georgia;
                 padding: rem(25px);
-                line-height: rem(24px);
                 color: get-color(stone);
             }
 

@@ -103,6 +103,10 @@ $maps: (
               }
             }
           }
+
+          .cmp-button__text {
+            vertical-align: middle;
+          }
         }
 
         &:hover .cmp-button {
@@ -129,10 +133,18 @@ $maps: (
           color: $activeColor;
         }
 
-        &.disabled .cmp-button {
+        &.disabled .cmp-button, :disabled .cmp-button {
           @each $prop, $value in $disabledStyles {
             #{$prop}: $value;
           }
+        }
+
+        &.btn-minimal .cmp-button {
+          min-width: 7rem;
+          max-height: 32px;
+          padding: 8px 20px;
+          font-size: 12px;
+          line-height: 12px;
         }
       }
     }

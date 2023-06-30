@@ -64,15 +64,19 @@
     }
 
     &__title {
-      font-size: 66px;
-      line-height: 82px;
+      font-size: 4.125rem;
+      font-weight: 700;
+      line-height: 5.125rem;
       text-align: center;
       margin: 0 auto;
       width: 100%;
       color: white;
+
       @include mobile {
-        font-size: 52px;
-        line-height: 78px;
+        font-size: 2rem;
+        font-family: Arial;
+        font-weight: 700;
+        line-height: 2.5rem;
       }
     }
 
@@ -353,11 +357,11 @@
       }
 
       &:first-child {
-        background-color: rgba(204, 216, 20, 0.5);
+        background-color: var(--legacy-ocean, map-get($color-palette, 'legacy-ocean'));
       }
 
       &:last-child {
-        background-color: rgba(0, 177, 226, 0.5);
+        background-color: var(--legacy-dark-blue, map-get($color-palette, 'legacy-dark-blue'));
       }
 
       img {
@@ -366,10 +370,6 @@
     }
 
     &--title {
-      color: map-get($color-palette, 'td-dark-blue');
-      font-size: 20px;
-      line-height: 26px;
-      font-weight: 700;
       margin-bottom: 22px;
       padding-top: 6px;
 
@@ -382,9 +382,6 @@
 
     &--link {
       display: block;
-      color: map-get($color-palette, 'td-dark-blue');
-      font-size: 16px;
-      line-height: 24px;
       padding-bottom: 6px;
       cursor: pointer;
       text-decoration: none;
@@ -397,6 +394,10 @@
 /// @access public
 /// @group Teaser
 .cmp-teaser__bottom-section--wrapper {
+  width: 19.25rem;
+  height: 9.625rem;
+  flex-shrink: 0;
+
   cursor: pointer;
 
   &:hover .cmp-teaser__bottom-section--link {

@@ -287,10 +287,7 @@
                 margin-bottom: 15px;
                 .cmp-teaser__title,
                 .cmp-teaser__title a {
-                    color: #000C21;
                     font-weight: 400;
-                    font-size: 32px;
-                    line-height: 40px;
                     text-decoration: none;
                 }
             }
@@ -312,6 +309,10 @@
                 flex: 33.33% 0 0;
                 padding-left: 17px;
                 padding-right: 17px;
+
+                @include mobile {
+                    padding: 0;
+                }
 
                 .cmp-teaser {
                     height: 100%;
@@ -347,12 +348,9 @@
                             padding: 0;
 
                             ul {
-                                padding-left: 15px;
+                                padding-left: 2rem;
 
                                 li {
-                                    font-size: 16px;
-                                    line-height: 24px;
-                                    color: #262626;
                                     font-family: 'Arial', sans-serif;
                                 }
                             }
