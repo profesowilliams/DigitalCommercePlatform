@@ -5,6 +5,8 @@
 @import '../abstracts/mixins';
 @import '../styles/font-face';
 
+$tags: ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'small');
+
 /// Color map for typography
 /// @type Map
 /// @access public
@@ -44,6 +46,7 @@ $fonts: (
 /// @prop {List} p - Font size and line-height for P
 /// @prop {List} blockquote - Font size and line-height for Blockquote
 /// @prop {List} inline-link - Font size and line-height for Inline link
+/// @prop {List} small - Font size and line-height for Small
 $typography: (
   'h1': (
     2.5rem,
@@ -93,6 +96,10 @@ $typography: (
     0.875rem,
     1.5rem,
   ),
+  'small': (
+    0.875rem,
+    1.5rem,
+  )
 );
 
 /// Font size and line-height map for small breakpoints
@@ -107,6 +114,7 @@ $typography: (
 /// @prop {List} p - Font size and line-height for P
 /// @prop {List} blockquote - Font size and line-height for Blockquote
 /// @prop {List} inline-link - Font size and line-height for Inline link
+/// @prop {List} small - Font size and line-height for Small
 $typography-mobile: (
   'h1': (
     2rem,
@@ -156,6 +164,10 @@ $typography-mobile: (
     0.875rem,
     1.5rem,
   ),
+    'small': (
+    0.875rem,
+    1.5rem,
+  )
 );
 
 /// Mixin for applying typography styles.
@@ -268,6 +280,12 @@ body {
     @include typography('blockquote', 'paragraph', 'quote');
   }
 
+  /// Styles for small inside <body>
+  /// @access public
+  small {
+    @include typography('small', 'paragraph', 'default');
+  }
+
   /// Styles for small breakpoints
   /// @access public
   @media (width <= 992px) {
@@ -320,12 +338,17 @@ body {
     blockquote {
       @include typography('blockquote', 'default', 'default', $typography-mobile);
     }
+
+    /// Styles for small at small breakpoints
+    small {
+      @include typography('small', 'default', 'default', $typography-mobile);
+    }
   }
 }
 
 /// Generate styles for apj
 /// @access public
-.apj {
+.apj, .asiapacificjapan {
   /// Styles for h1 inside .apj
   h1 {
     @include typography('h1', 'default', 'apj-header');
@@ -375,6 +398,11 @@ body {
   /// Styles for blockquote inside .apj
   blockquote {
     @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for small inside .apj
+  small {
+    @include typography('small', 'paragraph', 'default');
   }
 
   /// Styles for small breakpoints
@@ -428,12 +456,17 @@ body {
     blockquote {
       @include typography('blockquote', 'default', 'default', $typography-mobile);
     }
+
+    /// Styles for small at small breakpoints
+    small {
+      @include typography('small', 'default', 'default', $typography-mobile);
+    }
   }
 }
 
 /// Generate styles for td
 /// @access public
-.td {
+.td, .techdata {
   /// Styles for h1 inside .td
   h1 {
     @include typography('h1', 'default', 'td-header');
@@ -483,6 +516,11 @@ body {
   /// Styles for blockquote inside .td
   blockquote {
     @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for small inside .td
+  small {
+    @include typography('small', 'paragraph', 'default');
   }
 
   /// Styles for small breakpoints
@@ -536,12 +574,17 @@ body {
     blockquote {
       @include typography('blockquote', 'default', 'default', $typography-mobile);
     }
+
+    /// Styles for small at small breakpoints
+    small {
+      @include typography('small', 'default', 'default', $typography-mobile);
+    }
   }
 }
 
 /// Block of typography styles for `.tds` class.
 /// @access public
-.tds {
+.tds, .tdsynnex {
   /// Styles for `h1` tag in `.tds` class.
   h1 {
     @include typography('h1', 'header', 'tds-header');
@@ -591,6 +634,11 @@ body {
   /// Styles for `blockquote` tag in `.tds` class.
   blockquote {
     @include typography('blockquote', 'paragraph', 'quote');
+  }
+
+  /// Styles for `small` tag in `.tds` class.
+  small {
+    @include typography('small', 'paragraph', 'default');
   }
 
   /// Styles for .tds elements at small breakpoints (max-width: 992px)
@@ -654,6 +702,11 @@ body {
     /// Styles for `blockquote` at small breakpoints in `.tds` class.
     blockquote {
       @include typography('blockquote', 'default', 'default', $typography-mobile);
+    }
+
+    /// Styles for `small` at small breakpoints in `.tds` class.
+    small {
+      @include typography('small', 'default', 'default', $typography-mobile);
     }
   }
 }

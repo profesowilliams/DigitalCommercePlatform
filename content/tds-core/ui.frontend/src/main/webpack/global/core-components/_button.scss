@@ -1945,34 +1945,6 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   }
 }
 
-// Button specific to the practice builder subheader
-.subheader {
-  @extend .button;
-
-  .button {
-    &.cmp-button--small-minimal {
-      @include mobile {
-        top: 5px;
-      }
-
-      & .cmp-button {
-        height: unset;
-        padding-top: 8px !important;
-        padding-bottom: 8px !important;
-        outline: 1px solid get-color('teal');
-        outline-offset: -1px;
-        font-size: 12px;
-        line-height: 16px;
-        @include practice_builder_button_action_style;
-      }
-    }
-
-    &.cmp-button-align-right {
-      float: right;
-    }
-  }
-}
-
 .button {
   &.cmp-button-default {
     color: map-get($color-palette, 'charcoal');
