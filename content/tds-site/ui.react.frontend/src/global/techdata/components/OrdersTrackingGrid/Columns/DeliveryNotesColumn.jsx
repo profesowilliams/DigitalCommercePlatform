@@ -5,7 +5,6 @@ import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
 function DeliveryNotesColumn({
   deliveryNotes = [],
-  invoices = [],
   multiple,
   id,
   reseller,
@@ -16,13 +15,13 @@ function DeliveryNotesColumn({
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
-      value: { data: deliveryNotes, show: true, id: id, reseller: reseller },
+      value: { data: deliveryNotes, show: true, id: id, reseller: reseller.id },
     });
   };
 
   //TODO: change to use Denotes after BE create mock request for downloading dnotes
   const handleDownload = () => {
-    openFilePdf('Invoice', invoices[0]?.id);
+    openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
   return deliveryNotes.length == 0 ? (
     '-'

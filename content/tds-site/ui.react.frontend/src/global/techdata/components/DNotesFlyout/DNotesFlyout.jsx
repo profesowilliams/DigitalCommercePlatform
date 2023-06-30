@@ -30,9 +30,9 @@ function DNotesFlyout({
 
   const handleDownload = () => {
     if (selected.length === 1) {
-      return openFilePdf('Invoice', selected);
+      return openFilePdf('DNote', config?.id, selected);
     } else if (selected.length > 1) {
-      return downloadAllFile('Invoice', selected);
+      return downloadAllFile('DNote', config?.id, selected);
     }
   };
   return (
@@ -66,7 +66,7 @@ function DNotesFlyout({
               {'  '}
             </span>
             <span className="cmp-flyout__content-description--ellipsis">
-              {dNoteFlyoutConfig?.reseller?.id}
+              {dNoteFlyoutConfig?.reseller}
             </span>
           </div>
         </div>

@@ -33,10 +33,11 @@ const ActionsColumn = ({
   const id = apiResponse?.orderNumber;
   let invoices = [];
   invoices = line.invoices;
+  let deliveryNotes = [];
+  deliveryNotes = line.deliveryNotes;
 
-  //TODO: correct after invoice and dnote download request is ready
   const handleDownloadDnote = () => {
-    openFilePdf('Invoice', invoices[0]?.id);
+    openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
   const handleDownloadInvoice = () => {
     openFilePdf('Invoice', id, invoices[0]?.id);

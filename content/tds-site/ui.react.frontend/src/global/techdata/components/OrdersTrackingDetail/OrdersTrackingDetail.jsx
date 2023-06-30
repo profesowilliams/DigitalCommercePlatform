@@ -113,11 +113,11 @@ function OrdersTrackingDetail(props) {
           dNoteColumnList={config?.dNoteColumnList}
           subheaderReference={document.querySelector('.subheader > div > div')}
           isTDSynnex={isTDSynnex}
-          downloadAllFile={(flyoutType, orderId) =>
-            downloadAllFile(flyoutType, orderId)
+          downloadAllFile={(flyoutType, orderId, selectedId) =>
+            downloadAllFile(flyoutType, orderId, selectedId)
           }
-          openFilePdf={(flyoutType, orderId) =>
-            openFilePdf(flyoutType, orderId)
+          openFilePdf={(flyoutType, orderId, selectedId) =>
+            openFilePdf(flyoutType, orderId, selectedId)
           }
         />
         <InvoicesFlyout

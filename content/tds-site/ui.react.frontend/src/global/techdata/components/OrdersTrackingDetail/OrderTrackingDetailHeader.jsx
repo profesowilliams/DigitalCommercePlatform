@@ -52,7 +52,7 @@ const OrderTrackingDetailHeader = ({
   const hasMultipleDNotes = deliveryNotes.length > 1;
   const hasMultipleInvoices = invoices.length > 1;
   const handleDownloadDNote = () => {
-    openFilePdf('Invoice', invoices[0]?.id);
+    openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
   const handleDownloadInvoice = () => {
     openFilePdf('Invoice', id, invoices[0]?.id);

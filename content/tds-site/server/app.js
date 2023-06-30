@@ -5299,6 +5299,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               created: "02-09-2022",
               shippedFrom: null,
               actualShipDate: "03-09-2022",
+              actualShipDateFormatted: "04/02/2022",
               shippedFromText: "Aalst",
             },
           ],

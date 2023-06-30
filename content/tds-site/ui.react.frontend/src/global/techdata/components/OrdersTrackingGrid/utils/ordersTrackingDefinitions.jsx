@@ -18,38 +18,37 @@ export const ordersTrackingDefinition = (
         const { columnKey } = aemDefinition;
         const { value, data } = eventProps;
         const columnComponents = {
-            // US 399164: We will update the field mapping later when the UI service is ready.
-            // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
-            // and will render order date on DIT and SIT env
-            //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
-            updated: data?.updatedFormatted ?? data?.created,
-            created: data?.createdFormatted ?? data?.created,
-            select: <SelectColumn data={data} eventProps={eventProps} />,
-            priceFormatted: <TotalColumn data={data} />,
-            invoices: (
-                <InvoiceColumn
-                    id={data?.id}
-                    invoices={data?.invoices}
-                    multiple={multiple}
-                    reseller={data?.reseller}
-                    openFilePdf={openFilePdf}
-                    hasAIORights={hasAIORights}
-                />
-            ),
-            deliveryNotes: (
-                <DeliveryNotesColumn
-                    id={data?.id}
-                    deliveryNotes={data?.deliveryNotes}
-                    invoices={data?.invoices}
-                    multiple={multiple}
-                    reseller={data?.reseller}
-                    openFilePdf={openFilePdf}
-                />
-            ),
-            id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
-            shipTo: <ShipToColumn data={data?.shipTo} />,
-            reseller: <ResellerColumn data={data?.reseller} />,
-            actions: <OrderTrackingActionColumn />,
+          // US 399164: We will update the field mapping later when the UI service is ready.
+          // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
+          // and will render order date on DIT and SIT env
+          //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
+          updated: data?.updatedFormatted ?? data?.created,
+          created: data?.createdFormatted ?? data?.created,
+          select: <SelectColumn data={data} eventProps={eventProps} />,
+          priceFormatted: <TotalColumn data={data} />,
+          invoices: (
+            <InvoiceColumn
+              id={data?.id}
+              invoices={data?.invoices}
+              multiple={multiple}
+              reseller={data?.reseller}
+              openFilePdf={openFilePdf}
+              hasAIORights={hasAIORights}
+            />
+          ),
+          deliveryNotes: (
+            <DeliveryNotesColumn
+              id={data?.id}
+              deliveryNotes={data?.deliveryNotes}
+              multiple={multiple}
+              reseller={data?.reseller}
+              openFilePdf={openFilePdf}
+            />
+          ),
+          id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
+          shipTo: <ShipToColumn data={data?.shipTo} />,
+          reseller: <ResellerColumn data={data?.reseller} />,
+          actions: <OrderTrackingActionColumn />,
         };
         const defaultValue = () => (typeof value !== 'object' && value) || '';
         return columnComponents[columnKey] || defaultValue();
