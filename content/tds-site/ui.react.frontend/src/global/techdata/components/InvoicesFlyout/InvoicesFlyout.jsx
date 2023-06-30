@@ -31,9 +31,9 @@ function InvoicesFlyout({
 
   const handleDownload = () => {
     if (selected.length === 1) {
-      return openFilePdf('Invoice', selected);
+      return openFilePdf('Invoice', config?.id, selected);
     } else if (selected.length > 1) {
-      return downloadAllFile('Invoice', selected);
+      return downloadAllFile('Invoice', config?.id, selected);
     }
   };
   return (
@@ -67,7 +67,7 @@ function InvoicesFlyout({
               {'  '}
             </span>
             <span className="cmp-flyout__content-description--ellipsis">
-              {invoicesFlyoutConfig?.reseller?.id}
+              {invoicesFlyoutConfig?.reseller}
             </span>
           </div>
         </div>

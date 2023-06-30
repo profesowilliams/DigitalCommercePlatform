@@ -389,55 +389,57 @@ function OrdersTrackingGrid(props) {
         });
     };
 
-    const downloadFileBlob = async (flyoutType, orderId) => {
-        try {
-            const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
-            const mapIds = orderId.map((ids) => `&id=${ids}`).join('');
-            const downloadOrderInvoicesUrl = url + `?Type=${flyoutType}${mapIds}`;
-            const name = `${flyoutType}.zip`;
-            await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
-                redirect: false,
-            });
-        } catch (error) {
-            console.error('Error', error);
-        }
+    const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
+      try {
+        const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
+        const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
+        const downloadOrderInvoicesUrl =
+          url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
+        const name = `${flyoutType}.zip`;
+        await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
+          redirect: false,
+        });
+      } catch (error) {
+        console.error('Error', error);
+      }
     };
 
-    function downloadAllFile(flyoutType, orderId) {
-        return downloadFileBlob(flyoutType, orderId);
+    function downloadAllFile(flyoutType, orderId, selectedId) {
+      return downloadFileBlob(flyoutType, orderId, selectedId);
     }
 
-    async function openFilePdf(flyoutType, orderId) {
-        const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
-        const singleDownloadUrl = url + `?Type=${flyoutType}&id=${orderId[0]}`;
-        const name = `${orderId[0]}.pdf`;
-        await requestFileBlobWithoutModal(singleDownloadUrl, name, {
-            redirect: true,
-        });
+    async function openFilePdf(flyoutType, orderId, selectedId) {
+      const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
+      const singleDownloadUrl =
+        url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
+      const name = `${orderId}.pdf`;
+      await requestFileBlobWithoutModal(singleDownloadUrl, name, {
+        redirect: true,
+      });
     }
 
     function onCloseToaster() {
-        closeAndCleanToaster();
+      closeAndCleanToaster();
     }
     const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
     const hasAccess =
-        hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
+      hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
     useEffect(() => {
-        if (
-            hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
-            isFromRenewalDetailsPage()
-        ) {
-            hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
-        }
-        setFilterList([...predefined, ...customized]);
-        setCustomFiltersChecked(customized);
-        window.getSessionInfo &&
-            window.getSessionInfo().then((data) => {
-                setUserData(data[1]);
-            });
-        setDateType(filterLabels.orderDateLabel);
+      if (
+        hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
+        isFromRenewalDetailsPage()
+      ) {
+        hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+      }
+      setFilterList([...predefined, ...customized]);
+      setCustomFiltersChecked(customized);
+      window.getSessionInfo &&
+        window.getSessionInfo().then((data) => {
+          setUserData(data[1]);
+        });
+      setDateType(filterLabels.orderDateLabel);
     }, []);
 
     return (
@@ -551,11 +553,11 @@ function OrdersTrackingGrid(props) {
                     '.subheader > div > div'
                   )}
                   isTDSynnex={isTDSynnex}
-                  downloadAllFile={(flyoutType, orderId) =>
-                    downloadAllFile(flyoutType, orderId)
+                  downloadAllFile={(flyoutType, orderId, selectedId) =>
+                    downloadAllFile(flyoutType, orderId, selectedId)
                   }
-                  openFilePdf={(flyoutType, orderId) =>
-                    openFilePdf(flyoutType, orderId)
+                  openFilePdf={(flyoutType, orderId, selectedId) =>
+                    openFilePdf(flyoutType, orderId, selectedId)
                   }
                   hasAIORights={hasAIORights}
                 />

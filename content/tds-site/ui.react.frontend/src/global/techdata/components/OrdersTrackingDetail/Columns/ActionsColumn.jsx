@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../MenuActions';
 
-const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
+const ActionsColumn = ({
+  line,
+  config = {},
+  openFilePdf,
+  apiResponse,
+  hasAIORights,
+}) => {
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
 
   const handleActionMouseOver = () => {
@@ -24,7 +30,7 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
   const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
   const areInvoicesAvailable = line.invoices.length > 0;
   const isSerialNumberAvailable = Boolean(line.serialNumber);
-
+  const id = apiResponse?.orderNumber;
   let invoices = [];
   invoices = line.invoices;
 
@@ -33,7 +39,7 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
     openFilePdf('Invoice', invoices[0]?.id);
   };
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', invoices[0]?.id);
+    openFilePdf('Invoice', id, invoices[0]?.id);
   };
 
   const menuActionsItems = [
@@ -48,7 +54,7 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
       onClick: handleDownloadDnote,
     },
     {
-      condition: areInvoicesAvailable,
+      condition: hasAIORights && areInvoicesAvailable,
       label: labels?.detailsActionViewInvoices,
       onClick: handleDownloadInvoice,
     },
@@ -58,6 +64,7 @@ const ActionsColumn = ({ line, config = {}, openFilePdf }) => {
       onClick: null,
     },
   ];
+
   return (
     <div
       className="cmp-order-tracking-grid-details__action-column actions-container"

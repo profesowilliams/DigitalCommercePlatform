@@ -34,11 +34,12 @@ function OrdersTrackingDetail(props) {
     (role) => role.entitlement === 'OrderModification'
   );
 
-  const downloadFileBlob = async (flyoutType, orderId) => {
+  const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
     try {
       const url = componentProps.ordersDownloadDocumentsEndpoint || 'nourl';
-      const mapIds = orderId.map((ids) => `&id=${ids}`).join('');
-      const downloadOrderInvoicesUrl = url + `?Type=${flyoutType}${mapIds}`;
+      const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
+      const downloadOrderInvoicesUrl =
+        url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
       const name = `${flyoutType}.zip`;
       await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
         redirect: false,
@@ -48,14 +49,15 @@ function OrdersTrackingDetail(props) {
     }
   };
 
-  function downloadAllFile(flyoutType, orderId) {
-    return downloadFileBlob(flyoutType, orderId);
+  function downloadAllFile(flyoutType, orderId, selectedId) {
+    return downloadFileBlob(flyoutType, orderId, selectedId);
   }
 
-  async function openFilePdf(flyoutType, orderId) {
+  async function openFilePdf(flyoutType, orderId, selectedId) {
     const url = componentProps.ordersDownloadDocumentsEndpoint || 'nourl';
-    const singleDownloadUrl = url + `?Type=${flyoutType}&id=${orderId[0]}`;
-    const name = `${orderId[0]}.pdf`;
+    const singleDownloadUrl =
+      url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
+    const name = `${orderId}.pdf`;
     await requestFileBlobWithoutModal(singleDownloadUrl, name, {
       redirect: true,
     });
@@ -95,6 +97,7 @@ function OrdersTrackingDetail(props) {
               data={apiResponse.content}
               gridProps={config}
               openFilePdf={openFilePdf}
+              hasAIORights={hasAIORights}
             />
           )}
         </div>
@@ -123,11 +126,11 @@ function OrdersTrackingDetail(props) {
           invoicesColumnList={config?.invoicesColumnList}
           subheaderReference={document.querySelector('.subheader > div > div')}
           isTDSynnex={isTDSynnex}
-          downloadAllFile={(flyoutType, orderId) =>
-            downloadAllFile(flyoutType, orderId)
+          downloadAllFile={(flyoutType, orderId, selectedId) =>
+            downloadAllFile(flyoutType, orderId, selectedId)
           }
-          openFilePdf={(flyoutType, orderId) =>
-            openFilePdf(flyoutType, orderId)
+          openFilePdf={(flyoutType, orderId, selectedId) =>
+            openFilePdf(flyoutType, orderId, selectedId)
           }
           hasAIORights={hasAIORights}
         />

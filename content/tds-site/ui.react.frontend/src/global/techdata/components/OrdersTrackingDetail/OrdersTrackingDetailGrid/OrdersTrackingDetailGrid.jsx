@@ -15,9 +15,15 @@ import {
 } from '../../../../../utils/featureFlagUtils';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../../utils/constants';
 
-function OrdersTrackingDetailGrid({ data, gridProps, openFilePdf }) {
+function OrdersTrackingDetailGrid({
+  data,
+  gridProps,
+  openFilePdf,
+  hasAIORights,
+}) {
   const [userData, setUserData] = useState(null);
   const gridData = data.items ?? [];
+  const apiResponse = data;
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -110,6 +116,8 @@ function OrdersTrackingDetailGrid({ data, gridProps, openFilePdf }) {
           line={data}
           config={gridProps}
           openFilePdf={openFilePdf}
+          apiResponse={apiResponse}
+          hasAIORights={hasAIORights}
         />
       ),
       width: gridColumnWidths.actions,

@@ -55,7 +55,7 @@ const OrderTrackingDetailHeader = ({
     openFilePdf('Invoice', invoices[0]?.id);
   };
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', invoices[0]?.id);
+    openFilePdf('Invoice', id, invoices[0]?.id);
   };
   const triggerDNotesFlyout = () => {
     setCustomState({

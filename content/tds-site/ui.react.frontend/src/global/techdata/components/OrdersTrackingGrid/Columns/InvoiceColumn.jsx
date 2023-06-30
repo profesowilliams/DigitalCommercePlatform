@@ -16,11 +16,11 @@ function InvoiceColumn({
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
-      value: { data: invoices, show: true, id: id, reseller: reseller },
+      value: { data: invoices, show: true, id: id, reseller: reseller?.id },
     });
   };
   const handleDownload = () => {
-    hasAIORights && openFilePdf('Invoice', invoices[0]?.id);
+    hasAIORights && openFilePdf('Invoice', id, invoices[0]?.id);
   };
   return invoices.length == 0 ? (
     '-'
