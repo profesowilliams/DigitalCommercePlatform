@@ -258,6 +258,19 @@
                                         fieldLabel="Icon from DAM"
                                         name="./firstSeeThroughSectionIcon"
                                         rootPath="/content/dam"/>
+                                    <firstSeeThroughBackgroundColor
+                                            granite:hide="${!cqDesign.fontColorEnabled || cqDesign.fontColorSwatchesOnly}"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                            fieldLabel="Font Color"
+                                            name="./firstSeeThroughBackgroundColor"
+                                            showDefaultColors="{Boolean}false"
+                                            showProperties="{Boolean}true"
+                                            showSwatches="{Boolean}true">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
+                                    </firstSeeThroughBackgroundColor>
                                     <heading
                                         granite:class="coral-Heading coral-Heading--4"
                                         jcr:primaryType="nt:unstructured"
@@ -363,6 +376,19 @@
                                         fieldLabel="Icon from DAM"
                                         name="./secondSeeThroughSectionIcon"
                                         rootPath="/content/dam"/>
+                                    <secondSeeThroughBackgroundColor
+                                            granite:hide="${!cqDesign.fontColorEnabled || cqDesign.fontColorSwatchesOnly}"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                            fieldLabel="Font Color"
+                                            name="./secondSeeThroughBackgroundColor"
+                                            showDefaultColors="{Boolean}false"
+                                            showProperties="{Boolean}true"
+                                            showSwatches="{Boolean}true">
+                                        <datasource
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="core/wcm/components/commons/datasources/allowedcolorswatches/v1"/>
+                                    </secondSeeThroughBackgroundColor>
                                     <heading
                                         granite:class="coral-Heading coral-Heading--4"
                                         jcr:primaryType="nt:unstructured"
