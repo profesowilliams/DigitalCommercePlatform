@@ -91,78 +91,59 @@ use(["../../../common/utils.js"], function (utils) {
     if (invoicesColumnList != null) {
         jsonObject["invoicesColumnList"] = invoicesColumnList;
     }
+    const invoicesLabelsList = [
+      { key: "title", name: "invoicesFlyoutTitle" },
+      { key: "description", name: "invoicesFlyoutDescription" },
+      { key: "orderNo", name: "invoicesFlyoutOrderNo" },
+      { key: "poNo", name: "invoicesFlyoutPoNo" },
+      { key: "button", name: "invoicesFlyoutButton" },
+      { key: "clearAllButton", name: "invoicesFlyoutClearAllButton" },
+    ];
 
-    if (properties && properties["invoicesFlyoutTitle"]) {
-        invoicesFlyout.title = properties["invoicesFlyoutTitle"];
-    }
-
-    if (properties && properties["invoicesFlyoutDescription"]) {
-        invoicesFlyout.description = properties["invoicesFlyoutDescription"];
-    }
-
-    if (properties && properties["invoicesFlyoutOrderNo"]) {
-        invoicesFlyout.orderNo = properties["invoicesFlyoutOrderNo"];
-    }
-
-    if (properties && properties["invoicesFlyoutPoNo"]) {
-        invoicesFlyout.poNo = properties["invoicesFlyoutPoNo"];
-    }
-
-    if (properties && properties["invoicesFlyoutButton"]) {
-        invoicesFlyout.button = properties["invoicesFlyoutButton"];
-    }
-
-    if (properties && properties["invoicesFlyoutClearAllButton"]) {
-        invoicesFlyout.clearAllButton = properties["invoicesFlyoutClearAllButton"];
-    }
+    properties &&
+      invoicesLabelsList.map((label) => {
+        invoicesFlyout[label.key] = properties[label.name];
+      });
 
     if (invoicesFlyout != null) {
-        jsonObject["invoicesFlyout"] = invoicesFlyout;
+      jsonObject["invoicesFlyout"] = invoicesFlyout;
     }
+
     //D-notes flyout options
     let dNoteColumnList = utils.getDataFromMultifield(
-        resourceResolver,
-        "dNoteColumnList",
-        function (childResource) {
-            let itemData = {};
+      resourceResolver,
+      "dNoteColumnList",
+      function (childResource) {
+        let itemData = {};
 
-            itemData.columnLabel = childResource.properties["columnLabel"];
-            itemData.columnKey = childResource.properties["columnKey"];
-            return itemData;
-        }
+        itemData.columnLabel = childResource.properties["columnLabel"];
+        itemData.columnKey = childResource.properties["columnKey"];
+        return itemData;
+      }
     );
 
     if (dNoteColumnList != null) {
-        jsonObject["dNoteColumnList"] = dNoteColumnList;
+      jsonObject["dNoteColumnList"] = dNoteColumnList;
     }
 
-    if (properties && properties["dNotesFlyoutTitle"]) {
-        dNotesFlyout.title = properties["dNotesFlyoutTitle"];
-    }
+    const dnotesLabelsList = [
+      { key: "title", name: "dNotesFlyoutTitle" },
+      { key: "description", name: "dNotesFlyoutDescription" },
+      { key: "orderNo", name: "dNotesFlyoutOrderNo" },
+      { key: "poNo", name: "dNotesFlyoutPoNo" },
+      { key: "button", name: "dNotesFlyoutButton" },
+      { key: "clearAllButton", name: "dNotesFlyoutClearAllButton" },
+    ];
 
-    if (properties && properties["dNotesFlyoutDescription"]) {
-        dNotesFlyout.description = properties["dNotesFlyoutDescription"];
-    }
-
-    if (properties && properties["dNotesFlyoutOrderNo"]) {
-        dNotesFlyout.orderNo = properties["dNotesFlyoutOrderNo"];
-    }
-
-    if (properties && properties["dNotesFlyoutPoNo"]) {
-        dNotesFlyout.poNo = properties["dNotesFlyoutPoNo"];
-    }
-
-    if (properties && properties["dNotesFlyoutButton"]) {
-        dNotesFlyout.button = properties["dNotesFlyoutButton"];
-    }
-
-    if (properties && properties["dNotesFlyoutClearAllButton"]) {
-        dNotesFlyout.clearAllButton = properties["dNotesFlyoutClearAllButton"];
-    }
+    properties &&
+      dnotesLabelsList.map((label) => {
+        dNotesFlyout[label.key] = properties[label.name];
+      });
 
     if (dNotesFlyout != null) {
-        jsonObject["dNotesFlyout"] = dNotesFlyout;
+      jsonObject["dNotesFlyout"] = dNotesFlyout;
     }
+
     jsonObject["ordersDownloadDocumentsEndpoint"] =
         this.serviceData.uiServiceDomain +
         this.serviceData.ordersDownloadDocumentsEndpoint || "";
