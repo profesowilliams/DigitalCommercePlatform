@@ -313,13 +313,13 @@ export const getFilterFlyoutPredefined = (filterLabels) => [
       {
         id: 1,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
-        filterOptionKey: 'ZZCC',
+        filterOptionKey: 'ZZCC&type=ZZIT',
         group: 'type',
       },
       {
         id: 2,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
-        filterOptionKey: 'ZZCT',
+        filterOptionKey: 'ZZCT&type=ZZOR&type=ZZPB',
         group: 'type',
       },
       {
@@ -330,12 +330,6 @@ export const getFilterFlyoutPredefined = (filterLabels) => [
       },
       {
         id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
-        filterOptionKey: 'ZZIT',
-        group: 'type',
-      },
-      {
-        id: 5,
         filterOptionLabel: getDictionaryValueOrKey(
           filterLabels.consignmentFillUp
         ),
@@ -343,31 +337,19 @@ export const getFilterFlyoutPredefined = (filterLabels) => [
         group: 'type',
       },
       {
-        id: 6,
+        id: 5,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.license),
         filterOptionKey: 'ZZLV',
         group: 'type',
       },
       {
-        id: 7,
+        id: 6,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.tdmrsProject),
         filterOptionKey: 'ZZMR',
         group: 'type',
       },
       {
-        id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
-        filterOptionKey: 'ZZOR',
-        group: 'type',
-      },
-      {
-        id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
-        filterOptionKey: 'ZZPB',
-        group: 'type',
-      },
-      {
-        id: 10,
+        id: 7,
         filterOptionLabel: getDictionaryValueOrKey(
           filterLabels.tdStaffPurchase
         ),
@@ -375,37 +357,37 @@ export const getFilterFlyoutPredefined = (filterLabels) => [
         group: 'type',
       },
       {
-        id: 11,
+        id: 8,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.projectOrder),
         filterOptionKey: 'ZZPT',
         group: 'type',
       },
       {
-        id: 12,
+        id: 9,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.quotationLabel),
         filterOptionKey: 'ZZQT',
         group: 'type',
       },
       {
-        id: 13,
+        id: 10,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.thirdParty),
         filterOptionKey: 'ZZSB',
         group: 'type',
       },
       {
-        id: 14,
+        id: 11,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.licensing),
         filterOptionKey: 'ZZSL',
         group: 'type',
       },
       {
-        id: 15,
+        id: 12,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.stockingOrder),
         filterOptionKey: 'ZZSO',
         group: 'type',
       },
       {
-        id: 16,
+        id: 13,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.streamOne),
         filterOptionKey: 'ZZST',
         group: 'type',
