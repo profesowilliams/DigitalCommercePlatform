@@ -93,10 +93,10 @@ export async function fetchData(config) {
   }
 
   Object.keys(filtersRefs).map((filter) => {
-    if (filter !== 'customFilterRef') {
+    if (!['status', 'type'].includes(filter)) {
       const filterValue = filtersRefs[filter]?.current;
       filterValue && mapUrl.set(filter, filterValue);
-    } else {
+    } else if(filter === 'customFilterRef') {
       filtersRefs[filter].current?.map((ref) => {
         ref?.filterOptionList?.map((option) => {
           option?.checked &&
@@ -111,7 +111,7 @@ export async function fetchData(config) {
 
     if (sortData[0]) {
       mapUrl.set('SortDirection', sortData[0].sort);
-      mapUrl.set('SortBy', sortData[0].colId);
+      mapUrl.set('SortBy', sortData[0].colId === 'reseller' ? 'poNumber' : sortData[0].colId);
     }
 
     const secondLevelSort = calcSecondLevelSorting(sortData);
@@ -168,7 +168,10 @@ export async function fetchData(config) {
     params.PageNumber = 1;
   }
 
-  const filterUrl = mapStrucToUrlStr(mapUrl);
+  const filtersStatusAndType = (filtersRefs.type.current ?? '') + (filtersRefs.status.current ?? '');
+
+  const filterUrl = mapStrucToUrlStr(mapUrl) + filtersStatusAndType ;
+
   previousSortChanged.current = hasSortChanged.current;
   firstAPICall.current = false;
 
