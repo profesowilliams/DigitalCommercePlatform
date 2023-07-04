@@ -11,7 +11,9 @@
         ordersUrl: "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-grid",
         uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/order",
         ordersDownloadDocumentsEndpoint:
-      "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
+            "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
+        exportAllOrderLinesEndpoint: "http://localhost:3000/ui-commerce/v2/OrdersExport",
+        exportLinesWithSerialNumbersOnlyEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersExport",
         agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
         labels: {
             menuCopy: 'Copy',
@@ -100,6 +102,18 @@
             columnLabel: "Ship Date",
             columnKey: "createdFormatted",
         },
+    ],
+    exportFlyout: {
+      title: "Export",
+      description: "Send to",
+      secondaryDescription: "Details to include",
+      button: "Export",
+      exportSuccessMessage:"Your .xlsx export has been created successfully."
+    },
+    exportOptionsList: [{ label: "Exel (.xlxs)", key: "exportOptionsListKey" }],
+    exportSecondaryOptionsList: [
+      { label: "Export all order lines", key: "exportAllOrderLinesKey" },
+      { label: "Export lines with serial numbers only", key: "exportLinesWithSerialNumbersKey" },
     ],
     };
     renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);

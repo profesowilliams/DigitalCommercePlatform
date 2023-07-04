@@ -1,6 +1,5 @@
 import React from 'react';
 import { If } from './../../../helpers/If';
-import './orderfilter.scss';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';

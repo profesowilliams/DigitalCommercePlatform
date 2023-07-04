@@ -9,6 +9,7 @@ import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
 import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
 import OrderTrackingContainer from './OrderTrackingContainer';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
+import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
@@ -139,6 +140,16 @@ function OrdersTrackingDetail(props) {
         subheaderReference={document.querySelector('.subheader > div > div')}
         items={apiResponse?.content?.items}
         labels={config.labels}
+      />
+      <ExportFlyout
+        store={useOrderTrackingStore}
+        componentProp={config}
+        exportFlyout={config?.exportFlyout}
+        exportOptionsList={config?.exportOptionsList}
+        exportSecondaryOptionsList={config?.exportSecondaryOptionsList}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        isTDSynnex={isTDSynnex}
+        exportAnalyticsLabel={''}
       />
     </div>
   );

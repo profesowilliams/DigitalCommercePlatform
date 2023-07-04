@@ -148,6 +148,14 @@ use(["../../../common/utils.js"], function (utils) {
         this.serviceData.uiServiceDomain +
         this.serviceData.ordersDownloadDocumentsEndpoint || "";
 
+    jsonObject["exportAllOrderLinesEndpoint"] =
+      this.serviceData.uiServiceDomain +
+        this.serviceData.exportAllOrderLinesEndpoint || "";
+
+    jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
+      this.serviceData.uiServiceDomain +
+        this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
+
     return {
         configJson: JSON.stringify(jsonObject)
     };

@@ -9,7 +9,6 @@ import { If } from "../../../helpers/If";
 import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import { DateOptionsList } from "./DateOptionsList";
-import "./datePicker.scss";
 import { getClientLocale, localeByCountry } from "../../../../../utils/utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "../../../../../fluentIcons/FluentIcons";
 

@@ -50,7 +50,7 @@ function ExportFlyout({
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
-    exportOptionsList ? exportOptionsList[0].key : []
+    exportOptionsList ? exportOptionsList[0]?.key : []
   );
   const [secondarySelected, setSecondarySelected] = useState(null);
 

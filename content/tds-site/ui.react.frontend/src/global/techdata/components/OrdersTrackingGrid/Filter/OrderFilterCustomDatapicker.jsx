@@ -6,7 +6,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from '../../../../../fluentIcons/FluentIcons';
-import '../../RenewalFilter/components/datePicker.scss';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';

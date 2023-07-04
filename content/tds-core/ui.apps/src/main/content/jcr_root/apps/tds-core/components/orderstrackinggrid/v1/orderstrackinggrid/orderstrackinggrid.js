@@ -5,7 +5,7 @@ use(["../common/utils.js"], function (utils) {
   let jsonObject = {};
   let resourceResolver = resource.getResourceResolver();
   let optionData = {};
-  var productGrid = {};
+  let productGrid = {};
   let icons = {};
   let noResultsValues = {};
   let dNotesFlyout = {};
@@ -82,25 +82,18 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
   }
 
-  if (properties && properties["exportFlyoutTitle"]) {
-    exportFlyout.title = properties["exportFlyoutTitle"];
-  }
+  const exportFlyoutLabels = [
+    { key: "title", name: "exportFlyoutTitle" },
+    { key: "description", name: "exportFlyoutDescription" },
+    { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
+    { key: "button", name: "exportFlyoutButton" },
+    { key: "exportSuccessMessage", name: "exportSuccessMessage" },
+  ];
 
-  if (properties && properties["exportFlyoutDescription"]) {
-    exportFlyout.description = properties["exportFlyoutDescription"];
-  }
-  if (properties && properties["exportFlyoutSecondaryDescription"]) {
-    exportFlyout.secondaryDescription =
-      properties["exportFlyoutSecondaryDescription"];
-  }
-
-  if (properties && properties["exportFlyoutButton"]) {
-    exportFlyout.button = properties["exportFlyoutButton"];
-  }
-
-  if (properties && properties["exportSuccessMessage"]) {
-    exportFlyout.exportSuccessMessage = properties["exportSuccessMessage"];
-  }
+  properties &&
+    exportFlyoutLabels.map((label) => {
+      exportFlyout[label.key] = properties[label.name];
+    });
 
   if (exportFlyout != null) {
     jsonObject["exportFlyout"] = exportFlyout;

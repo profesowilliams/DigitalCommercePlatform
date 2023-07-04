@@ -45,7 +45,9 @@ const OrderTrackingDetailHeader = ({
 
   const areDeliveryNotesAvailable = deliveryNotes.length > 0;
   const areInvoicesAvailable = invoices.length > 0;
-  const areSerialNumbersAvailable = items.some((item) => item.serialNumber);
+  const areSerialNumbersAvailable = items.some(
+    (item) => item.serials.length > 0
+  );
 
   const id = apiResponse?.content?.orderNumber;
   const poNumber = apiResponse?.content?.poNumber;
@@ -69,6 +71,12 @@ const OrderTrackingDetailHeader = ({
       value: { data: invoices, show: true, id: id, reseller: poNumber },
     });
   };
+  const triggerExportFlyout = () => {
+    setCustomState({
+      key: 'exportFlyout',
+      value: { data: { title: '123' }, show: true, id: id },
+    });
+  };
   const menuActionsItems = [
     {
       condition: areDeliveryNotesAvailable,
@@ -90,7 +98,7 @@ const OrderTrackingDetailHeader = ({
     {
       condition: areSerialNumbersAvailable,
       label: labels?.detailsActionExportSerialNumbers,
-      onClick: null,
+      onClick: triggerExportFlyout,
     },
   ];
 
