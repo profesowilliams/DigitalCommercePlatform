@@ -40,7 +40,7 @@ const styleOverrideDivider = {
 function ExportFlyout({
   store,
   componentProp,
-  exportFlyout,
+  exportFlyout = {},
   exportOptionsList,
   exportSecondaryOptionsList,
   subheaderReference,
@@ -107,7 +107,7 @@ function ExportFlyout({
         origin: 'fromUpdate',
         isAutoClose: false,
         isSuccess: true,
-        message: getDictionaryValueOrKey(exportFlyout.exportSuccessMessage),
+        message: getDictionaryValueOrKey(exportFlyout?.exportSuccessMessage),
       };
       closeFlyout();
       effects.setCustomState({ key: 'toaster', value: { ...toaster } });
@@ -120,8 +120,8 @@ function ExportFlyout({
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={exportFlyout.title || 'Export'}
-      buttonLabel={exportFlyout.button || 'Export'}
+      titleLabel={exportFlyout?.title || 'Export'}
+      buttonLabel={exportFlyout?.button || 'Export'}
       disabledButton={!secondarySelected}
       selected={secondarySelected}
       isTDSynnex={isTDSynnex}
@@ -129,7 +129,7 @@ function ExportFlyout({
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
-          {getDictionaryValueOrKey(exportFlyout.description)}
+          {getDictionaryValueOrKey(exportFlyout?.description)}
         </div>
         <FormControl>
           <RadioGroup
@@ -151,7 +151,7 @@ function ExportFlyout({
         </FormControl>
         <Divider sx={styleOverrideDivider} />
         <div className="cmp-flyout__content-description">
-          {getDictionaryValueOrKey(exportFlyout.secondaryDescription)}
+          {getDictionaryValueOrKey(exportFlyout?.secondaryDescription)}
         </div>
         <FormControl>
           <RadioGroup
