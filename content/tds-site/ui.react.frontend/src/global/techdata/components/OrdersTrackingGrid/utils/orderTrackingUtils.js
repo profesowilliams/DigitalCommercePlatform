@@ -111,7 +111,7 @@ export async function fetchData(config) {
 
     if (sortData[0]) {
       mapUrl.set('SortDirection', sortData[0].sort);
-      mapUrl.set('SortBy', sortData[0].colId === 'reseller' ? 'poNumber' : sortData[0].colId);
+      mapUrl.set('SortBy', sortData[0].colId === 'reseller' ? 'CustomerPO' : sortData[0].colId);
     }
 
     const secondLevelSort = calcSecondLevelSorting(sortData);
@@ -159,7 +159,7 @@ export async function fetchData(config) {
 
   const { sortData } = hasSortChanged.current || {};
   const sortBy = sortData?.map(
-    (c) => `${c.colId === 'reseller' ? 'poNumber' : c.colId}:${c.sort ?? ''}`
+    (c) => `${c.colId === 'reseller' ? 'CustomerPO' : c.colId}:${c.sort ?? ''}`
   );
   const params = { ...optionFieldsRef.current, sortBy };
 
