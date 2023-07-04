@@ -82,9 +82,10 @@ $techdata: (
         'color': $legacy-dark-blue,
         'color-hover': tint($legacy-dark-blue, 20%),
         'color-active': shade($legacy-dark-blue, 20%),
-        'text-decoration': underline,
-        'background-clip': text,
-        'text-fill-color': transparent,
+        'text-decoration': none,
+        'text-decoration-hover': underline,
+        'text-decoration-active': underline,
+        'text-underline-position': under,
       ),
       'disabled': (
         'background': transparent,
@@ -158,10 +159,10 @@ $techdata: (
     ),
     'filled': (
       'standard': (
-        'background': $white,
-        'hover': rgb(255 255 255 / 70%),
-        'active': rgb(255 255 255 / 10%),
-        'color': $legacy-dark-blue,
+        'background': rgb(255 255 255 / 20%),
+        'hover': rgb(255 255 255 / 10%),
+        'active': rgb(255 255 255 / 30%),
+        'color': $white,
       ),
       'disabled': (
         'background': rgb(228 229 230 / 20%),
@@ -188,9 +189,10 @@ $techdata: (
         'color': $white,
         'color-hover': rgb(255 255 255 / 85%),
         'color-active': rgb(255 255 255 / 70%),
-        'text-decoration': underline,
-        'background-clip': text,
-        'text-fill-color': transparent,
+        'text-decoration': none,
+        'text-decoration-hover': underline,
+        'text-decoration-active': underline,
+        'text-underline-position': under,
       ),
       'disabled': (
         'background': transparent,

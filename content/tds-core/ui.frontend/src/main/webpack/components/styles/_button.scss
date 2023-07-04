@@ -8,58 +8,37 @@
 
 /// Basic button styles for a and button elements.
 /// @access public
-.button {
+:not(.dropdownbutton).button {
   a,
   button {
-    background: transparent;
-    border: none;
-    border-radius: none;
-    box-sizing: border-box;
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 400;
-    font-size: 1rem;
-    height: 3rem;
-    line-height: unset;
-    min-width: 8.8125rem;
-    outline-color: transparent;
-    outline-style: solid;
-    outline-width: 1px;
-    outline-offset: 0;
-    padding: 12px 20px;
-    -webkit-appearance: button;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    text-decoration-thickness: inherit;
-    text-underline-offset: inherit;
-    text-transform: none;
-    vertical-align: middle;
-    width: auto;
-  }
-
-  /// Minimal style for link elements
-  /// @access public
-  a.minimal {
-    line-height: inherit;
-    height: 32px;
-  }
-
-  /// Focus style for button and a elements
-  /// @access public
-  button:focus::before,
-  a:focus::before {
-    content: '';
-    border-radius: 0.25rem;
-    box-sizing: inherit;
-    display: block;
-    position: absolute;
-    height: calc(100% - 0.8rem);
-    top: 0.4rem;
-    left: 0.4rem;
-    visibility: visible;
-    width: calc(100% - 0.8rem);
+    &.cmp-button {
+      background: transparent;
+      border: none;
+      border-radius: none;
+      box-sizing: border-box;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-block;
+      font-weight: 400;
+      font-size: 1rem;
+      height: 3rem;
+      line-height: unset;
+      min-width: 8.8125rem;
+      outline-color: transparent;
+      outline-style: solid;
+      outline-width: 1px;
+      outline-offset: 0;
+      padding: 12px 20px;
+      -webkit-appearance: button;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      text-decoration-thickness: inherit;
+      text-underline-offset: inherit;
+      text-transform: none;
+      vertical-align: middle;
+      width: auto;
+    }
   }
 }
 
@@ -95,7 +74,8 @@ $maps: (
         .cmp-button {
           @each $prop, $value in $standardStyles {
             // Ignore hover and active here, we will handle them separately
-            @if $prop != 'hover' and $prop != 'active' {
+            $propStr: inspect($prop);
+            @if not str-index($prop, 'hover') and not str-index($prop, 'active') {
               @if type-of($value) == 'list' {
                 #{$prop}: nth($value, 1), nth($value, 2);
               } @else {
@@ -112,6 +92,8 @@ $maps: (
         &:hover .cmp-button {
           $hoverValue: map.get($standardStyles, 'hover');
           $hoverColor: map.get($standardStyles, 'color-hover');
+          $textDecoration: map.get($standardStyles, 'text-decoration-hover');
+          $textUnderlinePosition: map.get($standardStyles, 'text-underline-position');
           @if type-of($hoverValue) == 'list' {
             background: nth($hoverValue, 1), nth($hoverValue, 2);
           } @else {
@@ -119,11 +101,15 @@ $maps: (
           }
 
           color: $hoverColor;
+          text-decoration: $textDecoration;
+          text-underline-position: $textUnderlinePosition;
         }
 
         &:active .cmp-button {
           $activeValue: map.get($standardStyles, 'active');
           $activeColor: map.get($standardStyles, 'color-active');
+          $textDecoration: map.get($standardStyles, 'text-decoration-active');
+          $textUnderlinePosition: map.get($standardStyles, 'text-underline-position');
           @if type-of($activeValue) == 'list' {
             background: nth($activeValue, 1), nth($activeValue, 2);
           } @else {
@@ -131,9 +117,12 @@ $maps: (
           }
 
           color: $activeColor;
+          text-decoration: $textDecoration;
+          text-underline-offset: $textUnderlinePosition;
         }
 
-        &.disabled .cmp-button, :disabled .cmp-button {
+        &.disabled .cmp-button,
+        :disabled .cmp-button {
           @each $prop, $value in $disabledStyles {
             #{$prop}: $value;
           }

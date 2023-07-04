@@ -40,8 +40,14 @@ $tdsynnex: (
     'filled': (
       'standard': (
         'background': $white,
-        'hover': rgb(0 85 140 / 10%),
-        'active': rgb(0 177 226 / 10%),
+        'hover': (
+          linear-gradient(0deg, rgb(255 255 255 / 80%) 0%, rgb(255 255 255 / 80%) 100%),
+          $teal,
+        ),
+        'active': (
+          linear-gradient(0deg, rgb(255 255 255 / 70%) 0%, rgb(255 255 255 / 70%) 100%),
+          $teal,
+        ),
         'color': $teal,
       ),
       'disabled': (
@@ -52,8 +58,8 @@ $tdsynnex: (
     'tertiary': (
       'standard': (
         'background': transparent,
-        'hover': rgb(0 85 140 / 10%),
-        'active': rgb(0 85 140 / 20%),
+        'hover': rgb(0 87 88 / 10%),
+        'active': rgb(0 87 88 / 20%),
         'color': $teal,
       ),
       'disabled': (
@@ -69,9 +75,10 @@ $tdsynnex: (
         'color': $teal,
         'color-hover': tint($teal, 20%),
         'color-active': shade($teal, 20%),
-        'text-decoration': underline,
-        'background-clip': text,
-        'text-fill-color': transparent,
+        'text-decoration': none,
+        'text-decoration-hover': underline,
+        'text-decoration-active': underline,
+        'text-underline-position': under,
       ),
       'disabled': (
         'background': transparent,
@@ -122,7 +129,7 @@ $tdsynnex: (
         'color': $teal,
       ),
       'disabled': (
-        'background': $neutral-gray-2,
+        'background': rgb(228 229 230 / 80%),
         'color': $cool-gray-8,
       ),
     ),
@@ -154,7 +161,7 @@ $tdsynnex: (
         'color': $white,
       ),
       'disabled': (
-        'background': $neutral-gray-2,
+        'background': rgb(228 229 230 / 20%),
         'color': $cool-gray-8,
       ),
     ),
@@ -178,7 +185,10 @@ $tdsynnex: (
         'color': $white,
         'color-hover': rgb(255 255 255 / 85%),
         'color-active': rgb(255 255 255 / 70%),
-        'text-decoration': underline,
+        'text-decoration': none,
+        'text-decoration-hover': underline,
+        'text-decoration-active': underline,
+        'text-underline-position': under,
       ),
       'disabled': (
         'background': transparent,

@@ -78,7 +78,10 @@ $apj: (
         'color': $legacy-ocean,
         'color-hover': tint($legacy-ocean, 20%),
         'color-active': shade($legacy-ocean, 20%),
-        'text-decoration': underline,
+        'text-decoration': none,
+        'text-decoration-hover': underline,
+        'text-decoration-active': underline,
+        'text-underline-position': under,
       ),
       'disabled': (
         'background': transparent,
@@ -152,9 +155,9 @@ $apj: (
     ),
     'filled': (
       'standard': (
-        'background': $white,
-        'hover': rgb(255 255 255 / 70%),
-        'active': rgb(255 255 255 / 10%),
+        'background': rgb(255 255 255 / 20%),
+        'hover': rgb(255 255 255 / 10%),
+        'active': rgb(255 255 255 / 30%),
         'color': $legacy-ocean,
       ),
       'disabled': (
@@ -182,9 +185,10 @@ $apj: (
         'color': $white,
         'color-hover': rgb(255 255 255 / 85%),
         'color-active': rgb(255 255 255 / 70%),
-        'text-decoration': underline,
-        'background-clip': text,
-        'text-fill-color': transparent,
+        'text-decoration': none,
+        'text-decoration-hover': underline,
+        'text-decoration-active': underline,
+        'text-underline-position': under,
       ),
       'disabled': (
         'background': transparent,

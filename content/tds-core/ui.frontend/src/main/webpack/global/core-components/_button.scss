@@ -87,7 +87,6 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   white-space: nowrap;
   color: map-get($color-palette, 'charcoal');
-  height: 48px !important;
 }
 
 .button {
@@ -672,12 +671,11 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   }
 
   &.btn-teal.cmp-tds-button-primary {
-    @include type-button-handler(#ffffff, $teal-color, $teal-color, $primary-border-size, $primary-icon-color, $primary-opacity, #ffffff33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
     @include type-button-handler(#ffffff, $teal-color, $secondary-background-color, $primary-border-size, $primary-icon-color, $primary-opacity, #ffffff33, $primary-hover-opacity, $primary-active-color-opacity, $primary-active-opacity, $primary-background-disabled-color);
   }
 
   &.btn-teal.cmp-tds-button-tertiary {
-    @include type-button-handler($teal-color, get-color(container-transparent), $teal-color, $primary-border-size, #ffffff33, $secondary-opacity, $secondary-hover-color-opacity, $tertiary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
+    @include type-button-handler($teal-color, get-color(container-transparent), get-color(container-transparent), $primary-border-size, #ffffffff, $secondary-opacity, $secondary-hover-color-opacity, $tertiary-hover-opacity, $secondary-active-color-opacity, $secondary-active-opacity, $secondary-background-disabled-color);
   }
 
   &.btn-teal.cmp-tds-button-tertiary.cmp-tds-button-dark-mode {
@@ -1643,15 +1641,15 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       //border-size
       #ffffffff,
       //degraded-color
-      1,
+      $secondary-opacity,
       //opacity
       rgba(0, 85, 140, 0.1),
       //degraded-color-hover
-      1,
+      $secondary-hover-opacity,
       //opacity-hover
       rgba(0, 177, 226, 0.1),
       //pressed-opacity-color
-      1,
+      $secondary-active-opacity,
       //pressed-opacity-value
       #ffffff //disabled-background-color
     );
@@ -1669,15 +1667,15 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
       //border-size
       #ffffffff,
       //degraded-color
-      1,
+      $secondary-opacity,
       //opacity
       rgba(0, 85, 140, 0.1),
       //degraded-color-hover
-      1,
+      $secondary-hover-opacity,
       //opacity-hover
       rgba(0, 177, 226, 0.1),
       //pressed-opacity-color
-      1,
+      $secondary-active-opacity,
       //pressed-opacity-value
       #ffffff //disabled-background-color
     );
