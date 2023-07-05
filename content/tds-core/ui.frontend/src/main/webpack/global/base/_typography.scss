@@ -5,7 +5,7 @@
 @import '../abstracts/mixins';
 @import '../styles/font-face';
 
-$tags: ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'small');
+$tags: ('body', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'small');
 
 /// Color map for typography
 /// @type Map
@@ -48,6 +48,10 @@ $fonts: (
 /// @prop {List} inline-link - Font size and line-height for Inline link
 /// @prop {List} small - Font size and line-height for Small
 $typography: (
+  'body': (
+    1rem,
+    1.5rem,
+  ),
   'h1': (
     2.5rem,
     3.25rem,
@@ -99,7 +103,7 @@ $typography: (
   'small': (
     0.875rem,
     1.5rem,
-  )
+  ),
 );
 
 /// Font size and line-height map for small breakpoints
@@ -116,6 +120,10 @@ $typography: (
 /// @prop {List} inline-link - Font size and line-height for Inline link
 /// @prop {List} small - Font size and line-height for Small
 $typography-mobile: (
+  'body': (
+    1rem,
+    1.5rem,
+  ),
   'h1': (
     2rem,
     2.5rem,
@@ -164,10 +172,10 @@ $typography-mobile: (
     0.875rem,
     1.5rem,
   ),
-    'small': (
+  'small': (
     0.875rem,
     1.5rem,
-  )
+  ),
 );
 
 /// Mixin for applying typography styles.
@@ -219,6 +227,8 @@ $typography-mobile: (
 /// Main styles for <body>
 /// @access public
 body {
+  @include typography('body', 'default', 'default');
+
   /// Styles for h1 inside <body>
   /// @access public
   h1 {
@@ -258,6 +268,8 @@ body {
   /// Styles for p inside <body>
   /// @access public
   p,
+  ol,
+  ul,
   li {
     @include typography('p', 'paragraph', 'default');
 
@@ -265,11 +277,12 @@ body {
     /// @access public
     a {
       @include typography('inline-link', 'paragraph', 'link');
+      text-decoration: none;
 
       /// Styles for hover state of inline link inside <p> in <body>
       /// @access public
       &:hover {
-        text-decoration-line: underline;
+        text-decoration: underline;
       }
     }
   }
@@ -321,15 +334,18 @@ body {
 
     /// Styles for p at small breakpoints
     p,
+    ol,
+    ul,
     li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+        text-decoration: none;
 
         /// Styles for hover state of inline link inside <p> in .td at small breakpoints
         &:hover {
-          text-decoration-line: underline;
+          text-decoration: underline;
         }
       }
     }
@@ -348,7 +364,8 @@ body {
 
 /// Generate styles for apj
 /// @access public
-.apj, .asiapacificjapan {
+.apj,
+.asiapacificjapan {
   /// Styles for h1 inside .apj
   h1 {
     @include typography('h1', 'default', 'apj-header');
@@ -381,16 +398,19 @@ body {
 
   /// Styles for p inside .apj
   p,
+  ol,
+  ul,
   li {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for inline link inside <p> in .apj
     a {
       @include typography('inline-link', 'paragraph', 'link');
+      text-decoration: none;
 
       /// Styles for hover state of inline link inside <p> in .apj
       &:hover {
-        text-decoration-line: underline;
+        text-decoration: underline;
       }
     }
   }
@@ -439,15 +459,18 @@ body {
 
     /// Styles for p at small breakpoints
     p,
+    ol,
+    ul,
     li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+        text-decoration: none;
 
         /// Styles for hover state of inline link inside <p> in .td at small breakpoints
         &:hover {
-          text-decoration-line: underline;
+          text-decoration: underline;
         }
       }
     }
@@ -466,7 +489,8 @@ body {
 
 /// Generate styles for td
 /// @access public
-.td, .techdata {
+.td,
+.techdata {
   /// Styles for h1 inside .td
   h1 {
     @include typography('h1', 'default', 'td-header');
@@ -499,16 +523,18 @@ body {
 
   /// Styles for p inside .td
   p,
-  li {
+  ol,
+  ul {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for inline link inside <p> in .td
     a {
       @include typography('inline-link', 'paragraph', 'link');
+      text-decoration: none;
 
       /// Styles for hover state of inline link inside <p> in .td
       &:hover {
-        text-decoration-line: underline;
+        text-decoration: underline;
       }
     }
   }
@@ -562,10 +588,11 @@ body {
 
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+        text-decoration: none;
 
         /// Styles for hover state of inline link inside <p> in .td at small breakpoints
         &:hover {
-          text-decoration-line: underline;
+          text-decoration: underline;
         }
       }
     }
@@ -584,7 +611,8 @@ body {
 
 /// Block of typography styles for `.tds` class.
 /// @access public
-.tds, .tdsynnex {
+.tds,
+.tdsynnex {
   /// Styles for `h1` tag in `.tds` class.
   h1 {
     @include typography('h1', 'header', 'tds-header');
@@ -617,16 +645,19 @@ body {
 
   /// Styles for `p` tag in `.tds` class.
   p,
+  ol,
+  ul,
   li {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for `a` tag in `p` of `.tds` class.
     a {
       @include typography('inline-link', 'paragraph', 'link');
+      text-decoration: none;
 
       /// Hover styles for `a` tag in `p` of `.tds` class.
       &:hover {
-        text-decoration-line: underline;
+        text-decoration: underline;
       }
     }
   }
@@ -685,16 +716,19 @@ body {
     /// Styles for p elements at small breakpoints for `.tds` class.
     /// @access public
     p,
+    ol,
+    ul,
     li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
       /// Styles for `a` tag at small breakpoints in `p` of `.tds` class.
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+        text-decoration: none;
 
         /// Hover styles for `a` tag at small breakpoints in `p` of `.tds` class.
         &:hover {
-          text-decoration-line: underline;
+          text-decoration: underline;
         }
       }
     }
