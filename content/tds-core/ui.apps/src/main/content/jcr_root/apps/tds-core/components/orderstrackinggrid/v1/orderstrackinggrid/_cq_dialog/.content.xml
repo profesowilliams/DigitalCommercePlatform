@@ -74,7 +74,10 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Last 90 Days"
                                                         value="90" />
-
+                                                    <buttonList
+                                                        jcr:primaryType="nt:unstructured"
+                                                        text="Last 120 Days"
+                                                        value="120" />
                                                 </items>
                                             </defaultDateRange>
 

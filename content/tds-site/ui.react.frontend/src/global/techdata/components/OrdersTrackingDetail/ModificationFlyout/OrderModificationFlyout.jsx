@@ -10,6 +10,7 @@ function OrderModificationFlyout({
   items = [],
   labels = {},
 }) {
+  const [orderChanged, setOrderChanged] = useState(false);
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const effects = store((st) => st.effects);
@@ -21,14 +22,22 @@ function OrderModificationFlyout({
 
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button className="primary">
+      <button
+        disabled={!orderChanged}
+        className="primary"
+        onClick={closeFlyout}
+      >
         {getDictionaryValueOrKey(labels.update)}
       </button>
-      <button className="secondary">
+      <button className="secondary" onClick={closeFlyout}>
         {getDictionaryValueOrKey(labels.cancel)}
       </button>
     </div>
   );
+
+  const handleAmountChange = () => {
+    setOrderChanged(true);
+  };
 
   return (
     <BaseFlyout
@@ -67,7 +76,7 @@ function OrderModificationFlyout({
                 }`}</div>
               </div>
               <div className="cmp-flyout-list__element__counter">
-                <Counter value={item.quantity} onChange={() => {}} />
+                <Counter value={item.quantity} onChange={handleAmountChange} />
               </div>
               <div className="cmp-flyout-list__element__price">
                 <p className="cmp-flyout-list__element__price-bold">

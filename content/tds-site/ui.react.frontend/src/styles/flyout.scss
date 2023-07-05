@@ -285,6 +285,10 @@ $flyout-small-height-formax: 779px;
     font-size: 14px;  
     border-radius: 2px;
     cursor: pointer;
+    &:disabled {
+      background-color: $td-neutral-gray-2;
+      color: $brand-text-lightgray;
+    }
   }
 
   .primary {
