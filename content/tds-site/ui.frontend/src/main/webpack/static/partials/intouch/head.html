@@ -212,16 +212,19 @@
 
     function getHeaderInfoFromUrl(pathName) {
         try {
-            let countryIndex = 1; // uat/stage/prod
-            let languageIndex = 2;
+            let country, language;
             const pathArray = pathName?.split("/");
-            if (pathArray && pathArray.length >= 5 && pathArray[1] === "content") {
-                countryIndex = 4; // dit/sit
-                languageIndex = 5;
+            if (pathArray[1] === "editor.html") {  // dit/sit author
+                country = "UK";
+                language =  "en"
+            } else if (pathArray && pathArray.length >= 5 && pathArray[1] === "content") {
+                country = pathArray[4].toUpperCase();  // dit/sit
+                language = pathArray[5];
+            } else {
+                country = pathArray[1].toUpperCase(); // uat/stage/prod
+                language = pathArray[2];
             }
-
-            const country = pathArray[countryIndex].toUpperCase();
-            const language = pathArray[languageIndex];
+            console.log(pathArray);
 
             return {
                 site: country,
