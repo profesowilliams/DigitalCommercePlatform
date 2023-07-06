@@ -757,4 +757,9 @@ body {
 @include variant-styles('h1');
 @include variant-styles('p');
 
+@media (width <= 992px) {
+  @include variant-styles('h1', $typography-mobile);
+  @include variant-styles('p', $typography-mobile);
+}
+
 /* stylelint-enable no-descending-specificity */
