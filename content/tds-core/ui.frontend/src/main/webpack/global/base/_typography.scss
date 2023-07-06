@@ -194,32 +194,41 @@ $typography-mobile: (
   color: map.get($colors, $color);
   font-size: nth(map.get($typography-map, $element), 1);
   line-height: nth(map.get($typography-map, $element), 2);
+}
 
+@mixin variant-styles($element, $typography-map: $typography) {
   @if $element == 'h1' or $element == 'p' {
     /// Styles for .large variant of the element.
     /// @access public
-    &.large {
+    .#{$element}-large {
+      #{$element} {
       font-size: nth(map.get($typography-map, $element), 3);
       line-height: nth(map.get($typography-map, $element), 4);
+      }
     }
   }
 
   @if $element == 'p' {
     /// Styles for .small variant of the element.
     /// @access public
-    &.small {
+    .#{$element}-small {
+      #{$element} {
       font-size: nth(map.get($typography-map, $element), 5);
       line-height: nth(map.get($typography-map, $element), 6);
+      }
     }
 
     /// Styles for .extra-small variant of the element.
     /// @access public
-    &.extra-small {
+    .#{$element}-extra-small {
+      #{$element} {
       font-size: nth(map.get($typography-map, $element), 7);
       line-height: nth(map.get($typography-map, $element), 8);
+      }
     }
   }
 }
+
 // stylelint-enable scss/no-global-function-names
 
 /* stylelint-disable no-descending-specificity */
@@ -744,5 +753,8 @@ body {
     }
   }
 }
+
+@include variant-styles('h1');
+@include variant-styles('p');
 
 /* stylelint-enable no-descending-specificity */
