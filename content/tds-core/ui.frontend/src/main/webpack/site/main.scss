@@ -1,8 +1,9 @@
-
+/* stylelint-disable */
+@import '../../../vendors/boostrap';
 @import 'variables';
 @import 'base';
-@import '../components/main.scss';
-@import '../components/styles/*.scss';
-@import './styles/*.scss';
-
+@import '../components/main';
+@import '../components/styles/*';
+@import './styles/*';
+@import '../global/base/typography';
 @import '../../../components/**/*.scss';

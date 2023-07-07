@@ -839,7 +839,7 @@
         .cmp-teaser {
           height: 100%;
           justify-content: unset;
-          background-color: map-get($color-palette, 'neutral-gray-1');
+          background-color: map-get($color-palette, 'neutral-gray-2');
           box-shadow: none;
 
           &:hover {
@@ -867,12 +867,33 @@
 
             .cmp-teaser__description {
               padding: 0;
+              height: 144px;
+              overflow: hidden;
 
               ul {
                 padding-left: 2rem;
 
                 li {
                   list-style-type: disc;
+                }
+              }
+            }
+
+            .cmp-teaser__action-container {
+              padding-bottom: 20px;
+              padding-top: 15px;
+
+              .cmp-teaser__action-link {
+                color: map-get($color-palette, 'legacy-ocean');
+                text-decoration: none;
+                &:hover {
+                  color: lighten(map-get($color-palette, 'legacy-ocean'), 20%);
+                  text-decoration: underline;
+                }
+
+                &:active {
+                  color: darken(map-get($color-palette, 'legacy-ocean'), 20%);
+                  text-decoration: underline;
                 }
               }
             }

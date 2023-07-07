@@ -25,48 +25,6 @@
       line-height: 1.5;
     }
   }
-
-  h1 {
-    font-family: $font-family-marketing;
-    font-size: $font-size-marketing-h1 !important;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  h2 {
-    font-family: $font-family-marketing-md;
-    font-size: $font-size-marketing-h2 !important;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  h3 {
-    font-family: $font-family-marketing;
-    font-size: $font-size-marketing-h3 !important;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  h4 {
-    font-family: $font-family-marketing;
-    font-size: $font-size-marketing-h4 !important;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  h5 {
-    font-family: $font-family-marketing;
-    font-size: $font-size-marketing-h5 !important;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  h6 {
-    font-family: $font-family-marketing;
-    font-size: $font-size-marketing-h6 !important;
-    margin: 0;
-    line-height: 1.5;
-  }
 }
 
 .cmp-digital {
@@ -91,51 +49,6 @@
       font-size: $font-size-digital-h2-card !important;
       line-height: rem(42px);
     }
-  }
-
-  h1 {
-    font-family: $font-family-digital;
-    font-size: $font-size-digital-h1 !important;
-    line-height: rem(61px);
-    margin: 0;
-  }
-
-  h2 {
-    font-family: $font-family-digital;
-    font-weight: bold;
-    font-size: $font-size-digital-h2 !important;
-    margin: 0;
-  }
-
-  h3 {
-    font-family: $font-family-digital;
-    font-size: $font-size-digital-h3 !important;
-    line-height: rem(42px);
-    margin: 0;
-  }
-
-  h4 {
-    font-family: $font-family-digital;
-    font-size: $font-size-digital-h4 !important;
-    line-height: rem(30px);
-    font-weight: bold;
-    margin: 0;
-  }
-
-  h5 {
-    font-family: $font-family-digital;
-    font-size: $font-size-digital-h5 !important;
-    line-height: rem(24px);
-    font-weight: bold;
-    margin: 0;
-  }
-
-  h6 {
-    font-family: $font-family-digital;
-    font-size: $font-size-digital-h6 !important;
-    line-height: rem(16.8px);
-    font-weight: bold;
-    margin: 0;
   }
 }
 
@@ -270,63 +183,6 @@
       .dp-title__plus-sign {
         color: #00b1e2 !important;
         background-color: #ffff;
-      }
-    }
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.75rem;
-  }
-
-  h3 {
-    font-size: 1.25rem;
-  }
-
-  h4 {
-    font-size: 1rem;
-  }
-}
-
-@include mobile {
-  .dp-title {
-    @include mobile {
-      h1 {
-        font-size: rem(32px);
-        line-height: rem(40px);
-
-        &.large {
-          font-size: rem(52px);
-          line-height: rem(68px);
-        }
-      }
-
-      h2 {
-        font-size: rem(28px);
-        line-height: rem(42px);
-      }
-
-      h3 {
-        font-size: rem(20px);
-        line-height: rem(30px);
-      }
-
-      h4 {
-        font-size: rem(16px);
-        line-height: rem(21px);
-      }
-
-      h5 {
-        font-size: rem(16px);
-        line-height: rem(21px);
-      }
-
-      h6 {
-        font-size: rem(14px);
-        line-height: rem(21px);
       }
     }
   }

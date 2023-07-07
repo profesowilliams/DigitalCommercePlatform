@@ -86,15 +86,14 @@
 
     &__content[data-cmp-hasimage] {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
+      top: 35%;
+      left: 45%;
 
       @include mobile {
+        top: 10%;
+        left: 25%;
         bottom: 0;
         padding: 0;
-        width: 100%;
       }
       .cmp-item {
         color: inherit;
@@ -210,7 +209,6 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
       width: 100%;
       height: 100%;
       box-sizing: border-box;
@@ -402,5 +400,11 @@
 
   &:hover .cmp-teaser__bottom-section--link {
     text-decoration: underline;
+    opacity: 0.85;
+  }
+
+  &:active .cmp-teaser__bottom-section--link {
+    text-decoration: underline;
+    opacity: 0.7;
   }
 }
