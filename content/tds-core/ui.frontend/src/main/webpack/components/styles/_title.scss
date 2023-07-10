@@ -98,8 +98,6 @@
   @include typewriter-animation;
 
   &__text {
-    font-weight: 300;
-
     &--gray {
       .dp-title__text,
       .dp-title__link {

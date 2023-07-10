@@ -5,6 +5,7 @@
 @import '../abstracts/mixins';
 @import '../styles/font-face';
 
+// not used yet - ryan.williams@tdsynnex.com
 $tags: ('body', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'small');
 
 /// Color map for typography
@@ -202,8 +203,8 @@ $typography-mobile: (
     /// @access public
     .#{$element}-large {
       #{$element} {
-      font-size: nth(map.get($typography-map, $element), 3);
-      line-height: nth(map.get($typography-map, $element), 4);
+        font-size: nth(map.get($typography-map, $element), 3);
+        line-height: nth(map.get($typography-map, $element), 4);
       }
     }
   }
@@ -213,8 +214,8 @@ $typography-mobile: (
     /// @access public
     .#{$element}-small {
       #{$element} {
-      font-size: nth(map.get($typography-map, $element), 5);
-      line-height: nth(map.get($typography-map, $element), 6);
+        font-size: nth(map.get($typography-map, $element), 5);
+        line-height: nth(map.get($typography-map, $element), 6);
       }
     }
 
@@ -222,8 +223,8 @@ $typography-mobile: (
     /// @access public
     .#{$element}-extra-small {
       #{$element} {
-      font-size: nth(map.get($typography-map, $element), 7);
-      line-height: nth(map.get($typography-map, $element), 8);
+        font-size: nth(map.get($typography-map, $element), 7);
+        line-height: nth(map.get($typography-map, $element), 8);
       }
     }
   }
@@ -242,6 +243,8 @@ body {
   /// @access public
   h1 {
     @include typography('h1', 'default', 'default');
+
+    font-weight: 400;
   }
 
   /// Styles for h2 inside <body>
@@ -260,6 +263,8 @@ body {
   /// @access public
   h4 {
     @include typography('h4', 'default', 'default');
+
+    font-weight: 700;
   }
 
   /// Styles for h5 inside <body>
@@ -286,6 +291,7 @@ body {
     /// @access public
     a {
       @include typography('inline-link', 'paragraph', 'link');
+
       text-decoration: none;
 
       /// Styles for hover state of inline link inside <p> in <body>
@@ -350,6 +356,7 @@ body {
 
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
         text-decoration: none;
 
         /// Styles for hover state of inline link inside <p> in .td at small breakpoints
@@ -415,6 +422,7 @@ body {
     /// Styles for inline link inside <p> in .apj
     a {
       @include typography('inline-link', 'paragraph', 'link');
+
       text-decoration: none;
 
       /// Styles for hover state of inline link inside <p> in .apj
@@ -475,6 +483,7 @@ body {
 
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
         text-decoration: none;
 
         /// Styles for hover state of inline link inside <p> in .td at small breakpoints
@@ -539,6 +548,7 @@ body {
     /// Styles for inline link inside <p> in .td
     a {
       @include typography('inline-link', 'paragraph', 'link');
+
       text-decoration: none;
 
       /// Styles for hover state of inline link inside <p> in .td
@@ -597,6 +607,7 @@ body {
 
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
         text-decoration: none;
 
         /// Styles for hover state of inline link inside <p> in .td at small breakpoints
@@ -662,6 +673,7 @@ body {
     /// Styles for `a` tag in `p` of `.tds` class.
     a {
       @include typography('inline-link', 'paragraph', 'link');
+
       text-decoration: none;
 
       /// Hover styles for `a` tag in `p` of `.tds` class.
@@ -733,6 +745,7 @@ body {
       /// Styles for `a` tag at small breakpoints in `p` of `.tds` class.
       a {
         @include typography('inline-link', 'paragraph', 'link', $typography-mobile);
+
         text-decoration: none;
 
         /// Hover styles for `a` tag at small breakpoints in `p` of `.tds` class.
