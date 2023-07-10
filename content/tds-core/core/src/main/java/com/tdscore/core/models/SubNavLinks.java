@@ -77,6 +77,10 @@ public class SubNavLinks {
             this.pageIcon = DEFAULT_FONT_AWESOME_ICON;
         }
 
+        if (pageProps.containsKey("isGlobalPage")) {
+            this.isGlobalPage = pageProps.get("isGlobalPage").toString();
+        }
+
         childPageIterator(resolver);
     }
 
@@ -243,7 +247,7 @@ public class SubNavLinks {
     }
 
     public String getMenuID() {
-        return (this.getRootParentTitle()+"-"+this.getPageTitle()).toLowerCase(Locale.ROOT); 
+        return (this.getRootParentTitle()+"-"+this.getPageTitle()).toLowerCase(Locale.ROOT);
     }
 
     public String getLevels() {
@@ -283,12 +287,12 @@ public class SubNavLinks {
 
     public ComponentData getData() {
         return DataLayerBuilder.forComponent()
-            .withId(() -> this.getParentID()+"-"+this.getMenuID())
-            .withType(() -> this.getTenant() + "/components/megamenu/item")
-            .withTitle(() -> this.getPageTitle())
-            .withParentId(() -> this.getParentID()+"-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
-            .withLinkUrl(() -> this.getPagePath())
-            .build();        
+                .withId(() -> this.getParentID()+"-"+this.getMenuID())
+                .withType(() -> this.getTenant() + "/components/megamenu/item")
+                .withTitle(() -> this.getPageTitle())
+                .withParentId(() -> this.getParentID()+"-"+this.getRootParentTitle().toLowerCase(Locale.ROOT))
+                .withLinkUrl(() -> this.getPagePath())
+                .build();
     }
 }
 

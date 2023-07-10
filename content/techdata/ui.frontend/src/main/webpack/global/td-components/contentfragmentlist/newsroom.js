@@ -21,7 +21,7 @@
       if (dateValue) {
         const dateValues = dateValue.split('-');
         const dayValue = dateValues[2].split(' ');
-        const dateFormat = new Date(dateValues[0], dateValues[1], dayValue[0]);
+        const dateFormat = new Date(dateValues[0], dateValues[1] - 1, dayValue[0]);
         const month = dateFormat.toLocaleString('default', { month: 'short' });
         dateEle = contentFragTileELem1.querySelector('.cmp-contentfragment__element--press-release-date .cmp-contentfragment__element-value');
         dateEle.innerText = `${month} ${dayValue[0]}`;

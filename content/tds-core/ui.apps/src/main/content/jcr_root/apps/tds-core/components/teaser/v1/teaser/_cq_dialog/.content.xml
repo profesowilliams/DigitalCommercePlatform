@@ -478,11 +478,11 @@
                                                                 <openInNewWindow
                                                                     jcr:primaryType="nt:unstructured"
                                                                     text="Open In New Window"
-                                                                    value="openInNewWindow"/>
+                                                                    value="_blank"/>
                                                                 <openInSameWindow
                                                                     jcr:primaryType="nt:unstructured"
                                                                     text="Open In Same Window"
-                                                                    value="openInSameWindow"/>
+                                                                    value="_self"/>
                                                                 <openInModalPopup
                                                                     jcr:primaryType="nt:unstructured"
                                                                     text="Open In Modal Popup"
