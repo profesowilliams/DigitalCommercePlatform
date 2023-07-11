@@ -699,6 +699,31 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Search by Label"
                                                 name="./searchByLabel" />
+                                            <searchOrderNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Order Number Label"
+                                                name="./orderNo" />
+                                            <searchDnoteNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="DNote Number"
+                                                name="./searchDnoteNo" />
+                                            <searchInvoiceNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Invoice Number"
+                                                name="./searchInvoiceNo" />
+                                            <searchPoNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Filter Title"
+                                                name="./searchPoNo" />
+                                            <searchSerialNo
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Filter Title"
+                                                name="./searchSerialNo" />
                                             <actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"

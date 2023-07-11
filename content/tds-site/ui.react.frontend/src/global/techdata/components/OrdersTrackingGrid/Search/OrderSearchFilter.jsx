@@ -1,11 +1,17 @@
 import React from "react";
-import { CloseIcon, CloseIconWeighted } from "../../../../../fluentIcons/FluentIcons";
-import useComputeBranding from "../../../hooks/useComputeBranding";
+import {
+  CloseIcon,
+  CloseIconWeighted,
+  SearchIcon,
+} from '../../../../../fluentIcons/FluentIcons';
+import useComputeBranding from '../../../hooks/useComputeBranding';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export function OrderSearchField({
   chosenFilter = '',
   inputRef,
   triggerSearchOnEnter,
+  triggerSearch,
   searchTerm,
   setSearchTerm,
   store,
@@ -17,9 +23,9 @@ export function OrderSearchField({
     `${getDictionaryValueOrKey(
       gridConfig?.searchEnterLabel
     )} ${capitalizeContainedID(searchTermText)}`;
-  const { isTDSynnex } = useComputeBranding(store);
+  const { isTDSynnex, computeClassName } = useComputeBranding(store);
   return (
-    <div className="cmp-search-select-container__box-search-field">
+    <div className="order-search-select-container__box-search-field">
       <input
         className={`inputStyle ${searchTerm ? 'searchText' : ''}`}
         autoFocus
@@ -48,6 +54,12 @@ export function OrderSearchField({
           )}
         </>
       )}
+      <button
+        className={computeClassName('order-search-button')}
+        onClick={triggerSearch}
+      >
+        <SearchIcon className="search-icon__light" />
+      </button>
     </div>
   );
 }

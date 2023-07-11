@@ -312,84 +312,32 @@ export const getFilterFlyoutPredefined = (filterLabels) => [
     filterOptionList: [
       {
         id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
-        filterOptionKey: 'ZZCC&type=ZZIT',
-        group: 'type',
-      },
-      {
-        id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
-        filterOptionKey: 'ZZCT&type=ZZOR&type=ZZPB',
-        group: 'type',
-      },
-      {
-        id: 3,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.ediOrXml),
         filterOptionKey: 'ZZED',
         group: 'type',
       },
       {
-        id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(
-          filterLabels.consignmentFillUp
-        ),
-        filterOptionKey: 'ZZKB',
+        id: 2,
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
+        filterOptionKey: 'ZZCC&type=ZZIT',
         group: 'type',
       },
       {
-        id: 5,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.license),
-        filterOptionKey: 'ZZLV',
-        group: 'type',
-      },
-      {
-        id: 6,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.tdmrsProject),
-        filterOptionKey: 'ZZMR',
-        group: 'type',
-      },
-      {
-        id: 7,
-        filterOptionLabel: getDictionaryValueOrKey(
-          filterLabels.tdStaffPurchase
-        ),
-        filterOptionKey: 'ZZPE',
-        group: 'type',
-      },
-      {
-        id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.projectOrder),
-        filterOptionKey: 'ZZPT',
-        group: 'type',
-      },
-      {
-        id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.quotationLabel),
-        filterOptionKey: 'ZZQT',
-        group: 'type',
-      },
-      {
-        id: 10,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.thirdParty),
-        filterOptionKey: 'ZZSB',
-        group: 'type',
-      },
-      {
-        id: 11,
+        id: 3,
         filterOptionLabel: getDictionaryValueOrKey(filterLabels.licensing),
         filterOptionKey: 'ZZSL',
         group: 'type',
       },
       {
-        id: 12,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.stockingOrder),
-        filterOptionKey: 'ZZSO',
+        id: 4,
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
+        filterOptionKey: 'ZZCT&type=ZZOR&type=ZZPB',
         group: 'type',
       },
       {
-        id: 13,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.streamOne),
-        filterOptionKey: 'ZZST',
+        id: 5,
+        filterOptionLabel: getDictionaryValueOrKey(filterLabels.thirdParty),
+        filterOptionKey: 'ZZSB',
         group: 'type',
       },
     ],
@@ -437,3 +385,33 @@ export const getFilterFlyoutCustomized = (
   }
   return customizedFilters;
 };
+
+export const getPredefinedSearchOptionsList = (aemData) => {
+  const { orderNo, dnoteNo, invoiceNo, poNo, serialNo } = aemData;
+  return [
+    {
+      searchLabel: getDictionaryValueOrKey(orderNo),
+      searchKey: 'Id',
+      showIfIsHouseAccount: false,
+    },
+    {
+      searchLabel: getDictionaryValueOrKey(dnoteNo),
+      searchKey: 'DeliveryNote',
+      showIfIsHouseAccount: false,
+    },
+    {
+      searchLabel: getDictionaryValueOrKey(invoiceNo),
+      searchKey: 'InvoiceId',
+      showIfIsHouseAccount: false,
+    },
+    {
+      searchLabel: getDictionaryValueOrKey(poNo),
+      searchKey: 'CustomerPO',
+      showIfIsHouseAccount: false,
+    },
+    {
+      searchLabel: getDictionaryValueOrKey(serialNo),
+      searchKey: 'SerialNo',
+      showIfIsHouseAccount: false,
+    },
+  ];};

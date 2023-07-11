@@ -14,6 +14,7 @@ use(["../common/utils.js"], function (utils) {
   let noAccessProps = {};
   let analyticsCategories = {};
   let paginationLabels = {};
+  let searchLabels = {};
 
   let filterLabels = {};
 
@@ -253,6 +254,22 @@ use(["../common/utils.js"], function (utils) {
   }
 
   //Search Options
+  const searchLabelsList = [
+    { key: "orderNo", name: "searchOrderNo" },
+    { key: "dnoteNo", name: "searchDnoteNo" },
+    { key: "invoiceNo", name: "searchInvoiceNo" },
+    { key: "poNo", name: "searchPoNo" },
+    { key: "serialNo", name: "searchSerialNo" },
+  ];
+  properties &&
+    searchLabelsList.map((label) => {
+      searchLabels[label.key] = properties[label.name];
+    });
+
+  if (searchLabels != null) {
+    jsonObject["searchLabels"] = searchLabels;
+  }
+
   if (properties && properties["searchTitleLabel"]) {
     jsonObject["searchTitleLabel"] = properties["searchTitleLabel"];
   }

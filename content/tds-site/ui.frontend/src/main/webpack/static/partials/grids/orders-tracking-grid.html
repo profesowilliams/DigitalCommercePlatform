@@ -91,33 +91,15 @@
         type: "buttonList",
       },
     ],
-    searchOptionsList: [
-      {
-        searchLabel: "Order Nº",
-        searchKey: "Id",
-        showIfIsHouseAccount: false,
-      },
-      {
-        searchLabel: "D-note №",
-        searchKey: "DeliveryNote",
-        showIfIsHouseAccount: false,
-      },
-      {
-        searchLabel: "Invoice №",
-        searchKey: "InvoiceId",
-        showIfIsHouseAccount: false,
-      },
-      {
-        searchLabel: "PO Nº",
-        searchKey: "ResellerPO",
-        showIfIsHouseAccount: false,
-      },
-      {
-        searchLabel: "Serial Nº",
-        searchKey: "SerialNo",
-        showIfIsHouseAccount: false,
-      },
-    ],
+    searchOptionsList: [],
+    searchEnterLabel: "Enter",
+    searchLabels:{
+      orderNo: "Order Nº",
+      dnoteNo: "D-note №",
+      invoiceNo: "Invoice №",
+      poNo: "PO Nº",
+      serialNo: "Serial Nº",
+    },
     uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/orders",
     ordersCountEndpoint: "http://localhost:3000/ui-commerce/v2/OrdersCount",
     ordersReportEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrders",

@@ -46,6 +46,7 @@ import {
     getFilterFlyoutPredefined,
     getFilterFlyoutCustomized,
     setPaginationData,
+    getPredefinedSearchOptionsList,
 } from './utils/orderTrackingUtils';
 import Toaster from '../Widgets/Toaster';
 import {
@@ -116,6 +117,7 @@ function OrdersTrackingGrid(props) {
         noAccessProps,
         analyticsCategories,
         paginationLabels,
+        searchLabels,
     } = componentProp;
     const gridApiRef = useRef();
     const firstAPICall = useRef(true);
@@ -442,6 +444,8 @@ function OrdersTrackingGrid(props) {
       setDateType(filterLabels.orderDateLabel);
     }, []);
 
+    const searchOptions = [...getPredefinedSearchOptionsList(searchLabels), ...searchOptionsList]
+
     return (
       <>
         {(userData?.activeCustomer || isLocalDevelopment) && (
@@ -475,7 +479,7 @@ function OrdersTrackingGrid(props) {
                         ]
                       : []),
                     <OrderSearch
-                      options={searchOptionsList}
+                      options={searchOptions}
                       onQueryChanged={onSearchChange}
                       ref={searchCriteria}
                       store={useOrderTrackingStore}

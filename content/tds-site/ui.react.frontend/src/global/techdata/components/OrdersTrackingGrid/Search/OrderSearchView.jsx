@@ -65,20 +65,20 @@ const OrderSearchView = ({
           </div>
         )}
         {isDropdownVisible && (
-          <div className="cmp-search-select-container" ref={node}>
-            <div className="cmp-search-select-container__box">
+          <div className="order-search-select-container" ref={node}>
+            <div className="order-search-select-container__box">
               <input
                 className={computeClassName('inputStyle')}
                 placeholder={getDictionaryValue(gridConfig?.searchTitleLabel)}
                 disabled
               />
               <button
-                className={computeClassName('cmp-search-tooltip__button')}
+                className={computeClassName('order-search-tooltip__button')}
               >
                 <SearchIcon className="search-icon__light" />
               </button>
             </div>
-            <div className="cmp-search-select-container__filler"></div>
+            <div className="order-search-select-container__filler"></div>
             <div className={computeClassName('cmp-search-options')}>
               {options.map((option) => (
                 <OrderRenderWithPermissions

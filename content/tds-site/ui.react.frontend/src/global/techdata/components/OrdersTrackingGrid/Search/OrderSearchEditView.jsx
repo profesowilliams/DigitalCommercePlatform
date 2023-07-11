@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDownIcon, SearchIcon } from './../../../../../fluentIcons/FluentIcons';
+import { ChevronDownIcon } from './../../../../../fluentIcons/FluentIcons';
 import useComputeBranding from './../../../hooks/useComputeBranding';
 import OrderSearchCapsule from './OrderSearchCapsule';
 import { OrderSearchField } from './OrderSearchFilter';
@@ -23,7 +23,7 @@ const OrderSearchEditView = ({
   callbackExecuted,
   gridConfig,
 }) => {
-  const { computeClassName, isTDSynnex } = useComputeBranding(store);
+  const { isTDSynnex } = useComputeBranding(store);
 
   return (
     <>
@@ -36,23 +36,18 @@ const OrderSearchEditView = ({
         label={capsuleValues.label}
       />
       <div className="cmp-renewal-search">
-        <div className="cmp-search-select-container">
-          <div className="cmp-search-select-container__box">
+        <div className="order-search-select-container">
+          <div className="order-search-select-container__box">
             <OrderSearchField
               chosenFilter={values.label}
               inputRef={inputRef}
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               triggerSearchOnEnter={triggerSearchOnEnter}
+              triggerSearch={triggerSearch}
               store={store}
               gridConfig={gridConfig}
             />
-            <button
-              className={computeClassName('cmp-search-tooltip__button')}
-              onClick={() => triggerSearch()}
-            >
-              <SearchIcon className="search-icon__light" />
-            </button>
           </div>
           <div
             className="cmp-search-options"
@@ -81,7 +76,7 @@ const OrderSearchEditView = ({
               </div>
             </div>
           </div>
-          <div className="cmp-search-select-container__filler"></div>
+          <div className="order-search-select-container__filler"></div>
         </div>
       </div>
     </>
