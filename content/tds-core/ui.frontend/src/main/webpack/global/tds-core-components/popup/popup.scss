@@ -5,7 +5,7 @@ $popup-modal-sizes: (
   // Small size width
   medium: 768px,
   // Medium size width
-  large: 896px // Large size width,
+  large: 896px // Large size width,,
 );
 
 /// Styles for the button in the popup modal.
@@ -14,7 +14,7 @@ $cmp-popup-button-styles: (
   // Button width
   float: right !important,
   // Button float
-  margin-left: 20px !important // Button margin left,
+  margin-left: 20px !important // Button margin left,,
 );
 
 /// Popup modal component.

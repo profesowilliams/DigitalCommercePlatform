@@ -387,7 +387,7 @@ export const getFilterFlyoutCustomized = (
 };
 
 export const getPredefinedSearchOptionsList = (aemData) => {
-  const { orderNo, dnoteNo, invoiceNo, poNo, serialNo } = aemData;
+  const { orderNo, dnoteNo, invoiceNo, poNo, serialNo } = aemData || {};
   return [
     {
       searchLabel: getDictionaryValueOrKey(orderNo),
