@@ -43,6 +43,7 @@ function DropdownOrderDetails({ data, aemConfig }) {
       <div className="order-line-details__header">
         {tabsConfig.map((tab) => (
           <div
+            key={tab.index}
             className={`order-line-details__header__tab ${
               activeTab === tab.index
                 ? 'order-line-details__header__tab-active'
@@ -60,7 +61,10 @@ function DropdownOrderDetails({ data, aemConfig }) {
         ))}
       </div>
       <div>
-        {tabsConfig.map((tab) => activeTab === tab.index && tab.content)}
+        {tabsConfig.map(
+          (tab) =>
+            activeTab === tab.index && <div key={tab.index}>{tab.content}</div>
+        )}
       </div>
     </div>
   );
