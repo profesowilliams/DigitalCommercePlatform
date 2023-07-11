@@ -11,6 +11,7 @@ use(["../common/utils.js"], function (utils) {
   let dNotesFlyout = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
+  let orderLineDetails = {};
   let noAccessProps = {};
   let analyticsCategories = {};
   let paginationLabels = {};
@@ -98,6 +99,22 @@ use(["../common/utils.js"], function (utils) {
 
   if (exportFlyout != null) {
     jsonObject["exportFlyout"] = exportFlyout;
+  }
+
+  // Order Details Tab
+  const orderLineDetailsLabels = [
+    { key: "shippedLabel", name: "shippedLabel" },
+    { key: "notShippedLabel", name: "notShippedLabel" },
+    { key: "itemsLabel", name: "itemsLabel" },
+  ];
+
+  properties &&
+    orderLineDetailsLabels.map((label) => {
+      orderLineDetails[label.key] = properties[label.name];
+    });
+
+  if (orderLineDetails != null) {
+    jsonObject["orderLineDetails"] = orderLineDetails;
   }
 
   //Invoices flyout options

@@ -1,5 +1,8 @@
 import Create from 'zustand';
-import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import {
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+  PLANS_ACTIONS_LOCAL_STORAGE_KEY,
+} from '../../../../../utils/constants';
 import {
   basicGridState,
   paginationState,
@@ -22,6 +25,11 @@ const INITIAL_STATE = {
     ORDER_FILTER_LOCAL_STORAGE_KEY,
     'customEndDate',
     undefined
+  ),
+  detailRender: getLocalValueOrDefault(
+    PLANS_ACTIONS_LOCAL_STORAGE_KEY,
+    'detailRender',
+    'primary'
   ),
   dateSelected: getLocalValueOrDefault(
     ORDER_FILTER_LOCAL_STORAGE_KEY,
