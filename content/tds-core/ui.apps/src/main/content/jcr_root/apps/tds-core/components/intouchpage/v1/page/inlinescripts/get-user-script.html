@@ -1,107 +1,115 @@
 <!-- @format -->
 
 <script type="text/javascript">
-    const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
-    //let userDataPromise = null;
-    let cachedUserData = null;
-    let cacheExpiration = null;
-    const CACHE_DURATION = 600; // TODO: value should be configurable
+  console.log("get-user-script", window.location.pathname);
+  const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+  //let userDataPromise = null;
+  let cachedUserData = null;
+  let cacheExpiration = null;
+  const CACHE_DURATION = 600; // TODO: value should be configurable
 
-    async function getSessionInfo() {
-        let isLoggedIn;
-        let userData;
-        let data;
+  async function getSessionInfo() {
+    let isLoggedIn;
+    let userData;
+    let data;
 
-        try {
-            data = await getUserData();
-        } catch (error) {
-            data = null;
-        }
-
-        isLoggedIn = !!data;
-        userData = data;
-
-        return [isLoggedIn, userData];
+    try {
+      data = await getUserData();
+    } catch (error) {
+      data = null;
     }
 
-    async function getUserData() {
-        if (cachedUserData && Date.now() < cacheExpiration) {
-            console.log(
-                "Returning user data from local cache cacheExpiration = " +
-                new Date(cacheExpiration)
-            );
-            return cachedUserData;
-        }
+    isLoggedIn = !!data;
+    userData = data;
 
-        //if (userDataPromise) {
-        //    return await userDataPromise;
-        //}
+    return [isLoggedIn, userData];
+  }
 
-        try {
-            let userDataPromise = fetch(
-                "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
-                "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}",
-                {
-                    headers: {
-                        accept: "application/json, text/plain, */*",
-                        "accept-language": headerInfo.acceptLanguage,
-                        consumer: "AEM",
-                        site: headerInfo.site,
-                        traceid: new Date().toISOString(),
-                    },
-                    body: null,
-                    method: "GET",
-                    credentials: "include",
-                }
-            );
-
-            const response = await userDataPromise;
-
-            if (response.ok) {
-                const data = await response.json();
-                cachedUserData = data.content.user;
-                cacheExpiration = Date.now() + CACHE_DURATION * 1000;
-                console.log("Returned user data from API call");
-                return cachedUserData;
-            } else {
-                console.log("HTTP-Error: " + response.status);
-                throw new Error(response.status);
-            }
-        } catch (error) {
-            console.log("Exception while getting user data: " + error);
-            throw new Error(401);
-        }
-
-        throw new Error(401);
+  async function getUserData() {
+    if (cachedUserData && Date.now() < cacheExpiration) {
+      console.log(
+        "Returning user data from local cache cacheExpiration = " +
+          new Date(cacheExpiration)
+      );
+      return cachedUserData;
     }
 
-    function resolveAcceptLanguage(language, country) {
-        const collectiveCountry = country === "UK" ? "GB" : country;
-        return language + "-" + collectiveCountry;
-    }
+    //if (userDataPromise) {
+    //    return await userDataPromise;
+    //}
 
-    function getHeaderInfoFromUrl(pathName) {
-        try {
-            let country, language;
-            const pathArray = pathName?.split("/");
-            if (pathArray[1] === "editor.html") {  // dit/sit author
-                country = "UK";
-                language =  "en"
-            } else if (pathArray && pathArray.length >= 5 && pathArray[1] === "content") {
-                country = pathArray[4].toUpperCase();  // dit/sit
-                language = pathArray[5];
-            } else {
-                country = pathArray[1].toUpperCase(); // uat/stage/prod
-                language = pathArray[2];
-            }
-            console.log(pathArray);
-
-            return {
-                site: country,
-                acceptLanguage: resolveAcceptLanguage(language, country),
-            };
-        } catch (error) {
-            console.log("Exception while getting country and language from url: " + error);
+    try {
+      let userDataPromise = fetch(
+        "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}" +
+          "${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint @ context='scriptString'}",
+        {
+          headers: {
+            accept: "application/json, text/plain, */*",
+            "accept-language": headerInfo.acceptLanguage,
+            consumer: "AEM",
+            site: headerInfo.site,
+            traceid: new Date().toISOString(),
+          },
+          body: null,
+          method: "GET",
+          credentials: "include",
         }
+      );
+
+      const response = await userDataPromise;
+
+      if (response.ok) {
+        const data = await response.json();
+        cachedUserData = data.content.user;
+        cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+        console.log("Returned user data from API call");
+        return cachedUserData;
+      } else {
+        console.log("HTTP-Error: " + response.status);
+        throw new Error(response.status);
+      }
+    } catch (error) {
+      console.log("Exception while getting user data: " + error);
+      throw new Error(401);
     }
+
+    throw new Error(401);
+  }
+
+  function resolveAcceptLanguage(language, country) {
+    const collectiveCountry = country === "UK" ? "GB" : country;
+    return language + "-" + collectiveCountry;
+  }
+
+  function getHeaderInfoFromUrl(pathName) {
+    try {
+      let country, language;
+      const pathArray = pathName?.split("/");
+      if (pathArray[1] === "editor.html") {
+        // dit/sit author
+        country = "UK";
+        language = "en";
+      } else if (
+        pathArray &&
+        pathArray.length >= 5 &&
+        pathArray[1] === "content"
+      ) {
+        country = pathArray[4].toUpperCase(); // dit/sit
+        language = pathArray[5];
+      } else {
+        country = pathArray[1].toUpperCase(); // uat/stage/prod
+        language = pathArray[2];
+      }
+      console.log(window.location, pathArray);
+
+      return {
+        site: country,
+        acceptLanguage: resolveAcceptLanguage(language, country),
+      };
+    } catch (error) {
+      console.log(
+        "Exception while getting country and language from url: " + error
+      );
+    }
+  }
 </script>
