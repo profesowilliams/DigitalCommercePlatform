@@ -1,7 +1,6 @@
 <!-- @format -->
 
 <script type="text/javascript">
-  console.log("get-user-script", window.location.pathname);
   const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
   //let userDataPromise = null;
   let cachedUserData = null;
@@ -85,7 +84,7 @@
     try {
       let country, language;
       const pathArray = pathName?.split("/");
-      if (pathArray[1] === "editor.html") {
+      if (window.location.origin.includes("author")) {
         // dit/sit author
         country = "UK";
         language = "en";
