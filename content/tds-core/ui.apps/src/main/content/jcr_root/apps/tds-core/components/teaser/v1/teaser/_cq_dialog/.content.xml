@@ -475,14 +475,14 @@
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                             name="./linkType">
                                                             <items jcr:primaryType="nt:unstructured">
-                                                                <openInNewWindow
-                                                                    jcr:primaryType="nt:unstructured"
-                                                                    text="Open In New Window"
-                                                                    value="_blank"/>
                                                                 <openInSameWindow
                                                                     jcr:primaryType="nt:unstructured"
                                                                     text="Open In Same Window"
                                                                     value="_self"/>
+                                                                <openInNewWindow
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    text="Open In New Window"
+                                                                    value="_blank"/>
                                                                 <openInModalPopup
                                                                     jcr:primaryType="nt:unstructured"
                                                                     text="Open In Modal Popup"

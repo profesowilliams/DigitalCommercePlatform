@@ -1,11 +1,13 @@
-
 <sly data-sly-template.action="${@ action, index}">
 
     <sly data-sly-use.linkTypeLogic="${'linkType.js' @ index=index}" />
 
-    <a target="${linkTypeLogic.linkType}" class="cmp-teaser__action-link" href="${action.URL}"
+    <a target="${linkTypeLogic.linkType == 'openInModalPopup' ? '_self' : linkTypeLogic.linkType}" 
+       class="cmp-teaser__action-link" 
+       href="${action.URL}"
        id="${action.id}"
        data-cmp-data-layer="${action.data.json}"
        data-cmp-clickable="${action.data ? true : false}"
+       data-is-global="${linkTypeLogic.linkType == 'openInModalPopup' ? 'true' : 'false'}"
        style="color: ${properties.fontColorCtaText @ context ='styleToken'}">${action.title}</a>
 </sly>

@@ -316,7 +316,7 @@ body {
 
   /// Styles for small breakpoints
   /// @access public
-  @media (width <= 992px) {
+  @media screen and (max-width: 992px) {
     /// Styles for h1 at small breakpoints
     h1 {
       @include typography('h1', 'default', 'td-header', $typography-mobile);
@@ -443,7 +443,7 @@ body {
   }
 
   /// Styles for small breakpoints
-  @media (width <= 992px) {
+  @media screen and (max-width: 992px) {
     /// Styles for h1 at small breakpoints
     h1 {
       @include typography('h1', 'default', 'apj-header', $typography-mobile);
@@ -569,7 +569,7 @@ body {
   }
 
   /// Styles for small breakpoints
-  @media (width <= 992px) {
+  @media screen and (max-width: 992px) {
     /// Styles for h1 at small breakpoints
     h1 {
       @include typography('h1', 'default', 'td-header', $typography-mobile);
@@ -697,7 +697,7 @@ body {
   /// @access public
   /// @requires {mixin} typography
   /// @requires {map} $typography-mobile
-  @media (width <= 992px) {
+  @media screen and (max-width: 992px) {
     /// Styles for h1 elements at small breakpoints for `.tds` class.
     /// @access public
     h1 {
@@ -770,7 +770,7 @@ body {
 @include variant-styles('h1');
 @include variant-styles('p');
 
-@media (width <= 992px) {
+@media screen and (max-width: 992px) {
   @include variant-styles('h1', $typography-mobile);
   @include variant-styles('p', $typography-mobile);
 }
