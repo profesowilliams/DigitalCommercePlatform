@@ -1,27 +1,35 @@
 import axios from 'axios';
-import { getConsumerRequestHeader, isEnvironmentEnabled, getEnvironmentHeader } from '../utils';
+import {
+  getHeaderInfoFromUrl,
+  getConsumerRequestHeader,
+  isEnvironmentEnabled,
+  getEnvironmentHeader,
+} from '../utils';
 
-const isHttpOnlyEnabled = () => document.body.hasAttribute("data-signin-httponly");
+const isHttpOnlyEnabled = () =>
+  document.body.hasAttribute('data-signin-httponly');
 
-export const generateTraceId = (userData) => 
+export const generateTraceId = (userData) =>
   `${userData?.id}_${new Date().toISOString()}`;
 
 const sessionId = localStorage.getItem('sessionId');
-const userData = JSON.parse(localStorage.getItem('userData') || '{ "id": "NoAuth" }');
+const userData = JSON.parse(
+  localStorage.getItem('userData') || '{ "id": "NoAuth" }'
+);
 const traceId = generateTraceId(userData);
+const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
 const consumer = getConsumerRequestHeader();
 const envHeader = getEnvironmentHeader();
 
-
 const headers = {
-  common: { 
-    'TraceId': traceId,
-    'Site': headerInfo.site,
+  common: {
+    TraceId: traceId,
+    Site: headerInfo.site,
     'Accept-Language': headerInfo.acceptLanguage,
-    'Consumer': consumer,
+    Consumer: consumer,
     'Content-Type': 'application/json',
-  }
-}
+  },
+};
 
 if(!isHttpOnlyEnabled() && sessionId) {
   headers.common['SessionId'] = sessionId ?? '';

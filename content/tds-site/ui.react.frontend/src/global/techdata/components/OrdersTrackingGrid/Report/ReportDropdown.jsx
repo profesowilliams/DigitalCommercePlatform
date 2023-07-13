@@ -7,17 +7,24 @@ function ReportDropdown({ reportOptions, selectOption }, ref) {
   }
 
   return (
-    <div ref={ref} className='cmp-order-tracking-grid__report-dropdown'>
-        <ul>
-            {reportOptions.map((option) =>
-              <li key={option.key} onClick={(event) => handleOptionClick(option)}>
-                {option.label}
-              </li>
-            )}
-        </ul>
+    <div
+      ref={ref}
+      className="cmp-order-tracking-grid__report-dropdown"
+      data-testid="report-dropdown"
+    >
+      <ul>
+        {reportOptions.map((option, index) => (
+          <li
+            key={option.key}
+            onClick={(event) => handleOptionClick(option)}
+            data-testid={`report-option-${index}`}
+          >
+            {option.label}
+          </li>
+        ))}
+      </ul>
     </div>
-
-  )
+  );
 }
 
 export default forwardRef(ReportDropdown)

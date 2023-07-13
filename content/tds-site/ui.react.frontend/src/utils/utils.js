@@ -434,14 +434,16 @@ const renderIntouchFooterHTML = () => {
     );
 };
 
-$(document).ready(function () {
-    checkIntouchUser(
-        function () {
-            renderIntouchHeaderHTML();
-            renderIntouchFooterHTML();
-        }
-    )
-});
+document.addEventListener(
+  'DOMContentLoaded',
+  function () {
+    checkIntouchUser(function () {
+      renderIntouchHeaderHTML();
+      renderIntouchFooterHTML();
+    });
+  },
+  false
+);
 // END OF HEADER/FOOTER
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {

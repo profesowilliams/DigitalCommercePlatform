@@ -96,6 +96,7 @@ function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, 
       className="cmp-order-tracking-grid__report"
       onMouseOver={handleMouseOverSearch}
       onMouseLeave={handleMouseLeaveSearch}
+      data-testid="report"
     >
       {isReportHovered ? (
         <ReportIconFilled fill="#262626" className="icon-hover" />
