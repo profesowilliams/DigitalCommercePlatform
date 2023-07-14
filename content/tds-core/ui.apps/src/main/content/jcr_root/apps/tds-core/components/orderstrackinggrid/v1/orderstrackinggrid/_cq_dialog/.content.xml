@@ -721,7 +721,7 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Order Number Label"
-                                                name="./orderNo" />
+                                                name="./searchOrderNo" />
                                             <searchDnoteNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -735,12 +735,12 @@
                                             <searchPoNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Filter Title"
+                                                fieldLabel="PO Number"
                                                 name="./searchPoNo" />
                                             <searchSerialNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Filter Title"
+                                                fieldLabel="Serial Number"
                                                 name="./searchSerialNo" />
                                             <actions
                                                 jcr:primaryType="nt:unstructured"

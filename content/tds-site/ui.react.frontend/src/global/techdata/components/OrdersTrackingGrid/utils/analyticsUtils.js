@@ -8,16 +8,9 @@ export const pushDataLayerGoogle = (analyticsData) => {
 export const getSortAnalyticsGoogle = (category, sortedModel) => {
   const sortData = sortedModel.map((item) => `${item.colId}:${item.sort}`);
   return {
-    event: 'Order tracking - Sort',
-    type: 'button',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      title: '',
-      id: '',
-      sortInfo: {
-        sortBy: [...sortData],
-      },
-    },
+    event: 'Order tracking - Grid Sort',
+    category: getDictionaryValueOrKey(category),
+    sortBy: [...sortData],
   };
 };
 
@@ -28,21 +21,12 @@ export const getPaginationAnalyticsGoogle = (
 ) => {
   return {
     event: 'Order tracking - Pagination',
-    type:
-      pageEvent === ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo
-        ? 'input'
-        : 'button',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      title: pageEvent,
-      id: '',
-      paginationInfo: {
-        Details: 'false',
-        PageSize: '25',
-        PageNumber: pageNumber,
-        withPaginationInfo: 'true',
-      },
-    },
+    category: getDictionaryValueOrKey(category),
+    title: pageEvent,
+    Details: 'false',
+    PageSize: '25',
+    PageNumber: pageNumber,
+    withPaginationInfo: 'true',
   };
 };
 
@@ -50,37 +34,24 @@ export const getFilterAnalyticsGoogle = (category, filterData) => {
   const filters = filterData?.length > 0 ? filterData : [];
   return {
     event: 'Order tracking - Advanced Search',
-    type: 'button',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      id: '',
-      filterInfo: {
-        filterBy: [...filters],
-      },
-    },
+    category: getDictionaryValueOrKey(category),
+    filterBy: [...filters],
   };
 };
 
 export const getReportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Reports',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      id: '',
-      orderTracking: getDictionaryValueOrKey(option),
-    },
+    category: getDictionaryValueOrKey(category),
+    orderTracking: getDictionaryValueOrKey(option),
   };
 };
 
 export const getExportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Export',
-    type: 'button',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      id: '',
-      orderTracking: getDictionaryValueOrKey(option),
-    },
+    category: getDictionaryValueOrKey(category),
+    orderTracking: getDictionaryValueOrKey(option),
   };
 };
 
@@ -89,17 +60,12 @@ export const getSearchAnalyticsGoogle = (
   dropdownOption,
   textInput
 ) => {
-  let retObject = {
+  return {
     event: 'Order tracking - Search',
-    type: 'button',
-    clickInfo: {
-      category: getDictionaryValueOrKey(category),
-      id: '',
-      orderTracking: getDictionaryValueOrKey(dropdownOption),
-      userInput: textInput,
-    },
+    category: getDictionaryValueOrKey(category),
+    orderTracking: getDictionaryValueOrKey(dropdownOption),
+    userInput: textInput,
   };
-  return retObject;
 };
 
 export const ANALYTIC_CONSTANTS = {
