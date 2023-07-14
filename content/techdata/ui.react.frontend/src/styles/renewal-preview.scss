@@ -10,7 +10,7 @@
 
 .cmp-renewal-preview {
   .details-container {
-    display: flex;
+    display: inline-block;
     padding: 27px 15px 0 15px;
     justify-content: space-between;
     .details-preview {
@@ -19,6 +19,14 @@
         font-weight: 600;
         letter-spacing: 0;
         line-height: 33px;
+    }
+    .details-price-level {
+      color: map-get($color-palette, "cool-gray-10");
+      padding-left: 1.25rem;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.125rem;
     }
   }
   .loader-rotate {

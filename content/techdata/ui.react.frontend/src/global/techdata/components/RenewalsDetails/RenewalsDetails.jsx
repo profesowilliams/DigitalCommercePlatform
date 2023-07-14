@@ -242,6 +242,7 @@ function RenewalsDetails(props) {
             />
             )}
             {saving && <Saving />}
+            <span class="details-price-level">{renewalsDetails.renewalLevel}</span>
           </div>
           <RenewalPreviewGrid
             ref={gridRef}
