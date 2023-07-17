@@ -6,8 +6,16 @@ import {
   DollyIcon,
   DollyActiveIcon,
 } from '../../../../../fluentIcons/FluentIcons';
+import ShippedTabGrid from './ShippedTabGrid/ShippedTabGrid';
+import NotShippedTabGrid from './NotShippedTabGrid/NotShippedTabGrid';
 
-function DropdownOrderDetails({ data, aemConfig }) {
+function DropdownOrderDetails({
+  data,
+  aemConfig,
+  openFilePdf,
+  hasAIORights,
+  hasOrderModificationRights,
+}) {
   const [activeTab, setActiveTab] = useState(0);
   const shippedItemsLeft = '11';
   const notShippedItemsLeft = '22';
@@ -24,7 +32,14 @@ function DropdownOrderDetails({ data, aemConfig }) {
       iconInActive: <TruckIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.shippedLabel,
       numberOfItems: shippedItemsLeft,
-      content: <div>Content for Tab 1</div>,
+      content: (
+        <ShippedTabGrid
+          data={data}
+          gridProps={aemConfig}
+          openFilePdf={openFilePdf}
+          hasAIORights={hasAIORights}
+        />
+      ),
     },
     {
       index: 1,
@@ -34,7 +49,13 @@ function DropdownOrderDetails({ data, aemConfig }) {
       iconInActive: <DollyIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.notShippedLabel,
       numberOfItems: notShippedItemsLeft,
-      content: <div>Content for Tab 2</div>,
+      content: (
+        <NotShippedTabGrid
+          data={data}
+          gridProps={aemConfig}
+          hasOrderModificationRights={hasOrderModificationRights}
+        />
+      ),
     },
   ];
 

@@ -22,6 +22,81 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Items Label"
                     name="./itemsLabel"/>
+                <trackLabel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Truck Label"
+                    name="./trackLabel"/>
+                <modifyEligibleItemsLabel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Modify EligibleItems Label"
+                    name="./modifyEligibleItemsLabel"/>
+                <dropdownArrow
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Dropdown Arrow Label"
+                    name="./dropdownArrow"/>
+                <shipDate
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Ship Date Label"
+                    name="./shipDate"/>
+                <dnote
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="D-Note Label"
+                    name="./dnote"/>
+                <invoice
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Invoice Label"
+                    name="./invoice"/>
+                <value
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Value Label"
+                    name="./value"/>
+                <qty
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Quantity Label"
+                    name="./qty"/>
+                <track
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Track Label"
+                    name="./track"/>
+                <lineNumber
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Line Number Label"
+                    name="./lineNumber"/>
+                <item
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Item Label"
+                    name="./item"/>
+                <pnsku
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="PnSku Label"
+                    name="./pnsku"/>
+                <nqty
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Quantity Label"
+                    name="./nqty"/>
+                <deliveryEstimate
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Delivery Estimate Label"
+                    name="./deliveryEstimate"/>
+                <action
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Delivery Estimate Label"
+                    name="./action"/>
             </items>
         </orderLineDetailsGroup>
     </items>

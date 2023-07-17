@@ -106,6 +106,8 @@ use(["../common/utils.js"], function (utils) {
     { key: "shippedLabel", name: "shippedLabel" },
     { key: "notShippedLabel", name: "notShippedLabel" },
     { key: "itemsLabel", name: "itemsLabel" },
+    { key: "track", name: "track" },
+    { key: "modifyEligibleItems", name: "modifyEligibleItems" },
   ];
 
   properties &&
@@ -115,6 +117,48 @@ use(["../common/utils.js"], function (utils) {
 
   if (orderLineDetails != null) {
     jsonObject["orderLineDetails"] = orderLineDetails;
+  }
+
+  // Shipped Grid
+  const orderLineDetailsShippedLabels = [
+    { key: "dropdownArrow", name: "dropdownArrow" },
+    { key: "shipDate", name: "shipDate" },
+    { key: "dnote", name: "dnote" },
+    { key: "invoice", name: "invoice" },
+    { key: "value", name: "value" },
+    { key: "qty", name: "qty" },
+    { key: "track", name: "track" },
+  ];
+
+  properties &&
+    orderLineDetailsShippedLabels.map((label) => {
+      orderLineDetailsShippedColumnLabels[label.key] = properties[label.name];
+    });
+
+  if (orderLineDetailsShippedColumnLabels != null) {
+    jsonObject["orderLineDetailsShippedColumnLabels"] =
+      orderLineDetailsShippedColumnLabels;
+  }
+
+  // Not Shipped Grid
+  const orderLineDetailsNotShippedLabels = [
+    { key: "lineNumber", name: "lineNumber" },
+    { key: "item", name: "item" },
+    { key: "pnsku", name: "pnsku" },
+    { key: "nqty", name: "nqty" },
+    { key: "deliveryEstimate", name: "deliveryEstimate" },
+    { key: "action", name: "action" },
+  ];
+
+  properties &&
+    orderLineDetailsNotShippedLabels.map((label) => {
+      orderLineDetailsNotShippedColumnLabels[label.key] =
+        properties[label.name];
+    });
+
+  if (orderLineDetailsNotShippedColumnLabels != null) {
+    jsonObject["orderLineDetailsNotShippedColumnLabels"] =
+      orderLineDetailsNotShippedColumnLabels;
   }
 
   //Invoices flyout options
