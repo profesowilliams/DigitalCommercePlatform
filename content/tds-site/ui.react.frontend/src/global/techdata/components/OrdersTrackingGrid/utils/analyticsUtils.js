@@ -6,36 +6,31 @@ export const pushDataLayerGoogle = (analyticsData) => {
 };
 
 export const getSortAnalyticsGoogle = (category, sortedModel) => {
-  const sortData = sortedModel.map((item) => `${item.colId}:${item.sort}`);
+  const sortData = sortedModel
+    .map((item) => `${item.colId}: ${item.sort}`)
+    .join();
   return {
     event: 'Order tracking - Grid Sort',
     category: getDictionaryValueOrKey(category),
-    sortBy: [...sortData],
+    orderTracking: sortData,
   };
 };
 
-export const getPaginationAnalyticsGoogle = (
-  category,
-  pageEvent,
-  pageNumber
-) => {
+export const getPaginationAnalyticsGoogle = (category, pageEvent) => {
   return {
     event: 'Order tracking - Pagination',
     category: getDictionaryValueOrKey(category),
-    title: pageEvent,
-    Details: 'false',
-    PageSize: '25',
-    PageNumber: pageNumber,
-    withPaginationInfo: 'true',
+    orderTracking: pageEvent,
   };
 };
 
-export const getFilterAnalyticsGoogle = (category, filterData) => {
+export const getFilterAnalyticsGoogle = (category, filterData, dateLabel) => {
   const filters = filterData?.length > 0 ? filterData : [];
   return {
     event: 'Order tracking - Advanced Search',
     category: getDictionaryValueOrKey(category),
-    filterBy: [...filters],
+    orderTracking: filters.join('|'),
+    label: dateLabel,
   };
 };
 
@@ -43,7 +38,7 @@ export const getReportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Reports',
     category: getDictionaryValueOrKey(category),
-    orderTracking: getDictionaryValueOrKey(option),
+    orderTracking: getDictionaryValueOrKey(option?.label),
   };
 };
 
@@ -63,8 +58,7 @@ export const getSearchAnalyticsGoogle = (
   return {
     event: 'Order tracking - Search',
     category: getDictionaryValueOrKey(category),
-    orderTracking: getDictionaryValueOrKey(dropdownOption),
-    userInput: textInput,
+    orderTracking: `${getDictionaryValueOrKey(dropdownOption)}: ${textInput}`,
   };
 };
 
@@ -79,12 +73,7 @@ export const ANALYTIC_CONSTANTS = {
       PageNo: 'Page input',
     },
     RowActions: {
-      Copy: 'Copy',
       DownloadPdf: 'Download PDF',
-      DownloadXls: 'Download XLS',
-      DownloadPdfExpanded: 'Download PDF from Expanded',
-      DownloadXlsExpanded: 'Download XLS from Expanded',
-      Order: 'Place Order',
       OrderExpanded: 'Place Order from Expanded',
       DNote: 'View DNote',
       Invoice: 'View Invoice',

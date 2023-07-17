@@ -64,8 +64,7 @@ function OrderTrackingGridPagination(
           analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin,
-            pageNumber
+            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin
           )}
         >
           <ChevronDoubleLeftIcon />
@@ -77,8 +76,7 @@ function OrderTrackingGridPagination(
           analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack,
-            pageNumber
+            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack
           )}
         >
           <ChevronLeftIcon />
@@ -106,8 +104,7 @@ function OrderTrackingGridPagination(
           analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward,
-            pageNumber
+            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward
           )}
         >
           <ChevronRightIcon />
@@ -119,8 +116,7 @@ function OrderTrackingGridPagination(
           analyticsCallback={getPaginationAnalyticsGoogle.bind(
             paginationAnalyticsLabel,
             analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd,
-            pageNumber
+            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd
           )}
         >
           <ChevronDoubleRightIcon />

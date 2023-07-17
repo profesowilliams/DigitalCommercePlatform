@@ -33,6 +33,7 @@ const OrderFilterFlyout = ({
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.customFiltersChecked
   );
+  const dateType = useOrderTrackingStore((state) => state.dateType);
 
   const [showLess, setShowLess] = useState(true);
 
@@ -100,15 +101,28 @@ const OrderFilterFlyout = ({
     if (orderFilterCounter !== 0) {
       let checkedFilters = [];
       orderStatusFiltersChecked.length > 0 &&
-        checkedFilters.push(getDictionaryValueOrKey(orderStatus));
+        checkedFilters.push(
+          `${orderStatus}: ${orderStatusFiltersChecked
+            .map((filter) => filter.filterOptionLabel)
+            .join()}`
+        );
       orderTypeFiltersChecked.length > 0 &&
-        checkedFilters.push(getDictionaryValueOrKey(orderType));
+        checkedFilters.push(
+          `${orderType}: ${orderTypeFiltersChecked
+            .map((filter) => filter.filterOptionLabel)
+            .join()}`
+        );
       dateRangeFiltersChecked.length > 0 &&
-        checkedFilters.push(getDictionaryValueOrKey(dateRange));
+        checkedFilters.push(
+          `${dateRange}: ${dateRangeFiltersChecked
+            .map((filter) => filter.filterOptionLabel)
+            .join()}`
+        );
       pushDataLayerGoogle(
         getFilterAnalyticsGoogle(
           getDictionaryValueOrKey(analyticsCategories.filter),
-          checkedFilters
+          checkedFilters,
+          dateRangeFiltersChecked.length > 0 ? dateType : ''
         )
       );
     }

@@ -97,8 +97,7 @@ function useOrderTrackingPaginationState({
     pushDataLayerGoogle(
       getPaginationAnalyticsGoogle(
         paginationAnalyticsLabel,
-        ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
-        value.pageNumber
+        ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo
       )
     );
     goToSpecificPage(value);
@@ -112,8 +111,7 @@ function useOrderTrackingPaginationState({
       pushDataLayerGoogle(
         getPaginationAnalyticsGoogle(
           paginationAnalyticsLabel,
-          ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
-          value.pageNumber
+          ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo
         )
       );
       goToSpecificPage(value);

@@ -85,10 +85,15 @@ function ExportFlyout({
   }
 
   const exportRequests = [
-    { key: 'exportAllOrderLinesKey', request: getExportAllOrderLines },
+    {
+      key: 'exportAllOrderLinesKey',
+      request: getExportAllOrderLines,
+      analyticsLabel: 'all',
+    },
     {
       key: 'exportLinesWithSerialNumbersKey',
       request: getExportLinesWithSerialNumbersOnly,
+      analyticsLabel: 'serials',
     },
   ];
 
@@ -97,7 +102,10 @@ function ExportFlyout({
       (e) => e.key === secondarySelected
     );
     pushDataLayerGoogle(
-      getExportAnalyticsGoogle(exportAnalyticsLabel, secondarySelected)
+      getExportAnalyticsGoogle(
+        exportAnalyticsLabel,
+        matchingRequest.analyticsLabel
+      )
     );
     if (matchingRequest) {
       const downloadRequest = matchingRequest.request;
