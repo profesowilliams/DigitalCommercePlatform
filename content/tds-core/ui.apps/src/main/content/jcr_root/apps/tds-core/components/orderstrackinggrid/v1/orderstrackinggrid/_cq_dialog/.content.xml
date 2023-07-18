@@ -287,7 +287,7 @@
                             </elements>
                             <orderLineDetails
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="Order Line Dropdown"
+                                jcr:title="Export Flyout"
                                 sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
                                 margin="{Boolean}true">
                                 <items jcr:primaryType="nt:unstructured">

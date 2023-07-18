@@ -24,7 +24,7 @@ export const ordersTrackingDefinition = (
       //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
       updated: data?.updatedFormatted ?? data?.created,
       created: data?.createdFormatted ?? data?.created,
-      select: <SelectColumn eventProps={eventProps} />,
+      select: <SelectColumn data={data} eventProps={eventProps} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: (
         <InvoiceColumn

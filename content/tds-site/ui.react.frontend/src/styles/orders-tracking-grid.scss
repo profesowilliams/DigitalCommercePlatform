@@ -131,6 +131,9 @@
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+
+    &__caret {
+    }
   }
 
   &__action-column {
@@ -165,11 +168,7 @@
   }  
 }
 
-// Styles for Order Tracking Grid dropdown
 .order-line-details {
-  * {
-    font-family: Arial !important;
-  }
   margin-left: 40px;
   margin-right: 40px;
   &__header {
@@ -204,82 +203,6 @@
       font-size: 16px;
       font-weight: 400;
       line-height: 24px;
-    }
-  }
-  &__content {
-    &__title {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-    &__title-text {
-      color: $brand-black;
-      font-size: 28px;
-      font-weight: 400;
-    }
-    &__title-button {
-      height: 44px;
-      padding: 8px 20px;
-      font-size: 12px !important;
-      font-weight: 400;
-      color: $brand-green;
-      border: 1px solid $brand-green !important
-    }
-    &__downloadLink {
-      color: $brand-cobalt;
-      cursor: pointer;
-    }
-    &__track {
-      color:$brand-green
-    }
-    &__grid {
-      & * {
-        font-size: 16px !important;
-      }
-    }
-    &__innerTable {
-      margin-left: 48px;
-      &__line {
-        display: flex;
-        width: fit-content;
-        min-height: 42px;
-        padding: 8px;
-        padding-bottom: 8px;
-        border-bottom: 1px solid $brand-text-lightgray;
-      }
-      &__column {
-        padding-left: 30px;
-      }
-      &__text {
-        color: $brand-charcoal;
-        font-size: 14px !important;
-      }
-    }
-    &__description {
-      &-column {
-        display: flex;
-      }
-      &-right {
-        margin-left: 1rem;
-      }
-    }
-  }
-
-  // Overrides for inner grid
-   * {
-    &.cmp-grid.ag-theme-alpine{
-      border-top: none !important;
-    }
-    &.cmp-grid.ag-theme-alpine .ag-header {
-      border-top: none !important;
-    }
-    &.ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport{
-        min-height: fit-content !important;
-      }
-    &.ag-root-wrapper-body.ag-layout-auto-height.ag-focus-managed{
-      overflow-x: hidden !important;
     }
   }
 }
