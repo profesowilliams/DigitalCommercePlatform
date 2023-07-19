@@ -4,6 +4,11 @@ import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './MenuActions';
 import OrderTrackingDetailTitle from './OrderTrackingDetailTitle';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import {
+  getDNoteViewAnalyticsGoogle,
+  getInvoiceViewAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -64,12 +69,18 @@ const OrderTrackingDetailHeader = ({
       key: 'dNotesFlyout',
       value: { data: deliveryNotes, show: true, id: id, reseller: poNumber },
     });
+    pushDataLayerGoogle(
+      getDNoteViewAnalyticsGoogle(deliveryNotes.length, 'Order Details')
+    );
   };
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
       value: { data: invoices, show: true, id: id, reseller: poNumber },
     });
+    pushDataLayerGoogle(
+      getInvoiceViewAnalyticsGoogle(invoices.length, 'Order Details')
+    );
   };
   const triggerExportFlyout = () => {
     setCustomState({

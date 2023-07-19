@@ -62,6 +62,51 @@ export const getSearchAnalyticsGoogle = (
   };
 };
 
+export const getHomeAnalyticsGoogle = (rights) => {
+  return {
+    event: 'Order tracking - Home',
+    orderTracking: `Home: ${getDictionaryValueOrKey(rights)}`,
+  };
+};
+
+export const getOrderDetailsAnalyticsGoogle = (number) => {
+  return {
+    event: 'Order tracking - Order Details',
+    orderTracking: `Order Details: ${number}`,
+  };
+};
+
+export const getDNoteViewAnalyticsGoogle = (number, dNoteLabel) => {
+  return {
+    event: 'Order tracking - D-Note View',
+    orderTracking: `D-Note View: ${number}`,
+    label: getDictionaryValueOrKey(dNoteLabel),
+  };
+};
+
+export const getMainGridAnalyticsGoogle = (number, invoiceLabel) => {
+  return {
+    event: 'Order tracking - Main Grid',
+    orderTracking: `Invoice View: ${number}`,
+    label: getDictionaryValueOrKey(invoiceLabel),
+  };
+};
+
+export const getInvoiceViewAnalyticsGoogle = (number, invoiceLabel) => {
+  return {
+    event: 'Order tracking - Invoice View',
+    orderTracking: `Invoice View: ${number}`,
+    label: getDictionaryValueOrKey(invoiceLabel),
+  };
+};
+
+export const getErrorPageAnalyticsGoogle = (errorNumber) => {
+  return {
+    event: 'Order tracking - Error Page',
+    orderTracking: `Error Page: ${errorNumber}`,
+  };
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],

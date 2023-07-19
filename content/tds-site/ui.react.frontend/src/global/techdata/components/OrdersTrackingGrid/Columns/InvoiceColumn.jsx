@@ -1,7 +1,10 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
-
+import {
+  getInvoiceViewAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../utils/analyticsUtils';
 
 function InvoiceColumn({
   invoices = [],
@@ -18,6 +21,9 @@ function InvoiceColumn({
       key: 'invoicesFlyout',
       value: { data: invoices, show: true, id: id, reseller: reseller?.id },
     });
+    pushDataLayerGoogle(
+      getInvoiceViewAnalyticsGoogle(invoices.length, 'Main Grid')
+    );
   };
   const handleDownload = () => {
     hasAIORights && openFilePdf('Invoice', id, invoices[0]?.id);

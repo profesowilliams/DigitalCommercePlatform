@@ -1,6 +1,10 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import {
+  getDNoteViewAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../utils/analyticsUtils';
 
 //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
 function DeliveryNotesColumn({
@@ -17,6 +21,9 @@ function DeliveryNotesColumn({
       key: 'dNotesFlyout',
       value: { data: deliveryNotes, show: true, id: id, reseller: reseller.id },
     });
+    pushDataLayerGoogle(
+      getDNoteViewAnalyticsGoogle(deliveryNotes.length, 'Main Grid')
+    );
   };
 
   //TODO: change to use Denotes after BE create mock request for downloading dnotes

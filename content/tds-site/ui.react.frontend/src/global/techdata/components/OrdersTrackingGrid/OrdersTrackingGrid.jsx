@@ -50,8 +50,9 @@ import {
 } from './utils/orderTrackingUtils';
 import Toaster from '../Widgets/Toaster';
 import {
-    getSortAnalyticsGoogle,
-    pushDataLayerGoogle,
+  getHomeAnalyticsGoogle,
+  getSortAnalyticsGoogle,
+  pushDataLayerGoogle,
 } from './utils/analyticsUtils';
 import OrderTrackingGridPagination from './Pagination/OrderTrackingGridPagination';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
@@ -465,6 +466,9 @@ function OrdersTrackingGrid(props) {
           setUserData(data[1]);
         });
       setDateType(filterLabels.orderDateLabel);
+      pushDataLayerGoogle(
+        getHomeAnalyticsGoogle(hasAccess ? 'Rights' : 'No Rights')
+      );
     }, []);
 
     const searchOptions = [...getPredefinedSearchOptionsList(searchLabels), ...searchOptionsList]
