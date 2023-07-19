@@ -231,7 +231,7 @@ function RenewalsDetails(props) {
             }}
           />
           <div className="details-container">
-            <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}</span>
+            <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}<span class="details-price-level">{renewalsDetails.renewalLevel}</span></span>
             {isEditable(renewalsDetails) && (
             <EditFlow
               disabled={!editMode && isEditingDetails} 
@@ -242,7 +242,6 @@ function RenewalsDetails(props) {
             />
             )}
             {saving && <Saving />}
-            <span class="details-price-level">{renewalsDetails.renewalLevel}</span>
           </div>
           <RenewalPreviewGrid
             ref={gridRef}
