@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Counter = ({ value = 0, onChange }) => {
   const [currentValue, setCurrentValue] = useState(value);
 
   const increase = () => {
     setCurrentValue((prevState) => prevState + 1);
-    onChange(currentValue);
   };
 
   const decrease = () => {
     if (currentValue > 0) {
       setCurrentValue((prevState) => prevState - 1);
-      onChange(currentValue);
     }
   };
 
@@ -19,7 +17,11 @@ const Counter = ({ value = 0, onChange }) => {
     setCurrentValue(event.target.value);
     onChange(event.target.value);
   };
-  
+
+  useEffect(() => {
+    onChange(currentValue);
+  }, [currentValue]);
+
   return (
     <div className="counter">
       <div className="minus" onClick={decrease}>

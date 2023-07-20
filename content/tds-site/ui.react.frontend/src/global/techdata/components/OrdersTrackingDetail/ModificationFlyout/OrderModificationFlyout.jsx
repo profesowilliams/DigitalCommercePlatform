@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
-import Counter from '../../Counter/Counter';
+import LineItem from './LineItem';
 
 function OrderModificationFlyout({
   subheaderReference = '',
@@ -64,28 +64,12 @@ function OrderModificationFlyout({
         </p>
         <ul className="cmp-flyout-list">
           {items.map((item) => (
-            <li key={item.id} className="cmp-flyout-list__element">
-              <div className="cmp-flyout-list__element__number">{item.id}</div>
-              <div className="cmp-flyout-list__element__picture">
-                <img src={item?.urlProductImage} alt="" />
-              </div>
-              <div className="cmp-flyout-list__element__title">
-                <p>{item.displayName}</p>
-                <div>{`${getDictionaryValueOrKey(labels?.lineMfgPartNo)} ${
-                  item.manufacturerPart
-                }`}</div>
-              </div>
-              <div className="cmp-flyout-list__element__counter">
-                <Counter value={item.quantity} onChange={handleAmountChange} />
-              </div>
-              <div className="cmp-flyout-list__element__price">
-                <p className="cmp-flyout-list__element__price-bold">
-                  {getDictionaryValueOrKey(labels.lineTotal)} (
-                  {item.unitPriceCurrency})
-                </p>
-                <p> {item.unitPriceFormatted}</p>
-              </div>
-            </li>
+            <LineItem
+              key={item.id}
+              item={item}
+              onChange={handleAmountChange}
+              labels={labels}
+            />
           ))}
         </ul>
       </section>

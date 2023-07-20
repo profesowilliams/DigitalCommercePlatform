@@ -222,7 +222,7 @@ const mockedProps = {
       'There are no results for your current search. Adjust search criteria to improve results. ',
     noResultsImage:
       '/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png',
-    noDataTitle: 'No results found example ',
+    noDataTitle: 'No results found',
     noDataDescription:
       'There are no results for your current search. Adjust search criteria to improve results. example  ',
     noDataImage:

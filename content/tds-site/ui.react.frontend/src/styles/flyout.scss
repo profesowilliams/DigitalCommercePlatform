@@ -331,7 +331,21 @@ $flyout-small-height-formax: 779px;
     }
     &__counter {
       grid-area: 2 / 3 / 3 / 4;
+      height: 76px;
+
+      p {
+        font-size: 14px;
+        display: inline-block;
+        margin-top: 15px;
+        vertical-align: bottom;
+        svg {
+          display: inline-block;
+          vertical-align: text-bottom;
+          margin-right: 7px;
+        }
+      }
     }
+  }
     &__price {
       grid-area: 2 / 4 / 3 / 5; 
       text-align: right;
@@ -340,7 +354,6 @@ $flyout-small-height-formax: 779px;
       }
     }
   }
-}
 
 .cmp-flyout-td-synnex{
   & .cmp-flyout__footer {

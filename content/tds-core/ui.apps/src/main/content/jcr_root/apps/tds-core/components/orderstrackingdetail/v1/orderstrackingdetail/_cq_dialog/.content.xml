@@ -317,7 +317,12 @@
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Update Label"
-												name="./update"/>  
+												name="./update"/>
+                                            <additionalQuantityAdded
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Additional Quantity Added"
+												name="./additionalQuantityAdded"/>    
 
 											<menuCopy
 												jcr:primaryType="nt:unstructured"
