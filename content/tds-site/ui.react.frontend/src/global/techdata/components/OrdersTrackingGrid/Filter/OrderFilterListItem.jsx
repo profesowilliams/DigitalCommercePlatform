@@ -122,10 +122,10 @@ function OrderFilterListItem({
   return (
     <>
       <div
-        className="filter-accordion__item"
+        className="order-filter-accordion__item"
         onClick={() => handleFilterClick(id)}
       >
-        <div className="filter-accordion__item--group">
+        <div className="order-filter-accordion__item--group">
           <h3 className={`${open ? computeClassName('active') : ''}`}>
             {accordionLabel}
           </h3>

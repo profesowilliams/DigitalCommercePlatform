@@ -56,6 +56,7 @@ import {
 } from './utils/analyticsUtils';
 import OrderTrackingGridPagination from './Pagination/OrderTrackingGridPagination';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
+import { tooltipVal } from './utils/tooltipUtils';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -453,8 +454,8 @@ function OrdersTrackingGrid(props) {
     }
     const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
-    const hasAccess =
-      hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
+  const hasAccess =
+    hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
     useEffect(() => {
       if (
@@ -476,89 +477,90 @@ function OrdersTrackingGrid(props) {
         );
     }, []);
 
-    const searchOptions = [...getPredefinedSearchOptionsList(searchLabels), ...searchOptionsList]
+  const searchOptions = [
+    ...getPredefinedSearchOptionsList(searchLabels),
+    ...searchOptionsList,
+  ];
 
-    return (
-      <>
-        {(userData?.activeCustomer || isLocalDevelopment) && (
-          <>
-            {hasAccess ? (
-              <div className="cmp-order-tracking-grid">
-                <BaseGridHeader
-                  leftComponents={[
-                    <OrderTrackingGridPagination
-                      ref={customPaginationRef}
-                      store={useOrderTrackingStore}
-                      onQueryChanged={onQueryChanged}
-                      disabled={isLoading}
-                      paginationAnalyticsLabel={analyticsCategories.pagination}
-                      resultsLabel={paginationLabels.results}
-                      ofLabel={paginationLabels.of}
-                    />,
-                  ]}
-                  rightComponents={[
-                    ...(pill
-                      ? [
-                          <Pill
-                            children={
-                              <span className="td-capsule__text">
-                                {reportPillLabel}: {pill.label}
-                              </span>
-                            }
-                            closeClick={handleDeletePill}
-                            hasCloseButton
-                          />,
-                        ]
-                      : []),
-                    <OrderSearch
-                      options={searchOptions}
-                      onQueryChanged={onSearchChange}
-                      ref={searchCriteria}
-                      store={useOrderTrackingStore}
-                      hideLabel={true}
-                      gridConfig={gridConfig}
-                      searchAnalyticsLabel={analyticsCategories.search}
-                    />,
-                    <VerticalSeparator />,
-                    <OrderFilter />,
-                    <VerticalSeparator />,
-                    <Report
-                      selectOption={onReportChange}
-                      ref={reportFilterValue}
-                      selectedKey={pill?.key}
-                      gridConfig={gridConfig}
-                      reportAnalyticsLabel={analyticsCategories.report}
-                    />,
-                    <VerticalSeparator />,
-                    <OrderExport />,
-                  ]}
-                />
-                <BaseGrid
-                  columnList={addCurrencyToTotalColumn(
-                    componentProp.columnList
-                  )}
-                  definitions={ordersTrackingDefinition(
-                    componentProp,
-                    openFilePdf,
-                    hasAIORights
-                  )}
-                  config={gridConfig}
-                  options={options}
-                  gridConfig={gridConfig}
-                  defaultSearchDateRange={dateRange}
-                  requestInterceptor={customRequestInterceptor}
-                  mapServiceData={mapServiceData}
-                  onSortChanged={onSortChanged}
-                  onAfterGridInit={_onAfterGridInit}
-                  onDataLoad={onDataLoad}
-                  DetailRenderers={(props) => (
-                    <OrderDetailsRenderers {...props} config={gridConfig} />
-                  )}
-                  onCellMouseOver={cellMouseOver}
-                  onCellMouseOut={cellMouseOut}
-                />
-                <ToolTip toolTipData={toolTipData} />
-                <div className="cmp-renewals__pagination--bottom">
+  return (
+    <>
+      {(userData?.activeCustomer || isLocalDevelopment) && (
+        <>
+          {hasAccess ? (
+            <div className="cmp-order-tracking-grid">
+              <BaseGridHeader
+                leftComponents={[
+                  <OrderTrackingGridPagination
+                    ref={customPaginationRef}
+                    store={useOrderTrackingStore}
+                    onQueryChanged={onQueryChanged}
+                    disabled={isLoading}
+                    paginationAnalyticsLabel={analyticsCategories.pagination}
+                    resultsLabel={paginationLabels.results}
+                    ofLabel={paginationLabels.of}
+                  />,
+                ]}
+                rightComponents={[
+                  ...(pill
+                    ? [
+                        <Pill
+                          children={
+                            <span className="td-capsule__text">
+                              {reportPillLabel}: {pill.label}
+                            </span>
+                          }
+                          closeClick={handleDeletePill}
+                          hasCloseButton
+                        />,
+                      ]
+                    : []),
+                  <OrderSearch
+                    options={searchOptions}
+                    onQueryChanged={onSearchChange}
+                    ref={searchCriteria}
+                    store={useOrderTrackingStore}
+                    hideLabel={true}
+                    gridConfig={gridConfig}
+                    searchAnalyticsLabel={analyticsCategories.search}
+                  />,
+                  <VerticalSeparator />,
+                  <OrderFilter />,
+                  <VerticalSeparator />,
+                  <Report
+                    selectOption={onReportChange}
+                    ref={reportFilterValue}
+                    selectedKey={pill?.key}
+                    gridConfig={gridConfig}
+                    reportAnalyticsLabel={analyticsCategories.report}
+                  />,
+                  <VerticalSeparator />,
+                  <OrderExport />,
+                ]}
+              />
+              <BaseGrid
+                columnList={addCurrencyToTotalColumn(componentProp.columnList)}
+                definitions={ordersTrackingDefinition(
+                  componentProp,
+                  openFilePdf,
+                  hasAIORights
+                )}
+                config={gridConfig}
+                options={options}
+                gridConfig={gridConfig}
+                defaultSearchDateRange={dateRange}
+                requestInterceptor={customRequestInterceptor}
+                mapServiceData={mapServiceData}
+                onSortChanged={onSortChanged}
+                onAfterGridInit={_onAfterGridInit}
+                onDataLoad={onDataLoad}
+                DetailRenderers={(props) => (
+                  <OrderDetailsRenderers {...props} config={gridConfig} />
+                )}
+                onCellMouseOver={cellMouseOver}
+                onCellMouseOut={cellMouseOut}
+              />
+              <ToolTip toolTipData={toolTipData} />
+              <div className="cmp-renewals__pagination--bottom">
                 <OrderTrackingGridPagination
                   ref={customPaginationRef}
                   store={useOrderTrackingStore}
