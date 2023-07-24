@@ -1,121 +1,119 @@
 <div data-observe-mutation>
-    <div data-component="OrdersTrackingDetail"
-         data-cmp-type="react"
-         className="cmp-orders-tracking-detail"></div>
+  <div data-component="OrdersTrackingDetail" data-cmp-type="react" className="cmp-orders-tracking-detail"></div>
 </div>
 <script>
-    const renewalsGridDom = document.querySelector(
-        "[data-component='OrdersTrackingDetail']"
-    );
-    const AEM_DATA = {
-        ordersUrl: "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-grid",
-        uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/order",
-        ordersDownloadDocumentsEndpoint:
-            "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
-        exportAllOrderLinesEndpoint: "http://localhost:3000/ui-commerce/v2/OrdersExport",
-        exportLinesWithSerialNumbersOnlyEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersExport",
-        agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
-        labels: {
-            menuCopy: 'Copy',
-            menuCopyWithHeaders: 'Copy with headers',
-            menuExport: 'Export',
-            actions: 'Actions',
+  const renewalsGridDom = document.querySelector("[data-component='OrdersTrackingDetail']");
+  const AEM_DATA = {
+    ordersUrl: "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-grid",
+    uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/order",
+    ordersDownloadDocumentsEndpoint: "http://localhost:3000/ui-commerce/v2/DownloadDocuments",
+    exportAllOrderLinesEndpoint: "http://localhost:3000/ui-commerce/v2/OrdersExport",
+    exportLinesWithSerialNumbersOnlyEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersExport",
+    agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    labels: {
+      menuCopy: "Copy",
+      menuCopyWithHeaders: "Copy with headers",
+      menuExport: "Export",
+      actions: "Actions",
 
-            lineNo: 'Line №',
-            lineDescription: 'Description',
-            lineStatus: 'Line Status',
-            lineShipDate: 'Ship date',
-            lineUnitPrice: 'Unit cost ({currency-code})',
-            lineQuantity: 'Qty',
-            lineTotalPrice: 'Line  total ({currency-code})',
-            lineMfgPartNo: 'Mfg №:',
-            lineTdsPartNo: 'TDS №:',
+      lineNo: "Line №",
+      lineDescription: "Description",
+      lineStatus: "Line Status",
+      lineShipDate: "Ship date",
+      lineUnitPrice: "Unit cost ({currency-code})",
+      lineQuantity: "Qty",
+      lineTotalPrice: "Line  total ({currency-code})",
+      lineMfgPartNo: "Mfg №:",
+      lineTdsPartNo: "TDS №:",
 
-            detailsActionViewDNotes: "View D-Notes",
-            detailsActionViewInvoices: "View Invoices",
-            detailsActionModifyOrder: "Modify Order",
-            detailsActionExportSerialNumbers: "Export Serial Numbers",
-            detailsActionCopySerialNumber: "Copy Serial Number",
-            detailsActionTrack: "Track",
+      detailsActionViewDNotes: "View D-Notes",
+      detailsActionViewInvoices: "View Invoices",
+      detailsActionModifyOrder: "Modify Order",
+      detailsActionExportSerialNumbers: "Export Serial Numbers",
+      detailsActionCopySerialNumber: "Copy Serial Number",
+      detailsActionTrack: "Track",
 
-            detailsLineHeader: 'Line Item Details',
-            detailsBack: "Back",
-            detailsOrderNo: "Order №",
-            detailsActions: "Actions",
-            detailsSoldTo: "Sold to",
-            detailsSoldToPhone: "Phone:",
-            detailsSoldToEmail: "Email:",
-            detailsOrderAcknowledgement: "Order Acknowledgement",
-            detailsCustomerAccountCode: "Customer account code:",
-            detailsOrderDate: "Order date:",
-            detailsPurchaseOrderNo: "Purchase order №:",
-            detailsOrderType: "Order type:",
-            detailsContact: "Contact",
-            detailsContactName: "Name:",
-            detailsContactPhone: "Phone:",
-            detailsContactEmail: "Email:",
-            detailsOrderSubtotal: "Order Subtotal",
-            detailsTotalOrderNetPrice: "Total Order Net Price",
-            detailsFooterLine1: "Note: Pricing displayed is subject to vendor price changes and exchange rate",
-            detailsFooterLine2: "Taxes & Shipping Fees are not included",
-            detailsFooterLine3: "This order and our trading relationship are governed by the current TD SYNNEX Terms and Conditions of Supply as set out at ",
-            detailsFooterLine3Link: "https://eu.tdsynnex.com/terms-conditions",
-            addNewItem: "Add new Item",
-            editQuantities: "Edit quantities of eligible items",
-            lineTotal: "Line total",
-            modifyOrder: "Modify order",
-            cancel: "Cancel",
-            update: "Update",
-            additionalQuantityAdded: "Additional quantities will show in the Order Details page as a new line",
-        },
-        dNotesFlyout: {
-            title: "D-notes",
-            description: "Click a link to view or select items to download.",
-            orderNo: "Order №:",
-            poNo: "PO №:",
-            button: "Download selected",
-            clearAllButton: "Clear all",
-        },
-        dNoteColumnList: [
-            {
-                columnLabel: "D-note №",
-                columnKey: "id",
-            },
-            {
-                columnLabel: "Ship Date",
-                columnKey: "actualShipDateFormatted",
-            },
-        ],
-        invoicesFlyout: {
-            title: "Invoices",
-            description: "Click a link to view or select items to download.",
-            orderNo: "Order №:",
-            poNo: "PO №:",
-            button: "Download selected",
-            clearAllButton: "Clear all",
-        },
-        invoicesColumnList: [
-        {
-            columnLabel: "Invoice №",
-            columnKey: "id",
-        },
-        {
-            columnLabel: "Ship Date",
-            columnKey: "createdFormatted",
-        },
+      detailsLineHeader: "Line Item Details",
+      detailsBack: "Back",
+      detailsOrderNo: "Order №",
+      detailsActions: "Actions",
+      detailsSoldTo: "Sold to",
+      detailsSoldToPhone: "Phone:",
+      detailsSoldToEmail: "Email:",
+      detailsOrderAcknowledgement: "Order Acknowledgement",
+      detailsCustomerAccountCode: "Customer account code:",
+      detailsOrderDate: "Order date:",
+      detailsPurchaseOrderNo: "Purchase order №:",
+      detailsOrderType: "Order type:",
+      detailsContact: "Contact",
+      detailsContactName: "Name:",
+      detailsContactPhone: "Phone:",
+      detailsContactEmail: "Email:",
+      detailsOrderSubtotal: "Order Subtotal",
+      detailsTotalOrderNetPrice: "Total Order Net Price",
+      detailsFooterLine1: "Note: Pricing displayed is subject to vendor price changes and exchange rate",
+      detailsFooterLine2: "Taxes & Shipping Fees are not included",
+      detailsFooterLine3: "This order and our trading relationship are governed by the current TD SYNNEX Terms and Conditions of Supply as set out at ",
+      detailsFooterLine3Link: "https://eu.tdsynnex.com/terms-conditions",
+      addNewItem: "Add new Item",
+      editQuantities: "Edit quantities of eligible items",
+      lineTotal: "Line total",
+      modifyOrder: "Modify order",
+      cancel: "Cancel",
+      update: "Update",
+      manufacturersPartNumber: "Manufacturer's part number",
+      quantity: "Quantity",
+      add: "Add",
+      additionalQuantityAdded: "Additional quantities will show in the Order Details page as a new line",
+    },
+    dNotesFlyout: {
+      title: "D-notes",
+      description: "Click a link to view or select items to download.",
+      orderNo: "Order №:",
+      poNo: "PO №:",
+      button: "Download selected",
+      clearAllButton: "Clear all",
+    },
+    dNoteColumnList: [
+      {
+        columnLabel: "D-note №",
+        columnKey: "id",
+      },
+      {
+        columnLabel: "Ship Date",
+        columnKey: "actualShipDateFormatted",
+      },
+    ],
+    invoicesFlyout: {
+      title: "Invoices",
+      description: "Click a link to view or select items to download.",
+      orderNo: "Order №:",
+      poNo: "PO №:",
+      button: "Download selected",
+      clearAllButton: "Clear all",
+    },
+    invoicesColumnList: [
+      {
+        columnLabel: "Invoice №",
+        columnKey: "id",
+      },
+      {
+        columnLabel: "Ship Date",
+        columnKey: "createdFormatted",
+      },
     ],
     exportFlyout: {
       title: "Export",
       description: "Send to",
       secondaryDescription: "Details to include",
       button: "Export",
-      exportSuccessMessage:"Your .xlsx export has been created successfully."
+      exportSuccessMessage: "Your .xlsx export has been created successfully.",
     },
     exportOptionsList: [{ label: "Exel (.xlxs)", key: "exportOptionsListKey" }],
     exportSecondaryOptionsList: [
       { label: "Export all order lines", key: "exportAllOrderLinesKey" },
       { label: "Export lines with serial numbers only", key: "exportLinesWithSerialNumbersKey" },
     ],
-    };
-    renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
+  };
+  renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

@@ -264,11 +264,11 @@ $flyout-small-height-formax: 779px;
     padding: 20px 30px;
     font-size: 16px;
     color: $brand-green;
-    border-bottom: 1px solid $v-divider-gray;
   }
   .edit-quantities {
     font-size: 16px;
-    padding-left: 30px;
+    padding: 20px 0 0 30px;
+    border-top: 1px solid $v-divider-gray;
   }
 }
 
@@ -294,7 +294,6 @@ $flyout-small-height-formax: 779px;
   .primary {
     color: $brand-white;
     background-color: $brand-green;
-   
   }
   .secondary {
     color: $brand-green;
@@ -355,18 +354,18 @@ $flyout-small-height-formax: 779px;
     }
   }
 
-.cmp-flyout-td-synnex{
+.cmp-flyout-td-synnex {
   & .cmp-flyout__footer {
     &-buttons {
-    button {
-      &.cmp-flyout__footer-button--enabled {
-        background-color: $brand-green;
+      button {
+        &.cmp-flyout__footer-button--enabled {
+          background-color: $brand-green;
+        }
+        &.cmp-flyout__footer-button--secondary {
+          border: 1px solid $brand-green;
+          color: $brand-green;
+        }
       }
-      &.cmp-flyout__footer-button--secondary {
-        border: 1px solid $brand-green;
-        color: $brand-green;
-      }
-    }
     }
   }
 }

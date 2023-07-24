@@ -1,0 +1,16 @@
+.new-item-form {
+    padding: 20px 30px;
+
+    div {
+        margin-right: 30px;
+    }
+
+    button.MuiButton-root {
+        vertical-align: bottom;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        background-color: rgba(25, 118, 210, 0.04);
+        border: 1px solid transparent;
+        box-sizing: border-box;
+    }
+}

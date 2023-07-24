@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import NewItemForm from './NewItemForm';
 import LineItem from './LineItem';
 
 function OrderModificationFlyout({
@@ -11,6 +12,7 @@ function OrderModificationFlyout({
   labels = {},
 }) {
   const [orderChanged, setOrderChanged] = useState(false);
+  const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const effects = store((st) => st.effects);
@@ -39,6 +41,10 @@ function OrderModificationFlyout({
     setOrderChanged(true);
   };
 
+  const handleAddNewItem = () => {
+    setNewItemFormVisible(true);
+  };
+
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
@@ -55,10 +61,10 @@ function OrderModificationFlyout({
       buttonsSection={buttonsSection}
     >
       <section className="cmp-flyout__content order-modification">
-        <a className="add-new">
+        <a className="add-new" onClick={handleAddNewItem}>
           + {getDictionaryValueOrKey(labels.addNewItem)}
         </a>
-        <br />
+        {newItemFormVisible && <NewItemForm labels={labels} />}
         <p className="edit-quantities">
           {getDictionaryValueOrKey(labels.editQuantities)}
         </p>

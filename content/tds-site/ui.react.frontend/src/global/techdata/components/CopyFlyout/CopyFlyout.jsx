@@ -5,7 +5,6 @@ import {
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Autocomplete, Button, TextField } from '@mui/material';
-import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { QuoteDetails } from './QuoteDetails';
 import { checkQuoteExitsforReseller, copyQuote, resellerLookUp } from './api';
