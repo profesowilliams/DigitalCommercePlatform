@@ -1,22 +1,21 @@
-@import "../../abstracts/_mixins.scss";
-@import "../../styles/helpers/colors.scss";
+/* stylelint-disable */
+@import '../../abstracts/_mixins.scss';
+@import '../../styles/helpers/colors.scss';
 
 @mixin accordionIcon($isIcon, $content) {
   content: $content;
 
-  @if $isIcon=="true" {
+  @if $isIcon== 'true' {
     margin-left: rem(6px);
     margin: 0 rem(10px) 0 0;
-  }
-
-  @else {
+  } @else {
     font-size: 0.375rem;
     vertical-align: auto;
   }
 }
 
 .cmp-accordion__title {
-  color: map-get($color-palette, "charcoal");
+  color: map-get($color-palette, 'charcoal');
 }
 
 // The next rule its temporal because its a core component class
@@ -35,14 +34,14 @@
       background-color: transparent;
     }
 
-    .cmp-accordion__button[aria-expanded="false"]::before {
-      content: "\A0 \A0 \25BA";
+    .cmp-accordion__button[aria-expanded='false']::before {
+      content: '\A0 \A0 \25BA';
       font-size: 0.375rem;
       vertical-align: auto;
     }
 
-    .cmp-accordion__button[aria-expanded="true"]::before {
-      content: "\A0 \A0 \25BC";
+    .cmp-accordion__button[aria-expanded='true']::before {
+      content: '\A0 \A0 \25BC';
       font-size: 0.375rem;
       vertical-align: auto;
       color: inherit;
@@ -65,7 +64,6 @@
 
 .dp-accordion {
   &__footer {
-
     .cmp-accordion {
       &__button {
         color: inherit;
@@ -77,21 +75,21 @@
         outline: none;
       }
 
-      &__button[aria-expanded="false"]::before {
-        content: "\A0 \A0 \25BA";
+      &__button[aria-expanded='false']::before {
+        content: '\A0 \A0 \25BA';
         font-size: 0.375rem;
         vertical-align: auto;
         color: inherit;
         margin: 0 rem(13px) 0 0;
       }
 
-      &__button[aria-expanded="true"]::before {
-        content: "\A0 \A0 \25BC";
+      &__button[aria-expanded='true']::before {
+        content: '\A0 \A0 \25BC';
         font-size: 0.375rem;
         vertical-align: auto;
       }
 
-      &__button[aria-expanded="true"] {
+      &__button[aria-expanded='true'] {
         padding-bottom: 0;
       }
 
@@ -126,15 +124,15 @@
         cursor: pointer;
       }
 
-      &__button[aria-expanded="false"]::before {
-        content: "+";
+      &__button[aria-expanded='false']::before {
+        content: '+';
         font-size: 1.25rem;
         position: absolute;
         right: 1.6875rem;
       }
 
-      &__button[aria-expanded="true"]::before {
-        content: "-";
+      &__button[aria-expanded='true']::before {
+        content: '-';
         font-size: 1.25rem;
         position: absolute;
         right: 1.9375rem;
@@ -179,12 +177,12 @@
 .dp-accordion {
   &__footer {
     &.cmp-accordion__chevronFooter {
-      .cmp-accordion__button[aria-expanded="false"]::before {
-        @include accordionIcon("true", url('https://api.iconify.design/fluent/chevron-right-12-regular.svg?color=%23FFFFFF'));
+      .cmp-accordion__button[aria-expanded='false']::before {
+        @include accordionIcon('true', url('https://api.iconify.design/fluent/chevron-right-12-regular.svg?color=%23FFFFFF'));
       }
 
-      .cmp-accordion__button[aria-expanded="true"]::before {
-        @include accordionIcon("true", url('https://api.iconify.design/fluent/chevron-down-12-regular.svg?color=%23FFFFFF'));
+      .cmp-accordion__button[aria-expanded='true']::before {
+        @include accordionIcon('true', url('https://api.iconify.design/fluent/chevron-down-12-regular.svg?color=%23FFFFFF'));
       }
     }
 
@@ -198,15 +196,15 @@
       outline: none;
     }
 
-    .cmp-accordion__button[aria-expanded="false"]::before {
-      @include accordionIcon("false", "\A0 \A0 \25BA");
+    .cmp-accordion__button[aria-expanded='false']::before {
+      @include accordionIcon('false', '\A0 \A0 \25BA');
     }
 
-    .cmp-accordion__button[aria-expanded="true"]::before {
-      @include accordionIcon("false", "\A0 \A0 \25BC");
+    .cmp-accordion__button[aria-expanded='true']::before {
+      @include accordionIcon('false', '\A0 \A0 \25BC');
     }
 
-    .cmp-accordion__button[aria-expanded="true"] {
+    .cmp-accordion__button[aria-expanded='true'] {
       padding-bottom: 0;
     }
 
@@ -241,15 +239,15 @@
       cursor: pointer;
     }
 
-    .cmp-accordion__button[aria-expanded="false"]::after {
-      content: "+";
+    .cmp-accordion__button[aria-expanded='false']::after {
+      content: '+';
       font-size: 1.25rem;
       position: absolute;
       right: 1.6875rem;
     }
 
-    .cmp-accordion__button[aria-expanded="true"]::after {
-      content: "-";
+    .cmp-accordion__button[aria-expanded='true']::after {
+      content: '-';
       font-size: 1.25rem;
       position: absolute;
       right: 1.9375rem;
@@ -319,7 +317,6 @@
       .cmp-accordion__title {
         font-weight: $font-weight-semi-bold;
         font-size: rem(16px);
-        height: rem(24px);
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
@@ -343,7 +340,7 @@
         width: rem(24px);
       }
 
-      &[aria-expanded="true"] {
+      &[aria-expanded='true'] {
         .cmp-accordion__title {
           font-weight: $font-weight-extra-bold;
         }
@@ -353,7 +350,7 @@
         }
       }
 
-      &[aria-expanded="false"]::after {
+      &[aria-expanded='false']::after {
         content: fa-content($fa-var-chevron-down);
       }
     }
@@ -364,7 +361,7 @@
   padding: rem(25px);
 
   .text {
-    font-family: "Arial Regular";
+    font-family: 'Arial Regular';
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -378,7 +375,6 @@
     font-family: $font-family-everett !important;
     font-weight: 400 !important;
     font-size: 28px !important;
-    ;
     line-height: 36px !important;
     color: map-get($color-palette, 'teal') !important;
   }
@@ -391,19 +387,17 @@
     height: auto !important;
   }
 
-  .cmp-accordion__button[aria-expanded="false"]::after {
+  .cmp-accordion__button[aria-expanded='false']::after {
     content: fa-content($fa-var-arrow-right);
     font-size: 18px !important;
   }
 
-  .cmp-accordion__button[aria-expanded="true"]::after {
+  .cmp-accordion__button[aria-expanded='true']::after {
     content: fa-content($fa-var-arrow-up);
     font-size: 18px !important;
   }
 
   .cmp-accordion {
-
-
     color: get-color(text-mid-charcoal);
     font-family: $font-family;
     font-size: rem(14px);
@@ -417,7 +411,7 @@
         padding-left: rem(40px);
       }
 
-      .cmp-accordion__button[aria-expanded="true"] {
+      .cmp-accordion__button[aria-expanded='true'] {
         padding-bottom: 0rem;
       }
     }
@@ -472,7 +466,7 @@
         width: rem(24px);
       }
 
-      &[aria-expanded="true"] {
+      &[aria-expanded='true'] {
         .cmp-accordion__title {
           font-weight: $font-weight-extra-bold;
         }
@@ -483,7 +477,6 @@
 
 .cmp-accordion__title-color {
   &--teal {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -492,7 +485,6 @@
   }
 
   &--deep-teal {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -501,7 +493,6 @@
   }
 
   &--aqua {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -510,7 +501,6 @@
   }
 
   &--chartreuse {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -519,7 +509,6 @@
   }
 
   &--cool-gray-8 {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -528,7 +517,6 @@
   }
 
   &--cool-gray-10 {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -537,7 +525,6 @@
   }
 
   &--green {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -546,7 +533,6 @@
   }
 
   &--black {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -555,7 +541,6 @@
   }
 
   &--white {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -565,7 +550,6 @@
 
   //TDS Secondary background colors
   &--steel-blue {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -574,7 +558,6 @@
   }
 
   &--navy {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -583,7 +566,6 @@
   }
 
   &--copper {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -592,7 +574,6 @@
   }
 
   &--stone {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -601,7 +582,6 @@
   }
 
   &--cool-gray-1 {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -611,7 +591,6 @@
 
   //TDS Digital background colors
   &--cherry {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -620,7 +599,6 @@
   }
 
   &--amber {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -629,7 +607,6 @@
   }
 
   &--forest {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -638,7 +615,6 @@
   }
 
   &--charcoal {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -647,7 +623,6 @@
   }
 
   &--cool-gray-9 {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -656,7 +631,6 @@
   }
 
   &--cobalt {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -665,7 +639,6 @@
   }
 
   &--neutral-gray-1 {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -674,7 +647,6 @@
   }
 
   &--neutral-gray-2 {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -684,7 +656,6 @@
 
   //Legacy background colors
   &--dark-blue {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -693,7 +664,6 @@
   }
 
   &--sky-blue {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
@@ -702,7 +672,6 @@
   }
 
   &--legacy-gray {
-
     .cmp-accordion__title,
     .cmp-accordion__icon,
     .cmp-accordion__button {
