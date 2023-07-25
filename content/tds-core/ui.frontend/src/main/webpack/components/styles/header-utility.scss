@@ -1,69 +1,70 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
 .headerutility {
-    margin-right: 0!important;
+  margin-right: 0 !important;
+  z-index: 99;
+  &.aem-GridColumn {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end !important;
+    flex: 0;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: nowrap;
+    @include reset-aemgrid;
+  }
+  .signin {
+    white-space: nowrap;
+  }
+  .minicart,
+  .signin,
+  .hub {
+    padding: 0 10px;
+    @media only screen and (min-width: 1024px) and (max-width: 1260px) {
+      padding: 0 5px;
+    }
+    @include tablet {
+      padding: 0 5px;
+      button {
+        font-size: 0;
+        line-height: 0;
+        color: #231f20;
+      }
+    }
+  }
+  .languagenavigation {
+    position: relative;
+    white-space: nowrap;
+    .regionSelectDropdown {
+      position: absolute;
+      right: 2px;
+      top: 47px;
+      z-index: 100;
+      @include tablet {
+        position: fixed;
+      }
+    }
+  }
+  .button {
     z-index: 99;
-    &.aem-GridColumn {
-        display: flex !important;
-        align-items: center;
-        justify-content: flex-end !important;
-        flex: 0;
-        margin-left: auto;
-        margin-right: auto;
-        flex-wrap: nowrap;
-        @include reset-aemgrid;
-    } 
-    .signin {
-        white-space: nowrap;
-    }
-    .minicart,
-    .signin,
-    .hub {
-        padding: 0 10px;
-         @media only screen and (min-width: 1024px) and (max-width: 1260px){
-                    padding: 0 5px;
-         }
-        @include tablet {
-            padding: 0 5px;
-            button{
-              font-size: 0;
-              line-height: 0;
-              color: #231f20;
-            }
+    .extrabutton {
+      white-space: nowrap;
+      font-family: $font-family-everett;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      padding-left: rem(6.25px);
+      padding-right: rem(48px);
+      padding-top: rem(16px);
+      padding-bottom: rem(16px);
+      .cmp-image {
+        display: inline;
+        &__image {
+          width: 24px;
+          height: 24px;
+          float: left;
         }
+      }
     }
-    .languagenavigation {
-        position: relative;
-        white-space: nowrap;
-        .regionSelectDropdown {
-            position: absolute;
-            right: 2px;
-            top: 53px;
-            z-index: 100;
-            @include tablet {
-                position: fixed;
-            }
-        }
-    }
-    .button{
-        z-index: 99;
-        .extrabutton {
-            white-space: nowrap;
-            font-family: $font-family-everett;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 150%;
-            padding-left: rem(6.25px);
-            padding-right: rem(48px);
-            padding-top: rem(16px);
-            padding-bottom: rem(16px);
-            .cmp-image {
-                display: inline;
-                &__image {
-                    width: 24px;
-                    height: 24px;
-                    float: left;
-                }
-            }
-        }
-    }
+  }
 }

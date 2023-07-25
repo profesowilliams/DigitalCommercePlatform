@@ -1,3 +1,4 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
 .hub {
   position: relative;
   display: inline-block;
@@ -10,7 +11,7 @@
         position: absolute;
         width: 100%;
         height: 3px;
-        background: map-get($color-palette,"cobalt");
+        background: map-get($color-palette, 'cobalt');
         bottom: 6px;
         left: 0;
       }
@@ -27,131 +28,129 @@
     position: relative;
     &__icon {
       @include font-awesome-custom-icon;
-      font-family: "FontAwesome" !important;
+      font-family: 'FontAwesome' !important;
       vertical-align: middle;
     }
     &__dropdown {
       display: none;
       border-top: 2px solid get-color(header-links-blue);
       position: absolute;
-      top: 66px;
+      top: 61px;
       right: 10px;
       background-color: get-color(brand-white);
       min-width: 165px;
       overflow: auto;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 999;
-       @include tablet {
-          position: fixed;
-          top: 50px;
+      @include tablet {
+        position: fixed;
+        top: 50px;
       }
     }
     &__dropdown {
-      &.show{
+      &.show {
         display: block;
       }
     }
     &__dropdown a {
       color: get-color(brand-text-gray);
       font-size: rem(13px);
-      line-height:rem(18px);
+      line-height: rem(18px);
       padding: rem(12px) rem(12px);
       text-decoration: none;
       display: block;
     }
   }
-  }
-  .techdata-header-style .hub {
-    .cmp-button__dropdown {
-        a {
-            &:hover {
-                background-color: #e4e5e6;
-            }
-            &:active,
-            &:focus {
-                background-color: #000c21;
-                color: white;
-            }
-        }
-    }
-    .cmp-button__dropdown{
-       top: 62px !important;
+}
+.techdata-header-style .hub {
+  .cmp-button__dropdown {
+    a {
+      &:hover {
+        background-color: #e4e5e6;
+      }
+      &:active,
+      &:focus {
+        background-color: #000c21;
+        color: white;
+      }
     }
   }
-
-
-#cmp-techdata-header {
-    &.cmp-experiencefragment--header-mobile.cmp-container {
-        &.cmp-tds-site-header {
-            .hub .cmp-button .cmp-button__icon {
-                margin-right: 8px;
-                width: 20px;
-            }
-            .hub .cmp-button {
-                padding: 10px 0;
-            }
-            &.hub-menu-active {
-               .hub .cmp-button {
-                    position: relative;
-                    padding: 0;
-                    margin: 0 2px;
-                }
-
-               .hub .cmp-button:after {
-                    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE5LjE2NyA5LjE2N2EuODMzLjgzMyAwIDAwMC0xLjY2N0gzLjAwNWw2LjcyLTYuMDQ3QS44MzMuODMzIDAgMTA4LjYwOC4yMTRsLTguMzMzIDcuNWEuODMzLjgzMyAwIDAwMCAxLjI0bDguMzMzIDcuNWEuODMzLjgzMyAwIDAwMS4xMTUtMS4yNEwzLjAwNSA5LjE2N2gxNi4xNjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+");//back button
-                    background-repeat: no-repeat;
-                    background-position-y: center;
-                    overflow: visible;
-                    content: "";
-                    position: absolute;
-                    width: 30px;
-                    height: 100%;
-                    left: -28px;
-                    top: 0;
-                    background-color: transparent;
-                }
-
-               .headerutility .headerutility,
-               .megamenu,
-               .headerutility .headerutility.button {
-                    display: none
-                }
-
-               .headerutility .headerutility.hub {
-                    display: block;
-                    position: relative;
-                }
-
-               .header-active.cmp-container .masthead {
-                    display: none
-                }
-
-               .hub .cmp-button__dropdown {
-                    &.show {
-                       background-color: #005758;
-                       z-index: 9999;
-                       box-shadow: none;
-                       padding: 10px;
-                       max-width: none;
-                       color: #fff;
-                       position: absolute;
-                       left: -32px;
-                       right: 0;
-                       width: calc(100vw - 2pc);
-                       border-top: 1px solid #fff;
-                       margin: 0 1pc;
-                       top: 56px;
-                    }
-
-                    a {
-                        color: white;
-                        font-size: 16px;
-                        line-height: 36px;
-                        padding: 5px 12px;
-                    }
-               }
-            }
-        }
-    }
+  .cmp-button__dropdown {
+    top: 62px !important;
+  }
 }
 
+#cmp-techdata-header {
+  &.cmp-experiencefragment--header-mobile.cmp-container {
+    &.cmp-tds-site-header {
+      .hub .cmp-button .cmp-button__icon {
+        margin-right: 8px;
+        width: 20px;
+      }
+      .hub .cmp-button {
+        padding: 10px 0;
+      }
+      &.hub-menu-active {
+        .hub .cmp-button {
+          position: relative;
+          padding: 0;
+          margin: 0 2px;
+        }
+
+        .hub .cmp-button:after {
+          background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE5LjE2NyA5LjE2N2EuODMzLjgzMyAwIDAwMC0xLjY2N0gzLjAwNWw2LjcyLTYuMDQ3QS44MzMuODMzIDAgMTA4LjYwOC4yMTRsLTguMzMzIDcuNWEuODMzLjgzMyAwIDAwMCAxLjI0bDguMzMzIDcuNWEuODMzLjgzMyAwIDAwMS4xMTUtMS4yNEwzLjAwNSA5LjE2N2gxNi4xNjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+'); //back button
+          background-repeat: no-repeat;
+          background-position-y: center;
+          overflow: visible;
+          content: '';
+          position: absolute;
+          width: 30px;
+          height: 100%;
+          left: -28px;
+          top: 0;
+          background-color: transparent;
+        }
+
+        .headerutility .headerutility,
+        .megamenu,
+        .headerutility .headerutility.button {
+          display: none;
+        }
+
+        .headerutility .headerutility.hub {
+          display: block;
+          position: relative;
+        }
+
+        .header-active.cmp-container .masthead {
+          display: none;
+        }
+
+        .hub .cmp-button__dropdown {
+          &.show {
+            background-color: #005758;
+            z-index: 9999;
+            box-shadow: none;
+            padding: 10px;
+            max-width: none;
+            color: #fff;
+            position: absolute;
+            left: -32px;
+            right: 0;
+            width: calc(100vw - 2pc);
+            border-top: 1px solid #fff;
+            margin: 0 1pc;
+            top: 56px;
+          }
+
+          a {
+            color: white;
+            font-size: 16px;
+            line-height: 36px;
+            padding: 5px 12px;
+          }
+        }
+      }
+    }
+  }
+}
