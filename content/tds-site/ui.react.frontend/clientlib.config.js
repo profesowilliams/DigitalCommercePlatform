@@ -38,21 +38,21 @@ module.exports = {
                     "dist/**/*.css"
                 ]
             }
-        },
-        {
-            ...libsBaseConfig,
-            name: "clientlib-react-ordertracking",
-            categories: ["tds-site.react"],
-            dependencies: ["granite.utils"],
-            embed: ['core.wcm.components.ordertrackinggrid.v1', 'core.wcm.components.orderstrackingdetail.v1'],
-            assets: {
-                js: [
-                    "dist/**/*.js"
-                ],
-                css: [
-                    "dist/**/*.css"
-                ]
-            }
-        }
+        }//,
+        //{
+        //    ...libsBaseConfig,
+        //    name: "clientlib-react-ordertracking",
+        //    categories: ["tds-site.react"],
+        //    dependencies: ["granite.utils"],
+        //    embed: ['core.wcm.components.ordertrackinggrid.v1', 'core.wcm.components.orderstrackingdetail.v1'],
+        //    assets: {
+        //        js: [
+        //            "dist/**/*.js"
+        //        ],
+        //        css: [
+        //            "dist/**/*.css"
+        //        ]
+        //    }
+        //}
     ]
 };

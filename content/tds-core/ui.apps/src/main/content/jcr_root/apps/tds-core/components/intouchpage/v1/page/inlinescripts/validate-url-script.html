@@ -27,9 +27,9 @@
 
     (async function () {
         const [userIsLoggedIn, userData] = await getSessionInfo();
-        let authorMode = !(typeof typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
+        let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
         if (authorMode) {
-            document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
+            //document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
             return;
         }
 
@@ -37,7 +37,7 @@
         redirectBasedOnCountry(userData);
 
         if (userIsLoggedIn && userData) {
-            document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
+            //document.getElementById('${page.id @ context="scriptString"}').style.display = "block";
         }
     })();
 </script>

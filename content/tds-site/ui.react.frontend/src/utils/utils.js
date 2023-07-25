@@ -434,16 +434,17 @@ const renderIntouchFooterHTML = () => {
     );
 };
 
-document.addEventListener(
-  'DOMContentLoaded',
-  function () {
-    checkIntouchUser(function () {
-      renderIntouchHeaderHTML();
-      renderIntouchFooterHTML();
-    });
-  },
-  false
-);
+$(document).ready(function () {
+    let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
+    if (!authorMode) {
+        checkIntouchUser(
+            function () {
+                renderIntouchHeaderHTML();
+                renderIntouchFooterHTML();
+            }
+        )
+    }
+});
 // END OF HEADER/FOOTER
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {
