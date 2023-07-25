@@ -17,8 +17,8 @@
   },
   "engineStrict": true,
   "engines": {
-    "npm": "8.19.4",
-    "node": "16.20.0"
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   },
   "scripts": {
     "dev": "webpack -d --env dev --config ./webpack.dev.js && clientlib --verbose",

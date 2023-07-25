@@ -15,8 +15,10 @@
       "node": true
     }
   },
+  "engineStrict": true,
   "engines": {
-    "node": ">=14.17.3"
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   },
   "scripts": {
     "dev": "webpack -d --env dev --config ./webpack.dev.js && clientlib --verbose",
@@ -106,7 +108,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "regenerator-runtime": "^0.13.7",
-    "sass-rem": "^2.0.1",
+    "sass-rem": "^3.0.0",
     "semver": "^7.5.2",
     "slick-carousel": "^1.8.1"
   },

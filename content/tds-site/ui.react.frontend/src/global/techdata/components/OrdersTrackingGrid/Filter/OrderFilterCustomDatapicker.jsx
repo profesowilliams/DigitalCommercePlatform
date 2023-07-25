@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import moment from 'moment';
-import { DateRangePicker } from 'react-dates';
-import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates-gte-react-17';
+import 'react-dates-gte-react-17/initialize';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,

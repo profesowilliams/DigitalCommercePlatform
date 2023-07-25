@@ -2,8 +2,8 @@ import React,{ useEffect } from "react";
 import moment from "moment";
 import {
   DateRangePicker
-} from "react-dates";
-import "react-dates/initialize";
+} from "react-dates-gte-react-17";
+import "react-dates-gte-react-17/initialize";
 import { FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import { If } from "../../../helpers/If";
 import { getLocalStorageData, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
