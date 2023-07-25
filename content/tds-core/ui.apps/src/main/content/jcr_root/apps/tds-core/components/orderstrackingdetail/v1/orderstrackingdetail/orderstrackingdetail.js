@@ -38,6 +38,7 @@ use(["../../../common/utils.js"], function (utils) {
     "detailsActionViewInvoices",
     "detailsActionModifyOrder",
     "detailsActionExportSerialNumbers",
+    "detailsActionCopySerialNumber",
     "detailsLineHeader",
     "detailsBack",
     "detailsOrderNo",
