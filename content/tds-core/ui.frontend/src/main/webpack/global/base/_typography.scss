@@ -282,8 +282,6 @@ body {
   /// Styles for p inside <body>
   /// @access public
   p,
-  ol,
-  ul,
   li {
     @include typography('p', 'paragraph', 'default');
 
@@ -349,8 +347,6 @@ body {
 
     /// Styles for p at small breakpoints
     p,
-    ol,
-    ul,
     li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
@@ -414,8 +410,6 @@ body {
 
   /// Styles for p inside .apj
   p,
-  ol,
-  ul,
   li {
     @include typography('p', 'paragraph', 'default');
 
@@ -476,8 +470,6 @@ body {
 
     /// Styles for p at small breakpoints
     p,
-    ol,
-    ul,
     li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
@@ -541,8 +533,7 @@ body {
 
   /// Styles for p inside .td
   p,
-  ol,
-  ul {
+  li {
     @include typography('p', 'paragraph', 'default');
 
     /// Styles for inline link inside <p> in .td
@@ -665,8 +656,6 @@ body {
 
   /// Styles for `p` tag in `.tds` class.
   p,
-  ol,
-  ul,
   li {
     @include typography('p', 'paragraph', 'default');
 
@@ -737,8 +726,6 @@ body {
     /// Styles for p elements at small breakpoints for `.tds` class.
     /// @access public
     p,
-    ol,
-    ul,
     li {
       @include typography('p', 'default', 'default', $typography-mobile);
 
