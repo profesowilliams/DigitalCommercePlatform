@@ -9,6 +9,8 @@
 }
 
 .cmp-renewal-preview {
+  font-family: "Open Sans", sans-serif;
+
   .details-container {
     display: flex;
     padding: 27px 15px 0 15px;
@@ -22,6 +24,7 @@
     }
     .details-price-level {
       color: map-get($color-palette, "cool-gray-10");
+      font-family: inherit;
       padding-left: 1.25rem;
       font-size: 0.875rem;
       font-style: normal;
