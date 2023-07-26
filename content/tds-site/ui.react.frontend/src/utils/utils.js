@@ -434,17 +434,24 @@ const renderIntouchFooterHTML = () => {
     );
 };
 
-$(document).ready(function () {
-    let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-    if (!authorMode) {
-        checkIntouchUser(
-            function () {
-                renderIntouchHeaderHTML();
-                renderIntouchFooterHTML();
-            }
-        )
-    }
-});
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+        let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
+        if (!authorMode) {
+            console.log('AUTHOR:Load header/footer');
+            checkIntouchUser(
+                function () {
+                    renderIntouchHeaderHTML();
+                    renderIntouchFooterHTML();
+                }
+            )
+        } else {
+            console.log('AUTHOR:Skip header/footer');
+        }
+    },
+    false
+);
 // END OF HEADER/FOOTER
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {
