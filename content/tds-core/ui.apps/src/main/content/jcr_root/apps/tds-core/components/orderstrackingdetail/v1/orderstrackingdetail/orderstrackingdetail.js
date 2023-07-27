@@ -7,6 +7,7 @@ use(["../../../common/utils.js"], function (utils) {
   let labels = {};
   let dNotesFlyout = {};
   let invoicesFlyout = {};
+  let exportFlyout = {};
 
   // Settings
   if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
@@ -150,6 +151,19 @@ use(["../../../common/utils.js"], function (utils) {
   if (dNotesFlyout != null) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
+
+  const exportFlyoutLabels = [
+    { key: "title", name: "exportFlyoutTitle" },
+    { key: "description", name: "exportFlyoutDescription" },
+    { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
+    { key: "button", name: "exportFlyoutButton" },
+    { key: "exportSuccessMessage", name: "exportSuccessMessage" },
+  ];
+
+  properties &&
+    exportFlyoutLabels.map((label) => {
+      exportFlyout[label.key] = properties[label.name];
+    });
 
   jsonObject["ordersDownloadDocumentsEndpoint"] =
     this.serviceData.uiServiceDomain +

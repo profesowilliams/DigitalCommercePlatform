@@ -67,7 +67,7 @@ const OrderTrackingDetailHeader = ({
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
-      value: { data: deliveryNotes, show: true, id: id, reseller: poNumber },
+      value: { data: deliveryNotes, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
       getDNoteViewAnalyticsGoogle(deliveryNotes.length, 'Order Details')
@@ -76,7 +76,7 @@ const OrderTrackingDetailHeader = ({
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
-      value: { data: invoices, show: true, id: id, reseller: poNumber },
+      value: { data: invoices, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
       getInvoiceViewAnalyticsGoogle(invoices.length, 'Order Details')
@@ -85,7 +85,7 @@ const OrderTrackingDetailHeader = ({
   const triggerExportFlyout = () => {
     setCustomState({
       key: 'exportFlyout',
-      value: { data: { title: '123' }, show: true, id: id },
+      value: { data: config.exportFlyout, show: true, id },
     });
   };
   const menuActionsItems = [

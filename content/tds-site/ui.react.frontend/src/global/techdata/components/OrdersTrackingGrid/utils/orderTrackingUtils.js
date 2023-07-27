@@ -1,10 +1,5 @@
 import { usGet } from '../../../../../utils/api';
-import {
-  formatDatePicker,
-  createdFromDate,
-  getDictionaryValue,
-  getDictionaryValueOrKey,
-} from '../../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   calcSecondLevelSorting,
   isFirstTimeSortParameters,
@@ -50,9 +45,10 @@ export const fetchOrdersCount = async (
   }
 };
 
-export async function fetchReport(reportUrl, reportName) {
+export async function fetchReport(reportUrl, reportName, pagination) {
   const mapUrl = urlStrToMapStruc(reportUrl + '?PageNumber=1');
   mapUrl.set('ReportName', reportName);
+  mapUrl.set('PageNumber', pagination.current.pageNumber);
   const finalUrl = mapStrucToUrlStr(mapUrl);
 
   try {
@@ -81,8 +77,9 @@ export async function fetchData(config) {
 
   const { url } = request;
   const mapUrl = urlStrToMapStruc(url);
-  const isFirstAPICall = firstAPICall.current === true;
 
+  const isFirstAPICall = firstAPICall.current === true;
+  console.log('IS FIRST API CALL', isFirstAPICall);
   if (defaultSearchDateRange) {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
@@ -96,7 +93,7 @@ export async function fetchData(config) {
     if (!['status', 'type'].includes(filter)) {
       const filterValue = filtersRefs[filter]?.current;
       filterValue && mapUrl.set(filter, filterValue);
-    } else if(filter === 'customFilterRef') {
+    } else if (filter === 'customFilterRef') {
       filtersRefs[filter].current?.map((ref) => {
         ref?.filterOptionList?.map((option) => {
           option?.checked &&
@@ -111,7 +108,10 @@ export async function fetchData(config) {
 
     if (sortData[0]) {
       mapUrl.set('SortDirection', sortData[0].sort);
-      mapUrl.set('SortBy', sortData[0].colId === 'reseller' ? 'CustomerPO' : sortData[0].colId);
+      mapUrl.set(
+        'SortBy',
+        sortData[0].colId === 'reseller' ? 'CustomerPO' : sortData[0].colId
+      );
     }
 
     const secondLevelSort = calcSecondLevelSorting(sortData);
@@ -168,9 +168,10 @@ export async function fetchData(config) {
     params.PageNumber = 1;
   }
 
-  const filtersStatusAndType = (filtersRefs.type.current ?? '') + (filtersRefs.status.current ?? '');
+  const filtersStatusAndType =
+    (filtersRefs.type.current ?? '') + (filtersRefs.status.current ?? '');
 
-  const filterUrl = mapStrucToUrlStr(mapUrl) + filtersStatusAndType ;
+  const filterUrl = mapStrucToUrlStr(mapUrl) + filtersStatusAndType;
 
   previousSortChanged.current = hasSortChanged.current;
   firstAPICall.current = false;
