@@ -54,73 +54,75 @@ function OrderTrackingGridPagination(
   const isGoForwardDisabled = pageNumber === pageCount || disabled;
 
   return (
-    <div className="cmp-navigation">
-      <div className="navigation__info">{processPaginationString()}</div>
-      <div className="cmp-navigation__actions">
-        <Button
-          btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
-          disabled={isGoBackDisabled}
-          onClick={goToFirstPage}
-          analyticsCallback={getPaginationAnalyticsGoogle.bind(
-            paginationAnalyticsLabel,
-            analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin
-          )}
-        >
-          <ChevronDoubleLeftIcon />
-        </Button>
-        <Button
-          btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
-          disabled={isGoBackDisabled}
-          onClick={decrementHandler}
-          analyticsCallback={getPaginationAnalyticsGoogle.bind(
-            paginationAnalyticsLabel,
-            analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack
-          )}
-        >
-          <ChevronLeftIcon />
-        </Button>
-        <div className="cmp-navigation__actions-labels">
-          <div className="cmp-input-underline">
-            <input
-              className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
-              ref={pageInputRef}
-              type="number"
-              onKeyDown={handleInputChange}
-              onChange={handleInputChange}
-              onBlur={handleInputChange}
-              defaultValue={pageNumber}
-              key={Math.random()}
-            />
+    <div className="cmp-renewals__pagination--bottom">
+      <div className="cmp-navigation">
+        <div className="navigation__info">{processPaginationString()}</div>
+        <div className="cmp-navigation__actions">
+          <Button
+            btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
+            disabled={isGoBackDisabled}
+            onClick={goToFirstPage}
+            analyticsCallback={getPaginationAnalyticsGoogle.bind(
+              paginationAnalyticsLabel,
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin
+            )}
+          >
+            <ChevronDoubleLeftIcon />
+          </Button>
+          <Button
+            btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
+            disabled={isGoBackDisabled}
+            onClick={decrementHandler}
+            analyticsCallback={getPaginationAnalyticsGoogle.bind(
+              paginationAnalyticsLabel,
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack
+            )}
+          >
+            <ChevronLeftIcon />
+          </Button>
+          <div className="cmp-navigation__actions-labels">
+            <div className="cmp-input-underline">
+              <input
+                className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
+                ref={pageInputRef}
+                type="number"
+                onKeyDown={handleInputChange}
+                onChange={handleInputChange}
+                onBlur={handleInputChange}
+                defaultValue={pageNumber}
+                key={Math.random()}
+              />
+            </div>
+            <span>{getDictionaryValueOrKey(ofLabel)}</span>
+            <span>{pageCount}</span>
           </div>
-          <span>{getDictionaryValueOrKey(ofLabel)}</span>
-          <span>{pageCount}</span>
+          <Button
+            btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
+            disabled={isGoForwardDisabled}
+            onClick={incrementHandler}
+            analyticsCallback={getPaginationAnalyticsGoogle.bind(
+              paginationAnalyticsLabel,
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward
+            )}
+          >
+            <ChevronRightIcon />
+          </Button>
+          <Button
+            btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
+            disabled={isGoForwardDisabled}
+            onClick={gotToLastPage}
+            analyticsCallback={getPaginationAnalyticsGoogle.bind(
+              paginationAnalyticsLabel,
+              analyticsCategory,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd
+            )}
+          >
+            <ChevronDoubleRightIcon />
+          </Button>
         </div>
-        <Button
-          btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
-          disabled={isGoForwardDisabled}
-          onClick={incrementHandler}
-          analyticsCallback={getPaginationAnalyticsGoogle.bind(
-            paginationAnalyticsLabel,
-            analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward
-          )}
-        >
-          <ChevronRightIcon />
-        </Button>
-        <Button
-          btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
-          disabled={isGoForwardDisabled}
-          onClick={gotToLastPage}
-          analyticsCallback={getPaginationAnalyticsGoogle.bind(
-            paginationAnalyticsLabel,
-            analyticsCategory,
-            ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd
-          )}
-        >
-          <ChevronDoubleRightIcon />
-        </Button>
       </div>
     </div>
   );

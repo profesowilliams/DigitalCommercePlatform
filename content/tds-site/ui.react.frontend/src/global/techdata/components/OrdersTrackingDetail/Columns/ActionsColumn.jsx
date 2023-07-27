@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
-import MenuActions from '../MenuActions';
+import MenuActions from '../Header/MenuActions';
 
 const ActionsColumn = ({
   line,

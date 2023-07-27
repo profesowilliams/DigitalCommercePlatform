@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
-// TODO: add fields and from accountManager when it's ready 
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+// TODO: add fields and from accountManager when it's ready
 function ContactCard({ content, config }) {
   return (
     <Card className="card-container" variant="outlined">

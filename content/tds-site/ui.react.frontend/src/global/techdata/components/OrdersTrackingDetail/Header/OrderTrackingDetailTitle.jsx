@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDictionaryValueOrKey } from './../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const OrderTrackingDetailTitle = ({ content, label }) => {
   const { status, orderNumber } = content;

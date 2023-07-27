@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
-import MenuActions from './MenuActions';
-import OrderTrackingDetailTitle from './OrderTrackingDetailTitle';
+import MenuActions from './Header/MenuActions';
+import OrderTrackingDetailTitle from './Header/OrderTrackingDetailTitle';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import {
   getDNoteViewAnalyticsGoogle,
   getInvoiceViewAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import SoldToCard from './Header/SoldToCard';
+import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
+import ContactCard from './Header/ContactCard';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -114,42 +117,52 @@ const OrderTrackingDetailHeader = ({
   ];
 
   return (
-    <div className="header-container">
-      <div className="navigation-container">
-        <Link
-          variant="back-to-orders"
-          href={config?.ordersUrl || '#'}
-          underline="underline-none"
-        >
-          <i className="fas fa-chevron-left"></i>
-          {getDictionaryValueOrKey(config?.labels?.detailsBack)}
-        </Link>
-      </div>
-      <div className="title-container">
-        {apiResponse?.content && (
-          <OrderTrackingDetailTitle
-            content={apiResponse.content}
-            label={config.labels?.detailsOrderNo}
-          />
-        )}
-        <div
-          className="actions-container"
-          onMouseOver={handleActionMouseOver}
-          onMouseLeave={handleActionMouseLeave}
-        >
-          <span
-            className="quote-actions"
+    <div className="cmp-orders-qp__config-grid">
+      <div className="header-container">
+        <div className="navigation-container">
+          <Link
+            variant="back-to-orders"
+            href={config?.ordersUrl || '#'}
+            underline="underline-none"
+          >
+            <i className="fas fa-chevron-left"></i>
+            {getDictionaryValueOrKey(config?.labels?.detailsBack)}
+          </Link>
+        </div>
+        <div className="title-container">
+          {apiResponse?.content && (
+            <OrderTrackingDetailTitle
+              content={apiResponse.content}
+              label={config.labels?.detailsOrderNo}
+            />
+          )}
+          <div
+            className="actions-container"
             onMouseOver={handleActionMouseOver}
             onMouseLeave={handleActionMouseLeave}
           >
-            {getDictionaryValueOrKey(config.labels?.detailsActions)}
-          </span>
-          {actionsDropdownVisible && (
-            <div className="actions-dropdown">
-              <MenuActions items={menuActionsItems} />
-            </div>
-          )}
+            <span
+              className="quote-actions"
+              onMouseOver={handleActionMouseOver}
+              onMouseLeave={handleActionMouseLeave}
+            >
+              {getDictionaryValueOrKey(config.labels?.detailsActions)}
+            </span>
+            {actionsDropdownVisible && (
+              <div className="actions-dropdown">
+                <MenuActions items={menuActionsItems} />
+              </div>
+            )}
+          </div>
         </div>
+      </div>
+      <div className="info-container">
+        <SoldToCard shipTo={apiResponse?.content?.shipTo} config={config} />
+        <OrderAcknowledgementCard
+          content={apiResponse?.content}
+          config={config}
+        />
+        <ContactCard content={apiResponse?.content} config={config} />
       </div>
     </div>
   );

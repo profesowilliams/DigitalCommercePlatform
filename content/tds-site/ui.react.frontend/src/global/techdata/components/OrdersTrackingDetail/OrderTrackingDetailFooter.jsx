@@ -25,37 +25,41 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
   }, []);
 
   return (
-    <div className="box-container">
-      <div className="box-container__leftPart">
-        <span className="box-container__leftPart-line1">
-          {getDictionaryValueOrKey(config.labels?.detailsFooterLine1)}
-        </span>
-        <span className="box-container__leftPart-line2">
-          {getDictionaryValueOrKey(config.labels?.detailsFooterLine2)}
-        </span>
-        <span className="box-container__leftPart-line1">
-          {getDictionaryValueOrKey(config.labels?.detailsFooterLine3)}
-          <a href={config.labels?.detailsFooterLine3Link}>
-            {getDictionaryValueOrKey(config.labels?.detailsFooterLine3Link)}
-          </a>
-        </span>
+    <>
+      <div className="footer-container">
+        <div className="box-container">
+          <div className="box-container__leftPart">
+            <span className="box-container__leftPart-line1">
+              {getDictionaryValueOrKey(config.labels?.detailsFooterLine1)}
+            </span>
+            <span className="box-container__leftPart-line2">
+              {getDictionaryValueOrKey(config.labels?.detailsFooterLine2)}
+            </span>
+            <span className="box-container__leftPart-line1">
+              {getDictionaryValueOrKey(config.labels?.detailsFooterLine3)}
+              <a href={config.labels?.detailsFooterLine3Link}>
+                {getDictionaryValueOrKey(config.labels?.detailsFooterLine3Link)}
+              </a>
+            </span>
+          </div>
+          <div className="box-container__rightPart">
+            <span className="box-container__rightPart-subtotalLabel">
+              {multiplePages
+                ? `${getDictionaryValueOrKey(
+                    config.labels?.detailsOrderSubtotal
+                  )}: `
+                : `${getDictionaryValueOrKey(
+                    config.labels?.detailsTotalOrderNetPrice
+                  )}: `}
+            </span>
+            <span className="box-container__rightPart-subtotalValue">
+              {apiResponse?.content?.paymentDetails?.totalChargeFormatted}{' '}
+              {currency ?? defaultCurrency}
+            </span>
+          </div>
+        </div>
       </div>
-      <div className="box-container__rightPart">
-        <span className="box-container__rightPart-subtotalLabel">
-          {multiplePages
-            ? `${getDictionaryValueOrKey(
-                config.labels?.detailsOrderSubtotal
-              )}: `
-            : `${getDictionaryValueOrKey(
-                config.labels?.detailsTotalOrderNetPrice
-              )}: `}
-        </span>
-        <span className="box-container__rightPart-subtotalValue">
-          {apiResponse?.content?.paymentDetails?.totalChargeFormatted}{' '}
-          {currency ?? defaultCurrency}
-        </span>
-      </div>
-    </div>
+    </>
   );
 };
 export default OrderTrackingDetailFooter;

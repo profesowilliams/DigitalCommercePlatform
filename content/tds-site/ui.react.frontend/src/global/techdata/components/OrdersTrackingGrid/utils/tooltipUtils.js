@@ -1,7 +1,9 @@
+import React from 'react';
+
 export function tooltipVal(event) {
   const { value, colDef } = event;
-  const { name, contact, address } = value;
-  const { line1, line2, line3, city, state, zip, country } = address;
+  const { name, contact, address } = value || {};
+  const { line1, line2, line3, city, state, zip, country } = address || {};
   switch (colDef.headerName) {
     case 'PO Nº':
       return value ? (
@@ -35,4 +37,24 @@ export function tooltipVal(event) {
     default:
       return null;
   }
+}
+
+export function cellMouseOver(event, setToolTipData) {
+  const offset = 2;
+  const val = tooltipVal(event);
+  setToolTipData({
+    value: val,
+    x: event?.event?.pageX + offset,
+    y: event?.event?.pageY + offset,
+    show: val ? true : false,
+  });
+}
+
+export function cellMouseOut(setToolTipData) {
+  setToolTipData({
+    value: '',
+    x: 0,
+    y: 0,
+    show: false,
+  });
 }

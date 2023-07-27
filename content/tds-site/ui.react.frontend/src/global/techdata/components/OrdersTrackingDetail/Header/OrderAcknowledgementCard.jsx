@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function OrderAcknowledgementCard({ content = {}, config }) {
   const { reseller, createdFormatted, poNumber, docType } = content;

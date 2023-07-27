@@ -1,61 +1,52 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-    ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-    ORDER_SEARCH_LOCAL_STORAGE_KEY,
-    SEARCH_LOCAL_STORAGE_KEY,
-    SORT_LOCAL_STORAGE_KEY,
+  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+  SEARCH_LOCAL_STORAGE_KEY,
+  SORT_LOCAL_STORAGE_KEY,
 } from '../../../../utils/constants';
-import {
-    requestFileBlobWithoutModal,
-    setDefaultSearchDateRange,
-} from '../../../../utils/utils';
+import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import BaseGrid from '../BaseGrid/BaseGrid';
-import BaseGridHeader from '../BaseGrid/BaseGridHeader';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
-import ToolTip from '../BaseGrid/ToolTip';
-import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
-import ExportFlyout from '../ExportFlyout/ExportFlyout';
-import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
 import {
-    getLocalStorageData,
-    hasLocalStorageData,
-    isFirstTimeSortParameters,
-    isFromRenewalDetailsPage,
-    mapServiceData,
-    removeLocalStorageData,
-    setLocalStorageData,
-    updateQueryString,
+  getLocalStorageData,
+  hasLocalStorageData,
+  isFirstTimeSortParameters,
+  isFromRenewalDetailsPage,
 } from '../RenewalsGrid/utils/renewalUtils';
-import Pill from '../Widgets/Pill';
-import VerticalSeparator from '../Widgets/VerticalSeparator';
-import OrderExport from './Export/OrderExport';
-import OrderFilter from './Filter/OrderFilter';
-import OrderFilterFlyout from './Filter/OrderFilterFlyout';
-import Report from './Report/Report';
-import OrderSearch from './Search/OrderSearch';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import {
-    addCurrentPageNumber,
-    compareSort,
-    fetchData,
-    fetchOrdersCount,
-    fetchReport,
-    getFilterFlyoutPredefined,
-    getFilterFlyoutCustomized,
-    setPaginationData,
-    getPredefinedSearchOptionsList,
+  addCurrentPageNumber,
+  compareSort,
+  fetchData,
+  fetchOrdersCount,
+  fetchReport,
+  getFilterFlyoutPredefined,
+  getFilterFlyoutCustomized,
 } from './utils/orderTrackingUtils';
-import Toaster from '../Widgets/Toaster';
 import {
   getHomeAnalyticsGoogle,
   getSortAnalyticsGoogle,
   pushDataLayerGoogle,
 } from './utils/analyticsUtils';
-import OrderTrackingGridPagination from './Pagination/OrderTrackingGridPagination';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
+import { cellMouseOut, cellMouseOver } from './utils/tooltipUtils';
+import MainGridHeader from './MainGrid/MainGridHeader';
+import {
+  addCurrencyToTotalColumn,
+  doesCurrentSearchMatchResult,
+  downloadFileBlob,
+  getPaginationValue,
+  isLocalDevelopment,
+  setLocalStorageData,
+  updateQueryString,
+  removeLocalStorageData,
+  mapServiceData,
+} from './utils/gridUtils';
+import MainGridFooter from './MainGrid/MainGridFooter';
+import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -86,8 +77,14 @@ function OrdersTrackingGrid(props) {
     status,
     customFilterRef,
   };
-  const effects = useOrderTrackingStore((st) => st.effects);
-  const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
+  const {
+    setToolTipData,
+    setCustomState,
+    closeAndCleanToaster,
+    setFilterList,
+    setCustomFiltersChecked,
+    setDateType,
+  } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore
   );
@@ -104,7 +101,7 @@ function OrdersTrackingGrid(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
-  const [pill, setPill] = useState(null);
+
   const formattedDateRange = setDefaultSearchDateRange(
     componentProp?.defaultSearchDateRange
   );
@@ -112,7 +109,6 @@ function OrdersTrackingGrid(props) {
 
   const {
     searchOptionsList = [],
-    icons,
     reportPillLabel,
     filterListValues,
     dateOptionsList,
@@ -139,15 +135,6 @@ function OrdersTrackingGrid(props) {
     predefined.length + 1
   );
 
-  const {
-    setToolTipData,
-    setCustomState,
-    closeAndCleanToaster,
-    setFilterList,
-    setCustomFiltersChecked,
-    setDateType,
-  } = effects;
-
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
@@ -173,15 +160,6 @@ function OrdersTrackingGrid(props) {
       defaultState: { sort: null },
     };
     config.columnApi.applyColumnState({ ...columnState });
-  };
-
-  const getPaginationValue = (response, ordersCountResponse) => {
-    const paginationValue = setPaginationData(
-      ordersCountResponse?.data?.content,
-      response?.data?.content?.pageNumber,
-      gridConfig.itemsPerPage
-    );
-    return paginationValue;
   };
 
   const customRequestInterceptor = async (request) => {
@@ -274,169 +252,16 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  const removeDefaultDateRange = () => {
-    setDateRange(null);
-  };
-
-  function cellMouseOver(event) {
-    const offset = 2;
-    const val = tootltipVal(event);
-    setToolTipData({
-      value: val,
-      x: event?.event?.pageX + offset,
-      y: event?.event?.pageY + offset,
-      show: val ? true : false,
-    });
-  }
-
-  function cellMouseOut() {
-    setToolTipData({
-      value: '',
-      x: 0,
-      y: 0,
-      show: false,
-    });
-  }
-
-  function tootltipVal(event) {
-    switch (event.colDef.headerName) {
-      case 'PO Nº':
-        return event.value ? (
-          <div>
-            {event.value.name && <div>{event.value.name}</div>}
-            {event.value.contact.name && <div>{event.value.contact.name}</div>}
-            {event.value.contact.phone && (
-              <div>{event.value.contact.phone}</div>
-            )}
-          </div>
-        ) : (
-          <div>-</div>
-        );
-      case 'Ship to':
-        return event.value ? (
-          <div>
-            {event.value.name && <div>{event.value.name}</div>}
-            {event.value.address.line1 && (
-              <div>{event.value.address.line1}</div>
-            )}
-            {event.value.address.line2 && (
-              <div>{event.value.address.line2}</div>
-            )}
-            {event.value.address.line3 && (
-              <div>{event.value.address.line3}</div>
-            )}
-            {(event.value.address.city ||
-              event.value.address.state ||
-              event.value.address.zip ||
-              event.value.address.country) && (
-              <div>
-                {event.value.address.city && (
-                  <span>{event.value.address.city}&nbsp;</span>
-                )}
-                {event.value.address.state && (
-                  <span>{event.value.address.state}&nbsp;</span>
-                )}
-                {event.value.address.zip && (
-                  <span>{event.value.address.zip}&nbsp;</span>
-                )}
-                {event.value.address.country && (
-                  <span>{event.value.address.country}</span>
-                )}
-              </div>
-            )}
-          </div>
-        ) : (
-          <div>-</div>
-        );
-      default:
-        return null;
-    }
-  }
-
-  const onReportChange = (option) => {
-    setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
-      field: '',
-      value: '',
-    });
-    setPill({ key: option.key, label: option.label });
-    removeDefaultDateRange();
-    onQueryChanged();
-  };
-
-  const handleDeletePill = () => {
-    setPill();
-    onQueryChanged();
-  };
-
-  const onSearchChange = () => {
-    setPill();
-    removeDefaultDateRange();
-    onQueryChanged();
-  };
-
-  const doesMatchById = (searchId, orderId) => searchId === orderId;
-
-  const doesMatchByInvoiceId = (searchInvoice, orderInvoices) =>
-    orderInvoices.some((invoice) => invoice.id == searchInvoice);
-
-  const doesMatchByDeliveryNote = (searchDeliveryNote, deliveryNotes) =>
-    deliveryNotes.some((deliveryNote) => deliveryNote.id == searchDeliveryNote);
-
-  const doesCurrentSearchMatchResult = (result) => {
-    if (searchCriteria.current.field === 'Id') {
-      return doesMatchById(searchCriteria.current.value, result.id);
-    } else if (searchCriteria.current.field === 'InvoiceId') {
-      return doesMatchByInvoiceId(
-        searchCriteria.current.value,
-        result.invoices
-      );
-    } else if (searchCriteria.current.field === 'DeliveryNote') {
-      return doesMatchByDeliveryNote(
-        searchCriteria.current.value,
-        result.deliveryNotes
-      );
-    }
-  };
-
   const onDataLoad = (response) => {
-    if (response.length >= 1 && doesCurrentSearchMatchResult(response[0])) {
+    if (
+      response.length >= 1 &&
+      doesCurrentSearchMatchResult(response[0], searchCriteria)
+    ) {
       removeLocalStorageData(SEARCH_LOCAL_STORAGE_KEY);
       window.location.href = `${componentProp.detailUrl}.html?id=${response[0].id}`;
     }
     setIsLoading(false);
   };
-
-  const addCurrencyToTotalColumn = (list) => {
-    const activeCustomer = userData?.activeCustomer;
-    const defaultCurrency = activeCustomer?.defaultCurrency || '';
-
-    return list.map((column) => {
-      if (column.columnKey === 'priceFormatted') {
-        column.columnLabel = `Total (${defaultCurrency})`;
-        return column;
-      }
-      return column;
-    });
-  };
-
-  const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
-    try {
-      const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
-      const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
-      const downloadOrderInvoicesUrl =
-        url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
-      const name = `${flyoutType}.zip`;
-      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
-        redirect: false,
-      });
-    } catch (error) {
-      console.error('Error', error);
-    }
-  };
-
-  function downloadAllFile(flyoutType, orderId, selectedId) {
-    return downloadFileBlob(flyoutType, orderId, selectedId);
-  }
 
   async function openFilePdf(flyoutType, orderId, selectedId) {
     const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
@@ -451,7 +276,6 @@ function OrdersTrackingGrid(props) {
   function onCloseToaster() {
     closeAndCleanToaster();
   }
-  const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
   const hasAccess =
     hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
@@ -476,68 +300,31 @@ function OrdersTrackingGrid(props) {
       );
   }, []);
 
-  const searchOptions = [
-    ...getPredefinedSearchOptionsList(searchLabels),
-    ...searchOptionsList,
-  ];
-
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (
         <>
           {hasAccess ? (
             <div className="cmp-order-tracking-grid">
-              <BaseGridHeader
-                leftComponents={[
-                  <OrderTrackingGridPagination
-                    ref={customPaginationRef}
-                    store={useOrderTrackingStore}
-                    onQueryChanged={onQueryChanged}
-                    disabled={isLoading}
-                    paginationAnalyticsLabel={analyticsCategories.pagination}
-                    resultsLabel={paginationLabels.results}
-                    ofLabel={paginationLabels.of}
-                  />,
-                ]}
-                rightComponents={[
-                  ...(pill
-                    ? [
-                        <Pill
-                          children={
-                            <span className="td-capsule__text">
-                              {reportPillLabel}: {pill.label}
-                            </span>
-                          }
-                          closeClick={handleDeletePill}
-                          hasCloseButton
-                        />,
-                      ]
-                    : []),
-                  <OrderSearch
-                    options={searchOptions}
-                    onQueryChanged={onSearchChange}
-                    ref={searchCriteria}
-                    store={useOrderTrackingStore}
-                    hideLabel={true}
-                    gridConfig={gridConfig}
-                    searchAnalyticsLabel={analyticsCategories.search}
-                  />,
-                  <VerticalSeparator />,
-                  <OrderFilter />,
-                  <VerticalSeparator />,
-                  <Report
-                    selectOption={onReportChange}
-                    ref={reportFilterValue}
-                    selectedKey={pill?.key}
-                    gridConfig={gridConfig}
-                    reportAnalyticsLabel={analyticsCategories.report}
-                  />,
-                  <VerticalSeparator />,
-                  <OrderExport />,
-                ]}
+              <MainGridHeader
+                onQueryChanged={onQueryChanged}
+                searchLabels={searchLabels}
+                searchOptionsList={searchOptionsList}
+                reportPillLabel={reportPillLabel}
+                setDateRange={setDateRange}
+                analyticsCategories={analyticsCategories}
+                paginationLabels={paginationLabels}
+                customPaginationRef={customPaginationRef}
+                isLoading={isLoading}
+                searchCriteria={searchCriteria}
+                gridConfig={gridConfig}
+                reportFilterValue={reportFilterValue}
               />
               <BaseGrid
-                columnList={addCurrencyToTotalColumn(componentProp.columnList)}
+                columnList={addCurrencyToTotalColumn(
+                  componentProp.columnList,
+                  userData
+                )}
                 definitions={ordersTrackingDefinition(
                   componentProp,
                   openFilePdf,
@@ -555,84 +342,23 @@ function OrdersTrackingGrid(props) {
                 DetailRenderers={(props) => (
                   <OrderDetailsRenderers {...props} config={gridConfig} />
                 )}
-                onCellMouseOver={cellMouseOver}
-                onCellMouseOut={cellMouseOut}
+                onCellMouseOver={(e) => cellMouseOver(e, setToolTipData)}
+                onCellMouseOut={() => cellMouseOut(setToolTipData)}
               />
-              <ToolTip toolTipData={toolTipData} />
-              <div className="cmp-renewals__pagination--bottom">
-                <OrderTrackingGridPagination
-                  ref={customPaginationRef}
-                  store={useOrderTrackingStore}
-                  onQueryChanged={onQueryChanged}
-                  disabled={isLoading}
-                  paginationAnalyticsLabel={analyticsCategories.pagination}
-                  resultsLabel={paginationLabels.results}
-                  ofLabel={paginationLabels.of}
-                />
-              </div>
-              <DNotesFlyout
-                store={useOrderTrackingStore}
-                dNotesFlyout={gridConfig.dNotesFlyout}
-                dNoteColumnList={gridConfig.dNoteColumnList}
-                subheaderReference={document.querySelector(
-                  '.subheader > div > div'
-                )}
-                isTDSynnex={isTDSynnex}
-                downloadAllFile={(flyoutType, orderId, selectedId) =>
-                  downloadAllFile(flyoutType, orderId, selectedId)
-                }
-                openFilePdf={(flyoutType, orderId, selectedId) =>
-                  openFilePdf(flyoutType, orderId, selectedId)
-                }
-              />
-              <InvoicesFlyout
-                store={useOrderTrackingStore}
-                invoicesFlyout={gridConfig.invoicesFlyout}
-                invoicesColumnList={gridConfig.invoicesColumnList}
-                subheaderReference={document.querySelector(
-                  '.subheader > div > div'
-                )}
-                isTDSynnex={isTDSynnex}
-                downloadAllFile={(flyoutType, orderId, selectedId) =>
-                  downloadAllFile(flyoutType, orderId, selectedId)
-                }
-                openFilePdf={(flyoutType, orderId, selectedId) =>
-                  openFilePdf(flyoutType, orderId, selectedId)
-                }
+              <MainGridFooter
+                gridConfig={gridConfig}
+                downloadFileBlob={downloadFileBlob}
+                openFilePdf={openFilePdf}
+                analyticsCategories={analyticsCategories}
                 hasAIORights={hasAIORights}
-              />
-              <ExportFlyout
-                store={useOrderTrackingStore}
-                componentProp={gridConfig}
-                exportFlyout={gridConfig.exportFlyout}
-                exportOptionsList={gridConfig.exportOptionsList}
-                exportSecondaryOptionsList={
-                  gridConfig.exportSecondaryOptionsList
-                }
-                subheaderReference={document.querySelector(
-                  '.subheader > div > div'
-                )}
-                isTDSynnex={isTDSynnex}
-                exportAnalyticsLabel={analyticsCategories.export}
-              />
-              <Toaster
-                classname="toaster-modal-otg"
-                onClose={onCloseToaster}
-                store={useOrderTrackingStore}
-                message={{
-                  successSubmission: 'successSubmission',
-                  failedSubmission: 'failedSubmission',
-                }}
-              />
-              <OrderFilterFlyout
                 onQueryChanged={onQueryChanged}
                 filtersRefs={filtersRefs}
-                isTDSynnex={isTDSynnex}
                 filterLabels={filterLabels}
-                analyticsCategories={analyticsCategories}
-                subheaderReference={document.querySelector(
-                  '.subheader > div > div'
-                )}
+                onCloseToaster={onCloseToaster}
+                toolTipData={toolTipData}
+                customPaginationRef={customPaginationRef}
+                isLoading={isLoading}
+                paginationLabels={paginationLabels}
               />
             </div>
           ) : (
@@ -640,6 +366,16 @@ function OrdersTrackingGrid(props) {
           )}
         </>
       )}
+      <MainGridFlyouts
+        downloadFileBlob={downloadFileBlob}
+        filterLabels={filterLabels}
+        filtersRefs={filtersRefs}
+        gridConfig={gridConfig}
+        hasAIORights={hasAIORights}
+        openFilePdf={openFilePdf}
+        analyticsCategories={analyticsCategories}
+        onQueryChanged={onQueryChanged}
+      />
     </>
   );
 }

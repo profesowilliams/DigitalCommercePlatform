@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDictionaryValueOrKey } from './../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const MenuActions = ({ items = [] }) => {
   return (
