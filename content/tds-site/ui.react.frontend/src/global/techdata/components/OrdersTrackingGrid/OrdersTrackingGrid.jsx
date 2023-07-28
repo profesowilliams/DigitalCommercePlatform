@@ -207,7 +207,8 @@ function OrdersTrackingGrid(props) {
     const mappedResponse = mapServiceData(response);
     const paginationValue = getPaginationValue(
       mappedResponse,
-      ordersCountResponse
+      ordersCountResponse,
+      gridConfig
     );
 
     const responseContent = response?.data?.content;
