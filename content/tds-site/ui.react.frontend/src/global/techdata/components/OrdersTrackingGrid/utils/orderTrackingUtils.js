@@ -46,7 +46,7 @@ export const fetchOrdersCount = async (
 };
 
 export async function fetchReport(reportUrl, reportName, pagination) {
-  const mapUrl = urlStrToMapStruc(reportUrl + '?PageNumber=1');
+  const mapUrl = urlStrToMapStruc(reportUrl + '?');
   mapUrl.set('ReportName', reportName);
   mapUrl.set('PageNumber', pagination.current.pageNumber);
   const finalUrl = mapStrucToUrlStr(mapUrl);
