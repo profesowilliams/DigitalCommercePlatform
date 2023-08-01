@@ -8,7 +8,13 @@ function OrderDetailsRenderers(props) {
   return (
     <>
       {detailRender === 'primary' && (
-        <DropdownOrderDetails data={props.data} aemConfig={props.config} />
+        <DropdownOrderDetails
+          data={props.data}
+          aemConfig={props.config}
+          openFilePdf={props.openFilePdf}
+          hasAIORights={props.hasAIORights}
+          hasOrderModificationRights={props.hasOrderModificationRights}
+        />
       )}
     </>
   );
