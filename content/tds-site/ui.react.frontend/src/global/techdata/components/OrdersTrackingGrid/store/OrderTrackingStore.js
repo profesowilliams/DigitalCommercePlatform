@@ -48,6 +48,7 @@ const INITIAL_STATE = {
     y: 0,
     show: false,
   },
+  filterDefaultDateRange: false,
   orderTypeFilters: getLocalValueOrDefault(
     ORDER_FILTER_LOCAL_STORAGE_KEY,
     'orderTypeFilters',

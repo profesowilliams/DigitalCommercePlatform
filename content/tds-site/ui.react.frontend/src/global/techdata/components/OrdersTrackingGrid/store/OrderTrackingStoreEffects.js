@@ -116,6 +116,9 @@ export const orderTrackingEffects = (set, get) => {
     setCustomizedFiltersSelectedAfter(customizedFiltersSelectedAfter) {
       set({ customizedFiltersSelectedAfter });
     },
+    setSearch90DaysBack(filterDefaultDateRange) {
+      set({ filterDefaultDateRange });
+    },
     clearAllOrderFilters() {
       const { customFiltersChecked } = get();
 

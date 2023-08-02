@@ -140,6 +140,9 @@ function OrdersTrackingGrid(props) {
   );
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
+  const filterDefaultDateRange = useOrderTrackingStore(
+    (st) => st.filterDefaultDateRange
+  );
 
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
   const dueDateDir = componentProp.options.defaultSortingDirection;
@@ -185,6 +188,7 @@ function OrdersTrackingGrid(props) {
       gridApiRef,
       defaultSearchDateRange: dateRange,
       filtersRefs,
+      filterDefaultDateRange,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     const ordersReportUrl = new URL(componentProp.ordersReportEndpoint);

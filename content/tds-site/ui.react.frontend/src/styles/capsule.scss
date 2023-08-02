@@ -1,5 +1,5 @@
 .td-capsule {
-  background-color: $brand-blue;
+  background-color: $brand-green;
   min-width: 25px;
   border-radius: 20px;
   padding: 0 17px 0 17px;
@@ -7,7 +7,7 @@
   cursor: pointer;
 
   &__text {
-    color: #FFFFFF;
+    color: $brand-white;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: -0.07px;
@@ -15,7 +15,7 @@
     text-align: center;
   }
   & > svg {
-    fill: white;
+    fill: $brand-white;
     margin-left: 14px;
     cursor: pointer;
     vertical-align: middle;

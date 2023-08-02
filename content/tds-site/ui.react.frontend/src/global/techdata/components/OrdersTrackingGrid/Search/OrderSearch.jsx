@@ -23,6 +23,7 @@ import {
   getSearchAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 function _OrderSearch(
   {
@@ -42,6 +43,7 @@ function _OrderSearch(
     option: getInitialFieldState(),
     label: getInitialLabelState(),
   };
+  const { setSearch90DaysBack } = useOrderTrackingStore((st) => st.effects);
   const [values, setValues] = useState({
     ...customSearchValues,
   });
@@ -207,6 +209,14 @@ function _OrderSearch(
     pushDataLayerGoogle(
       getSearchAnalyticsGoogle(searchAnalyticsLabel, option, inputValue)
     );
+    if (
+      inputValue &&
+      option &&
+      inputValue.length < 10 &&
+      ['SerialNo', 'DeliveryNote'].includes(option)
+    ) {
+      setSearch90DaysBack(true);
+    }
     setIsSearchCapsuleVisible(true);
     setSearchTerm(inputValue);
     setCapsuleSearchValue(inputValue);

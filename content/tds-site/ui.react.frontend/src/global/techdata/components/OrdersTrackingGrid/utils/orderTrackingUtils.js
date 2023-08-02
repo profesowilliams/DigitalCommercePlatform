@@ -73,6 +73,7 @@ export async function fetchData(config) {
     previousFilter,
     defaultSearchDateRange,
     filtersRefs,
+    filterDefaultDateRange = false,
   } = config;
 
   const { url } = request;
@@ -166,6 +167,21 @@ export async function fetchData(config) {
   const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
   if (!isSameFilter) {
     params.PageNumber = 1;
+  }
+
+  if (filterDefaultDateRange) {
+    const dateTo = new Date();
+    const day = dateTo.getDate();
+    const month = dateTo.getMonth();
+    const year = dateTo.getFullYear();
+    const today = `${year}-${month}-${day}`;
+    mapUrl.set('createdFrom', fromDay);
+    const dateFrom = dateTo.getDate() - 90;
+    const dayFrom = dateFrom.getDate();
+    const monthFrom = dateFrom.getMonth();
+    const yearFrom = dateFrom.getFullYear();
+    const fromDay = `${yearFrom}-${monthFrom}-${dayFrom}`;
+    mapUrl.set('createdTo', today);
   }
 
   const filtersStatusAndType =
