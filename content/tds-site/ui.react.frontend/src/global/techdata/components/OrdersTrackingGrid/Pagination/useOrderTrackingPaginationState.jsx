@@ -5,7 +5,7 @@ import {
   minCounterCalculator,
 } from '../../../../../utils/paginationUtil';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { updateQueryString } from '../../RenewalsGrid/utils/renewalUtils';
+import { updateQueryString } from '../utils/gridUtils';
 import {
   ANALYTIC_CONSTANTS,
   getPaginationAnalyticsGoogle,

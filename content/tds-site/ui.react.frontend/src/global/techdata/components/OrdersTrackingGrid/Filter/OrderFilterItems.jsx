@@ -50,9 +50,9 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
           ...orderStatusFiltersChecked,
           ...orderStatusFilters.filter((status) => status.id === id),
         ];
-    filtersRefs.status.current = newList
-      .map((element) => "&status="+element.filterOptionKey)
-      .join("");
+    filtersRefs.current.status = newList
+      .map((element) => '&status=' + element.filterOptionKey)
+      .join('');
     setOrderStatusFiltersChecked(newList);
     setPredefinedFiltersSelectedAfter([
       ...newList,
@@ -72,9 +72,9 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
           ...orderTypeFiltersChecked,
           ...orderTypeFilters.filter((type) => type.id === id),
         ];
-    filtersRefs.type.current = newList
-      .map((element) => "&type="+element.filterOptionKey)
-      .join("");
+    filtersRefs.current.type = newList
+      .map((element) => '&type=' + element.filterOptionKey)
+      .join('');
     setOrderTypeFiltersChecked(newList);
     setPredefinedFiltersSelectedAfter([
       ...orderStatusFiltersChecked,

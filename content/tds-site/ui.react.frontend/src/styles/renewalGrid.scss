@@ -1,79 +1,5 @@
 
-@mixin common-planoption-card {
-  padding: 0 22px 1rem 0;
-  text-align: left;
-  position: relative;
-  padding-bottom: 2rem;  
-  .header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .rightHeader {
-    margin-left: 2px;
-    font-size: 14px;
-    color: $brand-blue;
-  }
-  .leftHeader {
-    font-size: 14px;
-    color: $brand-blue;
-    flex-grow: 0;
-    white-space: normal;
-    div{
-      label{
-        padding-left: 8px;
-        cursor: pointer;
-        transition: all .13s ease;
-      }
-      input{
-        cursor: pointer;
-        margin: 0;
-      }
-    }
-  }
-  .planDetails {
-    text-align: left;
-    font-size: 12px;
-    margin-top: 6px;
-    p {
-      line-height: 1.8em;
-    }
-  }
-  .currentPlan {
-    text-align: left;
-    font-size: 10px;
-    color: $brand-success;
-    display: block;
-    min-height: 18px;
-    margin-bottom: 2px;
-  }		
-  .footer{
-    display: flex;
-    margin-top: 1rem;
-    gap: 10px;
-    font-size: 12px;
-    justify-content: space-evenly;
-    align-items: center;
-    button {
-      width : min-content;
-      background-color: $td-neutral-gray;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      span{
-        color: $brand-text-gray;
-      }
-      &:disabled {
-        cursor: default;
-      }
-    }
-    span.vertical-separator{
-      background: #cbc9c9;
-      width: 1px;
-      height: 19px;
-      }
-  }	
-}
+
 
 @mixin cart-icon {  
   display: flex;
@@ -90,7 +16,7 @@
   } 
 } 
 
-.cmp-renewals-grid, .cmp-base-grid {
+.cmp-base-grid {
   .page-info.hidden{
     display: none;
   }
@@ -102,22 +28,7 @@
       }
     }    
   }
-  .cmp-renewal-duration{
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-    justify-content: space-between;
-    cursor: pointer; 
-    &__info {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }      
-    .cmp-triangle-up, .cmp-triangle-down{
-      pointer-events: none;
-    }
-  }
-  .cmp-grid.ag-theme-alpine .ag-row{
+  .cmp-grid.ag-theme-alpine .ag-row {
     background-color: white !important;
     border-bottom: 1.2px solid #cdcbcb61;    
   }
@@ -144,24 +55,7 @@
     top: calc(50% - 24%);
     height: 52%;
   }
-  .cmp-due-date-day-column{
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		width: calc(100% / 2);
-		margin: 0 auto;
-		height:100%;
-		gap: .5rem;
-		.cmp-due-date-days-number{
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			width: 100%;
-		}
-	}
-	.cmp-due-date-column{
-		text-align: left;
-	}
+
   @mixin bottom-border(){
     &:nth-child(-n+4){			
       &::before{
@@ -249,7 +143,7 @@
     white-space: nowrap;
   }
 }
-.cmp-renewals-subheader {
+.cmp-base-grid-subheader {
   display: flex;
   justify-content: space-between;
   padding: 5px 0;
@@ -347,12 +241,12 @@
       }
     }
   }
-  .renewal-filters {
+  .base-gird-filters {
     display: flex;
     gap: 1rem;
     align-items: center;
   }
-  .cmp-renewals-filter-container {
+  .cmp-base-grid-filter-container {
     display: flex;
     gap: 0.3rem;
     align-items: center;
@@ -545,14 +439,6 @@
   }
 }
 
-.cmp-grid-td-synnex {
-  .icon-container {
-    * {
-      font-family: Arial;
-    }
-  }
-}
-
 span.ag-group-value {
   font-size: x-large;
   font-weight: bold;
@@ -680,7 +566,7 @@ button.icon-box {
 }
 
 .cmp-grid-td-synnex, .cmp-order-tracking-grid, .cmp-grid-techdata {
-  & .cmp-renewals-subheader, .cmp-renewals__pagination--bottom {
+  & .cmp-base-grid-subheader, .cmp-renewals__pagination--bottom {
     @include font-arial-normal();
     border-bottom: unset;
     & .cmp-navigation {

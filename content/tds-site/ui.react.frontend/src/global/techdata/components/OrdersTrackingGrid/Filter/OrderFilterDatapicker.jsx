@@ -65,27 +65,27 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   };
 
   const resetFilters = () => {
-    filtersRefs.createdFrom.current = undefined;
-    filtersRefs.createdTo.current = undefined;
-    filtersRefs.shippedDateFrom.current = undefined;
-    filtersRefs.shippedDateTo.current = undefined;
-    filtersRefs.invoiceDateFrom.current = undefined;
-    filtersRefs.invoiceDateTo.current = undefined;
+    filtersRefs.current.createdFrom = undefined;
+    filtersRefs.current.createdTo = undefined;
+    filtersRefs.current.shippedDateFrom = undefined;
+    filtersRefs.current.shippedDateTo = undefined;
+    filtersRefs.current.invoiceDateFrom = undefined;
+    filtersRefs.current.invoiceDateTo = undefined;
   };
 
   const setDateRefs = (startDateFormatted, endDateFormatted, typeOfDate) => {
     if (typeOfDate === orderDate) {
       resetFilters();
-      filtersRefs.createdFrom.current = startDateFormatted;
-      filtersRefs.createdTo.current = endDateFormatted;
+      filtersRefs.current.createdFrom = startDateFormatted;
+      filtersRefs.current.createdTo = endDateFormatted;
     } else if (typeOfDate === shipDate) {
       resetFilters();
-      filtersRefs.shippedDateFrom.current = startDateFormatted;
-      filtersRefs.shippedDateTo.current = endDateFormatted;
+      filtersRefs.current.shippedDateFrom = startDateFormatted;
+      filtersRefs.current.shippedDateTo = endDateFormatted;
     } else if (typeOfDate === invoiceDate) {
       resetFilters();
-      filtersRefs.invoiceDateFrom.current = startDateFormatted;
-      filtersRefs.invoiceDateTo.current = endDateFormatted;
+      filtersRefs.current.invoiceDateFrom = startDateFormatted;
+      filtersRefs.current.invoiceDateTo = endDateFormatted;
     }
   };
 

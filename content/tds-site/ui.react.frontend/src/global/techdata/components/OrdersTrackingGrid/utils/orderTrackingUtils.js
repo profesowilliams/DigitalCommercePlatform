@@ -1,14 +1,14 @@
 import { usGet } from '../../../../../utils/api';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
-  calcSecondLevelSorting,
   isFirstTimeSortParameters,
+  calcSecondLevelSorting,
   isRepeatedSortAction,
   isSameFilterRepeated,
   mapStrucToUrlStr,
   urlStrToMapStruc,
   compareSort,
-} from '../../RenewalsGrid/utils/renewalUtils';
+} from './gridUtils';
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   if (defaultDateRange) {
@@ -25,9 +25,9 @@ export const fetchOrdersCount = async (
   reportValue = null
 ) => {
   const mapUrl = urlStrToMapStruc(url + '?PageSize=25');
-  const { createdFrom, createdTo } = filtersRefs;
-  const fromRef = createdFrom?.current;
-  const toRef = createdTo?.current;
+  const { createdFrom, createdTo } = filtersRefs?.current;
+  const fromRef = createdFrom;
+  const toRef = createdTo;
   if (reportValue) {
     mapUrl.set('reportName', reportValue);
   } else if (fromRef && toRef) {
@@ -69,7 +69,7 @@ export async function fetchData(config) {
     onFiltersClear,
     firstAPICall,
     onSearchAction,
-    optionFieldsRef,
+    // optionFieldsRef,
     previousFilter,
     defaultSearchDateRange,
     filtersRefs,
@@ -80,7 +80,6 @@ export async function fetchData(config) {
   const mapUrl = urlStrToMapStruc(url);
 
   const isFirstAPICall = firstAPICall.current === true;
-  console.log('IS FIRST API CALL', isFirstAPICall);
   if (defaultSearchDateRange) {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
@@ -90,12 +89,12 @@ export async function fetchData(config) {
     mapUrl.delete('createdTo');
   }
 
-  Object.keys(filtersRefs).map((filter) => {
+  Object.keys(filtersRefs.current).map((filter) => {
     if (!['status', 'type'].includes(filter)) {
-      const filterValue = filtersRefs[filter]?.current;
+      const filterValue = filtersRefs.current[filter];
       filterValue && mapUrl.set(filter, filterValue);
     } else if (filter === 'customFilterRef') {
-      filtersRefs[filter].current?.map((ref) => {
+      filtersRefs.current[filter].map((ref) => {
         ref?.filterOptionList?.map((option) => {
           option?.checked &&
             mapUrl.set(option.filterOptionLabel, option.filterOptionKey);
@@ -162,7 +161,7 @@ export async function fetchData(config) {
   const sortBy = sortData?.map(
     (c) => `${c.colId === 'reseller' ? 'CustomerPO' : c.colId}:${c.sort ?? ''}`
   );
-  const params = { ...optionFieldsRef.current, sortBy };
+  const params = { sortBy };
 
   const isSameFilter = isSameFilterRepeated(previousFilter.current, params);
   if (!isSameFilter) {
@@ -185,7 +184,7 @@ export async function fetchData(config) {
   }
 
   const filtersStatusAndType =
-    (filtersRefs.type.current ?? '') + (filtersRefs.status.current ?? '');
+    (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
 
   const filterUrl = mapStrucToUrlStr(mapUrl) + filtersStatusAndType;
 
@@ -220,14 +219,6 @@ export function addCurrentPageNumber(customPaginationRef, request) {
     INITIAL_PAGE; /** to take care of 0 value */
   urlMap.set('PageNumber', pageNumber);
   return mapStrucToUrlStr(urlMap);
-}
-
-export function hasLocalStorageData(key) {
-  return localStorage.getItem(key) !== null;
-}
-
-export function getLocalStorageData(key) {
-  return hasLocalStorageData(key) && JSON.parse(localStorage.getItem(key));
 }
 
 export const getDateRangeLabel = (startDate, endDate) => {

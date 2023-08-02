@@ -5,4 +5,4 @@
 @import './styles/helpers/variables';
 @import './styles/helpers/mixins';
 @import './styles/helpers/media-query.scss';
-@import './styles/*.scss';
+@import './styles/**/*.scss';

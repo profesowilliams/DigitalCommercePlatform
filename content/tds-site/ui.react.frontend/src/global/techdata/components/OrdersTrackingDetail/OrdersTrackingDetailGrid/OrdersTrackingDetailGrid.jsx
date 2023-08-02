@@ -8,7 +8,6 @@ import QuantityColumn from '../Columns/QuantityColumn';
 import LineStatusColumn from '../Columns/LineStatusColumn';
 import ShipDateColumn from '../Columns/ShipDateColumn';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { getContextMenuItems } from '../../RenewalsGrid/utils/renewalUtils';
 import {
   isExtraReloadDisabled,
   isHttpOnlyEnabled,
@@ -128,8 +127,6 @@ function OrdersTrackingDetailGrid({
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
   );
-  const contextMenuItems = (params) =>
-    getContextMenuItems(myColumnDefs, config?.labels);
 
   useEffect(() => {
     window.getSessionInfo &&
@@ -145,7 +142,7 @@ function OrdersTrackingDetailGrid({
         config={config}
         data={gridData}
         //getDefaultCopyValue={getDefaultCopyValue}
-        contextMenuItems={contextMenuItems}
+        contextMenuItems={() => {}}
       />
     </section>
   );

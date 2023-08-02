@@ -41,7 +41,7 @@ const OrderFilterCustomItem = ({
           })
         : filter;
     });
-    filtersRefs.customFilterRef.current = newList;
+    filtersRefs.current.customFilterRef = newList;
     setCustomFiltersChecked([...newList]);
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };

@@ -7,13 +7,6 @@ import {
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import BaseGrid from '../BaseGrid/BaseGrid';
 import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
-import { useMultiFilterSelected } from '../RenewalFilter/hooks/useFilteringState';
-import {
-  getLocalStorageData,
-  hasLocalStorageData,
-  isFirstTimeSortParameters,
-  isFromRenewalDetailsPage,
-} from '../RenewalsGrid/utils/renewalUtils';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
@@ -44,39 +37,32 @@ import {
   updateQueryString,
   removeLocalStorageData,
   mapServiceData,
+  isFirstTimeSortParameters,
+  getLocalStorageData,
+  hasLocalStorageData,
 } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
-  const { optionFieldsRef, isFilterDataPopulated } = useMultiFilterSelected();
   const previousFilter = useRef(false);
   const hasSortChanged = useRef(false);
   const previousSortChanged = useRef(false);
   const searchCriteria = useRef({ field: '', value: '' });
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
-  const createdFrom = useRef();
-  const createdTo = useRef();
-  const shippedDateFrom = useRef();
-  const shippedDateTo = useRef();
-  const invoiceDateFrom = useRef();
-  const invoiceDateTo = useRef();
-  const type = useRef();
-  const status = useRef();
-  const customFilterRef = useRef();
-  const filtersRefs = {
-    createdFrom,
-    createdTo,
-    shippedDateFrom,
-    shippedDateTo,
-    invoiceDateFrom,
-    invoiceDateTo,
-    type,
-    status,
-    customFilterRef,
-  };
+  const filtersRefs = useRef({
+    createdFrom: null,
+    createdTo: null,
+    shippedDateFrom: null,
+    shippedDateTo: null,
+    invoiceDateFrom: null,
+    invoiceDateTo: null,
+    type: null,
+    status: null,
+    customFilterRef: null,
+  });
   const {
     setToolTipData,
     setCustomState,
@@ -173,18 +159,15 @@ function OrdersTrackingGrid(props) {
     const gridApi = gridApiRef?.current?.api;
     const queryOperations = {
       hasSortChanged,
-      isFilterDataPopulated,
-      optionFieldsRef,
+      // isFilterDataPopulated,
+      // optionFieldsRef,
       customPaginationRef,
       componentProp,
-      //onSearchAction,
       searchCriteria,
       previousFilter,
       request,
       previousSortChanged,
-      //onFiltersClear,
       firstAPICall,
-      //isPriceColumnClicked,
       gridApiRef,
       defaultSearchDateRange: dateRange,
       filtersRefs,
@@ -240,12 +223,6 @@ function OrdersTrackingGrid(props) {
     const sortedModel = sortModelList
       .filter((o) => !!o.sort)
       .map(({ colId, sort }) => ({ colId, sort }));
-    const renewalPlanItem = sortedModel.find(
-      (x) => x.colId === 'renewedduration'
-    );
-    if (renewalPlanItem) {
-      sortedModel.push({ ...renewalPlanItem, colId: 'support' });
-    }
     hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
     setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
     const sortingEventFilter = evt?.columnApi
@@ -290,10 +267,7 @@ function OrdersTrackingGrid(props) {
     hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
   useEffect(() => {
-    if (
-      hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) &&
-      isFromRenewalDetailsPage()
-    ) {
+    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
     setFilterList([...predefined, ...customized]);

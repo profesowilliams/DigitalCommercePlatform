@@ -164,6 +164,10 @@ use(["../../../common/utils.js"], function (utils) {
     exportFlyoutLabels.map((label) => {
       exportFlyout[label.key] = properties[label.name];
     });
+  
+  if (exportFlyout != null) {
+    jsonObject["exportFlyout"] = exportFlyout;
+  }
 
   jsonObject["ordersDownloadDocumentsEndpoint"] =
     this.serviceData.uiServiceDomain +

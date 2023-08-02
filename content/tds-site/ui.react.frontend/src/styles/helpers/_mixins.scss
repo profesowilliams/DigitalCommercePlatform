@@ -9,10 +9,87 @@
   font-size: $size;
   line-height: $line-height;
 }
+
 @mixin font-arial-medium-bold($weight: 600, $size: 16px, $line-height: 21px) {
   font-family: 'Arial';
   font-style: normal;
   font-weight: $weight;
   font-size: $size;
   line-height: $line-height;
+}
+
+@mixin common-planoption-card {
+  padding: 0 22px 1rem 0;
+  text-align: left;
+  position: relative;
+  padding-bottom: 2rem;  
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .rightHeader {
+    margin-left: 2px;
+    font-size: 14px;
+    color: $brand-blue;
+  }
+  .leftHeader {
+    font-size: 14px;
+    color: $brand-blue;
+    flex-grow: 0;
+    white-space: normal;
+    div{
+      label{
+        padding-left: 8px;
+        cursor: pointer;
+        transition: all .13s ease;
+      }
+      input{
+        cursor: pointer;
+        margin: 0;
+      }
+    }
+  }
+  .planDetails {
+    text-align: left;
+    font-size: 12px;
+    margin-top: 6px;
+    p {
+      line-height: 1.8em;
+    }
+  }
+  .currentPlan {
+    text-align: left;
+    font-size: 10px;
+    color: $brand-success;
+    display: block;
+    min-height: 18px;
+    margin-bottom: 2px;
+  }		
+  .footer{
+    display: flex;
+    margin-top: 1rem;
+    gap: 10px;
+    font-size: 12px;
+    justify-content: space-evenly;
+    align-items: center;
+    button {
+      width : min-content;
+      background-color: $td-neutral-gray;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      span{
+        color: $brand-text-gray;
+      }
+      &:disabled {
+        cursor: default;
+      }
+    }
+    span.vertical-separator{
+      background: #cbc9c9;
+      width: 1px;
+      height: 19px;
+      }
+  }	
 }

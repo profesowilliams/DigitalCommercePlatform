@@ -1,6 +1,14 @@
 import { usGet } from "../../../../../utils/api";
 import { formatDatePicker } from "../../../../../utils/utils";
-import { calcSecondLevelSorting, extractSortColAndDirection, isFirstTimeSortParameters, isRepeatedSortAction, isSameFilterRepeated, mapStrucToUrlStr, urlStrToMapStruc } from "../../RenewalsGrid/utils/renewalUtils";
+import {
+  calcSecondLevelSorting,
+  extractSortColAndDirection,
+  isFirstTimeSortParameters,
+  isRepeatedSortAction,
+  isSameFilterRepeated,
+  mapStrucToUrlStr,
+  urlStrToMapStruc,
+} from '../../OrdersTrackingGrid/utils/gridUtils';
 
 function createdFromDate(dateRange) {
   const createdFrom = new Date();

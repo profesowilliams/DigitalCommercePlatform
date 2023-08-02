@@ -48,18 +48,18 @@ export default function OrderFilterCustomDatapicker({
   const momentCustomEndDate = customEndDate ? moment(customEndDate) : null;
 
   const resetFilters = () => {
-    filtersRefs.createdFrom.current = undefined;
-    filtersRefs.createdTo.current = undefined;
-    filtersRefs.shippedDateFrom.current = undefined;
-    filtersRefs.shippedDateTo.current = undefined;
-    filtersRefs.invoiceDateFrom.current = undefined;
-    filtersRefs.invoiceDateTo.current = undefined;
+    filtersRefs.current.createdFrom = undefined;
+    filtersRefs.current.createdTo = undefined;
+    filtersRefs.current.shippedDateFrom = undefined;
+    filtersRefs.current.shippedDateTo = undefined;
+    filtersRefs.current.invoiceDateFrom = undefined;
+    filtersRefs.current.invoiceDateTo = undefined;
   };
 
   const setDateRefs = (startDateFormatted, endDateFormatted) => {
     resetFilters();
-    filtersRefs.createdFrom.current = startDateFormatted;
-    filtersRefs.createdTo.current = endDateFormatted;
+    filtersRefs.current.createdFrom = startDateFormatted;
+    filtersRefs.current.createdTo = endDateFormatted;
   };
 
   const setFilterDate = (startDate, endDate) => {

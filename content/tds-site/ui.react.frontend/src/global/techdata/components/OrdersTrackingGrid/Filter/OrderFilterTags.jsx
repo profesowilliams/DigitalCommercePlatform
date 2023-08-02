@@ -29,7 +29,7 @@ function OrderFilterTags({ filtersRefs }) {
   const handleFilterCloseClick = (id, group) => {
     if (group === 'status') {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
-      filtersRefs.status.current = newList.join();
+      filtersRefs.current.status = newList.join();
       setOrderStatusFiltersChecked(newList);
       setPredefinedFiltersSelectedAfter([
         ...newList,
@@ -38,7 +38,7 @@ function OrderFilterTags({ filtersRefs }) {
       ]);
     } else if (group === 'type') {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
-      filtersRefs.type.current = newList.join();
+      filtersRefs.current.type = newList.join();
       setOrderTypeFiltersChecked(newList);
       setPredefinedFiltersSelectedAfter([
         ...orderStatusFiltersChecked,

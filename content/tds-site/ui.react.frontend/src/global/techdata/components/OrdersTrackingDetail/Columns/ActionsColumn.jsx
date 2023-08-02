@@ -29,7 +29,7 @@ const ActionsColumn = ({
 
   const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
   const areInvoicesAvailable = line.invoices.length > 0;
-  const isSerialNumberAvailable = Boolean(line.serialNumber);
+  const isSerialNumberAvailable = line.serials.length > 0;
   const id = apiResponse?.orderNumber;
   let invoices = [];
   invoices = line.invoices;

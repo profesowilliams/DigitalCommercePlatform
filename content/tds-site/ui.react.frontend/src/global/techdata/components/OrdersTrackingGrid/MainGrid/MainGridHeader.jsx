@@ -105,13 +105,13 @@ function MainGridHeader({
   ];
 
   return (
-    <div className="cmp-renewals-subheader">
-      <div className="cmp-renewals-subheader-left">
+    <div className="cmp-base-grid-subheader">
+      <div className="cmp-base-grid-subheader-left">
         {leftComponents.map((component, index) =>
           cloneElement(component, { key: index })
         )}
       </div>
-      <div className="renewal-filters">
+      <div className="base-grid-filters">
         {rightComponents.map((component, index) =>
           cloneElement(component, { key: index })
         )}

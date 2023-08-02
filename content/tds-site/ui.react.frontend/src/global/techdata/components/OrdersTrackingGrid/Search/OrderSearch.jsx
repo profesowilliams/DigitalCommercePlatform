@@ -13,9 +13,8 @@ import {
 import {
   getLocalStorageData,
   hasLocalStorageData,
-  isFromRenewalDetailsPage,
   setLocalStorageData,
-} from '../../RenewalsGrid/utils/renewalUtils';
+} from '../utils/gridUtils';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import OrderSearchEditView from './OrderSearchEditView';
 import OrderSearchView from './OrderSearchView';
@@ -76,10 +75,7 @@ function _OrderSearch(
   );
 
   function getInitialValueState() {
-    if (
-      hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY) &&
-      isFromRenewalDetailsPage()
-    ) {
+    if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
       return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.value;
     } else {
       return '';
@@ -87,10 +83,7 @@ function _OrderSearch(
   }
 
   function getInitialFieldState() {
-    if (
-      hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY) &&
-      isFromRenewalDetailsPage()
-    ) {
+    if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
       return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field;
     } else {
       return '';
@@ -102,12 +95,6 @@ function _OrderSearch(
       return '';
     }
 
-    if (isFromRenewalDetailsPage())
-      return (
-        options.filter((item) => item.searchKey === getInitialFieldState())[0]
-          ?.searchLabel || ''
-      );
-
     return '';
   }
 
@@ -115,9 +102,6 @@ function _OrderSearch(
     if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
       return false;
     }
-
-    if (isFromRenewalDetailsPage())
-      return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.value !== '';
 
     return false;
   }
