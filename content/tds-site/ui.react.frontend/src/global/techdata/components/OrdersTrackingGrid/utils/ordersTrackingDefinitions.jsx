@@ -22,9 +22,12 @@ export const ordersTrackingDefinition = (
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
       // and will render order date on DIT and SIT env
       //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
-      updated: data?.updatedFormatted ?? data?.created,
-      created: data?.createdFormatted ?? data?.created,
       select: <SelectColumn eventProps={eventProps} />,
+      updated: data?.updatedFormatted ?? data?.created,
+      shipTo: <ShipToColumn data={data?.shipTo} />,
+      created: data?.createdFormatted ?? data?.created,
+      id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
+      reseller: <ResellerColumn data={data?.reseller} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: (
         <InvoiceColumn
@@ -45,9 +48,6 @@ export const ordersTrackingDefinition = (
           openFilePdf={openFilePdf}
         />
       ),
-      id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
-      shipTo: <ShipToColumn data={data?.shipTo} />,
-      reseller: <ResellerColumn data={data?.reseller} />,
       actions: <OrderTrackingActionColumn />,
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';
@@ -55,41 +55,42 @@ export const ordersTrackingDefinition = (
   };
 
   const columnsMinWidth = {
-    resellername: 154,
-    endUser: 151,
-    vendor: 195,
-    Id: 139,
-    agreementNumber: 148,
-    renewedduration: 186,
-    dueDays: 127,
-    dueDate: 115,
-    total: 131,
+    select: 84,
+    updated: 94,
+    shipTo: 160,
+    status: 112,
+    created: 94,
+    id: 104,
+    reseller: 173,
+    priceFormatted: 112,
+    invoices: 100,
+    deliveryNotes: 100,
     actions: 100,
-    select: 40,
   };
 
   const columnsWidth = {
-    resellername: '173.368px',
-    endUser: '123.368px',
-    vendor: '177.632px',
-    Id: '150px',
-    agreementNumber: '130px',
-    renewedduration: '200.632px',
-    dueDays: '143.737px',
-    dueDate: '139.526px',
-    total: '122.526px',
+    select: '84px',
+    updated: '94px',
+    shipTo: '160px',
+    status: '112px',
+    created: '94px',
+    id: '104px',
+    reseller: '173px',
+    priceFormatted: '112px',
+    invoices: '100px',
+    deliveryNotes: '100px',
     actions: '100px',
-    select: '40px',
   };
 
   const hoverableList = [
-    'endUser',
-    'vendor',
-    'resellername',
-    'renewedduration',
+    'select',
+    'id',
+    'invoices',
+    'deliveryNotes',
+    'actions',
   ];
 
-  const fieldsWithCellStyle = ['Id'];
+  const fieldsWithCellStyle = ['id'];
 
   const cellStyle = {
     'text-overflow': 'initial',
