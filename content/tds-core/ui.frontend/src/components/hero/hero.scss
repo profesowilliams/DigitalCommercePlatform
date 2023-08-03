@@ -24,7 +24,7 @@
 
         That way the footer text is seperatly configured on the AEM side.
 
-        Justification: Waiting for AEM to add a functionality 
+        Justification: Waiting for AEM to add a functionality
         to customize multiple elements inside a component
 
     */
@@ -87,7 +87,12 @@
     &__content[data-cmp-hasimage] {
       position: absolute;
       top: 35%;
-      left: 45%;
+      display: flex;
+      justify-content: center;
+      flex-flow: wrap;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
 
       @include mobile {
         top: 10%;
@@ -96,6 +101,11 @@
         padding: 0;
         height: 500px;
       }
+
+      * {
+        width: 524px;
+      }
+
       .cmp-item {
         color: inherit;
       }
