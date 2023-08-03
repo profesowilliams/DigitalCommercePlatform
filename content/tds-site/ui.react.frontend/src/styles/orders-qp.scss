@@ -6,7 +6,7 @@
 
 .cmp-orders-qp__config-grid {
   padding: 0 2rem;
-  background-color: get-color(neutral-gray-1);
+  background-color: $td-neutral-gray;
   .cmp-order-preview {
     &__download {
         .separator {
@@ -26,7 +26,7 @@
       align-items: center;
       padding: 20px 0 13px 3px;
       .back-to-orders {
-        color: get-color(cobalt);
+        color: $brand-cobalt;
         font-size: 14px;
         .fa-chevron-left {
           font-size: 14px;
@@ -148,7 +148,7 @@
 .footer-container {
   * {
     font-family: Arial;
-    color: get-color(black);;
+    color: $brand-black;;
   }
   margin: 0 2rem;
   .box-container {
@@ -156,14 +156,18 @@
     justify-content: space-between;
     align-items: start;
     padding: 16px 20px;
-    background-color: get-color(neutral-gray-1);
+    background-color: $td-neutral-gray;
+    height:auto;
     &__leftPart{
       display: flex;
       flex-direction: column;
       max-width: 35rem;
       font-size: 14px;
       &-line1{
-        line-height: 24px;     
+        line-height: 24px;
+        & a {
+          color: $brand-cobalt
+        }
       }
       &-line2{
         font-weight: 700;

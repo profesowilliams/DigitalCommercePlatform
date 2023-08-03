@@ -176,45 +176,6 @@
     }
   }
 }
-.footer-container {
-  * {
-    font-family: Arial;
-    color: get-color(black);;
-  }
-  margin: 0 2rem;
-  .box-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 20px;
-    height: 80px;
-    background-color: get-color(neutral-gray-1);
-    &__leftPart{
-      display: flex;
-      flex-direction: column;
-      &-line1{
-        line-height: 24px;
-      }
-      &-line2{
-        font-weight: 700;
-        line-height: 24px;
-      }
-    }
-    &__rightPart{
-      display: flex;
-      align-items: center;
-      &-subtotalLabel {
-        font-weight: 700;
-        font-size: 20px
-      }
-      &-subtotalValue {
-        margin-left: 35px;
-        font-weight: 400;
-        font-size: 28px
-      }
-    }
-  }
-}
 
 .cmp-orders-qp__grid{
   * {
