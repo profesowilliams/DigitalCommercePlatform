@@ -1,3 +1,4 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
 .languagenavigation {
   position: relative;
 
@@ -44,16 +45,13 @@
 }
 
 .techdata-header-style .languagenavigation .cmp-button__region-select {
-   background-color: map-get($color-palette, 'td-dark-blue');
+  background-color: map-get($color-palette, 'td-dark-blue');
 }
 .techdata-header-style .languagenavigation .cmp-radio-btn input {
-    width: 1rem;
-    height: 1rem;
-    left: -0.125rem;
-    top: 0.875rem;
-}
-.techdata-header-style .languagenavigation .regionSelectDropdown {
-    top: 49px !important;
+  width: 1rem;
+  height: 1rem;
+  left: -0.125rem;
+  top: 0.875rem;
 }
 
 .cmp-form-options--radio {
@@ -70,41 +68,41 @@
 }
 
 .techdata-header-style .languagenavigation .cmp-radio-btn {
-    padding-left: 1.9375rem;
-    padding-top: rem(5px);
-    &:hover {
-        background-color: #E4E5E6;
-    }
-    &:active,
-    &:focus {
-        background-color: #000C21;
+  padding-left: 1.9375rem;
+  padding-top: rem(5px);
+  &:hover {
+    background-color: #e4e5e6;
+  }
+  &:active,
+  &:focus {
+    background-color: #000c21;
 
-        .cmp-form-options__field-description {
-            color: white;
-        }
+    .cmp-form-options__field-description {
+      color: white;
     }
+  }
 }
 
 .techdata-header-style .languagenavigation .cmp-radio-btn .checkmark {
-    border: 2px solid get-color(text-light-charcoal);
-    top: 18px;
-    left: 12px;
-    height: 20px;
-    width: 20px;
-    box-shadow: none;
+  border: 2px solid get-color(text-light-charcoal);
+  top: 18px;
+  left: 12px;
+  height: 20px;
+  width: 20px;
+  box-shadow: none;
 }
 
-.techdata-header-style .languagenavigation .cmp-radio-btn input:checked~.checkmark {
-    border-color: get-color(td-dark-blue);
-    background-color: white;
+.techdata-header-style .languagenavigation .cmp-radio-btn input:checked ~ .checkmark {
+  border-color: get-color(td-dark-blue);
+  background-color: white;
 }
 
-.techdata-header-style .languagenavigation .cmp-radio-btn input:checked~.checkmark:after {
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    height: 12px;
-    background-color: get-color(td-dark-blue);
+.techdata-header-style .languagenavigation .cmp-radio-btn input:checked ~ .checkmark:after {
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: get-color(td-dark-blue);
 }
 
 .cmp-form-options__field-description {
@@ -116,42 +114,42 @@
 }
 
 .techdata-header-style .languagenavigation .cmp-form-options__field-description {
-    top: unset;
-    left: unset;
-    padding-left: rem(15px);
+  top: unset;
+  left: unset;
+  padding-left: rem(15px);
 }
 
 .cmp-dropbtn {
-    display: flex;
-    align-items: center;
-    padding: 0;
-    min-height: 30px;
-    background: none;
-    color: get-color(brand-black);
-    border: none;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  min-height: 30px;
+  background: none;
+  color: get-color(brand-black);
+  border: none;
+  cursor: pointer;
 
-    @include mobile {
-        margin-bottom: rem(0px);
+  @include mobile {
+    margin-bottom: rem(0px);
 
-        & > .language-hiddenLabel {
-            display: inline;
-        }
+    & > .language-hiddenLabel {
+      display: inline;
     }
+  }
 
-    @media only screen and (min-width: 769px) {
-        & > .language-hiddenLabel {
-            display: none;
-        }
+  @media only screen and (min-width: 769px) {
+    & > .language-hiddenLabel {
+      display: none;
     }
+  }
 
-    &:hover {
-        box-shadow: 0 3px 0 0px get-color(cobalt);
-    }
+  &:hover {
+    box-shadow: 0 3px 0 0px get-color(cobalt);
+  }
 
-    &:active {
-        box-shadow: 0 3px 0 0px map-get($color-palette,"cobalt");
-    }
+  &:active {
+    box-shadow: 0 3px 0 0px map-get($color-palette, 'cobalt');
+  }
 }
 
 .cmp-dropdown {
@@ -173,8 +171,6 @@
   color: get-color(brand-black);
 }
 
-
-
 .cmp-region-list {
   &__title {
     font-size: $font-size-medium;
@@ -189,7 +185,6 @@
     text-transform: uppercase;
     box-shadow: 0 0 0 18px get-color(brand-white);
   }
-
 
   &__countries {
     font-size: $font-size-custom-xxsmall;
@@ -218,7 +213,6 @@
         position: relative;
         top: rem(1px);
       }
-
     }
 
     &--name {
@@ -303,7 +297,7 @@
       }
 
       &:after {
-        content: "";
+        content: '';
         display: table;
         clear: both;
       }
@@ -351,7 +345,7 @@
         }
       }
 
-      &:last-child>&__separator {
+      &:last-child > &__separator {
         border-right: none;
       }
 
@@ -363,8 +357,6 @@
         flex-direction: column;
         justify-content: flex-start;
       }
-
-
 
       &__separator {
         border-right: 0px solid get-color(brand-text-lightgray);

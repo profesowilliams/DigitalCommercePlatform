@@ -1,3 +1,4 @@
+/* stylelint-disable -- Too much to fix, will delete file later. */
 @import '../../abstracts/variables';
 @import '../../../../webpack/site/variables';
 
@@ -13,7 +14,7 @@
         height: rem(26px);
         margin-right: rem(10px);
         &.sign-in {
-          fill: get-color(header-links-blue);          
+          fill: get-color(header-links-blue);
         }
         &.sign-out {
           fill: transparent;
@@ -23,7 +24,7 @@
       }
     }
     &__link {
-      font-size:$font-size-small;
+      font-size: $font-size-small;
       color: get-color(header-links-blue);
       padding-top: rem(4px);
       outline: none !important;
@@ -32,258 +33,258 @@
 }
 
 .cmp-sign-in {
-    display: flex;
-    // justify-content: center;
-    &:hover {
-        .cmp-sign-in--container {
-            display: block;
-        }
+  display: flex;
+  // justify-content: center;
+  &:hover {
+    .cmp-sign-in--container {
+      display: block;
+    }
+  }
+
+  &-middle-div {
+    z-index: 9999;
+    position: absolute;
+    top: 30px;
+    right: 1px;
+    white-space: nowrap;
+    min-width: 200px;
+    min-height: 30px;
+  }
+
+  &-option {
+    display: inline-block;
+    position: relative;
+  }
+
+  &-button {
+    display: flex !important;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 2px 0;
+    color: #000;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 13px;
+    border-bottom: 2px solid transparent;
+
+    @media only screen and (min-width: 1024px) and (max-width: 1260px) {
+      padding: 0 0.1rem;
+      font-size: 0.8rem;
     }
 
-    &-middle-div {
-        z-index: 9999;
-        position: absolute;
-        top: 30px;
-        right: 1px;
-        white-space: nowrap;
-        min-width: 200px;
-        min-height: 30px;
+    @include tablet {
+      font-size: 0; // hide text on tablet and below
+      line-height: 0; // to balance the height when hidden
+      color: #231f20;
+
+      > i,
+      svg {
+        font-size: rem(12.8px) !important;
+      }
+
+      &.active {
+        color: #000c21;
+      }
+
+      &.clicked {
+        color: #1798d1;
+      }
     }
 
-    &-option {
-        display: inline-block;
-        position: relative;
+    &.active,
+    &:hover,
+    &:active {
+      box-shadow: 0 3px 0 0px map-get($color-palette, 'cobalt');
     }
 
-    &-button {
-        display: flex !important;
-        align-items: center;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        padding: 2px 0;
-        color: #000;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        letter-spacing: 0;
-        line-height: 13px;
-        border-bottom: 2px solid transparent;
-
-        @media only screen and (min-width: 1024px) and (max-width: 1260px) {
-            padding: 0 0.1rem;
-            font-size: .8rem;
-        }
-
-        @include tablet {
-            font-size: 0; // hide text on tablet and below
-            line-height: 0; // to balance the height when hidden
-            color: #231f20;
-
-            > i,
-            svg {
-                font-size: rem(12.8px) !important;
-            }
-
-            &.active {
-                color: #000c21;
-            }
-
-            &.clicked {
-                color: #1798d1;
-            }
-        }
-
-        &.active,
-        &:hover,
-        &:active {
-            box-shadow: 0 3px 0 0px map-get($color-palette,"cobalt");
-        }
-
-        &:focus(:not(.clicked)) {
-            outline: inset;
-            border-radius: 5px;
-            padding: 5px;
-        }
-
-        svg {
-            margin-right: 5px;
-
-            @include mobile {
-                margin-right: 0;
-            }
-        }
+    &:focus(:not(.clicked)) {
+      outline: inset;
+      border-radius: 5px;
+      padding: 5px;
     }
 
-    .cmp-sign-in--container.selected,
-    .cmp-sign-in--container.showMenu:focus {
+    svg {
+      margin-right: 5px;
+
+      @include mobile {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .cmp-sign-in--container.selected,
+  .cmp-sign-in--container.showMenu:focus {
+    display: block;
+  }
+
+  $offset-lg: 30px;
+  $offset-sm: 14px;
+
+  &-list {
+    background-color: #fff;
+    z-index: 9999;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
+    box-sizing: border-box;
+    padding: 0 $offset-sm;
+    position: absolute;
+    top: 47px;
+    right: 1px;
+    white-space: nowrap;
+    min-width: 200px;
+    border-top: 2px solid #000;
+
+    @include tablet {
+      position: fixed;
+      padding: 0 $offset-lg;
+      width: 100%;
+      max-width: 19.375rem;
+      max-height: 560px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    p {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0;
+      line-height: 16px;
+      padding: 14px 0;
+      text-align: left;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+
+      &.ec-id {
+        border-bottom: 1px solid #d6d6d6;
         display: block;
+      }
+
+      &.user-greet {
+        @include desktop {
+          display: none;
+        }
+
+        border-bottom: 1px solid #d6d6d6;
+      }
     }
 
-    $offset-lg: 30px;
-    $offset-sm: 14px;
+    &-content {
+      list-style: none;
+      padding: 0;
 
-    &-list {
-        background-color: #fff;
-        z-index: 9999;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 16px 0px;
-        box-sizing: border-box;
-        padding: 0 $offset-sm;
-        position: absolute;
-        top: 53px;
-        right: 1px;
-        white-space: nowrap;
-        min-width: 200px;
-        border-top: 2px solid #000;
+      &--item {
+        margin-bottom: 10px;
+        display: flex;
 
-        @include tablet {
-            position: fixed;
-            padding: 0 $offset-lg;
-            width: 100%;
-            max-width: 19.375rem;
-            max-height: 560px;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
+        &-link {
+          cursor: pointer;
+          text-decoration: none;
 
-        p {
-            font-family: "Open Sans", sans-serif;
-            font-size: 13px;
-            letter-spacing: 0;
-            line-height: 16px;
-            padding: 14px 0;
-            text-align: left;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
+          @include desktop {
+            position: relative;
+          }
 
-            &.ec-id {
-                border-bottom: 1px solid #d6d6d6;
-                display: block;
+          &--icon {
+            color: #1798d1;
+
+            @include desktop {
+              position: absolute;
+              top: 4px;
             }
 
-            &.user-greet {
-                @include desktop {
-                    display: none;
-                }
+            @include tablet {
+              display: none;
 
-                border-bottom: 1px solid #d6d6d6;
+              &.fa,
+              &.fa-user {
+                display: none;
+              }
             }
-        }
+          }
 
-        &-content {
-            list-style: none;
-            padding: 0;
-
-            &--item {
-                margin-bottom: 10px;
-                display: flex;
-
-                &-link {
-                    cursor: pointer;
-                    text-decoration: none;
-
-                    @include desktop {
-                        position: relative;
-                    }
-
-                    &--icon {
-                        color: #1798d1;
-
-                        @include desktop {
-                            position: absolute;
-                            top: 4px;
-                        }
-
-                        @include tablet {
-                            display: none;
-
-                            &.fa,
-                            &.fa-user {
-                                display: none;
-                            }
-                        }
-                    }
-
-                    span {
-                        color: #555555;
-                        font-size: 13px;
-
-                        @include desktop {
-                            padding-left: 23px;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    &-signout {
-        border: none;
-        background-color: transparent;
-        padding: inherit;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        cursor: pointer;
-        width: calc(100% + #{$offset-sm} * 2);
-        margin-left: -#{$offset-sm};
-        color: white;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        letter-spacing: 0;
-        background-color: get-color(deep-teal);
-
-        @include tablet {
-            background-color: #f6f6f6;
+          span {
             color: #555555;
-            text-align: left;
-            width: calc(100% + #{$offset-lg} * 2);
-            margin-left: -#{$offset-lg};
+            font-size: 13px;
+
+            @include desktop {
+              padding-left: 23px;
+            }
+          }
         }
+      }
     }
+  }
 
-    .active {
-        display: block;
-    }
+  &-signout {
+    border: none;
+    background-color: transparent;
+    padding: inherit;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    width: calc(100% + #{$offset-sm} * 2);
+    margin-left: -#{$offset-sm};
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    background-color: get-color(deep-teal);
 
-    .fa-user:before {
-        padding-right: 5px;
+    @include tablet {
+      background-color: #f6f6f6;
+      color: #555555;
+      text-align: left;
+      width: calc(100% + #{$offset-lg} * 2);
+      margin-left: -#{$offset-lg};
     }
+  }
 
-    .fa-user-alt:before {
-        padding-right: 5px;
-    }
+  .active {
+    display: block;
+  }
+
+  .fa-user:before {
+    padding-right: 5px;
+  }
+
+  .fa-user-alt:before {
+    padding-right: 5px;
+  }
 }
 
 .signin.techdatastyle {
-    .cmp-sign-in .cmp-sign-in-list {
-        padding: 0;
+  .cmp-sign-in .cmp-sign-in-list {
+    padding: 0;
 
-        & > p,
-        & > ul li {
-            padding-left: 10px;
-            padding-right: 10px;
+    & > p,
+    & > ul li {
+      padding-left: 10px;
+      padding-right: 10px;
 
-            &:hover {
-                background-color: #E4E5E6;
-            }
+      &:hover {
+        background-color: #e4e5e6;
+      }
 
-            &:active,
-            &:focus {
-                background-color: #000C21;
+      &:active,
+      &:focus {
+        background-color: #000c21;
 
-                span {
-                    color: white;
-                }
-            }
+        span {
+          color: white;
         }
-
-        & > ul {
-            margin: 0;
-
-            li {
-                padding: 10px;
-                margin: 0;
-            }
-        }
+      }
     }
+
+    & > ul {
+      margin: 0;
+
+      li {
+        padding: 10px;
+        margin: 0;
+      }
+    }
+  }
 }
