@@ -3,14 +3,16 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 
-const LineItem = ({ item, onChange, labels }) => {
+const LineItem = ({ item, index, onChange, labels }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.quantity);
 
-  const handleAmountChange = (e) => {
-    setQuantityIncreased(Boolean(e > item.quantity));
-    setCurrentValue(e);
+  const handleAmountChange = (newValue) => {
+    setQuantityIncreased(Boolean(newValue > item.quantity));
+    setCurrentValue(newValue);
+    onChange(index, newValue);
   };
+
   return (
     <li key={item.id} className="cmp-flyout-list__element">
       <div className="cmp-flyout-list__element__number">{item.id}</div>

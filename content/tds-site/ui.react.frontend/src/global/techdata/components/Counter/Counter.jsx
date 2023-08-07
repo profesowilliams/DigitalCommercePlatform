@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const Counter = ({ value = 0, onChange }) => {
-  const [currentValue, setCurrentValue] = useState(value);
-
   const increase = () => {
-    setCurrentValue((prevState) => prevState + 1);
+    onChange(value + 1);
   };
 
   const decrease = () => {
-    if (currentValue > 0) {
-      setCurrentValue((prevState) => prevState - 1);
-    }
+    onChange(value - 1);
   };
-
-  const handleChange = (event) => {
-    setCurrentValue(event.target.value);
-    onChange(event.target.value);
-  };
-
-  useEffect(() => {
-    onChange(currentValue);
-  }, [currentValue]);
 
   return (
     <div className="counter">
@@ -30,8 +17,8 @@ const Counter = ({ value = 0, onChange }) => {
       <input
         type="number"
         min={0}
-        value={currentValue}
-        onChange={handleChange}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
       <div className="plus" onClick={increase}>
         +

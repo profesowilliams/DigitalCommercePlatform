@@ -5,6 +5,18 @@ import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrack
 import NewItemForm from './NewItemForm';
 import LineItem from './LineItem';
 
+const areItemsListIdentical = (items, itemsCopy) => {
+  // This function compares only quantities rather than all items' parameters
+  const difference = items.find((item) => {
+    const index = itemsCopy.findIndex((copyItem) => copyItem.id === item.id);
+    if (index > -1) {
+      return itemsCopy[index].quantity !== item.quantity;
+    } else return false;
+  });
+
+  return Boolean(!difference);
+};
+
 function OrderModificationFlyout({
   subheaderReference = '',
   isTDSynnex = true,
@@ -16,11 +28,15 @@ function OrderModificationFlyout({
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const effects = store((st) => st.effects);
-  const closeFlyout = () =>
+  const closeFlyout = () => {
+    setNewItemFormVisible(false);
     effects.setCustomState({
       key: 'orderModificationFlyout',
       value: { show: false },
     });
+  };
+
+  const itemsCopy = [...items];
 
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
@@ -37,8 +53,9 @@ function OrderModificationFlyout({
     </div>
   );
 
-  const handleAmountChange = () => {
-    setOrderChanged(true);
+  const handleAmountChange = (index, newAmount) => {
+    itemsCopy[index] = { ...items[index], quantity: newAmount };
+    setOrderChanged(!areItemsListIdentical(items, itemsCopy));
   };
 
   const handleAddNewItem = () => {
@@ -69,9 +86,10 @@ function OrderModificationFlyout({
           {getDictionaryValueOrKey(labels.editQuantities)}
         </p>
         <ul className="cmp-flyout-list">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <LineItem
               key={item.id}
+              index={index}
               item={item}
               onChange={handleAmountChange}
               labels={labels}

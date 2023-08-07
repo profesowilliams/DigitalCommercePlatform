@@ -62,19 +62,19 @@
                                                 fieldLabel="Default Search Date Range"
                                                 name="./defaultSearchDateRange">
                                                 <items jcr:primaryType="nt:unstructured">
-                                                    <plainText
+                                                    <last30Days
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Last 30 Days"
                                                         value="30" />
-                                                    <date
+                                                    <last60Day
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Last 60 Days"
                                                         value="60" />
-                                                    <buttonList
+                                                    <last90Days
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Last 90 Days"
                                                         value="90" />
-                                                    <buttonList
+                                                    <last120Days
                                                         jcr:primaryType="nt:unstructured"
                                                         text="Last 120 Days"
                                                         value="120" />
