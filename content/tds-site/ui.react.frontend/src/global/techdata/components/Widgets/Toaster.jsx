@@ -5,7 +5,13 @@ import { teal, red } from "@mui/material/colors";
 import shallow from "zustand/shallow";
 
 
-function Toaster({ classname = '', onClose, MuiDrawerProps, store }) {
+function Toaster({
+  classname = '',
+  onClose,
+  closeEnabled,
+  MuiDrawerProps,
+  store,
+}) {
   const toaster = store((state) => state.toaster, shallow);
   const {
     isOpen,
@@ -18,12 +24,13 @@ function Toaster({ classname = '', onClose, MuiDrawerProps, store }) {
   } = toaster;
   const [DOMLoaded, setDOMLoaded] = useState(false);
   const [subheaderPosition, setSubheaderPosition] = useState('');
+  const autocloseTimeout = closeEnabled ? 3000 : 6000;
 
   useEffect(() => {
     if (isOpen && isAutoClose) {
       const timeout = setTimeout(() => {
         onClose();
-      }, 6000);
+      }, autocloseTimeout);
       return () => clearTimeout(timeout);
     }
   }, [isOpen]);
@@ -116,7 +123,7 @@ function Toaster({ classname = '', onClose, MuiDrawerProps, store }) {
               {isSuccess && !!Child && <br />}
               {Child && Child}
             </div>
-            {!isAutoClose && (
+            {(!isAutoClose || closeEnabled) && (
               <div className="cmp-toaster-content__closeIcon">
                 <Dismiss onClick={onClose} />
               </div>

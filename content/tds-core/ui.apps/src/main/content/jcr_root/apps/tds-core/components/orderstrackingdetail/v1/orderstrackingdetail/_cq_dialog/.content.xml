@@ -133,6 +133,14 @@
                                                 name="./detailsActionTrack"
                                                 required="{Boolean}true"/>    
 
+                                            <detailsToasterCopySerialNumbersMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Toaster Copy Serial Numbers Message"
+                                                fieldLabel="Copy Serial Numbers Message"
+                                                name="./detailsToasterCopySerialNumbersMessage"
+                                                required="{Boolean}true"/>    
+
 											<detailsLineHeader
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

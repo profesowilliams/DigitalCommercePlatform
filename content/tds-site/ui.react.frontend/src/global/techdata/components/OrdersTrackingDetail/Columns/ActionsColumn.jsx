@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const ActionsColumn = ({
   line,
@@ -9,6 +11,8 @@ const ActionsColumn = ({
   apiResponse,
   hasAIORights,
 }) => {
+  const effects = useOrderTrackingStore((st) => st.effects);
+
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
 
   const handleActionMouseOver = () => {
@@ -35,12 +39,28 @@ const ActionsColumn = ({
   invoices = line.invoices;
   let deliveryNotes = [];
   deliveryNotes = line.deliveryNotes;
-
+  const toaster = {
+    isOpen: true,
+    origin: 'fromUpdate',
+    isAutoClose: true,
+    isSuccess: true,
+    message: getDictionaryValueOrKey(
+      config?.labels?.detailsToasterCopySerialNumbersMessage
+    ),
+  };
   const handleDownloadDnote = () => {
     openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
   const handleDownloadInvoice = () => {
     openFilePdf('Invoice', id, invoices[0]?.id);
+  };
+
+  const handleCopySerialNumbers = () => {
+    const lineSerials = line?.serials || [];
+    const serialsText = lineSerials.join('\n');
+    navigator.clipboard.writeText(serialsText);
+
+    effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
 
   const menuActionsItems = [
@@ -62,10 +82,9 @@ const ActionsColumn = ({
     {
       condition: isSerialNumberAvailable,
       label: labels?.detailsActionCopySerialNumber,
-      onClick: null,
+      onClick: handleCopySerialNumbers,
     },
   ];
-
   return (
     <div
       className="cmp-order-tracking-grid-details__action-column actions-container"

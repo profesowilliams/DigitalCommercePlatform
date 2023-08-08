@@ -6152,7 +6152,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           supplierQuoteRef: null,
           configID: null,
           locationID: null,
-          serials: ["123"],
+          serials: ["123", "134"],
           paKs: null,
           images: null,
           logos: null,

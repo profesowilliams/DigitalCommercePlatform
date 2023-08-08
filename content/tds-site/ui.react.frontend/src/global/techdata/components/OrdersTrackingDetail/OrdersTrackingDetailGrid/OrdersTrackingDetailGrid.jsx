@@ -7,6 +7,9 @@ import ActionsColumn from '../Columns/ActionsColumn';
 import QuantityColumn from '../Columns/QuantityColumn';
 import LineStatusColumn from '../Columns/LineStatusColumn';
 import ShipDateColumn from '../Columns/ShipDateColumn';
+import Toaster from '../../Widgets/Toaster';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   isExtraReloadDisabled,
@@ -128,6 +131,11 @@ function OrdersTrackingDetailGrid({
     []
   );
 
+  const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
+  function onCloseToaster() {
+    closeAndCleanToaster();
+  }
+
   useEffect(() => {
     window.getSessionInfo &&
       window.getSessionInfo().then((data) => {
@@ -143,6 +151,16 @@ function OrdersTrackingDetailGrid({
         data={gridData}
         //getDefaultCopyValue={getDefaultCopyValue}
         contextMenuItems={() => {}}
+      />
+      <Toaster
+        classname="toaster-modal-otg"
+        onClose={onCloseToaster}
+        closeEnabled
+        store={useOrderTrackingStore}
+        message={{
+          successSubmission: 'successSubmission',
+          failedSubmission: 'failedSubmission',
+        }}
       />
     </section>
   );

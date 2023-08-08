@@ -43,12 +43,13 @@ function Grid(props) {
     onCellMouseOut,
     getDefaultCopyValue,
     suppressPaginationPanel = false,
+    suppressRowTransform = true,
     getRowId,
     defaultSearchDateRange = setDefaultSearchDateRange(30),
     onDataLoad,
   } = Object.assign({}, props);
   let isLicenseSet = false;
-  const componentVersion = "1.3.0";
+  const componentVersion = '1.3.0';
   const gridData = data;
   const [agGrid, setAgGrid] = useState(null);
   const noRowsErrorMessage = useRef(null);
@@ -58,11 +59,11 @@ function Grid(props) {
     total: null,
   });
   const popupParent = useMemo(() => document.querySelector('body'), []);
-  const {isUserLoggedIn: isLoggedIn} = useAuth();
+  const { isUserLoggedIn: isLoggedIn } = useAuth();
   const pagination =
     config?.paginationStyle &&
-    config?.paginationStyle !== "none" &&
-    config?.paginationStyle !== "scroll";
+    config?.paginationStyle !== 'none' &&
+    config?.paginationStyle !== 'scroll';
   const serverSide = config?.serverSide ?? true;
   const gridNodeRef = useRef(null);
   const gridId = useRef(null);
@@ -70,15 +71,15 @@ function Grid(props) {
   const DEFAULT_ROW_HEIGHT = 25;
 
   const updatingFinished =
-    typeof onModelUpdateFinished === "function"
+    typeof onModelUpdateFinished === 'function'
       ? debouncer(200, () => onModelUpdateFinished())
       : null;
 
   const getAgGridDomLayout = () => {
     if (serverSide) {
-      return pagination ? "autoHeight" : "normal";
+      return pagination ? 'autoHeight' : 'normal';
     }
-    return "autoHeight";
+    return 'autoHeight';
   };
 
   const CustomNoRowsOverlay = (props) => {
@@ -93,29 +94,39 @@ function Grid(props) {
           title: config.searchResultsError?.noDataTitle,
           description: config.searchResultsError?.noDataDescription,
         };
-    
-    return <>
-    {config.searchResultsError ? (
-        <div className='cmp-renewal-search-error'>
-          <div><img className='cmp-renewal-search-error__image' src={configInfo.src} /></div>
-          <div className='cmp-renewal-search-error__title'>{configInfo.title}</div>
-          <div className='cmp-renewal-search-error__description'>{configInfo.description}</div>
-        </div>
-      ) :
-      (
-        <div className=" customErrorNoRows">
-          {props.noRowsMessageFunc(props)}
-          <i className="far info-circle errorIcon"></i>
-        </div>
-      )
-    }</>
+
+    return (
+      <>
+        {config.searchResultsError ? (
+          <div className="cmp-renewal-search-error">
+            <div>
+              <img
+                className="cmp-renewal-search-error__image"
+                src={configInfo.src}
+              />
+            </div>
+            <div className="cmp-renewal-search-error__title">
+              {configInfo.title}
+            </div>
+            <div className="cmp-renewal-search-error__description">
+              {configInfo.description}
+            </div>
+          </div>
+        ) : (
+          <div className=" customErrorNoRows">
+            {props.noRowsMessageFunc(props)}
+            <i className="far info-circle errorIcon"></i>
+          </div>
+        )}
+      </>
+    );
   };
 
   const noRowMsg = {
     noRowsMessageFunc: (props) => {
-      return noRowsErrorMessage.current
-    }
-  }
+      return noRowsErrorMessage.current;
+    },
+  };
 
   const CustomLoadingCellRenderer = (props) => {
     return (
@@ -137,21 +148,28 @@ function Grid(props) {
 
   const getDefaultMenuItems = (params) => {
     const extendedItems =
-      typeof extendedContextMenuItems === "function" ? extendedContextMenuItems(params) : [];
+      typeof extendedContextMenuItems === 'function'
+        ? extendedContextMenuItems(params)
+        : [];
     return [
       {
         name: config?.menuCopy,
-        shortcut: "Ctrl+C",
+        shortcut: 'Ctrl+C',
         action: () => {
           switch (true) {
             case !params.value && typeof getDefaultCopyValue === 'function':
-              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
+              navigator.clipboard.writeText(
+                stringifyValue(getDefaultCopyValue(params))
+              );
               break;
             case isObject(params.value):
               navigator.clipboard.writeText(stringifyValue(params.value?.name));
               break;
-            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
-              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
+            case params?.column?.colDef?.field === 'renewalGridOptions' &&
+              params.value.split(/:(.*)/s).length === 3:
+              navigator.clipboard.writeText(
+                stringifyValue(params.value.split(/:(.*)/s)[1].trim())
+              );
               break;
             default:
               navigator.clipboard.writeText(stringifyValue(params.value));
@@ -165,13 +183,13 @@ function Grid(props) {
         action: function () {
           navigator.clipboard.writeText(
             `${params.column.colDef.headerName}\n${
-              stringifyValue(params.value) || ""
+              stringifyValue(params.value) || ''
             }`
           );
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
       },
-      "separator",
+      'separator',
       {
         name: config?.menuExport,
         subMenu: [
@@ -199,11 +217,9 @@ function Grid(props) {
   const getContextMenuItems = (params) => {
     if (contextMenuItems) {
       return contextMenuItems(params);
-    }
-    else if (noContextMenuItemsWhenColumnNull && !params.column) {
+    } else if (noContextMenuItemsWhenColumnNull && !params.column) {
       return undefined;
-    }
-    else {
+    } else {
       return getDefaultMenuItems(params);
     }
   };
@@ -216,7 +232,7 @@ function Grid(props) {
     <AgGridReact
       masterDetail={true}
       isRowMaster={function (dataItem) {
-        if (typeof handlerIsRowMaster === "function") {
+        if (typeof handlerIsRowMaster === 'function') {
           return handlerIsRowMaster(dataItem);
         } else {
           return true;
@@ -224,25 +240,25 @@ function Grid(props) {
       }}
       key={Math.floor(1000 * Math.random()).toString()}
       frameworkComponents={renderers}
-      noRowsOverlayComponent={"CustomNoRowsOverlay"}
+      noRowsOverlayComponent={'CustomNoRowsOverlay'}
       noRowsOverlayComponentParams={noRowMsg}
-      loadingCellRenderer={"CustomLoadingCellRenderer"}
+      loadingCellRenderer={'CustomLoadingCellRenderer'}
       loadingCellRendererParams={loadingCellRendererParams}
-      loadingOverlayComponent={"CustomLoadingCellRenderer"}
+      loadingOverlayComponent={'CustomLoadingCellRenderer'}
       loadingOverlayComponentParams={loadingCellRendererParams}
       pagination={pagination}
       paginationPageSize={config.itemsPerPage}
       cacheBlockSize={config.itemsPerPage}
       maxBlocksInCache={config.itemsPerPage}
-      rowModelType={serverSide ? "serverSide" : "clientSide"}
+      rowModelType={serverSide ? 'serverSide' : 'clientSide'}
       rowData={gridData}
       onGridReady={onGridReady}
       serverSideDatasource={serverSide && createDataSource()}
-      serverSideStoreType={serverSide ? "partial" : "full"}
+      serverSideStoreType={serverSide ? 'partial' : 'full'}
       rowHeight={DEFAULT_ROW_HEIGHT}
       onViewportChanged={onViewportChanged}
       blockLoadDebounceMillis={100}
-      detailCellRenderer={"$$detailRenderer"}
+      detailCellRenderer={'$$detailRenderer'}
       detailRowAutoHeight={true}
       animateRows={false}
       domLayout={getAgGridDomLayout()}
@@ -253,13 +269,14 @@ function Grid(props) {
       onCellMouseOver={onCellMouseOver}
       onCellMouseOut={onCellMouseOut}
       onSelectionChanged={onSelectionChanged}
-      rowSelection={"multiple"}
+      rowSelection={'multiple'}
       getRowHeight={getRowHeight}
       getRowClass={getRowClass}
       getRowNodeId={getRowIdCallback}
       suppressRowClickSelection={true}
       suppressPropertyNamesCheck={true}
       suppressPaginationPanel={suppressPaginationPanel}
+      suppressRowTransform={suppressRowTransform}
       onCellValueChanged={onModelUpdated}
       onModelUpdated={onModelUpdated}
       onSortChanged={onSortChanged}
@@ -274,7 +291,7 @@ function Grid(props) {
             {...column}
             cellRenderer={
               column.expandable
-                ? "agGroupCellRenderer"
+                ? 'agGroupCellRenderer'
                 : renderers[column.field] && column.field
             }
             suppressMenu={true}
