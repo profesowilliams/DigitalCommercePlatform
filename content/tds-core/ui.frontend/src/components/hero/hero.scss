@@ -340,12 +340,20 @@
   }
 
   &__bottom-section {
-    position: absolute;
+    position: sticky;
     bottom: 0;
-    right: 0;
-    display: flex;
-    min-width: 616px;
-    justify-content: flex-end;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: right;
+
+    &.reached-bottom {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      min-width: 616px;
+      justify-content: flex-end;
+    }
 
     @include mobile {
       position: unset;
