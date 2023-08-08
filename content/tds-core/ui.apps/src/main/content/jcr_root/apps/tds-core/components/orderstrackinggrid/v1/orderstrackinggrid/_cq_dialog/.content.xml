@@ -648,46 +648,41 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Report Pill Label"
                                                 name="./reportPillLabel" />
-                                            <openOrdersLabel
+                                            <reportOpenOrdersLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Report Open Orders Label"
-                                                name="./openOrdersLabel" />
-                                            <newBacklogLabel
+                                                name="./reportOpenOrdersLabel" />
+                                            <reportNewBacklogLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Report New Backlog Label"
-                                                name="./newBacklogLabel" />
-                                            <eolReportLabel
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Report End of Life Orders Label"
-                                                name="./eolReportLabel" />
-                                            <todaysShipmentsDeliveriesLabel
+                                                name="./reportNewBacklogLabel" />
+                                            <reportTodaysShipmentsDeliveriesLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Report Todays Shipments Deliveries Label"
-                                                name="./todaysShipmentsDeliveriesLabel" />
-                                            <last7DaysOrdersLabel
+                                                name="./reportTodaysShipmentsDeliveriesLabel" />
+                                            <reportLast7DaysOrdersLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Last 7 Days Orders Label"
-                                                name="./last7DaysOrdersLabel" />
-                                            <last30DaysOrdersLabel
+                                                name="./reportLast7DaysOrdersLabel" />
+                                            <reportLast30DaysOrdersLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Last 30 Days Orders Label"
-                                                name="./last30DaysOrdersLabel" />
-                                            <last7DaysShipmentsLabel
+                                                name="./reportLast30DaysOrdersLabel" />
+                                            <reportLast7DaysShipmentsLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Last 7 Days Shipments Label"
-                                                name="./last7DaysShipmentsLabel" />
-                                            <last30DaysShipmentsLabel
+                                                name="./reportLast7DaysShipmentsLabel" />
+                                            <reportLast30DaysShipmentsLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Last 30 Days Shipments Label"
-                                                name="./last30DaysShipmentsLabel" />
+                                                name="./reportLast30DaysShipmentsLabel" />
                                         </items>
                                     </column>
                                 </items>
