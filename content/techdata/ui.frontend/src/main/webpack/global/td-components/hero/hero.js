@@ -16,20 +16,46 @@ wrapperDivs.forEach((wrapperDiv) => {
   });
 });
 
+/**
+ * Class representing a listener for scroll events.
+ */
 class ScrollListener {
+  /**
+   * Creates a ScrollListener.
+   * It listens to scroll events and toggles a class when specific conditions are met.
+   */
   constructor() {
+    /** @private {number} - Tracks the last scroll position. */
     this.lastScrollTop = 0;
+
+    /** @private {Element|null} - Element representing the bottom section of a teaser. */
     this.element = document.querySelector('.cmp-teaser__bottom-section');
+
+    /** @private {Element|null} - Overlay element on the page. */
     this.overlay = document.querySelector('.cmp-image__overlay');
+
+    if (!this.element || !this.overlay) {
+      return;
+    }
+
     this.addScrollListener();
   }
 
+  /**
+   * Adds a scroll listener to the window.
+   * @private
+   */
   addScrollListener() {
     window.addEventListener('scroll', () => {
       this.onScroll();
     }, false);
   }
 
+  /**
+   * Handles the onScroll event. Checks the positions of the elements and
+   * toggles a class based on certain conditions.
+   * @private
+   */
   onScroll() {
     const elementRect = this.element.getBoundingClientRect();
     const overlayRect = this.overlay.getBoundingClientRect();
@@ -49,7 +75,13 @@ class ScrollListener {
   }
 }
 
+// Instantiate the class once the DOM is fully loaded and viewport width is greater than
+// or equal to 992px
 document.addEventListener('DOMContentLoaded', () => {
-  // eslint-disable-next-line no-unused-vars
-  const scrollListener = new ScrollListener();
+  /** Checks the viewport width before instantiating the ScrollListener class. */
+  if (window.innerWidth >= 992) {
+    /** @type {ScrollListener} - The instance of the ScrollListener class. */
+    // eslint-disable-next-line no-unused-vars
+    const scrollListener = new ScrollListener();
+  }
 });
