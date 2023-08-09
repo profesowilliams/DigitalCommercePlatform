@@ -55,7 +55,7 @@
     }
     return elementReturn
   }
-    
+
 
   function isCategoryKeyword(element, keyword = 'siteSection') {
     if (element.includes(keyword)) {
@@ -97,7 +97,7 @@
       return pageName;
     }
     siteSectionName.forEach((element, index) => {
-      if (index > (countryIndex)) { 
+      if (index > (countryIndex)) {
         pageName += '>' + element;
       }
     })
@@ -106,9 +106,9 @@
   }
 
   /**
-   * 
-   * @param {string} language 
-   * @param {string} url 
+   *
+   * @param {string} language
+   * @param {string} url
    */
   function setFlagHomeLanguagePage(language, url) {
     const pages = url.split('.html')[0].split('/');
@@ -117,8 +117,8 @@
   }
 
   /**
-   * 
-   * @param {string} errorCode 
+   *
+   * @param {string} errorCode
    */
   function setErrorFlag(errorCode) {
     let flagError = false;
@@ -185,10 +185,10 @@
           "userID": userIsLoggedIn && userData?.id ? userData.id : '',
           "customerID": accountDetail.customerNumber,
           "currencyCode": pageCurrency,
-          "internalTraffic": userIsLoggedIn ? userData?.isInternal?.toString() : null,
+          "internalTraffic": userIsLoggedIn ? userData?.isHouseAccount?.toString() : null,
           "language": language,
           "loginStatus": userIsLoggedIn ? 'Logged in' : 'Logged out',
-          "url": url, 
+          "url": url,
         };
         window.dataLayer.push(dataLayerObject);
       } else {
@@ -275,7 +275,7 @@
     const componentType = getComponentType(typeString);
     const parentObject = parentId ?
       (window.adobeDataLayer.getState(`component.${parentId}`) ??
-      window.adobeDataLayer.getState(`page.${parentId}`)) ?? 
+      window.adobeDataLayer.getState(`page.${parentId}`)) ??
       new Object() :
       new Object();
     let dlObject = {};
@@ -348,7 +348,7 @@
             }
            };
            break;
-      case 'dropdownbutton':  
+      case 'dropdownbutton':
         dlObject = {
           "event": "click",
           "clickInfo": {
@@ -584,11 +584,7 @@
     });
   }
 
-  if (document.readyState !== 'loading') {
+  window.onload = () => {
     initDataLayer();
-  } else {
-    document.addEventListener('DOMContentLoaded', () => {
-      initDataLayer();
-    });
-  }
+  };
 })();
