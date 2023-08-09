@@ -584,7 +584,7 @@
     });
   }
 
-  window.onload = () => {
-    initDataLayer();
-  };
+  window.addEventListener('load', () => {
+      initDataLayer();
+  });
 })();
