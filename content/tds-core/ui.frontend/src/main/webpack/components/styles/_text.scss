@@ -78,7 +78,7 @@
 
   ul {
     padding-left: 15px;
-    
+
     li {
       line-height: rem(20px);
       padding-bottom: rem(5.12px);
@@ -170,10 +170,6 @@
 
 .dp-text--white * {
   color: #fff;
-
-  @include mobile {
-    width: auto !important;
-  }
 }
 
 .dp-text--light-blue * {
