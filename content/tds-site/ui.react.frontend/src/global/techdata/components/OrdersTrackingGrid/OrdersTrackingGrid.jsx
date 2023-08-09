@@ -84,6 +84,9 @@ function OrdersTrackingGrid(props) {
   const hasOrderTrackingRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderTracking'
   );
+  const hasOrderModificationRights = userData?.roleList?.some(
+    (role) => role.entitlement === 'OrderModification'
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
@@ -95,6 +98,7 @@ function OrdersTrackingGrid(props) {
 
   const {
     searchOptionsList = [],
+    icons,
     reportPillLabel,
     filterListValues,
     dateOptionsList,
@@ -319,7 +323,15 @@ function OrdersTrackingGrid(props) {
                 onAfterGridInit={_onAfterGridInit}
                 onDataLoad={onDataLoad}
                 DetailRenderers={(props) => (
-                  <OrderDetailsRenderers {...props} config={gridConfig} />
+                  <OrderDetailsRenderers
+                    {...props}
+                    config={gridConfig}
+                    openFilePdf={(flyoutType, orderId, selectedId) =>
+                      openFilePdf(flyoutType, orderId, selectedId)
+                    }
+                    hasAIORights={hasAIORights}
+                    hasOrderModificationRights={hasOrderModificationRights}
+                  />
                 )}
                 onCellMouseOver={(e) => cellMouseOver(e, setToolTipData)}
                 onCellMouseOut={() => cellMouseOut(setToolTipData)}

@@ -15,38 +15,48 @@ import {
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, ref) {
+  const {
+    openOrdersLabel,
+    newBacklogLabel,
+    eolReportLabel,
+    todaysShipmentsDeliveriesLabel,
+    last7DaysOrdersLabel,
+    last30DaysOrdersLabel,
+    last7DaysShipmentsLabel,
+    last30DaysShipmentsLabel,
+  } = gridConfig?.reportLabels;
   const reportOptions = [
     {
       key: 'OpenOrders',
-      label: getDictionaryValueOrKey(gridConfig?.reportOpenOrdersLabel),
+      label: getDictionaryValueOrKey(openOrdersLabel),
     },
     {
       key: 'NewBacklog',
-      label: getDictionaryValueOrKey(gridConfig?.reportNewBacklogLabel),
+      label: getDictionaryValueOrKey(newBacklogLabel),
+    },
+    {
+      key: 'EOLReport',
+      label: getDictionaryValueOrKey(eolReportLabel),
     },
     {
       key: 'TodaysShipmentsDeliveries',
-      label: getDictionaryValueOrKey(
-        gridConfig?.reportTodaysShipmentsDeliveriesLabel
-      ),
+      label: getDictionaryValueOrKey(todaysShipmentsDeliveriesLabel),
     },
     {
       key: 'Last7DaysOrders',
-      label: getDictionaryValueOrKey(gridConfig?.reportLast7DaysOrdersLabel),
+      label: getDictionaryValueOrKey(last7DaysOrdersLabel),
     },
     {
       key: 'Last30DaysOrders',
-      label: getDictionaryValueOrKey(gridConfig?.reportLast30DaysOrdersLabel),
+      label: getDictionaryValueOrKey(last30DaysOrdersLabel),
     },
     {
       key: 'Last7DaysShipments',
-      label: getDictionaryValueOrKey(gridConfig?.reportLast7DaysShipmentsLabel),
+      label: getDictionaryValueOrKey(last7DaysShipmentsLabel),
     },
     {
       key: 'Last30DaysShipments',
-      label: getDictionaryValueOrKey(
-        gridConfig?.reportLast30DaysShipmentsLabel
-      ),
+      label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
     },
   ];
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);

@@ -15,8 +15,16 @@
     detailUrl:
       "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
     menuCopy: "Copy",
-    reportOpenOrdersLabel: "Open Orders",
-    reportNewBacklogLabel: "New Backlog",
+    reportLabels: {
+      openOrdersLabel: "Open Orders",
+      newBacklogLabel: "New Backlog",
+      eolReportLabel: "End of Life Orders",
+      todaysShipmentsDeliveriesLabel: "Todays Shipments Deliveries",
+      last7DaysOrdersLabel: "Last 7 Days Orders",
+      last30DaysOrdersLabel: "Last 30 Days Orders",
+      last7DaysShipmentsLabel: "Last 7 Days Shipments",
+      last30DaysShipmentsLabel: "Last 30 Days Shipments",
+    },
     reportPillLabel: "Report",
     menuCopyWithHeaders: "Copy with headers",
     menuExport: "Export",
@@ -91,7 +99,26 @@
     orderLineDetails: {
       shippedLabel: "Shipped",
       notShippedLabel: "Not Shipped",
-      itemsLabel: "items"
+      itemsLabel: "items",
+      track: "Track",
+      modifyEligibleItems: "Modify eligible items"
+    },
+    orderLineDetailsShippedColumnLabels: {
+      dropdownArrow: '',
+      shipDate: 'SHIP DATE',
+      dnote: 'D-NOTE',
+      invoice: 'INVOICE',
+      value: 'VALUE',
+      qty: 'QTY',
+      track: '',
+    },
+    orderLineDetailsNotShippedColumnLabels: {
+      lineNumber: 'LINE',
+      item: 'ITEM',
+      pnsku: 'PN/SKU',
+      nqty: 'QTY',
+      deliveryEstimate: 'DELIVERY ESTIMATE',
+      action:''
     },
     searchOptionsList: [],
     searchEnterLabel: "Enter",
