@@ -90,7 +90,7 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
         {hasOrderModificationRights && (
           <button className="order-line-details__content__title-button">
             {getDictionaryValueOrKey(
-              config?.orderLineDetails?.modifyEligibleItems
+              config?.orderLineDetails?.modifyEligibleItemsLabel
             )}
           </button>
         )}

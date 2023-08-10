@@ -9,6 +9,9 @@ use(["../common/utils.js"], function (utils) {
   let icons = {};
   let noResultsValues = {};
   let dNotesFlyout = {};
+  let reportLabels = {};
+  let orderLineDetailsShippedColumnLabels = {};
+  let orderLineDetailsNotShippedColumnLabels = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
   let orderLineDetails = {};
@@ -106,6 +109,8 @@ use(["../common/utils.js"], function (utils) {
     { key: "shippedLabel", name: "shippedLabel" },
     { key: "notShippedLabel", name: "notShippedLabel" },
     { key: "itemsLabel", name: "itemsLabel" },
+    { key: "trackLabel", name: "trackLabel" },
+    { key: "modifyEligibleItemsLabel", name: "modifyEligibleItemsLabel" },
   ];
 
   properties &&
@@ -115,6 +120,43 @@ use(["../common/utils.js"], function (utils) {
 
   if (orderLineDetails != null) {
     jsonObject["orderLineDetails"] = orderLineDetails;
+  }
+
+  // Shipped Grid
+  const orderLineDetailsShippedLabels = [
+    { key: "dropdownArrow", name: "dropdownArrow" },
+    { key: "shipDate", name: "shipDate" },
+    { key: "dnote", name: "dnote" },
+    { key: "invoice", name: "invoice" },
+    { key: "value", name: "value" },
+    { key: "qty", name: "qty" },
+    { key: "track", name: "track" },
+  ];
+  properties &&
+    orderLineDetailsShippedLabels.map((label) => {
+      orderLineDetailsShippedColumnLabels[label.key] = properties[label.name];
+    });
+  if (orderLineDetailsShippedColumnLabels != null) {
+    jsonObject["orderLineDetailsShippedColumnLabels"] =
+      orderLineDetailsShippedColumnLabels;
+  }
+  // Not Shipped Grid
+  const orderLineDetailsNotShippedLabels = [
+    { key: "lineNumber", name: "lineNumber" },
+    { key: "item", name: "item" },
+    { key: "pnsku", name: "pnsku" },
+    { key: "nqty", name: "nqty" },
+    { key: "deliveryEstimate", name: "deliveryEstimate" },
+    { key: "action", name: "action" },
+  ];
+  properties &&
+    orderLineDetailsNotShippedLabels.map((label) => {
+      orderLineDetailsNotShippedColumnLabels[label.key] =
+        properties[label.name];
+    });
+  if (orderLineDetailsNotShippedColumnLabels != null) {
+    jsonObject["orderLineDetailsNotShippedColumnLabels"] =
+      orderLineDetailsNotShippedColumnLabels;
   }
 
   //Invoices flyout options
@@ -187,35 +229,39 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
 
+  // Reports
+  const reportLabelsList = [
+    { key: "openOrdersLabel", name: "openOrdersLabel" },
+    { key: "newBacklogLabel", name: "newBacklogLabel" },
+    { key: "eolReportLabel", name: "eolReportLabel" },
+    {
+      key: "todaysShipmentsDeliveriesLabel",
+      name: "todaysShipmentsDeliveriesLabel",
+    },
+    { key: "last7DaysOrdersLabel", name: "last7DaysOrdersLabel" },
+    { key: "last30DaysOrdersLabel", name: "last30DaysOrdersLabel" },
+    {
+      key: "last7DaysShipmentsLabel",
+      name: "last7DaysShipmentsLabel",
+    },
+    {
+      key: "last30DaysShipmentsLabel",
+      name: "last30DaysShipmentsLabel",
+    },
+  ];
+  properties &&
+    reportLabelsList.map((label) => {
+      reportLabels[label.key] = properties[label.name];
+    });
+
+  if (reportLabels != null) {
+    jsonObject["reportLabels"] = reportLabels;
+  }
+
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
   }
-  if (properties && properties["reportOpenOrdersLabel"]) {
-    jsonObject["reportOpenOrdersLabel"] = properties["reportOpenOrdersLabel"];
-  }
-  if (properties && properties["reportNewBacklogLabel"]) {
-    jsonObject["reportNewBacklogLabel"] = properties["reportNewBacklogLabel"];
-  }
-  if (properties && properties["reportTodaysShipmentsDeliveriesLabel"]) {
-    jsonObject["reportTodaysShipmentsDeliveriesLabel"] =
-      properties["reportTodaysShipmentsDeliveriesLabel"];
-  }
-  if (properties && properties["reportLast7DaysOrdersLabel"]) {
-    jsonObject["reportLast7DaysOrdersLabel"] =
-      properties["reportLast7DaysOrdersLabel"];
-  }
-  if (properties && properties["reportLast30DaysOrdersLabel"]) {
-    jsonObject["reportLast30DaysOrdersLabel"] =
-      properties["reportLast30DaysOrdersLabel"];
-  }
-  if (properties && properties["reportLast7DaysShipmentsLabel"]) {
-    jsonObject["reportLast7DaysShipmentsLabel"] =
-      properties["reportLast7DaysShipmentsLabel"];
-  }
-  if (properties && properties["reportLast30DaysShipmentsLabel"]) {
-    jsonObject["reportLast30DaysShipmentsLabel"] =
-      properties["reportLast30DaysShipmentsLabel"];
-  }
+  
   // No Access Screen
   if (properties && properties["noAccessTitle"]) {
     noAccessProps.noAccessTitle = properties["noAccessTitle"];
