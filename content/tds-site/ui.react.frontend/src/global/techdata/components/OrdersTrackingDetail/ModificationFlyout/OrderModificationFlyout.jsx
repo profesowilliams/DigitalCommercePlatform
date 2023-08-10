@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { usPost } from '../../../../../utils/api';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
@@ -13,7 +14,6 @@ const areItemsListIdentical = (items, itemsCopy) => {
       return itemsCopy[index].quantity !== item.quantity;
     } else return false;
   });
-
   return Boolean(!difference);
 };
 
@@ -22,9 +22,14 @@ function OrderModificationFlyout({
   isTDSynnex = true,
   items = [],
   labels = {},
+  config = {},
+  apiResponse,
 }) {
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
+  const [quantityDifference, setQuantityDifference] = useState();
+  const [productID, setProductID] = useState('');
+
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const effects = store((st) => st.effects);
@@ -38,12 +43,35 @@ function OrderModificationFlyout({
 
   const itemsCopy = [...items];
 
+  const requestURL = config?.orderModifyEndpoint;
+  const payload = {
+    OrderID: apiResponse?.orderNumber,
+    ReduceLine: [],
+    AddLine: [
+      {
+        ProductID: productID,
+        Qty: `${quantityDifference}`,
+        UAN: '',
+      },
+    ],
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const result = await usPost(requestURL, payload);
+      if (!result.data?.error?.isError) console.log('Updated');
+      return result;
+    } catch (error) {
+      console.error('Error updating order:', error);
+    }
+  };
+
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
       <button
         disabled={!orderChanged}
         className="primary"
-        onClick={closeFlyout}
+        onClick={handleUpdate}
       >
         {getDictionaryValueOrKey(labels.update)}
       </button>
@@ -93,6 +121,8 @@ function OrderModificationFlyout({
               item={item}
               onChange={handleAmountChange}
               labels={labels}
+              setQuantityDifference={setQuantityDifference}
+              setProductID={setProductID}
             />
           ))}
         </ul>

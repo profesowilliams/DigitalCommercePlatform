@@ -3,14 +3,24 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 
-const LineItem = ({ item, index, onChange, labels }) => {
+const LineItem = ({
+  item,
+  index,
+  onChange,
+  labels,
+  setQuantityDifference,
+  setProductID,
+}) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.quantity);
 
+  const calculatedValue = currentValue - item?.quantity;
   const handleAmountChange = (newValue) => {
     setQuantityIncreased(Boolean(newValue > item.quantity));
     setCurrentValue(newValue);
     onChange(index, newValue);
+    setQuantityDifference(calculatedValue);
+    setProductID(item?.tdNumber);
   };
 
   return (

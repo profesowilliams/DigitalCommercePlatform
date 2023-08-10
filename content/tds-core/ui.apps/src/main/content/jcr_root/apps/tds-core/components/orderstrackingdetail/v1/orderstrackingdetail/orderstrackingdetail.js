@@ -182,6 +182,10 @@ use(["../../../common/utils.js"], function (utils) {
   jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
+  
+  jsonObject["orderModifyEndpoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.orderModifyEndpoint ||
+    "";
 
   return {
     configJson: JSON.stringify(jsonObject),

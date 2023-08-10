@@ -46,7 +46,9 @@ const Flyouts = ({
       <OrderModificationFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
         items={apiResponse?.content?.items}
+        apiResponse={apiResponse?.content}
         labels={config.labels}
+        config={config}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

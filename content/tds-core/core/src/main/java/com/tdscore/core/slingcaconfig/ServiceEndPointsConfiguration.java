@@ -97,6 +97,9 @@ public @interface ServiceEndPointsConfiguration {
     
     @Property(label = "Export Lines With Serial Numbers Only Endpoint", description = "Export Lines With Serial Numbers Only Endpoint")
     String exportLinesWithSerialNumbersOnlyEndpoint();
+    
+    @Property(label = "Order Modify Endpoint", description = "Order Modify Endpoint")
+    String orderModifyEndpoint();
 
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
