@@ -195,6 +195,15 @@
 }
 
 .cmp-orders-qp__grid{
+  // Action container visible
+  .cmp-grid.ag-theme-alpine {
+    overflow: visible;
+  }
+
+  .ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
+    overflow:visible;
+  }
+
   * {
     font-family: Arial;
   }
