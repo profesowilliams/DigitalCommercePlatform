@@ -55,7 +55,6 @@ function OrderModificationFlyout({
       },
     ],
   };
-
   const handleUpdate = async () => {
     try {
       const result = await usPost(requestURL, payload);

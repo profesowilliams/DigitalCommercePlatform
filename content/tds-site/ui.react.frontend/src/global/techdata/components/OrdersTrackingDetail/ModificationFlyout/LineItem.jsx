@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
@@ -19,9 +19,11 @@ const LineItem = ({
     setQuantityIncreased(Boolean(newValue > item.quantity));
     setCurrentValue(newValue);
     onChange(index, newValue);
-    setQuantityDifference(calculatedValue);
     setProductID(item?.tdNumber);
   };
+  useEffect(() => {
+    setQuantityDifference(calculatedValue);
+  }, [currentValue]);
 
   return (
     <li key={item.id} className="cmp-flyout-list__element">
