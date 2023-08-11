@@ -35,10 +35,6 @@ function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, 
       label: getDictionaryValueOrKey(newBacklogLabel),
     },
     {
-      key: 'EOLReport',
-      label: getDictionaryValueOrKey(eolReportLabel),
-    },
-    {
       key: 'TodaysShipmentsDeliveries',
       label: getDictionaryValueOrKey(todaysShipmentsDeliveriesLabel),
     },
@@ -57,6 +53,10 @@ function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, 
     {
       key: 'Last30DaysShipments',
       label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
+    },
+    {
+      key: 'EOLReport',
+      label: getDictionaryValueOrKey(eolReportLabel),
     },
   ];
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
