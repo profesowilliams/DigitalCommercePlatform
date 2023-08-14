@@ -15,13 +15,15 @@ export default function useGet(url) {
   const [error, setError] = useState(null);
   
   const {isUserLoggedIn:isLoggedIn} = useAuth();
-  const refreshRenewalDetailApi = useStore(state => state.refreshRenewalDetailApi);
+  const refreshOrderTrackingDetailApi = useStore(
+    (state) => state.refreshOrderTrackingDetailApi
+  );
 
   useEffect(() => {
     let isMounted = true;
-     try {
+    try {
       get(url, { withCredentials: isHttpOnlyEnabled() })
-        .then(result => {
+        .then((result) => {
           if (isMounted) {
             setResponse(result.data);
             if (result.data?.error?.isError) {
@@ -29,15 +31,14 @@ export default function useGet(url) {
             }
             setIsLoading(false);
           }
-        }).catch(
-          function (error) {
-            if (isMounted && error.response) {
-              setError(error.response);
-              setResponse(null);
-              setIsLoading(false);
-            }
+        })
+        .catch(function (error) {
+          if (isMounted && error.response) {
+            setError(error.response);
+            setResponse(null);
+            setIsLoading(false);
           }
-        );
+        });
     } catch (error) {
       if (isMounted) {
         setError(error);
@@ -48,6 +49,6 @@ export default function useGet(url) {
     return () => {
       isMounted = false;
     };
-  }, [isExtraReloadDisabled(), isLoggedIn, refreshRenewalDetailApi]);
+  }, [isExtraReloadDisabled(), isLoggedIn, refreshOrderTrackingDetailApi]);
   return [response, isLoading, error];
 }

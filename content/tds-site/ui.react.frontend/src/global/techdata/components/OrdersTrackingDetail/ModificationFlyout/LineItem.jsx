@@ -25,6 +25,10 @@ const LineItem = ({
     setQuantityDifference(calculatedValue);
   }, [currentValue]);
 
+  useEffect(() => {
+    setQuantityDifference(calculatedValue);
+  }, [currentValue]);
+
   return (
     <li key={item.id} className="cmp-flyout-list__element">
       <div className="cmp-flyout-list__element__number">{item.id}</div>

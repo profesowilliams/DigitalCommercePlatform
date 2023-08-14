@@ -5,6 +5,7 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import NewItemForm from './NewItemForm';
 import LineItem from './LineItem';
+import { useStore } from '../../../../../utils/useStore';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   // This function compares only quantities rather than all items' parameters
@@ -29,7 +30,9 @@ function OrderModificationFlyout({
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [quantityDifference, setQuantityDifference] = useState();
   const [productID, setProductID] = useState('');
-
+  const changeRefreshDetailApiState = useStore(
+    (state) => state.changeRefreshDetailApiState
+  );
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const effects = store((st) => st.effects);
@@ -58,7 +61,10 @@ function OrderModificationFlyout({
   const handleUpdate = async () => {
     try {
       const result = await usPost(requestURL, payload);
-      if (!result.data?.error?.isError) console.log('Updated');
+      if (result.data && !result.data?.error?.isError) {
+        changeRefreshDetailApiState();
+        closeFlyout();
+      }
       return result;
     } catch (error) {
       console.error('Error updating order:', error);
