@@ -33,6 +33,8 @@ const OrderFilterFlyout = ({
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.customFiltersChecked
   );
+  const filterClicked = useOrderTrackingStore((state) => state.filterClicked);
+
   const dateType = useOrderTrackingStore((state) => state.dateType);
 
   const [showLess, setShowLess] = useState(true);
@@ -76,7 +78,8 @@ const OrderFilterFlyout = ({
       customizedFiltersSelectedAfter
     );
 
-  const enabled = orderFilterCounter !== 0 && isChangeDetected;
+  const enabled =
+    orderFilterCounter !== 0 && (isChangeDetected || filterClicked);
 
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.isFilterModalOpen
@@ -84,18 +87,18 @@ const OrderFilterFlyout = ({
 
   const {
     toggleFilterModal,
-    clearAllOrderFilters,
+    clearCheckedButNotAppliedOrderFilters,
     setPredefinedFiltersSelectedBefore,
-    setPredefinedFiltersSelectedAfter,
     setCustomizedFiltersSelectedBefore,
-    setCustomizedFiltersSelectedAfter,
+    setFilterClicked,
   } = useOrderTrackingStore((state) => state.effects);
-  const { filterTitle, showResultLabel } = filterLabels;
+
   const toggleShowLess = () => {
     setShowLess(!showLess);
   };
 
-  const { dateRange, orderStatus, orderType } = filterLabels;
+  const { dateRange, orderStatus, orderType, filterTitle, showResultLabel } =
+    filterLabels;
 
   const showResult = () => {
     if (orderFilterCounter !== 0) {
@@ -137,14 +140,8 @@ const OrderFilterFlyout = ({
   };
 
   const handleClearFilter = () => {
-    Object.keys(filtersRefs).map(
-      (filter) => (filtersRefs[filter].current = undefined)
-    );
-    clearAllOrderFilters();
-    setPredefinedFiltersSelectedBefore([]);
-    setPredefinedFiltersSelectedAfter([]);
-    setCustomizedFiltersSelectedBefore([]);
-    setCustomizedFiltersSelectedAfter([]);
+    setFilterClicked(false);
+    clearCheckedButNotAppliedOrderFilters();
     toggleFilterModal();
     onQueryChanged();
   };

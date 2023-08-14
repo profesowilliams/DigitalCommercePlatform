@@ -30,6 +30,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
     setOrderTypeFiltersChecked,
     setOrderStatusFiltersChecked,
     setPredefinedFiltersSelectedAfter,
+    setFilterClicked,
   } = useOrderTrackingStore((state) => state.effects);
 
   const styleCheckbox = {
@@ -59,6 +60,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
       ...orderTypeFiltersChecked,
       ...dateRangeFiltersChecked,
     ]);
+    setFilterClicked(true);
   };
 
   const isStatusFilterChecked = (id) => {
@@ -81,6 +83,7 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
       ...newList,
       ...dateRangeFiltersChecked,
     ]);
+    setFilterClicked(true);
   };
 
   const isTypeFilterChecked = (id) => {

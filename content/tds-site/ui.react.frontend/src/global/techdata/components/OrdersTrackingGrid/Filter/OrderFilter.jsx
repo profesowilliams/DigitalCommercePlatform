@@ -11,7 +11,9 @@ function OrderFilter() {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.orderFilterCounter
   );
-  const { toggleFilterModal } = useOrderTrackingStore((st) => st.effects);
+  const { toggleFilterModal, setFilterClicked } = useOrderTrackingStore(
+    (st) => st.effects
+  );
   const [isFilterHovered, setIsFilterHovered] = useState(false);
   const handleMouseOverFilter = () => {
     setIsFilterHovered(true);
@@ -25,7 +27,10 @@ function OrderFilter() {
       className="cmp-order-tracking-grid__filter"
       onMouseOver={handleMouseOverFilter}
       onMouseLeave={handleMouseLeaveFilter}
-      onClick={toggleFilterModal}
+      onClick={() => {
+        toggleFilterModal();
+        setFilterClicked(false);
+      }}
     >
       {isFilterHovered ? (
         <OptionsIconFilled fill="#262626" className="icon-hover" />

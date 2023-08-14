@@ -119,6 +119,27 @@ export const orderTrackingEffects = (set, get) => {
     setSearch90DaysBack(filterDefaultDateRange) {
       set({ filterDefaultDateRange });
     },
+    clearCheckedButNotAppliedOrderFilters() {
+      const {
+        predefinedFiltersSelectedBefore,
+        customizedFiltersSelectedBefore,
+      } = get();
+      const getFromPredefinedFilters = (group) =>
+        predefinedFiltersSelectedBefore.filter(
+          (filter) => filter.group === group
+        );
+      const typeFilters = getFromPredefinedFilters('type');
+      const statusFilters = getFromPredefinedFilters('status');
+      const dateFilters = getFromPredefinedFilters('date');
+      const customFilters = customizedFiltersSelectedBefore;
+      set({
+        orderTypeFiltersChecked: structuredClone(typeFilters),
+        orderStatusFiltersChecked: structuredClone(statusFilters),
+        dateRangeFiltersChecked: structuredClone(dateFilters),
+        customFiltersChecked: structuredClone(customFilters),
+      });
+      updateOrderFilterCounter();
+    },
     clearAllOrderFilters() {
       const { customFiltersChecked } = get();
 
@@ -152,6 +173,9 @@ export const orderTrackingEffects = (set, get) => {
         value: undefined,
       });
       updateOrderFilterCounter();
+    },
+    setFilterClicked(filterClicked) {
+      set({ filterClicked });
     },
     closeAndCleanToaster() {
       const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };

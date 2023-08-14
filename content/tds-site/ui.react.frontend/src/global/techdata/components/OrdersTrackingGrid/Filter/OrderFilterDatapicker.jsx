@@ -27,6 +27,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     setCustomState,
     setDateRangeFiltersChecked,
     setPredefinedFiltersSelectedAfter,
+    setFilterClicked,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.dateType);
   const customStartDate = useOrderTrackingStore(
@@ -122,6 +123,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
         endDateFormatted.current,
         dateType
       );
+      setFilterClicked(true);
     }
   };
 

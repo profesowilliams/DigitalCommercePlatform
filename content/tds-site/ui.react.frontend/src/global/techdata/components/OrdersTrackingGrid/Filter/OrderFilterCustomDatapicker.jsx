@@ -36,8 +36,11 @@ export default function OrderFilterCustomDatapicker({
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.customFiltersChecked
   );
-  const { setCustomFiltersChecked, setCustomizedFiltersSelectedAfter } =
-    useOrderTrackingStore((state) => state.effects);
+  const {
+    setCustomFiltersChecked,
+    setCustomizedFiltersSelectedAfter,
+    setFilterClicked,
+  } = useOrderTrackingStore((state) => state.effects);
 
   const startDateFormatted = useRef('');
   const endDateFormatted = useRef('');
@@ -96,6 +99,7 @@ export default function OrderFilterCustomDatapicker({
     setCustomEndDate(endDate?.toISOString() || undefined);
     if ((startDate, endDate)) {
       setFilterDate(startDate, endDate);
+      setFilterClicked(true);
     }
   };
 

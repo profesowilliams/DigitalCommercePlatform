@@ -68,6 +68,7 @@ const INITIAL_STATE = {
   dateRangeFiltersChecked: [],
   customFiltersChecked: [],
   orderFilterCounter: 0,
+  filterClicked: false,
   toaster: {
     isOpen: false,
     title: '',
