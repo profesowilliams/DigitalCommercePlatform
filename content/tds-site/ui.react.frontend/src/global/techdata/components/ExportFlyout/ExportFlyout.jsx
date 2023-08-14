@@ -52,7 +52,9 @@ function ExportFlyout({
   const [selected, setSelected] = useState(
     exportOptionsList ? exportOptionsList[0]?.key : []
   );
-  const [secondarySelected, setSecondarySelected] = useState(null);
+  const [secondarySelected, setSecondarySelected] = useState(
+    exportSecondaryOptionsList[1]
+  );
 
   const handleSelectChange = (event) => {
     setSelected(event.target.value);

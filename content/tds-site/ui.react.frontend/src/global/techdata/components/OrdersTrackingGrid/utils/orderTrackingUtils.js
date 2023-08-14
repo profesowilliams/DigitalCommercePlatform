@@ -22,7 +22,8 @@ export const fetchOrdersCount = async (
   url,
   defaultSearchDateRange,
   filtersRefs,
-  reportValue = null
+  reportValue = null,
+  searchCriteria
 ) => {
   const mapUrl = urlStrToMapStruc(url + '?PageSize=25');
   const { createdFrom, createdTo } = filtersRefs?.current;
@@ -30,6 +31,9 @@ export const fetchOrdersCount = async (
   const toRef = createdTo;
   if (reportValue) {
     mapUrl.set('reportName', reportValue);
+  } else if (searchCriteria.current?.field) {
+    const { field, value } = searchCriteria.current;
+    mapUrl.set(field, value);
   } else if (fromRef && toRef) {
     mapUrl.set('createdFrom', fromRef);
     mapUrl.set('createdTo', toRef);
@@ -144,11 +148,8 @@ export async function fetchData(config) {
     const { field, value } = searchCriteria.current;
     mapUrl.set(field, value);
 
-    if (customPaginationRef.current?.pageNumber !== 1 && onSearchAction) {
-      mapUrl.set('PageNumber', 1);
-    }
-  } else {
     if (onSearchAction) {
+      console.log('on search action');
       mapUrl.set('PageNumber', 1);
     }
   }
@@ -422,4 +423,5 @@ export const getPredefinedSearchOptionsList = (aemData) => {
       searchKey: 'SerialNo',
       showIfIsHouseAccount: false,
     },
-  ];};
+  ];
+};

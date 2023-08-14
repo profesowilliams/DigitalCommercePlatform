@@ -75,19 +75,13 @@ function OrdersTrackingGrid(props) {
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore
   );
+  const hasRights = (entitlement) =>
+    userData?.roleList?.some((role) => role.entitlement === entitlement);
 
-  const hasAIORights = userData?.roleList?.some(
-    (role) => role.entitlement === 'AIO'
-  );
-  const hasCanViewOrdersRights = userData?.roleList?.some(
-    (role) => role.entitlement === 'CanViewOrders'
-  );
-  const hasOrderTrackingRights = userData?.roleList?.some(
-    (role) => role.entitlement === 'OrderTracking'
-  );
-  const hasOrderModificationRights = userData?.roleList?.some(
-    (role) => role.entitlement === 'OrderModification'
-  );
+  const hasAIORights = hasRights('AIO');
+  const hasCanViewOrdersRights = hasRights('CanViewOrders');
+  const hasOrderTrackingRights = hasRights('OrderTracking');
+  const hasOrderModificationRights = hasRights('OrderModification');
   const [isLoading, setIsLoading] = useState(true);
 
   const componentProp = JSON.parse(props.componentProp);
@@ -186,7 +180,8 @@ function OrdersTrackingGrid(props) {
         : ordersCountUrl.href,
       dateRange,
       filtersRefs,
-      reportFilterValue.current?.value
+      reportFilterValue.current?.value,
+      searchCriteria
     );
     const response = reportFilterValue.current?.value
       ? await fetchReport(

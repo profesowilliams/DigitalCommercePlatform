@@ -179,7 +179,12 @@ function useOrderTrackingPaginationState({
     gotToLastPage,
     handleInputChange,
   };
-  const paginationStates = { pageNumber, pageInputRef, pageCount };
+  const paginationStates = {
+    pageNumber,
+    pageInputRef,
+    pageCount,
+    totalCounter,
+  };
 
   return {
     paginationStates,

@@ -36,7 +36,8 @@ function OrderTrackingGridPagination(
     resultsLabel,
     ofLabel,
   });
-  const { pageNumber, pageInputRef, pageCount } = paginationStates;
+  const { pageNumber, pageInputRef, pageCount, totalCounter } =
+    paginationStates;
   const {
     goToFirstPage,
     incrementHandler,
@@ -52,6 +53,10 @@ function OrderTrackingGridPagination(
 
   const isGoBackDisabled = pageNumber === 1 || disabled;
   const isGoForwardDisabled = pageNumber === pageCount || disabled;
+
+  if (totalCounter === 0) {
+    return null;
+  }
 
   return (
     <div className="cmp-renewals__pagination--bottom">

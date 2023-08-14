@@ -154,6 +154,37 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["dNotesFlyout"] = dNotesFlyout;
   }
 
+  // Export Flyout
+  let exportOptionsList = utils.getDataFromMultifield(
+    resourceResolver,
+    "exportOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.key = childResource.properties["key"];
+      return itemData;
+    }
+  );
+
+  if (exportOptionsList != null) {
+    jsonObject["exportOptionsList"] = exportOptionsList;
+  }
+
+  let exportSecondaryOptionsList = utils.getDataFromMultifield(
+    resourceResolver,
+    "exportSecondaryOptionsList",
+    function (childResource) {
+      let itemData = {};
+      itemData.label = childResource.properties["label"];
+      itemData.key = childResource.properties["key"];
+      return itemData;
+    }
+  );
+
+  if (exportSecondaryOptionsList != null) {
+    jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
+  }
+
   const exportFlyoutLabels = [
     { key: "title", name: "exportFlyoutTitle" },
     { key: "description", name: "exportFlyoutDescription" },
@@ -166,7 +197,7 @@ use(["../../../common/utils.js"], function (utils) {
     exportFlyoutLabels.map((label) => {
       exportFlyout[label.key] = properties[label.name];
     });
-  
+
   if (exportFlyout != null) {
     jsonObject["exportFlyout"] = exportFlyout;
   }
