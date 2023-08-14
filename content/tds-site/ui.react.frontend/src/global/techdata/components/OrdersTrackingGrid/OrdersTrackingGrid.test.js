@@ -24,7 +24,7 @@ const mockedProps = {
     {
       columnLabel: 'Status',
       columnKey: 'status',
-      sortable: true,
+      sortable: false,
       type: 'plainText',
     },
     {

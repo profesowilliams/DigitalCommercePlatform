@@ -76,6 +76,9 @@ export const addCurrencyToTotalColumn = (list, userData) => {
       column.columnLabel = `Total (${defaultCurrency})`;
       return column;
     }
+    if (column.columnKey === 'status') {
+      column.sortable = false;
+    }
     return column;
   });
 };
