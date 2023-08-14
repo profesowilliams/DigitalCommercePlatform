@@ -119,6 +119,14 @@ export const orderTrackingEffects = (set, get) => {
     setSearch90DaysBack(filterDefaultDateRange) {
       set({ filterDefaultDateRange });
     },
+    setReasonDropdownValues(reasonDropdownValues) {
+      set({
+        reasonDropdownValues,
+      });
+    },
+    setDoesReasonDropdownHaveEmptyItems(doesReasonDropdownHaveEmptyItems) {
+      set({ doesReasonDropdownHaveEmptyItems });
+    },
     clearCheckedButNotAppliedOrderFilters() {
       const {
         predefinedFiltersSelectedBefore,

@@ -382,6 +382,31 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Context Menu Copy link Label"
 												name="./menuCopyLink"/>
+                                            <selectReasonLabel
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy link Label"
+												name="./selectReasonLabel"/>
+                                            <rejectionPrice
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy link Label"
+												name="./rejectionPrice"/>
+                                            <rejectionAvailability
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy link Label"
+												name="./rejectionAvailability"/>
+                                            <rejectionOther
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy link Label"
+												name="./rejectionOther"/>
+                                            <rejectionRequiredInfo
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Context Menu Copy link Label"
+												name="./rejectionRequiredInfo"/>
 										</items>
 									</column>
 								</items>

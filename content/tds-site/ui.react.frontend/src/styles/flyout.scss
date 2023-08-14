@@ -301,6 +301,24 @@ $flyout-small-height-formax: 779px;
   }
 }
 
+.full-width {
+  clear: both;
+  width: 100%;
+}
+
+.decreased-reason-dropdown {
+  margin-left: 120px;
+  width: calc(100% - 150px);
+}
+
+.decreased-reason-select {
+  border-radius: 0 !important;
+
+  .MuiSelect-select {
+    border-left: 0 !important;
+    border-right: 0 !important;
+  }
+}
 .cmp-flyout-list {
   padding: 20px 30px;
   margin: 0;

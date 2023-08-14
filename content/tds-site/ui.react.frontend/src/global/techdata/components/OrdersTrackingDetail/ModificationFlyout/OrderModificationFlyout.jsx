@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usPost } from '../../../../../utils/api';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
@@ -28,6 +28,7 @@ function OrderModificationFlyout({
 }) {
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [quantityDifference, setQuantityDifference] = useState();
   const [productID, setProductID] = useState('');
   const changeRefreshDetailApiState = useStore(
@@ -35,6 +36,9 @@ function OrderModificationFlyout({
   );
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
+  const doesReasonDropdownHaveEmptyItems = store(
+    (st) => st.doesReasonDropdownHaveEmptyItems
+  );
   const effects = store((st) => st.effects);
   const closeFlyout = () => {
     setNewItemFormVisible(false);
@@ -43,6 +47,10 @@ function OrderModificationFlyout({
       value: { show: false },
     });
   };
+
+  useEffect(() => {
+    setIsDisabled(!orderChanged || doesReasonDropdownHaveEmptyItems);
+  }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
 
   const itemsCopy = [...items];
 
@@ -73,11 +81,7 @@ function OrderModificationFlyout({
 
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button
-        disabled={!orderChanged}
-        className="primary"
-        onClick={handleUpdate}
-      >
+      <button disabled={isDisabled} className="primary" onClick={handleUpdate}>
         {getDictionaryValueOrKey(labels.update)}
       </button>
       <button className="secondary" onClick={closeFlyout}>
@@ -103,7 +107,7 @@ function OrderModificationFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(labels.modifyOrder)}
-      disabledButton={true}
+      disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
       onClickButton={null}

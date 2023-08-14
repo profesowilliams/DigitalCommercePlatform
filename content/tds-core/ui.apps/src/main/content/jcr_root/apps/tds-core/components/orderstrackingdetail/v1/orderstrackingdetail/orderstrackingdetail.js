@@ -74,6 +74,11 @@ use(["../../../common/utils.js"], function (utils) {
     "quantity",
     "add",
     "additionalQuantityAdded",
+    "selectReasonLabel",
+    "rejectionPrice",
+    "rejectionAvailability",
+    "rejectionOther",
+    "rejectionRequiredInfo",
   ];
 
   properties &&

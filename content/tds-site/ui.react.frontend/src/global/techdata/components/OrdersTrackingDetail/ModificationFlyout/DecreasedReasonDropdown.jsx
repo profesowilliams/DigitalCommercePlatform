@@ -1,0 +1,46 @@
+import React, { useEffect } from 'react';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+const DecreasedReasonDropdown = ({
+  labels,
+  decreasedReason,
+  handleChangeReason,
+}) => {
+  useEffect(() => {
+    handleChangeReason('');
+  }, []);
+
+  const {
+    selectReasonLabel,
+    rejectionPrice,
+    rejectionAvailability,
+    rejectionOther,
+    rejectionRequiredInfo,
+  } = labels;
+
+  return (
+    <div className="decreased-reason-dropdown">
+      <FormControl fullWidth>
+        <InputLabel>{getDictionaryValueOrKey(selectReasonLabel)}</InputLabel>
+        <Select
+          value={decreasedReason}
+          onChange={(e) => handleChangeReason(e.target.value)}
+          className="decreased-reason-select"
+        >
+          <MenuItem value={'Z1'}>
+            {getDictionaryValueOrKey(rejectionPrice)}
+          </MenuItem>
+          <MenuItem value={'Z2'}>
+            {getDictionaryValueOrKey(rejectionAvailability)}
+          </MenuItem>
+          <MenuItem value={'Z3'}>
+            {getDictionaryValueOrKey(rejectionOther)}
+          </MenuItem>
+        </Select>
+        <h5>{rejectionRequiredInfo}</h5>
+      </FormControl>
+    </div>
+  );
+};
+export default DecreasedReasonDropdown;

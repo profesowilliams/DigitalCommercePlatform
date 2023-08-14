@@ -79,6 +79,8 @@ const INITIAL_STATE = {
   isTDSynnex: true,
   branding: '',
   analyticsCategory: 'order tracking',
+  reasonDropdownValues: [],
+  doesReasonDropdownHaveEmptyItems: false,
 };
 
 const store = (set, get) => ({
