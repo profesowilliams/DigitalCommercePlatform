@@ -84,11 +84,11 @@ import events from '../../utils/events';
   function showCountriesListPopup(event) {
     showRegionSelectDropdown(); // this is necessary since countries pop-up is inside this div.
     if (userIsLoggedIn) {
-      document.getElementsByClassName('languagenavigation')[0].style.display = 'none';
+      document.getElementsByClassName('languagenavigation')[0].style.display = 'block';
     }
     if (event && event.target.closest('.languagenavigation')) {
       const langEle = event.target.closest('.languagenavigation');
-      langEle.querySelector('#countriesListModal').style.display = 'none';
+      langEle.querySelector('#countriesListModal').style.display = 'block';
     } else {
       document.querySelector('#countriesListModal').style.display = 'none';
     }
