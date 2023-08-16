@@ -385,27 +385,27 @@
                                             <selectReasonLabel
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-												fieldLabel="Context Menu Copy link Label"
+												fieldLabel="Reason Label"
 												name="./selectReasonLabel"/>
                                             <rejectionPrice
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-												fieldLabel="Context Menu Copy link Label"
+												fieldLabel="Rejection Price Label"
 												name="./rejectionPrice"/>
                                             <rejectionAvailability
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-												fieldLabel="Context Menu Copy link Label"
+												fieldLabel="Rejection Availability Label"
 												name="./rejectionAvailability"/>
                                             <rejectionOther
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-												fieldLabel="Context Menu Copy link Label"
+												fieldLabel="Rejection Another Label"
 												name="./rejectionOther"/>
                                             <rejectionRequiredInfo
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-												fieldLabel="Context Menu Copy link Label"
+												fieldLabel="Rejection Required Info Label"
 												name="./rejectionRequiredInfo"/>
 										</items>
 									</column>
