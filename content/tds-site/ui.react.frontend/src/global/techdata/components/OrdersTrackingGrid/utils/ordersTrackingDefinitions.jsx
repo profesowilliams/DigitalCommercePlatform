@@ -55,31 +55,31 @@ export const ordersTrackingDefinition = (
   };
 
   const columnsMinWidth = {
-    select: 84,
-    updated: 94,
+    select: 35,
+    updated: 90,
     shipTo: 160,
-    status: 112,
-    created: 94,
-    id: 104,
-    reseller: 173,
-    priceFormatted: 112,
+    status: 110,
+    created: 110,
+    id: 100,
+    reseller: 160,
+    priceFormatted: 130,
     invoices: 100,
     deliveryNotes: 100,
-    actions: 100,
+    actions: 60,
   };
 
   const columnsWidth = {
-    select: '84px',
-    updated: '94px',
+    select: '35px',
+    updated: '90px',
     shipTo: '160px',
-    status: '112px',
-    created: '94px',
-    id: '104px',
-    reseller: '173px',
-    priceFormatted: '112px',
+    status: '110px',
+    created: '110px',
+    id: '100px',
+    reseller: '160px',
+    priceFormatted: '130px',
     invoices: '100px',
     deliveryNotes: '100px',
-    actions: '100px',
+    actions: '60px',
   };
 
   const hoverableList = [

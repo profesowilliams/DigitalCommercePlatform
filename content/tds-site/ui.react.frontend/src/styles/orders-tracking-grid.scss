@@ -58,18 +58,9 @@
 
             .ag-header-cell-text::before {
               position: absolute;
-              top: -5px !important;
               left: -14px;
             }
           }
-        }
-      }
-      & .ag-header-cell-sortable {
-        & .ag-header-cell-sorted-none .ag-header-cell-text::before {
-        margin-top: 5px
-        }
-        & .ag-header-cell-sorted-asc .ag-header-cell-text::before {
-        margin-top: 5px
         }
       }
       & .ag-root-wrapper-body {
