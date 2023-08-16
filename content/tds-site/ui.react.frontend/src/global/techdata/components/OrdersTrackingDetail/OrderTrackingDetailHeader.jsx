@@ -122,7 +122,7 @@ const OrderTrackingDetailHeader = ({
         <div className="navigation-container">
           <Link
             variant="back-to-orders"
-            href={config?.ordersUrl || '#'}
+            href={`${location.href.substring(0, location.href.lastIndexOf("/"))}.html`}
             underline="underline-none"
           >
             <i className="fas fa-chevron-left"></i>
