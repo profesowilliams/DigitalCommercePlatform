@@ -19,7 +19,12 @@ function DeliveryNotesColumn({
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
-      value: { data: deliveryNotes, show: true, id: id, reseller: reseller.id },
+      value: {
+        data: deliveryNotes,
+        show: true,
+        id: id,
+        reseller: reseller ? reseller : '-',
+      },
     });
     pushDataLayerGoogle(
       getDNoteViewAnalyticsGoogle(deliveryNotes.length, 'Main Grid')

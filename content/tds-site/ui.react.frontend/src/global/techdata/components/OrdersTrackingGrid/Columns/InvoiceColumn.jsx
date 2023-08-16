@@ -19,7 +19,12 @@ function InvoiceColumn({
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
-      value: { data: invoices, show: true, id: id, reseller: reseller?.id },
+      value: {
+        data: invoices,
+        show: true,
+        id: id,
+        reseller: reseller ? reseller : '-',
+      },
     });
     pushDataLayerGoogle(
       getInvoiceViewAnalyticsGoogle(invoices.length, 'Main Grid')

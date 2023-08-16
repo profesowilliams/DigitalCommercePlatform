@@ -27,14 +27,14 @@ export const ordersTrackingDefinition = (
       shipTo: <ShipToColumn data={data?.shipTo} />,
       created: data?.createdFormatted ?? data?.created,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
-      reseller: <ResellerColumn data={data?.reseller} />,
+      reseller: <ResellerColumn data={data?.customerPO} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: (
         <InvoiceColumn
           id={data?.id}
           invoices={data?.invoices}
           multiple={multiple}
-          reseller={data?.reseller}
+          reseller={data?.customerPO}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
         />
@@ -44,7 +44,7 @@ export const ordersTrackingDefinition = (
           id={data?.id}
           deliveryNotes={data?.deliveryNotes}
           multiple={multiple}
-          reseller={data?.reseller}
+          reseller={data?.customerPO}
           openFilePdf={openFilePdf}
         />
       ),
