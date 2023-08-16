@@ -9,23 +9,17 @@ import { isDataLayerEnabled } from '../../../../utils/dataLayerUtils';
 
 const Link = ({ href, variant, children, underline, callback, target, analyticsCallback }) => {
   const handleClick = (e) => {
-    let analytics = analyticsCallback !== undefined ? analyticsCallback() : undefined;
-    if (isDataLayerEnabled() && analytics) {
-      pushDataLayer(analytics);
+    if (isDataLayerEnabled() && analyticsCallback) {
+      pushDataLayer(analyticsCallback());
     };
     if (callback) {
       callback();
-    } else if (href) {
-      if (target) {
-        window.open(href);
-      } else {
-        window.location.href = href;
-      }
     }
   };
 return (
   <a
     target = { target }
+    href = { href }
     onClick = { handleClick }
     className={`tdr-link ${variant || ''} ${underline || ''}`}>
       {children}
