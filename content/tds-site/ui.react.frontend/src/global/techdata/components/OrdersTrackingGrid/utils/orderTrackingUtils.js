@@ -112,10 +112,19 @@ export async function fetchData(config) {
 
     if (sortData[0]) {
       mapUrl.set('SortDirection', sortData[0].sort);
-      mapUrl.set(
-        'SortBy',
-        sortData[0].colId === 'reseller' ? 'CustomerPO' : sortData[0].colId
-      );
+      let sortBy;
+      switch (sortData[0].colId) {
+        case 'reseller':
+          sortBy = 'CustomerPO';
+          break;
+        case 'shipTo.name':
+          sortBy = 'ShipTo';
+          break;
+        default:
+          sortBy = sortData[0].colId;
+          break;
+      }
+      mapUrl.set('SortBy', sortBy);
     }
 
     const secondLevelSort = calcSecondLevelSorting(sortData);
