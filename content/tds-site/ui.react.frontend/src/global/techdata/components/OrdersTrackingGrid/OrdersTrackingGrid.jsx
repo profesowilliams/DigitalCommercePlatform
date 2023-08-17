@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-  SEARCH_LOCAL_STORAGE_KEY,
+  ORDER_SEARCH_LOCAL_STORAGE_KEY,
   SORT_LOCAL_STORAGE_KEY,
 } from '../../../../utils/constants';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
@@ -239,7 +239,7 @@ function OrdersTrackingGrid(props) {
       response.length >= 1 &&
       doesCurrentSearchMatchResult(response[0], searchCriteria)
     ) {
-      removeLocalStorageData(SEARCH_LOCAL_STORAGE_KEY);
+      removeLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY);
       window.location.href = `${componentProp.detailUrl}.html?id=${response[0].id}`;
     }
     setIsLoading(false);
