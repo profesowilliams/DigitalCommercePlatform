@@ -1,4 +1,3 @@
-import { requestFileBlobWithoutModal } from '../../../../../utils/utils';
 import { setPaginationData } from './orderTrackingUtils';
 
 export const isLocalDevelopment = window.origin === 'http://localhost:8080';
@@ -81,26 +80,6 @@ export const addCurrencyToTotalColumn = (list, userData) => {
     }
     return column;
   });
-};
-
-export const downloadFileBlob = async (
-  flyoutType,
-  orderId,
-  selectedId,
-  componentProp
-) => {
-  try {
-    const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
-    const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
-    const downloadOrderInvoicesUrl =
-      url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
-    const name = `${flyoutType}.zip`;
-    await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
-      redirect: false,
-    });
-  } catch (error) {
-    console.error('Error', error);
-  }
 };
 
 export const getPaginationValue = (

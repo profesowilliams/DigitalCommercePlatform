@@ -245,6 +245,20 @@ function OrdersTrackingGrid(props) {
     setIsLoading(false);
   };
 
+  async function downloadFileBlob(flyoutType, orderId, selectedId) {
+    try {
+      const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
+      const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
+      const downloadOrderInvoicesUrl =
+        url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
+      const name = `${flyoutType}.zip`;
+      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
+        redirect: false,
+      });
+    } catch (error) {
+      console.error('Error', error);
+    }
+  }
   async function openFilePdf(flyoutType, orderId, selectedId) {
     const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
     const singleDownloadUrl =
