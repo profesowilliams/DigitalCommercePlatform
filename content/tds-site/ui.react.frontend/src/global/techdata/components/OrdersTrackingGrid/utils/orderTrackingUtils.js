@@ -40,9 +40,10 @@ export const fetchOrdersCount = async (
   } else {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
-
+  const filtersStatusAndType =
+    (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
   try {
-    const result = await usGet(mapStrucToUrlStr(mapUrl));
+    const result = await usGet(mapStrucToUrlStr(mapUrl) + filtersStatusAndType);
     return result;
   } catch (error) {
     console.error('error on orders count >>', error);
