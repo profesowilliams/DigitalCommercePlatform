@@ -27,7 +27,7 @@ import { triggerEvent } from "../../../../utils/events";
 import axios from 'axios';
 import Modal from '../Modal/Modal';
 import { initializeSession } from "./ecommerceAuthentication";
-import { hasDCPAccess } from "../../../../utils/user-utils";
+import { hasDCPAccess } from "../../../../utils/user/utils";
 
 const FA = require("react-fontawesome");
 

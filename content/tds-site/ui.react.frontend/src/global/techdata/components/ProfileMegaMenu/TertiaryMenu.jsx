@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasDCPAccess } from "../../../../utils/user-utils";
+import { hasDCPAccess } from "../../../../utils/user/utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
 function TertiaryMenu({tertiaryData, userData, innerRef, handleKeyDown}) {

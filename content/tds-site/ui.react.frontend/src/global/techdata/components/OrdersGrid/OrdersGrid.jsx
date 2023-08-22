@@ -7,7 +7,7 @@ import useGridFiltering from '../../hooks/useGridFiltering';
 import OrdersGridSearch from './OrdersGridSearch';
 import { isNotEmptyValue, requestFileBlob } from '../../../../utils/utils';
 import TrackOrderModal, {getTrackingModalTitle} from './TrackOrderModal/TrackOrderModal';
-import { hasAccess, ACCESS_TYPES } from '../../../../utils/user-utils';
+import { hasAccess, ACCESS_TYPES } from '../../../../utils/user/utils';
 import {
     ADOBE_DATA_LAYER_ORDERS_GRID_CLICKINFO_CATEGORY,
     ADOBE_DATA_LAYER_ORDERS_GRID_SEARCH_EVENT,

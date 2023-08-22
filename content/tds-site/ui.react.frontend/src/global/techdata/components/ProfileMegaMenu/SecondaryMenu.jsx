@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TertiaryMenu from "../ProfileMegaMenu/TertiaryMenu";
 import FontIcon from "../Widgets/FontIcon";
-import { hasDCPAccess } from "../../../../utils/user-utils";
+import { hasDCPAccess } from "../../../../utils/user/utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 
 function SecondaryMenu({ secondaryData, userData, handleBackBtnClick, addToRefs, handleKeyDown, refBackButton }) {

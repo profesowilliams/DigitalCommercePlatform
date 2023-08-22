@@ -1,4 +1,6 @@
-import { isDisableChecksForDCPAccess, disableEntitlementsList } from "./featureFlagUtils";
+import { isDisableChecksForDCPAccess, disableEntitlementsList } from "../featureFlagUtils";
+import { getSessionInfo } from "./get";
+
 export const ACCESS_TYPES = {
     DCP_ACCESS: "hasDCPAccess",
     CAN_VIEW_ORDERS: 'CanViewOrders',
@@ -10,19 +12,16 @@ export const RENEWALS_TYPE = {
     resellerName: 'resellerName'
 }
 
-let userIsLoggedIn = window.localStorage.getItem("sessionId");
-let userData = JSON.parse(localStorage.getItem("userData"));
-
-window.getSessionInfo && window.getSessionInfo().then((data) => {
-  userIsLoggedIn = data[0];
-  userData = data[1];
-});
-
-export const getUserDataInitialState = () => userData;
-
 export const isHouseAccount = (userData) => {
-    const currentUserData = userData ?? getUserDataInitialState();
-    return currentUserData?.isHouseAccount ?? false;
+    if (userData) {
+        return userData?.isHouseAccount ?? false
+    }
+    else {
+        return getSessionInfo().then((data) => {
+            let userData = data[1];
+            return userData?.isHouseAccount ?? false
+        });
+    }
 }
 
 export const hasDCPAccess = (user) => {
@@ -39,7 +38,6 @@ export const hasDCPAccess = (user) => {
                 return true;
             }
         }
-
     }
     return false;
 }

@@ -5,7 +5,7 @@ import useGet from "../../hooks/useGet";
 import Loader from "../Widgets/Loader";
 import Modal from '../Modal/Modal';
 import { getUrlParams } from "../../../../utils";
-import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
+import { ACCESS_TYPES, hasAccess } from "../../../../utils/user/utils";
 import { LOCAL_STORAGE_KEY_USER_DATA } from "../../../../utils/constants";
 import { useStore } from "../../../../utils/useStore"
 import { isAuthormodeAEM, isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../../utils/featureFlagUtils";

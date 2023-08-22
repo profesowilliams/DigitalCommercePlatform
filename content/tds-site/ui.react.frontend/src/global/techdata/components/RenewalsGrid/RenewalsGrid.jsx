@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { LOCAL_STORAGE_KEY_USER_DATA, TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
-import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
+import { ACCESS_TYPES, hasAccess } from "../../../../utils/user/utils";
 import { thousandSeparator } from "../../helpers/formatting";
 import { useMultiFilterSelected } from "../RenewalFilter/hooks/useFilteringState";
 import RenewalFilter from "../RenewalFilter/RenewalFilter";

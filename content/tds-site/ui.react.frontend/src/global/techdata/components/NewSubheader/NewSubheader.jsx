@@ -7,7 +7,7 @@ import {getQueryStringValue} from "../../../../utils/utils";
 import { ANALYTICS_TYPES, pushEvent } from "../../../../utils/dataLayerUtils";
 import { useStore } from "../../../../utils/useStore";
 import { isExtraReloadDisabled } from "../../../../utils/featureFlagUtils";
-import { hasDCPAccess } from "../../../../utils/user-utils";
+import { hasDCPAccess } from "../../../../utils/user/utils";
 
 const NewSubheader = ({ componentProp }) => {
 	const dashboardMenuIndex = 0;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { isHouseAccount } from '../../../../../utils/user-utils';
+import { isHouseAccount } from '../../../../../utils/user/utils';
 
 const createColumn = (definition, businessConfig = {}, userData) => {
   const { columnLabel, columnKey, sortable = false } = definition;

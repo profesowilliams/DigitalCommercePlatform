@@ -4,6 +4,7 @@ import { getUrlParams } from '../../../../utils';
 import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
 import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
+import { getSessionInfo } from "../../../../utils/user/get";
 import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import Flyouts from './Flyouts';
 
@@ -56,10 +57,9 @@ function OrdersTrackingDetail(props) {
   }
 
   useEffect(() => {
-    window.getSessionInfo &&
-      window.getSessionInfo().then((data) => {
-        setUserData(data[1]);
-      });
+    getSessionInfo().then((data) => {
+      setUserData(data[1]);
+    });
   }, []);
 
   return (

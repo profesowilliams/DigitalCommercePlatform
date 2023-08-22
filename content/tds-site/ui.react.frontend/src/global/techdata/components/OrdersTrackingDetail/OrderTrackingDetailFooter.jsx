@@ -5,6 +5,7 @@ import {
   isExtraReloadDisabled,
   isHttpOnlyEnabled,
 } from '../../../../utils/featureFlagUtils';
+import { getSessionInfo } from "../../../../utils/user/get";
 
 const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
   const [userData, setUserData] = useState(null);
@@ -18,10 +19,9 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
   const currency = apiResponse?.content?.paymentDetails?.currency;
   const multiplePages = apiResponse?.content?.items.length > 25;
   useEffect(() => {
-    window.getSessionInfo &&
-      window.getSessionInfo().then((data) => {
-        setUserData(data[1]);
-      });
+    getSessionInfo().then((data) => {
+      setUserData(data[1]);
+    });
   }, []);
 
   return (

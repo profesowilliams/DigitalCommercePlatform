@@ -44,6 +44,7 @@ import {
 } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
+import { getSessionInfo } from "../../../../utils/user/get";
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -282,10 +283,9 @@ function OrdersTrackingGrid(props) {
     }
     setFilterList([...predefined, ...customized]);
     setCustomFiltersChecked(customized);
-    window.getSessionInfo &&
-      window.getSessionInfo().then((data) => {
-        setUserData(data[1]);
-      });
+    getSessionInfo().then((data) => {
+      setUserData(data[1]);
+    });
     setDateType(filterLabels.orderDateLabel);
     (userData?.activeCustomer || isLocalDevelopment) &&
       pushDataLayerGoogle(

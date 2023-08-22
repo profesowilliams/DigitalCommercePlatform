@@ -9,7 +9,7 @@ import LineStatusColumn from '../Columns/LineStatusColumn';
 import ShipDateColumn from '../Columns/ShipDateColumn';
 import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
-
+import { getSessionInfo } from "../../../../../utils/user/get";
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   isExtraReloadDisabled,
@@ -137,11 +137,11 @@ function OrdersTrackingDetailGrid({
   }
 
   useEffect(() => {
-    window.getSessionInfo &&
-      window.getSessionInfo().then((data) => {
-        setUserData(data[1]);
-      });
+    getSessionInfo().then((data) => {
+      setUserData(data[1]);
+    });
   }, []);
+
   return (
     <section>
       <Grid

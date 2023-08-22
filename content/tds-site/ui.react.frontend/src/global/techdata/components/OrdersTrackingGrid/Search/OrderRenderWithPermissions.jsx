@@ -1,5 +1,5 @@
 import React from 'react';
-import { isHouseAccount } from '../../../../../utils/user-utils';
+import { isHouseAccount } from '../../../../../utils/user/utils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const OrderRenderWithPermissions = ({ option, changeHandler }) => {

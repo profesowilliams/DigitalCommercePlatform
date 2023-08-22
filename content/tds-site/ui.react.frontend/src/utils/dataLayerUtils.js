@@ -13,17 +13,17 @@
  ~ See the License for the specific language governing permissions and
  ~ limitations under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-import { getUserDataInitialState } from './user-utils';
+import { getSessionInfo } from "./user/get";
 
 let dataLayerEnabled = null;
 let dataLayer = null;
 
 let userIsLoggedIn = window.localStorage.getItem("sessionId");
-let userData = getUserDataInitialState();
+let userData = null;
 
-window.getSessionInfo && window.getSessionInfo().then((data) => {
-  userIsLoggedIn = data[0];
-  userData = data[1];
+getSessionInfo().then((data) => {
+    userIsLoggedIn = data[0];
+    userData = data[1];
 });
 
 const ADOBE_DATA_LAYER_CLICKINFO_EVENT = 'click';

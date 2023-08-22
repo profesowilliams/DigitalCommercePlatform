@@ -4,6 +4,7 @@ import { usPost } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
 import { intouchHeaderAPIUrl, intouchFooterAPIUrl, intouchUserCheckAPIUrl } from "./intouchUtils";
 import { SEARCH_LOCAL_STORAGE_KEY, FILTER_LOCAL_STORAGE_KEY } from "./constants";
+import { headerInfo } from "./user/get";
 
 export const fileExtensions = {
     xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

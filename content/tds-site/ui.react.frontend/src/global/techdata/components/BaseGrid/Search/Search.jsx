@@ -9,7 +9,7 @@ import React, {
 import { useEffect } from "react";
 import { ChevronDownIcon, SearchIcon, SearchIconFilled } from "../../../../../fluentIcons/FluentIcons";
 import { SEARCH_LOCAL_STORAGE_KEY, TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-import { isHouseAccount } from "../../../../../utils/user-utils";
+import { isHouseAccount } from "../../../../../utils/user/utils";
 import { getDictionaryValue } from "../../../../../utils/utils";
 import { If } from "../../../helpers/If";
 import useComputeBranding from "../../../hooks/useComputeBranding";

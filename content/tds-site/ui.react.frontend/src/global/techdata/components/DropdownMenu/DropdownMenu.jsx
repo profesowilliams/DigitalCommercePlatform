@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { signOut } from "../../../../utils";
 import SubHeaderMenuContainer from "../ProfileMegaMenu/SubHeaderMenuContainer";
 import SecondaryMenu from "../ProfileMegaMenu/SecondaryMenu";
-import { hasDCPAccess } from "../../../../utils/user-utils";
+import { hasDCPAccess } from "../../../../utils/user/utils";
 import * as DataLayerUtils from "../../../../utils/dataLayerUtils";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { triggerEvent } from "../../../../utils/events";

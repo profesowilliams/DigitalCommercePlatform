@@ -6,7 +6,7 @@ import SearchSuggestions from './SearchSuggestions';
 import {
   getUserDataInitialState,
   hasDCPAccess,
-} from '../../../../utils/user-utils';
+} from '../../../../utils/user/utils';
 import * as DataLayerUtils from '../../../../utils/dataLayerUtils';
 import { ADOBE_DATA_LAYER_SEARCH_BAR_EVENT } from '../../../../utils/constants';
 import { useStore } from '../../../../utils/useStore';
