@@ -90,7 +90,7 @@ import events from '../../utils/events';
       const langEle = event.target.closest('.languagenavigation');
       langEle.querySelector('#countriesListModal').style.display = 'block';
     } else {
-      document.querySelector('#countriesListModal').style.display = 'none';
+      document.querySelector('#countriesListModal').style.display = 'block';
     }
   }
 
