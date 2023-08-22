@@ -4,6 +4,26 @@ import {
 } from '../../../../../utils/constants';
 import { setLocalStorageData } from '../utils/gridUtils';
 import { getLocalValueOrDefault } from './../../BaseGrid/store/GridStore';
+import { isEqual } from 'lodash';
+
+const areCustomFiltersEqual = (beforeFilters, afterFilters) => {
+  let counterBeforeFilters = 0;
+  beforeFilters?.map((element) => {
+    element?.filterOptionList?.map((filter) => {
+      filter?.checked === true && counterBeforeFilters++;
+    });
+  });
+  let counterAfterFilters = 0;
+  afterFilters?.map((element) => {
+    element?.filterOptionList?.map((filter) => {
+      filter?.checked === true && counterAfterFilters++;
+    });
+  });
+  if (counterBeforeFilters === 0 && counterAfterFilters === 0) {
+    return true;
+  }
+  return isEqual(beforeFilters, afterFilters);
+};
 
 export const orderTrackingEffects = (set, get) => {
   function setDatePickerState(fromDate = '', toDate = '') {
@@ -147,6 +167,31 @@ export const orderTrackingEffects = (set, get) => {
         customFiltersChecked: structuredClone(customFilters),
       });
       updateOrderFilterCounter();
+    },
+    isChangeDetected() {
+      const {
+        predefinedFiltersSelectedBefore,
+        customizedFiltersSelectedBefore,
+        predefinedFiltersSelectedAfter,
+        customizedFiltersSelectedAfter,
+      } = get();
+      return (
+        !isEqual(
+          predefinedFiltersSelectedBefore,
+          predefinedFiltersSelectedAfter
+        ) ||
+        !areCustomFiltersEqual(
+          customizedFiltersSelectedBefore,
+          customizedFiltersSelectedAfter
+        )
+      );
+    },
+    closeAllFilterOptions() {
+      const { filterList } = get();
+      const updateList = filterList.map((filter) => {
+        return { ...filter, open: false };
+      });
+      setFilterList(updateList);
     },
     clearAllOrderFilters() {
       const { customFiltersChecked } = get();

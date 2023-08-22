@@ -64,6 +64,17 @@ export async function fetchReport(reportUrl, reportName, pagination) {
   }
 }
 
+const sortSwap = (swapValue) => {
+  switch (swapValue) {
+    case 'reseller':
+      return 'CustomerPO';
+    case 'shipTo.name':
+      return 'ShipTo';
+    default:
+      return swapValue;
+  }
+};
+
 export async function fetchData(config) {
   const {
     request,
@@ -71,7 +82,6 @@ export async function fetchData(config) {
     searchCriteria,
     customPaginationRef,
     previousSortChanged,
-    onFiltersClear,
     firstAPICall,
     onSearchAction,
     // optionFieldsRef,
@@ -113,18 +123,7 @@ export async function fetchData(config) {
 
     if (sortData[0]) {
       mapUrl.set('SortDirection', sortData[0].sort);
-      let sortBy;
-      switch (sortData[0].colId) {
-        case 'reseller':
-          sortBy = 'CustomerPO';
-          break;
-        case 'shipTo.name':
-          sortBy = 'ShipTo';
-          break;
-        default:
-          sortBy = sortData[0].colId;
-          break;
-      }
+      const sortBy = sortSwap(sortData[0].colId);
       mapUrl.set('SortBy', sortBy);
     }
 
@@ -164,14 +163,8 @@ export async function fetchData(config) {
     }
   }
 
-  if (onFiltersClear) {
-    mapUrl.set('PageNumber', 1);
-  }
-
   const { sortData } = hasSortChanged.current || {};
-  const sortBy = sortData?.map(
-    (c) => `${c.colId === 'reseller' ? 'CustomerPO' : c.colId}:${c.sort ?? ''}`
-  );
+  const sortBy = sortData?.map((c) => `${sortSwap(c.colId)}:${c.sort ?? ''}`);
   const params = { sortBy };
 
   const isSameFilter = isSameFilterRepeated(previousFilter.current, params);

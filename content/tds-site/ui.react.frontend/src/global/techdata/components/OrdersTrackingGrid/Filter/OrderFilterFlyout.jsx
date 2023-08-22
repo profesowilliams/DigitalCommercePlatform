@@ -8,7 +8,6 @@ import {
   getFilterAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
-import { isEqual } from 'lodash';
 
 const OrderFilterFlyout = ({
   filterLabels,
@@ -39,48 +38,6 @@ const OrderFilterFlyout = ({
 
   const [showLess, setShowLess] = useState(true);
 
-  const predefinedFiltersSelectedBefore = useOrderTrackingStore(
-    (state) => state.predefinedFiltersSelectedBefore
-  );
-  const predefinedFiltersSelectedAfter = useOrderTrackingStore(
-    (state) => state.predefinedFiltersSelectedAfter
-  );
-  const customizedFiltersSelectedBefore = useOrderTrackingStore(
-    (state) => state.customizedFiltersSelectedBefore
-  );
-  const customizedFiltersSelectedAfter = useOrderTrackingStore(
-    (state) => state.customizedFiltersSelectedAfter
-  );
-
-  const areCustomFiltersEqual = (beforeFilters, afterFilters) => {
-    let counterBeforeFilters = 0;
-    beforeFilters?.map((element) => {
-      element?.filterOptionList?.map((filter) => {
-        filter?.checked === true && counterBeforeFilters++;
-      });
-    });
-    let counterAfterFilters = 0;
-    afterFilters?.map((element) => {
-      element?.filterOptionList?.map((filter) => {
-        filter?.checked === true && counterAfterFilters++;
-      });
-    });
-    if (counterBeforeFilters === 0 && counterAfterFilters === 0) {
-      return true;
-    }
-    return isEqual(beforeFilters, afterFilters);
-  };
-
-  const isChangeDetected =
-    !isEqual(predefinedFiltersSelectedBefore, predefinedFiltersSelectedAfter) ||
-    !areCustomFiltersEqual(
-      customizedFiltersSelectedBefore,
-      customizedFiltersSelectedAfter
-    );
-
-  const enabled =
-    orderFilterCounter !== 0 && (isChangeDetected || filterClicked);
-
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.isFilterModalOpen
   );
@@ -91,6 +48,7 @@ const OrderFilterFlyout = ({
     setPredefinedFiltersSelectedBefore,
     setCustomizedFiltersSelectedBefore,
     setFilterClicked,
+    closeAllFilterOptions,
   } = useOrderTrackingStore((state) => state.effects);
 
   const toggleShowLess = () => {
@@ -130,6 +88,8 @@ const OrderFilterFlyout = ({
       );
     }
     toggleFilterModal();
+    closeAllFilterOptions();
+    setFilterClicked(false);
     setPredefinedFiltersSelectedBefore([
       ...orderStatusFiltersChecked,
       ...orderTypeFiltersChecked,
@@ -143,6 +103,7 @@ const OrderFilterFlyout = ({
     setFilterClicked(false);
     clearCheckedButNotAppliedOrderFilters();
     toggleFilterModal();
+    closeAllFilterOptions();
     onQueryChanged();
   };
 
@@ -154,7 +115,7 @@ const OrderFilterFlyout = ({
       anchor="right"
       titleLabel={getDictionaryValueOrKey(filterTitle)}
       buttonLabel={getDictionaryValueOrKey(showResultLabel)}
-      disabledButton={!enabled}
+      disabledButton={!filterClicked}
       onClickButton={showResult}
       isTDSynnex={isTDSynnex}
       subheaderReference={subheaderReference}

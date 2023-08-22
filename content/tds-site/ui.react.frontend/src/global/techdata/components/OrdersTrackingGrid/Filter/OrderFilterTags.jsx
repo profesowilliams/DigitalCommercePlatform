@@ -11,6 +11,7 @@ function OrderFilterTags({ filtersRefs }) {
     setCustomFiltersChecked,
     setPredefinedFiltersSelectedAfter,
     setCustomizedFiltersSelectedAfter,
+    setFilterClicked,
   } = useOrderTrackingStore((state) => state.effects);
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.orderStatusFiltersChecked
@@ -31,6 +32,7 @@ function OrderFilterTags({ filtersRefs }) {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.current.status = newList.join();
       setOrderStatusFiltersChecked(newList);
+      setFilterClicked(true);
       setPredefinedFiltersSelectedAfter([
         ...newList,
         ...orderTypeFiltersChecked,
@@ -40,6 +42,7 @@ function OrderFilterTags({ filtersRefs }) {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.current.type = newList.join();
       setOrderTypeFiltersChecked(newList);
+      setFilterClicked(true);
       setPredefinedFiltersSelectedAfter([
         ...orderStatusFiltersChecked,
         ...newList,
@@ -60,6 +63,7 @@ function OrderFilterTags({ filtersRefs }) {
         key: 'customEndDate',
         value: undefined,
       });
+      setFilterClicked(true);
       Object.keys(filtersRefs)
         .filter(
           (filter) =>
