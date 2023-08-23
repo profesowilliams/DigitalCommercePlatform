@@ -1,25 +1,27 @@
 import { uiServiceDomain, getUserEndpoint } from "../intouchUtils";
+import { validateCountryAndLanguage } from "./validate";
+import { getHeaderInfo } from "../headers/get";
+import { intouchUserCheckAPIUrl } from "../intouchUtils";
 
 export const headerInfo = getHeaderInfo();
-let userDataPromise = null;
+//let getUserDataPromise = null;
+//let checkIntouchUserPromise = null;
 let cachedUserData = null;
 let cacheExpiration = null;
 const CACHE_DURATION = 600; // TODO: value should be configurable
 
 export async function getSessionInfo() {
+    console.log("getSessionInfo");
+
     let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
     if (authorMode)
         return [false, null];
 
     let isLoggedIn;
     let userData;
-    let data;
+    let data = await getUserData();
 
-    try {
-        data = await getUserData();
-    } catch (error) {
-        data = null;
-    }
+    console.log("UserData = " + userData);
 
     isLoggedIn = !!data;
     userData = data;
@@ -27,51 +29,8 @@ export async function getSessionInfo() {
     return [isLoggedIn, userData];
 }
 
-export function getHeaderInfo() {
-    let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-    if (authorMode)
-        return {
-            site: "UK",
-            language: "en",
-            acceptLanguage: "en-GB",
-            salesLogin: undefined
-        };
-
-    try {
-        const pathName = window.location.pathname;
-        const urlParams = new URLSearchParams(window.location.search);
-        const lowerCaseParams = new URLSearchParams();
-        for (const [name, value] of urlParams) {
-            lowerCaseParams.append(name.toLowerCase(), value);
-        }
-
-        let countryIndex = 1; // uat/stage/prod
-        let languageIndex = 2;
-        const pathArray = pathName?.split("/");
-        if (pathArray && pathArray.length >= 5 && pathArray[1] === "content") {
-            countryIndex = 4; // dit/sit
-            languageIndex = 5;
-        }
-
-        const country = pathArray[countryIndex].toUpperCase();
-        const language = pathArray[languageIndex];
-        const salesLogin = lowerCaseParams.has('saleslogin') ? lowerCaseParams.get('saleslogin') : undefined;
-
-        return {
-            site: country,
-            language: language.toUpperCase(),
-            acceptLanguage: resolveAcceptLanguage(language, country),
-            salesLogin: salesLogin
-        };
-    } catch (error) {
-        console.log("Exception while getting country and language from url: " + error);
-    }
-}
-
 async function getUserData() {
-    let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-    if (authorMode)
-        return null;
+    console.log("getUserData");
 
     if (cachedUserData && Date.now() < cacheExpiration) {
         console.log(
@@ -81,9 +40,10 @@ async function getUserData() {
         return cachedUserData;
     }
 
-    if (userDataPromise) {
-        return await userDataPromise;
-    }
+    //if (getUserDataPromise) {
+    //    console.log("Returning user promise");
+    //    return getUserDataPromise;
+    //}
 
     try {
         let headers = {
@@ -95,8 +55,7 @@ async function getUserData() {
         };
         headerInfo.salesLogin && (headers["SalesLogin"] = headerInfo.salesLogin);
 
-        let userDataPromise = fetch(
-            uiServiceDomain() + getUserEndpoint(),
+        let getUserDataPromise = fetch(uiServiceDomain() + getUserEndpoint(),
             {
                 headers: headers,
                 body: null,
@@ -105,31 +64,59 @@ async function getUserData() {
             }
         );
 
-        const response = await userDataPromise;
+        const response = await getUserDataPromise;
 
         if (response.ok) {
             const data = await response.json();
             cachedUserData = data.content.user;
             cacheExpiration = Date.now() + CACHE_DURATION * 1000;
             console.log("Returned user data from API call");
+            validateCountryAndLanguage(cachedUserData);
             return cachedUserData;
         } else {
             console.log("HTTP-Error: " + response.status);
-            throw new Error(response.status);
+            await checkIntouchUser(true);
         }
     } catch (error) {
         console.log("Exception while getting user data: " + error);
-        throw new Error(401);
+        await checkIntouchUser(true);
     }
 
-    throw new Error(401);
+    await checkIntouchUser(true);
 }
 
-function resolveAcceptLanguage(language, country) {
-    let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-    if (authorMode)
-        return "en-GB";
+export async function checkIntouchUser(forceRedirectWhenReady) {
+    console.log("checkIntouchUser: forceRedirectWhenReady=" + forceRedirectWhenReady);
 
-    const collectiveCountry = country === "UK" ? "GB" : country;
-    return language + "-" + collectiveCountry;
-}
+    const url = intouchUserCheckAPIUrl();
+    if (!url) return;
+
+    //if (checkIntouchUserPromise) {
+    //    return checkIntouchUserPromise;
+    //}
+
+    let headers = {
+        "Content-Type": "application/json",
+        "Accept-Language": headerInfo.acceptLanguage
+    };
+
+    let checkIntouchUserPromise = fetch(url + window.location.href,
+        {
+            headers: headers,
+            body: null,
+            method: "GET",
+            credentials: "include",
+        }
+    );
+
+    const response = await checkIntouchUserPromise;
+
+    if (response.ok) {
+        const data = await response.json();
+        if (!data.Status || forceRedirectWhenReady) {
+            window.location = data.LoginPageUrl;
+        }
+    } else {
+        console.error('Error ${xhr.status}: ${xhr.statusText}');
+    }
+};

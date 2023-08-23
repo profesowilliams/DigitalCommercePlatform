@@ -2,9 +2,8 @@ import axios from "axios";
 import { isObject } from ".";
 import { usPost } from "./api";
 import { dateToString } from "../global/techdata/helpers/formatting";
-import { intouchHeaderAPIUrl, intouchFooterAPIUrl, intouchUserCheckAPIUrl } from "./intouchUtils";
 import { SEARCH_LOCAL_STORAGE_KEY, FILTER_LOCAL_STORAGE_KEY } from "./constants";
-import { headerInfo } from "./user/get";
+import { loadIntouchHeaderAndFooter } from "./intouch/load";
 
 export const fileExtensions = {
     xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -356,104 +355,7 @@ window.onload = function () {
     }
 }
 
-// START OF HEADER/FOOTER
-// dynamic header & footer loaded from InTouch
-// TODO: it should be moved from here
-const checkIntouchUser = (loadend) => {
-    const url = intouchUserCheckAPIUrl();
-    if (!url) return;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url + window.location.href);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-
-    xhr.onload = function () {
-        if (xhr.status != 200) {
-            console.error('Error ${xhr.status}: ${xhr.statusText}');
-        } else if (xhr.response) { // follow redirect
-            let response = JSON.parse(xhr.response);
-            if (!response.Status)
-                window.location = response.LoginPageUrl;
-        }
-    };
-
-    xhr.onloadend = loadend;
-
-    xhr.withCredentials = true;
-    xhr.send(null);
-};
-
-const renderIntouchComponent = (url, loadToElement, loadend) => {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-
-    xhr.onload = function () {
-        if (xhr.status != 200) {
-            console.error('Error ${xhr.status}: ${xhr.statusText}');
-        } else { // show the result
-            loadToElement.innerHTML = xhr.responseText;
-        }
-    };
-
-    xhr.onloadend = loadend;
-
-    xhr.withCredentials = true;
-    xhr.send(null);
-};
-
-const renderIntouchHeaderHTML = () => {
-    const url = intouchHeaderAPIUrl();
-    const element = document.getElementById('intouch-headerhtml');
-
-    if (!element) return;
-
-    renderIntouchComponent(
-        url,
-        element,
-        function () {
-            console.log("Intouch header loaded");
-            window.td.deferred.$htmlLoaded.resolve();
-        }
-    );
-};
-
-const renderIntouchFooterHTML = () => {
-    const url = intouchFooterAPIUrl();
-    const element = document.getElementById('intouch-footerhtml');
-
-    if (!element) return;
-
-    renderIntouchComponent(
-        url,
-        element,
-        function () {
-            console.log("Intouch footer loaded");
-        }
-    );
-};
-
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
-        let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-        if (!authorMode) {
-            console.log('AUTHOR:Load header/footer');
-            checkIntouchUser(
-                function () {
-                    renderIntouchHeaderHTML();
-                    renderIntouchFooterHTML();
-                }
-            )
-        } else {
-            console.log('AUTHOR:Skip header/footer');
-        }
-    },
-    false
-);
-// END OF HEADER/FOOTER
+loadIntouchHeaderAndFooter();
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {
     return getDictionaryValue(dictionaryKey, dictionaryKey);
