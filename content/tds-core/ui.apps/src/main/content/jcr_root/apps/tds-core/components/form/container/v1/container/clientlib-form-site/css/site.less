@@ -1,0 +1,29 @@
+@keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+}
+.cmp-form-button {
+    svg {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+      fill: white;
+      margin-right: 10px;
+      animation: rotate 1s linear infinite;
+      display: none;
+    }
+
+    &.submit-active {
+        color: #555555 !important;
+        background: #ebebeb !important;
+        cursor: default !important;
+        svg {
+            display: inline-block;
+            path {
+                fill: #b3b3b3;
+                animation: none;
+            }
+        }
+    }
+}

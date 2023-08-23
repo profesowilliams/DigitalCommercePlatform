@@ -7,6 +7,7 @@
     const INVALID_CHARACTERS_MSG = 'This field contains Invalid Characters. Please correct';
     const INVALID_FILE_MSG = 'Invalid file size or type, recheck and try again.';
     const pdfRegex = new RegExp(/^.*\.pdf$/i);
+    let isSubmitting = false;
 
     function documentReady(fn) {
         if (document.readyState !== "loading") {
@@ -118,8 +119,13 @@
     }
 
     function handlerInputFile() {
+        if (isSubmitting) {
+            return;
+        }
+
         let submitButton = document.getElementById("formSubmit");
         submitButton.disabled = false;
+        submitButton.classList.remove('submit-active');
     }
 
     function validateAddress(element,value){
@@ -306,6 +312,20 @@
         parentDiv.removeChild(errorLabel);
     }
 
+    function setIsSubmitting(buttonElement) {
+        isSubmitting = true;
+
+        buttonElement.disabled = true;
+        buttonElement.classList.add('submit-active');
+    }
+
+    function setIsDoneSubmitting(buttonElement) {
+        isSubmitting = false;
+
+        buttonElement.disabled = false;
+        buttonElement.classList.remove('submit-active');
+    }
+
     documentReady(function() {
         var submitButton = document.getElementById("formSubmit");
         var tdForm = document.getElementById("tdForm");
@@ -336,31 +356,44 @@
 
         if (submitButton) {
             submitButton.addEventListener("click", (e) => {
-                if (tdForm.reportValidity())
-                {
-                    submitButton.disabled = true;
-                    let data = createFormData(tdForm);
-                    if(data == null) {
-                        e.preventDefault();
-                        console.warn('validation failed for form');
+                setIsSubmitting(submitButton);
+                try {
+                    if (tdForm.reportValidity())
+                    {
+                        let data = createFormData(tdForm);
+                        if(data == null) {
+                            e.preventDefault();
+                            console.warn('validation failed for form');
+                        } else {
+                            let endPoint = "/content/tds-core/apis/tdpostform";
+                            var xhr = new XMLHttpRequest();
+                            var handlePOSTRequest = function () { // Call a function when the state changes.
+                                if (xhr.status === 200) {
+                                    console.log("Successfully submitted");
+
+                                    setIsDoneSubmitting(submitButton);
+                                    successFlow(redirectSuccess);
+                                } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503 || xhr.status === 415) {
+                                    console.error("Error in submitting form");
+
+                                    setIsDoneSubmitting(submitButton);
+                                }
+                            };
+                            xhr.onreadystatechange = handlePOSTRequest;
+                            xhr.open("POST", endPoint, true);
+                            xhr.send(data);
+                        }
                     } else {
-                        let endPoint = "/content/tds-core/apis/tdpostform";
-                        var xhr = new XMLHttpRequest();
-                        var handlePOSTRequest = function () { // Call a function when the state changes.
-                            if (xhr.status === 200) {
-                                console.log("Successfully submitted");
-                                successFlow(redirectSuccess);
-                            } else if (xhr.status === 404 || xhr.status === 500 || xhr.status === 503 || xhr.status === 415) {
-                                console.error("Error in submitting form");
-                            }
-                        };
-                        xhr.onreadystatechange = handlePOSTRequest;
-                        xhr.open("POST", endPoint, true);
-                        xhr.send(data);
+                        e.preventDefault();
+                        console.error();
+
+                        setIsDoneSubmitting(submitButton);
                     }
-                }else{
-                    e.preventDefault();
-                    console.error();
+                }
+                catch (e) {
+                    console.error(e);
+
+                    setIsDoneSubmitting(submitButton);
                 }
             });
         }
