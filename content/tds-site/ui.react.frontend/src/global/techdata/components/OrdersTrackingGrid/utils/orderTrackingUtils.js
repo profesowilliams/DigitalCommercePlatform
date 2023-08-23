@@ -47,6 +47,9 @@ export const fetchOrdersCount = async (
     return result;
   } catch (error) {
     console.error('error on orders count >>', error);
+    return {
+      error: { isError: true },
+    };
   }
 };
 

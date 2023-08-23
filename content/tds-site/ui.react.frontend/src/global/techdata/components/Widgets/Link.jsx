@@ -7,23 +7,32 @@ import { isDataLayerEnabled } from '../../../../utils/dataLayerUtils';
 // variant = {'custom class'}
 // callback = {callback || false}
 
-const Link = ({ href, variant, children, underline, callback, target, analyticsCallback }) => {
+const Link = ({
+  href,
+  variant,
+  children,
+  underline,
+  callback,
+  target,
+  analyticsCallback,
+}) => {
   const handleClick = (e) => {
     if (isDataLayerEnabled() && analyticsCallback) {
       pushDataLayer(analyticsCallback());
-    };
+    }
     if (callback) {
       callback();
     }
   };
-return (
-  <a
-    target = { target }
-    href = { href }
-    onClick = { handleClick }
-    className={`tdr-link ${variant || ''} ${underline || ''}`}>
+  return (
+    <a
+      href={href}
+      target={target}
+      onClick={handleClick}
+      className={`tdr-link ${variant || ''} ${underline || ''}`}
+    >
       {children}
-  </a>
+    </a>
   );
 };
 

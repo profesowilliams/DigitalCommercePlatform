@@ -12,10 +12,8 @@ import {
   hasSearchOrFilterPresent,
 } from '../../../../utils/utils';
 
-import { useStore } from '../../../../utils/useStore';
-import { isExtraReloadDisabled } from '../../../../utils/featureFlagUtils';
 import { isObject } from '../../../../utils';
-import useAuth from "../../hooks/useAuth";
+import useAuth from '../../hooks/useAuth';
 
 function Grid(props) {
   let {
@@ -47,6 +45,7 @@ function Grid(props) {
     getRowId,
     defaultSearchDateRange = setDefaultSearchDateRange(30),
     onDataLoad,
+    responseError = null,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = '1.3.0';
@@ -311,7 +310,7 @@ function Grid(props) {
 
   const renderers = {
     CustomNoRowsOverlay: CustomNoRowsOverlay,
-    CustomLoadingCellRenderer
+    CustomLoadingCellRenderer,
   };
   let filteredColumns = [];
 
@@ -351,7 +350,8 @@ function Grid(props) {
     filteredColumns = columnDefinition;
   }
 
-  if (typeof customizedDetailedRender === 'function') renderers.$$detailRenderer = customizedDetailedRender;
+  if (typeof customizedDetailedRender === 'function')
+    renderers.$$detailRenderer = customizedDetailedRender;
   // overwrite options with options from AEM
   if (options) {
     for (let key in options) {
@@ -366,12 +366,17 @@ function Grid(props) {
   }
 
   const handleNoRowMsg = (response) => {
-    if(response?.isError) {
-      noRowsErrorMessage.current = getDictionaryValue(`techdata.grids.message.error.${response.code}`, `Service ${response.code} error.`);
+    if (response?.isError) {
+      noRowsErrorMessage.current = getDictionaryValue(
+        `techdata.grids.message.error.${response.code}`,
+        `Service ${response.code} error.`
+      );
       gridApi.current.showNoRowsOverlay();
-    }
-    else if(!response?.items || response?.items.length === 0) {
-      noRowsErrorMessage.current = getDictionaryValue("techdata.grids.message.noRows", "No rows found.");
+    } else if (!response?.items || response?.items.length === 0) {
+      noRowsErrorMessage.current = getDictionaryValue(
+        'techdata.grids.message.noRows',
+        'No rows found.'
+      );
       gridApi.current.showNoRowsOverlay();
     }
   };
@@ -383,19 +388,16 @@ function Grid(props) {
         const pageNo = params.request.endRow / config.itemsPerPage;
         const sortKey = params.request.sortModel?.[0]?.colId;
         const sortDir = params.request.sortModel?.[0]?.sort;
-        getGridData(
-          config.itemsPerPage,
-          pageNo,
-          sortKey,
-          sortDir
-        ).then((response) => {
-          params.success({
-            rowData: response?.items ?? 0,
-            lastRow: response?.totalItems ?? 0,
-            rowCount: response?.totalItems ?? 0,
-          });
-          handleNoRowMsg(response);
-        });
+        getGridData(config.itemsPerPage, pageNo, sortKey, sortDir).then(
+          (response) => {
+            params.success({
+              rowData: response?.items ?? 0,
+              lastRow: response?.totalItems ?? 0,
+              rowCount: response?.totalItems ?? 0,
+            });
+            handleNoRowMsg(response);
+          }
+        );
       },
     };
   }
@@ -451,6 +453,7 @@ function Grid(props) {
       onDataLoad &&
         response?.data?.content?.items &&
         onDataLoad(response.data.content.items);
+      console.log(response);
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
 
       return postProcessResponse(response);
@@ -464,7 +467,7 @@ function Grid(props) {
   function onGridReady(_) {
     if (!gridId.current) {
       let str = Math.floor(1000 * Math.random()).toString();
-      let pad = "0000";
+      let pad = '0000';
       gridId.current = pad.substring(0, pad.length - str.length) + str;
     }
     _.api.sizeColumnsToFit();
@@ -475,8 +478,8 @@ function Grid(props) {
         state: [
           {
             colId: options.defaultSortingColumnKey,
-            sort: options.defaultSortingDirection ?? "desc",
-          },                  
+            sort: options.defaultSortingDirection ?? 'desc',
+          },
         ],
         defaultState: { sort: null },
       });
@@ -497,7 +500,7 @@ function Grid(props) {
         : (response) => null,
     };
     // fire onAfterGridInit callback and pass AG grid object to parent
-    if (typeof onAfterGridInit === "function") {
+    if (typeof onAfterGridInit === 'function') {
       onAfterGridInit({
         node: gridNodeRef.current,
         api: _.api,
@@ -512,11 +515,11 @@ function Grid(props) {
   }
 
   function onViewportChanged(_) {
-    if (config.paginationStyle === "scroll") {
+    if (config.paginationStyle === 'scroll') {
       const renderedNodes = _.api.getRenderedNodes();
       const applyRange = () => {
         const rowContainer =
-          gridNodeRef.current.querySelector(".ag-body-viewport");
+          gridNodeRef.current.querySelector('.ag-body-viewport');
         const bbox = rowContainer.getBoundingClientRect();
         // DEFAULT_ROW_HEIGHT / 2 is fix for FireFox
         // FF is unable to get element from bottom bbox coords
@@ -524,19 +527,19 @@ function Grid(props) {
         const firstRowIndex = parseInt(
           document
             .elementFromPoint(bbox.x, bbox.y)
-            ?.closest(".ag-row")
-            ?.getAttribute("row-index")
+            ?.closest('.ag-row')
+            ?.getAttribute('row-index')
         );
         const lastRowIndex = parseInt(
           document
             .elementFromPoint(bbox.x, bbox.bottom - DEFAULT_ROW_HEIGHT / 2)
-            ?.closest(".ag-row")
-            ?.getAttribute("row-index")
+            ?.closest('.ag-row')
+            ?.getAttribute('row-index')
         );
 
         setActualRange({
-          from: isNaN(firstRowIndex) ? "" : firstRowIndex + 1,
-          to: isNaN(firstRowIndex) ? "" : lastRowIndex + 1,
+          from: isNaN(firstRowIndex) ? '' : firstRowIndex + 1,
+          to: isNaN(firstRowIndex) ? '' : lastRowIndex + 1,
           total: _.api.getDisplayedRowCount(),
         });
       };
@@ -556,12 +559,12 @@ function Grid(props) {
       });
       switch (row.expanded) {
         case true:
-          if (typeof columnDef?.onDetailsShown === "function") {
+          if (typeof columnDef?.onDetailsShown === 'function') {
             columnDef.onDetailsShown(row);
           }
           break;
         case false:
-          if (typeof columnDef?.onDetailsHidden === "function") {
+          if (typeof columnDef?.onDetailsHidden === 'function') {
             columnDef.onDetailsHidden(row);
           }
           break;
@@ -592,7 +595,7 @@ function Grid(props) {
         const columnDef = filteredColumns.find((el) => {
           return el.field === key;
         });
-        if (typeof columnDef?.cellHeight === "function") {
+        if (typeof columnDef?.cellHeight === 'function') {
           heights.push(columnDef.cellHeight(row));
         }
       });
@@ -603,13 +606,13 @@ function Grid(props) {
 
   function getRowClass(row) {
     if (row?.data) {
-      let classes = "";
+      let classes = '';
       const columnKeys = Object.keys(row.data);
       columnKeys.forEach((key) => {
         const columnDef = filteredColumns.find((el) => {
           return el.field === key;
         });
-        if (typeof columnDef?.rowClass === "function") {
+        if (typeof columnDef?.rowClass === 'function') {
           classes = columnDef?.rowClass(row);
         }
       });
@@ -623,7 +626,7 @@ function Grid(props) {
       let awaiter = (fn, arg) => setTimeout(() => fn.call(this, arg), interval);
       return {
         call: (fn) => {
-          if (typeof fn === "function") fn();
+          if (typeof fn === 'function') fn();
           calls++;
           awaiter((_calls) => {
             if (_calls === calls) {
@@ -636,30 +639,36 @@ function Grid(props) {
   }
 
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       !data && getGridData();
       setAgGrid(<AgGrid />);
       // set minimum height if height wasn't explicitly set in css
-      if (getAgGridDomLayout() !== "autoHeight") {
-        window.getComputedStyle(gridNodeRef.current).height === "0px" &&
+      if (getAgGridDomLayout() !== 'autoHeight') {
+        window.getComputedStyle(gridNodeRef.current).height === '0px' &&
           (gridNodeRef.current.style.height =
-            DEFAULT_ROW_HEIGHT * config.itemsPerPage + "px");
+            DEFAULT_ROW_HEIGHT * config.itemsPerPage + 'px');
       }
-      window.addEventListener("resize", onResize);
+      window.addEventListener('resize', onResize);
       return () => {
         gridApi?.current?.destroy();
         delete globalThis[`$$tdGrid${gridId.current}`];
-        window.removeEventListener("resize", onResize);
+        window.removeEventListener('resize', onResize);
       };
     }
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (responseError) {
+      gridApi.current.showNoRowsOverlay();
+    }
+  }, [responseError]);
 
   return (
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
       <Fragment>
         <div
           className={`page-info ${
-            config.paginationStyle === "scroll" ? "visible" : "hidden"
+            config.paginationStyle === 'scroll' ? 'visible' : 'hidden'
           }`}
         >
           {actualRange.from} - {actualRange.to} of {actualRange.total || ''}

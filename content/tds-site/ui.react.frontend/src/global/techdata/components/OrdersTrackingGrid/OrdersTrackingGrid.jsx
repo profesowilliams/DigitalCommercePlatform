@@ -84,7 +84,7 @@ function OrdersTrackingGrid(props) {
   const hasOrderTrackingRights = hasRights('OrderTracking');
   const hasOrderModificationRights = hasRights('OrderModification');
   const [isLoading, setIsLoading] = useState(true);
-
+  const [responseError, setResponseError] = useState(null);
   const componentProp = JSON.parse(props.componentProp);
 
   const formattedDateRange = setDefaultSearchDateRange(
@@ -94,7 +94,6 @@ function OrdersTrackingGrid(props) {
 
   const {
     searchOptionsList = [],
-    icons,
     reportPillLabel,
     filterListValues,
     dateOptionsList,
@@ -174,6 +173,7 @@ function OrdersTrackingGrid(props) {
     const ordersReportCountUrl = new URL(
       componentProp.ordersReportCountEndpoint
     );
+
     const ordersCountUrl = new URL(componentProp.ordersCountEndpoint);
     const ordersCountResponse = await fetchOrdersCount(
       reportFilterValue.current?.value
@@ -192,26 +192,30 @@ function OrdersTrackingGrid(props) {
         )
       : await fetchData(queryOperations);
 
-    const mappedResponse = mapServiceData(response);
-    const paginationValue = getPaginationValue(
-      mappedResponse,
-      ordersCountResponse,
-      gridConfig
-    );
+    if (ordersCountResponse.error?.isError) {
+      setResponseError(true);
+    } else {
+      const mappedResponse = mapServiceData(response);
+      const paginationValue = getPaginationValue(
+        mappedResponse,
+        ordersCountResponse,
+        gridConfig
+      );
 
-    const responseContent = response?.data?.content;
-    const pageNumber = responseContent?.pageNumber;
-    if (responseContent?.pageCount === pageNumber)
-      gridApi.paginationSetPageSize(responseContent?.items?.length);
-    updateQueryString(pageNumber);
-    setCustomState(
-      { key: 'pagination', value: paginationValue },
-      {
-        key: ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-        saveToLocal: true,
-      }
-    );
-    return mappedResponse;
+      const responseContent = response?.data?.content;
+      const pageNumber = responseContent?.pageNumber;
+      if (responseContent?.pageCount === pageNumber)
+        gridApi.paginationSetPageSize(responseContent?.items?.length);
+      updateQueryString(pageNumber);
+      setCustomState(
+        { key: 'pagination', value: paginationValue },
+        {
+          key: ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+          saveToLocal: true,
+        }
+      );
+      return mappedResponse;
+    }
   };
 
   const onSortChanged = (evt) => {
@@ -332,6 +336,7 @@ function OrdersTrackingGrid(props) {
                 onSortChanged={onSortChanged}
                 onAfterGridInit={_onAfterGridInit}
                 onDataLoad={onDataLoad}
+                responseError={responseError}
                 DetailRenderers={(props) => (
                   <OrderDetailsRenderers
                     {...props}
