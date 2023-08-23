@@ -1,10 +1,10 @@
 import axios from 'axios';
 import {
-  getHeaderInfoFromUrl,
   getConsumerRequestHeader,
   isEnvironmentEnabled,
   getEnvironmentHeader,
 } from '../utils';
+import { getHeaderInfo } from "./headers/get";
 
 const isHttpOnlyEnabled = () =>
   document.body.hasAttribute('data-signin-httponly');
@@ -17,23 +17,22 @@ const userData = JSON.parse(
   localStorage.getItem('userData') || '{ "id": "NoAuth" }'
 );
 const traceId = generateTraceId(userData);
-const headerInfo = getHeaderInfoFromUrl(window.location.pathname);
+const headerInfo = getHeaderInfo();
 const consumer = getConsumerRequestHeader();
 const envHeader = getEnvironmentHeader();
 
 const headers = {
   common: {
-    TraceId: traceId,
-    Site: headerInfo.site,
+    'TraceId': traceId,
+    'Site': headerInfo.site,
     'Accept-Language': headerInfo.acceptLanguage,
-    Consumer: consumer,
+    'Consumer': consumer,
     'Content-Type': 'application/json',
-  },
+  }
 };
 
-if(!isHttpOnlyEnabled() && sessionId) {
-  headers.common['SessionId'] = sessionId ?? '';
-}
+headerInfo.salesLogin && (headers.common['SalesLogin'] = headerInfo.salesLogin);
+!isHttpOnlyEnabled() && sessionId && (headers.common['SessionId'] = sessionId ?? '');
 
 export const USaxios = axios.create({
   headers
@@ -44,6 +43,7 @@ axios.defaults.headers.common['Accept-Language'] = headerInfo.acceptLanguage;
 axios.defaults.headers.common['Consumer'] = consumer;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Site'] = headerInfo.site;
+headerInfo.salesLogin && (axios.defaults.headers.common['SalesLogin'] = headerInfo.salesLogin);
 
 if (isEnvironmentEnabled()) {
   axios.defaults.headers.common['Environment'] = envHeader;
