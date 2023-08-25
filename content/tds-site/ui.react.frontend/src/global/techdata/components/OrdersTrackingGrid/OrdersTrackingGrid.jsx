@@ -338,15 +338,17 @@ function OrdersTrackingGrid(props) {
                 onDataLoad={onDataLoad}
                 responseError={responseError}
                 DetailRenderers={(props) => (
-                  <OrderDetailsRenderers
-                    {...props}
-                    config={gridConfig}
-                    openFilePdf={(flyoutType, orderId, selectedId) =>
-                      openFilePdf(flyoutType, orderId, selectedId)
-                    }
-                    hasAIORights={hasAIORights}
-                    hasOrderModificationRights={hasOrderModificationRights}
-                  />
+                  <>
+                    <OrderDetailsRenderers
+                      {...props}
+                      config={gridConfig}
+                      openFilePdf={(flyoutType, orderId, selectedId) =>
+                        openFilePdf(flyoutType, orderId, selectedId)
+                      }
+                      hasAIORights={hasAIORights}
+                      hasOrderModificationRights={hasOrderModificationRights}
+                    />
+                  </>
                 )}
                 onCellMouseOver={(e) => cellMouseOver(e, setToolTipData)}
                 onCellMouseOut={() => cellMouseOut(setToolTipData)}

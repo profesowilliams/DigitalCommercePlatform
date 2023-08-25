@@ -1,10 +1,12 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
+import Link from '../../../../Widgets/Link';
+
 function TrackColumn({ line, config }) {
   return (
-    <div className="order-line-details__content__track">
+    <Link variant="track" href={'#'} underline="underline-none">
       {getDictionaryValueOrKey(config?.orderLineDetails?.trackLabel)}
-    </div>
+    </Link>
   );
 }
 export default TrackColumn;

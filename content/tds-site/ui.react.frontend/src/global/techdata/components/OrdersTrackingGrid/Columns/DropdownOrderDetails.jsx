@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   TruckIcon,
@@ -8,6 +8,8 @@ import {
 } from '../../../../../fluentIcons/FluentIcons';
 import ShippedTabGrid from './ShippedTabGrid/ShippedTabGrid';
 import NotShippedTabGrid from './NotShippedTabGrid/NotShippedTabGrid';
+import useGet from '../../../hooks/useGet';
+import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
 
 function DropdownOrderDetails({
   data,
@@ -16,9 +18,12 @@ function DropdownOrderDetails({
   hasAIORights,
   hasOrderModificationRights,
 }) {
+  const [apiResponse, isLoading, error] = useGet(
+    `${aemConfig.uiServiceEndPointForDetails}?id=${data?.id}`
+  );
   const [activeTab, setActiveTab] = useState(0);
-  const shippedItemsLeft = '11';
-  const notShippedItemsLeft = '22';
+  const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
+  const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const handleTabChange = (tabIndex) => {
     setActiveTab(tabIndex);
   };
@@ -32,13 +37,16 @@ function DropdownOrderDetails({
       iconInActive: <TruckIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.shippedLabel,
       numberOfItems: shippedItemsLeft,
-      content: (
+      content: apiResponse?.content ? (
         <ShippedTabGrid
-          data={data}
+          data={apiResponse?.content}
           gridProps={aemConfig}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
+          reseller={data?.customerPO}
         />
+      ) : (
+        isLoading && <LoaderIcon className="loadingIcon-rotate" />
       ),
     },
     {
@@ -49,16 +57,21 @@ function DropdownOrderDetails({
       iconInActive: <DollyIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.notShippedLabel,
       numberOfItems: notShippedItemsLeft,
-      content: (
+      content: apiResponse?.content ? (
         <NotShippedTabGrid
-          data={data}
+          data={apiResponse?.content}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
         />
+      ) : (
+        isLoading && <LoaderIcon className="loadingIcon-rotate" />
       ),
     },
   ];
 
+  useEffect(() => {
+    error && console.log('Error: ', error);
+  }, [error]);
   return (
     <div className="order-line-details">
       <div className="order-line-details__header">
@@ -73,11 +86,17 @@ function DropdownOrderDetails({
             onClick={() => handleTabChange(tab.index)}
           >
             {activeTab === tab.index ? tab.iconActive : tab.iconInActive}
-            <span>{getDictionaryValueOrKey(tab.label)} |</span>
-            <span className="order-line-details__header__tab-items">
-              {tab.numberOfItems}{' '}
-              {getDictionaryValueOrKey(aemConfig?.orderLineDetails?.itemsLabel)}
+            <span>
+              {getDictionaryValueOrKey(tab.label)} {!isLoading && '|'}
             </span>
+            {!isLoading && (
+              <span className="order-line-details__header__tab-items">
+                {tab.numberOfItems}{' '}
+                {getDictionaryValueOrKey(
+                  aemConfig?.orderLineDetails?.itemsLabel
+                )}
+              </span>
+            )}
           </div>
         ))}
       </div>

@@ -1,5 +1,9 @@
 import React from 'react';
 function LineColumn({ line }) {
-  return <div>no</div>;
+  return (
+    <div>
+      <span>{line?.line}</span>
+    </div>
+  );
 }
 export default LineColumn;

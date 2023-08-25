@@ -1,5 +1,6 @@
 import React from 'react';
-function DropdownOrderShippedTabGridDetails({ data, aemConfig }) {
+
+function DropdownOrderShippedTabGridDetails({ data }) {
   const ProductTable = ({ data }) => {
     const defaultWidth = {
       line: '50px',
@@ -9,10 +10,19 @@ function DropdownOrderShippedTabGridDetails({ data, aemConfig }) {
       qty: '70px',
       deliveryEstimate: '50px',
     };
+   
     return (
       <div className="order-line-details__content__innerTable">
         {data.map((item, index) => {
-          const { name, manufacturerPart, divNumber } = item;
+          const {
+            line,
+            urlProductImage,
+            displayName,
+            mfrNumber,
+            tdNumber,
+            shipQuantity,
+            orderQuantity,
+          } = item;
           return (
             <div
               key={index}
@@ -20,21 +30,27 @@ function DropdownOrderShippedTabGridDetails({ data, aemConfig }) {
             >
               <div style={{ width: defaultWidth.line }}>
                 <span className="order-line-details__content__innerTable__text">
-                  11
+                  {line}
                 </span>
               </div>
               <div
-                style={{ width: defaultWidth.thumbNail }}
+                style={{
+                  width: defaultWidth.thumbNail,
+                }}
                 className="order-line-details__content__innerTable__column"
               >
-                Thumbnail
+                <img
+                  className={'order-line-details__content__innerTable__image'}
+                  src={urlProductImage}
+                  alt=""
+                />
               </div>
               <div
                 style={{ width: defaultWidth.item }}
                 className="order-line-details__content__innerTable__column"
               >
                 <span className="order-line-details__content__innerTable__text">
-                  {name}
+                  {displayName}
                 </span>
               </div>
               <div
@@ -43,12 +59,12 @@ function DropdownOrderShippedTabGridDetails({ data, aemConfig }) {
               >
                 <div>
                   <span className="order-line-details__content__innerTable__text">
-                    {manufacturerPart}
+                    {mfrNumber}
                   </span>
                 </div>
                 <div>
                   <span className="order-line-details__content__innerTable__text">
-                    {divNumber}
+                    {tdNumber}
                   </span>
                 </div>
               </div>
@@ -57,7 +73,7 @@ function DropdownOrderShippedTabGridDetails({ data, aemConfig }) {
                 className="order-line-details__content__innerTable__column"
               >
                 <span className="order-line-details__content__innerTable__text">
-                  1 / 11
+                  {shipQuantity} / {orderQuantity}
                 </span>
               </div>
             </div>
@@ -66,9 +82,10 @@ function DropdownOrderShippedTabGridDetails({ data, aemConfig }) {
       </div>
     );
   };
+
   return (
     <div className="order-line-details">
-      {data && <ProductTable data={data?.product} />}
+      {data && <ProductTable data={data} />}
     </div>
   );
 }

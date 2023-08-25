@@ -7,6 +7,7 @@ const columnDefs = [
     cellStyle: {
       'white-space': 'normal',
       padding: '12px 0',
+      paddingLeft: '20px',
     },
     autoHeight: true,
   },
@@ -40,7 +41,7 @@ const columnDefs = [
   },
   {
     headerName: 'VALUE',
-    field: 'totalPrice',
+    field: 'totalPriceFormatted',
     sortable: false,
     cellStyle: { padding: '12px 0' },
     autoHeight: true,

@@ -8,7 +8,7 @@ function DNoteColumn({ line, id, openFilePdf }) {
       className="order-line-details__content__downloadLink"
       onClick={handleDownload}
     >
-      {line?.deliveryNotes[0]?.id || '-'}
+      {line?.id || '-'}
     </div>
   );
 }

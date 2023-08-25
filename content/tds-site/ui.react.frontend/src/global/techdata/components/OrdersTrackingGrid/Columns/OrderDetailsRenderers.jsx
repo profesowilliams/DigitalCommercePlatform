@@ -4,7 +4,6 @@ import DropdownOrderDetails from './DropdownOrderDetails';
 
 function OrderDetailsRenderers(props) {
   const detailRender = useOrderTrackingStore((state) => state.detailRender);
-
   return (
     <>
       {detailRender === 'primary' && (

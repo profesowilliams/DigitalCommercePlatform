@@ -11,7 +11,7 @@ import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
 import ActionColumn from './Columns/ActionColumn';
 function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
-  const gridData = data.items ?? [];
+  const gridData = data?.items ?? [];
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -21,12 +21,12 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
-    lineNumber: '50px',
-    item: '165px',
-    pnsku: '138px',
-    nqty: '164px',
+    lineNumber: '60px',
+    item: '425px',
+    pnsku: '180px',
+    nqty: '70px',
     deliveryEstimate: '164x',
-    action: '50px',
+    action: '60px',
   });
   const columnDefinitionsOverride = [
     {
@@ -38,15 +38,13 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
     {
       field: 'item',
       headerName: getDictionaryValueOrKey(item),
-      cellRenderer: ({ data }) => <ItemColumn line={data} config={gridProps} />,
+      cellRenderer: ({ data }) => <ItemColumn line={data} />,
       width: gridColumnWidths.item,
     },
     {
       field: 'pnsku',
       headerName: getDictionaryValueOrKey(pnsku),
-      cellRenderer: ({ data }) => (
-        <PnSkuColumn line={data} config={gridProps} />
-      ),
+      cellRenderer: ({ data }) => <PnSkuColumn line={data} />,
       width: gridColumnWidths.pnsku,
     },
     {
@@ -60,15 +58,13 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
     {
       field: 'deliveryEstimate',
       headerName: getDictionaryValueOrKey(deliveryEstimate),
-      cellRenderer: ({ data }) => (
-        <DeliveryEstimateColumn line={data} config={gridProps} />
-      ),
+      cellRenderer: ({ data }) => <DeliveryEstimateColumn line={data} />,
       width: gridColumnWidths.deliveryEstimate,
     },
     {
       field: 'action',
       headerName: '',
-      cellRenderer: () => <ActionColumn />,
+      cellRenderer: ({ data }) => <ActionColumn line={data} />,
       width: gridColumnWidths.action,
     },
   ];

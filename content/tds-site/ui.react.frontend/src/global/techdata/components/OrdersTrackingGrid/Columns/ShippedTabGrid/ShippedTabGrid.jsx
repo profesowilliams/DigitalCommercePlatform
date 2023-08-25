@@ -11,9 +11,15 @@ import DNoteColumn from './Columns/DNoteColumn';
 import InvoiceColumn from './Columns/InvoiceColumn';
 import DropdownColumn from './Columns/DropdownColumn';
 import ShippedTabGridRenderers from './Columns/ShippedTabGridRenderers';
-function ShippedTabGrid({ data, gridProps, openFilePdf, hasAIORights }) {
-  const gridData = data.items ?? [];
-  const orderNumber = data?.id;
+function ShippedTabGrid({
+  data,
+  gridProps,
+  openFilePdf,
+  hasAIORights,
+  reseller,
+}) {
+  const gridData = data?.deliveryNotes ?? [];
+  const orderNumber = data?.orderNumber;
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -45,21 +51,14 @@ function ShippedTabGrid({ data, gridProps, openFilePdf, hasAIORights }) {
     {
       field: 'actualShipDateFormatted',
       headerName: getDictionaryValueOrKey(shipDate),
-      cellRenderer: ({ data }) => (
-        <ShipDateColumn line={data} config={gridProps} />
-      ),
+      cellRenderer: ({ data }) => <ShipDateColumn line={data} />,
       width: gridColumnWidths.shipDate,
     },
     {
       field: 'deliveryNotes',
       headerName: getDictionaryValueOrKey(dnote),
       cellRenderer: ({ data }) => (
-        <DNoteColumn
-          line={data}
-          config={gridProps}
-          id={orderNumber}
-          openFilePdf={openFilePdf}
-        />
+        <DNoteColumn line={data} id={orderNumber} openFilePdf={openFilePdf} />
       ),
       width: gridColumnWidths.dnote,
     },
@@ -69,16 +68,17 @@ function ShippedTabGrid({ data, gridProps, openFilePdf, hasAIORights }) {
       cellRenderer: ({ data }) => (
         <InvoiceColumn
           line={data}
-          config={gridProps}
+          config={config}
           id={orderNumber}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
+          reseller={reseller}
         />
       ),
       width: gridColumnWidths.invoice,
     },
     {
-      field: 'totalPrice',
+      field: 'totalPriceFormatted',
       headerName: getDictionaryValueOrKey(value),
       width: gridColumnWidths.value,
     },
@@ -91,9 +91,7 @@ function ShippedTabGrid({ data, gridProps, openFilePdf, hasAIORights }) {
     {
       field: 'track',
       headerName: '',
-      cellRenderer: ({ data }) => (
-        <TrackColumn line={data} config={gridProps} />
-      ),
+      cellRenderer: ({ data }) => <TrackColumn line={data} config={config} />,
       width: gridColumnWidths.track,
     },
   ];
