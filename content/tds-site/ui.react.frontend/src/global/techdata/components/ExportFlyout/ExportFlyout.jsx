@@ -53,7 +53,7 @@ function ExportFlyout({
     exportOptionsList ? exportOptionsList[0]?.key : []
   );
   const [secondarySelected, setSecondarySelected] = useState(
-    exportSecondaryOptionsList[1]
+    exportSecondaryOptionsList[1]?.key || []
   );
 
   const handleSelectChange = (event) => {
@@ -123,6 +123,7 @@ function ExportFlyout({
       effects.setCustomState({ key: 'toaster', value: { ...toaster } });
     }
   };
+
   return (
     <BaseFlyout
       open={exportFlyoutConfig?.show}

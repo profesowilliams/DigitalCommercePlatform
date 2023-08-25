@@ -337,6 +337,7 @@ $flyout-small-height-formax: 779px;
     p {
       font-size: 14px;
       margin: 0;
+      line-height: normal;
     }
 
     &__number {
@@ -369,7 +370,6 @@ $flyout-small-height-formax: 779px;
         }
       }
     }
-  }
     &__price {
       grid-area: 2 / 4 / 3 / 5; 
       text-align: right;
@@ -380,6 +380,7 @@ $flyout-small-height-formax: 779px;
         font-weight: 600;
       }
     }
+  }
   }
 
 .cmp-flyout-td-synnex {

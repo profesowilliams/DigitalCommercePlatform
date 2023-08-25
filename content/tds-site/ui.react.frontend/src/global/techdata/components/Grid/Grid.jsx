@@ -453,7 +453,6 @@ function Grid(props) {
       onDataLoad &&
         response?.data?.content?.items &&
         onDataLoad(response.data.content.items);
-      console.log(response);
       globalThis[`$$tdGrid${gridId.current}`]?.onNewGridDataLoaded(response);
 
       return postProcessResponse(response);

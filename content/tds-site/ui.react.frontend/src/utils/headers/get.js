@@ -1,12 +1,16 @@
 export function getHeaderInfo() {
-    let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-    if (authorMode)
-        return {
-            site: "UK",
-            language: "en",
-            acceptLanguage: "en-GB",
-            salesLogin: undefined
-        };
+    const authorMode = !(
+      typeof Granite === 'undefined' || typeof Granite.author === 'undefined'
+    );
+    const isLocalhost = window.location.href.includes('localhost');
+
+    if (authorMode || isLocalhost)
+      return {
+        site: 'UK',
+        language: 'en',
+        acceptLanguage: 'en-GB',
+        salesLogin: undefined,
+      };
 
     try {
         const pathName = window.location.pathname;

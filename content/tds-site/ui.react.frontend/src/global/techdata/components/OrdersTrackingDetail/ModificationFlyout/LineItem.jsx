@@ -83,7 +83,7 @@ const LineItem = ({
         <p className="cmp-flyout-list__element__price-bold">
           {getDictionaryValueOrKey(labels.lineTotal)} ({item.unitPriceCurrency})
         </p>
-        <p> {item.unitPriceFormatted}</p>
+        <p>{(currentValue * item.unitPrice).toFixed(2)}</p>
       </div>
     </li>
   );
