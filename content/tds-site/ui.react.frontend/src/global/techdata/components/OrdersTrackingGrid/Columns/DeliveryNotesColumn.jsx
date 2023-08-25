@@ -34,6 +34,7 @@ function DeliveryNotesColumn({
   //TODO: change to use Denotes after BE create mock request for downloading dnotes
   const handleDownload = () => {
     openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Main Grid'));
   };
   return deliveryNotes.length == 0 ? (
     '-'

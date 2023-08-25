@@ -7,6 +7,10 @@ import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { getSessionInfo } from "../../../../utils/user/get";
 import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import Flyouts from './Flyouts';
+import {
+  getOrderDetailsAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -60,6 +64,9 @@ function OrdersTrackingDetail(props) {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
     });
+    pushDataLayerGoogle(
+      getOrderDetailsAnalyticsGoogle(config.labels?.detailsOrderNo)
+    );
   }, []);
 
   return (

@@ -32,6 +32,7 @@ function InvoiceColumn({
   };
   const handleDownload = () => {
     hasAIORights && openFilePdf('Invoice', id, invoices[0]?.id);
+    pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Main Grid'));
   };
   return invoices.length == 0 ? (
     '-'

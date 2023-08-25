@@ -63,9 +63,11 @@ const OrderTrackingDetailHeader = ({
   const hasMultipleInvoices = invoices.length > 1;
   const handleDownloadDNote = () => {
     openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
   };
   const handleDownloadInvoice = () => {
     openFilePdf('Invoice', id, invoices[0]?.id);
+    pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
   };
   const triggerDNotesFlyout = () => {
     setCustomState({

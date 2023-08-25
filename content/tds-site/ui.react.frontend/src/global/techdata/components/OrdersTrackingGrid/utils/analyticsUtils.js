@@ -66,6 +66,7 @@ export const getHomeAnalyticsGoogle = (rights) => {
   return {
     event: 'Order tracking - Home',
     orderTracking: `Home: ${getDictionaryValueOrKey(rights)}`,
+    action: 'Rights',
   };
 };
 
@@ -76,10 +77,10 @@ export const getOrderDetailsAnalyticsGoogle = (number) => {
   };
 };
 
-export const getDNoteViewAnalyticsGoogle = (number, dNoteLabel) => {
+export const getDNoteViewAnalyticsGoogle = (numberOfDownloads, dNoteLabel) => {
   return {
     event: 'Order tracking - D-Note View',
-    orderTracking: `D-Note View: ${number}`,
+    orderTracking: `D-Note View: ${numberOfDownloads}`,
     label: getDictionaryValueOrKey(dNoteLabel),
   };
 };
@@ -104,6 +105,13 @@ export const getErrorPageAnalyticsGoogle = (errorNumber) => {
   return {
     event: 'Order tracking - Error Page',
     orderTracking: `Error Page: ${errorNumber}`,
+  };
+};
+
+export const getMainDashboardAnalyticsGoogle = () => {
+  return {
+    event: 'Order tracking - Main Dashboard',
+    orderTracking: 'Main Dashboard',
   };
 };
 

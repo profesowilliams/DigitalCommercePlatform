@@ -22,6 +22,7 @@ import {
 } from './utils/orderTrackingUtils';
 import {
   getHomeAnalyticsGoogle,
+  getMainDashboardAnalyticsGoogle,
   getSortAnalyticsGoogle,
   pushDataLayerGoogle,
 } from './utils/analyticsUtils';
@@ -291,10 +292,7 @@ function OrdersTrackingGrid(props) {
       setUserData(data[1]);
     });
     setDateType(filterLabels.orderDateLabel);
-    (userData?.activeCustomer || isLocalDevelopment) &&
-      pushDataLayerGoogle(
-        getHomeAnalyticsGoogle(hasAccess ? 'Rights' : 'No Rights')
-      );
+    pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
   }, []);
 
   return (
@@ -303,6 +301,7 @@ function OrdersTrackingGrid(props) {
         <>
           {hasAccess ? (
             <div className="cmp-order-tracking-grid">
+              {pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'))}
               <MainGridHeader
                 onQueryChanged={onQueryChanged}
                 searchLabels={searchLabels}
@@ -370,7 +369,10 @@ function OrdersTrackingGrid(props) {
               />
             </div>
           ) : (
-            <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+            <>
+              {pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'))}
+              <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+            </>
           )}
         </>
       )}
