@@ -25,13 +25,20 @@ import org.apache.sling.models.annotations.via.ResourceSuperType;
 import org.apache.sling.xss.XSSAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import com.tdscore.core.services.IntouchRequest;
+import com.tdscore.core.services.IntouchRequestType;
+import com.tdscore.core.services.IntouchRetrieveDataService;
+import java.io.UnsupportedEncodingException;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
+import com.tdscore.core.slingcaconfig.IntouchConfiguration;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Stream;
+import org.apache.sling.caconfig.ConfigurationBuilder;
+import java.net.URLDecoder;
 
 import static com.tdscore.core.util.Constants.COUNTRY_PAGE;
 import static com.tdscore.core.util.Constants.LOCALE_PAGE;
@@ -59,6 +66,9 @@ public class PageImpl implements Page {
 
     @Self
     private SlingHttpServletRequest request;
+
+    @OSGiService
+    private IntouchRetrieveDataService intouchService;
 
     private XSSAPI xssapi;
 
@@ -309,6 +319,61 @@ public class PageImpl implements Page {
             errorName = localePage.getProperties().get(ERROR_NAME, String.class);
         }
         return pageProperties.get(ERROR_NAME, errorName);
+    }
+
+    /*
+    public String getIntouchCSSScriptsData() {
+        IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
+        String intouchCSSAPIUrl = intouchConfiguration.cssAPIUrl();
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl, "UK", "en-US");
+        return intouchService.fetchScriptsData(intouchRequest);
+    }
+    */
+
+    public String getIntouchJSScriptsData() {
+        IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
+        String intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), addSalesLoginToUrl(intouchJSAPIUrl), "UK", "en-US");
+        return intouchService.fetchScriptsData(intouchRequest);
+    }
+
+    private String addSalesLoginToUrl(String url) {
+        String salesLogin = getSalesLogin();
+
+        if(!"".equals(salesLogin)) {
+            url = url.replace("/MVC/", "/MVC/" + salesLogin + "/");
+        }
+
+        return url;
+    }
+
+    public String getSalesLogin() {
+        try {
+            String queryString = request.getQueryString();       
+            List<String> salesLogin = splitQuery(queryString).get("saleslogin");
+            return salesLogin != null ? salesLogin.get(0) : "";
+        } 
+        catch (UnsupportedEncodingException ex) {
+        }
+
+        return "";
+    }
+
+    private static Map<String, List<String>> splitQuery(String query) throws UnsupportedEncodingException {
+        final Map<String, List<String>> query_pairs = new LinkedHashMap<String, List<String>>();
+        if(query == null) return query_pairs;
+        
+        final String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            final int idx = pair.indexOf("=");
+            final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
+            if (!query_pairs.containsKey(key)) {
+                query_pairs.put(key.toLowerCase(), new LinkedList<String>());
+            }
+            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
+            query_pairs.get(key.toLowerCase()).add(value);
+        }
+        return query_pairs;
     }
 
     private static final String ERROR_CODE = "errorCode";

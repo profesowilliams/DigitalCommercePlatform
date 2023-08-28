@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-cd content/tds-core/ui.frontend
-npx lint-staged

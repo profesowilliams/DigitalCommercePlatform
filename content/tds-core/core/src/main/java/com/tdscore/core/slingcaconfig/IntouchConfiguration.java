@@ -21,5 +21,5 @@ public @interface IntouchConfiguration {
     String footerAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Footer";
 
     @Property(label = "User Validation API Url", description = "API url that provides user validation (based on SWATpass cookie).")
-    String userCheckAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/api/User/Check/null?continueUrl=";
+    String userCheckAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/api/User/Check?continueUrl=";
 }

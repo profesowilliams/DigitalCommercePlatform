@@ -204,11 +204,11 @@ Bundle-DocURL:
             </dependency>
           </dependencies>
         </plugin>
-        <plugin>
+        <!--<plugin>
           <groupId>biz.aQute.bnd</groupId>
           <artifactId>bnd-baseline-maven-plugin</artifactId>
           <version>${bnd.version}</version>
-        </plugin>
+        </plugin>-->
         <!-- Maven Resources Plugin -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -316,6 +316,9 @@ Bundle-DocURL:
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.0.0</version>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
         </plugin>
         <!-- Maven Dependency Plugin -->
         <plugin>

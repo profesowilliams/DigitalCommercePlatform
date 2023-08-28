@@ -1,0 +1,15 @@
+<sly data-sly-use.page="com.tdscore.core.models.PageImpl">
+    <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+         data-sly-test.clientlibCategoriesJsBody="${page.clientLibCategoriesJsBody}"
+         data-sly-call="${clientlib.js @ categories=clientlibCategoriesJsBody}"></sly>
+
+    <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+        <sly data-sly-call="${clientlib.js @ categories='tds-core.base'}" />
+    </sly>
+    
+    <!-- Intouch JS scripts in Footer -->
+    <sly data-sly-test="${page.intouchJSScriptsData}">
+        ${page.intouchJSScriptsData @ context='scriptComment'}
+    </sly>
+    <!-- End Intouch JS scripts in Footer -->
+</sly>

@@ -1,23 +1,33 @@
 package com.tdscore.core.models;
 
-
 import com.day.cq.wcm.api.Page;
 import com.tdscore.core.services.IntouchRequest;
 import com.tdscore.core.services.IntouchRequestType;
 import com.tdscore.core.services.IntouchRetrieveDataService;
 import com.tdscore.core.slingcaconfig.*;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.caconfig.ConfigurationBuilder;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Model(adaptables= {SlingHttpServletRequest.class,Resource.class})
 public class CaConfigReader {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CaConfigReader.class);
 
     @ScriptVariable(name = "currentPage")
     private Page page;
@@ -262,17 +272,16 @@ public class CaConfigReader {
     @PostConstruct
     public void init() {
 
-        ServiceEndPointsConfiguration serviceEndPointsConfiguration =
-                page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
-        MiniCartConfiguration mcConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
-        AnalyticsConfiguration analyticsConfiguration =  page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
+        ServiceEndPointsConfiguration serviceEndPointsConfiguration = page.adaptTo(ConfigurationBuilder.class).as(ServiceEndPointsConfiguration.class);
+        MiniCartConfiguration mcConfiguration = page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
+        AnalyticsConfiguration analyticsConfiguration = page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
         RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
 
-        uiServiceDomain =  serviceEndPointsConfiguration.uiServiceDomain();
+        uiServiceDomain = serviceEndPointsConfiguration.uiServiceDomain();
         catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
         authorizationPageURL = serviceEndPointsConfiguration.authorizationPageURL();
         loginEndpoint = serviceEndPointsConfiguration.loginEndpoint();
-        pingAppId =  serviceEndPointsConfiguration.pingAppId();
+        pingAppId = serviceEndPointsConfiguration.pingAppId();
         activeCartEndpoint = serviceEndPointsConfiguration.activeCartEndpoint();
         myConfigurationsEndpoint = serviceEndPointsConfiguration.myConfigurationsEndpoint();
         myOrdersEndpoint = serviceEndPointsConfiguration.myOrdersEndpoint();
@@ -369,7 +378,7 @@ public class CaConfigReader {
             intouchUserCheckAPIUrl = intouchConfiguration.userCheckAPIUrl();
         }
     }
-
+    
     private void buildEcommerceAuthenticationLoginEndpoint() {
         EcommerceAuthenticationConfiguration ecommerceAuthenticationConfiguration = page.adaptTo(ConfigurationBuilder.class).as(EcommerceAuthenticationConfiguration.class);
         ecommerceAuthenticationLoginEndpoint = ecommerceAuthenticationConfiguration.loginEndpoint();
@@ -704,171 +713,103 @@ public class CaConfigReader {
         return searchRefinementsParameter;
     }
 
-    public String getSearchBParameter(){return searchBParameter;}
+    public String getSearchBParameter() { return searchBParameter; }
 
-    public String getContentSearchTab(){return contentSearchTab;}
+    public String getContentSearchTab() { return contentSearchTab; }
 
-    public String getDcpDashboardPage(){return dcpDashboardPage;}
+    public String getDcpDashboardPage() { return dcpDashboardPage; }
 
-    public String getQuoteListingPage(){return quoteListingPage;}
+    public String getQuoteListingPage() { return quoteListingPage; }
 
-    public String getQuoteDetailPage(){return quoteDetailPage;}
+    public String getQuoteDetailPage() { return quoteDetailPage; }
 
-    public String getQuotePreviewPage(){return quotePreviewPage;}
+    public String getQuotePreviewPage() { return quotePreviewPage; }
 
-    public String getOrderListingPage(){return orderListingPage;}
+    public String getOrderListingPage() { return orderListingPage; }
 
-    public String getOrderDetailPage(){return orderDetailPage;}
+    public String getOrderDetailPage() { return orderDetailPage; }
 
-    public String getShopDomainPage() {return shopDomainPage;}
+    public String getShopDomainPage() { return shopDomainPage; }
 
     public String getOrderDetailEndpoint() { return orderDetailEndpoint;}
 
-    public String getDownloadAllInvoicesEndpoint() {
-        return downloadAllInvoicesEndpoint;
-    }
+    public String getDownloadAllInvoicesEndpoint() { return downloadAllInvoicesEndpoint; }
 
-    public String getDownloadInvoiceEndpoint() {
-        return downloadInvoiceEndpoint;
-    }
+    public String getDownloadInvoiceEndpoint() { return downloadInvoiceEndpoint; }
 
-    public String getDealsForEndpoint() {
-        return dealsForEndpoint;
-    }
+    public String getDealsForEndpoint() { return dealsForEndpoint; }
 
-    public String getActionItemsEndpoint() {
-        return actionItemsEndpoint;
-    }
+    public String getActionItemsEndpoint() { return actionItemsEndpoint; }
 
-    public String getQuoteDetailsXLSEndpoint() {
-        return quoteDetailsXLSEndpoint;
-    }
+    public String getQuoteDetailsXLSEndpoint() { return quoteDetailsXLSEndpoint; }
 
-    public String getProductEmptyImageUrl() {
-        return productEmptyImageUrl;
-    }
+    public String getProductEmptyImageUrl() { return productEmptyImageUrl; }
 
-    public String getDownloadOrderDetailsEndpoint() {
-        return downloadOrderDetailsEndpoint;
-    }
+    public String getDownloadOrderDetailsEndpoint() { return downloadOrderDetailsEndpoint; }
 
-    public String getRenewalsGridEndpoint() {
-        return renewalsGridEndpoint;
-    }
+    public String getRenewalsGridEndpoint() { return renewalsGridEndpoint; }
 
-    public String getRenewalDetailLineItemEndpoint(){
-        return renewalDetailLineItemEndpoint;
-    }
+    public String getRenewalDetailLineItemEndpoint() { return renewalDetailLineItemEndpoint; }
 
-    public String getRenewalDetailsEndpoint(){
-        return renewalDetailsEndpoint;
-    }
+    public String getRenewalDetailsEndpoint() { return renewalDetailsEndpoint; }
 
-    public String getExportXLSRenewalsEndpoint(){
-        return exportXLSRenewalsEndpoint;
-    }
+    public String getExportXLSRenewalsEndpoint() { return exportXLSRenewalsEndpoint; }
 
-    public String getExportPDFRenewalsEndpoint() {
-        return exportPDFRenewalsEndpoint;
-    }
+    public String getExportPDFRenewalsEndpoint() { return exportPDFRenewalsEndpoint; }
 
     public String getSetVendorConnectionEndpoint() { return setVendorConnectionEndpoint; }
 
     public String getVendorDisconnectEndpoint() { return vendorDisconnectEndpoint; }
 
-    public String getVendorConnectionDataRefreshEndpoint() {
-        return vendorConnectionDataRefreshEndpoint;
-    }
+    public String getVendorConnectionDataRefreshEndpoint() { return vendorConnectionDataRefreshEndpoint; }
 
-    public String getAgGridLicenseKey() {
-        return agGridLicenseKey;
-    }
+    public String getAgGridLicenseKey() { return agGridLicenseKey; }
 
-    public String getAllowedFileExtensions() {
-        return allowedFileExtensions;
-    }
+    public String getAllowedFileExtensions() { return allowedFileExtensions; }
 
-    public String getFileThresholdInMB() {
-        return fileThresholdInMB;
-    }
+    public String getFileThresholdInMB() { return fileThresholdInMB; }
 
-    public String getTextFieldRegexString() {
-        return textFieldRegexString;
-    }
+    public String getTextFieldRegexString() { return textFieldRegexString; }
 
-    public boolean isEnableQualtricsCode() {
-        return enableQualtricsCode;
-    }
+    public boolean isEnableQualtricsCode() { return enableQualtricsCode; }
 
-    public String getRenewalOrderEndpoint(){
-        return renewalOrderEndpoint;
-    }
+    public String getRenewalOrderEndpoint() { return renewalOrderEndpoint; }
 
-    public String getRenewalUpdateQuoteEndpoint(){
-        return renewalUpdateQuoteEndpoint;
-    }
+    public String getRenewalUpdateQuoteEndpoint() { return renewalUpdateQuoteEndpoint; }
 
-    public String getRenewalGetStatusEndpoint(){
-        return renewalGetStatusEndpoint;
-    }
+    public String getRenewalGetStatusEndpoint() { return renewalGetStatusEndpoint; }
 
-    public String getAccountLookUpEndpoint(){
-        return accountLookUpEndpoint;
-    }
+    public String getAccountLookUpEndpoint() { return accountLookUpEndpoint; }
 
-    public String getCheckQuoteExitsforResellerEndpoint(){
-        return checkQuoteExitsforResellerEndpoint;
-    }
+    public String getCheckQuoteExitsforResellerEndpoint() { return checkQuoteExitsforResellerEndpoint; }
 
-    public String getCopyQuoteEndpoint(){
-        return copyQuoteEndpoint;
-    }
+    public String getCopyQuoteEndpoint() { return copyQuoteEndpoint; }
 
-    public String getAddressesEndpoint(){
-        return addressesEndpoint;
-    }
+    public String getAddressesEndpoint() { return addressesEndpoint; }
 
-    public String getGtmBodyJSScript() {
-        return gtmBodyJSScript;
-    }
+    public String getGtmBodyJSScript() { return gtmBodyJSScript; }
 
     public String getIntouchCSSScriptsData() {
-        IntouchRequest intouchRequest =
-                new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl, "UK", "en-US");
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl, "UK", "en-US");
         return intouchService.fetchScriptsData(intouchRequest);
     }
 
     public String getIntouchJSScriptsData() {
-        IntouchRequest intouchRequest =
-                new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), intouchJSAPIUrl, "UK", "en-US");
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), intouchJSAPIUrl, "UK", "en-US");
         return intouchService.fetchScriptsData(intouchRequest);
     }
 
-    public String getIntouchHeaderAPIUrl() {
-        return intouchHeaderAPIUrl;
-    }
+    public String getIntouchHeaderAPIUrl() { return intouchHeaderAPIUrl; }
 
-    public String getIntouchFooterAPIUrl() {
-        return intouchFooterAPIUrl;
-    }
+    public String getIntouchFooterAPIUrl() { return intouchFooterAPIUrl; }
 
-    public String getIntouchUserCheckAPIUrl() {
-        return intouchUserCheckAPIUrl;
-    }
+    public String getIntouchUserCheckAPIUrl() { return intouchUserCheckAPIUrl; }
 
-    public String getIntouchCSSAPIUrl() {
-        return intouchCSSAPIUrl;
-    }
+    public String getIntouchCSSAPIUrl() { return intouchCSSAPIUrl; }
 
-    public String getIntouchJSAPIUrl() {
-        return intouchJSAPIUrl;
-    }
+    public String getIntouchJSAPIUrl() { return intouchJSAPIUrl; }
 
-    public String getEcommerceAuthenticationLoginEndpoint() {
-        return ecommerceAuthenticationLoginEndpoint;
-    }
+    public String getEcommerceAuthenticationLoginEndpoint() { return ecommerceAuthenticationLoginEndpoint; }
 
-    public String getUserEndpoint() {
-        return getUserEndpoint;
-    }
+    public String getUserEndpoint() { return getUserEndpoint; }
 }

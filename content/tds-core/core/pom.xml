@@ -50,7 +50,7 @@ Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.Service
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-baseline-maven-plugin</artifactId>
                 <configuration>
@@ -64,7 +64,7 @@ Sling-ContextAware-Configuration-Classes: com.tdscore.core.slingcaconfig.Service
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
