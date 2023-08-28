@@ -91,13 +91,6 @@ function RenewalsGrid(props) {
     secondLevelOptions.sort = null;
   }
 
-  if (hasLocalStorageData(TOASTER_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
-    const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
-    const transactionNumber = toasterData.Child?.props?.data;
-    toasterData.Child = <TransactionNumber data={transactionNumber}/>   
-    setTimeout(() => setCustomState({key:'toaster', value:toasterData}), 800);
-  }
-
   const redirectToShop = () => {
     if(!shopURL) return;
     window.location = shopURL;
@@ -223,12 +216,6 @@ function RenewalsGrid(props) {
     }
   }, [])
 
-  useEffect(() => {
-    if(!isFromRenewalDetailsPage()) {
-      clearLocalStorageGridData();
-    }
-  }, []);
-
   const _onAfterGridInit = (config) => {
     const value = config.api;
     setCustomState({ key: 'gridApi', value });
@@ -246,6 +233,19 @@ function RenewalsGrid(props) {
       defaultState: { sort: null },
     }
     config.columnApi.applyColumnState({...columnState})
+
+    if (!!userData) {
+      if (hasLocalStorageData(TOASTER_LOCAL_STORAGE_KEY) ) {
+        const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
+        const transactionNumber = toasterData.Child?.props?.data;
+        toasterData.Child = <TransactionNumber data={transactionNumber}/>   
+        setTimeout(() => setCustomState({key:'toaster', value:toasterData}), 800);
+      }
+
+      if(!isFromRenewalDetailsPage()) {
+        clearLocalStorageGridData();
+      }
+    }
   }
 
   function tootltipVal(event) {
