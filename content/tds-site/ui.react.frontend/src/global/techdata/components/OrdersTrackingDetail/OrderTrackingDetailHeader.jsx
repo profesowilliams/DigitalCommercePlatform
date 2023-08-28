@@ -58,7 +58,7 @@ const OrderTrackingDetailHeader = ({
   );
 
   const id = apiResponse?.content?.orderNumber;
-  const poNumber = apiResponse?.content?.poNumber;
+  const poNumber = apiResponse?.content?.customerPO;
   const hasMultipleDNotes = deliveryNotes.length > 1;
   const hasMultipleInvoices = invoices.length > 1;
   const handleDownloadDNote = () => {
