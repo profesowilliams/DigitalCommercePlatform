@@ -658,10 +658,9 @@ function Grid(props) {
 
   useEffect(() => {
     if (responseError) {
-      gridApi.current.showNoRowsOverlay();
+      gridApi.current?.showNoRowsOverlay();
     }
-  }, [responseError]);
-
+  }, [responseError, gridApi.current]);
   return (
     <div className={`cmp-grid ag-theme-alpine`} ref={gridNodeRef}>
       <Fragment>

@@ -32,7 +32,6 @@ import MainGridHeader from './MainGrid/MainGridHeader';
 import {
   addCurrencyToTotalColumn,
   doesCurrentSearchMatchResult,
-  downloadFileBlob,
   getPaginationValue,
   isLocalDevelopment,
   setLocalStorageData,
@@ -45,10 +44,11 @@ import {
 } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
-import { getSessionInfo } from "../../../../utils/user/get";
+import { getSessionInfo } from '../../../../utils/user/get';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
+  const areSearchParamsValid = useRef(false);
   const previousFilter = useRef(false);
   const hasSortChanged = useRef(false);
   const previousSortChanged = useRef(false);
@@ -151,6 +151,10 @@ function OrdersTrackingGrid(props) {
     config.columnApi.applyColumnState({ ...columnState });
   };
 
+  const areUrlSearchParamsPresent =
+    window.location.search.includes('CustomerId=') &&
+    window.location.search.includes('SalesOrg=');
+
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
     const queryOperations = {
@@ -195,6 +199,11 @@ function OrdersTrackingGrid(props) {
 
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
+    } else if (
+      areUrlSearchParamsPresent &&
+      areSearchParamsValid.current === false
+    ) {
+      return;
     } else {
       const mappedResponse = mapServiceData(response);
       const paginationValue = getPaginationValue(
@@ -295,6 +304,27 @@ function OrdersTrackingGrid(props) {
     pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
   }, []);
 
+  const customerNumber = userData?.activeCustomer?.customerNumber;
+  const salesOrg = userData?.activeCustomer?.salesOrg;
+
+  useEffect(() => {
+    if (!userData) {
+      return;
+    } else if (
+      window.location.search.includes(`CustomerId=${customerNumber}`) &&
+      window.location.search.includes(`SalesOrg=${salesOrg}`)
+    ) {
+      if (window.location.search.includes('report=EOL')) {
+        reportFilterValue.current.value = 'EOLReport';
+        onQueryChanged();
+      }
+      areSearchParamsValid.current = true;
+    } else {
+      areSearchParamsValid.current = false;
+      setResponseError(true);
+    }
+  }, [userData]);
+  
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (

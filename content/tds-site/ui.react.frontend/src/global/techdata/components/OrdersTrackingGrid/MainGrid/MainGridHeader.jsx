@@ -1,4 +1,4 @@
-import React, { cloneElement, useState } from 'react';
+import React, { cloneElement, useState, useEffect } from 'react';
 import Report from '../Report/Report';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
 import OrderSearch from '../Search/OrderSearch';
@@ -103,7 +103,13 @@ function MainGridHeader({
       ofLabel={paginationLabels.of}
     />,
   ];
-
+  useEffect(() => {
+    reportFilterValue.current.value &&
+      setPill({
+        key: 'EOLReport',
+        label: gridConfig?.reportLabels?.eolReportLabel,
+      });
+  }, [reportFilterValue.current.value]);
   return (
     <div className="cmp-base-grid-subheader">
       <div className="cmp-base-grid-subheader-left">
