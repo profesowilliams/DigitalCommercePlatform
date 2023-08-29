@@ -10,9 +10,11 @@ import { useStore } from '../../../../../utils/useStore';
 const areItemsListIdentical = (items, itemsCopy) => {
   // This function compares only quantities rather than all items' parameters
   const difference = items.find((item) => {
-    const index = itemsCopy.findIndex((copyItem) => copyItem.id === item.id);
+    const index = itemsCopy.findIndex(
+      (copyItem) => copyItem.line === item.line
+    );
     if (index > -1) {
-      return itemsCopy[index].quantity !== item.quantity;
+      return itemsCopy[index].orderQuantity !== item.orderQuantity;
     } else return false;
   });
   return Boolean(!difference);
@@ -91,7 +93,7 @@ function OrderModificationFlyout({
   );
 
   const handleAmountChange = (index, newAmount) => {
-    itemsCopy[index] = { ...items[index], quantity: newAmount };
+    itemsCopy[index] = { ...items[index], orderQuantity: newAmount };
     setOrderChanged(!areItemsListIdentical(items, itemsCopy));
   };
 
@@ -125,7 +127,7 @@ function OrderModificationFlyout({
         <ul className="cmp-flyout-list">
           {items.map((item, index) => (
             <LineItem
-              key={item.id}
+              key={item.line}
               index={index}
               item={item}
               onChange={handleAmountChange}

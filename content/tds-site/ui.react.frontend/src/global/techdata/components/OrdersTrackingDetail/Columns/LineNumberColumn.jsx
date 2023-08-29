@@ -1,8 +1,9 @@
 import React from 'react'
 
 function LineNumberColumn({data}) {
+  console.log(data);
   return (
-    <div className="cmp-order-tracking-grid__id-column">{`${data?.id}`}</div>
+    <div className="cmp-order-tracking-grid__id-column">{`${data?.line}`}</div>
   );
 }
 

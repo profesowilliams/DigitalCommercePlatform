@@ -4,7 +4,7 @@ function QuantityColumn({line}) {
   //TODO: Add .map() over deliveryNotes
   return (
     <div>
-      {line?.deliveryNotes[0]?.quantityDelivered || `${line?.quantity}`}
+      {line?.deliveryNotes[0]?.quantityDelivered || `${line?.orderQuantity}`}
     </div>
   );
 }

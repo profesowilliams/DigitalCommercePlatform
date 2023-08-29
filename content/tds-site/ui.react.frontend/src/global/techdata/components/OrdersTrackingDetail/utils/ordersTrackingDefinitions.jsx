@@ -18,7 +18,7 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
       id: <LineNumberColumn data={data} />,
       quantity: <QuantityColumn data={data} />,
       xxxxxxxxx: <ShiptDateColumn data={data} />,
-      status: <StatusColumn data={data} />,      
+      status: <StatusColumn data={data} />,
       totalPriceFormatted: <TotalColumn data={data} />,
       unitPriceFormatted: <UnitCostColumn data={data} />,
     };

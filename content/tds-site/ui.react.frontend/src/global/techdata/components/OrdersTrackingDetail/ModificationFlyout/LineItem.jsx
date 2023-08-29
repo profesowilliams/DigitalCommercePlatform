@@ -14,7 +14,7 @@ const LineItem = ({
   setProductID,
 }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
-  const [currentValue, setCurrentValue] = useState(item.quantity);
+  const [currentValue, setCurrentValue] = useState(item.orderQuantity);
   const [decreasedReason, setDecreasedReason] = useState('');
   const [quantityDecreased, setQuantityDecreased] = useState(false);
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
@@ -23,13 +23,16 @@ const LineItem = ({
     (st) => st.reasonDropdownValues
   );
 
-  const calculatedValue = currentValue - item?.quantity;
+  const calculatedValue = currentValue - item?.orderQuantity;
   const handleAmountChange = (newValue) => {
-    setQuantityIncreased(Boolean(newValue > item.quantity));
-    setQuantityDecreased(Boolean(newValue < item.quantity));
+    setQuantityIncreased(Boolean(newValue > item.orderQuantity));
+    setQuantityDecreased(Boolean(newValue < item.orderQuantity));
     setCurrentValue(newValue);
     onChange(index, newValue);
     setProductID(item?.tdNumber);
+    if (currentValue >= item.orderQuantity) {
+      setDoesReasonDropdownHaveEmptyItems(false);
+    }
   };
   useEffect(() => {
     setQuantityDifference(calculatedValue);
@@ -39,22 +42,23 @@ const LineItem = ({
     const newArray = reasonDropdownValues;
     newArray[index] = val;
     setDoesReasonDropdownHaveEmptyItems(
-      newArray.some((dropdown) => dropdown === '')
+      newArray.some((dropdown) => dropdown === '') &&
+        currentValue < item.orderQuantity
     );
     setReasonDropdownValues(newArray);
     setDecreasedReason(val);
   };
 
   return (
-    <li key={item.id} className="cmp-flyout-list__element">
-      <div className="cmp-flyout-list__element__number">{item.id}</div>
+    <li key={item.line} className="cmp-flyout-list__element">
+      <div className="cmp-flyout-list__element__number">{item.line}</div>
       <div className="cmp-flyout-list__element__picture">
         <img src={item?.urlProductImage} alt="" />
       </div>
       <div className="cmp-flyout-list__element__title">
         <p>{item.displayName}</p>
         <div>{`${getDictionaryValueOrKey(labels?.lineMfgPartNo)} ${
-          item.manufacturerPart
+          item.mfrNumber
         }`}</div>
       </div>
       <div className="cmp-flyout-list__element__counter">
