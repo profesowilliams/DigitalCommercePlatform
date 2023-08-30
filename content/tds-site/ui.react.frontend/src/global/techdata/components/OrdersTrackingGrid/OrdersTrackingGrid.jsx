@@ -152,8 +152,9 @@ function OrdersTrackingGrid(props) {
   };
 
   const areUrlSearchParamsPresent =
-    window.location.search.includes('CustomerId=') &&
-    window.location.search.includes('SalesOrg=');
+    window.location.search.includes('customerId=') &&
+    window.location.search.includes('salesOrg=') &&
+    window.location.search.includes('report=EOL');
 
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
@@ -308,11 +309,11 @@ function OrdersTrackingGrid(props) {
   const salesOrg = userData?.activeCustomer?.salesOrg;
 
   useEffect(() => {
-    if (!userData) {
+    if (!userData || !areUrlSearchParamsPresent) {
       return;
     } else if (
-      window.location.search.includes(`CustomerId=${customerNumber}`) &&
-      window.location.search.includes(`SalesOrg=${salesOrg}`)
+      window.location.search.includes(`customerId=${customerNumber}`) &&
+      window.location.search.includes(`salesOrg=${salesOrg}`)
     ) {
       if (window.location.search.includes('report=EOL')) {
         reportFilterValue.current.value = 'EOLReport';
