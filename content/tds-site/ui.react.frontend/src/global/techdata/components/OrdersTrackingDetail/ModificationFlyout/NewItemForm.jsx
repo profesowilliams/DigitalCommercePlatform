@@ -15,7 +15,6 @@ const NewItemForm = ({ labels }) => {
   const isFormFilled = Object.values(values).every(
     (value) => value?.length > 0
   );
-  console.log(values, isFormFilled);
 
   return (
     <div className="new-item-form">
@@ -34,6 +33,7 @@ const NewItemForm = ({ labels }) => {
         id="standard-basic"
         label={getDictionaryValueOrKey(labels.quantity)}
         variant="standard"
+        type="number"
         InputLabelProps={{
           shrink: true,
         }}

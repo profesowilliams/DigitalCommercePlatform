@@ -256,7 +256,10 @@ function OrdersTrackingGrid(props) {
       doesCurrentSearchMatchResult(response[0], searchCriteria)
     ) {
       removeLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY);
-      window.location.href = `${componentProp.detailUrl}.html?id=${response[0].id}`;
+      window.location.href = `${location.href.substring(
+        0,
+        location.href.lastIndexOf('.')
+      )}/order-details.html?id=${response[0].id}`;
     }
     setIsLoading(false);
   };

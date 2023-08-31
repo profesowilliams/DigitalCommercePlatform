@@ -190,6 +190,9 @@ function _OrderSearch(
     const { option } = values;
     const inputValue = inputRef.current.value;
     if (!inputValue) return fetchAll();
+    // if (inputValue.length < 3) { // TODO: add proper handling in case there are less than 3 characters
+    //   return;
+    // }
     pushDataLayerGoogle(
       getSearchAnalyticsGoogle(searchAnalyticsLabel, option, inputValue)
     );

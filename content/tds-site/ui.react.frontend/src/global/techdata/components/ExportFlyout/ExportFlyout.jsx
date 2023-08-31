@@ -47,13 +47,16 @@ function ExportFlyout({
   isTDSynnex,
   exportAnalyticsLabel,
 }) {
+  const isOrderDetailsPage = window.location.href.includes(
+    'order-details.html?id='
+  );
   const exportFlyoutConfig = store((st) => st.exportFlyout);
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
     exportOptionsList ? exportOptionsList[0]?.key : []
   );
   const [secondarySelected, setSecondarySelected] = useState(
-    exportSecondaryOptionsList[1]?.key || []
+    (isOrderDetailsPage && exportSecondaryOptionsList[1]?.key) || []
   );
 
   const handleSelectChange = (event) => {
@@ -64,7 +67,7 @@ function ExportFlyout({
   };
   const closeFlyout = () => {
     effects.setCustomState({ key: 'exportFlyout', value: { show: false } });
-    setSecondarySelected(null);
+    isOrderDetailsPage && setSecondarySelected(null);
   };
 
   async function getExportAllOrderLines() {
