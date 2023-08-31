@@ -21,12 +21,9 @@ function DropdownOrderDetails({
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiServiceEndPointForDetails}?id=${data?.id}`
   );
-  const [activeTab, setActiveTab] = useState(0);
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
-  const handleTabChange = (tabIndex) => {
-    setActiveTab(tabIndex);
-  };
+  const noShippedItems = shippedItemsLeft === 0;
 
   const tabsConfig = [
     {
@@ -37,6 +34,9 @@ function DropdownOrderDetails({
       iconInActive: <TruckIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.shippedLabel,
       numberOfItems: shippedItemsLeft,
+      disabledClass: noShippedItems
+        ? 'order-line-details__header__disabled'
+        : '',
       content: apiResponse?.content ? (
         <ShippedTabGrid
           data={apiResponse?.content}
@@ -57,6 +57,7 @@ function DropdownOrderDetails({
       iconInActive: <DollyIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.notShippedLabel,
       numberOfItems: notShippedItemsLeft,
+      disabledClass: '',
       content: apiResponse?.content ? (
         <NotShippedTabGrid
           data={apiResponse?.content}
@@ -68,6 +69,21 @@ function DropdownOrderDetails({
       ),
     },
   ];
+
+  const [activeTab, setActiveTab] = useState(0);
+  const handleTabChange = (tabIndex) => {
+    if (!noShippedItems || tabIndex === 1) {
+      setActiveTab(tabIndex);
+    }
+  };
+
+  useEffect(() => {
+    if (shippedItemsLeft === 0) {
+      setActiveTab(1);
+    } else {
+      setActiveTab(0);
+    }
+  }, [shippedItemsLeft]);
 
   useEffect(() => {
     error && console.log('Error: ', error);
@@ -86,7 +102,7 @@ function DropdownOrderDetails({
             onClick={() => handleTabChange(tab.index)}
           >
             {activeTab === tab.index ? tab.iconActive : tab.iconInActive}
-            <span>
+            <span className={tab.disabledClass}>
               {getDictionaryValueOrKey(tab.label)} {!isLoading && '|'}
             </span>
             {!isLoading && (
