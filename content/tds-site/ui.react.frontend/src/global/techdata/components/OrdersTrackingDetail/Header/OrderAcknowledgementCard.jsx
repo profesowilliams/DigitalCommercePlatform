@@ -7,14 +7,16 @@ function OrderAcknowledgementCard({ content = {}, config }) {
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
-        {getDictionaryValueOrKey(config?.labels?.detailsOrderAcknowledgement)}
+        {getDictionaryValueOrKey(
+          config?.orderAcknowledgementLabels?.orderAcknowledgement
+        )}
       </div>
       <div>
         {reseller?.id && (
           <div className="card-container__contentGrid">
             <span>
               {getDictionaryValueOrKey(
-                config?.labels?.detailsCustomerAccountCode
+                config?.orderAcknowledgementLabels?.customerAccountCode
               )}
             </span>
             <span>{reseller?.id}</span>
@@ -23,7 +25,9 @@ function OrderAcknowledgementCard({ content = {}, config }) {
         {content.createdFormatted && (
           <div className="card-container__contentGrid">
             <span>
-              {getDictionaryValueOrKey(config?.labels?.detailsOrderDate)}
+              {getDictionaryValueOrKey(
+                config?.orderAcknowledgementLabels?.orderDate
+              )}
             </span>
             <span>{createdFormatted}</span>
           </div>
@@ -31,7 +35,9 @@ function OrderAcknowledgementCard({ content = {}, config }) {
         {poNumber && (
           <div className="card-container__contentGrid">
             <span>
-              {getDictionaryValueOrKey(config?.labels?.detailsPurchaseOrderNo)}
+              {getDictionaryValueOrKey(
+                config?.orderAcknowledgementLabels?.purchaseOrderNo
+              )}
             </span>
             <span>{poNumber}</span>
           </div>
@@ -39,7 +45,9 @@ function OrderAcknowledgementCard({ content = {}, config }) {
         {docType && (
           <div className="card-container__contentGrid">
             <span>
-              {getDictionaryValueOrKey(config?.labels?.detailsOrderType)}
+              {getDictionaryValueOrKey(
+                config?.orderAcknowledgementLabels?.orderType
+              )}
             </span>
             <span>{docType}</span>
           </div>

@@ -40,7 +40,7 @@ const OrderTrackingDetailHeader = ({
   };
 
   const items = apiResponse?.content?.items || [];
-  const labels = config?.labels;
+  const labels = config?.actionLabels;
 
   let deliveryNotes = [];
   items.map((item) => {
@@ -96,24 +96,24 @@ const OrderTrackingDetailHeader = ({
   const menuActionsItems = [
     {
       condition: areDeliveryNotesAvailable,
-      label: labels?.detailsActionViewDNotes,
+      label: labels?.viewDNotes,
       onClick: hasMultipleDNotes ? triggerDNotesFlyout : handleDownloadDNote,
     },
     {
       condition: hasAIORights && areInvoicesAvailable,
-      label: labels?.detailsActionViewInvoices,
+      label: labels?.viewInvoices,
       onClick: hasMultipleInvoices
         ? triggerInvoicesFlyout
         : handleDownloadInvoice,
     },
     {
       condition: hasOrderModificationRights,
-      label: labels?.detailsActionModifyOrder,
+      label: labels?.actionModifyOrder,
       onClick: handleOrderModification,
     },
     {
       condition: areSerialNumbersAvailable,
-      label: labels?.detailsActionExportSerialNumbers,
+      label: labels?.exportSerialNumbers,
       onClick: triggerExportFlyout,
     },
   ];
@@ -131,14 +131,14 @@ const OrderTrackingDetailHeader = ({
             underline="underline-none"
           >
             <i className="fas fa-chevron-left"></i>
-            {getDictionaryValueOrKey(config?.labels?.detailsBack)}
+            {getDictionaryValueOrKey(config?.labels?.back)}
           </Link>
         </div>
         <div className="title-container">
           {apiResponse?.content && (
             <OrderTrackingDetailTitle
               content={apiResponse.content}
-              label={config.labels?.detailsOrderNo}
+              label={config.labels?.orderNo}
             />
           )}
           <div
@@ -151,7 +151,7 @@ const OrderTrackingDetailHeader = ({
               onMouseOver={handleActionMouseOver}
               onMouseLeave={handleActionMouseLeave}
             >
-              {getDictionaryValueOrKey(config.labels?.detailsActions)}
+              {getDictionaryValueOrKey(config.labels?.actions)}
             </span>
             {actionsDropdownVisible && (
               <div className="actions-dropdown">

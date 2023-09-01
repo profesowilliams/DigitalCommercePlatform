@@ -5,7 +5,7 @@ const OrderTrackingContainer = ({ config }) => {
   return (
     <div className="details-container">
       <span className="details-preview">
-        {getDictionaryValueOrKey(config?.labels?.detailsLineHeader)}
+        {getDictionaryValueOrKey(config?.itemsLabels?.header)}
       </span>
     </div>
   );

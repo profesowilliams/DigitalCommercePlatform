@@ -56,12 +56,12 @@ function OrdersTrackingDetailGrid({
   const columnDefinitionsOverride = [
     {
       field: 'id',
-      headerName: getDictionaryValueOrKey(config?.labels?.lineNo),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
       width: gridColumnWidths.id,
     },
     {
       field: 'description',
-      headerName: getDictionaryValueOrKey(config?.labels?.lineDescription),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.description),
       cellHeight: () => 80,
       cellRenderer: ({ data }) => (
         <DescriptionColumn line={data} config={gridProps} />
@@ -70,13 +70,13 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'status',
-      headerName: getDictionaryValueOrKey(config?.labels?.lineStatus),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
       cellRenderer: ({ data }) => <LineStatusColumn line={data} />,
       width: gridColumnWidths.status,
     },
     {
       field: 'shipDate',
-      headerName: getDictionaryValueOrKey(config?.labels?.lineShipDate),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.shipDate),
       cellRenderer: ({ data }) => (
         <ShipDateColumn line={data} config={gridProps} />
       ),
@@ -85,7 +85,7 @@ function OrdersTrackingDetailGrid({
     {
       field: 'unitPriceFormatted',
       headerName: getDictionaryValueOrKey(
-        config?.labels?.lineUnitPrice
+        config?.itemsLabels?.unitPrice
       )?.replace(
         '{currency-code}',
         data?.paymentDetails?.currency || defaultCurrency
@@ -94,7 +94,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'quantity',
-      headerName: getDictionaryValueOrKey(config?.labels?.lineQuantity),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
       cellRenderer: ({ data }) => (
         <QuantityColumn line={data} config={gridProps} />
       ),
@@ -103,7 +103,7 @@ function OrdersTrackingDetailGrid({
     {
       field: 'totalPriceFormatted',
       headerName: getDictionaryValueOrKey(
-        config?.labels?.lineTotalPrice
+        config?.itemsLabels?.lineTotalPrice
       )?.replace(
         '{currency-code}',
         data?.paymentDetails?.currency || defaultCurrency

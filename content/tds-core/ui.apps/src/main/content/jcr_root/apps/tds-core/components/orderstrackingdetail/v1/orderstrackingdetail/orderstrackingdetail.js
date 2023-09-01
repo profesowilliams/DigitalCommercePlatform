@@ -5,6 +5,13 @@ use(["../../../common/utils.js"], function (utils) {
   let jsonObject = {};
   let resourceResolver = resource.getResourceResolver();
   let labels = {};
+  let itemsLabels = {};
+  let actionLabels = {};
+  let soldToLabels = {};
+  let orderAcknowledgementLabels = {};
+  let contactLabels = {};
+  let footerLabels = {};
+  let orderModifyLabels = {};
   let dNotesFlyout = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
@@ -26,44 +33,131 @@ use(["../../../common/utils.js"], function (utils) {
     "menuCopy",
     "menuCopyWithHeaders",
     "menuExport",
+    "back",
+    "orderNo",
+    "actions",
+  ];
+
+  properties &&
+    propertiesList.map((property) => {
+      labels[property] = properties[property];
+    });
+
+  if (labels != null) {
+    jsonObject["labels"] = labels;
+  }
+
+  // ItemsLabels
+  const itemsLabelsList = [
+    "header",
     "lineNo",
-    "lineDescription",
+    "description",
     "lineStatus",
-    "lineShipDate",
-    "lineUnitPrice",
-    "lineQuantity",
+    "shipDate",
+    "unitPrice",
+    "itemsQuantity",
     "lineTotalPrice",
-    "lineMfgPartNo",
-    "lineTdsPartNo",
-    "detailsActionViewDNotes",
-    "detailsActionViewInvoices",
-    "detailsActionModifyOrder",
-    "detailsActionExportSerialNumbers",
-    "detailsActionTrack",
-    "detailsToasterCopySerialNumbersMessage",
-    "detailsActionCopySerialNumber",
-    "detailsLineHeader",
-    "detailsBack",
-    "detailsOrderNo",
-    "detailsActions",
-    "detailsSoldTo",
-    "detailsSoldToPhone",
-    "detailsSoldToEmail",
-    "detailsOrderAcknowledgement",
-    "detailsCustomerAccountCode",
-    "detailsOrderDate",
-    "detailsPurchaseOrderNo",
-    "detailsOrderType",
-    "detailsContact",
-    "detailsContactName",
-    "detailsContactPhone",
-    "detailsContactEmail",
-    "detailsOrderSubtotal",
-    "detailsTotalOrderNetPrice",
-    "detailsFooterLine1",
-    "detailsFooterLine2",
-    "detailsFooterLine3",
-    "detailsFooterLine3Link",
+    "mfgPartNo",
+    "tdsPartNo",
+  ];
+
+  properties &&
+    itemsLabelsList.map((property) => {
+      itemsLabels[property] = properties[property];
+    });
+
+  if (itemsLabels != null) {
+    jsonObject["itemsLabels"] = itemsLabels;
+  }
+
+  // ActionLabels
+  const actionLabelsList = [
+    "viewDNotes",
+    "viewInvoices",
+    "actionModifyOrder",
+    "exportSerialNumbers",
+    "track",
+    "toasterCopySerialNumbersMessage",
+    "copySerialNumber",
+  ];
+
+  properties &&
+    actionLabelsList.map((property) => {
+      actionLabels[property] = properties[property];
+    });
+
+  if (actionLabels != null) {
+    jsonObject["actionLabels"] = actionLabels;
+  }
+
+  // SoldToLabels
+  const soldToLabelsList = ["soldTo", "soldToPhone", "soldToEmail"];
+
+  properties &&
+    soldToLabelsList.map((property) => {
+      soldToLabels[property] = properties[property];
+    });
+
+  if (soldToLabels != null) {
+    jsonObject["soldToLabels"] = soldToLabels;
+  }
+
+  // OrderAcknowledgementLabels
+  const orderAcknowledgementLabelsList = [
+    "orderAcknowledgement",
+    "customerAccountCode",
+    "orderDate",
+    "purchaseOrderNo",
+    "orderType",
+  ];
+
+  properties &&
+    orderAcknowledgementLabelsList.map((property) => {
+      orderAcknowledgementLabels[property] = properties[property];
+    });
+
+  if (orderAcknowledgementLabels != null) {
+    jsonObject["orderAcknowledgementLabels"] = orderAcknowledgementLabels;
+  }
+
+  // ContactLabels
+  const contactLabelsList = [
+    "contact",
+    "contactName",
+    "contactPhone",
+    "contactEmail",
+  ];
+
+  properties &&
+    contactLabelsList.map((property) => {
+      contactLabels[property] = properties[property];
+    });
+
+  if (contactLabels != null) {
+    jsonObject["contactLabels"] = contactLabels;
+  }
+
+  // FooterLabels
+  const footerLabelsList = [
+    "orderSubtotal",
+    "totalOrderNetPrice",
+    "line1",
+    "line2",
+    "line3",
+    "line3Link",
+  ];
+
+  properties &&
+    footerLabelsList.map((property) => {
+      footerLabels[property] = properties[property];
+    });
+
+  if (footerLabels != null) {
+    jsonObject["footerLabels"] = footerLabels;
+  }
+
+  // OrderModifyLabels
+  const orderModifyLabelsList = [
     "addNewItem",
     "editQuantities",
     "lineTotal",
@@ -82,13 +176,14 @@ use(["../../../common/utils.js"], function (utils) {
   ];
 
   properties &&
-    propertiesList.map((property) => {
-      labels[property] = properties[property];
+    orderModifyLabelsList.map((property) => {
+      orderModifyLabels[property] = properties[property];
     });
 
-  if (labels != null) {
-    jsonObject["labels"] = labels;
+  if (orderModifyLabels != null) {
+    jsonObject["orderModifyLabels"] = orderModifyLabels;
   }
+
 
   //Invoices flyout options
   let invoicesColumnList = utils.getDataFromMultifield(

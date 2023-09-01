@@ -29,7 +29,7 @@ const ActionsColumn = ({
     width: '1.3rem',
   };
 
-  const labels = config?.labels;
+  const labels = config?.actionLabels;
 
   const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
   const areInvoicesAvailable = line.invoices.length > 0;
@@ -45,7 +45,7 @@ const ActionsColumn = ({
     isAutoClose: true,
     isSuccess: true,
     message: getDictionaryValueOrKey(
-      config?.labels?.detailsToasterCopySerialNumbersMessage
+      config?.actionLabels?.toasterCopySerialNumbersMessage
     ),
   };
   const handleDownloadDnote = () => {
@@ -66,22 +66,22 @@ const ActionsColumn = ({
   const menuActionsItems = [
     {
       condition: true,
-      label: labels?.detailsActionTrack,
+      label: labels?.track,
       onClick: null,
     },
     {
       condition: areDeliveryNotesAvailable,
-      label: labels?.detailsActionViewDNotes,
+      label: labels?.viewDNotes,
       onClick: handleDownloadDnote,
     },
     {
       condition: hasAIORights && areInvoicesAvailable,
-      label: labels?.detailsActionViewInvoices,
+      label: labels?.viewInvoices,
       onClick: handleDownloadInvoice,
     },
     {
       condition: isSerialNumberAvailable,
-      label: labels?.detailsActionCopySerialNumber,
+      label: labels?.copySerialNumber,
       onClick: handleCopySerialNumbers,
     },
   ];

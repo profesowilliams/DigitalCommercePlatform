@@ -30,15 +30,15 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
         <div className="box-container">
           <div className="box-container__leftPart">
             <span className="box-container__leftPart-line1">
-              {getDictionaryValueOrKey(config.labels?.detailsFooterLine1)}
+              {getDictionaryValueOrKey(config.footerLabels?.line1)}
             </span>
             <span className="box-container__leftPart-line2">
-              {getDictionaryValueOrKey(config.labels?.detailsFooterLine2)}
+              {getDictionaryValueOrKey(config.footerLabels?.line2)}
             </span>
             <span className="box-container__leftPart-line1">
-              {getDictionaryValueOrKey(config.labels?.detailsFooterLine3)}
-              <a href={config.labels?.detailsFooterLine3Link}>
-                {getDictionaryValueOrKey(config.labels?.detailsFooterLine3Link)}
+              {getDictionaryValueOrKey(config.footerLabels?.line3)}
+              <a href={config.footerLabels?.line3Link}>
+                {getDictionaryValueOrKey(config.footerLabels?.line3Link)}
               </a>
             </span>
           </div>
@@ -46,10 +46,10 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
             <span className="box-container__rightPart-subtotalLabel">
               {multiplePages
                 ? `${getDictionaryValueOrKey(
-                    config.labels?.detailsOrderSubtotal
+                    config.footerLabels?.orderSubtotal
                   )}: `
                 : `${getDictionaryValueOrKey(
-                    config.labels?.detailsTotalOrderNetPrice
+                    config.footerLabels?.totalOrderNetPrice
                   )}: `}
             </span>
             <span className="box-container__rightPart-subtotalValue">

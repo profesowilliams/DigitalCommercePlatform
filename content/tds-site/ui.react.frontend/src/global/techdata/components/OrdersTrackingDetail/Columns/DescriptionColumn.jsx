@@ -17,12 +17,12 @@ function DescriptionColumn({ line, config }) {
         )}
         <div className="cmp-order-tracking-grid-details__description-text">
           {line?.manufacturerPart && (
-            <div>{`${getDictionaryValueOrKey(config?.labels?.lineMfgPartNo)} ${
+            <div>{`${getDictionaryValueOrKey(config?.itemsLabels?.mfgPartNo)} ${
               line?.manufacturerPart
             }`}</div>
           )}
           {line?.tdNumber && (
-            <div>{`${getDictionaryValueOrKey(config?.labels?.lineTdsPartNo)} ${
+            <div>{`${getDictionaryValueOrKey(config?.itemsLabels?.tdsPartNo)} ${
               line?.tdNumber
             }`}</div>
           )}

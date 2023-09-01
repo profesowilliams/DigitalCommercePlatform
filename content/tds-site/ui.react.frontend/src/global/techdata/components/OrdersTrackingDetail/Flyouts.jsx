@@ -47,7 +47,7 @@ const Flyouts = ({
         subheaderReference={document.querySelector('.subheader > div > div')}
         items={apiResponse?.content?.items}
         apiResponse={apiResponse?.content}
-        labels={config.labels}
+        labels={config.orderModifyLabels}
         config={config}
       />
       <ExportFlyout

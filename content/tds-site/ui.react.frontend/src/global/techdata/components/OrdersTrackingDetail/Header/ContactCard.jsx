@@ -6,13 +6,13 @@ function ContactCard({ content, config }) {
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
-        {getDictionaryValueOrKey(config?.labels?.detailsContact)}
+        {getDictionaryValueOrKey(config?.contactLabels?.contact)}
       </div>
       <div>
         {/* {
           <div className="card-container__contentGridContact">
             <span>
-              {getDictionaryValueOrKey(config?.labels?.detailsContactName)}
+              {getDictionaryValueOrKey(config?.contactLabels?.contactName)}
             </span>
             <span>lorem ipsum</span>
           </div>
@@ -20,7 +20,7 @@ function ContactCard({ content, config }) {
         {
           <div className="card-container__contentGridContact">
             <span>
-              {getDictionaryValueOrKey(config?.labels?.detailsContactPhone)}
+              {getDictionaryValueOrKey(config?.contactLabels?.contactPhone)}
             </span>
             <span>lorem ipsum</span>
           </div>
@@ -28,7 +28,7 @@ function ContactCard({ content, config }) {
         {
           <div className="card-container__contentGridContact">
             <span>
-              {getDictionaryValueOrKey(config?.labels?.detailsContactEmail)}
+              {getDictionaryValueOrKey(config?.contactLabels?.contactEmail)}
             </span>
             <span>lorem ipsum</span>
           </div>

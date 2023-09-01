@@ -17,7 +17,7 @@ function SoldToCard({ shipTo = {}, config }) {
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
-        {getDictionaryValueOrKey(config?.labels?.detailsSoldTo)}
+        {getDictionaryValueOrKey(config?.soldToLabels?.soldTo)}
       </div>
       <div>
         {companyName && (
@@ -43,15 +43,14 @@ function SoldToCard({ shipTo = {}, config }) {
       <div className="card-container__bottom">
         {phoneNumber && (
           <>
-            {getDictionaryValueOrKey(config?.labels?.detailsSoldToPhone)}{' '}
+            {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)}{' '}
             {phoneNumber}
             <br />
           </>
         )}
         {email && (
           <>
-            {getDictionaryValueOrKey(config?.labels?.detailsSoldToEmail)}{' '}
-            {email}
+            {getDictionaryValueOrKey(config?.soldToLabels?.soldToEmail)} {email}
           </>
         )}
       </div>
