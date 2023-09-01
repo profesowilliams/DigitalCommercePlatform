@@ -12,6 +12,8 @@ const LineItem = ({
   labels,
   setQuantityDifference,
   setProductID,
+  setItemsRequestData,
+  itemsRequestData,
 }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.orderQuantity);
@@ -30,6 +32,27 @@ const LineItem = ({
     setCurrentValue(newValue);
     onChange(index, newValue);
     setProductID(item?.tdNumber);
+    const itemsRequestDataCopy = itemsRequestData.some(
+      (data) => data.tdNumber !== item.tdNumber
+    )
+      ? itemsRequestData.filter((data) => data.tdNumber !== item.tdNumber)
+      : itemsRequestData;
+    Boolean(newValue < item.orderQuantity) &&
+      setItemsRequestData([
+        ...itemsRequestDataCopy,
+        {
+          ...item,
+          orderQuantity: newValue,
+          origQuantity: item.orderQuantity,
+          subtotalPrice: '',
+          subtotalPriceFormatted: '',
+          isShipped: false,
+          status: 'Rejected',
+          ShipDate: '',
+          ShipDateFormatted: '',
+          isShipment: false,
+        },
+      ]);
     if (currentValue >= item.orderQuantity) {
       setDoesReasonDropdownHaveEmptyItems(false);
     }

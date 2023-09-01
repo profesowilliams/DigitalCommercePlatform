@@ -11,6 +11,8 @@ const Flyouts = ({
   config,
   hasAIORights,
   apiResponse,
+  gridRef,
+  rowToGrayOutTDNameRef,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
 
@@ -49,6 +51,8 @@ const Flyouts = ({
         apiResponse={apiResponse?.content}
         labels={config.orderModifyLabels}
         config={config}
+        gridRef={gridRef}
+        rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

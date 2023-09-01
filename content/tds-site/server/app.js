@@ -7867,6 +7867,47 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   }
 });
 
+app.post("/ui-commerce/v2/OrderModifyChange", (req, res) => {
+  try {
+      setTimeout(() => {
+        res.status(500).json({
+          SalesOrg: "0014",
+          CustomerID: "325009",
+          OrderID: "I1234567",
+          isError: false,
+          message: "",
+          ReduceLine: [],
+          AddLine: [
+            {
+              ProductID: "5736235",
+              isError: true,
+              message: "Product does not exist",
+            },
+          ],
+        });
+    }, 5000);
+  } catch (err) {
+    console.log(err);
+    setTimeout(() => {
+      res.status(500).json({
+        SalesOrg: "0014",
+        CustomerID: "325009",
+        OrderID: "I1234567",
+        isError: false,
+        message: "",
+        ReduceLine: [],
+        AddLine: [
+          {
+            ProductID: "5736235",
+            isError: true,
+            message: "Product does not exist",
+          },
+        ],
+      });
+    }, 5000);
+  }
+});
+
 app.get("/ui-commerce/v2/OrdersExport", function (req, res) {
   return res.download("exportOrderDetail.xlsx");
 });

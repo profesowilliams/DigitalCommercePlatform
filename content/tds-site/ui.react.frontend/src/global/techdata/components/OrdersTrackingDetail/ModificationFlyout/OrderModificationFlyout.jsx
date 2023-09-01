@@ -27,12 +27,15 @@ function OrderModificationFlyout({
   labels = {},
   config = {},
   apiResponse,
+  gridRef,
+  rowToGrayOutTDNameRef,
 }) {
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [quantityDifference, setQuantityDifference] = useState();
   const [productID, setProductID] = useState('');
+  const [itemsRequestData, setItemsRequestData] = useState([]);
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
@@ -41,10 +44,10 @@ function OrderModificationFlyout({
   const doesReasonDropdownHaveEmptyItems = store(
     (st) => st.doesReasonDropdownHaveEmptyItems
   );
-  const effects = store((st) => st.effects);
+  const { setCustomState } = store((st) => st.effects);
   const closeFlyout = () => {
     setNewItemFormVisible(false);
-    effects.setCustomState({
+    setCustomState({
       key: 'orderModificationFlyout',
       value: { show: false },
     });
@@ -68,17 +71,56 @@ function OrderModificationFlyout({
       },
     ],
   };
+  const requestChangeURL = config?.orderModifyChangeEndpoint;
+
   const handleUpdate = async () => {
     try {
       const result = await usPost(requestURL, payload);
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState();
         closeFlyout();
+
+        for (const item of itemsRequestData) {
+          const payloadChange = {
+            id: item.id,
+            quantity: item.quantity,
+            origQuantity: item.origQuantity,
+            subtotalPrice: item.subtotalPrice,
+            subtotalPriceFormatted: item.subtotalPriceFormatted,
+            ShipDate: item.ShipDate,
+            ShipDateFormatted: item.ShipDateFormatted,
+            isShipment: item.isShipment,
+            status: item.status,
+          };
+
+          const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
+          const greyOutRow = async () => {
+            await timeout(5000);
+            rowToGrayOutTDNameRef.current = item.tdNumber;
+            gridRef.current?.api.redrawRows();
+          };
+
+          const fetchChangeData = async () => {
+            usPost(requestChangeURL, payloadChange);
+          };
+
+          const clear = async () => {
+            await timeout(6000);
+            rowToGrayOutTDNameRef.current = undefined;
+            gridRef.current?.api.redrawRows();
+          };
+
+          greyOutRow()
+            .then(() => fetchChangeData())
+            .then(() => clear());
+        }
+        return result;
       }
-      return result;
     } catch (error) {
       console.error('Error updating order:', error);
     }
+    setItemsRequestData([]);
+    setIsDisabled(true);
   };
 
   const buttonsSection = (
@@ -134,6 +176,8 @@ function OrderModificationFlyout({
               labels={labels}
               setQuantityDifference={setQuantityDifference}
               setProductID={setProductID}
+              itemsRequestData={itemsRequestData}
+              setItemsRequestData={setItemsRequestData}
             />
           ))}
         </ul>

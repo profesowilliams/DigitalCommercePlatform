@@ -335,7 +335,7 @@ function OrdersTrackingGrid(props) {
         <>
           {hasAccess ? (
             <div className="cmp-order-tracking-grid">
-              {pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'))}
+              {pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'))}
               <MainGridHeader
                 onQueryChanged={onQueryChanged}
                 searchLabels={searchLabels}

@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useGet from '../../hooks/useGet';
 import { getUrlParams } from '../../../../utils';
 import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
 import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
-import { getSessionInfo } from "../../../../utils/user/get";
+import { getSessionInfo } from '../../../../utils/user/get';
 import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import Flyouts from './Flyouts';
-import {
-  getOrderDetailsAnalyticsGoogle,
-  pushDataLayerGoogle,
-} from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
   const [userData, setUserData] = useState(null);
+  const gridRef = useRef();
+  const rowToGrayOutTDNameRef = useRef();
 
   const componentProps = JSON.parse(props.componentProp);
   const config = {
@@ -64,9 +62,6 @@ function OrdersTrackingDetail(props) {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
     });
-    pushDataLayerGoogle(
-      getOrderDetailsAnalyticsGoogle(config.labels?.detailsOrderNo)
-    );
   }, []);
 
   return (
@@ -85,6 +80,8 @@ function OrdersTrackingDetail(props) {
             config={config}
             hasAIORights={hasAIORights}
             openFilePdf={openFilePdf}
+            gridRef={gridRef}
+            rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
           />
           <OrderTrackingDetailFooter
             config={config}
@@ -98,6 +95,8 @@ function OrdersTrackingDetail(props) {
         config={config}
         hasAIORights={hasAIORights}
         apiResponse={apiResponse}
+        gridRef={gridRef}
+        rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
       />
     </>
   );

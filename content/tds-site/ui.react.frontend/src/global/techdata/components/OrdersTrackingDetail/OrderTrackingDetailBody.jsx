@@ -7,6 +7,8 @@ const OrderTrackingDetailBody = ({
   apiResponse,
   openFilePdf,
   hasAIORights,
+  gridRef,
+  rowToGrayOutTDNameRef,
 }) => {
   return (
     <div className="cmp-orders-qp__grid cmp-order-preview">
@@ -17,6 +19,8 @@ const OrderTrackingDetailBody = ({
           gridProps={config}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
+          gridRef={gridRef}
+          rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
         />
       )}
     </div>

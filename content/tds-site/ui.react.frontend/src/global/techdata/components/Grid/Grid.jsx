@@ -46,6 +46,8 @@ function Grid(props) {
     defaultSearchDateRange = setDefaultSearchDateRange(30),
     onDataLoad,
     responseError = null,
+    rowClassRules,
+    gridRef,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = '1.3.0';
@@ -283,6 +285,8 @@ function Grid(props) {
       getContextMenuItems={getContextMenuItems}
       popupParent={popupParent}
       getRowId={getRowId}
+      rowClassRules={rowClassRules}
+      ref={gridRef}
     >
       {filteredColumns.map((column) => {
         return (

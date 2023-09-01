@@ -318,6 +318,10 @@ use(["../../../common/utils.js"], function (utils) {
     this.serviceData.uiServiceDomain + this.serviceData.orderModifyEndpoint ||
     "";
 
+    jsonObject["orderModifyChangeEndpoint"] =
+      this.serviceData.uiServiceDomain +
+        this.serviceData.orderModifyChangeEndpoint || "";
+
   return {
     configJson: JSON.stringify(jsonObject),
   };
