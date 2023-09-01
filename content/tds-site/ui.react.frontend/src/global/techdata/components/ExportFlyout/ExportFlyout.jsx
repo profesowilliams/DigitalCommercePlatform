@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import Radio from '@mui/material/Radio';
@@ -67,7 +67,7 @@ function ExportFlyout({
   };
   const closeFlyout = () => {
     effects.setCustomState({ key: 'exportFlyout', value: { show: false } });
-    isOrderDetailsPage && setSecondarySelected(null);
+    !isOrderDetailsPage && setSecondarySelected(null);
   };
 
   async function getExportAllOrderLines() {
