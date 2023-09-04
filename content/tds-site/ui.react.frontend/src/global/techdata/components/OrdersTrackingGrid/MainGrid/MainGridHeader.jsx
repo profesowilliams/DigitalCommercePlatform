@@ -10,6 +10,7 @@ import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPaginati
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import { ORDER_SEARCH_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import { setLocalStorageData } from '../utils/gridUtils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function MainGridHeader({
   onQueryChanged,
@@ -26,9 +27,54 @@ function MainGridHeader({
   reportFilterValue,
 }) {
   const [pill, setPill] = useState(null);
+
   const searchOptions = [
     ...getPredefinedSearchOptionsList(searchLabels),
     ...searchOptionsList,
+  ];
+  const {
+    openOrdersLabel,
+    newBacklogLabel,
+    eolReportLabel,
+    todaysShipmentsDeliveriesLabel,
+    last7DaysOrdersLabel,
+    last30DaysOrdersLabel,
+    last7DaysShipmentsLabel,
+    last30DaysShipmentsLabel,
+  } = gridConfig?.reportLabels;
+  const reportOptions = [
+    {
+      key: 'OpenOrders',
+      label: getDictionaryValueOrKey(openOrdersLabel),
+    },
+    {
+      key: 'NewBacklog',
+      label: getDictionaryValueOrKey(newBacklogLabel),
+    },
+    {
+      key: 'TodaysShipmentsDeliveries',
+      label: getDictionaryValueOrKey(todaysShipmentsDeliveriesLabel),
+    },
+    {
+      key: 'Last7DaysOrders',
+      label: getDictionaryValueOrKey(last7DaysOrdersLabel),
+    },
+    {
+      key: 'Last30DaysOrders',
+      label: getDictionaryValueOrKey(last30DaysOrdersLabel),
+    },
+    {
+      key: 'Last7DaysShipments',
+      label: getDictionaryValueOrKey(last7DaysShipmentsLabel),
+    },
+    {
+      key: 'Last30DaysShipments',
+      label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
+    },
+    {
+      key: 'EOLReport',
+      label: getDictionaryValueOrKey(eolReportLabel),
+    },
   ];
 
   const removeDefaultDateRange = () => {
@@ -45,7 +91,13 @@ function MainGridHeader({
     onQueryChanged();
   };
 
+  const removeQueryParams = () => {
+    const newURL = window.location.pathname;
+    window.history.pushState({}, document.title, newURL);
+  };
+
   const handleDeletePill = () => {
+    removeQueryParams();
     setPill();
     onQueryChanged();
   };
@@ -86,8 +138,8 @@ function MainGridHeader({
       selectOption={onReportChange}
       ref={reportFilterValue}
       selectedKey={pill?.key}
-      gridConfig={gridConfig}
       reportAnalyticsLabel={analyticsCategories.report}
+      reportOptions={reportOptions}
     />,
     <VerticalSeparator />,
     <OrderExport />,
@@ -103,13 +155,26 @@ function MainGridHeader({
       ofLabel={paginationLabels.of}
     />,
   ];
+
   useEffect(() => {
-    reportFilterValue.current.value &&
-      setPill({
-        key: 'EOLReport',
-        label: gridConfig?.reportLabels?.eolReportLabel,
-      });
+    if (reportFilterValue.current.value) {
+      const selectedReport = reportOptions.find(
+        (option) => option.key === reportFilterValue.current.value
+      );
+
+      if (selectedReport) {
+        setPill({
+          key: selectedReport.key,
+          label: selectedReport.label,
+        });
+      } else {
+        setPill(null);
+      }
+    } else {
+      setPill(null);
+    }
   }, [reportFilterValue.current.value]);
+
   return (
     <div className="cmp-base-grid-subheader">
       <div className="cmp-base-grid-subheader-left">

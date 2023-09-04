@@ -12,53 +12,11 @@ import {
   getReportAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-function Report({ selectOption, selectedKey, reportAnalyticsLabel, gridConfig}, ref) {
-  const {
-    openOrdersLabel,
-    newBacklogLabel,
-    eolReportLabel,
-    todaysShipmentsDeliveriesLabel,
-    last7DaysOrdersLabel,
-    last30DaysOrdersLabel,
-    last7DaysShipmentsLabel,
-    last30DaysShipmentsLabel,
-  } = gridConfig?.reportLabels;
-  const reportOptions = [
-    {
-      key: 'OpenOrders',
-      label: getDictionaryValueOrKey(openOrdersLabel),
-    },
-    {
-      key: 'NewBacklog',
-      label: getDictionaryValueOrKey(newBacklogLabel),
-    },
-    {
-      key: 'TodaysShipmentsDeliveries',
-      label: getDictionaryValueOrKey(todaysShipmentsDeliveriesLabel),
-    },
-    {
-      key: 'Last7DaysOrders',
-      label: getDictionaryValueOrKey(last7DaysOrdersLabel),
-    },
-    {
-      key: 'Last30DaysOrders',
-      label: getDictionaryValueOrKey(last30DaysOrdersLabel),
-    },
-    {
-      key: 'Last7DaysShipments',
-      label: getDictionaryValueOrKey(last7DaysShipmentsLabel),
-    },
-    {
-      key: 'Last30DaysShipments',
-      label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
-    },
-    {
-      key: 'EOLReport',
-      label: getDictionaryValueOrKey(eolReportLabel),
-    },
-  ];
+function Report(
+  { selectOption, selectedKey, reportAnalyticsLabel, reportOptions },
+  ref
+) {
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(selectedKey);
   const wrapperRef = useRef(null);
