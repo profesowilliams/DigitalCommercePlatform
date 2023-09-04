@@ -348,9 +348,11 @@
         margin-left: 1rem;
       }
       &__ellipsis {
+        display: block;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 425px;
       }
       &__separateLine {
         display: flex;

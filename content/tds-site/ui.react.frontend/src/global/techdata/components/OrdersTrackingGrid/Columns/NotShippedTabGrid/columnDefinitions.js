@@ -14,7 +14,7 @@ const columnDefs = [
   {
     headerName: 'ITEM',
     field: 'item',
-    sortable: true,
+    sortable: false,
     width: '425px',
     cellStyle: {
       'white-space': 'normal',
