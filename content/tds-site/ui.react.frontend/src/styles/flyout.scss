@@ -308,7 +308,8 @@ $flyout-small-height-formax: 779px;
 
 .decreased-reason-dropdown {
   margin-left: 120px;
-  width: calc(100% - 150px);
+    width: 244px;
+      height: 66px;
 }
 
 .decreased-reason-select {
@@ -326,7 +327,7 @@ $flyout-small-height-formax: 779px;
   vertical-align: baseline;
 
   &__element {
-    height: 158px;
+    height: 160px;
     padding: 20px 0;
     border-bottom: 1px solid $v-divider-gray;
     display: grid;
@@ -356,8 +357,8 @@ $flyout-small-height-formax: 779px;
     }
     &__counter {
       grid-area: 2 / 3 / 3 / 4;
-      height: 76px;
-
+      height: 66px;
+        width: 596px;
       p {
         font-size: 14px;
         display: inline-block;

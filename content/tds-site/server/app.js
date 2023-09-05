@@ -7835,7 +7835,18 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
         OrderID: "I1234567",
         isError: false,
         message: "",
-        ReduceLine: [],
+        ReduceLine: [
+          {
+            LineID: "10",
+            Qty: "5",
+            RejectionReason: "Z2",
+          },
+          {
+            LineID: "20",
+            Qty: "3",
+            RejectionReason: "Z3",
+          },
+        ],
         AddLine: [
           {
             ProductID: "5736235",
@@ -7854,7 +7865,18 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
         OrderID: "I1234567",
         isError: false,
         message: "",
-        ReduceLine: [],
+        ReduceLine: [
+          {
+            LineID: "10",
+            Qty: "5",
+            RejectionReason: "Z2",
+          },
+          {
+            LineID: "20",
+            Qty: "3",
+            RejectionReason: "Z3",
+          },
+        ],
         AddLine: [
           {
             ProductID: "5736235",
@@ -7869,22 +7891,33 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
 
 app.post("/ui-commerce/v2/OrderModifyChange", (req, res) => {
   try {
-      setTimeout(() => {
-        res.status(500).json({
-          SalesOrg: "0014",
-          CustomerID: "325009",
-          OrderID: "I1234567",
-          isError: false,
-          message: "",
-          ReduceLine: [],
-          AddLine: [
-            {
-              ProductID: "5736235",
-              isError: true,
-              message: "Product does not exist",
-            },
-          ],
-        });
+    setTimeout(() => {
+      res.status(500).json({
+        SalesOrg: "0014",
+        CustomerID: "325009",
+        OrderID: "I1234567",
+        isError: false,
+        message: "",
+        ReduceLine: [
+          {
+            LineID: "10",
+            Qty: "5",
+            RejectionReason: "Z2",
+          },
+          {
+            LineID: "20",
+            Qty: "3",
+            RejectionReason: "Z3",
+          },
+        ],
+        AddLine: [
+          {
+            ProductID: "5736235",
+            isError: true,
+            message: "Product does not exist",
+          },
+        ],
+      });
     }, 5000);
   } catch (err) {
     console.log(err);
@@ -7895,7 +7928,18 @@ app.post("/ui-commerce/v2/OrderModifyChange", (req, res) => {
         OrderID: "I1234567",
         isError: false,
         message: "",
-        ReduceLine: [],
+        ReduceLine: [
+          {
+            LineID: "10",
+            Qty: "5",
+            RejectionReason: "Z2",
+          },
+          {
+            LineID: "20",
+            Qty: "3",
+            RejectionReason: "Z3",
+          },
+        ],
         AddLine: [
           {
             ProductID: "5736235",

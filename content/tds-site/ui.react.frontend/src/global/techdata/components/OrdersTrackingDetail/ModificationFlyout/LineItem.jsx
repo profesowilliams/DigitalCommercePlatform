@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
-import DecreasedReasonDropdown from './DecreasedReasonDropdown';
+import RejectedReasonDropdown from './RejectedReasonDropdown';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 
 const LineItem = ({
@@ -12,12 +12,14 @@ const LineItem = ({
   labels,
   setQuantityDifference,
   setProductID,
+  rejectedReason,
+  setRejectedReason,
+  setLineID,
   setItemsRequestData,
   itemsRequestData,
 }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.orderQuantity);
-  const [decreasedReason, setDecreasedReason] = useState('');
   const [quantityDecreased, setQuantityDecreased] = useState(false);
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);
@@ -69,7 +71,8 @@ const LineItem = ({
         currentValue < item.orderQuantity
     );
     setReasonDropdownValues(newArray);
-    setDecreasedReason(val);
+    setRejectedReason(val);
+    setLineID(item.line);
   };
 
   return (
@@ -99,9 +102,9 @@ const LineItem = ({
           </div>
         )}
         {quantityDecreased && (
-          <DecreasedReasonDropdown
+          <RejectedReasonDropdown
             labels={labels}
-            decreasedReason={decreasedReason}
+            rejectedReason={rejectedReason}
             handleChangeReason={handleChangeReason}
           />
         )}

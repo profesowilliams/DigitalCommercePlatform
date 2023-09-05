@@ -35,6 +35,8 @@ function OrderModificationFlyout({
   const [isDisabled, setIsDisabled] = useState(false);
   const [quantityDifference, setQuantityDifference] = useState();
   const [productID, setProductID] = useState('');
+  const [lineID, setLineID] = useState('');
+  const [rejectedReason, setRejectedReason] = useState('');
   const [itemsRequestData, setItemsRequestData] = useState([]);
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
@@ -61,8 +63,20 @@ function OrderModificationFlyout({
 
   const requestURL = config?.orderModifyEndpoint;
   const payload = {
+    SalesOrg: apiResponse?.SalesOrg,
+    CustomerID: apiResponse?.CustomerID,
     OrderID: apiResponse?.orderNumber,
-    ReduceLine: [],
+    isError: '',
+    message: '',
+    ReduceLine: [
+      {
+        LineID: `${lineID}`,
+        Qty: `${quantityDifference}`,
+        RejectionReason: `${rejectedReason}`,
+        message: '',
+        isError: '',
+      },
+    ],
     AddLine: [
       {
         ProductID: productID,
@@ -176,6 +190,9 @@ function OrderModificationFlyout({
               labels={labels}
               setQuantityDifference={setQuantityDifference}
               setProductID={setProductID}
+              setLineID={setLineID}
+              rejectedReason={rejectedReason}
+              setRejectedReason={setRejectedReason}
               itemsRequestData={itemsRequestData}
               setItemsRequestData={setItemsRequestData}
             />

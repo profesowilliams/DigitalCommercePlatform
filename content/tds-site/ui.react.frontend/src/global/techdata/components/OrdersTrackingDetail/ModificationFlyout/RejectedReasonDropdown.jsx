@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
-const DecreasedReasonDropdown = ({
+const RejectedReasonDropdown = ({
   labels,
-  decreasedReason,
+  rejectedReason,
   handleChangeReason,
 }) => {
   useEffect(() => {
@@ -24,7 +24,7 @@ const DecreasedReasonDropdown = ({
       <FormControl fullWidth>
         <InputLabel>{getDictionaryValueOrKey(selectReasonLabel)}</InputLabel>
         <Select
-          value={decreasedReason}
+          value={rejectedReason}
           onChange={(e) => handleChangeReason(e.target.value)}
           className="decreased-reason-select"
         >
@@ -43,4 +43,4 @@ const DecreasedReasonDropdown = ({
     </div>
   );
 };
-export default DecreasedReasonDropdown;
+export default RejectedReasonDropdown;
