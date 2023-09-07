@@ -91,12 +91,14 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
           </button>
         )}
       </div>
-      <Grid
-        columnDefinition={myColumnDefs}
-        config={config}
-        data={gridData}
-        contextMenuItems={contextMenuItems}
-      />
+      <div>
+        <Grid
+          columnDefinition={myColumnDefs}
+          config={config}
+          data={gridData}
+          contextMenuItems={contextMenuItems}
+        />
+      </div>
     </section>
   );
 }

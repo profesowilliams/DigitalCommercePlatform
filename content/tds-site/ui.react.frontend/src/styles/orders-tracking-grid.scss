@@ -137,9 +137,6 @@
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-
-    &__caret {
-    }
   }
 
   &__action-column {
@@ -188,11 +185,15 @@
   }
 }
 .cmp-order-tracking-grid {
+  // Enable vertical scrollbar in NotShipped inner grid
+  .cmp-base-grid .cmp-grid.ag-theme-alpine .ag-root.ag-unselectable.ag-layout-auto-height {
+    overflow-y: overlay !important;
+  }
   .ag-row-group-expanded{
     background-color: $td-neutral-gray !important;
   }
-  .ag-row-no-focus.ag-row.ag-row-level-1.ag-full-width-row.ag-row-position-absolute.ag-after-created,
-  .ag-row.ag-row-level-1.ag-full-width-row.ag-row-position-absolute.ag-after-created.ag-full-width-focus.ag-row-focus {
+  .ag-row-no-focus.ag-row.ag-full-width-row.ag-row-position-absolute.ag-after-created,
+  .ag-row.ag-full-width-row.ag-row-position-absolute.ag-after-created.ag-full-width-focus.ag-row-focus {
     background-color: $td-neutral-gray !important;
     border-bottom: 4px solid $brand-black;
     .ag-header-viewport {
@@ -202,25 +203,32 @@
       font-weight: 400;
     }
     .ag-row-no-focus.ag-row {
-      &.ag-row-level-1.ag-full-width-row.ag-row-position-absolute.ag-row-last.ag-after-created{
+      &.ag-full-width-row.ag-row-position-absolute.ag-row-last.ag-after-created{
         background-color: $brand-white !important;
         border-bottom: 1px solid $brand-black;
         &.ag-row-hover {
           background-color: $brand-white !important;
         }
       }
-      &.ag-row-level-0.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-row-first.ag-after-created {
+      &.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-row-first.ag-after-created {
         border-bottom: 1px solid $brand-black;
       }
     } 
-    .ag-row.ag-row-level-0.ag-row-group.ag-row-position-absolute.ag-row-first.ag-after-created.ag-row-focus.ag-row-group-expanded,
+    .ag-row.ag-row-group.ag-row-position-absolute.ag-row-first.ag-after-created.ag-row-focus.ag-row-group-expanded,
     .ag-body-viewport.ag-layout-auto-height.ag-row-no-animation {
       border-bottom: 1px solid $brand-black;
     }
-    
+    .ag-row-odd.ag-row-no-focus.ag-row.ag-row-level-0.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-after-created {
+      border-bottom: 1px solid $brand-black;
+    }
   }
 }
 .order-line-details {
+  // Enable vertical scrollbar in NotShipped inner grid
+  .ag-body-viewport.ag-layout-auto-height.ag-row-no-animation {
+    max-height: 370px;
+    overflow-y: overlay;
+  }
   .ag-cell-value {
     width: 100%
   }
@@ -358,13 +366,13 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 60px;
+        height: 73px;
       }
       &__separateLineMultiple {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 60px;
+        height: 73px;
         border-bottom: 1px solid $brand-text-lightgray;
       }
       &__separateLineText {

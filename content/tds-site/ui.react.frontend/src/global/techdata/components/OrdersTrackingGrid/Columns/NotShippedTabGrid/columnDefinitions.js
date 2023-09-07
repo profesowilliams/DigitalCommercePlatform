@@ -38,7 +38,7 @@ const columnDefs = [
     field: 'nqty',
     sortable: false,
     width: '70px',
-    cellStyle: { padding: '12px 0' },
+    cellStyle: { padding: '0 0' },
     autoHeight: true,
   },
   {
@@ -47,7 +47,7 @@ const columnDefs = [
     sortable: false,
     width: '164px',
     cellStyle: {
-      padding: '12px 0',
+      padding: '0 0',
     },
     autoHeight: true,
   },
@@ -56,7 +56,7 @@ const columnDefs = [
     field: 'action',
     sortable: false,
     width: '60px',
-    cellStyle: { padding: '12px 0' },
+    cellStyle: { padding: '0 0' },
     autoHeight: true,
   },
 ];

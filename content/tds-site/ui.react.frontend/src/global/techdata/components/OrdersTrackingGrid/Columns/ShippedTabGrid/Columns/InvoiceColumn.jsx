@@ -33,7 +33,9 @@ function InvoiceColumn({
       <a>
         {hasMultiple
           ? getDictionaryValueOrKey(config?.multiple)
-          : invoices[0]?.id}
+          : line?.invoices
+          ? line?.invoices[0]?.id
+          : '-'}
       </a>
     </div>
   );
