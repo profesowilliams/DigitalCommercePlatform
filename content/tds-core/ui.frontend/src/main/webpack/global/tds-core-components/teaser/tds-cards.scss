@@ -344,6 +344,7 @@
 
             .cmp-teaser__description {
               padding: 0;
+              height: auto;
               overflow: hidden;
 
               ul {
@@ -376,6 +377,13 @@
             padding: 40px 0 10px;
             text-align: left;
             font-family: 'Arial', sans-serif;
+          }
+        }
+        &.cmp-tds-triple-teaser--cta-align {
+          .cmp-teaser {
+            .cmp-teaser__description {
+              height: 144px;
+            }
           }
         }
       }
