@@ -362,6 +362,10 @@ use(['../../../common/utils.js'], function(utils) {
         copyFlyout.searchPlaceholder = properties["searchPlaceholder"];
     }
 
+   if (properties && properties["resellerAccountLabel"]) {
+        copyFlyout.resellerAccountLabel = properties["resellerAccountLabel"];
+   }
+
     if (properties && properties["selectedAccountLabel"]) {
         copyFlyout.selectedAccountLabel = properties["selectedAccountLabel"];
     }

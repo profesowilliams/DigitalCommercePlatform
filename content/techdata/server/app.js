@@ -5144,7 +5144,7 @@ app.post("/ui-renewal/v1/order", function (req, res) {
 });
 
 app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
-  const { resellerId } = req.query;
+  const { SearchInput } = req.query;
   const success = {
     content: [
       {
@@ -5186,7 +5186,7 @@ app.get("/ui-renewal/v1/AccountLookUp", function (req, res) {
     },
   };
 
-  return res.status(200).json(resellerId.includes("err") ? fail : success);
+  return res.status(200).json(SearchInput.includes("err") ? fail : success);
 });
 
 app.get("/ui-renewal/v1/SearchCheck", (req, res) => {

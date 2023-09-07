@@ -187,6 +187,13 @@ $flyout-small-height-formax: 779px;
       }
     }
   }
+  &__content-search {
+      #combo-box-demo {
+          &::placeholder {
+              color: transparent;
+          }
+      }
+    }
 }
 .MuiAutocomplete-option .cmp-flyout-autocomplete__option-name .cmp-flyout__quotecmp-flyout__selected-quote  {
   font-family: $font-family-arial;

@@ -128,7 +128,7 @@
         searchLabel: "Reseller Account",
         searchKey: "ResellerId",
         showIfIsHouseAccount: true,
-      },      
+      },
     ],
     renewalDetailsEndpoint: "http://localhost:3000/ui-renewal/v1/Details",
     uiServiceEndPoint:
@@ -212,7 +212,7 @@
       showOrderingIcon: true,
       placeOrderDialogTitle:'To continue placing your order for ({enduser-companyname}) please provide the following information.',
       termsAndConditions:"I have read and accept Terms & Conditions",
-      termsAndConditionsLink:"https://www.techdata.com/content/visitor/abouttd/conditions.aspx",     
+      termsAndConditionsLink:"https://www.techdata.com/content/visitor/abouttd/conditions.aspx",
       successSubmission:"Your order has been successfully submitted for processing. You will receive an email once processing is complete",
       failedSubmission:"Please try again. If the error persists please contact us at ({email})",
       noResponseMessage: "We are sorry, your order could not be processed, please try again later."
@@ -230,8 +230,9 @@
     copyFlyout: {
       title: "Copy",
       description: "Select the reseller to whom you want to copy the renewal. If the account does not have the correct accreditation, it does not appear in the list.",
-      searchLabel: "Account №",
-      searchPlaceholder: "Search by account number",
+      resellerAccountLabel: "Reseller account № or name",
+      searchLabel: "Search",
+      searchPlaceholder: "Search by account number ",
       selectedAccountLabel: "Selected Account",
       accountNumberLabel: "Account number:",
       accountNameLabel: "Account Name:",
@@ -243,7 +244,7 @@
       copySuccessMessage: "Copy quote successfully requested. You will receive an email when new quote is ready.",
       copyFailureMessage: "Your quote failed to copy. Open a ticket for further investigation.",
       button: "Copy",
-      accountLookUpEndpoint:"http://localhost:3000/ui-renewal/v1/AccountLookUp?resellerId={reseller-id}",
+      accountLookUpEndpoint:"http://localhost:3000/ui-renewal/v1/AccountLookUp?SearchInput={reseller-id}",
       checkQuoteExitsforResellerEndpoint:"http://localhost:3000/ui-renewal/v1/SearchCheck?ResellerId={reseller-id}&WithPaginationInfo=true&ContractID={agreement-number}",
       copyQuoteEndpoint:"http://localhost:3000/ui-renewal/v1/CopyQuote",
     }

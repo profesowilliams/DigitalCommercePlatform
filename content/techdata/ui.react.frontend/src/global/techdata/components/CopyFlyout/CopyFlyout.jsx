@@ -51,6 +51,9 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
 
     if (resellerId.length >= 3) {
       setIsAutocompleteOpen(true);
+      setAutocompleteTitle(
+        getDictionaryValueOrKey(copyFlyout.searchLabel)
+      );
       const response = await resellerLookUp(
         resellerId,
         copyFlyout.accountLookUpEndpoint
@@ -65,6 +68,9 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
     }
     else {
       setIsAutocompleteOpen(false);
+      setAutocompleteTitle(
+            getDictionaryValueOrKey(copyFlyout.resellerAccountLabel)
+          );
     }
   };
 
@@ -105,10 +111,12 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
 
   const handleQuoteSelectedChange = (event, newInput) => {
     findSelectedQuote(newInput);
+    setAutocompleteTitle(
+        getDictionaryValueOrKey(copyFlyout.resellerAccountLabel)
+      );
   };
 
   const handleCopy = async () => {
-    console.log("HandleCopy")
     if (!enableCopy) {
       return;
     }
@@ -161,7 +169,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
 
   const handleFocusIn = () => {
     setAutocompleteTitle(
-      getDictionaryValueOrKey(copyFlyout.searchLabel)
+      getDictionaryValueOrKey(copyFlyout.resellerAccountLabel)
     );
   };
 

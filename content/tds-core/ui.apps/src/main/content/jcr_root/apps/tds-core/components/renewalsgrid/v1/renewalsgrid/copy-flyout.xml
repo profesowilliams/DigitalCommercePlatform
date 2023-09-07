@@ -27,6 +27,11 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Search Placeholder"
                     name="./searchPlaceholder"/>
+                <resellerAccountLabel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Reseller Account Label"
+                    name="./resellerAccountLabel"/>
                 <selectedAccountLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
