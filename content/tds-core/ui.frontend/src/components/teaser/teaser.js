@@ -13,6 +13,15 @@
                 val.querySelectorAll('.cmp-teaser__title').forEach((ele) => {
                     ele.style.height = `${maxHeight}px`;
                 });
+                let descMaxHeight = 0;
+                val.querySelectorAll('.cmp-teaser__description').forEach((ele) => {
+                    ele.style.height = 'auto';
+                    let eleHeight = ele.offsetHeight;
+                    descMaxHeight = eleHeight > descMaxHeight ? eleHeight : descMaxHeight;
+                });
+                val.querySelectorAll('.cmp-teaser__description').forEach((ele) => {
+                    ele.style.height = `${descMaxHeight}px`;
+                });
             })
         };
 
