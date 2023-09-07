@@ -288,6 +288,7 @@ function OrdersTrackingGrid(props) {
       redirect: true,
     });
   }
+  
 
   function onCloseToaster() {
     closeAndCleanToaster();
@@ -329,7 +330,6 @@ function OrdersTrackingGrid(props) {
       setResponseError(true);
     }
   }, [userData]);
-  
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (

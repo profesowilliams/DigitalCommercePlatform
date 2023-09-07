@@ -116,16 +116,24 @@ const validateBlobResponse = async (response, modalPDFErrorHandler) => {
 };
 
 const validateBlobResponseWithoutModal = async (response) => {
-    try {
-        const responseData = await response?.data?.text();
-        const responseJson = JSON.parse(responseData); // validate if is a json to get the error message
-        const titleError = 'Error code ' + responseJson?.error?.code;
-        console.log(titleError, responseJson.error.messages[0]);
-        return false;
-    } catch (error) {
-        // Not a json so is a BLOB and sucecss response
-        return true;
+  let validation = false;
+
+  if (response.data instanceof Blob) {
+    validation = true;
+    if (response.status !== 200) {
+      validation = false;
+      if (response.status === 204) {
+        const url = window.location.href;
+        const regex = /\/dcp\/.*/;
+        const newUrl = url.replace(regex, '/errors/500.html/');
+        window.location.href = newUrl;
+      }
     }
+  } else {
+    validation = false;
+  }
+
+  return validation;
 };
 
 /**

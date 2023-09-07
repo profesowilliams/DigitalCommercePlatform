@@ -7818,11 +7818,20 @@ app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
 });
 
 app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
-  const { selectedId } = req.query;
-  if (selectedId && selectedId.length === 1) {
-    return res.download("file.pdf");
-  } else {
-    return res.download("file.zip");
+  try {
+    const { selectedId } = req.query;
+    if (res.status(200)) {
+      if (selectedId && selectedId.length === 1) {
+        return res.download("file.pdf");
+      } else {
+        return res.download("file.zip");
+      }
+    }
+    if (res.status(204)) {
+      console.log("Document is not available");
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 
