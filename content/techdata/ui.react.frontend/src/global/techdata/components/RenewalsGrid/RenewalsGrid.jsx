@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LOCAL_STORAGE_KEY_USER_DATA, TOASTER_LOCAL_STORAGE_KEY } from "../../../../utils/constants";
 import { ACCESS_TYPES, hasAccess } from "../../../../utils/user-utils";
 import { thousandSeparator } from "../../helpers/formatting";
@@ -40,6 +40,26 @@ import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
 
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
+const getOptionsDefaultValues = () => {
+  const currentOptions = {
+    defaultSortingColumnKey: "dueDate",
+    defaultSortingDirection: "desc",
+  };
+
+  const currentSecondLevelOptions = {
+    colId: 'total',
+    sort: "desc",
+  };
+
+  if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
+    currentOptions.defaultSortingColumnKey = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).colId;
+    currentOptions.defaultSortingDirection = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).sort;
+    currentSecondLevelOptions.colId = null;
+    currentSecondLevelOptions.sort = null;
+  }
+
+  return { currentOptions, currentSecondLevelOptions };
+}
 function RenewalsGrid(props) {
   const { onAfterGridInit, onQueryChanged, handleQueryFlowLogic, resetGrid } = useExtendGridOperations(useRenewalGridState);
   const effects = useRenewalGridState(state => state.effects);
@@ -74,22 +94,10 @@ function RenewalsGrid(props) {
 
   const toolTipData = useRenewalGridState(state => state.toolTipData, shallow);
 
-  let options = {
-    defaultSortingColumnKey: "dueDate",
-    defaultSortingDirection: "desc",
-  };
+  const { currentOptions, currentSecondLevelOptions } = getOptionsDefaultValues();
 
-  let secondLevelOptions = {
-    colId: 'total',
-    sort: "desc",
-  }
-
-  if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
-    options.defaultSortingColumnKey = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).colId;
-    options.defaultSortingDirection = getLocalStorageData(SORT_LOCAL_STORAGE_KEY).sort;
-    secondLevelOptions.colId = null;
-    secondLevelOptions.sort = null;
-  }
+  const [options, setOptions] = useState(currentOptions);
+  const [secondLevelOptions, setSecondLevelOptions] = useState(currentSecondLevelOptions);
 
   const redirectToShop = () => {
     if(!shopURL) return;
