@@ -207,3 +207,11 @@ export const compareSort = (oldSort, newSort) => {
   }
   return retValue;
 };
+
+export function extractSortColAndDirection(sortDataRef = []) {
+  const [sortParam] = sortDataRef;
+  return {
+    isColReseted: !sortParam?.colId || !sortParam?.sort,
+    sortStrValue: `${sortParam?.colId}:${sortParam?.sort}`,
+  };
+}

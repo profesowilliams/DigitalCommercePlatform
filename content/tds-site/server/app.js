@@ -7664,7 +7664,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           unitPriceFormatted: "7.59",
           totalPrice: 75.9,
           totalPriceFormatted: "75.90",
-          isEOL: false,
+          isEOL: true,
           isReturnable: false,
           deliveryNotes: [
             {
@@ -7717,7 +7717,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           unitPriceFormatted: "100.00",
           totalPrice: 1900.0,
           totalPriceFormatted: "1900.00",
-          isEOL: false,
+          isEOL: true,
           isReturnable: false,
           deliveryNotes: [
             {
@@ -7834,6 +7834,51 @@ app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
     console.log(err);
   }
 });
+
+app.get("/ui-commerce/v2/ReplacementProduct"),
+  (req, res) => {
+    console.log("ReplacementProduct");
+    const response = {
+      content: {
+        productDtos: [
+          {
+            images: {
+              default: {
+                id: "",
+                url: "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+                type: "",
+              },
+            },
+            authorization: {
+              canOrder: true,
+              canViewPrice: true,
+              customerCanView: true,
+              canViewStock: true,
+            },
+            price: {
+              listPrice: "24.17",
+              bestPrice: "19.72",
+              currency: "GBP",
+            },
+            source: {
+              system: "",
+              id: "",
+            },
+            description: "",
+          },
+        ],
+      },
+      error: {
+        code: 0,
+        messages: [],
+        isError: false,
+      },
+    };
+
+    setTimeout(() => {
+      return res.status(200).json(response);
+    }, 2000);
+  };
 
 app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   try {

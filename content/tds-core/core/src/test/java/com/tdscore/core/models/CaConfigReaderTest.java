@@ -100,6 +100,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint()).thenReturn("exportLinesWithSerialNumbersOnlyEndpoint");
         when(serviceEndPointsConfiguration.orderModifyEndpoint()).thenReturn("orderModifyEndpoint");
         when(serviceEndPointsConfiguration.orderModifyChangeEndpoint()).thenReturn("orderModifyChangeEndpoint");
+        when(serviceEndPointsConfiguration.replaceProductEndpoint()).thenReturn("replaceProductEndpoint");
         when(serviceEndPointsConfiguration.quotesPreviewEndPoint()).thenReturn("quotesPreviewEndPoint");
         when(serviceEndPointsConfiguration.quickQuoteEndpoint()).thenReturn("quickQuoteEndPoint");
         when(serviceEndPointsConfiguration.quotesPreviewPricingEndPoint()).thenReturn("quotesPreviewPricingEndPoint");
@@ -178,6 +179,7 @@ class CaConfigReaderTest {
         assertEquals("exportLinesWithSerialNumbersOnlyEndpoint", underTest.getExportLinesWithSerialNumbersOnlyEndpoint());
         assertEquals("orderModifyEndpoint", underTest.getOrderModifyEndpoint());
         assertEquals("orderModifyChangeEndpoint", underTest.getOrderModifyChangeEndpoint());
+        assertEquals("replaceProductEndpoint", underTest.getReplaceProductEndpoint());
         assertEquals("quotesPreviewEndPoint", underTest.getQuotesPreviewEndPoint());
         assertEquals("quotesPreviewPricingEndPoint", underTest.getQuotesPreviewPricingEndPoint());
         assertEquals("configurationsEndpoint", underTest.getConfigurationsEndpoint());

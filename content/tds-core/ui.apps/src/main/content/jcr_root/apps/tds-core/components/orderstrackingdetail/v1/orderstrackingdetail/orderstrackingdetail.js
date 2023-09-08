@@ -15,6 +15,7 @@ use(["../../../common/utils.js"], function (utils) {
   let dNotesFlyout = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
+  const productReplacementFlyout = {};
 
   // Settings
   if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
@@ -184,7 +185,6 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["orderModifyLabels"] = orderModifyLabels;
   }
 
-
   //Invoices flyout options
   let invoicesColumnList = utils.getDataFromMultifield(
     resourceResolver,
@@ -313,14 +313,35 @@ use(["../../../common/utils.js"], function (utils) {
   jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
-  
+
+  jsonObject["replaceProductEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.replaceProductEndpoint || "";
+
+  // Product Replacement Flyout
+  const productReplacementFlyoutLabels = [
+    "modifyOrder",
+    "pleaseSelect",
+    "replaceWithSuggestedItem",
+    "removeWithoutReplacement",
+  ];
+
+  properties &&
+    productReplacementFlyoutLabels.map((property) => {
+      productReplacementFlyout[property] = properties[property];
+    });
+
+  if (orderModifyLabels != null) {
+    jsonObject["productReplacementFlyout"] = productReplacementFlyout;
+  }
+
   jsonObject["orderModifyEndpoint"] =
     this.serviceData.uiServiceDomain + this.serviceData.orderModifyEndpoint ||
     "";
 
-    jsonObject["orderModifyChangeEndpoint"] =
-      this.serviceData.uiServiceDomain +
-        this.serviceData.orderModifyChangeEndpoint || "";
+  jsonObject["orderModifyChangeEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.orderModifyChangeEndpoint || "";
 
   return {
     configJson: JSON.stringify(jsonObject),

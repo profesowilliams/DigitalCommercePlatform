@@ -107,6 +107,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Order Modify Change Endpoint", description = "Order Modify Change Endpoint")
     String orderModifyChangeEndpoint();
 
+    @Property(label = "Replace Product Endpoint", description = "Replace Product Endpoint")
+    String replaceProductEndpoint();
+
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
 

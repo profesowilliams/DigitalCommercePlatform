@@ -538,6 +538,40 @@
 									</column>
 								</items>
 							</errorMessages>
+                            <productReplacementFlyout
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Reports"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <modifyOrder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Modify order"
+                                                name="./modifyOrder" />
+                                            <pleaseSelect
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Please select one of the following options to replace the line item."
+                                                name="./pleaseSelect" />
+                                            <replaceWithSuggestedItem
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Replace item with the suggested item"
+                                                name="./replaceWithSuggestedItem" />
+                                            <removeWithoutReplacement
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Remove selected line item from your order without selecting a replacement."
+                                                name="./removeWithoutReplacement" />
+                                        </items>
+                                    </column>
+                                </items>
+                            </productReplacementFlyout>
 						</items>
 					</tabs>
 				</items>

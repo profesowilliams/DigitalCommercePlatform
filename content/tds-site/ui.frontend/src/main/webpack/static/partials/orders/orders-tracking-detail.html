@@ -11,6 +11,7 @@
     exportLinesWithSerialNumbersOnlyEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersExport",
     orderModifyEndpoint: "http://localhost:3000/ui-commerce/v2/OrderModify",
     orderModifyChangeEndpoint: "http://localhost:3000/ui-commerce/v2/OrderModifyChange",
+    replaceProductEndpoint: "http://localhost:3000/ui-commerce/v2/ReplacementProduct",
     agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
     labels: {
       menuCopy: "Copy",
@@ -139,6 +140,18 @@
       { label: "Export all order lines", key: "exportAllOrderLinesKey" },
       { label: "Export lines with serial numbers only", key: "exportLinesWithSerialNumbersKey" },
     ],
+    productReplacementFlyout: {
+      modifyOrder: 'Modify order',
+      pleaseSelect: 'Please select one of the following options to replace the line item.',
+      replaceWithSuggestedItem: 'Replace item with the suggested item',
+      removeWithoutReplacement: 'Remove selected line item from your order without selecting a replacement.',
+      cancel: "Cancel",
+      update: "Update",
+      lineTotal: "Line total",
+      quantity: "Qty",
+      unitCost: "Unit cost",
+      lineMfgPartNo: "Mfg №:"
+    }
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

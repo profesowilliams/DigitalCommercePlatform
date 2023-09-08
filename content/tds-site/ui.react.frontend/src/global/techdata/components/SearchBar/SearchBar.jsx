@@ -67,7 +67,7 @@ const SearchBar = ({ data, componentProp }) => {
 
   const searchRef = useRef(null);
   const searchContainerRef = useRef(null);
-  const [userDataLS, setUserData] = useState(getUserDataInitialState);
+  const [userDataLS, setUserData] = useState(null);
   
   const userData = useStore(state => state.userData);
 
