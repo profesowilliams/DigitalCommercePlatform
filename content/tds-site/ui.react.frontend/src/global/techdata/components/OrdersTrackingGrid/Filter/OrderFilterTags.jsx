@@ -64,16 +64,8 @@ function OrderFilterTags({ filtersRefs }) {
         value: undefined,
       });
       setFilterClicked(true);
-      Object.keys(filtersRefs)
-        .filter(
-          (filter) =>
-            filter !== 'type' &&
-            filter !== 'status' &&
-            filtersRefs[filter]?.current
-        )
-        .map((filter) => {
-          filtersRefs[filter].current = undefined;
-        });
+      filtersRefs.current.createdFrom = undefined;
+      filtersRefs.current.createdTo = undefined;
     }
   };
 

@@ -388,14 +388,8 @@ function OrdersTrackingGrid(props) {
                 onCellMouseOut={() => cellMouseOut(setToolTipData)}
               />
               <MainGridFooter
-                gridConfig={gridConfig}
-                downloadFileBlob={downloadFileBlob}
-                openFilePdf={openFilePdf}
                 analyticsCategories={analyticsCategories}
-                hasAIORights={hasAIORights}
                 onQueryChanged={onQueryChanged}
-                filtersRefs={filtersRefs}
-                filterLabels={filterLabels}
                 onCloseToaster={onCloseToaster}
                 toolTipData={toolTipData}
                 customPaginationRef={customPaginationRef}

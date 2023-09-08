@@ -106,7 +106,7 @@ function OrderModificationFlyout({
             isShipment: item.isShipment,
             status: item.status,
           };
-
+          //TODO: after BE changes we need delete this
           const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
           const greyOutRow = async () => {
             await timeout(5000);
