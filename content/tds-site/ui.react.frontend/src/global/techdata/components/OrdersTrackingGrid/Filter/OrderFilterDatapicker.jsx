@@ -10,6 +10,7 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { QuerySelector } from 'ag-grid-community';
 
 function CustomStartEndText({ filterLabels }) {
   return (
@@ -178,8 +179,9 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
           transitionDuration={300}
           daySize={30}
           focusedInput={focusedInput}
-          onFocusChange={(focusedInput) => {
-            setFocusedInput(focusedInput || 'startDate');
+          onFocusChange={() => {
+            const start = document.querySelector('#start-date').value;
+            setFocusedInput(start !== '' ? 'endDate' : 'startDate');
           }}
         />
       </div>
