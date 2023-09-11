@@ -208,6 +208,11 @@
     font-family: Arial;
   }
   padding: 0 2rem;
+
+  // OrderDetailsGrid row grayed out
+  .gray-out-changing-rows {
+    opacity: 0.3
+  }
 }
 
 .cmp-order-preview {

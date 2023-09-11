@@ -2,14 +2,16 @@ import React, { useMemo, useState, useEffect } from 'react';
 import Grid from '../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
+import LineNumberColumn from '../Columns/LineNumberColumn';
 import DescriptionColumn from '../Columns/DescriptionColumn';
 import ActionsColumn from '../Columns/ActionsColumn';
 import QuantityColumn from '../Columns/QuantityColumn';
 import LineStatusColumn from '../Columns/LineStatusColumn';
 import ShipDateColumn from '../Columns/ShipDateColumn';
+import TotalColumn from '../Columns/TotalColumn';
 import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
-import { getSessionInfo } from "../../../../../utils/user/get";
+import { getSessionInfo } from '../../../../../utils/user/get';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   isExtraReloadDisabled,
@@ -59,6 +61,7 @@ function OrdersTrackingDetailGrid({
     {
       field: 'id',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
+      cellRenderer: ({ data }) => <LineNumberColumn line={data} />,
       width: gridColumnWidths.id,
     },
     {
@@ -97,9 +100,7 @@ function OrdersTrackingDetailGrid({
     {
       field: 'quantity',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
-      cellRenderer: ({ data }) => (
-        <QuantityColumn line={data} config={gridProps} />
-      ),
+      cellRenderer: ({ data }) => <QuantityColumn line={data} />,
       width: gridColumnWidths.quantity,
     },
     {
@@ -110,6 +111,7 @@ function OrdersTrackingDetailGrid({
         '{currency-code}',
         data?.paymentDetails?.currency || defaultCurrency
       ),
+      cellRenderer: ({ data }) => <TotalColumn line={data} />,
       width: gridColumnWidths.totalPriceFormatted,
     },
     {

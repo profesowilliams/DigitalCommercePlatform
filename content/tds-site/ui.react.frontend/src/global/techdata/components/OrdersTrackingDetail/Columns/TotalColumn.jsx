@@ -1,8 +1,8 @@
 import React from 'react'
 
-function TotalColumn({data}) {
+function TotalColumn({ line }) {
   return (
-    <div className="cmp-order-tracking-grid__total-column">{`${data?.unitPriceFormatted}`}</div>
+    <div className="cmp-order-tracking-grid__total-column">{`${line?.totalPriceFormatted}`}</div>
   );
 }
 

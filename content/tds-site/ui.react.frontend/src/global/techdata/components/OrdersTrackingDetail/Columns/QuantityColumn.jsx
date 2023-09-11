@@ -1,10 +1,10 @@
 import React from 'react'
 
-function QuantityColumn({line}) {
-  //TODO: Add .map() over deliveryNotes
+function QuantityColumn({ line }) {
+  //TODO: Add .map() over lineDetails
   return (
     <div>
-      {line?.deliveryNotes[0]?.quantityDelivered || `${line?.orderQuantity}`}
+      {line?.lineDetails[0]?.quantity || line?.lineDetails[0]?.orderQuantity}
     </div>
   );
 }

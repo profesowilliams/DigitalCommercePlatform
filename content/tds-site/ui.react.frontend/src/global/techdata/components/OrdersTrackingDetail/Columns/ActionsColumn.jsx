@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
+// TODO: map over multiple lines from lineDetails
 const ActionsColumn = ({
   line,
   config = {},
@@ -14,6 +15,7 @@ const ActionsColumn = ({
   const effects = useOrderTrackingStore((st) => st.effects);
 
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+  const [actionButtonVisible, setActionButtonVisible] = useState(true);
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -85,14 +87,21 @@ const ActionsColumn = ({
       onClick: handleCopySerialNumbers,
     },
   ];
+  useEffect(() => {
+    if (line?.lineDetails[0]?.quantity === 0) {
+      return setActionButtonVisible(false);
+    } else {
+      return setActionButtonVisible(true);
+    }
+  }, [line?.lineDetails[0]?.quantity]);
   return (
     <div
       className="cmp-order-tracking-grid-details__action-column actions-container"
       onMouseOver={handleActionMouseOver}
       onMouseLeave={handleActionMouseLeave}
     >
-      <EllipsisIcon style={iconStyle} />
-      {actionsDropdownVisible && (
+      {actionButtonVisible && <EllipsisIcon style={iconStyle} />}
+      {actionButtonVisible && actionsDropdownVisible && (
         <div
           className="actions-dropdown"
           onMouseOver={handleActionMouseOver}

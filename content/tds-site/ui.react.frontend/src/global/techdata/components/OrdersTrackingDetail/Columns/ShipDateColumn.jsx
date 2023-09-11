@@ -1,11 +1,9 @@
 import React from 'react';
-//TODO: Add .map() over deliveryNotes
+//TODO: Add .map() over lineDetails
 function ShipDateColumn({ line }) {
   return (
     <div>
-      {line?.deliveryNotes[0]?.actualShipDateFormatted ||
-        line?.estimatedShipDateFormatted ||
-        ''}
+      {line?.lineDetails ? `${line?.lineDetails[0]?.ShipDateFormatted}` : ''}
     </div>
   );
 }

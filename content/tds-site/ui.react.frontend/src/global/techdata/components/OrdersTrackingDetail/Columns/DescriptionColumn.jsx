@@ -16,9 +16,9 @@ function DescriptionColumn({ line, config }) {
           <div className="cmp-order-tracking-grid-details__description-link">{`${line?.displayName}`}</div>
         )}
         <div className="cmp-order-tracking-grid-details__description-text">
-          {line?.manufacturerPart && (
+          {line?.mfrNumber && (
             <div>{`${getDictionaryValueOrKey(config?.itemsLabels?.mfgPartNo)} ${
-              line?.manufacturerPart
+              line?.mfrNumber
             }`}</div>
           )}
           {line?.tdNumber && (

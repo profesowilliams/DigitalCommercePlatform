@@ -4,7 +4,7 @@ import DescriptionColumn from '../Columns/DescriptionColumn';
 import LineNumberColumn from '../Columns/LineNumberColumn';
 import QuantityColumn from '../Columns/QuantityColumn';
 import ShiptDateColumn from '../Columns/ShipDateColumn';
-import StatusColumn from '../Columns/StatusColumn';
+import LineStatusColumn from '../Columns/LineStatusColumn';
 import TotalColumn from '../Columns/TotalColumn';
 import UnitCostColumn from '../Columns/UnitCostColumn';
 
@@ -18,7 +18,7 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
       id: <LineNumberColumn data={data} />,
       quantity: <QuantityColumn data={data} />,
       xxxxxxxxx: <ShiptDateColumn data={data} />,
-      status: <StatusColumn data={data} />,
+      status: <LineStatusColumn data={data} />,
       totalPriceFormatted: <TotalColumn data={data} />,
       unitPriceFormatted: <UnitCostColumn data={data} />,
     };
@@ -48,9 +48,7 @@ export const ordersTrackingDefinition = ({ detailUrl, multiple }) => {
     unitPriceFormatted: '150px',
   };
 
-  const hoverableList = [
-    'description',
-  ];
+  const hoverableList = ['description'];
 
   const fieldsWithCellStyle = ['description'];
 

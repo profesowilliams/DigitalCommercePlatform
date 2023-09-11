@@ -6,14 +6,14 @@ import {
 } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const OrderTrackingDetailTitle = ({ content, label }) => {
-  const { status, orderNumber } = content;
+  const { statusText, orderNumber } = content;
   useEffect(() => {
     pushDataLayerGoogle(getOrderDetailsAnalyticsGoogle(orderNumber));
   }, []);
 
   return (
     <div>
-      <span className="quote-preview-bold">{status}</span>
+      <span className="quote-preview-bold">{statusText}</span>
       <span className="quote-preview-bold">
         {` | ${getDictionaryValueOrKey(label)}: `}
       </span>
