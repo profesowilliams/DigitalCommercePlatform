@@ -15,8 +15,12 @@ import { QuerySelector } from 'ag-grid-community';
 function CustomStartEndText({ filterLabels }) {
   return (
     <div className="customStartEndLabel">
-      <div>{getDictionaryValueOrKey(filterLabels.startLabel)}</div>
-      <div>{getDictionaryValueOrKey(filterLabels.endLabel)}</div>
+      <div className="customStartLabel">
+        {getDictionaryValueOrKey(filterLabels.startLabel)}
+      </div>
+      <div className="customEndLabel">
+        {getDictionaryValueOrKey(filterLabels.endLabel)}
+      </div>
     </div>
   );
 }

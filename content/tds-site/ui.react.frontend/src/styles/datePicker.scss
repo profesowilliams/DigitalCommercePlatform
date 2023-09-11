@@ -1034,7 +1034,6 @@
 }
 .customStartEndLabel {
   display: flex;
-  justify-content: space-between;
   max-width: 187px;
   margin-left: 41px;
   position: relative;
@@ -1045,6 +1044,21 @@
   font-size: 12px;
 }
 
+.customStartLabel {
+  width: 160px;
+  min-width: 160px;
+  max-width: 160px;
+}
+
+#end-date {
+  width: 95px;
+  margin-left: 10px;
+}
+
+.DateInput {
+  width: 90px;
+  text-align: center;
+}
 .cmp-grid-techdata {
   .filter-modal-content {
 
