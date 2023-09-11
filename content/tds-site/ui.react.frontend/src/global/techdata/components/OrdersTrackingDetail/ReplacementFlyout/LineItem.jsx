@@ -2,7 +2,6 @@ import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const LineItem = ({ item, labels = {}, toBeReplacedItem = false }) => {
-  console.log(item);
   return (
     <div
       className={`cmp-flyout-list ${toBeReplacedItem ? 'to-be-replaced' : ''} `}

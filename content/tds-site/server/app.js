@@ -7835,50 +7835,49 @@ app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
   }
 });
 
-app.get("/ui-commerce/v2/ReplacementProduct"),
-  (req, res) => {
-    console.log("ReplacementProduct");
-    const response = {
-      content: {
-        productDtos: [
-          {
-            images: {
-              default: {
-                id: "",
-                url: "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-                type: "",
-              },
-            },
-            authorization: {
-              canOrder: true,
-              canViewPrice: true,
-              customerCanView: true,
-              canViewStock: true,
-            },
-            price: {
-              listPrice: "24.17",
-              bestPrice: "19.72",
-              currency: "GBP",
-            },
-            source: {
-              system: "",
+app.get("/ui-commerce/v2/ReplacementProduct", (req, res) => {
+  const response = {
+    content: {
+      productDtos: [
+        {
+          images: {
+            default: {
               id: "",
+              url: "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+              type: "",
             },
-            description: "",
           },
-        ],
-      },
-      error: {
-        code: 0,
-        messages: [],
-        isError: false,
-      },
-    };
-
-    setTimeout(() => {
-      return res.status(200).json(response);
-    }, 2000);
+          authorization: {
+            canOrder: true,
+            canViewPrice: true,
+            customerCanView: true,
+            canViewStock: true,
+          },
+          price: {
+            listPrice: "24.17",
+            bestPrice: "19.72",
+            currency: "GBP",
+          },
+          source: {
+            system: "",
+            id: "",
+          },
+          description: "B100 Optical Mouse for Business Black",
+          manufacturerPartNumber: "910-003357",
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
   };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 2000);
+});
 
 app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   try {

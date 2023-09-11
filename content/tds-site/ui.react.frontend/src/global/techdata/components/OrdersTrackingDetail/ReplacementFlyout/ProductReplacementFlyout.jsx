@@ -7,7 +7,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import useGet from '../../../hooks/useGet';
 import { usGet } from '../../../../../utils/api';
 
 const styleOverrideFormControlLabel = {
@@ -43,7 +42,6 @@ function ProductReplacementFlyout({
 
   const { setCustomState } = store((st) => st.effects);
   const closeFlyout = () => {
-    setNewItemFormVisible(false);
     setCustomState({
       key: 'productReplacementFlyout',
       value: { show: false },
@@ -54,9 +52,11 @@ function ProductReplacementFlyout({
     setSelected(event.target.value);
   };
 
+  const handleUpdate = () => {};
+
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button disabled={isDisabled} className="primary" onClick={() => {}}>
+      <button disabled={isDisabled} className="primary" onClick={handleUpdate}>
         {getDictionaryValueOrKey(labels.update)}
       </button>
       <button className="secondary" onClick={closeFlyout}>
@@ -70,7 +70,20 @@ function ProductReplacementFlyout({
       ...productDtos.map((product) => ({
         key: 'replaceWithSuggestedItem',
         label: getDictionaryValueOrKey(labels.replaceWithSuggestedItem),
-        content: <LineItem item={product} labels={labels} />,
+        content: (
+          <LineItem
+            item={{
+              ...productReplacementConfig?.data?.line,
+              urlProductImage: product.images.default.url,
+              displayName: product.description,
+              mfrNumber: product.manufacturerPartNumber,
+              unitCost: product.price.bestPrice,
+              unitPriceCurrency: product.price.currency,
+              lineTotal: product.price.bestPrice,
+            }}
+            labels={labels}
+          />
+        ),
       })),
     ],
     //   {  // TODO add this option after MVP
@@ -87,10 +100,9 @@ function ProductReplacementFlyout({
   useEffect(async () => {
     if (productReplacementConfig?.data?.line?.tdNumber) {
       try {
-        const result = await usGet(
-          `${config.replaceProductEndpoint}?id=${productReplacementConfig?.data?.line?.tdNumber}`
-        );
-        setProductDtos(result?.content?.productDtod || []);
+        const result = await usGet(`${config.replaceProductEndpoint}`);
+        console.log(result);
+        setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {
         console.error(error);
       }
@@ -130,7 +142,7 @@ function ProductReplacementFlyout({
               onChange={handleSelectChange}
             >
               {options?.map((option) => (
-                <div>
+                <div key={option.key}>
                   <FormControlLabel
                     sx={styleOverrideFormControlLabel}
                     key={option.key}
