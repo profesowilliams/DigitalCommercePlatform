@@ -3,6 +3,7 @@ import DNotesFlyout from '../../DNotesFlyout/DNotesFlyout';
 import ExportFlyout from '../../ExportFlyout/ExportFlyout';
 import InvoicesFlyout from '../../InvoicesFlyout/InvoicesFlyout';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
+import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const MainGridFlyouts = ({
@@ -14,6 +15,7 @@ const MainGridFlyouts = ({
   downloadFileBlob,
   analyticsCategories,
   onQueryChanged,
+  apiResponse,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   function downloadAllFile(flyoutType, orderId, selectedId) {
@@ -66,6 +68,13 @@ const MainGridFlyouts = ({
         filterLabels={filterLabels}
         analyticsCategories={analyticsCategories}
         subheaderReference={document.querySelector('.subheader > div > div')}
+      />
+      <OrderModificationFlyout
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        items={apiResponse?.content?.items}
+        apiResponse={apiResponse?.content}
+        labels={gridConfig.orderModifyLabels}
+        config={gridConfig}
       />
     </>
   );

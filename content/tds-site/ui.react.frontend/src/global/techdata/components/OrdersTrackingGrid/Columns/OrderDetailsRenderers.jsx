@@ -13,6 +13,7 @@ function OrderDetailsRenderers(props) {
           openFilePdf={props.openFilePdf}
           hasAIORights={props.hasAIORights}
           hasOrderModificationRights={props.hasOrderModificationRights}
+          setDetailsApiResponse={props.setDetailsApiResponse}
         />
       )}
     </>

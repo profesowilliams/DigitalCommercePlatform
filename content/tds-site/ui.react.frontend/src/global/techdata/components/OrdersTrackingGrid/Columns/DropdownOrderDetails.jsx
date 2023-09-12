@@ -17,6 +17,7 @@ function DropdownOrderDetails({
   openFilePdf,
   hasAIORights,
   hasOrderModificationRights,
+  setDetailsApiResponse,
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiServiceEndPointForDetails}?id=${data?.id}`
@@ -88,6 +89,10 @@ function DropdownOrderDetails({
   useEffect(() => {
     error && console.log('Error: ', error);
   }, [error]);
+
+  useEffect(() => {
+    if (apiResponse) setDetailsApiResponse(apiResponse);
+  }, [apiResponse, isLoading, error]);
   return (
     <div className="order-line-details">
       <div className="order-line-details__header">

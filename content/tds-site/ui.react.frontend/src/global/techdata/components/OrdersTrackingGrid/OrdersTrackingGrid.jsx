@@ -48,6 +48,7 @@ import { getSessionInfo } from '../../../../utils/user/get';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
+  const [detailsApiResponse, setDetailsApiResponse] = useState(null);
   const areSearchParamsValid = useRef(false);
   const previousFilter = useRef(false);
   const hasSortChanged = useRef(false);
@@ -288,7 +289,6 @@ function OrdersTrackingGrid(props) {
       redirect: true,
     });
   }
-  
 
   function onCloseToaster() {
     closeAndCleanToaster();
@@ -381,6 +381,7 @@ function OrdersTrackingGrid(props) {
                       }
                       hasAIORights={hasAIORights}
                       hasOrderModificationRights={hasOrderModificationRights}
+                      setDetailsApiResponse={setDetailsApiResponse}
                     />
                   </>
                 )}
@@ -414,6 +415,7 @@ function OrdersTrackingGrid(props) {
         openFilePdf={openFilePdf}
         analyticsCategories={analyticsCategories}
         onQueryChanged={onQueryChanged}
+        apiResponse={detailsApiResponse}
       />
     </>
   );

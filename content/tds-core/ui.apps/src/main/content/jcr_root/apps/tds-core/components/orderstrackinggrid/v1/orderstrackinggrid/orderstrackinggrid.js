@@ -12,6 +12,7 @@ use(["../common/utils.js"], function (utils) {
   let reportLabels = {};
   let orderLineDetailsShippedColumnLabels = {};
   let orderLineDetailsNotShippedColumnLabels = {};
+  let orderModifyLabels = {};
   let invoicesFlyout = {};
   let exportFlyout = {};
   let orderLineDetails = {};
@@ -159,6 +160,34 @@ use(["../common/utils.js"], function (utils) {
       orderLineDetailsNotShippedColumnLabels;
   }
 
+  // OrderModifyLabels
+  const orderModifyLabelsList = [
+    "addNewItem",
+    "editQuantities",
+    "lineTotal",
+    "modifyOrder",
+    "cancel",
+    "update",
+    "manufacturersPartNumber",
+    "quantity",
+    "add",
+    "additionalQuantityAdded",
+    "selectReasonLabel",
+    "rejectionPrice",
+    "rejectionAvailability",
+    "rejectionOther",
+    "rejectionRequiredInfo",
+  ];
+
+  properties &&
+    orderModifyLabelsList.map((property) => {
+      orderModifyLabels[property] = properties[property];
+    });
+
+  if (orderModifyLabels != null) {
+    jsonObject["orderModifyLabels"] = orderModifyLabels;
+  }
+
   //Invoices flyout options
   let invoicesColumnList = utils.getDataFromMultifield(
     resourceResolver,
@@ -261,7 +290,7 @@ use(["../common/utils.js"], function (utils) {
   if (properties && properties["reportPillLabel"]) {
     jsonObject["reportPillLabel"] = properties["reportPillLabel"];
   }
-  
+
   // No Access Screen
   if (properties && properties["noAccessTitle"]) {
     noAccessProps.noAccessTitle = properties["noAccessTitle"];
@@ -390,7 +419,6 @@ use(["../common/utils.js"], function (utils) {
   jsonObject["exportAllOrderLinesEndpoint"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.exportAllOrderLinesEndpoint || "";
-
 
   jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
     this.serviceData.uiServiceDomain +

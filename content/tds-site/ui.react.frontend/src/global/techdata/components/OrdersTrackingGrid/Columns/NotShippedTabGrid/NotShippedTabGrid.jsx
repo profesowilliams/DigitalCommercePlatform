@@ -10,6 +10,8 @@ import ItemColumn from './Columns/ItemColumn';
 import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
 import ActionColumn from './Columns/ActionColumn';
+import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
+
 function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
   const gridData = data?.items ?? [];
   const config = {
@@ -18,6 +20,8 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
     serverSide: false,
     paginationStyle: 'none',
   };
+  const effects = useOrderTrackingStore((state) => state.effects);
+  const { setCustomState } = effects;
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -77,6 +81,12 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
       myColumnDefs,
       config?.orderLineDetailsNotShippedColumnLabels
     );
+  const handleOrderModification = () => {
+    setCustomState({
+      key: 'orderModificationFlyout',
+      value: { data: {}, show: true },
+    });
+  };
   return (
     <section>
       <div className="order-line-details__content__title">
@@ -84,7 +94,10 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
           {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
         </span>
         {hasOrderModificationRights && (
-          <button className="order-line-details__content__title-button">
+          <button
+            className="order-line-details__content__title-button"
+            onClick={handleOrderModification}
+          >
             {getDictionaryValueOrKey(
               config?.orderLineDetails?.modifyEligibleItemsLabel
             )}
