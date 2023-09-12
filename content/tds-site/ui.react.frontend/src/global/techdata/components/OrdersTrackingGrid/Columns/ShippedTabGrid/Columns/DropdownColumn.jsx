@@ -1,4 +1,8 @@
 import React, { useState, useMemo } from 'react';
+import {
+  ChevronRightIcon,
+  ChevronDownIcon,
+} from '../../../../../../../fluentIcons/FluentIcons';
 function DropdownColumn({ eventProps }) {
   const [isToggled, setIsToggled] = useState(false);
 
@@ -12,10 +16,10 @@ function DropdownColumn({ eventProps }) {
       onClick={toggleDetails}
     >
       <div style={{ display: isToggled ? 'none' : 'block' }}>
-        <i className="fas fa-chevron-right"></i>
+        <ChevronRightIcon />
       </div>
       <div style={{ display: isToggled ? 'block' : 'none' }}>
-        <i className="fas fa-chevron-down"></i>
+        <ChevronDownIcon />
       </div>
     </div>
   );
