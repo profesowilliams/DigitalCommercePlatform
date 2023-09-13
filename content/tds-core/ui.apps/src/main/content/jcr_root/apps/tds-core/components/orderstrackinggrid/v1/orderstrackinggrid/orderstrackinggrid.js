@@ -188,6 +188,14 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["orderModifyLabels"] = orderModifyLabels;
   }
 
+  jsonObject["orderModifyEndpoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.orderModifyEndpoint ||
+    "";
+
+  jsonObject["orderModifyChangeEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.orderModifyChangeEndpoint || "";
+
   //Invoices flyout options
   let invoicesColumnList = utils.getDataFromMultifield(
     resourceResolver,
