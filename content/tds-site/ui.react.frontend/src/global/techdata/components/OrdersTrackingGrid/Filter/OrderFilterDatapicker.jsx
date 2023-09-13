@@ -183,9 +183,18 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
           transitionDuration={300}
           daySize={30}
           focusedInput={focusedInput}
-          onFocusChange={() => {
+          onFocusChange={(focusedInput) => {
             const start = document.querySelector('#start-date').value;
-            setFocusedInput(start !== '' ? 'endDate' : 'startDate');
+            const end = document.querySelector('#end-date').value;
+            if (['startDate', 'endDate'].includes(focusedInput)) {
+              setFocusedInput(focusedInput);
+            } else if (!focusedInput && start === '') {
+              setFocusedInput('startDate');
+            } else if (end === '') {
+              setFocusedInput('endDate');
+            } else {
+              setFocusedInput('startDate');
+            }
           }}
         />
       </div>
