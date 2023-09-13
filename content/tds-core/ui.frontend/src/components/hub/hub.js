@@ -1,4 +1,4 @@
-(function() {
+/*(function() {
     "use strict";
     function onDocumentReady() {
         const dropdownBtns = document.querySelectorAll('.hub .cmp-button');
@@ -42,4 +42,4 @@
         });
     };
     document.addEventListener("DOMContentLoaded", onDocumentReady);
-})();
+})(); */
