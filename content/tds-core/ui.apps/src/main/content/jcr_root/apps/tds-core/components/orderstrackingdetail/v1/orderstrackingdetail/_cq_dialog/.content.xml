@@ -414,6 +414,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Add Label"
 												name="./add"/>
+                                            <lineMfgPartNo
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Mfr. №: Label"
+												name="./lineMfgPartNo"/>
                                             <additionalQuantityAdded
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

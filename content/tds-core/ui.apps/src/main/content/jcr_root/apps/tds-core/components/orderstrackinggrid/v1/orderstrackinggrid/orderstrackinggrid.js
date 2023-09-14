@@ -171,6 +171,7 @@ use(["../common/utils.js"], function (utils) {
     "manufacturersPartNumber",
     "quantity",
     "add",
+    "lineMfgPartNo",
     "additionalQuantityAdded",
     "selectReasonLabel",
     "rejectionPrice",

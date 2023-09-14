@@ -12,7 +12,13 @@ import PnSkuColumn from './Columns/PnSkuColumn';
 import ActionColumn from './Columns/ActionColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 
-function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
+function NotShippedTabGrid({
+  data,
+  gridProps,
+  hasOrderModificationRights,
+  gridRef,
+  rowToGrayOutTDNameRef,
+}) {
   const gridData = data?.items ?? [];
   const config = {
     ...gridProps,
@@ -87,6 +93,15 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
       value: { data: {}, show: true },
     });
   };
+  function getRowClass({ node }) {
+    const data = node.group ? node.aggData : node.data;
+    if (data.tdNumber === rowToGrayOutTDNameRef.current) {
+      return true;
+    }
+  }
+  const rowClassRules = {
+    'gray-out-changing-rows': getRowClass,
+  };
   return (
     <section>
       <div className="order-line-details__content__title">
@@ -110,6 +125,8 @@ function NotShippedTabGrid({ data, gridProps, hasOrderModificationRights }) {
           config={config}
           data={gridData}
           contextMenuItems={contextMenuItems}
+          rowClassRules={rowClassRules}
+          gridRef={gridRef}
         />
       </div>
     </section>

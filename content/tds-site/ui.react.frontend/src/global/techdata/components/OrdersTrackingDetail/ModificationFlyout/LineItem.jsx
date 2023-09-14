@@ -97,7 +97,7 @@ const LineItem = ({
           <div className="full-width">
             <p>
               <InfoIcon />
-              {getDictionaryValueOrKey(labels.additionalQuantityAdded)}
+              {getDictionaryValueOrKey(labels?.additionalQuantityAdded)}
             </p>
           </div>
         )}

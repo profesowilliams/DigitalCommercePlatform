@@ -67,6 +67,8 @@ function OrdersTrackingGrid(props) {
     status: null,
     customFilterRef: null,
   });
+  const gridRef = useRef();
+  const rowToGrayOutTDNameRef = useRef();
   const {
     setToolTipData,
     setCustomState,
@@ -378,6 +380,8 @@ function OrdersTrackingGrid(props) {
                       hasAIORights={hasAIORights}
                       hasOrderModificationRights={hasOrderModificationRights}
                       setDetailsApiResponse={setDetailsApiResponse}
+                      gridRef={gridRef}
+                      rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
                     />
                   </>
                 )}
@@ -412,6 +416,8 @@ function OrdersTrackingGrid(props) {
         analyticsCategories={analyticsCategories}
         onQueryChanged={onQueryChanged}
         apiResponse={detailsApiResponse}
+        gridRef={gridRef}
+        rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
       />
     </>
   );

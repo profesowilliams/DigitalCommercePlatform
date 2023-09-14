@@ -16,7 +16,6 @@ const Flyouts = ({
   rowToGrayOutTDNameRef,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
-
   return (
     <>
       <DNotesFlyout
