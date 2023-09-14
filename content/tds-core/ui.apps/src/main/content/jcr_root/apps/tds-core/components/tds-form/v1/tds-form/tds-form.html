@@ -3,6 +3,11 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
   </sly>
 
+  <script>
+    window.configuration = {
+      apiBaseUrl: "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}"
+    };
+  </script>
   <sly data-sly-use.model="${'tds-form.js' @ serviceData=serviceData}">
     <div data-observe-mutation>
       <div
