@@ -10,7 +10,6 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { QuerySelector } from 'ag-grid-community';
 
 function CustomStartEndText({ filterLabels }) {
   return (
@@ -68,6 +67,9 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
       endDateFormatted.current,
       ev.target.value
     );
+    if (customStartDate && customEndDate) {
+      setFilterClicked(true);
+    }
   };
 
   const resetFilters = () => {
