@@ -220,6 +220,13 @@ $flyout-small-height-formax: 779px;
 
     &__account-number, &__account-name, &__city {
       font-family: $font-family-arial;
+
+      .cmp-flyout__content-search__quote--highlighted {
+        color: $brand-cobalt;
+        font-weight: 700;
+        font-family: $font-family-arial;
+        text-transform: capitalize;
+      }
     }
   }
 }

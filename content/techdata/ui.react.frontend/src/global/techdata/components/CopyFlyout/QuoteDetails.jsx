@@ -4,16 +4,38 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
   const { accountNumber, name, city } = quote;
 
+  const isNumeric = (str) => {
+    return /^[0-9]+$/.test(str);
+  };
+
+  const isAccountNumFlag = isNumeric(currentlyTypedWord);
+
   const AccountNumberWithHighlight = () => {
     return (
+    isAccountNumFlag ? (
       <>
         <span className="cmp-flyout__content-search__quote--highlighted">
           {currentlyTypedWord}
         </span>
         <span>{accountNumber?.substring(currentlyTypedWord?.length)}</span>
       </>
+      ) : accountNumber
     );
   };
+
+  const AccountNameWithHighlight = () => {
+    return (
+        !isAccountNumFlag ? (
+      <>
+        <span className="cmp-flyout__content-search__quote--highlighted">
+          {currentlyTypedWord}
+        </span>
+        <span>{name?.substring(currentlyTypedWord?.length)}</span>
+      </>
+      ) : name
+    );
+  };
+
   return (
     <div className="cmp-flyout__quotecmp-flyout__selected-quote ">
       {accountNumber && (
@@ -42,7 +64,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
                 )}
               </span>
             )}
-            {name}
+            <AccountNameWithHighlight/>
           </div>
           <div className="cmp-flyout__quotecmp-flyout__selected-quote__city">
             {labels && (

@@ -5,6 +5,7 @@ import {
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Autocomplete, Button, TextField } from '@mui/material';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { QuoteDetails } from './QuoteDetails';
@@ -213,6 +214,10 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
     return null;
   };
 
+  const filterOptions = createFilterOptions({
+    stringify: (option) => `${option.accountNumber} ${option.name}`
+  });
+
   return (
     <BaseFlyout
       open={copyFlyoutConfig?.show}
@@ -242,6 +247,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
             open={isAutocompleteOpen}
             freeSolo={true}
             options={quotes}
+            filterOptions={filterOptions}
             getOptionLabel={(option) => option.accountNumber ?? accountNumber}
             onChange={handleQuoteSelectedChange}
             value={selectedQuote}
