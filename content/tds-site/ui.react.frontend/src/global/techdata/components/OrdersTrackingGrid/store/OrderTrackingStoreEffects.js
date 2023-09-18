@@ -4,7 +4,7 @@ import {
 } from '../../../../../utils/constants';
 import { setLocalStorageData } from '../utils/gridUtils';
 import { getLocalValueOrDefault } from './../../BaseGrid/store/GridStore';
-import { isEqual } from 'lodash';
+import { difference, isEqual } from 'lodash';
 
 const areCustomFiltersEqual = (beforeFilters, afterFilters) => {
   let counterBeforeFilters = 0;
@@ -136,6 +136,45 @@ export const orderTrackingEffects = (set, get) => {
     setCustomizedFiltersSelectedAfter(customizedFiltersSelectedAfter) {
       set({ customizedFiltersSelectedAfter });
     },
+    setPredefinedFiltersApplied(predefinedFiltersApplied) {
+      set({ predefinedFiltersApplied });
+    },
+    setCustomizedFiltersApplied(customizedFiltersApplied) {
+      set({ customizedFiltersApplied });
+    },
+    setAreThereAnyFiltersSelectedButNotApplied() {
+      const {
+        predefinedFiltersApplied,
+        orderStatusFiltersChecked,
+        orderTypeFiltersChecked,
+        dateRangeFiltersChecked,
+        customFiltersChecked,
+        customizedFiltersApplied,
+      } = get();
+
+      const checkedPredefinedFilters = [
+        ...orderStatusFiltersChecked,
+        ...orderTypeFiltersChecked,
+        ...dateRangeFiltersChecked,
+      ];
+      const areAnyPredefinedFiltersSelectedButNotApplied =
+        difference(checkedPredefinedFilters, predefinedFiltersApplied).length >
+        0;
+      const checkedCustomizedFilters = customFiltersChecked
+        .filter((filter) => filter.checked)
+        .map((filter) => filter.filterOptionKey);
+      const customizedFiltersAppliedSimplified = customizedFiltersApplied
+        .filter((filter) => filter.checked)
+        .map((filter) => filter.filterOptionKey);
+      const areAnyCustomFiltersSelectedButNotApplied =
+        difference(checkedCustomizedFilters, customizedFiltersAppliedSimplified)
+          .length > 0;
+
+      const areThereAnyFiltersSelectedButNotApplied =
+        areAnyPredefinedFiltersSelectedButNotApplied ||
+        areAnyCustomFiltersSelectedButNotApplied;
+      set({ areThereAnyFiltersSelectedButNotApplied });
+    },
     setSearch90DaysBack(filterDefaultDateRange) {
       set({ filterDefaultDateRange });
     },
@@ -148,18 +187,13 @@ export const orderTrackingEffects = (set, get) => {
       set({ doesReasonDropdownHaveEmptyItems });
     },
     clearCheckedButNotAppliedOrderFilters() {
-      const {
-        predefinedFiltersSelectedBefore,
-        customizedFiltersSelectedBefore,
-      } = get();
+      const { predefinedFiltersApplied, customizedFiltersApplied } = get();
       const getFromPredefinedFilters = (group) =>
-        predefinedFiltersSelectedBefore.filter(
-          (filter) => filter.group === group
-        );
+        predefinedFiltersApplied.filter((filter) => filter.group === group);
       const typeFilters = getFromPredefinedFilters('type');
       const statusFilters = getFromPredefinedFilters('status');
       const dateFilters = getFromPredefinedFilters('date');
-      const customFilters = customizedFiltersSelectedBefore;
+      const customFilters = customizedFiltersApplied;
       set({
         orderTypeFiltersChecked: structuredClone(typeFilters),
         orderStatusFiltersChecked: structuredClone(statusFilters),

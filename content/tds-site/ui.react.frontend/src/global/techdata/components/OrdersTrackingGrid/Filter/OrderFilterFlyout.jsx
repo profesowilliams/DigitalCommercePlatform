@@ -34,6 +34,10 @@ const OrderFilterFlyout = ({
   );
   const filterClicked = useOrderTrackingStore((state) => state.filterClicked);
 
+  const areThereAnyFiltersSelectedButNotApplied = useOrderTrackingStore(
+    (state) => state.areThereAnyFiltersSelectedButNotApplied
+  );
+
   const dateType = useOrderTrackingStore((state) => state.dateType);
 
   const [showLess, setShowLess] = useState(true);
@@ -45,10 +49,11 @@ const OrderFilterFlyout = ({
   const {
     toggleFilterModal,
     clearCheckedButNotAppliedOrderFilters,
-    setPredefinedFiltersSelectedBefore,
-    setCustomizedFiltersSelectedBefore,
     setFilterClicked,
     closeAllFilterOptions,
+    setCustomizedFiltersApplied,
+    setPredefinedFiltersApplied,
+    setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
 
   const toggleShowLess = () => {
@@ -90,13 +95,14 @@ const OrderFilterFlyout = ({
     toggleFilterModal();
     closeAllFilterOptions();
     setFilterClicked(false);
-    setPredefinedFiltersSelectedBefore([
+    setPredefinedFiltersApplied([
       ...orderStatusFiltersChecked,
       ...orderTypeFiltersChecked,
       ...dateRangeFiltersChecked,
     ]);
-    setCustomizedFiltersSelectedBefore(structuredClone(customFiltersChecked));
+    setCustomizedFiltersApplied(structuredClone(customFiltersChecked));
     onQueryChanged();
+    setAreThereAnyFiltersSelectedButNotApplied();
   };
 
   const handleClearFilter = () => {
@@ -115,7 +121,7 @@ const OrderFilterFlyout = ({
       anchor="right"
       titleLabel={getDictionaryValueOrKey(filterTitle)}
       buttonLabel={getDictionaryValueOrKey(showResultLabel)}
-      disabledButton={!filterClicked}
+      disabledButton={!areThereAnyFiltersSelectedButNotApplied}
       onClickButton={showResult}
       isTDSynnex={isTDSynnex}
       subheaderReference={subheaderReference}

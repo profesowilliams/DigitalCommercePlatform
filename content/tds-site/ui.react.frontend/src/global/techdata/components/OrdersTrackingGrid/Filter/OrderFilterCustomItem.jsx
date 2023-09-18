@@ -16,6 +16,7 @@ const OrderFilterCustomItem = ({
     setCustomFiltersChecked,
     setCustomizedFiltersSelectedAfter,
     setFilterClicked,
+    setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
 
   const styleCheckbox = {
@@ -48,6 +49,7 @@ const OrderFilterCustomItem = ({
     setCustomFiltersChecked([...newList]);
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
     setFilterClicked(true);
+    setAreThereAnyFiltersSelectedButNotApplied();
   };
 
   return (

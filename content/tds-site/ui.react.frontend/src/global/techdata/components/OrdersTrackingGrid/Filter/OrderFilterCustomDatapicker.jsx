@@ -40,6 +40,7 @@ export default function OrderFilterCustomDatapicker({
     setCustomFiltersChecked,
     setCustomizedFiltersSelectedAfter,
     setFilterClicked,
+    setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
 
   const startDateFormatted = useRef('');
@@ -100,6 +101,7 @@ export default function OrderFilterCustomDatapicker({
     if ((startDate, endDate)) {
       setFilterDate(startDate, endDate);
       setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
     }
   };
 

@@ -32,8 +32,12 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     setDateRangeFiltersChecked,
     setPredefinedFiltersSelectedAfter,
     setFilterClicked,
+    setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.dateType);
+  const dateRangeFiltersChecked = useOrderTrackingStore(
+    (state) => state.dateRangeFiltersChecked
+  );
   const customStartDate = useOrderTrackingStore(
     (state) => state.customStartDate
   );
@@ -68,6 +72,11 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
       ev.target.value
     );
     if (customStartDate && customEndDate) {
+      if (dateRangeFiltersChecked.length > 0) {
+        const startD = moment(dateRangeFiltersChecked[0].createdFrom);
+        const endD = moment(dateRangeFiltersChecked[0].createdTo);
+        setFilterDate(startD, endD);
+      }
       setFilterClicked(true);
     }
   };
@@ -106,6 +115,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
         group: 'date',
         createdFrom: startDate?.toDate(),
         createdTo: endDate?.toDate(),
+        dateType,
       },
     ];
     setDateRangeFiltersChecked(newDate);
@@ -131,6 +141,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
         dateType
       );
       setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
     }
   };
 

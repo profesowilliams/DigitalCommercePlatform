@@ -59,6 +59,9 @@ const INITIAL_STATE = {
     'orderStatusFilters',
     []
   ),
+  predefinedFiltersApplied: [],
+  customizedFiltersApplied: [],
+  areThereAnyFiltersSelectedButNotApplied: false,
   predefinedFiltersSelectedBefore: [],
   predefinedFiltersSelectedAfter: [],
   customizedFiltersSelectedBefore: [],

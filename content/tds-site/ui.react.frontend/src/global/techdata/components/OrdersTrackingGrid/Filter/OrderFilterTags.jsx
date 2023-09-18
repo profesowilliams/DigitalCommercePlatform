@@ -12,6 +12,7 @@ function OrderFilterTags({ filtersRefs }) {
     setPredefinedFiltersSelectedAfter,
     setCustomizedFiltersSelectedAfter,
     setFilterClicked,
+    setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.orderStatusFiltersChecked
@@ -33,6 +34,7 @@ function OrderFilterTags({ filtersRefs }) {
       filtersRefs.current.status = newList.join();
       setOrderStatusFiltersChecked(newList);
       setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
       setPredefinedFiltersSelectedAfter([
         ...newList,
         ...orderTypeFiltersChecked,
@@ -43,6 +45,7 @@ function OrderFilterTags({ filtersRefs }) {
       filtersRefs.current.type = newList.join();
       setOrderTypeFiltersChecked(newList);
       setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
       setPredefinedFiltersSelectedAfter([
         ...orderStatusFiltersChecked,
         ...newList,
@@ -64,6 +67,7 @@ function OrderFilterTags({ filtersRefs }) {
         value: undefined,
       });
       setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
       filtersRefs.current.createdFrom = undefined;
       filtersRefs.current.createdTo = undefined;
     }
@@ -78,6 +82,7 @@ function OrderFilterTags({ filtersRefs }) {
         });
     });
     setCustomFiltersChecked([...newList]);
+    setAreThereAnyFiltersSelectedButNotApplied();
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };
 
@@ -92,6 +97,7 @@ function OrderFilterTags({ filtersRefs }) {
       _filter.id === filter.id && clearDate(_filter);
     });
     setCustomFiltersChecked([...newList]);
+    setAreThereAnyFiltersSelectedButNotApplied();
     setCustomizedFiltersSelectedAfter(structuredClone(newList));
   };
 
