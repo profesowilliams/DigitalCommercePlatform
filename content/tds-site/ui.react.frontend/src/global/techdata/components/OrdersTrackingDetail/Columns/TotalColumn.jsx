@@ -1,8 +1,30 @@
 import React from 'react'
 
-function TotalColumn({ line }) {
+function TotalColumn({ line, sortedLineDetails }) {
+  const multiple = line?.lineDetails?.length > 1;
+  const isSingleElement = !multiple;
+
   return (
-    <div className="cmp-order-tracking-grid__total-column">{`${line?.totalPriceFormatted}`}</div>
+    <div className="cmp-order-tracking-grid-details__splitLine-column cmp-order-tracking-grid-details__splitLine--rightAlign">
+      {sortedLineDetails(line)?.map((el, index) => {
+        const isLastElement =
+          multiple && index === line?.lineDetails?.length - 1;
+        return (
+          <div
+            key={el.id}
+            className={`cmp-order-tracking-grid-details__splitLine${
+              isSingleElement || isLastElement
+                ? '__separateLine'
+                : '__separateLineMultiple'
+            }`}
+          >
+            <span className="cmp-order-tracking-grid-details__splitLine__separateLineText cmp-order-tracking-grid-details__splitLine--offsetRight">
+              {el.subtotalPriceFormatted}
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 

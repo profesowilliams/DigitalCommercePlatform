@@ -9,6 +9,7 @@ import QuantityColumn from '../Columns/QuantityColumn';
 import LineStatusColumn from '../Columns/LineStatusColumn';
 import ShipDateColumn from '../Columns/ShipDateColumn';
 import TotalColumn from '../Columns/TotalColumn';
+import UnitCostColumn from '../Columns/UnitCostColumn';
 import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { getSessionInfo } from '../../../../../utils/user/get';
@@ -47,15 +48,22 @@ function OrdersTrackingDetailGrid({
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
 
   const gridColumnWidths = Object.freeze({
-    actions: '50px',
-    description: '287px',
     id: '95px',
-    quantity: '58px',
-    shipDate: '99px',
+    description: '287px',
     status: '173x',
-    totalPriceFormatted: '150px',
+    shipDate: '99px',
     unitPriceFormatted: '150px',
+    quantity: '58px',
+    totalPriceFormatted: '150px',
+    actions: '50px',
   });
+
+  const sortedLineDetails = (line) =>
+    line?.lineDetails?.slice().sort((a, b) => {
+      const dateA = new Date(a.ShipDateFormatted);
+      const dateB = new Date(b.ShipDateFormatted);
+      return dateA - dateB;
+    });
 
   const columnDefinitionsOverride = [
     {
@@ -76,14 +84,20 @@ function OrdersTrackingDetailGrid({
     {
       field: 'status',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
-      cellRenderer: ({ data }) => <LineStatusColumn line={data} />,
+      cellRenderer: ({ data }) => (
+        <LineStatusColumn line={data} sortedLineDetails={sortedLineDetails} />
+      ),
       width: gridColumnWidths.status,
     },
     {
       field: 'shipDate',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.shipDate),
       cellRenderer: ({ data }) => (
-        <ShipDateColumn line={data} config={gridProps} />
+        <ShipDateColumn
+          line={data}
+          config={gridProps}
+          sortedLineDetails={sortedLineDetails}
+        />
       ),
       width: gridColumnWidths.shipDate,
     },
@@ -95,12 +109,17 @@ function OrdersTrackingDetailGrid({
         '{currency-code}',
         data?.paymentDetails?.currency || defaultCurrency
       ),
+      cellRenderer: ({ data }) => (
+        <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
+      ),
       width: gridColumnWidths.unitPriceFormatted,
     },
     {
       field: 'quantity',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
-      cellRenderer: ({ data }) => <QuantityColumn line={data} />,
+      cellRenderer: ({ data }) => (
+        <QuantityColumn line={data} sortedLineDetails={sortedLineDetails} />
+      ),
       width: gridColumnWidths.quantity,
     },
     {
@@ -111,7 +130,9 @@ function OrdersTrackingDetailGrid({
         '{currency-code}',
         data?.paymentDetails?.currency || defaultCurrency
       ),
-      cellRenderer: ({ data }) => <TotalColumn line={data} />,
+      cellRenderer: ({ data }) => (
+        <TotalColumn line={data} sortedLineDetails={sortedLineDetails} />
+      ),
       width: gridColumnWidths.totalPriceFormatted,
     },
     {
@@ -124,6 +145,7 @@ function OrdersTrackingDetailGrid({
           openFilePdf={openFilePdf}
           apiResponse={apiResponse}
           hasAIORights={hasAIORights}
+          sortedLineDetails={sortedLineDetails}
         />
       ),
       width: gridColumnWidths.actions,

@@ -1,42 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
-import MenuActions from '../Header/MenuActions';
+import React from 'react';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import ActionButton from './ActionButton';
 
-// TODO: map over multiple lines from lineDetails
 const ActionsColumn = ({
   line,
   config = {},
   openFilePdf,
   apiResponse,
   hasAIORights,
+  sortedLineDetails,
 }) => {
   const effects = useOrderTrackingStore((st) => st.effects);
-
-  const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
-  const [actionButtonVisible, setActionButtonVisible] = useState(true);
-
-  const handleActionMouseOver = () => {
-    setActionsDropdownVisible(true);
-  };
-
-  const handleActionMouseLeave = () => {
-    setActionsDropdownVisible(false);
-  };
-  const iconStyle = {
-    color: '#21314D',
-    cursor: 'pointer',
-    fontSize: '1.2rem',
-    width: '1.3rem',
-  };
-
   const labels = config?.actionLabels;
-
   const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
   const areInvoicesAvailable = line.invoices.length > 0;
   const isSerialNumberAvailable = line.serials.length > 0;
   const id = apiResponse?.orderNumber;
+
   let invoices = [];
   invoices = line.invoices;
   let deliveryNotes = [];
@@ -87,29 +68,18 @@ const ActionsColumn = ({
       onClick: handleCopySerialNumbers,
     },
   ];
-  useEffect(() => {
-    if (line?.lineDetails[0]?.quantity === 0) {
-      return setActionButtonVisible(false);
-    } else {
-      return setActionButtonVisible(true);
-    }
-  }, [line?.lineDetails[0]?.quantity]);
+
   return (
-    <div
-      className="cmp-order-tracking-grid-details__action-column actions-container"
-      onMouseOver={handleActionMouseOver}
-      onMouseLeave={handleActionMouseLeave}
-    >
-      {actionButtonVisible && <EllipsisIcon style={iconStyle} />}
-      {actionButtonVisible && actionsDropdownVisible && (
-        <div
-          className="actions-dropdown"
-          onMouseOver={handleActionMouseOver}
-          onMouseLeave={handleActionMouseLeave}
-        >
-          <MenuActions items={menuActionsItems} />
-        </div>
-      )}
+    <div className="cmp-order-tracking-grid-details__splitLine-column">
+      {sortedLineDetails(line)?.map((el, index) => (
+        <ActionButton
+          key={el.id}
+          line={line}
+          element={el}
+          index={index}
+          menuActionsItems={menuActionsItems}
+        />
+      ))}
     </div>
   );
 };

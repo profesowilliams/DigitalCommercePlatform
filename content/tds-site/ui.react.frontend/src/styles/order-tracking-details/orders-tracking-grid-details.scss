@@ -15,6 +15,15 @@
   }
 }
 
+  .cmp-order-preview .cmp-grid.ag-theme-alpine {
+    & .ag-cell-value {
+      width: 100%
+    }
+    & .ag-cell-wrapper{
+      width: inherit;
+    }
+  }
+
 .cmp-order-tracking-grid-details {
   /* Styles for the base grid */
   & .cmp-base-grid .cmp-grid {
@@ -41,6 +50,12 @@
           }
         }
       }
+    
+    }
+  }
+  * {
+   & .ag-cell-value {
+      width: 100%
     }
   }
 
@@ -67,7 +82,7 @@
     top: 25px;
     left: -156px;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
-    background-color: get-color(brand-white);
+    background-color: $brand-white;
     z-index: 10;
 
     ul {
@@ -81,15 +96,15 @@
       }
 
       > li:hover {
-        background-color: get-color(neutral-gray-2);
+        background-color: $td-neutral-gray-2;
       }
     }
   }
 
   &__report-pill {
-    background-color: #005758;
+    background-color: $brand-green;
     padding: 0 20px;
-    color: get-color(brand-white);
+    color: $brand-white;
     border-radius: 20px;
 
     span {
@@ -129,9 +144,17 @@
     padding-right: 12px;
   }
 
+  &__line {
+    text-align: right;
+  }
+
   &__description {
     &-column {
       display: flex;
+    }
+    &-row {
+      display: flex;
+      text-align: left;
     }
 
     &-image {
@@ -149,7 +172,7 @@
     }
 
     &-link {
-      color: get-color(cobalt);
+      color: $brand-cobalt;
       max-height: 3em;
       max-width: 191px;
       overflow: hidden;
@@ -163,6 +186,46 @@
       div {
         font-size: 14px;
       }
+    }
+  }
+  
+  &__splitLine {
+    &-column {
+      display: flex;
+      flex-direction: column;
+      * {
+        width: 100%;
+      }
+    }
+    &__separateLine {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      height: 114px;
+    }
+    &__separateLineMultiple {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      height: 114px;
+      border-bottom: 1px solid $td-neutral-gray-2;
+      padding-bottom: 20px;
+    }
+    &__separateLineText {
+      line-height: 24px;
+      margin-top: 32px;
+    }
+    &--offsetRight {
+      padding-right: 18px;
+    }
+    &--rightAlign {
+      text-align: right;
+    }
+    &--centerAlign {
+      text-align: center;
+    }
+    &--centerAlignActionButton {
+      place-items:  center;
     }
   }
 }

@@ -1,9 +1,29 @@
 import React from 'react';
-//TODO: Add .map() over lineDetails
-function ShipDateColumn({ line }) {
+function ShipDateColumn({ line, sortedLineDetails }) {
+  const multiple = line?.lineDetails?.length > 1;
+  const isSingleElement = !multiple;
+
   return (
-    <div>
-      {line?.lineDetails ? `${line?.lineDetails[0]?.ShipDateFormatted}` : ''}
+    <div className="cmp-order-tracking-grid-details__splitLine-column cmp-order-tracking-grid-details__splitLine--centerAlign">
+      {sortedLineDetails(line)?.map((el, index) => {
+        const isLastElement =
+          multiple && index === line?.lineDetails?.length - 1;
+
+        return (
+          <div
+            key={el.id}
+            className={`cmp-order-tracking-grid-details__splitLine${
+              isSingleElement || isLastElement
+                ? '__separateLine'
+                : '__separateLineMultiple'
+            }`}
+          >
+            <span className="cmp-order-tracking-grid-details__splitLine__separateLineText">
+              {el.ShipDateFormatted}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }

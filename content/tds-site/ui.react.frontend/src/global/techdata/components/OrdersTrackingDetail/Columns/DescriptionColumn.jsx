@@ -3,7 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function DescriptionColumn({ line, config }) {
   return (
-    <div className="cmp-order-tracking-grid-details__description-column">
+    <div className="cmp-order-tracking-grid-details__description-row">
       <div className="cmp-order-tracking-grid-details__description-image">
         <img
           className={'cmp-order-tracking-grid-details__description-image-child'}
