@@ -10,24 +10,25 @@ const LineItem = ({
   index,
   onChange,
   labels,
-  setQuantityDifference,
   setProductID,
   rejectedReason,
   setRejectedReason,
   setLineID,
   setItemsRequestData,
   itemsRequestData,
+  setAddLineQuantity,
+  setReduceLineQuantity,
 }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
-  const [currentValue, setCurrentValue] = useState(item.orderQuantity);
   const [quantityDecreased, setQuantityDecreased] = useState(false);
+  const [currentValue, setCurrentValue] = useState(item.orderQuantity);
+
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);
   const reasonDropdownValues = useOrderTrackingStore(
     (st) => st.reasonDropdownValues
   );
 
-  const calculatedValue = currentValue - item?.orderQuantity;
   const handleAmountChange = (newValue) => {
     setQuantityIncreased(Boolean(newValue > item.orderQuantity));
     setQuantityDecreased(Boolean(newValue < item.orderQuantity));
@@ -59,9 +60,6 @@ const LineItem = ({
       setDoesReasonDropdownHaveEmptyItems(false);
     }
   };
-  useEffect(() => {
-    setQuantityDifference(calculatedValue);
-  }, [currentValue]);
 
   const handleChangeReason = (val) => {
     const newArray = reasonDropdownValues;
@@ -75,6 +73,16 @@ const LineItem = ({
     setLineID(item.line);
   };
 
+  useEffect(() => {
+    quantityIncreased &&
+      currentValue > item.orderQuantity &&
+      setAddLineQuantity(currentValue - item.orderQuantity);
+  }, [quantityIncreased, currentValue]);
+  useEffect(() => {
+    quantityDecreased &&
+      currentValue < item.orderQuantity &&
+      setReduceLineQuantity(currentValue);
+  }, [quantityDecreased, currentValue]);
   return (
     <li key={item.line} className="cmp-flyout-list__element">
       <div className="cmp-flyout-list__element__number">{item.line}</div>

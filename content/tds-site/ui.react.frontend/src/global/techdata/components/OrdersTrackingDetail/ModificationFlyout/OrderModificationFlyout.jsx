@@ -33,11 +33,12 @@ function OrderModificationFlyout({
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [quantityDifference, setQuantityDifference] = useState();
   const [productID, setProductID] = useState('');
   const [lineID, setLineID] = useState('');
   const [rejectedReason, setRejectedReason] = useState('');
   const [itemsRequestData, setItemsRequestData] = useState([]);
+  const [addLineQuantity, setAddLineQuantity] = useState();
+  const [reduceLineQuantity, setReduceLineQuantity] = useState();
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
@@ -68,22 +69,27 @@ function OrderModificationFlyout({
     OrderID: apiResponse?.orderNumber,
     isError: '',
     message: '',
-    ReduceLine: [
-      {
-        LineID: `${lineID}`,
-        Qty: `${quantityDifference}`,
-        RejectionReason: `${rejectedReason}`,
-        message: '',
-        isError: '',
-      },
-    ],
-    AddLine: [
-      {
-        ProductID: productID,
-        Qty: `${quantityDifference}`,
-        UAN: '',
-      },
-    ],
+    ReduceLine: reduceLineQuantity
+      ? [
+          {
+            LineID: `${lineID}`,
+            Qty: `${reduceLineQuantity}`,
+            RejectionReason: `${rejectedReason}`,
+            message: '',
+            isError: '',
+          },
+        ]
+      : [],
+
+    AddLine: addLineQuantity
+      ? [
+          {
+            ProductID: productID,
+            Qty: `${addLineQuantity}`,
+            UAN: '',
+          },
+        ]
+      : [],
   };
   const requestChangeURL = config?.orderModifyChangeEndpoint;
 
@@ -188,13 +194,14 @@ function OrderModificationFlyout({
               item={item}
               onChange={handleAmountChange}
               labels={labels}
-              setQuantityDifference={setQuantityDifference}
               setProductID={setProductID}
               setLineID={setLineID}
               rejectedReason={rejectedReason}
               setRejectedReason={setRejectedReason}
               itemsRequestData={itemsRequestData}
               setItemsRequestData={setItemsRequestData}
+              setAddLineQuantity={setAddLineQuantity}
+              setReduceLineQuantity={setReduceLineQuantity}
             />
           ))}
         </ul>
