@@ -7570,7 +7570,8 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       docTypeText: "Normal order",
       status: "11",
       statusText: "Open",
-      isModifiable: true,
+      isEditable: true,
+      shipComplete: true,
       reseller: {
         id: "325009",
         name: "TD SYNNEX UK Limited",
@@ -7664,7 +7665,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           unitPriceFormatted: "7.59",
           totalPrice: 75.9,
           totalPriceFormatted: "75.90",
-          isEOL: true,
+          isEOL: false,
           isReturnable: false,
           deliveryNotes: [
             {
@@ -7717,7 +7718,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           unitPriceFormatted: "100.00",
           totalPrice: 1900.0,
           totalPriceFormatted: "1900.00",
-          isEOL: true,
+          isEOL: false,
           isReturnable: false,
           deliveryNotes: [
             {

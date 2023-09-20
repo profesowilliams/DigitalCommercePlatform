@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-const ActionsButton = ({ line, element, index, menuActionsItems }) => {
+const ActionsButton = ({
+  line,
+  element,
+  index,
+  config = {},
+  openFilePdf,
+  apiResponse,
+  hasAIORights,
+}) => {
   const iconStyle = {
     color: '#21314D',
     cursor: 'pointer',
@@ -22,6 +32,78 @@ const ActionsButton = ({ line, element, index, menuActionsItems }) => {
   const handleActionMouseLeave = () => {
     setActionsDropdownVisible(false);
   };
+  const effects = useOrderTrackingStore((st) => st.effects);
+  const { setCustomState } = effects;
+  const labels = config?.actionLabels;
+  const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
+  const areInvoicesAvailable = line.invoices.length > 0;
+  const isSerialNumberAvailable = line.serials.length > 0;
+  const id = apiResponse?.orderNumber;
+  const poNumber = apiResponse?.customerPO;
+
+  const invoices = line.invoices;
+  const deliveryNotes = line.deliveryNotes;
+  const toaster = {
+    isOpen: true,
+    origin: 'fromUpdate',
+    isAutoClose: true,
+    isSuccess: true,
+    message: getDictionaryValueOrKey(
+      config?.actionLabels?.toasterCopySerialNumbersMessage
+    ),
+  };
+  const hasMultipleDNotes = deliveryNotes.length > 1;
+  const hasMultipleInvoices = invoices.length > 1;
+  const handleDownloadDnote = () => {
+    openFilePdf('DNote', id, deliveryNotes[0]?.Id);
+  };
+  const handleDownloadInvoice = () => {
+    openFilePdf('Invoice', id, invoices[0]?.Id);
+  };
+  const triggerDNotesFlyout = () => {
+    setCustomState({
+      key: 'dNotesFlyout',
+      value: { data: deliveryNotes, show: true, id, reseller: poNumber },
+    });
+  };
+  const triggerInvoicesFlyout = () => {
+    setCustomState({
+      key: 'invoicesFlyout',
+      value: { data: invoices, show: true, id, reseller: poNumber },
+    });
+  };
+  const handleCopySerialNumbers = () => {
+    const lineSerials = line?.serials || [];
+    const serialsText = lineSerials.join('\n');
+    navigator.clipboard.writeText(serialsText);
+
+    effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+  };
+
+  const menuActionsItems = [
+    {
+      condition: true,
+      label: labels?.track,
+      onClick: null,
+    },
+    {
+      condition: areDeliveryNotesAvailable,
+      label: labels?.viewDNotes,
+      onClick: hasMultipleDNotes ? triggerDNotesFlyout : handleDownloadDnote,
+    },
+    {
+      condition: hasAIORights && areInvoicesAvailable,
+      label: labels?.viewInvoices,
+      onClick: hasMultipleInvoices
+        ? triggerInvoicesFlyout
+        : handleDownloadInvoice,
+    },
+    {
+      condition: isSerialNumberAvailable,
+      label: labels?.copySerialNumber,
+      onClick: handleCopySerialNumbers,
+    },
+  ];
 
   return (
     <div

@@ -62,11 +62,11 @@ const OrderTrackingDetailHeader = ({
   const hasMultipleDNotes = deliveryNotes.length > 1;
   const hasMultipleInvoices = invoices.length > 1;
   const handleDownloadDNote = () => {
-    openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    openFilePdf('DNote', id, deliveryNotes[0]?.Id);
     pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
   };
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', id, invoices[0]?.id);
+    openFilePdf('Invoice', id, invoices[0]?.Id);
     pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
   };
   const triggerDNotesFlyout = () => {
@@ -117,7 +117,6 @@ const OrderTrackingDetailHeader = ({
       onClick: triggerExportFlyout,
     },
   ];
-
   return (
     <div className="cmp-orders-qp__config-grid">
       <div className="header-container">
