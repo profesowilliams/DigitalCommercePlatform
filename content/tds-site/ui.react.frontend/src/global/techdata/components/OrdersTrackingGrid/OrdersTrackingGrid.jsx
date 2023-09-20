@@ -89,6 +89,7 @@ function OrdersTrackingGrid(props) {
   const hasOrderModificationRights = hasRights('OrderModification');
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
+  const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
   const componentProp = JSON.parse(props.componentProp);
 
   const formattedDateRange = setDefaultSearchDateRange(
@@ -338,7 +339,12 @@ function OrdersTrackingGrid(props) {
         <>
           {hasAccess ? (
             <div className="cmp-order-tracking-grid">
-              {pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'))}
+              {(() => {
+                if (sendAnalyticsDataHome) {
+                  pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
+                  setSendAnalyticsDataHome(false);
+                }
+              })()}
               <MainGridHeader
                 onQueryChanged={onQueryChanged}
                 searchLabels={searchLabels}
@@ -404,7 +410,12 @@ function OrdersTrackingGrid(props) {
             </div>
           ) : (
             <>
-              {pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'))}
+              {(() => {
+                if (sendAnalyticsDataHome) {
+                  pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
+                  setSendAnalyticsDataHome(false);
+                }
+              })()}
               <AccessPermissionsNeeded noAccessProps={noAccessProps} />
             </>
           )}

@@ -159,7 +159,8 @@ export const orderTrackingEffects = (set, get) => {
       ];
       const areAnyPredefinedFiltersSelectedButNotApplied =
         difference(checkedPredefinedFilters, predefinedFiltersApplied).length >
-        0;
+          0 ||
+        checkedPredefinedFilters.length !== predefinedFiltersApplied.length;
       const checkedCustomizedFilters = customFiltersChecked
         .filter((filter) => filter.checked)
         .map((filter) => filter.filterOptionKey);
@@ -168,7 +169,9 @@ export const orderTrackingEffects = (set, get) => {
         .map((filter) => filter.filterOptionKey);
       const areAnyCustomFiltersSelectedButNotApplied =
         difference(checkedCustomizedFilters, customizedFiltersAppliedSimplified)
-          .length > 0;
+          .length > 0 ||
+        checkedCustomizedFilters.length !==
+          customizedFiltersAppliedSimplified.length;
 
       const areThereAnyFiltersSelectedButNotApplied =
         areAnyPredefinedFiltersSelectedButNotApplied ||
