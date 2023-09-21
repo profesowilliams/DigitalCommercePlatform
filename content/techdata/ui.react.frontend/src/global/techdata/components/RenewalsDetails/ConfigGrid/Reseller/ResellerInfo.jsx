@@ -30,6 +30,8 @@ function ResellerInfo({
   // Changes reseller check to vendorAccountNumber
   const resellerResponseAsObj = isObject(reseller.vendorAccountNumber);
   const resellerData = getModifiedResellerData(resellerResponseAsObj, reseller);
+
+  const paymentTerms = reseller.paymentTerms || '';
   
   const { canEdit, isValid } = reseller;
   const showEditButton = canEdit && !saving;
@@ -111,6 +113,7 @@ function ResellerInfo({
           resellerData={resellerData}
           resellerLabels={resellerLabels} 
           shipToData={shipTo}
+          paymentTermsVal={paymentTerms}
         />
       )}
     </div>

@@ -545,6 +545,11 @@
                                                         jcr:primaryType="nt:unstructured"
                                                         sling:resourceType="granite/ui/components/coral/foundation/well">
 														<items jcr:primaryType="nt:unstructured">
+                                                            <paymentTerms
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                    fieldLabel="Payment Terms"
+                                                                    name="./paymentTerms"/>
 															<shipToLabel
                                                                 jcr:primaryType="nt:unstructured"
                                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

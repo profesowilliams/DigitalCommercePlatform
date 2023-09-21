@@ -2,7 +2,7 @@ import React from "react";
 import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
 import { getDictionaryValue } from "../../../../../../utils/utils";
 import Info from "../../../common/quotes/DisplayItemInfo";
-export default function ResellerReadOnly({ resellerData = {}, resellerLabels, shipToData = {} }) {  
+export default function ResellerReadOnly({ resellerData = {}, resellerLabels, shipToData = {}, paymentTermsVal }) {
   const { 
     id,
     contact,
@@ -14,6 +14,7 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels, sh
     resellerSAPaccNoLabel,
     resellerVendorAccountNoLabel,
     shipToLabel,
+    paymentTerms
   } = resellerLabels;
 
   const addSeparator = (items) => {
@@ -39,6 +40,7 @@ export default function ResellerReadOnly({ resellerData = {}, resellerLabels, sh
       <p>
         <Info label={getDictionaryValue("details.renewal.label.resellerAccountNo",'Account Nº') } >{id}</Info>
         <Info label={ getDictionaryValue("details.renewal.label.vendorAccountNo",'Vendor account Nº') } >{vendorAccountNumber}</Info>
+        <Info label={ getDictionaryValueOrKey(paymentTerms) } >{paymentTermsVal}</Info>
       </p>        
       {shipToData?.id?.text &&
       <p>
