@@ -33,7 +33,7 @@ function LineStatusColumn({ line, sortedLineDetails }) {
           >
             <span
               className="cmp-order-tracking-grid-details__splitLine__separateLineText"
-              onClick={isEOL && handleSeeOptionsClick}
+              onClick={isEOL ? handleSeeOptionsClick : undefined}
             >
               {isEOL ? 'See options' : el.statusText}
             </span>

@@ -73,13 +73,15 @@ const ActionsButton = ({
     });
   };
   const handleCopySerialNumbers = () => {
-    const lineSerials = line?.serials || [];
-    const serialsText = lineSerials.join('\n');
-    navigator.clipboard.writeText(serialsText);
+    const serialsString = line?.serials || '';
+    const lineSerials = serialsString.split(',').map((serial) => serial.trim());
+    if (Array.isArray(lineSerials)) {
+      const serialsText = lineSerials.join('\n');
+      serialsText && navigator.clipboard.writeText(serialsText);
+    }
 
     effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
-
   const menuActionsItems = [
     {
       condition: true,
