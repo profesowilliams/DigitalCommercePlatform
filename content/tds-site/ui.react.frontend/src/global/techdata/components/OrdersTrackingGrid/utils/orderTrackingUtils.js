@@ -1,5 +1,8 @@
 import { usGet } from '../../../../../utils/api';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import {
+  getDictionaryValueOrKey,
+  setDefaultSearchDateRange,
+} from '../../../../../utils/utils';
 import {
   isFirstTimeSortParameters,
   calcSecondLevelSorting,
@@ -34,6 +37,7 @@ export const fetchOrdersCount = async (
   } else if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
     mapUrl.set(field, value);
+    addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
   } else if (fromRef && toRef) {
     mapUrl.set('createdFrom', fromRef);
     mapUrl.set('createdTo', toRef);
@@ -86,8 +90,7 @@ export async function fetchData(config) {
     customPaginationRef,
     previousSortChanged,
     firstAPICall,
-    onSearchAction,
-    // optionFieldsRef,
+    isOnSearchAction,
     previousFilter,
     defaultSearchDateRange,
     filtersRefs,
@@ -102,9 +105,8 @@ export async function fetchData(config) {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
 
-  if (onSearchAction) {
-    mapUrl.delete('createdFrom');
-    mapUrl.delete('createdTo');
+  if (searchCriteria.current?.field) {
+    addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
   }
 
   Object.keys(filtersRefs.current).map((filter) => {
@@ -134,14 +136,6 @@ export async function fetchData(config) {
 
     if (secondLevelSort && !secondLevelSort.includes('undefined')) {
       mapUrl.set('SortBySecondLevel', secondLevelSort);
-
-      if (secondLevelSort.includes('renewedduration')) {
-        const renewedWithSupport = secondLevelSort.replace(
-          'renewedduration',
-          'support'
-        );
-        mapUrl.set('SortBySecondLevelComposite', renewedWithSupport);
-      }
     }
 
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
@@ -155,13 +149,11 @@ export async function fetchData(config) {
       if (!isEqual) mapUrl.set('PageNumber', 1);
     }
   }
-
   if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
     mapUrl.set(field, value);
 
-    if (onSearchAction) {
-      console.log('on search action');
+    if (isOnSearchAction) {
       mapUrl.set('PageNumber', 1);
     }
   }

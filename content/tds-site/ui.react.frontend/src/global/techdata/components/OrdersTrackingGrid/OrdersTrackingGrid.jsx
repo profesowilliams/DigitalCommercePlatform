@@ -69,6 +69,9 @@ function OrdersTrackingGrid(props) {
   });
   const gridRef = useRef();
   const rowToGrayOutTDNameRef = useRef();
+  const resetCallback = useRef(null);
+  const shouldGoToFirstPage = useRef(false);
+  const isOnSearchAction = useRef(false);
   const {
     setToolTipData,
     setCustomState,
@@ -78,7 +81,8 @@ function OrdersTrackingGrid(props) {
     setDateType,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
-    useOrderTrackingStore
+    useOrderTrackingStore,
+    { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
   const hasRights = (entitlement) =>
     userData?.roleList?.some((role) => role.entitlement === entitlement);
@@ -164,8 +168,6 @@ function OrdersTrackingGrid(props) {
     const gridApi = gridApiRef?.current?.api;
     const queryOperations = {
       hasSortChanged,
-      // isFilterDataPopulated,
-      // optionFieldsRef,
       customPaginationRef,
       componentProp,
       searchCriteria,
@@ -177,6 +179,7 @@ function OrdersTrackingGrid(props) {
       defaultSearchDateRange: dateRange,
       filtersRefs,
       filterDefaultDateRange,
+      isOnSearchAction,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
     const ordersReportUrl = new URL(componentProp.ordersReportEndpoint);
@@ -333,6 +336,7 @@ function OrdersTrackingGrid(props) {
       setResponseError(true);
     }
   }, [userData]);
+
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (

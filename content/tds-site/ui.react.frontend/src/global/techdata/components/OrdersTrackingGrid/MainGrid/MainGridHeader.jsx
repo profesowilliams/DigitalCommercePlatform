@@ -105,7 +105,7 @@ function MainGridHeader({
   const onSearchChange = () => {
     setPill();
     removeDefaultDateRange();
-    onQueryChanged();
+    onQueryChanged({ onSearchAction: true });
   };
 
   const rightComponents = [

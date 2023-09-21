@@ -24,7 +24,39 @@ import {
 } from '../utils/analyticsUtils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
-function _OrderSearch(
+const getInitialFieldState = () => {
+  if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
+    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field;
+  } else {
+    return '';
+  }
+};
+
+const getInitialLabelState = () => {
+  if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
+    return '';
+  }
+
+  return '';
+};
+
+const getInitialValueState = () => {
+  if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
+    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.value;
+  } else {
+    return '';
+  }
+};
+
+const hasPreviousSearchTerm = () => {
+  if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
+    return false;
+  }
+
+  return false;
+};
+
+const _OrderSearch = (
   {
     options,
     searchCounter,
@@ -35,7 +67,7 @@ function _OrderSearch(
     searchAnalyticsLabel,
   },
   ref
-) {
+) => {
   const customSearchValues = {
     dropdown: '',
     input: '',
@@ -74,39 +106,7 @@ function _OrderSearch(
     [values, inputValueState]
   );
 
-  function getInitialValueState() {
-    if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-      return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.value;
-    } else {
-      return '';
-    }
-  }
-
-  function getInitialFieldState() {
-    if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-      return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field;
-    } else {
-      return '';
-    }
-  }
-
-  function getInitialLabelState() {
-    if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-      return '';
-    }
-
-    return '';
-  }
-
-  function hasPreviousSearchTerm() {
-    if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-      return false;
-    }
-
-    return false;
-  }
-
-  function clearValues() {
+  const clearValues = () => {
     for (const key in values) {
       if (Object.hasOwnProperty.call(values, key)) {
         setValues((prevSt) => {
@@ -118,7 +118,7 @@ function _OrderSearch(
       }
     }
     setCapsuleValues(false);
-  }
+  };
 
   const onReset = () => {
     setCallbackExecuted(false);
@@ -175,17 +175,17 @@ function _OrderSearch(
     }
   };
 
-  function handleCapsuleClose() {
+  const handleCapsuleClose = () => {
     setIsSearchCapsuleVisible(false);
     fetchAll();
-  }
+  };
 
-  function handleCapsuleTextClick() {
+  const handleCapsuleTextClick = () => {
     setIsSearchCapsuleVisible(false);
     setIsEditView(true);
-  }
+  };
 
-  function triggerSearch() {
+  const triggerSearch = () => {
     if (!searchTriggered) setSearchTriggered(true);
     const { option } = values;
     const inputValue = inputRef.current.value;
@@ -196,14 +196,7 @@ function _OrderSearch(
     pushDataLayerGoogle(
       getSearchAnalyticsGoogle(searchAnalyticsLabel, option, inputValue)
     );
-    if (
-      inputValue &&
-      option &&
-      inputValue.length < 10 &&
-      ['SerialNo', 'DeliveryNote'].includes(option)
-    ) {
-      setSearch90DaysBack(true);
-    }
+    setSearch90DaysBack(true);
     setIsSearchCapsuleVisible(true);
     setSearchTerm(inputValue);
     setCapsuleSearchValue(inputValue);
@@ -213,7 +206,7 @@ function _OrderSearch(
       field: option,
       value: inputValue,
     });
-    onQueryChanged({ onSearchAction: true });
+    onQueryChanged();
     pushEvent(ANALYTICS_TYPES.events.orderSearch, null, {
       order: {
         searchTerm: inputValue,
@@ -221,12 +214,12 @@ function _OrderSearch(
       },
     });
     setCapsuleValues({ ...values });
-  }
+  };
 
-  function fetchAll() {
+  const fetchAll = () => {
     onQueryChanged({ onSearchAction: true });
     onReset();
-  }
+  };
 
   const triggerSearchOnEnter = (event) => {
     if (event.keyCode === 13) {
@@ -235,7 +228,7 @@ function _OrderSearch(
     }
   };
 
-  const handleMouseLeave = (e) => {
+  const handleMouseLeave = () => {
     if (isSearchCapsuleVisible) return;
     setSwitchDropdown(false);
     onReset();
@@ -293,6 +286,6 @@ function _OrderSearch(
       )}
     </>
   );
-}
+};
 const OrderSearch = React.memo(forwardRef(_OrderSearch));
 export default OrderSearch;
