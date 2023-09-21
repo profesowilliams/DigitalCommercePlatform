@@ -110,6 +110,7 @@ const OrderFilterFlyout = ({
     clearCheckedButNotAppliedOrderFilters();
     toggleFilterModal();
     closeAllFilterOptions();
+    setAreThereAnyFiltersSelectedButNotApplied();
     onQueryChanged();
   };
 

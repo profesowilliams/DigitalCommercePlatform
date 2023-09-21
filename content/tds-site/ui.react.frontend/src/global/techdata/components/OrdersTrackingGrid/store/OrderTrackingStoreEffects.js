@@ -160,7 +160,9 @@ export const orderTrackingEffects = (set, get) => {
       const areAnyPredefinedFiltersSelectedButNotApplied =
         difference(checkedPredefinedFilters, predefinedFiltersApplied).length >
           0 ||
-        checkedPredefinedFilters.length !== predefinedFiltersApplied.length;
+        difference(predefinedFiltersApplied, checkedPredefinedFilters).length >
+          0;
+
       const checkedCustomizedFilters = customFiltersChecked
         .filter((filter) => filter.checked)
         .map((filter) => filter.filterOptionKey);
@@ -170,12 +172,9 @@ export const orderTrackingEffects = (set, get) => {
       const areAnyCustomFiltersSelectedButNotApplied =
         difference(checkedCustomizedFilters, customizedFiltersAppliedSimplified)
           .length > 0 ||
-        checkedCustomizedFilters.length !==
-          customizedFiltersAppliedSimplified.length;
-
-      const areThereAnyFiltersSelectedButNotApplied =
-        areAnyPredefinedFiltersSelectedButNotApplied ||
-        areAnyCustomFiltersSelectedButNotApplied;
+        difference(customizedFiltersAppliedSimplified, checkedCustomizedFilters)
+          .length > 0;
+        const areThereAnyFiltersSelectedButNotApplied = areAnyPredefinedFiltersSelectedButNotApplied || areAnyCustomFiltersSelectedButNotApplied;
       set({ areThereAnyFiltersSelectedButNotApplied });
     },
     setSearch90DaysBack(filterDefaultDateRange) {

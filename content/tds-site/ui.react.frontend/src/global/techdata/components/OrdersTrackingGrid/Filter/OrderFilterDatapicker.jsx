@@ -72,12 +72,24 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
       ev.target.value
     );
     if (customStartDate && customEndDate) {
-      if (dateRangeFiltersChecked.length > 0) {
-        const startD = moment(dateRangeFiltersChecked[0].createdFrom);
-        const endD = moment(dateRangeFiltersChecked[0].createdTo);
-        setFilterDate(startD, endD);
-      }
+      setDateRangeFiltersChecked([]);
+      setPredefinedFiltersSelectedAfter([
+        ...orderStatusFiltersChecked,
+        ...orderTypeFiltersChecked,
+        ...dateRangeFiltersChecked,
+      ]);
+      setCustomState({
+        key: 'customStartDate',
+        value: undefined,
+      });
+      setCustomState({
+        key: 'customEndDate',
+        value: undefined,
+      });
       setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
+      filtersRefs.current.createdFrom = undefined;
+      filtersRefs.current.createdTo = undefined;
     }
   };
 
