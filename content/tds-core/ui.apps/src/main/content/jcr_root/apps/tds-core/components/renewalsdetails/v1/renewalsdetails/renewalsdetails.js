@@ -177,6 +177,9 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["shipToEditLabel"]) {
         reseller["shipToEditLabel"] = properties["shipToEditLabel"];
     }
+     if (properties && properties["paymentTerms"]) {
+        reseller["paymentTerms"] = properties["paymentTerms"];
+    }
 
     if (reseller != null) {
         quotePreview["reseller"] = reseller;

@@ -4552,7 +4552,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               allowedLength: 100000,
             },
             paymentTerms: "30 Days from month-end statement",
-            name: "Fore Solutions (P) Ltd",:wq!
+            name: "Fore Solutions (P) Ltd",
 
             nameUpper: "FORE SOLUTIONS (P) LTD",
             contact: [
