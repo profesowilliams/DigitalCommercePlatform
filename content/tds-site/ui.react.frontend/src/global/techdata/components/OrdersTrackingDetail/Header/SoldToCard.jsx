@@ -7,11 +7,12 @@ function SoldToCard({ shipTo = {}, config }) {
     companyName,
     line1,
     line2,
+    line3,
     city,
     state,
     zip,
     country,
-    phoneNumber,
+    phone,
     email,
   } = shipTo;
   return (
@@ -38,13 +39,18 @@ function SoldToCard({ shipTo = {}, config }) {
             <br />
           </>
         )}
-        {city} {state} {zip} {country}
+        {line3 && (
+          <>
+            {line3}
+            <br />
+          </>
+        )}
+        {city && city} {state && state} {zip && zip} {country && country}
       </div>
       <div className="card-container__bottom">
-        {phoneNumber && (
+        {phone && (
           <>
-            {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)}{' '}
-            {phoneNumber}
+            {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)} {phone}
             <br />
           </>
         )}

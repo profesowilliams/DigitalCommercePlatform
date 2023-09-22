@@ -296,6 +296,13 @@
                                                 fieldLabel="Line TDS Part Label"
                                                 name="./tdsPartNo"
                                                 required="{Boolean}true"/>
+											<seeOptions
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter See options Label"
+                                                fieldLabel="See options Label"
+                                                name="./seeOptions"
+                                                required="{Boolean}true"/>
 
 											<ordersUrl
                                                 jcr:primaryType="nt:unstructured"

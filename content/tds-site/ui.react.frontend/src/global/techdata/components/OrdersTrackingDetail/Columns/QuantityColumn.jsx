@@ -20,7 +20,7 @@ function QuantityColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText  cmp-order-tracking-grid-details__splitLine--offsetRight">
-              {el.quantity || el.orderQuantity}
+              {el.quantity ?? ''}
             </span>
           </div>
         );

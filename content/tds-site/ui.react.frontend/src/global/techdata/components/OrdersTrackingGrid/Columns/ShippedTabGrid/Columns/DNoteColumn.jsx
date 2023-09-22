@@ -1,7 +1,7 @@
 import React from 'react';
 function DNoteColumn({ line, id, openFilePdf }) {
   const handleDownload = () => {
-    openFilePdf('DNote', id, line?.deliveryNotes[0]?.id);
+    openFilePdf('DNote', id, line?.id);
   };
   return (
     <div

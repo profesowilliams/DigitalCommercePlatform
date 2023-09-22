@@ -85,7 +85,11 @@ function OrdersTrackingDetailGrid({
       field: 'status',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
       cellRenderer: ({ data }) => (
-        <LineStatusColumn line={data} sortedLineDetails={sortedLineDetails} />
+        <LineStatusColumn
+          line={data}
+          config={gridProps}
+          sortedLineDetails={sortedLineDetails}
+        />
       ),
       width: gridColumnWidths.status,
     },

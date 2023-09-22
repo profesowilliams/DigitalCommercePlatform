@@ -19,7 +19,7 @@ function TotalColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText cmp-order-tracking-grid-details__splitLine--offsetRight">
-              {el.subtotalPriceFormatted}
+              {el.subtotalPriceFormatted ?? ''}
             </span>
           </div>
         );

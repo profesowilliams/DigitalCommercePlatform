@@ -101,7 +101,6 @@ function ProductReplacementFlyout({
     if (productReplacementConfig?.data?.line?.tdNumber) {
       try {
         const result = await usGet(`${config.replaceProductEndpoint}`);
-        console.log(result);
         setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {
         console.error(error);

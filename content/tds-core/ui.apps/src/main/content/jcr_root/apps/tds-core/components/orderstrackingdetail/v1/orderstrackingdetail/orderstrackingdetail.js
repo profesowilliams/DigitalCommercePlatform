@@ -60,6 +60,7 @@ use(["../../../common/utils.js"], function (utils) {
     "lineTotalPrice",
     "mfgPartNo",
     "tdsPartNo",
+    "seeOptions",
   ];
 
   properties &&

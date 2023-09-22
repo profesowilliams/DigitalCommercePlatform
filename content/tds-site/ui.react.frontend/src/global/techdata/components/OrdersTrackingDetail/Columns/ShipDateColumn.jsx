@@ -19,7 +19,7 @@ function ShipDateColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText">
-              {el.ShipDateFormatted}
+              {el.ShipDateFormatted ?? ''}
             </span>
           </div>
         );
