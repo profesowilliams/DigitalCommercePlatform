@@ -58,7 +58,7 @@
       line-height: 20px;
     }
     .quote-actions {
-      color:  map-get($color-palette,"teal");
+      color: map-get($color-palette, "teal");
       cursor: pointer;
       font-size: 16px;
     }
@@ -101,7 +101,7 @@
     padding: 25px 0 42px 0;
     margin-top: 0;
 
-    .card-container{
+    .card-container {
       min-width: 275px;
       padding: 18px 25px;
       color: #000000;
@@ -163,39 +163,6 @@
         @include font-arial-medium-bold();
         margin-left: 10px;
         color: $brand-green--dark;
-      }
-    }
-}
-}
-
-/* Actions container styling */
-.actions-container {
-  position: relative;
-  display: inline-block;
-  height: 25px;
-
-  .actions-dropdown {
-    position: absolute;
-    width: 192px;
-    top: 25px;
-    right: 0;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
-    background-color: get-color(brand-white);
-    z-index: 10;
-    cursor: pointer;
-
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      line-height: 36px;
-
-      > li {
-        padding: 0 14px;
-        font-size: 16px;
-      }
-      > li:hover {
-        background-color: get-color(neutral-gray-2);
       }
     }
   }

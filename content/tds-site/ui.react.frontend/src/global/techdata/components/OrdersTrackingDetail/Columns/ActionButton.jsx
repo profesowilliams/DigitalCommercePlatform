@@ -113,7 +113,7 @@ const ActionsButton = ({
         isSingleElement || isLastElement
           ? '__separateLine'
           : '__separateLineMultiple'
-      } cmp-order-tracking-grid-details__splitLine--centerAlignActionButton`}
+      } cmp-order-tracking-grid-details__splitLine--centerAlignActionButton actions-container`}
       onMouseOver={handleActionMouseOver}
       onMouseLeave={handleActionMouseLeave}
     >

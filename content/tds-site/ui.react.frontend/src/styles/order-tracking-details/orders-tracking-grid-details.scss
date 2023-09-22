@@ -59,69 +59,6 @@
     }
   }
 
-  &__open-orders {
-    @extend %clickable-action;
-  }
-
-  &__search {
-    @extend %clickable-action;
-  }
-
-  &__filter {
-    @extend %clickable-action;
-  }
-
-  &__report {
-    @extend %clickable-action;
-    position: relative;
-  }
-
-  &__report-dropdown {
-    position: absolute;
-    width: 192px;
-    top: 25px;
-    left: -156px;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
-    background-color: $brand-white;
-    z-index: 10;
-
-    ul {
-      list-style: none;
-      padding: 0;
-      line-height: 36px;
-      margin: 0;
-
-      > li {
-        padding: 0 14px;
-      }
-
-      > li:hover {
-        background-color: $td-neutral-gray-2;
-      }
-    }
-  }
-
-  &__report-pill {
-    background-color: $brand-green;
-    padding: 0 20px;
-    color: $brand-white;
-    border-radius: 20px;
-
-    span {
-      font-size: 14px;
-      line-height: 29px;
-      padding-right: 14px;
-    }
-
-    svg {
-      cursor: pointer;
-    }
-  }
-
-  &__export {
-    @extend %clickable-action;
-  }
-
   &__select-column {
     display: flex;
     cursor: pointer;
@@ -196,6 +133,13 @@
       * {
         width: 100%;
       }
+      .actions-container {
+        align-items: flex-end;
+        display: flex;
+        .actions-dropdown {
+          top: 60px;
+        }
+      } 
     }
     &__separateLine {
       display: flex;

@@ -136,7 +136,7 @@ function OrdersTrackingGrid(props) {
 
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
   const dueDateDir = componentProp.options.defaultSortingDirection;
-  let options = {
+  const options = {
     defaultSortingColumnKey: 'created',
     defaultSortingDirection: 'desc',
   };

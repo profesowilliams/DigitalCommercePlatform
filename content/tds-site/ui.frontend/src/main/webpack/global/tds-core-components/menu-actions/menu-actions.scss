@@ -2,7 +2,7 @@
 .actions-container {
     position: relative;
     display: inline-block;
-    height: 25px;
+    min-height: 25px;
 
     .actions-dropdown {
       position: absolute;
