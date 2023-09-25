@@ -282,12 +282,12 @@
                                                 fieldLabel="Line Total Price Label"
                                                 name="./lineTotalPrice"
                                                 required="{Boolean}true"/>
-											<mfgPartNo
+											<mfrPartNo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Line Manufacturer Part Label"
                                                 fieldLabel="Line Manufacturer Part Label"
-                                                name="./mfgPartNo"
+                                                name="./mfrPartNo"
                                                 required="{Boolean}true"/>
 											<tdsPartNo
                                                 jcr:primaryType="nt:unstructured"

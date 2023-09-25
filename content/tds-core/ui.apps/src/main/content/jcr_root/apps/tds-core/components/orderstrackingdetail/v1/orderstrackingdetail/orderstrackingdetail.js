@@ -58,7 +58,7 @@ use(["../../../common/utils.js"], function (utils) {
     "unitPrice",
     "itemsQuantity",
     "lineTotalPrice",
-    "mfgPartNo",
+    "mfrPartNo",
     "tdsPartNo",
     "seeOptions",
   ];
