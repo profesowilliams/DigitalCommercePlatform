@@ -4,8 +4,6 @@ import InvoiceColumn from '../Columns/InvoiceColumn';
 import OrderNoColumn from '../Columns/OrderNoColumn';
 import ShipToColumn from '../Columns/ShipToColumn';
 import ResellerColumn from '../Columns/ResellerColumn';
-import OrderTrackingActionColumn from '../Columns/OrderTrackingActionColumn';
-
 import SelectColumn from '../Columns/SelectColumn';
 import TotalColumn from '../Columns/TotalColumn';
 
@@ -21,7 +19,6 @@ export const ordersTrackingDefinition = (
       // US 399164: We will update the field mapping later when the UI service is ready.
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
       // and will render order date on DIT and SIT env
-      //TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
       select: <SelectColumn eventProps={eventProps} />,
       updated: data?.updatedFormatted ?? data?.created,
       shipTo: <ShipToColumn data={data?.shipTo} />,
@@ -48,7 +45,6 @@ export const ordersTrackingDefinition = (
           openFilePdf={openFilePdf}
         />
       ),
-      actions: <OrderTrackingActionColumn />,
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';
     return columnComponents[columnKey] || defaultValue();
@@ -65,7 +61,6 @@ export const ordersTrackingDefinition = (
     priceFormatted: 130,
     invoices: 100,
     deliveryNotes: 100,
-    actions: 60,
   };
 
   const columnsWidth = {
@@ -79,16 +74,9 @@ export const ordersTrackingDefinition = (
     priceFormatted: '130px',
     invoices: '100px',
     deliveryNotes: '100px',
-    actions: '60px',
   };
 
-  const hoverableList = [
-    'select',
-    'id',
-    'invoices',
-    'deliveryNotes',
-    'actions',
-  ];
+  const hoverableList = ['select', 'id', 'invoices', 'deliveryNotes'];
 
   const fieldsWithCellStyle = ['id'];
 
