@@ -10,32 +10,32 @@
                 const targetDropdownBtn = e.target.closest('.dropdownbutton');
                 targetDropdownBtn.querySelector('.cmp-button__dropdown').classList.toggle("show");
                 targetDropdownBtn.classList.toggle("active");
-                if (e.target.closest('.hub')) {
-                  const headerContainerEle = document.querySelector('#cmp-techdata-header');
-                  headerContainerEle?.classList.toggle('hub-menu-active');
-                }
             });
         });
+
+        function closeHubDropdown() {
+          const targetDropdownBtn = document.querySelector('.hub');
+          if (targetDropdownBtn) {
+            targetDropdownBtn.querySelector('.cmp-button__dropdown').classList.remove("show");
+            targetDropdownBtn.classList.remove("active");
+            const headerContainerEle = document.querySelector('#cmp-techdata-header');
+            headerContainerEle?.classList.remove('hub-menu-active');
+          }
+        }
 
         function closeActiveDropdowns() {
             dropdownBtns && dropdownBtns.forEach(function(dropdownBtn) {
                 const targetDropdownBtn = dropdownBtn.closest('.dropdownbutton');
                 targetDropdownBtn.querySelector('.cmp-button__dropdown').classList.remove("show");
                 targetDropdownBtn.classList.remove("active");
-                const headerContainerEle = document.querySelector('#cmp-techdata-header');
-                headerContainerEle?.classList.remove('hub-menu-active');
+                closeHubDropdown();
             });
         }
 
         window.addEventListener("click", function(event) {
             if (!(event.target.matches('.cmp-button') || event.target.matches('.cmp-button__text') || event.target.matches('path') || event.target.matches('.cmp-button__icon'))) {
                 const dropdowns = document.querySelectorAll(".cmp-button__dropdown");
-                const headerContainerEle = document.querySelector('#cmp-techdata-header');
                 dropdowns && dropdowns.forEach(function(dropdown) {
-                    if (dropdown.closest('.hub') && dropdown.closest('.hub').classList.contains('active')) {
-                        dropdown.closest('.hub').classList.remove('active');
-                        headerContainerEle?.classList.remove('hub-menu-active');
-                    }
                     if (dropdown.closest('.dropdownbutton') && dropdown.closest('.dropdownbutton').classList.contains('active')) {
                         dropdown.closest('.dropdownbutton').classList.remove('active');
                     }

@@ -1,4 +1,4 @@
-/*(function() {
+(function() {
     "use strict";
     function onDocumentReady() {
         const dropdownBtns = document.querySelectorAll('.hub .cmp-button');
@@ -6,7 +6,7 @@
         dropdownBtns && dropdownBtns.forEach(function(dropdownBtn) {
             dropdownBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                // closeActiveDropdowns();
+                closeActiveDropdowns();
                 const targetDropdownBtn = e.target.closest('.hub');
                 targetDropdownBtn.querySelector('.cmp-button__dropdown').classList.toggle("show");
                 targetDropdownBtn.classList.toggle("active");
@@ -16,12 +16,11 @@
         });
 
         function closeActiveDropdowns() {
+          const dropdownBtns = document.querySelectorAll('.dropdownbutton .cmp-button');
             dropdownBtns && dropdownBtns.forEach(function(dropdownBtn) {
-                const targetDropdownBtn = dropdownBtn.closest('.hub');
+                const targetDropdownBtn = dropdownBtn.closest('.dropdownbutton');
                 targetDropdownBtn.querySelector('.cmp-button__dropdown').classList.remove("show");
                 targetDropdownBtn.classList.remove("active");
-                const headerContainerEle = document.querySelector('#cmp-techdata-header');
-                headerContainerEle?.classList.remove('hub-menu-active');
             });
         }
 
@@ -42,4 +41,4 @@
         });
     };
     document.addEventListener("DOMContentLoaded", onDocumentReady);
-})(); */
+})();
