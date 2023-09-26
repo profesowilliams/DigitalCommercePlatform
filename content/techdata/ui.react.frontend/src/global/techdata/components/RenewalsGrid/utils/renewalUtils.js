@@ -456,11 +456,11 @@ export const mapCopyOnNullValue = (params) => {
   }
 
 const mapVendorWithProgramName = (params) => {
-    navigator.clipboard.writeText(stringifyValue(`${params?.value?.name} : ${params?.node?.data?.programName}`));
+    return stringifyValue(`${params?.value?.name} : ${params?.node?.data?.programName}`);
 }
 
 const mapDueDateFormatted = (params) => {
-    navigator.clipboard.writeText(stringifyValue(params?.node?.data?.formattedDueDate));
+    return stringifyValue(params?.node?.data?.formattedDueDate);
 }
 
 const hasPriceColumns = (params) => {
@@ -470,41 +470,55 @@ const hasPriceColumns = (params) => {
 const mapShortDescriptionCopy = (params) => {
     const nodeData = params?.node?.data;
     const description = formatDetailsShortDescription(nodeData);
-    const instance = nodeData?.instance ? nodeData.instance : 'N/A'; 
-    navigator.clipboard.writeText(stringifyValue(`${description} Instance: ${instance}`));
+    const instance = nodeData?.instance ? nodeData.instance : 'N/A';
+
+    return stringifyValue(`${description} Instance: ${instance}`);
 }
+
+export const copyToClipboardAction = (params) => {
+    let copiedValue = null;
+
+    //TODO: at some point probably refactor this
+    switch (true) {
+        case hasPriceColumns(params): 
+            copiedValue = stringifyValue(thousandSeparator(params?.value));
+            break;
+        case params?.column?.colId === 'dueDate':
+            copiedValue = mapDueDateFormatted(params);
+            break;
+        case params?.column?.colId === 'vendor':
+            copiedValue = mapVendorWithProgramName(params);
+            break;
+        case params?.column?.colId === 'shortDescription':
+            copiedValue = mapShortDescriptionCopy(params);
+            break;
+        case !params.value && typeof mapCopyOnNullValue === 'function':
+            copiedValue = stringifyValue(mapCopyOnNullValue(params));
+            break;
+        case isObject(params.value):
+            copiedValue = stringifyValue(params.value?.name);
+            break;
+        case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
+            copiedValue = stringifyValue(params.value.split(/:(.*)/s)[1].trim());
+            break;
+        default:
+            copiedValue = stringifyValue(params.value);
+            break;
+    }
+
+    return copiedValue;
+};
 
 export const getContextMenuItems = (params, config) => [
     {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
         action: () => {
-          switch (true) {
-            case hasPriceColumns(params): 
-                navigator.clipboard.writeText(stringifyValue(thousandSeparator(params?.value)));
-                break;
-            case params?.column?.colId === 'dueDate':
-                mapDueDateFormatted(params);
-                break;
-            case params?.column?.colId === 'vendor':
-                mapVendorWithProgramName(params);
-                break;
-            case params?.column?.colId === 'shortDescription':
-                mapShortDescriptionCopy(params);
-                break;
-            case !params.value && typeof mapCopyOnNullValue === 'function':
-              navigator.clipboard.writeText(stringifyValue(mapCopyOnNullValue(params)));
-              break;
-            case isObject(params.value):
-              navigator.clipboard.writeText(stringifyValue(params.value?.name));
-              break;
-            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
-              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
-              break;
-            default:
-              navigator.clipboard.writeText(stringifyValue(params.value));
-              break;
-          }
+            const valueToCopy = copyToClipboardAction(params);
+
+            if (valueToCopy) {
+                navigator.clipboard.writeText(valueToCopy);
+            }
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
       },

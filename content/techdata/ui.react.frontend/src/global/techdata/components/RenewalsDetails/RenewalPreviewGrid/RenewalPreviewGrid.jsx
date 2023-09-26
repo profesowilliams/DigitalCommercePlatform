@@ -18,7 +18,7 @@ import { useRenewalsDetailsStore } from "../store/RenewalsDetailsStore";
 import Toaster from "../../Widgets/Toaster";
 import { TOASTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 import useIsIconEnabled from "../../RenewalsGrid/Orders/hooks/useIsIconEnabled";
-import { getContextMenuItems, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
+import { copyToClipboardAction, getContextMenuItems, setLocalStorageData } from "../../RenewalsGrid/utils/renewalUtils";
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { getDictionaryValue } from "../../../../../utils/utils";
 
@@ -294,6 +294,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   }
 
   const contextMenuItems = (params) => getContextMenuItems(params, compProps.productLines);
+  const processCustomClipboardAction = (params) => copyToClipboardAction(params);
 
   return (
     <div className="cmp-product-lines-grid cmp-renewals-details">
@@ -305,6 +306,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           data={mutableGridData}
           getDefaultCopyValue={getDefaultCopyValue}
           contextMenuItems={contextMenuItems}
+          processCustomClipboardAction={processCustomClipboardAction}
         />
         <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
         <div className="place-cmp-order-dialog-container">

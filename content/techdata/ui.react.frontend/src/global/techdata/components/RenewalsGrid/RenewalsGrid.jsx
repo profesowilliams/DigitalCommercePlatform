@@ -17,6 +17,7 @@ import {
   handleFetchDataStrategy,
   formatRenewedDuration,
   getContextMenuItems,
+  copyToClipboardAction,
 } from "./utils/renewalUtils";
 import { useRenewalGridState } from "./store/RenewalsStore";
 import shallow from 'zustand/shallow';
@@ -299,6 +300,7 @@ function RenewalsGrid(props) {
   }
 
   const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
+  const processCustomClipboardAction = (params) => copyToClipboardAction(params);
  
   return (
     <section ref={renewalsRef} id="renewals-grid-component">
@@ -341,6 +343,7 @@ function RenewalsGrid(props) {
         onCellMouseOut={cellMouseOut}
         omitCreatedQuery={true}
         contextMenuItems={contextMenuItems}
+        processCustomClipboardAction={processCustomClipboardAction}
         defaultSearchDateRange={defaultSearchDateRange}
         noContextMenuItemsWhenColumnNull={true} />
       <ToolTip toolTipData={toolTipData}/>

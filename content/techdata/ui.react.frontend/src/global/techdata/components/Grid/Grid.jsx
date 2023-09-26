@@ -34,6 +34,7 @@ function Grid(props) {
     icons,
     omitCreatedQuery = false,
     contextMenuItems = undefined,
+    processCustomClipboardAction = undefined,
     extendedContextMenuItems = undefined,
     noContextMenuItemsWhenColumnNull = false,
     customizedDetailedRender,
@@ -135,6 +136,26 @@ function Grid(props) {
     };
   }, []);
 
+  const copyToClipboardAction = (params) => {
+    let copiedValue = null;
+
+    //TODO: at some point probably refactor this
+    switch (true) {
+      case !params.value && typeof getDefaultCopyValue === 'function':
+        copiedValue = stringifyValue(getDefaultCopyValue(params));
+        break;
+      case isObject(params.value):
+        copiedValue = stringifyValue(params.value?.name);
+        break;
+      case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
+        copiedValue = stringifyValue(params.value.split(/:(.*)/s)[1].trim());
+        break;
+      default:
+        copiedValue = stringifyValue(params.value);
+        break;
+    }
+  };
+
   const getDefaultMenuItems = (params) => {
     const extendedItems =
       typeof extendedContextMenuItems === "function" ? extendedContextMenuItems(params) : [];
@@ -142,20 +163,11 @@ function Grid(props) {
       {
         name: config?.menuCopy,
         shortcut: "Ctrl+C",
-        action: () => {
-          switch (true) {
-            case !params.value && typeof getDefaultCopyValue === 'function':
-              navigator.clipboard.writeText(stringifyValue(getDefaultCopyValue(params)));
-              break;
-            case isObject(params.value):
-              navigator.clipboard.writeText(stringifyValue(params.value?.name));
-              break;
-            case params?.column?.colDef?.field === 'renewalGridOptions' && params.value.split(/:(.*)/s).length === 3:
-              navigator.clipboard.writeText(stringifyValue(params.value.split(/:(.*)/s)[1].trim()));
-              break;
-            default:
-              navigator.clipboard.writeText(stringifyValue(params.value));
-              break;
+        action: () => () => {
+          const valueToCopy = copyToClipboardAction(params)
+
+          if (valueToCopy) {
+            navigator.clipboard.writeText(valueToCopy);
           }
         },
         icon: '<span class="ag-icon ag-icon-copy" unselectable="on" role="presentation"></span>',
@@ -208,6 +220,15 @@ function Grid(props) {
     }
   };
 
+  const processClipboardAction = (params) => {
+    if (processCustomClipboardAction) {
+      return processCustomClipboardAction(params);
+    }
+    else {
+      return copyToClipboardAction(params);
+    }
+  };
+
   /*
     function that returns AG grid vnode outside main return function to keep that
     node on useState hook and set it once per component lifecycle or on demand
@@ -230,6 +251,7 @@ function Grid(props) {
       loadingCellRendererParams={loadingCellRendererParams}
       loadingOverlayComponent={"CustomLoadingCellRenderer"}
       loadingOverlayComponentParams={loadingCellRendererParams}
+      processCellForClipboard={processClipboardAction}
       pagination={pagination}
       paginationPageSize={config.itemsPerPage}
       cacheBlockSize={config.itemsPerPage}
