@@ -1,26 +1,42 @@
-@import "../../../../../../../tds-core/ui.frontend/src/main/webpack/components/styles/_header-mobile.scss";
+@import '../../../../../../../tds-core/ui.frontend/src/main/webpack/components/styles/_header-mobile.scss';
 #cmp-techdata-header {
-    &.cmp-experiencefragment--header-mobile {
-        &.cmp-container > div:has(div.cmp-navigation--apj) {
-            background-color: get-color("td-dark-blue") !important;
+  &.cmp-experiencefragment--header-mobile {
+    &.cmp-container > div:has(div.cmp-navigation--apj) {
+      background-color: get-color('td-dark-blue') !important;
 
-            .menu-icon span {
-                background-color: get-color("white") !important;
-            }
-        }
+      .menu-icon span {
+        background-color: get-color('white') !important;
+      }
     }
+  }
 }
 
 @include tablet {
-    #cmp-techdata-header.cmp-experiencefragment--header-mobile {
-        &.cmp-container.cmp-tds-site-header {
-            .header-active .megamenu #navigation > ul > .cmp-has-submenu > ul {
-                background-color: get-color("td-dark-blue") !important;
-            }
+  #cmp-techdata-header.cmp-experiencefragment--header-mobile {
+    &.cmp-container.cmp-tds-site-header {
+      .header-active .megamenu #navigation > ul > .cmp-has-submenu > ul {
+        background-color: get-color('td-dark-blue') !important;
+      }
 
-            .header-active .megamenu #navigation > ul > .cmp-has-submenu > ul ul {
-                background-color: get-color("td-dark-blue") !important;
-            }
-        }
+      .header-active .megamenu #navigation > ul > .cmp-has-submenu > ul ul {
+        background-color: get-color('td-dark-blue') !important;
+      }
     }
+  }
+}
+
+@include mobile {
+  #cmp-techdata-header.cmp-experiencefragment--header-mobile.cmp-container.cmp-tds-site-header {
+    .dp-figure {
+      width: 100%;
+      padding-top: 17px;
+      padding-bottom: 10px;
+    }
+  }
+
+  #cmp-techdata-header.cmp-experiencefragment--header-mobile.cmp-container .header-active.cmp-tds-site-header {
+    .dp-figure {
+      padding-top: unset;
+    }
+  }
 }
