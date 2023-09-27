@@ -1,10 +1,9 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef } from 'react';
 
 function ReportDropdown({ reportOptions, selectOption }, ref) {
-
   const handleOptionClick = (option) => {
     selectOption(option);
-  }
+  };
 
   return (
     <div
@@ -16,7 +15,7 @@ function ReportDropdown({ reportOptions, selectOption }, ref) {
         {reportOptions.map((option, index) => (
           <li
             key={option.key}
-            onClick={(event) => handleOptionClick(option)}
+            onClick={() => handleOptionClick(option)}
             data-testid={`report-option-${index}`}
           >
             {option.label}
@@ -27,4 +26,4 @@ function ReportDropdown({ reportOptions, selectOption }, ref) {
   );
 }
 
-export default forwardRef(ReportDropdown)
+export default forwardRef(ReportDropdown);
