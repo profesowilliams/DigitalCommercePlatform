@@ -50,6 +50,7 @@ function OrderModificationFlyout({
   const closeFlyout = () => {
     setNewItemFormVisible(false);
     setItemsCopy([...items]);
+    setOrderChanged(false);
     setIsDisabled(true);
     setCustomState({
       key: 'orderModificationFlyout',
