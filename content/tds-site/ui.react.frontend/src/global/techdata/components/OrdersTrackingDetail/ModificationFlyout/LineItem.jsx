@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Counter from '../../Counter/Counter';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
@@ -49,9 +49,6 @@ const LineItem = ({ item, index, onChange, labels }) => {
     });
   };
 
-  useEffect(() => {
-    // setQuantityDifference(calculatedValue);
-  }, [currentValue]);
   return (
     <li key={item.line} className="cmp-flyout-list__element">
       <div className="cmp-flyout-list__element__number">{item.line}</div>

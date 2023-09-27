@@ -75,7 +75,7 @@ function OrderModificationFlyout({
     if (item.orderQuantity > item.origQuantity) {
       const newItem = {
         ProductID: item.tdNumber,
-        Qty: item.orderQuantity,
+        Qty: item.orderQuantity - item.origQuantity,
         UAN: '',
       };
       filtered.push(newItem);
