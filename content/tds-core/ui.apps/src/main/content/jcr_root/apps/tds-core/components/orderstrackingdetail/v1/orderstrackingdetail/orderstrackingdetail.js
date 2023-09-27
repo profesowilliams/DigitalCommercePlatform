@@ -322,7 +322,7 @@ use(["../../../common/utils.js"], function (utils) {
 
   // Product Replacement Flyout
   const productReplacementFlyoutLabels = [
-    "modifyOrder",
+    "replacementModifyOrder",
     "pleaseSelect",
     "replaceWithSuggestedItem",
     "removeWithoutReplacement",

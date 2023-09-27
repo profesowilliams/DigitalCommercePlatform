@@ -115,7 +115,7 @@ function ProductReplacementFlyout({
       width="929px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(labels.modifyOrder)}
+      titleLabel={getDictionaryValueOrKey(labels.replacementModifyOrder)}
       disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
