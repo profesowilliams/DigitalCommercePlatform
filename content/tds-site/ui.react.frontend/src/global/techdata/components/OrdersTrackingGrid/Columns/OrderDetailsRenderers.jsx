@@ -15,7 +15,7 @@ function OrderDetailsRenderers(props) {
           hasOrderModificationRights={props.hasOrderModificationRights}
           setDetailsApiResponse={props.setDetailsApiResponse}
           gridRef={props.gridRef}
-          rowToGrayOutTDNameRef={props.rowToGrayOutTDNameRef}
+          rowsToGrayOutTDNameRef={props.rowsToGrayOutTDNameRef}
         />
       )}
     </>

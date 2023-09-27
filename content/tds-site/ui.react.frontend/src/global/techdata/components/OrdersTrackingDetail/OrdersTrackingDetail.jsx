@@ -12,7 +12,7 @@ function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
   const [userData, setUserData] = useState(null);
   const gridRef = useRef();
-  const rowToGrayOutTDNameRef = useRef();
+  const rowsToGrayOutTDNameRef = useRef([]);
 
   const componentProps = JSON.parse(props.componentProp);
   const config = {
@@ -81,7 +81,7 @@ function OrdersTrackingDetail(props) {
             hasAIORights={hasAIORights}
             openFilePdf={openFilePdf}
             gridRef={gridRef}
-            rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
+            rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           />
           <OrderTrackingDetailFooter
             config={config}
@@ -96,7 +96,8 @@ function OrdersTrackingDetail(props) {
         hasAIORights={hasAIORights}
         apiResponse={apiResponse}
         gridRef={gridRef}
-        rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        userData={userData}
       />
     </>
   );

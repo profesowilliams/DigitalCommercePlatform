@@ -8,7 +8,7 @@ const OrderTrackingDetailBody = ({
   openFilePdf,
   hasAIORights,
   gridRef,
-  rowToGrayOutTDNameRef,
+  rowsToGrayOutTDNameRef,
 }) => {
   return (
     <div className="cmp-orders-qp__grid cmp-order-preview">
@@ -20,7 +20,7 @@ const OrderTrackingDetailBody = ({
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
           gridRef={gridRef}
-          rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
+          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         />
       )}
     </div>

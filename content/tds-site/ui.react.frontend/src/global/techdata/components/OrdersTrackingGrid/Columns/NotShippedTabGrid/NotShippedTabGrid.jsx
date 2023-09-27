@@ -17,7 +17,7 @@ function NotShippedTabGrid({
   gridProps,
   hasOrderModificationRights,
   gridRef,
-  rowToGrayOutTDNameRef,
+  rowsToGrayOutTDNameRef,
 }) {
   const gridData = data?.items ?? [];
   const config = {
@@ -95,7 +95,7 @@ function NotShippedTabGrid({
   };
   function getRowClass({ node }) {
     const data = node.group ? node.aggData : node.data;
-    if (data.tdNumber === rowToGrayOutTDNameRef.current) {
+    if (rowsToGrayOutTDNameRef.current.includes(data.tdNumber)) {
       return true;
     }
   }

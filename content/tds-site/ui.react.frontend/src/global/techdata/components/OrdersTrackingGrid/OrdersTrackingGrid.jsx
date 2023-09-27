@@ -68,7 +68,7 @@ function OrdersTrackingGrid(props) {
     customFilterRef: null,
   });
   const gridRef = useRef();
-  const rowToGrayOutTDNameRef = useRef();
+  const rowsToGrayOutTDNameRef = useRef([]);
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
@@ -395,7 +395,7 @@ function OrdersTrackingGrid(props) {
                       hasOrderModificationRights={hasOrderModificationRights}
                       setDetailsApiResponse={setDetailsApiResponse}
                       gridRef={gridRef}
-                      rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
+                      rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                     />
                   </>
                 )}
@@ -436,7 +436,7 @@ function OrdersTrackingGrid(props) {
         onQueryChanged={onQueryChanged}
         apiResponse={detailsApiResponse}
         gridRef={gridRef}
-        rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
       />
     </>
   );

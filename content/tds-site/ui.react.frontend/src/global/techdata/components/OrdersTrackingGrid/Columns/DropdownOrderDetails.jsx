@@ -19,7 +19,7 @@ function DropdownOrderDetails({
   hasOrderModificationRights,
   setDetailsApiResponse,
   gridRef,
-  rowToGrayOutTDNameRef,
+  rowsToGrayOutTDNameRef,
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiServiceEndPointForDetails}?id=${data?.id}`
@@ -67,7 +67,7 @@ function DropdownOrderDetails({
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}
-          rowToGrayOutTDNameRef={rowToGrayOutTDNameRef}
+          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         />
       ) : (
         isLoading && <LoaderIcon className="loadingIcon-rotate" />

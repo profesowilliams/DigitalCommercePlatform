@@ -7,6 +7,8 @@ import NewItemForm from './NewItemForm';
 import LineItem from './LineItem';
 import { useStore } from '../../../../../utils/useStore';
 
+const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
+
 const areItemsListIdentical = (items, itemsCopy) => {
   // This function compares only quantities rather than all items' parameters
   const difference = items.find((item) => {
@@ -28,17 +30,14 @@ function OrderModificationFlyout({
   config = {},
   apiResponse,
   gridRef,
-  rowToGrayOutTDNameRef,
+  rowsToGrayOutTDNameRef,
+  userData,
 }) {
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [productID, setProductID] = useState('');
-  const [lineID, setLineID] = useState('');
-  const [rejectedReason, setRejectedReason] = useState('');
-  const [itemsRequestData, setItemsRequestData] = useState([]);
-  const [addLineQuantity, setAddLineQuantity] = useState();
-  const [reduceLineQuantity, setReduceLineQuantity] = useState();
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [itemsCopy, setItemsCopy] = useState([...items]);
+
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
@@ -50,97 +49,74 @@ function OrderModificationFlyout({
   const { setCustomState } = store((st) => st.effects);
   const closeFlyout = () => {
     setNewItemFormVisible(false);
+    setItemsCopy([...items]);
+    setIsDisabled(true);
     setCustomState({
       key: 'orderModificationFlyout',
       value: { show: false },
     });
   };
 
-  useEffect(() => {
-    setIsDisabled(!orderChanged || doesReasonDropdownHaveEmptyItems);
-  }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
-
-  const itemsCopy = [...items];
-
   const requestURL = config?.orderModifyEndpoint;
-  const payload = {
-    SalesOrg: apiResponse?.SalesOrg,
-    CustomerID: apiResponse?.CustomerID,
-    OrderID: apiResponse?.orderNumber,
-    isError: '',
-    message: '',
-    ReduceLine: reduceLineQuantity
-      ? [
-          {
-            LineID: `${lineID}`,
-            Qty: `${reduceLineQuantity}`,
-            RejectionReason: `${rejectedReason}`,
-            message: '',
-            isError: '',
-          },
-        ]
-      : [],
 
-    AddLine: addLineQuantity
-      ? [
-          {
-            ProductID: productID,
-            Qty: `${addLineQuantity}`,
-            UAN: '',
-          },
-        ]
-      : [],
+  const reduceLine = itemsCopy.reduce((filtered, item) => {
+    if (item.status === 'Rejected') {
+      const newItem = {
+        LineID: item.line,
+        Qty: item.orderQuantity,
+        RejectionReason: item.RejectionReason,
+      };
+      filtered.push(newItem);
+    }
+    return filtered;
+  }, []);
+
+  const addLine = itemsCopy.reduce((filtered, item) => {
+    if (item.orderQuantity > item.origQuantity) {
+      const newItem = {
+        ProductID: item.tdNumber,
+        Qty: item.orderQuantity,
+        UAN: '',
+      };
+      filtered.push(newItem);
+    }
+    return filtered;
+  }, []);
+
+  const getPayload = () => ({
+    SalesOrg: userData?.customersV2?.SalesOrg,
+    CustomerID: userData?.customersV2?.customerNumber,
+    OrderID: apiResponse?.orderNumber,
+    ReduceLine: reduceLine,
+    AddLine: addLine,
+  });
+  //TODO: after BE changes we need delete this
+  const greyOutRows = async (rows) => {
+    await timeout(5000);
+    rowsToGrayOutTDNameRef.current = [...rows];
+    gridRef.current?.api.redrawRows();
   };
-  const requestChangeURL = config?.orderModifyChangeEndpoint;
+
+  const clear = async () => {
+    await timeout(6000);
+    rowsToGrayOutTDNameRef.current = [];
+    gridRef.current?.api.redrawRows();
+  };
 
   const handleUpdate = async () => {
     try {
-      const result = await usPost(requestURL, payload);
+      const result = await usPost(requestURL, getPayload());
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState();
         closeFlyout();
-
-        for (const item of itemsRequestData) {
-          const payloadChange = {
-            id: item.id,
-            quantity: item.quantity,
-            origQuantity: item.origQuantity,
-            subtotalPrice: item.subtotalPrice,
-            subtotalPriceFormatted: item.subtotalPriceFormatted,
-            ShipDate: item.ShipDate,
-            ShipDateFormatted: item.ShipDateFormatted,
-            isShipment: item.isShipment,
-            status: item.status,
-          };
-          //TODO: after BE changes we need delete this
-          const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
-          const greyOutRow = async () => {
-            await timeout(5000);
-            rowToGrayOutTDNameRef.current = item.tdNumber;
-            gridRef.current?.api.redrawRows();
-          };
-
-          const fetchChangeData = async () => {
-            usPost(requestChangeURL, payloadChange);
-          };
-
-          const clear = async () => {
-            await timeout(6000);
-            rowToGrayOutTDNameRef.current = undefined;
-            gridRef.current?.api.redrawRows();
-          };
-
-          greyOutRow()
-            .then(() => fetchChangeData())
-            .then(() => clear());
-        }
-        return result;
+        const rowsDeleted = itemsCopy.filter(
+          (item) => item.status === 'Rejected'
+        );
+        greyOutRows(rowsDeleted).then(() => clear());
       }
     } catch (error) {
       console.error('Error updating order:', error);
     }
-    setItemsRequestData([]);
-    setIsDisabled(true);
   };
 
   const buttonsSection = (
@@ -154,14 +130,21 @@ function OrderModificationFlyout({
     </div>
   );
 
-  const handleAmountChange = (index, newAmount) => {
-    itemsCopy[index] = { ...items[index], orderQuantity: newAmount };
-    setOrderChanged(!areItemsListIdentical(items, itemsCopy));
+  const handleChange = (index, newItem) => {
+    const updatedItemsCopy = [...itemsCopy];
+    const item = { ...updatedItemsCopy[index], ...newItem };
+    updatedItemsCopy[index] = item;
+    setItemsCopy([...updatedItemsCopy]);
+    setOrderChanged(!areItemsListIdentical(items, updatedItemsCopy));
   };
 
   const handleAddNewItem = () => {
     setNewItemFormVisible(true);
   };
+
+  useEffect(() => {
+    setIsDisabled(!orderChanged || doesReasonDropdownHaveEmptyItems);
+  }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
 
   return (
     <BaseFlyout
@@ -187,21 +170,13 @@ function OrderModificationFlyout({
           {getDictionaryValueOrKey(labels.editQuantities)}
         </p>
         <ul className="cmp-flyout-list">
-          {items.map((item, index) => (
+          {items?.map((item, index) => (
             <LineItem
               key={item.line}
               index={index}
               item={item}
-              onChange={handleAmountChange}
+              onChange={handleChange}
               labels={labels}
-              setProductID={setProductID}
-              setLineID={setLineID}
-              rejectedReason={rejectedReason}
-              setRejectedReason={setRejectedReason}
-              itemsRequestData={itemsRequestData}
-              setItemsRequestData={setItemsRequestData}
-              setAddLineQuantity={setAddLineQuantity}
-              setReduceLineQuantity={setReduceLineQuantity}
             />
           ))}
         </ul>

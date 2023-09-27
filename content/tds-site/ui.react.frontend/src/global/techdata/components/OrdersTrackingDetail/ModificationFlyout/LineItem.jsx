@@ -5,23 +5,11 @@ import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import RejectedReasonDropdown from './RejectedReasonDropdown';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 
-const LineItem = ({
-  item,
-  index,
-  onChange,
-  labels,
-  setProductID,
-  rejectedReason,
-  setRejectedReason,
-  setLineID,
-  setItemsRequestData,
-  itemsRequestData,
-  setAddLineQuantity,
-  setReduceLineQuantity,
-}) => {
+const LineItem = ({ item, index, onChange, labels }) => {
   const [quantityIncreased, setQuantityIncreased] = useState(false);
   const [quantityDecreased, setQuantityDecreased] = useState(false);
   const [currentValue, setCurrentValue] = useState(item.orderQuantity);
+  const [rejectedReason, setRejectedReason] = useState('');
 
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);
@@ -33,29 +21,11 @@ const LineItem = ({
     setQuantityIncreased(Boolean(newValue > item.orderQuantity));
     setQuantityDecreased(Boolean(newValue < item.orderQuantity));
     setCurrentValue(newValue);
-    onChange(index, newValue);
-    setProductID(item?.tdNumber);
-    const itemsRequestDataCopy = itemsRequestData.some(
-      (data) => data.tdNumber !== item.tdNumber
-    )
-      ? itemsRequestData.filter((data) => data.tdNumber !== item.tdNumber)
-      : itemsRequestData;
-    Boolean(newValue < item.orderQuantity) &&
-      setItemsRequestData([
-        ...itemsRequestDataCopy,
-        {
-          ...item,
-          orderQuantity: newValue,
-          origQuantity: item.orderQuantity,
-          subtotalPrice: '',
-          subtotalPriceFormatted: '',
-          isShipped: false,
-          status: 'Rejected',
-          ShipDate: '',
-          ShipDateFormatted: '',
-          isShipment: false,
-        },
-      ]);
+    onChange(index, {
+      ...item,
+      orderQuantity: newValue,
+      origQuantity: item.orderQuantity,
+    });
     if (currentValue >= item.orderQuantity) {
       setDoesReasonDropdownHaveEmptyItems(false);
     }
@@ -70,19 +40,18 @@ const LineItem = ({
     );
     setReasonDropdownValues(newArray);
     setRejectedReason(val);
-    setLineID(item.line);
+    onChange(index, {
+      ...item,
+      orderQuantity: currentValue,
+      origQuantity: item.orderQuantity,
+      status: 'Rejected',
+      RejectionReason: val,
+    });
   };
 
   useEffect(() => {
-    quantityIncreased &&
-      currentValue > item.orderQuantity &&
-      setAddLineQuantity(currentValue - item.orderQuantity);
-  }, [quantityIncreased, currentValue]);
-  useEffect(() => {
-    quantityDecreased &&
-      currentValue < item.orderQuantity &&
-      setReduceLineQuantity(currentValue);
-  }, [quantityDecreased, currentValue]);
+    // setQuantityDifference(calculatedValue);
+  }, [currentValue]);
   return (
     <li key={item.line} className="cmp-flyout-list__element">
       <div className="cmp-flyout-list__element__number">{item.line}</div>

@@ -26,7 +26,7 @@ function OrdersTrackingDetailGrid({
   openFilePdf,
   hasAIORights,
   gridRef,
-  rowToGrayOutTDNameRef,
+  rowsToGrayOutTDNameRef,
 }) {
   const [userData, setUserData] = useState(null);
   const gridData = data.items ?? [];
@@ -158,7 +158,7 @@ function OrdersTrackingDetailGrid({
 
   function getRowClass({ node }) {
     const data = node.group ? node.aggData : node.data;
-    if (data.tdNumber === rowToGrayOutTDNameRef.current) {
+    if (rowsToGrayOutTDNameRef.current.includes(data.tdNumber)) {
       return true;
     }
   }
