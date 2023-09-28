@@ -18,6 +18,7 @@ const MainGridFlyouts = ({
   apiResponse,
   gridRef,
   rowsToGrayOutTDNameRef,
+  userData,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   function downloadAllFile(flyoutType, orderId, selectedId) {
@@ -79,6 +80,7 @@ const MainGridFlyouts = ({
         config={gridConfig}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        userData={userData}
       />
     </>
   );

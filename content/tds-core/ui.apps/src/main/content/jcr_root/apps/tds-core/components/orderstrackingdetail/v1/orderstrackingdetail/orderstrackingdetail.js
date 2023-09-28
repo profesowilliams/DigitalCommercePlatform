@@ -163,7 +163,6 @@ use(["../../../common/utils.js"], function (utils) {
     "addNewItem",
     "editQuantities",
     "lineTotal",
-    "modifyOrder",
     "cancel",
     "update",
     "manufacturersPartNumber",

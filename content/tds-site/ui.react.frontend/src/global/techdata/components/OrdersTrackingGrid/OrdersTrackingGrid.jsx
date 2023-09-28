@@ -437,6 +437,7 @@ function OrdersTrackingGrid(props) {
         apiResponse={detailsApiResponse}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        userData={userData}
       />
     </>
   );

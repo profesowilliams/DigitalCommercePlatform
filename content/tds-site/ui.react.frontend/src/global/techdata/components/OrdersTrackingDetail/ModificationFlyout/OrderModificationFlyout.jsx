@@ -123,10 +123,10 @@ function OrderModificationFlyout({
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
       <button disabled={isDisabled} className="primary" onClick={handleUpdate}>
-        {getDictionaryValueOrKey(labels.update)}
+        {getDictionaryValueOrKey(labels?.update)}
       </button>
       <button className="secondary" onClick={closeFlyout}>
-        {getDictionaryValueOrKey(labels.cancel)}
+        {getDictionaryValueOrKey(labels?.cancel)}
       </button>
     </div>
   );
@@ -154,7 +154,7 @@ function OrderModificationFlyout({
       width="929px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(labels.modifyOrder)}
+      titleLabel={getDictionaryValueOrKey(labels?.modifyOrder)}
       disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
@@ -168,7 +168,7 @@ function OrderModificationFlyout({
         </a>
         {newItemFormVisible && <NewItemForm labels={labels} />}
         <p className="edit-quantities">
-          {getDictionaryValueOrKey(labels.editQuantities)}
+          {getDictionaryValueOrKey(labels?.editQuantities)}
         </p>
         <ul className="cmp-flyout-list">
           {items?.map((item, index) => (
