@@ -1066,5 +1066,8 @@ $aqua: invert(72%) sepia(76%) saturate(4550%) hue-rotate(147deg) brightness(100%
             }
         }
     }
+}
 
+#cmp-techdata-header.cmp-experiencefragment--header-mobile.cmp-container.cmp-tds-site-header.hub-menu-active .theme.techdata-dark  .hub .cmp-button__dropdown.show {
+    background-color: map-get($color-palette, 'td-dark-blue') ;
 }
