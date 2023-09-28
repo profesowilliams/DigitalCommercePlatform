@@ -154,7 +154,7 @@ function OrderModificationFlyout({
       width="929px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(labels?.modifyOrder)}
+      titleLabel={labels?.modifyOrder}
       disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
