@@ -386,6 +386,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Edit Quantities Label"
 												name="./editQuantities"/>   
+                                            <modifyOrder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Modify Order Label"
+                                                name="./modifyOrder"/>   
                                             <lineTotal
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
