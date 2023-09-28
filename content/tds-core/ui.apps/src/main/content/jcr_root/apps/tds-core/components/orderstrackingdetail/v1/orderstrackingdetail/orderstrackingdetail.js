@@ -333,7 +333,7 @@ use(["../../../common/utils.js"], function (utils) {
       productReplacementFlyout[property] = properties[property];
     });
 
-  if (orderModifyLabels != null) {
+  if (productReplacementFlyout != null) {
     jsonObject["productReplacementFlyout"] = productReplacementFlyout;
   }
 
