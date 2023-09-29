@@ -91,16 +91,9 @@ function OrderModificationFlyout({
     ReduceLine: reduceLine,
     AddLine: addLine,
   });
-  //TODO: after BE changes we need delete this
-  const greyOutRows = async (rows) => {
-    await timeout(5000);
-    rowsToGrayOutTDNameRef.current = [...rows];
-    gridRef.current?.api.redrawRows();
-  };
 
-  const clear = async () => {
-    await timeout(6000);
-    rowsToGrayOutTDNameRef.current = [];
+  const greyOutRows = async (rows) => {
+    rowsToGrayOutTDNameRef.current = [...rows];
     gridRef.current?.api.redrawRows();
   };
 
@@ -110,10 +103,10 @@ function OrderModificationFlyout({
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState();
         closeFlyout();
-        const rowsDeleted = itemsCopy.filter(
-          (item) => item.status === 'Rejected'
-        );
-        greyOutRows(rowsDeleted).then(() => clear());
+        const rowsDeleted = itemsCopy
+          .filter((item) => item.status === 'Rejected')
+          .map((item) => item.tdNumber);
+        greyOutRows(rowsDeleted);
       }
     } catch (error) {
       console.error('Error updating order:', error);

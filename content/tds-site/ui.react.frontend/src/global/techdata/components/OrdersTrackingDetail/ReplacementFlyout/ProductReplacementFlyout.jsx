@@ -7,7 +7,8 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { usGet } from '../../../../../utils/api';
+import { usGet, usPost } from '../../../../../utils/api';
+import { useStore } from '../../../../../utils/useStore';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -33,6 +34,8 @@ function ProductReplacementFlyout({
   isTDSynnex = true,
   labels = {},
   config = {},
+  gridRef,
+  rowsToGrayOutTDNameRef,
 }) {
   const [selected, setSelected] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -41,6 +44,9 @@ function ProductReplacementFlyout({
   const productReplacementConfig = store((st) => st.productReplacementFlyout);
 
   const { setCustomState } = store((st) => st.effects);
+  const changeRefreshDetailApiState = useStore(
+    (state) => state.changeRefreshDetailApiState
+  );
   const closeFlyout = () => {
     setCustomState({
       key: 'productReplacementFlyout',
@@ -52,7 +58,35 @@ function ProductReplacementFlyout({
     setSelected(event.target.value);
   };
 
-  const handleUpdate = () => {};
+  const handleUpdate = async () => {
+    closeFlyout();
+    const newProductId =
+      selected === 'removeWithoutReplacement' ? '' : selected;
+    const operation =
+      selected === 'removeWithoutReplacement' ? 'Cancel' : 'Replace';
+    const payload = {
+      CustomerID: '325009',
+      SalesOrg: '0014',
+      OrderID: 'I1234567',
+      LineID: productReplacementConfig?.data?.line?.id,
+      Operation: operation,
+      ProductID: newProductId,
+    };
+    try {
+      const result = await usPost(`${config.replaceProductEndpoint}`, payload);
+      if (result.data && !result.data?.error?.isError) {
+        // TODO: handle results after BE part is ready
+      }
+    } catch (error) {
+      console.error('Error replacing product:', error);
+    }
+    closeFlyout();
+    rowsToGrayOutTDNameRef.current = [
+      productReplacementConfig?.data?.line?.tdNumber,
+    ];
+    gridRef.current?.api.redrawRows();
+    changeRefreshDetailApiState();
+  };
 
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
@@ -68,7 +102,7 @@ function ProductReplacementFlyout({
   const options = [
     ...[
       ...productDtos.map((product) => ({
-        key: 'replaceWithSuggestedItem',
+        key: product.source.id,
         label: getDictionaryValueOrKey(labels.replaceWithSuggestedItem),
         content: (
           <LineItem

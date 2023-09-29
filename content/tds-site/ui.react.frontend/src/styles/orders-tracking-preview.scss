@@ -113,6 +113,19 @@
       &--currency-symbol {
         margin-right: 2px;
       }
+    }
+    .line-status {
+      font-size: 16px;
+      font-family: 'Arial';
+      svg {
+        vertical-align: middle;
+        margin-right: 5px;
+        width: auto;
+      }
+      &-link {
+        color: $brand-cobalt;
+        cursor: pointer;
+      }
     }    
   }
 

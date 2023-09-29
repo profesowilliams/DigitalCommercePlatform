@@ -72,6 +72,7 @@ const Flyouts = ({
         labels={config.productReplacementFlyout}
         config={config}
         gridRef={gridRef}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
       />
     </>
   );

@@ -9,14 +9,14 @@
   background-color: $td-neutral-gray;
   .cmp-order-preview {
     &__download {
-        .separator {
-          border-right: 1px solid #d8d8d8;
-          padding-right: 20px;
-          cursor: pointer;
-        }
-        &--icon {
-          display: none;
-        }
+      .separator {
+        border-right: 1px solid #d8d8d8;
+        padding-right: 20px;
+        cursor: pointer;
+      }
+      &--icon {
+        display: none;
+      }
     }
   }
   .header-container {
@@ -58,7 +58,7 @@
       line-height: 20px;
     }
     .quote-actions {
-      color:  map-get($color-palette,"teal");
+      color: map-get($color-palette, 'teal');
       cursor: pointer;
       font-size: 16px;
     }
@@ -97,7 +97,7 @@
   .info-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 16px; 
+    grid-gap: 16px;
     padding: 25px 0 42px 0;
     margin-top: 0;
 
@@ -105,24 +105,24 @@
       min-width: 275px;
       padding: 18px 25px;
       color: #000000;
-      &__title{
+      &__title {
         font-weight: 700;
         margin-bottom: 19px;
         font-size: 16px;
       }
-      &__contentGrid{
+      &__contentGrid {
         display: grid;
         grid-template-columns: 152px 1fr;
-        grid-gap: 16px; 
+        grid-gap: 16px;
         font-size: 14px;
       }
-      &__contentGridContact{
+      &__contentGridContact {
         display: grid;
         grid-template-columns: 50px 1fr;
-        grid-gap: 16px; 
+        grid-gap: 16px;
         font-size: 14px;
       }
-      &__bottom{
+      &__bottom {
         margin-top: 19px;
         font-size: 14px;
       }
@@ -148,7 +148,7 @@
 .footer-container {
   * {
     font-family: Arial;
-    color: $brand-black;;
+    color: $brand-black;
   }
   margin: 0 2rem;
   .box-container {
@@ -157,24 +157,24 @@
     align-items: start;
     padding: 16px 20px;
     background-color: $td-neutral-gray;
-    height:auto;
-    &__leftPart{
+    height: auto;
+    &__leftPart {
       display: flex;
       flex-direction: column;
       max-width: 35rem;
       font-size: 14px;
-      &-line1{
+      &-line1 {
         line-height: 24px;
         & a {
-          color: $brand-cobalt
+          color: $brand-cobalt;
         }
       }
-      &-line2{
+      &-line2 {
         font-weight: 700;
         line-height: 24px;
       }
     }
-    &__rightPart{
+    &__rightPart {
       display: flex;
       justify-content: end;
       align-items: center;
@@ -182,26 +182,29 @@
       &-subtotalLabel {
         text-align: end;
         font-weight: 700;
-        font-size: 20px
+        font-size: 20px;
       }
       &-subtotalValue {
         text-align: end;
         margin-left: 35px;
         font-weight: 400;
-        font-size: 28px
+        font-size: 28px;
       }
     }
   }
 }
 
-.cmp-orders-qp__grid{
+.cmp-orders-qp__grid {
   // Action container visible
   .cmp-grid.ag-theme-alpine {
     overflow: visible;
   }
 
-  .ag-theme-alpine [class^=ag-], .ag-theme-alpine [class^=ag-]:focus, .ag-theme-alpine [class^=ag-]:after, .ag-theme-alpine [class^=ag-]:before {
-    overflow:visible;
+  .ag-theme-alpine [class^='ag-'],
+  .ag-theme-alpine [class^='ag-']:focus,
+  .ag-theme-alpine [class^='ag-']:after,
+  .ag-theme-alpine [class^='ag-']:before {
+    overflow: visible;
   }
 
   * {
@@ -211,7 +214,7 @@
 
   // OrderDetailsGrid row grayed out
   .gray-out-changing-rows {
-    opacity: 0.3
+    opacity: 0.3;
   }
 }
 
@@ -230,7 +233,8 @@
   }
 }
 
-.cmp-orders-grid, .cmp-base-grid {
+.cmp-orders-grid,
+.cmp-base-grid {
   .cmp-grid.ag-theme-alpine {
     .ag-root-wrapper {
       .ag-root-wrapper-body {
