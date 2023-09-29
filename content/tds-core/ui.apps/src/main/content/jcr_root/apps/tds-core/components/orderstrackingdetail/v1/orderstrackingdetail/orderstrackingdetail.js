@@ -163,7 +163,7 @@ use(["../../../common/utils.js"], function (utils) {
   const orderModifyLabelsList = [
     "addNewItem",
     "editQuantities",
-    "modifyOrder",
+    "modifyOrderTitle",
     "lineTotal",
     "cancel",
     "update",

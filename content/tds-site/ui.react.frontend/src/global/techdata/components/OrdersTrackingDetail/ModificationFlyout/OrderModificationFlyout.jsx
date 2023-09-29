@@ -57,7 +57,6 @@ function OrderModificationFlyout({
       value: { show: false },
     });
   };
-
   const requestURL = config?.orderModifyEndpoint;
 
   const reduceLine = itemsCopy.reduce((filtered, item) => {
@@ -139,7 +138,6 @@ function OrderModificationFlyout({
   useEffect(() => {
     setIsDisabled(!orderChanged || doesReasonDropdownHaveEmptyItems);
   }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
-
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
@@ -147,7 +145,7 @@ function OrderModificationFlyout({
       width="929px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={labels?.modifyOrder}
+      titleLabel={labels?.modifyOrder || labels?.modifyOrderTitle}
       disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
