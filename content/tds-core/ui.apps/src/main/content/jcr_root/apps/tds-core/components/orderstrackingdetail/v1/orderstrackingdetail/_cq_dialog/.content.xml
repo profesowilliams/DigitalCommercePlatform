@@ -360,10 +360,17 @@
                                                 fieldLabel="Copy Serial Numbers"
                                                 name="./copySerialNumber"
                                                 required="{Boolean}true"/>
+                                            <return
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Return"
+                                                fieldLabel="Return"
+                                                name="./return"
+                                                required="{Boolean}true"/>
                                             <track
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Export Serial Numbers"
+                                                fieldDescription="Enter Track"
                                                 fieldLabel="Track"
                                                 name="./track"
                                                 required="{Boolean}true"/>  

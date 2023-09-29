@@ -81,6 +81,7 @@ use(["../../../common/utils.js"], function (utils) {
     "track",
     "toasterCopySerialNumbersMessage",
     "copySerialNumber",
+    "return",
   ];
 
   properties &&

@@ -35,14 +35,21 @@ const ActionsButton = ({
   const effects = useOrderTrackingStore((st) => st.effects);
   const { setCustomState } = effects;
   const labels = config?.actionLabels;
-  const areDeliveryNotesAvailable = line.deliveryNotes.length > 0;
-  const areInvoicesAvailable = line.invoices.length > 0;
+  const invoices = line.invoices;
+  const deliveryNotes = line.deliveryNotes;
+  const areDeliveryNotesAvailable = deliveryNotes.length > 0;
+  const areInvoicesAvailable = invoices.length > 0;
   const isSerialNumberAvailable = line.serials.length > 0;
+  // TODO: Change isReturnAvailable validatioon after flyout for multiple return links will be created
+  const invoicesWithReturnURL = invoices.filter(
+    (invoice) => invoice.ReturnURL && invoice.ReturnURL.length > 0
+  );
+  const isReturnAvailable =
+    invoices.length > 0 && invoicesWithReturnURL.length === 1;
+
   const id = apiResponse?.orderNumber;
   const poNumber = apiResponse?.customerPO;
 
-  const invoices = line.invoices;
-  const deliveryNotes = line.deliveryNotes;
   const toaster = {
     isOpen: true,
     origin: 'fromUpdate',
@@ -82,6 +89,13 @@ const ActionsButton = ({
 
     effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
+  // TODO: Change handleReturn  after flyout for multiple return links will be created, add suport for single and multiple return links
+  const handleReturn = () => {
+    if (isReturnAvailable) {
+      const newUrl = line.invoices[0].ReturnURL;
+      window.open(newUrl, '_blank');
+    }
+  };
   const menuActionsItems = [
     {
       condition: true,
@@ -104,6 +118,11 @@ const ActionsButton = ({
       condition: isSerialNumberAvailable,
       label: labels?.copySerialNumber,
       onClick: handleCopySerialNumbers,
+    },
+    {
+      condition: isReturnAvailable,
+      label: labels?.return,
+      onClick: handleReturn,
     },
   ];
 

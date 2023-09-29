@@ -7569,7 +7569,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       docTypeText: "Normal order",
       status: "11",
       statusText: "Open",
-      isEditable: true,
+      isModifiable: true,
       shipComplete: true,
       reseller: {
         id: "325009",
@@ -7577,15 +7577,19 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         phoneNumber: "01256 788 000",
       },
       shipTo: {
+        Id: "",
+        CompanyName: "Frey Enterprise Inc",
         line1: "Frey Enterprise Inc",
         line2: "",
         line3: "2 Old Bath Road",
         city: "Newbury Berkshire",
         state: "",
         zip: "RG14 1QL",
+        PostalCode: "",
         country: "GB",
         phone: "44 7975 777666",
         email: "Gfrey@fei.com",
+        ContactEmail: "Gfrey@fei.com",
       },
       salesAgent: {
         name: "John Doe",
@@ -7617,7 +7621,18 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           shipQuantity: 12,
           totalPrice: 4000.0,
           totalPriceFormatted: "4000.00",
-          invoices: "877346264,877346265",
+          invoices: [
+            {
+              Id: "877346261",
+              Date: "07-18-2023",
+              DateFormatted: "18/07/2023",
+            },
+            {
+              Id: "877346262",
+              Date: "07-19-2023",
+              DateFormatted: "19/07/2023",
+            },
+          ],
           items: [
             {
               line: "10",
@@ -7678,11 +7693,15 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               Id: "877346261",
               Date: "07-18-2023",
               DateFormatted: "18/07/2023",
+              ReturnURL:
+                "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=877346261&Line=10&product=2663149",
             },
             {
               Id: "877346262",
               Date: "07-19-2023",
               DateFormatted: "19/07/2023",
+              ReturnURL:
+                "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=877346262&Line=10&product=2663149",
             },
           ],
           serials: "serial1,serial2",
