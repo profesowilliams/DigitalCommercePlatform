@@ -42,7 +42,7 @@ const ActionsButton = ({
   const isSerialNumberAvailable = line.serials.length > 0;
   // TODO: Change isReturnAvailable validatioon after flyout for multiple return links will be created
   const invoicesWithReturnURL = invoices.filter(
-    (invoice) => invoice.ReturnURL && invoice.ReturnURL.length > 0
+    (invoice) => invoice.returnURL && invoice.returnURL.length > 0
   );
   const isReturnAvailable =
     invoices.length > 0 && invoicesWithReturnURL.length === 1;
@@ -92,7 +92,7 @@ const ActionsButton = ({
   // TODO: Change handleReturn  after flyout for multiple return links will be created, add suport for single and multiple return links
   const handleReturn = () => {
     if (isReturnAvailable) {
-      const newUrl = line.invoices[0].ReturnURL;
+      const newUrl = line.invoices[0].returnURL;
       window.open(newUrl, '_blank');
     }
   };

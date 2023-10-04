@@ -60,8 +60,8 @@ function OrdersTrackingDetailGrid({
 
   const sortedLineDetails = (line) =>
     line?.lineDetails?.slice().sort((a, b) => {
-      const dateA = new Date(a.ShipDateFormatted);
-      const dateB = new Date(b.ShipDateFormatted);
+      const dateA = new Date(a.shipDateFormatted);
+      const dateB = new Date(b.shipDateFormatted);
       return dateA - dateB;
     });
 

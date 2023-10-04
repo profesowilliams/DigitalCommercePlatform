@@ -16,9 +16,9 @@ function DeliveryEstimateColumn({ line}) {
                 : '__separateLineMultiple'
             }`}
           >
-            {el.ShipDateFormatted ? (
+            {el.shipDateFormatted ? (
               <span className="order-line-details__content__innerTableNotShipped__separateLineText">
-                {el.ShipDateFormatted}
+                {el.shipDateFormatted}
               </span>
             ) : (
               <span></span>
