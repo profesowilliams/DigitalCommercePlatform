@@ -21,7 +21,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
     <>
       <span className="line-status">
         <WarningTriangle />
-        End Of Life
+        {getDictionaryValueOrKey(config?.itemsLabels?.endOfLife)}
       </span>
       <p className="line-status-link">
         {getDictionaryValueOrKey(config?.itemsLabels?.seeOptions)}

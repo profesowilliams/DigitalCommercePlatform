@@ -303,7 +303,13 @@
                                                 fieldLabel="See options Label"
                                                 name="./seeOptions"
                                                 required="{Boolean}true"/>
-
+                                            <endOfLife
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter End of Life Label"
+                                                fieldLabel="End of Life Label"
+                                                name="./endOfLife"
+                                                required="{Boolean}true"/>
 											<ordersUrl
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

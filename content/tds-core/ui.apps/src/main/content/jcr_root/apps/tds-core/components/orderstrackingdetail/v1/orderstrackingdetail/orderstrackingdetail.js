@@ -61,6 +61,7 @@ use(["../../../common/utils.js"], function (utils) {
     "mfrPartNo",
     "tdsPartNo",
     "seeOptions",
+    "endOfLife",
   ];
 
   properties &&
