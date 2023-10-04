@@ -43,8 +43,6 @@ const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
 const getOptionsDefaultValues = () => {
   const currentOptions = {
-    defaultSortingColumnKey: "dueDate",
-    defaultSortingDirection: "desc",
   };
 
   const currentSecondLevelOptions = {
@@ -331,6 +329,7 @@ function RenewalsGrid(props) {
         definitions={renewalsDefinitions()}
         config={gridConfig}
         options={options}
+        sortingOrder={['asc', 'desc']}
         gridConfig={gridConfig}
         onAfterGridInit={_onAfterGridInit}
         requestInterceptor={customRequestInterceptor}

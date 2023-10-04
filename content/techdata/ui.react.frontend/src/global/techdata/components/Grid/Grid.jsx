@@ -32,6 +32,7 @@ function Grid(props) {
     onSortChanged,
     handlerIsRowMaster,
     icons,
+    sortingOrder,
     omitCreatedQuery = false,
     contextMenuItems = undefined,
     processCustomClipboardAction = undefined,
@@ -289,6 +290,7 @@ function Grid(props) {
       getContextMenuItems={getContextMenuItems}
       popupParent={popupParent}
       getRowId={getRowId}
+      sortingOrder={sortingOrder}
     >
       {filteredColumns.map((column) => {
         return (
