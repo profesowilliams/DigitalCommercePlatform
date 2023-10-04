@@ -62,10 +62,10 @@ const ActionsButton = ({
   const hasMultipleDNotes = deliveryNotes.length > 1;
   const hasMultipleInvoices = invoices.length > 1;
   const handleDownloadDnote = () => {
-    openFilePdf('DNote', id, deliveryNotes[0]?.Id);
+    openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', id, invoices[0]?.Id);
+    openFilePdf('Invoice', id, invoices[0]?.id);
   };
   const triggerDNotesFlyout = () => {
     setCustomState({

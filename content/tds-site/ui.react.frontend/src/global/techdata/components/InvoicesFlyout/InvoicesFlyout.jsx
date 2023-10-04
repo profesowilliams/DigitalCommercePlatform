@@ -36,6 +36,7 @@ function InvoicesFlyout({
       return downloadAllFile('Invoice', config?.id, selected);
     }
   };
+
   return (
     <BaseFlyout
       open={invoicesFlyoutConfig?.show}

@@ -1,11 +1,12 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../utils/utils';
 
-function useTableFlyout({selected, setSelected, columnList, config}) {
-
+function useTableFlyout({ selected, setSelected, columnList, config }) {
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
+
     let newSelected = [];
+
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -18,33 +19,30 @@ function useTableFlyout({selected, setSelected, columnList, config}) {
         selected.slice(selectedIndex + 1)
       );
     }
+
     setSelected(newSelected);
-  };
-  const createData = (dataObj) => {
-    return {
-      ...dataObj,
-    };
-  };
-  const getRows = (config, ...headTags) => {
-    if (!config?.data || !Array.isArray(config.data)) {
-      return [];
-    }
-    return config?.data
-      .filter(
-        (e) =>
-          e &&
-          typeof e === 'object' &&
-          headTags.every((tag) => e.hasOwnProperty(tag))
-      )
-      .map((e) =>
-        createData(
-          headTags.reduce((acc, tag) => ({ ...acc, [tag]: e[tag] }), {})
-        )
-      );
   };
 
   const headTags = columnList ? columnList.map((e) => e.columnKey) : [];
-  const rows = getRows(config, ...headTags);
+
+  const getRows = (config, headTags) => {
+    if (!config?.data || !Array.isArray(config.data)) {
+      return [];
+    }
+  
+    return config.data
+      .filter((e) => e && typeof e === 'object')
+      .map((e) => {
+        const rowData = {};
+        headTags.forEach((tag) => {
+          rowData[tag] = e.hasOwnProperty(tag) ? e[tag] : '';
+        });
+        return rowData;
+      });
+  };
+
+  const rows = getRows(config, headTags);
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n[headTags[0]]);
@@ -53,11 +51,13 @@ function useTableFlyout({selected, setSelected, columnList, config}) {
     }
     setSelected([]);
   };
+
   const useHeadCells = (list) =>
     list?.map((e) => ({
       id: e.columnKey,
       label: e.columnLabel,
     }));
+
   const headCells = useHeadCells(columnList);
 
   const SecondaryButton = (selectedParam, secondaryParam) => {
@@ -73,7 +73,13 @@ function useTableFlyout({selected, setSelected, columnList, config}) {
     }
     return null;
   };
-  return { handleClick, handleSelectAllClick, rows, headCells, SecondaryButton};
+  return {
+    handleClick,
+    handleSelectAllClick,
+    rows,
+    headCells,
+    SecondaryButton,
+  };
 }
 
 export default useTableFlyout;

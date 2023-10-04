@@ -17,7 +17,9 @@ export default function FlyoutTable({
   checkboxEnabled,
 }) {
   const rows = dataTable;
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (row) => {
+    return selected.indexOf(row.id) !== -1;
+  };
 
   const EnhancedTableHead = (props) => {
     const { onSelectAllClick, numSelected, rowCount } = props;
@@ -59,7 +61,6 @@ export default function FlyoutTable({
       </TableHead>
     );
   };
-
   return (
     <Box className={'cmp-flyout-table'} sx={{ width: '100%' }}>
       <TableContainer>
@@ -75,7 +76,7 @@ export default function FlyoutTable({
           />
           <TableBody>
             {rows?.map((row, index) => {
-              const isItemSelected = isSelected(row.id);
+              const isItemSelected = isSelected(row);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
                 <TableRow
@@ -86,7 +87,7 @@ export default function FlyoutTable({
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
-                  key={row.id}
+                  key={index}
                   selected={isItemSelected}
                   sx={{
                     cursor: 'pointer',
@@ -116,7 +117,7 @@ export default function FlyoutTable({
                     padding="normal"
                     sx={{ color: '#006FBA' }}
                   >
-                    {row.id}
+                    {row.id || row.Id}
                   </TableCell>
                   {headCells?.slice(1)?.map((headCell, id) => (
                     <TableCell key={id} align="left" sx={{ color: '#000000' }}>

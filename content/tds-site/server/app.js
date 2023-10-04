@@ -5348,6 +5348,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               shippedFromText: "Lutterworth",
               created: "07-12-2023",
               createdFormatted: "12/07/2023",
+              dateFormatted: "18/07/2023",
               id: "7132124086",
               line: "10",
               quantity: 1,
@@ -5357,6 +5358,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               shippedFromText: "Lutterworth",
               created: "07-12-2023",
               createdFormatted: "12/07/2023",
+              dateFormatted: "18/07/2023",
               id: "7132124088",
               line: "10",
               quantity: 1,
@@ -5377,6 +5379,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               priceFormatted: "0.03",
               created: "08-07-2019",
               createdFormatted: "07/08/2019",
+              dateFormatted: "18/07/2023",
             },
             {
               id: "8153571433",
@@ -5385,7 +5388,8 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               price: 0.03,
               priceFormatted: "0.03",
               created: "08-07-2019",
-              createdFormatted: "07/08/2019",
+              createdFormatted: "08/08/2019",
+              dateFormatted: "18/07/2023",
             },
           ],
           id: "V003091843",
@@ -5413,13 +5417,13 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
             {
               deliveryNotes: [
                 {
-                  id: "7132124086",
+                  id: "7132124085",
                   line: "10",
                   quantity: 1,
                   quantityDelivered: 1.0,
                 },
                 {
-                  id: "7132124088",
+                  id: "7132124084",
                   line: "10",
                   quantity: 1,
                   quantityDelivered: 1.0,
@@ -5451,14 +5455,14 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
               serials: [],
               invoices: [
                 {
-                  id: "8153571432",
+                  id: "8153571412",
                   line: "10",
                   quantity: 3,
                   price: 0.03,
                   created: "08-07-2019",
                 },
                 {
-                  id: "8153571433",
+                  id: "8153571413",
                   line: "10",
                   quantity: 3,
                   price: 0.03,
@@ -7579,18 +7583,18 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       },
       shipTo: {
         id: "",
-        CompanyName: "Frey Enterprise Inc",
+        companyName: "Frey Enterprise Inc",
         line1: "Frey Enterprise Inc",
         line2: "",
         line3: "2 Old Bath Road",
         city: "Newbury Berkshire",
         state: "",
         zip: "RG14 1QL",
-        PostalCode: "",
+        postalCode: "",
         country: "GB",
         phone: "44 7975 777666",
         email: "Gfrey@fei.com",
-        ContactEmail: "Gfrey@fei.com",
+        contactEmail: "Gfrey@fei.com",
       },
       salesAgent: {
         name: "John Doe",
@@ -7616,7 +7620,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       },
       deliveryNotes: [
         {
-          id: "7492823724",
+          id: "7492813724",
           actualShipDate: "07-17-2023",
           actualShipDateFormatted: "17/07/2023",
           shipQuantity: 12,
@@ -7624,14 +7628,14 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           totalPriceFormatted: "4000.00",
           invoices: [
             {
-              Id: "877346261",
-              Date: "07-18-2023",
-              DateFormatted: "18/07/2023",
+              id: "817146261",
+              date: "07-18-2023",
+              dateFormatted: "18/07/2023",
             },
             {
-              Id: "877346262",
-              Date: "07-19-2023",
-              DateFormatted: "19/07/2023",
+              id: "817146262",
+              date: "07-19-2023",
+              dateFormatted: "19/07/2023",
             },
           ],
           items: [
@@ -7684,23 +7688,23 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           isReturnable: false,
           deliveryNotes: [
             {
-              Id: "7492823724",
-              Date: "07-17-2023",
-              DateFormatted: "17/07/2023",
+              id: "7492813724",
+              date: "07-17-2023",
+              dateFormatted: "17/07/2023",
             },
           ],
           invoices: [
             {
-              Id: "877346261",
-              Date: "07-18-2023",
-              DateFormatted: "18/07/2023",
+              id: "817346261",
+              date: "07-18-2023",
+              dateFormatted: "18/07/2023",
               returnURL:
                 "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=877346261&Line=10&product=2663149",
             },
             {
-              Id: "877346262",
-              Date: "07-19-2023",
-              DateFormatted: "19/07/2023",
+              id: "817346262",
+              date: "07-19-2023",
+              dateFormatted: "19/07/2023",
               returnURL:
                 "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=877346262&Line=10&product=2663149",
             },
@@ -7741,16 +7745,16 @@ app.get("/ui-commerce/v2/order", (req, res) => {
           isReturnable: false,
           deliveryNotes: [
             {
-              Id: "7492823724",
-              Date: "07-17-2023",
-              DateFormatted: "17/07/2023",
+              id: "7492823125",
+              date: "07-17-2023",
+              dateFormatted: "17/07/2023",
             },
           ],
           invoices: [
             {
-              Id: "877346264",
-              Date: "07-18-2023",
-              DateFormatted: "18/07/2023",
+              id: "877341264",
+              date: "07-18-2023",
+              dateFormatted: "18/07/2023",
             },
           ],
           serials: "serial1,serial2",

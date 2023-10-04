@@ -35,6 +35,7 @@ function DNotesFlyout({
       return downloadAllFile('DNote', config?.id, selected);
     }
   };
+
   return (
     <BaseFlyout
       open={dNoteFlyoutConfig?.show}
