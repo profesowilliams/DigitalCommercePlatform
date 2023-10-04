@@ -56,7 +56,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
         getDictionaryValueOrKey(copyFlyout.searchLabel)
       );
       const response = await resellerLookUp(
-        resellerId,
+        encodeURIComponent(resellerId),
         copyFlyout.accountLookUpEndpoint
       );
       if (response.isError) {
