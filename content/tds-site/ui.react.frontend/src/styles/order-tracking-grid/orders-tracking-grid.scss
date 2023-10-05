@@ -325,6 +325,14 @@
         border-bottom: 1px solid $brand-text-lightgray;
       }
       &__text {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: $brand-charcoal;
+        font-size: 14px !important;
+      }
+      &__quantity {
         color: $brand-charcoal;
         font-size: 14px !important;
       }

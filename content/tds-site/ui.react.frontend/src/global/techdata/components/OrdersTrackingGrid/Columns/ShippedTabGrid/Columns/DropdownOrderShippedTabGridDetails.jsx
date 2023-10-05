@@ -49,7 +49,10 @@ function DropdownOrderShippedTabGridDetails({ data }) {
                 style={{ width: defaultWidth.item }}
                 className="order-line-details__content__innerTable__column"
               >
-                <span className="order-line-details__content__innerTable__text">
+                <span
+                  style={{ maxWidth: defaultWidth.item }}
+                  className="order-line-details__content__innerTable__text"
+                >
                   {displayName}
                 </span>
               </div>
@@ -58,12 +61,18 @@ function DropdownOrderShippedTabGridDetails({ data }) {
                 className="order-line-details__content__innerTable__column"
               >
                 <div>
-                  <span className="order-line-details__content__innerTable__text">
+                  <span
+                    style={{ maxWidth: defaultWidth.mfrNumber }}
+                    className="order-line-details__content__innerTable__text"
+                  >
                     {mfrNumber}
                   </span>
                 </div>
                 <div>
-                  <span className="order-line-details__content__innerTable__text">
+                  <span
+                    style={{ maxWidth: defaultWidth.tdNumber }}
+                    className="order-line-details__content__innerTable__text"
+                  >
                     {tdNumber}
                   </span>
                 </div>
@@ -72,7 +81,7 @@ function DropdownOrderShippedTabGridDetails({ data }) {
                 style={{ width: defaultWidth.qty }}
                 className="order-line-details__content__innerTable__column"
               >
-                <span className="order-line-details__content__innerTable__text">
+                <span className="order-line-details__content__innerTable__quantity">
                   {shipQuantity} / {orderQuantity}
                 </span>
               </div>
