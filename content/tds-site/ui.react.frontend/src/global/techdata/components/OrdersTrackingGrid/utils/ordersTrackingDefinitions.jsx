@@ -24,7 +24,7 @@ export const ordersTrackingDefinition = (
       shipTo: <ShipToColumn data={data?.shipTo} />,
       created: data?.createdFormatted ?? data?.created,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
-      reseller: <ResellerColumn data={data?.customerPO} />,
+      customerPO: <ResellerColumn data={data?.customerPO} />,
       priceFormatted: <TotalColumn data={data} />,
       invoices: (
         <InvoiceColumn
@@ -57,7 +57,7 @@ export const ordersTrackingDefinition = (
     status: 110,
     created: 110,
     id: 100,
-    reseller: 160,
+    customerPO: 160,
     priceFormatted: 130,
     invoices: 100,
     deliveryNotes: 100,
@@ -70,7 +70,7 @@ export const ordersTrackingDefinition = (
     status: '110px',
     created: '110px',
     id: '100px',
-    reseller: '160px',
+    customerPO: '160px',
     priceFormatted: '130px',
     invoices: '100px',
     deliveryNotes: '100px',
