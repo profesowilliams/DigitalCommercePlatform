@@ -7929,7 +7929,7 @@ app.get("/ui-commerce/v2/ReplacementProduct", (req, res) => {
   }, 2000);
 });
 
-app.post("/ui-commerce/v2/ReplaceProduct", (req, res) => {
+app.post("/ui-commerce/v2/ReplaceProductUpdate", (req, res) => {
   const response = {
     content: {
       SalesOrg: "0014",
@@ -7963,6 +7963,24 @@ app.post("/ui-commerce/v2/ReplaceProduct", (req, res) => {
     return res.status(200).json(response);
   }, 2000);
 });
+
+app.get(
+  "/ui-commerce/v3/orders/carrierurl/:id/:lineId/:dnoteId",
+  (req, res) => {
+    const response = {
+      carrier: "DPD",
+      baseUrl: "http://www.dpd.co.uk/service/tracking",
+      parameters: {
+        orderNumber: "7132124875",
+      },
+      methodType: "GET",
+    };
+
+    setTimeout(() => {
+      return res.status(200).json(response);
+    }, 2000);
+  }
+);
 
 app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   try {

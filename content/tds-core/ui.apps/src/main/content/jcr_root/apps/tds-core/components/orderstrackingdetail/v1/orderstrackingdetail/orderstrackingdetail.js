@@ -322,6 +322,14 @@ use(["../../../common/utils.js"], function (utils) {
     this.serviceData.uiServiceDomain +
       this.serviceData.replaceProductEndpoint || "";
 
+  jsonObject["replacementsProductsEndpoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.replacementsProductsEndpoint || "";
+
+  jsonObject["trackDeliveryEndpoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.trackDeliveryEndpoint ||
+    "";
+
   // Product Replacement Flyout
   const productReplacementFlyoutLabels = [
     "replacementModifyOrder",

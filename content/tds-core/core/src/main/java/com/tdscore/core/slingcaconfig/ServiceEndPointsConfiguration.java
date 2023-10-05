@@ -110,6 +110,12 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Replace Product Endpoint", description = "Replace Product Endpoint")
     String replaceProductEndpoint();
 
+    @Property(label = "Replacements Products Endpoint", description = "Replacement Products Endpoint")
+    String replacementsProductsEndpoint();
+
+    @Property(label = "Track Delivery Endpoint", description = "Track Delivery Endpoint")
+    String trackDeliveryEndpoint();
+
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();
 

@@ -134,7 +134,7 @@ function ProductReplacementFlyout({
   useEffect(async () => {
     if (productReplacementConfig?.data?.line?.tdNumber) {
       try {
-        const result = await usGet(`${config.replaceProductEndpoint}`);
+        const result = await usGet(`${config.replacementsProductsEndpoint}`);
         setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {
         console.error(error);

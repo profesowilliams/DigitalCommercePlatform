@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { usGet } from '../../../../../utils/api';
 
 const ActionsButton = ({
   line,
@@ -20,6 +21,7 @@ const ActionsButton = ({
     width: '1.3rem',
   };
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+  const [trackUrl, setTrackUrl] = useState('');
   const multiple = line?.lineDetails?.length > 1;
   const isLastElement = multiple && index === line?.lineDetails?.length - 1;
   const isSingleElement = !multiple;
@@ -96,11 +98,16 @@ const ActionsButton = ({
       window.open(newUrl, '_blank');
     }
   };
+
+  const handleTrackAndTrace = () => {
+    window.open(trackUrl, '_blank');
+  };
+
   const menuActionsItems = [
     {
       condition: true,
       label: labels?.track,
-      onClick: null,
+      onClick: handleTrackAndTrace,
     },
     {
       condition: areDeliveryNotesAvailable,
@@ -125,6 +132,25 @@ const ActionsButton = ({
       onClick: handleReturn,
     },
   ];
+
+  useEffect(async () => {
+    try {
+      const result = await usGet(
+        `${config.trackDeliveryEndpoint}/${id}/${line.line}/${line.deliveryNotes[0].id}`
+      );
+      const { baseUrl, parameters } = result.data;
+      if (baseUrl) {
+        const urlParams =
+          '?' +
+          Object.entries(parameters)
+            .map((entry) => entry[0] + '=' + entry[1])
+            .join('&');
+        setTrackUrl(baseUrl + urlParams);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   return (
     <div

@@ -101,6 +101,8 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.orderModifyEndpoint()).thenReturn("orderModifyEndpoint");
         when(serviceEndPointsConfiguration.orderModifyChangeEndpoint()).thenReturn("orderModifyChangeEndpoint");
         when(serviceEndPointsConfiguration.replaceProductEndpoint()).thenReturn("replaceProductEndpoint");
+        when(serviceEndPointsConfiguration.replacementsProductsEndpoint()).thenReturn("replacementsProductsEndpoint");
+        when(serviceEndPointsConfiguration.trackDeliveryEndpoint()).thenReturn("trackDeliveryEndpoint");
         when(serviceEndPointsConfiguration.quotesPreviewEndPoint()).thenReturn("quotesPreviewEndPoint");
         when(serviceEndPointsConfiguration.quickQuoteEndpoint()).thenReturn("quickQuoteEndPoint");
         when(serviceEndPointsConfiguration.quotesPreviewPricingEndPoint()).thenReturn("quotesPreviewPricingEndPoint");
@@ -180,6 +182,8 @@ class CaConfigReaderTest {
         assertEquals("orderModifyEndpoint", underTest.getOrderModifyEndpoint());
         assertEquals("orderModifyChangeEndpoint", underTest.getOrderModifyChangeEndpoint());
         assertEquals("replaceProductEndpoint", underTest.getReplaceProductEndpoint());
+        assertEquals("replacementsProductsEndpoint", underTest.getReplacementsProductsEndpoint());
+        assertEquals("trackDeliveryEndpoint", underTest.getTrackDeliveryEndpoint());
         assertEquals("quotesPreviewEndPoint", underTest.getQuotesPreviewEndPoint());
         assertEquals("quotesPreviewPricingEndPoint", underTest.getQuotesPreviewPricingEndPoint());
         assertEquals("configurationsEndpoint", underTest.getConfigurationsEndpoint());
