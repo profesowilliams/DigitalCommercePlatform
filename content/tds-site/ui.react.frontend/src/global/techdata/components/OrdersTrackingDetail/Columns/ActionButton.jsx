@@ -39,6 +39,7 @@ const ActionsButton = ({
   const labels = config?.actionLabels;
   const invoices = line.invoices;
   const deliveryNotes = line.deliveryNotes;
+  const trackAndTraceAvailable = deliveryNotes.length === 1;
   const areDeliveryNotesAvailable = deliveryNotes.length > 0;
   const areInvoicesAvailable = invoices.length > 0;
   const isSerialNumberAvailable = line.serials.length > 0;
@@ -109,7 +110,7 @@ const ActionsButton = ({
 
   const menuActionsItems = [
     {
-      condition: true,
+      condition: trackAndTraceAvailable,
       label: labels?.track,
       onClick: handleTrackAndTrace,
     },
