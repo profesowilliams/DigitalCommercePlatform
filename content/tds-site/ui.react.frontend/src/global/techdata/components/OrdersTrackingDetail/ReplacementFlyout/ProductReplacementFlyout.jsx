@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { getUrlParams } from '../../../../../utils';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
@@ -36,7 +37,10 @@ function ProductReplacementFlyout({
   config = {},
   gridRef,
   rowsToGrayOutTDNameRef,
+  userData,
+  addNewItem,
 }) {
+  const { id = '' } = getUrlParams();
   const [selected, setSelected] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const [productDtos, setProductDtos] = useState([]);
@@ -65,9 +69,9 @@ function ProductReplacementFlyout({
     const operation =
       selected === 'removeWithoutReplacement' ? 'Cancel' : 'Replace';
     const payload = {
-      CustomerID: '325009',
-      SalesOrg: '0014',
-      OrderID: 'I1234567',
+      CustomerID: userData?.customersV2?.[0]?.customerNumber,
+      SalesOrg: userData?.customersV2?.[0]?.salesOrg,
+      OrderID: id,
       LineID: productReplacementConfig?.data?.line?.id,
       Operation: operation,
       ProductID: newProductId,
@@ -81,10 +85,13 @@ function ProductReplacementFlyout({
       console.error('Error replacing product:', error);
     }
     closeFlyout();
+    const chosenItemIndex = productDtos.findIndex(
+      (product) => product.source.id === selected
+    );
+    addNewItem(productDtos[chosenItemIndex]);
     rowsToGrayOutTDNameRef.current = [
       productReplacementConfig?.data?.line?.tdNumber,
     ];
-    gridRef.current?.api.redrawRows();
     changeRefreshDetailApiState();
   };
 

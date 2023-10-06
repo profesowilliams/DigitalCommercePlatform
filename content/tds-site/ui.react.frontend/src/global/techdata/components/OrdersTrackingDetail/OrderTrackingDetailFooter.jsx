@@ -7,7 +7,7 @@ import {
 } from '../../../../utils/featureFlagUtils';
 import { getSessionInfo } from "../../../../utils/user/get";
 
-const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
+const OrderTrackingDetailFooter = ({ content, config }) => {
   const [userData, setUserData] = useState(null);
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
@@ -16,8 +16,8 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
     isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
   const activeCustomer = currentUserData?.activeCustomer;
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
-  const currency = apiResponse?.content?.paymentDetails?.currency;
-  const multiplePages = apiResponse?.content?.items.length > 25;
+  const currency = content.paymentDetails?.currency;
+  const multiplePages = content.items.length > 25;
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
@@ -53,7 +53,7 @@ const OrderTrackingDetailFooter = ({ apiResponse, config }) => {
                   )}: `}
             </span>
             <span className="box-container__rightPart-subtotalValue">
-              {apiResponse?.content?.paymentDetails?.totalFormatted}{' '}
+              {content.paymentDetails?.totalFormatted}{' '}
               {currency ?? defaultCurrency}
             </span>
           </div>

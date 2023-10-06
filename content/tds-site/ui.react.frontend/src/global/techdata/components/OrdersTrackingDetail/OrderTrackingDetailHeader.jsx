@@ -15,7 +15,7 @@ import ContactCard from './Header/ContactCard';
 
 const OrderTrackingDetailHeader = ({
   config,
-  apiResponse,
+  content,
   hasAIORights,
   hasOrderModificationRights,
   openFilePdf,
@@ -39,7 +39,7 @@ const OrderTrackingDetailHeader = ({
     });
   };
 
-  const items = apiResponse?.content?.items || [];
+  const items = content.items || [];
   const labels = config?.actionLabels;
 
   let deliveryNotes = [];
@@ -57,8 +57,8 @@ const OrderTrackingDetailHeader = ({
     (item) => item.serials.length > 0
   );
 
-  const id = apiResponse?.content?.orderNumber;
-  const poNumber = apiResponse?.content?.customerPO;
+  const id = content.orderNumber;
+  const poNumber = content.customerPO;
   const hasMultipleDNotes = deliveryNotes.length > 1;
   const hasMultipleInvoices = invoices.length > 1;
   const handleDownloadDNote = () => {
@@ -134,12 +134,10 @@ const OrderTrackingDetailHeader = ({
           </Link>
         </div>
         <div className="title-container">
-          {apiResponse?.content && (
-            <OrderTrackingDetailTitle
-              content={apiResponse.content}
-              label={config.labels?.orderNo}
-            />
-          )}
+          <OrderTrackingDetailTitle
+            content={content}
+            label={config.labels?.orderNo}
+          />
           <div
             className="actions-container"
             onMouseOver={handleActionMouseOver}
@@ -161,12 +159,9 @@ const OrderTrackingDetailHeader = ({
         </div>
       </div>
       <div className="info-container">
-        <SoldToCard shipTo={apiResponse?.content?.shipTo} config={config} />
-        <OrderAcknowledgementCard
-          content={apiResponse?.content}
-          config={config}
-        />
-        <ContactCard content={apiResponse?.content} config={config} />
+        <SoldToCard shipTo={content.shipTo} config={config} />
+        <OrderAcknowledgementCard content={content} config={config} />
+        <ContactCard content={content} config={config} />
       </div>
     </div>
   );

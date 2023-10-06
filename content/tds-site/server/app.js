@@ -7552,7 +7552,6 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
   };
   const query = req.query;
   if (query.PageNumber) {
-    console.log(query.PageNumber);
     response.content.pageNumber = parseInt(query.PageNumber);
   }
   return res.status(200).json(response);

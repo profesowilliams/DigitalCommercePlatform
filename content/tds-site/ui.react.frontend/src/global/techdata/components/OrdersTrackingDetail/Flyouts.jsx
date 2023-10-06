@@ -11,10 +11,11 @@ const Flyouts = ({
   openFilePdf,
   config,
   hasAIORights,
-  apiResponse,
+  content,
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
+  addNewItem,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   return (
@@ -46,16 +47,17 @@ const Flyouts = ({
         }
         hasAIORights={hasAIORights}
       />
-      <OrderModificationFlyout
-        subheaderReference={document.querySelector('.subheader > div > div')}
-        items={apiResponse?.content?.items}
-        apiResponse={apiResponse?.content}
-        labels={config?.orderModifyLabels}
-        config={config}
-        gridRef={gridRef}
-        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        userData={userData}
-      />
+      {content && (
+        <OrderModificationFlyout
+          subheaderReference={document.querySelector('.subheader > div > div')}
+          content={content}
+          labels={config?.orderModifyLabels}
+          config={config}
+          gridRef={gridRef}
+          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+          userData={userData}
+        />
+      )}
       <ExportFlyout
         store={useOrderTrackingStore}
         componentProp={config}
@@ -68,11 +70,11 @@ const Flyouts = ({
       />
       <ProductReplacementFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
-        apiResponse={null}
         labels={config.productReplacementFlyout}
         config={config}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        addNewItem={addNewItem}
       />
     </>
   );

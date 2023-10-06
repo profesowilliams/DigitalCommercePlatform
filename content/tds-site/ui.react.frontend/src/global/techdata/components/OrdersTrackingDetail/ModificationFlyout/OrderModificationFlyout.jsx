@@ -25,10 +25,9 @@ const areItemsListIdentical = (items, itemsCopy) => {
 function OrderModificationFlyout({
   subheaderReference = '',
   isTDSynnex = true,
-  items = [],
   labels = {},
   config = {},
-  apiResponse,
+  content: { items = [] },
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
@@ -84,9 +83,9 @@ function OrderModificationFlyout({
   }, []);
 
   const getPayload = () => ({
-    SalesOrg: userData?.customersV2?.SalesOrg,
-    CustomerID: userData?.customersV2?.customerNumber,
-    OrderID: apiResponse?.orderNumber,
+    SalesOrg: userData?.customersV2?.[0]?.salesOrg,
+    CustomerID: userData?.customersV2?.[0]?.customerNumber,
+    OrderID: content?.orderNumber,
     ReduceLine: reduceLine,
     AddLine: addLine,
   });
@@ -162,7 +161,7 @@ function OrderModificationFlyout({
           {getDictionaryValueOrKey(labels?.editQuantities)}
         </p>
         <ul className="cmp-flyout-list">
-          {items?.map((item, index) => (
+          {items.map((item, index) => (
             <LineItem
               key={item.line}
               index={index}

@@ -63,6 +63,7 @@ const ActionsButton = ({
   };
   const hasMultipleDNotes = deliveryNotes.length > 1;
   const hasMultipleInvoices = invoices.length > 1;
+
   const handleDownloadDnote = () => {
     openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
@@ -75,12 +76,14 @@ const ActionsButton = ({
       value: { data: deliveryNotes, show: true, id, reseller: poNumber },
     });
   };
+
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
       value: { data: invoices, show: true, id, reseller: poNumber },
     });
   };
+
   const handleCopySerialNumbers = () => {
     const serialsString = line?.serials || '';
     const lineSerials = serialsString.split(',').map((serial) => serial.trim());
@@ -91,16 +94,17 @@ const ActionsButton = ({
 
     effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
+
+  const handleTrackAndTrace = () => {
+    window.open(trackUrl, '_blank');
+  };
+
   // TODO: Change handleReturn  after flyout for multiple return links will be created, add suport for single and multiple return links
   const handleReturn = () => {
     if (isReturnAvailable) {
       const newUrl = line.invoices[0].returnURL;
       window.open(newUrl, '_blank');
     }
-  };
-
-  const handleTrackAndTrace = () => {
-    window.open(trackUrl, '_blank');
   };
 
   const menuActionsItems = [

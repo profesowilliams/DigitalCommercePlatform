@@ -2,19 +2,19 @@
 
 "use strict";
 use(["../../../common/utils.js"], function (utils) {
-  let jsonObject = {};
-  let resourceResolver = resource.getResourceResolver();
-  let labels = {};
-  let itemsLabels = {};
-  let actionLabels = {};
-  let soldToLabels = {};
-  let orderAcknowledgementLabels = {};
-  let contactLabels = {};
-  let footerLabels = {};
-  let orderModifyLabels = {};
-  let dNotesFlyout = {};
-  let invoicesFlyout = {};
-  let exportFlyout = {};
+  const jsonObject = {};
+  const resourceResolver = resource.getResourceResolver();
+  const labels = {};
+  const itemsLabels = {};
+  const actionLabels = {};
+  const soldToLabels = {};
+  const orderAcknowledgementLabels = {};
+  const contactLabels = {};
+  const footerLabels = {};
+  const orderModifyLabels = {};
+  const dNotesFlyout = {};
+  const invoicesFlyout = {};
+  const exportFlyout = {};
   const productReplacementFlyout = {};
 
   // Settings

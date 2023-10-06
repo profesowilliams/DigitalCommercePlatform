@@ -13,6 +13,7 @@ function OrdersTrackingDetail(props) {
   const [userData, setUserData] = useState(null);
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
+  const [newItem, setNewItem] = useState(null);
 
   const componentProps = JSON.parse(props.componentProp);
   const config = {
@@ -28,6 +29,7 @@ function OrdersTrackingDetail(props) {
   const hasOrderModificationRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderModification'
   );
+  const content = apiResponse?.content;
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
     try {
@@ -58,6 +60,10 @@ function OrdersTrackingDetail(props) {
     });
   }
 
+  const handleAddNewItem = (item) => {
+    setNewItem(item);
+  };
+
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
@@ -68,25 +74,27 @@ function OrdersTrackingDetail(props) {
     <>
       <div className="cmp-quote-preview cmp-order-preview">
         <section>
-          <OrderTrackingDetailHeader
-            config={config}
-            apiResponse={apiResponse}
-            hasAIORights={hasAIORights}
-            hasOrderModificationRights={hasOrderModificationRights}
-            openFilePdf={openFilePdf}
-          />
-          <OrderTrackingDetailBody
-            apiResponse={apiResponse}
-            config={config}
-            hasAIORights={hasAIORights}
-            openFilePdf={openFilePdf}
-            gridRef={gridRef}
-            rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-          />
-          <OrderTrackingDetailFooter
-            config={config}
-            apiResponse={apiResponse}
-          />
+          {content && (
+            <>
+              <OrderTrackingDetailHeader
+                config={config}
+                content={content}
+                hasAIORights={hasAIORights}
+                hasOrderModificationRights={hasOrderModificationRights}
+                openFilePdf={openFilePdf}
+              />
+              <OrderTrackingDetailBody
+                content={content}
+                config={config}
+                hasAIORights={hasAIORights}
+                openFilePdf={openFilePdf}
+                gridRef={gridRef}
+                rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+                newItem={newItem}
+              />
+              <OrderTrackingDetailFooter config={config} content={content} />
+            </>
+          )}
         </section>
       </div>
       <Flyouts
@@ -94,10 +102,11 @@ function OrdersTrackingDetail(props) {
         openFilePdf={openFilePdf}
         config={config}
         hasAIORights={hasAIORights}
-        apiResponse={apiResponse}
+        content={content}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
+        addNewItem={handleAddNewItem}
       />
     </>
   );
