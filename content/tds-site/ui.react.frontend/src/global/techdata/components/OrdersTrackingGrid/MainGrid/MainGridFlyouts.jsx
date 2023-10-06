@@ -74,8 +74,7 @@ const MainGridFlyouts = ({
       />
       <OrderModificationFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
-        items={apiResponse?.content?.items}
-        apiResponse={apiResponse?.content}
+        content={apiResponse?.content}
         labels={gridConfig.orderModifyLabels}
         config={gridConfig}
         gridRef={gridRef}
