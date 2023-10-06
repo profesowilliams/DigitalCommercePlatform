@@ -27,16 +27,16 @@ function OrderModificationFlyout({
   isTDSynnex = true,
   labels = {},
   config = {},
-  content: { items = [] },
+  content,
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
 }) {
+  const items = content?.items || [];
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [itemsCopy, setItemsCopy] = useState([...items]);
-
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );

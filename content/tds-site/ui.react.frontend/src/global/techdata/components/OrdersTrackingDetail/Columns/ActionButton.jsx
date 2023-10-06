@@ -140,7 +140,7 @@ const ActionsButton = ({
   useEffect(async () => {
     try {
       const result = await usGet(
-        `${config.trackDeliveryEndpoint}/${id}/${line.line}/${line.deliveryNotes[0].id}`
+        `${config.trackDeliveryEndpoint}/${id}/${line.line}/${deliveryNotes[0].id}`
       );
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {
