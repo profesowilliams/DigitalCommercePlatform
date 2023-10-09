@@ -91,6 +91,8 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.quoteGridEndpoint()).thenReturn("quoteGridEndpoint");
         when(serviceEndPointsConfiguration.vendorConnectionEndpoint()).thenReturn("vendorConnectionEndpoint");
         when(serviceEndPointsConfiguration.orderGridEndpoint()).thenReturn("orderGridEndpoint");
+        when(serviceEndPointsConfiguration.getInvoicesEndPoint()).thenReturn("getInvoicesEndPoint");
+        when(serviceEndPointsConfiguration.getDeliveryNotesEndPoint()).thenReturn("getDeliveryNotesEndPoint");
         when(serviceEndPointsConfiguration.uiServiceEndPointForDetails()).thenReturn("uiServiceEndPointForDetails");
         when(serviceEndPointsConfiguration.ordersCountEndpoint()).thenReturn("ordersCountEndpoint");
         when(serviceEndPointsConfiguration.ordersReportEndpoint()).thenReturn("ordersReportEndpoint");
@@ -172,6 +174,8 @@ class CaConfigReaderTest {
         assertEquals("quoteGridEndpoint", underTest.getQuoteGridEndpoint());
         assertEquals("vendorConnectionEndpoint", underTest.getVendorConnectionEndpoint());
         assertEquals("orderGridEndpoint", underTest.getOrderGridEndpoint());
+        assertEquals("getInvoicesEndPoint", underTest.getGetInvoicesEndPoint());
+        assertEquals("getDeliveryNotesEndPoint", underTest.getGetDeliveryNotesEndPoint());
         assertEquals("uiServiceEndPointForDetails", underTest.getUiServiceEndPointForDetails());
         assertEquals("ordersCountEndpoint", underTest.getOrdersCountEndpoint());
         assertEquals("ordersReportEndpoint", underTest.getOrdersReportEndpoint());

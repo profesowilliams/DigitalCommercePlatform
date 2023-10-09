@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
+import { usGet } from '../../../../utils/api';
 
 function InvoicesFlyout({
   store,
+  gridConfig,
   invoicesFlyout = {},
   invoicesColumnList,
   subheaderReference,
@@ -20,7 +22,7 @@ function InvoicesFlyout({
     effects.setCustomState({ key: 'invoicesFlyout', value: { show: false } });
   const columnList = invoicesColumnList;
   const config = invoicesFlyoutConfig;
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = useState([]);
   const {
     rows,
     headCells,
@@ -28,7 +30,17 @@ function InvoicesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-
+  const [invoicesResponse, setInvoicesResponse] = useState(null);
+  const getInvoices = async () => {
+    try {
+      const result = await usGet(
+        `${gridConfig?.getInvoicesEndPoint}?id${invoicesFlyoutConfig?.id}`
+      );
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   const handleDownload = () => {
     if (selected.length === 1) {
       return openFilePdf('Invoice', config?.id, selected);
@@ -36,6 +48,23 @@ function InvoicesFlyout({
       return downloadAllFile('Invoice', config?.id, selected);
     }
   };
+
+  const allParametersHaveValue =
+    Array.isArray(rows) &&
+    rows.length > 0 &&
+    rows.every((item) => item.id && item.dateFormatted);
+
+  useEffect(() => {
+    invoicesFlyoutConfig?.id &&
+      !allParametersHaveValue &&
+      getInvoices()
+        .then((result) => {
+          setInvoicesResponse(result?.data?.content);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  }, [invoicesFlyoutConfig?.id, allParametersHaveValue]);
 
   return (
     <BaseFlyout
@@ -77,7 +106,7 @@ function InvoicesFlyout({
         </div>
         {columnList && (
           <FlyoutTable
-            dataTable={rows}
+            dataTable={allParametersHaveValue ? rows : invoicesResponse}
             selected={selected}
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}

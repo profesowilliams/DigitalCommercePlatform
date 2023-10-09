@@ -405,6 +405,14 @@ use(["../common/utils.js"], function (utils) {
   jsonObject["uiServiceEndPoint"] =
     this.serviceData.uiServiceDomain + this.serviceData.orderGridEndpoint || "";
 
+  jsonObject["getInvoicesEndPoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.getInvoicesEndPoint ||
+    "";
+
+  jsonObject["getDeliveryNotesEndPoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.getDeliveryNotesEndPoint || "";
+
   jsonObject["uiServiceEndPointForDetails"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.uiServiceEndPointForDetails || "";

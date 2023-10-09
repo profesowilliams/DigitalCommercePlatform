@@ -72,7 +72,7 @@ export default function FlyoutTable({
           <EnhancedTableHead
             numSelected={selected.length}
             onSelectAllClick={handleSelectAllClick}
-            rowCount={rows.length}
+            rowCount={rows?.length}
           />
           <TableBody>
             {rows?.map((row, index) => {

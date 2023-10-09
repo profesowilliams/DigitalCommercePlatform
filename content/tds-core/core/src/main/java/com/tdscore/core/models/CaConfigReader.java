@@ -93,6 +93,10 @@ public class CaConfigReader {
 
     private String orderGridEndpoint;
 
+    private String getInvoicesEndPoint;
+
+    private String getDeliveryNotesEndPoint;
+
     private String uiServiceEndPointForDetails;
 
     private String ordersCountEndpoint;
@@ -318,6 +322,8 @@ public class CaConfigReader {
         vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
         vendorConnectionDataRefreshEndpoint = serviceEndPointsConfiguration.vendorConnectionDataRefreshEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
+        getInvoicesEndPoint = serviceEndPointsConfiguration.getInvoicesEndPoint();
+        getDeliveryNotesEndPoint = serviceEndPointsConfiguration.getDeliveryNotesEndPoint();
         uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
         ordersCountEndpoint = serviceEndPointsConfiguration.ordersCountEndpoint();
         ordersReportEndpoint = serviceEndPointsConfiguration.ordersReportEndpoint();
@@ -542,6 +548,14 @@ public class CaConfigReader {
 
     public String getOrderGridEndpoint() {
         return orderGridEndpoint;
+    }
+
+    public String getGetInvoicesEndPoint() {
+        return getInvoicesEndPoint;
+    }
+
+    public String getGetDeliveryNotesEndPoint() {
+        return getDeliveryNotesEndPoint;
     }
 
     public String getUiServiceEndPointForDetails() {

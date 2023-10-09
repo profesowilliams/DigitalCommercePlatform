@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
+import { usGet } from '../../../../utils/api';
 
 function DNotesFlyout({
   store,
+  gridConfig,
   dNotesFlyout = {},
   dNoteColumnList,
   subheaderReference,
@@ -19,7 +21,8 @@ function DNotesFlyout({
     effects.setCustomState({ key: 'dNotesFlyout', value: { show: false } });
   const columnList = dNoteColumnList;
   const config = dNoteFlyoutConfig;
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = useState([]);
+
   const {
     rows,
     headCells,
@@ -27,7 +30,17 @@ function DNotesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-
+  const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
+  const getDeliveryNotes = async () => {
+    try {
+      const result = await usGet(
+        `${gridConfig?.getDeliveryNotesEndPoint}?id${dNoteFlyoutConfig?.id}`
+      );
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   const handleDownload = () => {
     if (selected.length === 1) {
       return openFilePdf('DNote', config?.id, selected);
@@ -36,6 +49,22 @@ function DNotesFlyout({
     }
   };
 
+  const allParametersHaveValue =
+    Array.isArray(rows) &&
+    rows.length > 0 &&
+    rows.every((item) => item.id && item.dateFormatted);
+
+  useEffect(() => {
+    dNoteFlyoutConfig?.id &&
+      !allParametersHaveValue &&
+      getDeliveryNotes()
+        .then((result) => {
+          setDeliveryNotesResponse(result?.data?.content);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  }, [dNoteFlyoutConfig?.id, allParametersHaveValue]);
   return (
     <BaseFlyout
       open={dNoteFlyoutConfig?.show}
@@ -76,7 +105,7 @@ function DNotesFlyout({
         </div>
         {columnList && (
           <FlyoutTable
-            dataTable={rows}
+            dataTable={allParametersHaveValue ? rows : deliveryNotesResponse}
             selected={selected}
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}

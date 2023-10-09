@@ -6,7 +6,6 @@ import {
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
 
-//TODO: delete invoices prop form DeliveryNotesColumn after BE create mock request for downloading dnotes
 function DeliveryNotesColumn({
   deliveryNotes = [],
   multiple,
@@ -14,34 +13,35 @@ function DeliveryNotesColumn({
   reseller,
   openFilePdf,
 }) {
-  const hasMultiple = deliveryNotes.length > 1;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
+  const hasMultiple = deliveryNotes?.length > 1;
+
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
       value: {
-        data: deliveryNotes,
+        data: null,
         show: true,
         id: id,
         reseller: reseller ? reseller : '-',
       },
     });
     pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(deliveryNotes.length, 'Main Grid')
+      getDNoteViewAnalyticsGoogle(deliveryNotes?.length, 'Main Grid')
     );
   };
 
-  //TODO: change to use Denotes after BE create mock request for downloading dnotes
   const handleDownload = () => {
-    openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    openFilePdf('DNote', id, deliveryNotes[0]);
     pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Main Grid'));
   };
-  return deliveryNotes.length == 0 ? (
+
+  return deliveryNotes?.length === 0 ? (
     '-'
   ) : (
     <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
       <a>
-        {hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0]?.id}
+        {hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0]}
       </a>
     </div>
   );
