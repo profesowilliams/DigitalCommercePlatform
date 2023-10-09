@@ -72,7 +72,7 @@ function MainGridHeader({
       label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
     },
     {
-      key: 'EOLReport',
+      key: 'EOLOrders',
       label: getDictionaryValueOrKey(eolReportLabel),
     },
   ];

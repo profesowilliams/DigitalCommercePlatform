@@ -11,6 +11,7 @@ import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { dateToString } from "../../helpers/formatting";
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -71,19 +72,23 @@ function ExportFlyout({
   };
 
   async function getExportAllOrderLines() {
-    const url = componentProp?.exportAllOrderLinesEndpoint || 'nourl';
-    const singleDownloadUrl = url;
-    const name = `file.xlsx`;
+    const url =
+      componentProp?.exportAllOrderLinesEndpoint || 'nourl';
+    const reportName = `OpenOrders`;
+    const singleDownloadUrl =
+      url + `?ReportName=` + reportName + `&OnlyWithSerialNumbers=false`;
+    const name = `Report_` + reportName + `_` + dateToString(Date.now(), 'dd-MM-uu') + `.xlsx`;
     await requestFileBlobWithoutModal(singleDownloadUrl, name, {
       redirect: false,
     });
   }
   async function getExportLinesWithSerialNumbersOnly() {
     const url =
-      componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
+          componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
+    const reportName = `OpenOrders`;
     const singleDownloadUrl =
-      url + `?ReportName=OpenOrders&OnlyWithSerialNumbers=true`;
-    const name = `file.xlsx`;
+      url + `?ReportName=` + reportName + `&OnlyWithSerialNumbers=true`;
+    const name = `Report_` + reportName + `_` + dateToString(Date.now(), 'dd-MM-uu') + `.xlsx`;
     await requestFileBlobWithoutModal(singleDownloadUrl, name, {
       redirect: false,
     });
