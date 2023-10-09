@@ -34,7 +34,7 @@ function InvoicesFlyout({
   const getInvoices = async () => {
     try {
       const result = await usGet(
-        `${gridConfig?.getInvoicesEndPoint}?id${invoicesFlyoutConfig?.id}`
+        `${gridConfig?.getInvoicesEndPoint}?id=${invoicesFlyoutConfig?.id}`
       );
       return result;
     } catch (error) {

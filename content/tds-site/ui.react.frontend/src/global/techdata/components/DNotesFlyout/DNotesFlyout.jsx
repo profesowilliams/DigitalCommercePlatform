@@ -34,7 +34,7 @@ function DNotesFlyout({
   const getDeliveryNotes = async () => {
     try {
       const result = await usGet(
-        `${gridConfig?.getDeliveryNotesEndPoint}?id${dNoteFlyoutConfig?.id}`
+        `${gridConfig?.getDeliveryNotesEndPoint}?id=${dNoteFlyoutConfig?.id}`
       );
       return result;
     } catch (error) {
