@@ -16,6 +16,15 @@ use(['../../../common/utils.js'], function(utils) {
       jsonObject["displayCurrencyName"] = properties["displayCurrencyName"];
     }
 
+    if (properties) {
+      if (properties["disableDefaultSort"]) {
+         jsonObject["disableDefaultSort"] = properties["disableDefaultSort"];
+      }else if (properties["disableDefaultSort"] == null || !properties["disableDefaultSort"]) {
+           jsonObject["disableDefaultSort"] = false;
+        }
+
+    }
+
     //Column definition
 
     let columnListValues = utils.getDataFromMultifield(resourceResolver, "columnList", function(childResource) {

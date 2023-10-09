@@ -329,8 +329,7 @@ function RenewalsGrid(props) {
         definitions={renewalsDefinitions()}
         config={gridConfig}
         options={options}
-        sortingOrder={['asc', 'desc']}
-        gridConfig={gridConfig}
+        sortingOrder={componentProp.disableDefaultSort ? ['asc', 'desc'] : ['desc', 'asc', null]}
         onAfterGridInit={_onAfterGridInit}
         requestInterceptor={customRequestInterceptor}
         mapServiceData={mapServiceData}

@@ -265,6 +265,18 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./displayCurrencyName@TypeHint"
                                                 value="Boolean"/>
+											<disableDefaultSort
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+												name="./disableDefaultSort"
+												text="Disable Default Sort"
+												uncheckedValue="false"
+												value="true"/>
+											<disableDefaultSortTypeHint
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+												name="./disableDefaultSort@TypeHint"
+												value="Boolean"/>
 										</items>
 									</column>
 								</items>
