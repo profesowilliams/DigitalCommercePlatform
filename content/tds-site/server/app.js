@@ -6837,66 +6837,73 @@ app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
 
 app.get("/ui-commerce/v3/refinements", function (req, res) {
   const response = {
-    orderStatuses: [
-      {
-        status: "OPEN",
-        statusText: "Open",
-      },
-      {
-        status: "INVESTIGATION",
-        statusText: "Investigation",
-      },
-      {
-        status: "SHIPPING",
-        statusText: "SHIPPING",
-      },
-      {
-        status: "REJECTED",
-        statusText: "Rejected",
-      },
-      {
-        status: "COMPLETED",
-        statusText: "Complete",
-      },
-      {
-        status: "CREDIT_HOLD",
-        statusText: "Credit Held",
-      },
-      {
-        status: "CANCELLED",
-        statusText: "Cancelled",
-      },
-      {
-        status: "SHIPPED",
-        statusText: "Shipped",
-      },
-      {
-        status: "IN_PROCESS",
-        statusText: "Processing",
-      },
-    ],
-    orderTypes: [
-      {
-        type: "EDI_OR_XML",
-        typeText: "EDI or XML",
-      },
-      {
-        type: "INTOUCH",
-        typeText: "InTouch",
-      },
-      {
-        type: "LICENSING",
-        typeText: "Licensing",
-      },
-      {
-        type: "MANUAL",
-        typeText: "Manual",
-      },
-      {
-        type: "THIRD_PARTY",
-        typeText: "Third Party order",
-      },
-    ],
+    content: {
+      orderStatuses: [
+        {
+          status: "OPEN",
+          statusText: "Open",
+        },
+        {
+          status: "INVESTIGATION",
+          statusText: "Investigation",
+        },
+        {
+          status: "SHIPPING",
+          statusText: "SHIPPING",
+        },
+        {
+          status: "REJECTED",
+          statusText: "Rejected",
+        },
+        {
+          status: "COMPLETED",
+          statusText: "Complete",
+        },
+        {
+          status: "CREDIT_HOLD",
+          statusText: "Credit Held",
+        },
+        {
+          status: "CANCELLED",
+          statusText: "Cancelled",
+        },
+        {
+          status: "SHIPPED",
+          statusText: "Shipped",
+        },
+        {
+          status: "IN_PROCESS",
+          statusText: "Processing",
+        },
+      ],
+      orderTypes: [
+        {
+          type: "EDI_OR_XML",
+          typeText: "EDI or XML",
+        },
+        {
+          type: "INTOUCH",
+          typeText: "InTouch",
+        },
+        {
+          type: "LICENSING",
+          typeText: "Licensing",
+        },
+        {
+          type: "MANUAL",
+          typeText: "Manual",
+        },
+        {
+          type: "THIRD_PARTY",
+          typeText: "Third Party order",
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
   };
 
   setTimeout(() => {

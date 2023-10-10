@@ -299,7 +299,7 @@ function OrdersTrackingGrid(props) {
 
   const fetchFiltersRefinements = async () => {
     const results = await usGet(`${componentProp.ordersRefinementsEndpoint}`);
-    return results.data;
+    return results.data.content;
   };
 
   useEffect(async () => {
