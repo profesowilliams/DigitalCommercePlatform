@@ -45,6 +45,7 @@ import {
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
+import { usGet } from '../../../../utils/api';
 
 function OrdersTrackingGrid(props) {
   const [userData, setUserData] = useState(null);
@@ -120,14 +121,6 @@ function OrdersTrackingGrid(props) {
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
   };
-
-  const predefined = getFilterFlyoutPredefined(filterLabels);
-
-  const customized = getFilterFlyoutCustomized(
-    dateOptionsList,
-    filterListValues,
-    predefined.length + 1
-  );
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
   const filterDefaultDateRange = useOrderTrackingStore(
@@ -303,12 +296,27 @@ function OrdersTrackingGrid(props) {
   const hasAccess =
     hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
+  const fetchFiltersRefinements = async () => {
+    const results = await usGet(`${componentProp.ordersRefinementsEndpoint}`);
+    return results.data;
+  };
+
+  useEffect(async () => {
+    const refinements = await fetchFiltersRefinements();
+    const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
+    const customized = getFilterFlyoutCustomized(
+      dateOptionsList,
+      filterListValues,
+      predefined.length + 1
+    );
+    setFilterList([...predefined, ...customized]);
+    setCustomFiltersChecked(customized);
+  }, []);
+
   useEffect(() => {
     if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
-    setFilterList([...predefined, ...customized]);
-    setCustomFiltersChecked(customized);
     getSessionInfo().then((data) => {
       setUserData(data[1]);
     });

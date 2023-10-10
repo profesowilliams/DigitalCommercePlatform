@@ -2,783 +2,655 @@
 
 "use strict";
 use(["../common/utils.js"], function (utils) {
-  let jsonObject = {};
-  let resourceResolver = resource.getResourceResolver();
-  let optionData = {};
-  let productGrid = {};
-  let icons = {};
-  let noResultsValues = {};
-  let dNotesFlyout = {};
-  let reportLabels = {};
-  let orderLineDetailsShippedColumnLabels = {};
-  let orderLineDetailsNotShippedColumnLabels = {};
-  let orderModifyLabels = {};
-  let invoicesFlyout = {};
-  let exportFlyout = {};
-  let orderLineDetails = {};
-  let noAccessProps = {};
-  let analyticsCategories = {};
-  let paginationLabels = {};
-  let searchLabels = {};
+  const jsonObject = {};
+  const resourceResolver = resource.getResourceResolver();
+  const optionData = {};
+  const productGrid = {};
+  const icons = {};
+  const noResultsValues = {};
+  const dNotesFlyout = {};
+  const reportLabels = {};
+  const orderLineDetailsShippedColumnLabels = {};
+  const orderLineDetailsNotShippedColumnLabels = {};
+  const orderModifyLabels = {};
+  const invoicesFlyout = {};
+  const exportFlyout = {};
+  const orderLineDetails = {};
+  const noAccessProps = {};
+  const analyticsCategories = {};
+  const paginationLabels = {};
+  const searchLabels = {};
+  const filterLabels = {};
 
-  let filterLabels = {};
+  if (properties) {
+    const labelsList = [
+      "detailUrl",
+      "displayCurrencyName",
+      "multiple",
+      "menuCopy",
+      "menuCopyWithHeaders",
+      "menuExport",
+      "menuCsvExport",
+      "menuExcelExport",
+      "menuOpenLink",
+      "menuCopyLink",
+      "ofTextLabel",
+    ];
 
-  if (properties && properties["detailUrl"]) {
-    jsonObject["detailUrl"] = properties["detailUrl"];
-  }
-  if (properties && properties["displayCurrencyName"]) {
-    jsonObject["displayCurrencyName"] = properties["displayCurrencyName"];
-  }
+    labelsList.map((property) => {
+      if (properties[property]) {
+        jsonObject[property] = properties[property];
+      }
+    });
 
-  //Column definition
+    //Column definition
+    let columnListValues = utils.getDataFromMultifield(
+      resourceResolver,
+      "columnList",
+      function (childResource) {
+        let itemData = {};
 
-  let columnListValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "columnList",
-    function (childResource) {
-      let itemData = {};
+        itemData.columnLabel = childResource.properties["columnLabel"];
+        itemData.columnKey = childResource.properties["columnKey"];
+        itemData.sortable = childResource.properties["sortable"];
+        itemData.type = childResource.properties["columnType"];
 
-      itemData.columnLabel = childResource.properties["columnLabel"];
-      itemData.columnKey = childResource.properties["columnKey"];
-      itemData.sortable = childResource.properties["sortable"];
-      itemData.type = childResource.properties["columnType"];
+        return itemData;
+      }
+    );
 
-      return itemData;
+    if (columnListValues != null) {
+      jsonObject["columnList"] = columnListValues;
     }
-  );
 
-  if (columnListValues != null) {
-    jsonObject["columnList"] = columnListValues;
-  }
+    //Export flyout options
+    let exportOptionsList = utils.getDataFromMultifield(
+      resourceResolver,
+      "exportOptionsList",
+      function (childResource) {
+        let itemData = {};
+        itemData.label = childResource.properties["label"];
+        itemData.key = childResource.properties["key"];
+        return itemData;
+      }
+    );
 
-  //Multiple translation
-
-  if (properties && properties["multiple"]) {
-    jsonObject["multiple"] = properties["multiple"];
-  }
-
-  //Export flyout options
-  let exportOptionsList = utils.getDataFromMultifield(
-    resourceResolver,
-    "exportOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.label = childResource.properties["label"];
-      itemData.key = childResource.properties["key"];
-      return itemData;
+    if (exportOptionsList != null) {
+      jsonObject["exportOptionsList"] = exportOptionsList;
     }
-  );
 
-  if (exportOptionsList != null) {
-    jsonObject["exportOptionsList"] = exportOptionsList;
-  }
+    let exportSecondaryOptionsList = utils.getDataFromMultifield(
+      resourceResolver,
+      "exportSecondaryOptionsList",
+      function (childResource) {
+        let itemData = {};
+        itemData.label = childResource.properties["label"];
+        itemData.key = childResource.properties["key"];
+        return itemData;
+      }
+    );
 
-  let exportSecondaryOptionsList = utils.getDataFromMultifield(
-    resourceResolver,
-    "exportSecondaryOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.label = childResource.properties["label"];
-      itemData.key = childResource.properties["key"];
-      return itemData;
+    if (exportSecondaryOptionsList != null) {
+      jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
     }
-  );
 
-  if (exportSecondaryOptionsList != null) {
-    jsonObject["exportSecondaryOptionsList"] = exportSecondaryOptionsList;
-  }
+    const exportFlyoutLabels = [
+      { key: "title", name: "exportFlyoutTitle" },
+      { key: "description", name: "exportFlyoutDescription" },
+      { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
+      { key: "button", name: "exportFlyoutButton" },
+      { key: "exportSuccessMessage", name: "exportSuccessMessage" },
+    ];
 
-  const exportFlyoutLabels = [
-    { key: "title", name: "exportFlyoutTitle" },
-    { key: "description", name: "exportFlyoutDescription" },
-    { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
-    { key: "button", name: "exportFlyoutButton" },
-    { key: "exportSuccessMessage", name: "exportSuccessMessage" },
-  ];
-
-  properties &&
     exportFlyoutLabels.map((label) => {
       exportFlyout[label.key] = properties[label.name];
     });
 
-  if (exportFlyout != null) {
-    jsonObject["exportFlyout"] = exportFlyout;
-  }
+    if (exportFlyout != null) {
+      jsonObject["exportFlyout"] = exportFlyout;
+    }
 
-  // Order Details Tab
-  const orderLineDetailsLabels = [
-    { key: "shippedLabel", name: "shippedLabel" },
-    { key: "notShippedLabel", name: "notShippedLabel" },
-    { key: "itemsLabel", name: "itemsLabel" },
-    { key: "trackLabel", name: "trackLabel" },
-    { key: "modifyEligibleItemsLabel", name: "modifyEligibleItemsLabel" },
-  ];
+    // Order Details Tab
+    const orderLineDetailsLabels = [
+      "shippedLabel",
+      "notShippedLabel",
+      "itemsLabel",
+      "trackLabel",
+      "modifyEligibleItemsLabel",
+    ];
 
-  properties &&
     orderLineDetailsLabels.map((label) => {
-      orderLineDetails[label.key] = properties[label.name];
+      orderLineDetails[label] = properties[label];
     });
 
-  if (orderLineDetails != null) {
-    jsonObject["orderLineDetails"] = orderLineDetails;
-  }
+    if (orderLineDetails != null) {
+      jsonObject["orderLineDetails"] = orderLineDetails;
+    }
 
-  // Shipped Grid
-  const orderLineDetailsShippedLabels = [
-    { key: "dropdownArrow", name: "dropdownArrow" },
-    { key: "shipDate", name: "shipDate" },
-    { key: "dnote", name: "dnote" },
-    { key: "invoice", name: "invoice" },
-    { key: "value", name: "value" },
-    { key: "qty", name: "qty" },
-    { key: "track", name: "track" },
-  ];
-  properties &&
+    // Shipped Grid
+    const orderLineDetailsShippedLabels = [
+      "dropdownArrow",
+      "shipDate",
+      "dnote",
+      "invoice",
+      "value",
+      "qty",
+      "track",
+    ];
+
     orderLineDetailsShippedLabels.map((label) => {
-      orderLineDetailsShippedColumnLabels[label.key] = properties[label.name];
+      orderLineDetailsShippedColumnLabels[label] = properties[label];
     });
-  if (orderLineDetailsShippedColumnLabels != null) {
-    jsonObject["orderLineDetailsShippedColumnLabels"] =
-      orderLineDetailsShippedColumnLabels;
-  }
-  // Not Shipped Grid
-  const orderLineDetailsNotShippedLabels = [
-    { key: "lineNumber", name: "lineNumber" },
-    { key: "item", name: "item" },
-    { key: "pnsku", name: "pnsku" },
-    { key: "nqty", name: "nqty" },
-    { key: "deliveryEstimate", name: "deliveryEstimate" },
-    { key: "action", name: "action" },
-  ];
-  properties &&
+    if (orderLineDetailsShippedColumnLabels != null) {
+      jsonObject["orderLineDetailsShippedColumnLabels"] =
+        orderLineDetailsShippedColumnLabels;
+    }
+    // Not Shipped Grid
+    const orderLineDetailsNotShippedLabels = [
+      "lineNumber",
+      "item",
+      "pnsku",
+      "nqty",
+      "deliveryEstimate",
+      "action",
+    ];
+
     orderLineDetailsNotShippedLabels.map((label) => {
-      orderLineDetailsNotShippedColumnLabels[label.key] =
-        properties[label.name];
+      orderLineDetailsNotShippedColumnLabels[label] = properties[label];
     });
-  if (orderLineDetailsNotShippedColumnLabels != null) {
-    jsonObject["orderLineDetailsNotShippedColumnLabels"] =
-      orderLineDetailsNotShippedColumnLabels;
-  }
+    if (orderLineDetailsNotShippedColumnLabels != null) {
+      jsonObject["orderLineDetailsNotShippedColumnLabels"] =
+        orderLineDetailsNotShippedColumnLabels;
+    }
 
-  // OrderModifyLabels
-  const orderModifyLabelsList = [
-    "addNewItem",
-    "editQuantities",
-    "lineTotal",
-    "modifyOrder",
-    "cancel",
-    "update",
-    "manufacturersPartNumber",
-    "quantity",
-    "add",
-    "lineMfgPartNo",
-    "additionalQuantityAdded",
-    "selectReasonLabel",
-    "rejectionPrice",
-    "rejectionAvailability",
-    "rejectionOther",
-    "rejectionRequiredInfo",
-  ];
+    // OrderModifyLabels
+    const orderModifyLabelsList = [
+      "addNewItem",
+      "editQuantities",
+      "lineTotal",
+      "modifyOrder",
+      "cancel",
+      "update",
+      "manufacturersPartNumber",
+      "quantity",
+      "add",
+      "lineMfgPartNo",
+      "additionalQuantityAdded",
+      "selectReasonLabel",
+      "rejectionPrice",
+      "rejectionAvailability",
+      "rejectionOther",
+      "rejectionRequiredInfo",
+    ];
 
-  properties &&
     orderModifyLabelsList.map((property) => {
       orderModifyLabels[property] = properties[property];
     });
 
-  if (orderModifyLabels != null) {
-    jsonObject["orderModifyLabels"] = orderModifyLabels;
-  }
-
-  jsonObject["orderModifyEndpoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.orderModifyEndpoint ||
-    "";
-
-  jsonObject["orderModifyChangeEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.orderModifyChangeEndpoint || "";
-
-  //Invoices flyout options
-  let invoicesColumnList = utils.getDataFromMultifield(
-    resourceResolver,
-    "invoicesColumnList",
-    function (childResource) {
-      let itemData = {};
-
-      itemData.columnLabel = childResource.properties["columnLabel"];
-      itemData.columnKey = childResource.properties["columnKey"];
-      return itemData;
+    if (orderModifyLabels != null) {
+      jsonObject["orderModifyLabels"] = orderModifyLabels;
     }
-  );
 
-  if (invoicesColumnList != null) {
-    jsonObject["invoicesColumnList"] = invoicesColumnList;
-  }
+    jsonObject["uiServiceEndPoint"] =
+      this.serviceData.uiServiceDomain + this.serviceData.orderGridEndpoint ||
+      "";
 
-  const invoicesLabelsList = [
-    { key: "title", name: "invoicesFlyoutTitle" },
-    { key: "description", name: "invoicesFlyoutDescription" },
-    { key: "orderNo", name: "invoicesFlyoutOrderNo" },
-    { key: "poNo", name: "invoicesFlyoutPoNo" },
-    { key: "button", name: "invoicesFlyoutButton" },
-    { key: "clearAllButton", name: "invoicesFlyoutClearAllButton" },
-  ];
+    const endpoints = [
+      "orderModifyEndpoint",
+      "orderModifyChangeEndpoint",
+      "uiServiceEndPointForDetails",
+      "ordersCountEndpoint",
+      "ordersReportEndpoint",
+      "ordersReportCountEndpoint",
+      "ordersRefinementsEndpoint",
+      "ordersDownloadDocumentsEndpoint",
+      "exportAllOrderLinesEndpoint",
+      "exportLinesWithSerialNumbersOnlyEndpoint",
+      "downloadAllInvoicesEndpoint",
+      "getDeliveryNotesEndPoint",
+      "getInvoicesEndPoint",
+    ];
 
-  properties &&
+    endpoints.map((endpoint) => {
+      jsonObject[endpoint] =
+        this.serviceData.uiServiceDomain + this.serviceData[endpoint] || "";
+    });
+
+    //Invoices flyout options
+    let invoicesColumnList = utils.getDataFromMultifield(
+      resourceResolver,
+      "invoicesColumnList",
+      function (childResource) {
+        let itemData = {};
+
+        itemData.columnLabel = childResource.properties["columnLabel"];
+        itemData.columnKey = childResource.properties["columnKey"];
+        return itemData;
+      }
+    );
+
+    if (invoicesColumnList != null) {
+      jsonObject["invoicesColumnList"] = invoicesColumnList;
+    }
+
+    const invoicesLabelsList = [
+      { key: "title", name: "invoicesFlyoutTitle" },
+      { key: "description", name: "invoicesFlyoutDescription" },
+      { key: "orderNo", name: "invoicesFlyoutOrderNo" },
+      { key: "poNo", name: "invoicesFlyoutPoNo" },
+      { key: "button", name: "invoicesFlyoutButton" },
+      { key: "clearAllButton", name: "invoicesFlyoutClearAllButton" },
+    ];
+
     invoicesLabelsList.map((label) => {
       invoicesFlyout[label.key] = properties[label.name];
     });
 
-  if (invoicesFlyout != null) {
-    jsonObject["invoicesFlyout"] = invoicesFlyout;
-  }
-
-  //D-notes flyout options
-  let dNoteColumnList = utils.getDataFromMultifield(
-    resourceResolver,
-    "dNoteColumnList",
-    function (childResource) {
-      let itemData = {};
-
-      itemData.columnLabel = childResource.properties["columnLabel"];
-      itemData.columnKey = childResource.properties["columnKey"];
-      return itemData;
+    if (invoicesFlyout != null) {
+      jsonObject["invoicesFlyout"] = invoicesFlyout;
     }
-  );
 
-  if (dNoteColumnList != null) {
-    jsonObject["dNoteColumnList"] = dNoteColumnList;
-  }
+    //D-notes flyout options
+    let dNoteColumnList = utils.getDataFromMultifield(
+      resourceResolver,
+      "dNoteColumnList",
+      function (childResource) {
+        let itemData = {};
 
-  const dnotesLabelsList = [
-    { key: "title", name: "dNotesFlyoutTitle" },
-    { key: "description", name: "dNotesFlyoutDescription" },
-    { key: "orderNo", name: "dNotesFlyoutOrderNo" },
-    { key: "poNo", name: "dNotesFlyoutPoNo" },
-    { key: "button", name: "dNotesFlyoutButton" },
-    { key: "clearAllButton", name: "dNotesFlyoutClearAllButton" },
-  ];
+        itemData.columnLabel = childResource.properties["columnLabel"];
+        itemData.columnKey = childResource.properties["columnKey"];
+        return itemData;
+      }
+    );
 
-  properties &&
+    if (dNoteColumnList != null) {
+      jsonObject["dNoteColumnList"] = dNoteColumnList;
+    }
+
+    const dnotesLabelsList = [
+      { key: "title", name: "dNotesFlyoutTitle" },
+      { key: "description", name: "dNotesFlyoutDescription" },
+      { key: "orderNo", name: "dNotesFlyoutOrderNo" },
+      { key: "poNo", name: "dNotesFlyoutPoNo" },
+      { key: "button", name: "dNotesFlyoutButton" },
+      { key: "clearAllButton", name: "dNotesFlyoutClearAllButton" },
+    ];
+
     dnotesLabelsList.map((label) => {
       dNotesFlyout[label.key] = properties[label.name];
     });
 
-  if (dNotesFlyout != null) {
-    jsonObject["dNotesFlyout"] = dNotesFlyout;
-  }
+    if (dNotesFlyout != null) {
+      jsonObject["dNotesFlyout"] = dNotesFlyout;
+    }
 
-  // Reports
-  const reportLabelsList = [
-    { key: "openOrdersLabel", name: "openOrdersLabel" },
-    { key: "newBacklogLabel", name: "newBacklogLabel" },
-    { key: "eolReportLabel", name: "eolReportLabel" },
-    {
-      key: "todaysShipmentsDeliveriesLabel",
-      name: "todaysShipmentsDeliveriesLabel",
-    },
-    { key: "last7DaysOrdersLabel", name: "last7DaysOrdersLabel" },
-    { key: "last30DaysOrdersLabel", name: "last30DaysOrdersLabel" },
-    {
-      key: "last7DaysShipmentsLabel",
-      name: "last7DaysShipmentsLabel",
-    },
-    {
-      key: "last30DaysShipmentsLabel",
-      name: "last30DaysShipmentsLabel",
-    },
-  ];
-  properties &&
+    // Reports
+    const reportLabelsList = [
+      "openOrdersLabel",
+      "newBacklogLabel",
+      "eolReportLabel",
+      "todaysShipmentsDeliveriesLabel",
+      "last7DaysOrdersLabel",
+      "last30DaysOrdersLabel",
+      "last7DaysShipmentsLabel",
+      "last30DaysShipmentsLabel",
+    ];
+
     reportLabelsList.map((label) => {
-      reportLabels[label.key] = properties[label.name];
+      reportLabels[label] = properties[label];
     });
 
-  if (reportLabels != null) {
-    jsonObject["reportLabels"] = reportLabels;
-  }
+    if (reportLabels != null) {
+      jsonObject["reportLabels"] = reportLabels;
+    }
 
-  if (properties && properties["reportPillLabel"]) {
-    jsonObject["reportPillLabel"] = properties["reportPillLabel"];
-  }
+    if (properties["reportPillLabel"]) {
+      jsonObject["reportPillLabel"] = properties["reportPillLabel"];
+    }
 
-  // No Access Screen
-  if (properties && properties["noAccessTitle"]) {
-    noAccessProps.noAccessTitle = properties["noAccessTitle"];
-  }
-  if (properties && properties["noAccessMessage"]) {
-    noAccessProps.noAccessMessage = properties["noAccessMessage"];
-  }
-  if (properties && properties["noAccessBack"]) {
-    noAccessProps.noAccessBack = properties["noAccessBack"];
-  }
-  if (noAccessProps != null) {
-    jsonObject["noAccessProps"] = noAccessProps;
-  }
+    // No Access Screen
+    if (properties["noAccessTitle"]) {
+      noAccessProps.noAccessTitle = properties["noAccessTitle"];
+    }
+    if (properties["noAccessMessage"]) {
+      noAccessProps.noAccessMessage = properties["noAccessMessage"];
+    }
+    if (properties["noAccessBack"]) {
+      noAccessProps.noAccessBack = properties["noAccessBack"];
+    }
+    if (noAccessProps != null) {
+      jsonObject["noAccessProps"] = noAccessProps;
+    }
 
-  // Analytics Categories
-  if (properties && properties["sortAnalyticsCategories"]) {
-    analyticsCategories.sort = properties["sortAnalyticsCategories"];
-  }
-  if (properties && properties["searchAnalyticsCategories"]) {
-    analyticsCategories.search = properties["searchAnalyticsCategories"];
-  }
-  if (properties && properties["filterAnalyticsCategories"]) {
-    analyticsCategories.filter = properties["filterAnalyticsCategories"];
-  }
-  if (properties && properties["exportAnalyticsCategories"]) {
-    analyticsCategories.export = properties["exportAnalyticsCategories"];
-  }
-  if (properties && properties["reportAnalyticsCategories"]) {
-    analyticsCategories.report = properties["reportAnalyticsCategories"];
-  }
-  if (properties && properties["paginationAnalyticsCategories"]) {
-    analyticsCategories.pagination =
-      properties["paginationAnalyticsCategories"];
-  }
-  if (analyticsCategories != null) {
-    jsonObject["analyticsCategories"] = analyticsCategories;
-  }
+    // Analytics Categories
+    if (properties["sortAnalyticsCategories"]) {
+      analyticsCategories.sort = properties["sortAnalyticsCategories"];
+    }
+    if (properties["searchAnalyticsCategories"]) {
+      analyticsCategories.search = properties["searchAnalyticsCategories"];
+    }
+    if (properties["filterAnalyticsCategories"]) {
+      analyticsCategories.filter = properties["filterAnalyticsCategories"];
+    }
+    if (properties["exportAnalyticsCategories"]) {
+      analyticsCategories.export = properties["exportAnalyticsCategories"];
+    }
+    if (properties["reportAnalyticsCategories"]) {
+      analyticsCategories.report = properties["reportAnalyticsCategories"];
+    }
+    if (properties["paginationAnalyticsCategories"]) {
+      analyticsCategories.pagination =
+        properties["paginationAnalyticsCategories"];
+    }
+    if (analyticsCategories != null) {
+      jsonObject["analyticsCategories"] = analyticsCategories;
+    }
 
-  if (properties && properties["reportPillLabel"]) {
-    jsonObject["reportPillLabel"] = properties["reportPillLabel"];
-  }
+    if (properties["reportPillLabel"]) {
+      jsonObject["reportPillLabel"] = properties["reportPillLabel"];
+    }
 
-  //Pagination Labels
+    //Pagination Labels
 
-  if (properties && properties["ofLabel"]) {
-    paginationLabels.of = properties["ofLabel"];
-  }
-  if (properties && properties["resultsLabel"]) {
-    paginationLabels.results = properties["resultsLabel"];
-  }
-  if (paginationLabels != null) {
-    jsonObject["paginationLabels"] = paginationLabels;
-  }
+    if (properties["ofLabel"]) {
+      paginationLabels.of = properties["ofLabel"];
+    }
+    if (properties["resultsLabel"]) {
+      paginationLabels.results = properties["resultsLabel"];
+    }
+    if (paginationLabels != null) {
+      jsonObject["paginationLabels"] = paginationLabels;
+    }
 
-  //Search Options
-  const searchLabelsList = [
-    { key: "orderNo", name: "searchOrderNo" },
-    { key: "dnoteNo", name: "searchDnoteNo" },
-    { key: "invoiceNo", name: "searchInvoiceNo" },
-    { key: "poNo", name: "searchPoNo" },
-    { key: "serialNo", name: "searchSerialNo" },
-  ];
-  properties &&
+    //Search Options
+    const searchLabelsList = [
+      { key: "orderNo", name: "searchOrderNo" },
+      { key: "dnoteNo", name: "searchDnoteNo" },
+      { key: "invoiceNo", name: "searchInvoiceNo" },
+      { key: "poNo", name: "searchPoNo" },
+      { key: "serialNo", name: "searchSerialNo" },
+    ];
+
     searchLabelsList.map((label) => {
       searchLabels[label.key] = properties[label.name];
     });
 
-  if (searchLabels != null) {
-    jsonObject["searchLabels"] = searchLabels;
-  }
-
-  if (properties && properties["searchTitleLabel"]) {
-    jsonObject["searchTitleLabel"] = properties["searchTitleLabel"];
-  }
-  if (properties && properties["searchEnterLabel"]) {
-    jsonObject["searchEnterLabel"] = properties["searchEnterLabel"];
-  }
-  if (properties && properties["searchSorryNoRowsToDisplayLabel"]) {
-    jsonObject["searchSorryNoRowsToDisplayLabel"] =
-      properties["searchSorryNoRowsToDisplayLabel"];
-  }
-  if (properties && properties["searchByLabel"]) {
-    jsonObject["searchByLabel"] = properties["searchByLabel"];
-  }
-
-  let searchOptionsValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "searchOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.searchLabel = childResource.properties["searchLabel"];
-      itemData.searchKey = childResource.properties["searchKey"];
-      itemData.showIfIsHouseAccount =
-        childResource.properties["showIfIsHouseAccount"];
-      return itemData;
+    if (searchLabels != null) {
+      jsonObject["searchLabels"] = searchLabels;
     }
-  );
 
-  if (searchOptionsValues != null) {
-    jsonObject["searchOptionsList"] = searchOptionsValues;
-  }
-
-  jsonObject["uiServiceEndPoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.orderGridEndpoint || "";
-
-  jsonObject["getInvoicesEndPoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.getInvoicesEndPoint ||
-    "";
-
-  jsonObject["getDeliveryNotesEndPoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.getDeliveryNotesEndPoint || "";
-
-  jsonObject["uiServiceEndPointForDetails"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.uiServiceEndPointForDetails || "";
-
-  jsonObject["ordersCountEndpoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.ordersCountEndpoint ||
-    "";
-
-  jsonObject["ordersReportEndpoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.ordersReportEndpoint ||
-    "";
-
-  jsonObject["ordersReportCountEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.ordersReportCountEndpoint || "";
-
-  jsonObject["ordersDownloadDocumentsEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.ordersDownloadDocumentsEndpoint || "";
-
-  jsonObject["exportAllOrderLinesEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.exportAllOrderLinesEndpoint || "";
-
-  jsonObject["exportLinesWithSerialNumbersOnlyEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.exportLinesWithSerialNumbersOnlyEndpoint || "";
-
-  if (this.uiServiceDomain && this.downloadAllInvoicesEndpoint) {
-    jsonObject["downloadAllInvoicesEndpoint"] =
-      this.uiServiceDomain + this.downloadAllInvoicesEndpoint;
-  }
-
-  if (this.agGridLicenseKey) {
-    jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
-  }
-  if (properties && properties["itemsPerPage"]) {
-    jsonObject["itemsPerPage"] = properties["itemsPerPage"];
-  }
-  if (properties && properties["shopPath"] && this.shopDomainPage) {
-    jsonObject["shopURL"] = this.shopDomainPage + properties["shopPath"];
-  }
-  if (properties && properties["paginationStyle"]) {
-    jsonObject["paginationStyle"] = properties["paginationStyle"];
-  }
-  if (properties && properties["defaultSortingColumnKey"]) {
-    optionData.defaultSortingColumnKey = properties["defaultSortingColumnKey"];
-  }
-  if (properties && properties["defaultSortingDirection"]) {
-    optionData.defaultSortingDirection = properties["defaultSortingDirection"];
-  }
-
-  if (optionData != null) {
-    jsonObject["options"] = optionData;
-  }
-
-  if (properties && properties["menuCopy"]) {
-    jsonObject["menuCopy"] = properties["menuCopy"];
-  }
-
-  if (properties && properties["menuCopyWithHeaders"]) {
-    jsonObject["menuCopyWithHeaders"] = properties["menuCopyWithHeaders"];
-  }
-
-  if (properties && properties["menuExport"]) {
-    jsonObject["menuExport"] = properties["menuExport"];
-  }
-
-  if (properties && properties["menuCsvExport"]) {
-    jsonObject["menuCsvExport"] = properties["menuCsvExport"];
-  }
-
-  if (properties && properties["menuExcelExport"]) {
-    jsonObject["menuExcelExport"] = properties["menuExcelExport"];
-  }
-
-  if (properties && properties["menuOpenLink"]) {
-    jsonObject["menuOpenLink"] = properties["menuOpenLink"];
-  }
-
-  if (properties && properties["menuCopyLink"]) {
-    jsonObject["menuCopyLink"] = properties["menuCopyLink"];
-  }
-
-  if (properties && properties["ofTextLabel"]) {
-    jsonObject["ofTextLabel"] = properties["ofTextLabel"];
-  }
-
-  //Filter Options
-
-  let dateOptionValues = utils.getDataFromMultifield(
-    resourceResolver,
-    "dateOptionsList",
-    function (childResource) {
-      let itemData = {};
-      itemData.label = childResource.properties["label"];
-      itemData.field = childResource.properties["field"];
-      return itemData;
+    if (properties["searchTitleLabel"]) {
+      jsonObject["searchTitleLabel"] = properties["searchTitleLabel"];
     }
-  );
+    if (properties["searchEnterLabel"]) {
+      jsonObject["searchEnterLabel"] = properties["searchEnterLabel"];
+    }
+    if (properties["searchSorryNoRowsToDisplayLabel"]) {
+      jsonObject["searchSorryNoRowsToDisplayLabel"] =
+        properties["searchSorryNoRowsToDisplayLabel"];
+    }
+    if (properties["searchByLabel"]) {
+      jsonObject["searchByLabel"] = properties["searchByLabel"];
+    }
 
-  if (dateOptionValues != null) {
-    jsonObject["dateOptionValues"] = dateOptionValues;
-  }
-
-  if (properties && properties["defaultSearchDateRange"]) {
-    jsonObject["defaultSearchDateRange"] = properties["defaultSearchDateRange"];
-  }
-
-  let node = resourceResolver.getResource(
-    currentNode.getPath() + "/filterList"
-  );
-  let filterListValues = [];
-  if (node !== null) {
-    let childrenList = node.getChildren();
-    for (let [key, res] in Iterator(childrenList)) {
-      let itemData = {};
-      itemData.accordionLabel = res.properties["accordionLabel"];
-      itemData.filterField = res.properties["filterField"];
-      itemData.filterOptionsValues = [];
-      let childNode = resourceResolver.getResource(
-        res.getPath() + "/filterOptionsValues"
-      );
-
-      if (childNode != null) {
-        let childNodeList = childNode.getChildren();
-        for (let [childkey, childRes] in Iterator(childNodeList)) {
-          itemData.filterOptionsValues.push({
-            filterOptionLabel: childRes.properties["filterOptionLabel"],
-            filterOptionKey: childRes.properties["filterOptionKey"],
-          });
-        }
+    let searchOptionsValues = utils.getDataFromMultifield(
+      resourceResolver,
+      "searchOptionsList",
+      function (childResource) {
+        let itemData = {};
+        itemData.searchLabel = childResource.properties["searchLabel"];
+        itemData.searchKey = childResource.properties["searchKey"];
+        itemData.showIfIsHouseAccount =
+          childResource.properties["showIfIsHouseAccount"];
+        return itemData;
       }
-      filterListValues.push(itemData);
+    );
+
+    if (searchOptionsValues != null) {
+      jsonObject["searchOptionsList"] = searchOptionsValues;
     }
-  }
 
-  if (filterListValues != null) {
-    jsonObject["filterListValues"] = filterListValues;
-  }
-
-  if (properties && properties["dateRange"]) {
-    filterLabels.dateRange = properties["dateRange"];
-  }
-
-  if (properties && properties["endLabel"]) {
-    filterLabels.endLabel = properties["endLabel"];
-  }
-
-  if (properties && properties["startLabel"]) {
-    filterLabels.startLabel = properties["startLabel"];
-  }
-
-  if (properties && properties["addDateLabel"]) {
-    filterLabels.addDateLabel = properties["addDateLabel"];
-  }
-  if (properties && properties["filterTitle"]) {
-    filterLabels.filterTitle = properties["filterTitle"];
-  }
-  if (properties && properties["filterType"]) {
-    filterLabels.filterType = properties["filterType"];
-  }
-
-  if (properties && properties["showResultLabel"]) {
-    filterLabels.showResultLabel = properties["showResultLabel"];
-  }
-  if (properties && properties["orderStatus"]) {
-    filterLabels.orderStatus = properties["orderStatus"];
-  }
-  if (properties && properties["orderType"]) {
-    filterLabels.orderType = properties["orderType"];
-  }
-  if (properties && properties["open"]) {
-    filterLabels.open = properties["open"];
-  }
-  if (properties && properties["investigation"]) {
-    filterLabels.investigation = properties["investigation"];
-  }
-  if (properties && properties["shipping"]) {
-    filterLabels.shipping = properties["shipping"];
-  }
-  if (properties && properties["reject"]) {
-    filterLabels.reject = properties["reject"];
-  }
-  if (properties && properties["complete"]) {
-    filterLabels.complete = properties["complete"];
-  }
-  if (properties && properties["cancelled"]) {
-    filterLabels.cancelled = properties["cancelled"];
-  }
-  if (properties && properties["onHold"]) {
-    filterLabels.onHold = properties["onHold"];
-  }
-  if (properties && properties["shipped"]) {
-    filterLabels.shipped = properties["shipped"];
-  }
-  if (properties && properties["inProcess"]) {
-    filterLabels.inProcess = properties["inProcess"];
-  }
-  if (properties && properties["inTouch"]) {
-    filterLabels.inTouch = properties["inTouch"];
-  }
-  if (properties && properties["ediOrXml"]) {
-    filterLabels.ediOrXml = properties["ediOrXml"];
-  }
-  if (properties && properties["consignmentFillUp"]) {
-    filterLabels.consignmentFillUp = properties["consignmentFillUp"];
-  }
-  if (properties && properties["license"]) {
-    filterLabels.license = properties["license"];
-  }
-  if (properties && properties["tdmrsProject"]) {
-    filterLabels.tdmrsProject = properties["tdmrsProject"];
-  }
-  if (properties && properties["manual"]) {
-    filterLabels.manual = properties["manual"];
-  }
-  if (properties && properties["tdStaffPurchase"]) {
-    filterLabels.tdStaffPurchase = properties["tdStaffPurchase"];
-  }
-  if (properties && properties["projectOrder"]) {
-    filterLabels.projectOrder = properties["projectOrder"];
-  }
-  if (properties && properties["quotationLabel"]) {
-    filterLabels.quotationLabel = properties["quotationLabel"];
-  }
-  if (properties && properties["thirdParty"]) {
-    filterLabels.thirdParty = properties["thirdParty"];
-  }
-  if (properties && properties["licensing"]) {
-    filterLabels.licensing = properties["licensing"];
-  }
-  if (properties && properties["stockingOrder"]) {
-    filterLabels.stockingOrder = properties["stockingOrder"];
-  }
-  if (properties && properties["streamOne"]) {
-    filterLabels.streamOne = properties["streamOne"];
-  }
-  if (properties && properties["orderDateLabel"]) {
-    filterLabels.orderDateLabel = properties["orderDateLabel"];
-  }
-  if (properties && properties["shipDateLabel"]) {
-    filterLabels.shipDateLabel = properties["shipDateLabel"];
-  }
-  if (properties && properties["invoiceDateLabel"]) {
-    filterLabels.invoiceDateLabel = properties["invoiceDateLabel"];
-  }
-
-  if (filterLabels != null) {
-    jsonObject["filterLabels"] = filterLabels;
-  }
-
-  if (properties && properties["quoteIdLabel"]) {
-    productGrid["quoteIdLabel"] = properties["quoteIdLabel"];
-  }
-
-  if (properties && properties["refNoLabel"]) {
-    productGrid["refNoLabel"] = properties["refNoLabel"];
-  }
-
-  if (properties && properties["expiryDateLabel"]) {
-    productGrid["expiryDateLabel"] = properties["expiryDateLabel"];
-  }
-
-  if (properties && properties["downloadPDFLabel"]) {
-    productGrid["downloadPDFLabel"] = properties["downloadPDFLabel"];
-  }
-
-  if (properties && properties["downloadXLSLabel"]) {
-    productGrid["downloadXLSLabel"] = properties["downloadXLSLabel"];
-  }
-
-  if (properties && properties["showDownloadPDFButton"]) {
-    productGrid["showDownloadPDFButton"] = properties["showDownloadPDFButton"];
-  }
-
-  if (properties && properties["showDownloadXLSButton"]) {
-    productGrid["showDownloadXLSButton"] = properties["showDownloadXLSButton"];
-  }
-
-  if (properties && properties["showDownloadXLSButton"]) {
-    productGrid["showDownloadXLSButton"] = properties["showDownloadXLSButton"];
-  }
-
-  if (properties && properties["showSeeDetailsButton"]) {
-    productGrid["showSeeDetailsButton"] = properties["showSeeDetailsButton"];
-  }
-
-  if (properties && properties["seeDetailsLabel"]) {
-    productGrid["seeDetailsLabel"] = properties["seeDetailsLabel"];
-  }
-
-  if (productGrid != null) {
-    jsonObject["productGrid"] = productGrid;
-  }
-
-  const overdueProperties = {
-    values: ["overdueIcon", "overdueIconColor"],
-    propertyName: "overdueDaysRange",
-  };
-  const thirtyDaysProperties = {
-    values: ["afterZeroIcon", "afterZeroIconColor"],
-    propertyName: "afterZeroDaysRange",
-  };
-  const sixtyOneDaysProperties = {
-    values: ["afterThirtyIcon", "afterThirtyIconColor"],
-    propertyName: "afterThirtyDaysRange",
-  };
-  const sixtyOnePlusProperties = {
-    values: ["sixtyPlusIcon", "sixtyPlusIconColor"],
-    propertyName: "sixtyPlusDaysRange",
-  };
-
-  function populateOutterProperty(obj, prop) {
-    const populated = utils.fillFieldsDialogProperties(prop.values);
-    const daysPropertyName = properties[prop.propertyName];
-    if (populated && daysPropertyName) {
-      obj[daysPropertyName] = populated;
+    if (this.agGridLicenseKey) {
+      jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
-  }
+    if (properties["itemsPerPage"]) {
+      jsonObject["itemsPerPage"] = properties["itemsPerPage"];
+    }
+    if (properties["shopPath"] && this.shopDomainPage) {
+      jsonObject["shopURL"] = this.shopDomainPage + properties["shopPath"];
+    }
+    if (properties["paginationStyle"]) {
+      jsonObject["paginationStyle"] = properties["paginationStyle"];
+    }
+    if (properties["defaultSortingColumnKey"]) {
+      optionData.defaultSortingColumnKey =
+        properties["defaultSortingColumnKey"];
+    }
+    if (properties["defaultSortingDirection"]) {
+      optionData.defaultSortingDirection =
+        properties["defaultSortingDirection"];
+    }
 
-  if (properties) {
-    populateOutterProperty(icons, overdueProperties);
-    populateOutterProperty(icons, thirtyDaysProperties);
-    populateOutterProperty(icons, sixtyOneDaysProperties);
-    populateOutterProperty(icons, sixtyOnePlusProperties);
-  }
+    if (optionData != null) {
+      jsonObject["options"] = optionData;
+    }
 
-  if (!!icons) {
-    jsonObject["icons"] = icons;
-  }
+    //Filter Options
 
-  if (properties && properties["hideCopyHeaderOption"]) {
-    jsonObject["hideCopyHeaderOption"] = properties["hideCopyHeaderOption"];
-  }
+    let dateOptionValues = utils.getDataFromMultifield(
+      resourceResolver,
+      "dateOptionsList",
+      function (childResource) {
+        let itemData = {};
+        itemData.label = childResource.properties["label"];
+        itemData.field = childResource.properties["field"];
+        return itemData;
+      }
+    );
 
-  if (properties && properties["hideExportOption"]) {
-    jsonObject["hideExportOption"] = properties["hideExportOption"];
-  }
+    if (dateOptionValues != null) {
+      jsonObject["dateOptionValues"] = dateOptionValues;
+    }
 
-  if (properties && properties["noResultsTitle"]) {
-    noResultsValues.noResultsTitle = properties["noResultsTitle"];
-  }
+    if (properties["defaultSearchDateRange"]) {
+      jsonObject["defaultSearchDateRange"] =
+        properties["defaultSearchDateRange"];
+    }
 
-  if (properties && properties["noResultsDescription"]) {
-    noResultsValues.noResultsDescription = properties["noResultsDescription"];
-  }
+    let node = resourceResolver.getResource(
+      currentNode.getPath() + "/filterList"
+    );
+    let filterListValues = [];
+    if (node !== null) {
+      let childrenList = node.getChildren();
+      for (let [key, res] in Iterator(childrenList)) {
+        let itemData = {};
+        itemData.accordionLabel = res.properties["accordionLabel"];
+        itemData.filterField = res.properties["filterField"];
+        itemData.filterOptionsValues = [];
+        let childNode = resourceResolver.getResource(
+          res.getPath() + "/filterOptionsValues"
+        );
 
-  if (properties && properties["noResultsImageFileReference"]) {
-    noResultsValues.noResultsImage = properties["noResultsImageFileReference"];
-  }
+        if (childNode != null) {
+          let childNodeList = childNode.getChildren();
+          for (let [childkey, childRes] in Iterator(childNodeList)) {
+            itemData.filterOptionsValues.push({
+              filterOptionLabel: childRes.properties["filterOptionLabel"],
+              filterOptionKey: childRes.properties["filterOptionKey"],
+            });
+          }
+        }
+        filterListValues.push(itemData);
+      }
+    }
 
-  if (properties && properties["noDataTitle"]) {
-    noResultsValues.noDataTitle = properties["noDataTitle"];
-  }
+    if (filterListValues != null) {
+      jsonObject["filterListValues"] = filterListValues;
+    }
 
-  if (properties && properties["noDataDescription"]) {
-    noResultsValues.noDataDescription = properties["noDataDescription"];
-  }
+    const filterLabelsKeys = [
+      "dateRange",
+      "endLabel",
+      "startLabel",
+      "addDateLabel",
+      "filterTitle",
+      "filterType",
+      "showResultLabel",
+      "orderStatus",
+      "orderType",
+      "open",
+      "investigation",
+      "shipping",
+      "reject",
+      "complete",
+      "cancelled",
+      "onHold",
+      "shipped",
+      "inProcess",
+      "inTouch",
+      "ediOrXml",
+      "consignmentFillUp",
+      "license",
+      "tdmrsProject",
+      "manual",
+      "tdStaffPurchase",
+      "projectOrder",
+      "quotationLabel",
+      "thirdParty",
+      "licensing",
+      "stockingOrder",
+      "streamOne",
+      "orderDateLabel",
+      "shipDateLabel",
+      "invoiceDateLabel",
+    ];
 
-  if (properties && properties["noDataImageFileReference"]) {
-    noResultsValues.noDataImage = properties["noDataImageFileReference"];
-  }
+    filterLabelsKeys.map((key) => (filterLabels[key] = properties[key]));
 
-  if (noResultsValues != null) {
-    jsonObject["searchResultsError"] = noResultsValues;
+    if (filterLabels != null) {
+      jsonObject["filterLabels"] = filterLabels;
+    }
+
+    if (properties["quoteIdLabel"]) {
+      productGrid["quoteIdLabel"] = properties["quoteIdLabel"];
+    }
+
+    if (properties["refNoLabel"]) {
+      productGrid["refNoLabel"] = properties["refNoLabel"];
+    }
+
+    if (properties["expiryDateLabel"]) {
+      productGrid["expiryDateLabel"] = properties["expiryDateLabel"];
+    }
+
+    if (properties["downloadPDFLabel"]) {
+      productGrid["downloadPDFLabel"] = properties["downloadPDFLabel"];
+    }
+
+    if (properties["downloadXLSLabel"]) {
+      productGrid["downloadXLSLabel"] = properties["downloadXLSLabel"];
+    }
+
+    if (properties["showDownloadPDFButton"]) {
+      productGrid["showDownloadPDFButton"] =
+        properties["showDownloadPDFButton"];
+    }
+
+    if (properties["showDownloadXLSButton"]) {
+      productGrid["showDownloadXLSButton"] =
+        properties["showDownloadXLSButton"];
+    }
+
+    if (properties["showDownloadXLSButton"]) {
+      productGrid["showDownloadXLSButton"] =
+        properties["showDownloadXLSButton"];
+    }
+
+    if (properties["showSeeDetailsButton"]) {
+      productGrid["showSeeDetailsButton"] = properties["showSeeDetailsButton"];
+    }
+
+    if (properties["seeDetailsLabel"]) {
+      productGrid["seeDetailsLabel"] = properties["seeDetailsLabel"];
+    }
+
+    if (productGrid != null) {
+      jsonObject["productGrid"] = productGrid;
+    }
+
+    const overdueProperties = {
+      values: ["overdueIcon", "overdueIconColor"],
+      propertyName: "overdueDaysRange",
+    };
+    const thirtyDaysProperties = {
+      values: ["afterZeroIcon", "afterZeroIconColor"],
+      propertyName: "afterZeroDaysRange",
+    };
+    const sixtyOneDaysProperties = {
+      values: ["afterThirtyIcon", "afterThirtyIconColor"],
+      propertyName: "afterThirtyDaysRange",
+    };
+    const sixtyOnePlusProperties = {
+      values: ["sixtyPlusIcon", "sixtyPlusIconColor"],
+      propertyName: "sixtyPlusDaysRange",
+    };
+
+    function populateOutterProperty(obj, prop) {
+      const populated = utils.fillFieldsDialogProperties(prop.values);
+      const daysPropertyName = properties[prop.propertyName];
+      if (populated && daysPropertyName) {
+        obj[daysPropertyName] = populated;
+      }
+    }
+
+    if (properties) {
+      populateOutterProperty(icons, overdueProperties);
+      populateOutterProperty(icons, thirtyDaysProperties);
+      populateOutterProperty(icons, sixtyOneDaysProperties);
+      populateOutterProperty(icons, sixtyOnePlusProperties);
+    }
+
+    if (!!icons) {
+      jsonObject["icons"] = icons;
+    }
+
+    if (properties["hideCopyHeaderOption"]) {
+      jsonObject["hideCopyHeaderOption"] = properties["hideCopyHeaderOption"];
+    }
+
+    if (properties["hideExportOption"]) {
+      jsonObject["hideExportOption"] = properties["hideExportOption"];
+    }
+
+    if (properties["noResultsTitle"]) {
+      noResultsValues.noResultsTitle = properties["noResultsTitle"];
+    }
+
+    if (properties["noResultsDescription"]) {
+      noResultsValues.noResultsDescription = properties["noResultsDescription"];
+    }
+
+    if (properties["noResultsImageFileReference"]) {
+      noResultsValues.noResultsImage =
+        properties["noResultsImageFileReference"];
+    }
+
+    if (properties["noDataTitle"]) {
+      noResultsValues.noDataTitle = properties["noDataTitle"];
+    }
+
+    if (properties["noDataDescription"]) {
+      noResultsValues.noDataDescription = properties["noDataDescription"];
+    }
+
+    if (properties["noDataImageFileReference"]) {
+      noResultsValues.noDataImage = properties["noDataImageFileReference"];
+    }
+
+    if (noResultsValues != null) {
+      jsonObject["searchResultsError"] = noResultsValues;
+    }
   }
 
   return {

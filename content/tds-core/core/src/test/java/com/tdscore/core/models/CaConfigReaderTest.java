@@ -97,6 +97,7 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.ordersCountEndpoint()).thenReturn("ordersCountEndpoint");
         when(serviceEndPointsConfiguration.ordersReportEndpoint()).thenReturn("ordersReportEndpoint");
         when(serviceEndPointsConfiguration.ordersReportCountEndpoint()).thenReturn("ordersReportCountEndpoint");
+        when(serviceEndPointsConfiguration.ordersRefinementsEndpoint()).thenReturn("ordersRefinementsEndpoint");
         when(serviceEndPointsConfiguration.ordersDownloadDocumentsEndpoint()).thenReturn("ordersDownloadDocumentsEndpoint");
         when(serviceEndPointsConfiguration.exportAllOrderLinesEndpoint()).thenReturn("exportAllOrderLinesEndpoint");
         when(serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint()).thenReturn("exportLinesWithSerialNumbersOnlyEndpoint");
@@ -180,6 +181,7 @@ class CaConfigReaderTest {
         assertEquals("ordersCountEndpoint", underTest.getOrdersCountEndpoint());
         assertEquals("ordersReportEndpoint", underTest.getOrdersReportEndpoint());
         assertEquals("ordersReportCountEndpoint", underTest.getOrdersReportCountEndpoint());
+        assertEquals("ordersRefinementsEndpoint", underTest.getOrdersRefinementsEndpoint());
         assertEquals("ordersDownloadDocumentsEndpoint", underTest.getOrdersDownloadDocumentsEndpoint());
         assertEquals("exportAllOrderLinesEndpoint", underTest.getExportAllOrderLinesEndpoint());
         assertEquals("exportLinesWithSerialNumbersOnlyEndpoint", underTest.getExportLinesWithSerialNumbersOnlyEndpoint());

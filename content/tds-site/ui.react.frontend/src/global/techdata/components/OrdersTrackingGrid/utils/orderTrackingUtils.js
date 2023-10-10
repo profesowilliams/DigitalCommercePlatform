@@ -239,117 +239,46 @@ export const getDateRangeLabel = (startDate, endDate) => {
 };
 export { compareSort };
 
-export const getFilterFlyoutPredefined = (filterLabels) => [
-  {
-    id: 1,
-    accordionLabel: getDictionaryValueOrKey(filterLabels.dateRange),
-    filterField: 'date',
-    group: 'date',
-    open: false,
-  },
-  {
-    id: 2,
-    accordionLabel: getDictionaryValueOrKey(filterLabels.orderStatus),
-    filterField: 'order',
-    group: 'order',
-    filterOptionList: [
-      {
-        id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.open),
-        filterOptionKey: 'Open',
+export const getFilterFlyoutPredefined = (filterLabels, refinements) => {
+  const statuses = refinements?.orderStatuses || [];
+  const types = refinements?.orderTypes || [];
+
+  return [
+    {
+      id: 1,
+      accordionLabel: getDictionaryValueOrKey(filterLabels.dateRange),
+      filterField: 'date',
+      group: 'date',
+      open: false,
+    },
+    {
+      id: 2,
+      accordionLabel: getDictionaryValueOrKey(filterLabels.orderStatus),
+      filterField: 'order',
+      group: 'order',
+      filterOptionList: statuses.map((element) => ({
+        id: element.status,
+        filterOptionLabel: element.statusText,
+        filterOptionKey: element.status,
         group: 'status',
-      },
-      {
-        id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.investigation),
-        filterOptionKey: 'Investigation',
+      })),
+      open: false,
+    },
+    {
+      id: 3,
+      accordionLabel: getDictionaryValueOrKey(filterLabels.orderType),
+      filterField: 'order',
+      group: 'order',
+      open: false,
+      filterOptionList: types.map((element) => ({
+        id: element.type,
+        filterOptionLabel: element.typeText,
+        filterOptionKey: element.type,
         group: 'status',
-      },
-      {
-        id: 3,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.shipping),
-        filterOptionKey: 'Shipping',
-        group: 'status',
-      },
-      {
-        id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.reject),
-        filterOptionKey: 'Reject',
-        group: 'status',
-      },
-      {
-        id: 5,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.complete),
-        filterOptionKey: 'Complete',
-        group: 'status',
-      },
-      {
-        id: 6,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.cancelled),
-        filterOptionKey: 'Cancelled',
-        group: 'status',
-      },
-      {
-        id: 7,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.onHold),
-        filterOptionKey: 'OnHold',
-        group: 'status',
-      },
-      {
-        id: 8,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.shipped),
-        filterOptionKey: 'Shipped',
-        group: 'status',
-      },
-      {
-        id: 9,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inProcess),
-        filterOptionKey: 'InProcess',
-        group: 'status',
-      },
-    ],
-    open: false,
-  },
-  {
-    id: 3,
-    accordionLabel: getDictionaryValueOrKey(filterLabels.orderType),
-    filterField: 'order',
-    group: 'order',
-    open: false,
-    filterOptionList: [
-      {
-        id: 1,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.ediOrXml),
-        filterOptionKey: 'ZZED',
-        group: 'type',
-      },
-      {
-        id: 2,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.inTouch),
-        filterOptionKey: 'ZZCC&type=ZZIT',
-        group: 'type',
-      },
-      {
-        id: 3,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.licensing),
-        filterOptionKey: 'ZZSL',
-        group: 'type',
-      },
-      {
-        id: 4,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.manual),
-        filterOptionKey: 'ZZCT&type=ZZOR&type=ZZPB',
-        group: 'type',
-      },
-      {
-        id: 5,
-        filterOptionLabel: getDictionaryValueOrKey(filterLabels.thirdParty),
-        filterOptionKey: 'ZZSB',
-        group: 'type',
-      },
-    ],
-  },
-];
+      })),
+    },
+  ];
+};
 
 export const getFilterFlyoutCustomized = (
   dateOptionsList,

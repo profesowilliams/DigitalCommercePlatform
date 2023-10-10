@@ -6382,7 +6382,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
 });
 
 app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
@@ -6399,7 +6399,7 @@ app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(success);
-  }, 1000);
+  }, 200);
 });
 
 app.get("/ui-commerce/v2/DownloadDocuments", function (req, res) {
@@ -6541,7 +6541,7 @@ app.get("/ui-commerce/v2/ReplacementProduct", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
 });
 
 app.post("/ui-commerce/v2/ReplaceProductUpdate", (req, res) => {
@@ -6576,7 +6576,7 @@ app.post("/ui-commerce/v2/ReplaceProductUpdate", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
 });
 
 app.get("/ui-commerce/v3/order/carrierurl/:id/:lineId/:dnoteId", (req, res) => {
@@ -6591,7 +6591,7 @@ app.get("/ui-commerce/v3/order/carrierurl/:id/:lineId/:dnoteId", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
 });
 
 app.post("/ui-commerce/v2/OrderModify", (req, res) => {
@@ -6623,37 +6623,12 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
           },
         ],
       });
-    }, 1000);
+    }, 200);
   } catch (err) {
     console.log(err);
     setTimeout(() => {
-      res.status(500).json({
-        SalesOrg: "0014",
-        CustomerID: "325009",
-        OrderID: "I1234567",
-        isError: false,
-        message: "",
-        ReduceLine: [
-          {
-            LineID: "10",
-            Qty: "5",
-            RejectionReason: "Z2",
-          },
-          {
-            LineID: "20",
-            Qty: "3",
-            RejectionReason: "Z3",
-          },
-        ],
-        AddLine: [
-          {
-            ProductID: "5736235",
-            isError: true,
-            message: "Product does not exist",
-          },
-        ],
-      });
-    }, 1000);
+      res.status(500);
+    }, 200);
   }
 });
 
@@ -6686,7 +6661,7 @@ app.post("/ui-commerce/v2/OrderModifyChange", (req, res) => {
           },
         ],
       });
-    }, 5000);
+    }, 200);
   } catch (err) {
     console.log(err);
     setTimeout(() => {
@@ -6716,7 +6691,7 @@ app.post("/ui-commerce/v2/OrderModifyChange", (req, res) => {
           },
         ],
       });
-    }, 5000);
+    }, 200);
   }
 });
 
@@ -6840,7 +6815,7 @@ app.get("/ui-commerce/v2/ReportOrders", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
 });
 
 app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
@@ -6857,5 +6832,74 @@ app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 2000);
+  }, 200);
+});
+
+app.get("/ui-commerce/v3/refinements", function (req, res) {
+  const response = {
+    orderStatuses: [
+      {
+        status: "OPEN",
+        statusText: "Open",
+      },
+      {
+        status: "INVESTIGATION",
+        statusText: "Investigation",
+      },
+      {
+        status: "SHIPPING",
+        statusText: "SHIPPING",
+      },
+      {
+        status: "REJECTED",
+        statusText: "Rejected",
+      },
+      {
+        status: "COMPLETED",
+        statusText: "Complete",
+      },
+      {
+        status: "CREDIT_HOLD",
+        statusText: "Credit Held",
+      },
+      {
+        status: "CANCELLED",
+        statusText: "Cancelled",
+      },
+      {
+        status: "SHIPPED",
+        statusText: "Shipped",
+      },
+      {
+        status: "IN_PROCESS",
+        statusText: "Processing",
+      },
+    ],
+    orderTypes: [
+      {
+        type: "EDI_OR_XML",
+        typeText: "EDI or XML",
+      },
+      {
+        type: "INTOUCH",
+        typeText: "InTouch",
+      },
+      {
+        type: "LICENSING",
+        typeText: "Licensing",
+      },
+      {
+        type: "MANUAL",
+        typeText: "Manual",
+      },
+      {
+        type: "THIRD_PARTY",
+        typeText: "Third Party order",
+      },
+    ],
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
 });

@@ -65,6 +65,7 @@ function DNotesFlyout({
           console.error('Error:', error);
         });
   }, [dNoteFlyoutConfig?.id, allParametersHaveValue]);
+
   return (
     <BaseFlyout
       open={dNoteFlyoutConfig?.show}
