@@ -7,6 +7,10 @@ import { requestFileBlobWithoutModal } from '../../../../utils/utils';
 import { getSessionInfo } from '../../../../utils/user/get';
 import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import Flyouts from './Flyouts';
+import {
+  getPageReloadAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -67,6 +71,17 @@ function OrdersTrackingDetail(props) {
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
+      pushDataLayerGoogle(
+        getPageReloadAnalyticsGoogle({
+          country: data[1]?.country,
+          internalTraffic: data[1]?.isInternal,
+          pageName: 'Order Details',
+          number: id,
+          userID: td?.userId ?? '',
+          customerID: td?.customerId ?? '',
+          industryKey: td?.customerId ?? '',
+        })
+      );
     });
   }, []);
 

@@ -115,6 +115,27 @@ export const getMainDashboardAnalyticsGoogle = () => {
   };
 };
 
+export const getPageReloadAnalyticsGoogle = ({
+  country,
+  internalTraffic,
+  pageName,
+  number,
+  userID,
+  customerID,
+  industryKey,
+}) => {
+  return {
+    event: 'pageReload',
+    country,
+    internalTraffic,
+    pageCategory: 'Order Tracking',
+    pageName: `${pageName} ${number}`,
+    userID,
+    customerID,
+    industryKey,
+  };
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],
