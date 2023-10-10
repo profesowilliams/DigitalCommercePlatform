@@ -91,7 +91,9 @@ function ShippedTabGrid({
     {
       field: 'track',
       headerName: '',
-      cellRenderer: ({ data }) => <TrackColumn line={data} config={config} />,
+      cellRenderer: ({ data }) => (
+        <TrackColumn line={data} config={config} id={orderNumber} />
+      ),
       width: gridColumnWidths.track,
     },
   ];

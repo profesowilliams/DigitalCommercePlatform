@@ -209,6 +209,7 @@ use(["../common/utils.js"], function (utils) {
       "downloadAllInvoicesEndpoint",
       "getDeliveryNotesEndPoint",
       "getInvoicesEndPoint",
+      "trackDeliveryEndpoint"
     ];
 
     endpoints.map((endpoint) => {
