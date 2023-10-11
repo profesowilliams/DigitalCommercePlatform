@@ -71,7 +71,7 @@ function OrdersTrackingDetail(props) {
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
-      td &&
+      window?.td &&
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
             country: data[1]?.country,
@@ -84,7 +84,7 @@ function OrdersTrackingDetail(props) {
           })
         );
     });
-  }, [td]);
+  }, [window?.td]);
 
   return (
     <>

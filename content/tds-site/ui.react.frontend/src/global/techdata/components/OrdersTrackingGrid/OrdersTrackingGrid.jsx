@@ -320,7 +320,7 @@ function OrdersTrackingGrid(props) {
     }
     getSessionInfo().then((data) => {
       setUserData(data[1]);
-      td &&
+      window?.td &&
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
             country: data[1]?.country,
@@ -335,7 +335,7 @@ function OrdersTrackingGrid(props) {
     });
     setDateType(filterLabels.orderDateLabel);
     pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
-  }, [td]);
+  }, [window?.td]);
 
   const customerNumber = userData?.activeCustomer?.customerNumber;
   const salesOrg = userData?.activeCustomer?.salesOrg;
