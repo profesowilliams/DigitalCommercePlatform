@@ -24,13 +24,23 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
   };
 
   const AccountNameWithHighlight = () => {
+    let string = name.substr(0, name.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()));
+    let endString = name.substr(
+        name.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()) +
+          currentlyTypedWord.length
+      );
+      let highlightedText = name.substr(
+        name.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()),
+        currentlyTypedWord.length
+      );
     return (
         !isAccountNumFlag ? (
       <>
+        <span>{string}</span>
         <span className="cmp-flyout__content-search__quote--highlighted">
-          {currentlyTypedWord}
+          {highlightedText}
         </span>
-        <span>{name?.substring(currentlyTypedWord?.length)}</span>
+        <span>{endString}</span>
       </>
       ) : name
     );
