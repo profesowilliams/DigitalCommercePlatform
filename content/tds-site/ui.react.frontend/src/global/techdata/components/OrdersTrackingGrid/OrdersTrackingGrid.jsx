@@ -458,6 +458,7 @@ function OrdersTrackingGrid(props) {
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
+        reportFilterValue={reportFilterValue}
       />
     </>
   );

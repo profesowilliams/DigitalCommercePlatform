@@ -59,18 +59,25 @@ export const getImageBuffer = async imgPath => {
 }
 
 const generateFile = (response, name, options) => {
-    const type = response.headers['content-type'];
-    const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    if (options.redirect) {
-        link.setAttribute("target", "_blank");
-    } else {
-        link.download = name;
-    }
-    link.click();
-    link.remove();
-}
+  const type = response.headers['content-type'];
+  const blob = new Blob([response.data], { type: type, encoding: 'UTF-8' });
+  const link = document.createElement('a');
+
+  if (!name) {
+    try {
+      name = response.headers['content-disposition'].split('filename=')[1];
+    } catch {}
+  }
+
+  link.href = window.URL.createObjectURL(blob);
+  if (options.redirect) {
+    link.setAttribute('target', '_blank');
+  } else {
+    link.download = name;
+  }
+  link.click();
+  link.remove();
+};
 
 export const generateFileFromPost = async ({ url, postData, name = '', fileTypeExtension = fileExtensions.xls }) => {
     try {
@@ -118,7 +125,11 @@ const validateBlobResponse = async (response, modalPDFErrorHandler) => {
 const validateBlobResponseWithoutModal = async (response) => {
   let validation = false;
 
-  if (response.data instanceof Blob) {
+  if (
+    response.data instanceof Blob &&
+    response.data.type != 'application/json'
+  ) {
+    // TODO: return 4xx or 5xx status from API therefore rejecting Promise
     validation = true;
     if (response.status !== 200) {
       validation = false;
@@ -161,13 +172,16 @@ export const requestFileBlob = async (
  * @param {{redirect: boolean}} options
  */
 export const requestFileBlobWithoutModal = async (
-    url,
-    name = '',
-    options = { redirect: false }
+  url,
+  name = '',
+  options = { redirect: false }
 ) => {
-    const response = await axios.get(url, { responseType: 'blob' });
-    (await validateBlobResponseWithoutModal(response)) &&
-        generateFile(response, name, options);
+  const response = await axios.get(url, { responseType: 'blob' });
+  if (await validateBlobResponseWithoutModal(response)) {
+    generateFile(response, name, options);
+  } else {
+    throw new Error('Validation failed');
+  }
 };
 
 const currentDate = new Date();

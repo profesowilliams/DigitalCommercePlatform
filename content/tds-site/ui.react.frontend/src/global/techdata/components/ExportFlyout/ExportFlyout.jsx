@@ -47,11 +47,13 @@ function ExportFlyout({
   subheaderReference,
   isTDSynnex,
   exportAnalyticsLabel,
+  reportFilterValue
 }) {
   const isOrderDetailsPage = window.location.href.includes(
     'order-details.html?id='
   );
   const exportFlyoutConfig = store((st) => st.exportFlyout);
+  const reportName = reportFilterValue?.current?.value || 'OpenOrders';
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
     exportOptionsList ? exportOptionsList[0]?.key : []
@@ -71,25 +73,21 @@ function ExportFlyout({
     !isOrderDetailsPage && setSecondarySelected(null);
   };
 
-  async function getExportAllOrderLines() {
+  function getExportAllOrderLines() {
     const url =
       componentProp?.exportAllOrderLinesEndpoint || 'nourl';
-    const reportName = `OpenOrders`;
     const singleDownloadUrl =
       url + `?ReportName=` + reportName + `&OnlyWithSerialNumbers=false`;
-    const name = `Report_` + reportName + `_` + dateToString(Date.now(), 'dd-MM-uu') + `.xlsx`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
+    return requestFileBlobWithoutModal(singleDownloadUrl, "", {
       redirect: false,
     });
   }
-  async function getExportLinesWithSerialNumbersOnly() {
+  function getExportLinesWithSerialNumbersOnly() {
     const url =
-          componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
-    const reportName = `OpenOrders`;
+      componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
     const singleDownloadUrl =
       url + `?ReportName=` + reportName + `&OnlyWithSerialNumbers=true`;
-    const name = `Report_` + reportName + `_` + dateToString(Date.now(), 'dd-MM-uu') + `.xlsx`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
+    return requestFileBlobWithoutModal(singleDownloadUrl, "", {
       redirect: false,
     });
   }
@@ -118,17 +116,28 @@ function ExportFlyout({
       )
     );
     if (matchingRequest) {
-      const downloadRequest = matchingRequest.request;
-      downloadRequest();
-      const toaster = {
-        isOpen: true,
-        origin: 'fromUpdate',
-        isAutoClose: false,
-        isSuccess: true,
-        message: getDictionaryValueOrKey(exportFlyout?.exportSuccessMessage),
-      };
+      matchingRequest.request().then(() => {
+        const toaster = {
+          isOpen: true,
+          origin: 'fromUpdate',
+          isAutoClose: false,
+          isSuccess: true,
+          message: getDictionaryValueOrKey(exportFlyout?.exportSuccessMessage),
+        };
+
+        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+      }).catch(() => {
+        const toaster = {
+          isOpen: true,
+          origin: 'fromUpdate',
+          isAutoClose: false,
+          isSuccess: false,
+          message: getDictionaryValueOrKey(exportFlyout?.exportFailedMessage),
+        };
+        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+      });
+
       closeFlyout();
-      effects.setCustomState({ key: 'toaster', value: { ...toaster } });
     }
   };
 

@@ -32,6 +32,11 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Export Success Message Label"
                     name="./exportSuccessMessage"/>
+                <exportFailedMessage
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Export Failed Message Label"
+                    name="./exportFailedMessage"/>
                 <exportOptionsList
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
