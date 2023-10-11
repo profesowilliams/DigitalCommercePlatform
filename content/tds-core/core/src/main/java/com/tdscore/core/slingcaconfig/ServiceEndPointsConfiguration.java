@@ -89,6 +89,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Ui Service End Point For Details", description = "Ui Service End Point For Details")
     String uiServiceEndPointForDetails();
 
+    @Property(label = "Order Items Endpoint", description = "Order Items Endpoint")
+    String orderItemsEndpoint();
+
     @Property(label = "Orders Count Endpoint", description = "Orders Count Endpoint")
     String ordersCountEndpoint();
 

@@ -21,11 +21,16 @@ function DropdownOrderDetails({
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
+  console.log(aemConfig);
   const [apiResponse, isLoading, error] = useGet(
-    `${aemConfig.uiServiceEndPointForDetails}?id=${data?.id}`
+    `${aemConfig.orderItemsEndpoint}?id=${data?.id}`
   );
-  const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
-  const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
+  const shippedItemsLeft =
+    apiResponse?.content?.totalShipQuantity ||
+    apiResponse?.content?.deliveryNotes?.length; // TODO: choose one method after BE is stable
+  const notShippedItemsLeft =
+    apiResponse?.content?.totalOpenQuantity ||
+    apiResponse?.content?.items?.length; // TODO: choose one method after BE is stable
   const noShippedItems = shippedItemsLeft === 0;
 
   const tabsConfig = [

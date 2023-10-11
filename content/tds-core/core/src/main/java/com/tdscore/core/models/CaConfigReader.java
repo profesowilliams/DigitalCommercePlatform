@@ -99,6 +99,8 @@ public class CaConfigReader {
 
     private String uiServiceEndPointForDetails;
 
+    private String orderItemsEndpoint;
+
     private String ordersCountEndpoint;
 
     private String ordersReportEndpoint;
@@ -327,6 +329,7 @@ public class CaConfigReader {
         getInvoicesEndPoint = serviceEndPointsConfiguration.getInvoicesEndPoint();
         getDeliveryNotesEndPoint = serviceEndPointsConfiguration.getDeliveryNotesEndPoint();
         uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
+        orderItemsEndpoint = serviceEndPointsConfiguration.orderItemsEndpoint();
         ordersCountEndpoint = serviceEndPointsConfiguration.ordersCountEndpoint();
         ordersReportEndpoint = serviceEndPointsConfiguration.ordersReportEndpoint();
         ordersReportCountEndpoint = serviceEndPointsConfiguration.ordersReportCountEndpoint();
@@ -563,6 +566,10 @@ public class CaConfigReader {
 
     public String getUiServiceEndPointForDetails() {
         return uiServiceEndPointForDetails;
+    }
+
+    public String getOrderItemsEndpoint() {
+        return orderItemsEndpoint;
     }
 
     public String getOrdersCountEndpoint() {

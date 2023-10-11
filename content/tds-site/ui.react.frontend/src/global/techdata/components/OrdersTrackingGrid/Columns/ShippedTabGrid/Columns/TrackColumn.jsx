@@ -11,12 +11,11 @@ function TrackColumn({ line, config, id }) {
   };
 
   useEffect(async () => {
+    const endpointUrl = enableLineId
+      ? `${config.trackDeliveryEndpoint}/${id}/${line?.items[0]?.line}/${line.id}`
+      : `${config.trackDeliveryEndpoint}/${id}/${line.id}`;
     try {
-      const result = await usGet(
-        `${config.trackDeliveryEndpoint}/${id}/${
-          enableLineId && line?.items[0]?.line + '/'
-        }${line.id}`
-      );
+      const result = await usGet(endpointUrl);
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {
         const urlParams =

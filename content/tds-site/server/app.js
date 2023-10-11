@@ -6835,6 +6835,97 @@ app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
   }, 200);
 });
 
+app.get("/ui-commerce/v3/orderitems", function (req, res) {
+  const response = {
+    content: {
+      items: [
+        {
+          line: "1",
+          urlProductImage:
+            "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+          displayName: "Mo Price per Point for 1-Yr Vol Rental",
+          tdNumber: "7414436",
+          mfrNumber: "H-MNLPMT-R0002-22",
+          orderQuantity: 200.0,
+          originalOrderQuantity: 200.0,
+          shippedQuantity: 6.0,
+          openQuantity: 194.0,
+          lineDetails: [
+            {
+              id: 0,
+              quantity: 200.0,
+              subtotalPrice: 128.0,
+              subtotalPriceFormatted: "128.00",
+              shipDate: "07-26-2023",
+              shipDateFormatted: "26/07/2023",
+              isShipment: true,
+              status: "Open",
+              statusText: "Open ",
+            },
+          ],
+        },
+      ],
+      deliveryNotes: [
+        {
+          id: "7133311405",
+          actualShipDate: "07-26-2023",
+          actualShipDateFormatted: "26/07/2023",
+          shipQuantity: 3.0,
+          totalPrice: 1.92,
+          totalPriceFormatted: "1.92",
+          items: [
+            {
+              line: "1",
+              urlProductImage:
+                "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+              displayName: "Mo Price per Point for 1-Yr Vol Rental",
+              tdNumber: "7414436",
+              mfrNumber: "H-MNLPMT-R0002-22",
+              isReturnable: false,
+              quantity: 3.0,
+              shipQuantity: 3.0,
+              orderQuantity: 0.0,
+              serials: "",
+            },
+          ],
+        },
+        {
+          id: "7133311406",
+          actualShipDate: "07-26-2023",
+          actualShipDateFormatted: "26/07/2023",
+          shipQuantity: 3.0,
+          totalPrice: 1.92,
+          totalPriceFormatted: "1.92",
+          items: [
+            {
+              line: "1",
+              urlProductImage:
+                "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
+              displayName: "Mo Price per Point for 1-Yr Vol Rental",
+              tdNumber: "7414436",
+              mfrNumber: "H-MNLPMT-R0002-22",
+              isReturnable: false,
+              quantity: 3.0,
+              shipQuantity: 3.0,
+              orderQuantity: 0.0,
+              serials: "",
+            },
+          ],
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
+
 app.get("/ui-commerce/v3/refinements", function (req, res) {
   const response = {
     content: {
