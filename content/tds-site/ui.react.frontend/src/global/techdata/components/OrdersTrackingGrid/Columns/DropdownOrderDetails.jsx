@@ -106,6 +106,10 @@ function DropdownOrderDetails({
             className={`order-line-details__header__tab ${
               activeTab === tab.index
                 ? 'order-line-details__header__tab-active'
+                : 'order-line-details__header__tab-inActive'
+            } ${
+              activeTab !== tab.index && noShippedItems
+                ? 'order-line-details__header__tab-disabled'
                 : ''
             }`}
             onClick={() => handleTabChange(tab.index)}

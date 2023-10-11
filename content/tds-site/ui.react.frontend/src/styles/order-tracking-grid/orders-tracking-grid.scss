@@ -261,6 +261,12 @@
     &__tab-active {
       border-bottom: 4px solid $brand-aqua;
     }
+    &__tab-inActive {
+      cursor: pointer;
+    }
+    &__tab-disabled {
+      cursor: auto;
+    }
     &__icon {
       margin-right: 10px;
     }
