@@ -18,11 +18,24 @@ function InvoicesFlyout({
 }) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
   const effects = store((st) => st.effects);
-  const closeFlyout = () =>
-    effects.setCustomState({ key: 'invoicesFlyout', value: { show: false } });
-  const columnList = invoicesColumnList;
-  const config = invoicesFlyoutConfig;
   const [selected, setSelected] = useState([]);
+  const [invoicesResponse, setInvoicesResponse] = useState(null);
+  const closeFlyout = () => {
+    setInvoicesResponse(null);
+    effects.setCustomState({
+      key: 'invoicesFlyout',
+      value: { data: null, show: false },
+    });
+    setSelected([]);
+  };
+  const columnList = invoicesColumnList;
+  const copiedInvoicesFlyoutConfig = {
+    ...invoicesFlyoutConfig,
+    data: invoicesResponse,
+  };
+  const config = invoicesResponse
+    ? copiedInvoicesFlyoutConfig
+    : invoicesFlyoutConfig;
   const {
     rows,
     headCells,
@@ -30,7 +43,6 @@ function InvoicesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-  const [invoicesResponse, setInvoicesResponse] = useState(null);
   const getInvoices = async () => {
     try {
       const result = await usGet(

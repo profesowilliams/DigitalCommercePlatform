@@ -17,12 +17,24 @@ function DNotesFlyout({
 }) {
   const dNoteFlyoutConfig = store((st) => st.dNotesFlyout);
   const effects = store((st) => st.effects);
-  const closeFlyout = () =>
-    effects.setCustomState({ key: 'dNotesFlyout', value: { show: false } });
-  const columnList = dNoteColumnList;
-  const config = dNoteFlyoutConfig;
   const [selected, setSelected] = useState([]);
-
+  const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
+  const closeFlyout = () => {
+    setDeliveryNotesResponse(null);
+    effects.setCustomState({
+      key: 'dNotesFlyout',
+      value: { data: null, show: false },
+    });
+    setSelected([]);
+  };
+  const columnList = dNoteColumnList;
+  const copiedDNoteFlyoutConfig = {
+    ...dNoteFlyoutConfig,
+    data: deliveryNotesResponse,
+  };
+  const config = deliveryNotesResponse
+    ? copiedDNoteFlyoutConfig
+    : dNoteFlyoutConfig;
   const {
     rows,
     headCells,
@@ -30,7 +42,6 @@ function DNotesFlyout({
     handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
-  const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
   const getDeliveryNotes = async () => {
     try {
       const result = await usGet(
