@@ -320,21 +320,22 @@ function OrdersTrackingGrid(props) {
     }
     getSessionInfo().then((data) => {
       setUserData(data[1]);
-      pushDataLayerGoogle(
-        getPageReloadAnalyticsGoogle({
-          country: data[1]?.country,
-          internalTraffic: data[1]?.isInternal,
-          pageName: 'Main Dashboard',
-          number: '',
-          userID: td?.userId ?? '',
-          customerID: td?.customerId ?? '',
-          industryKey: td?.customerId ?? '',
-        })
-      );
+      td &&
+        pushDataLayerGoogle(
+          getPageReloadAnalyticsGoogle({
+            country: data[1]?.country,
+            internalTraffic: data[1]?.isInternal,
+            pageName: 'Main Dashboard',
+            number: '',
+            userID: td?.userId ?? '',
+            customerID: td?.customerId ?? '',
+            industryKey: td?.industryKey ?? '',
+          })
+        );
     });
     setDateType(filterLabels.orderDateLabel);
     pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
-  }, []);
+  }, [td]);
 
   const customerNumber = userData?.activeCustomer?.customerNumber;
   const salesOrg = userData?.activeCustomer?.salesOrg;

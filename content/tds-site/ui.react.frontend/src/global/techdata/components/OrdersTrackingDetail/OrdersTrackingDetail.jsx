@@ -71,19 +71,20 @@ function OrdersTrackingDetail(props) {
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
-      pushDataLayerGoogle(
-        getPageReloadAnalyticsGoogle({
-          country: data[1]?.country,
-          internalTraffic: data[1]?.isInternal,
-          pageName: 'Order Details',
-          number: id,
-          userID: td?.userId ?? '',
-          customerID: td?.customerId ?? '',
-          industryKey: td?.customerId ?? '',
-        })
-      );
+      td &&
+        pushDataLayerGoogle(
+          getPageReloadAnalyticsGoogle({
+            country: data[1]?.country,
+            internalTraffic: data[1]?.isInternal,
+            pageName: 'Order Details',
+            number: id,
+            userID: td?.userId ?? '',
+            customerID: td?.customerId ?? '',
+            industryKey: td?.industryKey ?? '',
+          })
+        );
     });
-  }, []);
+  }, [td]);
 
   return (
     <>
