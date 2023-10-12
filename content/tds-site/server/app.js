@@ -6142,6 +6142,11 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         name: "TD SYNNEX UK Limited",
         phoneNumber: "01256 788 000",
       },
+      salesAgent: {
+        name: "Richard  Farrell",
+        email: "Richard.Farrell@techdata.co.uk",
+        phoneNumber: "01256 864200",
+      },
       shipTo: {
         id: "",
         companyName: "Frey Enterprise Inc",
