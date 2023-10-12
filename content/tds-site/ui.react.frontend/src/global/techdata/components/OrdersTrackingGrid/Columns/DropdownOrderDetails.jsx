@@ -52,6 +52,7 @@ function DropdownOrderDetails({
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
           reseller={data?.customerPO}
+          id={data?.id}
         />
       ) : (
         isLoading && <LoaderIcon className="loadingIcon-rotate" />

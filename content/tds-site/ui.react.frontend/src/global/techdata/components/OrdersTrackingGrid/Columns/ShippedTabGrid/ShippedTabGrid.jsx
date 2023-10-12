@@ -17,9 +17,9 @@ function ShippedTabGrid({
   openFilePdf,
   hasAIORights,
   reseller,
+  id,
 }) {
   const gridData = data?.deliveryNotes ?? [];
-  const orderNumber = data?.orderNumber;
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -58,7 +58,7 @@ function ShippedTabGrid({
       field: 'deliveryNotes',
       headerName: getDictionaryValueOrKey(dnote),
       cellRenderer: ({ data }) => (
-        <DNoteColumn line={data} id={orderNumber} openFilePdf={openFilePdf} />
+        <DNoteColumn line={data} id={id} openFilePdf={openFilePdf} />
       ),
       width: gridColumnWidths.dnote,
     },
@@ -69,7 +69,7 @@ function ShippedTabGrid({
         <InvoiceColumn
           line={data}
           config={config}
-          id={orderNumber}
+          id={id}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
           reseller={reseller}
@@ -92,7 +92,7 @@ function ShippedTabGrid({
       field: 'track',
       headerName: '',
       cellRenderer: ({ data }) => (
-        <TrackColumn line={data} config={config} id={orderNumber} />
+        <TrackColumn line={data} config={config} id={id} />
       ),
       width: gridColumnWidths.track,
     },
