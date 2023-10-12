@@ -17,7 +17,7 @@ const QuantityColumn = ({ line }) => {
               }`}
             >
               <span className="order-line-details__content__innerTableNotShipped__separateLineText">
-                {el.quantity} / {el.orderQuantity}
+                {el.quantity} / {line.orderQuantity}
               </span>
             </div>
           );
