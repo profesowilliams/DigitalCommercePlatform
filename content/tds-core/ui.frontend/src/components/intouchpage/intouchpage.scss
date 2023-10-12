@@ -4,19 +4,45 @@
  * @class intouchpage
  * @classdesc Styles for the intouch page.
  */
- .intouchpage {
-    /* display: none; */
-  
-    #page-container {
-      position: relative;
-      min-height: 100vh;
-    }
-  
-    /* Push header to the bottom of the page */
-    #intouch-footerhtml {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-    }
+.intouchpage {
+  /* display: none; */
+
+  #page-container {
+    position: relative;
+    min-height: 100vh;
   }
-  
+
+  /* Push header to the bottom of the page */
+  #intouch-footerhtml {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .dp-general__innerspace--left > .cmp-container {
+    padding-left: 0rem !important;
+  }
+
+  .dp-general__innerspace--right > .cmp-container {
+    padding-right: 0rem !important;
+  }
+
+  h3 {
+    color: var(--Charcoal, #262626);
+    font-family: Arial;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    padding-top: 26px;
+    margin-bottom: 0px;
+  }
+
+  .cmp-base-grid-subheader {
+    margin-top: 0px !important;
+  }
+
+  .cmp-renewals__pagination--bottom {
+    margin-left: 0px !important;
+  }
+}
