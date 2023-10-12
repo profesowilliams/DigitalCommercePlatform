@@ -11,7 +11,6 @@
     position: relative;
     min-height: 100vh;
   }
-
   /* Push header to the bottom of the page */
   #intouch-footerhtml {
     position: absolute;
@@ -44,5 +43,9 @@
 
   .cmp-renewals__pagination--bottom {
     margin-left: 0px !important;
+  }
+
+  .ag-theme-alpine .ag-ltr .ag-cell {
+    border: none !important;
   }
 }
