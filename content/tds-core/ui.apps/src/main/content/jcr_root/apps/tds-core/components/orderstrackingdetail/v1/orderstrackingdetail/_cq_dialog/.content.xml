@@ -131,13 +131,6 @@
                                                 fieldLabel="Contact Email Label"
                                                 name="./contactEmail"
                                                 required="{Boolean}true"/>											
-											<orderSubtotal
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Order Subtotal Label"
-                                                fieldLabel="Order Subtotal Label"
-                                                name="./orderSubtotal"
-                                                required="{Boolean}true"/>											
 											<totalOrderNetPrice
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

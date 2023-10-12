@@ -17,7 +17,6 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
   const activeCustomer = currentUserData?.activeCustomer;
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
   const currency = content.paymentDetails?.currency;
-  const multiplePages = content.items.length > 25;
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
@@ -44,13 +43,7 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
           </div>
           <div className="box-container__rightPart">
             <span className="box-container__rightPart-subtotalLabel">
-              {multiplePages
-                ? `${getDictionaryValueOrKey(
-                    config.footerLabels?.orderSubtotal
-                  )}: `
-                : `${getDictionaryValueOrKey(
-                    config.footerLabels?.totalOrderNetPrice
-                  )}: `}
+              {getDictionaryValueOrKey(config.footerLabels?.totalOrderNetPrice)}
             </span>
             <span className="box-container__rightPart-subtotalValue">
               {content.paymentDetails?.totalFormatted}{' '}
