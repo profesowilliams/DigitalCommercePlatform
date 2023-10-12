@@ -53,6 +53,7 @@ function DNotesFlyout({
     }
   };
   const handleDownload = () => {
+    closeFlyout()
     if (selected.length === 1) {
       return openFilePdf('DNote', config?.id, selected);
     } else if (selected.length > 1) {

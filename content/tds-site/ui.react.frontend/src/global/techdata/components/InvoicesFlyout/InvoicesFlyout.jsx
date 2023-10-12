@@ -54,6 +54,7 @@ function InvoicesFlyout({
     }
   };
   const handleDownload = () => {
+    closeFlyout()
     if (selected.length === 1) {
       return openFilePdf('Invoice', config?.id, selected);
     } else if (selected.length > 1) {
