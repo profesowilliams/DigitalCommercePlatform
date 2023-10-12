@@ -327,9 +327,9 @@ function OrdersTrackingGrid(props) {
             internalTraffic: data[1]?.isInternal,
             pageName: 'Main Dashboard',
             number: '',
-            userID: td?.userId ?? '',
-            customerID: td?.customerId ?? '',
-            industryKey: td?.industryKey ?? '',
+            userID: window?.td?.userId ?? '',
+            customerID: window?.td?.customerId ?? '',
+            industryKey: window?.td?.industryKey ?? '',
           })
         );
     });
