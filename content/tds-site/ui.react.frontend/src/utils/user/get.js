@@ -11,6 +11,11 @@ let cachedUserData = null;
 let cacheExpiration = null;
 const CACHE_DURATION = 600; // TODO: value should be configurable
 
+// not set yet, its set to login page after user check action is executed
+// value can be used to capture 401 and redirect user to loginpage
+// contains continueurl for current page
+export var loginPageUrl = null;
+
 export async function getSessionInfo() {
   const authorMode = !(
     typeof Granite === 'undefined' || typeof Granite.author === 'undefined'
@@ -118,6 +123,8 @@ export async function checkIntouchUser(forceRedirectWhenReady) {
     const data = await response.json();
     if (!data.Status || forceRedirectWhenReady) {
       window.location = data.LoginPageUrl;
+    } else {
+      loginPageUrl = data.LoginPageUrl;
     }
   } else {
     console.error('Error ${xhr.status}: ${xhr.statusText}');

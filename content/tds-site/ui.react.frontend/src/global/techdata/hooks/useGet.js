@@ -3,6 +3,7 @@ import { get } from '../../../utils/api';
 import { useStore } from "../../../utils/useStore"
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../utils/featureFlagUtils";
 import useAuth from "./useAuth";
+import { loginPageUrl } from "../../../utils/user/get"
 
 // hook for getting data from API on component init, checks if component is mounted before call
 // return array of three states = [ response - actual response, 
@@ -13,6 +14,11 @@ export default function useGet(url) {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const catch401 = function (error){
+      if (error && response && error.response.status === 401) {
+      window.location = loginPageUrl;
+    }
+  }
   
   const {isUserLoggedIn:isLoggedIn} = useAuth();
   const refreshOrderTrackingDetailApi = useStore(
@@ -40,6 +46,7 @@ export default function useGet(url) {
           }
         });
     } catch (error) {
+      catch401(error);
       if (isMounted) {
         setError(error);
         setResponse(null);
