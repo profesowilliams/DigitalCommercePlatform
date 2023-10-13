@@ -29,18 +29,19 @@ export const fetchOrdersCount = async (
   searchCriteria
 ) => {
   const mapUrl = urlStrToMapStruc(url + '?PageSize=25');
-  const { createdFrom, createdTo } = filtersRefs?.current;
-  const fromRef = createdFrom;
-  const toRef = createdTo;
+  const dateFilters = Object.entries(filtersRefs?.current).filter((entry) =>
+    Boolean(entry[1])
+  );
+
   if (reportValue) {
     mapUrl.set('reportName', reportValue);
   } else if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
     mapUrl.set(field, value);
     addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
-  } else if (fromRef && toRef) {
-    mapUrl.set('createdFrom', fromRef);
-    mapUrl.set('createdTo', toRef);
+  } else if (dateFilters.length > 0) {
+    dateFilters.forEach(filter => mapUrl.set(filter[0], filter[1]));
+    addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   } else {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }

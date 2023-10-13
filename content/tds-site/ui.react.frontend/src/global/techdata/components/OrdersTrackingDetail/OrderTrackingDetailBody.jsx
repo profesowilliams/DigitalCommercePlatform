@@ -14,15 +14,20 @@ const OrderTrackingDetailBody = ({
   useEffect(() => {
     if (newItem) {
       const itemsCopy = [...content.items];
+      const newLineDetails = content.items[0].lineDetails;
+      newLineDetails[0] = { ...newLineDetails[0], statusText: 'New' };
       itemsCopy.unshift({
+        ...content.items[0],
+        tdNumber: '',
         key: '23123',
-        line: '',
+        line: '10',
         urlProductImage: newItem.images.default.url,
         displayName: newItem.description,
         mfrNumber: newItem.manufacturerPartNumber,
         unitCost: newItem.price.bestPrice,
         unitPriceCurrency: newItem.price.currency,
         lineTotal: newItem.price.bestPrice,
+        isEOL: false,
       });
       gridRef.current?.api.setRowData(itemsCopy);
     }

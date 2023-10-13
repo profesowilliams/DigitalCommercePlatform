@@ -6933,6 +6933,8 @@ app.get("/ui-commerce/v3/orderitems", function (req, res) {
           ],
         },
       ],
+      totalShipQuantity: 2,
+      totalOpenQuantity: 2,
     },
     error: {
       code: 0,

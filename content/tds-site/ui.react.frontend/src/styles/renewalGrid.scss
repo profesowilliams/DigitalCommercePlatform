@@ -584,7 +584,6 @@ button.icon-box {
           margin: 0px;
         }
         & .move-button {
-          padding-top: 4px;
           svg {
             fill:#08bed5;
             height: 16px;
@@ -604,12 +603,11 @@ button.icon-box {
           padding: 0px 8px;
           font-family: 'Arial', sans-serif;
           color: #003031;
+          display: flex;
+          align-items: center;
           & .cmp-input-underline {
             height: 29px;
             border-bottom: 1px solid #75716E;
-          }
-          span {
-            margin-top: 6px;
           }
           input{
             margin-bottom: 0px;
