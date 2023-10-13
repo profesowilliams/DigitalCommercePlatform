@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 function ContactCard({ content, config }) {
-  const { name, phoneNumber, email } = content?.salesAgent;
+  const { name, phoneNumber, email } = content?.salesAgent || {};
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
