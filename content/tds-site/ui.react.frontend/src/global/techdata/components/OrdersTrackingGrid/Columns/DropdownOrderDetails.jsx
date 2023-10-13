@@ -21,17 +21,26 @@ function DropdownOrderDetails({
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
-  console.log(aemConfig);
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.orderItemsEndpoint}?id=${data?.id}`
   );
+  const notShippedGridData = apiResponse?.content?.items ?? [];
+  const filteredGridData = notShippedGridData.reduce((result, item) => {
+    const lineDetails = item.lineDetails.filter(
+      (detail) => detail.isShipment === false
+    );
+    if (lineDetails.length > 0) {
+      result.push({ ...item, lineDetails });
+    }
+    return result;
+  }, []);
   const shippedItemsLeft =
     apiResponse?.content?.totalShipQuantity ||
     apiResponse?.content?.deliveryNotes?.length; // TODO: choose one method after BE is stable
   const notShippedItemsLeft =
-    apiResponse?.content?.totalOpenQuantity ||
-    apiResponse?.content?.items?.length; // TODO: choose one method after BE is stable
+    apiResponse?.content?.totalOpenQuantity || filteredGridData?.length; // TODO: choose one method after BE is stable
   const noShippedItems = shippedItemsLeft === 0;
+  const noNotShippedItems = notShippedItemsLeft === 0;
 
   const tabsConfig = [
     {
@@ -66,10 +75,12 @@ function DropdownOrderDetails({
       iconInActive: <DollyIcon className="order-line-details__header__icon" />,
       label: aemConfig?.orderLineDetails?.notShippedLabel,
       numberOfItems: notShippedItemsLeft,
-      disabledClass: '',
+      disabledClass: noNotShippedItems
+        ? 'order-line-details__header__disabled'
+        : '',
       content: apiResponse?.content ? (
         <NotShippedTabGrid
-          data={apiResponse?.content}
+          filteredGridData={filteredGridData}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}
@@ -114,11 +125,11 @@ function DropdownOrderDetails({
                 ? 'order-line-details__header__tab-active'
                 : 'order-line-details__header__tab-inActive'
             } ${
-              activeTab !== tab.index && noShippedItems
+              (activeTab !== tab.index && noShippedItems) || noNotShippedItems
                 ? 'order-line-details__header__tab-disabled'
                 : ''
             }`}
-            onClick={() => handleTabChange(tab.index)}
+            onClick={() => !noNotShippedItems && handleTabChange(tab.index)}
           >
             {activeTab === tab.index ? tab.iconActive : tab.iconInActive}
             <span className={tab.disabledClass}>
