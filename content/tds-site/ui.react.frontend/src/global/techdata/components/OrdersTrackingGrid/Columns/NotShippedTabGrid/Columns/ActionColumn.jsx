@@ -7,6 +7,11 @@ function ActionColumn({ line }) {
     fontSize: '1.2rem',
     width: '1.3rem',
   };
+  const disabledIconStyle = {
+    ...iconStyle,
+    fill: '#727679',
+    cursor: 'default'
+  };
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
   return (
@@ -24,7 +29,7 @@ function ActionColumn({ line }) {
                 : '__separateLineMultiple'
             }`}
           >
-            <EllipsisIcon style={iconStyle} />
+            <EllipsisIcon style={disabledIconStyle} />
           </div>
         );
       })}

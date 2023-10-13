@@ -20,6 +20,11 @@ const ActionsButton = ({
     fontSize: '1.2rem',
     width: '1.3rem',
   };
+  const disabledIconStyle = {
+    ...iconStyle,
+    fill: '#727679',
+    cursor: 'default'
+  };
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [trackUrl, setTrackUrl] = useState('');
   const multiple = line?.lineDetails?.length > 1;
@@ -169,7 +174,7 @@ const ActionsButton = ({
     >
       <EllipsisIcon
         className="cmp-order-tracking-grid-details__splitLine__separateLineText"
-        style={iconStyle}
+        style={isShipment ? iconStyle : disabledIconStyle}
       />
       {actionsDropdownVisible && isShipment && (
         <div
