@@ -15,7 +15,7 @@ export default function useGet(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const catch401 = function (error){
-      if (error && response && error.response.status === 401) {
+      if (error && error.response && error.response.status === 401) {
       window.location = loginPageUrl;
     }
   }
@@ -47,7 +47,6 @@ export default function useGet(url) {
           }
         });
     } catch (error) {
-      catch401(error);
       if (isMounted) {
         setError(error);
         setResponse(null);
