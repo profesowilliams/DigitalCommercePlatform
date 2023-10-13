@@ -96,6 +96,7 @@ function RenewalsGrid(props) {
   const { currentOptions, currentSecondLevelOptions } = getOptionsDefaultValues();
 
   const [options, setOptions] = useState(currentOptions);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [secondLevelOptions, setSecondLevelOptions] = useState(currentSecondLevelOptions);
 
   const redirectToShop = () => {
@@ -106,11 +107,11 @@ function RenewalsGrid(props) {
   const isPriceColumnClicked = useRef(false);
 
   useEffect(() => {
-    
+
     const catchPriceColumnClickEvent = (e) => {
       e.stopPropagation();
       const innerText = e.target.innerText || e.target.closest(".ag-header-cell-label")?.innerText;
-      isPriceColumnClicked.current = innerText?.includes('Price');    
+      isPriceColumnClicked.current = innerText?.includes('Price');
     }
     window.addEventListener("click", catchPriceColumnClickEvent);
 
@@ -134,6 +135,17 @@ function RenewalsGrid(props) {
     if(isAuthormodeAEM()) return; // Validation for Author ENV
 
     const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
+
+    // If user not logged in
+    if(!userData && !USER_DATA) {
+        const access_message = document.querySelector('.renewals-errormessage');
+        if (access_message) {
+            access_message.style.display = 'block';
+            document.querySelector('.subheader').style.display = 'none';
+        }
+    } else {
+        setIsLoggedIn(true);
+    }
 
     // Only redirect if the user has logged in and lacks the access. Otherwise wait for the login to finish before evaluating
     if(!!currentUserData &&
@@ -209,8 +221,8 @@ function RenewalsGrid(props) {
     if(renewalPlanItem) {
       sortedModel.push({...renewalPlanItem, colId: 'support'});
     }
-    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;  
-    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current); 
+    hasSortChanged.current = sortedModel ? { sortData: sortedModel } : false;
+    setLocalStorageData(SORT_LOCAL_STORAGE_KEY, hasSortChanged.current);
     const sortingEventFilter = evt?.columnApi?.getColumnState().filter(val => val.sort)
     if (sortingEventFilter.length === 1 && !compareSort(currentSortState, hasSortChanged.current)) {
       pushDataLayer(getSortAnalytics(category, sortedModel));
@@ -227,7 +239,7 @@ function RenewalsGrid(props) {
     const value = config.api;
     setCustomState({ key: 'gridApi', value });
     gridApiRef.current = config;
-    onAfterGridInit(config);    
+    onAfterGridInit(config);
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current)
     const columnState =  {
       state: isDefaultSort ? [
@@ -245,7 +257,7 @@ function RenewalsGrid(props) {
       if (hasLocalStorageData(TOASTER_LOCAL_STORAGE_KEY) ) {
         const toasterData = getLocalStorageData(TOASTER_LOCAL_STORAGE_KEY);
         const transactionNumber = toasterData.Child?.props?.data;
-        toasterData.Child = <TransactionNumber data={transactionNumber}/>   
+        toasterData.Child = <TransactionNumber data={transactionNumber}/>
         setTimeout(() => setCustomState({key:'toaster', value:toasterData}), 800);
       }
 
@@ -294,13 +306,14 @@ function RenewalsGrid(props) {
   }
 
   function onCloseToaster() {
-    closeAndCleanToaster();    
+    closeAndCleanToaster();
   }
 
   const contextMenuItems = (params) => getContextMenuItems(params, gridConfig);
   const processCustomClipboardAction = (params) => copyToClipboardAction(params);
- 
+
   return (
+    isLoggedIn ? (
     <section ref={renewalsRef} id="renewals-grid-component">
       <BaseGridHeader
         leftComponents={[
@@ -323,7 +336,7 @@ function RenewalsGrid(props) {
             onQueryChanged={onQueryChanged}
           />
         ]}
-      />      
+      />
       <BaseGrid
         columnList={componentProp.columnList}
         definitions={renewalsDefinitions()}
@@ -354,14 +367,14 @@ function RenewalsGrid(props) {
       </div>
       <Toaster
         onClose={onCloseToaster}
-        store={useRenewalGridState} 
+        store={useRenewalGridState}
         message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
-      <CopyFlyout 
+      <CopyFlyout
         store={useRenewalGridState}
         copyFlyout={gridConfig.copyFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         resetGrid={resetGrid} />
-    </section>
+    </section> ) : null
   );
 }
 
