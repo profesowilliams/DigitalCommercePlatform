@@ -39,6 +39,7 @@ export default function useGet(url) {
           }
         })
         .catch(function (error) {
+          catch401(error);
           if (isMounted && error.response) {
             setError(error.response);
             setResponse(null);
