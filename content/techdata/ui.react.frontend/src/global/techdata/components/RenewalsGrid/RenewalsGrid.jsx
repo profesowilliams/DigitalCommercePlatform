@@ -137,14 +137,18 @@ function RenewalsGrid(props) {
     const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
 
     // If user not logged in
+    const access_message = document.querySelector('.renewals-errormessage');
     if(!userData && !USER_DATA) {
-        const access_message = document.querySelector('.renewals-errormessage');
         if (access_message) {
             access_message.style.display = 'block';
             document.querySelector('.subheader').style.display = 'none';
         }
     } else {
         setIsLoggedIn(true);
+        if (access_message) {
+            access_message.style.display = 'none';
+            document.querySelector('.subheader').style.display = 'block';
+        }
     }
 
     // Only redirect if the user has logged in and lacks the access. Otherwise wait for the login to finish before evaluating
