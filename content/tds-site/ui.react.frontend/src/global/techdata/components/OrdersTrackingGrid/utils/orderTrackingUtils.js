@@ -275,7 +275,7 @@ export const getFilterFlyoutPredefined = (filterLabels, refinements) => {
         id: element.type,
         filterOptionLabel: element.typeText,
         filterOptionKey: element.type,
-        group: 'status',
+        group: 'type',
       })),
     },
   ];

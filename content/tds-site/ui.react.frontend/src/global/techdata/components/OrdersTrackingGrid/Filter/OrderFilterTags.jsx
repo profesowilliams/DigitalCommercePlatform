@@ -2,6 +2,14 @@ import React from 'react';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterTag from './OrderFilterTag';
 
+const filtersDateGroup = [
+  'createdFrom',
+  'createdTo',
+  'invoiceDateFrom',
+  'invoiceDateTo',
+  'shippedDateFrom',
+  'shippedDateTo',
+];
 function OrderFilterTags({ filtersRefs }) {
   const {
     setOrderStatusFiltersChecked,
@@ -68,8 +76,9 @@ function OrderFilterTags({ filtersRefs }) {
       });
       setFilterClicked(true);
       setAreThereAnyFiltersSelectedButNotApplied();
-      filtersRefs.current.createdFrom = undefined;
-      filtersRefs.current.createdTo = undefined;
+      filtersDateGroup.map(
+        (filter) => (filtersRefs.current[filter] = undefined)
+      );
     }
   };
 

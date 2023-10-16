@@ -314,6 +314,13 @@ function OrdersTrackingGrid(props) {
     );
     setFilterList([...predefined, ...customized]);
     setCustomFiltersChecked(customized);
+    return () => {
+      resetLocalStorage([
+        ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+        ORDER_SEARCH_LOCAL_STORAGE_KEY,
+        SORT_LOCAL_STORAGE_KEY,
+      ]);
+    };
   }, []);
 
   useEffect(() => {
