@@ -18,6 +18,10 @@ export const removeLocalStorageData = (key = '') => {
   key && localStorage.removeItem(key);
 };
 
+export const resetLocalStorage = (keys = []) => {
+  keys.map((key) => localStorage.removeItem(key));
+};
+
 export const mapServiceData = (response) => {
   const mappedResponse = { ...response };
   const items = mappedResponse?.data?.content?.items?.map((val) => ({
@@ -215,3 +219,10 @@ export function extractSortColAndDirection(sortDataRef = []) {
     sortStrValue: `${sortParam?.colId}:${sortParam?.sort}`,
   };
 }
+
+export const pageAccessedByReload =
+  (window.performance.navigation && window.performance.navigation.type === 1) ||
+  window.performance
+    .getEntriesByType('navigation')
+    .map((nav) => nav.type)
+    .includes('reload');

@@ -147,10 +147,14 @@ function DropdownOrderDetails({
         ))}
       </div>
       <div>
-        {tabsConfig.map(
-          (tab) =>
-            activeTab === tab.index && <div key={tab.index}>{tab.content}</div>
-        )}
+        {tabsConfig.map((tab) => (
+          <div
+            style={{ display: `${activeTab === tab.index ? 'block' : 'none'}` }}
+            key={tab.index}
+          >
+            {tab.content}
+          </div>
+        ))}
       </div>
     </div>
   );

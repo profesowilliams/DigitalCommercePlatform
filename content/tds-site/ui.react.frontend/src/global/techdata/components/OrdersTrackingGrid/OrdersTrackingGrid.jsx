@@ -42,6 +42,8 @@ import {
   isFirstTimeSortParameters,
   getLocalStorageData,
   hasLocalStorageData,
+  resetLocalStorage,
+  pageAccessedByReload,
 } from './utils/gridUtils';
 import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
