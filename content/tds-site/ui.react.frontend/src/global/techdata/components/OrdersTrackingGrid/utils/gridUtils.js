@@ -107,6 +107,7 @@ const doesMatchByDeliveryNote = (searchDeliveryNote, deliveryNotes) =>
 
 const doesMatchById = (searchId, orderId) => searchId === orderId;
 
+// DEPRECATED: Now for every single row results you get redirected, so only checking results.length
 export const doesCurrentSearchMatchResult = (result, searchCriteria) => {
   if (searchCriteria.current.field === 'Id') {
     return doesMatchById(searchCriteria.current.value, result.id);

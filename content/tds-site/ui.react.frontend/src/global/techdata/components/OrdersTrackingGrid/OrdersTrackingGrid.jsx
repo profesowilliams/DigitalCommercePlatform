@@ -254,18 +254,23 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  const handleDirectMatch = (response) => {
+    removeLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY);
+    window.location.href = `${location.href.substring(
+      0,
+      location.href.lastIndexOf('.')
+    )}/order-details.html?id=${response[0].id}`;
+  }
+
   const onDataLoad = (response) => {
     if (
-      response.length >= 1 &&
-      doesCurrentSearchMatchResult(response[0], searchCriteria)
+      response.length === 1
     ) {
-      removeLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY);
-      window.location.href = `${location.href.substring(
-        0,
-        location.href.lastIndexOf('.')
-      )}/order-details.html?id=${response[0].id}`;
+      gridApiRef?.current?.api.showLoadingOverlay()
+      handleDirectMatch(response)
+    } else {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   async function downloadFileBlob(flyoutType, orderId, selectedId) {
