@@ -46,6 +46,7 @@ function RenewalsDetails(props) {
 
   const [toggleEdit, setToggleEdit] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
@@ -74,6 +75,22 @@ function RenewalsDetails(props) {
     if(isAuthormodeAEM()) return; // Validation for Author ENV
 
     const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
+
+
+    // If user not logged in
+    const access_message = document.querySelector('.renewals-errormessage');
+    if(!userData && !USER_DATA) {
+        if (access_message) {
+            access_message.style.display = 'block';
+            document.querySelector('.subheader').style.display = 'none';
+        }
+    } else {
+        setAuthenticated(true);
+        if (access_message) {
+            access_message.style.display = 'none';
+            document.querySelector('.subheader').style.display = 'block';
+        }
+    }
 
     if(!!currentUserData &&
        !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
@@ -219,6 +236,7 @@ function RenewalsDetails(props) {
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
+    authenticated ? (
     <div className="cmp-quote-preview cmp-renewal-preview" ref={renewalsRef}>
       {renewalsDetails ? (
         <section>
@@ -283,7 +301,7 @@ function RenewalsDetails(props) {
         onClose={closeCancelDialog}
         labels={componentProp.quoteEditing}
       />
-    </div>
+    </div> ) : null
   );
 }
 

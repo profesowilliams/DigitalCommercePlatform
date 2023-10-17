@@ -977,3 +977,33 @@
     }
   }
 }
+
+.renewals-errormessage {
+  display: none;
+  &.teaser {
+    .cmp-teaser {
+      max-width: 456px;
+      text-align: center;
+      margin: 20px auto;
+
+      .cmp-teaser__image img {
+        width: 176px;
+        ma: center;
+      }
+
+      .cmp-teaser__content {
+        .cmp-teaser__title {
+          font-size: 32px;
+          line-height: 40px;
+          color: #262626;
+        }
+
+        .cmp-teaser__desc-link p {
+          font-size: 16px;
+          line-height: 24px;
+          color: #262626;
+        }
+      }
+    }
+  }
+}
