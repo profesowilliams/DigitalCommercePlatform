@@ -236,9 +236,8 @@ function RenewalsDetails(props) {
 
   const isEditable = ({ canEditLines }) => canEditLines && !saving;
   return (
-    authenticated ? (
     <div className="cmp-quote-preview cmp-renewal-preview" ref={renewalsRef}>
-      {renewalsDetails ? (
+      {authenticated && renewalsDetails ? (
         <section>
           <ConfigGrid
             data={renewalsDetails}
@@ -252,10 +251,10 @@ function RenewalsDetails(props) {
             <span className="details-preview">{componentProp?.productLines?.lineItemDetailsLabel || "Details"}<span class="details-price-level">{renewalsDetails.renewalLevel}</span></span>
             {isEditable(renewalsDetails) && (
             <EditFlow
-              disabled={!editMode && isEditingDetails} 
-              editValue={editMode} 
-              setEdit={setLockedEdit} 
-              saveHandler={handleSave} 
+              disabled={!editMode && isEditingDetails}
+              editValue={editMode}
+              setEdit={setLockedEdit}
+              saveHandler={handleSave}
               cancelHandler={handleCancel}
             />
             )}
@@ -294,14 +293,14 @@ function RenewalsDetails(props) {
           actionErrorMessage={modal.errorMessage}
           onModalClosed={modal.onModalClosed}
         ></Modal>
-      )}      
+      )}
       <CancelDialog
         branding={useRenewalsDetailsStore(state => state.branding || '')}
         isDialogOpen={openCancelDialog}
         onClose={closeCancelDialog}
         labels={componentProp.quoteEditing}
       />
-    </div> ) : null
+    </div>
   );
 }
 
