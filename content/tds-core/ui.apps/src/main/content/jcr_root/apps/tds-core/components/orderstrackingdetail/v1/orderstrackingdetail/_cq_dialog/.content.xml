@@ -482,11 +482,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Track and Trace Label"
 												name="./title"/>
-                                            <description
+                                            <trackingDescription
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Select the D-Note you want to track. Label"
-												name="./description"/>
+												name="./trackingDescription"/>
                                             <mfrNo
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

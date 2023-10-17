@@ -99,7 +99,7 @@ function TrackingFlyout({
           </div>
         </div>
         <div className="cmp-flyout-tracking__content__message">
-          {getDictionaryValueOrKey(trackingFlyout?.description)}
+          {getDictionaryValueOrKey(trackingFlyout?.trackingDescription)}
         </div>
         <div>
           <div className="cmp-flyout-tracking__content__tableHeader">
