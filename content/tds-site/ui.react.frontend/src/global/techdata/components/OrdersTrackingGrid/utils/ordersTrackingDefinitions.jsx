@@ -6,9 +6,10 @@ import ShipToColumn from '../Columns/ShipToColumn';
 import ResellerColumn from '../Columns/ResellerColumn';
 import SelectColumn from '../Columns/SelectColumn';
 import TotalColumn from '../Columns/TotalColumn';
+import StatusColumn from '../Columns/StatusColumn';
 
 export const ordersTrackingDefinition = (
-  { detailUrl, multiple },
+  { detailUrl, multiple, orderModifyLabels },
   openFilePdf,
   hasAIORights
 ) => {
@@ -22,6 +23,12 @@ export const ordersTrackingDefinition = (
       select: <SelectColumn eventProps={eventProps} />,
       updated: data?.updatedFormatted ?? data?.created,
       shipTo: <ShipToColumn data={data?.shipTo} />,
+      status: (
+        <StatusColumn
+          data={data}
+          completeDeliveryOnly={orderModifyLabels.completeDeliveryOnly}
+        />
+      ),
       created: data?.createdFormatted ?? data?.created,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
       customerPO: <ResellerColumn data={data?.customerPO} />,
@@ -54,7 +61,7 @@ export const ordersTrackingDefinition = (
     select: 35,
     updated: 90,
     shipTo: 160,
-    status: 110,
+    status: 140,
     created: 110,
     id: 100,
     customerPO: 160,
@@ -67,7 +74,7 @@ export const ordersTrackingDefinition = (
     select: '35px',
     updated: '90px',
     shipTo: '160px',
-    status: '110px',
+    status: '140px',
     created: '110px',
     id: '100px',
     customerPO: '160px',

@@ -905,6 +905,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Rejection Required Info Label"
 												name="./rejectionRequiredInfo"/>
+                                            <completeDeliveryOnly
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Complete Delivery Only Info Label"
+												name="./completeDeliveryOnly"/>
 										</items>
 									</column>
 								</items>

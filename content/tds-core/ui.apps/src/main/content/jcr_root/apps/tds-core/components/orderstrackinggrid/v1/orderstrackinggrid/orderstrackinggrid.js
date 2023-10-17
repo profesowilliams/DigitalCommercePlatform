@@ -182,6 +182,7 @@ use(["../common/utils.js"], function (utils) {
       "rejectionAvailability",
       "rejectionOther",
       "rejectionRequiredInfo",
+      "completeDeliveryOnly",
     ];
 
     orderModifyLabelsList.map((property) => {
