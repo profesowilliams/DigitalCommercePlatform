@@ -467,6 +467,60 @@
 									</column>
 								</items>
 							</orderModify>
+                            <trackingFlyout
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Tracking Flyout"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+										<items jcr:primaryType="nt:unstructured">
+                                            <title
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Track and Trace Label"
+												name="./title"/>
+                                            <description
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Select the D-Note you want to track. Label"
+												name="./description"/>
+                                            <mfrNo
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Mfr №: Label"
+												name="./mfrNo"/>
+                                            <tdsNo
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="TDS №: Label"
+												name="./tdsNo"/>
+                                            <button
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Track"
+												name="./button"/>
+                                            <cancelButton
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Cancel"
+												name="./cancelButton"/>
+                                            <dNoteColumn
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="D-note №"
+												name="./dNoteColumn"/>
+                                            <shipDateColumn
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Ship Date"
+												name="./shipDateColumn"/>
+										</items>
+									</column>
+								</items>
+							</trackingFlyout>
                             <invoicesFlyout
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Invoices Flyout"

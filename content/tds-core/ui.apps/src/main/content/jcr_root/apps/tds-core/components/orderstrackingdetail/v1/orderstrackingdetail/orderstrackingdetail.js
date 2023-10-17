@@ -12,6 +12,7 @@ use(["../../../common/utils.js"], function (utils) {
   const contactLabels = {};
   const footerLabels = {};
   const orderModifyLabels = {};
+  const trackingFlyout = {};
   const dNotesFlyout = {};
   const invoicesFlyout = {};
   const exportFlyout = {};
@@ -186,6 +187,27 @@ use(["../../../common/utils.js"], function (utils) {
 
   if (orderModifyLabels != null) {
     jsonObject["orderModifyLabels"] = orderModifyLabels;
+  }
+
+  // Tracking Flyout Labels
+  const trackingFlyoutList = [
+    "title",
+    "description",
+    "mfrNo",
+    "tdsNo",
+    "button",
+    "cancelButton",
+    "dNoteColumn",
+    "shipDateColumn",
+  ];
+
+  properties &&
+    trackingFlyoutList.map((property) => {
+      trackingFlyout[property] = properties[property];
+    });
+
+  if (trackingFlyout != null) {
+    jsonObject["trackingFlyout"] = trackingFlyout;
   }
 
   //Invoices flyout options

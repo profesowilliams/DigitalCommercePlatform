@@ -1,4 +1,5 @@
 import React from 'react';
+import TrackingFlyout from '../TrackingFlyout/TrackingFlyout';
 import DNotesFlyout from '../DNotesFlyout/DNotesFlyout';
 import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
@@ -20,6 +21,13 @@ const Flyouts = ({
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   return (
     <>
+      <TrackingFlyout
+        store={useOrderTrackingStore}
+        config={config}
+        trackingFlyout={config?.trackingFlyout}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        isTDSynnex={isTDSynnex}
+      />
       <DNotesFlyout
         store={useOrderTrackingStore}
         dNotesFlyout={config?.dNotesFlyout}
