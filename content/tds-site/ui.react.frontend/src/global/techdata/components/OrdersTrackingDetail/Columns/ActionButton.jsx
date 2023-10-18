@@ -23,10 +23,9 @@ const ActionsButton = ({
   const disabledIconStyle = {
     ...iconStyle,
     fill: '#727679',
-    cursor: 'default'
+    cursor: 'default',
   };
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
-  const [trackUrl, setTrackUrl] = useState('');
   const multiple = line?.lineDetails?.length > 1;
   const isLastElement = multiple && index === line?.lineDetails?.length - 1;
   const isSingleElement = !multiple;
@@ -58,6 +57,11 @@ const ActionsButton = ({
   const id = apiResponse?.orderNumber;
   const poNumber = apiResponse?.customerPO;
 
+  const orderId = id;
+  const lineId = line.line;
+  const dNoteId = deliveryNotes[0].id;
+  const enableLineId = line.line.length === 1;
+
   const toaster = {
     isOpen: true,
     origin: 'fromUpdate',
@@ -87,9 +91,28 @@ const ActionsButton = ({
     }
     effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
-  const handleTrackAndTrace = () => {
-    window.open(trackUrl, '_blank');
+
+  const handleTrackAndTrace = async () => {
+    try {
+      const endpointUrl = enableLineId
+        ? `${config.trackDeliveryEndpoint}/${orderId}/${lineId}/${dNoteId}`
+        : `${config.trackDeliveryEndpoint}/${orderId}/${dNoteId}`;
+      const result = await usGet(endpointUrl);
+      const { baseUrl, parameters } = result.data;
+      if (baseUrl) {
+        const urlParams =
+          '?' +
+          Object.entries(parameters)
+            .map((entry) => entry[0] + '=' + entry[1])
+            .join('&');
+        const trackUrl = baseUrl + urlParams;
+        window.open(trackUrl, '_blank');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   // TODO: Change handleReturn  after flyout for multiple return links will be created, add suport for single and multiple return links
   const handleReturn = () => {
     if (isReturnAvailable) {
@@ -153,25 +176,6 @@ const ActionsButton = ({
       onClick: handleReturn,
     },
   ];
-
-  useEffect(async () => {
-    try {
-      const result = await usGet(
-        `${config.trackDeliveryEndpoint}/${id}/${line.line}/${deliveryNotes[0].id}`
-      );
-      const { baseUrl, parameters } = result.data;
-      if (baseUrl) {
-        const urlParams =
-          '?' +
-          Object.entries(parameters)
-            .map((entry) => entry[0] + '=' + entry[1])
-            .join('&');
-        setTrackUrl(baseUrl + urlParams);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
 
   return (
     <div
