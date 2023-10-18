@@ -24,6 +24,10 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
   };
 
   const AccountNameWithHighlight = () => {
+    if (!currentlyTypedWord) {
+      return null;
+    }
+
     let string = name.substr(0, name.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()));
     let endString = name.substr(
         name.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()) +
