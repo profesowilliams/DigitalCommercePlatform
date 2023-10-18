@@ -192,7 +192,7 @@ use(["../../../common/utils.js"], function (utils) {
   // Tracking Flyout Labels
   const trackingFlyoutList = [
     "title",
-    "description",
+    "descriptionTracking",
     "mfrNo",
     "tdsNo",
     "button",
