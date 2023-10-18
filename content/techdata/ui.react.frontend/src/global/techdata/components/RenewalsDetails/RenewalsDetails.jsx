@@ -46,7 +46,7 @@ function RenewalsDetails(props) {
 
   const [toggleEdit, setToggleEdit] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
 
   // Keep grid reference to cancel edit changes
   const gridRef = useRef();
@@ -76,19 +76,15 @@ function RenewalsDetails(props) {
 
     const currentUserData = isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : USER_DATA;
 
-
     // If user not logged in
     const access_message = document.querySelector('.renewals-errormessage');
-    if(!userData && !USER_DATA) {
+    if(userData && USER_DATA &&
+    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
+    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
         if (access_message) {
+            setAuthenticated(false);
             access_message.style.display = 'block';
             document.querySelector('.subheader').style.display = 'none';
-        }
-    } else {
-        setAuthenticated(true);
-        if (access_message) {
-            access_message.style.display = 'none';
-            document.querySelector('.subheader').style.display = 'block';
         }
     }
 

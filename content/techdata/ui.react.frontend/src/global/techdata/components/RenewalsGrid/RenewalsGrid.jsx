@@ -96,7 +96,7 @@ function RenewalsGrid(props) {
   const { currentOptions, currentSecondLevelOptions } = getOptionsDefaultValues();
 
   const [options, setOptions] = useState(currentOptions);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [secondLevelOptions, setSecondLevelOptions] = useState(currentSecondLevelOptions);
 
   const redirectToShop = () => {
@@ -138,16 +138,13 @@ function RenewalsGrid(props) {
 
     // If user not logged in
     const access_message = document.querySelector('.renewals-errormessage');
-    if(!userData && !USER_DATA) {
+    if(userData && USER_DATA &&
+    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
+    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
         if (access_message) {
+            setIsLoggedIn(false);
             access_message.style.display = 'block';
             document.querySelector('.subheader').style.display = 'none';
-        }
-    } else {
-        setIsLoggedIn(true);
-        if (access_message) {
-            access_message.style.display = 'none';
-            document.querySelector('.subheader').style.display = 'block';
         }
     }
 
