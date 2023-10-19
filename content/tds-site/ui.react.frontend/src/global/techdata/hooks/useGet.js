@@ -15,8 +15,18 @@ export default function useGet(url) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const catch401 = function (error){
-      if (error && error.response && error.response.status === 401) {
-      window.location = loginPageUrl;
+      const authorMode = !(
+          typeof Granite === 'undefined' || typeof Granite.author === 'undefined'
+      );
+      const isLocalhost = window.location.href.includes('localhost');
+
+      if (authorMode || isLocalhost) {
+          // do nothing
+          console.log("authorMode or localhost = ", authorMode || isLocalhost);
+      } else {
+        if (error && error.response && error.response.status === 401) {
+          window.location = loginPageUrl;
+      }
     }
   }
   
