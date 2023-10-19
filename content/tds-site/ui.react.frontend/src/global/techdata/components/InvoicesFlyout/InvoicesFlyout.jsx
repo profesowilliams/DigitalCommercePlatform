@@ -9,7 +9,7 @@ function InvoicesFlyout({
   store,
   gridConfig,
   invoicesFlyout = {},
-  invoicesColumnList,
+  invoicesColumnList: columnList,
   subheaderReference,
   isTDSynnex,
   downloadAllFile,
@@ -21,21 +21,14 @@ function InvoicesFlyout({
   const [selected, setSelected] = useState([]);
   const [invoicesResponse, setInvoicesResponse] = useState(null);
   const closeFlyout = () => {
-    setInvoicesResponse(null);
     effects.setCustomState({
       key: 'invoicesFlyout',
       value: { data: null, show: false },
     });
     setSelected([]);
   };
-  const columnList = invoicesColumnList;
-  const copiedInvoicesFlyoutConfig = {
-    ...invoicesFlyoutConfig,
-    data: invoicesResponse,
-  };
-  const config = invoicesResponse
-    ? copiedInvoicesFlyoutConfig
-    : invoicesFlyoutConfig;
+  const config = {...invoicesFlyoutConfig, data: invoicesFlyoutConfig?.data || invoicesResponse };
+
   const {
     rows,
     headCells,
@@ -62,14 +55,9 @@ function InvoicesFlyout({
     }
   };
 
-  const allParametersHaveValue =
-    Array.isArray(rows) &&
-    rows.length > 0 &&
-    rows.every((item) => item.id && item.dateFormatted);
-
   useEffect(() => {
+    setInvoicesResponse(null);
     invoicesFlyoutConfig?.id &&
-      !allParametersHaveValue &&
       getInvoices()
         .then((result) => {
           setInvoicesResponse(result?.data?.content);
@@ -77,7 +65,7 @@ function InvoicesFlyout({
         .catch((error) => {
           console.error('Error:', error);
         });
-  }, [invoicesFlyoutConfig?.id, allParametersHaveValue]);
+  }, [invoicesFlyoutConfig?.id]);
 
   return (
     <BaseFlyout
@@ -119,7 +107,7 @@ function InvoicesFlyout({
         </div>
         {columnList && (
           <FlyoutTable
-            dataTable={allParametersHaveValue ? rows : invoicesResponse}
+            dataTable={rows}
             selected={selected}
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}

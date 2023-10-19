@@ -9,7 +9,7 @@ function DNotesFlyout({
   store,
   gridConfig,
   dNotesFlyout = {},
-  dNoteColumnList,
+  dNoteColumnList: columnList,
   subheaderReference,
   isTDSynnex,
   downloadAllFile,
@@ -20,21 +20,15 @@ function DNotesFlyout({
   const [selected, setSelected] = useState([]);
   const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
   const closeFlyout = () => {
-    setDeliveryNotesResponse(null);
     effects.setCustomState({
       key: 'dNotesFlyout',
       value: { data: null, show: false },
     });
     setSelected([]);
   };
-  const columnList = dNoteColumnList;
-  const copiedDNoteFlyoutConfig = {
-    ...dNoteFlyoutConfig,
-    data: deliveryNotesResponse,
-  };
-  const config = deliveryNotesResponse
-    ? copiedDNoteFlyoutConfig
-    : dNoteFlyoutConfig;
+
+  const config = {...dNoteFlyoutConfig, data: dNoteFlyoutConfig?.data || deliveryNotesResponse};
+
   const {
     rows,
     headCells,
@@ -61,14 +55,9 @@ function DNotesFlyout({
     }
   };
 
-  const allParametersHaveValue =
-    Array.isArray(rows) &&
-    rows.length > 0 &&
-    rows.every((item) => item.id && item.dateFormatted);
-
   useEffect(() => {
+    setDeliveryNotesResponse(null);
     dNoteFlyoutConfig?.id &&
-      !allParametersHaveValue &&
       getDeliveryNotes()
         .then((result) => {
           setDeliveryNotesResponse(result?.data?.content);
@@ -76,7 +65,7 @@ function DNotesFlyout({
         .catch((error) => {
           console.error('Error:', error);
         });
-  }, [dNoteFlyoutConfig?.id, allParametersHaveValue]);
+  }, [dNoteFlyoutConfig?.id]);
 
   return (
     <BaseFlyout
@@ -118,7 +107,7 @@ function DNotesFlyout({
         </div>
         {columnList && (
           <FlyoutTable
-            dataTable={allParametersHaveValue ? rows : deliveryNotesResponse}
+            dataTable={rows}
             selected={selected}
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}
