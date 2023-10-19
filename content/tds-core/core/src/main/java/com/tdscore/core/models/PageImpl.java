@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Exporter;
@@ -67,6 +68,9 @@ public class PageImpl implements Page {
     @Self
     private SlingHttpServletRequest request;
 
+    @Inject
+    private SlingHttpServletResponse response;
+
     @OSGiService
     private IntouchRetrieveDataService intouchService;
 
@@ -80,6 +84,9 @@ public class PageImpl implements Page {
     @PostConstruct
     protected void initModel() {
         LOG.debug("Inside PageImpl Model");
+        response.setHeader("Dispatcher", "no-cache");
+        response.setHeader("X-Dispatcher", "no-cache");
+        response.setHeader("alamakota", "akotmapchly");
     }
 
     @Override
