@@ -78,20 +78,13 @@ function RenewalsDetails(props) {
 
     // If user not logged in
     const access_message = document.querySelector('.renewals-errormessage');
-    if(userData && USER_DATA &&
-    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
+    if(currentUserData &&
     !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
         if (access_message) {
             setAuthenticated(false);
             access_message.style.display = 'block';
             document.querySelector('.subheader').style.display = 'none';
         }
-    }
-
-    if(!!currentUserData &&
-       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
-       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
-      redirectToShop();
     }
   }, [
     USER_DATA,

@@ -138,21 +138,13 @@ function RenewalsGrid(props) {
 
     // If user not logged in
     const access_message = document.querySelector('.renewals-errormessage');
-    if(userData && USER_DATA &&
-    !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
+    if(currentUserData &&
     !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
         if (access_message) {
             setIsLoggedIn(false);
             access_message.style.display = 'block';
             document.querySelector('.subheader').style.display = 'none';
         }
-    }
-
-    // Only redirect if the user has logged in and lacks the access. Otherwise wait for the login to finish before evaluating
-    if(!!currentUserData &&
-       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.RENEWALS_ACCESS }) &&
-       !hasAccess({ user: currentUserData, accessType: ACCESS_TYPES.CAN_ACCESS_RENEWALS })) {
-      redirectToShop();
     }
   }, [
     USER_DATA,
