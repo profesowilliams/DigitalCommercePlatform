@@ -59,7 +59,7 @@ function TrackingFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={trackingFlyout.titleTracking || 'Track and Trace'}
-      buttonLabel={trackingFlyout.cancelButton || 'Cancel'}
+      buttonLabel={trackingFlyout.cancelButtonTracking || 'Cancel'}
       isTDSynnex={isTDSynnex}
       onClickButton={closeFlyout}
     >
@@ -78,7 +78,7 @@ function TrackingFlyout({
             </span>
             <div className="cmp-flyout-with-links__content__text">
               <span className="cmp-flyout-with-links__content__label">
-                {getDictionaryValueOrKey(trackingFlyout?.mfrNo)}
+                {getDictionaryValueOrKey(trackingFlyout?.mfrNoTracking)}
               </span>
               <span className="cmp-flyout-with-links__content__value">
                 {mfrNumber}
@@ -86,7 +86,7 @@ function TrackingFlyout({
             </div>
             <div className="cmp-flyout-with-links__content__text">
               <span className="cmp-flyout-with-links__content__label">
-                {getDictionaryValueOrKey(trackingFlyout?.tdsNo)}
+                {getDictionaryValueOrKey(trackingFlyout?.tdsNoTracking)}
               </span>
               <span className="cmp-flyout-with-links__content__value">
                 {tdNumber}
@@ -98,12 +98,12 @@ function TrackingFlyout({
           {getDictionaryValueOrKey(trackingFlyout?.descriptionTracking)}
         </div>
         <FlyoutTableWithRedirectLinks
-          config={trackingFlyout}
           data={data}
           handleButtonClick={handleTrackAndTrace}
           handleButtonField={'id'}
           idLabel={trackingFlyout?.idColumnTracking}
           buttonLabel={trackingFlyout?.buttonTracking}
+          shipDateLabel={trackingFlyout?.shipDateColumnTracking}
         />
       </section>
     </BaseFlyout>

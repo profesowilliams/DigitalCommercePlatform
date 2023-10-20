@@ -194,12 +194,12 @@ use(["../../../common/utils.js"], function (utils) {
   const trackingFlyoutList = [
     "titleTracking",
     "descriptionTracking",
-    "mfrNo",
-    "tdsNo",
+    "mfrNoTracking",
+    "tdsNoTracking",
     "buttonTracking",
-    "cancelButton",
+    "cancelButtonTracking",
     "idColumnTracking",
-    "shipDateColumn",
+    "shipDateColumnTracking",
   ];
 
   properties &&
@@ -215,12 +215,12 @@ use(["../../../common/utils.js"], function (utils) {
   const returnFlyoutList = [
     "titleReturn",
     "descriptionReturn",
-    "mfrNo",
-    "tdsNo",
+    "mfrNoReturn",
+    "tdsNoReturn",
     "buttonReturn",
-    "cancelButton",
+    "cancelButtonReturn",
     "idColumnReturn",
-    "shipDateColumn",
+    "shipDateColumnReturn",
   ];
 
   properties &&

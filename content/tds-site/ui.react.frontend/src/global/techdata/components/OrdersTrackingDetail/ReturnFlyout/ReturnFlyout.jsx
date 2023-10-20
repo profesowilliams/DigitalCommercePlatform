@@ -34,7 +34,7 @@ function ReturnFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={returnFlyout.titleReturn || 'Return'}
-      buttonLabel={returnFlyout.cancelButton || 'Cancel'}
+      buttonLabel={returnFlyout.cancelButtonReturn || 'Cancel'}
       isTDSynnex={isTDSynnex}
       onClickButton={closeFlyout}
     >
@@ -53,7 +53,7 @@ function ReturnFlyout({
             </span>
             <div className="cmp-flyout-with-links__content__text">
               <span className="cmp-flyout-with-links__content__label">
-                {getDictionaryValueOrKey(returnFlyout?.mfrNo)}
+                {getDictionaryValueOrKey(returnFlyout?.mfrNoReturn)}
               </span>
               <span className="cmp-flyout-with-links__content__value">
                 {mfrNumber}
@@ -61,7 +61,7 @@ function ReturnFlyout({
             </div>
             <div className="cmp-flyout-with-links__content__text">
               <span className="cmp-flyout-with-links__content__label">
-                {getDictionaryValueOrKey(returnFlyout?.tdsNo)}
+                {getDictionaryValueOrKey(returnFlyout?.tdsNoReturn)}
               </span>
               <span className="cmp-flyout-with-links__content__value">
                 {tdNumber}
@@ -73,12 +73,12 @@ function ReturnFlyout({
           {getDictionaryValueOrKey(returnFlyout?.descriptionReturn)}
         </div>
         <FlyoutTableWithRedirectLinks
-          config={returnFlyout}
           data={data}
           handleButtonClick={handleReturn}
           handleButtonField={'returnURL'}
           idLabel={returnFlyout?.idColumnReturn}
           buttonLabel={returnFlyout?.buttonReturn}
+          shipDateLabel={returnFlyout?.shipDateColumnReturn}
         />
       </section>
     </BaseFlyout>

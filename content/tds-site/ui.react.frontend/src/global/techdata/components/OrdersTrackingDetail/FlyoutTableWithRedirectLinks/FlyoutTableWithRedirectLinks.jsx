@@ -2,12 +2,12 @@ import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export default function FlyoutTableWithRedirectLinks({
-  config,
   data,
   handleButtonClick,
   handleButtonField,
   idLabel,
   buttonLabel,
+  shipDateLabel,
 }) {
   return (
     <div>
@@ -16,7 +16,7 @@ export default function FlyoutTableWithRedirectLinks({
           {getDictionaryValueOrKey(idLabel)}
         </span>
         <span className="cmp-flyout-with-links__content__bold">
-          {getDictionaryValueOrKey(config?.shipDateColumn)}
+          {getDictionaryValueOrKey(shipDateLabel)}
         </span>
         <span className="cmp-flyout-with-links__content__bold"></span>
       </div>
