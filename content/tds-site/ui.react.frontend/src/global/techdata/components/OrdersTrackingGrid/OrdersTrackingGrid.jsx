@@ -260,14 +260,12 @@ function OrdersTrackingGrid(props) {
       0,
       location.href.lastIndexOf('.')
     )}/order-details.html?id=${response[0].id}`;
-  }
+  };
 
   const onDataLoad = (response) => {
-    if (
-      response.length === 1
-    ) {
-      gridApiRef?.current?.api.showLoadingOverlay()
-      handleDirectMatch(response)
+    if (response.length === 1) {
+      gridApiRef?.current?.api.showLoadingOverlay();
+      handleDirectMatch(response);
     } else {
       setIsLoading(false);
     }
@@ -310,6 +308,11 @@ function OrdersTrackingGrid(props) {
   };
 
   useEffect(async () => {
+    resetLocalStorage([
+      ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+      ORDER_SEARCH_LOCAL_STORAGE_KEY,
+      SORT_LOCAL_STORAGE_KEY,
+    ]);
     const refinements = await fetchFiltersRefinements();
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     const customized = getFilterFlyoutCustomized(
@@ -319,13 +322,6 @@ function OrdersTrackingGrid(props) {
     );
     setFilterList([...predefined, ...customized]);
     setCustomFiltersChecked(customized);
-    return () => {
-      resetLocalStorage([
-        ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-        ORDER_SEARCH_LOCAL_STORAGE_KEY,
-        SORT_LOCAL_STORAGE_KEY,
-      ]);
-    };
   }, []);
 
   useEffect(() => {

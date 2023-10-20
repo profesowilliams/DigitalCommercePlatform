@@ -39,12 +39,14 @@ export const fetchOrdersCount = async (
     const { field, value } = searchCriteria.current;
     mapUrl.set(field, value);
     addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
-  } else if (dateFilters.length > 0) {
-    dateFilters.forEach(filter => mapUrl.set(filter[0], filter[1]));
-    addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   } else {
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
+
+  if (dateFilters.length > 0) {
+    dateFilters.forEach((filter) => mapUrl.set(filter[0], filter[1]));
+    addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
+  } 
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
   try {
