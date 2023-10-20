@@ -37,7 +37,7 @@ export default function FlyoutHeaderWithRedirectLinks({ data, config }) {
         </div>
       </div>
       <div className="cmp-flyout-with-links__content__message">
-        {getDictionaryValueOrKey(config?.descriptionTracking)}
+        {getDictionaryValueOrKey(config?.descriptionWithRedirectLinks)}
       </div>
     </>
   );

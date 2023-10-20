@@ -482,11 +482,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Track and Trace Label"
 												name="./title"/>
-                                            <description
+                                            <descriptionWithRedirectLinks
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Select the D-Note you want to track. Label"
-												name="./description"/>
+												name="./descriptionWithRedirectLinks"/>
                                             <mfrNo
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -536,11 +536,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Return Label"
 												name="./title"/>
-                                            <description
+                                            <descriptionWithRedirectLinks
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Select the Invoice you want to return. Label"
-												name="./description"/>
+												name="./descriptionWithRedirectLinks"/>
                                             <mfrNo
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
