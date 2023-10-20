@@ -6326,6 +6326,13 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               id: "877341264",
               date: "07-18-2023",
               dateFormatted: "18/07/2023",
+              returnURL:
+                "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=877346262&Line=10&product=2663149",
+            },
+            {
+              id: "877341264",
+              date: "07-18-2023",
+              dateFormatted: "18/07/2023",
             },
           ],
           serials: "serial1,serial2",

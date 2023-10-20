@@ -463,7 +463,7 @@ $flyout-small-height-formax: 779px;
   }
 }
 
-.cmp-flyout-tracking {
+.cmp-flyout-with-links {
   &__content {
     font-family: $font-family-arial;
     color: $brand-charcoal;
@@ -482,7 +482,7 @@ $flyout-small-height-formax: 779px;
       margin-top: 12px;
     }
     &__detailsLeft {
-      max-width: 80px
+      width: 80px
     }
     &__image {
       width:100%;

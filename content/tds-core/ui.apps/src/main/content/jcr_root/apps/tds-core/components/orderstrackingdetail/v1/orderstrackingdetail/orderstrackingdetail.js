@@ -13,6 +13,7 @@ use(["../../../common/utils.js"], function (utils) {
   const footerLabels = {};
   const orderModifyLabels = {};
   const trackingFlyout = {};
+  const returnFlyout = {};
   const dNotesFlyout = {};
   const invoicesFlyout = {};
   const exportFlyout = {};
@@ -192,12 +193,12 @@ use(["../../../common/utils.js"], function (utils) {
   // Tracking Flyout Labels
   const trackingFlyoutList = [
     "title",
-    "descriptionTracking",
+    "description",
     "mfrNo",
     "tdsNo",
     "button",
     "cancelButton",
-    "dNoteColumn",
+    "idColumn",
     "shipDateColumn",
   ];
 
@@ -208,6 +209,27 @@ use(["../../../common/utils.js"], function (utils) {
 
   if (trackingFlyout != null) {
     jsonObject["trackingFlyout"] = trackingFlyout;
+  }
+
+  // Return Flyout Labels
+  const returnFlyoutList = [
+    "title",
+    "description",
+    "mfrNo",
+    "tdsNo",
+    "button",
+    "cancelButton",
+    "idColumn",
+    "shipDateColumn",
+  ];
+
+  properties &&
+    returnFlyoutList.map((property) => {
+      returnFlyout[property] = properties[property];
+    });
+
+  if (returnFlyout != null) {
+    jsonObject["returnFlyout"] = returnFlyout;
   }
 
   //Invoices flyout options
