@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { usGet } from '../../../../../utils/api';
 import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/FlyoutTableWithRedirectLinks';
-import FlyoutHeaderWithRedirectLinks from '../FlyoutHeaderWithRedirectLinks/FlyoutHeaderWithRedirectLinks';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function TrackingFlyout({
   store,
@@ -58,21 +58,52 @@ function TrackingFlyout({
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={trackingFlyout.title || 'Track and Trace'}
+      titleLabel={trackingFlyout.titleTracking || 'Track and Trace'}
       buttonLabel={trackingFlyout.cancelButton || 'Cancel'}
       isTDSynnex={isTDSynnex}
       onClickButton={closeFlyout}
     >
       <section className="cmp-flyout-with-links__content">
-        <FlyoutHeaderWithRedirectLinks
-          data={trackingFlyoutConfig?.line}
-          config={trackingFlyout}
-        />
+        <div className="cmp-flyout-with-links__content__contentFlex">
+          <div className="cmp-flyout-with-links__content__detailsLeft">
+            <img
+              src={urlProductImage}
+              alt=""
+              className="cmp-flyout-with-links__content__image"
+            />
+          </div>
+          <div className="cmp-flyout-with-links__content__detailsRight">
+            <span className="cmp-flyout-with-links__content__name">
+              {displayName}
+            </span>
+            <div className="cmp-flyout-with-links__content__text">
+              <span className="cmp-flyout-with-links__content__label">
+                {getDictionaryValueOrKey(trackingFlyout?.mfrNo)}
+              </span>
+              <span className="cmp-flyout-with-links__content__value">
+                {mfrNumber}
+              </span>
+            </div>
+            <div className="cmp-flyout-with-links__content__text">
+              <span className="cmp-flyout-with-links__content__label">
+                {getDictionaryValueOrKey(trackingFlyout?.tdsNo)}
+              </span>
+              <span className="cmp-flyout-with-links__content__value">
+                {tdNumber}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="cmp-flyout-with-links__content__message">
+          {getDictionaryValueOrKey(trackingFlyout?.descriptionTracking)}
+        </div>
         <FlyoutTableWithRedirectLinks
           config={trackingFlyout}
           data={data}
           handleButtonClick={handleTrackAndTrace}
           handleButtonField={'id'}
+          idLabel={trackingFlyout?.idColumnTracking}
+          buttonLabel={trackingFlyout?.buttonTracking}
         />
       </section>
     </BaseFlyout>

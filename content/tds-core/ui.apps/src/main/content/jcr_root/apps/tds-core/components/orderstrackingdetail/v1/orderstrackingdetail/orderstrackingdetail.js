@@ -192,13 +192,13 @@ use(["../../../common/utils.js"], function (utils) {
 
   // Tracking Flyout Labels
   const trackingFlyoutList = [
-    "title",
-    "descriptionWithRedirectLinks",
+    "titleTracking",
+    "descriptionTracking",
     "mfrNo",
     "tdsNo",
-    "button",
+    "buttonTracking",
     "cancelButton",
-    "idColumn",
+    "idColumnTracking",
     "shipDateColumn",
   ];
 
@@ -213,13 +213,13 @@ use(["../../../common/utils.js"], function (utils) {
 
   // Return Flyout Labels
   const returnFlyoutList = [
-    "title",
-    "descriptionWithRedirectLinks",
+    "titleReturn",
+    "descriptionReturn",
     "mfrNo",
     "tdsNo",
-    "button",
+    "buttonReturn",
     "cancelButton",
-    "idColumn",
+    "idColumnReturn",
     "shipDateColumn",
   ];
 

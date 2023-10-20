@@ -6,12 +6,14 @@ export default function FlyoutTableWithRedirectLinks({
   data,
   handleButtonClick,
   handleButtonField,
+  idLabel,
+  buttonLabel,
 }) {
   return (
     <div>
       <div className="cmp-flyout-with-links__content__tableHeader">
         <span className="cmp-flyout-with-links__content__bold">
-          {getDictionaryValueOrKey(config?.idColumn)}
+          {getDictionaryValueOrKey(idLabel)}
         </span>
         <span className="cmp-flyout-with-links__content__bold">
           {getDictionaryValueOrKey(config?.shipDateColumn)}
@@ -39,7 +41,7 @@ export default function FlyoutTableWithRedirectLinks({
                 className="cmp-flyout-with-links__content__button"
                 onClick={handleClick}
               >
-                {getDictionaryValueOrKey(config?.button)}
+                {getDictionaryValueOrKey(buttonLabel)}
               </div>
             </div>
           );
