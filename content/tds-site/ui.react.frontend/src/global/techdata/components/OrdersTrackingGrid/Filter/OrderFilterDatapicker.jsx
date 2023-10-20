@@ -35,6 +35,24 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.dateType);
+  const { orderDateLabel, shipDateLabel, invoiceDateLabel, addDateLabel } =
+    filterLabels;
+
+  const months = [
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december',
+  ];
+
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.dateRangeFiltersChecked
   );
@@ -56,9 +74,9 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
 
   const startDateFormatted = useRef('');
   const endDateFormatted = useRef('');
-  const orderDate = getDictionaryValueOrKey(filterLabels.orderDateLabel);
-  const shipDate = getDictionaryValueOrKey(filterLabels.shipDateLabel);
-  const invoiceDate = getDictionaryValueOrKey(filterLabels.invoiceDateLabel);
+  const orderDate = getDictionaryValueOrKey(orderDateLabel);
+  const shipDate = getDictionaryValueOrKey(shipDateLabel);
+  const invoiceDate = getDictionaryValueOrKey(invoiceDateLabel);
   const momentCustomStartDate = customStartDate
     ? moment(customStartDate)
     : null;
@@ -171,6 +189,10 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     }
   };
 
+  const translationSwapMonth = (month) => {
+    return getDictionaryValueOrKey(filterLabels[months[month]]);
+  };
+
   return (
     <>
       <OrderFilterDateType
@@ -183,14 +205,15 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
       <CustomStartEndText filterLabels={filterLabels} />
       <div className="order_datapicker">
         <DateRangePicker
+          renderMonthText={(data) => {
+            return `${translationSwapMonth(
+              data._d.getMonth()
+            )} ${data._d.getFullYear()}`;
+          }}
           startDate={momentCustomStartDate}
           startDateId="start-date"
-          startDatePlaceholderText={getDictionaryValueOrKey(
-            filterLabels.addDateLabel
-          )}
-          endDatePlaceholderText={getDictionaryValueOrKey(
-            filterLabels.addDateLabel
-          )}
+          startDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
+          endDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
           endDate={momentCustomEndDate}
           {...navIcons}
           endDateId="end-date"

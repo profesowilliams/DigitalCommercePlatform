@@ -528,6 +528,18 @@ use(["../common/utils.js"], function (utils) {
       "orderDateLabel",
       "shipDateLabel",
       "invoiceDateLabel",
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
     ];
 
     filterLabelsKeys.map((key) => (filterLabels[key] = properties[key]));
