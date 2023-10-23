@@ -56,11 +56,7 @@ const OrderSearchView = ({
               onMouseOver={handleMouseOverSearch}
               onMouseLeave={handleMouseLeaveSearch}
             >
-              {isSearchHovered ? (
-                <SearchIconFilled className="search-icon__dark" />
-              ) : (
-                <SearchIcon className="search-icon__dark" />
-              )}
+              <SearchIcon className="search-icon__dark" />
             </div>
           </div>
         )}

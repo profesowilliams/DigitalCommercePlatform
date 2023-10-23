@@ -79,7 +79,7 @@ const _OrderSearch = (
     ...customSearchValues,
   });
   const [callbackExecuted, setCallbackExecuted] = useState(false);
-  const [isDropdownVisible, setSwitchDropdown] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSearchHovered, setIsSearchHovered] = useState(false);
   const { option } = values;
   const node = useRef();
@@ -124,7 +124,7 @@ const _OrderSearch = (
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
     if (searchTriggered) {
-      setSwitchDropdown(true);
+      setIsDropdownVisible(true);
       onQueryChanged({ onSearchAction: true });
     }
     setSearchTriggered(false);
@@ -152,7 +152,7 @@ const _OrderSearch = (
     if (isSearchCapsuleVisible) {
       handleCapsuleTextClick();
     }
-    setSwitchDropdown(!isDropdownVisible);
+    setIsDropdownVisible(false);
     if (!isDropdownVisible) {
       document.addEventListener('click', handleOutsideClick, false);
     } else {
@@ -171,7 +171,7 @@ const _OrderSearch = (
       !isComingFromReset &&
       !node.current.contains(e.target)
     ) {
-      setSwitchDropdown(false);
+      setIsDropdownVisible(false);
     }
   };
 
@@ -186,6 +186,7 @@ const _OrderSearch = (
   };
 
   const triggerSearch = () => {
+    setIsDropdownVisible(false);
     if (!searchTriggered) setSearchTriggered(true);
     const { option } = values;
     const inputValue = inputRef.current.value;
@@ -223,19 +224,20 @@ const _OrderSearch = (
 
   const triggerSearchOnEnter = (event) => {
     if (event.keyCode === 13) {
-      setSwitchDropdown(false);
+      setIsDropdownVisible(false);
       triggerSearch();
     }
   };
 
   const handleMouseLeave = () => {
     if (isSearchCapsuleVisible) return;
-    setSwitchDropdown(false);
+    setIsDropdownVisible(false);
     onReset();
   };
 
   const handleMouseOverSearch = () => {
     setIsSearchHovered(true);
+    setIsDropdownVisible(true);
   };
 
   const handleMouseLeaveSearch = () => {
@@ -261,6 +263,7 @@ const _OrderSearch = (
           onReset={onReset}
           callbackExecuted={callbackExecuted}
           gridConfig={gridConfig}
+          setIsDropdownVisible={setIsDropdownVisible}
         />
       ) : (
         <OrderSearchView
