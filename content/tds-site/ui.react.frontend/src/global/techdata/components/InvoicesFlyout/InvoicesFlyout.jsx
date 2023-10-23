@@ -57,7 +57,8 @@ function InvoicesFlyout({
 
   useEffect(() => {
     setInvoicesResponse(null);
-    invoicesFlyoutConfig?.id &&
+    !invoicesFlyoutConfig?.data &&
+      invoicesFlyoutConfig?.id &&
       getInvoices()
         .then((result) => {
           setInvoicesResponse(result?.data?.content);

@@ -57,7 +57,8 @@ function DNotesFlyout({
 
   useEffect(() => {
     setDeliveryNotesResponse(null);
-    dNoteFlyoutConfig?.id &&
+    !dNoteFlyoutConfig?.data &&
+      dNoteFlyoutConfig?.id &&
       getDeliveryNotes()
         .then((result) => {
           setDeliveryNotesResponse(result?.data?.content);
