@@ -58,7 +58,7 @@ const ActionsButton = ({
 
   const orderId = id;
   const lineId = line.line;
-  const dNoteId = deliveryNotes[0].id;
+  const dNoteId = deliveryNotes.length > 0 ? deliveryNotes[0].id : null;
   const enableLineId = line.line.length === 1;
 
   const toaster = {
