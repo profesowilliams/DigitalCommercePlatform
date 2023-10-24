@@ -48,4 +48,8 @@
   .ag-theme-alpine .ag-ltr .ag-cell {
     border: none !important;
   }
+
+  .ag-cell-wrapper {
+    display: contents;
+  }
 }

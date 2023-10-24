@@ -66,6 +66,9 @@ function Grid(props) {
     config?.paginationStyle !== 'none' &&
     config?.paginationStyle !== 'scroll';
   const serverSide = config?.serverSide ?? true;
+  const suppressContextMenu = config?.suppressContextMenu ?? false;
+  const enableCellTextSelection = config?.enableCellTextSelection ?? false;
+  const ensureDomOrder = config?.ensureDomOrder ?? false;    
   const gridNodeRef = useRef(null);
   const gridId = useRef(null);
   const gridApi = useRef(null);
@@ -283,6 +286,9 @@ function Grid(props) {
       onSortChanged={onSortChanged}
       icons={icons}
       getContextMenuItems={getContextMenuItems}
+      suppressContextMenu={suppressContextMenu}
+      enableCellTextSelection={enableCellTextSelection}
+      ensureDomOrder={ensureDomOrder}
       popupParent={popupParent}
       getRowId={getRowId}
       rowClassRules={rowClassRules}

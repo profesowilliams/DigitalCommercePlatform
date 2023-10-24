@@ -3,7 +3,6 @@ import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
 import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
-import { getContextMenuItems } from '../../../RenewalsGrid/utils/renewalUtils';
 import LineColumn from './Columns/LineColumn';
 import QuantityColumn from './Columns/QuantityColumn';
 import ItemColumn from './Columns/ItemColumn';
@@ -24,6 +23,9 @@ function NotShippedTabGrid({
     columnList: columnDefs,
     serverSide: false,
     paginationStyle: 'none',
+    suppressContextMenu: true,
+    enableCellTextSelection: true,
+    ensureDomOrder: true,
   };
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
@@ -81,11 +83,6 @@ function NotShippedTabGrid({
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
   );
-  const contextMenuItems = (params) =>
-    getContextMenuItems(
-      myColumnDefs,
-      config?.orderLineDetailsNotShippedColumnLabels
-    );
   const handleOrderModification = () => {
     setCustomState({
       key: 'orderModificationFlyout',
@@ -123,7 +120,6 @@ function NotShippedTabGrid({
           columnDefinition={myColumnDefs}
           config={config}
           data={filteredGridData}
-          contextMenuItems={contextMenuItems}
           rowClassRules={rowClassRules}
           gridRef={gridRef}
         />

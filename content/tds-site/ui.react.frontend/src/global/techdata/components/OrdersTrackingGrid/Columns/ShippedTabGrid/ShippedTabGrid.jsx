@@ -3,7 +3,6 @@ import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
 import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
-import { getContextMenuItems } from '../../../RenewalsGrid/utils/renewalUtils';
 import QuantityColumn from './Columns/QuantityColumn';
 import TrackColumn from './Columns/TrackColumn';
 import ShipDateColumn from './Columns/ShipDateColumn';
@@ -25,6 +24,9 @@ function ShippedTabGrid({
     columnList: columnDefs,
     serverSide: false,
     paginationStyle: 'none',
+    suppressContextMenu: true,
+    enableCellTextSelection: true,
+    ensureDomOrder: true,
   };
   const { shipDate, dnote, invoice, value, qty } =
     config?.orderLineDetailsShippedColumnLabels;
@@ -101,11 +103,6 @@ function ShippedTabGrid({
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
   );
-  const contextMenuItems = (params) =>
-    getContextMenuItems(
-      myColumnDefs,
-      config?.orderLineDetailsShippedColumnLabels
-    );
   return (
     <section>
       <div className="order-line-details__content__title">
@@ -118,7 +115,6 @@ function ShippedTabGrid({
           columnDefinition={myColumnDefs}
           config={config}
           data={gridData}
-          contextMenuItems={contextMenuItems}
           customizedDetailedRender={(props) => (
             <ShippedTabGridRenderers {...props} config={config} />
           )}

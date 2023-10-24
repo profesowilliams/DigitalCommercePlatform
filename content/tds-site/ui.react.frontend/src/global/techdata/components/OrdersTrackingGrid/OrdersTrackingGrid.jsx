@@ -125,6 +125,9 @@ function OrdersTrackingGrid(props) {
     paginationStyle: 'custom',
     noRowsErrorMessage: 'No data found',
     errorGettingDataMessage: 'Internal server error please refresh the page',
+    suppressContextMenu: true,
+    enableCellTextSelection: true,
+    ensureDomOrder: true,
   };
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);

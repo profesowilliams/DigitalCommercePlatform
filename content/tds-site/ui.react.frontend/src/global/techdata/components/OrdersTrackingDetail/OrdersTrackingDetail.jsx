@@ -25,6 +25,9 @@ function OrdersTrackingDetail(props) {
     productLines: { agGridLicenseKey: componentProps?.agGridLicenseKey },
     serverSide: false,
     paginationStyle: 'none',
+    suppressContextMenu: true,
+    enableCellTextSelection: true,
+    ensureDomOrder: true,
   };
   const [apiResponse] = useGet(`${config.uiServiceEndPoint}?id=${id}`);
   const hasAIORights = userData?.roleList?.some(
