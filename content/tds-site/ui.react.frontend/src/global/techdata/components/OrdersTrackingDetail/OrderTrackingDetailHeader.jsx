@@ -12,6 +12,7 @@ import {
 import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
+import { getUrlParamsCaseInsensitive } from '../../../../utils';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -20,6 +21,7 @@ const OrderTrackingDetailHeader = ({
   hasOrderModificationRights,
   openFilePdf,
 }) => {
+  const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
@@ -117,6 +119,9 @@ const OrderTrackingDetailHeader = ({
       onClick: triggerExportFlyout,
     },
   ];
+
+  const salesLoginParam = saleslogin ? `?saleslogin=${saleslogin}` : '';
+
   return (
     <div className="cmp-orders-qp__config-grid">
       <div className="header-container">
@@ -126,7 +131,7 @@ const OrderTrackingDetailHeader = ({
             href={`${location.href.substring(
               0,
               location.href.lastIndexOf('/')
-            )}.html`}
+            )}.html${salesLoginParam}`}
             underline="underline-none"
           >
             <i className="fas fa-chevron-left"></i>

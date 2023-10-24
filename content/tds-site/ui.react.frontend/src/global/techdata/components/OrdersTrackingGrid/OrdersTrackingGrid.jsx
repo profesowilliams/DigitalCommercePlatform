@@ -10,6 +10,7 @@ import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
+import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import {
   addCurrentPageNumber,
@@ -51,6 +52,7 @@ import { getSessionInfo } from '../../../../utils/user/get';
 import { usGet } from '../../../../utils/api';
 
 function OrdersTrackingGrid(props) {
+  const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [userData, setUserData] = useState(null);
   const [detailsApiResponse, setDetailsApiResponse] = useState(null);
   const areSearchParamsValid = useRef(false);
@@ -254,12 +256,14 @@ function OrdersTrackingGrid(props) {
     }
   };
 
+  const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
+
   const handleDirectMatch = (response) => {
     removeLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY);
     window.location.href = `${location.href.substring(
       0,
       location.href.lastIndexOf('.')
-    )}/order-details.html?id=${response[0].id}`;
+    )}/order-details.html?id=${response[0].id}${salesLoginParam}`;
   };
 
   const onDataLoad = (response) => {
