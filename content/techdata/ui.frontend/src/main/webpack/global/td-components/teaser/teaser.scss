@@ -920,18 +920,40 @@
 }
 
 .cmp-teaser-home-page {
+  .cmp-container div {
+    flex-flow: row wrap;
+  }
+
   .aem-Grid {
     display: flex;
     justify-content: space-around;
-    padding: 0 40px;
+
+    figure.dp-figure {
+      flex: 1 1 150px;
+      min-width: 25%;
+    }
+
+    figure.dp-figure .cmp-image {
+      place-content: center;
+
+      .cmp-image__image {
+        filter: grayscale(1);
+      }
+    }
+
+    @media (max-width: 700px) {
+      figure.dp-figure {
+        min-width: 33.33%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      figure.dp-figure {
+        min-width: 50%;
+      }
+    }
 
     @include mobile {
-      display: grid;
-      grid-template-columns: 6.22875rem 6.22875rem;
-      grid-template-rows: 6.22875rem 6.22875rem;
-      gap: 10rem 5rem;
-      margin-bottom: 200px;
-
       &::before {
         content: none;
       }
