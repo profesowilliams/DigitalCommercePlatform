@@ -61,13 +61,13 @@ export const mapServiceData = (response) => {
 
 export function updateQueryString(pageNumber) {
   if (!pageNumber) return;
-  if (pageNumber === 1) {
-    if (location.href.includes('page=')) {
-      history.replaceState(null, '', location.origin + location.pathname);
-    }
+  const searchParams = new URLSearchParams(window.location.search);
+  if (pageNumber > 1) {
+      searchParams.set('page', pageNumber);
   } else {
-    history.replaceState(null, '', `?page=${pageNumber}`);
+      searchParams.delete('page');
   }
+  history.replaceState(null, '', '?' + searchParams.toString());
 }
 
 export const addCurrencyToTotalColumn = (list, userData) => {
