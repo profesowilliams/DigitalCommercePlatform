@@ -37,11 +37,16 @@ function InvoiceColumn({
     pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Main Grid'));
   };
 
+  const disabledLink = {
+    cursor: 'default',
+    color: '#000'
+  }
+
   return invoices?.length === 0 ? (
     '-'
   ) : (
     <div onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}>
-      <a>{hasMultiple ? getDictionaryValueOrKey(multiple) : invoices[0]}</a>
+      <a style={hasAIORights || hasMultiple ? undefined : disabledLink}>{hasMultiple ? getDictionaryValueOrKey(multiple) : invoices[0]}</a>
     </div>
   );
 }
