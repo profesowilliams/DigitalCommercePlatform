@@ -57,7 +57,7 @@
 
     .li,
     [role='tab'] {
-      color: get-color(cool-gray-8);
+      color: get-color(charcoal);
       padding: 0;
       margin: 0 40px 0 40px;
       font-family: Arial;
@@ -65,16 +65,22 @@
       font-style: normal;
       font-weight: 700;
       line-height: 26px;
-      border-bottom: transparent 3px solid;
+      height: 2rem;
 
       &:hover {
-        border-bottom: get-color(brand-button-blue) 2px solid;
+        text-decoration: underline;
+        text-decoration-color: get-color(legacy-ocean);
+        text-underline-offset: 0.62rem;
+        text-decoration-thickness: 2px;
       }
     }
 
     .cmp-tabs__tab--active {
-      color: get-color(brand-button-blue);
-      border-bottom: get-color(brand-button-blue) 2px solid;
+      color: get-color(legacy-ocean);
+      text-decoration: underline;
+      text-decoration-color: get-color(legacy-ocean);
+      text-underline-offset: 0.62rem;
+      text-decoration-thickness: 2px;
     }
   }
 
