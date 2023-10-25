@@ -40,12 +40,13 @@ export const fetchOrdersCount = async (
     mapUrl.set(field, value);
     addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
   } else {
+    console.log('add default date range'); // temporary test
     addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   }
-
+  console.log(dateFilters); // temporary test
   if (dateFilters.length > 0) {
     dateFilters.forEach((filter) => mapUrl.set(filter[0], filter[1]));
-  } 
+  }
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
   try {

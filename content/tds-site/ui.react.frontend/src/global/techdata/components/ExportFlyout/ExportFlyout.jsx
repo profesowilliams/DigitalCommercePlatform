@@ -47,13 +47,36 @@ function ExportFlyout({
   subheaderReference,
   isTDSynnex,
   exportAnalyticsLabel,
-  reportFilterValue
+  searchParams,
 }) {
   const isOrderDetailsPage = window.location.href.includes(
     'order-details.html?id='
   );
   const exportFlyoutConfig = store((st) => st.exportFlyout);
-  const reportName = reportFilterValue?.current?.value || 'OpenOrders';
+  const { reports, sort, search, filters } = searchParams;
+  const reportValue = reports.current?.value;
+  const reportName = reportValue ? `reportName=${reportValue}` : '';
+  const searchValue = search.current;
+  const searchParam = searchValue?.value
+    ? `${searchValue.field}=${searchValue.value}`
+    : '';
+  const sortValue = sort.current?.sortData?.[0];
+  const sortParam = sortValue
+    ? `SortDirection=${sortValue.sort}&SortBy=${sortValue.colId}`
+    : '';
+  const filterParam =
+    (filters.current &&
+      Object.entries(filters.current).reduce((params, filter) => {
+        if (filter[1] && (filter[0] === 'status' || filter[0] === 'type')) {
+          return params + `${filter[1]}`;
+        } else if (filter[1]) {
+          return params + `&${filter[0]}=${filter[1]}`;
+        } else return params;
+      }, '')) ||
+    '';
+  const paramNames = reportValue
+    ? reportName
+    : searchParam + sortParam + filterParam;
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
     exportOptionsList ? exportOptionsList[0]?.key : []
@@ -74,11 +97,10 @@ function ExportFlyout({
   };
 
   function getExportAllOrderLines() {
-    const url =
-      componentProp?.exportAllOrderLinesEndpoint || 'nourl';
+    const url = componentProp?.exportAllOrderLinesEndpoint || 'nourl';
     const singleDownloadUrl =
-      url + `?ReportName=` + reportName + `&OnlyWithSerialNumbers=false`;
-    return requestFileBlobWithoutModal(singleDownloadUrl, "", {
+      url + '?' + paramNames + `&OnlyWithSerialNumbers=false`;
+    return requestFileBlobWithoutModal(singleDownloadUrl, '', {
       redirect: false,
     });
   }
@@ -86,8 +108,8 @@ function ExportFlyout({
     const url =
       componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
     const singleDownloadUrl =
-      url + `?ReportName=` + reportName + `&OnlyWithSerialNumbers=true`;
-    return requestFileBlobWithoutModal(singleDownloadUrl, "", {
+      url + '?' + paramNames + `&OnlyWithSerialNumbers=true`;
+    return requestFileBlobWithoutModal(singleDownloadUrl, '', {
       redirect: false,
     });
   }
@@ -116,26 +138,31 @@ function ExportFlyout({
       )
     );
     if (matchingRequest) {
-      matchingRequest.request().then(() => {
-        const toaster = {
-          isOpen: true,
-          origin: 'fromUpdate',
-          isAutoClose: false,
-          isSuccess: true,
-          message: getDictionaryValueOrKey(exportFlyout?.exportSuccessMessage),
-        };
+      matchingRequest
+        .request()
+        .then(() => {
+          const toaster = {
+            isOpen: true,
+            origin: 'fromUpdate',
+            isAutoClose: false,
+            isSuccess: true,
+            message: getDictionaryValueOrKey(
+              exportFlyout?.exportSuccessMessage
+            ),
+          };
 
-        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
-      }).catch(() => {
-        const toaster = {
-          isOpen: true,
-          origin: 'fromUpdate',
-          isAutoClose: false,
-          isSuccess: false,
-          message: getDictionaryValueOrKey(exportFlyout?.exportFailedMessage),
-        };
-        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
-      });
+          effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+        })
+        .catch(() => {
+          const toaster = {
+            isOpen: true,
+            origin: 'fromUpdate',
+            isAutoClose: false,
+            isSuccess: false,
+            message: getDictionaryValueOrKey(exportFlyout?.exportFailedMessage),
+          };
+          effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+        });
 
       closeFlyout();
     }

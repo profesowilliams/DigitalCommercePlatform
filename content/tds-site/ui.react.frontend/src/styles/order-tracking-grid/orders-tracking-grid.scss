@@ -92,7 +92,7 @@
     top: 25px;
     left: -156px;
     box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
-    background-color: get-color(brand-white);
+    background-color: $brand-white;
     z-index: 10;
 
     ul {
@@ -106,7 +106,7 @@
       }
 
       > li:hover {
-        background-color: get-color(neutral-gray-2);
+        background-color: $td-neutral-gray-2;
       }
     }
   }
@@ -114,7 +114,7 @@
   &__report-pill {
     background-color: #005758;
     padding: 0 20px;
-    color: get-color(brand-white);
+    color: $brand-white;
     border-radius: 20px;
 
     span {
@@ -146,7 +146,7 @@
 
   &__description {
     &-link {
-      color: get-color(cobalt);
+      color: $brand-cobalt;
       max-height: 3em;
       max-width: 191px;
       overflow: hidden;

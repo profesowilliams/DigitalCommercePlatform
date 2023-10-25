@@ -19,7 +19,7 @@ const MainGridFlyouts = ({
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
-  reportFilterValue
+  searchParams,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   function downloadAllFile(flyoutType, orderId, selectedId) {
@@ -66,7 +66,7 @@ const MainGridFlyouts = ({
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
         exportAnalyticsLabel={analyticsCategories.export}
-        reportFilterValue={reportFilterValue}
+        searchParams={searchParams}
       />
       <OrderFilterFlyout
         onQueryChanged={onQueryChanged}
