@@ -11,7 +11,7 @@ import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
-import { dateToString } from "../../helpers/formatting";
+import { dateToString } from '../../helpers/formatting';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -53,30 +53,33 @@ function ExportFlyout({
     'order-details.html?id='
   );
   const exportFlyoutConfig = store((st) => st.exportFlyout);
-  const { reports, sort, search, filters } = searchParams;
-  const reportValue = reports.current?.value;
-  const reportName = reportValue ? `reportName=${reportValue}` : '';
-  const searchValue = search.current;
-  const searchParam = searchValue?.value
-    ? `${searchValue.field}=${searchValue.value}`
-    : '';
-  const sortValue = sort.current?.sortData?.[0];
-  const sortParam = sortValue
-    ? `SortDirection=${sortValue.sort}&SortBy=${sortValue.colId}`
-    : '';
-  const filterParam =
-    (filters.current &&
-      Object.entries(filters.current).reduce((params, filter) => {
-        if (filter[1] && (filter[0] === 'status' || filter[0] === 'type')) {
-          return params + `${filter[1]}`;
-        } else if (filter[1]) {
-          return params + `&${filter[0]}=${filter[1]}`;
-        } else return params;
-      }, '')) ||
-    '';
-  const paramNames = reportValue
-    ? reportName
-    : searchParam + sortParam + filterParam;
+  let paramNames = '';
+  if (searchParams) {
+    const { reports, sort, search, filters } = searchParams;
+    const reportValue = reports.current?.value;
+    const reportName = reportValue ? `reportName=${reportValue}` : '';
+    const searchValue = search.current;
+    const searchParam = searchValue?.value
+      ? `${searchValue.field}=${searchValue.value}`
+      : '';
+    const sortValue = sort.current?.sortData?.[0];
+    const sortParam = sortValue
+      ? `SortDirection=${sortValue.sort}&SortBy=${sortValue.colId}`
+      : '';
+    const filterParam =
+      (filters.current &&
+        Object.entries(filters.current).reduce((params, filter) => {
+          if (filter[1] && (filter[0] === 'status' || filter[0] === 'type')) {
+            return params + `${filter[1]}`;
+          } else if (filter[1]) {
+            return params + `&${filter[0]}=${filter[1]}`;
+          } else return params;
+        }, '')) ||
+      '';
+    paramNames = reportValue
+      ? reportName
+      : searchParam + sortParam + filterParam;
+  }
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
     exportOptionsList ? exportOptionsList[0]?.key : []

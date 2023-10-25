@@ -82,6 +82,7 @@ const Flyouts = ({
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
         exportAnalyticsLabel={''}
+        searchParams={null}
       />
       <ProductReplacementFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}

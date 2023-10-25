@@ -30,34 +30,31 @@ import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 
 const getInitialFieldState = () => {
   if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.field;
+    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field;
   } else {
     return '';
   }
 };
 
 const getInitialLabelState = () => {
-  if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return '';
+  if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
+    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field;
   }
-
   return '';
 };
 
 const getInitialValueState = () => {
   if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)?.value;
-  } else {
-    return '';
+    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).value;
   }
+  return '';
 };
 
 const hasPreviousSearchTerm = () => {
   if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
     return false;
   }
-
-  return false;
+  return true;
 };
 
 const _OrderSearch = (
@@ -74,9 +71,11 @@ const _OrderSearch = (
 ) => {
   const customSearchValues = {
     dropdown: '',
-    input: '',
+    input: getInitialValueState(),
     option: getInitialFieldState(),
-    label: getInitialLabelState(),
+    label:
+      options.find((option) => option.searchKey === getInitialFieldState())
+        ?.searchLabel || '',
   };
   const { setSearch90DaysBack } = useOrderTrackingStore((st) => st.effects);
   const [values, setValues] = useState({
