@@ -1,16 +1,10 @@
 import React from 'react';
 import { ChevronDownIcon } from './../../../../../fluentIcons/FluentIcons';
 import useComputeBranding from './../../../hooks/useComputeBranding';
-import OrderSearchCapsule from './OrderSearchCapsule';
 import { OrderSearchField } from './OrderSearchFilter';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const OrderSearchEditView = ({
-  isSearchCapsuleVisible,
-  handleCapsuleClose,
-  handleCapsuleTextClick,
-  capsuleValues,
-  capsuleSearchValue,
   inputRef,
   values,
   searchTerm,
@@ -27,57 +21,47 @@ const OrderSearchEditView = ({
 
   return (
     <>
-      <OrderSearchCapsule
-        capsuleSearchValue={capsuleSearchValue}
-        handleCapsuleClose={handleCapsuleClose}
-        handleCapsuleTextClick={handleCapsuleTextClick}
-        inputValue={inputRef?.current?.value}
-        isSearchCapsuleVisible={isSearchCapsuleVisible}
-        label={capsuleValues.label}
-      />
-      <div className="cmp-renewal-search">
-        <div className="order-search-select-container">
-          <div className="order-search-select-container__box">
-            <OrderSearchField
-              chosenFilter={values.label}
-              inputRef={inputRef}
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              triggerSearchOnEnter={triggerSearchOnEnter}
-              triggerSearch={triggerSearch}
-              store={store}
-              gridConfig={gridConfig}
-            />
-          </div>
-          <div
-            className="cmp-search-options"
-            style={!isTDSynnex ? { padding: '5px 10px' } : {}}
-          >
-            <div className="cmp-search-options__reset">
-              <label style={{ pointerEvents: 'none' }}>
-                {callbackExecuted && !searchCounter ? (
-                  <p>
-                    {getDictionaryValueOrKey(
-                      gridConfig?.searchSorryNoRowsToDisplayLabel
-                    )}
-                  </p>
-                ) : (
-                  <p>
-                    {getDictionaryValueOrKey(gridConfig.searchByLabel)}{' '}
-                    {values.label}
-                  </p>
-                )}
-              </label>
-              <div
-                className="cmp-search-options__reset__icon-container"
-                onClick={onReset}
-              >
-                <ChevronDownIcon onClick={onReset} />
-              </div>
+      <div className="order-search-select-container">
+        <div className="order-search-select-container__box">
+          <OrderSearchField
+            chosenFilter={values.label}
+            inputRef={inputRef}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            triggerSearchOnEnter={triggerSearchOnEnter}
+            triggerSearch={triggerSearch}
+            store={store}
+            gridConfig={gridConfig}
+          />
+        </div>
+        <div
+          className="cmp-search-options"
+          style={!isTDSynnex ? { padding: '5px 10px' } : {}}
+        >
+          <div className="cmp-search-options__reset">
+            <label style={{ pointerEvents: 'none' }}>
+              {callbackExecuted && !searchCounter ? (
+                <p>
+                  {getDictionaryValueOrKey(
+                    gridConfig?.searchSorryNoRowsToDisplayLabel
+                  )}
+                </p>
+              ) : (
+                <p>
+                  {getDictionaryValueOrKey(gridConfig.searchByLabel)}{' '}
+                  {values.label}
+                </p>
+              )}
+            </label>
+            <div
+              className="cmp-search-options__reset__icon-container"
+              onClick={onReset}
+            >
+              <ChevronDownIcon onClick={onReset} />
             </div>
           </div>
-          <div className="order-search-select-container__filler"></div>
         </div>
+        <div className="order-search-select-container__filler"></div>
       </div>
     </>
   );

@@ -23,6 +23,10 @@ import {
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import OrderSearchCapsule from './OrderSearchCapsule';
+import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 
 const getInitialFieldState = () => {
   if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
@@ -124,7 +128,6 @@ const _OrderSearch = (
     setCallbackExecuted(false);
     setIsSearchCapsuleVisible(false);
     if (searchTriggered) {
-      setIsDropdownVisible(true);
       onQueryChanged({ onSearchAction: true });
     }
     setSearchTriggered(false);
@@ -144,21 +147,22 @@ const _OrderSearch = (
       label: option.searchLabel,
     }));
     setIsEditView(true);
+    setIsSearchCapsuleVisible(false);
   };
 
   const handleDropdownSwitch = useCallback(() => {
     setIsSearchHovered(false);
+    setIsDropdownVisible(false);
     closeAndCleanToaster && closeAndCleanToaster();
     if (isSearchCapsuleVisible) {
       handleCapsuleTextClick();
     }
-    setIsDropdownVisible(false);
     if (!isDropdownVisible) {
       document.addEventListener('click', handleOutsideClick, false);
     } else {
       document.removeEventListener('click', handleOutsideClick, false);
     }
-  }, [isDropdownVisible]);
+  }, []);
 
   const handleOutsideClick = (e) => {
     const isComingFromSearch = e.target.closest('.cmp-renewal-search');
@@ -215,6 +219,7 @@ const _OrderSearch = (
       },
     });
     setCapsuleValues({ ...values });
+    setIsDropdownVisible(false);
   };
 
   const fetchAll = () => {
@@ -242,16 +247,61 @@ const _OrderSearch = (
 
   const handleMouseLeaveSearch = () => {
     setIsSearchHovered(false);
+    setIsDropdownVisible(false);
   };
   return (
     <>
-      {option.length && isEditView ? (
+      {isSearchCapsuleVisible ? (
+        <>
+          <OrderSearchCapsule
+            capsuleSearchValue={capsuleSearchValue}
+            handleCapsuleClose={handleCapsuleClose}
+            handleCapsuleTextClick={handleCapsuleTextClick}
+            inputValue={inputRef?.current?.value}
+            label={capsuleValues.label}
+          />
+          {!isDropdownVisible ? (
+            <div className="cmp-renewal-search">
+              <div
+                onMouseOver={handleMouseOverSearch}
+                onMouseLeave={handleMouseLeaveSearch}
+              >
+                <SearchIcon className="search-icon__dark" />
+              </div>
+            </div>
+          ) : (
+            <div
+              className="order-search-select-container"
+              ref={node}
+              onMouseLeave={handleMouseLeaveSearch}
+            >
+              <div className="order-search-select-container__box">
+                <input
+                  className="inputStyle"
+                  placeholder={getDictionaryValueOrKey(
+                    gridConfig?.searchTitleLabel
+                  )}
+                  disabled
+                />
+                <button className="order-search-tooltip__button">
+                  <SearchIcon className="search-icon__light" />
+                </button>
+              </div>
+              <div className="order-search-select-container__filler"></div>
+              <div className="cmp-search-options">
+                {options.map((option) => (
+                  <OrderRenderWithPermissions
+                    option={option}
+                    changeHandler={changeHandler}
+                    key={option.searchKey}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
+      ) : option.length && isEditView ? (
         <OrderSearchEditView
-          isSearchCapsuleVisible={isSearchCapsuleVisible}
-          handleCapsuleClose={handleCapsuleClose}
-          handleCapsuleTextClick={handleCapsuleTextClick}
-          capsuleValues={capsuleValues}
-          capsuleSearchValue={capsuleSearchValue}
           inputRef={inputRef}
           values={values}
           searchTerm={searchTerm}
@@ -267,12 +317,6 @@ const _OrderSearch = (
         />
       ) : (
         <OrderSearchView
-          isSearchCapsuleVisible={isSearchCapsuleVisible}
-          handleCapsuleClose={handleCapsuleClose}
-          handleCapsuleTextClick={handleCapsuleTextClick}
-          capsuleValues={capsuleValues}
-          capsuleSearchValue={capsuleSearchValue}
-          inputRef={inputRef}
           handleMouseLeave={handleMouseLeave}
           isDropdownVisible={isDropdownVisible}
           handleDropdownSwitch={handleDropdownSwitch}
