@@ -42,15 +42,20 @@ const OrderTrackingDetailHeader = ({
   };
 
   const items = content.items || [];
+  const deliveryNotes = content.deliveryNotes || [];
   const labels = config?.actionLabels;
-
-  let deliveryNotes = [];
-  items.map((item) => {
-    deliveryNotes = deliveryNotes.concat(item.deliveryNotes);
-  });
+  
   let invoices = [];
-  items.map((item) => {
+  const seenInvoiceIds = {};
+  deliveryNotes.forEach((item) => {
     invoices = invoices.concat(item.invoices);
+  });
+  invoices = invoices.filter((invoice) => {
+    if (!seenInvoiceIds[invoice.id]) {
+      seenInvoiceIds[invoice.id] = true;
+      return true;
+    }
+    return false;
   });
 
   const areDeliveryNotesAvailable = deliveryNotes.length > 0;
