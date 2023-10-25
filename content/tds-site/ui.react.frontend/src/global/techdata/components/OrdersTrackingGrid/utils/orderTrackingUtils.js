@@ -45,7 +45,6 @@ export const fetchOrdersCount = async (
 
   if (dateFilters.length > 0) {
     dateFilters.forEach((filter) => mapUrl.set(filter[0], filter[1]));
-    addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
   } 
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');

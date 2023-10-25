@@ -111,7 +111,6 @@ const OrderFilterFlyout = ({
     toggleFilterModal();
     closeAllFilterOptions();
     setAreThereAnyFiltersSelectedButNotApplied();
-    onQueryChanged();
   };
 
   return (

@@ -51,7 +51,16 @@ import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
 import { usGet } from '../../../../utils/api';
 
+import { getUrlParams, deleteSearchParam } from '../../../../utils';
+
+const searchParamsKeys = [
+  ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+  ORDER_SEARCH_LOCAL_STORAGE_KEY,
+  SORT_LOCAL_STORAGE_KEY,
+];
+
 function OrdersTrackingGrid(props) {
+  const { redirectedFrom = '' } = getUrlParams();
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [userData, setUserData] = useState(null);
   const [detailsApiResponse, setDetailsApiResponse] = useState(null);
@@ -262,7 +271,7 @@ function OrdersTrackingGrid(props) {
   const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
 
   const handleDirectMatch = (response) => {
-    removeLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY);
+    resetLocalStorage(searchParamsKeys); // This reset is to avoid looping in case of one result redirect
     window.location.href = `${location.href.substring(
       0,
       location.href.lastIndexOf('.')
@@ -315,11 +324,10 @@ function OrdersTrackingGrid(props) {
   };
 
   useEffect(async () => {
-    resetLocalStorage([
-      ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-      ORDER_SEARCH_LOCAL_STORAGE_KEY,
-      SORT_LOCAL_STORAGE_KEY,
-    ]);
+    if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
+      resetLocalStorage(searchParamsKeys);
+    }
+    redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     const customized = getFilterFlyoutCustomized(

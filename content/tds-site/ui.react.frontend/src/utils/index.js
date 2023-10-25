@@ -104,7 +104,18 @@ export const getUrlParams = () =>
         .split('&')
         .map((item) => item.split('='))
     )
-  )
+  );
+
+export const deleteSearchParam = (searchParam) => {
+  const urlSplitByParam = window.location.href.split(searchParam + '=');
+  const index = urlSplitByParam[1].indexOf('&');
+  const urlSuffix = index !== -1 ? urlSplitByParam[1].slice(index + 1) : '';
+  const newUrl = urlSplitByParam[0] + urlSuffix;
+  const formattedUrl =
+    newUrl.charAt(newUrl.length - 1) === '?' ? newUrl.slice(0, -1) : newUrl;
+
+  history.replaceState({}, '', formattedUrl);
+}; 
 
 export const getUrlParamsCaseInsensitive = () =>
   Object.fromEntries(

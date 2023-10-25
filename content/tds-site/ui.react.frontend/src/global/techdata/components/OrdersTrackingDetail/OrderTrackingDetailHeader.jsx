@@ -131,7 +131,7 @@ const OrderTrackingDetailHeader = ({
             href={`${location.href.substring(
               0,
               location.href.lastIndexOf('/')
-            )}.html${salesLoginParam}`}
+            )}.html?redirectedFrom=detailsPage${salesLoginParam}`}
             underline="underline-none"
           >
             <i className="fas fa-chevron-left"></i>
