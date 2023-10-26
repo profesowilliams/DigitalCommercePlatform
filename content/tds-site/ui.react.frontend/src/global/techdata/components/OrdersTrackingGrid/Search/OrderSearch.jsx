@@ -51,10 +51,10 @@ const getInitialValueState = () => {
 };
 
 const hasPreviousSearchTerm = () => {
-  if (!hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return false;
+  if (getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).value) {
+    return true;
   }
-  return true;
+  return false;
 };
 
 const _OrderSearch = (

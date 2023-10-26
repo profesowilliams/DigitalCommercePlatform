@@ -211,7 +211,8 @@ function OrdersTrackingGrid(props) {
       ? await fetchReport(
           ordersReportUrl,
           reportFilterValue.current.value,
-          customPaginationRef
+          customPaginationRef,
+          hasSortChanged
         )
       : await fetchData(queryOperations);
 
@@ -279,7 +280,7 @@ function OrdersTrackingGrid(props) {
   };
 
   const onDataLoad = (response) => {
-    if (response.length === 1) {
+    if (response.length === 1 && !isLocalDevelopment) {
       gridApiRef?.current?.api.showLoadingOverlay();
       handleDirectMatch(response);
     } else {

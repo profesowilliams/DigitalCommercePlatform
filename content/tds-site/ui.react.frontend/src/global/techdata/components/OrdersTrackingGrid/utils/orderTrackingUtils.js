@@ -60,10 +60,16 @@ export const fetchOrdersCount = async (
   }
 };
 
-export async function fetchReport(reportUrl, reportName, pagination) {
-  const mapUrl = urlStrToMapStruc(reportUrl + '?');
-  mapUrl.set('ReportName', reportName);
+export async function fetchReport(reportUrl, reportName, pagination, sort) {
+  const mapUrl = urlStrToMapStruc(reportUrl + '?ReportName=' + reportName);
   mapUrl.set('PageNumber', pagination.current.pageNumber);
+
+  if (sort?.current?.sortData?.[0]) {
+    const { sortData } = sort.current;
+    mapUrl.set('SortDirection', sortData[0].sort);
+    const sortBy = sortSwap(sortData[0].colId);
+    mapUrl.set('SortBy', sortBy);
+  }
   const finalUrl = mapStrucToUrlStr(mapUrl);
 
   try {
