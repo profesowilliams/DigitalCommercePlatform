@@ -14,7 +14,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
   const { setReasonDropdownValues, setDoesReasonDropdownHaveEmptyItems } =
     useOrderTrackingStore((st) => st.effects);
   const reasonDropdownValues = useOrderTrackingStore(
-    (st) => st.reasonDropdownValues
+    (st) => st.orderModification.reasonDropdownValues
   );
 
   const handleAmountChange = (newValue) => {

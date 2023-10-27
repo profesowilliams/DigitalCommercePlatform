@@ -43,7 +43,7 @@ function OrderModificationFlyout({
   const store = useOrderTrackingStore;
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const doesReasonDropdownHaveEmptyItems = store(
-    (st) => st.doesReasonDropdownHaveEmptyItems
+    (st) => st.orderModification.doesReasonDropdownHaveEmptyItems
   );
   const { setCustomState } = store((st) => st.effects);
   const closeFlyout = () => {

@@ -34,7 +34,7 @@ export default function OrderFilterCustomDatapicker({
   };
 
   const customFiltersChecked = useOrderTrackingStore(
-    (state) => state.customFiltersChecked
+    (state) => state.filter.customFiltersChecked
   );
   const {
     setCustomFiltersChecked,

@@ -18,32 +18,34 @@ const OrderFilterFlyout = ({
   analyticsCategories,
 }) => {
   const orderFilterCounter = useOrderTrackingStore(
-    (state) => state.orderFilterCounter
+    (state) => state.filter.orderFilterCounter
   );
   const orderStatusFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderStatusFiltersChecked
+    (state) => state.filter.orderStatusFiltersChecked
   );
   const orderTypeFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderTypeFiltersChecked
+    (state) => state.filter.orderTypeFiltersChecked
   );
   const dateRangeFiltersChecked = useOrderTrackingStore(
-    (state) => state.dateRangeFiltersChecked
+    (state) => state.filter.dateRangeFiltersChecked
   );
   const customFiltersChecked = useOrderTrackingStore(
-    (state) => state.customFiltersChecked
+    (state) => state.filter.customFiltersChecked
   );
-  const filterClicked = useOrderTrackingStore((state) => state.filterClicked);
+  const filterClicked = useOrderTrackingStore(
+    (state) => state.filter.filterClicked
+  );
 
   const areThereAnyFiltersSelectedButNotApplied = useOrderTrackingStore(
-    (state) => state.areThereAnyFiltersSelectedButNotApplied
+    (state) => state.filter.areThereAnyFiltersSelectedButNotApplied
   );
 
-  const dateType = useOrderTrackingStore((state) => state.dateType);
+  const dateType = useOrderTrackingStore((state) => state.filter.dateType);
 
   const [showLess, setShowLess] = useState(true);
 
   const isFilterModalOpen = useOrderTrackingStore(
-    (state) => state.isFilterModalOpen
+    (state) => state.filter.isFilterModalOpen
   );
 
   const {

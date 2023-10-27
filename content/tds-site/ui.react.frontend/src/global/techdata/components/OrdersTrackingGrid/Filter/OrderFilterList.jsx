@@ -3,7 +3,7 @@ import OrderFilterListItem from './OrderFilterListItem';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
 function OrderFilterList({ filtersRefs, filterLabels }) {
-  const filterList = useOrderTrackingStore((state) => state.filterList);
+  const filterList = useOrderTrackingStore((state) => state.filter.filterList);
   return filterList.map((x) => (
     <OrderFilterListItem
       key={x.id}

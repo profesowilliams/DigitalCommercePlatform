@@ -13,65 +13,69 @@ import { orderTrackingEffects } from './OrderTrackingStoreEffects';
 const INITIAL_STATE = {
   ...basicGridState,
   ...paginationState,
-  isFilterModalOpen: false,
-  filterList: [],
+
   branding: '',
-  customStartDate: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'customStartDate',
-    undefined
-  ),
-  customEndDate: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'customEndDate',
-    undefined
-  ),
-  detailRender: getLocalValueOrDefault(
-    PLANS_ACTIONS_LOCAL_STORAGE_KEY,
-    'detailRender',
-    'primary'
-  ),
-  dateSelected: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'dateSelected',
-    null
-  ),
-  appliedFilterCount: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'count',
-    0
-  ),
-  dateType: null,
+
   toolTipData: {
     value: '',
     x: 0,
     y: 0,
     show: false,
   },
-  filterDefaultDateRange: false,
-  orderTypeFilters: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'orderTypeFilters',
-    []
-  ),
-  orderStatusFilters: getLocalValueOrDefault(
-    ORDER_FILTER_LOCAL_STORAGE_KEY,
-    'orderStatusFilters',
-    []
-  ),
-  predefinedFiltersApplied: [],
-  customizedFiltersApplied: [],
-  areThereAnyFiltersSelectedButNotApplied: false,
-  predefinedFiltersSelectedBefore: [],
-  predefinedFiltersSelectedAfter: [],
-  customizedFiltersSelectedBefore: [],
-  customizedFiltersSelectedAfter: [],
-  orderTypeFiltersChecked: [],
-  orderStatusFiltersChecked: [],
-  dateRangeFiltersChecked: [],
-  customFiltersChecked: [],
-  orderFilterCounter: 0,
-  filterClicked: false,
+  filter: {
+    isFilterModalOpen: false,
+    filterList: [],
+    dateType: null,
+    customStartDate: getLocalValueOrDefault(
+      ORDER_FILTER_LOCAL_STORAGE_KEY,
+      'customStartDate',
+      undefined
+    ),
+    customEndDate: getLocalValueOrDefault(
+      ORDER_FILTER_LOCAL_STORAGE_KEY,
+      'customEndDate',
+      undefined
+    ),
+    detailRender: getLocalValueOrDefault(
+      PLANS_ACTIONS_LOCAL_STORAGE_KEY,
+      'detailRender',
+      'primary'
+    ),
+    dateSelected: getLocalValueOrDefault(
+      ORDER_FILTER_LOCAL_STORAGE_KEY,
+      'dateSelected',
+      null
+    ),
+    appliedFilterCount: getLocalValueOrDefault(
+      ORDER_FILTER_LOCAL_STORAGE_KEY,
+      'count',
+      0
+    ),
+    filterDefaultDateRange: false,
+    orderTypeFilters: getLocalValueOrDefault(
+      ORDER_FILTER_LOCAL_STORAGE_KEY,
+      'orderTypeFilters',
+      []
+    ),
+    orderStatusFilters: getLocalValueOrDefault(
+      ORDER_FILTER_LOCAL_STORAGE_KEY,
+      'orderStatusFilters',
+      []
+    ),
+    predefinedFiltersApplied: [],
+    orderTypeFiltersChecked: [],
+    orderStatusFiltersChecked: [],
+    dateRangeFiltersChecked: [],
+    customFiltersChecked: [],
+    customizedFiltersApplied: [],
+    areThereAnyFiltersSelectedButNotApplied: false,
+    predefinedFiltersSelectedBefore: [],
+    predefinedFiltersSelectedAfter: [],
+    customizedFiltersSelectedBefore: [],
+    customizedFiltersSelectedAfter: [],
+    orderFilterCounter: 0,
+    filterClicked: false,
+  },
   toaster: {
     isOpen: false,
     title: '',
@@ -80,10 +84,11 @@ const INITIAL_STATE = {
     isSuccess: false,
   },
   isTDSynnex: true,
-  branding: '',
   analyticsCategory: 'order tracking',
-  reasonDropdownValues: [],
-  doesReasonDropdownHaveEmptyItems: false,
+  orderModification: {
+    reasonDropdownValues: [],
+    doesReasonDropdownHaveEmptyItems: false,
+  },
 };
 
 const store = (set, get) => ({

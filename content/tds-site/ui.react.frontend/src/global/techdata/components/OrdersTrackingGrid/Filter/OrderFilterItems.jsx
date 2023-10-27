@@ -7,15 +7,15 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
-  const filterList = useOrderTrackingStore((state) => state.filterList);
+  const filterList = useOrderTrackingStore((state) => state.filter.filterList);
   const orderStatusFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderStatusFiltersChecked
+    (state) => state.filter.orderStatusFiltersChecked
   );
   const orderTypeFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderTypeFiltersChecked
+    (state) => state.filter.orderTypeFiltersChecked
   );
   const dateRangeFiltersChecked = useOrderTrackingStore(
-    (state) => state.dateRangeFiltersChecked
+    (state) => state.filter.dateRangeFiltersChecked
   );
   const orderStatusFilters = filterList.find(
     (filter) =>

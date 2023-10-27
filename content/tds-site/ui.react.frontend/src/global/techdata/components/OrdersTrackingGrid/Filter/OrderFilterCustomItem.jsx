@@ -10,7 +10,7 @@ const OrderFilterCustomItem = ({
   filtersRefs,
 }) => {
   const customFiltersChecked = useOrderTrackingStore(
-    (state) => state.customFiltersChecked
+    (state) => state.filter.customFiltersChecked
   );
   const {
     setCustomFiltersChecked,

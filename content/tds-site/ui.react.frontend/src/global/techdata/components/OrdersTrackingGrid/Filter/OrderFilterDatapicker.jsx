@@ -28,13 +28,12 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   const [focusedInput, setFocusedInput] = useState('startDate');
   const {
     setDateType,
-    setCustomState,
     setDateRangeFiltersChecked,
     setPredefinedFiltersSelectedAfter,
     setFilterClicked,
     setAreThereAnyFiltersSelectedButNotApplied,
   } = useOrderTrackingStore((state) => state.effects);
-  const dateType = useOrderTrackingStore((state) => state.dateType);
+  const dateType = useOrderTrackingStore((state) => state.filter.dateType);
   const { orderDateLabel, shipDateLabel, invoiceDateLabel, addDateLabel } =
     filterLabels;
 
@@ -54,17 +53,13 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   ];
 
   const dateRangeFiltersChecked = useOrderTrackingStore(
-    (state) => state.dateRangeFiltersChecked
+    (state) => state.filter.dateRangeFiltersChecked
   );
-  const customStartDate = useOrderTrackingStore(
-    (state) => state.customStartDate
-  );
-  const customEndDate = useOrderTrackingStore((state) => state.customEndDate);
   const orderStatusFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderStatusFiltersChecked
+    (state) => state.filter.orderStatusFiltersChecked
   );
   const orderTypeFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderTypeFiltersChecked
+    (state) => state.filter.orderTypeFiltersChecked
   );
   const dark_teal = '#003031';
   const navIcons = {
@@ -77,10 +72,8 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   const orderDate = getDictionaryValueOrKey(orderDateLabel);
   const shipDate = getDictionaryValueOrKey(shipDateLabel);
   const invoiceDate = getDictionaryValueOrKey(invoiceDateLabel);
-  const momentCustomStartDate = customStartDate
-    ? moment(customStartDate)
-    : null;
-  const momentCustomEndDate = customEndDate ? moment(customEndDate) : null;
+  const [currentStartDate, setCurrentStartDate] = useState(null);
+  const [currentEndDate, setCurrentEndDate] = useState(null);
 
   const onChangeRadio = (ev) => {
     setDateType(ev.target.value);
@@ -89,21 +82,15 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
       endDateFormatted.current,
       ev.target.value
     );
-    if (customStartDate && customEndDate) {
+    if (currentStartDate && currentEndDate) {
       setDateRangeFiltersChecked([]);
       setPredefinedFiltersSelectedAfter([
         ...orderStatusFiltersChecked,
         ...orderTypeFiltersChecked,
         ...dateRangeFiltersChecked,
       ]);
-      setCustomState({
-        key: 'customStartDate',
-        value: undefined,
-      });
-      setCustomState({
-        key: 'customEndDate',
-        value: undefined,
-      });
+      setCurrentStartDate(undefined);
+      setCurrentEndDate(undefined);
       setFilterClicked(true);
       setAreThereAnyFiltersSelectedButNotApplied();
       filtersRefs.current.createdFrom = undefined;
@@ -170,22 +157,16 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
         endDateFormatted.current,
         dateType
       );
-      setFilterClicked(true);
-      setAreThereAnyFiltersSelectedButNotApplied();
     }
   };
 
   const onDatesChange = ({ startDate, endDate }) => {
-    setCustomState({
-      key: 'customStartDate',
-      value: startDate?.toISOString() || undefined,
-    });
-    setCustomState({
-      key: 'customEndDate',
-      value: endDate?.toISOString() || undefined,
-    });
-    if ((startDate, endDate)) {
+    startDate && setCurrentStartDate(startDate?.toISOString());
+    endDate && setCurrentEndDate(endDate?.toISOString());
+    if (startDate && endDate) {
       setFilterDate(startDate, endDate);
+      setFilterClicked(true);
+      setAreThereAnyFiltersSelectedButNotApplied();
     }
   };
 
@@ -210,11 +191,11 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
               data._d.getMonth()
             )} ${data._d.getFullYear()}`;
           }}
-          startDate={momentCustomStartDate}
+          startDate={currentStartDate ? moment(currentStartDate) : null}
           startDateId="start-date"
           startDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
           endDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
-          endDate={momentCustomEndDate}
+          endDate={currentEndDate ? moment(currentEndDate) : null}
           {...navIcons}
           endDateId="end-date"
           verticalHeight={280}

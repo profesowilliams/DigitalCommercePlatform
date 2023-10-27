@@ -3,7 +3,9 @@ import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import DropdownOrderDetails from './DropdownOrderDetails';
 
 function OrderDetailsRenderers(props) {
-  const detailRender = useOrderTrackingStore((state) => state.detailRender);
+  const detailRender = useOrderTrackingStore(
+    (state) => state.filter.detailRender
+  );
   return (
     <>
       {detailRender === 'primary' && (

@@ -9,7 +9,7 @@ import OrderCount from './OrderCount';
 
 function OrderFilter() {
   const orderFilterCounter = useOrderTrackingStore(
-    (state) => state.orderFilterCounter
+    (state) => state.filter.orderFilterCounter
   );
   const { toggleFilterModal, setFilterClicked } = useOrderTrackingStore(
     (st) => st.effects

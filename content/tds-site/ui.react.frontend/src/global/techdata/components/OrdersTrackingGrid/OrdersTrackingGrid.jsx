@@ -141,7 +141,7 @@ function OrdersTrackingGrid(props) {
 
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
   const filterDefaultDateRange = useOrderTrackingStore(
-    (st) => st.filterDefaultDateRange
+    (st) => st.filter.filterDefaultDateRange
   );
 
   const dueDateKey = componentProp.options.defaultSortingColumnKey;

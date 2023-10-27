@@ -18,20 +18,20 @@ function OrderFilterListItem({
   filterOptionList,
   filterLabels,
 }) {
-  const filterList = useOrderTrackingStore((state) => state.filterList);
+  const filterList = useOrderTrackingStore((state) => state.filter.filterList);
   const { setFilterList } = useOrderTrackingStore((state) => state.effects);
 
   const orderTypeFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderTypeFiltersChecked
+    (state) => state.filter.orderTypeFiltersChecked
   );
   const orderStatusFiltersChecked = useOrderTrackingStore(
-    (state) => state.orderStatusFiltersChecked
+    (state) => state.filter.orderStatusFiltersChecked
   );
   const dateRangeFiltersChecked = useOrderTrackingStore(
-    (state) => state.dateRangeFiltersChecked
+    (state) => state.filter.dateRangeFiltersChecked
   );
   const customFiltersChecked = useOrderTrackingStore(
-    (state) => state.customFiltersChecked
+    (state) => state.filter.customFiltersChecked
   );
   const { computeClassName } = useComputeBranding(useOrderTrackingStore);
 
