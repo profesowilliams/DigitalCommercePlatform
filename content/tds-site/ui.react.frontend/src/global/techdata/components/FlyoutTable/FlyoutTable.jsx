@@ -61,6 +61,12 @@ export default function FlyoutTable({
       </TableHead>
     );
   };
+
+  const disabledLink = {
+    cursor: 'default',
+    color: '#000'
+  }
+
   return (
     <Box className={'cmp-flyout-table'} sx={{ width: '100%' }}>
       <TableContainer>
@@ -115,7 +121,7 @@ export default function FlyoutTable({
                     id={labelId}
                     scope="row"
                     padding="normal"
-                    sx={{ color: '#006FBA' }}
+                    sx={checkboxEnabled ? { color: '#006FBA' } : disabledLink}
                   >
                     {row.id || row.Id}
                   </TableCell>
