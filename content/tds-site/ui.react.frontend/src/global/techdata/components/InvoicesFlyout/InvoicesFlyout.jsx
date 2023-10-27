@@ -55,6 +55,10 @@ function InvoicesFlyout({
     }
   };
 
+  const handleSingleDownload = (clickedId) => {
+    openFilePdf('Invoice', config?.id, clickedId);
+  }
+
   useEffect(() => {
     setInvoicesResponse(null);
     !invoicesFlyoutConfig?.data &&
@@ -110,6 +114,7 @@ function InvoicesFlyout({
           <FlyoutTable
             dataTable={rows}
             selected={selected}
+            handleSingleDownload={handleSingleDownload}
             handleClick={handleClick}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}

@@ -12,6 +12,7 @@ export default function FlyoutTable({
   dataTable,
   selected,
   handleClick,
+  handleSingleDownload,
   handleSelectAllClick,
   headCells,
   checkboxEnabled,
@@ -67,6 +68,13 @@ export default function FlyoutTable({
     color: '#000'
   }
 
+  const handleSingleLinkClick = (e, id) => {
+    if (handleSingleDownload) {
+      e.stopPropagation();
+      handleSingleDownload(id)
+    }
+  }
+
   return (
     <Box className={'cmp-flyout-table'} sx={{ width: '100%' }}>
       <TableContainer>
@@ -117,6 +125,7 @@ export default function FlyoutTable({
                     />
                   </TableCell>
                   <TableCell
+                    onClick={(e) => checkboxEnabled ? handleSingleLinkClick(e,row.id || row.Id) : undefined}
                     component="th"
                     id={labelId}
                     scope="row"

@@ -55,6 +55,10 @@ function DNotesFlyout({
     }
   };
 
+  const handleSingleDownload = (clickedId) => {
+    openFilePdf('DNote', config?.id, clickedId);
+  }
+
   useEffect(() => {
     setDeliveryNotesResponse(null);
     !dNoteFlyoutConfig?.data &&
@@ -111,6 +115,7 @@ function DNotesFlyout({
             dataTable={rows}
             selected={selected}
             handleClick={handleClick}
+            handleSingleDownload={handleSingleDownload}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
             checkboxEnabled={true}
