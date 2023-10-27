@@ -103,7 +103,9 @@ const ActionsButton = ({
       if (baseUrl) {
         const trackAndTraceUrl = new URL(baseUrl);
         if (parameters) {
-          Object.entries(parameters).forEach((entry) => trackAndTraceUrl.searchParams.append(entry[0][0], entry[1][0]));
+          Object.entries(parameters).forEach((entry) =>
+            trackAndTraceUrl.searchParams.append(entry[0], entry[1])
+          );
         }
         window.open(trackAndTraceUrl.href, '_blank');
       }

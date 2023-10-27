@@ -38,13 +38,13 @@ function TrackingFlyout({
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {
-        const urlParams =
-          '?' +
-          Object.entries(parameters)
-            .map((entry) => entry[0] + '=' + entry[1])
-            .join('&');
-        const trackUrl = baseUrl + urlParams;
-        window.open(trackUrl, '_blank');
+        const trackAndTraceUrl = new URL(baseUrl);
+        if (parameters) {
+          Object.entries(parameters).forEach((entry) =>
+            trackAndTraceUrl.searchParams.append(entry[0], entry[1])
+          );
+        }
+        window.open(trackAndTraceUrl.href, '_blank');
       }
     } catch (error) {
       console.error(error);
