@@ -101,6 +101,7 @@ function TrackingFlyout({
           data={data}
           handleButtonClick={handleTrackAndTrace}
           handleButtonField={'id'}
+          shipDateField={'actualShipDateFormatted'}
           idLabel={trackingFlyout?.idColumnTracking}
           buttonLabel={trackingFlyout?.buttonTracking}
           shipDateLabel={trackingFlyout?.shipDateColumnTracking}

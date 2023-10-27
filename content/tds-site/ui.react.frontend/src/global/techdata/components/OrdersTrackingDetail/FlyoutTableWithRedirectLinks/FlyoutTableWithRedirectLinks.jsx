@@ -8,6 +8,7 @@ export default function FlyoutTableWithRedirectLinks({
   idLabel,
   buttonLabel,
   shipDateLabel,
+  shipDateField,
 }) {
   return (
     <div>
@@ -23,6 +24,7 @@ export default function FlyoutTableWithRedirectLinks({
       <div>
         {data?.map((line) => {
           const fieldValue = line[handleButtonField];
+          const shipDateValue = shipDateField ? line[shipDateField] : '';
           const handleClick = () => {
             handleButtonClick(fieldValue);
           };
@@ -35,7 +37,7 @@ export default function FlyoutTableWithRedirectLinks({
                 {line?.id}
               </span>
               <span className="cmp-flyout-with-links__content__tableValue">
-                {line?.dateFormatted}
+                {shipDateValue}
               </span>
               <div
                 className="cmp-flyout-with-links__content__button"

@@ -76,6 +76,7 @@ function ReturnFlyout({
           data={data}
           handleButtonClick={handleReturn}
           handleButtonField={'returnURL'}
+          shipDateField={'dateFormatted'}
           idLabel={returnFlyout?.idColumnReturn}
           buttonLabel={returnFlyout?.buttonReturn}
           shipDateLabel={returnFlyout?.shipDateColumnReturn}
