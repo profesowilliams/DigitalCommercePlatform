@@ -43,6 +43,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .quote-preview-offset {
+      margin-left: 24px;
+    }
     .quote-preview-bold {
       color: rgba(0, 12, 33, 1);
       font-size: 20px;

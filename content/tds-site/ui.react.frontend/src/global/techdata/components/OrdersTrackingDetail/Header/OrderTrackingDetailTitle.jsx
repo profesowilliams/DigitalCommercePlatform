@@ -5,19 +5,31 @@ import {
   pushDataLayerGoogle,
 } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
-const OrderTrackingDetailTitle = ({ content, label }) => {
-  const { statusText, orderNumber } = content;
+const OrderTrackingDetailTitle = ({ content, labels }) => {
+  const { statusText, orderNumber, shipComplete } = content;
+  const { orderNo, completeDeliveryOnly } = labels;
+
+  const completeDeliveryOnlyAvailable = shipComplete === true;
+
   useEffect(() => {
     pushDataLayerGoogle(getOrderDetailsAnalyticsGoogle(orderNumber));
   }, []);
 
   return (
-    <div>
-      <span className="quote-preview-bold">{statusText}</span>
+    <div className="quote-preview-title">
       <span className="quote-preview-bold">
-        {` | ${getDictionaryValueOrKey(label)}: `}
+        {`${getDictionaryValueOrKey(orderNo)}: `}
       </span>
       <span className="quote-preview">{orderNumber}</span>
+      <span className="quote-preview-bold quote-preview-offset">|</span>
+      <span className="quote-preview-bold quote-preview-offset">
+        {statusText}
+      </span>
+      {completeDeliveryOnlyAvailable && (
+        <span className="quote-preview">
+          {` ${getDictionaryValueOrKey(completeDeliveryOnly)}`}
+        </span>
+      )}
     </div>
   );
 };

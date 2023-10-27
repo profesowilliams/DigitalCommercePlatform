@@ -144,10 +144,7 @@ const OrderTrackingDetailHeader = ({
           </Link>
         </div>
         <div className="title-container">
-          <OrderTrackingDetailTitle
-            content={content}
-            label={config.labels?.orderNo}
-          />
+          <OrderTrackingDetailTitle content={content} labels={config?.labels} />
           <div
             className="actions-container"
             onMouseOver={handleActionMouseOver}

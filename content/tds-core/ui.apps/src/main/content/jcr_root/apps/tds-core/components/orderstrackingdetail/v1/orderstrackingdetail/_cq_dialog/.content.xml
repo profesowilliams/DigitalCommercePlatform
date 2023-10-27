@@ -40,6 +40,13 @@
                                                 fieldLabel="Order Number Label"
                                                 name="./orderNo"
                                                 required="{Boolean}true"/>
+											<completeDeliveryOnly
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Complete delivery only Label"
+                                                fieldLabel="Complete delivery only Label"
+                                                name="./completeDeliveryOnly"
+                                                required="{Boolean}true"/>
 											<actions
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

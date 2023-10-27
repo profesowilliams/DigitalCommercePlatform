@@ -38,6 +38,7 @@ use(["../../../common/utils.js"], function (utils) {
     "menuExport",
     "back",
     "orderNo",
+    "completeDeliveryOnly",
     "actions",
   ];
 
