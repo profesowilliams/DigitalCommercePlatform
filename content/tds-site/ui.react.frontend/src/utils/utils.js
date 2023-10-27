@@ -136,7 +136,7 @@ const validateBlobResponseWithoutModal = async (response) => {
       if (response.status === 204) {
         const url = window.location.href;
         const regex = /\/dcp\/.*/;
-        const newUrl = url.replace(regex, '/errors/500.html/');
+        const newUrl = url.replace(regex, '/errors/204.html/');
         window.open(newUrl, '_blank');
       }
     }
