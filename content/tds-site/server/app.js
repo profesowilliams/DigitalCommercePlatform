@@ -6520,7 +6520,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       created: "10-02-2023",
       createdFormatted: "02/10/2023",
       isEditable: false,
-      shipComplete: false,
+      shipComplete: true,
       status: "Open",
       statusText: "Open",
       updated: "04-01-2023",

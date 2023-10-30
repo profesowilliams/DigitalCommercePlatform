@@ -60,6 +60,7 @@ const OrderTrackingDetailHeader = ({
 
   const areDeliveryNotesAvailable = deliveryNotes.length > 0;
   const areInvoicesAvailable = invoices.length > 0;
+  const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = items.some(
     (item) => item.serials.length > 0
   );
@@ -112,6 +113,11 @@ const OrderTrackingDetailHeader = ({
       onClick: hasMultipleInvoices
         ? triggerInvoicesFlyout
         : handleDownloadInvoice,
+    },
+    {
+      condition: areReleaseTheOrderAvailable,
+      label: labels?.releaseTheOrder,
+      onClick: () => null, // TODO: add Release action
     },
     {
       condition: hasOrderModificationRights,

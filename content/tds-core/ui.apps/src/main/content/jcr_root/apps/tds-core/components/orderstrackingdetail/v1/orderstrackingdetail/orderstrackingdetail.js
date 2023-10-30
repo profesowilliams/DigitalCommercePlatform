@@ -80,6 +80,7 @@ use(["../../../common/utils.js"], function (utils) {
   const actionLabelsList = [
     "viewDNotes",
     "viewInvoices",
+    "releaseTheOrder",
     "actionModifyOrder",
     "exportSerialNumbers",
     "track",

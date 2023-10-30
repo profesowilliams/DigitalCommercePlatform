@@ -345,6 +345,13 @@
                                                 fieldLabel="View Invoices"
                                                 name="./viewInvoices"
                                                 required="{Boolean}true"/>
+                                            <releaseTheOrder
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Release The Order"
+                                                fieldLabel="Release The Order"
+                                                name="./releaseTheOrder"
+                                                required="{Boolean}true"/>
                                             <actionModifyOrder
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
