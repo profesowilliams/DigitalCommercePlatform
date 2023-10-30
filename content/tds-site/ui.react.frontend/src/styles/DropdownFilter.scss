@@ -169,7 +169,7 @@
   flex-direction: column; 
   box-shadow: 0.5px 0.5px 8px #000000ad; 
   position: absolute;
-  height: fit-content;
+  height: 32px;
   z-index: 5;
   background: $brand-white;
   top: 34px;
@@ -184,7 +184,7 @@
     transition: all .4s ease;
     flex: 1;
     &:hover{
-      background-color: #f2f2f2;
+      background-color: $td-neutral-gray-2
     }
   }
   &__reset{
