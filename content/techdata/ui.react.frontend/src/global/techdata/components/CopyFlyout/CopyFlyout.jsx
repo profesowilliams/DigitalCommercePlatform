@@ -111,6 +111,9 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
   }
 
   const handleQuoteSelectedChange = (event, newInput) => {
+    if(newInput){
+      setAccountNumber('');
+    }
     findSelectedQuote(newInput);
     setAutocompleteTitle(
         getDictionaryValueOrKey(copyFlyout.resellerAccountLabel)
@@ -250,7 +253,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
             filterOptions={filterOptions}
             getOptionLabel={(option) => option.accountNumber ?? accountNumber}
             onChange={handleQuoteSelectedChange}
-            value={selectedQuote}
+            value={accountNumber}
             onKeyDown={handleKeyDown}
             renderOption={(props, option) => {
               return (
@@ -271,7 +274,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
                 {...params}
                 error={!!errorMessage}
                 label={autocompleteTitle}
-                value={accountNumber}
+                value={selectedQuote ? "" : accountNumber}
                 variant="standard"
                 onChange={handleResellerIdChange}
                 onBlur={handleFocusOut}
