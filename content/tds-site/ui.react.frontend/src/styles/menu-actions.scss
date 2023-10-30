@@ -14,7 +14,7 @@
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.24);
       background-color: $brand-white;
       z-index: 100;
-      cursor: pointer;
+      
 
       > ul {
         margin: 0;
@@ -32,6 +32,13 @@
         }
         > li:hover {
           background-color: $td-neutral-gray-2;
+        }
+        .disabled {
+          color:$brand-icon-gray-color;
+          cursor:default;
+          &:hover {
+            background-color: transparent;
+          }
         }
       }
     }
