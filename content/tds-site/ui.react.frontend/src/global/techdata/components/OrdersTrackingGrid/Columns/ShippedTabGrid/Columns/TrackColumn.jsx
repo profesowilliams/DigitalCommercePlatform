@@ -35,7 +35,7 @@ function TrackColumn({ line, config, id }) {
       className="order-line-details__content__trackLink"
       onClick={trackAndTraceAvailable ? handleTrackAndTrace : null}
     >
-      {getDictionaryValueOrKey(config?.orderLineDetails?.trackLabel)}
+      {getDictionaryValueOrKey(config?.orderLineDetails?.trackLabel) || 'Track'}
     </div>
   );
 }
