@@ -15,17 +15,18 @@ const StatusColumn = ({ data, completeDeliveryOnly }) => {
   };
 
   const open = Boolean(anchorEl);
-  const className = open ? 'status-popover-grid' : undefined;
+  const className = open ? 'status-popover-grid' : '';
   const icon = data?.shipComplete ? (
     <span className="status-span-icon" onClick={handleClick}>
       <ParcelIcon />
     </span>
-  ) : (
-    ''
-  );
+  ) : null;
   return data && data?.status ? (
-    <span>
-      {icon}
+    <div>
+      <span>{icon}</span>
+      <span className={!data?.shipComplete ? 'status-icon-offset' : ''}>
+        {data?.status}
+      </span>
       <Popover
         className={className}
         open={open}
@@ -43,9 +44,7 @@ const StatusColumn = ({ data, completeDeliveryOnly }) => {
       >
         {getDictionaryValueOrKey(completeDeliveryOnly)}
       </Popover>
-
-      {data?.status}
-    </span>
+    </div>
   ) : (
     <span>-</span>
   );
