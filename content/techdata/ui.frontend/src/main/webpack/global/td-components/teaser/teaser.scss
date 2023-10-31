@@ -929,7 +929,7 @@
     justify-content: space-around;
 
     figure.dp-figure {
-      flex: 1 1 150px;
+      flex: 1 1 244px;
       min-width: 25%;
       text-align: center;
       text-align: -webkit-center;
@@ -938,9 +938,12 @@
     figure.dp-figure .cmp-image {
       place-content: center;
       min-width: 25%;
-      max-width: 250px;
+      max-width: 244px;
 
-      .cmp-image__image {
+      img,
+      svg {
+        width: 244px;
+        height: auto;
         filter: grayscale(1);
       }
     }
