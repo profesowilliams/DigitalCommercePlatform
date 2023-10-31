@@ -169,7 +169,7 @@
   flex-direction: column; 
   box-shadow: 0.5px 0.5px 8px #000000ad; 
   position: absolute;
-  height: 32px;
+  height: fit-content;
   z-index: 5;
   background: $brand-white;
   top: 34px;
