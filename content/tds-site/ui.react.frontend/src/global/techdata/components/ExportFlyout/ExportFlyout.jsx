@@ -72,10 +72,14 @@ function ExportFlyout({
       (filters.current &&
         Object.entries(filters.current).reduce((params, filter) => {
           if (filter[1] && (filter[0] === 'status' || filter[0] === 'type')) {
-            urlSearchParams.append(filter[0], filter[1].replace('&' + filter[0] + '=', ''));
+            filter[1].split('&').forEach((e) => {
+                if (!e) { return; }
+                let key = e.split('=');
+                urlSearchParams.append(key[0], key[1]);
+            });
           }
           else if (filter[1]) {
-            urlSearchParams.append(filter[0], filter[1]);
+            urlSearchParams.set(filter[0], filter[1]);
           }
         }, ''))
     }
