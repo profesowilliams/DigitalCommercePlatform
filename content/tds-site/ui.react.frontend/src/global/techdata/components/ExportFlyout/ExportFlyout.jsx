@@ -53,32 +53,32 @@ function ExportFlyout({
     'order-details.html?id='
   );
   const exportFlyoutConfig = store((st) => st.exportFlyout);
-  let paramNames = '';
+  let urlSearchParams = new URLSearchParams();
   if (searchParams) {
     const { reports, sort, search, filters } = searchParams;
     const reportValue = reports.current?.value;
-    const reportName = reportValue ? `reportName=${reportValue}` : '';
-    const searchValue = search.current;
-    const searchParam = searchValue?.value
-      ? `${searchValue.field}=${searchValue.value}`
-      : '';
-    const sortValue = sort.current?.sortData?.[0];
-    const sortParam = sortValue
-      ? `SortDirection=${sortValue.sort}&SortBy=${sortValue.colId}`
-      : '';
-    const filterParam =
+    if(reportValue) {
+      urlSearchParams.set('reportName', reportValue);
+    } else {
+      const searchValue = search.current;
+      if(searchValue?.value) {
+        urlSearchParams.set(searchValue.field, searchValue.value);
+      }
+      const sortValue = sort.current?.sortData?.[0];
+      if(sortValue) {
+        urlSearchParams.set('SortDirection', sortValue.sort);
+        urlSearchParams.set('SortBy', sortValue.colId);
+      }
       (filters.current &&
         Object.entries(filters.current).reduce((params, filter) => {
           if (filter[1] && (filter[0] === 'status' || filter[0] === 'type')) {
-            return params + `${filter[1]}`;
-          } else if (filter[1]) {
-            return params + `&${filter[0]}=${filter[1]}`;
-          } else return params;
-        }, '')) ||
-      '';
-    paramNames = reportValue
-      ? reportName
-      : searchParam + sortParam + filterParam;
+            urlSearchParams.append(filter[0], filter[1].replace('&' + filter[0] + '=', ''));
+          }
+          else if (filter[1]) {
+            urlSearchParams.append(filter[0], filter[1]);
+          }
+        }, ''))
+    }
   }
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
@@ -101,18 +101,15 @@ function ExportFlyout({
 
   function getExportAllOrderLines() {
     const url = componentProp?.exportAllOrderLinesEndpoint || 'nourl';
-    const singleDownloadUrl =
-      url + '?' + paramNames + `&OnlyWithSerialNumbers=false`;
-    return requestFileBlobWithoutModal(singleDownloadUrl, '', {
+    urlSearchParams.set('OnlyWithSerialNumbers', false);
+    return requestFileBlobWithoutModal(url + '?' + urlSearchParams.toString(), '', {
       redirect: false,
     });
   }
   function getExportLinesWithSerialNumbersOnly() {
-    const url =
-      componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
-    const singleDownloadUrl =
-      url + '?' + paramNames + `&OnlyWithSerialNumbers=true`;
-    return requestFileBlobWithoutModal(singleDownloadUrl, '', {
+    const url = componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
+    urlSearchParams.set('OnlyWithSerialNumbers', true);
+    return requestFileBlobWithoutModal(url + '?' + urlSearchParams.toString(), '', {
       redirect: false,
     });
   }
