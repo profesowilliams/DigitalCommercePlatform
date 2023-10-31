@@ -46,7 +46,7 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
               {getDictionaryValueOrKey(config.footerLabels?.totalOrderNetPrice)}
             </span>
             <span className="box-container__rightPart-subtotalValue">
-              {content.paymentDetails?.totalFormatted}{' '}
+              {content.paymentDetails?.subtotalFormatted}{' '}
               {currency ?? defaultCurrency}
             </span>
           </div>
