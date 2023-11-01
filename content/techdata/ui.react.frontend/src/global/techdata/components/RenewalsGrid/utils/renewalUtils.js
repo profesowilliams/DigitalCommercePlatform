@@ -333,7 +333,6 @@ export function getLocalStorageData(key) {
  * Removes the specified keys from localstorage
  */
 export function clearLocalStorageGridData() {
-    localStorage.removeItem(SEARCH_LOCAL_STORAGE_KEY);
     localStorage.removeItem(PAGINATION_LOCAL_STORAGE_KEY);
     localStorage.removeItem(SORT_LOCAL_STORAGE_KEY);
     localStorage.removeItem(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
