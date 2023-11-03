@@ -24,7 +24,7 @@ function InvoiceColumn({
   };
 
   const handleDownload = () => {
-    hasAIORights && openFilePdf('Invoice', id, line?.invoices);
+    true && openFilePdf('Invoice', id, line?.invoices[0]?.id);
   };
   return line?.invoices?.length == 0 ? (
     '-'
