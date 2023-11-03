@@ -130,21 +130,19 @@ const OrderTrackingDetailHeader = ({
       onClick: triggerExportFlyout,
     },
   ];
-
-  const salesLoginParam = saleslogin ? `?saleslogin=${saleslogin}` : '';
+  const createBackUrl = () => {
+    let backParams = new URLSearchParams();
+    backParams.set('redirectedFrom', "detailsPage");
+    if(saleslogin)
+      backParams.set('saleslogin', saleslogin);
+    return location.href.substring(0, location.href.lastIndexOf('/')) + ".html?" + backParams.toString();
+  };
 
   return (
     <div className="cmp-orders-qp__config-grid">
       <div className="header-container">
         <div className="navigation-container">
-          <Link
-            variant="back-to-orders"
-            href={`${location.href.substring(
-              0,
-              location.href.lastIndexOf('/')
-            )}.html?redirectedFrom=detailsPage${salesLoginParam}`}
-            underline="underline-none"
-          >
+          <Link variant="back-to-orders" href={createBackUrl()} underline="underline-none">
             <i className="fas fa-chevron-left"></i>
             {getDictionaryValueOrKey(config?.labels?.back)}
           </Link>
