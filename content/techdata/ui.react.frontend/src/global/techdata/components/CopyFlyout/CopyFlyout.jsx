@@ -15,7 +15,6 @@ import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid }) {
   const copyFlyoutConfig = store((st) => st.copyFlyout);
   const effects = store((st) => st.effects);
-  const [accountNumber, setAccountNumber] = useState('');
   const [autocompleteTitle, setAutocompleteTitle] = useState(
     getDictionaryValueOrKey(
       copyFlyout.searchPlaceholder
@@ -29,11 +28,13 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
   let analyticsAction = copyFlyoutConfig?.data?.analyticsAction;
 
   const [quotes, setQuotes] = useState([]);
+  const [accountNumber, setAccountNumber] = useState('');
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [selectedQuote, setSelectedQuote] = useState(null);
   const [enableCopy, setEnableCopy] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const closeFlyout = () => effects.setCustomState({ key: 'copyFlyout', value: {show:false} });
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
   }, [copyFlyoutConfig?.show]);
 
   const handleResellerIdChange = async (event) => {
+    setIsTyping(true);
     const resellerId = event.target.value;
     setAccountNumber(resellerId);
 
@@ -99,21 +101,20 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
     }
 
     if (quoteExists) {
+      setIsTyping(false);
       setErrorMessage(copyFlyout.quoteExistsError);
     }
     else {
+      setAccountNumber('');
       setQuotes([]);
       setErrorMessage('');
-      setAccountNumber('');
       setSelectedQuote(newInput);
+      setIsTyping(false);
     }
     setIsAutocompleteOpen(false);
   }
 
   const handleQuoteSelectedChange = (event, newInput) => {
-    if(newInput){
-      setAccountNumber('');
-    }
     findSelectedQuote(newInput);
     setAutocompleteTitle(
         getDictionaryValueOrKey(copyFlyout.resellerAccountLabel)
@@ -253,7 +254,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
             filterOptions={filterOptions}
             getOptionLabel={(option) => option.accountNumber ?? accountNumber}
             onChange={handleQuoteSelectedChange}
-            value={accountNumber}
+            value={selectedQuote}
             onKeyDown={handleKeyDown}
             renderOption={(props, option) => {
               return (
@@ -269,12 +270,16 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
                 </li>
               );
             }}
-            renderInput={(params) => (
-              <TextField
+            renderInput={(params) => {
+            if((selectedQuote || setErrorMessage)&& !isTyping){
+              params.inputProps.value = "";
+              setIsTyping(false);
+            }
+              return( <TextField
                 {...params}
                 error={!!errorMessage}
                 label={autocompleteTitle}
-                value={selectedQuote ? "" : accountNumber}
+                value={accountNumber }
                 variant="standard"
                 onChange={handleResellerIdChange}
                 onBlur={handleFocusOut}
@@ -296,8 +301,10 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
                     </div>
                   ),
                 }}
-              />
-            )}
+              />)
+            } 
+             
+            }
           />
           {errorMessage && (
             <div className="cmp-flyout__content--error">{errorMessage}</div>
