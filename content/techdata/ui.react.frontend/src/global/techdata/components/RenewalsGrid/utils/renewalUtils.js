@@ -336,7 +336,6 @@ export function clearLocalStorageGridData() {
     localStorage.removeItem(PAGINATION_LOCAL_STORAGE_KEY);
     localStorage.removeItem(SORT_LOCAL_STORAGE_KEY);
     localStorage.removeItem(PLANS_ACTIONS_LOCAL_STORAGE_KEY);
-    localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
     localStorage.removeItem(TOASTER_LOCAL_STORAGE_KEY);
 }
 
