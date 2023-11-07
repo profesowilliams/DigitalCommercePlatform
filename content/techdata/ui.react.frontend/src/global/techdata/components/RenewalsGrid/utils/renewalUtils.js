@@ -339,6 +339,11 @@ export function clearLocalStorageGridData() {
     localStorage.removeItem(TOASTER_LOCAL_STORAGE_KEY);
 }
 
+export function clearLocalStorageFilterData() {
+    localStorage.removeItem(FILTER_LOCAL_STORAGE_KEY);
+    localStorage.removeItem(SEARCH_LOCAL_STORAGE_KEY);
+}
+
 export function isFromRenewalDetailsPage() {
     const renewalsDetailsUrl = process.env.NODE_ENV === "development" ? 'td-renewals-details-react' : 'renewal-details.html';
     if (process.env.NODE_ENV === "development") return true;

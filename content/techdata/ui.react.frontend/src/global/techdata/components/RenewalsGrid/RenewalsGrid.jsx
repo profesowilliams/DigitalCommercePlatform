@@ -12,6 +12,7 @@ import {
   setPaginationData,
   isFirstTimeSortParameters,
   clearLocalStorageGridData,
+  clearLocalStorageFilterData,
   isFromRenewalDetailsPage,
   updateQueryString,
   handleFetchDataStrategy,
@@ -226,6 +227,9 @@ function RenewalsGrid(props) {
     if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY) && isFromRenewalDetailsPage()) {
       hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
+    if (!isFromRenewalDetailsPage()) {
+        clearLocalStorageFilterData();
+    }
   }, [])
 
   const _onAfterGridInit = (config) => {
@@ -258,6 +262,7 @@ function RenewalsGrid(props) {
         clearLocalStorageGridData();
       }
     }
+
   }
 
   function tootltipVal(event) {
