@@ -12,6 +12,7 @@ export default function FlyoutTable({
   dataTable,
   selected,
   handleClick,
+  handleCheckboxEnabled,
   handleSingleDownload,
   handleSelectAllClick,
   headCells,
@@ -75,6 +76,12 @@ export default function FlyoutTable({
     }
   }
 
+  if(!handleCheckboxEnabled) {
+    handleCheckboxEnabled = () => {
+      return checkboxEnabled;
+    }
+  }
+
   return (
     <Box className={'cmp-flyout-table'} sx={{ width: '100%' }}>
       <TableContainer>
@@ -96,7 +103,7 @@ export default function FlyoutTable({
                 <TableRow
                   hover
                   onClick={(event) => {
-                    checkboxEnabled ? handleClick(event, row.id) : undefined;
+                    handleCheckboxEnabled(row) ? handleClick(event, row.id) : undefined;
                   }}
                   role="checkbox"
                   aria-checked={isItemSelected}
@@ -112,7 +119,7 @@ export default function FlyoutTable({
                       color="primary"
                       checked={isItemSelected}
                       padding={'normal'}
-                      disabled={!checkboxEnabled}
+                      disabled={!handleCheckboxEnabled(row)}
                       inputProps={{
                         'aria-labelledby': labelId,
                       }}
@@ -125,12 +132,12 @@ export default function FlyoutTable({
                     />
                   </TableCell>
                   <TableCell
-                    onClick={(e) => checkboxEnabled ? handleSingleLinkClick(e,row.id || row.Id) : undefined}
+                    onClick={(e) => handleCheckboxEnabled(row) ? handleSingleLinkClick(e, row.id || row.Id) : undefined}
                     component="th"
                     id={labelId}
                     scope="row"
                     padding="normal"
-                    sx={checkboxEnabled ? { color: '#006FBA' } : disabledLink}
+                    sx={handleCheckboxEnabled(row) ? { color: '#006FBA' } : disabledLink}
                   >
                     {row.id || row.Id}
                   </TableCell>

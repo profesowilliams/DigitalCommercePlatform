@@ -32,18 +32,17 @@ function DeliveryNotesColumn({
   };
 
   const handleDownload = () => {
-    openFilePdf('DNote', id, deliveryNotes[0]);
+    openFilePdf('DNote', id, deliveryNotes[0].Id);
     pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Main Grid'));
   };
 
-  return deliveryNotes?.length === 0 ? (
-    '-'
-  ) : (
-    <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
-      <a>
-        {hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0]}
-      </a>
-    </div>
+  return deliveryNotes?.length === 0 ? ('-') : 
+  (
+    !deliveryNotes[0].canDownloadDocument 
+      ? deliveryNotes[0].id
+      : (<div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
+         <a>{hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0].id}</a>
+         </div>)
   );
 }
 

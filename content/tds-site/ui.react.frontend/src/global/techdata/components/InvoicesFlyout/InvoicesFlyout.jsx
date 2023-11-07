@@ -14,7 +14,6 @@ function InvoicesFlyout({
   isTDSynnex,
   downloadAllFile,
   openFilePdf,
-  hasAIORights,
 }) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
   const effects = store((st) => st.effects);
@@ -33,7 +32,6 @@ function InvoicesFlyout({
     rows,
     headCells,
     handleClick,
-    handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
   const getInvoices = async () => {
@@ -46,6 +44,7 @@ function InvoicesFlyout({
       console.error('Error:', error);
     }
   };
+
   const handleDownload = () => {
     closeFlyout()
     if (selected.length === 1) {
@@ -58,6 +57,23 @@ function InvoicesFlyout({
   const handleSingleDownload = (clickedId) => {
     openFilePdf('Invoice', config?.id, clickedId);
   }
+
+  const handleCheckboxEnabled = (row) => {
+    return row.canDownloadDocument;
+  }
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = rows.filter((n) => n.canDownloadDocument).map((n) => n[headTags[0]]);
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const checkboxEnabled = () => {
+    return rows.filter((n) => n.canDownloadDocument).length > 0;
+  };
 
   useEffect(() => {
     setInvoicesResponse(null);
@@ -79,14 +95,14 @@ function InvoicesFlyout({
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={invoicesFlyout.title || 'Invoices'}
-      buttonLabel={invoicesFlyout.button || 'Download selected'}
-      secondaryButtonLabel={invoicesFlyout.clearAllButton || 'Clear all'}
+      titleLabel={getDictionaryValueOrKey(invoicesFlyout.title || 'Invoices')}
+      buttonLabel={getDictionaryValueOrKey(invoicesFlyout.button || 'Download selected')}
+      secondaryButtonLabel={getDictionaryValueOrKey(invoicesFlyout.clearAllButton || 'Clear all')}
       disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}
       isTDSynnex={isTDSynnex}
-      onClickButton={hasAIORights ? handleDownload : undefined}
+      onClickButton={handleDownload}
     >
       <section className="cmp-flyout__content">
         <div className="cmp-flyout__content-description">
@@ -116,9 +132,10 @@ function InvoicesFlyout({
             selected={selected}
             handleSingleDownload={handleSingleDownload}
             handleClick={handleClick}
+            handleCheckboxEnabled={handleCheckboxEnabled}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
-            checkboxEnabled={hasAIORights}
+            checkboxEnabled={checkboxEnabled}
           />
         )}
       </section>

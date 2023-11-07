@@ -3,7 +3,7 @@ import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
 import { usGet } from '../../../../../../../utils/api';
 
 function TrackColumn({ line, config, id }) {
-  const trackAndTraceAvailable = line?.id?.length > 0;
+  const trackAndTraceAvailable = line?.canTrackAndTrace ;
   const enableLineId = line?.items?.length === 1;
   const orderId = id;
   const lineId = line?.items[0]?.line;

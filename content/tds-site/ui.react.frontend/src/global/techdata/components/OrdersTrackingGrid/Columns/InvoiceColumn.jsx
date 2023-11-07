@@ -11,8 +11,7 @@ function InvoiceColumn({
   multiple,
   id,
   reseller,
-  openFilePdf,
-  hasAIORights,
+  openFilePdf
 }) {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const hasMultiple = invoices?.length > 1;
@@ -33,21 +32,17 @@ function InvoiceColumn({
   };
 
   const handleDownload = () => {
-    hasAIORights && openFilePdf('Invoice', id, invoices[0]);
+    openFilePdf('Invoice', id, invoices[0].id);
     pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Main Grid'));
   };
 
-  const disabledLink = {
-    cursor: 'default',
-    color: '#000'
-  }
-
-  return invoices?.length === 0 ? (
-    '-'
-  ) : (
-    <div onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}>
-      <a style={hasAIORights || hasMultiple ? undefined : disabledLink}>{hasMultiple ? getDictionaryValueOrKey(multiple) : invoices[0]}</a>
-    </div>
+  return invoices?.length === 0 ? ('-') : 
+  (
+    !invoices[0].canDownloadDocument 
+      ? invoices[0].id
+      : (<div onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}>
+         <a>{hasMultiple ? getDictionaryValueOrKey(multiple) : invoices[0].id}</a>
+         </div>)
   );
 }
 

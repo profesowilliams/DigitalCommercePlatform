@@ -33,7 +33,6 @@ function DNotesFlyout({
     rows,
     headCells,
     handleClick,
-    handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
   const getDeliveryNotes = async () => {
@@ -46,6 +45,7 @@ function DNotesFlyout({
       console.error('Error:', error);
     }
   };
+
   const handleDownload = () => {
     closeFlyout()
     if (selected.length === 1) {
@@ -58,6 +58,23 @@ function DNotesFlyout({
   const handleSingleDownload = (clickedId) => {
     openFilePdf('DNote', config?.id, clickedId);
   }
+
+  const handleCheckboxEnabled = (row) => {
+    return row.canDownloadDocument;
+  }
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelected = rows.filter((n) => n.canDownloadDocument).map((n) => n[headTags[0]]);
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const checkboxEnabled = () => {
+    return rows.filter((n) => n.canDownloadDocument).length > 0;
+  };
 
   useEffect(() => {
     setDeliveryNotesResponse(null);
@@ -79,9 +96,9 @@ function DNotesFlyout({
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={dNotesFlyout.title || 'D-notes'}
-      buttonLabel={dNotesFlyout.button || 'Download selected'}
-      secondaryButtonLabel={dNotesFlyout.clearAllButton || 'Clear all'}
+      titleLabel={getDictionaryValueOrKey(dNotesFlyout.title || 'D-notes')}
+      buttonLabel={getDictionaryValueOrKey(dNotesFlyout.button || 'Download selected')}
+      secondaryButtonLabel={getDictionaryValueOrKey(dNotesFlyout.clearAllButton || 'Clear all')}
       disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}
@@ -115,10 +132,11 @@ function DNotesFlyout({
             dataTable={rows}
             selected={selected}
             handleClick={handleClick}
+            handleCheckboxEnabled={handleCheckboxEnabled}
             handleSingleDownload={handleSingleDownload}
             handleSelectAllClick={handleSelectAllClick}
             headCells={headCells}
-            checkboxEnabled={true}
+            checkboxEnabled={checkboxEnabled}
           />
         )}
       </section>

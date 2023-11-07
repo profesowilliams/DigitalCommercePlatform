@@ -30,15 +30,7 @@ function useTableFlyout({ selected, setSelected, columnList, config }) {
       return [];
     }
   
-    return config.data
-      .filter((e) => e && typeof e === 'object')
-      .map((e) => {
-        const rowData = {};
-        headTags.forEach((tag) => {
-          rowData[tag] = e.hasOwnProperty(tag) ? e[tag] : '';
-        });
-        return rowData;
-      });
+    return config.data.filter((e) => e && typeof e === 'object');
   };
 
   const rows = getRows(config, headTags);
