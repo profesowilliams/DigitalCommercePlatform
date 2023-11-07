@@ -124,33 +124,33 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   };
 
   const setFilterDate = (startDate, endDate) => {
-    const dateLabel = getDateRangeLabel(startDate, endDate);
-    const newDate = [
-      {
-        id: 1,
-        filterOptionLabel: dateLabel,
-        group: 'date',
-        createdFrom: startDate?.toDate(),
-        createdTo: endDate?.toDate(),
-        dateType,
-      },
-    ];
-    setDateRangeFiltersChecked(newDate);
-    setPredefinedFiltersSelectedAfter([
-      ...orderStatusFiltersChecked,
-      ...orderTypeFiltersChecked,
-      ...newDate,
-    ]);
-    if (startDate && endDate) {
-      const startDateMonth = startDate.format('MM');
-      const startDateDay = startDate.format('DD');
-      const startDateYear = startDate.format('YYYY');
+    const startDateMonth = startDate.format('MM');
+    const startDateDay = startDate.format('DD');
+    const startDateYear = startDate.format('YYYY');
 
-      const endDateMonth = endDate.format('MM');
-      const endDateDay = endDate.format('DD');
-      const endDateYear = endDate.format('YYYY');
-      startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
-      endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
+    const endDateMonth = endDate.format('MM');
+    const endDateDay = endDate.format('DD');
+    const endDateYear = endDate.format('YYYY');
+    startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
+    endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
+    if (startDate && endDate) {
+      const dateLabel = getDateRangeLabel(startDate, endDate);
+      const newDate = [
+        {
+          id: 1,
+          filterOptionLabel: dateLabel,
+          group: 'date',
+          createdFrom: `${startDateYear}-${startDateMonth}-${startDateDay}`,
+          createdTo: `${endDateYear}-${endDateMonth}-${endDateDay}`,
+          dateType,
+        },
+      ];
+      setDateRangeFiltersChecked(newDate);
+      setPredefinedFiltersSelectedAfter([
+        ...orderStatusFiltersChecked,
+        ...orderTypeFiltersChecked,
+        ...newDate,
+      ]);
 
       setDateRefs(
         startDateFormatted.current,

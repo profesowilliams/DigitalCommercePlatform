@@ -380,7 +380,9 @@ window.onload = function () {
 loadIntouchHeaderAndFooter();
 
 export const getDictionaryValueOrKey = (dictionaryKey) => {
-    return getDictionaryValue(dictionaryKey, dictionaryKey);
+    return dictionaryKey
+      ? getDictionaryValue(dictionaryKey, dictionaryKey)
+      : '';
 }
 
 export const getDictionaryValue = (dictionaryKey, defaultValue) => {

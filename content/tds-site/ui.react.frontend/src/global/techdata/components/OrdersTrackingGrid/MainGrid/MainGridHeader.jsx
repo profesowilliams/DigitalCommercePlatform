@@ -8,8 +8,16 @@ import Pill from '../../Widgets/Pill';
 import { getPredefinedSearchOptionsList } from '../utils/orderTrackingUtils';
 import OrderTrackingGridPagination from '../Pagination/OrderTrackingGridPagination';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
-import { ORDER_SEARCH_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
-import { setLocalStorageData } from '../utils/gridUtils';
+import {
+  ORDER_SEARCH_LOCAL_STORAGE_KEY,
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+  REPORTS_LOCAL_STORAGE_KEY,
+} from '../../../../../utils/constants';
+import {
+  setLocalStorageData,
+  removeLocalStorageData,
+  getLocalStorageData,
+} from '../utils/gridUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function MainGridHeader({
@@ -26,7 +34,9 @@ function MainGridHeader({
   gridConfig,
   reportFilterValue,
 }) {
-  const [pill, setPill] = useState(null);
+  const [pill, setPill] = useState(
+    getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
+  );
 
   const searchOptions = [
     ...getPredefinedSearchOptionsList(searchLabels),
@@ -86,6 +96,7 @@ function MainGridHeader({
       field: '',
       value: '',
     });
+    removeLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
     setPill({ key: option.key, label: option.label });
     removeDefaultDateRange();
     onQueryChanged();

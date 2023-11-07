@@ -12,6 +12,8 @@ import {
   getReportAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
+import { setLocalStorageData } from '../utils/gridUtils';
+import { REPORTS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
 function Report(
   { selectOption, selectedKey, reportAnalyticsLabel, reportOptions },
@@ -36,6 +38,7 @@ function Report(
     setCurrentValue(option.key);
     selectOption(option);
     setIsReportHovered(false);
+    setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, option);
   };
 
   useEffect(() => {

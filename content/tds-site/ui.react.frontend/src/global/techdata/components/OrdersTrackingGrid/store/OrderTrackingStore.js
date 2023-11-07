@@ -9,6 +9,13 @@ import {
   getLocalValueOrDefault,
 } from '../../BaseGrid/store/GridStore';
 import { orderTrackingEffects } from './OrderTrackingStoreEffects';
+import { getLocalStorageData } from '../utils/gridUtils';
+
+const getInitialPredefinedFilters = () => {
+  const filtersFromLS = getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
+  const { dates, types, statuses } = filtersFromLS;
+  return [...dates, ...types, ...statuses];
+};
 
 const INITIAL_STATE = {
   ...basicGridState,
@@ -62,10 +69,16 @@ const INITIAL_STATE = {
       'orderStatusFilters',
       []
     ),
-    predefinedFiltersApplied: [],
-    orderTypeFiltersChecked: [],
-    orderStatusFiltersChecked: [],
-    dateRangeFiltersChecked: [],
+    predefinedFiltersApplied:
+      (getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY) &&
+        getInitialPredefinedFilters()) ||
+      [],
+    orderTypeFiltersChecked:
+      getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY)?.types || [],
+    orderStatusFiltersChecked:
+      getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY)?.statuses || [],
+    dateRangeFiltersChecked:
+      getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY)?.dates || [],
     customFiltersChecked: [],
     customizedFiltersApplied: [],
     areThereAnyFiltersSelectedButNotApplied: false,

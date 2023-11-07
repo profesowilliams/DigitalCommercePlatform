@@ -5,19 +5,22 @@ import {
 } from '../../../../../utils/utils';
 import {
   isFirstTimeSortParameters,
-  calcSecondLevelSorting,
   isRepeatedSortAction,
   isSameFilterRepeated,
   mapStrucToUrlStr,
   urlStrToMapStruc,
   compareSort,
+  getLocalStorageData,
 } from './gridUtils';
+import {
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+} from '../../../../../utils/constants';
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   if (defaultDateRange) {
-    const dateRange = urlStrToMapStruc(defaultDateRange).entries();
-    url.set(...dateRange.next().value);
-    url.set(...dateRange.next().value);
+    new URLSearchParams(defaultDateRange).entries((entry) =>
+      url.searchParams.set(entry[0], entry[1])
+    );
   }
 };
 
@@ -28,29 +31,29 @@ export const fetchOrdersCount = async (
   reportValue = null,
   searchCriteria
 ) => {
-  const mapUrl = urlStrToMapStruc(url + '?PageSize=25');
+  const requestUrl = new URL(url);
   const dateFilters = Object.entries(filtersRefs?.current).filter((entry) =>
     Boolean(entry[1])
   );
 
   if (reportValue) {
-    mapUrl.set('reportName', reportValue);
+    requestUrl.searchParams.append('reportName', reportValue);
   } else if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
-    mapUrl.set(field, value);
-    addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
+    requestUrl.searchParams.append(field, value);
+    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   } else {
-    console.log('add default date range'); // temporary test
-    addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
+    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
-  console.log(dateFilters); // temporary test
   if (dateFilters.length > 0) {
-    dateFilters.forEach((filter) => mapUrl.set(filter[0], filter[1]));
+    dateFilters.forEach((filter) =>
+      requestUrl.searchParams.append(filter[0], filter[1])
+    );
   }
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
   try {
-    const result = await usGet(mapStrucToUrlStr(mapUrl) + filtersStatusAndType);
+    const result = await usGet(requestUrl.href + filtersStatusAndType);
     return result;
   } catch (error) {
     console.error('error on orders count >>', error);
@@ -107,26 +110,27 @@ export async function fetchData(config) {
   } = config;
 
   const { url } = request;
-  const mapUrl = urlStrToMapStruc(url);
-
+  const requestUrl = new URL(url);
   const isFirstAPICall = firstAPICall.current === true;
   if (defaultSearchDateRange) {
-    addDefaultDateRangeToUrl(mapUrl, defaultSearchDateRange);
+    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
-
   if (searchCriteria.current?.field) {
-    addDefaultDateRangeToUrl(mapUrl, setDefaultSearchDateRange(90));
+    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   }
 
   Object.keys(filtersRefs.current).map((filter) => {
     if (!['status', 'type'].includes(filter)) {
       const filterValue = filtersRefs.current[filter];
-      filterValue && mapUrl.set(filter, filterValue);
+      filterValue && requestUrl.searchParams.append(filter, filterValue);
     } else if (filter === 'customFilterRef') {
       filtersRefs.current[filter].map((ref) => {
         ref?.filterOptionList?.map((option) => {
           option?.checked &&
-            mapUrl.set(option.filterOptionLabel, option.filterOptionKey);
+            requestUrl.searchParams.appends(
+              option.filterOptionLabel,
+              option.filterOptionKey
+            );
         });
       });
     }
@@ -136,15 +140,9 @@ export async function fetchData(config) {
     const { sortData } = hasSortChanged.current;
 
     if (sortData[0]) {
-      mapUrl.set('SortDirection', sortData[0].sort);
+      requestUrl.searchParams.append('SortDirection', sortData[0].sort);
       const sortBy = sortSwap(sortData[0].colId);
-      mapUrl.set('SortBy', sortBy);
-    }
-
-    const secondLevelSort = calcSecondLevelSorting(sortData);
-
-    if (secondLevelSort && !secondLevelSort.includes('undefined')) {
-      mapUrl.set('SortBySecondLevel', secondLevelSort);
+      requestUrl.searchParams.append('SortBy', sortBy);
     }
 
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
@@ -155,15 +153,15 @@ export async function fetchData(config) {
     const pageNumber = customPaginationRef.current?.pageNumber;
 
     if (pageNumber !== 1 && !isDefaultSort && !isFirstAPICall) {
-      if (!isEqual) mapUrl.set('PageNumber', 1);
+      if (!isEqual) requestUrl.searchParams.append('PageNumber', 1);
     }
   }
   if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
-    mapUrl.set(field, value);
+    requestUrl.searchParams.append(field, value);
 
     if (isOnSearchAction) {
-      mapUrl.set('PageNumber', 1);
+      requestUrl.searchParams.append('PageNumber', 1);
     }
   }
 
@@ -182,19 +180,19 @@ export async function fetchData(config) {
     const month = dateTo.getMonth();
     const year = dateTo.getFullYear();
     const today = `${year}-${month}-${day}`;
-    mapUrl.set('createdFrom', fromDay);
+    requestUrl.searchParams.set('createdFrom', fromDay);
     const dateFrom = dateTo.getDate() - 90;
     const dayFrom = dateFrom.getDate();
     const monthFrom = dateFrom.getMonth();
     const yearFrom = dateFrom.getFullYear();
     const fromDay = `${yearFrom}-${monthFrom}-${dayFrom}`;
-    mapUrl.set('createdTo', today);
+    requestUrl.searchParams.set('createdTo', today);
   }
 
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
 
-  const filterUrl = mapStrucToUrlStr(mapUrl) + filtersStatusAndType;
+  const filterUrl = requestUrl.href + filtersStatusAndType;
 
   previousSortChanged.current = hasSortChanged.current;
   firstAPICall.current = false;
@@ -360,4 +358,29 @@ export const getPredefinedSearchOptionsList = (aemData) => {
       showIfIsHouseAccount: false,
     },
   ];
+};
+
+export const getInitialFiltersDataFromLS = () => {
+  const data = getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
+  if (!data)
+    return {
+      createdFrom: null,
+      createdTo: null,
+      shippedDateFrom: null,
+      shippedDateTo: null,
+      invoiceDateFrom: null,
+      invoiceDateTo: null,
+      type: null,
+      status: null,
+    };
+  return {
+    createdFrom: data.dates[0]?.createdFrom,
+    createdTo: data.dates[0]?.createdTo,
+    shippedDateFrom: data.dates[0]?.shippedDateFrom,
+    shippedDateTo: data.dates[0]?.shippedDateTo,
+    invoiceDateFrom: data.dates[0]?.invoiceDateFrom,
+    invoiceDateTo: data.dates[0]?.invoiceDateTo,
+    type: data.statuses.map((status) => `&status=${status.id}`).join(),
+    status: data.types.map((type) => `&type=${type.id}`).join(),
+  };
 };

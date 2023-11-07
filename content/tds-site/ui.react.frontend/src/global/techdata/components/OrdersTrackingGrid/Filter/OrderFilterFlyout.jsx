@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OrderFilterList from './OrderFilterList';
 import OrderFilterTags from './OrderFilterTags';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
@@ -8,6 +8,8 @@ import {
   getFilterAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
+import { setLocalStorageData } from '../utils/gridUtils';
+import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
 const OrderFilterFlyout = ({
   filterLabels,
@@ -16,6 +18,7 @@ const OrderFilterFlyout = ({
   isTDSynnex,
   subheaderReference,
   analyticsCategories,
+  resetReports,
 }) => {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
@@ -66,6 +69,7 @@ const OrderFilterFlyout = ({
     filterLabels;
 
   const showResult = () => {
+    resetReports();
     if (orderFilterCounter !== 0) {
       let checkedFilters = [];
       orderStatusFiltersChecked.length > 0 &&
@@ -103,6 +107,11 @@ const OrderFilterFlyout = ({
       ...dateRangeFiltersChecked,
     ]);
     setCustomizedFiltersApplied(structuredClone(customFiltersChecked));
+    setLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY, {
+      dates: dateRangeFiltersChecked,
+      types: orderTypeFiltersChecked,
+      statuses: orderStatusFiltersChecked,
+    });
     onQueryChanged();
     setAreThereAnyFiltersSelectedButNotApplied();
   };
@@ -114,6 +123,10 @@ const OrderFilterFlyout = ({
     closeAllFilterOptions();
     setAreThereAnyFiltersSelectedButNotApplied();
   };
+
+  useEffect(() => {
+    setAreThereAnyFiltersSelectedButNotApplied();
+  }, []);
 
   return (
     <BaseFlyout

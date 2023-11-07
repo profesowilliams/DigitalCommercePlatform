@@ -71,6 +71,7 @@ export const ORDER_SEARCH_LOCAL_STORAGE_KEY = 'orderSearchLocalStorageData';
 export const PLANS_ACTIONS_LOCAL_STORAGE_KEY = 'plansActionsLocalStorageData';
 export const FILTER_LOCAL_STORAGE_KEY = 'filterLocalStorageData';
 export const ORDER_FILTER_LOCAL_STORAGE_KEY = 'orderFilterLocalStorageData';
+export const REPORTS_LOCAL_STORAGE_KEY = 'reportsLocalStorageData';
 export const ERROR_LOGIN_MESSAGE = 'You do not have the required entitlement to access this information';
 export const ERROR_TITLE_DEFAULT = 'Error';
 

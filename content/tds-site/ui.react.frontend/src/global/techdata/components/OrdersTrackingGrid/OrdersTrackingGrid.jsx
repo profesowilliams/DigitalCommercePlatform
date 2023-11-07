@@ -3,6 +3,8 @@ import {
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
   ORDER_SEARCH_LOCAL_STORAGE_KEY,
   SORT_LOCAL_STORAGE_KEY,
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+  REPORTS_LOCAL_STORAGE_KEY,
 } from '../../../../utils/constants';
 import { setDefaultSearchDateRange } from '../../../../utils/utils';
 import BaseGrid from '../BaseGrid/BaseGrid';
@@ -20,6 +22,7 @@ import {
   fetchReport,
   getFilterFlyoutPredefined,
   getFilterFlyoutCustomized,
+  getInitialFiltersDataFromLS,
 } from './utils/orderTrackingUtils';
 import {
   getHomeAnalyticsGoogle,
@@ -57,6 +60,8 @@ const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
   ORDER_SEARCH_LOCAL_STORAGE_KEY,
   SORT_LOCAL_STORAGE_KEY,
+  ORDER_FILTER_LOCAL_STORAGE_KEY,
+  REPORTS_LOCAL_STORAGE_KEY,
 ];
 
 function OrdersTrackingGrid(props) {
@@ -71,17 +76,7 @@ function OrdersTrackingGrid(props) {
   const searchCriteria = useRef({ field: '', value: '' });
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
-  const filtersRefs = useRef({
-    createdFrom: null,
-    createdTo: null,
-    shippedDateFrom: null,
-    shippedDateTo: null,
-    invoiceDateFrom: null,
-    invoiceDateTo: null,
-    type: null,
-    status: null,
-    customFilterRef: null,
-  });
+  const filtersRefs = useRef({});
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
   const resetCallback = useRef(null);
@@ -288,7 +283,7 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  async function downloadFileBlob(flyoutType, orderId, selectedId) {
+  const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
     try {
       const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
       const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
@@ -301,8 +296,8 @@ function OrdersTrackingGrid(props) {
     } catch (error) {
       console.error('Error', error);
     }
-  }
-  async function openFilePdf(flyoutType, orderId, selectedId) {
+  };
+  const openFilePdf = async (flyoutType, orderId, selectedId) => {
     const url = componentProp.ordersDownloadDocumentsEndpoint || 'nourl';
     const singleDownloadUrl =
       url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
@@ -310,11 +305,11 @@ function OrdersTrackingGrid(props) {
     await requestFileBlobWithoutModal(singleDownloadUrl, name, {
       redirect: true,
     });
-  }
+  };
 
-  function onCloseToaster() {
+  const onCloseToaster = () => {
     closeAndCleanToaster();
-  }
+  };
 
   const hasAccess =
     hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
@@ -324,10 +319,16 @@ function OrdersTrackingGrid(props) {
     return results.data.content;
   };
 
+  const resetReports = () => {
+    removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
+    filtersRefs.current = {};
+  };
+
   useEffect(async () => {
     if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
       resetLocalStorage(searchParamsKeys);
     }
+    filtersRefs.current = getInitialFiltersDataFromLS();
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
@@ -491,6 +492,7 @@ function OrdersTrackingGrid(props) {
           search: searchCriteria,
           filters: filtersRefs,
         }}
+        resetReports={resetReports}
       />
     </>
   );

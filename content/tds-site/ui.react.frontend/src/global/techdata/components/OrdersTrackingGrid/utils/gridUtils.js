@@ -1,4 +1,5 @@
 import { setPaginationData } from './orderTrackingUtils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 export const isLocalDevelopment = window.origin === 'http://localhost:8080';
 
@@ -63,9 +64,9 @@ export function updateQueryString(pageNumber) {
   if (!pageNumber) return;
   const searchParams = new URLSearchParams(window.location.search);
   if (pageNumber > 1) {
-      searchParams.set('page', pageNumber);
+    searchParams.set('page', pageNumber);
   } else {
-      searchParams.delete('page');
+    searchParams.delete('page');
   }
   history.replaceState(null, '', '?' + searchParams.toString());
 }
@@ -76,12 +77,15 @@ export const addCurrencyToTotalColumn = (list, userData) => {
 
   return list.map((column) => {
     if (column.columnKey === 'priceFormatted') {
-      column.columnLabel = `Total (${defaultCurrency})`;
+      column.columnLabel = `${getDictionaryValueOrKey(
+        'Total'
+      )} (${defaultCurrency})`;
       return column;
     }
     if (column.columnKey === 'status') {
       column.sortable = false;
     }
+    column.columnLabel = getDictionaryValueOrKey(column.columnLabel);
     return column;
   });
 };

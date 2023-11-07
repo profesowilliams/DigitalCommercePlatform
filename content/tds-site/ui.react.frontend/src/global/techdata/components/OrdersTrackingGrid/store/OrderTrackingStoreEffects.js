@@ -4,7 +4,7 @@ import {
 } from '../../../../../utils/constants';
 import { setLocalStorageData } from '../utils/gridUtils';
 import { getLocalValueOrDefault } from './../../BaseGrid/store/GridStore';
-import { difference, isEqual } from 'lodash';
+import { differenceWith, isEqual, isEmpty } from 'lodash';
 import _ from 'lodash/set';
 
 const areCustomFiltersEqual = (beforeFilters, afterFilters) => {
@@ -24,6 +24,10 @@ const areCustomFiltersEqual = (beforeFilters, afterFilters) => {
     return true;
   }
   return isEqual(beforeFilters, afterFilters);
+};
+
+const isArrayEqual = (x, y) => {
+  return isEmpty(differenceWith(x, y, isEqual));
 };
 
 export const orderTrackingEffects = (set, get) => {
@@ -262,10 +266,8 @@ export const orderTrackingEffects = (set, get) => {
         ...dateRangeFiltersChecked,
       ];
       const areAnyPredefinedFiltersSelectedButNotApplied =
-        difference(checkedPredefinedFilters, predefinedFiltersApplied).length >
-          0 ||
-        difference(predefinedFiltersApplied, checkedPredefinedFilters).length >
-          0;
+        !isArrayEqual(checkedPredefinedFilters, predefinedFiltersApplied) ||
+        !isArrayEqual(predefinedFiltersApplied, checkedPredefinedFilters);
 
       const checkedCustomizedFilters = customFiltersChecked
         .filter((filter) => filter.checked)
@@ -274,10 +276,14 @@ export const orderTrackingEffects = (set, get) => {
         .filter((filter) => filter.checked)
         .map((filter) => filter.filterOptionKey);
       const areAnyCustomFiltersSelectedButNotApplied =
-        difference(checkedCustomizedFilters, customizedFiltersAppliedSimplified)
-          .length > 0 ||
-        difference(customizedFiltersAppliedSimplified, checkedCustomizedFilters)
-          .length > 0;
+        !isArrayEqual(
+          checkedCustomizedFilters,
+          customizedFiltersAppliedSimplified
+        ) ||
+        !isArrayEqual(
+          customizedFiltersAppliedSimplified,
+          checkedCustomizedFilters
+        );
       const areThereAnyFiltersSelectedButNotApplied =
         areAnyPredefinedFiltersSelectedButNotApplied ||
         areAnyCustomFiltersSelectedButNotApplied;
