@@ -12,7 +12,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
 
   const AccountNumberWithHighlight = () => {
       if (!currentlyTypedWord) {
-        return null;
+        return accountNumber;
       }
 
       let string = accountNumber.substr(0, accountNumber.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()));
@@ -39,7 +39,7 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
 
   const AccountNameWithHighlight = () => {
     if (!currentlyTypedWord) {
-      return null;
+      return name;
     }
 
     let string = name.substr(0, name.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()));
