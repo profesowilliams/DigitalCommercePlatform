@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 export default function FlyoutTable({
   dataTable,
@@ -56,7 +57,7 @@ export default function FlyoutTable({
               align={'left'}
               padding={'normal'}
             >
-              {headCell.label}
+              {getDictionaryValueOrKey(headCell.label)}
             </TableCell>
           ))}
         </TableRow>

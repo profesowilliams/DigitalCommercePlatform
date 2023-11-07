@@ -386,7 +386,7 @@ export const getDictionaryValueOrKey = (dictionaryKey) => {
 }
 
 export const getDictionaryValue = (dictionaryKey, defaultValue) => {
-    let dictionaryValue = Granite?.I18n?.get(dictionaryKey);
+    let dictionaryValue = Granite?.I18n?.get(dictionaryKey.trim());
     return dictionaryValue != dictionaryKey ? dictionaryValue : defaultValue;
 }
 
