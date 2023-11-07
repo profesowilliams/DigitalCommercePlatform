@@ -11,7 +11,6 @@ import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
-import { dateToString } from '../../helpers/formatting';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -95,9 +94,11 @@ function ExportFlyout({
   const handleSelectChange = (event) => {
     setSelected(event.target.value);
   };
+
   const handleSecondarySelectChange = (event) => {
     setSecondarySelected(event.target.value);
   };
+
   const closeFlyout = () => {
     effects.setCustomState({ key: 'exportFlyout', value: { show: false } });
     !isOrderDetailsPage && setSecondarySelected(null);
@@ -110,6 +111,7 @@ function ExportFlyout({
       redirect: false,
     });
   }
+
   function getExportLinesWithSerialNumbersOnly() {
     const url = componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', true);
@@ -179,8 +181,8 @@ function ExportFlyout({
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={exportFlyout?.title || 'Export'}
-      buttonLabel={exportFlyout?.button || 'Export'}
+      titleLabel={getDictionaryValueOrKey(exportFlyout?.title || 'Export')}
+      buttonLabel={getDictionaryValueOrKey(exportFlyout?.button || 'Export')}
       disabledButton={!secondarySelected}
       selected={secondarySelected}
       isTDSynnex={isTDSynnex}
@@ -203,7 +205,7 @@ function ExportFlyout({
                 key={e.key}
                 value={e.key}
                 control={<Radio sx={styleOverrideRadio} />}
-                label={e.label}
+                label={getDictionaryValueOrKey(e.label)}
               />
             ))}
           </RadioGroup>
@@ -225,7 +227,7 @@ function ExportFlyout({
                 key={e.key}
                 value={e.key}
                 control={<Radio sx={styleOverrideRadio} />}
-                label={e.label}
+                label={getDictionaryValueOrKey(e.label)}
               />
             ))}
           </RadioGroup>
