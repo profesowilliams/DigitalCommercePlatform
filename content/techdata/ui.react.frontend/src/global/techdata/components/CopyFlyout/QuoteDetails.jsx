@@ -11,13 +11,27 @@ export const QuoteDetails = ({ quote, labels, currentlyTypedWord }) => {
   const isAccountNumFlag = isNumeric(currentlyTypedWord);
 
   const AccountNumberWithHighlight = () => {
+      if (!currentlyTypedWord) {
+        return null;
+      }
+
+      let string = accountNumber.substr(0, accountNumber.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()));
+      let endString = accountNumber.substr(
+          accountNumber.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()) +
+            currentlyTypedWord.length
+    );
+    let highlightedText = accountNumber.substr(
+      accountNumber.toLowerCase().indexOf(currentlyTypedWord.toLowerCase()),
+      currentlyTypedWord.length
+    );
     return (
     isAccountNumFlag ? (
       <>
+        <span>{string}</span>
         <span className="cmp-flyout__content-search__quote--highlighted">
-          {currentlyTypedWord}
+          {highlightedText}
         </span>
-        <span>{accountNumber?.substring(currentlyTypedWord?.length)}</span>
+        <span>{endString}</span>
       </>
       ) : accountNumber
     );
