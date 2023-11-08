@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import Button from '../../Widgets/Button';
 import {
   ChevronDoubleLeftIcon,
@@ -49,7 +49,35 @@ function OrderTrackingGridPagination(
    * The useImperativeHandle hook exposes the paginationData state to external references,
    * enabling the custom interceptor to make the proper request to the service on changes.
    */
+
+  const [currentValue, setCurrentValue] = useState(pageNumber || 1);
   useImperativeHandle(ref, () => ({ pageNumber }), [pageNumber]);
+  const maxInputLength = 6;
+  const validateInput = (e) => {
+    if (!Boolean(e.target.value) || e.target.value == 0) {
+      setCurrentValue(1);
+      handleInputChange({ ...e, target: { ...e.target, value: 1 } });
+    } else if (e.target.value > pageCount) {
+      setCurrentValue(pageCount);
+      handleInputChange({ ...e, target: { ...e.target, value: pageCount } });
+    } else {
+      setCurrentValue(e.target.value);
+      handleInputChange(e);
+    }
+  };
+  const handleBlur = (e) => {
+    validateInput(e);
+  };
+  const handleKeyChange = (e) => {
+    if (e.code === 'Enter') {
+      validateInput(e);
+    }
+  };
+  const handleChange = (e) => {
+    if (e.target.value.length <= maxInputLength) {
+      setCurrentValue(e.target.value);
+    }
+  };
 
   const isGoBackDisabled = pageNumber === 1 || disabled;
   const isGoForwardDisabled = pageNumber === pageCount || disabled;
@@ -78,7 +106,10 @@ function OrderTrackingGridPagination(
           <Button
             btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
             disabled={isGoBackDisabled}
-            onClick={decrementHandler}
+            onClick={() => {
+              decrementHandler();
+              setCurrentValue(currentValue - 1);
+            }}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
               paginationAnalyticsLabel,
               analyticsCategory,
@@ -88,16 +119,26 @@ function OrderTrackingGridPagination(
             <ChevronLeftIcon />
           </Button>
           <div className="cmp-navigation__actions-labels">
-            <div className="cmp-input-underline">
+            <div
+              style={
+                currentValue ? { paddingLeft: '6px', paddingRight: '6px' } : {}
+              }
+              className="cmp-input-underline"
+            >
               <input
+                style={{
+                  width: `${currentValue?.toString().length}ch`,
+                  maxWidth: 'none',
+                }}
                 className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
                 ref={pageInputRef}
                 type="number"
-                onKeyDown={handleInputChange}
-                onChange={handleInputChange}
-                onBlur={handleInputChange}
-                defaultValue={pageNumber}
-                key={Math.random()}
+                onKeyDown={handleKeyChange}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={currentValue}
+                maxLength={maxInputLength}
+                key={'pagination'}
               />
             </div>
             <span>{getDictionaryValueOrKey(ofLabel)}</span>
@@ -106,7 +147,10 @@ function OrderTrackingGridPagination(
           <Button
             btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
             disabled={isGoForwardDisabled}
-            onClick={incrementHandler}
+            onClick={() => {
+              incrementHandler();
+              setCurrentValue(currentValue + 1);
+            }}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
               paginationAnalyticsLabel,
               analyticsCategory,
