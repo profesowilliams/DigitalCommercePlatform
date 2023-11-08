@@ -197,6 +197,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
           endDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
           endDate={currentEndDate ? moment(currentEndDate) : null}
           {...navIcons}
+          minimumNights={0}
           endDateId="end-date"
           verticalHeight={280}
           showDefaultInputIcon={true}

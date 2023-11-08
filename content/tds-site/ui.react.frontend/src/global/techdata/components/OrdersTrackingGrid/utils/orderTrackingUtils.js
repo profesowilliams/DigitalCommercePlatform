@@ -380,7 +380,7 @@ export const getInitialFiltersDataFromLS = () => {
     shippedDateTo: data.dates[0]?.shippedDateTo,
     invoiceDateFrom: data.dates[0]?.invoiceDateFrom,
     invoiceDateTo: data.dates[0]?.invoiceDateTo,
-    type: data.statuses.map((status) => `&status=${status.id}`).join(),
-    status: data.types.map((type) => `&type=${type.id}`).join(),
+    status: data.statuses.map((status) => `&status=${status.id}`).join(),
+    type: data.types.map((type) => `&type=${type.id}`).join(),
   };
 };

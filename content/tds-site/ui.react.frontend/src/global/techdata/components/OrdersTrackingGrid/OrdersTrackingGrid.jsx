@@ -321,7 +321,7 @@ function OrdersTrackingGrid(props) {
 
   const resetReports = () => {
     removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
-    filtersRefs.current = {};
+    reportFilterValue.current = {};
   };
 
   useEffect(async () => {

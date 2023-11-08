@@ -39,7 +39,9 @@ function OrderFilterTags({ filtersRefs }) {
   const handleFilterCloseClick = (id, group) => {
     if (group === 'status') {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
-      filtersRefs.current.status = newList.join();
+      filtersRefs.current.status = newList
+      .map((element) => '&status=' + element.filterOptionKey)
+      .join('');
       setOrderStatusFiltersChecked(newList);
       setFilterClicked(true);
       setAreThereAnyFiltersSelectedButNotApplied();
@@ -50,7 +52,9 @@ function OrderFilterTags({ filtersRefs }) {
       ]);
     } else if (group === 'type') {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
-      filtersRefs.current.type = newList.join();
+      filtersRefs.current.type =  newList
+      .map((element) => '&type=' + element.filterOptionKey)
+      .join('');
       setOrderTypeFiltersChecked(newList);
       setFilterClicked(true);
       setAreThereAnyFiltersSelectedButNotApplied();

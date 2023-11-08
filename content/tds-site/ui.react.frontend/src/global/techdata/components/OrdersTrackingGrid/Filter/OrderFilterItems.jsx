@@ -52,9 +52,9 @@ const OrderFilterItems = ({ itemKey, filtersRefs, filterLabels }) => {
           ...orderStatusFiltersChecked,
           ...orderStatusFilters.filter((status) => status.id === id),
         ];
-    filtersRefs.current.status = newList
-      .map((element) => '&status=' + element.filterOptionKey)
-      .join('');
+        filtersRefs.current.status = newList
+          .map((element) => '&status=' + element.filterOptionKey)
+          .join('');
     setOrderStatusFiltersChecked(newList);
     setPredefinedFiltersSelectedAfter([
       ...newList,

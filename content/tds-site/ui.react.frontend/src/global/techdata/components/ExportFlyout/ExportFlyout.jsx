@@ -85,10 +85,10 @@ function ExportFlyout({
   }
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(
-    exportOptionsList ? exportOptionsList[0]?.key : []
+    exportOptionsList ? exportOptionsList?.[0]?.key : []
   );
   const [secondarySelected, setSecondarySelected] = useState(
-    (isOrderDetailsPage && exportSecondaryOptionsList[1]?.key) || []
+    (isOrderDetailsPage && exportSecondaryOptionsList?.[1]?.key) || []
   );
 
   const handleSelectChange = (event) => {
