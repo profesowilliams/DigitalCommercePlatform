@@ -5326,7 +5326,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           isEditable: false,
           totalCharge: null,
           totalChargeFormatted: null,
-          price: 0.0,
+          price: 0,
           priceFormatted: "0.00",
           customerPO: "8476369",
           shipComplete: false,
@@ -5467,7 +5467,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           isEditable: false,
           totalCharge: null,
           totalChargeFormatted: null,
-          price: 49.0,
+          price: 49,
           priceFormatted: "49.00",
           customerPO: "8475455-2",
           shipComplete: false,
@@ -6139,7 +6139,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           shipComplete: false,
         },
       ],
-      pageNumber: 1,
+      pageNumber: 5,
       pageSize: 25,
     },
     error: {
@@ -6620,13 +6620,15 @@ app.get("/ui-commerce/v3/deliverynotes", (req, res) => {
         content: [
           {
             id: "111111111111",
-            date: "11-11-1111",
-            dateFormatted: "22/22/2222",
+            actualShipDate: "11-11-1111",
+            actualShipDateFormatted: "22/22/2222",
+            canDownloadDocument: true,
           },
           {
             id: "222222222222",
-            date: "22-22-2222",
-            dateFormatted: "22/22/2222",
+            actualShipDate: "22-22-2222",
+            actualShipDateFormatted: "22/22/2222",
+            canDownloadDocument: true,
           },
         ],
         error: {
@@ -6649,11 +6651,13 @@ app.get("/ui-commerce/v3/invoices", (req, res) => {
             id: "33333333",
             date: "07-17-2023",
             dateFormatted: "17/07/2023",
+            canDownloadDocument: true,
           },
           {
             id: "44444444",
             date: "08-18-2023",
             dateFormatted: "18/08/2023",
+            canDownloadDocument: true,
           },
         ],
         error: {
