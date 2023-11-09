@@ -17,12 +17,22 @@ import {
 } from '../../../../../utils/constants';
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
+  const searchParams = new URLSearchParams(defaultDateRange);
   if (defaultDateRange) {
-    new URLSearchParams(defaultDateRange).entries((entry) =>
-      url.searchParams.set(entry[0], entry[1])
-    );
+    for (const [key, value] of searchParams.entries()) {
+      url.searchParams.set(key, value);
+    }
   }
 };
+
+const filtersDateGroup = [
+  'createdFrom',
+  'createdTo',
+  'invoiceDateFrom',
+  'invoiceDateTo',
+  'shippedDateFrom',
+  'shippedDateTo',
+];
 
 export const fetchOrdersCount = async (
   url,
@@ -32,8 +42,8 @@ export const fetchOrdersCount = async (
   searchCriteria
 ) => {
   const requestUrl = new URL(url);
-  const dateFilters = Object.entries(filtersRefs?.current).filter((entry) =>
-    Boolean(entry[1])
+  const dateFilters = Object.entries(filtersRefs?.current).filter(
+    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
   );
 
   if (reportValue) {
@@ -140,9 +150,9 @@ export async function fetchData(config) {
     const { sortData } = hasSortChanged.current;
 
     if (sortData[0]) {
-      requestUrl.searchParams.append('SortDirection', sortData[0].sort);
+      requestUrl.searchParams.set('SortDirection', sortData[0].sort);
       const sortBy = sortSwap(sortData[0].colId);
-      requestUrl.searchParams.append('SortBy', sortBy);
+      requestUrl.searchParams.set('SortBy', sortBy);
     }
 
     const isDefaultSort = isFirstTimeSortParameters(hasSortChanged.current);
@@ -153,15 +163,15 @@ export async function fetchData(config) {
     const pageNumber = customPaginationRef.current?.pageNumber;
 
     if (pageNumber !== 1 && !isDefaultSort && !isFirstAPICall) {
-      if (!isEqual) requestUrl.searchParams.append('PageNumber', 1);
+      if (!isEqual) requestUrl.searchParams.set('PageNumber', 1);
     }
   }
   if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
-    requestUrl.searchParams.append(field, value);
+    requestUrl.searchParams.set(field, value);
 
     if (isOnSearchAction) {
-      requestUrl.searchParams.append('PageNumber', 1);
+      requestUrl.searchParams.set('PageNumber', 1);
     }
   }
 
