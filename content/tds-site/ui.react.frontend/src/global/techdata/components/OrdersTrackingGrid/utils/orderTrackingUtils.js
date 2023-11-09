@@ -47,17 +47,17 @@ export const fetchOrdersCount = async (
   );
 
   if (reportValue) {
-    requestUrl.searchParams.append('reportName', reportValue);
+    requestUrl.searchParams.set('reportName', reportValue);
   } else if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
-    requestUrl.searchParams.append(field, value);
+    requestUrl.searchParams.set(field, value);
     addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   } else {
     addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
   if (dateFilters.length > 0) {
     dateFilters.forEach((filter) =>
-      requestUrl.searchParams.append(filter[0], filter[1])
+      requestUrl.searchParams.set(filter[0], filter[1])
     );
   }
   const filtersStatusAndType =
@@ -132,7 +132,7 @@ export async function fetchData(config) {
   Object.keys(filtersRefs.current).map((filter) => {
     if (!['status', 'type'].includes(filter)) {
       const filterValue = filtersRefs.current[filter];
-      filterValue && requestUrl.searchParams.append(filter, filterValue);
+      filterValue && requestUrl.searchParams.set(filter, filterValue);
     } else if (filter === 'customFilterRef') {
       filtersRefs.current[filter].map((ref) => {
         ref?.filterOptionList?.map((option) => {
@@ -390,7 +390,7 @@ export const getInitialFiltersDataFromLS = () => {
     shippedDateTo: data.dates[0]?.shippedDateTo,
     invoiceDateFrom: data.dates[0]?.invoiceDateFrom,
     invoiceDateTo: data.dates[0]?.invoiceDateTo,
-    status: data.statuses.map((status) => `&status=${status.id}`).join(),
-    type: data.types.map((type) => `&type=${type.id}`).join(),
+    status: data.statuses.map((status) => `&status=${status.id}`).join(''),
+    type: data.types.map((type) => `&type=${type.id}`).join(''),
   };
 };
