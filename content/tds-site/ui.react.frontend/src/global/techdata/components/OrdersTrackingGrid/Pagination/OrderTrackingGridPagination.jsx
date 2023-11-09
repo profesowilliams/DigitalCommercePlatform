@@ -119,16 +119,11 @@ function OrderTrackingGridPagination(
             <ChevronLeftIcon />
           </Button>
           <div className="cmp-navigation__actions-labels">
-            <div
-              style={
-                currentValue ? { paddingLeft: '6px', paddingRight: '6px' } : {}
-              }
-              className="cmp-input-underline"
-            >
+            <div className="cmp-input-underline">
               <input
                 style={{
                   width: `${currentValue?.toString().length}ch`,
-                  maxWidth: 'none',
+                  minWidth: '27px',
                 }}
                 className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
                 ref={pageInputRef}
