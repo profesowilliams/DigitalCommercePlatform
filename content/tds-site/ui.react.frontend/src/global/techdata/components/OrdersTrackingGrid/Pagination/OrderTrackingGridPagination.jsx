@@ -66,7 +66,9 @@ function OrderTrackingGridPagination(
     }
   };
   const handleBlur = (e) => {
-    validateInput(e);
+    if (e.target.value !== currentValue) {
+      validateInput(e);
+    }
   };
   const handleKeyChange = (e) => {
     if (e.code === 'Enter') {
@@ -108,7 +110,7 @@ function OrderTrackingGridPagination(
             disabled={isGoBackDisabled}
             onClick={() => {
               decrementHandler();
-              setCurrentValue(currentValue - 1);
+              setCurrentValue(Number(currentValue) - 1);
             }}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
               paginationAnalyticsLabel,
@@ -122,7 +124,7 @@ function OrderTrackingGridPagination(
             <div className="cmp-input-underline">
               <input
                 style={{
-                  width: `${currentValue?.toString().length}ch`,
+                  width: `${currentValue?.toString().length || 1}ch`,
                   minWidth: '27px',
                 }}
                 className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
@@ -144,7 +146,7 @@ function OrderTrackingGridPagination(
             disabled={isGoForwardDisabled}
             onClick={() => {
               incrementHandler();
-              setCurrentValue(currentValue + 1);
+              setCurrentValue(Number(currentValue) + 1);
             }}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
               paginationAnalyticsLabel,
