@@ -37,6 +37,7 @@ const Flyouts = ({
       />
       <DNotesFlyout
         store={useOrderTrackingStore}
+        gridConfig={config}
         dNotesFlyout={config?.dNotesFlyout}
         dNoteColumnList={config?.dNoteColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}
@@ -50,6 +51,7 @@ const Flyouts = ({
       />
       <InvoicesFlyout
         store={useOrderTrackingStore}
+        gridConfig={config}
         invoicesFlyout={config?.invoicesFlyout}
         invoicesColumnList={config?.invoicesColumnList}
         subheaderReference={document.querySelector('.subheader > div > div')}

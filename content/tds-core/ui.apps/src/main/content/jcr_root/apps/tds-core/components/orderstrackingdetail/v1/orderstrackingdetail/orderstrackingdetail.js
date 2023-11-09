@@ -371,6 +371,12 @@ use(["../../../common/utils.js"], function (utils) {
     this.serviceData.uiServiceDomain +
       this.serviceData.replacementsProductsEndpoint || "";
 
+  jsonObject["getDeliveryNotesEndPoint"] =
+    this.serviceData.uiServiceDomain +
+      this.serviceData.getDeliveryNotesEndPoint || "";
+  jsonObject["getInvoicesEndPoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.getInvoicesEndPoint ||
+    "";
   jsonObject["trackDeliveryEndpoint"] =
     this.serviceData.uiServiceDomain + this.serviceData.trackDeliveryEndpoint ||
     "";
