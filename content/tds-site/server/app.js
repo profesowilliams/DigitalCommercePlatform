@@ -6377,16 +6377,19 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               id: "7000420758",
               actualShipDate: "02-04-2022",
               actualShipDateFormatted: "04/02/2022",
+              canDownloadDocument: true,
             },
             {
               id: "7000422054",
               actualShipDate: "02-04-2022",
               actualShipDateFormatted: "04/02/2022",
+              canDownloadDocument: true,
             },
             {
               id: "7000421257",
               actualShipDate: "02-04-2022",
               actualShipDateFormatted: "04/02/2022",
+              canDownloadDocument: true,
             },
           ],
           invoices: [
@@ -6396,6 +6399,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               dateFormatted: "10/08/2021",
               returnURL:
                 "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8000046276&Line=1&product=4845652",
+              canDownloadDocument: true,
             },
             {
               id: "8000046277",
@@ -6403,6 +6407,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
               dateFormatted: "10/08/2021",
               returnURL:
                 "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8000046277&Line=1&product=4845652",
+              canDownloadDocument: true,
             },
             {
               id: "8000046279",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './Header/MenuActions';
@@ -13,6 +13,7 @@ import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
+import { usGet } from '../../../../utils/api';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -23,6 +24,9 @@ const OrderTrackingDetailHeader = ({
 }) => {
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+  const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
+  const [invoicesResponse, setInvoicesResponse] = useState(null);
+
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
 
@@ -42,24 +46,10 @@ const OrderTrackingDetailHeader = ({
   };
 
   const items = content.items || [];
-  const deliveryNotes = content.deliveryNotes || [];
   const labels = config?.actionLabels;
-  
-  let invoices = [];
-  const seenInvoiceIds = {};
-  deliveryNotes.forEach((item) => {
-    invoices = invoices.concat(item.invoices);
-  });
-  invoices = invoices.filter((invoice) => {
-    if (!seenInvoiceIds[invoice.id]) {
-      seenInvoiceIds[invoice.id] = true;
-      return true;
-    }
-    return false;
-  });
 
-  const areDeliveryNotesAvailable = deliveryNotes.length > 0;
-  const areInvoicesAvailable = invoices.length > 0;
+  const areDeliveryNotesAvailable = deliveryNotesResponse?.length > 0;
+  const areInvoicesAvailable = invoicesResponse?.length > 0;
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = items.some(
     (item) => item.serials.length > 0
@@ -67,14 +57,14 @@ const OrderTrackingDetailHeader = ({
 
   const id = content.orderNumber;
   const poNumber = content.customerPO;
-  const hasMultipleDNotes = deliveryNotes.length > 1;
-  const hasMultipleInvoices = invoices.length > 1;
+  const hasMultipleDNotes = deliveryNotesResponse?.length > 1;
+  const hasMultipleInvoices = invoicesResponse?.length > 1;
   const handleDownloadDNote = () => {
-    openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    openFilePdf('DNote', id, deliveryNotesResponse[0]?.id);
     pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
   };
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', id, invoices[0]?.id);
+    openFilePdf('Invoice', id, invoicesResponse[0]?.id);
     pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
   };
   const triggerDNotesFlyout = () => {
@@ -83,7 +73,10 @@ const OrderTrackingDetailHeader = ({
       value: { data: null, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(deliveryNotes.length, 'Order Details')
+      getDNoteViewAnalyticsGoogle(
+        deliveryNotesResponse?.length,
+        'Order Details'
+      )
     );
   };
   const triggerInvoicesFlyout = () => {
@@ -92,7 +85,7 @@ const OrderTrackingDetailHeader = ({
       value: { data: null, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
-      getInvoiceViewAnalyticsGoogle(invoices.length, 'Order Details')
+      getInvoiceViewAnalyticsGoogle(invoicesResponse?.length, 'Order Details')
     );
   };
   const triggerExportFlyout = () => {
@@ -132,17 +125,58 @@ const OrderTrackingDetailHeader = ({
   ];
   const createBackUrl = () => {
     let backParams = new URLSearchParams();
-    backParams.set('redirectedFrom', "detailsPage");
-    if(saleslogin)
-      backParams.set('saleslogin', saleslogin);
-    return location.href.substring(0, location.href.lastIndexOf('/')) + ".html?" + backParams.toString();
+    backParams.set('redirectedFrom', 'detailsPage');
+    if (saleslogin) backParams.set('saleslogin', saleslogin);
+    return (
+      location.href.substring(0, location.href.lastIndexOf('/')) +
+      '.html?' +
+      backParams.toString()
+    );
   };
+  const getDeliveryNotes = async () => {
+    try {
+      const result = await usGet(
+        `${config?.getDeliveryNotesEndPoint}?id=${id}`
+      );
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  const getInvoices = async () => {
+    try {
+      const result = await usGet(`${config?.getInvoicesEndPoint}?id=${id}`);
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  useEffect(() => {
+    getDeliveryNotes()
+      .then((result) => {
+        setDeliveryNotesResponse(result?.data?.content);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    getInvoices()
+      .then((result) => {
+        setInvoicesResponse(result?.data?.content);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   return (
     <div className="cmp-orders-qp__config-grid">
       <div className="header-container">
         <div className="navigation-container">
-          <Link variant="back-to-orders" href={createBackUrl()} underline="underline-none">
+          <Link
+            variant="back-to-orders"
+            href={createBackUrl()}
+            underline="underline-none"
+          >
             <i className="fas fa-chevron-left"></i>
             {getDictionaryValueOrKey(config?.labels?.back)}
           </Link>
