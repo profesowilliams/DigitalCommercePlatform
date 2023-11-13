@@ -21,6 +21,8 @@ function OrderFilterTags({ filtersRefs }) {
     setCustomizedFiltersSelectedAfter,
     setFilterClicked,
     setAreThereAnyFiltersSelectedButNotApplied,
+    setCurrentStartDate,
+    setCurrentEndDate,
   } = useOrderTrackingStore((state) => state.effects);
   const orderStatusFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.orderStatusFiltersChecked
@@ -40,8 +42,8 @@ function OrderFilterTags({ filtersRefs }) {
     if (group === 'status') {
       const newList = orderStatusFiltersChecked.filter((x) => x.id !== id);
       filtersRefs.current.status = newList
-      .map((element) => '&status=' + element.filterOptionKey)
-      .join('');
+        .map((element) => '&status=' + element.filterOptionKey)
+        .join('');
       setOrderStatusFiltersChecked(newList);
       setFilterClicked(true);
       setAreThereAnyFiltersSelectedButNotApplied();
@@ -52,9 +54,9 @@ function OrderFilterTags({ filtersRefs }) {
       ]);
     } else if (group === 'type') {
       const newList = orderTypeFiltersChecked.filter((x) => x.id !== id);
-      filtersRefs.current.type =  newList
-      .map((element) => '&type=' + element.filterOptionKey)
-      .join('');
+      filtersRefs.current.type = newList
+        .map((element) => '&type=' + element.filterOptionKey)
+        .join('');
       setOrderTypeFiltersChecked(newList);
       setFilterClicked(true);
       setAreThereAnyFiltersSelectedButNotApplied();
@@ -83,6 +85,8 @@ function OrderFilterTags({ filtersRefs }) {
       filtersDateGroup.map(
         (filter) => (filtersRefs.current[filter] = undefined)
       );
+      setCurrentStartDate(null);
+      setCurrentEndDate(null);
     }
   };
 

@@ -32,6 +32,8 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     setPredefinedFiltersSelectedAfter,
     setFilterClicked,
     setAreThereAnyFiltersSelectedButNotApplied,
+    setCurrentStartDate,
+    setCurrentEndDate,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.filter.dateType);
   const { orderDateLabel, shipDateLabel, invoiceDateLabel, addDateLabel } =
@@ -61,6 +63,12 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   const orderTypeFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.orderTypeFiltersChecked
   );
+  const currentStartDate = useOrderTrackingStore(
+    (state) => state.filter.currentStartDate
+  );
+  const currentEndDate = useOrderTrackingStore(
+    (state) => state.filter.currentEndDate
+  );
   const dark_teal = '#003031';
   const navIcons = {
     navPrev: <ChevronLeftIcon fill={dark_teal} />,
@@ -72,8 +80,6 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
   const orderDate = getDictionaryValueOrKey(orderDateLabel);
   const shipDate = getDictionaryValueOrKey(shipDateLabel);
   const invoiceDate = getDictionaryValueOrKey(invoiceDateLabel);
-  const [currentStartDate, setCurrentStartDate] = useState(null);
-  const [currentEndDate, setCurrentEndDate] = useState(null);
 
   const onChangeRadio = (ev) => {
     setDateType(ev.target.value);

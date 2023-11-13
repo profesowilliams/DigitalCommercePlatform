@@ -88,6 +88,8 @@ const INITIAL_STATE = {
     customizedFiltersSelectedAfter: [],
     orderFilterCounter: 0,
     filterClicked: false,
+    currentStartDate: null,
+    currentEndDate: null,
   },
   toaster: {
     isOpen: false,

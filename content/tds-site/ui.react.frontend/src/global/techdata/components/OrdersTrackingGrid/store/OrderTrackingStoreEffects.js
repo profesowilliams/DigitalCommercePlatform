@@ -425,5 +425,23 @@ export const orderTrackingEffects = (set, get) => {
       const options = { key: TOASTER_LOCAL_STORAGE_KEY, clearLocal: true };
       setCustomState({ key: 'toaster', value: { isOpen: false } }, options);
     },
+    setCurrentStartDate(currentStartDate) {
+      set((state) => ({
+        ...state,
+        filter: {
+          ...state.filter,
+          currentStartDate,
+        },
+      }));
+    },
+    setCurrentEndDate(currentEndDate) {
+      set((state) => ({
+        ...state,
+        filter: {
+          ...state.filter,
+          currentEndDate,
+        },
+      }));
+    },
   };
 };
