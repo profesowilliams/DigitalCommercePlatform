@@ -38,7 +38,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     setCurrentEndDate,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.filter.dateType);
-  const { orderDateLabel, shipDateLabel, invoiceDateLabel, dateFormatLabel, datePlaceholder } =
+  const { orderDateLabel, shipDateLabel, invoiceDateLabel, dateFormat, datePlaceholder } =
     filterLabels;
 
   const dateRangeFiltersChecked = useOrderTrackingStore(
@@ -191,7 +191,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
           onDatesChange={onDatesChange}
           isOutsideRange={() => false}
           numberOfMonths={1}
-          displayFormat={getDictionaryValueOrKey(dateFormatLabel)}
+          displayFormat={getDictionaryValueOrKey(dateFormat)}
           noBorder={true}
           regular={false}
           transitionDuration={300}

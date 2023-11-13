@@ -528,7 +528,7 @@ use(["../common/utils.js"], function (utils) {
       "shipDateLabel",
       "invoiceDateLabel",
       "datePlaceholder",
-      "dateFormatLabel",
+      "dateFormat",
     ];
 
     filterLabelsKeys.map((key) => (filterLabels[key] = properties[key]));

@@ -509,81 +509,19 @@
                                                 fieldLabel="Add Invoice Date Label"
                                                 name="./invoiceDateLabel"
                                             />
-
-                                            <january
+                                          <invoiceDateLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add january Label"
-                                                name="./january"
+                                                fieldLabel="Add Date Placeholder"
+                                                name="./datePlaceholder"
                                             />
-                                            <february
+                                          <dateFormatLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add february Label"
-                                                name="./february"
+                                                fieldLabel="Add Date Format"
+                                                name="./dateFormat"
                                             />
-                                            <march
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add march Label"
-                                                name="./march"
-                                            />
-                                            <april
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add april Label"
-                                                name="./april"
-                                            />
-                                            <may
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add may Label"
-                                                name="./may"
-                                            />
-                                            <june
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add june Label"
-                                                name="./june"
-                                            />
-                                            <july
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add july Label"
-                                                name="./july"
-                                            />
-                                            <august
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add august Label"
-                                                name="./august"
-                                            />
-                                            <september
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add september Label"
-                                                name="./september"
-                                            />
-                                            <october
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add october Label"
-                                                name="./october"
-                                            />
-                                            <november
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add november Label"
-                                                name="./november"
-                                            />
-                                            <december
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Add december Label"
-                                                name="./december"
-                                            />
-
-                                            <filterType
+                                          <filterType
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldLabel="Filter Type"
