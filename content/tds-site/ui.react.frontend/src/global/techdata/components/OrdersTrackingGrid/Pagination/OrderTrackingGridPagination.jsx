@@ -50,36 +50,7 @@ function OrderTrackingGridPagination(
    * enabling the custom interceptor to make the proper request to the service on changes.
    */
 
-  const [currentValue, setCurrentValue] = useState(pageNumber || 1);
   useImperativeHandle(ref, () => ({ pageNumber }), [pageNumber]);
-  const maxInputLength = 6;
-  const validateInput = (e) => {
-    if (!Boolean(e.target.value) || e.target.value == 0) {
-      setCurrentValue(1);
-      handleInputChange({ ...e, target: { ...e.target, value: 1 } });
-    } else if (e.target.value > pageCount) {
-      setCurrentValue(pageCount);
-      handleInputChange({ ...e, target: { ...e.target, value: pageCount } });
-    } else {
-      setCurrentValue(e.target.value);
-      handleInputChange(e);
-    }
-  };
-  const handleBlur = (e) => {
-    if (e.target.value !== currentValue) {
-      validateInput(e);
-    }
-  };
-  const handleKeyChange = (e) => {
-    if (e.code === 'Enter') {
-      validateInput(e);
-    }
-  };
-  const handleChange = (e) => {
-    if (e.target.value.length <= maxInputLength) {
-      setCurrentValue(e.target.value);
-    }
-  };
 
   const isGoBackDisabled = pageNumber === 1 || disabled;
   const isGoForwardDisabled = pageNumber === pageCount || disabled;
@@ -108,10 +79,7 @@ function OrderTrackingGridPagination(
           <Button
             btnClass={`move-button${isGoBackDisabled ? '__disabled' : ''}`}
             disabled={isGoBackDisabled}
-            onClick={() => {
-              decrementHandler();
-              setCurrentValue(Number(currentValue) - 1);
-            }}
+            onClick={decrementHandler}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
               paginationAnalyticsLabel,
               analyticsCategory,
@@ -123,19 +91,16 @@ function OrderTrackingGridPagination(
           <div className="cmp-navigation__actions-labels">
             <div className="cmp-input-underline">
               <input
-                style={{
-                  width: `${currentValue?.toString().length || 1}ch`,
-                  minWidth: '27px',
-                }}
+                style={{ maxWidth: '27px' }}
                 className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
                 ref={pageInputRef}
                 type="number"
-                onKeyDown={handleKeyChange}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={currentValue}
-                maxLength={maxInputLength}
-                key={'pagination'}
+                onKeyDown={handleInputChange}
+                onChange={handleInputChange}
+                onBlur={handleInputChange}
+                defaultValue={pageNumber}
+                maxLength={3}
+                key={Math.random()}
               />
             </div>
             <span>{getDictionaryValueOrKey(ofLabel)}</span>
@@ -144,10 +109,7 @@ function OrderTrackingGridPagination(
           <Button
             btnClass={`move-button${isGoForwardDisabled ? '__disabled' : ''}`}
             disabled={isGoForwardDisabled}
-            onClick={() => {
-              incrementHandler();
-              setCurrentValue(Number(currentValue) + 1);
-            }}
+            onClick={incrementHandler}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
               paginationAnalyticsLabel,
               analyticsCategory,

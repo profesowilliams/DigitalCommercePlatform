@@ -493,6 +493,7 @@ function OrdersTrackingGrid(props) {
           filters: filtersRefs,
         }}
         resetReports={resetReports}
+        defaultDateRange={componentProp?.defaultSearchDateRange}
       />
     </>
   );

@@ -6,7 +6,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
-import { requestFileBlobWithoutModal } from '../../../../utils/utils';
+import {
+  requestFileBlobWithoutModal,
+  getDateValue,
+  createdFromDate,
+} from '../../../../utils/utils';
 import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
@@ -47,6 +51,7 @@ function ExportFlyout({
   isTDSynnex,
   exportAnalyticsLabel,
   searchParams,
+  defaultDateRange,
 }) {
   const isOrderDetailsPage = window.location.href.includes(
     'order-details.html?id='
@@ -56,31 +61,40 @@ function ExportFlyout({
   if (searchParams) {
     const { reports, sort, search, filters } = searchParams;
     const reportValue = reports.current?.value;
-    if(reportValue) {
+    if (reportValue) {
       urlSearchParams.set('reportName', reportValue);
     } else {
       const searchValue = search.current;
-      if(searchValue?.value) {
+      if (searchValue?.value) {
         urlSearchParams.set(searchValue.field, searchValue.value);
       }
       const sortValue = sort.current?.sortData?.[0];
-      if(sortValue) {
+      if (sortValue) {
         urlSearchParams.set('SortDirection', sortValue.sort);
         urlSearchParams.set('SortBy', sortValue.colId);
       }
-      (filters.current &&
+      if (defaultDateRange) {
+        urlSearchParams.set(
+          'createdFrom',
+          getDateValue(createdFromDate(defaultDateRange))
+        );
+        urlSearchParams.set('createdTo', getDateValue(new Date()));
+      }
+
+      filters.current &&
         Object.entries(filters.current).reduce((params, filter) => {
           if (filter[1] && (filter[0] === 'status' || filter[0] === 'type')) {
             filter[1].split('&').forEach((e) => {
-                if (!e) { return; }
-                let key = e.split('=');
-                urlSearchParams.append(key[0], key[1]);
+              if (!e) {
+                return;
+              }
+              let key = e.split('=');
+              urlSearchParams.set(key[0], key[1]);
             });
-          }
-          else if (filter[1]) {
+          } else if (filter[1]) {
             urlSearchParams.set(filter[0], filter[1]);
           }
-        }, ''))
+        }, '');
     }
   }
   const effects = store((st) => st.effects);
@@ -107,17 +121,26 @@ function ExportFlyout({
   function getExportAllOrderLines() {
     const url = componentProp?.exportAllOrderLinesEndpoint || 'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', false);
-    return requestFileBlobWithoutModal(url + '?' + urlSearchParams.toString(), '', {
-      redirect: false,
-    });
+    return requestFileBlobWithoutModal(
+      url + '?' + urlSearchParams.toString(),
+      '',
+      {
+        redirect: false,
+      }
+    );
   }
 
   function getExportLinesWithSerialNumbersOnly() {
-    const url = componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
+    const url =
+      componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', true);
-    return requestFileBlobWithoutModal(url + '?' + urlSearchParams.toString(), '', {
-      redirect: false,
-    });
+    return requestFileBlobWithoutModal(
+      url + '?' + urlSearchParams.toString(),
+      '',
+      {
+        redirect: false,
+      }
+    );
   }
 
   const exportRequests = [

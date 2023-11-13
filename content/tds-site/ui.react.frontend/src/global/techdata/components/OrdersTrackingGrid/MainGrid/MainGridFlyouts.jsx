@@ -21,6 +21,7 @@ const MainGridFlyouts = ({
   userData,
   searchParams,
   resetReports,
+  defaultDateRange,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   function downloadAllFile(flyoutType, orderId, selectedId) {
@@ -68,6 +69,7 @@ const MainGridFlyouts = ({
         isTDSynnex={isTDSynnex}
         exportAnalyticsLabel={analyticsCategories.export}
         searchParams={searchParams}
+        defaultDateRange={defaultDateRange}
       />
       <OrderFilterFlyout
         onQueryChanged={onQueryChanged}
