@@ -23,7 +23,7 @@
     &__footer {
         .cmp-accordion__button {
             color: white;
-            font-size: rem(11.2px); 
+            font-size: rem(11.2px);
             font-weight: 700;
             border: none;
             background-color: transparent;
@@ -338,3 +338,29 @@
     }
   }
 }
+
+.cmp-accordion__grey-style {
+    &.cmp-accordion__body *.cmp-accordion *.cmp-accordion__item {
+      margin-bottom: 0.75rem !important;
+    }
+
+    &.cmp-accordion__body *.cmp-accordion *.cmp-accordion__header {
+      margin: 0.625rem 1rem !important;
+    }
+    &.cmp-accordion__body *.cmp-accordion *.cmp-accordion__panel--expanded {
+      padding: 1.25rem 1rem !important;
+    }
+
+    .cmp-accordion__item {
+      border-radius: 4px;
+      border: 1px solid #D9D8D7;
+      background: #F8F8F8;
+      margin-bottom: 0.75rem;
+    }
+    .cmp-accordion__item p {
+      margin-bottom: 0;
+    }
+    .cmp-carousel {
+      display:block;
+    }
+  }

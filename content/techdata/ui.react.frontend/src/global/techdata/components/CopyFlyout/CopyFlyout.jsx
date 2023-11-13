@@ -49,6 +49,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
 
   const handleResellerIdChange = async (event) => {
     setIsTyping(true);
+    setErrorMessage('');
     const resellerId = event.target.value;
     setAccountNumber(resellerId);
 
@@ -119,6 +120,7 @@ export function CopyFlyout({ store, copyFlyout, subheaderReference, resetGrid })
     setAutocompleteTitle(
         getDictionaryValueOrKey(copyFlyout.resellerAccountLabel)
       );
+      setErrorMessage('');
   };
 
   const handleCopy = async () => {
