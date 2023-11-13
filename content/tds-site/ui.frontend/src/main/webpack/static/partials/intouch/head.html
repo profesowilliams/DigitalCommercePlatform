@@ -192,6 +192,10 @@
                 cachedUserData = data.content.user;
                 cacheExpiration = Date.now() + CACHE_DURATION * 1000;
                 console.log("Returned user data from API call");
+
+                // set current language based on user data
+                moment.locale(data.content.user.language);
+
                 return cachedUserData;
             } else {
                 console.log("HTTP-Error: " + response.status);

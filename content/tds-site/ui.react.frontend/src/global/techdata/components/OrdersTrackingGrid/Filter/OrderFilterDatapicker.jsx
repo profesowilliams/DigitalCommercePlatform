@@ -10,7 +10,6 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { getSessionInfo } from '../../../../../utils/user/get';
 
 function CustomStartEndText({ filterLabels }) {
   return (
@@ -22,11 +21,6 @@ function CustomStartEndText({ filterLabels }) {
 }
 
 export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
-  getSessionInfo().then((data) => {
-    let userData = data[1];
-    moment.locale(userData.language);
-  });
-
   const [focusedInput, setFocusedInput] = useState('startDate');
   const {
     setDateType,

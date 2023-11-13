@@ -3,6 +3,7 @@ import { mockedUserData } from './mock';
 import { validateCountryAndLanguage } from './validate';
 import { getHeaderInfo } from '../headers/get';
 import { intouchUserCheckAPIUrl } from '../intouchUtils';
+import moment from 'moment';
 
 export const headerInfo = getHeaderInfo();
 //let getUserDataPromise = null;
@@ -79,6 +80,10 @@ async function getUserData() {
       cachedUserData = data.content.user;
       cacheExpiration = Date.now() + CACHE_DURATION * 1000;
       console.log('Returned user data from API call');
+
+      // set current language based on user data
+      moment.locale(data.content.user.language);
+
       validateCountryAndLanguage(cachedUserData);
       return cachedUserData;
     } else {
