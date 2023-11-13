@@ -111,6 +111,7 @@ function MainGridHeader({
     removeQueryParams();
     setPill();
     onQueryChanged();
+    removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
   };
 
   const onSearchChange = () => {

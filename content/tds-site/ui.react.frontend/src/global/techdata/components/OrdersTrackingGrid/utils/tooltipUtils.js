@@ -6,7 +6,7 @@ export function tooltipVal(event) {
   const { line1, line2, line3, city, state, zip, country } = address || {};
   switch (colDef.field) {
     case 'customerPO':
-      return <div>{value ? value : '-'}</div>;
+      return <div>{value && typeof value === 'string' ? value : '-'}</div>;
     case 'shipTo':
       return value ? (
         <div>
