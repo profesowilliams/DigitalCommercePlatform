@@ -4,10 +4,10 @@ export function tooltipVal(event) {
   const { value, colDef } = event;
   const { name, address } = value || {};
   const { line1, line2, line3, city, state, zip, country } = address || {};
-  switch (colDef.headerName) {
-    case 'PO Nº':
+  switch (colDef.field) {
+    case 'customerPO':
       return <div>{value ? value : '-'}</div>;
-    case 'Ship to':
+    case 'shipTo':
       return value ? (
         <div>
           {name && <div>{name}</div>}
