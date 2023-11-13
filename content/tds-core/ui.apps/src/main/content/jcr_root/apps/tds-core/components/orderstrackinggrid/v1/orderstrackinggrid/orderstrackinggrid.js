@@ -497,7 +497,6 @@ use(["../common/utils.js"], function (utils) {
       "dateRange",
       "endLabel",
       "startLabel",
-      "addDateLabel",
       "filterTitle",
       "filterType",
       "showResultLabel",
@@ -528,18 +527,8 @@ use(["../common/utils.js"], function (utils) {
       "orderDateLabel",
       "shipDateLabel",
       "invoiceDateLabel",
-      "january",
-      "february",
-      "march",
-      "april",
-      "may",
-      "june",
-      "july",
-      "august",
-      "september",
-      "october",
-      "november",
-      "december",
+      "datePlaceholder",
+      "dateFormatLabel",
     ];
 
     filterLabelsKeys.map((key) => (filterLabels[key] = properties[key]));

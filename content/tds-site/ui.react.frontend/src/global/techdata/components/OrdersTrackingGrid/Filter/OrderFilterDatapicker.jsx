@@ -10,21 +10,23 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getSessionInfo } from '../../../../../utils/user/get';
 
 function CustomStartEndText({ filterLabels }) {
   return (
     <div className="customStartEndLabel">
-      <div className="customStartLabel">
-        {getDictionaryValueOrKey(filterLabels.startLabel)}
-      </div>
-      <div className="customEndLabel">
-        {getDictionaryValueOrKey(filterLabels.endLabel)}
-      </div>
+      <div className="customStartLabel">{getDictionaryValueOrKey(filterLabels.startLabel)}</div>
+      <div className="customEndLabel">{getDictionaryValueOrKey(filterLabels.endLabel)}</div>
     </div>
   );
 }
 
 export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
+  getSessionInfo().then((data) => {
+    let userData = data[1];
+    moment.locale(userData.language);
+  });
+
   const [focusedInput, setFocusedInput] = useState('startDate');
   const {
     setDateType,
@@ -36,23 +38,8 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     setCurrentEndDate,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.filter.dateType);
-  const { orderDateLabel, shipDateLabel, invoiceDateLabel, addDateLabel } =
+  const { orderDateLabel, shipDateLabel, invoiceDateLabel, dateFormatLabel, datePlaceholder } =
     filterLabels;
-
-  const months = [
-    'january',
-    'february',
-    'march',
-    'april',
-    'may',
-    'june',
-    'july',
-    'august',
-    'september',
-    'october',
-    'november',
-    'december',
-  ];
 
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.dateRangeFiltersChecked
@@ -176,10 +163,6 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
     }
   };
 
-  const translationSwapMonth = (month) => {
-    return getDictionaryValueOrKey(filterLabels[months[month]]);
-  };
-
   return (
     <>
       <OrderFilterDateType
@@ -192,15 +175,10 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
       <CustomStartEndText filterLabels={filterLabels} />
       <div className="order_datapicker">
         <DateRangePicker
-          renderMonthText={(data) => {
-            return `${translationSwapMonth(
-              data._d.getMonth()
-            )} ${data._d.getFullYear()}`;
-          }}
           startDate={currentStartDate ? moment(currentStartDate) : null}
           startDateId="start-date"
-          startDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
-          endDatePlaceholderText={getDictionaryValueOrKey(addDateLabel)}
+          startDatePlaceholderText={getDictionaryValueOrKey(datePlaceholder)}
+          endDatePlaceholderText={getDictionaryValueOrKey(datePlaceholder)}
           endDate={currentEndDate ? moment(currentEndDate) : null}
           {...navIcons}
           minimumNights={0}
@@ -213,7 +191,7 @@ export default function OrderFilterDatePicker({ filtersRefs, filterLabels }) {
           onDatesChange={onDatesChange}
           isOutsideRange={() => false}
           numberOfMonths={1}
-          displayFormat="MMM D, YYYY"
+          displayFormat={getDictionaryValueOrKey(dateFormatLabel)}
           noBorder={true}
           regular={false}
           transitionDuration={300}
