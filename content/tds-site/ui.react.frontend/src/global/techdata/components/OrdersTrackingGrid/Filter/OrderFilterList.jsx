@@ -2,7 +2,7 @@ import React from 'react';
 import OrderFilterListItem from './OrderFilterListItem';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
-function OrderFilterList({ filtersRefs, filterLabels }) {
+function OrderFilterList({ filtersRefs, filterLabels, filterDateOptions }) {
   const filterList = useOrderTrackingStore((state) => state.filter.filterList);
   return filterList.map((x) => (
     <OrderFilterListItem
@@ -15,6 +15,7 @@ function OrderFilterList({ filtersRefs, filterLabels }) {
       filtersRefs={filtersRefs}
       filterOptionList={x?.filterOptionList}
       filterLabels={filterLabels}
+      filterDateOptions={filterDateOptions}
     />
   ));
 }

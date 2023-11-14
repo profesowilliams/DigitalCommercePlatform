@@ -360,7 +360,6 @@ function OrdersTrackingGrid(props) {
           })
         );
     });
-    setDateType(filterLabels.orderDateLabel);
     pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
   }, [window?.td]);
 

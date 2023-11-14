@@ -17,6 +17,7 @@ function OrderFilterListItem({
   filtersRefs,
   filterOptionList,
   filterLabels,
+  filterDateOptions,
 }) {
   const filterList = useOrderTrackingStore((state) => state.filter.filterList);
   const { setFilterList } = useOrderTrackingStore((state) => state.effects);
@@ -82,6 +83,7 @@ function OrderFilterListItem({
             <OrderFilterDatePicker
               filtersRefs={filtersRefs}
               filterLabels={filterLabels}
+              filterDateOptions={filterDateOptions}
             />
           </div>
         );

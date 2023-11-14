@@ -59,6 +59,7 @@ const OrderFilterFlyout = ({
     setCustomizedFiltersApplied,
     setPredefinedFiltersApplied,
     setAreThereAnyFiltersSelectedButNotApplied,
+    setDateType,
   } = useOrderTrackingStore((state) => state.effects);
 
   const toggleShowLess = () => {
@@ -67,6 +68,16 @@ const OrderFilterFlyout = ({
 
   const { dateRange, orderStatus, orderType, filterTitle, showResultLabel } =
     filterLabels;
+
+  const orderDate = getDictionaryValueOrKey(filterLabels.orderDateLabel);
+  const shipDate = getDictionaryValueOrKey(filterLabels.shipDateLabel);
+  const invoiceDate = getDictionaryValueOrKey(filterLabels.invoiceDateLabel);
+
+  const filterDateOptions = [
+    { key: 'orderDate', label: orderDate },
+    { key: 'shipDate', label: shipDate },
+    { key: 'invoiceDate', label: invoiceDate },
+  ];
 
   const showResult = () => {
     resetReports();
@@ -125,6 +136,7 @@ const OrderFilterFlyout = ({
   };
 
   useEffect(() => {
+    setDateType(filterDateOptions[0].key);
     setAreThereAnyFiltersSelectedButNotApplied();
   }, []);
 
@@ -146,6 +158,7 @@ const OrderFilterFlyout = ({
           <OrderFilterList
             filtersRefs={filtersRefs}
             filterLabels={filterLabels}
+            filterDateOptions={filterDateOptions}
           />
         </div>
       </section>
@@ -156,7 +169,10 @@ const OrderFilterFlyout = ({
           onClick={toggleShowLess}
           className="order-filter-tags-more"
         ></span>
-        <OrderFilterTags filtersRefs={filtersRefs} />
+        <OrderFilterTags
+          filterDateOptions={filterDateOptions}
+          filtersRefs={filtersRefs}
+        />
       </section>
     </BaseFlyout>
   );

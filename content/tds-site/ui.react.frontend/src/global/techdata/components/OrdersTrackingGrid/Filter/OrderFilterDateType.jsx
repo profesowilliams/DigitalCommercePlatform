@@ -1,16 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 
-const OrderFilterDateType = ({
-  onChangeRadio,
-  dateType,
-  orderDate,
-  shipDate,
-  invoiceDate,
-}) => {
+const OrderFilterDateType = ({ onChangeRadio, options, dateType }) => {
   const styleLabel = {
     '& .MuiSvgIcon-root': {
       fontSize: '18px',
@@ -28,6 +22,12 @@ const OrderFilterDateType = ({
       backgroundColor: 'transparent',
     },
   };
+  const [value, setValue] = useState(dateType || options[0].key);
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    onChangeRadio(e.target.value);
+  };
 
   return (
     <div className="check-order-wrapper">
@@ -35,27 +35,18 @@ const OrderFilterDateType = ({
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
-          value={dateType}
-          onChange={onChangeRadio}
+          value={value}
+          onChange={handleChange}
         >
-          <FormControlLabel
-            sx={styleLabel}
-            value={orderDate}
-            control={<Radio sx={styleRadio} />}
-            label={orderDate}
-          />
-          <FormControlLabel
-            sx={styleLabel}
-            value={shipDate}
-            control={<Radio sx={styleRadio} />}
-            label={shipDate}
-          />
-          <FormControlLabel
-            sx={styleLabel}
-            value={invoiceDate}
-            control={<Radio sx={styleRadio} />}
-            label={invoiceDate}
-          />
+          {options?.map((option) => (
+            <FormControlLabel
+              sx={styleLabel}
+              key={option.key}
+              value={option.key}
+              control={<Radio sx={styleRadio} />}
+              label={option.label}
+            />
+          ))}
         </RadioGroup>
       </FormControl>
     </div>

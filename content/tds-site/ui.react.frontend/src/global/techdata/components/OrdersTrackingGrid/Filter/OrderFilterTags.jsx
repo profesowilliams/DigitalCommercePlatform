@@ -10,7 +10,7 @@ const filtersDateGroup = [
   'shippedDateFrom',
   'shippedDateTo',
 ];
-function OrderFilterTags({ filtersRefs }) {
+function OrderFilterTags({ filtersRefs, filterDateOptions }) {
   const {
     setOrderStatusFiltersChecked,
     setOrderTypeFiltersChecked,
@@ -143,6 +143,9 @@ function OrderFilterTags({ filtersRefs }) {
         key={filter.id}
       />
     );
+  const dateTypeLabel = dateType
+    ? filterDateOptions.find((option) => option.key === dateType)?.label
+    : '';
 
   return (
     <div className={`order-filter-tags-container teal_scroll`}>
@@ -155,7 +158,7 @@ function OrderFilterTags({ filtersRefs }) {
           closeHandler={() => handleFilterCloseClick(filter.id, filter?.group)}
           value={
             filter?.group === 'date'
-              ? `${dateType} : ${filter.filterOptionLabel}`
+              ? `${dateTypeLabel} : ${filter.filterOptionLabel}`
               : filter.filterOptionLabel
           }
           id={filter.id}

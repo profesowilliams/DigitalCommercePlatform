@@ -32,7 +32,8 @@ const INITIAL_STATE = {
   filter: {
     isFilterModalOpen: false,
     filterList: [],
-    dateType: null,
+    dateType: getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY)?.dates?.[0]
+      ?.dateType,
     customStartDate: getLocalValueOrDefault(
       ORDER_FILTER_LOCAL_STORAGE_KEY,
       'customStartDate',
