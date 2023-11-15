@@ -24,7 +24,7 @@ function Toaster({
   } = toaster;
   const [DOMLoaded, setDOMLoaded] = useState(false);
   const [subheaderPosition, setSubheaderPosition] = useState('');
-  const autocloseTimeout = closeEnabled ? 3000 : 6000;
+  const autocloseTimeout = 5000;
 
   useEffect(() => {
     if (isOpen && isAutoClose) {
