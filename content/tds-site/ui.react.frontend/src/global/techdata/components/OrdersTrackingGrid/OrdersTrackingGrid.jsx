@@ -275,7 +275,11 @@ function OrdersTrackingGrid(props) {
   };
 
   const onDataLoad = (response) => {
-    if (response.length === 1 && !isLocalDevelopment) {
+    if (
+      response.length === 1 &&
+      !isLocalDevelopment &&
+      customPaginationRef.current.pageNumber === 1
+    ) {
       gridApiRef?.current?.api.showLoadingOverlay();
       handleDirectMatch(response);
     } else {

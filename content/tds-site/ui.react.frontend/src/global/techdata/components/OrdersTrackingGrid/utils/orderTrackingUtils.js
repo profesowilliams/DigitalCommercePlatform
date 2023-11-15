@@ -51,7 +51,10 @@ export const fetchOrdersCount = async (
   } else if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
     requestUrl.searchParams.set(field, value);
-    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+    const isSearchForExactId = field === 'Id' && value.length === 10;
+    if (!isSearchForExactId) {
+      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+    }
   } else {
     addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
@@ -122,11 +125,18 @@ export async function fetchData(config) {
   const { url } = request;
   const requestUrl = new URL(url);
   const isFirstAPICall = firstAPICall.current === true;
-  if (defaultSearchDateRange) {
-    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
-  }
+
   if (searchCriteria.current?.field) {
-    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+    const { field, value } = searchCriteria.current;
+    const isSearchForExactId = field === 'Id' && value.length === 10;
+    if (isSearchForExactId) {
+      requestUrl.searchParams.delete('createdFrom');
+      requestUrl.searchParams.delete('createdTo');
+    } else {
+      addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+    }
+  } else if (defaultSearchDateRange) {
+    addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
 
   Object.keys(filtersRefs.current).map((filter) => {
