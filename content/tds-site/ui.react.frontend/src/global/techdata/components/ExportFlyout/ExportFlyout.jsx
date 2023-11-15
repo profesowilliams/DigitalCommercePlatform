@@ -102,9 +102,8 @@ function ExportFlyout({
     exportOptionsList ? exportOptionsList?.[0]?.key : []
   );
   const [secondarySelected, setSecondarySelected] = useState(
-    (isOrderDetailsPage && exportSecondaryOptionsList?.[1]?.key) || []
+    (isOrderDetailsPage && exportSecondaryOptionsList?.[1]?.key) || null
   );
-
   const handleSelectChange = (event) => {
     setSelected(event.target.value);
   };
