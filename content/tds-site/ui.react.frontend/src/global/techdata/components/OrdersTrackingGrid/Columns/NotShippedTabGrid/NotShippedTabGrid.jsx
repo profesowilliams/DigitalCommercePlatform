@@ -72,12 +72,6 @@ function NotShippedTabGrid({
       cellRenderer: ({ data }) => <DeliveryEstimateColumn line={data} />,
       width: gridColumnWidths.deliveryEstimate,
     },
-    {
-      field: 'action',
-      headerName: '',
-      cellRenderer: ({ data }) => <ActionColumn line={data} />,
-      width: gridColumnWidths.action,
-    },
   ];
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),

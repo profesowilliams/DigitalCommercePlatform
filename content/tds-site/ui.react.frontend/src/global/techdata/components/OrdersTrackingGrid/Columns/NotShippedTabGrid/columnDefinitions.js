@@ -51,13 +51,6 @@ const columnDefs = [
     },
     autoHeight: true,
   },
-  {
-    headerName: '',
-    field: 'action',
-    sortable: false,
-    width: '60px',
-    cellStyle: { padding: '0 0' },
-    autoHeight: true,
-  },
+
 ];
 export default columnDefs;

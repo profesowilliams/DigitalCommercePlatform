@@ -92,11 +92,6 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Delivery Estimate Label"
                     name="./deliveryEstimate"/>
-                <action
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldLabel="Action Label"
-                    name="./action"/>
             </items>
         </orderLineDetailsLabels>
     </items>

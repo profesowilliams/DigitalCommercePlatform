@@ -153,7 +153,6 @@ use(["../common/utils.js"], function (utils) {
       "pnsku",
       "nqty",
       "deliveryEstimate",
-      "action",
     ];
 
     orderLineDetailsNotShippedLabels.map((label) => {
