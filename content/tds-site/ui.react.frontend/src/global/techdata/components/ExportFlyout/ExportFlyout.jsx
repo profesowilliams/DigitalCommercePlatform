@@ -11,6 +11,8 @@ import {
   getDateValue,
   createdFromDate,
 } from '../../../../utils/utils';
+import { getUrlParams } from '../../../../utils';
+
 import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
@@ -53,6 +55,7 @@ function ExportFlyout({
   searchParams,
   defaultDateRange,
 }) {
+  const { id = '' } = getUrlParams();
   const isOrderDetailsPage = window.location.href.includes(
     'order-details.html?id='
   );
@@ -96,6 +99,8 @@ function ExportFlyout({
           }
         }, '');
     }
+  } else if (isOrderDetailsPage) {
+    urlSearchParams.set('Id', id);
   }
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState(

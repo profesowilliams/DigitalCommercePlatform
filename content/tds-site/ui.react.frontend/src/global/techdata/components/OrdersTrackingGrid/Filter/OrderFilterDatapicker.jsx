@@ -152,7 +152,7 @@ export default function OrderFilterDatePicker({
       setAreThereAnyFiltersSelectedButNotApplied();
     }
   };
-
+  
   return (
     <>
       <OrderFilterDateType

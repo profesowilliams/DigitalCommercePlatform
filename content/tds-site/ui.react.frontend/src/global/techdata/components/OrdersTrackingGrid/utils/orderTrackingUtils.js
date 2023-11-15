@@ -51,7 +51,7 @@ export const fetchOrdersCount = async (
   } else if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
     requestUrl.searchParams.set(field, value);
-    const isSearchForExactId = field === 'Id' && value.length === 10;
+    const isSearchForExactId = value.length === 10;
     if (!isSearchForExactId) {
       addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
     }
