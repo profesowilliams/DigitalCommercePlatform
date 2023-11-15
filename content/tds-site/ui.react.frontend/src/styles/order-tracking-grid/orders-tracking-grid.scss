@@ -43,6 +43,10 @@
         padding-top: 0;
       }
       & .ag-header-cell {
+        cursor: default;
+        & * .ag-header-cell-text::before {
+            cursor: pointer;
+        }
         &:not(.ag-header-cell-sortable) {
           padding-left: 4px;
         }
