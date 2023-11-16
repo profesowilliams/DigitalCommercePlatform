@@ -36,15 +36,23 @@ function GridHeader({ gridProps, data }) {
   };
 
   const downloadPDF = () => {
-    try {      
+    try {
       pushDataLayer(
         getRowAnalytics(
           analyticsCategory,
           ANALYTIC_CONSTANTS.Detail.Actions.DownloadPdfDetail,
           data));
+      let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
+      if (data?.hasMultipleSupportLevel) {
+        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}
+          -${data.source.id}-${m.items[0].contract.renewedDuration.replaceAll(' ', '_')}-Quote`;
+      } else {
+        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}
+          -${data.source.id}-${m.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${data.quoteSupportLevel}-Quote`;
+      }
       generateFileFromPost({
         url: gridProps.exportPDFRenewalsEndpoint,
-        name: `Renewals Quote ${data?.source?.id}.pdf`,
+        name: `${pdfFileName}.pdf`,
         postData: {
           Id: data?.source?.id
         },

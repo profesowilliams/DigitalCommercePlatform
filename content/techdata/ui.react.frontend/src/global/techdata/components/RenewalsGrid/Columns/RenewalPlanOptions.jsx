@@ -94,9 +94,21 @@ function RenewalPlanOptions({ labels, data, node }) {
 
   const downloadPDF = (Id) => {
     try {
+      let pdfFileName = `Renewals Quote ${Id}.pdf`;
+      const activeIDData = data.options.filter((item) => {
+           return item.id == Id;
+       })
+      if (data?.hasMultipleSupportLevel) {
+          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}
+              -${data.source.id}-${activeIDData.contractDuration.replaceAll(' ', '_')}-Quote`;
+      } else {
+          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}
+              -${data.source.id}-${activeIDData.contractDuration.replaceAll(' ', '_')}
+              -${activeIDData.support}-Quote`;
+      }
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,
-        name: `Renewals Quote ${Id}.pdf`,
+        name: `${pdfFileName}.pdf`,
         postData: {
           Id
         },
