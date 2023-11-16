@@ -22,7 +22,7 @@ use(["../../../common/utils.js"], function (utils) {
   // Settings
   if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
     jsonObject["uiServiceEndPoint"] =
-      this.uiServiceDomain + this.orderDetailGridEndpoint;
+      this.uiServiceDomain + this.serviceData.orderDetailGridEndpoint;
   }
   if (properties && properties["ordersUrl"]) {
     jsonObject["ordersUrl"] = properties["ordersUrl"];
