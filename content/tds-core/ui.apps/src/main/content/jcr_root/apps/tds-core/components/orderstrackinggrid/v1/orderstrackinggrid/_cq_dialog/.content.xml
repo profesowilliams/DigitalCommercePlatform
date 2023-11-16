@@ -922,6 +922,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Complete Delivery Only Info Label"
 												name="./completeDeliveryOnly"/>
+                                            <cancelNewItem
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Complete New Item Cancel Label"
+												name="./cancelNewItem"/>
 										</items>
 									</column>
 								</items>

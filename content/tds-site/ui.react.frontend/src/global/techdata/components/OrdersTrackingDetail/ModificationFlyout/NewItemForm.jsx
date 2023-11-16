@@ -42,6 +42,9 @@ const NewItemForm = ({ labels }) => {
       <Button disabled={!isFormFilled} variant="outlined">
         {getDictionaryValueOrKey(labels.add)}
       </Button>
+      <Button disabled={!isFormFilled} variant="outlined">
+        {getDictionaryValueOrKey(labels.cancelNewItem)}
+      </Button>
     </div>
   );
 };

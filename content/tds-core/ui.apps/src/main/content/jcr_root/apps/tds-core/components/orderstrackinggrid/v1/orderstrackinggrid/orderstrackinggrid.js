@@ -182,6 +182,7 @@ use(["../common/utils.js"], function (utils) {
       "rejectionOther",
       "rejectionRequiredInfo",
       "completeDeliveryOnly",
+      "cancelNewItem",
     ];
 
     orderModifyLabelsList.map((property) => {
