@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle } from 'react';
 import Button from '../../Widgets/Button';
 import {
   ChevronDoubleLeftIcon,
@@ -16,7 +16,6 @@ import {
 function OrderTrackingGridPagination(
   {
     onQueryChanged,
-    store,
     disabled = false,
     paginationAnalyticsLabel,
     resultsLabel,
@@ -30,7 +29,6 @@ function OrderTrackingGridPagination(
     processPaginationString,
     analyticsCategory,
   } = useOrderTrackingPaginationState({
-    store,
     onQueryChanged,
     paginationAnalyticsLabel,
     resultsLabel,

@@ -27,7 +27,6 @@ const MainGridFooter = ({
       <ToolTip toolTipData={toolTipData} />
       <OrderTrackingGridPagination
         ref={customPaginationRef}
-        store={useOrderTrackingStore}
         onQueryChanged={onQueryChanged}
         disabled={isLoading}
         paginationAnalyticsLabel={analyticsCategories.pagination}

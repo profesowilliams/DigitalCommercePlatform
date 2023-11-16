@@ -1,23 +1,30 @@
-import Create from "zustand";
-import { renewalsEffects } from "../../RenewalsGrid/store/RenewalsEffects";
-import { getLocalStorageData, hasLocalStorageData, isFromRenewalDetailsPage } from "../../RenewalsGrid/utils/renewalUtils";
-import { FILTER_LOCAL_STORAGE_KEY, PAGINATION_LOCAL_STORAGE_KEY, PLANS_ACTIONS_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
-
-import { DATE_DEFAULT_OPTIONS } from "./StoreConstants";
+import {
+  getLocalStorageData,
+  hasLocalStorageData,
+  isFromRenewalDetailsPage,
+} from '../../RenewalsGrid/utils/renewalUtils';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
 export const basicGridState = {
-  resetGrid:null,
-  aemConfig:null,
-  gridApi:null,
+  resetGrid: null,
+  aemConfig: null,
+  gridApi: null,
 };
 
 export const paginationState = {
   pagination: {
     totalCounter: 0,
     stepBy: 25,
-    currentPage: 1,
-    currentResultsInPage: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "currentResultsInPage", 0),
-    pageNumber: getLocalValueOrDefault(PAGINATION_LOCAL_STORAGE_KEY, "pageNumber", getFromQueryString('page=') || 1),
+    currentResultsInPage: getLocalValueOrDefault(
+      ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+      'currentResultsInPage',
+      0
+    ),
+    pageNumber: getLocalValueOrDefault(
+      ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+      'pageNumber',
+      getFromQueryString('page=') || 1
+    ),
   },
 };
 
@@ -33,7 +40,9 @@ export const filterState = {
  */
 export function getFromQueryString(param) {
   if (location?.href?.includes(param)) {
-    return location.href.split(param).pop() === '1' ? false : location.href.split(param).pop();
+    return location.href.split(param).pop() === '1'
+      ? false
+      : location.href.split(param).pop();
   }
 
   return false;
@@ -49,17 +58,20 @@ export function getFromQueryString(param) {
  * @returns Either the parsed Object or the value of otherwise argument.
  */
 export function getLocalValueOrDefault(key, property, otherwise) {
-  if (hasLocalStorageData(key) && isFromRenewalDetailsPage()) {
+  if (hasLocalStorageData(key)) {
     return getLocalStorageData(key)[property];
   } else {
     return otherwise;
   }
 }
 
-export function getLocalSelectedDateRange(key, otherwise){
+export function getLocalSelectedDateRange(key, otherwise) {
   if (hasLocalStorageData(key) && isFromRenewalDetailsPage()) {
-    const {customStartDate = '', customEndDate = ''} = getLocalStorageData(key);
-    return customStartDate && customEndDate ? [customStartDate, customEndDate] : otherwise;
+    const { customStartDate = '', customEndDate = '' } =
+      getLocalStorageData(key);
+    return customStartDate && customEndDate
+      ? [customStartDate, customEndDate]
+      : otherwise;
   } else {
     return otherwise;
   }

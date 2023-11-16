@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import {
   maxCounterCalculator,
   minCounterCalculator,
@@ -11,9 +11,9 @@ import {
   getPaginationAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 function useOrderTrackingPaginationState({
-  store,
   onQueryChanged,
   paginationAnalyticsLabel,
   resultsLabel,
@@ -24,8 +24,8 @@ function useOrderTrackingPaginationState({
     maxCounter: 0,
   });
   const pageInputRef = useRef();
-  const paginationData = store((st) => st.pagination);
-  const effects = store((st) => st.effects);
+  const paginationData = useOrderTrackingStore((st) => st.pagination);
+  const effects = useOrderTrackingStore((st) => st.effects);
 
   const { totalCounter, currentResultsInPage, pageCount, pageNumber } =
     paginationData;
@@ -64,7 +64,7 @@ function useOrderTrackingPaginationState({
     setCustomState(
       { key: 'pagination', value },
       {
-        key: PAGINATION_LOCAL_STORAGE_KEY,
+        key: ORDER_PAGINATION_LOCAL_STORAGE_KEY,
         saveToLocal: true,
       }
     );

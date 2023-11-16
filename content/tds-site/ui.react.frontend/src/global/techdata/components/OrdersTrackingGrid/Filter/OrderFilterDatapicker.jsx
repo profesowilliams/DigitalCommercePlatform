@@ -152,7 +152,6 @@ export default function OrderFilterDatePicker({
       setAreThereAnyFiltersSelectedButNotApplied();
     }
   };
-  
   return (
     <>
       <OrderFilterDateType
@@ -179,7 +178,8 @@ export default function OrderFilterDatePicker({
           onDatesChange={onDatesChange}
           isOutsideRange={() => false}
           numberOfMonths={1}
-          displayFormat={getDictionaryValueOrKey(dateFormat)}
+          displayFormat="MM/DD/YYYY"
+          // displayFormat={getDictionaryValueOrKey(dateFormat)} // TODO make dateformat translatable
           noBorder={true}
           regular={false}
           transitionDuration={300}

@@ -9,11 +9,13 @@ import {
   getInvoiceViewAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { getLocalStorageData } from '../OrdersTrackingGrid/utils/gridUtils';
 import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import { usGet } from '../../../../utils/api';
+import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -124,8 +126,12 @@ const OrderTrackingDetailHeader = ({
     },
   ];
   const createBackUrl = () => {
-    let backParams = new URLSearchParams();
+    const backParams = new URLSearchParams();
     backParams.set('redirectedFrom', 'detailsPage');
+    backParams.set(
+      'page',
+      getLocalStorageData(ORDER_PAGINATION_LOCAL_STORAGE_KEY)?.pageNumber || 1
+    );
     if (saleslogin) backParams.set('saleslogin', saleslogin);
     return (
       location.href.substring(0, location.href.lastIndexOf('/')) +

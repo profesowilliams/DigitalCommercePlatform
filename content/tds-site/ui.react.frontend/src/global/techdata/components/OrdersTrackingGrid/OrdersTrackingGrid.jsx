@@ -36,7 +36,6 @@ import { cellMouseOut, cellMouseOver } from './utils/tooltipUtils';
 import MainGridHeader from './MainGrid/MainGridHeader';
 import {
   addCurrencyToTotalColumn,
-  doesCurrentSearchMatchResult,
   getPaginationValue,
   isLocalDevelopment,
   setLocalStorageData,
@@ -88,7 +87,6 @@ function OrdersTrackingGrid(props) {
     closeAndCleanToaster,
     setFilterList,
     setCustomFiltersChecked,
-    setDateType,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
