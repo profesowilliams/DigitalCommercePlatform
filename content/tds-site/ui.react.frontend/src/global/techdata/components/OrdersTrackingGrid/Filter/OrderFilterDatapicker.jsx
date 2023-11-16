@@ -179,8 +179,7 @@ export default function OrderFilterDatePicker({
           onDatesChange={onDatesChange}
           isOutsideRange={() => false}
           numberOfMonths={1}
-          displayFormat="MM/DD/YYYY"
-          // displayFormat={getDictionaryValueOrKey(dateFormat)} // TODO make dateformat translatable
+          displayFormat={getDictionaryValueOrKey(dateFormat)}
           noBorder={true}
           regular={false}
           transitionDuration={300}
