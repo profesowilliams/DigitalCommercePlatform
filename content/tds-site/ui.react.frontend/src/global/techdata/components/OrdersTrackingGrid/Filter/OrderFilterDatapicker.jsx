@@ -107,16 +107,15 @@ export default function OrderFilterDatePicker({
   };
 
   const setFilterDate = (startDate, endDate) => {
-    const startDateMonth = startDate.format('MM');
-    const startDateDay = startDate.format('DD');
-    const startDateYear = startDate.format('YYYY');
-
-    const endDateMonth = endDate.format('MM');
-    const endDateDay = endDate.format('DD');
-    const endDateYear = endDate.format('YYYY');
-    startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
-    endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
     if (startDate && endDate) {
+      const startDateMonth = startDate.format('MM');
+      const startDateDay = startDate.format('DD');
+      const startDateYear = startDate.format('YYYY');
+      startDateFormatted.current = `${startDateYear}-${startDateMonth}-${startDateDay}`;
+      const endDateMonth = endDate.format('MM');
+      const endDateDay = endDate.format('DD');
+      const endDateYear = endDate.format('YYYY');
+      endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
       const dateLabel = getDateRangeLabel(startDate, endDate);
       const newDate = [
         {
@@ -140,17 +139,19 @@ export default function OrderFilterDatePicker({
         endDateFormatted.current,
         dateType
       );
+    } else {
+      setDateRangeFiltersChecked([]);
     }
   };
 
   const onDatesChange = ({ startDate, endDate }) => {
     startDate && setCurrentStartDate(startDate?.toISOString());
     endDate && setCurrentEndDate(endDate?.toISOString());
-    if (startDate && endDate) {
-      setFilterDate(startDate, endDate);
-      setFilterClicked(true);
-      setAreThereAnyFiltersSelectedButNotApplied();
-    }
+    !startDate && setCurrentStartDate(undefined);
+    !endDate && setCurrentEndDate(undefined);
+    setFilterClicked(true);
+    setFilterDate(startDate, endDate);
+    setAreThereAnyFiltersSelectedButNotApplied();
   };
   return (
     <>
