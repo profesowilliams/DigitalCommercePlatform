@@ -170,6 +170,9 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Order Detail Endpoint", description = "Order Detail Endpoint")
     String orderDetailEndpoint();
 
+    @Property(label = "Order Detail Grid Endpoint", description = "Order Detail Grid Endpoint")
+    String orderDetailGridEndpoint();
+
     @Property(label = "Download All Invoices Endpoint", description = "Download All Invoices Endpoint")
     String downloadAllInvoicesEndpoint();
 

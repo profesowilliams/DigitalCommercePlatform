@@ -19,6 +19,8 @@ import {
   isHttpOnlyEnabled,
 } from '../../../../../utils/featureFlagUtils';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../../utils/constants';
+import useGet from '../../../hooks/useGet';
+import { getUrlParams } from '../../../../../utils';
 
 function OrdersTrackingDetailGrid({
   data,
@@ -28,8 +30,8 @@ function OrdersTrackingDetailGrid({
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
+  const { id = '' } = getUrlParams();
   const [userData, setUserData] = useState(null);
-  const gridData = data.items ?? [];
   const apiResponse = data;
   const config = {
     ...gridProps,
@@ -155,6 +157,9 @@ function OrdersTrackingDetailGrid({
       width: gridColumnWidths.actions,
     },
   ];
+  const [orderDetailsGridResponse] = useGet(
+    `${config.uiServiceEndPoint}?id=${id}`
+  );
 
   function getRowClass({ node }) {
     const data = node.group ? node.aggData : node.data;
@@ -185,16 +190,18 @@ function OrdersTrackingDetailGrid({
 
   return (
     <section>
-      <Grid
-        //onAfterGridInit={onAfterGridInit}
-        columnDefinition={myColumnDefs}
-        config={config}
-        data={gridData}
-        //getDefaultCopyValue={getDefaultCopyValue}
-        contextMenuItems={() => {}}
-        rowClassRules={rowClassRules}
-        gridRef={gridRef}
-      />
+      {orderDetailsGridResponse?.content && (
+        <Grid
+          //onAfterGridInit={onAfterGridInit}
+          columnDefinition={myColumnDefs}
+          config={config}
+          data={orderDetailsGridResponse.content.items || []}
+          //getDefaultCopyValue={getDefaultCopyValue}
+          contextMenuItems={() => {}}
+          rowClassRules={rowClassRules}
+          gridRef={gridRef}
+        />
+      )}
       <Toaster
         classname="toaster-modal-otg"
         onClose={onCloseToaster}

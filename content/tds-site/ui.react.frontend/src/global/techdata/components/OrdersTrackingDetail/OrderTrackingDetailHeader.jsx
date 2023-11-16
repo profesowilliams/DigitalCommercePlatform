@@ -54,7 +54,7 @@ const OrderTrackingDetailHeader = ({
   const areInvoicesAvailable = invoicesResponse?.length > 0;
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = items.some(
-    (item) => item.serials.length > 0
+    (item) => item.serials?.length > 0
   );
 
   const id = content.orderNumber;

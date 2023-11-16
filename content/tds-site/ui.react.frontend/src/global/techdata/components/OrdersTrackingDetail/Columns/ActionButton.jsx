@@ -44,21 +44,21 @@ const ActionsButton = ({
   const invoices = line.invoices;
   const deliveryNotes = line.deliveryNotes;
   const trackAndTraceAvailable = line.canTrackAndTrace;
-  const areDeliveryNotesAvailable = deliveryNotes.length > 0;
-  const areInvoicesAvailable = invoices.length > 0;
-  const isSerialNumberAvailable = line.serials.length > 0;
-  const invoicesWithReturnURL = invoices.filter(
+  const areDeliveryNotesAvailable = deliveryNotes?.length > 0;
+  const areInvoicesAvailable = invoices?.length > 0;
+  const isSerialNumberAvailable = line.serials?.length > 0;
+  const invoicesWithReturnURL = invoices?.filter(
     (invoice) => invoice.returnURL && invoice.returnURL.length > 0
   );
   const isReturnAvailable =
-    invoices.length > 0 && invoicesWithReturnURL.length >= 1;
+    invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const id = apiResponse?.orderNumber;
   const poNumber = apiResponse?.customerPO;
 
   const orderId = id;
   const lineId = line.line;
-  const dNoteId = deliveryNotes.length > 0 ? deliveryNotes[0].id : null;
+  const dNoteId = deliveryNotes?.length > 0 ? deliveryNotes[0].id : null;
   const enableLineId = line.line.length === 1;
 
   const toaster = {
@@ -71,11 +71,11 @@ const ActionsButton = ({
     ),
   };
 
-  const hasMultipleDNotes = deliveryNotes.length > 1;
-  const hasMultipleInvoices = invoices.length > 1;
-  const hasMultipleTrackingLinks = deliveryNotes.length > 1;
+  const hasMultipleDNotes = deliveryNotes?.length > 1;
+  const hasMultipleInvoices = invoices?.length > 1;
+  const hasMultipleTrackingLinks = deliveryNotes?.length > 1;
   const hasMultipleReturnLinks =
-    invoices.length > 1 && invoicesWithReturnURL.length > 1;
+    invoices?.length > 1 && invoicesWithReturnURL.length > 1;
 
   const handleDownloadDnote = () => {
     openFilePdf('DNote', id, deliveryNotes[0]?.id);

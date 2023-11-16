@@ -29,7 +29,8 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const [apiResponse] = useGet(`${config.uiServiceEndPoint}?id=${id}`);
+  console.log(config.orderDetailEndpoint);
+  const [apiResponse] = useGet(`${config.orderDetailEndpoint}?id=${id}`);
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );

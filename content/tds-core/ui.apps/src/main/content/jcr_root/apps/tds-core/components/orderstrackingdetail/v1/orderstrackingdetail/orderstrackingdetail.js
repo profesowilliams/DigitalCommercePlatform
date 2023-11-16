@@ -22,7 +22,7 @@ use(["../../../common/utils.js"], function (utils) {
   // Settings
   if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
     jsonObject["uiServiceEndPoint"] =
-      this.uiServiceDomain + this.orderDetailEndpoint;
+      this.uiServiceDomain + this.orderDetailGridEndpoint;
   }
   if (properties && properties["ordersUrl"]) {
     jsonObject["ordersUrl"] = properties["ordersUrl"];
@@ -351,6 +351,10 @@ use(["../../../common/utils.js"], function (utils) {
   if (exportFlyout != null) {
     jsonObject["exportFlyout"] = exportFlyout;
   }
+
+  jsonObject["orderDetailEndpoint"] =
+    this.serviceData.uiServiceDomain + this.serviceData.orderDetailEndpoint ||
+    "";
 
   jsonObject["ordersDownloadDocumentsEndpoint"] =
     this.serviceData.uiServiceDomain +
