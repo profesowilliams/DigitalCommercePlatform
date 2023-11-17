@@ -23,6 +23,7 @@ import useGet from '../../../hooks/useGet';
 import { getUrlParams } from '../../../../../utils';
 
 function OrdersTrackingDetailGrid({
+  data,
   gridProps,
   openFilePdf,
   hasAIORights,
@@ -31,6 +32,7 @@ function OrdersTrackingDetailGrid({
 }) {
   const { id = '' } = getUrlParams();
   const [userData, setUserData] = useState(null);
+  const apiResponse = data;
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -64,6 +66,10 @@ function OrdersTrackingDetailGrid({
       const dateB = new Date(b.shipDateFormatted);
       return dateA - dateB;
     });
+
+  const [orderDetailsGridResponse] = useGet(
+    `${config.uiServiceEndPoint}/${id}/lines`
+  );
 
   const columnDefinitionsOverride = [
     {
@@ -147,7 +153,7 @@ function OrdersTrackingDetailGrid({
           line={data}
           config={gridProps}
           openFilePdf={openFilePdf}
-          apiResponse={orderDetailsGridResponse.content}
+          apiResponse={apiResponse}
           hasAIORights={hasAIORights}
           sortedLineDetails={sortedLineDetails}
         />
@@ -155,9 +161,6 @@ function OrdersTrackingDetailGrid({
       width: gridColumnWidths.actions,
     },
   ];
-  const [orderDetailsGridResponse] = useGet(
-    `${config.uiServiceEndPoint}/${id}/lines`
-  );
 
   function getRowClass({ node }) {
     const data = node.group ? node.aggData : node.data;
