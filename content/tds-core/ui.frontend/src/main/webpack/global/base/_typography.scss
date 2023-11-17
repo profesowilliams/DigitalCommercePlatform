@@ -68,8 +68,8 @@ $typography: (
     2.25rem,
   ),
   'h4': (
-    1.25rem,
-    1.625rem,
+    1.75rem,
+    125%,
   ),
   'h5': (
     1rem,
@@ -239,6 +239,12 @@ $typography-mobile: (
 body {
   @include typography('body', 'default', 'default');
 
+  /// Styles for b inside <body>
+  /// @access public
+  b {
+    font-weight: bold;
+  }
+
   /// Styles for h1 inside <body>
   /// @access public
   h1 {
@@ -263,8 +269,6 @@ body {
   /// @access public
   h4 {
     @include typography('h4', 'default', 'default');
-
-    font-weight: 700;
   }
 
   /// Styles for h5 inside <body>
@@ -396,6 +400,11 @@ body {
   /// Styles for h4 inside .apj
   h4 {
     @include typography('h4', 'default', 'apj-header');
+
+    a {
+      @include typography('h4', 'default', 'apj-header');
+      text-decoration: none;
+    }
   }
 
   /// Styles for h5 inside .apj
@@ -418,12 +427,13 @@ body {
       @include typography('inline-link', 'paragraph', 'link');
 
       text-decoration: none;
-
-      /// Styles for hover state of inline link inside <p> in .apj
-      &:hover {
-        text-decoration: underline;
-      }
     }
+  }
+
+  a {
+    @include typography('inline-link', 'paragraph', 'link');
+
+    text-decoration: none;
   }
 
   /// Styles for blockquote inside .apj
