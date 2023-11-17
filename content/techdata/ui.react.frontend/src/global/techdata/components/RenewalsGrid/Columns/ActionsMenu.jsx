@@ -52,14 +52,11 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
             analyticsCategory,
             ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdf,
             data));
-             let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
-             if (data?.hasMultipleSupportLevel) {
-                pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}
-                -${data.source.id}-${data.options[0].contractDuration.replaceAll(' ', '_')}-Quote`;
-                 } else {
-                    pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}
-                    -${data.source.id}-${data.options[0].contractDuration.replaceAll(' ', '_')}-
-                    ${data.options[0].support}-Quote`;
+            let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
+                    if (data?.hasMultipleSupportLevel) {
+                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-Quote`;
+                    } else {
+                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-${data.support}-Quote`;
                     }
         generateFileFromPost({
           url: exportPDFRenewalsEndpoint,

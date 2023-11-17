@@ -99,12 +99,9 @@ function RenewalPlanOptions({ labels, data, node }) {
            return item.id == Id;
        })
       if (data?.hasMultipleSupportLevel) {
-          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}
-              -${data.source.id}-${activeIDData.contractDuration.replaceAll(' ', '_')}-Quote`;
+          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-Quote`;
       } else {
-          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}
-              -${data.source.id}-${activeIDData.contractDuration.replaceAll(' ', '_')}
-              -${activeIDData.support}-Quote`;
+          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${activeIDData[0].support}-Quote`;
       }
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,

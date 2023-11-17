@@ -44,11 +44,9 @@ function GridHeader({ gridProps, data }) {
           data));
       let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
       if (data?.hasMultipleSupportLevel) {
-        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}
-          -${data.source.id}-${m.items[0].contract.renewedDuration.replaceAll(' ', '_')}-Quote`;
+        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-Quote`;
       } else {
-        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}
-          -${data.source.id}-${m.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${data.quoteSupportLevel}-Quote`;
+        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${data.quoteSupportLevel}-Quote`;
       }
       generateFileFromPost({
         url: gridProps.exportPDFRenewalsEndpoint,
