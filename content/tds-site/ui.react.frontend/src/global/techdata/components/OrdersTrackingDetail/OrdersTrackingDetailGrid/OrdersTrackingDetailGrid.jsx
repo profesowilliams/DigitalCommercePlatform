@@ -23,7 +23,6 @@ import useGet from '../../../hooks/useGet';
 import { getUrlParams } from '../../../../../utils';
 
 function OrdersTrackingDetailGrid({
-  data,
   gridProps,
   openFilePdf,
   hasAIORights,
@@ -32,7 +31,6 @@ function OrdersTrackingDetailGrid({
 }) {
   const { id = '' } = getUrlParams();
   const [userData, setUserData] = useState(null);
-  const apiResponse = data;
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -149,7 +147,7 @@ function OrdersTrackingDetailGrid({
           line={data}
           config={gridProps}
           openFilePdf={openFilePdf}
-          apiResponse={apiResponse}
+          apiResponse={orderDetailsGridResponse.content}
           hasAIORights={hasAIORights}
           sortedLineDetails={sortedLineDetails}
         />
@@ -158,7 +156,7 @@ function OrdersTrackingDetailGrid({
     },
   ];
   const [orderDetailsGridResponse] = useGet(
-    `${config.uiServiceEndPoint}?id=${id}`
+    `${config.uiServiceEndPoint}/${id}/lines`
   );
 
   function getRowClass({ node }) {
@@ -192,11 +190,9 @@ function OrdersTrackingDetailGrid({
     <section>
       {orderDetailsGridResponse?.content && (
         <Grid
-          //onAfterGridInit={onAfterGridInit}
           columnDefinition={myColumnDefs}
           config={config}
           data={orderDetailsGridResponse.content.items || []}
-          //getDefaultCopyValue={getDefaultCopyValue}
           contextMenuItems={() => {}}
           rowClassRules={rowClassRules}
           gridRef={gridRef}
