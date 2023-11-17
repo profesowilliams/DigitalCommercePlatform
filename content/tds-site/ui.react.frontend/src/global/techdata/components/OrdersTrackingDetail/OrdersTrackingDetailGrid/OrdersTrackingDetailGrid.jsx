@@ -132,7 +132,7 @@ function OrdersTrackingDetailGrid({
         config?.itemsLabels?.lineTotalPrice
       )?.replace(
         '{currency-code}',
-        data?.paymentDetails?.currency || defaultCurrency
+        orderDetailsGridResponse.content?.currency || defaultCurrency
       ),
       cellRenderer: ({ data }) => (
         <TotalColumn line={data} sortedLineDetails={sortedLineDetails} />
