@@ -195,7 +195,7 @@ function OrdersTrackingDetailGrid({
         <Grid
           columnDefinition={myColumnDefs}
           config={config}
-          data={orderDetailsGridResponse.content.items || []}
+          data={orderDetailsGridResponse?.content?.items || []}
           contextMenuItems={() => {}}
           rowClassRules={rowClassRules}
           gridRef={gridRef}

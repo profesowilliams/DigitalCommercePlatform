@@ -6584,68 +6584,71 @@ app.get("/ui-commerce/v2/order", (req, res) => {
   }, 200);
 });
 
-app.get("/ui-commerce/v3/orderdetails/orderlines", (req, res) => {
-  const response = {
-    content: {
-      items: [
-        {
-          line: "10",
-          tdNumber: "8320984",
-          mfrNumber: "7L6Y1ET#ABD",
-          isEOL: false,
-          currency: "EUR",
-          canTrackAndTrace: true,
-          lineDetails: [
-            {
-              id: 0,
-              quantity: 1.0,
-              subtotalPrice: 681.39,
-              subtotalPriceFormatted: "681.39",
-              shipDate: "11-13-2023",
-              shipDateFormatted: "13/11/2023",
-              unitPrice: 681.39,
-              unitPriceFormatted: "681.39",
-              statusText: "Passed to courier",
-            },
-          ],
-        },
-        {
-          line: "20",
-          urlProductImage:
-            "https://cdn.cs.1worldsync.com/d4/99/d4999f7d-2baf-4d70-bf98-d6c3255e08a5.jpg",
-          displayName: "HP USB-C Dock G5",
-          tdNumber: "5408788",
-          mfrNumber: "5TW10AA#ABB",
-          isEOL: true,
-          currency: "EUR",
-          canTrackAndTrace: true,
-          lineDetails: [
-            {
-              id: 0,
-              quantity: 1.0,
-              subtotalPrice: 106.79,
-              subtotalPriceFormatted: "106.79",
-              shipDate: "11-13-2023",
-              shipDateFormatted: "13/11/2023",
-              unitPrice: 106.79,
-              unitPriceFormatted: "106.79",
-              statusText: "Passed to courier",
-            },
-          ],
-        },
-      ],
-    },
-    error: {
-      code: 0,
-      messages: [],
-      isError: false,
-    },
-  };
+app.get(
+  "/ui-commerce/v3/orderdetails/orderlines/I537882999/lines",
+  (req, res) => {
+    const response = {
+      content: {
+        items: [
+          {
+            line: "10",
+            tdNumber: "8320984",
+            mfrNumber: "7L6Y1ET#ABD",
+            isEOL: false,
+            currency: "EUR",
+            canTrackAndTrace: true,
+            lineDetails: [
+              {
+                id: 0,
+                quantity: 1.0,
+                subtotalPrice: 681.39,
+                subtotalPriceFormatted: "681.39",
+                shipDate: "11-13-2023",
+                shipDateFormatted: "13/11/2023",
+                unitPrice: 681.39,
+                unitPriceFormatted: "681.39",
+                statusText: "Passed to courier",
+              },
+            ],
+          },
+          {
+            line: "20",
+            urlProductImage:
+              "https://cdn.cs.1worldsync.com/d4/99/d4999f7d-2baf-4d70-bf98-d6c3255e08a5.jpg",
+            displayName: "HP USB-C Dock G5",
+            tdNumber: "5408788",
+            mfrNumber: "5TW10AA#ABB",
+            isEOL: true,
+            currency: "EUR",
+            canTrackAndTrace: true,
+            lineDetails: [
+              {
+                id: 0,
+                quantity: 1.0,
+                subtotalPrice: 106.79,
+                subtotalPriceFormatted: "106.79",
+                shipDate: "11-13-2023",
+                shipDateFormatted: "13/11/2023",
+                unitPrice: 106.79,
+                unitPriceFormatted: "106.79",
+                statusText: "Passed to courier",
+              },
+            ],
+          },
+        ],
+      },
+      error: {
+        code: 0,
+        messages: [],
+        isError: false,
+      },
+    };
 
-  setTimeout(() => {
-    return res.status(200).json(response);
-  }, 200);
-});
+    setTimeout(() => {
+      return res.status(200).json(response);
+    }, 200);
+  }
+);
 
 app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
   const success = {

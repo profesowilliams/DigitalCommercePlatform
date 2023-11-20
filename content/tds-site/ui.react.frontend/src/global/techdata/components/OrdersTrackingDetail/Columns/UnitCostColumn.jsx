@@ -18,7 +18,7 @@ function UnitCostColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText cmp-order-tracking-grid-details__splitLine--offsetRight">
-              {line?.unitPriceFormatted ?? ''}
+              {el?.unitPriceFormatted ?? ''}
             </span>
           </div>
         );
