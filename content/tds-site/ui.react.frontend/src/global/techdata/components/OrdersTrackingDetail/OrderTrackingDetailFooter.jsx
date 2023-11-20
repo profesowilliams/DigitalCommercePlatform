@@ -35,7 +35,7 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
               {getDictionaryValueOrKey(config.footerLabels?.line2)}
             </span>
             <span className="box-container__leftPart-line1">
-              {getDictionaryValueOrKey(config.footerLabels?.line3)}
+              {getDictionaryValueOrKey(config.footerLabels?.line3)}{' '}
               <a href={config.footerLabels?.line3Link}>
                 {getDictionaryValueOrKey(config.footerLabels?.line3Link)}
               </a>
