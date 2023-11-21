@@ -75,6 +75,9 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["quoteSubtotalCurrencySymbol"]) {
         productLines["quoteSubtotalCurrencySymbol"] = properties["quoteSubtotalCurrencySymbol"];
     }
+     if (properties && properties["quoteTextForFileName"]) {
+            productLines["quoteTextForFileName"] = properties["quoteTextForFileName"];
+        }
     if (properties && properties["note"]) {
         productLines["note"] = properties["note"];
     }
@@ -218,8 +221,8 @@ use(['../../../common/utils.js'], function(utils) {
         agreementInfo["programLabel"] = properties["programLabel"];
     }
 
-    if (properties && properties["durationLabel"]) {
-        agreementInfo["durationLabel"] = properties["durationLabel"];
+    if (properties && properties["termLabel"]) {
+        agreementInfo["termLabel"] = properties["termLabel"];
     }
     if (properties && properties["supportLevelLabel"]) {
         agreementInfo["supportLevelLabel"] = properties["supportLevelLabel"];
@@ -233,14 +236,14 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["vendorQuoteId"]) {
         agreementInfo["vendorQuoteId"] = properties["vendorQuoteId"];
     }
-    if (properties && properties["quotedueDateLabel"]) {
-        agreementInfo["quotedueDateLabel"] = properties["quotedueDateLabel"];
+    if (properties && properties["dueDateLabel"]) {
+        agreementInfo["dueDateLabel"] = properties["dueDateLabel"];
     }
     if (properties && properties["quoteExpiryDateLabel"]) {
         agreementInfo["quoteExpiryDateLabel"] = properties["quoteExpiryDateLabel"];
     }
-    if (properties && properties["agreementDuration"]) {
-        agreementInfo["agreementDuration"] = properties["agreementDuration"];
+    if (properties && properties["duration"]) {
+        agreementInfo["duration"] = properties["duration"];
     }
     if (properties && properties["usageDuration"]) {
         agreementInfo["usageDuration"] = properties["usageDuration"];

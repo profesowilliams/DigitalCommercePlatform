@@ -12,8 +12,8 @@ import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analyt
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from '../../../../../utils/utils';
 
 function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, detailUrl }) {
-
     const dialogRef = useRef();
+    const { productGrid } = useRenewalGridState(st => st.aemConfig);
     const { setCustomState } = useRenewalGridState(st => st.effects);
     const analyticsCategory = useRenewalGridState(st => st.analyticsCategory);
     const getDetailUrl = (id) => `${window.location.origin}${detailUrl}.html?id=${data?.source?.id ?? ""}`;
@@ -54,9 +54,9 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
             data));
             let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
                     if (data?.hasMultipleSupportLevel) {
-                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-Quote`;
+                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-${productGrid.quoteTextForFileName}`;
                     } else {
-                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-${data.support}-Quote`;
+                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-${data.support}-${productGrid.quoteTextForFileName}`;
                     }
         generateFileFromPost({
           url: exportPDFRenewalsEndpoint,

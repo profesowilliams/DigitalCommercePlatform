@@ -193,6 +193,10 @@ use(['../../../common/utils.js'], function(utils) {
         productGrid["expiryDateLabel"] = properties["expiryDateLabel"];
     }
 
+    if (properties && properties["quoteTextForFileName"]) {
+        productGrid["quoteTextForFileName"] = properties["quoteTextForFileName"];
+    }
+
     if (properties && properties["downloadPDFLabel"]) {
         productGrid["downloadPDFLabel"] = properties["downloadPDFLabel"];
     }

@@ -43,10 +43,11 @@ function GridHeader({ gridProps, data }) {
           ANALYTIC_CONSTANTS.Detail.Actions.DownloadPdfDetail,
           data));
       let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
+      const quoteText = gridProps.productLines.quoteTextForFileName || 'quote';
       if (data?.hasMultipleSupportLevel) {
-        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-Quote`;
+        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${quoteText}`;
       } else {
-        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${data.quoteSupportLevel}-Quote`;
+        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${data.quoteSupportLevel}-${quoteText}`;
       }
       generateFileFromPost({
         url: gridProps.exportPDFRenewalsEndpoint,

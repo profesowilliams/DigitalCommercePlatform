@@ -335,6 +335,11 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./hideExportOption@TypeHint"
                                                 value="Boolean"/>
+                                            <quoteTextForFileName
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Quote text for file name"
+                                                    name="./quoteTextForFileName"/>
                                         </items>
                                     </column>
                                 </items>
@@ -562,6 +567,80 @@
                                                                 name="./shipToEditLabel"/>
 														</items>
 													</resellerGroup>
+                                                    <agreementInfo
+                                                            jcr:primaryType="nt:unstructured"
+                                                            jcr:title="Agreement Information"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                            margin="{Boolean}true">
+                                                        <items jcr:primaryType="nt:unstructured">
+                                                            <column
+                                                                    jcr:primaryType="nt:unstructured"
+                                                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                                <items jcr:primaryType="nt:unstructured">
+                                                                    <agreementInfoLabel
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Agreement Information Label"
+                                                                            fieldLabel="Agreement Information Label"
+                                                                            name="./agreementInfoLabel"/>
+                                                                    <quoteNo
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Quote Number Label"
+                                                                            fieldLabel="Quote Number Label"
+                                                                            name="./quoteNo"/>
+                                                                    <vendorQuoteId
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Vendor Quote ID Label"
+                                                                            fieldLabel="Vendor Quote ID Label"
+                                                                            name="./vendorQuoteId"/>
+                                                                    <agreementNo
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Agreement Number Label"
+                                                                            fieldLabel="Agreement Number Label"
+                                                                            name="./agreementNoLabel"/>
+                                                                    <program
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Program Label"
+                                                                            fieldLabel="Program Label"
+                                                                            name="./programLabel"/>
+                                                                    <term
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Term Label"
+                                                                            fieldLabel="Term Label"
+                                                                            name="./termLabel"/>
+                                                                    <supportLevel
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Support Level Label"
+                                                                            fieldLabel="Support Level Label"
+                                                                            name="./supportLevelLabel"/>
+                                                                    <quoteExpiryDate
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Quote Expiry Date Label"
+                                                                            fieldLabel="Quote Expiry Date Label"
+                                                                            name="./quoteExpiryDateLabel"/>
+                                                                    <dueDate
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Quote Due Date Label"
+                                                                            fieldLabel="Due Date Label"
+                                                                            name="./dueDateLabel"/>
+                                                                    <duration
+                                                                            jcr:primaryType="nt:unstructured"
+                                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                            fieldDescription="Agreement Duration"
+                                                                            fieldLabel="Duration"
+                                                                            name="./duration"/>
+                                                                </items>
+                                                            </column>
+                                                        </items>
+                                                    </agreementInfo>
 												</items>
 											</column>
 										</items>
