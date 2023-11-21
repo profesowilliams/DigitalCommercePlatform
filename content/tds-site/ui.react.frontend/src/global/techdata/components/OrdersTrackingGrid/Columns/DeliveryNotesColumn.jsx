@@ -15,7 +15,8 @@ function DeliveryNotesColumn({
 }) {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const hasMultiple = deliveryNotes?.length > 1;
-
+  const firstDeliveryNote = deliveryNotes ? deliveryNotes[0] : [];
+  const isDeliveryNoteDownloadable = firstDeliveryNote?.canDownloadDocument;
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
@@ -32,18 +33,27 @@ function DeliveryNotesColumn({
   };
 
   const handleDownload = () => {
-    openFilePdf('DNote', id, deliveryNotes[0].Id);
-    pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Main Grid'));
+    if (isDeliveryNoteDownloadable) {
+      openFilePdf('DNote', id, firstDeliveryNote?.id);
+      pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Main Grid'));
+    }
   };
 
-  return deliveryNotes?.length === 0 ? ('-') : 
-  (
-    !deliveryNotes[0].canDownloadDocument 
-      ? deliveryNotes[0].id
-      : (<div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
-         <a>{hasMultiple ? getDictionaryValueOrKey(multiple) : deliveryNotes[0].id}</a>
-         </div>)
-  );
+  const renderContent = () => {
+    return !isDeliveryNoteDownloadable ? (
+      firstDeliveryNote?.id
+    ) : (
+      <div onClick={hasMultiple ? triggerDNotesFlyout : handleDownload}>
+        <a>
+          {hasMultiple
+            ? getDictionaryValueOrKey(multiple)
+            : firstDeliveryNote?.id}
+        </a>
+      </div>
+    );
+  };
+
+  return deliveryNotes?.length === 0 ? '-' : renderContent();
 }
 
 export default DeliveryNotesColumn;

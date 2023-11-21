@@ -5427,13 +5427,13 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           invoices: [
             {
               id: "8204748546",
-              canDownloadDocument: true,
+              canDownloadDocument: false,
             },
           ],
           deliveryNotes: [
             {
               id: "7135916150",
-              canDownloadDocument: true,
+              canDownloadDocument: false,
             },
           ],
           currency: "EUR",
