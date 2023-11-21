@@ -177,7 +177,7 @@ function ExportFlyout({
           const toaster = {
             isOpen: true,
             origin: 'fromUpdate',
-            isAutoClose: false,
+            isAutoClose: true,
             isSuccess: true,
             message: getDictionaryValueOrKey(
               exportFlyout?.exportSuccessMessage
@@ -190,7 +190,7 @@ function ExportFlyout({
           const toaster = {
             isOpen: true,
             origin: 'fromUpdate',
-            isAutoClose: false,
+            isAutoClose: true,
             isSuccess: false,
             message: getDictionaryValueOrKey(exportFlyout?.exportFailedMessage),
           };
