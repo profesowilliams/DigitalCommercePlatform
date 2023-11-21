@@ -1,4 +1,5 @@
 import Create from 'zustand';
+import moment from 'moment';
 import {
   ORDER_FILTER_LOCAL_STORAGE_KEY,
   PLANS_ACTIONS_LOCAL_STORAGE_KEY,
@@ -15,6 +16,20 @@ const getInitialPredefinedFilters = () => {
   const filtersFromLS = getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
   const { dates, types, statuses } = filtersFromLS;
   return [...dates, ...types, ...statuses];
+};
+
+const getCurrentStartDate = () => {
+  const dateFilters = getLocalStorageData(
+    ORDER_FILTER_LOCAL_STORAGE_KEY
+  )?.dates;
+  return moment(dateFilters?.[0]?.createdFrom).toISOString() || null;
+};
+
+const getCurrentEndDate = () => {
+  const dateFilters = getLocalStorageData(
+    ORDER_FILTER_LOCAL_STORAGE_KEY
+  )?.dates;
+  return moment(dateFilters?.[0]?.createdTo).toISOString() || null;
 };
 
 const INITIAL_STATE = {
@@ -89,8 +104,8 @@ const INITIAL_STATE = {
     customizedFiltersSelectedAfter: [],
     orderFilterCounter: 0,
     filterClicked: false,
-    currentStartDate: null,
-    currentEndDate: null,
+    currentStartDate: getCurrentStartDate(),
+    currentEndDate: getCurrentEndDate(),
   },
   toaster: {
     isOpen: false,

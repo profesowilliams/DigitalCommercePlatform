@@ -331,16 +331,26 @@ export const orderTrackingEffects = (set, get) => {
       const statusFilters = getFromPredefinedFilters('status');
       const dateFilters = getFromPredefinedFilters('date');
       const customFilters = customizedFiltersApplied;
-      set((state) => ({
-        ...state,
-        filter: {
-          ...state.filter,
-          orderTypeFiltersChecked: structuredClone(typeFilters),
-          orderStatusFiltersChecked: structuredClone(statusFilters),
-          dateRangeFiltersChecked: structuredClone(dateFilters),
-          customFiltersChecked: structuredClone(customFilters),
-        },
-      }));
+            set((state) => ({
+              ...state,
+              filter: {
+                ...state.filter,
+                orderTypeFiltersChecked: structuredClone(typeFilters),
+                orderStatusFiltersChecked: structuredClone(statusFilters),
+                dateRangeFiltersChecked: structuredClone(dateFilters),
+                customFiltersChecked: structuredClone(customFilters),
+              },
+            }));
+            if (dateFilters.length === 0) {
+              set((state) => ({
+                ...state,
+                filter: {
+                  ...state.filter,
+                  currentStartDate: undefined,
+                  currentEndDate: undefined,
+                },
+              }));
+            }
       updateOrderFilterCounter();
     },
     isChangeDetected() {
