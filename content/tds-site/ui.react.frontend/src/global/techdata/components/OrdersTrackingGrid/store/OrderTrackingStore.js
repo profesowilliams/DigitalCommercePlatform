@@ -22,14 +22,16 @@ const getCurrentStartDate = () => {
   const dateFilters = getLocalStorageData(
     ORDER_FILTER_LOCAL_STORAGE_KEY
   )?.dates;
-  return moment(dateFilters?.[0]?.createdFrom).toISOString() || null;
+  const currentCreatedFrom = dateFilters?.[0]?.createdFrom;
+  return currentCreatedFrom ? moment(currentCreatedFrom).toISOString() : null;
 };
 
 const getCurrentEndDate = () => {
   const dateFilters = getLocalStorageData(
     ORDER_FILTER_LOCAL_STORAGE_KEY
   )?.dates;
-  return moment(dateFilters?.[0]?.createdTo).toISOString() || null;
+  const currenCreatedTo = dateFilters?.[0]?.createdTo;
+  return currenCreatedTo ? moment(currenCreatedTo).toISOString() : null;
 };
 
 const INITIAL_STATE = {
