@@ -1,14 +1,39 @@
+/**
+ * @namespace teaser
+ * @group Teaser Components
+ *
+ * SCSS code for styling the teaser component, type 3.
+ *
+ * @author Ryan
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+
+/**
+ * @class teaser--type-3
+ *
+ * Styles for type 3 of the teaser component.
+ */
 .teaser {
   &.teaser--type-3 {
+    /**
+     * Teaser container styles.
+     */
     grid-template-columns: 1fr !important;
     width: 90%;
 
+    /**
+     * Inner teaser container styles.
+     */
     [id^='teaser-'] {
       display: grid !important;
       grid-gap: 1.88rem;
       grid-template-columns: 6rem 1fr !important;
     }
 
+    /**
+     * Teaser styles.
+     */
     .cmp-teaser {
       text-align: center;
       display: inherit !important;
@@ -18,24 +43,39 @@
         margin-bottom: 40px;
       }
     }
+
+    /**
+     * Teaser image styles.
+     */
     .cmp-teaser__image {
       margin-bottom: 20px;
       align-self: start;
       grid-template-columns: 1fr !important;
 
+      /**
+       * Image styles.
+       */
       .cmp-image {
         height: 155px;
         align-items: center;
+
         &__image {
           width: 151px;
         }
       }
     }
+
+    /**
+     * Teaser content styles.
+     */
     .cmp-teaser__content {
       margin-bottom: 15px;
       text-align: left;
       grid-template-columns: 1fr !important;
 
+      /**
+       * Teaser title styles.
+       */
       .cmp-teaser__title,
       .cmp-teaser__title a {
         font-weight: 400;

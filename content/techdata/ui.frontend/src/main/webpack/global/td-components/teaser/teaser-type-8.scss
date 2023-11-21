@@ -1,5 +1,24 @@
+/**
+ * @namespace teaser
+ * @group Teaser Components
+ *
+ * SCSS code for styling the teaser component.
+ *
+ * @author Ryan
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+
+/**
+ * @class teaser--type-8
+ *
+ * Styles for a specific type (type-8) of teaser component.
+ */
 .teaser {
   &.teaser--type-8 {
+    /**
+     * Teaser container styles.
+     */
     display: flex;
     width: 30%;
     flex-direction: column;
@@ -9,6 +28,9 @@
     margin-right: 2rem;
     align-self: start;
 
+    /**
+     * Inner teaser container styles.
+     */
     [id^='teaser-'] {
       width: 26rem;
       align-self: center;
@@ -18,12 +40,23 @@
       flex-direction: column;
     }
 
+    /**
+     * Teaser image styles.
+     */
     .cmp-teaser__image {
+      // Add image styles here
     }
 
+    /**
+     * Image link styles.
+     */
     .cmp-image__link {
+      // Add image link styles here
     }
 
+    /**
+     * Teaser content styles.
+     */
     .cmp-teaser__content {
       width: 26rem;
       margin-top: -53px;
@@ -32,20 +65,34 @@
       gap: 0;
       height: 16.5rem;
 
+      /**
+       * Teaser title styles.
+       */
       .cmp-teaser__title {
         background: var(--White, map-get($color-palette, 'white'));
         padding: 1.5rem 1.5rem 0 1.5rem;
         height: initial;
+        width: 100%;
       }
 
+      /**
+       * Title link styles.
+       */
       .cmp-teaser__title-link {
+        // Add title link styles here
       }
 
+      /**
+       * Teaser description styles.
+       */
       .cmp-teaser__description {
-        height: none;
+        height: auto;
         padding: 0 1.5rem 0 1.5rem;
       }
 
+      /**
+       * Description link styles.
+       */
       .cmp-teaser__desc-link {
         background: var(--White, map-get($color-palette, 'white'));
         height: auto;
@@ -54,7 +101,22 @@
         padding-top: 1.5rem;
       }
 
+      /**
+       * Action container styles.
+       */
       .cmp-teaser__action-container {
+        display: block !important;
+        flex-basis: unset;
+        width: 100%;
+        padding: 0 1.5rem 1.5rem;
+        background: var(--White, map-get($color-palette, 'white'));
+      }
+
+      /**
+       * Action link styles.
+       */
+      .cmp-teaser__action-link {
+        background: var(--White, map-get($color-palette, 'white'));
       }
     }
   }

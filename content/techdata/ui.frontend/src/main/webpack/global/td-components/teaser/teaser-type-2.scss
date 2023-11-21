@@ -1,5 +1,24 @@
+/**
+ * @namespace teaser
+ * @group Teaser Components
+ *
+ * SCSS code for styling the teaser component, type 2.
+ *
+ * @author Ryan
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+
+/**
+ * @class teaser--type-2
+ *
+ * Styles for type 2 of the teaser component.
+ */
 .teaser {
   &.teaser--type-2 {
+    /**
+     * Teaser container styles.
+     */
     display: flex !important;
     width: 37.5rem !important;
     flex-direction: column !important;
@@ -7,6 +26,9 @@
     gap: 1rem;
     background: var(--Neutral-Gray-1, map-get($color-palette, 'neutral-gray-1'));
 
+    /**
+     * Inner teaser container styles.
+     */
     [id^='teaser-'] {
       width: 100%;
       align-self: center;
@@ -14,12 +36,23 @@
       // padding: 1.5rem;
     }
 
+    /**
+     * Teaser image styles.
+     */
     .cmp-teaser__image {
+      // Add image styles here
     }
 
+    /**
+     * Image link styles.
+     */
     .cmp-image__link {
+      // Add image link styles here
     }
 
+    /**
+     * Teaser content styles.
+     */
     .cmp-teaser__content {
       display: flex;
       padding: 1.5rem 0 2rem 0;
@@ -27,6 +60,9 @@
       align-items: flex-start;
       align-self: stretch;
 
+      /**
+       * Teaser title styles.
+       */
       .cmp-teaser__title {
         display: flex;
         align-items: center;
@@ -46,9 +82,16 @@
         }
       }
 
+      /**
+       * Title link styles.
+       */
       .cmp-teaser__title-link {
+        // Add title link styles here
       }
 
+      /**
+       * Teaser description styles.
+       */
       .cmp-teaser__description {
         padding: 1.5rem 2rem 2rem 2rem;
 
@@ -58,14 +101,25 @@
         }
       }
 
+      /**
+       * Description link styles.
+       */
       .cmp-teaser__desc-link {
+        // Add description link styles here
       }
 
+      /**
+       * Action container styles.
+       */
       .cmp-teaser__action-container {
         padding-top: 1.5rem;
       }
 
+      /**
+       * Action link styles.
+       */
       .cmp-teaser__action-link {
+        // Add action link styles here
       }
     }
   }

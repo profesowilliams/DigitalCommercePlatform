@@ -1,5 +1,24 @@
+/**
+ * @namespace teaser
+ * @group Teaser Components
+ *
+ * SCSS code for styling the teaser component, type 1.
+ *
+ * @author Ryan
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+
+/**
+ * @class teaser--type-1
+ *
+ * Styles for type 1 of the teaser component.
+ */
 .teaser {
   &.teaser--type-1 {
+    /**
+     * Teaser container styles.
+     */
     display: flex !important;
     width: 30% !important;
     flex-direction: column !important;
@@ -7,33 +26,58 @@
     gap: 1rem;
     justify-content: start !important;
 
+    /**
+     * Inner teaser container styles.
+     */
     [id^='teaser-'] {
       width: 20.25rem;
       align-self: center;
       justify-content: left;
       padding: 1.5rem;
+      gap: 0;
     }
 
+    /**
+     * Teaser image styles.
+     */
     .cmp-teaser__image {
       height: 64px; /* Set the desired height */
       max-height: 66px; /* Apply a maximum height constraint */
     }
 
+    /**
+     * Image link styles.
+     */
     .cmp-image__link {
+      // Add image link styles here
     }
 
+    /**
+     * Teaser content styles.
+     */
     .cmp-teaser__content {
       justify-content: left;
       width: 100%;
+      gap: 0;
 
+      /**
+       * Teaser title styles.
+       */
       .cmp-teaser__title {
         padding-top: 1rem;
         padding-bottom: 1rem;
       }
 
+      /**
+       * Title link styles.
+       */
       .cmp-teaser__title-link {
+        // Add title link styles here
       }
 
+      /**
+       * Teaser description styles.
+       */
       .cmp-teaser__description {
         ul {
           list-style-type: disc;
@@ -42,13 +86,23 @@
         }
       }
 
+      /**
+       * Description link styles.
+       */
       .cmp-teaser__desc-link {
+        // Add description link styles here
       }
 
+      /**
+       * Action container styles.
+       */
       .cmp-teaser__action-container {
         padding-top: 1.5rem;
       }
 
+      /**
+       * Action link styles.
+       */
       .cmp-teaser__action-link {
         padding: 0;
       }

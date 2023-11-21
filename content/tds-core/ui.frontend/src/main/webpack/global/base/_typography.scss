@@ -431,9 +431,13 @@ body {
   }
 
   a {
-    @include typography('inline-link', 'paragraph', 'link');
+    @include typography('inline-link', 'paragraph', 'apj-header');
 
     text-decoration: none;
+
+    &:hover {
+      // text-decoration: underline;
+    }
   }
 
   /// Styles for blockquote inside .apj
@@ -492,6 +496,17 @@ body {
         &:hover {
           text-decoration: underline;
         }
+      }
+    }
+
+    a {
+      @include typography('inline-link', 'paragraph', 'apj-header', $typography-mobile);
+
+      text-decoration: none;
+
+      /// Styles for hover state of inline link inside <p> in .td at small breakpoints
+      &:hover {
+        text-decoration: underline;
       }
     }
 

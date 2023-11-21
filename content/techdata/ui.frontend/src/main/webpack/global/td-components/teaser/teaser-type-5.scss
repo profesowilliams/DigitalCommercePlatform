@@ -1,5 +1,24 @@
+/**
+ * @namespace teaser
+ * @group Teaser Components
+ *
+ * SCSS code for styling the teaser component, type 5.
+ *
+ * @author Ryan
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+
+/**
+ * @class teaser--type-5
+ *
+ * Styles for type 5 of the teaser component.
+ */
 .teaser {
   &.teaser--type-5 {
+    /**
+     * Teaser container styles.
+     */
     display: flex;
     width: 17.25rem;
     flex-direction: column;
@@ -8,31 +27,60 @@
     background: white;
     margin-right: 2rem;
 
+    /**
+     * Teaser image styles.
+     */
     .cmp-teaser__image {
+      // Add image styles here
     }
 
+    /**
+     * Image link styles.
+     */
     .cmp-image__link {
+      // Add image link styles here
     }
 
+    /**
+     * Teaser content styles.
+     */
     .cmp-teaser__content {
+      /**
+       * Teaser title styles.
+       */
       .cmp-teaser__title {
         height: none;
         padding-top: 2.5rem;
         padding-left: 2rem;
       }
 
+      /**
+       * Title link styles.
+       */
       .cmp-teaser__title-link {
+        // Add title link styles here
       }
 
+      /**
+       * Teaser description styles.
+       */
       .cmp-teaser__description {
         height: none;
         padding: 1.5rem 2rem 2rem 2rem;
       }
 
+      /**
+       * Description link styles.
+       */
       .cmp-teaser__desc-link {
+        // Add description link styles here
       }
 
+      /**
+       * Action container styles.
+       */
       .cmp-teaser__action-container {
+        // Add action container styles here
       }
     }
   }
