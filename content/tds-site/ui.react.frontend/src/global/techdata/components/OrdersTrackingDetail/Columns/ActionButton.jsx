@@ -11,7 +11,6 @@ const ActionsButton = ({
   index,
   config = {},
   openFilePdf,
-  apiResponse,
   hasAIORights,
 }) => {
   const iconStyle = {
@@ -53,9 +52,8 @@ const ActionsButton = ({
   const isReturnAvailable =
     invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
-  const id = apiResponse?.orderNumber;
-  const poNumber = apiResponse?.customerPO;
-
+  const id = line.orderNumber;
+  const poNumber = line.customerPO;
   const orderId = id;
   const lineId = line.line;
   const dNoteId = deliveryNotes?.length > 0 ? deliveryNotes[0].id : null;

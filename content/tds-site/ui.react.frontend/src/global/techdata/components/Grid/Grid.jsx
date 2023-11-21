@@ -80,6 +80,8 @@ function Grid(props) {
       : null;
 
   const getAgGridDomLayout = () => {
+    if (config?.domLayout)
+      return config.domLayout;
     if (serverSide) {
       return pagination ? 'autoHeight' : 'normal';
     }
@@ -428,11 +430,11 @@ function Grid(props) {
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiServiceEndPoint);
-      const pages = `PageSize=${pageSize}&PageNumber=${pageNumber}`;
+      const pages = pageSize && pageNumber ? `PageSize=${pageSize}&PageNumber=${pageNumber}` : null;
       const sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}${dateRangeUrlParam}`
-          : `&SortDirection=desc&SortBy=id${dateRangeUrlParam}`; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
+          : (dateRangeUrlParam ? `&SortDirection=desc&SortBy=id${dateRangeUrlParam}` : null); // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
       let pathName = url.pathname ?? '';
       pathName.slice(-1) === '/' && (pathName = pathName.slice(0, -1));
       const apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}${

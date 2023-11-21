@@ -18,7 +18,6 @@ function ShippedTabGrid({
   reseller,
   id,
 }) {
-  const gridData = data?.deliveryNotes ?? [];
   const config = {
     ...gridProps,
     columnList: columnDefs,
@@ -114,7 +113,7 @@ function ShippedTabGrid({
         <Grid
           columnDefinition={myColumnDefs}
           config={config}
-          data={gridData}
+          data={data}
           customizedDetailedRender={(props) => (
             <ShippedTabGridRenderers {...props} config={config} />
           )}

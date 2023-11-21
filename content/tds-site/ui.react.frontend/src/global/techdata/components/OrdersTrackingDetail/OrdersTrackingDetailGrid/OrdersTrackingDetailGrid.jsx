@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Grid from '../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
@@ -14,40 +14,40 @@ import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { getSessionInfo } from '../../../../../utils/user/get';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { isLocalDevelopment, mapServiceData, addCurrencyToColumns } from './utils/gridUtils';
 import {
-  isExtraReloadDisabled,
-  isHttpOnlyEnabled,
-} from '../../../../../utils/featureFlagUtils';
-import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../../utils/constants';
-import useGet from '../../../hooks/useGet';
-import { getUrlParams } from '../../../../../utils';
+  fetchData,
+} from './utils/orderTrackingUtils';
 
 function OrdersTrackingDetailGrid({
-  data,
   gridProps,
   openFilePdf,
   hasAIORights,
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
-  const { id = '' } = getUrlParams();
   const [userData, setUserData] = useState(null);
-  const apiResponse = data;
+  const [isLoading, setIsLoading] = useState(true);
+  const [responseError, setResponseError] = useState(null);
   const config = {
     ...gridProps,
-    columnList: columnDefs,
-    serverSide: false,
+    serverSide: true,
     paginationStyle: 'none',
+    noRowsErrorMessage: 'No data found',
+    errorGettingDataMessage: 'Internal server error please refresh the page',
+    suppressContextMenu: true,
+    enableCellTextSelection: true,
+    ensureDomOrder: true,
+    domLayout: 'autoHeight',
   };
+  const gridApiRef = useRef();
 
-  const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
-    ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
-    : null;
-  const currentUserData =
-    isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
-
-  const activeCustomer = currentUserData?.activeCustomer;
-  const defaultCurrency = activeCustomer?.defaultCurrency || '';
+  const hasRights = (entitlement) =>
+    userData?.roleList?.some((role) => role.entitlement === entitlement);
+  const hasCanViewOrdersRights = hasRights('CanViewOrders');
+  const hasOrderTrackingRights = hasRights('OrderTracking');
+  const hasAccess =
+    hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
   const gridColumnWidths = Object.freeze({
     id: '95px',
@@ -60,16 +60,27 @@ function OrdersTrackingDetailGrid({
     actions: '50px',
   });
 
-  const sortedLineDetails = (line) =>
+  const sortedLineDetails = (line) => // TODO:move to UI-COMMERCE
     line?.lineDetails?.slice().sort((a, b) => {
       const dateA = new Date(a.shipDateFormatted);
       const dateB = new Date(b.shipDateFormatted);
       return dateA - dateB;
     });
 
-  const [orderDetailsGridResponse] = useGet(
-    `${config.uiServiceEndPoint}/${id}/lines`
-  );
+  const _onAfterGridInit = (config) => {
+    gridApiRef.current = config;
+  };
+
+  const onDataLoad = () => {
+    setIsLoading(false);
+  }
+
+  const customRequestInterceptor = async () => {
+    const response = await fetchData(config);
+    setResponseError(false);
+    const mappedResponse = mapServiceData(response);
+    return mappedResponse;
+  };
 
   const columnDefinitionsOverride = [
     {
@@ -113,12 +124,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'unitPriceFormatted',
-      headerName: getDictionaryValueOrKey(
-        config?.itemsLabels?.unitPrice
-      )?.replace(
-        '{currency-code}',
-        data?.paymentDetails?.currency || defaultCurrency
-      ),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.unitPrice),
       cellRenderer: ({ data }) => (
         <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
       ),
@@ -134,12 +140,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'totalPriceFormatted',
-      headerName: getDictionaryValueOrKey(
-        config?.itemsLabels?.lineTotalPrice
-      )?.replace(
-        '{currency-code}',
-        data?.paymentDetails?.currency || defaultCurrency
-      ),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineTotalPrice),
       cellRenderer: ({ data }) => (
         <TotalColumn line={data} sortedLineDetails={sortedLineDetails} />
       ),
@@ -153,7 +154,6 @@ function OrdersTrackingDetailGrid({
           line={data}
           config={gridProps}
           openFilePdf={openFilePdf}
-          apiResponse={apiResponse}
           hasAIORights={hasAIORights}
           sortedLineDetails={sortedLineDetails}
         />
@@ -162,16 +162,16 @@ function OrdersTrackingDetailGrid({
     },
   ];
 
-  function getRowClass({ node }) {
-    const data = node.group ? node.aggData : node.data;
-    if (rowsToGrayOutTDNameRef.current.includes(data.tdNumber)) {
-      return true;
-    }
-  }
+  //function getRowClass({ node }) {
+  //  const data = node.group ? node.aggData : node.data;
+  //  if (rowsToGrayOutTDNameRef.current.includes(data.tdNumber)) {
+  //    return true;
+  //  }
+  //}
 
-  const rowClassRules = {
-    'gray-out-changing-rows': getRowClass,
-  };
+  //const rowClassRules = {
+  //  'gray-out-changing-rows': getRowClass,
+  //};
 
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),
@@ -179,6 +179,7 @@ function OrdersTrackingDetailGrid({
   );
 
   const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
+
   function onCloseToaster() {
     closeAndCleanToaster();
   }
@@ -190,29 +191,41 @@ function OrdersTrackingDetailGrid({
   }, []);
 
   return (
-    <section>
-      {orderDetailsGridResponse?.content && (
-        <Grid
-          columnDefinition={myColumnDefs}
-          config={config}
-          data={orderDetailsGridResponse?.content?.items || []}
-          contextMenuItems={() => {}}
-          rowClassRules={rowClassRules}
-          gridRef={gridRef}
-        />
+    <>
+      {(userData?.activeCustomer || isLocalDevelopment) && (
+        <>
+          {hasAccess ? (
+            <div className="cmp-order-tracking-details-grid">
+              <Grid
+                columnDefinition={addCurrencyToColumns(myColumnDefs, userData)}
+                config={config}
+                gridConfig={config}
+                requestInterceptor={customRequestInterceptor}
+                mapServiceData={mapServiceData}
+                onAfterGridInit={_onAfterGridInit}
+                onDataLoad={onDataLoad}
+                responseError={responseError}
+              //rowClassRules={rowClassRules}
+              />
+              <Toaster
+                classname="toaster-modal-otg"
+                onClose={onCloseToaster}
+                closeEnabled
+                store={useOrderTrackingStore}
+                message={{
+                  successSubmission: 'successSubmission',
+                  failedSubmission: 'failedSubmission',
+                }}
+              />
+            </div>
+          ) : (
+            <>
+              <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+            </>
+          )}
+        </>
       )}
-      <Toaster
-        classname="toaster-modal-otg"
-        onClose={onCloseToaster}
-        closeEnabled
-        store={useOrderTrackingStore}
-        message={{
-          successSubmission: 'successSubmission',
-          failedSubmission: 'failedSubmission',
-        }}
-      />
-    </section>
+    </>
   );
 }
-
 export default OrdersTrackingDetailGrid;

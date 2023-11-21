@@ -12,7 +12,7 @@ import ActionColumn from './Columns/ActionColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 
 function NotShippedTabGrid({
-  filteredGridData,
+  data,
   gridProps,
   hasOrderModificationRights,
   gridRef,
@@ -113,7 +113,7 @@ function NotShippedTabGrid({
         <Grid
           columnDefinition={myColumnDefs}
           config={config}
-          data={filteredGridData}
+          data={data}
           rowClassRules={rowClassRules}
           gridRef={gridRef}
         />

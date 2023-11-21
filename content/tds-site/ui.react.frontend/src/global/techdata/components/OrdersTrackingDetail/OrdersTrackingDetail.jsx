@@ -30,7 +30,7 @@ function OrdersTrackingDetail(props) {
     ensureDomOrder: true,
   };
   console.log(config.orderDetailEndpoint);
-  const [apiResponse] = useGet(`${config.orderDetailEndpoint}?id=${id}`);
+  const [apiResponse] = useGet(`${config.orderDetailEndpoint}/${id}`);
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );

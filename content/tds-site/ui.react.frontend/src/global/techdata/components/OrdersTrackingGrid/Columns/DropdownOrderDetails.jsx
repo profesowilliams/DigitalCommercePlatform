@@ -24,21 +24,8 @@ function DropdownOrderDetails({
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.orderItemsEndpoint}?id=${data?.id}`
   );
-  const notShippedGridData = apiResponse?.content?.items ?? [];
-  const filteredGridData = notShippedGridData.reduce((result, item) => {
-    const lineDetails = item.lineDetails.filter(
-      (detail) => detail.isShipment === false
-    );
-    if (lineDetails.length > 0) {
-      result.push({ ...item, lineDetails });
-    }
-    return result;
-  }, []);
-  const shippedItemsLeft =
-    apiResponse?.content?.totalShipQuantity ||
-    apiResponse?.content?.deliveryNotes?.length; // TODO: choose one method after BE is stable
-  const notShippedItemsLeft =
-    apiResponse?.content?.totalOpenQuantity || filteredGridData?.length; // TODO: choose one method after BE is stable
+  const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
+  const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const noShippedItems = shippedItemsLeft === 0;
   const noNotShippedItems = notShippedItemsLeft === 0;
 
@@ -56,7 +43,7 @@ function DropdownOrderDetails({
         : '',
       content: apiResponse?.content ? (
         <ShippedTabGrid
-          data={apiResponse?.content}
+          data={apiResponse?.content?.deliveryNotes}
           gridProps={aemConfig}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
@@ -80,7 +67,7 @@ function DropdownOrderDetails({
         : '',
       content: apiResponse?.content ? (
         <NotShippedTabGrid
-          filteredGridData={filteredGridData}
+          data={apiResponse?.content?.items}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}
