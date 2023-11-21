@@ -6,7 +6,7 @@ import { Popover } from '@mui/material';
 const StatusColumn = ({ data, completeDeliveryOnly }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
+  const showNewElement = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -15,20 +15,19 @@ const StatusColumn = ({ data, completeDeliveryOnly }) => {
   };
 
   const open = Boolean(anchorEl);
-  const className = open ? 'status-popover-grid' : '';
   const icon = data?.shipComplete ? (
-    <span className="status-span-icon" onClick={handleClick}>
+    <span className="status-span-icon" onClick={showNewElement}>
       <ParcelIcon />
     </span>
   ) : null;
   return data && data?.status ? (
-    <div>
-      <span>{icon}</span>
+    <div onMouseMoveCapture={handleClose}>
+      <span onMouseOver={showNewElement}>{icon}</span>
       <span className={!data?.shipComplete ? 'status-icon-offset' : ''}>
         {data?.status}
       </span>
       <Popover
-        className={className}
+        className="status-popover-grid"
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
