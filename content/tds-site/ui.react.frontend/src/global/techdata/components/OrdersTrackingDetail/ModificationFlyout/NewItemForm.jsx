@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-const NewItemForm = ({ labels }) => {
+const NewItemForm = ({ labels, setNewItemFormVisible }) => {
   const [values, setValues] = useState({
     manufacturersPartNumber: null,
     quantity: null,
@@ -42,7 +42,7 @@ const NewItemForm = ({ labels }) => {
       <Button disabled={!isFormFilled} variant="outlined">
         {getDictionaryValueOrKey(labels.add)}
       </Button>
-      <Button disabled={!isFormFilled} variant="outlined">
+      <Button variant="outlined" onClick={() => setNewItemFormVisible(false)}>
         {getDictionaryValueOrKey(labels.cancelNewItem)}
       </Button>
     </div>

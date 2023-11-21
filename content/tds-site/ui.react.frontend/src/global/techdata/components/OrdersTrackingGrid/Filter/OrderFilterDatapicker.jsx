@@ -144,15 +144,15 @@ export default function OrderFilterDatePicker({
       }
     };
 
-    const onDatesChange = ({ startDate, endDate }) => {
-      startDate && setCurrentStartDate(startDate?.toISOString());
-      endDate && setCurrentEndDate(endDate?.toISOString());
-      !startDate && setCurrentStartDate(undefined);
-      !endDate && setCurrentEndDate(undefined);
-      setFilterClicked(true);
-      setFilterDate(startDate, endDate);
-      setAreThereAnyFiltersSelectedButNotApplied();
-    };
+  const onDatesChange = ({ startDate, endDate }) => {
+    startDate && setCurrentStartDate(startDate?.toISOString());
+    endDate && setCurrentEndDate(endDate?.toISOString());
+    !startDate && setCurrentStartDate(undefined);
+    !endDate && setCurrentEndDate(undefined);
+    setFilterClicked(true);
+    setFilterDate(startDate, endDate);
+    startDate && endDate && setAreThereAnyFiltersSelectedButNotApplied();
+  };
   return (
     <>
       <OrderFilterDateType

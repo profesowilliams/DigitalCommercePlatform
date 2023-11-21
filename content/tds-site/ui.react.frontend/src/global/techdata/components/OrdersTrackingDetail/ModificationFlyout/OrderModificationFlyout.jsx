@@ -156,7 +156,12 @@ function OrderModificationFlyout({
         <a className="add-new" onClick={handleAddNewItem}>
           + {getDictionaryValueOrKey(labels.addNewItem)}
         </a>
-        {newItemFormVisible && <NewItemForm labels={labels} />}
+        {newItemFormVisible && (
+          <NewItemForm
+            labels={labels}
+            setNewItemFormVisible={setNewItemFormVisible}
+          />
+        )}
         <p className="edit-quantities">
           {getDictionaryValueOrKey(labels?.editQuantities)}
         </p>
