@@ -23,6 +23,7 @@ const MainGridFooter = ({
           successSubmission: 'successSubmission',
           failedSubmission: 'failedSubmission',
         }}
+        closeEnabled={true}
       />
       <ToolTip toolTipData={toolTipData} />
       <OrderTrackingGridPagination
