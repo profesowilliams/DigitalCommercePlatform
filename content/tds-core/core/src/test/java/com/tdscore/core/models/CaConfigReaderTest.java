@@ -91,14 +91,10 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.quoteGridEndpoint()).thenReturn("quoteGridEndpoint");
         when(serviceEndPointsConfiguration.vendorConnectionEndpoint()).thenReturn("vendorConnectionEndpoint");
         when(serviceEndPointsConfiguration.orderGridEndpoint()).thenReturn("orderGridEndpoint");
-        when(serviceEndPointsConfiguration.getInvoicesEndPoint()).thenReturn("getInvoicesEndPoint");
-        when(serviceEndPointsConfiguration.getDeliveryNotesEndPoint()).thenReturn("getDeliveryNotesEndPoint");
         when(serviceEndPointsConfiguration.uiServiceEndPointForDetails()).thenReturn("uiServiceEndPointForDetails");
         when(serviceEndPointsConfiguration.orderItemsEndpoint()).thenReturn("orderItemsEndpoint");
-        when(serviceEndPointsConfiguration.ordersCountEndpoint()).thenReturn("ordersCountEndpoint");
         when(serviceEndPointsConfiguration.ordersReportEndpoint()).thenReturn("ordersReportEndpoint");
         when(serviceEndPointsConfiguration.ordersReportCountEndpoint()).thenReturn("ordersReportCountEndpoint");
-        when(serviceEndPointsConfiguration.ordersRefinementsEndpoint()).thenReturn("ordersRefinementsEndpoint");
         when(serviceEndPointsConfiguration.ordersDownloadDocumentsEndpoint()).thenReturn("ordersDownloadDocumentsEndpoint");
         when(serviceEndPointsConfiguration.exportAllOrderLinesEndpoint()).thenReturn("exportAllOrderLinesEndpoint");
         when(serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint()).thenReturn("exportLinesWithSerialNumbersOnlyEndpoint");
@@ -106,7 +102,6 @@ class CaConfigReaderTest {
         when(serviceEndPointsConfiguration.orderModifyChangeEndpoint()).thenReturn("orderModifyChangeEndpoint");
         when(serviceEndPointsConfiguration.replaceProductEndpoint()).thenReturn("replaceProductEndpoint");
         when(serviceEndPointsConfiguration.replacementsProductsEndpoint()).thenReturn("replacementsProductsEndpoint");
-        when(serviceEndPointsConfiguration.trackDeliveryEndpoint()).thenReturn("trackDeliveryEndpoint");
         when(serviceEndPointsConfiguration.quotesPreviewEndPoint()).thenReturn("quotesPreviewEndPoint");
         when(serviceEndPointsConfiguration.quickQuoteEndpoint()).thenReturn("quickQuoteEndPoint");
         when(serviceEndPointsConfiguration.quotesPreviewPricingEndPoint()).thenReturn("quotesPreviewPricingEndPoint");
@@ -176,14 +171,10 @@ class CaConfigReaderTest {
         assertEquals("quoteGridEndpoint", underTest.getQuoteGridEndpoint());
         assertEquals("vendorConnectionEndpoint", underTest.getVendorConnectionEndpoint());
         assertEquals("orderGridEndpoint", underTest.getOrderGridEndpoint());
-        assertEquals("getInvoicesEndPoint", underTest.getGetInvoicesEndPoint());
-        assertEquals("getDeliveryNotesEndPoint", underTest.getGetDeliveryNotesEndPoint());
         assertEquals("uiServiceEndPointForDetails", underTest.getUiServiceEndPointForDetails());
         assertEquals("orderItemsEndpoint", underTest.getOrderItemsEndpoint());
-        assertEquals("ordersCountEndpoint", underTest.getOrdersCountEndpoint());
         assertEquals("ordersReportEndpoint", underTest.getOrdersReportEndpoint());
         assertEquals("ordersReportCountEndpoint", underTest.getOrdersReportCountEndpoint());
-        assertEquals("ordersRefinementsEndpoint", underTest.getOrdersRefinementsEndpoint());
         assertEquals("ordersDownloadDocumentsEndpoint", underTest.getOrdersDownloadDocumentsEndpoint());
         assertEquals("exportAllOrderLinesEndpoint", underTest.getExportAllOrderLinesEndpoint());
         assertEquals("exportLinesWithSerialNumbersOnlyEndpoint", underTest.getExportLinesWithSerialNumbersOnlyEndpoint());
@@ -191,7 +182,6 @@ class CaConfigReaderTest {
         assertEquals("orderModifyChangeEndpoint", underTest.getOrderModifyChangeEndpoint());
         assertEquals("replaceProductEndpoint", underTest.getReplaceProductEndpoint());
         assertEquals("replacementsProductsEndpoint", underTest.getReplacementsProductsEndpoint());
-        assertEquals("trackDeliveryEndpoint", underTest.getTrackDeliveryEndpoint());
         assertEquals("quotesPreviewEndPoint", underTest.getQuotesPreviewEndPoint());
         assertEquals("quotesPreviewPricingEndPoint", underTest.getQuotesPreviewPricingEndPoint());
         assertEquals("configurationsEndpoint", underTest.getConfigurationsEndpoint());

@@ -202,17 +202,12 @@ use(["../common/utils.js"], function (utils) {
       "orderModifyChangeEndpoint",
       "uiServiceEndPointForDetails",
       "orderItemsEndpoint",
-      "ordersCountEndpoint",
       "ordersReportEndpoint",
       "ordersReportCountEndpoint",
-      "ordersRefinementsEndpoint",
       "ordersDownloadDocumentsEndpoint",
       "exportAllOrderLinesEndpoint",
       "exportLinesWithSerialNumbersOnlyEndpoint",
-      "downloadAllInvoicesEndpoint",
-      "getDeliveryNotesEndPoint",
-      "getInvoicesEndPoint",
-      "trackDeliveryEndpoint",
+      "downloadAllInvoicesEndpoint"
     ];
 
     endpoints.map((endpoint) => {

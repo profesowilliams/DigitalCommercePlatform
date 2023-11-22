@@ -24,7 +24,6 @@ function OrdersTrackingDetailGrid({
   openFilePdf,
   hasAIORights,
   gridRef,
-  rowsToGrayOutTDNameRef,
 }) {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -162,17 +161,6 @@ function OrdersTrackingDetailGrid({
     },
   ];
 
-  //function getRowClass({ node }) {
-  //  const data = node.group ? node.aggData : node.data;
-  //  if (rowsToGrayOutTDNameRef.current.includes(data.tdNumber)) {
-  //    return true;
-  //  }
-  //}
-
-  //const rowClassRules = {
-  //  'gray-out-changing-rows': getRowClass,
-  //};
-
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
@@ -205,7 +193,6 @@ function OrdersTrackingDetailGrid({
                 onAfterGridInit={_onAfterGridInit}
                 onDataLoad={onDataLoad}
                 responseError={responseError}
-              //rowClassRules={rowClassRules}
               />
               <Toaster
                 classname="toaster-modal-otg"

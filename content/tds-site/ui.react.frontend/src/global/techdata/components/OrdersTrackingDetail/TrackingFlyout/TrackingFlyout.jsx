@@ -33,8 +33,8 @@ function TrackingFlyout({
     setDNoteId(dNoteParam);
     try {
       const endpointUrl = enableLineId
-        ? `${config.trackDeliveryEndpoint}/${orderId}/${lineId}/${dNoteId}`
-        : `${config.trackDeliveryEndpoint}/${orderId}/${dNoteId}`;
+        ? `${uiServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
+        : `${uiServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {

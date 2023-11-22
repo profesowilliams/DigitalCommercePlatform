@@ -129,14 +129,8 @@ const mockedProps = {
   ],
   uiServiceEndPoint:
     'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/orders',
-  getInvoicesEndPoint:
-    'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v3/invoices',
-  getDeliveryNotesEndPoint:
-    'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v3/deliverynotes',
   uiServiceEndPointForDetails:
     'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/order',
-  ordersCountEndpoint:
-    'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/orderscount',
   ordersReportEndpoint:
     'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/ReportOrders',
   ordersReportCountEndpoint:

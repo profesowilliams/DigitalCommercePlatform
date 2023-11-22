@@ -80,29 +80,17 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Order Grid Endpoint", description = "Order Grid Endpoint")
     String orderGridEndpoint();
 
-    @Property(label = "Get Invoices Endpoint", description = "Get Invoices Endpoint")
-    String getInvoicesEndPoint();
-
-    @Property(label = "Get Delivery Notes Endpoint", description = "Get Delivery Notes Endpoint")
-    String getDeliveryNotesEndPoint();
-
     @Property(label = "Ui Service End Point For Details", description = "Ui Service End Point For Details")
     String uiServiceEndPointForDetails();
 
     @Property(label = "Order Items Endpoint", description = "Order Items Endpoint")
     String orderItemsEndpoint();
 
-    @Property(label = "Orders Count Endpoint", description = "Orders Count Endpoint")
-    String ordersCountEndpoint();
-
     @Property(label = "Orders Report Endpoint", description = "Orders Report Endpoint")
     String ordersReportEndpoint();
     
     @Property(label = "Orders Report Count Endpoint", description = "Orders Report Count Endpoint")
     String ordersReportCountEndpoint();
-
-    @Property(label = "Orders Refinements Endpoint", description = "Orders Refinements Endpoint")
-    String ordersRefinementsEndpoint();
 
     @Property(label = "Orders Download Documents Endpoint", description = "Orders Download Documents Endpoint")
     String ordersDownloadDocumentsEndpoint();
@@ -124,9 +112,6 @@ public @interface ServiceEndPointsConfiguration {
 
     @Property(label = "Replacements Products Endpoint", description = "Replacement Products Endpoint")
     String replacementsProductsEndpoint();
-
-    @Property(label = "Track Delivery Endpoint", description = "Track Delivery Endpoint")
-    String trackDeliveryEndpoint();
 
     @Property(label = "Quote Detail Endpoint", description = "Quote Detail Endpoint")
     String quoteDetailEndpoint();

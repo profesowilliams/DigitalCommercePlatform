@@ -95,21 +95,13 @@ public class CaConfigReader {
 
     private String orderGridEndpoint;
 
-    private String getInvoicesEndPoint;
-
-    private String getDeliveryNotesEndPoint;
-
     private String uiServiceEndPointForDetails;
 
     private String orderItemsEndpoint;
 
-    private String ordersCountEndpoint;
-
     private String ordersReportEndpoint;
 
     private String ordersReportCountEndpoint;
-
-    private String ordersRefinementsEndpoint;
 
     private String ordersDownloadDocumentsEndpoint;
 
@@ -124,8 +116,6 @@ public class CaConfigReader {
     private String replaceProductEndpoint;
 
     private String replacementsProductsEndpoint;
-
-    private String trackDeliveryEndpoint;
 
     private String quotesPreviewEndPoint;
 
@@ -329,14 +319,10 @@ public class CaConfigReader {
         vendorDisconnectEndpoint = serviceEndPointsConfiguration.vendorDisconnectEndpoint();
         vendorConnectionDataRefreshEndpoint = serviceEndPointsConfiguration.vendorConnectionDataRefreshEndpoint();
         orderGridEndpoint = serviceEndPointsConfiguration.orderGridEndpoint();
-        getInvoicesEndPoint = serviceEndPointsConfiguration.getInvoicesEndPoint();
-        getDeliveryNotesEndPoint = serviceEndPointsConfiguration.getDeliveryNotesEndPoint();
         uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
         orderItemsEndpoint = serviceEndPointsConfiguration.orderItemsEndpoint();
-        ordersCountEndpoint = serviceEndPointsConfiguration.ordersCountEndpoint();
         ordersReportEndpoint = serviceEndPointsConfiguration.ordersReportEndpoint();
         ordersReportCountEndpoint = serviceEndPointsConfiguration.ordersReportCountEndpoint();
-        ordersRefinementsEndpoint = serviceEndPointsConfiguration.ordersRefinementsEndpoint();
         ordersDownloadDocumentsEndpoint = serviceEndPointsConfiguration.ordersDownloadDocumentsEndpoint();
         exportAllOrderLinesEndpoint = serviceEndPointsConfiguration.exportAllOrderLinesEndpoint();
         exportLinesWithSerialNumbersOnlyEndpoint = serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint();
@@ -344,7 +330,6 @@ public class CaConfigReader {
         orderModifyChangeEndpoint = serviceEndPointsConfiguration.orderModifyChangeEndpoint();
         replaceProductEndpoint = serviceEndPointsConfiguration.replaceProductEndpoint();
         replacementsProductsEndpoint = serviceEndPointsConfiguration.replacementsProductsEndpoint();
-        trackDeliveryEndpoint = serviceEndPointsConfiguration.trackDeliveryEndpoint();
         quotesPreviewEndPoint = serviceEndPointsConfiguration.quotesPreviewEndPoint();
         quickQuoteEndpoint = serviceEndPointsConfiguration.quickQuoteEndpoint();
         quotesPreviewPricingEndPoint = serviceEndPointsConfiguration.quotesPreviewPricingEndPoint();
@@ -559,14 +544,6 @@ public class CaConfigReader {
         return orderGridEndpoint;
     }
 
-    public String getGetInvoicesEndPoint() {
-        return getInvoicesEndPoint;
-    }
-
-    public String getGetDeliveryNotesEndPoint() {
-        return getDeliveryNotesEndPoint;
-    }
-
     public String getUiServiceEndPointForDetails() {
         return uiServiceEndPointForDetails;
     }
@@ -575,20 +552,12 @@ public class CaConfigReader {
         return orderItemsEndpoint;
     }
 
-    public String getOrdersCountEndpoint() {
-        return ordersCountEndpoint;
-    }
-
     public String getOrdersReportEndpoint() {
         return ordersReportEndpoint;
     }
 
     public String getOrdersReportCountEndpoint() {
         return ordersReportCountEndpoint;
-    }
-
-    public String getOrdersRefinementsEndpoint() {
-        return ordersRefinementsEndpoint;
     }
 
     public String getOrdersDownloadDocumentsEndpoint() {
@@ -617,10 +586,6 @@ public class CaConfigReader {
 
     public String getReplacementsProductsEndpoint() {
         return replacementsProductsEndpoint;
-    }
-
-    public String getTrackDeliveryEndpoint() {
-        return trackDeliveryEndpoint;
     }
 
     public String getQuotesPreviewEndPoint() {

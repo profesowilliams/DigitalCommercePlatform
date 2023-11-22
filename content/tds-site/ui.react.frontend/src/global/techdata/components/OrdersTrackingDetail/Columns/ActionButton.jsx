@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
@@ -45,12 +45,11 @@ const ActionsButton = ({
   const trackAndTraceAvailable = line.canTrackAndTrace;
   const areDeliveryNotesAvailable = deliveryNotes?.length > 0;
   const areInvoicesAvailable = invoices?.length > 0;
-  const isSerialNumberAvailable = line.serials?.length > 0;
+  const isSerialNumberAvailable = line.serialsAny === true;
   const invoicesWithReturnURL = invoices?.filter(
     (invoice) => invoice.returnURL && invoice.returnURL.length > 0
   );
-  const isReturnAvailable =
-    invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
+  const isReturnAvailable = invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const id = line.orderNumber;
   const poNumber = line.customerPO;
@@ -72,30 +71,29 @@ const ActionsButton = ({
   const hasMultipleDNotes = deliveryNotes?.length > 1;
   const hasMultipleInvoices = invoices?.length > 1;
   const hasMultipleTrackingLinks = deliveryNotes?.length > 1;
-  const hasMultipleReturnLinks =
-    invoices?.length > 1 && invoicesWithReturnURL.length > 1;
+  const hasMultipleReturnLinks = invoices?.length > 1 && invoicesWithReturnURL.length > 1;
 
   const handleDownloadDnote = () => {
     openFilePdf('DNote', id, deliveryNotes[0]?.id);
   };
+
   const handleDownloadInvoice = () => {
     openFilePdf('Invoice', id, invoices[0]?.id);
   };
-  const handleCopySerialNumbers = () => {
-    const serialsString = line?.serials || '';
-    const lineSerials = serialsString.split(',').map((serial) => serial.trim());
-    if (Array.isArray(lineSerials)) {
-      const serialsText = lineSerials.join('\n');
-      serialsText && navigator.clipboard.writeText(serialsText);
-    }
+
+  const handleCopySerialNumbers = async () => {
+    const result = await usGet(`${config.uiCommerceServiceDomain}/v3/orderdetails/${id}/serials`);
+    const lineSerials = result?.data?.content;
+    const serialsText = lineSerials.join('\n');
+    serialsText && navigator.clipboard.writeText(serialsText);
     effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
 
   const handleTrackAndTrace = async () => {
     try {
       const endpointUrl = enableLineId
-        ? `${config.trackDeliveryEndpoint}/${orderId}/${lineId}/${dNoteId}`
-        : `${config.trackDeliveryEndpoint}/${orderId}/${dNoteId}`;
+        ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
+        : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {
@@ -123,12 +121,14 @@ const ActionsButton = ({
       value: { data: deliveryNotes, show: true, id, reseller: poNumber },
     });
   };
+
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
       value: { data: invoices, show: true, id, reseller: poNumber },
     });
   };
+
   const triggerTrackingFlyout = () => {
     setCustomState({
       key: 'trackingFlyout',
@@ -140,6 +140,7 @@ const ActionsButton = ({
       },
     });
   };
+
   const triggerReturnFlyout = () => {
     setCustomState({
       key: 'returnFlyout',
@@ -168,9 +169,7 @@ const ActionsButton = ({
     {
       condition: hasAIORights && areInvoicesAvailable,
       label: labels?.viewInvoices,
-      onClick: hasMultipleInvoices
-        ? triggerInvoicesFlyout
-        : handleDownloadInvoice,
+      onClick: hasMultipleInvoices ? triggerInvoicesFlyout : handleDownloadInvoice,
     },
     {
       condition: isSerialNumberAvailable,

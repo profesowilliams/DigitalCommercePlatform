@@ -14,7 +14,6 @@ import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
-import { usGet } from '../../../../utils/api';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 
 const OrderTrackingDetailHeader = ({
@@ -26,9 +25,6 @@ const OrderTrackingDetailHeader = ({
 }) => {
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
-  const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
-  const [invoicesResponse, setInvoicesResponse] = useState(null);
-
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
 
@@ -47,55 +43,55 @@ const OrderTrackingDetailHeader = ({
     });
   };
 
-  const items = content.items || [];
   const labels = config?.actionLabels;
 
-  const areDeliveryNotesAvailable = deliveryNotesResponse?.length > 0;
-  const areInvoicesAvailable = invoicesResponse?.length > 0;
+  const areDeliveryNotesAvailable = content?.deliveryNotes?.length > 0;
+  const areInvoicesAvailable = content?.invoices?.length > 0;
   const areReleaseTheOrderAvailable = content.shipComplete === true;
-  const areSerialNumbersAvailable = items.some(
-    (item) => item.serials?.length > 0
-  );
+  const areSerialNumbersAvailable = content.serialsAny === true;
 
   const id = content.orderNumber;
   const poNumber = content.customerPO;
-  const hasMultipleDNotes = deliveryNotesResponse?.length > 1;
-  const hasMultipleInvoices = invoicesResponse?.length > 1;
+  const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
+  const hasMultipleInvoices = content?.invoices?.length > 1;
+
   const handleDownloadDNote = () => {
-    openFilePdf('DNote', id, deliveryNotesResponse[0]?.id);
+    openFilePdf('DNote', id, content?.deliveryNotes[0]?.id);
     pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
   };
+
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', id, invoicesResponse[0]?.id);
+    openFilePdf('Invoice', id, content?.invoices[0]?.id);
     pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
   };
+
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
       value: { data: null, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(
-        deliveryNotesResponse?.length,
-        'Order Details'
-      )
+      getDNoteViewAnalyticsGoogle(content?.deliveryNotes?.length, 'Order Details')
     );
   };
+
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
       value: { data: null, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
-      getInvoiceViewAnalyticsGoogle(invoicesResponse?.length, 'Order Details')
+      getInvoiceViewAnalyticsGoogle(content?.invoices?.length, 'Order Details')
     );
   };
+
   const triggerExportFlyout = () => {
     setCustomState({
       key: 'exportFlyout',
       value: { data: config.exportFlyout, show: true, id },
     });
   };
+
   const menuActionsItems = [
     {
       condition: areDeliveryNotesAvailable,
@@ -105,9 +101,7 @@ const OrderTrackingDetailHeader = ({
     {
       condition: hasAIORights && areInvoicesAvailable,
       label: labels?.viewInvoices,
-      onClick: hasMultipleInvoices
-        ? triggerInvoicesFlyout
-        : handleDownloadInvoice,
+      onClick: hasMultipleInvoices ? triggerInvoicesFlyout : handleDownloadInvoice,
     },
     {
       condition: areReleaseTheOrderAvailable,
@@ -125,6 +119,7 @@ const OrderTrackingDetailHeader = ({
       onClick: triggerExportFlyout,
     },
   ];
+
   const createBackUrl = () => {
     const backParams = new URLSearchParams();
     backParams.set('redirectedFrom', 'detailsPage');
@@ -139,40 +134,6 @@ const OrderTrackingDetailHeader = ({
       backParams.toString()
     );
   };
-  const getDeliveryNotes = async () => {
-    try {
-      const result = await usGet(
-        `${config?.getDeliveryNotesEndPoint}?id=${id}`
-      );
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  const getInvoices = async () => {
-    try {
-      const result = await usGet(`${config?.getInvoicesEndPoint}?id=${id}`);
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  useEffect(() => {
-    getDeliveryNotes()
-      .then((result) => {
-        setDeliveryNotesResponse(result?.data?.content);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-    getInvoices()
-      .then((result) => {
-        setInvoicesResponse(result?.data?.content);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, []);
 
   return (
     <div className="cmp-orders-qp__config-grid">

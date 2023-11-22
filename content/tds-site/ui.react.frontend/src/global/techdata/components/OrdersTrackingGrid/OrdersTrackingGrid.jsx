@@ -190,7 +190,7 @@ function OrdersTrackingGrid(props) {
       componentProp.ordersReportCountEndpoint
     );
 
-    const ordersCountUrl = new URL(componentProp.ordersCountEndpoint);
+    const ordersCountUrl = new URL(`${config.uiCommerceServiceDomain}/v3/orders/count`);
     const ordersCountResponse = await fetchOrdersCount(
       reportFilterValue.current?.value
         ? ordersReportCountUrl.href
@@ -317,7 +317,7 @@ function OrdersTrackingGrid(props) {
     hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
   const fetchFiltersRefinements = async () => {
-    const results = await usGet(`${componentProp.ordersRefinementsEndpoint}`);
+    const results = await usGet(`${config.uiCommerceServiceDomain}/refinements`);
     return results.data.content;
   };
 

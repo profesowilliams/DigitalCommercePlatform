@@ -43,7 +43,7 @@ function DropdownOrderDetails({
         : '',
       content: apiResponse?.content ? (
         <ShippedTabGrid
-          data={apiResponse?.content?.deliveryNotes}
+          data={apiResponse?.content?.shipped}
           gridProps={aemConfig}
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
@@ -67,7 +67,7 @@ function DropdownOrderDetails({
         : '',
       content: apiResponse?.content ? (
         <NotShippedTabGrid
-          data={apiResponse?.content?.items}
+          data={apiResponse?.content?.notshipped}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}

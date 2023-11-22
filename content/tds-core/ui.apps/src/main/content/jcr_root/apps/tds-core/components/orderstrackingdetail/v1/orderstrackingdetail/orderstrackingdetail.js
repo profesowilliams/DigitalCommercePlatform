@@ -19,6 +19,9 @@ use(["../../../common/utils.js"], function (utils) {
   const exportFlyout = {};
   const productReplacementFlyout = {};
 
+  jsonObject["uiServiceDomain"] = this.uiServiceDomain;
+  jsonObject["uiCommerceServiceDomain"] = this.uiServiceDomain + `/ui-commerce`;
+
   // Settings
   if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
     jsonObject["uiServiceEndPoint"] =
@@ -375,16 +378,6 @@ use(["../../../common/utils.js"], function (utils) {
   jsonObject["replacementsProductsEndpoint"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.replacementsProductsEndpoint || "";
-
-  jsonObject["getDeliveryNotesEndPoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.getDeliveryNotesEndPoint || "";
-  jsonObject["getInvoicesEndPoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.getInvoicesEndPoint ||
-    "";
-  jsonObject["trackDeliveryEndpoint"] =
-    this.serviceData.uiServiceDomain + this.serviceData.trackDeliveryEndpoint ||
-    "";
 
   // Product Replacement Flyout
   const productReplacementFlyoutLabels = [
