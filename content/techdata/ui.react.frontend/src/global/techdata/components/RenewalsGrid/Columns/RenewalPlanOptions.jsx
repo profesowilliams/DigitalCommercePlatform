@@ -16,7 +16,7 @@ import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../../Analytics/analytics';
 
 function RenewalPlanOptions({ labels, data, node }) {
   const aemConfig = useRenewalGridState((state) => state.aemConfig);
-  const labelText = useRenewalGridState((state) => state.labels);
+  const { productGrid } = useRenewalGridState(state => state.aemConfig);
   const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
   const { updateRenewalOrderEndpoint, getStatusEndpoint, orderRenewalEndpoint, renewalDetailsEndpoint } = aemConfig;
   const { pageNumber } = useRenewalGridState((state) => state.pagination);
@@ -100,9 +100,9 @@ function RenewalPlanOptions({ labels, data, node }) {
            return item.id == Id;
        })
       if (data?.hasMultipleSupportLevel) {
-          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${labelText.quoteTextForFileName}`;
+          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${productGrid.quoteTextForFileName}`;
       } else {
-          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${activeIDData[0].support}-${labelText.quoteTextForFileName}`;
+          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${activeIDData[0].support}-${productGrid.quoteTextForFileName}`;
       }
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,
