@@ -197,11 +197,11 @@ use(["../common/utils.js"], function (utils) {
       this.serviceData.uiServiceDomain + this.serviceData.orderGridEndpoint ||
       "";
 
+    jsonObject["uiCommerceServiceDomain"] = this.serviceData.uiServiceDomain + `/ui-commerce`;
     const endpoints = [
       "orderModifyEndpoint",
       "orderModifyChangeEndpoint",
       "uiServiceEndPointForDetails",
-      "orderItemsEndpoint",
       "ordersReportEndpoint",
       "ordersReportCountEndpoint",
       "ordersDownloadDocumentsEndpoint",

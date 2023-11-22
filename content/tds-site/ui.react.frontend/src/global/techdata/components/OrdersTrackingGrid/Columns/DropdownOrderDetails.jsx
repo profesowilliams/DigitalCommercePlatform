@@ -22,7 +22,7 @@ function DropdownOrderDetails({
   rowsToGrayOutTDNameRef,
 }) {
   const [apiResponse, isLoading, error] = useGet(
-    `${aemConfig.orderItemsEndpoint}?id=${data?.id}`
+    `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`
   );
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;

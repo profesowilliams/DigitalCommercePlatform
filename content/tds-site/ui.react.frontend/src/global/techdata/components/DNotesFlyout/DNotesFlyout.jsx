@@ -38,7 +38,7 @@ function DNotesFlyout({
   const getDeliveryNotes = async () => {
     try {
       const result = await usGet(
-        `${config.uiCommerceServiceDomain}/v3/order/${dNoteFlyoutConfig?.id}/deliverynotes`
+        `${gridConfig.uiCommerceServiceDomain}/v3/order/${dNoteFlyoutConfig?.id}/deliverynotes`
       );
       return result;
     } catch (error) {

@@ -37,7 +37,7 @@ function InvoicesFlyout({
   const getInvoices = async () => {
     try {
       const result = await usGet(
-        `${config.uiCommerceServiceDomain}/v3/order/${invoicesFlyoutConfig?.id}/invoices`
+        `${gridConfig.uiCommerceServiceDomain}/v3/order/${invoicesFlyoutConfig?.id}/invoices`
       );
       return result;
     } catch (error) {
