@@ -25,5 +25,7 @@ use(function () {
   }
   return {
     configJson: jsonResponse || "",
+    language: properties.get("language") || null,
+    country: properties.get("country") || null,
   };
 });

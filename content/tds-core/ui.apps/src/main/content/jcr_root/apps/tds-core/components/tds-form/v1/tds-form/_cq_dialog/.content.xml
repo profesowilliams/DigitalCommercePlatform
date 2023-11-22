@@ -39,6 +39,16 @@
                                                 fieldDescription="Enter json file"
                                                 name="./json"
                                                 rootPath="/content/dam/techdata" />
+                                            <country
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Country"
+                                                name="./country"/>
+                                            <language
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Language"
+                                                name="./language"/>
                                         </items>
                                     </column>
                                 </items>

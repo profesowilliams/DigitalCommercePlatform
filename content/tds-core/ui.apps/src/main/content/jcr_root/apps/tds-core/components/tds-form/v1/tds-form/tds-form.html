@@ -3,12 +3,22 @@
     <div class="cq-placeholder" data-emptyText="${component.title}"></div>
   </sly>
 
-  <script>
-    window.configuration = {
-      apiBaseUrl: "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}"
-    };
-  </script>
   <sly data-sly-use.model="${'tds-form.js' @ serviceData=serviceData}">
+    <script>
+      const language = "${model.language @ context='scriptString'}";
+      const country = "${model.country @ context='scriptString'}";
+
+      window.configuration = {
+        apiBaseUrl: "${caconfig['com.tdscore.core.slingcaconfig.ServiceEndPointsConfiguration'].uiServiceDomain @ context='scriptString'}",
+      };
+
+      if (language) {
+        window.configuration.language = language;
+      }
+      if (country) {
+        window.configuration.country = country;
+      }
+    </script>
     <div data-observe-mutation>
       <div
               id="root"
