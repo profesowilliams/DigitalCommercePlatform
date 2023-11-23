@@ -12,8 +12,8 @@ function TrackColumn({ line, config, id }) {
   const handleTrackAndTrace = async () => {
     try {
       const endpointUrl = enableLineId
-        ? `${uiServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
-        : `${uiServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
+        ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
+        : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {

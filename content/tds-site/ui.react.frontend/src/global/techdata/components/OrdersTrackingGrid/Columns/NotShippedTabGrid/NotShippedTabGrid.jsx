@@ -84,8 +84,8 @@ function NotShippedTabGrid({
     });
   };
   function getRowClass({ node }) {
-    const data = node.group ? node.aggData : node.data;
-    if (rowsToGrayOutTDNameRef.current.includes(data.tdNumber)) {
+    const nodeData = node.group ? node.aggData : node.data;
+    if (rowsToGrayOutTDNameRef.current.includes(nodeData.tdNumber)) {
       return true;
     }
   }

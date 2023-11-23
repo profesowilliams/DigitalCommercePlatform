@@ -32,6 +32,7 @@ function InvoicesFlyout({
     rows,
     headCells,
     handleClick,
+    handleSelectAllClick,
     SecondaryButton,
   } = useTableFlyout({ selected, setSelected, columnList, config });
   const getInvoices = async () => {
@@ -61,15 +62,6 @@ function InvoicesFlyout({
   const handleCheckboxEnabled = (row) => {
     return row.canDownloadDocument;
   }
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.filter((n) => n.canDownloadDocument).map((n) => n[headTags[0]]);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
 
   const checkboxEnabled = () => {
     return rows.filter((n) => n.canDownloadDocument).length > 0;

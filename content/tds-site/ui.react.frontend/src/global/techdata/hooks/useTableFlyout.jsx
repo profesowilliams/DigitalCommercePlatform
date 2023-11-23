@@ -37,7 +37,7 @@ function useTableFlyout({ selected, setSelected, columnList, config }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n[headTags[0]]);
+      const newSelected = rows.filter((n) => n.canDownloadDocument).map((n) => n[headTags[0]]);
       setSelected(newSelected);
       return;
     }

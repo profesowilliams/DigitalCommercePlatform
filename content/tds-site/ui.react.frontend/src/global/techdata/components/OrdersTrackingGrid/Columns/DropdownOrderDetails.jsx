@@ -67,7 +67,7 @@ function DropdownOrderDetails({
         : '',
       content: apiResponse?.content ? (
         <NotShippedTabGrid
-          data={apiResponse?.content?.notshipped}
+          data={apiResponse?.content?.notShipped}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}
