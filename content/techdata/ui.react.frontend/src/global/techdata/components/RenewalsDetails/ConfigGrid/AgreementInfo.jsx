@@ -20,7 +20,9 @@ function AgreementInfo({
   source,
   contract,
   programName,
+  quoteSupportLevel,
   formattedDueDate,
+  agreementDuration,
   agreementInfo,
   formattedExpiry,
   vendorReference
@@ -36,12 +38,12 @@ function AgreementInfo({
         <p>
           <Info label={agreementInfo.programLabel}>{programName}</Info>
           <Info label={agreementInfo.termLabel}>{contract?.renewedDuration}</Info>
-          <Info label={agreementInfo.supportLevelLabel}>{contract?.serviceLevel}</Info>
+          <Info label={agreementInfo.supportLevelLabel}>{quoteSupportLevel}</Info>
         </p>
         <p>
           <Info label={agreementInfo.quoteExpiryDateLabel}>{formattedExpiry}</Info>
           <Info label={agreementInfo.dueDateLabel}>{formattedDueDate}</Info>
-          <DurationDates label={agreementInfo.duration} startDate={contract?.formattedNewAgreementStartDate} endDate={contract?.formattedNewAgreementEndDate} />
+          <Info label={agreementInfo.duration}>{agreementDuration}</Info>
           <DurationDates label={agreementInfo.usageDuration} endDate={contract?.formattedNewUsagePeriodEndDate} />
         </p>
       </div>
