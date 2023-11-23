@@ -23,13 +23,40 @@ export default function EndUserInfoReadOnly ({ endUserData, endUserType, product
       <p>
         <Info>{address.line1}</Info>
         <Info>{address.line2}</Info>
-        <Info>{addSeparator([address.city, address.state, address.country?.text])}</Info>      
+        <Info>
+          {addSeparator([
+            address.city,
+            address.state?.text ?? address.state,
+            address.country?.text,
+          ])}
+        </Info>
         <Info>{address.postalCode ?? ''}</Info>
       </p>
-      <p>          
-        <Info label={getDictionaryValue("details.renewal.label.endUserType", "End user type")}>{endUserType}</Info>
-        <Info label={getDictionaryValue("details.renewal.label.vendorAccountNo", "Vendor account №")}>{endUserData.vendorAccountNumber}</Info>
-        <Info label={getDictionaryValue("details.renewal.label.prevPONo", "Previous purchase order №")}>{endUserData.previousEndUserPO}</Info>   
+      <p>
+        <Info
+          label={getDictionaryValue(
+            'details.renewal.label.endUserType',
+            'End user type'
+          )}
+        >
+          {endUserType}
+        </Info>
+        <Info
+          label={getDictionaryValue(
+            'details.renewal.label.vendorAccountNo',
+            'Vendor account №'
+          )}
+        >
+          {endUserData.vendorAccountNumber}
+        </Info>
+        <Info
+          label={getDictionaryValue(
+            'details.renewal.label.prevPONo',
+            'Previous purchase order №'
+          )}
+        >
+          {endUserData.previousEndUserPO}
+        </Info>
       </p>
     </div>
   );
