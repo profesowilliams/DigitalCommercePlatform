@@ -84,7 +84,15 @@ async function getUserData() {
       // set current language based on user data
       moment.locale(data.content.user.language);
 
-      validateCountryAndLanguage(cachedUserData);
+      if (!validateCountryAndLanguage(cachedUserData)) {
+        try {
+          document.getElementById("page-container").style.display = "block";
+          document.getElementById("page-global-loader").style.display = "none";
+        } catch {
+          console.error('MISSING PAGE ELEMENTS!');
+        }
+      }
+
       return cachedUserData;
     } else {
       console.log('HTTP-Error: ' + response.status);
@@ -128,6 +136,7 @@ export async function checkIntouchUser(forceRedirectWhenReady) {
     const data = await response.json();
     if (!data.Status || forceRedirectWhenReady) {
       window.location = data.LoginPageUrl;
+      console.error('redirect to loginpage!');
     } else {
       loginPageUrl = data.LoginPageUrl;
     }

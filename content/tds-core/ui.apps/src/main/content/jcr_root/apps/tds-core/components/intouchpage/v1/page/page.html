@@ -23,17 +23,18 @@
       data-get-user-endpoint="${caconfig['com.tdscore.core.slingcaconfig.EcommerceAuthenticationConfiguration'].getUserEndpoint}"
       data-salesLogin="${page.salesLogin}"
       data-qualtricsCode-enabled="${caconfig['com.tdscore.core.models.CaConfigReader'].enableQualtricsCode}">
-    <sly data-sly-include="body.google-tag-manager.html"></sly>
-    <div id="page-container">
-        <div id="top"></div>
-        <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
-             data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
-        <sly data-sly-test="${!isRedirectPage}">
-            <div id="intouch-headerhtml"></div>
-            <sly data-sly-include="body.html"></sly>
-            <div id="intouch-footerhtml"></div>
-            <sly data-sly-call="${footer.footer @ page = page, pwa = pwa, wcmmode = wcmmode}"></sly>
-        </sly>
-    </div>
+  <sly data-sly-include="body.google-tag-manager.html"></sly>
+  <div id="page-global-loader"></div>
+  <div id="page-container" style="display: none">
+    <div id="top"></div>
+    <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
+         data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
+    <sly data-sly-test="${!isRedirectPage}">
+      <div id="intouch-headerhtml"></div>
+      <sly data-sly-include="body.html"></sly>
+      <div id="intouch-footerhtml"></div>
+      <sly data-sly-call="${footer.footer @ page = page, pwa = pwa, wcmmode = wcmmode}"></sly>
+    </sly>
+  </div>
 </body>
 </html>
