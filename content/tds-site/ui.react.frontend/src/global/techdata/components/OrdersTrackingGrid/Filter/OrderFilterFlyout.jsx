@@ -123,7 +123,7 @@ const OrderFilterFlyout = ({
       types: orderTypeFiltersChecked,
       statuses: orderStatusFiltersChecked,
     });
-    onQueryChanged();
+    onQueryChanged({ onSearchAction: true });
     setAreThereAnyFiltersSelectedButNotApplied();
   };
 

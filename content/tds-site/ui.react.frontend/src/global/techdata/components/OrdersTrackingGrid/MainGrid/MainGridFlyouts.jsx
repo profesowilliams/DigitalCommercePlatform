@@ -10,7 +10,6 @@ const MainGridFlyouts = ({
   gridConfig,
   openFilePdf,
   hasAIORights,
-  filtersRefs,
   filterLabels,
   downloadFileBlob,
   analyticsCategories,
@@ -73,7 +72,7 @@ const MainGridFlyouts = ({
       />
       <OrderFilterFlyout
         onQueryChanged={onQueryChanged}
-        filtersRefs={filtersRefs}
+        filtersRefs={searchParams.filters}
         isTDSynnex={isTDSynnex}
         filterLabels={filterLabels}
         analyticsCategories={analyticsCategories}

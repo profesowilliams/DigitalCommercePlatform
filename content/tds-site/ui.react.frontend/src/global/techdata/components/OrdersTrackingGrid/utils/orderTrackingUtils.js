@@ -76,9 +76,19 @@ export const fetchOrdersCount = async (
   }
 };
 
-export async function fetchReport(reportUrl, reportName, pagination, sort) {
+export async function fetchReport(
+  reportUrl,
+  reportName,
+  pagination,
+  sort,
+  isOnSearchAction
+) {
   const mapUrl = urlStrToMapStruc(reportUrl + '?ReportName=' + reportName);
   mapUrl.set('PageNumber', pagination.current.pageNumber);
+
+  if (isOnSearchAction) {
+    mapUrl.set('PageNumber', 1);
+  }
 
   if (sort?.current?.sortData?.[0]) {
     const { sortData } = sort.current;
@@ -179,12 +189,10 @@ export async function fetchData(config) {
   if (searchCriteria.current?.field) {
     const { field, value } = searchCriteria.current;
     requestUrl.searchParams.set(field, value);
-
-    if (isOnSearchAction) {
-      requestUrl.searchParams.set('PageNumber', 1);
-    }
   }
-
+  if (isOnSearchAction.current) {
+    requestUrl.searchParams.set('PageNumber', 1);
+  }
   const { sortData } = hasSortChanged.current || {};
   const sortBy = sortData?.map((c) => `${sortSwap(c.colId)}:${c.sort ?? ''}`);
   const params = { sortBy };

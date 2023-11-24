@@ -205,7 +205,8 @@ function OrdersTrackingGrid(props) {
           ordersReportUrl,
           reportFilterValue.current.value,
           customPaginationRef,
-          hasSortChanged
+          hasSortChanged,
+          isOnSearchAction.current
         )
       : await fetchData(queryOperations);
 
@@ -411,6 +412,7 @@ function OrdersTrackingGrid(props) {
                 searchCriteria={searchCriteria}
                 gridConfig={gridConfig}
                 reportFilterValue={reportFilterValue}
+                filtersRefs={filtersRefs}
               />
               <BaseGrid
                 columnList={addCurrencyToTotalColumn(
@@ -477,7 +479,6 @@ function OrdersTrackingGrid(props) {
       <MainGridFlyouts
         downloadFileBlob={downloadFileBlob}
         filterLabels={filterLabels}
-        filtersRefs={filtersRefs}
         gridConfig={gridConfig}
         hasAIORights={hasAIORights}
         openFilePdf={openFilePdf}

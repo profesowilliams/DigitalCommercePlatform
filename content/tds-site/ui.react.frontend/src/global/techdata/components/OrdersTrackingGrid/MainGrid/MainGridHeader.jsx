@@ -33,6 +33,7 @@ function MainGridHeader({
   searchCriteria,
   gridConfig,
   reportFilterValue,
+  filtersRefs,
 }) {
   const [pill, setPill] = useState(
     getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
@@ -97,9 +98,11 @@ function MainGridHeader({
       value: '',
     });
     removeLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
+    searchCriteria.current = { field: '', value: '' };
+    filtersRefs.current = {};
     setPill({ key: option.key, label: option.label });
     removeDefaultDateRange();
-    onQueryChanged();
+    onQueryChanged({ onSearchAction: true });
   };
 
   const removeQueryParams = () => {
