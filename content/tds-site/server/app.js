@@ -6584,81 +6584,138 @@ app.get("/ui-commerce/v2/order", (req, res) => {
   }, 200);
 });
 
-app.get(
-  "/ui-commerce/v3/orderdetails/orderlines/I537882999/lines",
-  (req, res) => {
-    const response = {
-      content: {
-        orderNumber: "I537882081",
-        customerPO: "",
-        currency: "GBP",
-        items: [
-          {
-            line: "1",
-            urlProductImage:
-              "https://cdn.cs.1worldsync.com/27/58/2758fb56-c778-465e-8885-b2fea396a901.jpg",
-            displayName: "Logitech B110 Silent - BLACK - EMEA",
-            tdNumber: "4845652",
-            mfrNumber: "910-005508",
-            isEOL: false,
-            canTrackAndTrace: false,
-            unitPrice: 7.07,
-            unitPriceFormatted: "7.07",
-            lineDetails: [
-              {
-                id: 0,
-                quantity: 40,
-                subtotalPrice: 282.8,
-                subtotalPriceFormatted: "282.80",
-                shipDate: "02-04-2022",
-                shipDateFormatted: "04/02/2022",
-                statusText: "Passed to courier",
-                isShipment: true,
-              },
-            ],
-            invoices: [],
-            deliveryNotes: [
-              {
-                id: "7000420758",
-                actualShipDate: "02-04-2022",
-                actualShipDateFormatted: "04/02/2022",
-                canDownloadDocument: true,
-              },
-              {
-                id: "7000422054",
-                actualShipDate: "02-04-2022",
-                actualShipDateFormatted: "04/02/2022",
-                canDownloadDocument: true,
-              },
-              {
-                id: "7000421257",
-                actualShipDate: "02-04-2022",
-                actualShipDateFormatted: "04/02/2022",
-                canDownloadDocument: true,
-              },
-              {
-                id: "0281288217",
-                actualShipDate: "02-04-2022",
-                actualShipDateFormatted: "04/02/2022",
-                canDownloadDocument: true,
-              },
-            ],
-            serials: [],
-          },
-        ],
+app.get("/ui-commerce/v3/orderdetails/:id", (req, res) => {
+  const response = {
+    content: {
+      shipComplete: false,
+      orderNumber: "6082941289",
+      customerPO: "4516212939",
+      docTypeText: "EDI or XML",
+      shipTo: {},
+      reseller: {
+        companyName: "Bechtle Logistik & Service GmbH",
+        name: "Bechtle Logistik & Service GmbH",
+        line1: "Bechtle Platz 1",
+        city: "Neckarsulm",
+        state: "08",
+        zip: "74172",
+        country: "DE",
+        phoneNumber: "07132 981-0",
       },
-      error: {
-        code: 0,
-        messages: [],
-        isError: false,
+      created: "11-21-2023",
+      createdFormatted: "21/11/2023",
+      salesAgent: {
+        name: "Richard  Farrell",
+        email: "Richard.Farrell@techdata.co.uk",
+        phoneNumber: "01256 864200",
       },
-    };
+      paymentDetails: {
+        currency: "EUR",
+        subtotal: 12.41,
+        subtotalFormatted: "12.41",
+      },
+      status: "COMPLETED",
+      statusText: "Complete",
+      serialsAny: false,
+      invoices: [
+        {
+          id: "8205490758",
+          date: "11-21-2023",
+          dateFormatted: "21/11/2023",
+          canDownloadDocument: true,
+        },
+      ],
+      deliveryNotes: [
+        {
+          id: "7136357483",
+          actualShipDate: "11-21-2023",
+          actualShipDateFormatted: "21/11/2023",
+          canDownloadDocument: true,
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
 
-    setTimeout(() => {
-      return res.status(200).json(response);
-    }, 200);
-  }
-);
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
+
+app.get("/ui-commerce/v3/orderdetails/orderlines/:id/lines", (req, res) => {
+  const response = {
+    content: {
+      orderNumber: "6082941289",
+      customerPO: "",
+      currency: "EUR",
+      items: [
+        {
+          line: "10",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/6c/44/6c445831-7fa4-49d8-bfb6-590365a82ece.jpg",
+          displayName: "EarPods With Lightning Connector",
+          tdNumber: "3994306",
+          mfrNumber: "MMTN2ZM/A",
+          isEOL: false,
+          canTrackAndTrace: true,
+          unitPrice: 12.41,
+          unitPriceFormatted: "12.41",
+          lineDetails: [
+            {
+              id: 0,
+              quantity: 1.0,
+              subtotalPrice: 12.41,
+              subtotalPriceFormatted: "12.41",
+              shipDate: "11-21-2023",
+              shipDateFormatted: "21/11/2023",
+              statusText: "Passed to courier",
+              isShipment: true,
+            },
+          ],
+          serialsAny: false,
+          invoices: [
+            {
+              returnUrl:
+                "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8205490758&Line=10&product=3994306",
+              id: "8205490758",
+              date: "11-21-2023",
+              dateFormatted: "21/11/2023",
+              canDownloadDocument: false,
+            },
+            {
+              returnUrl:
+                "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8205490758&Line=10&product=3994306",
+              id: "8205490751",
+              date: "11-21-2023",
+              dateFormatted: "21/11/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          deliveryNotes: [
+            {
+              id: "7136357483",
+              actualShipDate: "11-21-2023",
+              actualShipDateFormatted: "21/11/2023",
+              canDownloadDocument: false,
+            },
+          ],
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
 
 app.get("/ui-commerce/v2/OrdersCount", (req, res) => {
   const success = {

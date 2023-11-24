@@ -42,14 +42,9 @@ const ActionsButton = ({
   const labels = config?.actionLabels;
   const invoices = line.invoices;
   const deliveryNotes = line.deliveryNotes;
-  const trackAndTraceAvailable = line.canTrackAndTrace;
-  const areDeliveryNotesAvailable = deliveryNotes?.length > 0;
-  const areInvoicesAvailable = invoices?.length > 0;
-  const isSerialNumberAvailable = line.serialsAny === true;
   const invoicesWithReturnURL = invoices?.filter(
     (invoice) => invoice.returnURL && invoice.returnURL.length > 0
   );
-  const isReturnAvailable = invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const id = line.orderNumber;
   const poNumber = line.customerPO;
@@ -71,14 +66,36 @@ const ActionsButton = ({
   const hasMultipleDNotes = deliveryNotes?.length > 1;
   const hasMultipleInvoices = invoices?.length > 1;
   const hasMultipleTrackingLinks = deliveryNotes?.length > 1;
-  const hasMultipleReturnLinks = invoices?.length > 1 && invoicesWithReturnURL.length > 1;
+  const hasMultipleReturnLinks =
+    invoices?.length > 1 && invoicesWithReturnURL.length > 1;
+
+  const isInvoiceDownloadable = invoices.some(
+    (invoice) => invoice.canDownloadDocument
+  );
+  const isDeliveryNoteDownloadable = deliveryNotes.some(
+    (deliveryNote) => deliveryNote.canDownloadDocument
+  );
+
+  const trackAndTraceAvailable = line.canTrackAndTrace;
+  const areDeliveryNotesAvailable =
+    deliveryNotes?.length > 1 ||
+    (deliveryNotes?.length === 1 && isDeliveryNoteDownloadable);
+  const areInvoicesAvailable =
+    invoices?.length > 1 || (invoices?.length === 1 && isInvoiceDownloadable);
+  const isSerialNumberAvailable = line.serialsAny === true;
+  const isReturnAvailable =
+    invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const handleDownloadDnote = () => {
-    openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    if (isDeliveryNoteDownloadable) {
+      openFilePdf('DNote', id, deliveryNotes[0]?.id);
+    }
   };
 
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', id, invoices[0]?.id);
+    if (isInvoiceDownloadable) {
+      openFilePdf('Invoice', id, invoices[0]?.id);
+    }
   };
 
   const handleCopySerialNumbers = async () => {
