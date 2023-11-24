@@ -292,20 +292,18 @@ div.filter-accordion {
   }
 
   h3 {
+    font-family: Arial !important;
     color: $brand-charcoal;
-    font-size: 16px;
+    font-size: 16px !important;
     letter-spacing: 0;
     line-height: 24px;
     cursor: pointer;
     font-weight: 400;
-    margin: 30px 0;
+    margin: 4px 0;
     text-align: left;
     padding-top: 0;
 
     &.active {
-      color: $blue-dark;
-      font-weight: bold;
-
       &:before {
         content: "\f078";
       }
