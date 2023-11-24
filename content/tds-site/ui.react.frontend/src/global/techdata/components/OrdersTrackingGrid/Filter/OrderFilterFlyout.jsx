@@ -38,7 +38,6 @@ const OrderFilterFlyout = ({
   const filterClicked = useOrderTrackingStore(
     (state) => state.filter.filterClicked
   );
-
   const areThereAnyFiltersSelectedButNotApplied = useOrderTrackingStore(
     (state) => state.filter.areThereAnyFiltersSelectedButNotApplied
   );
@@ -162,18 +161,22 @@ const OrderFilterFlyout = ({
           />
         </div>
       </section>
-      <section
-        className={`filter-order-tags-container ${showLess ? 'activated' : ''}`}
-      >
-        <span
-          onClick={toggleShowLess}
-          className="order-filter-tags-more"
-        ></span>
-        <OrderFilterTags
-          filterDateOptions={filterDateOptions}
-          filtersRefs={filtersRefs}
-        />
-      </section>
+      {orderFilterCounter !== 0 && (
+        <section
+          className={`filter-order-tags-container ${
+            showLess ? 'activated' : ''
+          }`}
+        >
+          <span
+            onClick={toggleShowLess}
+            className="order-filter-tags-more"
+          ></span>
+          <OrderFilterTags
+            filterDateOptions={filterDateOptions}
+            filtersRefs={filtersRefs}
+          />
+        </section>
+      )}
     </BaseFlyout>
   );
 };
