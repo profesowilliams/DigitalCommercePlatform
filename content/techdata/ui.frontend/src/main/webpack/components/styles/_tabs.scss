@@ -55,6 +55,21 @@
   > .cmp-tabs > .cmp-tabs__tablist {
     margin: 40px 0 40px 0;
 
+    @include mobile {
+      overflow: hidden;
+      overflow-x: scroll;
+      background: linear-gradient(90deg, map-get($color-palette, 'neutral-gray-1') 0px, transparent 80px, transparent calc(100% - 80px), map-get($color-palette, 'neutral-gray-1') 100%);
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      text-wrap: nowrap;
+      z-index: 1;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
     .li,
     [role='tab'] {
       color: get-color(charcoal);
@@ -67,7 +82,21 @@
       line-height: 26px;
       height: 2rem;
 
-      &:hover {
+      @include mobile {
+        margin: 0;
+        padding: 0 20px;
+        mix-blend-mode: color-dodge;
+        text-wrap: nowrap;
+        display: inline-block;
+
+        &:first-of-type,
+        &:last-of-type {
+          mix-blend-mode: unset;
+        }
+      }
+
+      &:hover,
+      &:active {
         text-decoration: underline;
         text-decoration-color: get-color(legacy-ocean);
         text-underline-offset: 0.62rem;
