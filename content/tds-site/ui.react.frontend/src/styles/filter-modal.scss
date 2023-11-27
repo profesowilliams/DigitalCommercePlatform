@@ -1,8 +1,6 @@
 .filter-modal-container {
   position: fixed;
   background: rgba(0, 12, 33, .28);
-
-  // background-color: #0067ab;
   height: 100vh;
   width: 100vw;
   top: 0;
@@ -45,7 +43,6 @@
   }
 
   &__popup {
-    // box-shadow: 0 2px 15px 0 rgb(0 0 0 / 26%);
     position: absolute;
     right: 0;
     top: 0;
@@ -245,10 +242,6 @@
   }
 }
 
-div.filter-accordion {
-  height: 100%;
-}
-
 .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
   font-family: Arial;
   font-size: 14px;
@@ -258,13 +251,13 @@ div.filter-accordion {
   text-align: left;
 }
 .order-filter-accordion {
-  text-align: left;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  text-align: left;
   font-family: 'TWKEverett-Regular-web';
+  overflow-y: hidden;
 
   div.filter-option__options li {
     list-style: none;
@@ -292,82 +285,18 @@ div.filter-accordion {
   }
 
   h3 {
-    font-family: Arial !important;
-    color: $brand-charcoal;
-    font-size: 16px !important;
-    letter-spacing: 0;
-    line-height: 24px;
-    cursor: pointer;
-    font-weight: 400;
     margin: 30px 0;
-    text-align: left;
     padding-top: 0;
-
-    &.active {
-      &:before {
-        content: "\f078";
-      }
-    }
-
-    &.active.td-synnex {
-      color: $brand-charcoal;
-    }
-
-    &:before {
-      content: "\f054";
-      @include font-awesome;
-      padding-right: 11px;
-      font-weight: 900;
-    }
-  }
-}
-.filter-accordion {
-  text-align: left;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  font-family: 'TWKEverett-Regular-web';
-
-  div.filter-option__options li {
-    list-style: none;
-    padding-left: 21px !important;
-  }
-
-  &__item {
-    list-style: none;
-
-    &--group {
-      padding: 8px 0;
-      padding-left: 30px !important;
-      position: relative;
-
-      .count {
-        position: absolute;
-        right: 47px;
-        top: 21px;
-      }
-
-      .count.td-synnex {
-        background-color: $brand-green;
-      }
-    }
-  }
-
-  h3 {
     color: $brand-charcoal;
-    font-size: 14px;
+    font-family: Arial !important;
+    font-size: 16px !important;
+    line-height: 24px;
+    text-align: left;
+    font-weight: 400;
     letter-spacing: 0;
-    line-height: 19px;
     cursor: pointer;
-    font-weight: normal;
-    margin: 14px 0;
 
     &.active {
-      color: $blue-dark;
-      font-weight: bold;
-
       &:before {
         content: "\f078";
       }
@@ -387,138 +316,57 @@ div.filter-accordion {
 }
 
 .order-filter-tags-more {
+  margin-top: 20px;
+  margin-bottom: 20px;
   height: 1px;
-  width: 60px;
-  border: 2px solid #6d7278;
-  position: relative;
-  top: 10px;
-  left: 0;
+  width: 82px;
   box-sizing: border-box;
-  right: 0;
-  margin: 0 auto;
-  cursor: pointer;
+  border: 2px solid $filter-light-gray;
   border-radius: 10px;
+  cursor: pointer;
 }
 .filter-order-tags-container {
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding-top: 0;
-    padding-bottom: 0;
-  gap: 20px;
-  background: $brand-white;
   flex: none;
   order: 0;
   flex-grow: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  width: 100%;
+  background: $brand-white;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .activated {
   height: 83px;
 }
-.filter-tags-container {
-  height: 106px;
-  width: 100%;
-  background-color: $brand-white;
-  position: relative;
-  bottom: 0;
-  z-index: 1;
-  padding: 25px 12px 0;
-  display: flex;
-  flex-wrap: wrap;
-
-  &.active {
-    height: 80%;
-  }
-
-  .filter-tags-more {
-    height: 1px;
-    width: 60px;
-    border: 2px solid #6d7278;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    box-sizing: border-box;
-    right: 0;
-    margin: 0 auto;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-
-  .filter-tags {
-    border-radius: 14px;
-    background-color: $blue-dark;
-      color: $brand-white;
-    padding: 0 10px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    width: max-content;
-    max-height: 17px;
-
-    &>span:nth-child(2) {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding: 1px 0 0;
-    }
-
-    &__title {
-      color: $brand-white;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: -0.07px;
-      line-height: 17px;
-      text-align: center;
-    }
-
-    &__close {
-      color: $brand-white;
-      font-family: "Font Awesome 5 Free";
-      font-size: 9px;
-      letter-spacing: 0;
-      line-height: 9px;
-      cursor: pointer;
-    }
-  }
-
-  .filter-tags.td-synnex {
-    background-color: $brand-green;
-    padding: 11px;
-  }
-}
 
 .order-filter-tags-container {
-  height: 106px;
-  width: 100%;
-  background-color: $brand-white;
-  position: relative;
-  bottom: 0;
-  z-index: 1;
-  padding: 5px 20px 0 20px;
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
   justify-content: center;
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 10px;
+  background-color: $brand-white;
 
   .filter-tags {
     border-radius: 14px;
     background-color: $blue-dark;
     color: white;
     padding: 0 10px;
-    margin-bottom: 10px;
     margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 6px;
     width: max-content;
-    max-height: 17px;
+    height: 20px;
+    margin-bottom: 10px;
 
     &>span:nth-child(2) {
       display: flex;
@@ -594,7 +442,7 @@ div.filter-accordion {
 .count {
   border-radius: 9.5px;
   background-color: $blue-dark;
-    color: $brand-white;
+  color: $brand-white;
   text-align: center;
   padding: 0px 12px;
   font-size: 13px;
