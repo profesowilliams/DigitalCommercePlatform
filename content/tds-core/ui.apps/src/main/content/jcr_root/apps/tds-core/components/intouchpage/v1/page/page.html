@@ -25,7 +25,8 @@
       data-qualtricsCode-enabled="${caconfig['com.tdscore.core.models.CaConfigReader'].enableQualtricsCode}">
   <sly data-sly-include="body.google-tag-manager.html"></sly>
   <div id="page-global-loader"></div>
-  <div id="page-container" style="display: none">
+  <sly data-sly-test.editOrPreview="${(wcmmode.edit || wcmmode.preview) ? 'block' : 'none'}" />
+  <div id="page-container" style="display: ${editOrPreview @ context='styleToken'}">
     <div id="top"></div>
     <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
          data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
