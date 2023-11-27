@@ -19,7 +19,9 @@ const StatusColumn = ({ data, completeDeliveryOnly }) => {
     <span className="status-span-icon" onClick={showNewElement}>
       <ParcelIcon />
     </span>
-  ) : null;
+  ) : (
+    <span className="status-span-icon-empty"></span>
+  );
   return data && data?.status ? (
     <div onMouseMoveCapture={handleClose}>
       <span onMouseOver={showNewElement}>{icon}</span>
