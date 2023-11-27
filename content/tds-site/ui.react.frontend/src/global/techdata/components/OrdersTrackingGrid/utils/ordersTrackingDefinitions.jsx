@@ -29,6 +29,12 @@ export const ordersTrackingDefinition = (
           completeDeliveryOnly={orderModifyLabels.completeDeliveryOnly}
         />
       ),
+      statusText: (
+        <StatusColumn
+          data={data}
+          completeDeliveryOnly={orderModifyLabels.completeDeliveryOnly}
+        />
+      ),
       created: data?.createdFormatted ?? data?.created,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
       customerPO: <ResellerColumn data={data?.customerPO} />,
