@@ -133,6 +133,11 @@
     }
   }
 
+  &__settings {
+    @extend %clickable-action;
+    position: relative;
+  }
+
   &__export {
     @extend %clickable-action;
   }

@@ -1,5 +1,6 @@
 import React, { cloneElement, useState, useEffect } from 'react';
 import Report from '../Report/Report';
+import Settings from '../Settings/Settings';
 import VerticalSeparator from '../../Widgets/VerticalSeparator';
 import OrderSearch from '../Search/OrderSearch';
 import OrderFilter from '../Filter/OrderFilter';
@@ -156,6 +157,8 @@ function MainGridHeader({
       reportAnalyticsLabel={analyticsCategories.report}
       reportOptions={reportOptions}
     />,
+    <VerticalSeparator />,
+    <Settings />,
     <VerticalSeparator />,
     <OrderExport />,
   ];
