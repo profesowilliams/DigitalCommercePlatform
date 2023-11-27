@@ -154,8 +154,10 @@ export default function OrderFilterDatePicker({
     !startDate && setCurrentStartDate(undefined);
     !endDate && setCurrentEndDate(undefined);
     setFilterClicked(true);
-    setFilterDate(startDate, endDate);
-    startDate && endDate && setAreThereAnyFiltersSelectedButNotApplied();
+    if ((startDate && endDate) || (!startDate && !endDate)) {
+      setFilterDate(startDate, endDate);
+      setAreThereAnyFiltersSelectedButNotApplied();
+    }
   };
   return (
     <>
