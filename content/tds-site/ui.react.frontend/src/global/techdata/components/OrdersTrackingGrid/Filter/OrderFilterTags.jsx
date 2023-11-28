@@ -1,15 +1,8 @@
 import React from 'react';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterTag from './OrderFilterTag';
+import { filtersDateGroup } from '../utils/gridUtils';
 
-const filtersDateGroup = [
-  'createdFrom',
-  'createdTo',
-  'invoiceDateFrom',
-  'invoiceDateTo',
-  'shippedDateFrom',
-  'shippedDateTo',
-];
 function OrderFilterTags({ filtersRefs, filterDateOptions }) {
   const {
     setOrderStatusFiltersChecked,

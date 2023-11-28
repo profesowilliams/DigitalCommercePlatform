@@ -130,6 +130,15 @@ export const secondLevelOptions = {
   sort: 'desc',
 };
 
+export const filtersDateGroup = [
+  'createdFrom',
+  'createdTo',
+  'invoiceDateFrom',
+  'invoiceDateTo',
+  'shippedDateFrom',
+  'shippedDateTo',
+];
+
 export function isFirstTimeSortParameters(sortingList) {
   const { colId } = secondLevelOptions;
   if (!sortingList) return true;

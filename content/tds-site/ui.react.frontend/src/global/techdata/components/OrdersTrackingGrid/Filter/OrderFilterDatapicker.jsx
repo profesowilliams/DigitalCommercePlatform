@@ -10,6 +10,7 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { filtersDateGroup } from '../utils/gridUtils';
 
 function CustomStartEndText({ filterLabels }) {
   return (
@@ -158,6 +159,11 @@ export default function OrderFilterDatePicker({
       setFilterDate(startDate, endDate);
       setAreThereAnyFiltersSelectedButNotApplied();
     }
+    !startDate &&
+      !endDate &&
+      filtersDateGroup.map(
+        (filter) => (filtersRefs.current[filter] = undefined)
+      );
   };
   return (
     <>
