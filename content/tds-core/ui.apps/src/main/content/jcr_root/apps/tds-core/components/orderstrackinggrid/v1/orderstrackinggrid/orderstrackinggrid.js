@@ -204,7 +204,6 @@ use(["../common/utils.js"], function (utils) {
       "uiServiceEndPointForDetails",
       "ordersReportEndpoint",
       "ordersReportCountEndpoint",
-      "ordersDownloadDocumentsEndpoint",
       "exportAllOrderLinesEndpoint",
       "exportLinesWithSerialNumbersOnlyEndpoint",
       "downloadAllInvoicesEndpoint"

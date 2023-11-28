@@ -41,12 +41,11 @@ function OrdersTrackingDetail(props) {
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
     try {
-      const url = componentProps.ordersDownloadDocumentsEndpoint || 'nourl';
+      const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
       const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
       const downloadOrderInvoicesUrl =
         url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
-      const name = `${flyoutType}.zip`;
-      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, name, {
+      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, null, {
         redirect: false,
       });
     } catch (error) {
@@ -59,11 +58,10 @@ function OrdersTrackingDetail(props) {
   }
 
   async function openFilePdf(flyoutType, orderId, selectedId) {
-    const url = componentProps.ordersDownloadDocumentsEndpoint || 'nourl';
+    const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
     const singleDownloadUrl =
       url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
-    const name = `${orderId}.pdf`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, name, {
+    await requestFileBlobWithoutModal(singleDownloadUrl, null, {
       redirect: true,
     });
   }

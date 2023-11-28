@@ -101,8 +101,6 @@ public class CaConfigReader {
 
     private String ordersReportCountEndpoint;
 
-    private String ordersDownloadDocumentsEndpoint;
-
     private String exportAllOrderLinesEndpoint;
 
     private String exportLinesWithSerialNumbersOnlyEndpoint;
@@ -320,7 +318,6 @@ public class CaConfigReader {
         uiServiceEndPointForDetails = serviceEndPointsConfiguration.uiServiceEndPointForDetails();
         ordersReportEndpoint = serviceEndPointsConfiguration.ordersReportEndpoint();
         ordersReportCountEndpoint = serviceEndPointsConfiguration.ordersReportCountEndpoint();
-        ordersDownloadDocumentsEndpoint = serviceEndPointsConfiguration.ordersDownloadDocumentsEndpoint();
         exportAllOrderLinesEndpoint = serviceEndPointsConfiguration.exportAllOrderLinesEndpoint();
         exportLinesWithSerialNumbersOnlyEndpoint = serviceEndPointsConfiguration.exportLinesWithSerialNumbersOnlyEndpoint();
         orderModifyEndpoint = serviceEndPointsConfiguration.orderModifyEndpoint();
@@ -551,10 +548,6 @@ public class CaConfigReader {
 
     public String getOrdersReportCountEndpoint() {
         return ordersReportCountEndpoint;
-    }
-
-    public String getOrdersDownloadDocumentsEndpoint() {
-        return ordersDownloadDocumentsEndpoint;
     }
 
     public String getExportAllOrderLinesEndpoint() {

@@ -359,10 +359,6 @@ use(["../../../common/utils.js"], function (utils) {
     this.serviceData.uiServiceDomain + this.serviceData.orderDetailEndpoint ||
     "";
 
-  jsonObject["ordersDownloadDocumentsEndpoint"] =
-    this.serviceData.uiServiceDomain +
-      this.serviceData.ordersDownloadDocumentsEndpoint || "";
-
   jsonObject["exportAllOrderLinesEndpoint"] =
     this.serviceData.uiServiceDomain +
       this.serviceData.exportAllOrderLinesEndpoint || "";

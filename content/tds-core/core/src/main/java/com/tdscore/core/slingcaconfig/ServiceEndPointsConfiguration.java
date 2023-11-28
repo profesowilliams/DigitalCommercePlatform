@@ -89,9 +89,6 @@ public @interface ServiceEndPointsConfiguration {
     @Property(label = "Orders Report Count Endpoint", description = "Orders Report Count Endpoint")
     String ordersReportCountEndpoint();
 
-    @Property(label = "Orders Download Documents Endpoint", description = "Orders Download Documents Endpoint")
-    String ordersDownloadDocumentsEndpoint();
-
     @Property(label = "Export All Order Lines Endpoint", description = "Export All Order Lines Endpoint")
     String exportAllOrderLinesEndpoint();
     

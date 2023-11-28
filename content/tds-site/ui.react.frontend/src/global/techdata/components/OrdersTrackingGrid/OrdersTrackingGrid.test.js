@@ -135,8 +135,6 @@ const mockedProps = {
     'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/ReportOrders',
   ordersReportCountEndpoint:
     'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/ReportOrdersCount',
-  ordersDownloadDocumentsEndpoint:
-    'https://westeu-dit-ui.dc.tdebusiness.cloud/ui-commerce/v2/DownloadDocuments',
   agGridLicenseKey:
     'CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=2,AssetReference=AG-036821,SupportServicesEnd=16_March_2024_[v2]_MTcxMDU0NzIwMDAwMA==bc4bd0ff633ce8a7dc0be1551198da2b',
   itemsPerPage: '25',
