@@ -23,12 +23,6 @@ export const ordersTrackingDefinition = (
       select: <SelectColumn eventProps={eventProps} />,
       updated: data?.updatedFormatted ?? data?.created,
       shipTo: <ShipToColumn data={data?.shipTo} />,
-      status: (
-        <StatusColumn
-          data={data}
-          completeDeliveryOnly={orderModifyLabels.completeDeliveryOnly}
-        />
-      ),
       statusText: (
         <StatusColumn
           data={data}
@@ -67,7 +61,7 @@ export const ordersTrackingDefinition = (
     select: 35,
     updated: 90,
     shipTo: 160,
-    status: 140,
+    statusText: 140,
     created: 110,
     id: 100,
     customerPO: 160,
@@ -80,7 +74,7 @@ export const ordersTrackingDefinition = (
     select: '35px',
     updated: '90px',
     shipTo: '160px',
-    status: '140px',
+    statusText: '140px',
     created: '110px',
     id: '100px',
     customerPO: '160px',

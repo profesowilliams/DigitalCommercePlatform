@@ -22,11 +22,11 @@ const StatusColumn = ({ data, completeDeliveryOnly }) => {
   ) : (
     <span className="status-span-icon-empty"></span>
   );
-  return data && data?.status ? (
+  return data && data?.statusText ? (
     <div onMouseMoveCapture={handleClose}>
       <span onMouseOver={showNewElement}>{icon}</span>
       <span className={!data?.shipComplete ? 'status-icon-offset' : ''}>
-        {data?.status}
+        {data?.statusText}
       </span>
       <Popover
         className="status-popover-grid"
