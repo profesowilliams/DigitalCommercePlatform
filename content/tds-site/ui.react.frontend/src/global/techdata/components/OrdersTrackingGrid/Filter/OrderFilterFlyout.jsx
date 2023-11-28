@@ -152,7 +152,7 @@ const OrderFilterFlyout = ({
       isTDSynnex={isTDSynnex}
       subheaderReference={subheaderReference}
     >
-      <section className="cmp-flyout__content teal_scroll height_order_filters">
+      <section className="cmp-flyout__content-without-padding teal_scroll height_order_filters">
         <div className={'order-filter-accordion'}>
           <OrderFilterList
             filtersRefs={filtersRefs}

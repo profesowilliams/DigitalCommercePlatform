@@ -123,6 +123,11 @@ $flyout-small-height-formax: 779px;
       }
     }
   }
+  &__content-without-padding {
+    padding: 0;
+    overflow-y: auto;
+    height: calc(100% - 117px);
+  }
   &__footer {
     display: flex;
     flex-direction: column;

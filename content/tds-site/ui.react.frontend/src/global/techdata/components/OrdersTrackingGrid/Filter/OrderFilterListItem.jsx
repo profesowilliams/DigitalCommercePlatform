@@ -124,7 +124,7 @@ function OrderFilterListItem({
   return (
     <>
       <div
-        className="order-filter-accordion__item"
+        className={`order-filter-accordion__item ${!open ? 'separator' : ''}`}
         onClick={() => handleFilterClick(id)}
       >
         <div className="order-filter-accordion__item--group">
