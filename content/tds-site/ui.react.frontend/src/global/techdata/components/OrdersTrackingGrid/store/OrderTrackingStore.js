@@ -76,7 +76,6 @@ const INITIAL_STATE = {
       'count',
       0
     ),
-    filterDefaultDateRange: false,
     orderTypeFilters: getLocalValueOrDefault(
       ORDER_FILTER_LOCAL_STORAGE_KEY,
       'orderTypeFilters',

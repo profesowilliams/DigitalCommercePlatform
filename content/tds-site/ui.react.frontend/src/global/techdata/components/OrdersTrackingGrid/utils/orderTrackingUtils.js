@@ -129,7 +129,6 @@ export async function fetchData(config) {
     previousFilter,
     defaultSearchDateRange,
     filtersRefs,
-    filterDefaultDateRange = false,
   } = config;
 
   const { url } = request;
@@ -202,19 +201,8 @@ export async function fetchData(config) {
     params.PageNumber = 1;
   }
 
-  if (filterDefaultDateRange) {
-    const dateTo = new Date();
-    const day = dateTo.getDate();
-    const month = dateTo.getMonth();
-    const year = dateTo.getFullYear();
-    const today = `${year}-${month}-${day}`;
-    requestUrl.searchParams.set('createdFrom', fromDay);
-    const dateFrom = dateTo.getDate() - 90;
-    const dayFrom = dateFrom.getDate();
-    const monthFrom = dateFrom.getMonth();
-    const yearFrom = dateFrom.getFullYear();
-    const fromDay = `${yearFrom}-${monthFrom}-${dayFrom}`;
-    requestUrl.searchParams.set('createdTo', today);
+  if (filtersRefs.current.type || filtersRefs.current.status) {
+    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   }
 
   const filtersStatusAndType =

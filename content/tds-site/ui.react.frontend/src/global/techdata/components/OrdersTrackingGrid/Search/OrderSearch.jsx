@@ -22,7 +22,6 @@ import {
   getSearchAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
-import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import OrderSearchCapsule from './OrderSearchCapsule';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
@@ -77,7 +76,6 @@ const _OrderSearch = (
       options.find((option) => option.searchKey === getInitialFieldState())
         ?.searchLabel || '',
   };
-  const { setSearch90DaysBack } = useOrderTrackingStore((st) => st.effects);
   const [values, setValues] = useState({
     ...customSearchValues,
   });
@@ -200,7 +198,6 @@ const _OrderSearch = (
     pushDataLayerGoogle(
       getSearchAnalyticsGoogle(searchAnalyticsLabel, option, inputValue)
     );
-    setSearch90DaysBack(true);
     setIsSearchCapsuleVisible(true);
     setSearchTerm(inputValue);
     setCapsuleSearchValue(inputValue);
