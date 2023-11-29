@@ -12,9 +12,7 @@ import {
   compareSort,
   getLocalStorageData,
 } from './gridUtils';
-import {
-  ORDER_FILTER_LOCAL_STORAGE_KEY,
-} from '../../../../../utils/constants';
+import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   const searchParams = new URLSearchParams(defaultDateRange);
@@ -62,6 +60,8 @@ export const fetchOrdersCount = async (
     dateFilters.forEach((filter) =>
       requestUrl.searchParams.set(filter[0], filter[1])
     );
+  } else if (filtersRefs.current.type || filtersRefs.current.status) {
+    addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   }
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
@@ -200,8 +200,13 @@ export async function fetchData(config) {
   if (!isSameFilter) {
     params.PageNumber = 1;
   }
-
-  if (filtersRefs.current.type || filtersRefs.current.status) {
+  const dateFilters = Object.entries(filtersRefs?.current).filter(
+    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+  );
+  if (
+    dateFilters.length === 0 &&
+    (filtersRefs.current.type || filtersRefs.current.status)
+  ) {
     addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
   }
 
