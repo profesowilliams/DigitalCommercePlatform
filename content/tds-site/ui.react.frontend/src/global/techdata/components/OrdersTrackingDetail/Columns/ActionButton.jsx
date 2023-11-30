@@ -40,8 +40,8 @@ const ActionsButton = ({
   const effects = useOrderTrackingStore((st) => st.effects);
   const { setCustomState } = effects;
   const labels = config?.actionLabels;
-  const invoices = line.invoices;
-  const deliveryNotes = line.deliveryNotes;
+  const invoices = element.invoices;
+  const deliveryNotes = element.deliveryNotes;
   const invoicesWithReturnURL = invoices?.filter(
     (invoice) => invoice.returnURL && invoice.returnURL.length > 0
   );
@@ -50,8 +50,8 @@ const ActionsButton = ({
   const poNumber = line.customerPO;
   const orderId = id;
   const lineId = line.line;
-  const dNoteId = deliveryNotes?.length > 0 ? deliveryNotes[0].id : null;
   const enableLineId = line.line.length === 1;
+  const dNoteId = deliveryNotes?.length > 0 ? deliveryNotes[0].id : null;
 
   const toaster = {
     isOpen: true,
@@ -63,32 +63,24 @@ const ActionsButton = ({
     ),
   };
 
-  const hasMultipleDNotes = deliveryNotes?.length > 1;
   const hasMultipleInvoices = invoices?.length > 1;
-  const hasMultipleTrackingLinks = deliveryNotes?.length > 1;
-  const hasMultipleReturnLinks =
-    invoices?.length > 1 && invoicesWithReturnURL.length > 1;
+  const hasMultipleReturnLinks = invoices?.length > 1 && invoicesWithReturnURL.length > 1;
 
-  const isInvoiceDownloadable = invoices.some(
+  const isInvoiceDownloadable = invoices?.some(
     (invoice) => invoice.canDownloadDocument
   );
-  const isDeliveryNoteDownloadable = deliveryNotes.some(
-    (deliveryNote) => deliveryNote.canDownloadDocument
-  );
 
-  const trackAndTraceAvailable = line.canTrackAndTrace;
-  const areDeliveryNotesAvailable =
-    deliveryNotes?.length > 1 ||
-    (deliveryNotes?.length === 1 && isDeliveryNoteDownloadable);
+  const trackAndTraceAvailable = element.canTrackAndTrace;
+  const areDeliveryNotesAvailable = deliveryNotes?.length === 1 && deliveryNotes[0].canDownloadDocument;
   const areInvoicesAvailable =
     invoices?.length > 1 || (invoices?.length === 1 && isInvoiceDownloadable);
-  const isSerialNumberAvailable = line.serialsAny === true;
+  const isSerialNumberAvailable = element.serialsAny === true;
   const isReturnAvailable =
     invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const handleDownloadDnote = () => {
     if (isDeliveryNoteDownloadable) {
-      openFilePdf('DNote', id, deliveryNotes[0]?.id);
+      openFilePdf('DNote', id, dNoteId);
     }
   };
 
@@ -99,7 +91,7 @@ const ActionsButton = ({
   };
 
   const handleCopySerialNumbers = async () => {
-    const result = await usGet(`${config.uiCommerceServiceDomain}/v3/orderdetails/${id}/serials`);
+    const result = await usGet(`${config.uiCommerceServiceDomain}/v3/orderdetails/${id}/line/${lineId}/deliverynote/${dNoteId}/serials`);
     const lineSerials = result?.data?.content;
     const serialsText = lineSerials.join('\n');
     serialsText && navigator.clipboard.writeText(serialsText);
@@ -132,29 +124,10 @@ const ActionsButton = ({
     window.open(newUrl, '_blank');
   };
 
-  const triggerDNotesFlyout = () => {
-    setCustomState({
-      key: 'dNotesFlyout',
-      value: { data: deliveryNotes, show: true, id, reseller: poNumber },
-    });
-  };
-
   const triggerInvoicesFlyout = () => {
     setCustomState({
       key: 'invoicesFlyout',
       value: { data: invoices, show: true, id, reseller: poNumber },
-    });
-  };
-
-  const triggerTrackingFlyout = () => {
-    setCustomState({
-      key: 'trackingFlyout',
-      value: {
-        data: deliveryNotes,
-        show: true,
-        line,
-        id,
-      },
     });
   };
 
@@ -174,14 +147,12 @@ const ActionsButton = ({
     {
       condition: trackAndTraceAvailable,
       label: labels?.track,
-      onClick: hasMultipleTrackingLinks
-        ? triggerTrackingFlyout
-        : handleTrackAndTrace,
+      onClick: handleTrackAndTrace,
     },
     {
       condition: areDeliveryNotesAvailable,
       label: labels?.viewDNotes,
-      onClick: hasMultipleDNotes ? triggerDNotesFlyout : handleDownloadDnote,
+      onClick: handleDownloadDnote,
     },
     {
       condition: hasAIORights && areInvoicesAvailable,

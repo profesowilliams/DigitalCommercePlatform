@@ -1,6 +1,5 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
 import Grid from '../../Grid/Grid';
-import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from './buildColumnDefinitions';
 import LineNumberColumn from '../Columns/LineNumberColumn';
 import DescriptionColumn from '../Columns/DescriptionColumn';
