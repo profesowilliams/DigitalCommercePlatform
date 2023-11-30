@@ -1,15 +1,21 @@
 import React from 'react';
 function DNoteColumn({ line, id, openFilePdf }) {
+  const firstDeliveryNote = line;
+  const isDeliveryNoteDownloadable = firstDeliveryNote?.canDownloadDocument;
   const handleDownload = () => {
-    openFilePdf('DNote', id, line?.id);
+    if (isDeliveryNoteDownloadable) {
+      openFilePdf('DNote', id, firstDeliveryNote?.id);
+    }
   };
-  return (
-    <div
-      className="order-line-details__content__downloadLink"
-      onClick={handleDownload}
-    >
-      {line?.id || '-'}
-    </div>
-  );
+  const renderContent = () => {
+    return !isDeliveryNoteDownloadable ? (
+      firstDeliveryNote?.id
+    ) : (
+      <div onClick={handleDownload}>
+        <a>{firstDeliveryNote?.id}</a>
+      </div>
+    );
+  };
+  return line?.length === 0 ? '-' : renderContent();
 }
 export default DNoteColumn;

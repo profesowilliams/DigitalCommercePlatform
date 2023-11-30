@@ -10,6 +10,8 @@ function InvoiceColumn({
   reseller,
 }) {
   const hasMultiple = line?.invoices?.length > 1;
+  const firstInvoice = line?.invoices ? line?.invoices[0] : [];
+  const isInvoiceDownloadable = firstInvoice?.canDownloadDocument;
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const triggerInvoicesFlyout = () => {
     setCustomState({
@@ -24,20 +26,23 @@ function InvoiceColumn({
   };
 
   const handleDownload = () => {
-    true && openFilePdf('Invoice', id, line?.invoices[0]?.id);
+    if (isInvoiceDownloadable) {
+      openFilePdf('Invoice', id, firstInvoice?.id);
+    }
   };
-  return line?.invoices?.length == 0 ? (
-    '-'
-  ) : (
-    <div onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}>
-      <a>
-        {hasMultiple
-          ? getDictionaryValueOrKey(config?.multiple)
-          : line?.invoices
-          ? line?.invoices[0]?.id
-          : '-'}
-      </a>
-    </div>
-  );
+  const renderContent = () => {
+    return !isInvoiceDownloadable ? (
+      firstInvoice?.id
+    ) : (
+      <div onClick={hasMultiple ? triggerInvoicesFlyout : handleDownload}>
+        <a>
+          {hasMultiple
+            ? getDictionaryValueOrKey(config?.multiple)
+            : firstInvoice?.id}
+        </a>
+      </div>
+    );
+  };
+  return line?.invoices?.length == 0 ? '-' : renderContent();
 }
 export default InvoiceColumn;

@@ -6646,6 +6646,65 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
   }, 200);
 });
 
+app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
+  const response = {
+    content: {
+      notShipped: [],
+      shipped: [
+        {
+          id: "7136213233",
+          actualShipDate: "11-13-2023",
+          actualShipDateFormatted: "13/11/2023",
+          shipQuantity: 2.0,
+          totalPrice: 788.18,
+          totalPriceFormatted: "788.18",
+          invoices: [
+            {
+              id: "8205169914",
+              date: "11-13-2023",
+              dateFormatted: "13/11/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          items: [
+            {
+              line: "10",
+              tdNumber: "8320984",
+              mfrNumber: "7L6Y1ET#ABD",
+              isReturnable: false,
+              quantity: 1.0,
+              shipQuantity: 1.0,
+              orderQuantity: 1.0,
+            },
+            {
+              line: "20",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/d4/99/d4999f7d-2baf-4d70-bf98-d6c3255e08a5.jpg",
+              displayName: "HP USB-C Dock G5",
+              tdNumber: "5408788",
+              mfrNumber: "5TW10AA#ABB",
+              isReturnable: false,
+              quantity: 1.0,
+              shipQuantity: 1.0,
+              orderQuantity: 1.0,
+            },
+          ],
+          canTrackAndTrace: true,
+        },
+      ],
+      totalOpenQuantity: 0.0,
+      totalShipQuantity: 2.0,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
 app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
   const response = {
     content: {
