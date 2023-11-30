@@ -12466,3 +12466,54 @@ app.get("/ui-commerce/v2/ReportOrdersCount", function (req, res) {
     return res.status(200).json(response);
   }, 2000);
 });
+
+app.post("/pushAsset", function (req, res) {
+  const { Name, Path, Size, Asset } = req.body;
+  const bearerToken = req.headers.authorization;
+
+  const first30 = Asset.slice(0, 30);
+  console.log(
+    "pushAsset",
+    Name,
+    Path,
+    Size,
+    Asset.length,
+    bearerToken,
+    first30,
+    req.headers
+  );
+
+  if (Name && Path && Size && Asset) {
+    return res.status(200).json({ success: true });
+  } else {
+    return res.status(400).json({ success: false });
+  }
+});
+
+app.post("/unpublish", function (req, res) {
+  const { Path } = req.body;
+  const bearerToken = req.headers.authorization;
+
+  console.log("unpublish", Path, bearerToken, req.headers);
+
+  if (Path) {
+    return res.status(200).json({ success: true });
+  } else {
+    return res.status(400).json({ success: false });
+  }
+});
+
+app.post("/security", function (req, res) {
+  const { client_id, client_secret } = req.body;
+
+  console.log(client_id, client_secret, req.body);
+
+  if (client_id && client_secret) {
+    return res.status(200).json({
+      access_token: "ha!!!",
+      token_type: "Bearer",
+    });
+  } else {
+    return res.status(400).json({ success: false });
+  }
+});
