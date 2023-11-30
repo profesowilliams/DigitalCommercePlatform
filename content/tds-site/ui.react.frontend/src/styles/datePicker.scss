@@ -341,7 +341,7 @@
 .order_datapicker .CalendarDay__default:hover {
   border-radius: 50%;
   border: 1px solid var(--dark-teal-color);
-  background-color: inherit !important;
+  background-color: $brand-white !important;
   color: black !important;
 }
 .CalendarDay__hovered_offset {
@@ -382,7 +382,6 @@
   color: #222;
   border: none;  
 }
-
 .order_datapicker .CalendarDay__default:hover{
   background: var(--light-teal-color);
 }
@@ -396,7 +395,6 @@
   margin-bottom: 2px;
   margin-left: 5px;
   margin-left: 5px;
-  
 }
 
 .order_datapicker .CalendarMonth_table .CalendarDay__selected_span{
@@ -411,11 +409,48 @@
 }
 
 .order_datapicker .CalendarDay__selected {
+  position: relative;
   background-color: var(--dark-teal-color) !important;
   border: 1px solid var(--dark-teal-color);
   border-radius: 50%;
   color: white;
 }
+.order_datapicker .CalendarDay__selected_start::after {
+  content: '';
+  display: block;
+  width: 15px;
+  height: 30px;
+  position: absolute;
+  margin: 0;
+  top: -1px;
+  left: 14px;
+  z-index: -1;
+  background-color: $light-teal-color;
+}
+
+.order_datapicker .CalendarDay__selected_end::before {
+  content: '';
+  display: block;
+  width: 15px;
+  height: 30px;
+  position: absolute;
+  margin: 0;
+  top: -1px;
+  right: 14px;
+  z-index: -1;
+  background-color: $light-teal-color;
+}
+.order_datapicker .CalendarDay__selected_start.CalendarDay__selected_end::after {
+  display:none
+}
+.order_datapicker .CalendarDay__selected_start.CalendarDay__selected_end::before {
+  display:none
+}
+
+.order_datapicker .CalendarDay__selected_start_no_selected_end::after {
+  display: none;
+}
+
 .order_datapicker .CalendarDay__selected:hover {
   background-color: var(--dark-teal-color);
   border: 1px solid var(--dark-teal-color);
@@ -435,10 +470,25 @@
 
 .CalendarDay__selected_span:active,
 .CalendarDay__selected_span:hover {
-  background: #E2E7EB;
+  position: relative;
+  background: $brand-white!important;
   /* border: 1px double #33dacd; */
   color: #222;
   border: none;
+}
+.order_datapicker .CalendarDay__selected_span:active::after,
+.order_datapicker .CalendarDay__selected_span:hover::after {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  top: -1px;
+  left: -1px;
+  z-index: -1;
+  background-color: $lighter-teal-color;
+  border-radius: 0%;
 }
 .CalendarDay__selected,
 .CalendarDay__selected:active,
