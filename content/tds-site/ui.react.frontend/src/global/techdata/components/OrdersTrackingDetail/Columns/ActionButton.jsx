@@ -79,9 +79,7 @@ const ActionsButton = ({
     invoices?.length > 0 && invoicesWithReturnURL.length >= 1;
 
   const handleDownloadDnote = () => {
-    if (isDeliveryNoteDownloadable) {
-      openFilePdf('DNote', id, dNoteId);
-    }
+    openFilePdf('DNote', id, dNoteId);
   };
 
   const handleDownloadInvoice = () => {
