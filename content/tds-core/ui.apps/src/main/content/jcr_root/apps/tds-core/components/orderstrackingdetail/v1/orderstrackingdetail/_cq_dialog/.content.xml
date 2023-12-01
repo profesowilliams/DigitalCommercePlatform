@@ -57,22 +57,22 @@
 											<soldTo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter SoldTo Label"
-                                                fieldLabel="SoldTo Label"
+                                                fieldDescription="Enter Ship To Label"
+                                                fieldLabel="Ship To Label"
                                                 name="./soldTo"
                                                 required="{Boolean}true"/>
 											<soldToPhone
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter SoldTo Phone Label"
-                                                fieldLabel="SoldTo Phone Label"
+                                                fieldDescription="Enter Ship To Phone Label"
+                                                fieldLabel="Ship To Phone Label"
                                                 name="./soldToPhone"
                                                 required="{Boolean}true"/>
 											<soldToEmail
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter SoldTo Email Label"
-                                                fieldLabel="SoldTo Email Label"
+                                                fieldDescription="Enter Ship To Email Label"
+                                                fieldLabel="Ship To Email Label"
                                                 name="./soldToEmail"
                                                 required="{Boolean}true"/>
 											<orderAcknowledgement
