@@ -43,7 +43,7 @@ const ActionsButton = ({
   const invoices = element.invoices;
   const deliveryNotes = element.deliveryNotes;
   const invoicesWithReturnURL = invoices?.filter(
-    (invoice) => invoice.returnURL && invoice.returnURL.length > 0
+    (invoice) => invoice.returnUrl && invoice.returnUrl.length > 0
   );
 
   const id = line.orderNumber;
@@ -64,14 +64,16 @@ const ActionsButton = ({
   };
 
   const hasMultipleInvoices = invoices?.length > 1;
-  const hasMultipleReturnLinks = invoices?.length > 1 && invoicesWithReturnURL.length > 1;
+  const hasMultipleReturnLinks =
+    invoices?.length > 1 && invoicesWithReturnURL.length > 1;
 
   const isInvoiceDownloadable = invoices?.some(
     (invoice) => invoice.canDownloadDocument
   );
 
   const trackAndTraceAvailable = element.canTrackAndTrace;
-  const areDeliveryNotesAvailable = deliveryNotes?.length === 1 && deliveryNotes[0].canDownloadDocument;
+  const areDeliveryNotesAvailable =
+    deliveryNotes?.length === 1 && deliveryNotes[0].canDownloadDocument;
   const areInvoicesAvailable =
     invoices?.length > 1 || (invoices?.length === 1 && isInvoiceDownloadable);
   const isSerialNumberAvailable = element.serialsAny === true;
@@ -89,7 +91,9 @@ const ActionsButton = ({
   };
 
   const handleCopySerialNumbers = async () => {
-    const result = await usGet(`${config.uiCommerceServiceDomain}/v3/orderdetails/${id}/line/${lineId}/deliverynote/${dNoteId}/serials`);
+    const result = await usGet(
+      `${config.uiCommerceServiceDomain}/v3/orderdetails/${id}/line/${lineId}/deliverynote/${dNoteId}/serials`
+    );
     const lineSerials = result?.data?.content;
     const serialsText = lineSerials.join('\n');
     serialsText && navigator.clipboard.writeText(serialsText);
@@ -118,7 +122,7 @@ const ActionsButton = ({
   };
 
   const handleReturn = () => {
-    const newUrl = line.invoices[0].returnURL;
+    const newUrl = element.invoices[0].returnUrl;
     window.open(newUrl, '_blank');
   };
 
@@ -155,7 +159,9 @@ const ActionsButton = ({
     {
       condition: hasAIORights && areInvoicesAvailable,
       label: labels?.viewInvoices,
-      onClick: hasMultipleInvoices ? triggerInvoicesFlyout : handleDownloadInvoice,
+      onClick: hasMultipleInvoices
+        ? triggerInvoicesFlyout
+        : handleDownloadInvoice,
     },
     {
       condition: isSerialNumberAvailable,
@@ -168,7 +174,6 @@ const ActionsButton = ({
       onClick: hasMultipleReturnLinks ? triggerReturnFlyout : handleReturn,
     },
   ];
-
   return (
     <div
       className={`cmp-order-tracking-grid-details__splitLine${
