@@ -3,14 +3,15 @@ import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
 import { usGet } from '../../../../../../../utils/api';
 
 function TrackColumn({ line, config, id }) {
-  const trackAndTraceAvailable = line?.canTrackAndTrace ;
-  const enableLineId = line?.items?.length === 1;
-  const orderId = id;
-  const lineId = line?.items[0]?.line;
-  const dNoteId = line.id;
+  const trackAndTraceAvailable = line?.canTrackAndTrace;
 
   const handleTrackAndTrace = async () => {
     try {
+      const enableLineId = line?.items?.length === 1;
+      const orderId = id;
+      const lineId = line?.items[0]?.line;
+      const dNoteId = line?.id;
+
       const endpointUrl = enableLineId
         ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
         : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
