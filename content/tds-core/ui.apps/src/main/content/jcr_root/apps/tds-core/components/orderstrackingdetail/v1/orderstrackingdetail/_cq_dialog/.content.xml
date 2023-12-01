@@ -54,26 +54,26 @@
                                                 fieldLabel="Actions Label"
                                                 name="./actions"
                                                 required="{Boolean}true"/>
-											<soldTo
+											<shipTo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter SoldTo Label"
-                                                fieldLabel="SoldTo Label"
-                                                name="./soldTo"
+                                                fieldDescription="Enter Ship To Label"
+                                                fieldLabel="Ship To Label"
+                                                name="./shipTo"
                                                 required="{Boolean}true"/>
-											<soldToPhone
+											<shipToPhone
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter SoldTo Phone Label"
-                                                fieldLabel="SoldTo Phone Label"
-                                                name="./soldToPhone"
+                                                fieldDescription="Enter Ship To Phone Label"
+                                                fieldLabel="Ship To Phone Label"
+                                                name="./shipToPhone"
                                                 required="{Boolean}true"/>
-											<soldToEmail
+											<shipToEmail
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter SoldTo Email Label"
-                                                fieldLabel="SoldTo Email Label"
-                                                name="./soldToEmail"
+                                                fieldDescription="Enter Ship To Email Label"
+                                                fieldLabel="Ship To Email Label"
+                                                name="./shipToEmail"
                                                 required="{Boolean}true"/>
 											<orderAcknowledgement
                                                 jcr:primaryType="nt:unstructured"
