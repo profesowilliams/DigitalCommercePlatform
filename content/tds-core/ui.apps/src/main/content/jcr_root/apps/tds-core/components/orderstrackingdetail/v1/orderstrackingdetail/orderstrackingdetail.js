@@ -7,7 +7,7 @@ use(["../../../common/utils.js"], function (utils) {
   const labels = {};
   const itemsLabels = {};
   const actionLabels = {};
-  const shipToLabels = {};
+  const soldToLabels = {};
   const orderAcknowledgementLabels = {};
   const contactLabels = {};
   const footerLabels = {};
@@ -101,16 +101,16 @@ use(["../../../common/utils.js"], function (utils) {
     jsonObject["actionLabels"] = actionLabels;
   }
 
-  // ShipToLabels
-  const shipToLabelsList = ["shipTo", "shipToPhone", "shipToEmail"];
+  // SoldToLabels
+  const soldToLabelsList = ["soldTo", "soldToPhone", "soldToEmail"];
 
   properties &&
-    shipToLabelsList.map((property) => {
-      shipToLabels[property] = properties[property];
+    soldToLabelsList.map((property) => {
+      soldToLabels[property] = properties[property];
     });
 
-  if (shipToLabels != null) {
-    jsonObject["shipToLabels"] = shipToLabels;
+  if (soldToLabels != null) {
+    jsonObject["soldToLabels"] = soldToLabels;
   }
 
   // OrderAcknowledgementLabels

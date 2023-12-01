@@ -10,7 +10,7 @@ import {
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { getLocalStorageData } from '../OrdersTrackingGrid/utils/gridUtils';
-import ShipToCard from './Header/ShipToCard';
+import SoldToCard from './Header/SoldToCard';
 import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
@@ -68,18 +68,10 @@ const OrderTrackingDetailHeader = ({
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
-      value: {
-        data: content?.deliveryNotes,
-        show: true,
-        id,
-        reseller: poNumber,
-      },
+      value: { data: content?.deliveryNotes, show: true, id, reseller: poNumber },
     });
     pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(
-        content?.deliveryNotes?.length,
-        'Order Details'
-      )
+      getDNoteViewAnalyticsGoogle(content?.deliveryNotes?.length, 'Order Details')
     );
   };
 
@@ -109,9 +101,7 @@ const OrderTrackingDetailHeader = ({
     {
       condition: hasAIORights && areInvoicesAvailable,
       label: labels?.viewInvoices,
-      onClick: hasMultipleInvoices
-        ? triggerInvoicesFlyout
-        : handleDownloadInvoice,
+      onClick: hasMultipleInvoices ? triggerInvoicesFlyout : handleDownloadInvoice,
     },
     {
       condition: areReleaseTheOrderAvailable,
@@ -181,7 +171,7 @@ const OrderTrackingDetailHeader = ({
         </div>
       </div>
       <div className="info-container">
-        <ShipToCard shipTo={content.shipTo} config={config} />
+        <SoldToCard shipTo={content.shipTo} config={config} />
         <OrderAcknowledgementCard content={content} config={config} />
         <ContactCard content={content} config={config} />
       </div>

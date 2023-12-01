@@ -2,7 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-function ShipToCard({ shipTo = {}, config }) {
+function SoldToCard({ shipTo = {}, config }) {
   const {
     companyName,
     line1,
@@ -18,7 +18,7 @@ function ShipToCard({ shipTo = {}, config }) {
   return (
     <Card className="card-container" variant="outlined">
       <div className="card-container__title">
-        {getDictionaryValueOrKey(config?.shipToLabels?.shipTo)}
+        {getDictionaryValueOrKey(config?.soldToLabels?.soldTo)}
       </div>
       <div>
         {companyName && (
@@ -50,13 +50,13 @@ function ShipToCard({ shipTo = {}, config }) {
       <div className="card-container__bottom">
         {phone && (
           <>
-            {getDictionaryValueOrKey(config?.shipToLabels?.shipToPhone)} {phone}
+            {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)} {phone}
             <br />
           </>
         )}
         {email && (
           <>
-            {getDictionaryValueOrKey(config?.shipToLabels?.shipToEmail)} {email}
+            {getDictionaryValueOrKey(config?.soldToLabels?.soldToEmail)} {email}
           </>
         )}
       </div>
@@ -64,4 +64,4 @@ function ShipToCard({ shipTo = {}, config }) {
   );
 }
 
-export default ShipToCard;
+export default SoldToCard;
