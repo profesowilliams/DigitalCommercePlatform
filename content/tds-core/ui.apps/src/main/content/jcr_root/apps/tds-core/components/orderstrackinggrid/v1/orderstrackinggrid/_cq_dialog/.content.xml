@@ -931,6 +931,35 @@
 									</column>
 								</items>
 							</orderModify>
+                            <settingsFlyout
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Settings Flyout"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+										<items jcr:primaryType="nt:unstructured">
+                                            <swithLabel
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Switch Label"
+												name="./switchLabel"/> 
+                                            <save
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Save"
+												name="./save"/> 
+                                            <cancel
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Cancel"
+												name="./cancel"/>       
+                                        </items>
+									</column>
+								</items>
+							</settingsFlyout>
                             <invoicesFlyout
                                 jcr:primaryType="nt:unstructured"
                                 jcr:title="Invoices Flyout"

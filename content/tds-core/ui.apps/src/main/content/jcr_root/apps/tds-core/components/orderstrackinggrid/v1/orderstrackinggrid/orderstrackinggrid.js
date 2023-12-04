@@ -13,6 +13,7 @@ use(["../common/utils.js"], function (utils) {
   const orderLineDetailsShippedColumnLabels = {};
   const orderLineDetailsNotShippedColumnLabels = {};
   const orderModifyLabels = {};
+  const settingsFlyoutLabels = {};
   const invoicesFlyout = {};
   const exportFlyout = {};
   const orderLineDetails = {};
@@ -100,7 +101,7 @@ use(["../common/utils.js"], function (utils) {
       { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
       { key: "button", name: "exportFlyoutButton" },
       { key: "exportSuccessMessage", name: "exportSuccessMessage" },
-      { key: "exportFailedMessage", name: "exportFailedMessage" }
+      { key: "exportFailedMessage", name: "exportFailedMessage" },
     ];
 
     exportFlyoutLabels.map((label) => {
@@ -193,11 +194,22 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["orderModifyLabels"] = orderModifyLabels;
     }
 
+    const settingsFlyoutLabelsList = ["switchLabel", "save", "cancel"];
+
+    settingsFlyoutLabelsList.map((property) => {
+      settingsFlyoutLabels[property] = properties[property];
+    });
+
+    if (settingsFlyoutLabels != null) {
+      jsonObject["settingsFlyoutLabels"] = settingsFlyoutLabels;
+    }
+
     jsonObject["uiServiceEndPoint"] =
       this.serviceData.uiServiceDomain + this.serviceData.orderGridEndpoint ||
       "";
 
-    jsonObject["uiCommerceServiceDomain"] = this.serviceData.uiServiceDomain + `/ui-commerce`;
+    jsonObject["uiCommerceServiceDomain"] =
+      this.serviceData.uiServiceDomain + `/ui-commerce`;
     const endpoints = [
       "orderModifyEndpoint",
       "orderModifyChangeEndpoint",
@@ -206,7 +218,7 @@ use(["../common/utils.js"], function (utils) {
       "ordersReportCountEndpoint",
       "exportAllOrderLinesEndpoint",
       "exportLinesWithSerialNumbersOnlyEndpoint",
-      "downloadAllInvoicesEndpoint"
+      "downloadAllInvoicesEndpoint",
     ];
 
     endpoints.map((endpoint) => {

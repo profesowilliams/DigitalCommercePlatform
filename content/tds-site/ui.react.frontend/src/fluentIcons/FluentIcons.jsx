@@ -679,3 +679,287 @@ export const SettingsIcon = () => (
     />
   </svg>
 );
+
+export const SwitchOn = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="16"
+    viewBox="0 0 32 16"
+    fill="none"
+  >
+    <rect width="32" height="16" rx="8" fill="#005758" />
+    <path
+      d="M24 0.999999C20.134 0.999999 17 4.13401 17 8C17 11.866 20.134 15 24 15C27.866 15 31 11.866 31 8C31 4.13401 27.866 1 24 0.999999Z"
+      fill="white"
+    />
+    <path
+      d="M21.25 8L23.75 10.5L27.5 5"
+      stroke="#005758"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const SwitchOnHovered = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="34"
+    height="20"
+    viewBox="0 0 34 20"
+    fill="none"
+  >
+    <rect y="2" width="32" height="16" rx="8" fill="#005758" />
+    <path
+      opacity="0.1"
+      d="M24 -8.74228e-07C18.4772 -1.35705e-06 14 4.47715 14 10C14 15.5228 18.4772 20 24 20C29.5228 20 34 15.5228 34 10C34 4.47715 29.5228 -3.91405e-07 24 -8.74228e-07Z"
+      fill="#005758"
+    />
+    <path
+      d="M24 3C20.134 3 17 6.13401 17 10C17 13.866 20.134 17 24 17C27.866 17 31 13.866 31 10C31 6.13401 27.866 3 24 3Z"
+      fill="white"
+    />
+    <path
+      d="M21.25 10L23.75 12.5L27.5 7"
+      stroke="#005758"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const SwitchOnActive = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="36"
+    height="24"
+    viewBox="0 0 36 24"
+    fill="none"
+  >
+    <rect y="3" width="32" height="16" rx="8" fill="#005758" />
+    <g opacity="0.3" filter="url(#filter0_d_3731_24665)">
+      <path
+        d="M24 0.999999C18.4772 0.999999 14 5.47715 14 11C14 16.5228 18.4772 21 24 21C29.5228 21 34 16.5228 34 11C34 5.47715 29.5228 1 24 0.999999Z"
+        fill="#005758"
+      />
+    </g>
+    <path
+      d="M24 4C20.134 4 17 7.13401 17 11C17 14.866 20.134 18 24 18C27.866 18 31 14.866 31 11C31 7.13401 27.866 4 24 4Z"
+      fill="white"
+    />
+    <path
+      d="M21.25 11L23.75 13.5L27.5 8"
+      stroke="#005758"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <filter
+        id="filter0_d_3731_24665"
+        x="12"
+        y="0"
+        width="24"
+        height="24"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dy="1" />
+        <feGaussianBlur stdDeviation="1" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_3731_24665"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_3731_24665"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+);
+
+export const SwitchOnDisabled = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="16"
+    viewBox="0 0 32 16"
+    fill="none"
+  >
+    <rect width="32" height="16" rx="8" fill="#888B8D" />
+    <path
+      d="M24 0.999999C20.134 0.999999 17 4.13401 17 8C17 11.866 20.134 15 24 15C27.866 15 31 11.866 31 8C31 4.13401 27.866 1 24 0.999999Z"
+      fill="white"
+    />
+    <path
+      d="M21.25 8L23.75 10.5L27.5 5"
+      stroke="#888B8D"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const SwitchOff = () => (
+  <svg
+    width="32"
+    height="16"
+    viewBox="0 0 32 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="31"
+      height="15"
+      rx="7.5"
+      fill="white"
+      stroke="#005758"
+    />
+    <path
+      d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2Z"
+      fill="#005758"
+    />
+    <path d="M6 6L10 10M6 10L10 6" stroke="white" strokeLinecap="round" />
+  </svg>
+);
+
+export const SwitchOffHovered = () => (
+  <svg
+    width="34"
+    height="20"
+    viewBox="0 0 34 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="2.5"
+      y="2.5"
+      width="31"
+      height="15"
+      rx="7.5"
+      fill="white"
+      stroke="#005758"
+    />
+    <path
+      opacity="0.1"
+      d="M10 -8.74228e-07C4.47715 -1.35705e-06 1.35705e-06 4.47715 8.74228e-07 10C3.91405e-07 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 -3.91405e-07 10 -8.74228e-07Z"
+      fill="#005758"
+    />
+    <path
+      d="M10 4C6.68629 4 4 6.68629 4 10C4 13.3137 6.68629 16 10 16C13.3137 16 16 13.3137 16 10C16 6.68629 13.3137 4 10 4Z"
+      fill="#005758"
+    />
+    <path d="M8 8L12 12M8 12L12 8" stroke="white" strokeLinecap="round" />
+  </svg>
+);
+
+export const SwitchOffActive = () => (
+  <svg
+    width="36"
+    height="24"
+    viewBox="0 0 36 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="4.5"
+      y="3.5"
+      width="31"
+      height="15"
+      rx="7.5"
+      fill="white"
+      stroke="#005758"
+    />
+    <path
+      d="M12 5C8.68629 5 6 7.68629 6 11C6 14.3137 8.68629 17 12 17C15.3137 17 18 14.3137 18 11C18 7.68629 15.3137 5 12 5Z"
+      fill="#005758"
+    />
+    <path d="M10 9L14 13M10 13L14 9" stroke="white" strokeLinecap="round" />
+    <g opacity="0.3" filter="url(#filter0_d_3731_24685)">
+      <path
+        d="M12 0.999999C6.47715 0.999999 2 5.47715 2 11C2 16.5228 6.47715 21 12 21C17.5228 21 22 16.5228 22 11C22 5.47715 17.5228 1 12 0.999999Z"
+        fill="#005758"
+      />
+    </g>
+    <defs>
+      <filter
+        id="filter0_d_3731_24685"
+        x="0"
+        y="0"
+        width="24"
+        height="24"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset dy="1" />
+        <feGaussianBlur stdDeviation="1" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_3731_24685"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_3731_24685"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+);
+
+export const SwitchOffDisabled = () => (
+  <svg
+    width="32"
+    height="16"
+    viewBox="0 0 32 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="0.5"
+      y="0.5"
+      width="31"
+      height="15"
+      rx="7.5"
+      fill="white"
+      stroke="#888B8D"
+    />
+    <path
+      d="M8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2Z"
+      fill="#888B8D"
+    />
+    <path d="M6 6L10 10M6 10L10 6" stroke="white" strokeLinecap="round" />
+  </svg>
+);

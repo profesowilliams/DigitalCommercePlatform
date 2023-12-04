@@ -317,6 +317,40 @@ $flyout-small-height-formax: 779px;
   }
 }
 
+.cmp-flyout__content.settings {
+  padding: 0;
+  .switch-wrapper {
+    display: block;
+    padding: 20px;
+    .switch-label {
+      width: 346px;
+      float: left;
+    }
+    .switch-icon-wrapper {
+      float: inline-end;
+      display: flex;
+      align-items: center;
+      height: 20px;
+      width: 38px;
+      justify-content: left;
+      cursor: pointer;
+    }
+  }
+}
+
+.cmp-flyout__footer-buttons {
+  padding: 0;
+  .primary {
+    color: $brand-white;
+    background-color: $brand-green;
+  }
+  .secondary {
+    color: $brand-green;
+    background-color: $brand-white;
+    border: 1px solid $brand-green;
+  }
+}
+
 .full-width {
   clear: both;
   width: 100%;

@@ -4,6 +4,7 @@ import ExportFlyout from '../../ExportFlyout/ExportFlyout';
 import InvoicesFlyout from '../../InvoicesFlyout/InvoicesFlyout';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
+import SettingsFlyout from '../../SettingsFlyout/SettingsFlyout';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const MainGridFlyouts = ({
@@ -87,6 +88,10 @@ const MainGridFlyouts = ({
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
+      />
+      <SettingsFlyout
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        labels={gridConfig.settingsFlyoutLabels}
       />
     </>
   );
