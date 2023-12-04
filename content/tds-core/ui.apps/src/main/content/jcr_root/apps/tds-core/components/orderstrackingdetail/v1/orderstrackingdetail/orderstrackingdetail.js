@@ -90,6 +90,14 @@ use(["../../../common/utils.js"], function (utils) {
     "toasterCopySerialNumbersMessage",
     "copySerialNumber",
     "return",
+    "title",
+    "orderNoString",
+    "PONoString",
+    "upperText",
+    "lowerText",
+    "cancelString",
+    "releaseOrderString",
+    "releaseButtonLabel",
   ];
 
   properties &&

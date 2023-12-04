@@ -119,6 +119,14 @@ use(["../common/utils.js"], function (utils) {
       "itemsLabel",
       "trackLabel",
       "modifyEligibleItemsLabel",
+      "title",
+      "orderNoString",
+      "PONoString",
+      "upperText",
+      "lowerText",
+      "cancelString",
+      "releaseOrderString",
+      "releaseButtonLabel",
     ];
 
     orderLineDetailsLabels.map((label) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './Header/MenuActions';
@@ -15,6 +15,8 @@ import OrderAcknowledgementCard from './Header/OrderAcknowledgementCard';
 import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
+import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
+import { usGet } from '../../../../utils/api';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -22,9 +24,11 @@ const OrderTrackingDetailHeader = ({
   hasAIORights,
   hasOrderModificationRights,
   openFilePdf,
+  componentProps,
 }) => {
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+  const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
 
@@ -49,7 +53,6 @@ const OrderTrackingDetailHeader = ({
   const areInvoicesAvailable = content?.invoices?.length > 0;
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = content.serialsAny === true;
-
   const id = content.orderNumber;
   const poNumber = content.customerPO;
   const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
@@ -68,10 +71,18 @@ const OrderTrackingDetailHeader = ({
   const triggerDNotesFlyout = () => {
     setCustomState({
       key: 'dNotesFlyout',
-      value: { data: content?.deliveryNotes, show: true, id, reseller: poNumber },
+      value: {
+        data: content?.deliveryNotes,
+        show: true,
+        id,
+        reseller: poNumber,
+      },
     });
     pushDataLayerGoogle(
-      getDNoteViewAnalyticsGoogle(content?.deliveryNotes?.length, 'Order Details')
+      getDNoteViewAnalyticsGoogle(
+        content?.deliveryNotes?.length,
+        'Order Details'
+      )
     );
   };
 
@@ -84,7 +95,7 @@ const OrderTrackingDetailHeader = ({
       getInvoiceViewAnalyticsGoogle(content?.invoices?.length, 'Order Details')
     );
   };
-
+  
   const triggerExportFlyout = () => {
     setCustomState({
       key: 'exportFlyout',
@@ -101,12 +112,14 @@ const OrderTrackingDetailHeader = ({
     {
       condition: hasAIORights && areInvoicesAvailable,
       label: labels?.viewInvoices,
-      onClick: hasMultipleInvoices ? triggerInvoicesFlyout : handleDownloadInvoice,
+      onClick: hasMultipleInvoices
+        ? triggerInvoicesFlyout
+        : handleDownloadInvoice,
     },
     {
       condition: areReleaseTheOrderAvailable,
       label: labels?.releaseTheOrder,
-      onClick: () => null, // TODO: add Release action
+      onClick: () => setReleaseOrderShow(true),
     },
     {
       condition: hasOrderModificationRights,
@@ -175,6 +188,17 @@ const OrderTrackingDetailHeader = ({
         <OrderAcknowledgementCard content={content} config={config} />
         <ContactCard content={content} config={config} />
       </div>
+      <OrderReleaseModal
+        open={releaseOrderShow}
+        handleClose={() => setReleaseOrderShow(false)}
+        handleReleaseOrder={async () => {
+          const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag?OrderId=${id}`;
+          await usGet(url);
+        }}
+        orderLineDetails={config.actionLabels}
+        orderNo={id}
+        PONo={poNumber}
+      />
     </div>
   );
 };

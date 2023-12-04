@@ -29,7 +29,6 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  console.log(config.orderDetailEndpoint);
   const [apiResponse] = useGet(`${config.orderDetailEndpoint}/${id}`);
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
@@ -100,6 +99,7 @@ function OrdersTrackingDetail(props) {
                 hasAIORights={hasAIORights}
                 hasOrderModificationRights={hasOrderModificationRights}
                 openFilePdf={openFilePdf}
+                componentProps={componentProps}
               />
               <OrderTrackingDetailBody
                 content={content}

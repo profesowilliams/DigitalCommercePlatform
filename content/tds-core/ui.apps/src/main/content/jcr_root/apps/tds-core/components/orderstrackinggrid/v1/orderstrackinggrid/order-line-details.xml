@@ -92,6 +92,46 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Delivery Estimate Label"
                     name="./deliveryEstimate"/>
+                <title
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Title Label"
+                    name="./title"/>
+                <orderNoString
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Order No Label"
+                    name="./orderNoString"/>
+                <PONoString
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="PO No Label"
+                    name="./PONoString"/>
+                <upperText
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Upper Text Label"
+                    name="./upperText"/>
+                <lowerText
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Lower Text Label"
+                    name="./lowerText"/>
+                <cancelString
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Cancel Label"
+                    name="./cancelString"/>
+                <releaseOrderString
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Release Order Label"
+                    name="./releaseOrderString"/>
+                <releaseButtonLabel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Release Button Label"
+                    name="./releaseButtonLabel"/>
             </items>
         </orderLineDetailsLabels>
     </items>

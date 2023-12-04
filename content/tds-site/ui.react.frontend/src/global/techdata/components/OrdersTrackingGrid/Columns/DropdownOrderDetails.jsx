@@ -28,7 +28,9 @@ function DropdownOrderDetails({
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const noShippedItems = shippedItemsLeft === 0;
   const noNotShippedItems = notShippedItemsLeft === 0;
-
+  const PONo = data.customerPO;
+  const orderNo = data.id;
+  const shipCompleted = data.shipComplete;
   const tabsConfig = [
     {
       index: 0,
@@ -72,6 +74,9 @@ function DropdownOrderDetails({
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+          PONo={PONo}
+          orderNo={orderNo}
+          shipCompleted={shipCompleted}
         />
       ) : (
         isLoading && <LoaderIcon className="loadingIcon-rotate" />

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
@@ -8,8 +8,9 @@ import QuantityColumn from './Columns/QuantityColumn';
 import ItemColumn from './Columns/ItemColumn';
 import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
-import ActionColumn from './Columns/ActionColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
+import OrderReleaseModal from '../../Modals/OrderReleaseModal';
+import { usGet } from '../../../../../../utils/api';
 
 function NotShippedTabGrid({
   data,
@@ -17,6 +18,9 @@ function NotShippedTabGrid({
   hasOrderModificationRights,
   gridRef,
   rowsToGrayOutTDNameRef,
+  PONo,
+  orderNo,
+  shipCompleted,
 }) {
   const config = {
     ...gridProps,
@@ -29,6 +33,7 @@ function NotShippedTabGrid({
   };
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
+  const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -77,6 +82,12 @@ function NotShippedTabGrid({
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
   );
+
+  const handleReleaseOrder = async () => {
+    const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag?OrderId=${orderNo}`;
+    await usGet(url);
+  };
+
   const handleOrderModification = () => {
     setCustomState({
       key: 'orderModificationFlyout',
@@ -98,6 +109,16 @@ function NotShippedTabGrid({
         <span className="order-line-details__content__title-text">
           {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
         </span>
+        {shipCompleted && (
+          <button
+            className="order-line-details__content__release-button"
+            onClick={() => setReleaseOrderShow(true)}
+          >
+            {getDictionaryValueOrKey(
+              config?.orderLineDetails?.releaseButtonLabel
+            )}
+          </button>
+        )}
         {hasOrderModificationRights && (
           <button
             className="order-line-details__content__title-button"
@@ -118,6 +139,14 @@ function NotShippedTabGrid({
           gridRef={gridRef}
         />
       </div>
+      <OrderReleaseModal
+        open={releaseOrderShow}
+        handleClose={() => setReleaseOrderShow(false)}
+        handleReleaseOrder={handleReleaseOrder}
+        orderLineDetails={config?.orderLineDetails}
+        orderNo={orderNo}
+        PONo={PONo}
+      />
     </section>
   );
 }
