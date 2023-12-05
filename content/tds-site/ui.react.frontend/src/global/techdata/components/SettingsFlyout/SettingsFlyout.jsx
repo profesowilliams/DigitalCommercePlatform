@@ -12,6 +12,7 @@ import {
   SwitchOffHovered,
   SwitchOffActive,
 } from '../../../../fluentIcons/FluentIcons';
+import useGet from '../../hooks/useGet';
 
 const CustomSwitch = ({
   on,
@@ -53,12 +54,17 @@ const SettingsFlyout = ({
   subheaderReference,
   isTDSynnex = true,
   labels = {},
+  config,
 }) => {
   const settingsFlyoutConfig = useOrderTrackingStore((st) => st.settingsFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
   const [isSwitchHovered, setIsSwitchHovered] = useState(false);
   const [isSwitchPressed, setIsSwitchPressed] = useState(false);
   const [isSwitchOn, setIsSwitchOn] = useState(true);
+
+  const [apiResponse, isLoading, error] = useGet(
+    `${config.uiProactiveServiceDomain}/v1`
+  );
 
   const closeFlyout = () => {
     effects.setCustomState({
@@ -93,7 +99,7 @@ const SettingsFlyout = ({
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons settings">
       <button className="secondary" onClick={closeFlyout}>
-        {getDictionaryValueOrKey(labels?.cancel)}
+        {getDictionaryValueOrKey(labels?.cancelSettingsChange)}
       </button>
       <button disabled={false} className="primary" onClick={saveData}>
         {getDictionaryValueOrKey(labels?.save)}

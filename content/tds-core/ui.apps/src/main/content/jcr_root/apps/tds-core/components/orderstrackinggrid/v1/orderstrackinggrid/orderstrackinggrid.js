@@ -202,7 +202,11 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["orderModifyLabels"] = orderModifyLabels;
     }
 
-    const settingsFlyoutLabelsList = ["switchLabel", "save", "cancel"];
+    const settingsFlyoutLabelsList = [
+      "switchLabel",
+      "save",
+      "cancelSettingsChange",
+    ];
 
     settingsFlyoutLabelsList.map((property) => {
       settingsFlyoutLabels[property] = properties[property];
@@ -218,6 +222,9 @@ use(["../common/utils.js"], function (utils) {
 
     jsonObject["uiCommerceServiceDomain"] =
       this.serviceData.uiServiceDomain + `/ui-commerce`;
+
+    jsonObject["uiProactiveServiceDomain"] =
+      this.serviceData.uiServiceDomain + `/ui-proactive`;
     const endpoints = [
       "orderModifyEndpoint",
       "orderModifyChangeEndpoint",

@@ -92,6 +92,7 @@ const MainGridFlyouts = ({
       <SettingsFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
         labels={gridConfig.settingsFlyoutLabels}
+        config={gridConfig}
       />
     </>
   );

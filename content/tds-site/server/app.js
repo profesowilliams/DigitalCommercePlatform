@@ -8380,6 +8380,55 @@ app.get("/ui-commerce/v3/refinements", function (req, res) {
   }, 200);
 });
 
+app.get("/ui-proactive/v1", function (req, res) {
+  const response = [
+    {
+      type: "TDPACK",
+      destination: {
+        customerId: "325009",
+        userId: "2033643",
+        email: "adam.dobrzanski.additional@techdata.com",
+      },
+      site: "UK",
+      languageCode: "en-GB",
+    },
+    {
+      type: "OFD",
+      destination: {
+        customerId: "325009",
+        userId: "2033643",
+        email: "adam.dobrzanski.additional@techdata.com",
+      },
+      site: "UK",
+      languageCode: "en-GB",
+    },
+    {
+      type: "DELIVERED",
+      destination: {
+        customerId: "325009",
+        userId: "2033643",
+        email: "adam.dobrzanski.additional@techdata.com",
+      },
+      site: "UK",
+      languageCode: "en-GB",
+    },
+    {
+      type: "EXCEPTION",
+      destination: {
+        customerId: "325009",
+        userId: "2033643",
+        email: "adam.dobrzanski.additional@techdata.com",
+      },
+      site: "UK",
+      languageCode: "en-GB",
+    },
+  ];
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
+
 app.post("/pushAsset", function (req, res) {
   const { Name, Path, Size, Asset } = req.body;
   const bearerToken = req.headers.authorization;

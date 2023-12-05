@@ -67,10 +67,6 @@ function ExportFlyout({
     if (reportValue) {
       urlSearchParams.set('reportName', reportValue);
     } else {
-      const searchValue = search.current;
-      if (searchValue?.value) {
-        urlSearchParams.set(searchValue.field, searchValue.value);
-      }
       const sortValue = sort.current?.sortData?.[0];
       if (sortValue) {
         urlSearchParams.set('SortDirection', sortValue.sort);
@@ -82,6 +78,14 @@ function ExportFlyout({
           getDateValue(createdFromDate(defaultDateRange))
         );
         urlSearchParams.set('createdTo', getDateValue(new Date()));
+      }
+      const searchValue = search.current;
+      if (searchValue?.value) {
+        urlSearchParams.set(searchValue.field, searchValue.value);
+        urlSearchParams.set(
+          'createdFrom',
+          getDateValue(createdFromDate(90))
+        );
       }
 
       filters.current &&
