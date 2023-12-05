@@ -6720,7 +6720,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
           tdNumber: "7829683",
           mfrNumber: "XUB2793HS-B5",
           isEOL: false,
-          canTrackAndTrace: false,
+          canTrackAndTrace: true,
           unitPrice: 102.07,
           unitPriceFormatted: "102.07",
           lineDetails: [

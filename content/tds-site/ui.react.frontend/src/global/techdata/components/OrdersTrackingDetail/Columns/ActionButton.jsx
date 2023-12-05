@@ -71,7 +71,7 @@ const ActionsButton = ({
     (invoice) => invoice.canDownloadDocument
   );
 
-  const trackAndTraceAvailable = element.canTrackAndTrace;
+  const trackAndTraceAvailable = line?.canTrackAndTrace;
   const areDeliveryNotesAvailable =
     deliveryNotes?.length === 1 && deliveryNotes[0].canDownloadDocument;
   const areInvoicesAvailable =
