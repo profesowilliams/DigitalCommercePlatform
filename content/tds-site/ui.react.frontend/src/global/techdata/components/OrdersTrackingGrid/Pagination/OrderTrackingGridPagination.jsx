@@ -57,6 +57,7 @@ function OrderTrackingGridPagination(
     return null;
   }
 
+
   return (
     <div className="cmp-renewals__pagination--bottom">
       <div className="cmp-navigation">
@@ -89,7 +90,10 @@ function OrderTrackingGridPagination(
           <div className="cmp-navigation__actions-labels">
             <div className="cmp-input-underline">
               <input
-                style={{ maxWidth: '27px' }}
+                style={{
+                  width: `${pageNumber.toString().length || 1}ch`,
+                  minWidth: '40px',
+                }}
                 className={pageNumber.toString().length > 2 ? 'goSmall' : ''}
                 ref={pageInputRef}
                 type="number"
@@ -97,7 +101,7 @@ function OrderTrackingGridPagination(
                 onChange={handleInputChange}
                 onBlur={handleInputChange}
                 defaultValue={pageNumber}
-                maxLength={3}
+                maxLength={5}
                 key={Math.random()}
               />
             </div>
