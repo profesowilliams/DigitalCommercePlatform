@@ -10,8 +10,7 @@ const ActionsButton = ({
   element,
   index,
   config = {},
-  openFilePdf,
-  hasAIORights,
+  openFilePdf
 }) => {
   const iconStyle = {
     color: '#21314D',
@@ -157,7 +156,7 @@ const ActionsButton = ({
       onClick: handleDownloadDnote,
     },
     {
-      condition: hasAIORights && areInvoicesAvailable,
+      condition: areInvoicesAvailable,
       label: labels?.viewInvoices,
       onClick: hasMultipleInvoices
         ? triggerInvoicesFlyout
