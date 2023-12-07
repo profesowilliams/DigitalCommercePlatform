@@ -127,6 +127,8 @@ use(["../common/utils.js"], function (utils) {
       "cancelString",
       "releaseOrderString",
       "releaseButtonLabel",
+      "releaseSuccessText",
+      "releaseFailText",
     ];
 
     orderLineDetailsLabels.map((label) => {

@@ -495,4 +495,41 @@
     padding: 12px 20px 12px 20px;
     border-radius: 2px;
   }
+  &__alert-wrapper{
+    position: relative;
+    top: 206px;
+    left: 1200px;
+    display: inline;
+    &__red{
+      border-left-color: $dark-cherry;
+      background-color: $light-cherry;
+      border-left-width: 4px;
+      border-style: solid;
+      width: 448px;
+      height: 88px;
+    }
+    &__green{
+      border-left-color: $dark-forrest;
+      background-color: $light-forrest;
+      border-left-width: 4px;
+      border-style: solid;
+      width: 448px;
+      height: 88px;
+    }
+    &__text{
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 328px;
+      height: 48px;
+      float: left;
+    }
+    &__icon-symbol{
+      padding: 18px;
+      float: left;
+    }
+    &__icon-close{
+      padding: 18px;
+      float: right;
+    }
+  }
 }

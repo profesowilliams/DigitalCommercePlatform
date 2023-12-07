@@ -431,7 +431,17 @@
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Release Button Label"
-                                                name="./releaseButtonLabel"/>    
+                                                name="./releaseButtonLabel"/>
+                                            <releaseSuccessText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Release Success Text"
+                                                name="./releaseSuccessText"/>
+                                            <releaseFailText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Release Fail Text"
+                                                name="./releaseFailText"/>    
                                             <addNewItem
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

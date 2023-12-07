@@ -10,7 +10,8 @@ import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 import OrderReleaseModal from '../../Modals/OrderReleaseModal';
-import { usGet } from '../../../../../../utils/api';
+import { usPost } from '../../../../../../utils/api';
+import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 
 function NotShippedTabGrid({
   data,
@@ -34,6 +35,8 @@ function NotShippedTabGrid({
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [releaseSuccess, setReleaseSuccess] = useState(false);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -83,11 +86,6 @@ function NotShippedTabGrid({
     []
   );
 
-  const handleReleaseOrder = async () => {
-    const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag?OrderId=${orderNo}`;
-    await usGet(url);
-  };
-
   const handleOrderModification = () => {
     setCustomState({
       key: 'orderModificationFlyout',
@@ -103,6 +101,20 @@ function NotShippedTabGrid({
   const rowClassRules = {
     'gray-out-changing-rows': getRowClass,
   };
+  const handleReleaseOrder = async () => {
+    setReleaseOrderShow(false);
+      const params = {
+        OrderId: id
+      }
+      const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
+      const {content} = await usPost(url, params);
+      if(content?.ChangeDelFlag?.success){
+        setReleaseSuccess(true);
+      }else{
+        setReleaseSuccess(false);
+      }
+      setOpenAlert(true);
+  }
   return (
     <section>
       <div className="order-line-details__content__title">
@@ -146,6 +158,12 @@ function NotShippedTabGrid({
         orderLineDetails={config?.orderLineDetails}
         orderNo={orderNo}
         PONo={PONo}
+      />
+      <OrderReleaseAlertModal
+        open={openAlert}
+        handleClose={()=>{setOpenAlert(false)}}
+        orderLineDetails={config?.orderLineDetails}
+        releaseSuccess={releaseSuccess}
       />
     </section>
   );

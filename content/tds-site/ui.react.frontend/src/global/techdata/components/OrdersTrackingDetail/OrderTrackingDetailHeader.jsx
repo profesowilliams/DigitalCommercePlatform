@@ -16,7 +16,8 @@ import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
-import { usGet } from '../../../../utils/api';
+import { usPost } from '../../../../utils/api';
+import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -29,6 +30,8 @@ const OrderTrackingDetailHeader = ({
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [releaseSuccess, setReleaseSuccess] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
 
@@ -148,6 +151,23 @@ const OrderTrackingDetailHeader = ({
     );
   };
 
+  const handleReleaseOrder = async () => {
+    setReleaseOrderShow(false);
+    const params = {
+      OrderId: id
+    }
+      const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
+      const {content} = await usPost(url, params);
+      const {ChangeDelFlag} = content;
+      const {success} = ChangeDelFlag;
+      if(success){
+        setReleaseSuccess(true);
+      }else{
+        setReleaseSuccess(false);
+      }
+      setOpenAlert(true);
+  }
+
   return (
     <div className="cmp-orders-qp__config-grid">
       <div className="header-container">
@@ -191,13 +211,16 @@ const OrderTrackingDetailHeader = ({
       <OrderReleaseModal
         open={releaseOrderShow}
         handleClose={() => setReleaseOrderShow(false)}
-        handleReleaseOrder={async () => {
-          const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag?OrderId=${id}`;
-          await usGet(url);
-        }}
+        handleReleaseOrder={handleReleaseOrder}
         orderLineDetails={config.actionLabels}
         orderNo={id}
         PONo={poNumber}
+      />
+      <OrderReleaseAlertModal 
+        open={openAlert}
+        handleClose={()=>{setOpenAlert(false)}}
+        orderLineDetails={config.actionLabels}
+        releaseSuccess={releaseSuccess}
       />
     </div>
   );
