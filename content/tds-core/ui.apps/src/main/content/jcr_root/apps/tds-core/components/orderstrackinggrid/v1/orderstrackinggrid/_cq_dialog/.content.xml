@@ -941,7 +941,7 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
 										<items jcr:primaryType="nt:unstructured">
-                                            <swithLabel
+                                            <switchLabel
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Switch Label"
@@ -956,6 +956,67 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Cancel"
 												name="./cancelSettingsChange"/>       
+                                            <notificationsMessages
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Notifications messages label"
+												name="./notificationsMessages"/>    
+                                            <notificationTypes
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Notification types label"
+												name="./notificationTypes"/>    
+                                            <notificationEmails
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Notification email(s)"
+												name="./notificationEmails"/>  
+                                            <rangeIntouchOnly
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Intouch ONLY label"
+												name="./rangeIntouchOnly"/> 
+                                            <rangeTdSynnex
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="All TD Synnex"
+												name="./rangeTdSynnex"/> 
+                                            <shippedFromTDSWarehouse
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Shipped from TDS warehouse label"
+												name="./shippedFromTDSWarehouse"/> 
+                                            <outForDelivery
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Out For Delivery label"
+												name="./outForDelivery"/> 
+                                            <delivered
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Delivered label"
+												name="./delivered"/> 
+                                            <deliveryException
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Delivery Exception label"
+												name="./deliveryException"/> 
+                                            <defaultEmailAddress
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Default emaill address label"
+												name="./defaultEmailAddress"/> 
+                                            <addAnotherEmail
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Add another email label"
+												name="./addAnotherEmail"/> 
+                                            <forInternalUseOnly
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="For Internal Use Only label"
+												name="./forInternalUseOnly"/> 
+
                                         </items>
 									</column>
 								</items>

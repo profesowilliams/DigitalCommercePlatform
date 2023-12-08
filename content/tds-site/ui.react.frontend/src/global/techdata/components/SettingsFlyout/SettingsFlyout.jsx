@@ -2,53 +2,13 @@ import React, { useState, useEffect } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
-import {
-  SwitchOn,
-  SwitchOnHovered,
-  SwitchOnActive,
-  SwitchOnDisabled,
-  SwitchOffDisabled,
-  SwitchOff,
-  SwitchOffHovered,
-  SwitchOffActive,
-} from '../../../../fluentIcons/FluentIcons';
+
+import CollapsibleSection from './CollapsibleSection';
 import useGet from '../../hooks/useGet';
-
-const CustomSwitch = ({
-  on,
-  hovered = false,
-  active = false,
-  disabled = false,
-}) => {
-  const stateMap = {
-    on: {
-      disabled: <SwitchOnDisabled />,
-      active: <SwitchOnActive />,
-      hovered: <SwitchOnHovered />,
-      default: <SwitchOn />,
-    },
-    off: {
-      disabled: <SwitchOffDisabled />,
-      active: <SwitchOffActive />,
-      hovered: <SwitchOffHovered />,
-      default: <SwitchOff />,
-    },
-  };
-
-  const currentType = on ? 'on' : 'off';
-  const component =
-    stateMap[currentType][
-      disabled
-        ? 'disabled'
-        : active
-        ? 'active'
-        : hovered
-        ? 'hovered'
-        : 'default'
-    ];
-
-  return component;
-};
+import MessagesForm from './MessagesForm';
+import TypesForm from './TypesForm';
+import EmailsForm from './EmailsForm';
+import CustomSwitch from './CustomSwitch';
 
 const SettingsFlyout = ({
   subheaderReference,
@@ -107,6 +67,47 @@ const SettingsFlyout = ({
     </div>
   );
 
+  const messageOptions = [
+    { key: 'InTouch', label: getDictionaryValueOrKey(labels.rangeIntouchOnly) },
+    { key: 'All', label: getDictionaryValueOrKey(labels.rangeTdSynnex) },
+  ];
+
+  const typeOptions = [
+    {
+      key: 'TDPACK',
+      label: getDictionaryValueOrKey(labels.shippedFromTDSWarehouse),
+    },
+    { key: 'OFD', label: getDictionaryValueOrKey(labels.outForDelivery) },
+    { key: 'DELIVERED', label: getDictionaryValueOrKey(labels.delivered) },
+    {
+      key: 'EXCEPTION',
+      label: getDictionaryValueOrKey(labels.deliveryException),
+    },
+  ];
+
+  const emailOptions = [
+    { key: 'email', label: 'emal@email.com' },
+    { key: 'additionalEmail', label: 'additionalEmail@email.com' },
+  ];
+
+  const collapsibleSections = [
+    {
+      title: getDictionaryValueOrKey(labels.notificationMessages),
+      content: <MessagesForm options={messageOptions} />,
+      expanded: true,
+    },
+    {
+      title: getDictionaryValueOrKey(labels.notificationTypes),
+      content: <TypesForm options={typeOptions} />,
+      expanded: true,
+    },
+    {
+      title: getDictionaryValueOrKey(labels.notificationEmails),
+      content: <EmailsForm options={emailOptions} />,
+      expanded: true,
+    },
+  ];
+
   return (
     <BaseFlyout
       open={settingsFlyoutConfig?.show}
@@ -141,6 +142,16 @@ const SettingsFlyout = ({
               disabled={disabled}
             />
           </div>
+        </div>
+        <div className="collapsible-sections-wrapper">
+          {collapsibleSections.map((section, index) => (
+            <CollapsibleSection
+              title={section.title}
+              content={section.content}
+              expanded={section.expanded}
+              key={index}
+            />
+          ))}
         </div>
       </section>
     </BaseFlyout>

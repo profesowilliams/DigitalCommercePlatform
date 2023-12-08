@@ -80,12 +80,9 @@ function ExportFlyout({
         urlSearchParams.set('createdTo', getDateValue(new Date()));
       }
       const searchValue = search.current;
-      if (searchValue?.value) {
+      if (searchValue?.field) {
         urlSearchParams.set(searchValue.field, searchValue.value);
-        urlSearchParams.set(
-          'createdFrom',
-          getDateValue(createdFromDate(90))
-        );
+        urlSearchParams.set('createdFrom', getDateValue(createdFromDate(90)));
       }
 
       filters.current &&
@@ -97,6 +94,10 @@ function ExportFlyout({
               }
               let key = e.split('=');
               urlSearchParams.set(key[0], key[1]);
+              urlSearchParams.set(
+                'createdFrom',
+                getDateValue(createdFromDate(90))
+              );
             });
           } else if (filter[1]) {
             urlSearchParams.set(filter[0], filter[1]);

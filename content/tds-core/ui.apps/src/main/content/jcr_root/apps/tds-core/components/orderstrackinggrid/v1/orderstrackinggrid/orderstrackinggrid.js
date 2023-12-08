@@ -208,6 +208,18 @@ use(["../common/utils.js"], function (utils) {
       "switchLabel",
       "save",
       "cancelSettingsChange",
+      "notificationMessages",
+      "notificationTypes",
+      "notificationEmails",
+      "rangeIntouchOnly",
+      "rangeTdSynnex",
+      "shippedFromTDSWarehouse",
+      "outForDelivery",
+      "delivered",
+      "deliveryException",
+      "defaultEmailAddress",
+      "addAnotherEmail",
+      "forInternalUseOnly",
     ];
 
     settingsFlyoutLabelsList.map((property) => {

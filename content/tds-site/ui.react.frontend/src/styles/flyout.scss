@@ -340,6 +340,58 @@ $flyout-small-height-formax: 779px;
       width: 38px;
       justify-content: left;
       cursor: pointer;
+
+    }
+  }
+  .collapsible-sections-wrapper {
+    margin-top: 20px;
+    .collapsible-section {
+      padding: 20px 0;
+      margin: 0 20px;
+      border-bottom: 1px solid $td-neutral-gray-2;
+      color: $brand-green--dark;
+
+      h3 {
+        font-family: Arial;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        padding-top: 0;
+        color: $brand-charcoal;
+        cursor: pointer;
+
+        &:before {
+          content: "\f054";
+          @include font-awesome;
+          padding-right: 31px;
+          font-weight: 900;
+        }
+
+        &.active {
+          &:before {
+            content: "\f078";
+            padding-right: 25px;
+          }
+        }
+      }
+    }
+    .messages-form {
+      padding: 30px 0 0 46px;
+    }
+    .types-form {
+      padding: 30px 0 0 46px;
+    }
+    .emails-form {
+      padding: 30px 0 0 46px;
+      color: $brand-charcoal;
+
+      .default-email {
+        font-size: 12px;
+        margin: 0;
+        color: gray;
+        padding-left: 32px;
+
+      }
     }
   }
 }

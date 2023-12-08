@@ -1,19 +1,12 @@
 <!-- @format -->
 
 <div data-observe-mutation>
-  <div
-    data-component="OrdersTrackingGrid"
-    data-cmp-type="react"
-    className="cmp-orders-tracking-grid"
-  ></div>
+  <div data-component="OrdersTrackingGrid" data-cmp-type="react" className="cmp-orders-tracking-grid"></div>
 </div>
 <script>
-  const renewalsGridDom = document.querySelector(
-    "[data-component='OrdersTrackingGrid']"
-  );
+  const renewalsGridDom = document.querySelector("[data-component='OrdersTrackingGrid']");
   const AEM_DATA = {
-    detailUrl:
-      "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
+    detailUrl: "/content/tds-site/uk/en/dcp/orders-tracking/order-tracking-details",
     menuCopy: "Copy",
     reportLabels: {
       openOrdersLabel: "Open Orders",
@@ -99,8 +92,8 @@
       title: "Release order",
       orderNoString: "Order Nº",
       PONoString: "PO Nº",
-      upperText: "Releasing your order will remove the \"ship complete\" block from your order and cannot be undone.",
-      lowerText: "Select \"Release Order\" to allow items to ship as they become available.",
+      upperText: 'Releasing your order will remove the "ship complete" block from your order and cannot be undone.',
+      lowerText: 'Select "Release Order" to allow items to ship as they become available.',
       cancelString: "Cancel",
       releaseOrderString: "Release Order",
       releaseButtonLabel: "Release the order",
@@ -108,24 +101,24 @@
       releaseFailText: "It wasn't possible to complete your request at this time. Please try again later.",
     },
     orderLineDetailsShippedColumnLabels: {
-      dropdownArrow: '',
-      shipDate: 'SHIP DATE',
-      dnote: 'D-NOTE',
-      invoice: 'INVOICE',
-      value: 'VALUE',
-      qty: 'QTY',
-      track: '',
+      dropdownArrow: "",
+      shipDate: "SHIP DATE",
+      dnote: "D-NOTE",
+      invoice: "INVOICE",
+      value: "VALUE",
+      qty: "QTY",
+      track: "",
     },
     orderLineDetailsNotShippedColumnLabels: {
-      lineNumber: 'LINE',
-      item: 'ITEM',
-      pnsku: 'PN/SKU',
-      nqty: 'QTY',
-      deliveryEstimate: 'DELIVERY ESTIMATE',
+      lineNumber: "LINE",
+      item: "ITEM",
+      pnsku: "PN/SKU",
+      nqty: "QTY",
+      deliveryEstimate: "DELIVERY ESTIMATE",
     },
     searchOptionsList: [],
     searchEnterLabel: "Enter",
-    searchLabels:{
+    searchLabels: {
       orderNo: "Order Nº",
       dnoteNo: "D-note №",
       invoiceNo: "Invoice №",
@@ -137,15 +130,13 @@
     uiServiceEndPoint: "http://localhost:3000/ui-commerce/v2/orders",
     uiServiceEndPointForDetails: "http://localhost:3000/ui-commerce/v2/order",
     ordersReportEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrders",
-    ordersReportCountEndpoint:
-      "http://localhost:3000/ui-commerce/v2/ReportOrdersCount",
+    ordersReportCountEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersCount",
     exportAllOrderLinesEndpoint: "http://localhost:3000/ui-commerce/v2/OrdersExport",
     exportLinesWithSerialNumbersOnlyEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersExport",
     orderModifyEndpoint: "http://localhost:3000/ui-commerce/v2/OrderModify",
     orderModifyChangeEndpoint: "http://localhost:3000/ui-commerce/v2/OrderModifyChange",
     shopURL: "https://shop.cstenet.com/renewals",
-    agGridLicenseKey:
-      "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
+    agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
     itemsPerPage: "25",
     paginationStyle: "scroll",
     options: {
@@ -188,30 +179,22 @@
     displayCurrencyName: true,
     orderingFromDashboard: {
       showOrderingIcon: true,
-      placeOrderDialogTitle:
-        "To continue placing your order for ({enduser-companyname}) please provide the following information.",
+      placeOrderDialogTitle: "To continue placing your order for ({enduser-companyname}) please provide the following information.",
       termsAndConditions: "I have read and accept Terms & Conditions",
-      termsAndConditionsLink:
-        "https://www.techdata.com/content/visitor/abouttd/conditions.aspx",
-      successSubmission:
-        "Your order has been successfully submitted for processing. You will receive an email once processing is complete",
-      failedSubmission:
-        "Please try again. If the error persists please contact us at ({email})",
-      noResponseMessage:
-        "We are sorry, your order could not be processed, please try again later.",
+      termsAndConditionsLink: "https://www.techdata.com/content/visitor/abouttd/conditions.aspx",
+      successSubmission: "Your order has been successfully submitted for processing. You will receive an email once processing is complete",
+      failedSubmission: "Please try again. If the error persists please contact us at ({email})",
+      noResponseMessage: "We are sorry, your order could not be processed, please try again later.",
     },
     hideExportOption: false,
     hideCopyHeaderOption: false,
     searchResultsError: {
       noResultsTitle: "No Results Found",
-      noResultsDescription:
-        "There are no results for your search criteria. Adjust your search and filter choices to improve results.",
-      noResultsImage:
-        "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",
+      noResultsDescription: "There are no results for your search criteria. Adjust your search and filter choices to improve results.",
+      noResultsImage: "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",
       noDataTitle: "No Results Found",
       noDataDescription: "There are no results for your current search. Adjust search criteria to improve results.",
-      noDataImage:
-        "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",      
+      noDataImage: "/content/dam/tds-site/tds-site-shared/error-icons/search-error-tds.png",
     },
     defaultSearchDateRange: "30",
     multiple: "multiple",
@@ -236,10 +219,22 @@
       cancelNewItem: "Cancel",
     },
     settingsFlyoutLabels: {
-      switchLabel: 'Notification options selected here apply to orders shipped via DHL, TNT, and JEP.',
+      switchLabel: "Notification options selected here apply to orders shipped via DHL, TNT, and JEP.",
       cancelSettingsChange: "Cancel",
-      save: "Save"
-    },
+      save: "Save",
+      notificationMessages: "Notifications messages",
+      notificationTypes: "Notification types",
+      notificationEmails: "Notification email(s)",
+      rangeIntouchOnly: "All orders placed by my InTouch account via InTouch ONLY",
+      rangeTdSynnex: "All orders placed against my TD SYNNEX account (InTouch, Manual, EDI/XML etc.)",
+      shippedFromTDSWarehouse: "Shipped from TDSynnex warehouse",
+      outForDelivery : "Out for delivery",
+      delivered: "Delivered",
+      deliveryException: "Delivery exceptions",
+      defaultEmailAddress: "Default Email Address",
+      addAnotherEmail: "Add another email address",
+      forInternalUseOnly: "For Internal use only. Communications may contain sensitive information."
+     },
     dNotesFlyout: {
       title: "D-notes",
       description: "Click a link to view or select items to download.",
@@ -281,7 +276,7 @@
       description: "Send to",
       secondaryDescription: "Details to include",
       button: "Export",
-      exportSuccessMessage:"Your .xlsx export has been created successfully."
+      exportSuccessMessage: "Your .xlsx export has been created successfully.",
     },
     exportOptionsList: [{ label: "Exel (.xlxs)", key: "exportOptionsListKey" }],
     exportSecondaryOptionsList: [
@@ -293,24 +288,22 @@
         accordionLabel: "My custom filter",
         filterField: "InvoiceId",
         filterOptionsValues: [
-          {filterOptionLabel: "Six", filterOptionKey: "666"},
-          {filterOptionLabel: "Five", filterOptionKey: "555"},
-          {filterOptionLabel: "Four", filterOptionKey: "444"},
-      ]
+          { filterOptionLabel: "Six", filterOptionKey: "666" },
+          { filterOptionLabel: "Five", filterOptionKey: "555" },
+          { filterOptionLabel: "Four", filterOptionKey: "444" },
+        ],
       },
       {
         accordionLabel: "My custom filter1",
         filterField: "IdType",
         filterOptionsValues: [
-          {filterOptionLabel: "Three", filterOptionKey: "333"},
-          {filterOptionLabel: "Two", filterOptionKey: "222"},
-          {filterOptionLabel: "One", filterOptionKey: "111"},
-      ]
+          { filterOptionLabel: "Three", filterOptionKey: "333" },
+          { filterOptionLabel: "Two", filterOptionKey: "222" },
+          { filterOptionLabel: "One", filterOptionKey: "111" },
+        ],
       },
     ],
-    dateOptionsList: [
-      {label: "My custom date", key: "mock"},
-  ],
+    dateOptionsList: [{ label: "My custom date", key: "mock" }],
     filterLabels: {
       filterType: "static",
       startLabel: "Start",
@@ -349,9 +342,9 @@
       dateFormat: "MM/DD/YYYY",
     },
     noAccessProps: {
-    noAccessTitle: "Access permisions needed",
-    noAccessMessage: "Looks like your credentials don't include this area. If you feel this is a mistake, please contact your administrator to request a change.",
-    noAccessBack: "Go back",
+      noAccessTitle: "Access permisions needed",
+      noAccessMessage: "Looks like your credentials don't include this area. If you feel this is a mistake, please contact your administrator to request a change.",
+      noAccessBack: "Go back",
     },
     analyticsCategories: {
       sort: "Sort",
