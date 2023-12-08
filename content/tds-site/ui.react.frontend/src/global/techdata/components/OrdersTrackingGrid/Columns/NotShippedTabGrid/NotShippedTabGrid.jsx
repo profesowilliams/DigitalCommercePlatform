@@ -90,7 +90,7 @@ function NotShippedTabGrid({
     setCustomState({
       key: 'orderModificationFlyout',
       value: {
-        data: {},
+        data: null,
         id: orderNo,
         show: true
       },
