@@ -89,7 +89,11 @@ function NotShippedTabGrid({
   const handleOrderModification = () => {
     setCustomState({
       key: 'orderModificationFlyout',
-      value: { data: {}, show: true },
+      value: {
+        data: {},
+        id: orderNo,
+        show: true
+      },
     });
   };
   function getRowClass({ node }) {

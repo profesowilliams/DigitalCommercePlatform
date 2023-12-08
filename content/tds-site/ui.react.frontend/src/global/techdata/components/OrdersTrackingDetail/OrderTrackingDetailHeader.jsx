@@ -46,7 +46,11 @@ const OrderTrackingDetailHeader = ({
   const handleOrderModification = () => {
     setCustomState({
       key: 'orderModificationFlyout',
-      value: { data: {}, show: true },
+      value: {
+        data: {},
+        id,
+        show: true
+      },
     });
   };
 

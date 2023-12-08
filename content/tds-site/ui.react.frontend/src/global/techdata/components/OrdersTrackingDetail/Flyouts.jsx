@@ -13,7 +13,6 @@ const Flyouts = ({
   openFilePdf,
   config,
   hasAIORights,
-  content,
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
@@ -64,17 +63,16 @@ const Flyouts = ({
         }
         hasAIORights={hasAIORights}
       />
-      {content && (
-        <OrderModificationFlyout
-          subheaderReference={document.querySelector('.subheader > div > div')}
-          content={content}
-          labels={config?.orderModifyLabels}
-          config={config}
-          gridRef={gridRef}
-          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-          userData={userData}
-        />
-      )}
+      <OrderModificationFlyout
+        store={useOrderTrackingStore}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        labels={config?.orderModifyLabels}
+        gridConfig={config}
+        gridRef={gridRef}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        userData={userData}
+        orderModificationFlyout={config?.orderModificationFlyout}
+      />
       <ExportFlyout
         store={useOrderTrackingStore}
         componentProp={config}

@@ -15,7 +15,6 @@ const MainGridFlyouts = ({
   downloadFileBlob,
   analyticsCategories,
   onQueryChanged,
-  apiResponse,
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
@@ -81,13 +80,14 @@ const MainGridFlyouts = ({
         resetReports={resetReports}
       />
       <OrderModificationFlyout
+        store={useOrderTrackingStore}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        content={apiResponse?.content}
         labels={gridConfig.orderModifyLabels}
-        config={gridConfig}
+        gridConfig={gridConfig}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
+        orderModificationFlyout={gridConfig.orderModificationFlyout}
       />
       <SettingsFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
