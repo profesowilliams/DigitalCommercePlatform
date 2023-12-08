@@ -209,19 +209,13 @@
       &.ag-full-width-row.ag-row-position-absolute.ag-row-last.ag-after-created{
         background-color: $brand-white !important;
         border-bottom: 1px solid $brand-black;
+        border-top: 1px solid $brand-black ;
         &.ag-row-hover {
           background-color: $brand-white !important;
         }
       }
-      &.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-row-first.ag-after-created {
-        border-bottom: 1px solid $brand-black;
-      }
     } 
-    .ag-row.ag-row-group.ag-row-position-absolute.ag-row-first.ag-after-created.ag-row-focus.ag-row-group-expanded,
-    .ag-body-viewport.ag-layout-auto-height.ag-row-no-animation {
-      border-bottom: 1px solid $brand-black;
-    }
-    .ag-row-odd.ag-row-no-focus.ag-row.ag-row-level-0.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-after-created {
+    .ag-row.ag-row-level-0.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-after-created {
       border-bottom: 1px solid $brand-black;
     }
   }
