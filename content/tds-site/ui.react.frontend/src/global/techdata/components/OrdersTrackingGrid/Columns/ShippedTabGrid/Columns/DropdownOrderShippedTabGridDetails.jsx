@@ -92,10 +92,6 @@ function DropdownOrderShippedTabGridDetails({ data }) {
     );
   };
 
-  return (
-    <div className="order-line-details">
-      {data && <ProductTable data={data} />}
-    </div>
-  );
+  return <div>{data && <ProductTable data={data} />}</div>;
 }
 export default DropdownOrderShippedTabGridDetails;

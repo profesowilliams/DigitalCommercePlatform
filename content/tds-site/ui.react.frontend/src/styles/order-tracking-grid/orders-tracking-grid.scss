@@ -192,6 +192,9 @@
   .cmp-base-grid .cmp-grid.ag-theme-alpine .ag-root.ag-unselectable.ag-layout-auto-height {
     overflow-y: overlay !important;
   }
+  .ag-row.ag-row-level-0.ag-row-group.ag-row-position-absolute.ag-after-created.ag-row-group-expanded {
+    border-bottom: 1px solid $td-neutral-gray;
+  }
   .ag-row-group-expanded{
     background-color: $td-neutral-gray !important;
   }
@@ -208,19 +211,31 @@
     .ag-row-no-focus.ag-row {
       &.ag-full-width-row.ag-row-position-absolute.ag-row-last.ag-after-created{
         background-color: $brand-white !important;
-        border-bottom: 1px solid $brand-black;
-        border-top: 1px solid $brand-black ;
+        border-bottom: 1px solid $brand-text-lightgray;
+        border-top: 1px solid $brand-text-lightgray ;
         &.ag-row-hover {
           background-color: $brand-white !important;
         }
       }
     } 
     .ag-row.ag-row-level-0.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-after-created {
-      border-bottom: 1px solid $brand-black;
+      border-bottom: 1px solid $brand-text-lightgray;
     }
   }
 }
 .order-line-details {
+  .ag-react-container {
+    background-color: $brand-white;
+    padding-bottom: 0;
+  }
+  .ag-row.ag-row-level-0.ag-row-group.ag-row-position-absolute.ag-after-created.ag-row-group-expanded {
+    border-bottom: 1px solid $brand-white;
+  }
+  .ag-row-no-focus.ag-row.ag-full-width-row.ag-row-position-absolute.ag-after-created,
+  .ag-row.ag-full-width-row.ag-row-position-absolute.ag-after-created.ag-full-width-focus.ag-row-focus {
+    border-bottom: 1px solid $brand-text-lightgray;
+  }
+
   // Enable vertical scrollbar in NotShipped inner grid
   .ag-cell-label-container .ag-header-cell-label {
     align-self: flex-end;
@@ -400,6 +415,7 @@
         flex-direction: column;
         justify-content: center;
         height: 73px;
+        border-bottom: 1px solid $brand-text-lightgray;
       }
       &__separateLineMultiple {
         display: flex;
