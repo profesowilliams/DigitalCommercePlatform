@@ -108,8 +108,8 @@ function NotShippedTabGrid({
   const handleReleaseOrder = async () => {
     setReleaseOrderShow(false);
       const params = {
-        OrderId: id
-      }
+        OrderId: orderNo
+      };
       const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
       const {content} = await usPost(url, params);
       if(content?.ChangeDelFlag?.success){
@@ -125,26 +125,28 @@ function NotShippedTabGrid({
         <span className="order-line-details__content__title-text">
           {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
         </span>
-        {shipCompleted && (
-          <button
-            className="order-line-details__content__release-button"
-            onClick={() => setReleaseOrderShow(true)}
-          >
-            {getDictionaryValueOrKey(
-              config?.orderLineDetails?.releaseButtonLabel
-            )}
-          </button>
-        )}
-        {hasOrderModificationRights && (
-          <button
-            className="order-line-details__content__title-button"
-            onClick={handleOrderModification}
-          >
-            {getDictionaryValueOrKey(
-              config?.orderLineDetails?.modifyEligibleItemsLabel
-            )}
-          </button>
-        )}
+        <span>
+          {
+            shipCompleted && <button
+              className="order-line-details__content__release-button"
+              onClick={() => setReleaseOrderShow(true)}
+            >
+              {getDictionaryValueOrKey(
+                config?.orderLineDetails?.releaseButtonLabel
+              )}
+            </button>
+          }
+          {
+            hasOrderModificationRights && <button
+              className="order-line-details__content__title-button"
+              onClick={handleOrderModification}
+            >
+              {getDictionaryValueOrKey(
+                config?.orderLineDetails?.modifyEligibleItemsLabel
+              )}
+            </button>
+          }
+        </span>
       </div>
       <div>
         <Grid
@@ -165,7 +167,9 @@ function NotShippedTabGrid({
       />
       <OrderReleaseAlertModal
         open={openAlert}
-        handleClose={()=>{setOpenAlert(false)}}
+        handleClose={() => {
+          setOpenAlert(false);
+        }}
         orderLineDetails={config?.orderLineDetails}
         releaseSuccess={releaseSuccess}
       />

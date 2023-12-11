@@ -31,6 +31,7 @@ function DropdownOrderDetails({
   const PONo = data.customerPO;
   const orderNo = data.id;
   const shipCompleted = data.shipComplete;
+  const isModifiable = hasOrderModificationRights && data?.isModifiable;
   const tabsConfig = [
     {
       index: 0,
@@ -71,7 +72,7 @@ function DropdownOrderDetails({
         <NotShippedTabGrid
           data={apiResponse?.content?.notShipped}
           gridProps={aemConfig}
-          hasOrderModificationRights={hasOrderModificationRights}
+          hasOrderModificationRights={isModifiable}
           gridRef={gridRef}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           PONo={PONo}

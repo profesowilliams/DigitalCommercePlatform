@@ -60,6 +60,7 @@ const OrderTrackingDetailHeader = ({
   const areInvoicesAvailable = content?.invoices?.length > 0;
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = content.serialsAny === true;
+  const isModifiable = hasOrderModificationRights && content?.isModifiable === true;
   const id = content.orderNumber;
   const poNumber = content.customerPO;
   const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
@@ -129,7 +130,7 @@ const OrderTrackingDetailHeader = ({
       onClick: () => setReleaseOrderShow(true),
     },
     {
-      condition: hasOrderModificationRights,
+      condition: isModifiable,
       label: labels?.actionModifyOrder,
       onClick: handleOrderModification,
     },
@@ -162,11 +163,9 @@ const OrderTrackingDetailHeader = ({
     }
       const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
       const {content} = await usPost(url, params);
-      const {ChangeDelFlag} = content;
-      const {success} = ChangeDelFlag;
-      if(success){
+      if (content?.ChangeDelFlag?.success) {
         setReleaseSuccess(true);
-      }else{
+      } else {
         setReleaseSuccess(false);
       }
       setOpenAlert(true);

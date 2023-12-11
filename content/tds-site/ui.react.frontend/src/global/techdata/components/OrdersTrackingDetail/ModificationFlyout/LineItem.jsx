@@ -85,7 +85,7 @@ const LineItem = ({ item, index, onChange, labels }) => {
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({item.unitPriceCurrency})
+          {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency})
         </p>
         <p>{(currentValue * item.unitPrice).toFixed(2)}</p>
       </div>
