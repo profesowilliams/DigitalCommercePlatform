@@ -449,6 +449,7 @@
     }
     &.cmp-grid.ag-theme-alpine .ag-header {
       border-top: none !important;
+      border-bottom: 3px solid $brand-charcoal !important;
     }
     &.ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport{
         min-height: fit-content !important;
