@@ -1011,6 +1011,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Add another email label"
 												name="./addAnotherEmail"/> 
+                                            <newEmailAddress
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="New email address label"
+												name="./newEmailAddress"/> 
                                             <forInternalUseOnly
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

@@ -219,6 +219,7 @@ use(["../common/utils.js"], function (utils) {
       "deliveryException",
       "defaultEmailAddress",
       "addAnotherEmail",
+      "newEmailAddress",
       "forInternalUseOnly",
     ];
 

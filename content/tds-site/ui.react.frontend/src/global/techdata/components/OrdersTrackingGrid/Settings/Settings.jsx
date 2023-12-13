@@ -3,13 +3,13 @@ import { SettingsIcon } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
-const Settings = () => {
+const Settings = ({ settings }) => {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
 
   const triggerSettingsFlyout = () => {
     setCustomState({
       key: 'settingsFlyout',
-      value: { show: true },
+      value: { show: true, data: settings },
     });
   };
   const isSettingsHovered = useState(false);

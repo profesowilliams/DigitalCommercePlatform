@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 import CollapsibleSection from './CollapsibleSection';
-import useGet from '../../hooks/useGet';
 import MessagesForm from './MessagesForm';
 import TypesForm from './TypesForm';
 import EmailsForm from './EmailsForm';
@@ -18,13 +17,7 @@ const SettingsFlyout = ({
 }) => {
   const settingsFlyoutConfig = useOrderTrackingStore((st) => st.settingsFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
-  const [isSwitchHovered, setIsSwitchHovered] = useState(false);
-  const [isSwitchPressed, setIsSwitchPressed] = useState(false);
   const [isSwitchOn, setIsSwitchOn] = useState(true);
-
-  const [apiResponse, isLoading, error] = useGet(
-    `${config.uiProactiveServiceDomain}/v1`
-  );
 
   const closeFlyout = () => {
     effects.setCustomState({
@@ -39,21 +32,8 @@ const SettingsFlyout = ({
     closeFlyout();
   };
 
-  const handleSwitchMouseDown = () => {
-    setIsSwitchPressed(true);
-  };
-
-  const handleSwitchMouseUp = () => {
-    setIsSwitchPressed(false);
-    setIsSwitchOn(!isSwitchOn);
-  };
-
-  const handleSwitchMouseOver = () => {
-    setIsSwitchHovered(true);
-  };
-
-  const handleSwitchMouseLeave = () => {
-    setIsSwitchHovered(false);
+  const handleSwitchChange = () => {
+    setIsSwitchOn((prevState) => !prevState);
   };
 
   const buttonsSection = (
@@ -103,7 +83,7 @@ const SettingsFlyout = ({
     },
     {
       title: getDictionaryValueOrKey(labels.notificationEmails),
-      content: <EmailsForm options={emailOptions} />,
+      content: <EmailsForm options={emailOptions} labels={labels} />,
       expanded: true,
     },
   ];
@@ -128,31 +108,26 @@ const SettingsFlyout = ({
           <p className="switch-label">
             {getDictionaryValueOrKey(labels?.switchLabel)}
           </p>
-          <div
-            className="switch-icon-wrapper"
-            onMouseDown={handleSwitchMouseDown}
-            onMouseUp={handleSwitchMouseUp}
-            onMouseOver={handleSwitchMouseOver}
-            onMouseLeave={handleSwitchMouseLeave}
-          >
+          <div className="switch-icon-wrapper">
             <CustomSwitch
-              on={isSwitchOn}
-              active={isSwitchPressed}
-              hovered={isSwitchHovered}
+              checked={isSwitchOn}
+              onChange={handleSwitchChange}
               disabled={disabled}
             />
           </div>
         </div>
-        <div className="collapsible-sections-wrapper">
-          {collapsibleSections.map((section, index) => (
-            <CollapsibleSection
-              title={section.title}
-              content={section.content}
-              expanded={section.expanded}
-              key={index}
-            />
-          ))}
-        </div>
+        {isSwitchOn && (
+          <div className="collapsible-sections-wrapper">
+            {collapsibleSections.map((section, index) => (
+              <CollapsibleSection
+                title={section.title}
+                content={section.content}
+                expanded={section.expanded}
+                key={index}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </BaseFlyout>
   );

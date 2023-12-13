@@ -20,6 +20,7 @@ import {
   getLocalStorageData,
 } from '../utils/gridUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import useGet from '../../../hooks/useGet';
 
 function MainGridHeader({
   onQueryChanged,
@@ -125,6 +126,10 @@ function MainGridHeader({
     onQueryChanged({ onSearchAction: true });
   };
 
+  const [apiResponse, loading, error] = useGet(
+    `${gridConfig.uiProactiveServiceDomain}/v1`
+  );
+
   const rightComponents = [
     ...(pill
       ? [
@@ -159,8 +164,9 @@ function MainGridHeader({
       reportOptions={reportOptions}
     />,
     <VerticalSeparator />,
-    <Settings />,
-    <VerticalSeparator />,
+    ...(apiResponse
+      ? [<Settings settings={apiResponse} />, <VerticalSeparator />]
+      : []),
     <OrderExport />,
   ];
   const leftComponents = [

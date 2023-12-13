@@ -9174,48 +9174,20 @@ app.get("/ui-commerce/v3/refinements", function (req, res) {
 });
 
 app.get("/ui-proactive/v1", function (req, res) {
-  const response = [
-    {
-      type: "TDPACK",
-      destination: {
-        customerId: "325009",
-        userId: "2033643",
-        email: "adam.dobrzanski.additional@techdata.com",
-      },
-      site: "UK",
-      languageCode: "en-GB",
+  const response = {
+    active: false,
+    types: ["TDPACK", "OFD", "DELIVERED", "EXCEPTION"],
+    range: "Intouch",
+    destination: {
+      customerId: "325009",
+      userId: "2033643",
+      email: "adam.dobrzanski@techdata.com",
     },
-    {
-      type: "OFD",
-      destination: {
-        customerId: "325009",
-        userId: "2033643",
-        email: "adam.dobrzanski.additional@techdata.com",
-      },
-      site: "UK",
-      languageCode: "en-GB",
-    },
-    {
-      type: "DELIVERED",
-      destination: {
-        customerId: "325009",
-        userId: "2033643",
-        email: "adam.dobrzanski.additional@techdata.com",
-      },
-      site: "UK",
-      languageCode: "en-GB",
-    },
-    {
-      type: "EXCEPTION",
-      destination: {
-        customerId: "325009",
-        userId: "2033643",
-        email: "adam.dobrzanski.additional@techdata.com",
-      },
-      site: "UK",
-      languageCode: "en-GB",
-    },
-  ];
+    emailActive: true,
+    additionalEmailActive: false,
+    site: "UK",
+    languageCode: "en-us",
+  };
 
   setTimeout(() => {
     return res.status(200).json(response);
