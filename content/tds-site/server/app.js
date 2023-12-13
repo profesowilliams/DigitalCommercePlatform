@@ -7381,6 +7381,124 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   }
 });
 
+app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
+  try {
+    setTimeout(() => {
+      return res.status(200).json({
+        content: {
+          orderNumber: "6082483761",
+          customerPO: "",
+          currency: "GBP",
+          items: [
+            {
+              line: "10",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/6c/a8/6ca85d27-e833-48a4-b15c-30cdd86296a4.jpg",
+              displayName: 'XUB2793HS-B5 27" IPS FHD 75Hz 4ms HDMI',
+              tdNumber: "7829683",
+              mfrNumber: "XUB2793HS-B5",
+              isEOL: false,
+              canTrackAndTrace: true,
+              unitPrice: 102.07,
+              unitPriceFormatted: "102.07",
+              lineDetails: [
+                {
+                  id: 0,
+                  quantity: 19.0,
+                  subtotalPrice: 1939.33,
+                  subtotalPriceFormatted: "1,939.33",
+                  shipDate: "10-25-2023",
+                  shipDateFormatted: "25/10/2023",
+                  statusText: "Open ",
+                  isShipment: true,
+                  invoices: [
+                    {
+                      returnUrl:
+                        "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8204648419&Line=10&product=7829683",
+                      id: "8204648419",
+                      date: "10-26-2023",
+                      dateFormatted: "26/10/2023",
+                      canDownloadDocument: true,
+                    },
+                  ],
+                  deliveryNotes: [
+                    {
+                      id: "7135863537",
+                      actualShipDate: "10-25-2023",
+                      actualShipDateFormatted: "25/10/2023",
+                      canDownloadDocument: true,
+                    },
+                  ],
+                  serialsAny: true,
+                },
+                {
+                  id: 1,
+                  quantity: 14.0,
+                  subtotalPrice: 1428.98,
+                  subtotalPriceFormatted: "1,428.98",
+                  shipDate: "11-08-2023",
+                  shipDateFormatted: "08/11/2023",
+                  statusText: "Open ",
+                  isShipment: false,
+                  serialsAny: false,
+                },
+              ],
+            },
+            {
+              line: "20",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/88/aa/88aaf689-e5cc-40fa-bd11-463decd41bc8.jpg",
+              displayName: "CABLE_BO Hybrid USB-C Cable",
+              tdNumber: "5288039",
+              mfrNumber: "4X90U90618",
+              isEOL: false,
+              canTrackAndTrace: false,
+              unitPrice: 16.0,
+              unitPriceFormatted: "16.00",
+              lineDetails: [
+                {
+                  id: 0,
+                  quantity: 13.0,
+                  subtotalPrice: 208.0,
+                  subtotalPriceFormatted: "208.00",
+                  shipDate: "10-25-2023",
+                  shipDateFormatted: "25/10/2023",
+                  statusText: "Passed to courier",
+                  isShipment: true,
+                  invoices: [
+                    {
+                      returnUrl:
+                        "https://asm.integration.tdsynnex.eu/asm/pages/query/querycreateselectreason.aspx?Invoice=8204648419&Line=20&product=5288039",
+                      id: "8204648419",
+                      date: "10-26-2023",
+                      dateFormatted: "26/10/2023",
+                      canDownloadDocument: true,
+                    },
+                  ],
+                  deliveryNotes: [
+                    {
+                      id: "7135863537",
+                      actualShipDate: "10-25-2023",
+                      actualShipDateFormatted: "25/10/2023",
+                      canDownloadDocument: true,
+                    },
+                  ],
+                  serialsAny: true,
+                },
+              ],
+            },
+          ],
+        },
+      });
+    }, 200);
+  } catch (err) {
+    console.log(err);
+    setTimeout(() => {
+      res.status(500);
+    }, 200);
+  }
+});
+
 app.get("/ui-commerce/v2/OrdersExport", function (req, res) {
   return res.download("exportOrderDetail.xlsx");
 });

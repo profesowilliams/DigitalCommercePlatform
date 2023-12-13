@@ -13,6 +13,7 @@ const Flyouts = ({
   openFilePdf,
   config,
   hasAIORights,
+  content,
   gridRef,
   rowsToGrayOutTDNameRef,
   userData,
@@ -71,7 +72,7 @@ const Flyouts = ({
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
-        orderModificationFlyout={config?.orderModificationFlyout}
+        content={content}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

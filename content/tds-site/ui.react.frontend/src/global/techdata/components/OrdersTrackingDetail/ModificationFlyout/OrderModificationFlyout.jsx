@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import BaseFlyout from '../../BaseFlyout/BaseFlyout';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import NewItemForm from './NewItemForm';
 import LineItem from './LineItem';
 import { usGet, usPost } from '../../../../../utils/api';
+import BaseFlyout from '../../BaseFlyout/BaseFlyout';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   //// This function compares only quantities rather than all items' parameters
-  //const difference = items.find((item) => {
-  //  const index = itemsCopy.findIndex(
-  //    (copyItem) => copyItem.line === item.line
-  //  );
-  //  if (index > -1) {
-  //    return itemsCopy[index].orderQuantity !== item.orderQuantity;
-  //  } else return false;
-  //});
-  //return Boolean(!difference);
+  const difference = items.find((item) => {
+   const index = itemsCopy.findIndex(
+     (copyItem) => copyItem?.line === item?.line
+   );
+   if (index > -1) {
+     return itemsCopy[index].orderQuantity !== item.orderQuantity;
+   } else return false;
+  });
+  return Boolean(!difference);
 };
 
 function OrderModificationFlyout({
@@ -24,34 +24,32 @@ function OrderModificationFlyout({
   isTDSynnex = true,
   labels = {},
   gridConfig = {},
-  //content,
-  //gridRef,
-  //rowsToGrayOutTDNameRef,
-  //userData,
-  //orderModificationFlyout = {},
+  content,
+  gridRef,
+  rowsToGrayOutTDNameRef,
+  userData,
 }) {
-  const orderModificationFlyoutConfig = store((st) => st.orderModificationFlyout);
+  const [items, setItems] = useState([]);
+  const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  //const [itemsCopy, setItemsCopy] = useState([...items]);
-  //const changeRefreshDetailApiState = useStore(
-  //  (state) => state.changeRefreshDetailApiState
-  //);
-  const orderModificationConfig = store((st) => st.orderModificationFlyout);
+  const [itemsCopy, setItemsCopy] = useState([]);
+  const changeRefreshDetailApiState = store(
+    (state) => state.changeRefreshDetailApiState
+  );
   const doesReasonDropdownHaveEmptyItems = store(
     (st) => st.orderModification.doesReasonDropdownHaveEmptyItems
   );
   const { setCustomState } = store((st) => st.effects);
-  const [orderModificationResponse, setOrderModificationResponse] = useState(null);
-  //const requestURL = config?.orderModifyEndpoint;
-  //const config = { ...orderModificationFlyoutConfig, data: orderModificationFlyoutConfig?.data || orderModificationResponse };
+  const [orderModificationResponse, setOrderModificationResponse] =
+    useState(null);
+  const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${content?.orderNo}`;
+  const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
 
   const getOrderModificationData = async () => {
     try {
-      const result = await usGet(
-        `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderModificationFlyoutConfig?.id}`
-      );
+      const result = await usGet(requestURLData);
       return result;
     } catch (error) {
       console.error('Error:', error);
@@ -59,9 +57,9 @@ function OrderModificationFlyout({
   };
 
   const closeFlyout = () => {
-    //setNewItemFormVisible(false);
-    //setItemsCopy([...items]);
-    //setOrderChanged(false);
+    setNewItemFormVisible(false);
+    setItemsCopy([...items]);
+    setOrderChanged(false);
     setIsDisabled(true);
     setCustomState({
       key: 'orderModificationFlyout',
@@ -69,57 +67,57 @@ function OrderModificationFlyout({
     });
   };
 
-  //const reduceLine = itemsCopy.reduce((filtered, item) => {
-  //  if (item.status === 'Rejected') {
-  //    const newItem = {
-  //      LineID: item.line,
-  //      Qty: item.orderQuantity,
-  //      RejectionReason: item.RejectionReason,
-  //    };
-  //    filtered.push(newItem);
-  //  }
-  //  return filtered;
-  //}, []);
+  const reduceLine = itemsCopy.reduce((filtered, item) => {
+    if (item.status === 'Rejected') {
+      const newItem = {
+        LineID: item.line,
+        Qty: item.orderQuantity,
+        RejectionReason: item.RejectionReason,
+      };
+      filtered.push(newItem);
+    }
+    return filtered;
+  }, []);
 
-  //const addLine = itemsCopy.reduce((filtered, item) => {
-  //  if (item.orderQuantity > item.origQuantity) {
-  //    const newItem = {
-  //      ProductID: item.tdNumber,
-  //      Qty: item.orderQuantity - item.origQuantity,
-  //      UAN: '',
-  //    };
-  //    filtered.push(newItem);
-  //  }
-  //  return filtered;
-  //}, []);
+  const addLine = itemsCopy.reduce((filtered, item) => {
+    if (item.orderQuantity > item.origQuantity) {
+      const newItem = {
+        ProductID: item.tdNumber,
+        Qty: item.orderQuantity - item.origQuantity,
+        UAN: '',
+      };
+      filtered.push(newItem);
+    }
+    return filtered;
+  }, []);
 
   const getPayload = () => ({
-    //  SalesOrg: userData?.customersV2?.[0]?.salesOrg,
-    //  CustomerID: userData?.customersV2?.[0]?.customerNumber,
-    //  OrderID: content?.orderNumber,
-    //  ReduceLine: reduceLine,
-    //  AddLine: addLine,
+    SalesOrg: userData?.customersV2?.[0]?.salesOrg,
+    CustomerID: userData?.customersV2?.[0]?.customerNumber,
+    OrderID: content?.orderNumber,
+    ReduceLine: reduceLine,
+    AddLine: addLine,
   });
 
   const greyOutRows = async (rows) => {
-    //  rowsToGrayOutTDNameRef.current = [...rows];
-    //  gridRef.current?.api.redrawRows();
+    rowsToGrayOutTDNameRef.current = [...rows];
+    gridRef.current?.api.redrawRows();
   };
 
   const handleUpdate = async () => {
-    //  try {
-    //    const result = await usPost(requestURL, getPayload());
-    //    if (result.data && !result.data?.error?.isError) {
-    //      changeRefreshDetailApiState();
-    //      closeFlyout();
-    //      const rowsDeleted = itemsCopy
-    //        .filter((item) => item.status === 'Rejected')
-    //        .map((item) => item.tdNumber);
-    //      greyOutRows(rowsDeleted);
-    //    }
-    //  } catch (error) {
-    //    console.error('Error updating order:', error);
-    //  }
+    try {
+      const result = await usPost(requestURLLineModify, getPayload());
+      if (result.data && !result.data?.error?.isError) {
+        changeRefreshDetailApiState();
+        closeFlyout();
+        const rowsDeleted = itemsCopy
+          ?.filter((item) => item.status === 'Rejected')
+          .map((item) => item.tdNumber);
+        greyOutRows(rowsDeleted);
+      }
+    } catch (error) {
+      console.error('Error updating order:', error);
+    }
   };
 
   const buttonsSection = (
@@ -134,11 +132,11 @@ function OrderModificationFlyout({
   );
 
   const handleChange = (index, newItem) => {
-    //const updatedItemsCopy = [...itemsCopy];
-    //const item = { ...updatedItemsCopy[index], ...newItem };
-    //updatedItemsCopy[index] = item;
-    //setItemsCopy([...updatedItemsCopy]);
-    //setOrderChanged(!areItemsListIdentical(items, updatedItemsCopy));
+    const updatedItemsCopy = [...itemsCopy];
+    const item = { ...updatedItemsCopy[index], ...newItem };
+    updatedItemsCopy[index] = item;
+    setItemsCopy([...updatedItemsCopy]);
+    setOrderChanged(!areItemsListIdentical(items, updatedItemsCopy));
   };
 
   const handleAddNewItem = () => {
@@ -150,17 +148,15 @@ function OrderModificationFlyout({
   }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
 
   useEffect(() => {
-    setOrderModificationResponse(null);
-    !orderModificationConfig?.data &&
-      orderModificationConfig?.id &&
-      getOrderModificationData()
-        .then((result) => {
-          setOrderModificationResponse(result?.data?.content);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-  }, [orderModificationConfig?.id]);
+    getOrderModificationData()
+      .then((result) => {
+        setOrderModificationResponse(result?.data?.content?.items);
+        setItems(result?.data?.content?.items);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   return (
     <BaseFlyout
@@ -169,7 +165,9 @@ function OrderModificationFlyout({
       width="929px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(labels?.modifyOrder || labels?.modifyOrderTitle)}
+      titleLabel={getDictionaryValueOrKey(
+        labels?.modifyOrder || labels?.modifyOrderTitle
+      )}
       disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
@@ -191,15 +189,16 @@ function OrderModificationFlyout({
           {getDictionaryValueOrKey(labels?.editQuantities)}
         </p>
         <ul className="cmp-flyout-list">
-          {orderModificationResponse && orderModificationResponse.map((item, index) => (
-            <LineItem
-              key={item.line}
-              index={index}
-              item={item}
-              onChange={handleChange}
-              labels={labels}
-            />
-          ))}
+          {orderModificationResponse &&
+            orderModificationResponse?.map((item, index) => (
+              <LineItem
+                key={item.line}
+                index={index}
+                item={item}
+                onChange={handleChange}
+                labels={labels}
+              />
+            ))}
         </ul>
       </section>
     </BaseFlyout>
