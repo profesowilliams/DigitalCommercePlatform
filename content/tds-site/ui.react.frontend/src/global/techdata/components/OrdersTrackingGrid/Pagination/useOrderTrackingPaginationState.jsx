@@ -107,7 +107,7 @@ function useOrderTrackingPaginationState({
     const value = parseInt(target.value) - 1;
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
-    if (target.value.length >= 3) {
+    if (target.value.length >= 5) {
       pushDataLayerGoogle(
         getPaginationAnalyticsGoogle(
           paginationAnalyticsLabel,

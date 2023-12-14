@@ -20,11 +20,13 @@ export const paginationState = {
       'currentResultsInPage',
       0
     ),
-    pageNumber: getLocalValueOrDefault(
-      ORDER_PAGINATION_LOCAL_STORAGE_KEY,
-      'pageNumber',
-      getFromQueryString('page=') || 1
-    ),
+    pageNumber:
+      getFromQueryString('page=') ||
+      getLocalValueOrDefault(
+        ORDER_PAGINATION_LOCAL_STORAGE_KEY,
+        'pageNumber',
+        1
+      ),
   },
 };
 
@@ -40,9 +42,7 @@ export const filterState = {
  */
 export function getFromQueryString(param) {
   if (location?.href?.includes(param)) {
-    return location.href.split(param).pop() === '1'
-      ? false
-      : location.href.split(param).pop();
+    return location.href.split(param).pop();
   }
 
   return false;
