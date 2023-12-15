@@ -4,6 +4,7 @@ import LineItem from './LineItem';
 import { usGet, usPost } from '../../../../../utils/api';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { useStore } from '../../../../../utils/useStore';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   //// This function compares only quantities rather than all items' parameters
@@ -35,7 +36,7 @@ function OrderModificationFlyout({
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [itemsCopy, setItemsCopy] = useState([]);
-  const changeRefreshDetailApiState = store(
+  const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
   const doesReasonDropdownHaveEmptyItems = store(
@@ -68,7 +69,7 @@ function OrderModificationFlyout({
   };
 
   const reduceLine = itemsCopy.reduce((filtered, item) => {
-    if (item.status === 'Rejected') {
+    if (item?.status === 'Rejected') {
       const newItem = {
         LineID: item.line,
         Qty: item.orderQuantity,
@@ -80,7 +81,7 @@ function OrderModificationFlyout({
   }, []);
 
   const addLine = itemsCopy.reduce((filtered, item) => {
-    if (item.orderQuantity > item.origQuantity) {
+    if (item?.orderQuantity > item.origQuantity) {
       const newItem = {
         ProductID: item.tdNumber,
         Qty: item.orderQuantity - item.origQuantity,
