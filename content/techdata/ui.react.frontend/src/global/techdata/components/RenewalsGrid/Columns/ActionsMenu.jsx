@@ -55,7 +55,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
             let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
             const quoteText = productGrid.quoteTextForFileName || 'quote';
             const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
-            const endUser = data.endUser?.name?.text ? `${data.endUser.name.text} - ` : '';
+            const endUser = data.endUser.name ? `${data.endUser.name} - ` : '';
             const renewedDuration = data.renewedDuration ? `${data.renewedDuration} - ` : '';
             const sourceId = data.source.id ? `${data.source.id} - ` : '';
           if (data?.hasMultipleSupportLevel) {
