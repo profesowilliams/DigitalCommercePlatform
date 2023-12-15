@@ -7500,7 +7500,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
 app.get("/ui-commerce/v3/orders/count", (req, res) => {
   const success = {
     content: {
-      totalItems: 1198999,
+      totalItems: 1198,
     },
     error: {
       code: 0,
