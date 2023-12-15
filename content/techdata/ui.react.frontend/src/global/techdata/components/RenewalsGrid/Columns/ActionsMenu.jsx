@@ -53,11 +53,17 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
             ANALYTIC_CONSTANTS.Grid.RowActions.DownloadPdf,
             data));
             let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
-                    if (data?.hasMultipleSupportLevel) {
-                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-${productGrid.quoteTextForFileName}`;
-                    } else {
-                        pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${data.renewedDuration.replaceAll(' ', '_')}-${data.support}-${productGrid.quoteTextForFileName}`;
-                    }
+            const quoteText = productGrid.quoteTextForFileName || 'quote';
+            const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
+            const endUser = data.endUser?.name?.text ? `${data.endUser.name.text} - ` : '';
+            const renewedDuration = data.renewedDuration ? `${data.renewedDuration} - ` : '';
+            const sourceId = data.source.id ? `${data.source.id} - ` : '';
+          if (data?.hasMultipleSupportLevel) {
+              pdfFileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${quoteText}`;
+          } else {
+            const supportLevel = data.support ? `${data.support} - ` : '';
+              pdfFileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${supportLevel}${quoteText}`;
+          }
         generateFileFromPost({
           url: exportPDFRenewalsEndpoint,
           name: `${pdfFileName}.pdf`,

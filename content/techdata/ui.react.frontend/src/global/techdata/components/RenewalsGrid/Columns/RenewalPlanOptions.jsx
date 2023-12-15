@@ -99,10 +99,16 @@ function RenewalPlanOptions({ labels, data, node }) {
       const activeIDData = data.options.filter((item) => {
            return item.id == Id;
        })
+       const quoteText = productGrid.quoteTextForFileName || 'quote';
+       const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
+       const endUser = data.endUser.name ? `${data.endUser.name} - ` : '';
+       const contractDuration = activeIDData[0].contractDuration ? `${activeIDData[0].contractDuration} - ` : '';
+       const sourceId = data.source.id ? `${data.source.id} - ` : '';
       if (data?.hasMultipleSupportLevel) {
-          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${productGrid.quoteTextForFileName}`;
+          pdfFileName = `${vendorName}${endUser}${sourceId}${contractDuration}${quoteText}`;
       } else {
-          pdfFileName = `${data.vendor.name}-${data.endUser.name.replaceAll(' ', '_')}-${data.source.id}-${activeIDData[0].contractDuration.replaceAll(' ', '_')}-${activeIDData[0].support}-${productGrid.quoteTextForFileName}`;
+        const supportLevel = activeIDData[0].support ? `${activeIDData[0].support} - ` : '';
+          pdfFileName = `${vendorName}${endUser}${sourceId}${contractDuration}${supportLevel}${quoteText}`;
       }
       generateFileFromPost({
         url: exportPDFRenewalsEndpoint,

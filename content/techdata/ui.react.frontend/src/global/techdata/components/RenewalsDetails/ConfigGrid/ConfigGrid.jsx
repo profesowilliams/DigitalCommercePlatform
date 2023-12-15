@@ -44,10 +44,15 @@ function GridHeader({ gridProps, data }) {
           data));
       let pdfFileName = `Renewals Quote ${data?.source?.id}.pdf`;
       const quoteText = gridProps.productLines.quoteTextForFileName || 'quote';
+      const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
+      const endUser = data.endUser?.name?.text ? `${data.endUser.name.text} - ` : '';
+      const renewedDuration = data.items[0]?.contract?.renewedDuration ? `${data.items[0].contract.renewedDuration} - ` : '';
+      const sourceId = data.source.id ? `${data.source.id} - ` : '';
       if (data?.hasMultipleSupportLevel) {
-        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${quoteText}`;
+        pdfFileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${quoteText}`;
       } else {
-        pdfFileName = `${data.vendor.name}-${data.endUser.name.text.replaceAll(' ', '_')}-${data.source.id}-${data.items[0].contract.renewedDuration.replaceAll(' ', '_')}-${data.quoteSupportLevel}-${quoteText}`;
+      const supportLevel = data.quoteSupportLevel ? `${data.quoteSupportLevel} - ` : '';
+        pdfFileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${supportLevel}${quoteText}`;
       }
       generateFileFromPost({
         url: gridProps.exportPDFRenewalsEndpoint,
