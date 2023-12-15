@@ -97,6 +97,7 @@ function OrderModificationFlyout({
     OrderID: content?.orderNumber,
     ReduceLine: reduceLine,
     AddLine: addLine,
+    ProductID: content?.productDtos?.source?.Id,
   });
 
   const greyOutRows = async (rows) => {
@@ -189,8 +190,7 @@ function OrderModificationFlyout({
           {getDictionaryValueOrKey(labels?.editQuantities)}
         </p>
         <ul className="cmp-flyout-list">
-          {orderModificationResponse &&
-            orderModificationResponse?.map((item, index) => (
+          {orderModificationResponse?.map((item, index) => (
               <LineItem
                 key={item.line}
                 index={index}
