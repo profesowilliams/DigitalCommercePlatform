@@ -22,11 +22,10 @@ import { copyToClipboardAction, getContextMenuItems, setLocalStorageData } from 
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { getDictionaryValue } from "../../../../../utils/utils";
 
-
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
-      <div className="cmp-renewal-preview__subtotal--note" 
+      <div className="cmp-renewal-preview__subtotal--note"
         dangerouslySetInnerHTML={{
             __html: sanitizeHtml(gridProps?.note)
         }}>
@@ -44,7 +43,7 @@ function GridSubTotal({ subtotal, data, gridProps }) {
             <span className="cmp-renewal-preview__subtotal--currency-code">
               {gridProps.quoteSubtotalCurrency?.replace(
                 '{currency-code}',
-                data?.currency || '' 
+                data?.currency || ''
               )}
             </span>
           )}
@@ -63,7 +62,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const [isPODialogOpen, setIsPODialogOpen] = useState(false);
   const orderEndpoints = {
     updateRenewalOrderEndpoint: compProps.updateRenewalOrderEndpoint,
-    getStatusEndpoint: compProps.getStatusEndpoint, 
+    getStatusEndpoint: compProps.getStatusEndpoint,
     orderRenewalEndpoint: compProps.orderRenewalEndpoint
   };
   const { computeClassName } = useComputeBranding(useRenewalsDetailsStore);
@@ -113,7 +112,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   }, [isEditing])
 
   useEffect(() => {
-    if(isEditing) { 
+    if(isEditing) {
       effects.setCustomState({ key: 'items', value: mapRenewalItemProducts(mutableGridData) });
     } else {
       effects.clearItems();
@@ -163,32 +162,37 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       field: "id",
       headerName: gridProps?.line,
       width: gridColumnWidths.line,
+      cellRenderer: ({ data }) => {
+        return Object.keys(data).includes('contract') ? data.id : <div className="row-header">{data.id}</div>
+      }
     },
     {
       field: "vendorPartNo",
       headerName: gridProps?.productfamily,
+      // cellRenderer: (props) => Object.keys(props?.data).includes("contract") ? <div>{props?.data?.vendorPartNo}</div>: "",
       valueGetter: ({ data }) =>
-        data.product.find((p) => p.family)?.family ?? "N/A",
+      Object.keys(data).includes("contract") ? data.product.find((p) => p.family)?.family ?? "N/A" : "",
       width: gridColumnWidths.productFamily,
     },
     {
       field: "shortDescription",
       headerName: gridProps?.productdescription,
       cellHeight: () => 80,
-      cellRenderer: ({ data }) => (
+      cellRenderer: ({ data }) => {
+        return Object.keys(data).includes("contract") ?
         <RenewalProductLinesItemInformation
           line={data}
           isLinkDisabled={gridProps.disableProductDetailsLink}
           shopDomainPage={shopDomainPage}
           invokeModal={invokeModal}
-        />
-      ),
+        /> : ""
+      },
       width: gridColumnWidths.productDescription,
     },
     {
       field: "mfrNumber",
       headerName: gridProps?.vendorPartNo,
-      cellRenderer: (props) => RenewalManufacturer(props),
+      cellRenderer: (props) => Object.keys(props?.data).includes("contract") ? RenewalManufacturer(props) : "",
       width: gridColumnWidths.vendorPartNo,
     },
     {
@@ -197,14 +201,16 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         "{currency-code}",
         data?.currency || ""
       ),
-      cellRenderer: (props) => Price(props),
+      cellRenderer: (props) => {
+        return Object.keys(props?.data).includes("contract") ? Price(props) : ""
+      },
       width: gridColumnWidths.listPrice,
     },
     {
       field:'value',
       headerName: gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
-      cellRenderer: (props) => Price(props),
+      cellRenderer: (props) => Object.keys(props?.data).includes("contract") ? Price(props) : "",
       width: gridColumnWidths.percentageOfflist,
       valueGetter:'(data.unitListPrice - data.unitPrice) / data.unitListPrice * 100'
     },
@@ -217,18 +223,18 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       suppressKeyboardEvent: (params) => suppressNavigation(params),
       cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditResellerPrice;
-        return UnitPriceColumn({...props, isEditing})
+        return Object.keys(props?.data).includes("contract") ? UnitPriceColumn({...(props), isEditing}) : ""
       },
       width: gridColumnWidths.unitPrice,
     },
     {
       field:'quantity',
       headerName: gridProps?.quantity,
-      cellRenderer: (props) =>{
+      cellRenderer: (props) => {
         const isEditing = isEditingRef.current && data?.canEditQty;
-        return QuantityColumn({ ...props, isEditing })
+        return Object.keys(props?.data).includes("contract") ? QuantityColumn({ ...(props), isEditing }) : ""
       },
-      width: gridColumnWidths.quantity,     
+      width: gridColumnWidths.quantity,
     },
     {
       field:'totalPrice',
@@ -236,7 +242,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         "{currency-code}",
         data?.currency || ""
       ),
-      cellRenderer: (props) => Price(props),
+      cellRenderer: (props) => Object.keys(props?.data).includes("contract") ? Price(props) : "",
       valueGetter:'data.quantity * data.unitPrice',
       // Use sum aggFunc to also update subtotal value.
       // Function is triggered on internal grid updates.
@@ -247,29 +253,130 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         return total;
       },
       width: gridColumnWidths.total,
-    }
+    },
   ];
 
-  const columnDefs = useMemo(() => buildColumnDefinitions(columnDefinitionsOverride),[]); 
+  const columnDefs = useMemo(() => buildColumnDefinitions(columnDefinitionsOverride),[]);
+  const contractMap = new Map();
+  JSON.parse(JSON.stringify(gridData))?.forEach(item => {
+    const contractId = item.contract.id;
+    if (!contractMap.has(contractId)) {
+      contractMap.set(contractId, []);
+    }
+    contractMap.get(contractId).push(item);
+  });
 
+  const resultArray = [];
 
+  contractMap?.forEach((contractGroup, index) => {
+    if (contractGroup.length > 1) {
+      resultArray.push(
+        {
+          "id": "1",
+          "group": null,
+          "solution": null,
+          "parent": null,
+          "product": [
+              {
+                  "type": "",
+                  "id": "",
+                  "name": null,
+                  "manufacturer": null,
+                  "manufacturerId": null,
+                  "localManufacturer": null,
+                  "classification": null,
+                  "family": ""
+              },
+              {
+                  "type": "MANUFACTURER",
+                  "id": "NX-DC-ADV-P-SSS-C",
+                  "name": "Production Support/Subscription for VMware NSX Data Center Advanced per Processor for 3 year 3 months",
+                  "manufacturer": "VMware",
+                  "manufacturerId": "21",
+                  "localManufacturer": null,
+                  "classification": null,
+                  "family": null
+              }
+          ],
+          "quantity": 0,
+          "confirmedQuantity": 0,
+          "contractNumber": null,
+          "contractType": null,
+          "license": null,
+          "references": [],
+          "status": null,
+          "statusNotes": null,
+          "updated": "0001-01-01T00:00:00",
+          "unitPrice": 0,
+          "unitCost": 0,
+          "totalPrice": 0,
+          "unitListPrice": 0,
+          "unitPriceCurrency": "",
+          "unitCostCurrency": "",
+          "unitListPriceCurrency": "",
+          "extendedListPrice": 0,
+          "requested": "0001-01-01T00:00:00",
+          "shippingCondition": null,
+          "shippingFrom": null,
+          "businessManager": null,
+          "divisionManager": null,
+          "director": null,
+          "rejectionCode": null,
+          "rejectionDescription": null,
+          "femAmount": 0,
+          "pomAmount": 0,
+          "samAmount": 0,
+          "nsmAmount": 0,
+          "femPercentage": 0,
+          "pomPercentage": 0,
+          "samPercentage": 0,
+          "nsmPercentage": 0,
+          "agreements": [],
+          "attributes": [],
+          "dealRegNumber": null,
+          "reinstatementFeeCost": null,
+          "reinstatementFeeSell": null,
+          "serialNumbers": [
+              null
+          ],
+          "instance": "",
+          "discounts": [
+              {
+                  "type": "",
+                  "value": ""
+              }
+          ],
+          "tdNumber": null,
+          "mfrNumber": null,
+          "shortDescription": null,
+          "manufacturer": null,
+          "vendorPartNo": null,
+          "formattedUpdated": null,
+          "formattedRequested": null,
+          section: 'big-title', id: `Agreement No:  ${index}`
+      }
+      );
+    }
+    resultArray.push(...contractGroup);
+  });
   /*
     mutableGridData is copied version of response that can be safely mutated,
     original state is preserved in gridData.
   */
-  const [mutableGridData, setMutableGridData] = useState(JSON.parse(JSON.stringify(gridData)));
+
+  const [mutableGridData, setMutableGridData] = useState(resultArray);
 
   function invokeModal(modal) {
     setModal(modal);
   }
-  const onOrderButtonClicked = () => {    
+  const onOrderButtonClicked = () => {
     effects.setCustomState({ key: 'toaster', value: { isOpen: false } });
     setIsPODialogOpen(true);
   }
 
   const onCloseOrderDialog =(options = {}) => {
     const {isSuccess = false, toaster} = options || {isSuccess : false, toaster:false} ;
-    setIsPODialogOpen(false); 
+    setIsPODialogOpen(false);
     if (!isSuccess) return;
     if(isSuccess){
       setLocalStorageData(TOASTER_LOCAL_STORAGE_KEY,toaster);
@@ -303,19 +410,24 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           onAfterGridInit={onAfterGridInit}
           columnDefinition={columnDefs}
           config={gridConfig}
-          data={mutableGridData}
+          data={resultArray}
           getDefaultCopyValue={getDefaultCopyValue}
           contextMenuItems={contextMenuItems}
           processCustomClipboardAction={processCustomClipboardAction}
         />
+        {/* <AgGridReact
+          rowData={mutableGridData}
+          columnDefs={columnDefs}
+
+        /> */}
         <GridSubTotal data={data} gridProps={gridProps} subtotal={subtotal} />
         <div className="place-cmp-order-dialog-container">
         <p className="cmp-place-order-actions">
             <Button
               disabled={!isIconEnabled}
-              className={computeClassName('cmp-detail-order-button')}             
+              className={computeClassName('cmp-detail-order-button')}
               onClick={onOrderButtonClicked}
-              variant="contained"           
+              variant="contained"
             >
               { getDictionaryValue("button.common.label.order", "Order") }
             </Button>
@@ -344,10 +456,11 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         />
       <Toaster
         onClose={() => closeAndCleanToaster()}
-        store={useRenewalsDetailsStore} 
+        store={useRenewalsDetailsStore}
         message={{successSubmission:'successSubmission', failedSubmission:'failedSubmission'}}/>
     </div>
   );
 }
 
 export default forwardRef(RenewalPreviewGrid);
+
