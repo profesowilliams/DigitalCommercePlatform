@@ -1015,13 +1015,32 @@
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="New email address label"
-												name="./newEmailAddress"/> 
+												name="./newEmailAddress"/>
+                                            <emailsErrorMessage
+                                                jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Emails error message label"
+												name="./emailsErrorMessage"/>
                                             <forInternalUseOnly
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="For Internal Use Only label"
 												name="./forInternalUseOnly"/> 
-
+                                            <settingsSuccessMessage    
+                                                jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Settings Success Message"
+												name="./settingsSuccessMessage"/> 
+                                            <settingsErrorMessage    
+                                                jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Settings Error Message"
+												name="./settingsErrorMessage"/> 
+                                            <adjustSettings    
+                                                jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Adjust Settings label"
+												name="./adjustSettings"/>
                                         </items>
 									</column>
 								</items>

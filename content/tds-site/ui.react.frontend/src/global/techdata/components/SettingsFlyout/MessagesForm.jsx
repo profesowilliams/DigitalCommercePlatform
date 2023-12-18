@@ -24,10 +24,11 @@ const styleRadio = {
   },
 };
 
-const MessagesForm = ({ options }) => {
-  const [value, setValue] = useState(options?.[0]?.key);
+const MessagesForm = ({ value: defaultValue, onChange, options }) => {
+  const [value, setValue] = useState(defaultValue);
   const handleChange = (e) => {
     setValue(e.target.value);
+    onChange(e.target.value);
   };
 
   return (

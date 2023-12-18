@@ -220,7 +220,11 @@ use(["../common/utils.js"], function (utils) {
       "defaultEmailAddress",
       "addAnotherEmail",
       "newEmailAddress",
+      "emailsErrorMessage",
       "forInternalUseOnly",
+      "settingsSuccessMessage",
+      "settingsErrorMessage",
+      "adjustSettings",
     ];
 
     settingsFlyoutLabelsList.map((property) => {

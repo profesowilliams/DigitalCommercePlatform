@@ -87,7 +87,6 @@ const MainGridFlyouts = ({
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
-        orderModificationFlyout={gridConfig.orderModificationFlyout}
       />
       <SettingsFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}

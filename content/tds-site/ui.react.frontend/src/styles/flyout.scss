@@ -333,14 +333,12 @@ $flyout-small-height-formax: 779px;
       float: left;
     }
     .switch-icon-wrapper {
-      float: inline-end;
       display: flex;
       align-items: center;
       height: 20px;
       width: 38px;
-      justify-content: left;
+      padding-left: 25px;
       cursor: pointer;
-
     }
   }
   .collapsible-sections-wrapper {
@@ -396,6 +394,10 @@ $flyout-small-height-formax: 779px;
         justify-content: space-between;
         align-items: center;
       }
+      .error-message {
+        font-size: 14px;
+        color: $td-error-red;
+      }
       .add-email {
         font-size: 14px;
         color: $brand-green--dark;
@@ -438,6 +440,10 @@ $flyout-small-height-formax: 779px;
   .primary {
     color: $brand-white;
     background-color: $brand-green;
+    &:disabled {
+      background-color: $td-neutral-gray-2;
+      color: $brand-text-lightgray;
+    }
   }
   .secondary {
     color: $brand-green;

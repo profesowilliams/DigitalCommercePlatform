@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Checkbox } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
@@ -20,23 +20,29 @@ const styleCheckbox = {
   },
 };
 
-const EmailsForm = ({ options, labels }) => {
-  const [values, setValues] = useState([options[0].key]);
-  const [additionalEmail, setAdditionalEmail] = useState(undefined);
+const EmailsForm = ({ options, labels, value, onChange }) => {
+  const { emailActive, additionalEmailActive, email, additionalEmail } = value;
+  const initialValues = [
+    ...(emailActive ? [options[0].key] : []),
+    ...(additionalEmailActive ? [options[1].key] : []),
+  ];
+  const [values, setValues] = useState(initialValues);
+  const [newAdditionalEmail, setNewAdditionalEmail] = useState(additionalEmail);
 
-  const handleChange = (newValue) => {
-    if (values.includes(newValue)) {
-      setValues(values.filter((value) => value !== newValue));
+  const handleChange = (key, activeFlag, newValue) => {
+    if (values.includes(key)) {
+      setValues(values.filter((value) => value !== key));
+      onChange(activeFlag, false);
     } else {
-      setValues([...values, newValue]);
+      setValues([...values, key]);
+      onChange(activeFlag, true);
     }
+    newValue && onChange(key, newValue);
   };
 
   const handleAdditionalEmailChange = (newValue) => {
-    setAdditionalEmail(newValue);
-    if (newValue) {
-      handleChange(options[1].key);
-    }
+    setNewAdditionalEmail(newValue);
+    handleChange('additionalEmail', 'additionalEmailActive', newValue);
   };
 
   return (
@@ -50,38 +56,47 @@ const EmailsForm = ({ options, labels }) => {
                 <Checkbox
                   sx={styleCheckbox}
                   checked={values.includes(options[0].key)}
-                  disabled={!additionalEmail}
+                  disabled={!newAdditionalEmail}
                 />
               }
-              disabled={!additionalEmail}
-              label={options[0].label}
-              onChange={() => handleChange(options[0].key)}
+              disabled={!newAdditionalEmail}
+              label={email}
+              onChange={() => handleChange('email', 'emailActive')}
             />
             <p className="default-email">
               {getDictionaryValueOrKey(labels.defaultEmailAddress)}
             </p>
-            {additionalEmail ? (
-              <div className="additional-email">
-                <FormControlLabel
-                  key={options[1].key}
-                  control={
-                    <Checkbox
-                      sx={styleCheckbox}
-                      checked={values.includes(options[1].key)}
-                    />
-                  }
-                  label={additionalEmail}
-                  onChange={() => handleChange(options[1].key)}
-                />
-                <div
-                  className="additional-email-delete"
-                  onClick={() =>
-                    handleAdditionalEmailChange('', options[1].key)
-                  }
-                >
-                  <DeleteElement />
+            {newAdditionalEmail ? (
+              <>
+                <div className="additional-email">
+                  <FormControlLabel
+                    key={options[1].key}
+                    control={
+                      <Checkbox
+                        sx={styleCheckbox}
+                        checked={values.includes(options[1].key)}
+                      />
+                    }
+                    label={newAdditionalEmail}
+                    onChange={() =>
+                      handleChange('additionalEmail', 'additionalEmailActive')
+                    }
+                  />
+                  <div
+                    className="additional-email-delete"
+                    onClick={() => handleAdditionalEmailChange('')}
+                  >
+                    <DeleteElement />
+                  </div>
                 </div>
-              </div>
+                <div>
+                  {values.length === 0 && (
+                    <p className="error-message">
+                      {getDictionaryValueOrKey(labels?.emailsErrorMessage)}
+                    </p>
+                  )}
+                </div>
+              </>
             ) : (
               <AdditionalEmailForm
                 labels={labels}

@@ -14,14 +14,16 @@ const styleCheckbox = {
   },
 };
 
-const TypesForm = ({ options }) => {
-  const [values, setValues] = useState([]);
+const TypesForm = ({ options, value, onChange }) => {
+  const [values, setValues] = useState(value);
 
   const handleChange = (newValue) => {
     if (values.includes(newValue)) {
       setValues(values.filter((value) => value !== newValue));
+      onChange(values.filter((value) => value !== newValue));
     } else {
       setValues([...values, newValue]);
+      onChange([...values, newValue]);
     }
   };
 

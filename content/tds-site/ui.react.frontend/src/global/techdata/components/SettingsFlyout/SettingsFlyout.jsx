@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import SettingsContent from './SettingsContent';
+import { usPut } from '../../../../utils/api';
 
-import CollapsibleSection from './CollapsibleSection';
-import MessagesForm from './MessagesForm';
-import TypesForm from './TypesForm';
-import EmailsForm from './EmailsForm';
-import CustomSwitch from './CustomSwitch';
+const settingsKeys = [
+  'active',
+  'range',
+  'types',
+  'email',
+  'additionalEmail',
+  'emailActive',
+  'additionalEmailActive',
+];
+
+const areSettingsIdentical = (originalSettings, settings) => {
+  const diff = Object.keys(originalSettings).some(
+    (key) => originalSettings[key] !== settings[key]
+  );
+  return !diff;
+};
 
 const SettingsFlyout = ({
   subheaderReference,
@@ -17,7 +30,9 @@ const SettingsFlyout = ({
 }) => {
   const settingsFlyoutConfig = useOrderTrackingStore((st) => st.settingsFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const [data, setData] = useState({});
+  const [isSaveEnabled, setIsSaveEnabled] = useState(false);
+  const [dataCopy, setDataCopy] = useState({});
 
   const closeFlyout = () => {
     effects.setCustomState({
@@ -25,15 +40,55 @@ const SettingsFlyout = ({
       value: { data: null, show: false },
     });
   };
-  const disabled = false;
 
-  const saveData = () => {
-    // TO DO: send data to BE
+  const openFlyout = () => {
+    effects.setCustomState({
+      key: 'settingsFlyout',
+      value: { data: settingsFlyoutConfig?.data, show: true },
+    });
+  };
+
+  const handleDataChange = (key, value) => {
+    setData({ ...data, [key]: value });
+  };
+
+  const saveData = async () => {
+    try {
+      await usPut(`${config.uiProactiveServiceDomain}/v1`, data);
+      const successToaster = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: true,
+        message: getDictionaryValueOrKey(labels?.settingsSuccessMessage),
+        Child: (
+          <a onClick={openFlyout}>
+            {getDictionaryValueOrKey(labels?.adjustSettings)}
+          </a>
+        ),
+      };
+      effects.setCustomState({ key: 'toaster', value: { ...successToaster } });
+    } catch {
+      const errorToaster = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(labels?.settingsErrorMessage),
+      };
+      effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
+    }
     closeFlyout();
   };
 
-  const handleSwitchChange = () => {
-    setIsSwitchOn((prevState) => !prevState);
+  const isDataModifiedAndValid = () => {
+    if (_.isEmpty(data)) {
+      return false;
+    } else if (!data.email && !data.additionalEmail) {
+      return false;
+    } else if (areSettingsIdentical(dataCopy, data)) {
+      return false;
+    } else return true;
   };
 
   const buttonsSection = (
@@ -41,52 +96,29 @@ const SettingsFlyout = ({
       <button className="secondary" onClick={closeFlyout}>
         {getDictionaryValueOrKey(labels?.cancelSettingsChange)}
       </button>
-      <button disabled={false} className="primary" onClick={saveData}>
+      <button disabled={!isSaveEnabled} className="primary" onClick={saveData}>
         {getDictionaryValueOrKey(labels?.save)}
       </button>
     </div>
   );
 
-  const messageOptions = [
-    { key: 'InTouch', label: getDictionaryValueOrKey(labels.rangeIntouchOnly) },
-    { key: 'All', label: getDictionaryValueOrKey(labels.rangeTdSynnex) },
-  ];
+  useEffect(() => {
+    isDataModifiedAndValid() ? setIsSaveEnabled(true) : setIsSaveEnabled(false);
+  }, [data]);
 
-  const typeOptions = [
-    {
-      key: 'TDPACK',
-      label: getDictionaryValueOrKey(labels.shippedFromTDSWarehouse),
-    },
-    { key: 'OFD', label: getDictionaryValueOrKey(labels.outForDelivery) },
-    { key: 'DELIVERED', label: getDictionaryValueOrKey(labels.delivered) },
-    {
-      key: 'EXCEPTION',
-      label: getDictionaryValueOrKey(labels.deliveryException),
-    },
-  ];
-
-  const emailOptions = [
-    { key: 'email', label: 'emal@email.com' },
-    { key: 'additionalEmail', label: 'additionalEmail@email.com' },
-  ];
-
-  const collapsibleSections = [
-    {
-      title: getDictionaryValueOrKey(labels.notificationMessages),
-      content: <MessagesForm options={messageOptions} />,
-      expanded: true,
-    },
-    {
-      title: getDictionaryValueOrKey(labels.notificationTypes),
-      content: <TypesForm options={typeOptions} />,
-      expanded: true,
-    },
-    {
-      title: getDictionaryValueOrKey(labels.notificationEmails),
-      content: <EmailsForm options={emailOptions} labels={labels} />,
-      expanded: true,
-    },
-  ];
+  useEffect(() => {
+    if (settingsFlyoutConfig?.data) {
+      const initialSettings = {};
+      settingsKeys.forEach((key) => {
+        initialSettings[key] =
+          key === 'email' || key === 'additionalEmail'
+            ? settingsFlyoutConfig.data.destination[key]
+            : settingsFlyoutConfig.data[key];
+      });
+      setData(initialSettings);
+      setDataCopy(initialSettings);
+    }
+  }, [settingsFlyoutConfig?.data]);
 
   return (
     <BaseFlyout
@@ -103,32 +135,13 @@ const SettingsFlyout = ({
       isTDSynnex={isTDSynnex}
       buttonsSection={buttonsSection}
     >
-      <section className="cmp-flyout__content settings">
-        <div className="switch-wrapper">
-          <p className="switch-label">
-            {getDictionaryValueOrKey(labels?.switchLabel)}
-          </p>
-          <div className="switch-icon-wrapper">
-            <CustomSwitch
-              checked={isSwitchOn}
-              onChange={handleSwitchChange}
-              disabled={disabled}
-            />
-          </div>
-        </div>
-        {isSwitchOn && (
-          <div className="collapsible-sections-wrapper">
-            {collapsibleSections.map((section, index) => (
-              <CollapsibleSection
-                title={section.title}
-                content={section.content}
-                expanded={section.expanded}
-                key={index}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      {settingsFlyoutConfig?.data && (
+        <SettingsContent
+          labels={labels}
+          settingsData={settingsFlyoutConfig.data}
+          onChange={handleDataChange}
+        />
+      )}
     </BaseFlyout>
   );
 };

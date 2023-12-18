@@ -9178,15 +9178,29 @@ app.get("/ui-proactive/v1", function (req, res) {
     active: false,
     types: ["TDPACK", "OFD", "DELIVERED", "EXCEPTION"],
     range: "Intouch",
+    rangeAllEnabled: true,
     destination: {
       customerId: "325009",
       userId: "2033643",
       email: "adam.dobrzanski@techdata.com",
+      additionalEmail: "adam.dobrzanski.additional@techdata.com",
     },
     emailActive: true,
-    additionalEmailActive: false,
+    additionalEmailActive: true,
     site: "UK",
     languageCode: "en-us",
+  };
+
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
+
+app.put("/ui-proactive/v1", function (req, res) {
+  const response = {
+    content: {
+      success: true,
+    },
   };
 
   setTimeout(() => {
