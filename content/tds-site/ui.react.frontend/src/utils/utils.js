@@ -578,3 +578,27 @@ export const isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\
 export const addSeparator = (items) => {
     return items?.filter(Boolean)?.join(', ');
 };
+
+/**
+* Add a URL parameter (or changing it if it already exists)
+* @param {search} string  this is typically document.location.search
+* @param {key}    string  the key to set
+* @param {val}    string  value 
+*/
+export const addUrlParam = function (search, key, val) {
+  var newParam = key + '=' + val,
+    params = '?' + newParam;
+
+  // If the "search" string exists, then build params from it
+  if (search) {
+    // Try to replace an existance instance
+    params = search.replace(new RegExp('([?&])' + key + '[^&]*'), '$1' + newParam);
+
+    // If nothing was replaced, then add the new param to the end
+    if (params === search) {
+      params += '&' + newParam;
+    }
+  }
+
+  return params;
+};

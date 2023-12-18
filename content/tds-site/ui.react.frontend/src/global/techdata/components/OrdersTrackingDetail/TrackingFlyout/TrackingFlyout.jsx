@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { usGet } from '../../../../../utils/api';
 import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/FlyoutTableWithRedirectLinks';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getDictionaryValueOrKey, addUrlParam } from '../../../../../utils/utils';
 
 function TrackingFlyout({
   store,
@@ -38,13 +38,13 @@ function TrackingFlyout({
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters } = result.data;
       if (baseUrl) {
-        const trackAndTraceUrl = new URL(baseUrl);
+        let trackAndTraceParams = '';
         if (parameters) {
           Object.entries(parameters).forEach((entry) =>
-            trackAndTraceUrl.searchParams.append(entry[0], entry[1])
+            trackAndTraceParams = addUrlParam(trackAndTraceParams, entry[0], entry[1])
           );
         }
-        window.open(trackAndTraceUrl.href, '_blank');
+        window.open(baseUrl + trackAndTraceParams, '_blank');
       }
     } catch (error) {
       console.error(error);
