@@ -6169,6 +6169,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
         email: "Richard.Farrell@techdata.co.uk",
         phoneNumber: "01256 864200",
       },
+      isModifiable: true,
       paymentDetails: {
         netValue: 12.03,
         netValueFormatted: "12.03",
@@ -6571,6 +6572,7 @@ app.get("/ui-commerce/v2/order", (req, res) => {
       docTypeText: "ZZIT",
       totalOpenQuantity: -46.0,
       totalShipQuantity: 48.0,
+      isModifiable: true,
     },
     error: {
       code: 0,
@@ -6609,6 +6611,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         email: "Richard.Farrell@techdata.co.uk",
         phoneNumber: "01256 864200",
       },
+      isModifiable: true,
       paymentDetails: {
         currency: "EUR",
         subtotal: 12.41,
@@ -6987,6 +6990,7 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
       ],
       totalOpenQuantity: 8.0,
       totalShipQuantity: 22.0,
+      isModifiable: true,
     },
     error: {
       code: 0,
@@ -9084,6 +9088,7 @@ app.get("/ui-commerce/v3/orderitems", function (req, res) {
       ],
       totalOpenQuantity: 8.0,
       totalShipQuantity: 78.0,
+      isModifiable: true,
     },
     error: {
       code: 0,

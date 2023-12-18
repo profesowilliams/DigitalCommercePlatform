@@ -17,6 +17,7 @@ function NotShippedTabGrid({
   data,
   gridProps,
   hasOrderModificationRights,
+  isModifiable,
   gridRef,
   rowsToGrayOutTDNameRef,
   PONo,
@@ -126,8 +127,8 @@ function NotShippedTabGrid({
           {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
         </span>
         <span>
-          {
-            shipCompleted && <button
+          {shipCompleted && (
+            <button
               className="order-line-details__content__release-button"
               onClick={() => setReleaseOrderShow(true)}
             >
@@ -135,9 +136,9 @@ function NotShippedTabGrid({
                 config?.orderLineDetails?.releaseButtonLabel
               )}
             </button>
-          }
-          {
-            hasOrderModificationRights && <button
+          )}
+          {hasOrderModificationRights && isModifiable && (
+            <button
               className="order-line-details__content__title-button"
               onClick={handleOrderModification}
             >
@@ -145,7 +146,7 @@ function NotShippedTabGrid({
                 config?.orderLineDetails?.modifyEligibleItemsLabel
               )}
             </button>
-          }
+          )}
         </span>
       </div>
       <div>
