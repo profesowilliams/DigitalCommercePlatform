@@ -58,12 +58,18 @@
      * Teaser content styles.
      */
     .cmp-teaser__content {
-      width: 26rem;
-      margin-top: -53px;
-      padding: 0 2rem 2rem 2rem;
-      background: transparent;
-      gap: 0;
-      height: 16.5rem;
+    width: 26rem;
+    margin-top: -73px;
+    padding: 0 2rem 2rem;
+    background: transparent;
+    gap: 0!important;
+    flex: 1;
+    display: flex;
+    padding: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 0 0;
+    align-self: stretch;
 
       /**
        * Teaser title styles.
@@ -71,7 +77,6 @@
       .cmp-teaser__title {
         background: var(--White, map-get($color-palette, 'white'));
         padding: 1.5rem 1.5rem 0 1.5rem;
-        height: initial;
         width: 100%;
       }
 
@@ -95,7 +100,6 @@
        */
       .cmp-teaser__desc-link {
         background: var(--White, map-get($color-palette, 'white'));
-        height: auto;
         min-height: 8.325rem;
         max-height: 33rem;
         padding-top: 1.5rem;
