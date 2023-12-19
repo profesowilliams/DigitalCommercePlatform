@@ -4,7 +4,7 @@
  *
  * SCSS code for styling the teaser component, type 5.
  *
- * @author Ryan
+ * @author Ryan Williams <ryan.williams@tdsynnex.com>
  * @version 1.0.0
  * @since 1.0.0
  */
@@ -67,6 +67,11 @@
       .cmp-teaser__description {
         height: none;
         padding: 1.5rem 2rem 2rem 2rem;
+
+        ul {
+          list-style: inside;
+          margin-left: 10px;
+        }
       }
 
       /**
