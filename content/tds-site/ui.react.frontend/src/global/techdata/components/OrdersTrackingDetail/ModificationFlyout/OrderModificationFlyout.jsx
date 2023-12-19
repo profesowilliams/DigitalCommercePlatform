@@ -45,7 +45,7 @@ function OrderModificationFlyout({
   const { setCustomState } = store((st) => st.effects);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
-  const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${content?.orderNo}`;
+  const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${content?.orderNumber}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
 
   const getOrderModificationData = async () => {
