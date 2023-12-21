@@ -10,7 +10,7 @@ import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 import OrderReleaseModal from '../../Modals/OrderReleaseModal';
-import { usPost } from '../../../../../../utils/api';
+import { usPost, usGet } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 
 function NotShippedTabGrid({
@@ -34,10 +34,14 @@ function NotShippedTabGrid({
     ensureDomOrder: true,
   };
   const effects = useOrderTrackingStore((state) => state.effects);
+
   const { setCustomState } = effects;
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
+  const [orderModificationContent, setOrderModificationContent] =
+    useState(null);
+  const orderEditable = orderModificationContent?.orderEditable === true;
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -88,14 +92,18 @@ function NotShippedTabGrid({
   );
 
   const handleOrderModification = () => {
-    setCustomState({
-      key: 'orderModificationFlyout',
-      value: {
-        data: null,
-        id: orderNo,
-        show: true,
-      },
-    });
+    orderEditable
+      ? setCustomState({
+          key: 'orderModificationFlyout',
+          value: {
+            data: null,
+            id: orderNo,
+            show: true,
+          },
+        })
+      : console.log(
+          'the order currently cannot be modified and he should come back later' //TODO: replace console.log during US #504536
+        );
   };
   function getRowClass({ node }) {
     const nodeData = node.group ? node.aggData : node.data;
@@ -111,7 +119,7 @@ function NotShippedTabGrid({
     const params = {
       OrderId: orderNo,
     };
-    const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
+    const url = `${config.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
     const { content } = await usPost(url, params);
     if (content?.ChangeDelFlag?.success) {
       setReleaseSuccess(true);
@@ -120,6 +128,26 @@ function NotShippedTabGrid({
     }
     setOpenAlert(true);
   };
+  const requestURLData = `${config.uiCommerceServiceDomain}/v3/ordermodification/${orderNo}`;
+  const getOrderModificationData = async () => {
+    try {
+      const result = await usGet(requestURLData);
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
+    orderNo &&
+      getOrderModificationData()
+        .then((result) => {
+          setOrderModificationContent(result.data.content);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  }, [orderNo]);
   useEffect(() => {
     setCustomState({
       key: 'orderModificationFlyout',

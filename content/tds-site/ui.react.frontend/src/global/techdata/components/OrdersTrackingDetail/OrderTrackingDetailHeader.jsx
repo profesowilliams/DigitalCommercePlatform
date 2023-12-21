@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from './../Widgets/Link';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import MenuActions from './Header/MenuActions';
@@ -16,7 +16,7 @@ import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
-import { usPost } from '../../../../utils/api';
+import { usPost, usGet } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 
 const OrderTrackingDetailHeader = ({
@@ -32,8 +32,11 @@ const OrderTrackingDetailHeader = ({
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
+  const [orderModificationContent, setOrderModificationContent] =
+    useState(null);
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
+  const orderEditable = orderModificationContent?.orderEditable === true;
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -44,14 +47,19 @@ const OrderTrackingDetailHeader = ({
   };
 
   const handleOrderModification = () => {
-    setCustomState({
-      key: 'orderModificationFlyout',
-      value: {
-        data: null,
-        id,
-        show: true
-      },
-    });
+    orderEditable
+      ? setCustomState({
+          key: 'orderModificationFlyout',
+          value: {
+            data: null,
+            id,
+            show: true,
+          },
+        })
+      : console.log(
+          'the order currently cannot be modified and he should come back later'
+        );
+    //TODO: replace console.log during US #504536
   };
 
   const labels = config?.actionLabels;
@@ -60,7 +68,8 @@ const OrderTrackingDetailHeader = ({
   const areInvoicesAvailable = content?.invoices?.length > 0;
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = content.serialsAny === true;
-  const isModifiable = hasOrderModificationRights && content?.isModifiable === true;
+  const isModifiable =
+    hasOrderModificationRights && content?.isModifiable === true;
   const id = content.orderNumber;
   const poNumber = content.customerPO;
   const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
@@ -103,7 +112,7 @@ const OrderTrackingDetailHeader = ({
       getInvoiceViewAnalyticsGoogle(content?.invoices?.length, 'Order Details')
     );
   };
-  
+
   const triggerExportFlyout = () => {
     setCustomState({
       key: 'exportFlyout',
@@ -159,17 +168,38 @@ const OrderTrackingDetailHeader = ({
   const handleReleaseOrder = async () => {
     setReleaseOrderShow(false);
     const params = {
-      OrderId: id
+      OrderId: id,
+    };
+    const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
+    const { content } = await usPost(url, params);
+    if (content?.ChangeDelFlag?.success) {
+      setReleaseSuccess(true);
+    } else {
+      setReleaseSuccess(false);
     }
-      const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
-      const {content} = await usPost(url, params);
-      if (content?.ChangeDelFlag?.success) {
-        setReleaseSuccess(true);
-      } else {
-        setReleaseSuccess(false);
-      }
-      setOpenAlert(true);
-  }
+    setOpenAlert(true);
+  };
+
+  const requestURLData = `${componentProps.uiCommerceServiceDomain}/v3/ordermodification/${id}`;
+  const getOrderModificationData = async () => {
+    try {
+      const result = await usGet(requestURLData);
+      return result;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
+    id &&
+      getOrderModificationData()
+        .then((result) => {
+          setOrderModificationContent(result.data.content);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  }, [id]);
 
   return (
     <div className="cmp-orders-qp__config-grid">
@@ -219,9 +249,11 @@ const OrderTrackingDetailHeader = ({
         orderNo={id}
         PONo={poNumber}
       />
-      <OrderReleaseAlertModal 
+      <OrderReleaseAlertModal
         open={openAlert}
-        handleClose={()=>{setOpenAlert(false)}}
+        handleClose={() => {
+          setOpenAlert(false);
+        }}
         orderLineDetails={config.actionLabels}
         releaseSuccess={releaseSuccess}
       />

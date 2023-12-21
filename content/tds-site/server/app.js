@@ -7775,9 +7775,13 @@ app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
           orderNumber: "6082483761",
           customerPO: "",
           currency: "GBP",
+          orderEditable: true,
+          addLine: true,
           items: [
             {
               line: "10",
+              cancel: true,
+              reduceQty: true,
               urlProductImage:
                 "https://cdn.cs.1worldsync.com/6c/a8/6ca85d27-e833-48a4-b15c-30cdd86296a4.jpg",
               displayName: 'XUB2793HS-B5 27" IPS FHD 75Hz 4ms HDMI',
@@ -7832,6 +7836,8 @@ app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
             },
             {
               line: "20",
+              cancel: true,
+              reduceQty: true,
               urlProductImage:
                 "https://cdn.cs.1worldsync.com/88/aa/88aaf689-e5cc-40fa-bd11-463decd41bc8.jpg",
               displayName: "CABLE_BO Hybrid USB-C Cable",

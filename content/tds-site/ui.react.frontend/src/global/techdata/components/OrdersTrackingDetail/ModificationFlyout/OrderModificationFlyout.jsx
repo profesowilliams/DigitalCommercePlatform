@@ -47,11 +47,11 @@ function OrderModificationFlyout({
   const { setCustomState } = store((st) => st.effects);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
+  const enableAddLine = orderModificationResponse?.addLine === true;
   const requestURLData = `${
     gridConfig.uiCommerceServiceDomain
   }/v3/ordermodification/${orderModificationConfig?.id || id}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
-
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
@@ -146,7 +146,7 @@ function OrderModificationFlyout({
   };
 
   const handleAddNewItem = () => {
-    setNewItemFormVisible(true);
+    enableAddLine && setNewItemFormVisible(true);
   };
 
   useEffect(() => {
@@ -182,7 +182,10 @@ function OrderModificationFlyout({
       buttonsSection={buttonsSection}
     >
       <section className="cmp-flyout__content order-modification">
-        <a className="add-new" onClick={handleAddNewItem}>
+        <a
+          className={`add-new ${!enableAddLine ? 'add-new-disabled' : ''}`}
+          onClick={handleAddNewItem}
+        >
           + {getDictionaryValueOrKey(labels.addNewItem)}
         </a>
         {newItemFormVisible && (
