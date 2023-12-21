@@ -38,6 +38,8 @@ function OrderModificationFlyout({
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [itemsCopy, setItemsCopy] = useState([]);
+  const [orderModificationContent, setOrderModificationContent] =
+    useState(null);
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
@@ -47,7 +49,7 @@ function OrderModificationFlyout({
   const { setCustomState } = store((st) => st.effects);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
-  const enableAddLine = orderModificationResponse?.addLine === true;
+  const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${
     gridConfig.uiCommerceServiceDomain
   }/v3/ordermodification/${orderModificationConfig?.id || id}`;
@@ -159,6 +161,7 @@ function OrderModificationFlyout({
         .then((result) => {
           setOrderModificationResponse(result?.data?.content?.items);
           setItems(result?.data?.content?.items);
+          setOrderModificationContent(result.data.content);
         })
         .catch((error) => {
           console.error('Error:', error);
