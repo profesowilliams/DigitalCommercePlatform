@@ -82,7 +82,7 @@ const MainGridFlyouts = ({
       <OrderModificationFlyout
         store={useOrderTrackingStore}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        labels={gridConfig.orderModifyLabels}
+        labels={gridConfig?.orderModifyLabels}
         gridConfig={gridConfig}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}

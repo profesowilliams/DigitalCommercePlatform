@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
@@ -93,7 +93,7 @@ function NotShippedTabGrid({
       value: {
         data: null,
         id: orderNo,
-        show: true
+        show: true,
       },
     });
   };
@@ -108,18 +108,26 @@ function NotShippedTabGrid({
   };
   const handleReleaseOrder = async () => {
     setReleaseOrderShow(false);
-      const params = {
-        OrderId: orderNo
-      };
-      const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
-      const {content} = await usPost(url, params);
-      if(content?.ChangeDelFlag?.success){
-        setReleaseSuccess(true);
-      }else{
-        setReleaseSuccess(false);
-      }
-      setOpenAlert(true);
-  }
+    const params = {
+      OrderId: orderNo,
+    };
+    const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
+    const { content } = await usPost(url, params);
+    if (content?.ChangeDelFlag?.success) {
+      setReleaseSuccess(true);
+    } else {
+      setReleaseSuccess(false);
+    }
+    setOpenAlert(true);
+  };
+  useEffect(() => {
+    setCustomState({
+      key: 'orderModificationFlyout',
+      value: {
+        id: orderNo,
+      },
+    });
+  }, []);
   return (
     <section>
       <div className="order-line-details__content__title">

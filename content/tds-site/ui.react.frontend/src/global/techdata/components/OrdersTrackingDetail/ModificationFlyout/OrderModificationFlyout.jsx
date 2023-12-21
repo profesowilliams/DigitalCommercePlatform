@@ -5,16 +5,17 @@ import { usGet, usPost } from '../../../../../utils/api';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useStore } from '../../../../../utils/useStore';
+import { getUrlParams } from '../../../../../utils';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   //// This function compares only quantities rather than all items' parameters
   const difference = items.find((item) => {
-   const index = itemsCopy.findIndex(
-     (copyItem) => copyItem?.line === item?.line
-   );
-   if (index > -1) {
-     return itemsCopy[index].orderQuantity !== item.orderQuantity;
-   } else return false;
+    const index = itemsCopy.findIndex(
+      (copyItem) => copyItem?.line === item?.line
+    );
+    if (index > -1) {
+      return itemsCopy[index].orderQuantity !== item.orderQuantity;
+    } else return false;
   });
   return Boolean(!difference);
 };
@@ -30,6 +31,7 @@ function OrderModificationFlyout({
   rowsToGrayOutTDNameRef,
   userData,
 }) {
+  const { id = '' } = getUrlParams();
   const [items, setItems] = useState([]);
   const orderModificationConfig = store((st) => st.orderModificationFlyout);
   const [orderChanged, setOrderChanged] = useState(false);
@@ -45,7 +47,9 @@ function OrderModificationFlyout({
   const { setCustomState } = store((st) => st.effects);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
-  const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${content?.orderNumber}`;
+  const requestURLData = `${
+    gridConfig.uiCommerceServiceDomain
+  }/v3/ordermodification/${orderModificationConfig?.id || id}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
 
   const getOrderModificationData = async () => {
@@ -150,16 +154,16 @@ function OrderModificationFlyout({
   }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
 
   useEffect(() => {
-    getOrderModificationData()
-      .then((result) => {
-        setOrderModificationResponse(result?.data?.content?.items);
-        setItems(result?.data?.content?.items);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, []);
-
+    (id || orderModificationConfig?.id) &&
+      getOrderModificationData()
+        .then((result) => {
+          setOrderModificationResponse(result?.data?.content?.items);
+          setItems(result?.data?.content?.items);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+  }, [orderModificationConfig?.id, id]);
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
@@ -192,14 +196,14 @@ function OrderModificationFlyout({
         </p>
         <ul className="cmp-flyout-list">
           {orderModificationResponse?.map((item, index) => (
-              <LineItem
-                key={item.line}
-                index={index}
-                item={item}
-                onChange={handleChange}
-                labels={labels}
-              />
-            ))}
+            <LineItem
+              key={item.line}
+              index={index}
+              item={item}
+              onChange={handleChange}
+              labels={labels}
+            />
+          ))}
         </ul>
       </section>
     </BaseFlyout>
