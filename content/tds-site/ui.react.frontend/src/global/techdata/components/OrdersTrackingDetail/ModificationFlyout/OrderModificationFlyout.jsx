@@ -192,6 +192,7 @@ function OrderModificationFlyout({
           <NewItemForm
             labels={labels}
             setNewItemFormVisible={setNewItemFormVisible}
+            domain={gridConfig.uiCommerceServiceDomain}
           />
         )}
         <p className="edit-quantities">

@@ -50,7 +50,7 @@ const AdditionalEmailForm = ({ labels, onChange }) => {
             value={newEmail}
             onChange={handleInputChange}
             variant="standard"
-            label={labels.newEmailAddress}
+            label={labels.newEmailAddress + '*'}
             InputLabelProps={{
               shrink: true,
             }}

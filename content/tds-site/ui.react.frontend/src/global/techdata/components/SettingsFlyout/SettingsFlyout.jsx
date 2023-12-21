@@ -82,9 +82,10 @@ const SettingsFlyout = ({
   };
 
   const isDataModifiedAndValid = () => {
+    console.log(data.email && data.additionalEmail, data);
     if (_.isEmpty(data)) {
       return false;
-    } else if (!data.email && !data.additionalEmail) {
+    } else if (!data.emailActive && !data.additionalEmailActive) {
       return false;
     } else if (areSettingsIdentical(dataCopy, data)) {
       return false;

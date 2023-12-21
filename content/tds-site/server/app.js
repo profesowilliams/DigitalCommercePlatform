@@ -9269,3 +9269,103 @@ app.post("/security", function (req, res) {
     return res.status(400).json({ success: false });
   }
 });
+
+app.get("/ui-commerce/v2/SearchProduct", function (req, res) {
+  const response = {
+    content: {
+      products: [
+        {
+          id: "2476043",
+          description:
+            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+          manufacturer: "TARGUS",
+          manufacturerPartNumber: "CN414EU",
+          price: 20.45,
+          endUserPromos: [
+            {
+              endCustomer: "PUBLIC SECTOR BID H2",
+              id: ["6445478"],
+              includesWebDiscount: false,
+              type: "END_USER",
+              value: 16.27,
+              expiration: "12-31-2023",
+              minQuantity: 1,
+              vendorBidNumber: "TGSST2306016",
+              remainingQuantity: 50,
+              quantityLimited: false,
+              info: [],
+            },
+            {
+              endCustomer: "50-99 VOLUME BREAK PRICING",
+              id: ["6215729"],
+              includesWebDiscount: false,
+              type: "END_USER",
+              value: 17.5,
+              expiration: "12-31-2023",
+              minQuantity: 50,
+              vendorBidNumber: "TGSHQUK99",
+              quantityLimited: false,
+              info: [],
+            },
+            {
+              endCustomer: "25-49 VOLUME BREAK PRICING",
+              id: ["6216854"],
+              includesWebDiscount: false,
+              type: "END_USER",
+              value: 18.32,
+              expiration: "12-31-2023",
+              minQuantity: 25,
+              vendorBidNumber: "TGSHQUK49",
+              quantityLimited: false,
+              info: [],
+            },
+            {
+              endCustomer: "100 -249 VOLUME BREAK PRICING",
+              id: ["6220060"],
+              includesWebDiscount: false,
+              type: "END_USER",
+              value: 16.69,
+              expiration: "12-31-2023",
+              minQuantity: 100,
+              vendorBidNumber: "TGSHQUK249",
+              quantityLimited: false,
+              info: [],
+            },
+          ],
+        },
+        {
+          id: "2476043",
+          description:
+            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+          manufacturer: "TARGUS",
+          manufacturerPartNumber: "CN412345",
+          price: 20.45,
+        },
+        {
+          id: "2476043",
+          description:
+            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+          manufacturer: "TARGUS",
+          manufacturerPartNumber: "CN432211",
+          price: 20.45,
+        },
+        {
+          id: "2476043",
+          description:
+            'Targus Classic Clamshell - Notebook carrying case - 14" - black, red',
+          manufacturer: "TARGUS",
+          manufacturerPartNumber: "CN412377",
+          price: 20.45,
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});

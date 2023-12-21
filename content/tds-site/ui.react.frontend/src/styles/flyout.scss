@@ -285,8 +285,12 @@ $flyout-small-height-formax: 779px;
     color: $brand-text-lightgray;
   }
   .new-item-form {
+    display: flex;
+    & > div:first-of-type {
+      width: 224px;
+    }
     button:nth-of-type(2) {
-      margin-left: 5px;
+      margin-left: 24px;
     }
   }
   .edit-quantities {
