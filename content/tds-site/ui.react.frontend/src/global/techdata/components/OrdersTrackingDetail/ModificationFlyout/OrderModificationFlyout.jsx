@@ -134,7 +134,7 @@ function OrderModificationFlyout({
         {getDictionaryValueOrKey(labels?.update)}
       </button>
       <button className="secondary" onClick={closeFlyout}>
-        {getDictionaryValueOrKey(labels?.cancel)}
+        {getDictionaryValueOrKey(labels?.flyoutCancel || labels?.cancel)}
       </button>
     </div>
   );

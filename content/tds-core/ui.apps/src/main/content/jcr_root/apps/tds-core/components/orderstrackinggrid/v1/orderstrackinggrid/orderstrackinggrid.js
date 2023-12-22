@@ -180,7 +180,7 @@ use(["../common/utils.js"], function (utils) {
       "editQuantities",
       "lineTotal",
       "modifyOrder",
-      "cancel",
+      "flyoutCancel",
       "update",
       "manufacturersPartNumber",
       "quantity",

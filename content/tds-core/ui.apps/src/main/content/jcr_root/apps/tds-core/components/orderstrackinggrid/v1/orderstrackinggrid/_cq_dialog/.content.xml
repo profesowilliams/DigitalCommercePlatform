@@ -856,11 +856,11 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Modify Order Label"
 												name="./modifyOrder"/>   
-                                            <cancel
+                                            <flyoutCancel
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Cancel Label"
-												name="./cancel"/>
+												name="./flyoutCancel"/>
                                             <update
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
