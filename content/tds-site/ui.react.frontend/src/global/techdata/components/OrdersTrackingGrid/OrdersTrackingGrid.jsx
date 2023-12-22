@@ -12,7 +12,6 @@ import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
-import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import {
   addCurrentPageNumber,
@@ -65,7 +64,6 @@ const searchParamsKeys = [
 
 function OrdersTrackingGrid(props) {
   const { redirectedFrom = '' } = getUrlParams();
-  const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [userData, setUserData] = useState(null);
   const [detailsApiResponse, setDetailsApiResponse] = useState(null);
   const areSearchParamsValid = useRef(false);
@@ -261,27 +259,8 @@ function OrdersTrackingGrid(props) {
     }
   };
 
-  const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
-
-  const handleDirectMatch = (response) => {
-    resetLocalStorage(searchParamsKeys); // This reset is to avoid looping in case of one result redirect
-    window.location.href = `${location.href.substring(
-      0,
-      location.href.lastIndexOf('.')
-    )}/order-details.html?id=${response[0].id}${salesLoginParam}`;
-  };
-
-  const onDataLoad = (response) => {
-    if (
-      response.length === 1 &&
-      !isLocalDevelopment &&
-      customPaginationRef.current.pageNumber === 1
-    ) {
-      gridApiRef?.current?.api.showLoadingOverlay();
-      handleDirectMatch(response);
-    } else {
+  const onDataLoad = () => {
       setIsLoading(false);
-    }
   };
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
