@@ -337,7 +337,7 @@ function RenewalsGrid(props) {
       />
       <BaseGrid
         columnList={componentProp.columnList}
-        definitions={renewalsDefinitions()}
+        definitions={renewalsDefinitions(componentProp)}
         config={gridConfig}
         options={options}
         sortingOrder={componentProp.disableDefaultSort ? ['asc', 'desc'] : ['desc', 'asc', null]}

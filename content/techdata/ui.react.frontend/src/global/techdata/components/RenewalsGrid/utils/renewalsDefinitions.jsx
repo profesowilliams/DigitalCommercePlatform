@@ -7,7 +7,7 @@ import DueDateDayColumn from '../Columns/DueDateDayColumn';
 import PriceColumn from '../Columns/PriceColumn';
 import RenewalActionColumn from "../Columns/RenewalActionColumn";
 
-export const renewalsDefinitions = () => {
+export const renewalsDefinitions = (componentProp) => {
 
   const createColumnComponent = (eventProps, aemDefinition) => {  
     const { columnKey } = aemDefinition;
@@ -21,7 +21,7 @@ export const renewalsDefinitions = () => {
       dueDate: <DueDateColumn columnValue={data?.formattedDueDate} />,
       actions: <RenewalActionColumn eventProps={eventProps} />,
       total: <PriceColumn columnValue={data?.renewal?.total} currency={data?.renewal?.currency} />,
-      agreementNumber: data?.agreementNumber,
+      agreementNumber: data?.agreementNumber === 'Multiple' ? componentProp?.productGrid?.multipleLabel : data?.agreementNumber,
       Id: <DistiQuoteColumn id={data?.source?.id} />,
     };
     const defaultValue = () => (typeof value !== 'object' && value) || '';

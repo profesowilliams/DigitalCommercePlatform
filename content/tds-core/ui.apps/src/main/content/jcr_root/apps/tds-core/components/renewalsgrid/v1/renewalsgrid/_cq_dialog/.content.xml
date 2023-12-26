@@ -665,6 +665,13 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
                                                 name="./showSeeDetailsButton@TypeHint"
                                                 value="Boolean"/>
+											<multipleLabel
+													jcr:primaryType="nt:unstructured"
+													sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+													fieldDescription="Enter Multiple Label"
+													fieldLabel="Multiple Label"
+													name="./multipleLabel"
+													required="{Boolean}true"/>
 										</items>
 									</column>
 								</items>

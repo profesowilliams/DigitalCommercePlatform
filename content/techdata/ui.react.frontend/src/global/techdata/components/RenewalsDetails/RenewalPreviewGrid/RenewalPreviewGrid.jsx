@@ -22,7 +22,6 @@ import { copyToClipboardAction, getContextMenuItems, setLocalStorageData } from 
 import useComputeBranding from "../../../hooks/useComputeBranding";
 import { getDictionaryValue } from "../../../../../utils/utils";
 
-
 function GridSubTotal({ subtotal, data, gridProps }) {
   return (
     <div className="cmp-renewal-preview__subtotal">
@@ -60,6 +59,7 @@ function Price({ value }) {
 
 function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compProps }, ref) {
   const [modal, setModal] = useState(null);
+  const [multipleFlag, setMultipleFlag] = useState(false);
   const [isPODialogOpen, setIsPODialogOpen] = useState(false);
   const orderEndpoints = {
     updateRenewalOrderEndpoint: compProps.updateRenewalOrderEndpoint,
@@ -145,7 +145,37 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       return mutableGridData;
     }
   }), [gridSavedItems])
+  const contractMap = new Map();
+  const sortedGridData = gridData.sort((a, b) => {
+    const contractIdA = a.contract.id;
+    const contractIdB = b.contract.id;
 
+    return contractIdA - contractIdB;
+  });
+  JSON.parse(JSON.stringify(sortedGridData))?.forEach(item => {
+    const contractId = item.contract.id;
+    if (!contractMap.has(contractId)) {
+      contractMap.set(contractId, []);
+    }
+    contractMap.get(contractId).push(item);
+  });
+
+  const resultArray = [];
+  contractMap?.forEach((contractGroup, index) => {
+    if (contractGroup.length > 1 && contractMap?.size > 1) {
+      resultArray.push(
+        {
+          ...gridData[0],
+          totalPrice: 0,
+          value: 0,
+          unitPrice: 0,
+          quantity:0,
+          section: 'big-title', id: `Agreement No:  ${index}`
+      }
+      );
+    }
+    resultArray.push(...contractGroup);
+  });
   const gridColumnWidths = Object.freeze({
     line: "29px",
     productFamily: "150px",
@@ -164,8 +194,19 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       headerName: gridProps?.line,
       width: gridColumnWidths.line,
       cellRenderer: ({ data }) => {
-        return !(data?.id?.includes('Agreement')) ? data.id : <div className="row-header">{data.id}</div>
-      }
+        if (contractMap.size > 1) {
+          setMultipleFlag(true);
+        }
+        return !(data?.id?.includes('Agreement')) ? data.id :
+          <div className="row-header">
+            <div><span>{data.id?.split(":")[0]}:</span> {data.id?.split(":")[1]}</div> |
+            <div><span>Support Level:</span> {data.supportLevel}</div> |
+            <div><span>Due Date:</span> {'06.16/2021'}</div> |
+            <div><span>Duration:</span> {'06.16/2020 - 06.16/2021'}</div> |
+            <div><span>Usage Period:</span> {'06.16/2020 - 06.16/2021'}</div>
+          </div>
+      },
+      headerClass: contractMap.size <= 1 ? 'contract-header' : "normal-headerr",
     },
     {
       field: "vendorPartNo",
@@ -182,6 +223,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         return !(data?.id?.includes("Agreement")) ?
         <RenewalProductLinesItemInformation
           line={data}
+          lineDetailsLabels={compProps.lineItemDetailLabels}
           isLinkDisabled={gridProps.disableProductDetailsLink}
           shopDomainPage={shopDomainPage}
           invokeModal={invokeModal}
@@ -242,11 +284,14 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         "{currency-code}",
         data?.currency || ""
       ),
-      cellRenderer: (props) => !(props?.data?.id?.includes("Agreement")) ? Price(props) : "",
+      cellRenderer: (props) =>
+        !(props?.data?.id?.includes("Agreement")) ? Price(props) : ""
+      ,
       valueGetter:'data.quantity * data.unitPrice',
       // Use sum aggFunc to also update subtotal value.
       // Function is triggered on internal grid updates.
-      aggFunc: params => {
+      aggFunc: (params, props) => {
+
         let total = 0;
         params.values.forEach(value => total += value);
         setSubtotal(total);
@@ -257,28 +302,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   ];
 
   const columnDefs = useMemo(() => buildColumnDefinitions(columnDefinitionsOverride),[]);
-  const contractMap = new Map();
-  JSON.parse(JSON.stringify(gridData))?.forEach(item => {
-    const contractId = item.contract.id;
-    if (!contractMap.has(contractId)) {
-      contractMap.set(contractId, []);
-    }
-    contractMap.get(contractId).push(item);
-  });
 
-  const resultArray = [];
-
-  contractMap?.forEach((contractGroup, index) => {
-    if (contractGroup.length > 1) {
-      resultArray.push(
-        {
-          ...gridData[0],
-          section: 'big-title', id: `Agreement No:  ${index}`
-      }
-      );
-    }
-    resultArray.push(...contractGroup);
-  });
   /*
     mutableGridData is copied version of response that can be safely mutated,
     original state is preserved in gridData.
@@ -324,7 +348,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const processCustomClipboardAction = (params) => copyToClipboardAction(params);
 
   return (
-    <div className="cmp-product-lines-grid cmp-renewals-details">
+    <div className={multipleFlag ? "cmp-product-lines-grid cmp-renewals-details renewals-has-multiple" :"cmp-product-lines-grid cmp-renewals-details"}>
       <section>
         <Grid
           onAfterGridInit={onAfterGridInit}
@@ -334,7 +358,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           getDefaultCopyValue={getDefaultCopyValue}
           contextMenuItems={contextMenuItems}
           processCustomClipboardAction={processCustomClipboardAction}
-        />
+          />
         {/* <AgGridReact
           rowData={mutableGridData}
           columnDefs={columnDefs}

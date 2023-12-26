@@ -22,7 +22,7 @@ Instance:${line.instance}`
 }
 
 
-function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shopDomainPage = "", invokeModal }) {
+function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shopDomainPage = "", invokeModal, lineDetailsLabels }) {
   const description =  formatDetailsShortDescription(line);
   const serialHasValue = hasSerialNumbers(line);
  
@@ -83,7 +83,7 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
             </a>
             <br />
             {serialHasValue && <span>
-              <b>Serial №: </b>
+              <b>{lineDetailsLabels.serialNumberLabel}</b>
               {line.serialNumbers && line.serialNumbers.length && !line.serialNumbers.every(e => e === null) ? (
                 <a
                   className="cmp-grid-url-underlined"
@@ -113,8 +113,20 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
               )}
             </span>}
             {line.instance && <span>
-              <b>Instance: </b>
+              <b>{lineDetailsLabels?.instanceLabel}</b>
               {line.instance}
+            </span>}
+            {line?.contract?.dueDate && <span>
+              <b>{lineDetailsLabels?.dueDateLabel}</b>
+              {line?.contract?.formattedEndDate}
+            </span>}
+            {line?.contract?.duration && <span>
+              <b>{lineDetailsLabels?.durationLabel}</b>
+              {line?.contract?.formattedStartDate} - {line?.contract?.formattedEndDate}
+            </span>}
+            {line?.contract?.usagePeriod && <span>
+              <b>{lineDetailsLabels?.usagePeriodLabel}</b>
+              {line?.contract?.formattedUsagePeriod}
             </span>}
           </div>
         </div>

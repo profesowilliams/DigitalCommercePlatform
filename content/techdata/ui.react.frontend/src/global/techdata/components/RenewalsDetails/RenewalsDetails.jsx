@@ -179,7 +179,7 @@ function RenewalsDetails(props) {
       renewalsDetails.endUser = endUserDetails || renewalsDetails.endUser;
       renewalsDetails.reseller = resellerDetails || renewalsDetails.reseller;
       renewalsDetails.shipTo = shipToDetails || renewalsDetails.shipTo;
-      renewalsDetails.items = gridRef.current.getMutableGridData();
+      renewalsDetails.items = (gridRef.current.getMutableGridData())?.filter(item => !(item.id.includes('Agreement')));
       
       if (renewalsDetails.endUser?.eaNumber?.text) {
         renewalsDetails['EANumber'] = renewalsDetails.endUser?.eaNumber?.text;

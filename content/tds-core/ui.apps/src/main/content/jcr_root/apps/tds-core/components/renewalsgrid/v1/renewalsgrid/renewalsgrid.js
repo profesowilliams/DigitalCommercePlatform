@@ -184,7 +184,9 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["quoteIdLabel"]) {
         productGrid["quoteIdLabel"] = properties["quoteIdLabel"];
     }
-
+     if (properties && properties["quoteIdLabel"]) {
+            productGrid["multipleLabel"] = properties["multipleLabel"];
+        }
     if (properties && properties["refNoLabel"]) {
         productGrid["refNoLabel"] = properties["refNoLabel"];
     }

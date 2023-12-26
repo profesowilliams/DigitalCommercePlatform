@@ -9,6 +9,7 @@ use(['../../../common/utils.js'], function(utils) {
     var errorMessages = {};
     var endCustomer = {};
     var quoteEditing = {};
+    var lineItemDetailLabels = {};
     let copyFlyout = {};
     
     if (properties && properties["line"]) {
@@ -418,6 +419,34 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (copyFlyout != null) {
         jsonObject["copyFlyout"] = copyFlyout;
+    }
+
+    if (properties && properties["lineItemSerialNumberLabel"]) {
+        lineItemDetailLabels.serialNumberLabel = properties["lineItemSerialNumberLabel"];
+    }
+
+    if (properties && properties["lineItemSupportLevelLabel"]) {
+        lineItemDetailLabels.supportLevelLabel = properties["lineItemSupportLevelLabel"];
+    }
+
+    if (properties && properties["lineItemInstanceLabel"]) {
+        lineItemDetailLabels.instanceLabel = properties["lineItemInstanceLabel"];
+    }
+
+    if (properties && properties["lineItemDueDateLabel"]) {
+        lineItemDetailLabels.dueDateLabel = properties["lineItemDueDateLabel"];
+    }
+
+    if (properties && properties["lineItemDurationLabel"]) {
+         lineItemDetailLabels.durationLabel = properties["lineItemDurationLabel"];
+    }
+
+    if (properties && properties["lineItemUsagePeriodLabel"]) {
+         lineItemDetailLabels.usagePeriodLabel = properties["lineItemUsagePeriodLabel"];
+    }
+
+    if (lineItemDetailLabels != null) {
+        jsonObject["lineItemDetailLabels"] = lineItemDetailLabels;
     }
 
     return {
