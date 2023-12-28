@@ -19,6 +19,14 @@
     updateRenewalOrderEndpoint:"http://localhost:3000/ui-renewal/v1/Update",
     getStatusEndpoint:"http://localhost:3000/ui-renewal/v1/getStatus",
     orderRenewalEndpoint:"http://localhost:3000/ui-renewal/v1/order",
+    "lineItemDetailLabels": {
+      "serialNumberLabel": "Serial  Number",
+      "supportLevelLabel": "Support Level",
+      "instanceLabel": "Instancenew:",
+      "dueDateLabel": "Due Date:",
+      "durationLabel": "Duration:",
+      "usagePeriodLabel": "Usage:"
+    },
     productLines: {
       line: "Line",
       lineItemDetailsLabel: "Details",
@@ -75,19 +83,19 @@
         vendorAccountNo: "Vendor account No:",
         endCustpreviousPurchaseOrderNo: "Previous purchase order No:",
       },
-      agreementInfo: {
-        agreementInfoLabel: "Agreement ",
-        programLabel: "Program:",
-        durationLabel: "Duration:",
-        supportLevelLabel: "Support level:",
-        quoteNo: "Quote Nº:",
-        agreementNoLabel: "Agreement Nº:",
-        vendorQuoteId: "Vendor quote ID:",
-        quotedueDateLabel: "Quote due date:",
-        quoteExpiryDateLabel: "Quote expiry date:",
-        agreementDuration: "Agreement Duration:",
-        usageDuration: "Usage Duration:"
-      },
+      agreementInfo:{
+    "agreementInfoLabel": "Agreement ",
+    "programLabel": "Program:",
+    "termLabel": "TErm",
+    "supportLevelLabel": "Support level:",
+    "quoteNo": "Quote Nº",
+    "agreementNoLabel": "Agreement Nº:",
+    "vendorQuoteId": "Vendor quote ID",
+    "dueDateLabel": "Due date",
+    "quoteExpiryDateLabel": "Quote expiry date:",
+    "duration": "Duration",
+    "usageDuration": "Usage Duration"
+},
     },
     errorMessages: {
       notFoundErrorMessage: "The renewal details cannot be found.",
