@@ -75,6 +75,7 @@ const SettingsFlyout = ({
         isAutoClose: true,
         isSuccess: false,
         message: getDictionaryValueOrKey(labels?.settingsErrorMessage),
+        Child: null,
       };
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }

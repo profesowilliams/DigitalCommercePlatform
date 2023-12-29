@@ -39,6 +39,9 @@
                     font-family: "Arial";
                     margin: 0;                
                 }
+                a {
+                    color: $brand-cobalt;
+                }
             }
 
             &__error-title {
