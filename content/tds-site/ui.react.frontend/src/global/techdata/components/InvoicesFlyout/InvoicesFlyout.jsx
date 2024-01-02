@@ -4,6 +4,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
 import { usGet } from '../../../../utils/api';
+import ToolTip from '../BaseGrid/ToolTip';
 
 function InvoicesFlyout({
   store,
@@ -16,6 +17,7 @@ function InvoicesFlyout({
   openFilePdf,
 }) {
   const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
+  const [showTooltip, setShowTooltip] = useState(false)
   const effects = store((st) => st.effects);
   const [selected, setSelected] = useState([]);
   const [invoicesResponse, setInvoicesResponse] = useState(null);
@@ -88,8 +90,12 @@ function InvoicesFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(invoicesFlyout.title || 'Invoices')}
-      buttonLabel={getDictionaryValueOrKey(invoicesFlyout.button || 'Download selected')}
-      secondaryButtonLabel={getDictionaryValueOrKey(invoicesFlyout.clearAllButton || 'Clear all')}
+      buttonLabel={getDictionaryValueOrKey(
+        invoicesFlyout.button || 'Download selected'
+      )}
+      secondaryButtonLabel={getDictionaryValueOrKey(
+        invoicesFlyout.clearAllButton || 'Clear all'
+      )}
       disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}
@@ -105,7 +111,11 @@ function InvoicesFlyout({
             </span>
             <span>{invoicesFlyoutConfig?.id}</span>
           </div>
-          <div className="cmp-flyout__content__contentGrid">
+          <div
+            className="cmp-flyout__content__contentGrid"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
             <span className="cmp-flyout__content-bold">
               {getDictionaryValueOrKey(invoicesFlyout.poNo)}
               {'  '}
@@ -114,6 +124,14 @@ function InvoicesFlyout({
               {invoicesFlyoutConfig?.reseller}
             </span>
           </div>
+          <ToolTip
+            toolTipData={{
+              show: showTooltip,
+              y: null,
+              x: null,
+              value: invoicesFlyoutConfig?.reseller,
+            }}
+          />
         </div>
         <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(invoicesFlyout.description)}
