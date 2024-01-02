@@ -44,7 +44,7 @@
      * Teaser image styles.
      */
     .cmp-teaser__image {
-      // Add image styles here
+      height: 19.8125rem;
     }
 
     /**
@@ -58,18 +58,18 @@
      * Teaser content styles.
      */
     .cmp-teaser__content {
-    width: 26rem;
-    margin-top: -73px;
-    padding: 0 2rem 2rem;
-    background: transparent;
-    gap: 0!important;
-    flex: 1;
-    display: flex;
-    padding: 1.5rem;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 1 0 0;
-    align-self: stretch;
+      width: 26rem;
+      margin-top: -73px;
+      padding: 0 2rem 2rem;
+      background: transparent;
+      gap: 0 !important;
+      flex: 1;
+      display: flex;
+      padding: 1.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1 0 0;
+      align-self: stretch;
 
       /**
        * Teaser title styles.
