@@ -173,7 +173,7 @@ function NotShippedTabGrid({
               )}
             </button>
           )}
-          {hasOrderModificationRights && isModifiable && (
+          {true && isModifiable && (
             <button
               className="order-line-details__content__title-button"
               onClick={handleOrderModification}

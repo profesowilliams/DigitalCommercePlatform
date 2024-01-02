@@ -49,10 +49,9 @@ function OrderModificationFlyout({
   const { setCustomState } = store((st) => st.effects);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
+  const orderNumber = id || orderModificationConfig?.id;
   const enableAddLine = orderModificationContent?.addLine === true;
-  const requestURLData = `${
-    gridConfig.uiCommerceServiceDomain
-  }/v3/ordermodification/${orderModificationConfig?.id || id}`;
+  const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
   const getOrderModificationData = async () => {
     try {
@@ -101,7 +100,7 @@ function OrderModificationFlyout({
   const getPayload = () => ({
     SalesOrg: userData?.customersV2?.[0]?.salesOrg,
     CustomerID: userData?.customersV2?.[0]?.customerNumber,
-    OrderID: content?.orderNumber,
+    OrderID: orderNumber,
     ReduceLine: reduceLine,
     AddLine: addLine,
     ProductID: content?.productDtos?.source?.Id,
@@ -156,7 +155,7 @@ function OrderModificationFlyout({
   }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
 
   useEffect(() => {
-    (id || orderModificationConfig?.id) &&
+    orderNumber &&
       getOrderModificationData()
         .then((result) => {
           setOrderModificationResponse(result?.data?.content?.items);
@@ -166,7 +165,7 @@ function OrderModificationFlyout({
         .catch((error) => {
           console.error('Error:', error);
         });
-  }, [orderModificationConfig?.id, id]);
+  }, [orderNumber]);
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
