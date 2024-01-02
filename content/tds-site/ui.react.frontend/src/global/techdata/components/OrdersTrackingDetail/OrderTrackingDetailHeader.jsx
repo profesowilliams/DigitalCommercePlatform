@@ -64,8 +64,19 @@ const OrderTrackingDetailHeader = ({
 
   const labels = config?.actionLabels;
 
-  const areDeliveryNotesAvailable = content?.deliveryNotes?.length > 0;
-  const areInvoicesAvailable = content?.invoices?.length > 0;
+  const firstDeliveryNote = content?.deliveryNotes
+    ? content?.deliveryNotes[0]
+    : [];
+  const isDeliveryNoteDownloadable = firstDeliveryNote?.canDownloadDocument;
+  const firstInvoice = content?.invoices ? content.invoices[0] : [];
+  const isInvoiceDownloadable = firstInvoice?.canDownloadDocument;
+
+  const areDeliveryNotesAvailable =
+    content?.deliveryNotes?.length > 1 ||
+    (content?.deliveryNotes?.length === 1 && isDeliveryNoteDownloadable);
+  const areInvoicesAvailable =
+    content?.invoices?.length > 1 ||
+    (content?.invoices?.length === 1 && isInvoiceDownloadable);
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = content.serialsAny === true;
   const isModifiable =
@@ -76,13 +87,17 @@ const OrderTrackingDetailHeader = ({
   const hasMultipleInvoices = content?.invoices?.length > 1;
 
   const handleDownloadDNote = () => {
-    openFilePdf('DNote', id, content?.deliveryNotes[0]?.id);
-    pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
+    if (isDeliveryNoteDownloadable) {
+      openFilePdf('DNote', id, content?.deliveryNotes[0]?.id);
+      pushDataLayerGoogle(getDNoteViewAnalyticsGoogle(1, 'Order Details'));
+    }
   };
 
   const handleDownloadInvoice = () => {
-    openFilePdf('Invoice', id, content?.invoices[0]?.id);
-    pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
+    if (isInvoiceDownloadable) {
+      openFilePdf('Invoice', id, content?.invoices[0]?.id);
+      pushDataLayerGoogle(getInvoiceViewAnalyticsGoogle(1, 'Order Details'));
+    }
   };
 
   const triggerDNotesFlyout = () => {
