@@ -21,7 +21,7 @@ export const ordersTrackingDefinition = (
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
       // and will render order date on DIT and SIT env
       select: <SelectColumn eventProps={eventProps} />,
-      updated: data?.updatedFormatted ?? data?.created,
+      actualShipDate: data?.actualShipDateFormatted,
       shipTo: <ShipToColumn data={data?.shipTo} />,
       statusText: (
         <StatusColumn
