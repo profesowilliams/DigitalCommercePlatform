@@ -90,7 +90,6 @@ function OrdersTrackingDetailGrid({
     {
       field: 'description',
       headerName: getDictionaryValueOrKey(config?.itemsLabels?.description),
-      cellHeight: () => 80,
       cellRenderer: ({ data }) => (
         <DescriptionColumn line={data} config={gridProps} />
       ),
@@ -176,7 +175,7 @@ function OrdersTrackingDetailGrid({
       setUserData(data[1]);
     });
   }, []);
-
+console.log(`DESCRIPTION ${getDictionaryValueOrKey(config?.itemsLabels?.description)}`);
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (
