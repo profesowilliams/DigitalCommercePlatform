@@ -4,7 +4,12 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
 import { usGet } from '../../../../../utils/api';
 
-const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
+const NewItemForm = ({
+  labels = {},
+  setNewItemFormVisible,
+  domain,
+  addNewItem,
+}) => {
   const [values, setValues] = useState({
     manufacturersPartNumber: null,
     quantity: null,
@@ -14,10 +19,22 @@ const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
   const loading = open && suggestions.length === 0;
 
   const setNewSuggestions = (response) => {
-    if (response) {
-      setSuggestions(
-        response.products.map((product) => product.manufacturerPartNumber)
-      );
+    if (response && values.manufacturersPartNumber) {
+      let matchingKey = 'manufacturerPartNumber';
+      if (
+        response.products[0].manufacturerPartNumber
+          .toLowerCase()
+          ?.includes(values.manufacturersPartNumber.toLowerCase())
+      ) {
+        matchingKey = 'manufacturerPartNumber';
+      } else if (
+        response.products[0].id
+          .toLowerCase()
+          ?.includes(values.manufacturersPartNumber.toLowerCase())
+      ) {
+        matchingKey = 'id';
+      }
+      setSuggestions(response.products.map((product) => product[matchingKey]));
     }
   };
 
@@ -32,7 +49,8 @@ const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
     }
   };
 
-  const handleAutocompleteChange = (key, newValue) => {
+  const handleAutocompleteInput = (key, newValue) => {
+    setValues({ ...values, [key]: newValue });
     fetchSuggestions(newValue).then((result) => {
       setNewSuggestions(result.data.content);
     });
@@ -40,6 +58,10 @@ const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
 
   const handleChange = (key, newValue) => {
     setValues({ ...values, [key]: newValue });
+  };
+
+  const handleAutocompleteChange = (e) => {
+    addNewItem(e.target.textContent);
   };
 
   const isFormFilled = Object.values(values).every(
@@ -58,6 +80,7 @@ const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
         id="free-solo-demo"
         freeSolo
         options={suggestions}
+        // getOptionLabel={(option) => option.title}
         loading={loading}
         open={open}
         onOpen={() => {
@@ -66,6 +89,7 @@ const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
         onClose={() => {
           setOpen(false);
         }}
+        onChange={handleAutocompleteChange}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -76,7 +100,7 @@ const NewItemForm = ({ labels, setNewItemFormVisible, domain }) => {
               shrink: true,
             }}
             onChange={(event) =>
-              handleAutocompleteChange(
+              handleAutocompleteInput(
                 'manufacturersPartNumber',
                 event.target.value
               )

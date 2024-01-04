@@ -539,6 +539,10 @@ $flyout-small-height-formax: 779px;
         font-weight: 600;
       }
     }
+    &.newly-added {
+      background-color: $td-neutral-gray;
+      margin: 12px 18px;
+    }
   }
 }
 

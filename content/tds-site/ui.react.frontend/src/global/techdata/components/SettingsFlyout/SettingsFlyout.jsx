@@ -3,6 +3,7 @@ import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import SettingsContent from './SettingsContent';
+import { useStore } from '../../../../utils/useStore';
 import { usPut } from '../../../../utils/api';
 
 const settingsKeys = [
@@ -33,6 +34,9 @@ const SettingsFlyout = ({
   const [data, setData] = useState({});
   const [isSaveEnabled, setIsSaveEnabled] = useState(false);
   const [dataCopy, setDataCopy] = useState({});
+  const changeRefreshDetailApiState = useStore(
+    (state) => state.changeRefreshDetailApiState
+  );
 
   const closeFlyout = () => {
     effects.setCustomState({
@@ -79,11 +83,11 @@ const SettingsFlyout = ({
       };
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
+    changeRefreshDetailApiState();
     closeFlyout();
   };
 
   const isDataModifiedAndValid = () => {
-    console.log(data.email && data.additionalEmail, data);
     if (_.isEmpty(data)) {
       return false;
     } else if (!data.emailActive && !data.additionalEmailActive) {

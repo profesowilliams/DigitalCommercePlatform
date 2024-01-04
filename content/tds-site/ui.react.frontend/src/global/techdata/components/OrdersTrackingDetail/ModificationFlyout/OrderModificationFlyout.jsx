@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NewItemForm from './NewItemForm';
+import NewlyAddedLineItem from './NewlyAddedLineItem';
 import LineItem from './LineItem';
 import { usGet, usPost } from '../../../../../utils/api';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
@@ -40,6 +41,7 @@ function OrderModificationFlyout({
   const [itemsCopy, setItemsCopy] = useState([]);
   const [orderModificationContent, setOrderModificationContent] =
     useState(null);
+  const [newlyAddedItems, setNewlyAddedItems] = useState([]);
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
@@ -150,6 +152,10 @@ function OrderModificationFlyout({
     enableAddLine && setNewItemFormVisible(true);
   };
 
+  const handleNewItem = (item) => {
+    setNewlyAddedItems([...newlyAddedItems, item]);
+  };
+
   useEffect(() => {
     setIsDisabled(!orderChanged || doesReasonDropdownHaveEmptyItems);
   }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
@@ -191,11 +197,17 @@ function OrderModificationFlyout({
           + {getDictionaryValueOrKey(labels.addNewItem)}
         </a>
         {newItemFormVisible && (
-          <NewItemForm
-            labels={labels}
-            setNewItemFormVisible={setNewItemFormVisible}
-            domain={gridConfig.uiCommerceServiceDomain}
-          />
+          <>
+            <NewItemForm
+              labels={labels}
+              setNewItemFormVisible={setNewItemFormVisible}
+              domain={gridConfig.uiCommerceServiceDomain}
+              addNewItem={handleNewItem}
+            />
+            {newlyAddedItems.map((item, index) => (
+              <NewlyAddedLineItem key={index} labels={labels} />
+            ))}
+          </>
         )}
         <p className="edit-quantities">
           {getDictionaryValueOrKey(labels?.editQuantities)}
