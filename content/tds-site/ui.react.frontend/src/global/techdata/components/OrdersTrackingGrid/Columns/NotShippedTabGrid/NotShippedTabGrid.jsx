@@ -42,8 +42,14 @@ function NotShippedTabGrid({
   const [orderModificationContent, setOrderModificationContent] =
     useState(null);
   const orderEditable = orderModificationContent?.orderEditable === true;
-  const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
-    config?.orderLineDetailsNotShippedColumnLabels;
+  const {
+    lineNumber,
+    item,
+    pnsku,
+    nqty,
+    deliveryEstimate,
+    modifyErrorMessage,
+  } = config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
     lineNumber: '60px',
     item: '425px',
@@ -92,6 +98,13 @@ function NotShippedTabGrid({
   );
 
   const handleOrderModification = () => {
+    const toaster = {
+      isOpen: true,
+      origin: 'fromUpdate',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(modifyErrorMessage),
+    };
     orderEditable
       ? setCustomState({
           key: 'orderModificationFlyout',
@@ -101,9 +114,7 @@ function NotShippedTabGrid({
             show: true,
           },
         })
-      : console.log(
-          'the order currently cannot be modified and he should come back later' //TODO: replace console.log during US #504536
-        );
+      : effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
   function getRowClass({ node }) {
     const nodeData = node.group ? node.aggData : node.data;

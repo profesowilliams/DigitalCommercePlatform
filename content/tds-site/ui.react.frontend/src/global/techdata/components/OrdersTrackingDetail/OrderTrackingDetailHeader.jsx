@@ -47,6 +47,13 @@ const OrderTrackingDetailHeader = ({
   };
 
   const handleOrderModification = () => {
+    const toaster = {
+      isOpen: true,
+      origin: 'fromUpdate',
+      isAutoClose: true,
+      isSuccess: false,
+      message: getDictionaryValueOrKey(config.labels?.modifyErrorMessage),
+    };
     orderEditable
       ? setCustomState({
           key: 'orderModificationFlyout',
@@ -56,10 +63,7 @@ const OrderTrackingDetailHeader = ({
             show: true,
           },
         })
-      : console.log(
-          'the order currently cannot be modified and he should come back later'
-        );
-    //TODO: replace console.log during US #504536
+      : effects.setCustomState({ key: 'toaster', value: { ...toaster } });
   };
 
   const labels = config?.actionLabels;

@@ -129,6 +129,7 @@ use(["../common/utils.js"], function (utils) {
       "releaseButtonLabel",
       "releaseSuccessText",
       "releaseFailText",
+      "modifyErrorMessage",
     ];
 
     orderLineDetailsLabels.map((label) => {
