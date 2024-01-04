@@ -28,6 +28,7 @@ const SettingsFlyout = ({
   isTDSynnex = true,
   labels = {},
   config,
+  settings,
 }) => {
   const settingsFlyoutConfig = useOrderTrackingStore((st) => st.settingsFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
@@ -48,7 +49,7 @@ const SettingsFlyout = ({
   const openFlyout = () => {
     effects.setCustomState({
       key: 'settingsFlyout',
-      value: { data: settingsFlyoutConfig?.data, show: true },
+      value: { data: settings, show: true },
     });
   };
 
@@ -90,11 +91,14 @@ const SettingsFlyout = ({
   const isDataModifiedAndValid = () => {
     if (_.isEmpty(data)) {
       return false;
-    } else if (!data.emailActive && !data.additionalEmailActive) {
+    }
+    if (!data.emailActive && !data.additionalEmailActive) {
       return false;
-    } else if (areSettingsIdentical(dataCopy, data)) {
+    }
+    if (areSettingsIdentical(dataCopy, data)) {
       return false;
-    } else return true;
+    }
+    return true;
   };
 
   const buttonsSection = (

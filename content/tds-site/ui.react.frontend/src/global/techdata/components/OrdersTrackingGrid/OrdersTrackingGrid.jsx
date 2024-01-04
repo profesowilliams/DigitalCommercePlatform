@@ -51,6 +51,7 @@ import MainGridFooter from './MainGrid/MainGridFooter';
 import MainGridFlyouts from './MainGrid/MainGridFlyouts';
 import { getSessionInfo } from '../../../../utils/user/get';
 import { usGet } from '../../../../utils/api';
+import useGet from '../../hooks/useGet';
 
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 
@@ -260,7 +261,7 @@ function OrdersTrackingGrid(props) {
   };
 
   const onDataLoad = () => {
-      setIsLoading(false);
+    setIsLoading(false);
   };
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
@@ -303,6 +304,10 @@ function OrdersTrackingGrid(props) {
     removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
     reportFilterValue.current = {};
   };
+
+  const [settingsResponse, loading, error] = useGet(
+    `${gridConfig.uiProactiveServiceDomain}/v1`
+  );
 
   useEffect(async () => {
     if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
@@ -390,6 +395,7 @@ function OrdersTrackingGrid(props) {
                 gridConfig={gridConfig}
                 reportFilterValue={reportFilterValue}
                 filtersRefs={filtersRefs}
+                settings={settingsResponse}
               />
               <BaseGrid
                 columnList={addCurrencyToTotalColumn(
@@ -473,6 +479,7 @@ function OrdersTrackingGrid(props) {
         }}
         resetReports={resetReports}
         defaultDateRange={componentProp?.defaultSearchDateRange}
+        settings={settingsResponse}
       />
     </>
   );

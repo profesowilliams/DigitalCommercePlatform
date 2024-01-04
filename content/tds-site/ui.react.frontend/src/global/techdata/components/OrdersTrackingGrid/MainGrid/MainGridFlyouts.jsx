@@ -21,6 +21,7 @@ const MainGridFlyouts = ({
   searchParams,
   resetReports,
   defaultDateRange,
+  settings,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   function downloadAllFile(flyoutType, orderId, selectedId) {
@@ -92,6 +93,7 @@ const MainGridFlyouts = ({
         subheaderReference={document.querySelector('.subheader > div > div')}
         labels={gridConfig.settingsFlyoutLabels}
         config={gridConfig}
+        settings={settings}
       />
     </>
   );
