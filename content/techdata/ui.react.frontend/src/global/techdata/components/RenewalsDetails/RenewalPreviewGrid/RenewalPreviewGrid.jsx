@@ -70,6 +70,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const [subtotal, setSubtotal] = useState(null);
   const [orderButtonLabel, setOrderButtonLabel] = useState(gridProps?.orderButtonLabel);
   const gridData = data.items ?? [];
+  const dataObj = data;
   const gridConfig = {
     ...gridProps,
     serverSide: false,
@@ -162,7 +163,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
 
   const resultArray = [];
   contractMap?.forEach((contractGroup, index) => {
-    if (contractGroup.length > 1 && contractMap?.size > 1) {
+    if (contractGroup.length >= 1 && contractMap?.size > 1) {
       resultArray.push(
         {
           ...gridData[0],
@@ -223,6 +224,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         return !(data?.id?.includes("Agreement")) ?
         <RenewalProductLinesItemInformation
           line={data}
+          dataObj={dataObj}
           lineDetailsLabels={compProps.lineItemDetailLabels}
           isLinkDisabled={gridProps.disableProductDetailsLink}
           shopDomainPage={shopDomainPage}

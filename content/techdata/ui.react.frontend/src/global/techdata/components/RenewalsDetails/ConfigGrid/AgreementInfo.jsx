@@ -18,6 +18,8 @@ function DurationDates({ startDate, endDate, label, noColon, multipleOrderFlag }
 function AgreementInfo({
   source,
   contract,
+  agreementNumber,
+  renewedDuration,
   programName,
   quoteSupportLevel,
   formattedDueDate,
@@ -32,19 +34,17 @@ function AgreementInfo({
         <p>
           <Info label={agreementInfo.quoteNo} multipleOrderFlag={source?.id?.indexOf('see line') > -1 ? true : false}>{source?.id}</Info>
           <Info label={agreementInfo.vendorQuoteId} multipleOrderFlag={vendorReference?.value.indexOf('see line') > -1 ? true : false}>{vendorReference?.value}</Info>
-          <Info label={agreementInfo.agreementNoLabel} multipleOrderFlag={contract?.id?.indexOf('see line') > -1 ? true : false}>{contract?.id}</Info>
+          <Info label={agreementInfo.agreementNoLabel} multipleOrderFlag={agreementNumber?.indexOf('see line') > -1 ? true : false}>{agreementNumber}</Info>
         </p>
         <p>
           <Info label={agreementInfo.programLabel} multipleOrderFlag={programName?.indexOf('see line') > -1 ? true : false}>{programName}</Info>
-          <Info label={agreementInfo.termLabel} multipleOrderFlag={contract?.renewedDuration?.indexOf('see line') > -1 ? true : false}>{contract?.renewedDuration}</Info>
-          <Info label={agreementInfo.supportLevelLabel} multipleOrderFlag={contract?.serviceLevel?.indexOf('see line') > -1 ? true : false}>{contract?.serviceLevel}</Info>
+          <Info label={agreementInfo.termLabel} multipleOrderFlag={renewedDuration?.indexOf('see line') > -1 ? true : false}>{renewedDuration}</Info>
+          <Info label={agreementInfo.supportLevelLabel} multipleOrderFlag={quoteSupportLevel?.indexOf('see line') > -1 ? true : false}>{quoteSupportLevel}</Info>
         </p>
         <p>
           <Info label={agreementInfo.quoteExpiryDateLabel} multipleOrderFlag={formattedExpiry?.indexOf('see line') > -1 ? true : false}>{formattedExpiry}</Info>
           <Info label={agreementInfo.dueDateLabel} multipleOrderFlag={formattedDueDate?.indexOf('see line') > -1 ? true : false}>{formattedDueDate}</Info>
-          <DurationDates label={agreementInfo.duration} startDate={contract?.formattedNewAgreementStartDate}
-          endDate={contract?.formattedNewAgreementEndDate}
-          multipleOrderFlag={contract?.formattedNewAgreementStartDate?.indexOf('see line') > -1 ? true : false}/>
+          <Info label={agreementInfo.duration} multipleOrderFlag={agreementDuration?.indexOf('see line') > -1 ? true : false}>{agreementDuration}</Info>
           <DurationDates label={agreementInfo.usageDuration} endDate={contract?.formattedNewUsagePeriodEndDate}
           multipleOrderFlag={contract?.formattedNewUsagePeriodEndDate?.indexOf('see line') > -1 ? true : false}/>
         </p>

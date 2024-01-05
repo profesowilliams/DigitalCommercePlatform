@@ -22,10 +22,9 @@ Instance:${line.instance}`
 }
 
 
-function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shopDomainPage = "", invokeModal, lineDetailsLabels }) {
+function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="false", shopDomainPage = "", invokeModal, lineDetailsLabels }) {
   const description =  formatDetailsShortDescription(line);
   const serialHasValue = hasSerialNumbers(line);
- 
   const formatShopDomainUrl = useCallback(() => {
     if (shopDomainPage.length > 1 && line.product) {
       const hasHttp = /^(http|https):/gm.test(shopDomainPage);
@@ -116,11 +115,11 @@ function RenewalProductLinesItemInformation({ line, isLinkDisabled="false", shop
               <b>{lineDetailsLabels?.instanceLabel}</b>
               {line.instance}
             </span>}
-            {line?.contract?.dueDate && <span>
+            {dataObj?.formattedDueDate?.indexOf('see line') > -1 && line?.contract?.dueDate && <span>
               <b>{lineDetailsLabels?.dueDateLabel}</b>
               {line?.contract?.formattedEndDate}
             </span>}
-            {line?.contract?.duration && <span>
+            {dataObj?.agreementDuration?.indexOf('see line') > -1 && line?.contract?.duration && <span>
               <b>{lineDetailsLabels?.durationLabel}</b>
               {line?.contract?.formattedStartDate} - {line?.contract?.formattedEndDate}
             </span>}
