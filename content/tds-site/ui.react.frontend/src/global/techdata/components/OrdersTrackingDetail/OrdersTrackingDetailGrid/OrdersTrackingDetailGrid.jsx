@@ -175,7 +175,7 @@ function OrdersTrackingDetailGrid({
       setUserData(data[1]);
     });
   }, []);
-console.log(`DESCRIPTION ${getDictionaryValueOrKey(config?.itemsLabels?.description)}`);
+
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (

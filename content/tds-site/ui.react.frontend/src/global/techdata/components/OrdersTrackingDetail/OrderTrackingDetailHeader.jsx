@@ -86,7 +86,7 @@ const OrderTrackingDetailHeader = ({
   const isModifiable =
     hasOrderModificationRights && content?.isModifiable === true;
   const id = content.orderNumber;
-  const poNumber = content.customerPO;
+  const poNumber = content?.customerPO;
   const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
   const hasMultipleInvoices = content?.invoices?.length > 1;
 
@@ -189,7 +189,7 @@ const OrderTrackingDetailHeader = ({
     const params = {
       OrderId: id,
     };
-    const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/ChangeDeliveryFlag`;
+    const url = `${componentProps.uiCommerceServiceDomain}/v2/orders/ChangeDeliveryFlag`;
     const { content } = await usPost(url, params);
     if (content?.ChangeDelFlag?.success) {
       setReleaseSuccess(true);

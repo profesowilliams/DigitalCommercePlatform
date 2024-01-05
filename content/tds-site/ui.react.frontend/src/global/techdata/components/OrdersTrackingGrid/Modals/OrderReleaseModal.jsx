@@ -36,7 +36,7 @@ const OrderReleaseModal = ({
           )}: ${orderNo}`}</div>
           <div className="order-modal__line">{`${getDictionaryValueOrKey(
             PONoString
-          )}: ${PONo}`}</div>
+          )}: ${PONo ?? ''}`}</div>
           <br />
           <div className="order-modal__line">
             {getDictionaryValueOrKey(upperText)}
@@ -53,6 +53,7 @@ const OrderReleaseModal = ({
           >
             {getDictionaryValueOrKey(cancelString)}
           </button>
+          <div className="order-modal__gap"></div>
           <button
             className="order-modal__primary-button"
             onClick={handleReleaseOrder}
