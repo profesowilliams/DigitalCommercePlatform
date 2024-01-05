@@ -131,13 +131,17 @@ function NotShippedTabGrid({
       OrderId: orderNo,
     };
     const url = `${config.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
-    const { content } = await usPost(url, params);
-    if (content?.ChangeDelFlag?.success) {
-      setReleaseSuccess(true);
-    } else {
-      setReleaseSuccess(false);
-    }
-    setOpenAlert(true);
+    await usPost(url, params)
+      .then(({ content }) => {
+        if (content?.ChangeDelFlag?.success) {
+          setReleaseSuccess(true);
+        } else {
+          setReleaseSuccess(false);
+        }
+      })
+      .finally(() => {
+        setOpenAlert(true);
+      });
   };
   const requestURLData = `${config.uiCommerceServiceDomain}/v3/ordermodification/${orderNo}`;
   const getOrderModificationData = async () => {
