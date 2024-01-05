@@ -189,7 +189,7 @@ const OrderTrackingDetailHeader = ({
     const params = {
       OrderId: id,
     };
-    const url = `${componentProps.uiCommerceServiceDomain}/v2/orders/ChangeDeliveryFlag`;
+    const url = `${componentProps.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
     const { content } = await usPost(url, params);
     if (content?.ChangeDelFlag?.success) {
       setReleaseSuccess(true);
