@@ -535,6 +535,41 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Complete New Item Cancel Label"
 												name="./cancelNewItem"/>
+                                            <updateSucessMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Your order has been successfully updated as requested Label"
+												name="./updateSucessMessage"/>
+                                            <updateErrorMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="It was not possible to complete your request at this time, please try again later. Label"
+												name="./updateErrorMessage"/>
+                                            <updateErrorListMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="We weren't able to complete the following updates: Label"
+												name="./updateErrorListMessage"/>
+                                            <line
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Line Label"
+												name="./line"/>
+                                            <reduceQuantity
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Reduce Quantity Label"
+												name="./reduceQuantity"/>
+                                            <addNewLine
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Add new line Label"
+												name="./addNewLine"/>
+                                            <pleaseTryAgain
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Please try again. Label"
+												name="./pleaseTryAgain"/>
                                             <newItemInfo
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

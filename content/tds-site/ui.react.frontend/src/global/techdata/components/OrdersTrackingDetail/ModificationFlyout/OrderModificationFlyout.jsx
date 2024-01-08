@@ -7,6 +7,7 @@ import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useStore } from '../../../../../utils/useStore';
 import { getUrlParams } from '../../../../../utils';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 
 const areItemsListIdentical = (items, itemsCopy) => {
@@ -50,6 +51,7 @@ function OrderModificationFlyout({
     (st) => st.orderModification.doesReasonDropdownHaveEmptyItems
   );
   const { setCustomState } = store((st) => st.effects);
+  const effects = useOrderTrackingStore((state) => state.effects);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
   const orderNumber = id || orderModificationConfig?.id;
@@ -77,7 +79,7 @@ function OrderModificationFlyout({
   };
 
   const reduceLine = itemsCopy.reduce((filtered, item) => {
-    if (item?.status === 'Rejected') {
+    if (item && item?.status === 'Rejected') {
       const newItem = {
         LineID: item.line,
         Qty: item.orderQuantity,
@@ -89,7 +91,7 @@ function OrderModificationFlyout({
   }, []);
 
   const addLine = itemsCopy.reduce((filtered, item) => {
-    if (item?.orderQuantity > item.origQuantity) {
+    if (item?.orderQuantity > item?.origQuantity) {
       const newItem = {
         ProductID: item.tdNumber,
         Qty: item.orderQuantity - item.origQuantity,
@@ -117,16 +119,77 @@ function OrderModificationFlyout({
   const handleUpdate = async () => {
     try {
       const result = await usPost(requestURLLineModify, getPayload());
+
+      const resultContent = result.data.content;
+
+      const addLineError = resultContent.addLine?.some((e) => e.isError);
+      const reduceLineError = resultContent.reduceLine?.some((e) => e.isError);
+
+      const toasterSucess = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: true,
+        message: getDictionaryValueOrKey(labels?.updateSucessMessage),
+      };
+
+      const toasterListedError = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(labels?.updateErrorListMessage),
+        Child: (
+          <ul>
+            {reduceLineError &&
+              resultContent.reduceLine.map(
+                (line) =>
+                  line.isError && (
+                    <li key={line.lineId}>
+                      {getDictionaryValueOrKey(labels?.line)} {line.lineId} -{' '}
+                      {getDictionaryValueOrKey(labels?.reduceQuantity)}
+                    </li>
+                  )
+              )}
+            {addLineError &&
+              result.data.content.addLine.map(
+                (line) =>
+                  line.isError && (
+                    <li key={line.productId}>
+                      {getDictionaryValueOrKey(labels?.addNewLine)}{' '}
+                      {line.productId}
+                    </li>
+                  )
+              )}
+            {getDictionaryValueOrKey(labels?.pleaseTryAgain)}
+          </ul>
+        ),
+      };
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState();
         closeFlyout();
         const rowsDeleted = itemsCopy
-          ?.filter((item) => item.status === 'Rejected')
+          ?.filter((item) => item?.status === 'Rejected')
           .map((item) => item.tdNumber);
         greyOutRows(rowsDeleted);
+        effects.setCustomState({ key: 'toaster', value: { ...toasterSucess } });
+      }
+      if (addLineError || reduceLineError) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...toasterListedError },
+        });
       }
     } catch (error) {
+      const toasterError = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(labels?.updateErrorMessage),
+      };
       console.error('Error updating order:', error);
+      effects.setCustomState({ key: 'toaster', value: { ...toasterError } });
     }
   };
 
