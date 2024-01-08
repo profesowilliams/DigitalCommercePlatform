@@ -7,6 +7,7 @@ import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useStore } from '../../../../../utils/useStore';
 import { getUrlParams } from '../../../../../utils';
+import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   //// This function compares only quantities rather than all items' parameters
@@ -148,12 +149,27 @@ function OrderModificationFlyout({
     setOrderChanged(!areItemsListIdentical(items, updatedItemsCopy));
   };
 
-  const handleAddNewItem = () => {
+  const showNewItemForm = () => {
     enableAddLine && setNewItemFormVisible(true);
   };
 
-  const handleNewItem = (item) => {
-    setNewlyAddedItems([...newlyAddedItems, item]);
+  const handleAddNewItem = (item, quantity) => {
+    setNewlyAddedItems([
+      ...newlyAddedItems,
+      { ...item, quantity: Number(quantity) },
+    ]);
+  };
+
+  const handleRemoveNewItem = (index) => {
+    const newItemsList = [...newlyAddedItems];
+    newItemsList.splice(index, 1);
+    setNewlyAddedItems(newItemsList);
+  };
+
+  const handleChangeNewItem = (index, quantity) => {
+    const newItemsList = [...newlyAddedItems];
+    newItemsList[index].quantity = quantity;
+    setNewlyAddedItems(newItemsList);
   };
 
   useEffect(() => {
@@ -172,6 +188,7 @@ function OrderModificationFlyout({
           console.error('Error:', error);
         });
   }, [orderNumber]);
+
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
@@ -192,23 +209,38 @@ function OrderModificationFlyout({
       <section className="cmp-flyout__content order-modification">
         <a
           className={`add-new ${!enableAddLine ? 'add-new-disabled' : ''}`}
-          onClick={handleAddNewItem}
+          onClick={showNewItemForm}
         >
           + {getDictionaryValueOrKey(labels.addNewItem)}
         </a>
         {newItemFormVisible && (
-          <>
-            <NewItemForm
-              labels={labels}
-              setNewItemFormVisible={setNewItemFormVisible}
-              domain={gridConfig.uiCommerceServiceDomain}
-              addNewItem={handleNewItem}
-            />
-            {newlyAddedItems.map((item, index) => (
-              <NewlyAddedLineItem key={index} labels={labels} />
-            ))}
-          </>
+          <NewItemForm
+            labels={labels}
+            setNewItemFormVisible={setNewItemFormVisible}
+            domain={gridConfig.uiCommerceServiceDomain}
+            addNewItem={handleAddNewItem}
+          />
         )}
+        <>
+          <ul>
+            {newlyAddedItems.map((item, index) => (
+              <NewlyAddedLineItem
+                key={index}
+                index={index}
+                labels={labels}
+                item={item}
+                onChange={handleChangeNewItem}
+                removeElement={() => handleRemoveNewItem(index)}
+              />
+            ))}
+          </ul>
+          {newlyAddedItems.length > 0 && (
+            <p className="new-items-list-info">
+              <InfoIcon />
+              <span>{getDictionaryValueOrKey(labels?.newItemInfo)}</span>
+            </p>
+          )}
+        </>
         <p className="edit-quantities">
           {getDictionaryValueOrKey(labels?.editQuantities)}
         </p>

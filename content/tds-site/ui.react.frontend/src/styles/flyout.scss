@@ -277,7 +277,7 @@ $flyout-small-height-formax: 779px;
   padding: 0;
   .add-new {
     display: block;
-    padding: 20px 30px;
+    padding: 20px 20px;
     font-size: 16px;
     color: $brand-green;
   }
@@ -291,6 +291,16 @@ $flyout-small-height-formax: 779px;
     }
     button:nth-of-type(2) {
       margin-left: 24px;
+    }
+  }
+  .new-items-list-info {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 5px;
     }
   }
   .edit-quantities {
@@ -528,6 +538,12 @@ $flyout-small-height-formax: 779px;
           margin-right: 7px;
         }
       }
+      &__remove-link {
+        display: inline-block;
+        margin-top: 13px;
+        margin-left: 30px;
+        font-size: 14px;
+      }
     }
     &__price {
       grid-area: 2 / 4 / 3 / 5;
@@ -541,7 +557,10 @@ $flyout-small-height-formax: 779px;
     }
     &.newly-added {
       background-color: $td-neutral-gray;
-      margin: 12px 18px;
+      margin: 6px 18px;
+      grid-template-columns: 15px 110px 627px 106px;
+      padding-bottom: 0;
+      height: 126px;
     }
   }
 }

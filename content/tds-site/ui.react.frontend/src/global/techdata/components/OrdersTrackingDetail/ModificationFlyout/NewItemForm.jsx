@@ -13,28 +13,35 @@ const NewItemForm = ({
   const [values, setValues] = useState({
     manufacturersPartNumber: null,
     quantity: null,
+    item: null,
   });
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
-  const loading = open && suggestions.length === 0;
+  const [autocompleteInputValue, setAutocompleteInputValue] = useState('');
 
   const setNewSuggestions = (response) => {
-    if (response && values.manufacturersPartNumber) {
+    if (response && autocompleteInputValue) {
       let matchingKey = 'manufacturerPartNumber';
       if (
         response.products[0].manufacturerPartNumber
-          .toLowerCase()
-          ?.includes(values.manufacturersPartNumber.toLowerCase())
+          ?.toLowerCase()
+          ?.includes(autocompleteInputValue.toLowerCase())
       ) {
         matchingKey = 'manufacturerPartNumber';
       } else if (
         response.products[0].id
           .toLowerCase()
-          ?.includes(values.manufacturersPartNumber.toLowerCase())
+          ?.includes(autocompleteInputValue.toLowerCase())
       ) {
         matchingKey = 'id';
       }
-      setSuggestions(response.products.map((product) => product[matchingKey]));
+      setSuggestions(
+        response.products.map((product) => {
+          product.title = product[matchingKey];
+          return product;
+        })
+      );
     }
   };
 
@@ -46,33 +53,38 @@ const NewItemForm = ({
       return result;
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleAutocompleteInput = (key, newValue) => {
-    setValues({ ...values, [key]: newValue });
+  const handleAutocompleteInput = (newValue) => {
+    setLoading(true);
+    setAutocompleteInputValue(newValue);
     fetchSuggestions(newValue).then((result) => {
       setNewSuggestions(result.data.content);
     });
   };
 
   const handleChange = (key, newValue) => {
-    setValues({ ...values, [key]: newValue });
+    setValues((prevState) => ({ ...prevState, [key]: newValue }));
   };
 
-  const handleAutocompleteChange = (e) => {
-    addNewItem(e.target.textContent);
+  const handleAddNewItem = () => {
+    addNewItem(values.item, values.quantity);
+    setNewItemFormVisible(false);
   };
 
-  const isFormFilled = Object.values(values).every(
-    (value) => value?.length > 0
-  );
+  const isFormFilled = Object.values(values).every((value) => Boolean(value));
+
+  const isError =
+    autocompleteInputValue?.length > 2 && suggestions.length === 0;
 
   useEffect(() => {
     if (!open) {
       setSuggestions([]);
     }
-  }, [open]);
+  }, [open, values]);
 
   return (
     <div className="new-item-form">
@@ -80,7 +92,7 @@ const NewItemForm = ({
         id="free-solo-demo"
         freeSolo
         options={suggestions}
-        // getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option.title}
         loading={loading}
         open={open}
         onOpen={() => {
@@ -89,22 +101,26 @@ const NewItemForm = ({
         onClose={() => {
           setOpen(false);
         }}
-        onChange={handleAutocompleteChange}
+        onChange={(event, value) => {
+          handleChange('manufacturersPartNumber', event.target.textContent);
+          handleChange('item', value);
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
             id="standard-basic"
             label="Manufacturer's part number"
             variant="standard"
+            error={isError}
+            helperText={
+              isError
+                ? getDictionaryValueOrKey(labels?.newItemErrorMessage)
+                : ''
+            }
             InputLabelProps={{
               shrink: true,
             }}
-            onChange={(event) =>
-              handleAutocompleteInput(
-                'manufacturersPartNumber',
-                event.target.value
-              )
-            }
+            onChange={(event) => handleAutocompleteInput(event.target.value)}
           />
         )}
       />
@@ -118,7 +134,11 @@ const NewItemForm = ({
         }}
         onChange={(event) => handleChange('quantity', event.target.value)}
       />
-      <Button disabled={!isFormFilled} variant="outlined">
+      <Button
+        disabled={!isFormFilled}
+        variant="outlined"
+        onClick={handleAddNewItem}
+      >
         {getDictionaryValueOrKey(labels.add)}
       </Button>
       <Button variant="outlined" onClick={() => setNewItemFormVisible(false)}>

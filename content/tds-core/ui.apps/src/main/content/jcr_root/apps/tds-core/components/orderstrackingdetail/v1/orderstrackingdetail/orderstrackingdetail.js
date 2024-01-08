@@ -196,6 +196,9 @@ use(["../../../common/utils.js"], function (utils) {
     "rejectionOther",
     "rejectionRequiredInfo",
     "cancelNewItem",
+    "newItemInfo",
+    "newItemRemove",
+    "newItemErrorMessage",
   ];
 
   properties &&

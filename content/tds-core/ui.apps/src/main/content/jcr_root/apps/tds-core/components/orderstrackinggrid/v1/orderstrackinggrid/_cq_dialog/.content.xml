@@ -927,6 +927,21 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Complete New Item Cancel Label"
 												name="./cancelNewItem"/>
+                                            <newItemInfo
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="New Item Info Message"
+												name="./newItemInfo"/>
+                                            <newItemRemove
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="New Item Remove Label"
+												name="./newItemRemove"/>
+                                            <newItemErrorMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="New Item Error Message"
+												name="./newItemErrorMessage"/>
 										</items>
 									</column>
 								</items>

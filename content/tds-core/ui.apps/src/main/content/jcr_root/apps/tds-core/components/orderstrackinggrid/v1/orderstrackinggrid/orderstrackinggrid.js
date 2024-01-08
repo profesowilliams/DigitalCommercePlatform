@@ -195,6 +195,9 @@ use(["../common/utils.js"], function (utils) {
       "rejectionRequiredInfo",
       "completeDeliveryOnly",
       "cancelNewItem",
+      "newItemInfo",
+      "newItemRemove",
+      "newItemErrorMessage",
     ];
 
     orderModifyLabelsList.map((property) => {
