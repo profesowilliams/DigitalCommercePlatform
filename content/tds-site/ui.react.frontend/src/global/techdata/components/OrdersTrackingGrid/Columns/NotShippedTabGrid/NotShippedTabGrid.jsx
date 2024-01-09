@@ -141,6 +141,9 @@ function NotShippedTabGrid({
       })
       .finally(() => {
         setOpenAlert(true);
+        setTimeout(() => {
+          setOpenAlert(false);
+        }, 5000);
       });
   };
   const requestURLData = `${config.uiCommerceServiceDomain}/v3/ordermodification/${orderNo}`;

@@ -198,6 +198,9 @@ const OrderTrackingDetailHeader = ({
       }
     }).finally(()=>{
       setOpenAlert(true);
+      setTimeout(() => {
+        setOpenAlert(false);
+      }, 5000);
     });
   };
 
