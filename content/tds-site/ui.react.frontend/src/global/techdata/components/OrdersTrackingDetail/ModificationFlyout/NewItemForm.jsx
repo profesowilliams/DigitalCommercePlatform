@@ -16,7 +16,9 @@ const NewItemForm = ({
     item: null,
   });
   const [open, setOpen] = useState(false);
+  const [focused, setFocused] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [autocompleteInputValue, setAutocompleteInputValue] = useState('');
 
@@ -35,6 +37,11 @@ const NewItemForm = ({
           ?.includes(autocompleteInputValue.toLowerCase())
       ) {
         matchingKey = 'id';
+      }
+      if (response.products.length === 0) {
+        setIsError(true);
+      } else {
+        setIsError(false);
       }
       setSuggestions(
         response.products.map((product) => {
@@ -77,9 +84,6 @@ const NewItemForm = ({
 
   const isFormFilled = Object.values(values).every((value) => Boolean(value));
 
-  const isError =
-    autocompleteInputValue?.length > 2 && suggestions.length === 0;
-
   useEffect(() => {
     if (!open) {
       setSuggestions([]);
@@ -111,7 +115,9 @@ const NewItemForm = ({
             id="standard-basic"
             label="Manufacturer's part number"
             variant="standard"
-            error={isError}
+            error={!focused && isError}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
             helperText={
               isError
                 ? getDictionaryValueOrKey(labels?.newItemErrorMessage)
