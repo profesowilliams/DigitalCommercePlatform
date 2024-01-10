@@ -236,8 +236,11 @@ function OrderModificationFlyout({
   };
 
   useEffect(() => {
-    setIsDisabled(!orderChanged || doesReasonDropdownHaveEmptyItems);
-  }, [orderChanged, doesReasonDropdownHaveEmptyItems]);
+    setIsDisabled(
+      (!orderChanged || doesReasonDropdownHaveEmptyItems) &&
+        newlyAddedItems.length === 0
+    );
+  }, [orderChanged, doesReasonDropdownHaveEmptyItems, newlyAddedItems]);
 
   useEffect(() => {
     orderNumber &&

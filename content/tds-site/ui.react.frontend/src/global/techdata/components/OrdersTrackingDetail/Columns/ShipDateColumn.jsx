@@ -11,7 +11,7 @@ function ShipDateColumn({ line, sortedLineDetails }) {
 
         return (
           <div
-            key={el.id}
+            key={line.tdNumber}
             className={`cmp-order-tracking-grid-details__splitLine${
               isSingleElement || isLastElement
                 ? '__separateLine'

@@ -11,7 +11,7 @@ function TotalColumn({ line, sortedLineDetails }) {
           multiple && index === line?.lineDetails?.length - 1;
         return (
           <div
-            key={el.id}
+            key={line.tdNumber}
             className={`cmp-order-tracking-grid-details__splitLine${
               isSingleElement || isLastElement
                 ? '__separateLine'
