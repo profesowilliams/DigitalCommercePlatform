@@ -60,7 +60,7 @@
         align-items: center;
 
         &__image {
-          width: 151px;
+          // width: 151px;
         }
       }
     }
@@ -72,6 +72,8 @@
       margin-bottom: 15px;
       text-align: left;
       grid-template-columns: 1fr !important;
+      align-self: start;
+      width: 13.875rem;
 
       /**
        * Teaser title styles.
@@ -81,6 +83,10 @@
         font-weight: 400;
         text-decoration: none;
         font-family: 'Arial', sans-serif;
+      }
+
+      .cmp-teaser__description {
+        grid-template-columns: 1fr;
       }
     }
   }
