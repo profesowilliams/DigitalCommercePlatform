@@ -119,7 +119,7 @@ use(["../common/utils.js"], function (utils) {
       "itemsLabel",
       "trackLabel",
       "modifyEligibleItemsLabel",
-      "title",
+      "titleReleaseModal",
       "orderNoString",
       "PONoString",
       "upperText",

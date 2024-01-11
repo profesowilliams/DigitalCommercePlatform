@@ -59,7 +59,7 @@ use(["../../../common/utils.js"], function (utils) {
   const itemsLabelsList = [
     "header",
     "lineNo",
-    "description",
+    "descriptionPN",
     "lineStatus",
     "shipDate",
     "unitPrice",
@@ -91,7 +91,7 @@ use(["../../../common/utils.js"], function (utils) {
     "toasterCopySerialNumbersMessage",
     "copySerialNumber",
     "return",
-    "title",
+    "titleReleaseModal",
     "orderNoString",
     "PONoString",
     "upperText",

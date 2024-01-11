@@ -92,7 +92,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'description',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.description),
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.descriptionPN),
       cellRenderer: ({ data }) => (
         <DescriptionColumn line={data} config={gridProps} />
       ),

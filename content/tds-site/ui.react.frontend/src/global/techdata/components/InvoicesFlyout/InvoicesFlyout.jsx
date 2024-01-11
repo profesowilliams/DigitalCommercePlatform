@@ -89,12 +89,12 @@ function InvoicesFlyout({
       width="425px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(invoicesFlyout.title || 'Invoices')}
+      titleLabel={getDictionaryValueOrKey(invoicesFlyout.title)}
       buttonLabel={getDictionaryValueOrKey(
-        invoicesFlyout.button || 'Download selected'
+        invoicesFlyout.button
       )}
       secondaryButtonLabel={getDictionaryValueOrKey(
-        invoicesFlyout.clearAllButton || 'Clear all'
+        invoicesFlyout.clearAllButton
       )}
       disabledButton={selected.length === 0}
       selected={selected}

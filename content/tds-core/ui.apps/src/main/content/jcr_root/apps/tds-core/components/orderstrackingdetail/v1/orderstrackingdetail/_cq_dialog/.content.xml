@@ -244,12 +244,12 @@
                                                 fieldLabel="Line Item Number Label"
                                                 name="./lineNo"
                                                 required="{Boolean}true"/>
-											<description
+											<descriptionPN
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="Enter Description Label"
                                                 fieldLabel="Description Label"
-                                                name="./description"
+                                                name="./descriptionPN"
                                                 required="{Boolean}true"/>
 											<lineStatus
                                                 jcr:primaryType="nt:unstructured"
@@ -399,11 +399,11 @@
                                                 fieldLabel="Copy Serial Numbers Message"
                                                 name="./toasterCopySerialNumbersMessage"
                                                 required="{Boolean}true"/>
-                                            <title
+                                            <titleReleaseModal
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Title Release Label"
-                                                name="./title"/>
+                                                name="./titleReleaseModal"/>
                                             <orderNoString
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

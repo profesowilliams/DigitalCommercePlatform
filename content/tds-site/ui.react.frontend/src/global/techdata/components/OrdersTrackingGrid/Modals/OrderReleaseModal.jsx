@@ -11,7 +11,7 @@ const OrderReleaseModal = ({
   PONo,
 }) => {
   const {
-    title,
+    titleReleaseModal,
     orderNoString,
     PONoString,
     upperText,
@@ -28,7 +28,7 @@ const OrderReleaseModal = ({
     >
       <div className="order-modal__wrapper">
         <div className="order-modal__header">
-          {getDictionaryValueOrKey(title)}
+          {getDictionaryValueOrKey(titleReleaseModal)}
         </div>
         <div className="order-modal__body">
           <div className="order-modal__line">{`${getDictionaryValueOrKey(
