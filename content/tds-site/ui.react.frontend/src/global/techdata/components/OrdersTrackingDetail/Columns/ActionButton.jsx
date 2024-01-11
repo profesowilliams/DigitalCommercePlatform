@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EllipsisIcon } from '../../../../../fluentIcons/FluentIcons';
 import MenuActions from '../Header/MenuActions';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
-import { getDictionaryValueOrKey, addUrlParam } from '../../../../../utils/utils';
+import {
+  getDictionaryValueOrKey,
+  addUrlParam,
+} from '../../../../../utils/utils';
 import { usGet } from '../../../../../utils/api';
 
-const ActionsButton = ({
-  line,
-  element,
-  index,
-  config = {},
-  openFilePdf
-}) => {
+const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const iconStyle = {
     color: '#21314D',
     cursor: 'pointer',
@@ -19,6 +16,8 @@ const ActionsButton = ({
     width: '1.3rem',
   };
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
+  const [actionButtonVisible, setActionButtonVisible] = useState(true);
+
   const multiple = line?.lineDetails?.length > 1;
   const isLastElement = multiple && index === line?.lineDetails?.length - 1;
   const isSingleElement = !multiple;
@@ -102,8 +101,13 @@ const ActionsButton = ({
       if (baseUrl) {
         let trackAndTraceParams = '';
         if (parameters) {
-          Object.entries(parameters).forEach((entry) =>
-            trackAndTraceParams = addUrlParam(trackAndTraceParams, entry[0], entry[1])
+          Object.entries(parameters).forEach(
+            (entry) =>
+              (trackAndTraceParams = addUrlParam(
+                trackAndTraceParams,
+                entry[0],
+                entry[1]
+              ))
           );
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');
@@ -166,6 +170,13 @@ const ActionsButton = ({
       onClick: hasMultipleReturnLinks ? triggerReturnFlyout : handleReturn,
     },
   ];
+  useEffect(() => {
+    if (line?.lineDetails[0]?.quantity === 0) {
+      return setActionButtonVisible(false);
+    } else {
+      return setActionButtonVisible(true);
+    }
+  }, [line?.lineDetails[0]?.quantity]);
   return (
     <div
       className={`cmp-order-tracking-grid-details__splitLine${
@@ -176,11 +187,13 @@ const ActionsButton = ({
       onMouseOver={handleActionMouseOver}
       onMouseLeave={handleActionMouseLeave}
     >
-      <EllipsisIcon
-        className="cmp-order-tracking-grid-details__splitLine__separateLineText"
-        style={iconStyle}
-      />
-      {actionsDropdownVisible && (
+      {actionButtonVisible && (
+        <EllipsisIcon
+          className="cmp-order-tracking-grid-details__splitLine__separateLineText"
+          style={iconStyle}
+        />
+      )}
+      {actionButtonVisible && actionsDropdownVisible && (
         <div
           className="actions-dropdown"
           onMouseOver={handleActionMouseOver}

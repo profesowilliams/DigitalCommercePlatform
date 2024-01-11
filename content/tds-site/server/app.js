@@ -6217,63 +6217,309 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
 app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
   const response = {
     content: {
-      orderNumber: "I039057549",
-      customerPO: "",
-      currency: "CZK",
-      isModifiable: true,
-      items: [
+      notShipped: [
         {
-          line: "1",
+          line: "10",
           urlProductImage:
-            "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-          tdNumber: "8350060",
-          mfrNumber: "817S5EA#BCM",
-          isEOL: false,
-          originalOrderQuantity: 1.0,
-          canTrackAndTrace: false,
-          unitPrice: 16218.07,
-          unitPriceFormatted: "16,218.07",
+            "https://cdn.cs.1worldsync.com/c1/b2/c1b27db7-ebf2-403d-b59e-2f877e526494.jpg",
+          displayName: "Privacy filter 2-way for Surface Pro 8",
+          tdNumber: "7274162",
+          mfrNumber: "D31895",
+          orderQuantity: 100.0,
+          originalOrderQuantity: 100.0,
+          shippedQuantity: 11.0,
+          openQuantity: 89.0,
+          currency: "EUR",
+          unitPrice: 40.32,
+          unitPriceFormatted: "40.32",
+          invoices: [
+            {
+              id: "8206102120",
+              date: "12-14-2023",
+              dateFormatted: "14/12/2023",
+              canDownloadDocument: true,
+            },
+          ],
           lineDetails: [
             {
-              quantity: 1.0,
-              subtotalPrice: 16218.07,
-              subtotalPriceFormatted: "16,218.07",
-              shipDateNotAvailableTranslated: "N.A.",
-              status: 0,
-              statusText: "Rejected",
+              quantity: 89.0,
+              subtotalPrice: 3588.48,
+              subtotalPriceFormatted: "3,588.48",
+              shipDate: "01-04-2024",
+              shipDateFormatted: "04/01/2024",
+              status: "OPEN",
+              statusText: "Open",
               isShipment: false,
-              invoices: [],
-              serialsAny: false,
             },
           ],
         },
         {
-          line: "2",
+          line: "20",
           urlProductImage:
-            "https://cdn.cs.1worldsync.com/31/be/31bef805-89ee-4bef-924b-7bc1e2763fa1.jpg",
-          displayName: 'HP Prelude Pro 15.6" Top Load Water-resi',
-          tdNumber: "5722218",
-          mfrNumber: "1X645AA",
-          isEOL: false,
-          originalOrderQuantity: 1.0,
-          canTrackAndTrace: false,
-          unitPrice: 350.66,
-          unitPriceFormatted: "350.66",
+            "https://cdn.cs.1worldsync.com/e6/99/e6999229-dbfa-4136-ae8e-5bdee2dae6bb.jpg",
+          displayName: "UAG Case Surface Pro 8 Ice",
+          tdNumber: "6993897",
+          mfrNumber: "323263114343",
+          orderQuantity: 50.0,
+          originalOrderQuantity: 50.0,
+          shippedQuantity: 0.0,
+          openQuantity: 50.0,
+          currency: "EUR",
+          unitPrice: 50.45,
+          unitPriceFormatted: "50.45",
+          invoices: [],
           lineDetails: [
             {
-              quantity: 1.0,
-              subtotalPrice: 350.66,
-              subtotalPriceFormatted: "350.66",
-              shipDateNotAvailableTranslated: "N.A.",
-              status: 0,
-              statusText: "Rejected",
+              quantity: 13.0,
+              subtotalPrice: 2522.5,
+              subtotalPriceFormatted: "2,522.50",
+              shipDate: "01-15-2024",
+              shipDateFormatted: "15/01/2024",
+              status: "BLOCKED",
+              statusText: "Delivery Blocked - XI S&amp;D condition missing",
               isShipment: false,
-              invoices: [],
-              serialsAny: false,
+            },
+            {
+              quantity: 13.0,
+              subtotalPrice: 2522.5,
+              subtotalPriceFormatted: "2,522.50",
+              shipDate: "01-04-2024",
+              shipDateFormatted: "04/01/2024",
+              status: "BLOCKED",
+              statusText: "Delivery Blocked - XI S&amp;D condition missing",
+              isShipment: false,
+            },
+            {
+              quantity: 24.0,
+              subtotalPrice: 2522.5,
+              subtotalPriceFormatted: "2,522.50",
+              shipDate: "01-04-2024",
+              shipDateFormatted: "04/01/2024",
+              status: "BLOCKED",
+              statusText: "Delivery Blocked - XI S&amp;D condition missing",
+              isShipment: false,
+            },
+          ],
+        },
+        {
+          line: "40",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/a3/0b/a30bcad5-18bd-4adc-8acd-5500c0beb478.jpg",
+          displayName: "NanoSaver Keyed Laptop Lock",
+          tdNumber: "4129557",
+          mfrNumber: "K64444WW",
+          orderQuantity: 400.0,
+          originalOrderQuantity: 400.0,
+          shippedQuantity: 115.0,
+          openQuantity: 285.0,
+          currency: "EUR",
+          unitPrice: 22.09,
+          unitPriceFormatted: "22.09",
+          invoices: [
+            {
+              id: "8206102120",
+              date: "12-14-2023",
+              dateFormatted: "14/12/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          lineDetails: [
+            {
+              quantity: 285.0,
+              subtotalPrice: 6295.65,
+              subtotalPriceFormatted: "6,295.65",
+              shipDate: "12-29-2023",
+              shipDateFormatted: "29/12/2023",
+              status: "OPEN",
+              statusText: "Open",
+              isShipment: false,
+            },
+          ],
+        },
+        {
+          line: "50",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/17/e0/17e0903b-2de2-4729-9e37-20e037d85589.jpg",
+          displayName: "Surface Pro 7+Plamsa case with H+S strap",
+          tdNumber: "4539957",
+          mfrNumber: "SFPROHSS-L-IC",
+          orderQuantity: 20.0,
+          originalOrderQuantity: 20.0,
+          shippedQuantity: 15.0,
+          openQuantity: 5.0,
+          currency: "EUR",
+          unitPrice: 51.74,
+          unitPriceFormatted: "51.74",
+          invoices: [
+            {
+              id: "8206102118",
+              date: "12-14-2023",
+              dateFormatted: "14/12/2023",
+              canDownloadDocument: true,
+            },
+            {
+              id: "8206102120",
+              date: "12-14-2023",
+              dateFormatted: "14/12/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          lineDetails: [
+            {
+              quantity: 5.0,
+              subtotalPrice: 258.7,
+              subtotalPriceFormatted: "258.70",
+              shipDate: "12-28-2023",
+              shipDateFormatted: "28/12/2023",
+              status: "OPEN",
+              statusText: "Open",
+              isShipment: false,
             },
           ],
         },
       ],
+      shipped: [
+        {
+          id: "7136909332",
+          actualShipDate: "12-14-2023",
+          actualShipDateFormatted: "14/12/2023",
+          shipQuantity: 135.0,
+          totalPrice: 3419.88,
+          totalPriceFormatted: "3,419.88",
+          invoices: [
+            {
+              id: "8206102120",
+              date: "12-14-2023",
+              dateFormatted: "14/12/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          items: [
+            {
+              line: "10",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/c1/b2/c1b27db7-ebf2-403d-b59e-2f877e526494.jpg",
+              displayName: "Privacy filter 2-way for Surface Pro 8",
+              tdNumber: "7274162",
+              mfrNumber: "D31895",
+              isReturnable: false,
+              quantity: 11.0,
+              shipQuantity: 11.0,
+              orderQuantity: 100.0,
+              originalOrderQuantity: 100.0,
+            },
+            {
+              line: "30",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/5d/c2/5dc25b65-b984-44c9-b8a4-14e3e0194f48.jpg",
+              displayName: "MicroSaver 2.0 Keyed Lock",
+              tdNumber: "3984975",
+              mfrNumber: "K65020EU",
+              isReturnable: false,
+              quantity: 1.0,
+              shipQuantity: 1.0,
+              orderQuantity: 50.0,
+              originalOrderQuantity: 50.0,
+            },
+            {
+              line: "40",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/a3/0b/a30bcad5-18bd-4adc-8acd-5500c0beb478.jpg",
+              displayName: "NanoSaver Keyed Laptop Lock",
+              tdNumber: "4129557",
+              mfrNumber: "K64444WW",
+              isReturnable: false,
+              quantity: 115.0,
+              shipQuantity: 115.0,
+              orderQuantity: 400.0,
+              originalOrderQuantity: 400.0,
+            },
+            {
+              line: "50",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/17/e0/17e0903b-2de2-4729-9e37-20e037d85589.jpg",
+              displayName: "Surface Pro 7+Plamsa case with H+S strap",
+              tdNumber: "4539957",
+              mfrNumber: "SFPROHSS-L-IC",
+              isReturnable: false,
+              quantity: 8.0,
+              shipQuantity: 8.0,
+              orderQuantity: 20.0,
+              originalOrderQuantity: 20.0,
+            },
+          ],
+          canTrackAndTrace: false,
+          canDownloadDocument: true,
+        },
+        {
+          id: "7136963204",
+          actualShipDate: "12-18-2023",
+          actualShipDateFormatted: "18/12/2023",
+          shipQuantity: 49.0,
+          totalPrice: 1082.41,
+          totalPriceFormatted: "1,082.41",
+          invoices: [
+            {
+              id: "8206373944",
+              date: "12-18-2023",
+              dateFormatted: "18/12/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          items: [
+            {
+              line: "30",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/5d/c2/5dc25b65-b984-44c9-b8a4-14e3e0194f48.jpg",
+              displayName: "MicroSaver 2.0 Keyed Lock",
+              tdNumber: "3984975",
+              mfrNumber: "K65020EU",
+              isReturnable: false,
+              quantity: 49.0,
+              shipQuantity: 49.0,
+              orderQuantity: 50.0,
+              originalOrderQuantity: 50.0,
+            },
+          ],
+          canTrackAndTrace: false,
+          canDownloadDocument: true,
+        },
+        {
+          id: "7136898624",
+          actualShipDate: "12-14-2023",
+          actualShipDateFormatted: "14/12/2023",
+          shipQuantity: 7.0,
+          totalPrice: 362.18,
+          totalPriceFormatted: "362.18",
+          invoices: [
+            {
+              id: "8206102118",
+              date: "12-14-2023",
+              dateFormatted: "14/12/2023",
+              canDownloadDocument: true,
+            },
+          ],
+          items: [
+            {
+              line: "50",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/17/e0/17e0903b-2de2-4729-9e37-20e037d85589.jpg",
+              displayName: "Surface Pro 7+Plamsa case with H+S strap",
+              tdNumber: "4539957",
+              mfrNumber: "SFPROHSS-L-IC",
+              isReturnable: false,
+              quantity: 7.0,
+              shipQuantity: 7.0,
+              orderQuantity: 20.0,
+              originalOrderQuantity: 20.0,
+            },
+          ],
+          canTrackAndTrace: false,
+          canDownloadDocument: true,
+        },
+      ],
+      totalOpenQuantity: 429.0,
+      totalShipQuantity: 191.0,
     },
     error: {
       code: 0,
@@ -6299,7 +6545,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
             "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
           tdNumber: "8233216",
           mfrNumber: "VSAGUMLMBEU",
-          isEOL: false,
+          isEOL: true,
           originalOrderQuantity: 1.0,
           canTrackAndTrace: false,
           unitPrice: 107.73,
@@ -6365,7 +6611,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
           line: "30",
           urlProductImage:
             "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-          tdNumber: "7716126",
+          tdNumber: "7716127",
           mfrNumber: "PSP2023ULMLMBEU",
           isEOL: false,
           originalOrderQuantity: 1.0,
@@ -6594,7 +6840,7 @@ app.post("/ui-commerce/v2/ReplaceProductUpdate", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 200);
+  }, 3000);
 });
 
 app.get("/ui-commerce/v3/order/carrierurl/:id/:lineId/:dnoteId", (req, res) => {
@@ -6661,7 +6907,7 @@ app.post("/ui-commerce/v2/OrderModify", (req, res) => {
 
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 20000);
+  }, 3000);
 });
 
 app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
@@ -6707,7 +6953,7 @@ app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
           line: "30",
           urlProductImage:
             "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
-          tdNumber: "7716126",
+          tdNumber: "7716127",
           mfrNumber: "PSP2023ULMLMBEU",
           quantity: 1.0,
           orderQuantity: 1.0,

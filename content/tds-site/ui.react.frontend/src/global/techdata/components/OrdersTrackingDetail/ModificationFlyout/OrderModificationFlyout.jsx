@@ -117,6 +117,11 @@ function OrderModificationFlyout({
   };
 
   const handleUpdate = async () => {
+    const rowsDeleted = itemsCopy
+      ?.filter((item) => item?.status === 'Rejected')
+      .map((item) => item.tdNumber);
+    greyOutRows(rowsDeleted);
+    closeFlyout();
     try {
       const result = await usPost(requestURLLineModify, getPayload());
 
@@ -167,11 +172,6 @@ function OrderModificationFlyout({
       };
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState();
-        closeFlyout();
-        const rowsDeleted = itemsCopy
-          ?.filter((item) => item?.status === 'Rejected')
-          .map((item) => item.tdNumber);
-        greyOutRows(rowsDeleted);
         effects.setCustomState({ key: 'toaster', value: { ...toasterSucess } });
       }
       if (addLineError || reduceLineError) {
@@ -190,6 +190,8 @@ function OrderModificationFlyout({
       };
       console.error('Error updating order:', error);
       effects.setCustomState({ key: 'toaster', value: { ...toasterError } });
+    } finally {
+      greyOutRows([]);
     }
   };
 

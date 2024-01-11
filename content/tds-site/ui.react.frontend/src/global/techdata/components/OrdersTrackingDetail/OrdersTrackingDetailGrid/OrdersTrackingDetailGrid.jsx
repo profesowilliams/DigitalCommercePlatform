@@ -23,6 +23,7 @@ function OrdersTrackingDetailGrid({
   openFilePdf,
   hasAIORights,
   gridRef,
+  rowsToGrayOutTDNameRef,
 }) {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +59,9 @@ function OrdersTrackingDetailGrid({
     actions: '50px',
   });
 
-  const sortedLineDetails = (line) => // TODO:move to UI-COMMERCE
+  const sortedLineDetails = (
+    line // TODO:move to UI-COMMERCE
+  ) =>
     line?.lineDetails?.slice().sort((a, b) => {
       const dateA = new Date(a.shipDateFormatted);
       const dateB = new Date(b.shipDateFormatted);
@@ -71,7 +74,7 @@ function OrdersTrackingDetailGrid({
 
   const onDataLoad = () => {
     setIsLoading(false);
-  }
+  };
 
   const customRequestInterceptor = async () => {
     const response = await fetchData(config);
@@ -158,6 +161,16 @@ function OrdersTrackingDetailGrid({
       width: gridColumnWidths.actions,
     },
   ];
+  function getRowClass({ node }) {
+    const data = node.group ? node.aggData : node.data;
+    if (rowsToGrayOutTDNameRef.current.includes(data?.tdNumber)) {
+      return true;
+    }
+  }
+
+  const rowClassRules = {
+    'gray-out-changing-rows': getRowClass,
+  };
 
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),
@@ -190,6 +203,8 @@ function OrdersTrackingDetailGrid({
                 mapServiceData={mapServiceData}
                 onAfterGridInit={_onAfterGridInit}
                 onDataLoad={onDataLoad}
+                rowClassRules={rowClassRules}
+                gridRef={gridRef}
                 responseError={responseError}
               />
               <Toaster
