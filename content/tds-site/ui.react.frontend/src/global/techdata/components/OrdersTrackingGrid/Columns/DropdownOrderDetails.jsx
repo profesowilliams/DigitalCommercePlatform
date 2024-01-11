@@ -72,7 +72,6 @@ function DropdownOrderDetails({
           data={apiResponse?.content?.notShipped}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
-          isModifiable={apiResponse?.content?.isModifiable}
           gridRef={gridRef}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           PONo={PONo}

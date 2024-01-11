@@ -6873,6 +6873,23 @@ app.get("/ui-commerce/v3/order/carrierurl/:id/:dnoteId", (req, res) => {
   }, 200);
 });
 
+app.get("/ui-commerce/v3/ordervalidation/:id", function (req, res) {
+  const response = {
+    content: {
+      id: "6110014079",
+      orderEditable: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
+
 app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   const response = {
     content: {

@@ -83,8 +83,7 @@ const OrderTrackingDetailHeader = ({
     (content?.invoices?.length === 1 && isInvoiceDownloadable);
   const areReleaseTheOrderAvailable = content.shipComplete === true;
   const areSerialNumbersAvailable = content.serialsAny === true;
-  const isModifiable =
-    hasOrderModificationRights && content?.isModifiable === true;
+  const isModifiable = hasOrderModificationRights && orderEditable;
   const id = content.orderNumber;
   const poNumber = content?.customerPO;
   const hasMultipleDNotes = content?.deliveryNotes?.length > 1;
@@ -190,21 +189,23 @@ const OrderTrackingDetailHeader = ({
       OrderId: id,
     };
     const url = `${componentProps.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
-    await usPost(url, params).then(({content})=>{
-      if (content?.ChangeDelFlag?.success) {
-        setReleaseSuccess(true);
-      } else {
-        setReleaseSuccess(false);
-      }
-    }).finally(()=>{
-      setOpenAlert(true);
-      setTimeout(() => {
-        setOpenAlert(false);
-      }, 5000);
-    });
+    await usPost(url, params)
+      .then(({ content }) => {
+        if (content?.ChangeDelFlag?.success) {
+          setReleaseSuccess(true);
+        } else {
+          setReleaseSuccess(false);
+        }
+      })
+      .finally(() => {
+        setOpenAlert(true);
+        setTimeout(() => {
+          setOpenAlert(false);
+        }, 5000);
+      });
   };
 
-  const requestURLData = `${componentProps.uiCommerceServiceDomain}/v3/ordermodification/${id}`;
+  const requestURLData = `${componentProps.uiCommerceServiceDomain}/v3/ordervalidation/${id}`;
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);

@@ -17,7 +17,6 @@ function NotShippedTabGrid({
   data,
   gridProps,
   hasOrderModificationRights,
-  isModifiable,
   gridRef,
   rowsToGrayOutTDNameRef,
   PONo,
@@ -146,7 +145,7 @@ function NotShippedTabGrid({
         }, 5000);
       });
   };
-  const requestURLData = `${config.uiCommerceServiceDomain}/v3/ordermodification/${orderNo}`;
+  const requestURLData = `${config.uiCommerceServiceDomain}/v3/ordervalidation/${orderNo}`;
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
@@ -191,7 +190,7 @@ function NotShippedTabGrid({
               )}
             </button>
           )}
-          {hasOrderModificationRights && isModifiable && (
+          {hasOrderModificationRights && orderEditable && (
             <button
               className="order-line-details__content__title-button"
               onClick={handleOrderModification}

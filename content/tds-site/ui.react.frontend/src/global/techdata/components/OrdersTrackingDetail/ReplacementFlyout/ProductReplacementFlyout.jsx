@@ -89,7 +89,6 @@ function ProductReplacementFlyout({
       (product) => product.source.id === selected
     );
     addNewItem(productDtos[chosenItemIndex]);
-    console.log('grey out', productReplacementConfig?.data?.line?.tdNumber);
     rowsToGrayOutTDNameRef.current = [
       productReplacementConfig?.data?.line?.tdNumber,
     ];
