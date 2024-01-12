@@ -93,12 +93,12 @@ function ExportFlyout({
                 return;
               }
               let key = e.split('=');
-              urlSearchParams.set(key[0], key[1]);
-              urlSearchParams.set(
-                'createdFrom',
-                getDateValue(createdFromDate(90))
-              );
+              urlSearchParams.append(key[0], key[1]);
             });
+            urlSearchParams.set(
+              'createdFrom',
+              filters.current.createdFrom ?? getDateValue(createdFromDate(90))
+            );
           } else if (filter[1]) {
             urlSearchParams.set(filter[0], filter[1]);
           }
