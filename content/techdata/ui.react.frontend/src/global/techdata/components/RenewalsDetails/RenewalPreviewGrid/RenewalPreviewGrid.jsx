@@ -200,14 +200,10 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         }
         return !(data?.id?.includes('Agreement')) ? data.id :
           <div className="row-header">
-            <div><span>{data.id?.split(":")[0]}:</span> {data.id?.split(":")[1]}</div> |
-            {data?.contract?.supportLevel && <><div><span>Support Level:</span> {data?.contract?.supportLevel}</div> |</>}
-            {data?.contract?.dueDate && <><div><span>Due Date:</span> {data?.contract?.dueDate?.split('T')[0]}</div> |</>}
-            {data?.contract?.startDate && data?.contract?.endDate && <><div><span>Duration:</span> {`${data?.contract?.startDate?.split('T')[0]} - ${data?.contract?.endDate?.split('T')[0]}`}</div> |</>}
-            {data?.contract?.formattedUsagePeriod && <div><span>Usage Period:</span> {data?.contract?.formattedUsagePeriod}</div>}
+            <div><span>{data.id?.split(":")[0]}:</span> {data.id?.split(":")[1]}</div>
           </div>
       },
-      headerClass: contractMap.size <= 1 ? 'contract-header' : "normal-headerr",
+      headerClass: contractMap.size <= 1 ? 'contract-header' : "normal-header",
     },
     {
       field: "vendorPartNo",

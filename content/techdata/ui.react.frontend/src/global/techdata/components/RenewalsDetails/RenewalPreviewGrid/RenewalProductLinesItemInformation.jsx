@@ -115,18 +115,6 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
               <b>{lineDetailsLabels?.instanceLabel}</b>
               {line.instance}
             </span>}
-            {dataObj?.formattedDueDate?.indexOf('see line') > -1 && line?.contract?.dueDate && <span>
-              <b>{lineDetailsLabels?.dueDateLabel}</b>
-              {line?.contract?.formattedEndDate}
-            </span>}
-            {dataObj?.agreementDuration?.indexOf('see line') > -1 && line?.contract?.duration && <span>
-              <b>{lineDetailsLabels?.durationLabel}</b>
-              {line?.contract?.formattedStartDate} - {line?.contract?.formattedEndDate}
-            </span>}
-            {line?.contract?.usagePeriod && <span>
-              <b>{lineDetailsLabels?.usagePeriodLabel}</b>
-              {line?.contract?.formattedUsagePeriod}
-            </span>}
           </div>
         </div>
       </div>
