@@ -41,14 +41,8 @@ function NotShippedTabGrid({
   const [orderModificationContent, setOrderModificationContent] =
     useState(null);
   const orderEditable = orderModificationContent?.orderEditable === true;
-  const {
-    lineNumber,
-    item,
-    pnsku,
-    nqty,
-    deliveryEstimate,
-    modifyErrorMessage,
-  } = config?.orderLineDetailsNotShippedColumnLabels;
+  const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
+    config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
     lineNumber: '60px',
     item: '425px',
@@ -97,23 +91,15 @@ function NotShippedTabGrid({
   );
 
   const handleOrderModification = () => {
-    const toaster = {
-      isOpen: true,
-      origin: 'fromUpdate',
-      isAutoClose: true,
-      isSuccess: false,
-      message: getDictionaryValueOrKey(modifyErrorMessage),
-    };
-    orderEditable
-      ? setCustomState({
-          key: 'orderModificationFlyout',
-          value: {
-            data: null,
-            id: orderNo,
-            show: true,
-          },
-        })
-      : effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+    orderEditable &&
+      setCustomState({
+        key: 'orderModificationFlyout',
+        value: {
+          data: null,
+          id: orderNo,
+          show: true,
+        },
+      });
   };
   function getRowClass({ node }) {
     const nodeData = node.group ? node.aggData : node.data;

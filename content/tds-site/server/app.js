@@ -6931,7 +6931,7 @@ app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
   const response = {
     content: {
       id: "6110014079",
-      orderEditable: true,
+      orderEditable: false,
       addLine: true,
       items: [
         {

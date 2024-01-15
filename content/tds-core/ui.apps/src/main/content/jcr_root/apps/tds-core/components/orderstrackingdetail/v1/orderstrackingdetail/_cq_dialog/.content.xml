@@ -54,13 +54,6 @@
                                                 fieldLabel="Actions Label"
                                                 name="./actions"
                                                 required="{Boolean}true"/>
-											<modifyErrorMessage
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter It was not possible to modify your order at this time. Please try again later. Label"
-                                                fieldLabel="It was not possible to modify your order at this time. Please try again later. Label"
-                                                name="./modifyErrorMessage"
-                                                required="{Boolean}true"/>
 											<soldTo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -540,6 +533,13 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Your order has been successfully updated as requested Label"
 												name="./updateSucessMessage"/>
+                                            <modifyErrorMessage
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter It was not possible to modify your order at this time. Please try again later. Label"
+                                                fieldLabel="It was not possible to modify your order at this time. Please try again later. Label"
+                                                name="./modifyErrorMessage"
+                                                required="{Boolean}true"/>
                                             <updateErrorMessage
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

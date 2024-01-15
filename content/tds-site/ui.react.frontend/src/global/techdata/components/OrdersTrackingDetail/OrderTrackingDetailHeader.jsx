@@ -47,23 +47,15 @@ const OrderTrackingDetailHeader = ({
   };
 
   const handleOrderModification = () => {
-    const toaster = {
-      isOpen: true,
-      origin: 'fromUpdate',
-      isAutoClose: true,
-      isSuccess: false,
-      message: getDictionaryValueOrKey(config.labels?.modifyErrorMessage),
-    };
-    orderEditable
-      ? setCustomState({
-          key: 'orderModificationFlyout',
-          value: {
-            data: null,
-            id,
-            show: true,
-          },
-        })
-      : effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+    orderEditable &&
+      setCustomState({
+        key: 'orderModificationFlyout',
+        value: {
+          data: null,
+          id,
+          show: true,
+        },
+      });
   };
 
   const labels = config?.actionLabels;

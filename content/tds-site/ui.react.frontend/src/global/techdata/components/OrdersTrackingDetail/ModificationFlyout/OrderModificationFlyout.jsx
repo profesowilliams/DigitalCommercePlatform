@@ -55,12 +55,24 @@ function OrderModificationFlyout({
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
   const orderNumber = id || orderModificationConfig?.id;
+  const flyoutVisible = orderModificationConfig?.show;
   const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
+      const resultContent = result.data.content;
+      const orderEditable = resultContent?.orderEditable;
+      const toaster = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(labels?.modifyErrorMessage),
+      };
+      !orderEditable &&
+        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
       return result;
     } catch (error) {
       console.error('Error:', error);
@@ -246,6 +258,7 @@ function OrderModificationFlyout({
 
   useEffect(() => {
     orderNumber &&
+      flyoutVisible &&
       getOrderModificationData()
         .then((result) => {
           setOrderModificationResponse(result?.data?.content?.items);
@@ -255,7 +268,7 @@ function OrderModificationFlyout({
         .catch((error) => {
           console.error('Error:', error);
         });
-  }, [orderNumber]);
+  }, [orderNumber, flyoutVisible]);
 
   return (
     <BaseFlyout

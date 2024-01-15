@@ -43,7 +43,6 @@ use(["../../../common/utils.js"], function (utils) {
     "orderNo",
     "completeDeliveryOnly",
     "actions",
-    "modifyErrorMessage",
   ];
 
   properties &&
@@ -197,6 +196,7 @@ use(["../../../common/utils.js"], function (utils) {
     "rejectionRequiredInfo",
     "cancelNewItem",
     "updateSucessMessage",
+    "modifyErrorMessage",
     "updateErrorMessage",
     "updateErrorListMessage",
     "line",

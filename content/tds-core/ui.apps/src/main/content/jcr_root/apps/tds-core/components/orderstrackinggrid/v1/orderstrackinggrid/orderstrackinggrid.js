@@ -129,7 +129,6 @@ use(["../common/utils.js"], function (utils) {
       "releaseButtonLabel",
       "releaseSuccessText",
       "releaseFailText",
-      "modifyErrorMessage",
     ];
 
     orderLineDetailsLabels.map((label) => {
@@ -196,6 +195,7 @@ use(["../common/utils.js"], function (utils) {
       "completeDeliveryOnly",
       "cancelNewItem",
       "updateSucessMessage",
+      "modifyErrorMessage",
       "updateErrorMessage",
       "updateErrorListMessage",
       "line",
