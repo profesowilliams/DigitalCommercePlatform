@@ -6588,7 +6588,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
             "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
           tdNumber: "7716126",
           mfrNumber: "PSP2023ULMLMBEU",
-          isEOL: false,
+          isEOL: true,
           originalOrderQuantity: 1.0,
           canTrackAndTrace: false,
           unitPrice: 128.47,
@@ -6613,7 +6613,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
             "https://uat.dc.tdebusiness.cloud/content/dam/techdata/shared/dcp/products/images/default.jpg",
           tdNumber: "7716127",
           mfrNumber: "PSP2023ULMLMBEU",
-          isEOL: false,
+          isEOL: true,
           originalOrderQuantity: 1.0,
           canTrackAndTrace: false,
           unitPrice: 128.47,
@@ -6808,24 +6808,32 @@ app.get("/ui-commerce/v2/ReplacementProduct", (req, res) => {
   }, 200);
 });
 
-app.post("/ui-commerce/v2/ReplaceProductUpdate", (req, res) => {
+app.post("/ui-commerce/v2/OrderEOL", (req, res) => {
   const response = {
     content: {
-      SalesOrg: "0014",
-      CustomerID: "325009",
-      OrderID: "I1234567",
-      isError: false,
-      message: "",
-      Cancellation: [
+      orderId: "I038551264",
+      isError: true,
+      message: "One or more errors occured",
+      cancellation: [
         {
-          LineID: "10",
+          lineId: "10",
+          isError: false,
+          message: "",
+        },
+        {
+          lineId: "20",
+          isError: false,
+          message: "",
+        },
+        {
+          lineId: "30",
           isError: false,
           message: "",
         },
       ],
-      AddLine: [
+      addLine: [
         {
-          ProductID: "45739376",
+          productId: "8665459",
           isError: false,
           message: "",
         },
@@ -6893,16 +6901,21 @@ app.get("/ui-commerce/v3/ordervalidation/:id", function (req, res) {
 app.post("/ui-commerce/v2/OrderModify", (req, res) => {
   const response = {
     content: {
-      orderId: "I039019963",
+      orderId: "6110014079",
       isError: false,
       reduceLine: [
         {
-          lineId: "1",
+          lineId: "10",
           isError: false,
           message: "Function QTYCHANGE for Order I038550438 executed",
         },
         {
-          lineId: "2",
+          lineId: "20",
+          isError: false,
+          message: "Function QTYCHANGE for Order I038550438 executed",
+        },
+        {
+          lineId: "30",
           isError: false,
           message: "Function QTYCHANGE for Order I038550438 executed",
         },

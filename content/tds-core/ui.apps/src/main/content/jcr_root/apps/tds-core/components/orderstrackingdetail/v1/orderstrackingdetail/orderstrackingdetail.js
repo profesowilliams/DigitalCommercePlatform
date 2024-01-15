@@ -402,6 +402,13 @@ use(["../../../common/utils.js"], function (utils) {
     "pleaseSelect",
     "replaceWithSuggestedItem",
     "removeWithoutReplacement",
+    "replacementUpdateSucessMessage",
+    "replacementUpdateErrorMessage",
+    "replacementUpdateErrorListMessage",
+    "replacementLine",
+    "replacementReduceQuantity",
+    "replacementAddNewLine",
+    "replacementPleaseTryAgain",
   ];
 
   properties &&

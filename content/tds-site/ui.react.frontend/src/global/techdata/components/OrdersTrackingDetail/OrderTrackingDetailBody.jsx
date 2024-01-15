@@ -12,7 +12,7 @@ const OrderTrackingDetailBody = ({
   newItem,
 }) => {
   useEffect(() => {
-    if (newItem) {
+    if (newItem && content && content.items) {
       const itemsCopy = [...content.items];
       const newLineDetails = content.items[0].lineDetails;
       newLineDetails[0] = { ...newLineDetails[0], statusText: 'New' };

@@ -816,6 +816,41 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Remove selected line item from your order without selecting a replacement."
                                                 name="./removeWithoutReplacement" />
+                                            <replacementUpdateSucessMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Your order has been successfully updated as requested Label"
+												name="./replacementUpdateSucessMessage"/>
+                                            <replacementUpdateErrorMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="It was not possible to complete your request at this time, please try again later. Label"
+												name="./replacementUpdateErrorMessage"/>
+                                            <replacementUpdateErrorListMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="We weren't able to complete the following updates: Label"
+												name="./replacementUpdateErrorListMessage"/>
+                                            <replacementLine
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Line Label"
+												name="./replacementLine"/>
+                                            <replacementReduceQuantity
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Reduce Quantity Label"
+												name="./replacementReduceQuantity"/>
+                                            <replacementAddNewLine
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Add new line Label"
+												name="./replacementAddNewLine"/>
+                                            <replacementPleaseTryAgain
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Please try again. Label"
+												name="./replacementPleaseTryAgain"/>
                                         </items>
                                     </column>
                                 </items>

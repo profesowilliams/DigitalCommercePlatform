@@ -12,7 +12,7 @@
     exportLinesWithSerialNumbersOnlyEndpoint: "http://localhost:3000/ui-commerce/v2/ReportOrdersExport",
     orderModifyEndpoint: "http://localhost:3000/ui-commerce/v2/OrderModify",
     orderModifyChangeEndpoint: "http://localhost:3000/ui-commerce/v2/OrderModifyChange",
-    replaceProductEndpoint: "http://localhost:3000/ui-commerce/v2/ReplaceProductUpdate",
+    replaceProductEndpoint: "http://localhost:3000/ui-commerce/v2/OrderEOL",
     replacementsProductsEndpoint: "http://localhost:3000/ui-commerce/v2/ReplacementProduct",
     agGridLicenseKey: "CompanyName=Tech Data Corporation,LicensedGroup=1602297,LicenseType=MultipleApplications,LicensedConcurrentDeveloperCount=25,LicensedProductionInstancesCount=1,AssetReference=AG-021049,ExpiryDate=2_February_2023_[v2]_MTY3NTI5NjAwMDAwMA==340781a1814319241544115aa922bb79",
     labels: {
@@ -200,6 +200,13 @@
       quantity: "Qty",
       unitCost: "Unit cost",
       lineMfgPartNo: "Mfg №:",
+      replacementUpdateSucessMessage: "Your order has been successfully updated as requested",
+      replacementUpdateErrorMessage: "It was not possible to complete your request at this time, please try again later.",
+      replacementUpdateErrorListMessage: "We weren't able to complete the following updates:",
+      replacementLine: "Line",
+      replacementReduceQuantity: "Reduce Quantity",
+      replacementAddNewLine: "Add new line",
+      replacementPleaseTryAgain: "Please try again.",
     },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);

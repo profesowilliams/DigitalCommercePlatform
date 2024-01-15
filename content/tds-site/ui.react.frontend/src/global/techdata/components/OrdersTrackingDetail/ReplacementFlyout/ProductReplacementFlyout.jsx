@@ -48,6 +48,8 @@ function ProductReplacementFlyout({
   const productReplacementConfig = store((st) => st.productReplacementFlyout);
 
   const { setCustomState } = store((st) => st.effects);
+  const effects = useOrderTrackingStore((state) => state.effects);
+
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
@@ -78,11 +80,81 @@ function ProductReplacementFlyout({
     };
     try {
       const result = await usPost(`${config.replaceProductEndpoint}`, payload);
+
+      const resultContent = result.data.content;
+      const addLineError = resultContent.addLine?.some((e) => e.isError);
+      const cancellationError = resultContent.cancellation?.some(
+        (e) => e.isError
+      );
+
+      const toasterSucess = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: true,
+        message: getDictionaryValueOrKey(
+          labels?.replacementUpdateSucessMessage
+        ),
+      };
+
+      const toasterListedError = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(
+          labels?.replacementUpdateErrorListMessage
+        ),
+        Child: (
+          <ul>
+            {cancellationError &&
+              resultContent.cancellation.map(
+                (line) =>
+                  line.isError && (
+                    <li key={line.lineId}>
+                      {getDictionaryValueOrKey(labels?.replacementLine)}{' '}
+                      {line.lineId} -{' '}
+                      {getDictionaryValueOrKey(
+                        labels?.replacementReduceQuantity
+                      )}
+                    </li>
+                  )
+              )}
+            {addLineError &&
+              resultContent.addLine.map(
+                (line) =>
+                  line.isError && (
+                    <li key={line.productId}>
+                      {getDictionaryValueOrKey(labels?.replacementAddNewLine)}{' '}
+                      {line.productId}
+                    </li>
+                  )
+              )}
+            {getDictionaryValueOrKey(labels?.replacementPleaseTryAgain)}
+          </ul>
+        ),
+      };
+
       if (result.data && !result.data?.error?.isError) {
         // TODO: handle results after BE part is ready
+        effects.setCustomState({ key: 'toaster', value: { ...toasterSucess } });
+      }
+      if (addLineError || cancellationError) {
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...toasterListedError },
+        });
       }
     } catch (error) {
+      const toasterError = {
+        isOpen: true,
+        origin: 'fromUpdate',
+        isAutoClose: true,
+        isSuccess: false,
+        message: getDictionaryValueOrKey(labels?.replacementUpdateErrorMessage),
+      };
       console.error('Error replacing product:', error);
+      effects.setCustomState({ key: 'toaster', value: { ...toasterError } });
     }
     closeFlyout();
     const chosenItemIndex = productDtos.findIndex(
