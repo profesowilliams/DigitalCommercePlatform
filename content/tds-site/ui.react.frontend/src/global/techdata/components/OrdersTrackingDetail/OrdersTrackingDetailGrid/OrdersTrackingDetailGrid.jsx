@@ -17,6 +17,8 @@ import { isLocalDevelopment, mapServiceData, addCurrencyToColumns } from './util
 import {
   fetchData,
 } from './utils/orderTrackingUtils';
+import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperations';
+import { useStore } from '../../../../../utils/useStore';
 
 function OrdersTrackingDetailGrid({
   gridProps,
@@ -28,6 +30,16 @@ function OrdersTrackingDetailGrid({
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
+  const refreshOrderTrackingDetailApi = useStore(
+    (state) => state.refreshOrderTrackingDetailApi
+  );
+  const resetCallback = useRef(null);
+  const shouldGoToFirstPage = useRef(false);
+  const isOnSearchAction = useRef(false);
+  const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
+    useOrderTrackingStore,
+    { resetCallback, shouldGoToFirstPage, isOnSearchAction }
+  );
   const config = {
     ...gridProps,
     serverSide: true,
@@ -69,6 +81,7 @@ function OrdersTrackingDetailGrid({
     });
 
   const _onAfterGridInit = (config) => {
+    onAfterGridInit(config);
     gridApiRef.current = config;
   };
 
@@ -189,6 +202,10 @@ function OrdersTrackingDetailGrid({
     });
   }, []);
 
+  useEffect(() => {
+    onQueryChanged();
+  }, [refreshOrderTrackingDetailApi]);
+
   return (
     <>
       {(userData?.activeCustomer || isLocalDevelopment) && (
@@ -206,6 +223,7 @@ function OrdersTrackingDetailGrid({
                 rowClassRules={rowClassRules}
                 gridRef={gridRef}
                 responseError={responseError}
+                isLoading={isLoading}
               />
               <Toaster
                 classname="toaster-modal-otg"

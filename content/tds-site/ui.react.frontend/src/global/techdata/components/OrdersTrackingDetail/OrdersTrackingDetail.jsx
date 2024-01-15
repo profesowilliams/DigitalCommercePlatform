@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import useGet from '../../hooks/useGet';
+import { usGet } from '../../../../utils/api';
 import { getUrlParams } from '../../../../utils';
 import OrderTrackingDetailHeader from './OrderTrackingDetailHeader';
 import OrderTrackingDetailFooter from './OrderTrackingDetailFooter';
@@ -18,6 +18,7 @@ function OrdersTrackingDetail(props) {
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
   const [newItem, setNewItem] = useState(null);
+  const [content, setContent] = useState(null);
 
   const componentProps = JSON.parse(props.componentProp);
   const config = {
@@ -29,14 +30,13 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const [apiResponse] = useGet(`${config.orderDetailEndpoint}/${id}`);
+
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
   const hasOrderModificationRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderModification'
   );
-  const content = apiResponse?.content;
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
     try {
@@ -87,6 +87,15 @@ function OrdersTrackingDetail(props) {
     });
   }, [window?.td]);
 
+  useEffect(async () => {
+    try {
+      const apiResponse = await usGet(`${config.orderDetailEndpoint}/${id}`);
+      setContent(apiResponse?.data?.content);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   return (
     <>
       <div className="cmp-quote-preview cmp-order-preview">
@@ -102,7 +111,6 @@ function OrdersTrackingDetail(props) {
                 componentProps={componentProps}
               />
               <OrderTrackingDetailBody
-                content={content}
                 config={config}
                 hasAIORights={hasAIORights}
                 openFilePdf={openFilePdf}

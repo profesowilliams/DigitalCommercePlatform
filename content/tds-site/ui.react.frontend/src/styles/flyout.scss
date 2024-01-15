@@ -284,6 +284,9 @@ $flyout-small-height-formax: 779px;
   .add-new-disabled {
     color: $brand-text-lightgray;
   }
+  ul {
+    padding: 0;
+  }
   .new-item-form {
     display: flex;
     & > div:first-of-type {
@@ -557,9 +560,8 @@ $flyout-small-height-formax: 779px;
     }
     &.newly-added {
       background-color: $td-neutral-gray;
-      margin: 6px 18px;
+      margin: 0 18px 6px;
       grid-template-columns: 15px 110px 627px 106px;
-      padding-bottom: 0;
       height: 126px;
     }
   }

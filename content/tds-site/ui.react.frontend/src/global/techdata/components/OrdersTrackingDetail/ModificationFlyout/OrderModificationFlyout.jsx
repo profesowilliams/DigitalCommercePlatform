@@ -59,6 +59,7 @@ function OrderModificationFlyout({
   const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
   const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
+
   const getOrderModificationData = async () => {
     try {
       const result = await usGet(requestURLData);
@@ -114,12 +115,17 @@ function OrderModificationFlyout({
     return filtered;
   }, []);
 
+  const newlyAddedLines = newlyAddedItems.map((item) => ({
+    ProductID: item.id,
+    Qty: item.quantity,
+  }));
+
   const getPayload = () => ({
     SalesOrg: userData?.customersV2?.[0]?.salesOrg,
     CustomerID: userData?.customersV2?.[0]?.customerNumber,
     OrderID: orderNumber,
     ReduceLine: reduceLine,
-    AddLine: addLine,
+    AddLine: addLine.concat(newlyAddedLines),
     ProductID: content?.productDtos?.source?.Id,
   });
 
