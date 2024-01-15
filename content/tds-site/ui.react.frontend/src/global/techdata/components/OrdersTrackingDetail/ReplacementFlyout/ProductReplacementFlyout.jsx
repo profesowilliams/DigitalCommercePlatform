@@ -79,7 +79,10 @@ function ProductReplacementFlyout({
       ProductID: newProductId,
     };
     try {
-      const result = await usPost(`${config.replaceProductEndpoint}`, payload);
+      const result = await usPost(
+        `${config.uiCommerceServiceDomain + '/v2/OrderEOL'}`,
+        payload
+      );
 
       const resultContent = result.data.content;
       const addLineError = resultContent.addLine?.some((e) => e.isError);
@@ -213,7 +216,9 @@ function ProductReplacementFlyout({
   useEffect(async () => {
     if (productReplacementConfig?.data?.line?.tdNumber) {
       try {
-        const result = await usGet(`${config.replacementsProductsEndpoint}`);
+        const result = await usGet(
+          `${config.uiCommerceServiceDomain + '/v2/ReplacementProduct'}`
+        );
         setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {
         console.error(error);
