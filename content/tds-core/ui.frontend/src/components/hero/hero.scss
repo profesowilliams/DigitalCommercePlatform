@@ -191,6 +191,47 @@
   }
 }
 
+.hero-centered {
+  .cmp-teaser {
+    &__content[data-cmp-hasimage] {
+      position: absolute;
+      top: 35%;
+      display: flex;
+      justify-content: center;
+      flex-flow: wrap;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+
+      .display-xl,
+      .h0,
+      .h1-large,
+      .cmp-teaser-hero__description {
+        width: 31.4375rem;
+
+        @media (max-width: 767.98px) {
+          width: 18.125rem !important;
+        }
+      }
+
+      @include mobile {
+        top: 0;
+        left: 2rem;
+        bottom: 0;
+        padding: 0;
+        height: 500px;
+      }
+
+      .cmp-item {
+        color: inherit;
+      }
+      .cmp-teaser__footer {
+        color: inherit;
+      }
+    }
+  }
+}
+
 /// Variant of hero component with unique styling and structure
 /// @group Hero
 .hero {
