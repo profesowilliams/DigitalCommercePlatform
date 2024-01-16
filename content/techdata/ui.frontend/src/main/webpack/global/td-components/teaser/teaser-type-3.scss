@@ -19,7 +19,7 @@
     /**
      * Teaser container styles.
      */
-    grid-template-columns: 1fr !important;
+    // grid-template-columns: 1fr !important;
     width: 90%;
 
     /**
@@ -28,7 +28,7 @@
     [id^='teaser-'] {
       display: grid !important;
       grid-gap: 1.88rem;
-      grid-template-columns: 6rem 1fr !important;
+      grid-template-columns: 6rem 16rem !important;
     }
 
     /**
