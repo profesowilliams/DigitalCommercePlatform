@@ -91,9 +91,10 @@ function useOrderTrackingPaginationState({
   };
 
   const handleInputBlur = ({ target }) => {
-    const value = parseInt(target.value) - 1;
-    if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
-      return;
+    let value = parseInt(target.value) - 1;
+    if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10)) {
+      value = parseInt(paginationGetTotalPages(), 10) - 1;
+    }
     pushDataLayerGoogle(
       getPaginationAnalyticsGoogle(
         paginationAnalyticsLabel,
@@ -107,7 +108,7 @@ function useOrderTrackingPaginationState({
     const value = parseInt(target.value) - 1;
     if (parseInt(target.value) > parseInt(paginationGetTotalPages(), 10))
       return;
-    if (target.value.length >= 5) {
+    if (target.value.length >= 3) {
       pushDataLayerGoogle(
         getPaginationAnalyticsGoogle(
           paginationAnalyticsLabel,
