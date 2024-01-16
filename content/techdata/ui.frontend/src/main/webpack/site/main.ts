@@ -26,6 +26,7 @@ import "../global/td-components/filmstrip-carousel/filmstrip-carousel"
 import "../global/td-components/authentication/authentication"
 import "../global/td-components/form-options/brand-filter/brandFilter"
 import "../../../../../../tds-core/ui.frontend/src/components/hub/hub"
+import "../../../../../../tds-core/ui.frontend/src/components/display-xl/display-xl"
 // eslint-disable-next-line max-len
 import "../../../../../../tds-core/ui.frontend/src/main/webpack/global/tds-core-components/analytics/analytics-data-layer"
 import "../../../../../../tds-core/ui.frontend/src/components/teaser/teaser"

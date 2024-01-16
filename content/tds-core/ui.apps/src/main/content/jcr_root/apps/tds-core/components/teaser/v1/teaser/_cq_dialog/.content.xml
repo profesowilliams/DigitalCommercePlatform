@@ -219,6 +219,10 @@
                                                                         jcr:primaryType="nt:unstructured"
                                                                         description="Paragraph"
                                                                         tag="p"/>
+                                                                    <default_display-xl
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        description="Display XL"
+                                                                        tag="display-xl"/>
                                                                     <default_h1
                                                                         jcr:primaryType="nt:unstructured"
                                                                         description="Heading 1"

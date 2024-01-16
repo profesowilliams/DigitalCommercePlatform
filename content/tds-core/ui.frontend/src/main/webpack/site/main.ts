@@ -31,3 +31,4 @@ import '../../../../../../tds-core/ui.frontend/src/components/hamburger-menu/ham
 import '../../../../../../tds-core/ui.frontend/src/components/hub/hub';
 import '../../../../../../tds-core/ui.frontend/src/components/icons/svg-icon';
 import '../../../../../../tds-core/ui.frontend/src/components/teaser/teaser';
+import '../../../../../../tds-core/ui.frontend/src/components/display-xl/display-xl';
