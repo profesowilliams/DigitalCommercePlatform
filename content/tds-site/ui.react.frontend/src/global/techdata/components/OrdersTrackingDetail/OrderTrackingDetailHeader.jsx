@@ -16,7 +16,7 @@ import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
-import { usPost, usGet } from '../../../../utils/api';
+import { usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 
 const OrderTrackingDetailHeader = ({
@@ -32,11 +32,9 @@ const OrderTrackingDetailHeader = ({
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
-  const [orderModificationContent, setOrderModificationContent] =
-    useState(null);
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
-  const orderEditable = orderModificationContent?.orderEditable === true;
+  const orderEditable = content?.orderEditable === true;
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -73,7 +71,10 @@ const OrderTrackingDetailHeader = ({
   const areInvoicesAvailable =
     content?.invoices?.length > 1 ||
     (content?.invoices?.length === 1 && isInvoiceDownloadable);
-  const areReleaseTheOrderAvailable = content.shipComplete === true;
+  const areReleaseTheOrderAvailable =
+    content.shipComplete === true &&
+    content.status !== 'Completed' &&
+    content.orderEditable;
   const areSerialNumbersAvailable = content.serialsAny === true;
   const isModifiable = hasOrderModificationRights && orderEditable;
   const id = content.orderNumber;
@@ -196,27 +197,6 @@ const OrderTrackingDetailHeader = ({
         }, 5000);
       });
   };
-
-  const requestURLData = `${componentProps.uiCommerceServiceDomain}/v3/ordervalidation/${id}`;
-  const getOrderModificationData = async () => {
-    try {
-      const result = await usGet(requestURLData);
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  useEffect(() => {
-    id &&
-      getOrderModificationData()
-        .then((result) => {
-          setOrderModificationContent(result.data.content);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-  }, [id]);
 
   return (
     <div className="cmp-orders-qp__config-grid">

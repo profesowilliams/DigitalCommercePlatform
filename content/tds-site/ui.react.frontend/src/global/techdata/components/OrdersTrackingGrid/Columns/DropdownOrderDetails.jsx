@@ -31,6 +31,8 @@ function DropdownOrderDetails({
   const PONo = data.customerPO;
   const orderNo = data.id;
   const shipCompleted = data.shipComplete;
+  const status = data.status !== 'Completed';
+  const ordersOrderEditable = data.orderEditable;
   const tabsConfig = [
     {
       index: 0,
@@ -70,6 +72,7 @@ function DropdownOrderDetails({
       content: apiResponse?.content ? (
         <NotShippedTabGrid
           data={apiResponse?.content?.notShipped}
+          orderEditable={apiResponse?.content?.orderEditable}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
           gridRef={gridRef}
@@ -77,6 +80,8 @@ function DropdownOrderDetails({
           PONo={PONo}
           orderNo={orderNo}
           shipCompleted={shipCompleted}
+          status={status}
+          ordersOrderEditable={ordersOrderEditable}
         />
       ) : (
         isLoading && <LoaderIcon className="loadingIcon-rotate" />

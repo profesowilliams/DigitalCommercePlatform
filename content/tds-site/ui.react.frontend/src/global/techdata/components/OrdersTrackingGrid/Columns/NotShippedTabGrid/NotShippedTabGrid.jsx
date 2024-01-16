@@ -10,11 +10,12 @@ import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 import OrderReleaseModal from '../../Modals/OrderReleaseModal';
-import { usPost, usGet } from '../../../../../../utils/api';
+import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
 
 function NotShippedTabGrid({
   data,
+  orderEditable,
   gridProps,
   hasOrderModificationRights,
   gridRef,
@@ -22,6 +23,8 @@ function NotShippedTabGrid({
   PONo,
   orderNo,
   shipCompleted,
+  status,
+  ordersOrderEditable,
 }) {
   const config = {
     ...gridProps,
@@ -38,9 +41,6 @@ function NotShippedTabGrid({
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
-  const [orderModificationContent, setOrderModificationContent] =
-    useState(null);
-  const orderEditable = orderModificationContent?.orderEditable === true;
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -131,26 +131,7 @@ function NotShippedTabGrid({
         }, 5000);
       });
   };
-  const requestURLData = `${config.uiCommerceServiceDomain}/v3/ordervalidation/${orderNo}`;
-  const getOrderModificationData = async () => {
-    try {
-      const result = await usGet(requestURLData);
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
 
-  useEffect(() => {
-    orderNo &&
-      getOrderModificationData()
-        .then((result) => {
-          setOrderModificationContent(result.data.content);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-  }, [orderNo]);
   useEffect(() => {
     setCustomState({
       key: 'orderModificationFlyout',
@@ -166,7 +147,7 @@ function NotShippedTabGrid({
           {getDictionaryValueOrKey(config?.orderLineDetails?.notShippedLabel)}
         </span>
         <span>
-          {shipCompleted && (
+          {shipCompleted && status && ordersOrderEditable && (
             <button
               className="order-line-details__content__release-button"
               onClick={() => setReleaseOrderShow(true)}
