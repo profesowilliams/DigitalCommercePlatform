@@ -157,11 +157,12 @@ function OrdersTrackingGrid(props) {
     };
     config.columnApi.applyColumnState({ ...columnState });
   };
+  const params = new URLSearchParams(window.location.search);
 
   const areUrlSearchParamsPresent =
-    window.location.search.includes('customerId=') &&
-    window.location.search.includes('salesOrg=') &&
-    window.location.search.includes('report=EOL');
+    params.has('customerId') &&
+    params.has('salesOrg') &&
+    params.get('report') === 'EOL';
 
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
@@ -308,6 +309,12 @@ function OrdersTrackingGrid(props) {
   const [settingsResponse, loading, error] = useGet(
     `${gridConfig.uiProactiveServiceDomain}/v1`
   );
+  const triggerSettingsFlyout = (settings) => {
+    setCustomState({
+      key: 'settingsFlyout',
+      value: { show: true, data: settings },
+    });
+  };
 
   useEffect(async () => {
     if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
@@ -325,6 +332,12 @@ function OrdersTrackingGrid(props) {
     setFilterList([...predefined, ...customized]);
     setCustomFiltersChecked(customized);
   }, []);
+
+  useEffect(() => {
+    if (settingsResponse && params.has('notifications')) {
+      triggerSettingsFlyout(settingsResponse);
+    }
+  }, [settingsResponse]);
 
   useEffect(() => {
     if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
@@ -355,10 +368,10 @@ function OrdersTrackingGrid(props) {
     if (!userData || !areUrlSearchParamsPresent) {
       return;
     } else if (
-      window.location.search.includes(`customerId=${customerNumber}`) &&
-      window.location.search.includes(`salesOrg=${salesOrg}`)
+      params.get('customerId') === customerNumber &&
+      params.get('salesOrg') === salesOrg
     ) {
-      if (window.location.search.includes('report=EOL')) {
+      if (params.get('report') === 'EOL') {
         reportFilterValue.current.value = 'EOLReport';
         onQueryChanged();
       }
