@@ -1,22 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { WarningTriangle } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getUrlParams } from '../../../../../utils';
+import { usGet } from '../../../../../utils/api';
 
 function LineStatusColumn({ line, config, sortedLineDetails }) {
+  const { id = '' } = getUrlParams();
+
   const isEOL = line.isEOL;
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
-
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
 
-  const handleSeeOptionsClick = () => {
-    setCustomState({
-      key: 'productReplacementFlyout',
-      value: { data: { line }, show: true },
-    });
+  const getValidationData = async () => {
+    try {
+      const result = await usGet(
+        `${
+          config.uiCommerceServiceDomain +
+          `/v3/ordervalidation/${id}/${line.line}`
+        }`
+      );
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const toasterError = {
+    isOpen: true,
+    origin: 'fromUpdate',
+    isAutoClose: true,
+    isSuccess: false,
+    message: getDictionaryValueOrKey(config?.itemsLabels?.updateErrorMessage),
+  };
+
+  const handleSeeOptionsClick = () => {
+    getValidationData()
+      .then((result) => {
+        const orderEditable = result.data.content.orderEditable;
+        const enableReplace = result.data.content.replace;
+        orderEditable
+          ? setCustomState({
+              key: 'productReplacementFlyout',
+              value: { data: { line }, enableReplace, show: true },
+            })
+          : effects.setCustomState({
+              key: 'toaster',
+              value: { ...toasterError },
+            });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        effects.setCustomState({
+          key: 'toaster',
+          value: { ...toasterError },
+        });
+      });
+  };
+
   const EOLStatus = (
     <>
       <span className="line-status">
@@ -28,7 +71,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
       </p>
     </>
   );
-
+ 
   return (
     <div className="cmp-order-tracking-grid-details__splitLine-column">
       {sortedLineDetails(line)?.map((el, index) => {

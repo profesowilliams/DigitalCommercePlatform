@@ -307,6 +307,11 @@
                                                 fieldLabel="End of Life Label"
                                                 name="./endOfLife"
                                                 required="{Boolean}true"/>
+                                            <updateErrorMessage
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="It was not possible to complete your request at this time, please try again later. Label"
+												name="./updateErrorMessage"/>
 											<ordersUrl
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
@@ -814,7 +819,7 @@
                                             <removeWithoutReplacement
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Remove selected line item from your order without selecting a replacement."
+                                                fieldLabel="Cancel selected line item from your order without selecting a replacement"
                                                 name="./removeWithoutReplacement" />
                                             <replacementUpdateSucessMessage
 												jcr:primaryType="nt:unstructured"

@@ -46,13 +46,15 @@ function ProductReplacementFlyout({
   const [productDtos, setProductDtos] = useState([]);
   const store = useOrderTrackingStore;
   const productReplacementConfig = store((st) => st.productReplacementFlyout);
-
   const { setCustomState } = store((st) => st.effects);
   const effects = useOrderTrackingStore((state) => state.effects);
 
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
+
+  const enableReplace = productReplacementConfig?.enableReplace;
+
   const closeFlyout = () => {
     setCustomState({
       key: 'productReplacementFlyout',
@@ -183,24 +185,26 @@ function ProductReplacementFlyout({
 
   const options = [
     ...[
-      ...productDtos.map((product) => ({
-        key: product.source.id,
-        label: getDictionaryValueOrKey(labels.replaceWithSuggestedItem),
-        content: (
-          <LineItem
-            item={{
-              ...productReplacementConfig?.data?.line,
-              urlProductImage: product.images.default.url,
-              displayName: product.description,
-              mfrNumber: product.manufacturerPartNumber,
-              unitCost: product.price.bestPrice,
-              unitPriceCurrency: product.price.currency,
-              lineTotal: product.price.bestPrice,
-            }}
-            labels={labels}
-          />
-        ),
-      })),
+      ...(enableReplace
+        ? productDtos.map((product) => ({
+            key: product.source.id,
+            label: getDictionaryValueOrKey(labels.replaceWithSuggestedItem),
+            content: (
+              <LineItem
+                item={{
+                  ...productReplacementConfig?.data?.line,
+                  urlProductImage: product.images.default.url,
+                  displayName: product.description,
+                  mfrNumber: product.manufacturerPartNumber,
+                  unitCost: product.price.bestPrice,
+                  unitPriceCurrency: product.price.currency,
+                  lineTotal: product.price.bestPrice,
+                }}
+                labels={labels}
+              />
+            ),
+          }))
+        : []),
     ],
     //   {  // TODO add this option after MVP
     //     key: 'replaceWithNewItem',

@@ -6386,7 +6386,7 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
           displayName: 'HP Prelude Pro 15.6" Top Load Water-resi',
           tdNumber: "5722218",
           mfrNumber: "1X645AA",
-          isEOL: false,
+          isEOL: true,
           originalOrderQuantity: 1.0,
           canTrackAndTrace: false,
           unitPrice: 350.66,
@@ -6575,7 +6575,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
           displayName: "HP EB840G8 i5-1135G7 14 16GB 256GB W10P",
           tdNumber: "6979573",
           mfrNumber: "358N7EA#ABU",
-          isEOL: false,
+          isEOL: true,
           originalOrderQuantity: 1.0,
           canTrackAndTrace: false,
           unitPrice: 1530.17,
@@ -6848,6 +6848,26 @@ app.get("/ui-commerce/v3/ordervalidation/:id", function (req, res) {
     content: {
       id: "6110014079",
       orderEditable: true,
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+  setTimeout(() => {
+    return res.status(200).json(response);
+  }, 200);
+});
+
+app.get("/ui-commerce/v3/ordervalidation/:id/:lineId", function (req, res) {
+  const response = {
+    content: {
+      OrderID: "I1234567",
+      LineID: "10",
+      orderEditable: true,
+      cancel: true,
+      replace: true,
     },
     error: {
       code: 0,
