@@ -1,0 +1,17 @@
+.apac-form .cmp-wizard-form .cmp-wizard-form-container {
+  background: none;
+}
+.apac-form .cmp-wizard-form .cmp-wizard-form__header {
+  display: none !important;
+}
+
+.apac-form .cmp-wizard-form .cmp-wizard-form__panel,
+.apac-form .cmp-wizard-form .cmp-wizard-form__panel.active {
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .apac-form .cmp-wizard-form .cmp-bottom-button.cmp-bottom-button__invalid-inputs {
+    width: 80%;
+  }
+}
