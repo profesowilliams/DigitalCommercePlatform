@@ -85,9 +85,21 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
               analyticsCategory,
               ANALYTIC_CONSTANTS.Grid.RowActions.DownloadXls,
               data));
+            let fileName = `Renewals Quote ${data?.source?.id}`;
+            const quoteText = productGrid.quoteTextForFileName || 'quote';
+            const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
+            const endUser = data.endUser.name ? `${data.endUser.name} - ` : '';
+            const renewedDuration = data.renewedDuration ? `${data.renewedDuration} - ` : '';
+            const sourceId = data.source.id ? `${data.source.id} - ` : '';
+            if (data?.hasMultipleSupportLevel) {
+                fileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${quoteText}`;
+            } else {
+              const supportLevel = data.support ? `${data.support} - ` : '';
+                fileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${supportLevel}${quoteText}`;
+            }
             generateFileFromPost({
                 url: exportXLSRenewalsEndpoint,
-                name: `Renewals Quote ${data?.source?.id}.xlsx`,
+                name: `${fileName}.xlsx`,
                 postData: {
                     Id: data?.source?.id,
                 },

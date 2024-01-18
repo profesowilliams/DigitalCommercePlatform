@@ -69,9 +69,20 @@ function RenewalPlanOptions({ labels, data, node }) {
 
   const exportXlsPlan = (id) => {
     const postData = { id };
-    const name = `renewal-${id}.xlsx`;
+    let name = `renewal-${id}`;
     const url = exportXLSRenewalsEndpoint;
-    generateFileFromPost({ url, name, postData })
+    const quoteText = productGrid.quoteTextForFileName || 'quote';
+     const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
+     const endUser = data.endUser.name ? `${data.endUser.name} - ` : '';
+     const contractDuration = activeIDData[0].contractDuration ? `${activeIDData[0].contractDuration} - ` : '';
+     const sourceId = data.source.id ? `${data.source.id} - ` : '';
+    if (data?.hasMultipleSupportLevel) {
+        name = `${vendorName}${endUser}${sourceId}${contractDuration}${quoteText}`;
+    } else {
+      const supportLevel = activeIDData[0].support ? `${activeIDData[0].support} - ` : '';
+        name = `${vendorName}${endUser}${sourceId}${contractDuration}${supportLevel}${quoteText}`;
+    }
+    generateFileFromPost({ url, `${name}.xlsx`, postData })
   }
 
   const computeClassName = (optionList, index) => {

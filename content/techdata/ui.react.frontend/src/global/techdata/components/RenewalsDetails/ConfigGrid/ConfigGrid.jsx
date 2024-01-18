@@ -23,9 +23,21 @@ function GridHeader({ gridProps, data }) {
           analyticsCategory,
           ANALYTIC_CONSTANTS.Detail.Actions.DownloadXlsDetail,
           data));
+       let fileName = `Renewals quote ${data?.source?.id}`;
+       const quoteText = gridProps.productLines.quoteTextForFileName || 'quote';
+       const vendorName = data.vendor.name ? `${data.vendor.name} - ` : '';
+       const endUser = data.endUser?.name?.text ? `${data.endUser.name.text} - ` : '';
+       const renewedDuration = data.items[0]?.contract?.renewedDuration ? `${data.items[0].contract.renewedDuration} - ` : '';
+       const sourceId = data.source.id ? `${data.source.id} - ` : '';
+       if (data?.hasMultipleSupportLevel) {
+         fileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${quoteText}`;
+       } else {
+       const supportLevel = data.quoteSupportLevel ? `${data.quoteSupportLevel} - ` : '';
+         fileName = `${vendorName}${endUser}${sourceId}${renewedDuration}${supportLevel}${quoteText}`;
+       }
       generateExcelFileFromPost({
         url: gridProps?.excelFileUrl,
-        name: `Renewals quote ${data?.source?.id}.xlsx`,
+        name: `${fileName}.xlsx`,
         postData: {
           Id: data?.source?.id
         },
