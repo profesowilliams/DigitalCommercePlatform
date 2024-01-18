@@ -64,20 +64,7 @@
     }
 
     &__title {
-      font-size: 4.125rem;
-      font-weight: 700;
-      line-height: 5.125rem;
-      text-align: center;
-      margin: 0 auto;
-      width: 100%;
-      color: white;
-
-      @include mobile {
-        font-size: 2rem;
-        font-family: Arial;
-        font-weight: 700;
-        line-height: 2.5rem;
-      }
+      @extend display-xl;
     }
 
     &__image-container {
@@ -191,22 +178,28 @@
   }
 }
 
-.hero-centered {
-  .cmp-teaser {
-    &__content[data-cmp-hasimage] {
-      position: absolute;
-      top: 35%;
-      display: flex;
-      justify-content: center;
-      flex-flow: wrap;
-      flex-direction: column;
-      width: 100%;
-      align-items: center;
+.hero {
+  &.hero-centered {
+    .cmp-teaser {
+      &__title {
+        font-family: Arial;
+        font-size: 4.125rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 115%; /* 4.74375rem */
+        width: 31.4375rem;
 
-      display-xl,
-      .h0,
-      .h1-large,
-      .cmp-teaser-hero__description {
+        @media (max-width: 767.98px) {
+          font-family: Arial;
+          font-size: 2.375rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: 120%; /* 2.85rem */
+          width: 18.125rem !important;
+        }
+      }
+
+      &-hero__description {
         width: 31.4375rem;
 
         @media (max-width: 767.98px) {
@@ -214,19 +207,56 @@
         }
       }
 
-      @include mobile {
-        top: 0;
-        left: 2rem;
-        bottom: 0;
-        padding: 0;
-        height: 500px;
+      &__bottom-section--title {
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 150%; /* 1.875rem */
+        padding-bottom: 1.5rem;
+
+        @media (max-width: 767.98px) {
+          font-size: 1.25rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 125%;
+          padding-bottom: 0.38rem;
+        }
       }
 
-      .cmp-item {
-        color: inherit;
+      &__bottom-section--link {
+        @media (max-width: 767.98px) {
+          font-size: 0.875rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%; /* 1.3125rem */
+        }
       }
-      .cmp-teaser__footer {
-        color: inherit;
+
+      &__content[data-cmp-hasimage] {
+        position: absolute;
+        top: 35%;
+        display: flex;
+        justify-content: center;
+        flex-flow: wrap;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        left: 0;
+
+        @include mobile {
+          top: 0;
+          left: 2rem;
+          bottom: 0;
+          padding: 0;
+          height: 500px;
+        }
+
+        .cmp-item {
+          color: inherit;
+        }
+        .cmp-teaser__footer {
+          color: inherit;
+        }
       }
     }
   }

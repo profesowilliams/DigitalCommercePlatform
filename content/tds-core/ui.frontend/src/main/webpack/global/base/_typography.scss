@@ -170,6 +170,7 @@ body {
   .h9 b,
   .h10 strong,
   .h10 b,
+  display-xl strong,
   h1 strong,
   h1 b,
   h2 strong,
@@ -189,7 +190,8 @@ body {
     .h0,
     h1.h0,
     .display-xl,
-    h1.display-xl {
+    h1.display-xl,
+    display-xl {
       font-size: 2.375rem;
       line-height: 2.85rem;
       font-weight: normal;
@@ -315,6 +317,7 @@ body {
 // APJ Styles
 .apj,
 .asiapacificjapan {
+  display-xl,
   h1,
   h2,
   h3,
@@ -342,6 +345,7 @@ body {
 // TECH DATA Styles
 .td,
 .techdata {
+  display-xl,
   h1,
   h2,
   h3,
@@ -369,6 +373,7 @@ body {
 // TD SYNNEX Styles
 .tds,
 .tdsynnex {
+  display-xl,
   h1,
   h2,
   h3,
@@ -393,7 +398,8 @@ body {
   .h0,
   h1.h0,
   .display-xl,
-  h1.display-xl {
+  h1.display-xl,
+  display-xl {
     font-size: 3.9375rem;
     line-height: 4.764375rem;
 
@@ -482,6 +488,7 @@ body {
   .h9 b,
   .h10 strong,
   .h10 b,
+  display-xl strong,
   h1 strong,
   h1 b,
   h2 strong,
