@@ -54,6 +54,7 @@ import { usGet } from '../../../../utils/api';
 import useGet from '../../hooks/useGet';
 
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
+import Criteria from './Criteria/Criteria';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -118,6 +119,7 @@ function OrdersTrackingGrid(props) {
     analyticsCategories,
     paginationLabels,
     searchLabels,
+    criteriaLabels,
   } = componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
@@ -394,6 +396,7 @@ function OrdersTrackingGrid(props) {
                   setSendAnalyticsDataHome(false);
                 }
               })()}
+              <Criteria config={gridConfig} />
               <MainGridHeader
                 onQueryChanged={onQueryChanged}
                 searchLabels={searchLabels}

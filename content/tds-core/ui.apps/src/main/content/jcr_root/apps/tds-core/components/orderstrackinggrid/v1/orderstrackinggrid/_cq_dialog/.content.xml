@@ -110,6 +110,18 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Copy Label"
                                                 name="./menuCopy" />
+                                            <last30DaysCriteria
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Showing results from the last 30 days. Label"
+                                                name="./last30DaysCriteria"
+                                            />
+                                            <last90DaysCriteria
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Showing results from the last 90 days. Apply a Date Range filter to see results for more specific dates Label"
+                                                name="./last90DaysCriteria"
+                                            />
                                             <multiple
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

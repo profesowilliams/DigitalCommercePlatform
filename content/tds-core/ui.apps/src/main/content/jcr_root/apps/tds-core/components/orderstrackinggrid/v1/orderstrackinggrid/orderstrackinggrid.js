@@ -27,6 +27,8 @@ use(["../common/utils.js"], function (utils) {
     const labelsList = [
       "detailUrl",
       "displayCurrencyName",
+      "last30DaysCriteria",
+      "last90DaysCriteria",
       "multiple",
       "menuCopy",
       "menuCopyWithHeaders",
