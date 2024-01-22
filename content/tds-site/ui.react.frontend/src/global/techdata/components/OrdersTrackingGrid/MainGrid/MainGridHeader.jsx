@@ -84,11 +84,10 @@ function MainGridHeader({
       key: 'Last30DaysShipments',
       label: getDictionaryValueOrKey(last30DaysShipmentsLabel),
     },
-    // TODO: Hide until it's ready
-    // {
-    //   key: 'EOLOrders',
-    //   label: getDictionaryValueOrKey(eolReportLabel),
-    // },
+    {
+      key: 'EOLOrders',
+      label: getDictionaryValueOrKey(eolReportLabel),
+    },
   ];
 
   const removeDefaultDateRange = () => {
