@@ -273,6 +273,8 @@ public class CaConfigReader {
 
     private String getUserEndpoint;
 
+    private boolean disableMultipleAgreement;
+
     @PostConstruct
     public void init() {
 
@@ -280,6 +282,7 @@ public class CaConfigReader {
         MiniCartConfiguration mcConfiguration = page.adaptTo(ConfigurationBuilder.class).as(MiniCartConfiguration.class);
         AnalyticsConfiguration analyticsConfiguration = page.adaptTo(ConfigurationBuilder.class).as(AnalyticsConfiguration.class);
         RedirectConfiguration redirectConfiguration = page.adaptTo(ConfigurationBuilder.class).as(RedirectConfiguration.class);
+        FeatureFlagsConfiguration featureFlagsConfiguration = page.adaptTo(ConfigurationBuilder.class).as(FeatureFlagsConfiguration.class);
 
         uiServiceDomain = serviceEndPointsConfiguration.uiServiceDomain();
         catalogEndpoint = serviceEndPointsConfiguration.catalogEndpoint();
@@ -353,6 +356,7 @@ public class CaConfigReader {
         tdPartSmart = mcConfiguration.tdPartSmart();
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
         gtmBodyJSScript = analyticsConfiguration.gtmBodyJSScript();
+        disableMultipleAgreement = featureFlagsConfiguration.disableMultipleAgreement();
 
         buildSearchConfigurations();
 
@@ -824,4 +828,8 @@ public class CaConfigReader {
     public String getEcommerceAuthenticationLoginEndpoint() { return ecommerceAuthenticationLoginEndpoint; }
 
     public String getUserEndpoint() { return getUserEndpoint; }
+
+    public boolean getDisableMultipleAgreement() {
+        return  disableMultipleAgreement;
+    }
 }

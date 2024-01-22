@@ -48,6 +48,9 @@ class CaConfigReaderTest {
     private FormConfigurations formConfigurations;
 
     @Mock
+    private FeatureFlagsConfiguration featureFlagsConfiguration;
+
+    @Mock
     private EcommerceAuthenticationConfiguration ecommerceAuthenticationConfiguration;
 
     @BeforeEach
@@ -73,6 +76,7 @@ class CaConfigReaderTest {
         when(configurationBuilder.as(RedirectConfiguration.class)).thenReturn(redirectConfiguration);
         when(configurationBuilder.as(CommonConfigurations.class)).thenReturn(commonConfigurations);
         when(configurationBuilder.as(FormConfigurations.class)).thenReturn(formConfigurations);
+        when(configurationBuilder.as(FeatureFlagsConfiguration.class)).thenReturn(featureFlagsConfiguration);
         when(configurationBuilder.as(EcommerceAuthenticationConfiguration.class)).thenReturn(ecommerceAuthenticationConfiguration);
 
         when(serviceEndPointsConfiguration.uiServiceDomain()).thenReturn("uiServiceDomain");

@@ -26,4 +26,8 @@ public @interface FeatureFlagsConfiguration {
     @Property(label = "Disable Impersonate Account Request Header", description = "Disables the inclusion of the impersonateAccount header on Order Requests in Renewals APJ.")
     boolean disableImpersonateAccountRequestHeader() default true;
 
+    @Property(label = "Disable Multiple Agreement", description = "Helps to disable Multiple Agreement Support, enabled by default.")
+    boolean disableMultipleAgreement() default false;
+
+
 }

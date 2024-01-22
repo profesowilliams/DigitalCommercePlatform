@@ -30,6 +30,7 @@ function DisplayItemInfo({
   noColon = false,
   boldLabel = false,
   multipleOrderFlag = false,
+  disableMultipleAgreement = false
 }) {
 
   const SpanInfo = (
@@ -42,6 +43,8 @@ function DisplayItemInfo({
 
   const toggleBoldLabel = () => (boldLabel ? <b>{label}</b> : label);
 
+  const italicText = (text) => (multipleOrderFlag ? <i>{text}</i> : text);
+
   const handleObjectResponseForApj = (child) => {
     const res = typeof child === "object" ? child?.text : child;
     return res;
@@ -53,7 +56,7 @@ function DisplayItemInfo({
       <If condition={label && children} Else={SpanInfo}>
         <span>
           {toggleBoldLabel()}
-          {!noColon ? ":" : ""} {handleObjectResponseForApj(children)}
+          {!noColon ? ":" : ""} {disableMultipleAgreement ? italicText(handleObjectResponseForApj(children)) : handleObjectResponseForApj(children)}
         </span>
       </If>
     </ErrorDisplayItemBoundary>

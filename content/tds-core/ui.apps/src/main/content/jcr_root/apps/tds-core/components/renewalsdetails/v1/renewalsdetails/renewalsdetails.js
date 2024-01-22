@@ -326,6 +326,10 @@ use(['../../../common/utils.js'], function(utils) {
         jsonObject["orderRenewalEndpoint"] = this.serviceData.uiServiceDomain + this.orderRenewalEndpoint;
     }
 
+    if (this.disableMultipleAgreement != null) {
+        agreementInfo["disableMultipleAgreement"] = this.disableMultipleAgreement;
+    }
+
     if (this.accountLookUpEndpoint && this.serviceData.uiServiceDomain) {
         copyFlyout["accountLookUpEndpoint"] = this.serviceData.uiServiceDomain + this.accountLookUpEndpoint;
     }

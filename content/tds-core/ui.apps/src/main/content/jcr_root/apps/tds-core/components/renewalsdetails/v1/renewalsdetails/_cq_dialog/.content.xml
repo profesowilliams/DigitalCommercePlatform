@@ -690,7 +690,7 @@
                                                             jcr:primaryType="nt:unstructured"
                                                             sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                             fieldDescription="Quote Due Date Label"
-                                                            ficoeldLabel="Due Date Label"
+                                                            fieldLabel="Due Date Label"
                                                             name="./lineItemDueDateLabel"/>
                                                     <duration
                                                             jcr:primaryType="nt:unstructured"

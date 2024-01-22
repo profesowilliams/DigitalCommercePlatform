@@ -150,8 +150,10 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
       quotePreview[key] = quotePreview[key].replace(/ No:/g,' \u2116:');
     } else if (typeof  quotePreview[key] === 'object') {
       Object.keys(quotePreview[key]).forEach(subkey => {
+        if (typeof (quotePreview[key][subkey]) === 'string') {
           quotePreview[key][subkey] = quotePreview[key][subkey].replace(/ No:/g,' \u2116:');
-        });
+        }
+      });
     }
   });
   
@@ -206,6 +208,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           contract={items[0].contract}
           formattedExpiry={formattedExpiry}
           vendorReference={vendorReference?.length ? vendorReference[0] : null}
+          disableMultipleAgreement={!quotePreview.agreementInfo.disableMultipleAgreement}
         />
       </div>
     </div>

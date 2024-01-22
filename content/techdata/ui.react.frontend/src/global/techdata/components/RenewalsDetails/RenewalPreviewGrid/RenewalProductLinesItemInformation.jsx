@@ -22,7 +22,7 @@ Instance:${line.instance}`
 }
 
 
-function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="false", shopDomainPage = "", invokeModal, lineDetailsLabels }) {
+function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="false", disableMultipleAgreement, shopDomainPage = "", invokeModal, lineDetailsLabels }) {
   const description =  formatDetailsShortDescription(line);
   const serialHasValue = hasSerialNumbers(line);
   const formatShopDomainUrl = useCallback(() => {
@@ -114,6 +114,18 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
             {line.instance && <span>
               <b>{lineDetailsLabels?.instanceLabel}</b>
               {line.instance}
+            </span>}
+            {disableMultipleAgreement && dataObj?.formattedDueDate?.indexOf('see line') > -1 && line?.contract?.dueDate && <span>
+              <b>{lineDetailsLabels?.dueDateLabel}</b>
+              {line?.contract?.formattedEndDate}
+            </span>}
+            {disableMultipleAgreement && dataObj?.agreementDuration?.indexOf('see line') > -1 && line?.contract?.duration && <span>
+              <b>{lineDetailsLabels?.durationLabel}</b>
+              {line?.contract?.formattedStartDate} - {line?.contract?.formattedEndDate}
+            </span>}
+            {disableMultipleAgreement && line?.contract?.usagePeriod && <span>
+              <b>{lineDetailsLabels?.usagePeriodLabel}</b>
+              {line?.contract?.formattedUsagePeriod}
             </span>}
           </div>
         </div>
