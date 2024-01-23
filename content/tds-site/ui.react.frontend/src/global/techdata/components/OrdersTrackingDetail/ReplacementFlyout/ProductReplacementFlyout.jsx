@@ -37,7 +37,6 @@ function ProductReplacementFlyout({
   config = {},
   gridRef,
   rowsToGrayOutTDNameRef,
-  userData,
   addNewItem,
 }) {
   const { id = '' } = getUrlParams();
@@ -48,6 +47,7 @@ function ProductReplacementFlyout({
   const productReplacementConfig = store((st) => st.productReplacementFlyout);
   const { setCustomState } = store((st) => st.effects);
   const effects = useOrderTrackingStore((state) => state.effects);
+  const userData = useOrderTrackingStore((st) => st.userData);
 
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState

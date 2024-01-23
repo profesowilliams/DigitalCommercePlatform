@@ -4,9 +4,9 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
 import { usGet } from '../../../../utils/api';
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 function DNotesFlyout({
-  store,
   gridConfig,
   dNotesFlyout = {},
   dNoteColumnList: columnList,
@@ -15,8 +15,8 @@ function DNotesFlyout({
   downloadAllFile,
   openFilePdf,
 }) {
-  const dNoteFlyoutConfig = store((st) => st.dNotesFlyout);
-  const effects = store((st) => st.effects);
+  const dNoteFlyoutConfig = useOrderTrackingStore((st) => st.dNotesFlyout);
+  const effects = useOrderTrackingStore((st) => st.effects);
   const [selected, setSelected] = useState([]);
   const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
   const closeFlyout = () => {
@@ -27,7 +27,10 @@ function DNotesFlyout({
     setSelected([]);
   };
 
-  const config = {...dNoteFlyoutConfig, data: dNoteFlyoutConfig?.data || deliveryNotesResponse};
+  const config = {
+    ...dNoteFlyoutConfig,
+    data: dNoteFlyoutConfig?.data || deliveryNotesResponse,
+  };
 
   const {
     rows,
@@ -48,7 +51,7 @@ function DNotesFlyout({
   };
 
   const handleDownload = () => {
-    closeFlyout()
+    closeFlyout();
     if (selected.length === 1) {
       return openFilePdf('DNote', config?.id, selected);
     } else if (selected.length > 1) {
@@ -58,11 +61,11 @@ function DNotesFlyout({
 
   const handleSingleDownload = (clickedId) => {
     openFilePdf('DNote', config?.id, clickedId);
-  }
+  };
 
   const handleCheckboxEnabled = (row) => {
     return row.canDownloadDocument;
-  }
+  };
 
   const checkboxEnabled = () => {
     return rows.filter((n) => n.canDownloadDocument).length > 0;
@@ -89,8 +92,12 @@ function DNotesFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(dNotesFlyout.title || 'D-notes')}
-      buttonLabel={getDictionaryValueOrKey(dNotesFlyout.button || 'Download selected')}
-      secondaryButtonLabel={getDictionaryValueOrKey(dNotesFlyout.clearAllButton || 'Clear all')}
+      buttonLabel={getDictionaryValueOrKey(
+        dNotesFlyout.button || 'Download selected'
+      )}
+      secondaryButtonLabel={getDictionaryValueOrKey(
+        dNotesFlyout.clearAllButton || 'Clear all'
+      )}
       disabledButton={selected.length === 0}
       selected={selected}
       secondaryButton={SecondaryButton}

@@ -11,12 +11,13 @@ import TotalColumn from '../Columns/TotalColumn';
 import UnitCostColumn from '../Columns/UnitCostColumn';
 import Toaster from '../../Widgets/Toaster';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
-import { getSessionInfo } from '../../../../../utils/user/get';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { isLocalDevelopment, mapServiceData, addCurrencyToColumns } from './utils/gridUtils';
 import {
-  fetchData,
-} from './utils/orderTrackingUtils';
+  isLocalDevelopment,
+  mapServiceData,
+  addCurrencyToColumns,
+} from './utils/gridUtils';
+import { fetchData } from './utils/orderTrackingUtils';
 import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperations';
 import { useStore } from '../../../../../utils/useStore';
 
@@ -27,12 +28,12 @@ function OrdersTrackingDetailGrid({
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
-  const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
   const refreshOrderTrackingDetailApi = useStore(
     (state) => state.refreshOrderTrackingDetailApi
   );
+  const userData = useOrderTrackingStore((st) => st.userData);
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
@@ -195,12 +196,6 @@ function OrdersTrackingDetailGrid({
   function onCloseToaster() {
     closeAndCleanToaster();
   }
-
-  useEffect(() => {
-    getSessionInfo().then((data) => {
-      setUserData(data[1]);
-    });
-  }, []);
 
   useEffect(() => {
     onQueryChanged();

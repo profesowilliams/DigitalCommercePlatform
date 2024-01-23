@@ -66,7 +66,6 @@ const searchParamsKeys = [
 
 function OrdersTrackingGrid(props) {
   const { redirectedFrom = '' } = getUrlParams();
-  const [userData, setUserData] = useState(null);
   const [detailsApiResponse, setDetailsApiResponse] = useState(null);
   const areSearchParamsValid = useRef(false);
   const previousFilter = useRef(false);
@@ -82,6 +81,7 @@ function OrdersTrackingGrid(props) {
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
   const {
+    setUserData,
     setToolTipData,
     setCustomState,
     closeAndCleanToaster,
@@ -92,6 +92,8 @@ function OrdersTrackingGrid(props) {
     useOrderTrackingStore,
     { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
+  const userData = useOrderTrackingStore((st) => st.userData);
+
   const hasRights = (entitlement) =>
     userData?.roleList?.some((role) => role.entitlement === entitlement);
 
@@ -132,7 +134,6 @@ function OrdersTrackingGrid(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-
   const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
@@ -308,7 +309,7 @@ function OrdersTrackingGrid(props) {
     reportFilterValue.current = {};
   };
 
-  const [settingsResponse, loading, error] = useGet(
+  const [settingsResponse] = useGet(
     `${gridConfig.uiProactiveServiceDomain}/v1`
   );
   const triggerSettingsFlyout = (settings) => {

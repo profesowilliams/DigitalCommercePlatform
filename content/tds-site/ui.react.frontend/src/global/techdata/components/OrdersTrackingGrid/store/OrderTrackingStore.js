@@ -39,7 +39,7 @@ const INITIAL_STATE = {
   ...paginationState,
 
   branding: '',
-
+  userData: null,
   toolTipData: {
     value: '',
     x: 0,

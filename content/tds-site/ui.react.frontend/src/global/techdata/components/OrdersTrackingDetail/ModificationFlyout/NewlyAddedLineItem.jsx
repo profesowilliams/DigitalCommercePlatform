@@ -16,13 +16,7 @@ const NewlyAddedLineItem = ({
   return (
     <li key={index} className="cmp-flyout-list__element newly-added">
       <div className="cmp-flyout-list__element__picture">
-        <img
-          src={
-            'https://cdn.cs.1worldsync.com/27/58/2758fb56-c778-465e-8885-b2fea396a901.jpg'
-          }
-          alt=""
-        />
-        {/* TODO: replace placeholder with image url after BE is ready  */}
+        <img src={item.imageUrl} alt="" />
       </div>
       <div className="cmp-flyout-list__element__title">
         <p>{item.description}</p>
@@ -45,8 +39,7 @@ const NewlyAddedLineItem = ({
       </div>
       <div className="cmp-flyout-list__element__price">
         <p className="cmp-flyout-list__element__price-bold">
-          {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency || 'GBP'}){' '}
-          {/* TODO: delete placeholder currency after BE is ready  */}
+          {getDictionaryValueOrKey(labels.lineTotal)} ({item.currency}){' '}
         </p>
         <p>{(item.quantity * item.price).toFixed(2)}</p>
       </div>

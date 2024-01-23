@@ -5,9 +5,9 @@ import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
 import { usGet } from '../../../../utils/api';
 import ToolTip from '../BaseGrid/ToolTip';
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 function InvoicesFlyout({
-  store,
   gridConfig,
   invoicesFlyout = {},
   invoicesColumnList: columnList,
@@ -16,9 +16,9 @@ function InvoicesFlyout({
   downloadAllFile,
   openFilePdf,
 }) {
-  const invoicesFlyoutConfig = store((st) => st.invoicesFlyout);
-  const [showTooltip, setShowTooltip] = useState(false)
-  const effects = store((st) => st.effects);
+  const invoicesFlyoutConfig = useOrderTrackingStore((st) => st.invoicesFlyout);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const effects = useOrderTrackingStore((st) => st.effects);
   const [selected, setSelected] = useState([]);
   const [invoicesResponse, setInvoicesResponse] = useState(null);
   const closeFlyout = () => {
@@ -28,7 +28,10 @@ function InvoicesFlyout({
     });
     setSelected([]);
   };
-  const config = {...invoicesFlyoutConfig, data: invoicesFlyoutConfig?.data || invoicesResponse };
+  const config = {
+    ...invoicesFlyoutConfig,
+    data: invoicesFlyoutConfig?.data || invoicesResponse,
+  };
 
   const {
     rows,
@@ -49,7 +52,7 @@ function InvoicesFlyout({
   };
 
   const handleDownload = () => {
-    closeFlyout()
+    closeFlyout();
     if (selected.length === 1) {
       return openFilePdf('Invoice', config?.id, selected);
     } else if (selected.length > 1) {
@@ -59,11 +62,11 @@ function InvoicesFlyout({
 
   const handleSingleDownload = (clickedId) => {
     openFilePdf('Invoice', config?.id, clickedId);
-  }
+  };
 
   const handleCheckboxEnabled = (row) => {
     return row.canDownloadDocument;
-  }
+  };
 
   const checkboxEnabled = () => {
     return rows.filter((n) => n.canDownloadDocument).length > 0;
@@ -90,9 +93,7 @@ function InvoicesFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(invoicesFlyout.title)}
-      buttonLabel={getDictionaryValueOrKey(
-        invoicesFlyout.button
-      )}
+      buttonLabel={getDictionaryValueOrKey(invoicesFlyout.button)}
       secondaryButtonLabel={getDictionaryValueOrKey(
         invoicesFlyout.clearAllButton
       )}

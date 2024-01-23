@@ -21,6 +21,10 @@ export const mockedUserData = {
       accountId: '325009',
     },
     {
+      entitlement: 'ResellerAdmin',
+      accountId: '325009',
+    },
+    {
       entitlement: 'MenuBuilder',
       accountId: '325009',
     },

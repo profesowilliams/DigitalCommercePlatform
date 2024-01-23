@@ -5,10 +5,16 @@ import MessagesForm from './MessagesForm';
 import TypesForm from './TypesForm';
 import EmailsForm from './EmailsForm';
 import CustomSwitch from './CustomSwitch';
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 const SettingsContent = ({ labels, settingsData, onChange }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(settingsData.active);
+  const userData = useOrderTrackingStore((st) => st.userData);
 
+  const hasRights = (entitlement) =>
+    userData?.roleList?.some((role) => role.entitlement === entitlement);
+
+  const hasResellerAdminRights = hasRights('ResellerAdmin');
   const handleSwitchChange = () => {
     setIsSwitchOn((prevState) => {
       onChange('active', !prevState);
@@ -38,7 +44,14 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
 
   const emailOptions = [
     { key: 'email', label: settingsData.destination.email },
-    { key: 'additionalEmail', label: settingsData.destination.additionalEmail },
+    ...(hasResellerAdminRights
+      ? [
+          {
+            key: 'additionalEmail',
+            label: settingsData.destination.additionalEmail,
+          },
+        ]
+      : []),
   ];
 
   const {
@@ -82,6 +95,7 @@ const SettingsContent = ({ labels, settingsData, onChange }) => {
             email,
             additionalEmail,
           }}
+          isAdditionalEmailEnabled={hasResellerAdminRights}
           options={emailOptions}
           labels={labels}
           onChange={onChange}

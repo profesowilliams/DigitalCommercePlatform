@@ -12,7 +12,7 @@ import {
   createdFromDate,
 } from '../../../../utils/utils';
 import { getUrlParams } from '../../../../utils';
-
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import {
   getExportAnalyticsGoogle,
   pushDataLayerGoogle,
@@ -44,7 +44,6 @@ const styleOverrideDivider = {
 };
 
 function ExportFlyout({
-  store,
   componentProp,
   exportFlyout = {},
   exportOptionsList,
@@ -59,7 +58,7 @@ function ExportFlyout({
   const isOrderDetailsPage = window.location.href.includes(
     'order-details.html?id='
   );
-  const exportFlyoutConfig = store((st) => st.exportFlyout);
+  const exportFlyoutConfig = useOrderTrackingStore((st) => st.exportFlyout);
   let urlSearchParams = new URLSearchParams();
   if (searchParams) {
     const { reports, sort, search, filters } = searchParams;
@@ -107,7 +106,7 @@ function ExportFlyout({
   } else if (isOrderDetailsPage) {
     urlSearchParams.set('Id', id);
   }
-  const effects = store((st) => st.effects);
+  const effects = useOrderTrackingStore((st) => st.effects);
   const [selected, setSelected] = useState(
     exportOptionsList ? exportOptionsList?.[0]?.key : []
   );

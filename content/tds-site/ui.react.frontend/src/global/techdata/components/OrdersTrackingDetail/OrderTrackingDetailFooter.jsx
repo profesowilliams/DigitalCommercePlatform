@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
 import { LOCAL_STORAGE_KEY_USER_DATA } from '../../../../utils/constants';
 import {
   isExtraReloadDisabled,
   isHttpOnlyEnabled,
 } from '../../../../utils/featureFlagUtils';
-import { getSessionInfo } from "../../../../utils/user/get";
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 const OrderTrackingDetailFooter = ({ content, config }) => {
-  const [userData, setUserData] = useState(null);
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
     : null;
+  const userData = useOrderTrackingStore((st) => st.userData);
   const currentUserData =
     isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
   const activeCustomer = currentUserData?.activeCustomer;
   const defaultCurrency = activeCustomer?.defaultCurrency || '';
   const currency = content.paymentDetails?.currency;
-  useEffect(() => {
-    getSessionInfo().then((data) => {
-      setUserData(data[1]);
-    });
-  }, []);
 
   return (
     <>

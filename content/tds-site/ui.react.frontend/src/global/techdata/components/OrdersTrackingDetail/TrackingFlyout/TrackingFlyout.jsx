@@ -3,17 +3,17 @@ import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { usGet } from '../../../../../utils/api';
 import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/FlyoutTableWithRedirectLinks';
 import { getDictionaryValueOrKey, addUrlParam } from '../../../../../utils/utils';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 
 function TrackingFlyout({
-  store,
   config,
   trackingFlyout = {},
   subheaderReference,
   isTDSynnex,
 }) {
   const [dNoteId, setDNoteId] = useState(null);
-  const trackingFlyoutConfig = store((st) => st.trackingFlyout);
-  const effects = store((st) => st.effects);
+  const trackingFlyoutConfig = useOrderTrackingStore((st) => st.trackingFlyout);
+  const effects = useOrderTrackingStore((st) => st.effects);
   const data = trackingFlyoutConfig?.line?.deliveryNotes;
   const { line, urlProductImage, mfrNumber, tdNumber, displayName } =
     trackingFlyoutConfig?.line || {};
@@ -40,8 +40,13 @@ function TrackingFlyout({
       if (baseUrl) {
         let trackAndTraceParams = '';
         if (parameters) {
-          Object.entries(parameters).forEach((entry) =>
-            trackAndTraceParams = addUrlParam(trackAndTraceParams, entry[0], entry[1])
+          Object.entries(parameters).forEach(
+            (entry) =>
+              (trackAndTraceParams = addUrlParam(
+                trackAndTraceParams,
+                entry[0],
+                entry[1]
+              ))
           );
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');

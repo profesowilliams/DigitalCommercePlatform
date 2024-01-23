@@ -93,6 +93,9 @@ export const orderTrackingEffects = (set, get) => {
 
   return {
     setCustomState,
+    setUserData(data) {
+      set({ userData: data });
+    },
     toggleFilterModal(options = {}) {
       const { justClose = false } = options;
       const { isFilterModalOpen } = get().filter;

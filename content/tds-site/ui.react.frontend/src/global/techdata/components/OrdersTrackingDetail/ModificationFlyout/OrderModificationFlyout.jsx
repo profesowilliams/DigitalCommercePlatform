@@ -24,7 +24,6 @@ const areItemsListIdentical = (items, itemsCopy) => {
 };
 
 function OrderModificationFlyout({
-  store,
   subheaderReference = '',
   isTDSynnex = true,
   labels = {},
@@ -32,11 +31,12 @@ function OrderModificationFlyout({
   content,
   gridRef,
   rowsToGrayOutTDNameRef,
-  userData,
 }) {
   const { id = '' } = getUrlParams();
   const [items, setItems] = useState([]);
-  const orderModificationConfig = store((st) => st.orderModificationFlyout);
+  const orderModificationConfig = useOrderTrackingStore(
+    (st) => st.orderModificationFlyout
+  );
   const [orderChanged, setOrderChanged] = useState(false);
   const [newItemFormVisible, setNewItemFormVisible] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -47,11 +47,12 @@ function OrderModificationFlyout({
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
-  const doesReasonDropdownHaveEmptyItems = store(
+  const doesReasonDropdownHaveEmptyItems = useOrderTrackingStore(
     (st) => st.orderModification.doesReasonDropdownHaveEmptyItems
   );
-  const { setCustomState } = store((st) => st.effects);
+  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const effects = useOrderTrackingStore((state) => state.effects);
+  const userData = useOrderTrackingStore((st) => st.userData);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
   const orderNumber = id || orderModificationConfig?.id;
@@ -309,7 +310,7 @@ function OrderModificationFlyout({
           />
         )}
         <>
-          <ul>
+          <ul className="new-list">
             {newlyAddedItems.map((item, index) => (
               <NewlyAddedLineItem
                 key={index}

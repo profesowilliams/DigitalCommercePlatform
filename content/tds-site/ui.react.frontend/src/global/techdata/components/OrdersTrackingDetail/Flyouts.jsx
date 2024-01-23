@@ -12,31 +12,26 @@ const Flyouts = ({
   downloadAllFile,
   openFilePdf,
   config,
-  hasAIORights,
   content,
   gridRef,
   rowsToGrayOutTDNameRef,
-  userData,
   addNewItem,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   return (
     <>
       <TrackingFlyout
-        store={useOrderTrackingStore}
         config={config}
         trackingFlyout={config?.trackingFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
       />
       <ReturnFlyout
-        store={useOrderTrackingStore}
         returnFlyout={config?.returnFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         isTDSynnex={isTDSynnex}
       />
       <DNotesFlyout
-        store={useOrderTrackingStore}
         gridConfig={config}
         dNotesFlyout={config?.dNotesFlyout}
         dNoteColumnList={config?.dNoteColumnList}
@@ -50,7 +45,6 @@ const Flyouts = ({
         }
       />
       <InvoicesFlyout
-        store={useOrderTrackingStore}
         gridConfig={config}
         invoicesFlyout={config?.invoicesFlyout}
         invoicesColumnList={config?.invoicesColumnList}
@@ -62,20 +56,16 @@ const Flyouts = ({
         openFilePdf={(flyoutType, orderId, selectedId) =>
           openFilePdf(flyoutType, orderId, selectedId)
         }
-        hasAIORights={hasAIORights}
       />
       <OrderModificationFlyout
-        store={useOrderTrackingStore}
         subheaderReference={document.querySelector('.subheader > div > div')}
         labels={config?.orderModifyLabels}
         gridConfig={config}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        userData={userData}
         content={content}
       />
       <ExportFlyout
-        store={useOrderTrackingStore}
         componentProp={config}
         exportFlyout={config?.exportFlyout}
         exportOptionsList={config?.exportOptionsList}

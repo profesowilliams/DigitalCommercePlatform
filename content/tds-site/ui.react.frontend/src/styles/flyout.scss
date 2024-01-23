@@ -284,7 +284,7 @@ $flyout-small-height-formax: 779px;
   .add-new-disabled {
     color: $brand-text-lightgray;
   }
-  ul {
+  ul.new-list {
     padding: 0;
   }
   .new-item-form {
@@ -546,6 +546,8 @@ $flyout-small-height-formax: 779px;
         margin-top: 13px;
         margin-left: 30px;
         font-size: 14px;
+        text-decoration: none;
+        color: $brand-cobalt;
       }
     }
     &__price {
@@ -562,7 +564,7 @@ $flyout-small-height-formax: 779px;
       background-color: $td-neutral-gray;
       margin: 0 18px 6px;
       grid-template-columns: 15px 110px 627px 106px;
-      height: 126px;
+      height: 138px;
     }
   }
 }

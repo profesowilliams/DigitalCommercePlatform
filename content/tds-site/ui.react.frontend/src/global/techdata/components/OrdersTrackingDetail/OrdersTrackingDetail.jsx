@@ -11,10 +11,10 @@ import {
   getPageReloadAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
-  const [userData, setUserData] = useState(null);
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
   const [newItem, setNewItem] = useState(null);
@@ -30,6 +30,8 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
+  const { setUserData } = useOrderTrackingStore((st) => st.effects);
+  const userData = useOrderTrackingStore((st) => st.userData);
 
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
@@ -127,11 +129,9 @@ function OrdersTrackingDetail(props) {
         downloadAllFile={downloadAllFile}
         openFilePdf={openFilePdf}
         config={config}
-        hasAIORights={hasAIORights}
         content={content}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-        userData={userData}
         addNewItem={handleAddNewItem}
       />
     </>
