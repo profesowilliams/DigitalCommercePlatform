@@ -69,6 +69,9 @@ function RenewalPlanOptions({ labels, data, node }) {
 
   const exportXlsPlan = (id) => {
     const postData = { id };
+    const activeIDData = data.options.filter((item) => {
+         return item.id == Id;
+     })
     let name = `renewal-${id}.xlsx`;
     const url = exportXLSRenewalsEndpoint;
     const quoteText = productGrid.quoteTextForFileName || 'quote';
