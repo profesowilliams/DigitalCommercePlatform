@@ -65,7 +65,8 @@ export const mapRenewalItemProducts = (items = []) => {
     id: item?.id,
     product: Array.isArray(item?.product) ? mapProduct(item?.product[1]) || {} : {},
     quantity: item?.quantity,
-    unitPrice: item?.unitPrice
+    unitPrice: item?.unitPrice,
+    AgreementNumber: item?.contract?.id
   }));
 }
 
