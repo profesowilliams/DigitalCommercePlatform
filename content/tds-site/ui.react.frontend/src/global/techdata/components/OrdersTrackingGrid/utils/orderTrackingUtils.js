@@ -208,6 +208,9 @@ export async function fetchData(config) {
     (filtersRefs.current.type || filtersRefs.current.status)
   ) {
     addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
+  }else if(dateFilters.length !== 0){
+    requestUrl.searchParams.delete('createdFrom');
+    requestUrl.searchParams.delete('createdTo');
   }
 
   const filtersStatusAndType =
@@ -383,7 +386,7 @@ export const getPredefinedSearchOptionsList = (aemData) => {
 
 export const getInitialFiltersDataFromLS = () => {
   const data = getLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY);
-  if (!data)
+  if (!data){
     return {
       createdFrom: null,
       createdTo: null,
@@ -394,13 +397,18 @@ export const getInitialFiltersDataFromLS = () => {
       type: null,
       status: null,
     };
+  }
+  const dateType = data.dates[0]?.dateType;
   return {
-    createdFrom: data.dates[0]?.createdFrom,
-    createdTo: data.dates[0]?.createdTo,
-    shippedDateFrom: data.dates[0]?.shippedDateFrom,
-    shippedDateTo: data.dates[0]?.shippedDateTo,
-    invoiceDateFrom: data.dates[0]?.invoiceDateFrom,
-    invoiceDateTo: data.dates[0]?.invoiceDateTo,
+    dateType: dateType,
+    createdFrom: dateType === 'orderDate' ? data.dates[0]?.createdFrom : null,
+    createdTo: dateType === 'orderDate' ? data.dates[0]?.createdTo : null,
+    shippedDateFrom:
+      dateType === 'shipDate' ? data.dates[0]?.createdFrom : null,
+    shippedDateTo: dateType === 'shipDate' ? data.dates[0]?.createdTo : null,
+    invoiceDateFrom:
+      dateType === 'invoiceDate' ? data.dates[0]?.createdFrom : null,
+    invoiceDateTo: dateType === 'invoiceDate' ? data.dates[0]?.createdTo : null,
     status: data.statuses.map((status) => `&status=${status.id}`).join(''),
     type: data.types.map((type) => `&type=${type.id}`).join(''),
   };

@@ -4,6 +4,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import FlyoutTable from '../FlyoutTable/FlyoutTable';
 import useTableFlyout from '../../hooks/useTableFlyout';
 import { usGet } from '../../../../utils/api';
+import ToolTip from '../BaseGrid/ToolTip';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 
 function DNotesFlyout({
@@ -17,6 +18,7 @@ function DNotesFlyout({
 }) {
   const dNoteFlyoutConfig = useOrderTrackingStore((st) => st.dNotesFlyout);
   const effects = useOrderTrackingStore((st) => st.effects);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [selected, setSelected] = useState([]);
   const [deliveryNotesResponse, setDeliveryNotesResponse] = useState(null);
   const closeFlyout = () => {
@@ -113,7 +115,11 @@ function DNotesFlyout({
             </span>
             <span>{dNoteFlyoutConfig?.id}</span>
           </div>
-          <div className="cmp-flyout__content__contentGrid">
+          <div
+            className="cmp-flyout__content__contentGrid"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
             <span className="cmp-flyout__content-bold">
               {getDictionaryValueOrKey(dNotesFlyout.poNo)}
               {'  '}
@@ -123,6 +129,14 @@ function DNotesFlyout({
             </span>
           </div>
         </div>
+        <ToolTip
+          toolTipData={{
+            show: showTooltip,
+            y: null,
+            x: null,
+            value: dNoteFlyoutConfig?.reseller,
+          }}
+        />
         <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(dNotesFlyout.description)}
         </div>

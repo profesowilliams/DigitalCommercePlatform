@@ -135,7 +135,7 @@ const OrderFilterFlyout = ({
   };
 
   useEffect(() => {
-    setDateType(filterDateOptions[0].key);
+    !dateType && setDateType(filterDateOptions[0].key);
     setAreThereAnyFiltersSelectedButNotApplied();
   }, []);
 
