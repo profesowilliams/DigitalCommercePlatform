@@ -36,7 +36,6 @@ import MainGridHeader from './MainGrid/MainGridHeader';
 import {
   addCurrencyToTotalColumn,
   getPaginationValue,
-  isLocalDevelopment,
   setLocalStorageData,
   updateQueryString,
   removeLocalStorageData,
@@ -66,7 +65,6 @@ const searchParamsKeys = [
 
 function OrdersTrackingGrid(props) {
   const { redirectedFrom = '' } = getUrlParams();
-  const [detailsApiResponse, setDetailsApiResponse] = useState(null);
   const areSearchParamsValid = useRef(false);
   const previousFilter = useRef(false);
   const hasSortChanged = useRef(false);
@@ -97,10 +95,6 @@ function OrdersTrackingGrid(props) {
   const hasRights = (entitlement) =>
     userData?.roleList?.some((role) => role.entitlement === entitlement);
 
-  const hasAIORights = hasRights('AIO');
-  const hasCanViewOrdersRights = hasRights('CanViewOrders');
-  const hasOrderTrackingRights = hasRights('OrderTracking');
-  const hasOrderModificationRights = hasRights('OrderModification');
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
@@ -134,7 +128,6 @@ function OrdersTrackingGrid(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
 
   const dueDateKey = componentProp.options.defaultSortingColumnKey;
   const dueDateDir = componentProp.options.defaultSortingDirection;
@@ -294,9 +287,6 @@ function OrdersTrackingGrid(props) {
     closeAndCleanToaster();
   };
 
-  const hasAccess =
-    hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
-
   const fetchFiltersRefinements = async () => {
     const results = await usGet(
       `${componentProp.uiCommerceServiceDomain}/v3/refinements`
@@ -310,7 +300,8 @@ function OrdersTrackingGrid(props) {
   };
 
   const [settingsResponse] = useGet(
-    `${gridConfig.uiProactiveServiceDomain}/v1`
+    `${gridConfig.uiProactiveServiceDomain}/v1`,
+    'settings'
   );
   const triggerSettingsFlyout = (settings) => {
     setCustomState({
@@ -385,106 +376,106 @@ function OrdersTrackingGrid(props) {
     }
   }, [userData]);
 
+  const authorizedContent = () => {
+    const hasAIORights = hasRights('AIO');
+    const hasCanViewOrdersRights = hasRights('CanViewOrders');
+    const hasOrderTrackingRights = hasRights('OrderTracking');
+    const hasOrderModificationRights = hasRights('OrderModification');
+    const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
+
+    return hasAccess ? (
+      <div className="cmp-order-tracking-grid">
+        {(() => {
+          if (sendAnalyticsDataHome) {
+            pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
+            setSendAnalyticsDataHome(false);
+          }
+        })()}
+        <Criteria config={gridConfig} />
+        <MainGridHeader
+          onQueryChanged={onQueryChanged}
+          searchLabels={searchLabels}
+          searchOptionsList={searchOptionsList}
+          reportPillLabel={reportPillLabel}
+          setDateRange={setDateRange}
+          analyticsCategories={analyticsCategories}
+          paginationLabels={paginationLabels}
+          customPaginationRef={customPaginationRef}
+          isLoading={isLoading}
+          searchCriteria={searchCriteria}
+          gridConfig={gridConfig}
+          reportFilterValue={reportFilterValue}
+          filtersRefs={filtersRefs}
+          settings={settingsResponse}
+        />
+        <BaseGrid
+          columnList={addCurrencyToTotalColumn(
+            componentProp.columnList,
+            userData
+          )}
+          definitions={ordersTrackingDefinition(
+            componentProp,
+            openFilePdf,
+            hasAIORights
+          )}
+          config={gridConfig}
+          options={options}
+          gridConfig={gridConfig}
+          defaultSearchDateRange={dateRange}
+          requestInterceptor={customRequestInterceptor}
+          mapServiceData={mapServiceData}
+          onSortChanged={onSortChanged}
+          onAfterGridInit={_onAfterGridInit}
+          onDataLoad={onDataLoad}
+          responseError={responseError}
+          DetailRenderers={(props) => (
+            <OrderDetailsRenderers
+              {...props}
+              config={gridConfig}
+              openFilePdf={(flyoutType, orderId, selectedId) =>
+                openFilePdf(flyoutType, orderId, selectedId)
+              }
+              hasAIORights={hasAIORights}
+              hasOrderModificationRights={hasOrderModificationRights}
+              gridRef={gridRef}
+              rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+            />
+          )}
+          onCellMouseOver={(e) => cellMouseOver(e, setToolTipData)}
+          onCellMouseOut={() => cellMouseOut(setToolTipData)}
+        />
+        <MainGridFooter
+          analyticsCategories={analyticsCategories}
+          onQueryChanged={onQueryChanged}
+          onCloseToaster={onCloseToaster}
+          customPaginationRef={customPaginationRef}
+          isLoading={isLoading}
+          paginationLabels={paginationLabels}
+        />
+      </div>
+    ) : (
+      <>
+        {(() => {
+          if (sendAnalyticsDataHome) {
+            pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
+            setSendAnalyticsDataHome(false);
+          }
+        })()}
+        <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+      </>
+    );
+  };
+
   return (
     <>
-      {(userData?.activeCustomer || isLocalDevelopment) && (
-        <>
-          {hasAccess ? (
-            <div className="cmp-order-tracking-grid">
-              {(() => {
-                if (sendAnalyticsDataHome) {
-                  pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
-                  setSendAnalyticsDataHome(false);
-                }
-              })()}
-              <Criteria config={gridConfig} />
-              <MainGridHeader
-                onQueryChanged={onQueryChanged}
-                searchLabels={searchLabels}
-                searchOptionsList={searchOptionsList}
-                reportPillLabel={reportPillLabel}
-                setDateRange={setDateRange}
-                analyticsCategories={analyticsCategories}
-                paginationLabels={paginationLabels}
-                customPaginationRef={customPaginationRef}
-                isLoading={isLoading}
-                searchCriteria={searchCriteria}
-                gridConfig={gridConfig}
-                reportFilterValue={reportFilterValue}
-                filtersRefs={filtersRefs}
-                settings={settingsResponse}
-              />
-              <BaseGrid
-                columnList={addCurrencyToTotalColumn(
-                  componentProp.columnList,
-                  userData
-                )}
-                definitions={ordersTrackingDefinition(
-                  componentProp,
-                  openFilePdf,
-                  hasAIORights
-                )}
-                config={gridConfig}
-                options={options}
-                gridConfig={gridConfig}
-                defaultSearchDateRange={dateRange}
-                requestInterceptor={customRequestInterceptor}
-                mapServiceData={mapServiceData}
-                onSortChanged={onSortChanged}
-                onAfterGridInit={_onAfterGridInit}
-                onDataLoad={onDataLoad}
-                responseError={responseError}
-                DetailRenderers={(props) => (
-                  <>
-                    <OrderDetailsRenderers
-                      {...props}
-                      config={gridConfig}
-                      openFilePdf={(flyoutType, orderId, selectedId) =>
-                        openFilePdf(flyoutType, orderId, selectedId)
-                      }
-                      hasAIORights={hasAIORights}
-                      hasOrderModificationRights={hasOrderModificationRights}
-                      setDetailsApiResponse={setDetailsApiResponse}
-                      gridRef={gridRef}
-                      rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
-                    />
-                  </>
-                )}
-                onCellMouseOver={(e) => cellMouseOver(e, setToolTipData)}
-                onCellMouseOut={() => cellMouseOut(setToolTipData)}
-              />
-              <MainGridFooter
-                analyticsCategories={analyticsCategories}
-                onQueryChanged={onQueryChanged}
-                onCloseToaster={onCloseToaster}
-                toolTipData={toolTipData}
-                customPaginationRef={customPaginationRef}
-                isLoading={isLoading}
-                paginationLabels={paginationLabels}
-              />
-            </div>
-          ) : (
-            <>
-              {(() => {
-                if (sendAnalyticsDataHome) {
-                  pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
-                  setSendAnalyticsDataHome(false);
-                }
-              })()}
-              <AccessPermissionsNeeded noAccessProps={noAccessProps} />
-            </>
-          )}
-        </>
-      )}
+      {userData?.activeCustomer && authorizedContent()}
       <MainGridFlyouts
         downloadFileBlob={downloadFileBlob}
         filterLabels={filterLabels}
         gridConfig={gridConfig}
-        hasAIORights={hasAIORights}
         openFilePdf={openFilePdf}
         analyticsCategories={analyticsCategories}
         onQueryChanged={onQueryChanged}
-        apiResponse={detailsApiResponse}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}

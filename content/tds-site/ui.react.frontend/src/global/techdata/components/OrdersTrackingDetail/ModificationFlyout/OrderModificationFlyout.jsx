@@ -190,7 +190,7 @@ function OrderModificationFlyout({
         ),
       };
       if (result.data && !result.data?.error?.isError) {
-        changeRefreshDetailApiState();
+        changeRefreshDetailApiState('lineDetails');
         effects.setCustomState({ key: 'toaster', value: { ...toasterSucess } });
       }
       if (addLineError || reduceLineError) {

@@ -8,11 +8,12 @@ const MainGridFooter = ({
   analyticsCategories,
   onQueryChanged,
   onCloseToaster,
-  toolTipData,
   customPaginationRef,
   isLoading,
   paginationLabels,
 }) => {
+  const toolTipData = useOrderTrackingStore((st) => st.toolTipData);
+
   return (
     <>
       <Toaster

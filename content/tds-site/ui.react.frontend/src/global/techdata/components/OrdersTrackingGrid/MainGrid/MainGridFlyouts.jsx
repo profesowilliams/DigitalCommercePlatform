@@ -10,7 +10,6 @@ import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 const MainGridFlyouts = ({
   gridConfig,
   openFilePdf,
-  hasAIORights,
   filterLabels,
   downloadFileBlob,
   analyticsCategories,
@@ -57,7 +56,6 @@ const MainGridFlyouts = ({
         openFilePdf={(flyoutType, orderId, selectedId) =>
           openFilePdf(flyoutType, orderId, selectedId)
         }
-        hasAIORights={hasAIORights}
       />
       <ExportFlyout
         store={useOrderTrackingStore}

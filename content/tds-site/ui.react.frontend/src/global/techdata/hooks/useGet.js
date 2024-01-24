@@ -10,29 +10,29 @@ import { loginPageUrl } from "../../../utils/user/get"
 //                                  isLoading - boolean indicating that loading is in progress, 
 //                                  error - actual error, if null, there is no error]
 
-export default function useGet(url) {
+export default function useGet(url, id) {
   const [response, setResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const catch401 = function (error){
-      const authorMode = !(
-          typeof Granite === 'undefined' || typeof Granite.author === 'undefined'
-      );
-      const isLocalhost = window.location.href.includes('localhost');
+  const catch401 = function (error) {
+    const authorMode = !(
+      typeof Granite === 'undefined' || typeof Granite.author === 'undefined'
+    );
+    const isLocalhost = window.location.href.includes('localhost');
 
-      if (authorMode || isLocalhost) {
-          // do nothing
-          console.log("authorMode or localhost = ", authorMode || isLocalhost);
-      } else {
-        if (error && error.response && error.response.status === 401) {
-          window.location = loginPageUrl;
+    if (authorMode || isLocalhost) {
+      // do nothing
+      console.log('authorMode or localhost = ', authorMode || isLocalhost);
+    } else {
+      if (error && error.response && error.response.status === 401) {
+        window.location = loginPageUrl;
       }
     }
-  }
-  
-  const {isUserLoggedIn:isLoggedIn} = useAuth();
+  };
+
+  const { isUserLoggedIn: isLoggedIn } = useAuth();
   const refreshOrderTrackingDetailApi = useStore(
-    (state) => state.refreshOrderTrackingDetailApi
+    (state) => state.refreshOrderTrackingDetailApi[id]
   );
 
   useEffect(() => {

@@ -17,12 +17,12 @@ function DropdownOrderDetails({
   openFilePdf,
   hasAIORights,
   hasOrderModificationRights,
-  setDetailsApiResponse,
   gridRef,
   rowsToGrayOutTDNameRef,
 }) {
   const [apiResponse, isLoading, error] = useGet(
-    `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`
+    `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
+    'lineDetails'
   );
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
@@ -109,8 +109,11 @@ function DropdownOrderDetails({
   }, [error]);
 
   useEffect(() => {
-    if (apiResponse) setDetailsApiResponse(apiResponse);
+    if (apiResponse) {
+      gridRef.current?.api.setRowData(apiResponse.content?.notShipped);
+    }
   }, [apiResponse]);
+
   return (
     <div className="order-line-details">
       <div className="order-line-details__header">

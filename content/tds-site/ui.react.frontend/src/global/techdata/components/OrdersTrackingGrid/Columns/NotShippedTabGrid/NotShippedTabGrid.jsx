@@ -140,6 +140,7 @@ function NotShippedTabGrid({
       },
     });
   }, []);
+
   return (
     <section>
       <div className="order-line-details__content__title">

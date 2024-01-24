@@ -199,7 +199,7 @@ function OrdersTrackingDetailGrid({
 
   useEffect(() => {
     onQueryChanged();
-  }, [refreshOrderTrackingDetailApi]);
+  }, [refreshOrderTrackingDetailApi.lineDetails]);
 
   return (
     <>

@@ -169,7 +169,7 @@ function ProductReplacementFlyout({
     rowsToGrayOutTDNameRef.current = [
       productReplacementConfig?.data?.line?.tdNumber,
     ];
-    changeRefreshDetailApiState();
+    changeRefreshDetailApiState('lineDetails');
   };
 
   const buttonsSection = (

@@ -84,7 +84,7 @@ const SettingsFlyout = ({
       };
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
-    changeRefreshDetailApiState();
+    changeRefreshDetailApiState('settings');
     closeFlyout();
   };
 
