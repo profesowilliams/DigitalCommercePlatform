@@ -87,6 +87,17 @@
 
       .cmp-teaser__description {
         grid-template-columns: 1fr;
+        text-decoration: none;
+        color: initial;
+      }
+
+      /**
+       * Description link styles.
+       */
+      .cmp-teaser__desc-link {
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }

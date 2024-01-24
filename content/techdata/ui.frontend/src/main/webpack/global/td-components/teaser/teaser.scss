@@ -275,6 +275,15 @@
             background-color: get-color(brand-green-synnex) !important;
           }
         }
+
+        .cmp-teaser__desc-link {
+          text-decoration: none;
+          color: initial !important;
+
+          &:hover {
+            text-decoration: none !important;
+          }
+        }
       }
     }
   }
@@ -342,6 +351,15 @@
 
     &__image {
       width: 100%;
+    }
+
+    .cmp-teaser__desc-link {
+      text-decoration: none;
+      color: initial !important;
+
+      &:hover {
+        text-decoration: none !important;
+      }
     }
   }
 }
@@ -680,11 +698,15 @@
                 color: map-get($color-palette, 'charcoal');
 
                 .cmp-teaser__desc-link {
-                  color: map-get($color-palette, 'charcoal');
+                  color: initial !important;
 
                   &:link,
                   &:visited {
                     color: map-get($color-palette, 'cobalt');
+                  }
+
+                  &:hover {
+                    text-decoration: none !important;
                   }
                 }
 
@@ -1086,10 +1108,16 @@
           color: #262626;
         }
 
-        .cmp-teaser__desc-link p {
-          font-size: 16px;
-          line-height: 24px;
-          color: #262626;
+        .cmp-teaser__desc-link {
+          &:hover {
+            text-decoration: none;
+          }
+
+          p {
+            font-size: 16px;
+            line-height: 24px;
+            color: #262626;
+          }
         }
       }
     }

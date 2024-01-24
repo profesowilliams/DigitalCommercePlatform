@@ -93,6 +93,12 @@
       .cmp-teaser__description {
         height: auto;
         padding: 0 1.5rem 0 1.5rem;
+        text-decoration: none;
+        color: initial;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
 
       /**
@@ -103,6 +109,10 @@
         min-height: 8.325rem;
         max-height: 33rem;
         padding-top: 1.5rem;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
 
       /**

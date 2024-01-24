@@ -67,6 +67,12 @@
       .cmp-teaser__description {
         height: none;
         padding: 1.5rem 2rem 2rem 2rem;
+        text-decoration: none;
+        color: initial;
+
+        &:hover {
+          text-decoration: none;
+        }
 
         ul {
           list-style: inside;
@@ -78,7 +84,9 @@
        * Description link styles.
        */
       .cmp-teaser__desc-link {
-        // Add description link styles here
+        &:hover {
+          text-decoration: none;
+        }
       }
 
       /**

@@ -83,6 +83,12 @@
       .cmp-teaser__description {
         padding-left: 1.25rem;
         padding-right: 1.25rem;
+        text-decoration: none;
+        color: initial;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
 
       /**
@@ -90,6 +96,10 @@
        */
       .cmp-teaser__desc-link {
         height: 100%;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
 
       /**
