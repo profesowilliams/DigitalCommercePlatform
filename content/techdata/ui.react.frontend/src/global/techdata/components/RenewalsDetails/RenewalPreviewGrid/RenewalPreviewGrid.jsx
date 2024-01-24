@@ -162,18 +162,21 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   });
 
   const resultArray = [];
+  let i = 0;
   contractMap?.forEach((contractGroup, index) => {
     if (contractGroup.length >= 1 && contractMap?.size > 1) {
       resultArray.push(
         {
-          ...gridData[0],
+          ...gridData[i],
           totalPrice: 0,
           value: 0,
           unitPrice: 0,
           quantity:0,
-          section: 'big-title', id: `Agreement No:  ${index}`
-      }
+          section: 'big-title',
+          id: `Agreement No:  ${index}`
+        }
       );
+      i++;
     }
     resultArray.push(...contractGroup);
   });
