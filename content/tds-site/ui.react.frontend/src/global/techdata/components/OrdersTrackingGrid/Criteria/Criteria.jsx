@@ -6,6 +6,9 @@ function Criteria({ config }) {
   const predefinedFiltersApplied = useOrderTrackingStore(
     (state) => state.filter.predefinedFiltersApplied
   );
+  const enableCriteriaTextOnSearch = useOrderTrackingStore(
+    (state) => state.showCriteria
+  );
 
   const hasDateRangeFilter = predefinedFiltersApplied.some(
     (filterAplied) => 'createdTo' in filterAplied
@@ -13,7 +16,7 @@ function Criteria({ config }) {
   const hasOtherFilters = predefinedFiltersApplied.some(
     (filterAplied) => 'filterOptionKey' in filterAplied
   );
-  const showCriteria = !hasDateRangeFilter;
+  const showCriteria = !hasDateRangeFilter && enableCriteriaTextOnSearch;
 
   const selectedLabel = showCriteria
     ? hasOtherFilters

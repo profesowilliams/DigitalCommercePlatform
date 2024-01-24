@@ -26,6 +26,7 @@ import OrderSearchCapsule from './OrderSearchCapsule';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const getInitialFieldState = () => {
   if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
@@ -95,6 +96,7 @@ const _OrderSearch = (
   );
   const [searchTriggered, setSearchTriggered] = useState(false);
   const effects = store((state) => state.effects);
+  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const { closeAndCleanToaster } = effects;
   const [inputValueState, setInputValueState] = useState(
     getInitialValueState()
@@ -134,6 +136,10 @@ const _OrderSearch = (
     setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
       field: '',
       value: '',
+    });
+    setCustomState({
+      key: 'showCriteria',
+      value: true,
     });
   };
 
@@ -216,6 +222,10 @@ const _OrderSearch = (
     });
     setCapsuleValues({ ...values });
     setIsDropdownVisible(false);
+    setCustomState({
+      key: 'showCriteria',
+      value: false,
+    });
   };
 
   const fetchAll = () => {
