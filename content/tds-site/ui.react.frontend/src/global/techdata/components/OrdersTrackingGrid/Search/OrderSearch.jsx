@@ -128,6 +128,10 @@ const _OrderSearch = (
     setIsSearchCapsuleVisible(false);
     if (searchTriggered) {
       onQueryChanged({ onSearchAction: true });
+      setCustomState({
+        key: 'showCriteria',
+        value: true,
+      });
     }
     setSearchTriggered(false);
     setSearchTerm('');
@@ -136,10 +140,6 @@ const _OrderSearch = (
     setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
       field: '',
       value: '',
-    });
-    setCustomState({
-      key: 'showCriteria',
-      value: true,
     });
   };
 

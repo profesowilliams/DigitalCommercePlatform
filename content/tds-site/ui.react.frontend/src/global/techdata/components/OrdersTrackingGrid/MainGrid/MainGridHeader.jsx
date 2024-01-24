@@ -37,6 +37,7 @@ function MainGridHeader({
   filtersRefs,
   settings,
 }) {
+  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const [pill, setPill] = useState(
     getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
   );
@@ -105,6 +106,10 @@ function MainGridHeader({
     setPill({ key: option.key, label: option.label });
     removeDefaultDateRange();
     onQueryChanged({ onSearchAction: true });
+    setCustomState({
+      key: 'showCriteria',
+      value: false,
+    });
   };
 
   const removeQueryParams = () => {
@@ -117,6 +122,10 @@ function MainGridHeader({
     setPill();
     onQueryChanged();
     removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
+    setCustomState({
+      key: 'showCriteria',
+      value: true,
+    });
   };
 
   const onSearchChange = () => {
