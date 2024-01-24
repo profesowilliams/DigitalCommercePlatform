@@ -38,7 +38,7 @@ const RejectedReasonDropdown = ({
             {getDictionaryValueOrKey(rejectionOther)}
           </MenuItem>
         </Select>
-        <h5>{rejectionRequiredInfo}</h5>
+        <div className="decreased-validation-text">{rejectionRequiredInfo}</div>
       </FormControl>
     </div>
   );

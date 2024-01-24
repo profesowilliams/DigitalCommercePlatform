@@ -57,9 +57,9 @@ const LineItem = ({ item, index, onChange, labels }) => {
       </div>
       <div className="cmp-flyout-list__element__title">
         <p>{item.displayName}</p>
-        <div>{`${getDictionaryValueOrKey(labels?.lineMfgPartNo)} ${
-          item.mfrNumber
-        }`}</div>
+        <div className="cmp-flyout-list__element__title__mfr-number">{`${getDictionaryValueOrKey(
+          labels?.lineMfgPartNo
+        )} ${item.mfrNumber}`}</div>
       </div>
       <div className="cmp-flyout-list__element__counter">
         <Counter
