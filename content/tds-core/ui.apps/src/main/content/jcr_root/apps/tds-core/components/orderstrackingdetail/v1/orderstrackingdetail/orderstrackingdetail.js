@@ -68,7 +68,7 @@ use(["../../../common/utils.js"], function (utils) {
     "tdsPartNo",
     "seeOptions",
     "endOfLife",
-    "updateErrorMessage",
+    "itemsUpdateErrorMessage",
   ];
 
   properties &&

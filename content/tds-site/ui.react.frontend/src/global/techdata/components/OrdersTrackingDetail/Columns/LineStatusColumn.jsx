@@ -33,7 +33,9 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
     origin: 'fromUpdate',
     isAutoClose: true,
     isSuccess: false,
-    message: getDictionaryValueOrKey(config?.itemsLabels?.updateErrorMessage),
+    message: getDictionaryValueOrKey(
+      config?.itemsLabels?.itemsUpdateErrorMessage
+    ),
   };
 
   const handleSeeOptionsClick = () => {
