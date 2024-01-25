@@ -214,12 +214,17 @@ function OrderModificationFlyout({
     }
   };
 
+  const handleCancelClick = () => {
+    closeFlyout();
+    setNewlyAddedItems([]);
+  };
+
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
       <button disabled={isDisabled} className="primary" onClick={handleUpdate}>
         {getDictionaryValueOrKey(labels?.update)}
       </button>
-      <button className="secondary" onClick={closeFlyout}>
+      <button className="secondary" onClick={handleCancelClick}>
         {getDictionaryValueOrKey(labels?.flyoutCancel || labels?.cancel)}
       </button>
     </div>
