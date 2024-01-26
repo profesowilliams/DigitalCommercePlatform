@@ -12,7 +12,7 @@ function SoldToCard({ shipTo = {}, config }) {
     state,
     zip,
     country,
-    phone,
+    phoneNumber,
     email,
   } = shipTo;
   return (
@@ -48,9 +48,10 @@ function SoldToCard({ shipTo = {}, config }) {
         {city && city} {state && state} {zip && zip} {country && country}
       </div>
       <div className="card-container__bottom">
-        {phone && (
+        {phoneNumber && (
           <>
-            {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)} {phone}
+            {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)}{' '}
+            {phoneNumber}
             <br />
           </>
         )}
