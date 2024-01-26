@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
-import { ParcelIcon } from '../../../../../fluentIcons/FluentIcons';
+import {
+  ParcelIcon,
+  WarningModifiedIcon,
+  ProhibitedIcon,
+  CompletedIcon,
+} from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { Popover } from '@mui/material';
 
-const StatusColumn = ({ data, completeDeliveryOnly }) => {
+const StatusColumn = ({ data, iconsStatuses }) => {
+  const { status, shipComplete } = data || {};
   const [anchorEl, setAnchorEl] = useState(null);
 
   const showNewElement = (event) => {
@@ -15,36 +21,76 @@ const StatusColumn = ({ data, completeDeliveryOnly }) => {
   };
 
   const open = Boolean(anchorEl);
-  const icon = data?.shipComplete ? (
+
+  const renderIcon = () => {
+    switch (status) {
+      case 'Investigation':
+        return <WarningModifiedIcon />;
+      case 'Rejected':
+        return <ProhibitedIcon />;
+      case 'Completed':
+        return <CompletedIcon />;
+      case 'Open':
+        return shipComplete ? <ParcelIcon /> : null;
+      case 'Shipping':
+        return null;
+      default:
+        return null;
+    }
+  };
+  const renderTooltip = () => {
+    switch (status) {
+      case 'Investigation':
+        return getDictionaryValueOrKey(iconsStatuses?.iconInvestigation);
+      case 'Rejected':
+        return getDictionaryValueOrKey(iconsStatuses?.rejected);
+      case 'Completed':
+        return getDictionaryValueOrKey(iconsStatuses?.completed);
+      case 'Open':
+        return shipComplete
+          ? getDictionaryValueOrKey(iconsStatuses?.completeDeliveryOnly)
+          : null;
+      default:
+        return null;
+    }
+  };
+
+  const noIcon = renderIcon() === null;
+  const enableTooltip =
+    ['Investigation', 'Rejected', 'Completed'].includes(status) ||
+    (status === 'Open' && shipComplete);
+
+  const icon = (
     <span className="status-span-icon" onClick={showNewElement}>
-      <ParcelIcon />
+      {renderIcon()}
     </span>
-  ) : (
-    <span className="status-span-icon-empty"></span>
   );
+
   return data && data?.statusText ? (
-    <div onMouseMoveCapture={handleClose}>
-      <span onMouseOver={showNewElement}>{icon}</span>
-      <span className={!data?.shipComplete ? 'status-icon-offset' : ''}>
+    <div className="status-column-container" onMouseMoveCapture={handleClose}>
+      <div onMouseOver={showNewElement}>{icon}</div>
+      <span className={noIcon ? 'status-icon-offset' : ''}>
         {data?.statusText}
       </span>
-      <Popover
-        className="status-popover-grid"
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorPosition={{ top: 0, left: 700 }}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        {getDictionaryValueOrKey(completeDeliveryOnly)}
-      </Popover>
+      {enableTooltip && (
+        <Popover
+          className="status-popover-grid"
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorPosition={{ top: 0, left: 700 }}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          {renderTooltip()}
+        </Popover>
+      )}
     </div>
   ) : (
     <span>-</span>

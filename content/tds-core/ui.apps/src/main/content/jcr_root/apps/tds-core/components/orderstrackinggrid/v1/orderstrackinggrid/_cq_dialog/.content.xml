@@ -122,6 +122,26 @@
                                                 fieldLabel="Showing results from the last 90 days. Apply a Date Range filter to see results for more specific dates Label"
                                                 name="./last90DaysCriteria"
                                             />
+                                            <completeDeliveryOnly
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Complete Delivery Only Info Label"
+												name="./completeDeliveryOnly"/>
+                                            <iconInvestigation
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Investigation Label"
+												name="./iconInvestigation"/>
+                                            <rejected
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Order Rejected Label"
+												name="./rejected"/>
+                                            <completed
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Order Completed Label"
+												name="./completed"/>
                                             <multiple
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -929,11 +949,6 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Rejection Required Info Label"
 												name="./rejectionRequiredInfo"/>
-                                            <completeDeliveryOnly
-												jcr:primaryType="nt:unstructured"
-												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-												fieldLabel="Complete Delivery Only Info Label"
-												name="./completeDeliveryOnly"/>
                                             <cancelNewItem
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

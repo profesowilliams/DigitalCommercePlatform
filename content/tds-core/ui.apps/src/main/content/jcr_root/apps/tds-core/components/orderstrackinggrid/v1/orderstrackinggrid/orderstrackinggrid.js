@@ -6,6 +6,7 @@ use(["../common/utils.js"], function (utils) {
   const resourceResolver = resource.getResourceResolver();
   const optionData = {};
   const productGrid = {};
+  const iconsStatuses = {};
   const icons = {};
   const noResultsValues = {};
   const dNotesFlyout = {};
@@ -45,6 +46,19 @@ use(["../common/utils.js"], function (utils) {
         jsonObject[property] = properties[property];
       }
     });
+
+    //Icons Statuses
+    const iconsStatusesLabel = [
+      "completeDeliveryOnly",
+      "iconInvestigation",
+      "rejected",
+      "completed",
+    ];
+
+    iconsStatusesLabel.map(
+      (label) => (iconsStatuses[label] = properties[label])
+    );
+    jsonObject["iconsStatuses"] = iconsStatuses;
 
     //Column definition
     let columnListValues = utils.getDataFromMultifield(
@@ -194,7 +208,6 @@ use(["../common/utils.js"], function (utils) {
       "rejectionAvailability",
       "rejectionOther",
       "rejectionRequiredInfo",
-      "completeDeliveryOnly",
       "cancelNewItem",
       "updateSucessMessage",
       "modifyErrorMessage",

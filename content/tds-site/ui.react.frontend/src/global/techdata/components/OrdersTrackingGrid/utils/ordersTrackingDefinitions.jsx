@@ -9,7 +9,7 @@ import TotalColumn from '../Columns/TotalColumn';
 import StatusColumn from '../Columns/StatusColumn';
 
 export const ordersTrackingDefinition = (
-  { detailUrl, multiple, orderModifyLabels },
+  { detailUrl, multiple, iconsStatuses },
   openFilePdf,
   hasAIORights
 ) => {
@@ -23,12 +23,7 @@ export const ordersTrackingDefinition = (
       select: <SelectColumn eventProps={eventProps} />,
       actualShipDate: data?.actualShipDateFormatted,
       shipTo: <ShipToColumn data={data?.shipTo} />,
-      statusText: (
-        <StatusColumn
-          data={data}
-          completeDeliveryOnly={orderModifyLabels.completeDeliveryOnly}
-        />
-      ),
+      statusText: <StatusColumn data={data} iconsStatuses={iconsStatuses} />,
       created: data?.createdFormatted ?? data?.created,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,
       customerPO: <ResellerColumn data={data?.customerPO} />,

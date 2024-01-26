@@ -5309,8 +5309,8 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           createdFormatted: "03/11/2023",
           updated: "11-05-2023",
           updatedFormatted: "05/11/2023",
-          status: "Completed",
-          statusText: "Completed",
+          status: "Rejected",
+          statusText: "Rejected",
           invoices: [],
           deliveryNotes: [],
           currency: "EUR",
@@ -5338,8 +5338,8 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           createdFormatted: "03/11/2023",
           updated: "11-05-2023",
           updatedFormatted: "05/11/2023",
-          status: "Completed",
-          statusText: "Completed",
+          status: "Shipping",
+          statusText: "Shipping",
           invoices: [
             {
               id: "8204748554",
@@ -5566,7 +5566,7 @@ app.get("/ui-commerce/v2/orders", (req, res) => {
           price: 12.03,
           priceFormatted: "12.03",
           customerPO: "Test CustomerPO Number for SKU Tooltip on UI SIT",
-          shipComplete: false,
+          shipComplete: true,
         },
         {
           id: "I038550223",
