@@ -377,6 +377,26 @@ app.get("/ui-account/v1/topConfigurations/get", function (req, res) {
 
   res.json(response);
 });
+
+app.post("/ui-commerce/v2/ChangeDeliveryFlag", function (req, res) {
+  res.json({
+    content: {
+      orderId: "I038551797",
+      isError: false,
+      message: "Function DLVFLAGCHANGE for order I038551797 executed",
+      changeDelFlag: {
+        isError: false,
+        message: "Function DLVFLAGCHANGE for order I038551797 executed",
+      },
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  });
+});
+
 //---TOP n OPEN CONFIG MOCK API---//
 app.get("/ui-account/v1/topQuotes/get", function (req, res) {
   const param = req.query.top || 5;

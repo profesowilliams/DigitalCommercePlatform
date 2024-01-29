@@ -117,8 +117,13 @@ function NotShippedTabGrid({
     };
     const url = `${config.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
     await usPost(url, params)
-      .then(({ content }) => {
-        if (content?.ChangeDelFlag?.success) {
+      .then((response) => {
+          const {
+            data: {
+              content: { changeDelFlag, isError },
+            },
+          } = response;
+        if (changeDelFlag?.isError === false && isError === false) {
           setReleaseSuccess(true);
         } else {
           setReleaseSuccess(false);

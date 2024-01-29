@@ -10,6 +10,7 @@ const OrderTrackingDetailBody = ({
   gridRef,
   rowsToGrayOutTDNameRef,
   newItem,
+  setSubtotalValue,
 }) => {
   useEffect(() => {
     if (newItem && content && content.items) {
@@ -42,6 +43,7 @@ const OrderTrackingDetailBody = ({
         hasAIORights={hasAIORights}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        setSubtotalValue={setSubtotalValue}
       />
     </div>
   );

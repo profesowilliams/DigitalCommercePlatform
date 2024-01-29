@@ -183,13 +183,20 @@ const OrderTrackingDetailHeader = ({
     };
     const url = `${componentProps.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
     await usPost(url, params)
-      .then(({ content }) => {
-        if (content?.ChangeDelFlag?.isError === false) {
-          setReleaseSuccess(true);
-        } else {
-          setReleaseSuccess(false);
+      .then(
+        (response) => {
+          const {
+            data: {
+              content: { changeDelFlag, isError },
+            },
+          } = response;
+          if (changeDelFlag?.isError === false && isError === false) {
+            setReleaseSuccess(true);
+          } else {
+            setReleaseSuccess(false);
+          }
         }
-      })
+      )
       .finally(() => {
         setOpenAlert(true);
         setTimeout(() => {

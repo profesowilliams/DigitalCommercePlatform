@@ -139,6 +139,19 @@ function OrderModificationFlyout({
     const rowsDeleted = itemsCopy
       ?.filter((item) => item?.status === 'Rejected')
       .map((item) => item.tdNumber);
+    const rowsToZero = itemsCopy
+      ?.map(
+        (item) => {
+          if(item?.status === 'Rejected' && item?.orderQuantity === 0){
+            item.totalPrice = 0;
+            item.totalPriceFormatted = '0';
+            item.quantity = 0;
+            item.orderQuantity = 0;
+          }
+          return item;
+        }
+      );
+    gridRef.current?.api.setRowData(rowsToZero);
     greyOutRows(rowsDeleted);
     closeFlyout();
     try {
