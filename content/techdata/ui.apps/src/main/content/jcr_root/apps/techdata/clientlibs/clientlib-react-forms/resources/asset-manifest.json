@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.9dfdf31f.css",
-    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.873eb973.js",
+    "main.css": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.2f37291c.css",
+    "main.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.828d989c.js",
     "static/js/787.c9ff93fe.chunk.js": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js",
     "static/media/OpenSans_SemiBold.ttf": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/OpenSans_SemiBold.917aa0aa0ddaafd4eb54.ttf",
     "static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4taVIUwaEQbjB_mQ.woff2": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsgH1x4taVIUwaEQbjB_mQ.76f19aa8b3824bd998c6.woff2",
@@ -16,12 +16,12 @@
     "static/media/warning.svg": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/warning.6ca4850358613b2f138cbb4aca55ba7d.svg",
     "static/media/add.svg": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/add.bd4710d9eccb141cbdacf5fcc340323d.svg",
     "static/media/index.cjs": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/media/index.cd351d7c31d0d3fccf96.cjs",
-    "main.9dfdf31f.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.9dfdf31f.css.map",
-    "main.873eb973.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.873eb973.js.map",
+    "main.2f37291c.css.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/css/main.2f37291c.css.map",
+    "main.828d989c.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/main.828d989c.js.map",
     "787.c9ff93fe.chunk.js.map": "/etc.clientlibs/techdata/clientlibs/clientlib-react/resources/static/js/787.c9ff93fe.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9dfdf31f.css",
-    "static/js/main.873eb973.js"
+    "static/css/main.2f37291c.css",
+    "static/js/main.828d989c.js"
   ]
 }
