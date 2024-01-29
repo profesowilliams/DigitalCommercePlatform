@@ -46,7 +46,11 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
         orderEditable
           ? setCustomState({
               key: 'productReplacementFlyout',
-              value: { data: { line }, enableReplace, show: true },
+              value: {
+                data: { line },
+                enableReplace,
+                show: true,
+              },
             })
           : effects.setCustomState({
               key: 'toaster',
@@ -73,7 +77,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
       </p>
     </>
   );
- 
+
   return (
     <div className="cmp-order-tracking-grid-details__splitLine-column">
       {sortedLineDetails(line)?.map((el, index) => {

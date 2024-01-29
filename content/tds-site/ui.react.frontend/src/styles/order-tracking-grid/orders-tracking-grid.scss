@@ -272,7 +272,7 @@
   }
   
   * {
-    font-family: Arial !important;
+    font-family: $font-family-arial!important;
   }
   margin-left: 40px;
   margin-right: 40px;
@@ -492,7 +492,7 @@
   }
 
   &__line {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: $font-family-arial!important;
     font-weight: 400;
     line-height: 30px;
     font-size: 20px;
@@ -522,7 +522,7 @@
     height: 48px;
     padding: 9px 20px;
     border-radius: 2px;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: $font-family-arial!important;
     font-weight: 400;
     line-height: 30px;
     font-size: 20px  !important;
@@ -536,7 +536,7 @@
     height: 48px;
     padding: 12px 20px;
     border-radius: 2px;
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: $font-family-arial!important;
     font-weight: 400;
     line-height: 30px;
     font-size: 20px !important;

@@ -7,7 +7,13 @@ export const mapServiceData = (response) => {
     ...val,
   }));
   const itemsWithActions = items
-    ? items.map((data) => ({ ...data, orderNumber: responseData?.orderNumber, customerPO: responseData?.customerPO, actions: true }))
+    ? items.map((data) => ({
+        ...data,
+        orderNumber: responseData?.orderNumber,
+        customerPO: responseData?.customerPO,
+        actions: true,
+        currency: responseData?.currency,
+      }))
     : [];
   const totalItems = mappedResponse?.data?.content?.totalItems ?? items?.length;
   const pageCount = mappedResponse?.data?.content?.pageCount ?? 1;

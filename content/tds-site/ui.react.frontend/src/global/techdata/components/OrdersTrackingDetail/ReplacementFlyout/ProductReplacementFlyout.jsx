@@ -35,13 +35,11 @@ function ProductReplacementFlyout({
   isTDSynnex = true,
   labels = {},
   config = {},
-  gridRef,
   rowsToGrayOutTDNameRef,
   addNewItem,
 }) {
   const { id = '' } = getUrlParams();
   const [selected, setSelected] = useState(null);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [productDtos, setProductDtos] = useState([]);
   const store = useOrderTrackingStore;
   const productReplacementConfig = store((st) => st.productReplacementFlyout);
@@ -54,6 +52,8 @@ function ProductReplacementFlyout({
   );
 
   const enableReplace = productReplacementConfig?.enableReplace;
+  const lineId = productReplacementConfig?.data?.line?.id;
+  const tdNumber = productReplacementConfig?.data?.line?.tdNumber;
 
   const closeFlyout = () => {
     setCustomState({
@@ -76,7 +76,7 @@ function ProductReplacementFlyout({
       CustomerID: userData?.customersV2?.[0]?.customerNumber,
       SalesOrg: userData?.customersV2?.[0]?.salesOrg,
       OrderID: id,
-      LineID: productReplacementConfig?.data?.line?.id,
+      LineID: lineId,
       Operation: operation,
       ProductID: newProductId,
     };
@@ -174,7 +174,7 @@ function ProductReplacementFlyout({
 
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
-      <button disabled={isDisabled} className="primary" onClick={handleUpdate}>
+      <button disabled={!selected} className="primary" onClick={handleUpdate}>
         {getDictionaryValueOrKey(labels.update)}
       </button>
       <button className="secondary" onClick={closeFlyout}>
@@ -191,14 +191,13 @@ function ProductReplacementFlyout({
             label: getDictionaryValueOrKey(labels.replaceWithSuggestedItem),
             content: (
               <LineItem
-                item={{
-                  ...productReplacementConfig?.data?.line,
+                data={{
+                  ...productReplacementConfig?.data,
                   urlProductImage: product.images.default.url,
                   displayName: product.description,
                   mfrNumber: product.manufacturerPartNumber,
-                  unitCost: product.price.bestPrice,
-                  unitPriceCurrency: product.price.currency,
-                  lineTotal: product.price.bestPrice,
+                  unitPrice: product.price.bestPrice,
+                  currency: product.price.currency,
                 }}
                 labels={labels}
               />
@@ -218,10 +217,10 @@ function ProductReplacementFlyout({
   ];
 
   useEffect(async () => {
-    if (productReplacementConfig?.data?.line?.tdNumber) {
+    if (tdNumber) {
       try {
         const result = await usGet(
-          `${config.uiCommerceServiceDomain + '/v2/ReplacementProduct'}`
+          `${config.uiCommerceServiceDomain}/v2/ReplacementProduct?id=${tdNumber}`
         );
         setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {
@@ -238,7 +237,6 @@ function ProductReplacementFlyout({
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(labels.replacementModifyOrder)}
-      disabledButton={isDisabled}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
       onClickButton={null}
@@ -246,11 +244,13 @@ function ProductReplacementFlyout({
       buttonsSection={buttonsSection}
     >
       <section className="cmp-flyout__content replacement">
-        <LineItem
-          item={productReplacementConfig?.data?.line}
-          labels={labels}
-          toBeReplacedItem={true}
-        />
+        {productReplacementConfig?.data && (
+          <LineItem
+            data={productReplacementConfig.data}
+            labels={labels}
+            toBeReplacedItem={true}
+          />
+        )}
         <p className="replacement-text">
           {getDictionaryValueOrKey(labels.pleaseSelect)}
         </p>

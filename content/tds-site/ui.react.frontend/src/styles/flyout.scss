@@ -315,7 +315,7 @@ $flyout-small-height-formax: 779px;
     padding: 24px 16px 0 16px;
     border-top: 1px solid $v-divider-gray;
     color: $brand-charcoal !important;
-    font-family: Arial !important;
+    font-family: $font-family-arial!important;
   }
 }
 
@@ -376,7 +376,7 @@ $flyout-small-height-formax: 779px;
       color: $brand-green--dark;
 
       h3 {
-        font-family: Arial;
+        font-family: $font-family-arial;
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
@@ -451,7 +451,7 @@ $flyout-small-height-formax: 779px;
       }
       .internal-use-info {
         color: $cool-gray;
-        font-family: Arial;
+        font-family: $font-family-arial;
         font-size: 14px;
         line-height: 150%;
         margin-top: 5px;
@@ -520,7 +520,7 @@ $flyout-small-height-formax: 779px;
     grid-column-gap: 0;
     grid-row-gap: 0;
     * {
-      font-family: 'Arial' !important;
+      font-family: $font-family-arial!important;
     }
 
     p {
