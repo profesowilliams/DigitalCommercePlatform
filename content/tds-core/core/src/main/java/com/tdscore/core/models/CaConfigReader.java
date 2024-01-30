@@ -275,6 +275,8 @@ public class CaConfigReader {
 
     private boolean disableMultipleAgreement;
 
+    private boolean enableShareOption;
+
     @PostConstruct
     public void init() {
 
@@ -357,6 +359,7 @@ public class CaConfigReader {
         analyticsSnippet = analyticsConfiguration.analyticsSnippet();
         gtmBodyJSScript = analyticsConfiguration.gtmBodyJSScript();
         disableMultipleAgreement = featureFlagsConfiguration.disableMultipleAgreement();
+        enableShareOption = featureFlagsConfiguration.enableShareOption();
 
         buildSearchConfigurations();
 
@@ -831,5 +834,9 @@ public class CaConfigReader {
 
     public boolean getDisableMultipleAgreement() {
         return  disableMultipleAgreement;
+    }
+
+    public boolean getEnableShareOption() {
+        return enableShareOption;
     }
 }

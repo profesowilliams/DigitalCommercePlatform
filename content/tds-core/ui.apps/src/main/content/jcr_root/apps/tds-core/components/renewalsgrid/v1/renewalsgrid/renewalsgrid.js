@@ -25,6 +25,10 @@ use(['../../../common/utils.js'], function(utils) {
 
     }
 
+    if (this.serviceData && this.serviceData.enableShareOption) {
+        jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
+    }
+
     //Column definition
 
     let columnListValues = utils.getDataFromMultifield(resourceResolver, "columnList", function(childResource) {

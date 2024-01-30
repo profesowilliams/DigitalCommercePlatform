@@ -3,6 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import { useRenewalGridState } from '../store/RenewalsStore';
 import {
     CopyIcon,
+    ShareIcon,
     DownloadIcon,
     EyeLightIcon,
 } from '../../../../../fluentIcons/FluentIcons';
@@ -29,7 +30,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
     
     useOutsideClick(dialogRef, onClose, 'mousedown', [onClose]);
 
-    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint } = endpoints;
+    const { exportXLSRenewalsEndpoint, exportPDFRenewalsEndpoint, enableShareOption } = endpoints;
 
     useEffect(() => {
         let timer;
@@ -147,6 +148,17 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                             <CopyIcon width="16" height="16" />
                         </span>
                         <span className="cmp-renewals-actions-menu__item-label">Copy</span>
+                    </div>
+                ) : null}
+                {enableShareOption ? (
+                    <div
+                        className="cmp-renewals-actions-menu__item"
+                        onClick={triggerCopyFlyout}
+                    >
+                        <span className="cmp-renewals-actions-menu__item-icon">
+                            <ShareIcon width="16" height="16" />
+                        </span>
+                        <span className="cmp-renewals-actions-menu__item-label">Share</span>
                     </div>
                 ) : null}
                 {menuOptions?.showDownloadPDFButton ? (

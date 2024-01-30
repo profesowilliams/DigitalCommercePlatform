@@ -29,5 +29,8 @@ public @interface FeatureFlagsConfiguration {
     @Property(label = "Disable Multiple Agreement", description = "Helps to disable Multiple Agreement Support, enabled by default.")
     boolean disableMultipleAgreement() default false;
 
+    @Property(label = "Enable Share Option to Ellipsis Menu", description = "Helps to enable Share Option to Ellipsis Menu in Renewals grid.")
+    boolean enableShareOption() default false;
+
 
 }
