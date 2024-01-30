@@ -455,6 +455,17 @@
   letter-spacing: 0;
 }
 
+.count-clear {
+  border-radius: 9.5px;
+  background-color: $blue-dark;
+  color: $brand-white;
+  text-align: justify;
+  padding: 0px 5px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
 .count.td-synnex {
   background-color: $brand-green;
 }

@@ -5,9 +5,9 @@ import {
 } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
-import OrderCount from './OrderCount';
+import OrderCountClear from './OrderCountClear';
 
-function OrderFilter() {
+function OrderFilter({ onQueryChanged }) {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
@@ -23,22 +23,28 @@ function OrderFilter() {
   };
 
   return (
-    <div
-      className="cmp-order-tracking-grid__filter"
-      onMouseOver={handleMouseOverFilter}
-      onMouseLeave={handleMouseLeaveFilter}
-      onClick={() => {
-        toggleFilterModal();
-        setFilterClicked(false);
-      }}
-    >
-      {isFilterHovered ? (
-        <OptionsIconFilled fill="#262626" className="icon-hover" />
-      ) : (
-        <OptionsIcon fill="#262626" className="icon-hover" />
+    <>
+      <div
+        className="cmp-order-tracking-grid__filter"
+        onMouseOver={handleMouseOverFilter}
+        onMouseLeave={handleMouseLeaveFilter}
+        onClick={() => {
+          toggleFilterModal();
+          setFilterClicked(false);
+        }}
+      >
+        {isFilterHovered ? (
+          <OptionsIconFilled fill="#262626" className="icon-hover" />
+        ) : (
+          <OptionsIcon fill="#262626" className="icon-hover" />
+        )}
+      </div>
+      {orderFilterCounter > 0 && (
+        <OrderCountClear onQueryChanged={onQueryChanged}>
+          {orderFilterCounter}
+        </OrderCountClear>
       )}
-      {orderFilterCounter > 0 && <OrderCount>{orderFilterCounter}</OrderCount>}
-    </div>
+    </>
   );
 }
 export default OrderFilter;
