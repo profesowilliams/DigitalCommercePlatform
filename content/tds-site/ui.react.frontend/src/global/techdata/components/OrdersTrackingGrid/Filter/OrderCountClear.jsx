@@ -26,7 +26,10 @@ const OrderCountClear = ({ onQueryChanged, children }) => {
   };
   return (
     <div className={'count-clear tag_dark_teal'}>
-      {children} <button onClick={onClear}>&#11198;</button>
+      {children}{' '}
+      <button className="filter-clear-button" onClick={onClear}>
+        &#11198;
+      </button>
     </div>
   );
 };

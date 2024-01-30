@@ -460,10 +460,16 @@
   background-color: $blue-dark;
   color: $brand-white;
   text-align: justify;
-  padding: 0px 5px;
+  padding: 0 5px;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0;
+}
+
+.filter-clear-button {
+  padding: 0;
+  border: none;
+  background: none;
 }
 
 .count.td-synnex {
