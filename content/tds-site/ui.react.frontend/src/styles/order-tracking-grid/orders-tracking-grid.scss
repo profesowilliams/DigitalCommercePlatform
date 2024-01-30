@@ -104,11 +104,12 @@
   &__report-dropdown {
     position: absolute;
     width: 240px;
-    top: 25px;
-    left: -156px;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
+    top: 36px;
+    left: -198px;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.24);
     background-color: $brand-white;
     z-index: 10;
+    border-top: 2px $brand-cobalt solid;
 
     ul {
       list-style: none;
@@ -117,7 +118,7 @@
       margin: 0;
 
       > li {
-        padding: 0 14px;
+        padding: 0 15px;
       }
 
       > li:hover {

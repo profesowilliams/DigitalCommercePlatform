@@ -82,6 +82,7 @@ function OrderModificationFlyout({
   };
 
   const closeFlyout = () => {
+    setNewlyAddedItems([]);
     setNewItemFormVisible(false);
     setItemsCopy([...items]);
     setOrderChanged(false);
@@ -139,18 +140,15 @@ function OrderModificationFlyout({
     const rowsDeleted = itemsCopy
       ?.filter((item) => item?.status === 'Rejected')
       .map((item) => item.tdNumber);
-    const rowsToZero = itemsCopy
-      ?.map(
-        (item) => {
-          if(item?.status === 'Rejected' && item?.orderQuantity === 0){
-            item.totalPrice = 0;
-            item.totalPriceFormatted = '0';
-            item.quantity = 0;
-            item.orderQuantity = 0;
-          }
-          return item;
-        }
-      );
+    const rowsToZero = itemsCopy?.map((item) => {
+      if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
+        item.totalPrice = 0;
+        item.totalPriceFormatted = '0';
+        item.quantity = 0;
+        item.orderQuantity = 0;
+      }
+      return item;
+    });
     gridRef.current?.api.setRowData(rowsToZero);
     greyOutRows(rowsDeleted);
     closeFlyout();
@@ -227,17 +225,12 @@ function OrderModificationFlyout({
     }
   };
 
-  const handleCancelClick = () => {
-    closeFlyout();
-    setNewlyAddedItems([]);
-  };
-
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
       <button disabled={isDisabled} className="primary" onClick={handleUpdate}>
         {getDictionaryValueOrKey(labels?.update)}
       </button>
-      <button className="secondary" onClick={handleCancelClick}>
+      <button className="secondary" onClick={closeFlyout}>
         {getDictionaryValueOrKey(labels?.flyoutCancel || labels?.cancel)}
       </button>
     </div>

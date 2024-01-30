@@ -77,7 +77,10 @@ const Flyouts = ({
       />
       <ProductReplacementFlyout
         subheaderReference={document.querySelector('.subheader > div > div')}
-        labels={config.productReplacementFlyout}
+        labels={{
+          ...config?.productReplacementFlyout,
+          ...config?.orderModifyLabels,
+        }}
         config={config}
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}

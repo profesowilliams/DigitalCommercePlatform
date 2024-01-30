@@ -1,5 +1,10 @@
 import React, { forwardRef } from 'react';
 
+
+const toSentenceCase = (str) => {
+  return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 function ReportDropdown({ reportOptions, selectOption }, ref) {
   const handleOptionClick = (option) => {
     selectOption(option);
