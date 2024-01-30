@@ -259,8 +259,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
       headerName: gridProps?.percentOffListPrice,
       valueGetter: ({ data }) => data.discounts && data.discounts[0]?.value,
       cellRenderer: (props) => !(props?.data?.id?.includes("Agreement")) ? Price(props) : "",
-      width: gridColumnWidths.percentageOfflist,
-      valueGetter:'(data.unitListPrice - data.unitPrice) / data.unitListPrice * 100'
+      width: gridColumnWidths.percentageOfflist
     },
     {
       field:'unitPrice',

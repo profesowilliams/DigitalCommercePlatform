@@ -37,7 +37,7 @@ function UnitPriceColumn(props) {
   const ENTER_KEY = 13;
   const handleChange = (event) => {
     const value = event.target.value;   
-    if (value <=0 && value) return setPrice(1);
+    if (value <0 && value) return setPrice(1);
     if (value > MAX_PRICE_VALUE) return setPrice(MAX_PRICE_VALUE);     
     setPrice(value);
   };
@@ -99,7 +99,7 @@ function UnitPriceColumn(props) {
         name="numberformat"
         id="formatted-uniteprice-input"
         InputProps={{
-          min: 1,
+          min: 0,
           style: {
             textAlign: 'right',
             paddingRight: '0',
