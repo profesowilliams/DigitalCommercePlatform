@@ -6,21 +6,10 @@ import {
   CompletedIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { Popover } from '@mui/material';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 const StatusColumn = ({ data, iconsStatuses }) => {
   const { status, shipComplete } = data || {};
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const showNewElement = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
 
   const renderIcon = () => {
     switch (status) {
@@ -60,37 +49,21 @@ const StatusColumn = ({ data, iconsStatuses }) => {
     ['Investigation', 'Rejected', 'Completed'].includes(status) ||
     (status === 'Open' && shipComplete);
 
-  const icon = (
-    <span className="status-span-icon" onClick={showNewElement}>
-      {renderIcon()}
-    </span>
-  );
-
   return data && data?.statusText ? (
-    <div className="status-column-container" onMouseMoveCapture={handleClose}>
-      <div onMouseOver={showNewElement}>{icon}</div>
+    <div className="status-column-container">
+      <Tooltip
+        title={renderTooltip()}
+        placement="bottom"
+        arrow
+        disableHoverListener={enableTooltip ? false : true}
+        disableInteractive={true}
+      >
+        <span className="status-span-icon">{renderIcon()}</span>
+      </Tooltip>
+
       <span className={noIcon ? 'status-icon-offset' : ''}>
         {data?.statusText}
       </span>
-      {enableTooltip && (
-        <Popover
-          className="status-popover-grid"
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorPosition={{ top: 0, left: 700 }}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-        >
-          {renderTooltip()}
-        </Popover>
-      )}
     </div>
   ) : (
     <span>-</span>

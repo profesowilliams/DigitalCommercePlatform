@@ -11,13 +11,17 @@
     text-align: left;
 }
 .status-column-container {
-    display:flex
+    display:flex;
+    align-items: center
 }
 .status-span-icon {
     margin-right: 4px;
+    margin-top: 2px;
+    max-height: 16px;
+    align-self: start;
 }
 .status-icon-offset {
-    margin-left: 16px;
+    margin-left: 14px;
 }
 
 .status-popover-grid>.MuiPaper-root.MuiPaper-elevation {
@@ -29,5 +33,20 @@
     font-size: 12px;
     letter-spacing: 0;
     line-height: 25px;
-        text-align: center;
+    text-align: center;
     }
+        
+.MuiTooltip-popper[data-popper-placement*="bottom"] div[class^='MuiTooltip-tooltip'] {
+    margin-top: 19px;
+}
+div[class*='MuiTooltip-tooltip'] {
+    background-color: $tooltip-background;
+    color: $brand-white;
+    font-size: 14px;
+    line-height: 21px;
+    border-radius: 6px;
+    padding: 8px;
+}
+div[class*='MuiPopper-root-MuiTooltip-popper'] .MuiTooltip-arrow::before{
+    background-color: $tooltip-background;
+}
