@@ -11,19 +11,7 @@ import OrderFilterDateType from './OrderFilterDateType';
 import { getDateRangeLabel } from '../utils/orderTrackingUtils';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { filtersDateGroup } from '../utils/gridUtils';
-
-function CustomStartEndText({ filterLabels }) {
-  return (
-    <div className="customStartEndLabel">
-      <div className="customStartLabel">
-        {getDictionaryValueOrKey(filterLabels.startLabel)}
-      </div>
-      <div className="customEndLabel">
-        {getDictionaryValueOrKey(filterLabels.endLabel)}
-      </div>
-    </div>
-  );
-}
+import StartEndDisplay from './StartEndDisplay';
 
 export default function OrderFilterDatePicker({
   filtersRefs,
@@ -172,7 +160,7 @@ export default function OrderFilterDatePicker({
         options={filterDateOptions}
         dateType={dateType}
       />
-      <CustomStartEndText filterLabels={filterLabels} />
+
       <div className="order_datapicker">
         <DateRangePicker
           startDate={currentStartDate ? moment(currentStartDate) : null}
@@ -184,7 +172,6 @@ export default function OrderFilterDatePicker({
           minimumNights={0}
           endDateId="end-date"
           verticalHeight={280}
-          showDefaultInputIcon={true}
           customArrowIcon={<div className="customHyphen"></div>}
           reopenPickerOnClearDates
           keepOpenOnDateSelect={true}
@@ -212,6 +199,21 @@ export default function OrderFilterDatePicker({
           }}
         />
       </div>
+      <StartEndDisplay
+        filterLabels={filterLabels}
+        startDate={
+          currentStartDate
+            ? moment(currentStartDate).format(
+                getDictionaryValueOrKey(dateFormat)
+              )
+            : null
+        }
+        endDate={
+          currentEndDate
+            ? moment(currentEndDate).format(getDictionaryValueOrKey(dateFormat))
+            : null
+        }
+      />
     </>
   );
 }

@@ -546,22 +546,23 @@
 }
 
 .datepicker-wrapper {
-  height: 530px !important;
-  min-height: 530px;
-  }
+  height: 450px !important;
+  min-height: 450px;
+}
 
-    .datepicker-wrapper-custom {
-      height: 380px !important;
-      min-height: 380px;
-    }
-  div.DateRangePicker.DateRangePicker_1 {
-    width: 339px;
-  }
-  
-  div.DateRangePickerInput.DateRangePickerInput_1 {
-    width: 255px;
-  }
-  
-  div.DateRangePickerInput_arrow.DateRangePickerInput_arrow_1 {
-    margin-right: 10px;
+.datepicker-wrapper-custom {
+  height: 380px !important;
+  min-height: 380px;
+}
+
+div.DateRangePicker.DateRangePicker_1 {
+  width: 339px;
+}
+
+div.DateRangePickerInput.DateRangePickerInput_1 {
+  width: 255px;
+}
+
+div.DateRangePickerInput_arrow.DateRangePickerInput_arrow_1 {
+  margin-right: 10px;
 }

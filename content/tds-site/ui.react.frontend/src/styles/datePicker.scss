@@ -812,6 +812,7 @@
 }
 .order_datapicker .DateRangePicker_picker{
   background-color: transparent;
+  top: -25px !important;
 }
 .order_datapicker .CalendarMonthGrid{
   background-color: transparent;
@@ -1043,7 +1044,7 @@
     is no property exposed to control the left direction in the API. Overriding via CSS
     using !important.
   */
-  left: 40px !important;
+  left: 80px !important;
 }
 .DateRangePicker_picker__directionRight {
   right: 0;
@@ -1092,9 +1093,7 @@
   }
 }
 .customHyphen {
-  height: 1px;
-  width: 11px;
-  background-color: #000c21;
+  display: none;
 }
 .customStartEndLabel {
   display: flex;
@@ -1118,9 +1117,64 @@
 }
 
 .DateInput {
-  width: 90px;
-  text-align: center;
+ display: none
 }
+
+.start-end-display {
+  display: flex;
+  justify-content: space-between;
+  width: 250px;
+  margin-top: 200px;
+  margin-left: 80px;
+  padding-top: 8px;
+  padding-bottom: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-bottom: 1px solid $brand-text-lightgray;
+  &__start {
+    display: flex;
+    flex-direction: column;
+    &__label{
+      margin-bottom: 7px;
+      color: $brand-text-lightgray;
+      font-family: $font-family-arial !important;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    &__date{
+      color: $brand-text-lightgray;
+      font-family: $font-family-arial !important;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+  &__end {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    &__label{
+      margin-bottom: 7px;
+      color: $brand-text-lightgray;
+      font-family: $font-family-arial !important;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    &__date{
+      color: $brand-text-lightgray;
+      font-family: $font-family-arial !important;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+  &__hyphen {
+    width:11px;
+    height:2px;
+    background-color: $brand-text-lightgray;
+    align-self: center;
+  }
+
+}
+
 .cmp-grid-techdata {
   .filter-modal-content {
 
