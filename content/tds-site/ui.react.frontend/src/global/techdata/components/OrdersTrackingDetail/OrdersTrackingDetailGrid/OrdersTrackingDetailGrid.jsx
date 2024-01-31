@@ -97,7 +97,7 @@ function OrdersTrackingDetailGrid({
     response?.data?.content?.items?.map(item=>{
       subtotalValueSum+=(parseFloat(item?.unitPrice)??0)
     });
-    setSubtotalValue(subtotalValueSum);
+    setSubtotalValue(subtotalValueSum.toFixed(2));
     setResponseError(false);
     const mappedResponse = mapServiceData(response);
     return mappedResponse;

@@ -11,7 +11,6 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
     originalOrderQuantity,
     unitPrice,
     unitPriceFormatted,
-    totalPriceFormatted,
     currency,
   } = item || {};
   return (
@@ -30,7 +29,7 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
           )} ${mfrNumber}`}</div>
         </div>
         <div className="cmp-flyout-list__element__quantity">
-          <p className="bold">{getDictionaryValueOrKey(labels.quantity)}:</p>
+          <p className="bold">{getDictionaryValueOrKey(labels.qty)}:</p>
           <p>{originalOrderQuantity}</p>
         </div>
         <div className="cmp-flyout-list__element__unit-cost">

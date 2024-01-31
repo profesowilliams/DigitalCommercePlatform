@@ -56,6 +56,7 @@ function ProductReplacementFlyout({
   const tdNumber = productReplacementConfig?.data?.line?.tdNumber;
 
   const closeFlyout = () => {
+    setSelected(null);
     setCustomState({
       key: 'productReplacementFlyout',
       value: { show: false },
