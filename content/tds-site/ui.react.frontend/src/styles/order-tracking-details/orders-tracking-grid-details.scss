@@ -95,11 +95,11 @@
     }
 
     &-image {
-      width: 80px;
+      width: 80px !important;
 
       &-child {
         display: block;
-        width: 100%;
+        width: fit-content;
         height: auto;
       }
     }

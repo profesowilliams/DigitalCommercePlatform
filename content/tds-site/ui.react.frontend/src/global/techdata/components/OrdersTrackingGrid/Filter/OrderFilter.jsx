@@ -7,7 +7,7 @@ import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
 
-function OrderFilter({ onQueryChanged }) {
+function OrderFilter({ onQueryChanged, filtersRefs }) {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
@@ -30,6 +30,7 @@ function OrderFilter({ onQueryChanged }) {
         onMouseLeave={handleMouseLeaveFilter}
         onClick={() => {
           toggleFilterModal();
+          filtersRefs = {};
           setFilterClicked(false);
         }}
       >

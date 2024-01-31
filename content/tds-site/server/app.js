@@ -6614,6 +6614,32 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
             },
           ],
         },
+        {
+          line: "2",
+          urlProductImage:
+            "https://cdn.cs.1worldsync.com/5d/7b/5d7b4582-9397-40c0-9a1e-9ec7a75ffe01.jpg",
+          displayName: "HP EB840G8 i5-1135G7 14 16GB 256GB W10P",
+          tdNumber: "6979575",
+          mfrNumber: "358N7EA#ABZ",
+          isEOL: true,
+          originalOrderQuantity: 2.0,
+          canTrackAndTrace: false,
+          unitPrice: 1535.17,
+          unitPriceFormatted: "1,535.17",
+          lineDetails: [
+            {
+              quantity: 1.0,
+              subtotalPrice: 1535.17,
+              subtotalPriceFormatted: "1,535.17",
+              shipDateNotAvailableTranslated: "N.A.",
+              status: 3,
+              statusText: "Rejected",
+              isShipment: false,
+              invoices: [],
+              serialsAny: false,
+            },
+          ],
+        },
       ],
     },
     error: {
