@@ -84,11 +84,15 @@ public class PageImpl implements Page {
     @PostConstruct
     protected void initModel() {
         LOG.debug("Inside PageImpl Model");
+
         // to avoid Dispatcher cache for intouch pages (otherwise saleslogin is shared between different users)
         // maybe we can move salesLogin (and intouch JS files - which contains url + saleslogin) somewhere and enable cache again?
-        response.setHeader("Dispatcher", "no-cache");
-        // its used only as a information for developers because Dispatcher header is removed from response by Dispatcher itself
-        response.setHeader("X-Dispatcher", "no-cache"); 
+        String salesLogin = getSalesLogin();
+        if(!"".equals(salesLogin)) {
+            response.setHeader("Dispatcher", "no-cache");
+            // its used only as a information for developers because Dispatcher header is removed from response by Dispatcher itself
+            response.setHeader("X-Dispatcher", "no-cache"); 
+        }
     }
 
     @Override
