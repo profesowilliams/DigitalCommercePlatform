@@ -2,6 +2,7 @@ import React from "react";
 import { useOrderTrackingStore } from "../store/OrderTrackingStore";
 import { setLocalStorageData } from "../utils/gridUtils";
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
+import { FilterClearIcon } from "../../../../../fluentIcons/FluentIcons";
 
 const OrderCountClear = ({ onQueryChanged, children, filtersRefs }) => {
   const {
@@ -12,6 +13,7 @@ const OrderCountClear = ({ onQueryChanged, children, filtersRefs }) => {
     clearCheckedButNotAppliedOrderFilters,
   } = useOrderTrackingStore((st) => st.effects);
   const onClear = () => {
+    filtersRefs.current = {};
     clearAllOrderFilters();
     setFilterClicked(false);
     setPredefinedFiltersApplied([]);
@@ -21,15 +23,14 @@ const OrderCountClear = ({ onQueryChanged, children, filtersRefs }) => {
       types: [],
       statuses: [],
     });
-    filtersRefs = {};
     clearCheckedButNotAppliedOrderFilters();
     onQueryChanged({ onSearchAction: true });
   };
   return (
     <div className={'count-clear tag_dark_teal'}>
-      {children}{' '}
+      <div className={'filter-count-wrapper'}>{children}</div>
       <button className="filter-clear-button" onClick={onClear}>
-        &#11198;
+        <FilterClearIcon />
       </button>
     </div>
   );

@@ -158,7 +158,7 @@ function MainGridHeader({
       searchAnalyticsLabel={analyticsCategories.search}
     />,
     <VerticalSeparator />,
-    <OrderFilter onQueryChanged={onQueryChanged} filtersRefs={filtersRefs.current} />,
+    <OrderFilter onQueryChanged={onQueryChanged} filtersRefs={filtersRefs} />,
     <VerticalSeparator />,
     <Report
       selectOption={onReportChange}

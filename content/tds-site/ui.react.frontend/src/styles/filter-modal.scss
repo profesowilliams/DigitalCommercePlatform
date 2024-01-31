@@ -464,12 +464,23 @@
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0;
+  width: 39px;
+  height: 16px;
+  display: flex;
 }
 
 .filter-clear-button {
-  padding: 0;
   border: none;
   background: none;
+  width: 16px;
+  height: 16px;
+  padding-left: 5px;
+}
+
+.filter-count-wrapper {
+  width: 15px;
+  height: 15px;
+  text-align: center;
 }
 
 .count.td-synnex {

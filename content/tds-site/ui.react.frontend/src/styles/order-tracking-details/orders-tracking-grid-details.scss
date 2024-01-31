@@ -96,6 +96,7 @@
 
     &-image {
       width: 80px !important;
+      flex-shrink: 0;
       &-child {
         display: block;
         width: 100% !important;
