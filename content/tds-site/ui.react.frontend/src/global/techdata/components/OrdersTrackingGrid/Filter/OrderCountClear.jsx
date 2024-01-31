@@ -3,7 +3,7 @@ import { useOrderTrackingStore } from "../store/OrderTrackingStore";
 import { setLocalStorageData } from "../utils/gridUtils";
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from "../../../../../utils/constants";
 
-const OrderCountClear = ({ onQueryChanged, children }) => {
+const OrderCountClear = ({ onQueryChanged, children, filtersRefs }) => {
   const {
     clearAllOrderFilters,
     setFilterClicked,
@@ -21,6 +21,7 @@ const OrderCountClear = ({ onQueryChanged, children }) => {
       types: [],
       statuses: [],
     });
+    filtersRefs = {};
     clearCheckedButNotAppliedOrderFilters();
     onQueryChanged({ onSearchAction: true });
   };

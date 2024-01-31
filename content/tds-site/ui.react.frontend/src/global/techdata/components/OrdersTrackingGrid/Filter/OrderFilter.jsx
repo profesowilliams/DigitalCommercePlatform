@@ -30,7 +30,6 @@ function OrderFilter({ onQueryChanged, filtersRefs }) {
         onMouseLeave={handleMouseLeaveFilter}
         onClick={() => {
           toggleFilterModal();
-          filtersRefs = {};
           setFilterClicked(false);
         }}
       >
@@ -41,7 +40,10 @@ function OrderFilter({ onQueryChanged, filtersRefs }) {
         )}
       </div>
       {orderFilterCounter > 0 && (
-        <OrderCountClear onQueryChanged={onQueryChanged}>
+        <OrderCountClear
+          onQueryChanged={onQueryChanged}
+          filtersRefs={filtersRefs}
+        >
           {orderFilterCounter}
         </OrderCountClear>
       )}

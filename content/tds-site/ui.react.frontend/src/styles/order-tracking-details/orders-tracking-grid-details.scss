@@ -90,16 +90,15 @@
       display: flex;
     }
     &-row {
-      display: flex;
       text-align: left;
+      display: flex;
     }
 
     &-image {
       width: 80px !important;
-
       &-child {
         display: block;
-        width: fit-content;
+        width: 100% !important;
         height: auto;
       }
     }
