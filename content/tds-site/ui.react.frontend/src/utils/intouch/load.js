@@ -1,76 +1,88 @@
 import { intouchHeaderAPIUrl, intouchFooterAPIUrl } from "../intouchUtils";
 import { headerInfo, checkIntouchUser } from "../user/get";
 
-const renderIntouchComponent = (url, loadToElement, loadend) => {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Accept-Language', headerInfo.acceptLanguage);
-
-    xhr.onload = function () {
-        if (xhr.status != 200) {
-            console.error('Error ${xhr.status}: ${xhr.statusText}');
-        } else { // show the result
-            loadToElement.innerHTML = xhr.responseText;
-        }
-    };
-
-    xhr.onloadend = loadend;
-
-    xhr.withCredentials = true;
-    xhr.send(null);
-};
-
 const renderIntouchHeaderHTML = () => {
-    const url = intouchHeaderAPIUrl();
-    const element = document.getElementById('intouch-headerhtml');
+  const url = intouchHeaderAPIUrl();
+  const element = document.getElementById('intouch-headerhtml');
 
-    if (!element) return;
+  if (!element) return;
 
-    renderIntouchComponent(
-        url,
-        element,
-        function () {
-            console.log("Intouch header loaded");
-        }
-    );
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept-Language': headerInfo.acceptLanguage
+    },
+    credentials: "include"
+  })
+    .then(checkStatus)
+    .then(parseResponse)
+    .then(function (data) {
+      element.innerHTML = data;
+      console.log("Intouch header loaded");
+    }).catch(function (error) {
+      console.log('Request failed', error);
+    });
 };
 
 const renderIntouchFooterHTML = () => {
-    const url = intouchFooterAPIUrl();
-    const element = document.getElementById('intouch-footerhtml');
+  const url = intouchFooterAPIUrl();
+  const element = document.getElementById('intouch-footerhtml');
 
-    if (!element) return;
+  if (!element) return;
 
-    renderIntouchComponent(
-        url,
-        element,
-        function () {
-            console.log("Intouch footer loaded");
-        }
-    );
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept-Language': headerInfo.acceptLanguage
+    },
+    credentials: "include"
+  })
+    .then(checkStatus)
+    .then(parseResponse)
+    .then(function (data) {
+      element.innerHTML = data;
+      console.log("Intouch footer loaded");
+    }).catch(function (error) {
+      console.log('Request failed', error);
+    });
 };
 
-export const loadIntouchHeaderAndFooter = () => {
-    console.log('loadIntouchHeaderAndFooter()');
+const checkStatus = (response) => {
+  if (response.status >= 200 && response.status < 300) {
+    return Promise.resolve(response)
+  } else {
+    return Promise.reject(new Error(response.statusText))
+  }
+}
 
-    document.addEventListener(
-        'DOMContentLoaded',
-        function () {
-            let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
-            if (!authorMode) {
-                console.log('AUTHOR:Load header/footer');
-                checkIntouchUser().then(function () { 
-                    renderIntouchHeaderHTML();
-                    renderIntouchFooterHTML();
-                }).then(function () {
-                  console.log("$htmlLoaded resolve");
-                  window.td.deferred.$htmlLoaded.resolve();
-                })
-            } else {
-                console.log('AUTHOR:Skip header/footer');
-            }
-        },
-        false
-    );
+const parseResponse = (response) => {
+  return response.text()
+}
+
+export const loadIntouchHeaderAndFooter = () => {
+  console.log('loadIntouchHeaderAndFooter()');
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
+      if (!authorMode) {
+        console.log('AUTHOR:Load header/footer');
+        checkIntouchUser().then(function () {
+          Promise.all([
+            renderIntouchHeaderHTML(),
+            renderIntouchFooterHTML()
+          ]).then(function () {
+            console.log("$htmlLoaded resolve");
+            window.td.deferred.$htmlLoaded.resolve();
+          })
+        })
+      } else {
+        console.log('AUTHOR:Skip header/footer');
+      }
+    },
+    false
+  );
 }
