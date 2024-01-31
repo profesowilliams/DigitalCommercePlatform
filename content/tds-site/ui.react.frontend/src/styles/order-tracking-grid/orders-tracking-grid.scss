@@ -1,5 +1,4 @@
 .orderstrackinggrid {
-
   .cmp-order-tracking-grid .cmp-base-grid .cmp-grid.ag-theme-alpine .ag-header {
     background-color: $brand-white;
     border-top: 3px solid $brand-charcoal;
@@ -23,7 +22,7 @@
  * @class cmp-order-tracking-grid
  * @classdesc Styles for the order tracking grid component.
  */
- %clickable-action {
+%clickable-action {
   display: flex;
   gap: rem(8px);
   align-items: center;
@@ -33,7 +32,6 @@
     cursor: pointer;
   }
 }
-
 
 .cmp-order-tracking-grid {
   /* Styles for the base grid */
@@ -45,13 +43,13 @@
       & .ag-header-cell {
         cursor: default;
         & * .ag-header-cell-text::before {
-            cursor: pointer;
+          cursor: pointer;
         }
         &:not(.ag-header-cell-sortable) {
-          padding-left: 4px;
+          padding-left: 0;
         }
 
-        &[col-id="priceFormatted"] {
+        &[col-id='priceFormatted'] {
           .ag-header-cell-label {
             padding: 0px 12px 0px 0px;
             text-align: right;
@@ -69,7 +67,7 @@
         }
       }
       & .ag-root-wrapper-body {
-        overflow-x: hidden !important
+        overflow-x: hidden !important;
       }
     }
   }
@@ -77,11 +75,11 @@
   &__criteria {
     margin-top: 8px;
     color: $cool-gray;
-    font-family: "Arial" !important;
+    font-family: 'Arial' !important;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 24px; 
+    line-height: 24px;
   }
 
   &__open-orders {
@@ -103,10 +101,10 @@
 
   &__report-dropdown {
     position: absolute;
-    width: 240px;
-    top: 36px;
-    left: -198px;
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.24);
+    min-width: 240px;
+    top: 25px;
+    right: -17px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
     background-color: $brand-white;
     z-index: 10;
     border-top: 2px $brand-cobalt solid;
@@ -114,10 +112,11 @@
     ul {
       list-style: none;
       padding: 0;
-      line-height: 36px;
+      line-height: 40px;
       margin: 0;
 
       > li {
+        white-space: nowrap;
         padding: 0 15px;
       }
 
@@ -182,7 +181,7 @@
         font-size: 14px;
       }
     }
-  }  
+  }
 }
 
 // Styles for Order Tracking Grid dropdown
@@ -200,13 +199,15 @@
 }
 .cmp-order-tracking-grid {
   // Enable vertical scrollbar in NotShipped inner grid
-  .cmp-base-grid .cmp-grid.ag-theme-alpine .ag-root.ag-unselectable.ag-layout-auto-height {
+  .cmp-base-grid
+    .cmp-grid.ag-theme-alpine
+    .ag-root.ag-unselectable.ag-layout-auto-height {
     overflow-y: overlay !important;
   }
   .ag-row.ag-row-level-0.ag-row-group.ag-row-position-absolute.ag-after-created.ag-row-group-expanded {
     border-bottom: 1px solid $td-neutral-gray;
   }
-  .ag-row-group-expanded{
+  .ag-row-group-expanded {
     background-color: $td-neutral-gray !important;
   }
   .ag-row-no-focus.ag-row.ag-full-width-row.ag-row-position-absolute.ag-after-created,
@@ -220,15 +221,15 @@
       font-weight: 400;
     }
     .ag-row-no-focus.ag-row {
-      &.ag-full-width-row.ag-row-position-absolute.ag-row-last.ag-after-created{
+      &.ag-full-width-row.ag-row-position-absolute.ag-row-last.ag-after-created {
         background-color: $brand-white !important;
         border-bottom: 1px solid $brand-text-lightgray;
-        border-top: 1px solid $brand-text-lightgray ;
+        border-top: 1px solid $brand-text-lightgray;
         &.ag-row-hover {
           background-color: $brand-white !important;
         }
       }
-    } 
+    }
     .ag-row.ag-row-level-0.ag-row-group.ag-row-group-contracted.ag-row-position-absolute.ag-after-created {
       border-bottom: 1px solid $brand-text-lightgray;
     }
@@ -256,14 +257,14 @@
     top: 13px !important;
   }
   .ag-header .ag-focus-managed .ag-pivot-off {
-    height: 30px
+    height: 30px;
   }
   .ag-body-viewport.ag-layout-auto-height.ag-row-no-animation {
     max-height: 370px;
     overflow-y: overlay;
   }
   .ag-cell-value {
-    width: 100%
+    width: 100%;
   }
   .track {
     color: $brand-green !important;
@@ -271,9 +272,9 @@
   .ag-row-group-expanded {
     background-color: $brand-white !important;
   }
-  
+
   * {
-    font-family: $font-family-arial!important;
+    font-family: $font-family-arial !important;
   }
   margin-left: 40px;
   margin-right: 40px;
@@ -290,7 +291,7 @@
       padding-left: 16px;
       padding-bottom: 10px;
       color: $brand-charcoal;
-      width:50%;
+      width: 50%;
       font-size: 20px;
       font-weight: 700;
       line-height: 26px;
@@ -339,7 +340,7 @@
       font-size: 12px !important;
       font-weight: 400;
       color: $brand-green;
-      border: 1px solid $brand-green !important
+      border: 1px solid $brand-green !important;
     }
     &__release-button {
       height: 44px;
@@ -402,14 +403,14 @@
       &__item-column {
         display: flex;
         flex-direction: column;
-        justify-content: center
+        justify-content: center;
       }
       &__item-row {
         display: flex;
       }
       &__image {
         width: 65px;
-        height:auto;
+        height: auto;
         max-height: 45px;
       }
       &__right {
@@ -438,7 +439,7 @@
       }
       &__separateLineText {
         line-height: 24px;
-        margin:0;
+        margin: 0;
       }
       &__text {
         color: $brand-charcoal;
@@ -455,18 +456,18 @@
     }
   }
   // Overrides for inner grid
-   * {
-    &.cmp-grid.ag-theme-alpine{
+  * {
+    &.cmp-grid.ag-theme-alpine {
       border-top: none !important;
     }
     &.cmp-grid.ag-theme-alpine .ag-header {
       border-top: none !important;
       border-bottom: 3px solid $brand-charcoal !important;
     }
-    &.ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport{
-        min-height: fit-content !important;
-      }
-    &.ag-root-wrapper-body.ag-layout-auto-height.ag-focus-managed{
+    &.ag-theme-alpine .ag-root-wrapper .ag-root-wrapper-body .ag-body-viewport {
+      min-height: fit-content !important;
+    }
+    &.ag-root-wrapper-body.ag-layout-auto-height.ag-focus-managed {
       overflow-x: hidden !important;
     }
   }
@@ -488,72 +489,72 @@
     height: 36px;
     line-height: 36px;
     font-size: 2rem;
-      position: absolute;
-      top: 24px;
+    position: absolute;
+    top: 24px;
   }
 
   &__line {
-    font-family: $font-family-arial!important;
+    font-family: $font-family-arial !important;
     font-weight: 400;
     line-height: 30px;
     font-size: 20px;
     letter-spacing: 0;
   }
 
-    &__body {
-      width: 740px;
-      height: 210px;
-      line-height: 30px;
-      position: absolute;
-      top: 80px;
-    }
-  
-    &__footer {
+  &__body {
+    width: 740px;
+    height: 210px;
+    line-height: 30px;
+    position: absolute;
+    top: 80px;
+  }
+
+  &__footer {
     min-width: 266px;
     height: 48px;
     position: absolute;
-      bottom: 36px;
-      right: 24px;
+    bottom: 36px;
+    right: 24px;
   }
 
-&__primary-button {
+  &__primary-button {
     background-color: $brand-green;
     color: $brand-white;
     min-width: 151px;
     height: 48px;
     padding: 9px 20px;
     border-radius: 2px;
-    font-family: $font-family-arial!important;
+    font-family: $font-family-arial !important;
     font-weight: 400;
     line-height: 30px;
-    font-size: 20px  !important;
+    font-size: 20px !important;
     letter-spacing: 0;
     text-align: center;
   }
-&__secondary-button {
+  &__secondary-button {
     background-color: $brand-white;
     color: $brand-green;
     min-width: 95px;
     height: 48px;
     padding: 12px 20px;
     border-radius: 2px;
-    font-family: $font-family-arial!important;
+    font-family: $font-family-arial !important;
     font-weight: 400;
     line-height: 30px;
     font-size: 20px !important;
     letter-spacing: 0;
   }
-  &__gap{
+  &__gap {
     height: 48px;
     width: 10px !important;
     min-width: 10px;
     display: inline-flex;
   }
-  &__alert-wrapper{
+  &__alert-wrapper {
     position: absolute;
     right: 0;
     display: inline;
-    &__red{
+    &__red {
       border-left-color: $dark-cherry;
       background-color: $light-cherry;
       border-left-width: 4px;
@@ -561,7 +562,7 @@
       width: 448px;
       height: 88px;
     }
-    &__green{
+    &__green {
       border-left-color: $dark-forrest;
       background-color: $light-forrest;
       border-left-width: 4px;
@@ -569,18 +570,18 @@
       width: 448px;
       height: 88px;
     }
-    &__text{
+    &__text {
       margin-top: 20px;
       margin-bottom: 20px;
       width: 328px;
       height: 48px;
       float: left;
     }
-    &__icon-symbol{
+    &__icon-symbol {
       padding: 18px;
       float: left;
     }
-    &__icon-close{
+    &__icon-close {
       padding: 18px;
       float: right;
     }

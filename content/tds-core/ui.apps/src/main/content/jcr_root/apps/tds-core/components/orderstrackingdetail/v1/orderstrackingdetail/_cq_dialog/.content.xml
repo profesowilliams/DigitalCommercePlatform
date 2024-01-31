@@ -806,6 +806,11 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Modify order"
                                                 name="./replacementModifyOrder" />
+                                            <unitCost
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Unit Cost Label"
+                                                name="./unitCost" />
                                             <pleaseSelect
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

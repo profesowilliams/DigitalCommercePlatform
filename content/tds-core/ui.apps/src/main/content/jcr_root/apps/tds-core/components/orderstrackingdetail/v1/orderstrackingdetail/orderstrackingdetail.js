@@ -401,6 +401,7 @@ use(["../../../common/utils.js"], function (utils) {
   const productReplacementFlyoutLabels = [
     "replacementModifyOrder",
     "pleaseSelect",
+    "unitCost",
     "replaceWithSuggestedItem",
     "removeWithoutReplacement",
     "replacementUpdateSucessMessage",
