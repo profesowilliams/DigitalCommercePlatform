@@ -32,7 +32,6 @@ const renderIntouchHeaderHTML = () => {
         element,
         function () {
             console.log("Intouch header loaded");
-            window.td.deferred.$htmlLoaded.resolve();
         }
     );
 };
@@ -64,6 +63,9 @@ export const loadIntouchHeaderAndFooter = () => {
                 checkIntouchUser().then(function () { 
                     renderIntouchHeaderHTML();
                     renderIntouchFooterHTML();
+                }).then(function () {
+                  console.log("$htmlLoaded resolve");
+                  window.td.deferred.$htmlLoaded.resolve();
                 })
             } else {
                 console.log('AUTHOR:Skip header/footer');
