@@ -71,9 +71,6 @@ public class PageImpl implements Page {
     @Inject
     private SlingHttpServletResponse response;
 
-    @OSGiService
-    private IntouchRetrieveDataService intouchService;
-
     private XSSAPI xssapi;
 
     @Inject
@@ -84,15 +81,6 @@ public class PageImpl implements Page {
     @PostConstruct
     protected void initModel() {
         LOG.debug("Inside PageImpl Model");
-
-        // to avoid Dispatcher cache for intouch pages (otherwise saleslogin is shared between different users)
-        // maybe we can move salesLogin (and intouch JS files - which contains url + saleslogin) somewhere and enable cache again?
-        String salesLogin = getSalesLogin();
-        if(!"".equals(salesLogin)) {
-            response.setHeader("Dispatcher", "no-cache");
-            // its used only as a information for developers because Dispatcher header is removed from response by Dispatcher itself
-            response.setHeader("X-Dispatcher", "no-cache"); 
-        }
     }
 
     @Override
@@ -332,61 +320,6 @@ public class PageImpl implements Page {
             errorName = localePage.getProperties().get(ERROR_NAME, String.class);
         }
         return pageProperties.get(ERROR_NAME, errorName);
-    }
-
-    /*
-    public String getIntouchCSSScriptsData() {
-        IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
-        String intouchCSSAPIUrl = intouchConfiguration.cssAPIUrl();
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl, "UK", "en-US");
-        return intouchService.fetchScriptsData(intouchRequest);
-    }
-    */
-
-    public String getIntouchJSScriptsData() {
-        IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
-        String intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), addSalesLoginToUrl(intouchJSAPIUrl), "UK", "en-US");
-        return intouchService.fetchScriptsData(intouchRequest);
-    }
-
-    private String addSalesLoginToUrl(String url) {
-        String salesLogin = getSalesLogin();
-
-        if(!"".equals(salesLogin)) {
-            url = url.replace("/MVC/", "/MVC/" + salesLogin + "/");
-        }
-
-        return url;
-    }
-
-    public String getSalesLogin() {
-        try {
-            String queryString = request.getQueryString();       
-            List<String> salesLogin = splitQuery(queryString).get("saleslogin");
-            return salesLogin != null ? salesLogin.get(0) : "";
-        } 
-        catch (UnsupportedEncodingException ex) {
-        }
-
-        return "";
-    }
-
-    private static Map<String, List<String>> splitQuery(String query) throws UnsupportedEncodingException {
-        final Map<String, List<String>> query_pairs = new LinkedHashMap<String, List<String>>();
-        if(query == null) return query_pairs;
-        
-        final String[] pairs = query.split("&");
-        for (String pair : pairs) {
-            final int idx = pair.indexOf("=");
-            final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
-            if (!query_pairs.containsKey(key)) {
-                query_pairs.put(key.toLowerCase(), new LinkedList<String>());
-            }
-            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
-            query_pairs.get(key.toLowerCase()).add(value);
-        }
-        return query_pairs;
     }
 
     private static final String ERROR_CODE = "errorCode";
