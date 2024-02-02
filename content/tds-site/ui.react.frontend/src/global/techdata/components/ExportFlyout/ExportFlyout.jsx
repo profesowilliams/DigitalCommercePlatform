@@ -220,6 +220,9 @@ function ExportFlyout({
       onClickButton={handleDownload}
     >
       <section className="cmp-flyout__content">
+        <div className="cmp-flyout__content-description-message">
+          {getDictionaryValueOrKey(exportFlyout?.descriptionMessage)}
+        </div>
         <div className="cmp-flyout__content-description">
           {getDictionaryValueOrKey(exportFlyout?.description)}
         </div>

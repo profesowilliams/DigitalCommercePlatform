@@ -113,6 +113,7 @@ use(["../common/utils.js"], function (utils) {
 
     const exportFlyoutLabels = [
       { key: "title", name: "exportFlyoutTitle" },
+      { key: "descriptionMessage", name: "exportFlyoutDescriptionMessage" },
       { key: "description", name: "exportFlyoutDescription" },
       { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
       { key: "button", name: "exportFlyoutButton" },
