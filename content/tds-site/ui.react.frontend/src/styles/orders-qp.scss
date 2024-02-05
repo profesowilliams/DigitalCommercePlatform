@@ -4,6 +4,32 @@
   }
 }
 
+.contact-card {
+  display: grid;
+  grid-template-columns: auto 275px;
+  grid-gap: 16px;
+  font-size: 14px;
+  padding: 18px 25px;
+  grid-template-rows: 16px;
+  span {
+    min-width: 70px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.acknowledgement-card {
+  display: grid;
+  grid-template-columns: auto 175px;
+  grid-gap: 16px;
+  font-size: 14px;
+  padding: 18px 25px;
+  grid-template-rows: auto;
+  span {
+    min-width: 50px;
+    overflow-wrap: anywhere;
+  }
+}
+
 .cmp-orders-qp__config-grid {
   padding: 0 2rem;
   background-color: $td-neutral-gray;

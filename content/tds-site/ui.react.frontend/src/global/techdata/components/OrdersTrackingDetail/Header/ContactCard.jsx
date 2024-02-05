@@ -8,30 +8,30 @@ function ContactCard({ content, config }) {
       <div className="card-container__title">
         {getDictionaryValueOrKey(config?.contactLabels?.contact)}
       </div>
-      <div>
+      <div className="contact-card">
         {name && (
-          <div className="card-container__contentGridContact">
+          <>
             <span>
               {getDictionaryValueOrKey(config?.contactLabels?.contactName)}
             </span>
             <span>{name}</span>
-          </div>
+          </>
         )}
         {phoneNumber && (
-          <div className="card-container__contentGridContact">
+          <>
             <span>
               {getDictionaryValueOrKey(config?.contactLabels?.contactPhone)}
             </span>
             <span>{phoneNumber}</span>
-          </div>
+          </>
         )}
         {email && (
-          <div className="card-container__contentGridContact">
+          <>
             <span>
               {getDictionaryValueOrKey(config?.contactLabels?.contactEmail)}
             </span>
             <span>{email}</span>
-          </div>
+          </>
         )}
       </div>
     </Card>

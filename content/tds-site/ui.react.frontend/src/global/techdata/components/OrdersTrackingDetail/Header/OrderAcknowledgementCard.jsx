@@ -11,46 +11,46 @@ function OrderAcknowledgementCard({ content = {}, config }) {
           config?.orderAcknowledgementLabels?.orderAcknowledgement
         )}
       </div>
-      <div>
+      <div className="acknowledgement-card">
         {reseller?.id && (
-          <div className="card-container__contentGrid">
+          <>
             <span>
               {getDictionaryValueOrKey(
                 config?.orderAcknowledgementLabels?.customerAccountCode
               )}
             </span>
             <span>{reseller?.id}</span>
-          </div>
+          </>
         )}
         {createdFormatted && (
-          <div className="card-container__contentGrid">
+          <>
             <span>
               {getDictionaryValueOrKey(
                 config?.orderAcknowledgementLabels?.orderDate
               )}
             </span>
             <span>{createdFormatted}</span>
-          </div>
+          </>
         )}
         {customerPO && (
-          <div className="card-container__contentGrid">
+          <>
             <span>
               {getDictionaryValueOrKey(
                 config?.orderAcknowledgementLabels?.purchaseOrderNo
               )}
             </span>
             <span>{customerPO}</span>
-          </div>
+          </>
         )}
         {docTypeText && (
-          <div className="card-container__contentGrid">
+          <>
             <span>
               {getDictionaryValueOrKey(
                 config?.orderAcknowledgementLabels?.orderType
               )}
             </span>
             <span>{docTypeText}</span>
-          </div>
+          </>
         )}
       </div>
     </Card>
