@@ -6306,7 +6306,8 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
               shipDate: "01-04-2024",
               shipDateFormatted: "04/01/2024",
               status: "BLOCKED",
-              statusText: "Delivery Blocked - XI S&amp;D condition missing",
+              statusText:
+                "Delivery Blocked - XI S&amp;D condition missing Delivery Blocked - XI S&amp;D condition missing",
               isShipment: false,
             },
             {

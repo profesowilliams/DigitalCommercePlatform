@@ -34,23 +34,13 @@ const columnDefs = [
     autoHeight: true,
   },
   {
-    headerName: 'QTY',
-    field: 'nqty',
+    field: 'nqtyDeliveryEstimate',
     sortable: false,
-    width: '70px',
-    cellStyle: { padding: '0 0' },
-    autoHeight: true,
-  },
-  {
-    headerName: 'DELIVERY ESTIMATE',
-    field: 'deliveryEstimate',
-    sortable: false,
-    width: '164px',
+    width: '254px',
     cellStyle: {
       padding: '0 0',
     },
     autoHeight: true,
   },
-
 ];
 export default columnDefs;

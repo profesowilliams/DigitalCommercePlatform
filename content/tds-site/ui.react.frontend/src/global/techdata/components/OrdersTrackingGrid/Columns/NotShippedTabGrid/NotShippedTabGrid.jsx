@@ -4,9 +4,8 @@ import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
 import { getDictionaryValueOrKey } from '../../../../../../utils/utils';
 import LineColumn from './Columns/LineColumn';
-import QuantityColumn from './Columns/QuantityColumn';
 import ItemColumn from './Columns/ItemColumn';
-import DeliveryEstimateColumn from './Columns/DeliveryEstimateColumn';
+import QuantityAndDeliveryEstimateColumn from './Columns/QuantityAndDeliveryEstimateColumn';
 import PnSkuColumn from './Columns/PnSkuColumn';
 import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 import OrderReleaseModal from '../../Modals/OrderReleaseModal';
@@ -47,10 +46,19 @@ function NotShippedTabGrid({
     lineNumber: '60px',
     item: '425px',
     pnsku: '180px',
-    nqty: '70px',
-    deliveryEstimate: '164x',
+    nqtyDeliveryEstimate: '234px',
     action: '60px',
   });
+  const CustomHeaderComponent = () => (
+    <div className="not-shipped-header-end">
+      <div className="not-shipped-header-end__qty-column">
+        {getDictionaryValueOrKey(nqty)}
+      </div>
+      <div className="not-shipped-header-end__delivery-column">
+        {getDictionaryValueOrKey(deliveryEstimate)}
+      </div>
+    </div>
+  );
   const columnDefinitionsOverride = [
     {
       field: 'lineNumber',
@@ -71,17 +79,11 @@ function NotShippedTabGrid({
       width: gridColumnWidths.pnsku,
     },
     {
-      field: 'nqty',
-      headerName: getDictionaryValueOrKey(nqty),
+      field: 'nqtyDeliveryEstimate',
+      headerComponentFramework: CustomHeaderComponent,
       cellRenderer: ({ data }) => (
-        <QuantityColumn line={data} config={gridProps} />
+        <QuantityAndDeliveryEstimateColumn line={data} config={gridProps} />
       ),
-      width: gridColumnWidths.nqty,
-    },
-    {
-      field: 'deliveryEstimate',
-      headerName: getDictionaryValueOrKey(deliveryEstimate),
-      cellRenderer: ({ data }) => <DeliveryEstimateColumn line={data} />,
       width: gridColumnWidths.deliveryEstimate,
     },
   ];
@@ -118,11 +120,11 @@ function NotShippedTabGrid({
     const url = `${config.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
     await usPost(url, params)
       .then((response) => {
-          const {
-            data: {
-              content: { changeDelFlag, isError },
-            },
-          } = response;
+        const {
+          data: {
+            content: { changeDelFlag, isError },
+          },
+        } = response;
         if (changeDelFlag?.isError === false && isError === false) {
           setReleaseSuccess(true);
         } else {
