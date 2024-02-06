@@ -7,6 +7,9 @@ function DeliveryEstimateColumn({ line}) {
       {line?.lineDetails?.map((el, index) => {
         const isLastElement =
           multiple && index === line?.lineDetails?.length - 1;
+
+        const shipDateText =
+          el.shipDateDetailsTranslated || el.shipDateFormatted;
         return (
           <div
             key={el.id}
@@ -16,9 +19,9 @@ function DeliveryEstimateColumn({ line}) {
                 : '__separateLineMultiple'
             }`}
           >
-            {el.shipDateFormatted ? (
+            {shipDateText ? (
               <span className="order-line-details__content__innerTableNotShipped__separateLineText">
-                {el.shipDateFormatted}
+                {shipDateText}
               </span>
             ) : (
               <span></span>

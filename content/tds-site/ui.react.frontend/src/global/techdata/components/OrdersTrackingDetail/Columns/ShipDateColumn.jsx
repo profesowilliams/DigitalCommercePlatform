@@ -19,7 +19,10 @@ function ShipDateColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText">
-              {el.shipDateFormatted || el.shipDateNotAvailableTranslated || '-'}
+              {el.shipDateDetailsTranslated ||
+                el.shipDateFormatted ||
+                el.shipDateNotAvailableTranslated ||
+                '-'}
             </span>
           </div>
         );
