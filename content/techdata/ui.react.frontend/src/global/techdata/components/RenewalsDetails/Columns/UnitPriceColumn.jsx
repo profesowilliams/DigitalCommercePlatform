@@ -36,9 +36,9 @@ function UnitPriceColumn(props) {
   const MAX_PRICE_VALUE = 999999999; 
   const ENTER_KEY = 13;
   const handleChange = (event) => {
-    const value = event.target.value;   
+    const value = event.target.value;
     if (value <0 && value) return setPrice(1);
-    if (value > MAX_PRICE_VALUE) return setPrice(MAX_PRICE_VALUE);     
+    if (value > MAX_PRICE_VALUE) return setPrice(MAX_PRICE_VALUE);
     setPrice(value);
   };
 
@@ -63,9 +63,9 @@ function UnitPriceColumn(props) {
     },
   };
 
-  const updateValue = () => { 
+  const updateValue = () => {
     if (isNaN(price)) return;
-    if (price < 1) return setPrice(1); setValue(1);
+    if (price < 0) return setPrice(1); setValue(1);
     try {
       setValue(price);
     } catch (err) {

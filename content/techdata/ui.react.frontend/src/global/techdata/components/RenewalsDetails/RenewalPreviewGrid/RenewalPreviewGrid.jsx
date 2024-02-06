@@ -70,6 +70,7 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   const [subtotal, setSubtotal] = useState(null);
   const [orderButtonLabel, setOrderButtonLabel] = useState(gridProps?.orderButtonLabel);
   const gridData = data.items ?? [];
+  const orignalGridData = JSON.parse(JSON.stringify(gridData));
   const dataObj = data;
   const gridConfig = {
     ...gridProps,
@@ -124,22 +125,29 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   useImperativeHandle(ref, () => ({
     cancelEdit () {
       // Copy original grid data
-      let copyGridData = JSON.parse(JSON.stringify(gridData));
+     /* let copyGridData = JSON.parse(JSON.stringify(gridData));
       if (gridSavedItems) {
         copyGridData.map((item, index) => {
           item.id = gridSavedItems[index].id;
           item.quantity = gridSavedItems[index].quantity;
           item.unitPrice = gridSavedItems[index].unitPrice;
-        })
-      }
-
+        })*/
+    orignalGridData.forEach((item, index) => {
+                resultArray.map((resultItem, resultIndex) => {
+                            if(resultItem.id == item.id && resultItem.instance == item.instance) {
+                                resultItem.id = item.id;
+                                resultItem.quantity = item.quantity;
+                                resultItem.unitPrice = item.unitPrice;
+                            }
+                        })
+              });
       // Replace grid data with original
-      setMutableGridData(copyGridData);
+      setMutableGridData(resultArray);
       effects.clearItems();
 
       // Api call needed to refresh grid
       if(gridApiRef.current) {
-        gridApiRef.current.setRowData(copyGridData);
+        gridApiRef.current.setRowData(resultArray);
       }
     },
     getMutableGridData () {
