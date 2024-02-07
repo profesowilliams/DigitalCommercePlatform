@@ -12,6 +12,7 @@ import {
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
+import { useGTMStatus } from '../../hooks/useGTMStatus';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -22,7 +23,7 @@ function OrdersTrackingDetail(props) {
   const [subtotalValue, setSubtotalValue] = useState(
     null
   );
-
+  const { isGTMReady } = useGTMStatus();
   const componentProps = JSON.parse(props.componentProp);
   const config = {
     ...componentProps,
@@ -75,22 +76,24 @@ function OrdersTrackingDetail(props) {
   };
 
   useEffect(() => {
-    getSessionInfo().then((data) => {
-      setUserData(data[1]);
-      window?.td &&
-        pushDataLayerGoogle(
-          getPageReloadAnalyticsGoogle({
-            country: data[1]?.country,
-            internalTraffic: data[1]?.isInternal,
-            pageName: 'Order Details',
-            number: id,
-            userID: window?.td?.userId ?? '',
-            customerID: window?.td?.customerId ?? '',
-            industryKey: window?.td?.industryKey ?? '',
-          })
-        );
-    });
-  }, [window?.td]);
+    if(isGTMReady) {
+      getSessionInfo().then((data) => {
+        setUserData(data[1]);
+          pushDataLayerGoogle(
+            getPageReloadAnalyticsGoogle({
+              country: data[1]?.country,
+              internalTraffic: data[1]?.isInternal,
+              pageName: 'Order Details',
+              number: id,
+              userID: data[1]?.id,
+              customerID: data[1]?.customers[0],
+              industryKey: data[1]?.industryKey,
+            })
+          );
+          pushDataLayerGoogle(getOrderDetailsAnalyticsGoogle(content?.orderNumber));
+      });
+    }
+  }, [isGTMReady]);
 
   useEffect(async () => {
     try {

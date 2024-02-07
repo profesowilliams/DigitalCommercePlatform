@@ -54,6 +54,7 @@ import useGet from '../../hooks/useGet';
 
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
+import { useGTMStatus } from '../../hooks/useGTMStatus';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -91,7 +92,7 @@ function OrdersTrackingGrid(props) {
     { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
-
+  const { isGTMReady } = useGTMStatus()
   const hasRights = (entitlement) =>
     userData?.roleList?.some((role) => role.entitlement === entitlement);
 
@@ -334,29 +335,46 @@ function OrdersTrackingGrid(props) {
   }, [settingsResponse]);
 
   useEffect(() => {
-    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
-      hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+    if(isGTMReady) {
+      if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+        hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
+      }
+      getSessionInfo().then((data) => {
+        setUserData(data[1]);
+          pushDataLayerGoogle(
+            getPageReloadAnalyticsGoogle({
+              country: data[1]?.country,
+              internalTraffic: data[1]?.isInternal,
+              pageName: 'Main Dashboard',
+              number: '',
+              userID: data[1]?.id,
+              customerID: data[1]?.customers[0],
+              industryKey: data[1]?.industryKey,
+            })
+          );
+          pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
+
+          if(sendAnalyticsDataHome) {
+            if (hasAccess) {
+              pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
+              setSendAnalyticsDataHome(false);
+            } else {
+              pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
+              setSendAnalyticsDataHome(false);
+            }
+          }
+      });
     }
-    getSessionInfo().then((data) => {
-      setUserData(data[1]);
-      window?.td &&
-        pushDataLayerGoogle(
-          getPageReloadAnalyticsGoogle({
-            country: data[1]?.country,
-            internalTraffic: data[1]?.isInternal,
-            pageName: 'Main Dashboard',
-            number: '',
-            userID: window?.td?.userId ?? '',
-            customerID: window?.td?.customerId ?? '',
-            industryKey: window?.td?.industryKey ?? '',
-          })
-        );
-    });
-    pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
-  }, [window?.td]);
+  }, [isGTMReady]);
 
   const customerNumber = userData?.activeCustomer?.customerNumber;
   const salesOrg = userData?.activeCustomer?.salesOrg;
+
+  const hasAIORights = hasRights('AIO');
+  const hasCanViewOrdersRights = hasRights('CanViewOrders');
+  const hasOrderTrackingRights = hasRights('OrderTracking');
+  const hasOrderModificationRights = hasRights('OrderModification');
+  const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
 
   useEffect(() => {
     if (!userData || !areUrlSearchParamsPresent) {
@@ -377,20 +395,9 @@ function OrdersTrackingGrid(props) {
   }, [userData]);
 
   const authorizedContent = () => {
-    const hasAIORights = hasRights('AIO');
-    const hasCanViewOrdersRights = hasRights('CanViewOrders');
-    const hasOrderTrackingRights = hasRights('OrderTracking');
-    const hasOrderModificationRights = hasRights('OrderModification');
-    const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
 
     return hasAccess ? (
       <div className="cmp-order-tracking-grid">
-        {(() => {
-          if (sendAnalyticsDataHome) {
-            pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
-            setSendAnalyticsDataHome(false);
-          }
-        })()}
         <Criteria config={gridConfig} />
         <MainGridHeader
           onQueryChanged={onQueryChanged}
@@ -454,15 +461,7 @@ function OrdersTrackingGrid(props) {
         />
       </div>
     ) : (
-      <>
-        {(() => {
-          if (sendAnalyticsDataHome) {
-            pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
-            setSendAnalyticsDataHome(false);
-          }
-        })()}
         <AccessPermissionsNeeded noAccessProps={noAccessProps} />
-      </>
     );
   };
 
