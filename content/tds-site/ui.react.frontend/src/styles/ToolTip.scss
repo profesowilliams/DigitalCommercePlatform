@@ -1,52 +1,51 @@
 .tool-tip {
-    position: absolute;
-    height: auto;
-    padding: 0 12px;
-    border-radius: 2px;
-    background-color: #30343B;
-    color: #FFFFFF;
-    font-size: 12px;
-    letter-spacing: 0;
-    line-height: 32px;
-    text-align: left;
+  position: absolute;
+  height: auto;
+  padding: 0 12px;
+  border-radius: 2px;
+  background-color: $tooltip-background-dark;
+  color: $brand-white;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 32px;
+  text-align: left;
 }
 .status-column-container {
-    display:flex;
-    align-items: center
+  display: flex;
 }
 .status-span-icon {
-    margin-right: 4px;
-    margin-top: 2px;
-    max-height: 16px;
-    align-self: start;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
 }
 .status-icon-offset {
-    margin-left: 14px;
+  margin-left: 14px;
 }
 
-.status-popover-grid>.MuiPaper-root.MuiPaper-elevation {
-    height: 40px;
-    padding: 5px;
-    border-radius: 2px;
-    background-color: #30343B;
-    color: #FFFFFF;
-    font-size: 12px;
-    letter-spacing: 0;
-    line-height: 25px;
-    text-align: center;
-    }
-        
-.MuiTooltip-popper[data-popper-placement*="bottom"] div[class^='MuiTooltip-tooltip'] {
-    margin-top: 19px;
+.status-popover-grid > .MuiPaper-root.MuiPaper-elevation {
+  height: 40px;
+  padding: 5px;
+  border-radius: 2px;
+  background-color: $tooltip-background-dark;
+  color: $brand-white;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 25px;
+  text-align: center;
+}
+
+.MuiTooltip-popper[data-popper-placement*='bottom']
+  div[class^='MuiTooltip-tooltip'] {
+  margin-top: 19px;
 }
 div[class*='MuiTooltip-tooltip'] {
-    background-color: $tooltip-background;
-    color: $brand-white;
-    font-size: 14px;
-    line-height: 21px;
-    border-radius: 6px;
-    padding: 8px;
+  background-color: $tooltip-background;
+  color: $brand-white;
+  font-size: 14px;
+  line-height: 21px;
+  border-radius: 6px;
+  padding: 8px;
 }
-div[class*='MuiPopper-root-MuiTooltip-popper'] .MuiTooltip-arrow::before{
-    background-color: $tooltip-background;
+div[class*='MuiPopper-root-MuiTooltip-popper'] .MuiTooltip-arrow::before {
+  background-color: $tooltip-background;
 }
