@@ -16,8 +16,9 @@ import ContactCard from './Header/ContactCard';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import { ORDER_PAGINATION_LOCAL_STORAGE_KEY } from '../../../../utils/constants';
 import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
-import { usPost } from '../../../../utils/api';
+import { usGet, usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
+import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -31,6 +32,7 @@ const OrderTrackingDetailHeader = ({
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openXMLAlert, setOpenXMLAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
@@ -76,6 +78,7 @@ const OrderTrackingDetailHeader = ({
     content.status !== 'Completed' &&
     content.orderEditable;
   const areSerialNumbersAvailable = content.serialsAny === true;
+  const areXMLMessageAvailable = content.xmlAvailable;
   const isModifiable = hasOrderModificationRights && orderEditable;
   const id = content.orderNumber;
   const poNumber = content?.customerPO;
@@ -131,6 +134,24 @@ const OrderTrackingDetailHeader = ({
     });
   };
 
+  const triggerXMLMessage = async () => {
+    const url = `${componentProps.uiCommerceServiceDomain}/v3/ITOrderXML/${id}`;
+    await usGet(url)
+      .then((response) => {
+        if (response?.data?.status === '200') {
+          let xmlWindow = window.open('', '_blank');
+          xmlWindow.document.write(JSON.stringify(response));
+        } else {
+          setOpenXMLAlert(true);
+        }
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setOpenXMLAlert(false);
+        }, 5000);
+      });;
+  }
+
   const menuActionsItems = [
     {
       condition: areDeliveryNotesAvailable,
@@ -158,6 +179,11 @@ const OrderTrackingDetailHeader = ({
       condition: areSerialNumbersAvailable,
       label: labels?.exportSerialNumbers,
       onClick: triggerExportFlyout,
+    },
+    {
+      condition: areXMLMessageAvailable,
+      label: labels?.xmlMessageLabel,
+      onClick: triggerXMLMessage,
     },
   ];
 
@@ -260,6 +286,11 @@ const OrderTrackingDetailHeader = ({
         }}
         orderLineDetails={config.actionLabels}
         releaseSuccess={releaseSuccess}
+      />
+      <XMLMessageModal
+        open={openXMLAlert}
+        handleClose={() => setOpenXMLAlert(false)}
+        message={labels?.xmlMessageAlertLabel}
       />
     </div>
   );

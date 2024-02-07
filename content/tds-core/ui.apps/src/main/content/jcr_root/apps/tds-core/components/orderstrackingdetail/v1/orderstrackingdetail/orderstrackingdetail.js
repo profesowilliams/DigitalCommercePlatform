@@ -87,6 +87,8 @@ use(["../../../common/utils.js"], function (utils) {
     "releaseTheOrder",
     "actionModifyOrder",
     "exportSerialNumbers",
+    "xmlMessageLabel",
+    "xmlMessageAlertLabel",
     "track",
     "toasterCopySerialNumbersMessage",
     "copySerialNumber",

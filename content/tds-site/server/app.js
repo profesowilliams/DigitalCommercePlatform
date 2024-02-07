@@ -6581,6 +6581,13 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
     return res.status(200).json(response);
   }, 200);
 });
+app.get("/ui-commerce/v3/ITOrderXML/:id?", (req, res) => {
+  const response = {
+    content: "ITOrderXML TEST MESSAGE",
+    status: "200",
+  };
+  return res.status(200).json(response);
+});
 app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
   const response = {
     content: {

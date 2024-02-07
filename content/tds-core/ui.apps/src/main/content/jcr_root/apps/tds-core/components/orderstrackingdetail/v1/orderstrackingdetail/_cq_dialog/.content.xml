@@ -368,6 +368,20 @@
                                                 fieldLabel="Export Serial Numbers"
                                                 name="./exportSerialNumbers"
                                                 required="{Boolean}true"/>
+                                            <xmlMessageLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter XML Message Label"
+                                                fieldLabel="XML Message Label"
+                                                name="./xmlMessageLabel"
+                                                required="{Boolean}true"/>
+                                            <xmlMessageAlertLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter XML Message Label"
+                                                fieldLabel="XML Message Alert Label"
+                                                name="./xmlMessageAlertLabel"
+                                                required="{Boolean}true"/>
                                             <copySerialNumber
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

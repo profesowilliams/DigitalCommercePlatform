@@ -29,9 +29,9 @@ const OrderCountClear = ({ onQueryChanged, children, filtersRefs }) => {
   return (
     <div className={'count-clear tag_dark_teal'}>
       <div className={'filter-count-wrapper'}>{children}</div>
-      <button className="filter-clear-button" onClick={onClear}>
+      <span className="filter-clear-button" onClick={onClear}>
         <FilterClearIcon />
-      </button>
+      </span>
     </div>
   );
 };
