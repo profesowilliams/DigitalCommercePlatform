@@ -448,7 +448,9 @@ function OrdersTrackingGrid(props) {
               rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
             />
           )}
-          onCellMouseOver={(e) => cellMouseOver(e, setToolTipData)}
+          onCellMouseOver={(e) =>
+            cellMouseOver(e, setToolTipData, gridConfig?.shipToTooltipTemplate)
+          }
           onCellMouseOut={() => cellMouseOut(setToolTipData)}
         />
         <MainGridFooter

@@ -148,6 +148,12 @@
                                                 fieldLabel="Multiple Label"
                                                 name="./multiple"
                                             />
+                                            <shipToTooltipTemplate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Ship To Column Template"
+                                                name="./shipToTooltipTemplate"
+                                            />
                                             <menuCopyWithHeaders
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

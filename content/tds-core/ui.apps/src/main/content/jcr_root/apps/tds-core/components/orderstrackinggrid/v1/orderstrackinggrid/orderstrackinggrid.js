@@ -31,6 +31,7 @@ use(["../common/utils.js"], function (utils) {
       "last30DaysCriteria",
       "last90DaysCriteria",
       "multiple",
+      "shipToTooltipTemplate",
       "menuCopy",
       "menuCopyWithHeaders",
       "menuExport",
