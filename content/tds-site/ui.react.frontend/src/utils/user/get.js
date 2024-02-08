@@ -4,13 +4,28 @@ import { validateCountryAndLanguage } from './validate';
 import { getHeaderInfo } from '../headers/get';
 import { intouchUserCheckAPIUrl } from '../intouchUtils';
 import moment from 'moment';
+import { memoryCache } from '../memoryCache';
 
 export const headerInfo = getHeaderInfo();
 //let getUserDataPromise = null;
 //let checkIntouchUserPromise = null;
-let cachedUserData = null;
-let cacheExpiration = null;
+//let cachedUserData = null;
 const CACHE_DURATION = 600; // TODO: value should be configurable
+
+const cachedUserData = {
+  set current(data) {
+    const expiryDate = Date.now() + CACHE_DURATION * 1000;
+    memoryCache.set('cachedUserData', [expiryDate, data])
+  },
+  get current() {
+    const data = memoryCache.get('cachedUserData')
+    return data ? data[1] : null
+  },
+  get expiresOn() {
+    const data = memoryCache.get('cachedUserData')
+    return data ? data[0] : null
+  }
+}
 
 // not set yet, its set to login page after user check action is executed
 // value can be used to capture 401 and redirect user to loginpage
@@ -29,13 +44,21 @@ export async function getSessionInfo() {
   }
 
   let isLoggedIn;
-  let userData;
-  let data = await getUserData();
+  let userData = await getUserData();
 
-  console.log('UserData = ' + userData);
+  // set current language based on user data
+  moment.locale(userData.language);
 
-  isLoggedIn = !!data;
-  userData = data;
+  if (!validateCountryAndLanguage(userData)) {
+    try {
+      document.getElementById("page-container").style.display = "block";
+      document.getElementById("page-global-loader").style.display = "none";
+    } catch {
+      console.error('MISSING PAGE ELEMENTS!');
+    }
+  }
+
+  isLoggedIn = !!userData;
 
   return [isLoggedIn, userData];
 }
@@ -43,12 +66,12 @@ export async function getSessionInfo() {
 async function getUserData() {
   console.log('getUserData');
 
-  if (cachedUserData && Date.now() < cacheExpiration) {
+  if (cachedUserData.current && Date.now() < cachedUserData.expiresOn) {
     console.log(
       'Returning user data from local cache cacheExpiration = ' +
-        new Date(cacheExpiration)
+        new Date(cachedUserData.expiresOn)
     );
-    return cachedUserData;
+    return cachedUserData.current;
   }
 
   //if (getUserDataPromise) {
@@ -77,23 +100,9 @@ async function getUserData() {
 
     if (response.ok) {
       const data = await response.json();
-      cachedUserData = data.content.user;
-      cacheExpiration = Date.now() + CACHE_DURATION * 1000;
+      cachedUserData.current = data.content.user;
       console.log('Returned user data from API call');
-
-      // set current language based on user data
-      moment.locale(data.content.user.language);
-
-      if (!validateCountryAndLanguage(cachedUserData)) {
-        try {
-          document.getElementById("page-container").style.display = "block";
-          document.getElementById("page-global-loader").style.display = "none";
-        } catch {
-          console.error('MISSING PAGE ELEMENTS!');
-        }
-      }
-
-      return cachedUserData;
+      return cachedUserData.current;
     } else {
       console.log('HTTP-Error: ' + response.status);
       await checkIntouchUser(true);
