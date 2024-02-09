@@ -76,23 +76,23 @@ function OrdersTrackingDetail(props) {
   };
 
   useEffect(() => {
-    if(isGTMReady) {
-      getSessionInfo().then((data) => {
-        setUserData(data[1]);
-          pushDataLayerGoogle(
-            getPageReloadAnalyticsGoogle({
-              country: data[1]?.country,
-              internalTraffic: data[1]?.isInternal,
-              pageName: 'Order Details',
-              number: id,
-              userID: data[1]?.id,
-              customerID: data[1]?.customers[0],
-              industryKey: data[1]?.industryKey,
-            })
-          );
-          pushDataLayerGoogle(getOrderDetailsAnalyticsGoogle(content?.orderNumber));
-      });
-    }
+    getSessionInfo().then((data) => {
+      setUserData(data[1]);
+      if(isGTMReady) {
+        pushDataLayerGoogle(
+          getPageReloadAnalyticsGoogle({
+            country: data[1]?.country,
+            internalTraffic: data[1]?.isInternal,
+            pageName: 'Order Details',
+            number: id,
+            userID: data[1]?.id,
+            customerID: data[1]?.customers[0],
+            industryKey: data[1]?.industryKey,
+          })
+        );
+        pushDataLayerGoogle(getOrderDetailsAnalyticsGoogle(content?.orderNumber));
+      }
+    });
   }, [isGTMReady]);
 
   useEffect(async () => {

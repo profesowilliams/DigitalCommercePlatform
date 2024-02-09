@@ -335,36 +335,36 @@ function OrdersTrackingGrid(props) {
   }, [settingsResponse]);
 
   useEffect(() => {
-    if(isGTMReady) {
-      if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
-        hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
-      }
-      getSessionInfo().then((data) => {
-        setUserData(data[1]);
-          pushDataLayerGoogle(
-            getPageReloadAnalyticsGoogle({
-              country: data[1]?.country,
-              internalTraffic: data[1]?.isInternal,
-              pageName: 'Main Dashboard',
-              number: '',
-              userID: data[1]?.id,
-              customerID: data[1]?.customers[0],
-              industryKey: data[1]?.industryKey,
-            })
-          );
-          pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
-
-          if(sendAnalyticsDataHome) {
-            if (hasAccess) {
-              pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
-              setSendAnalyticsDataHome(false);
-            } else {
-              pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
-              setSendAnalyticsDataHome(false);
-            }
-          }
-      });
+    if (hasLocalStorageData(SORT_LOCAL_STORAGE_KEY)) {
+      hasSortChanged.current = getLocalStorageData(SORT_LOCAL_STORAGE_KEY);
     }
+    getSessionInfo().then((data) => {
+      setUserData(data[1]);
+      if(isGTMReady) {
+        pushDataLayerGoogle(
+          getPageReloadAnalyticsGoogle({
+            country: data[1]?.country,
+            internalTraffic: data[1]?.isInternal,
+            pageName: 'Main Dashboard',
+            number: '',
+            userID: data[1]?.id,
+            customerID: data[1]?.customers[0],
+            industryKey: data[1]?.industryKey,
+          })
+        );
+        pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
+
+        if(sendAnalyticsDataHome) {
+          if (hasAccess) {
+            pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
+            setSendAnalyticsDataHome(false);
+          } else {
+            pushDataLayerGoogle(getHomeAnalyticsGoogle('No Rights'));
+            setSendAnalyticsDataHome(false);
+          }
+        }
+      }
+    });
   }, [isGTMReady]);
 
   const customerNumber = userData?.activeCustomer?.customerNumber;
