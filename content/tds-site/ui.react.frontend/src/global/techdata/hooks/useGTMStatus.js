@@ -16,7 +16,7 @@ function subscribe(callback) {
 }
 
 export const useGTMStatus = () => {
-    const isGTMReady = useSyncExternalStore(subscribe, () => { return window.td?.gtm?.isLoaded() })
+    const isGTMReady = useSyncExternalStore(subscribe, () => { return !!window.td?.gtm?.push })
 
     return { isGTMReady }
 }
