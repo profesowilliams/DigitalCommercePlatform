@@ -82,53 +82,14 @@ public class PageIntouchImpl extends PageImpl {
     public String getIntouchJSScriptsData() {
         IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
         String intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), addSalesLoginToUrl(intouchJSAPIUrl));
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), intouchJSAPIUrl);
         return intouchService.fetchScriptsData(intouchRequest);
     }
 
     public String getIntouchGTMScriptsData() {
         IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
         String intouchGTMAPIUrl = intouchConfiguration.gtmAPIUrl();
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.GTM_REQUEST.getId(), addSalesLoginToUrl(intouchGTMAPIUrl));
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.GTM_REQUEST.getId(), intouchGTMAPIUrl);
         return intouchService.fetchScriptsData(intouchRequest);
-    }
-
-    private String addSalesLoginToUrl(String url) {
-        String salesLogin = getSalesLogin();
-
-        if(!"".equals(salesLogin)) {
-            url = url.replace("/MVC/", "/MVC/" + salesLogin + "/");
-        }
-
-        return url;
-    }
-
-    public String getSalesLogin() {
-        try {
-            String queryString = request.getQueryString();       
-            List<String> salesLogin = splitQuery(queryString).get("saleslogin");
-            return salesLogin != null ? salesLogin.get(0) : "";
-        } 
-        catch (UnsupportedEncodingException ex) {
-        }
-
-        return "";
-    }
-    
-    private static Map<String, List<String>> splitQuery(String query) throws UnsupportedEncodingException {
-        final Map<String, List<String>> query_pairs = new LinkedHashMap<String, List<String>>();
-        if(query == null) return query_pairs;
-        
-        final String[] pairs = query.split("&");
-        for (String pair : pairs) {
-            final int idx = pair.indexOf("=");
-            final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
-            if (!query_pairs.containsKey(key)) {
-                query_pairs.put(key.toLowerCase(), new LinkedList<String>());
-            }
-            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
-            query_pairs.get(key.toLowerCase()).add(value);
-        }
-        return query_pairs;
     }
 }
