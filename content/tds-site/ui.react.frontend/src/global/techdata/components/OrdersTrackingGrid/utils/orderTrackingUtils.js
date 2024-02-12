@@ -147,7 +147,13 @@ export async function fetchData(config) {
   } else if (defaultSearchDateRange) {
     addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
-
+  const dateFilters = Object.entries(filtersRefs?.current).filter(
+    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
+  );
+  if (dateFilters.length !== 0) {
+    requestUrl.searchParams.delete('createdFrom');
+    requestUrl.searchParams.delete('createdTo');
+  }
   Object.keys(filtersRefs.current).map((filter) => {
     if (!['status', 'type'].includes(filter)) {
       const filterValue = filtersRefs.current[filter];
@@ -200,24 +206,17 @@ export async function fetchData(config) {
   if (!isSameFilter) {
     params.PageNumber = 1;
   }
-  const dateFilters = Object.entries(filtersRefs?.current).filter(
-    (entry) => filtersDateGroup.includes(entry[0]) && Boolean(entry[1])
-  );
   if (
     dateFilters.length === 0 &&
     (filtersRefs.current.type || filtersRefs.current.status)
   ) {
     addDefaultDateRangeToUrl(requestUrl, setDefaultSearchDateRange(90));
-  }else if(dateFilters.length !== 0){
-    requestUrl.searchParams.delete('createdFrom');
-    requestUrl.searchParams.delete('createdTo');
   }
 
   const filtersStatusAndType =
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
 
   const filterUrl = requestUrl.href + filtersStatusAndType;
-
   previousSortChanged.current = hasSortChanged.current;
   firstAPICall.current = false;
 

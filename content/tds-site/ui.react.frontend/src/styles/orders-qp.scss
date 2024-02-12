@@ -8,6 +8,7 @@
   display: grid;
   grid-template-columns: auto 275px;
   grid-gap: 16px;
+  grid-row-gap: 5px;
   font-size: 14px;
   padding: 18px 25px;
   grid-template-rows: 16px;
@@ -19,8 +20,9 @@
 
 .acknowledgement-card {
   display: grid;
-  grid-template-columns: auto 175px;
+  grid-template-columns: auto 150px;
   grid-gap: 16px;
+  grid-row-gap: 5px;
   font-size: 14px;
   padding: 18px 25px;
   grid-template-rows: auto;
@@ -137,7 +139,7 @@
       &__title {
         font-weight: 700;
         margin-bottom: 19px;
-        font-size: 16px;
+        font-size: 14px;
       }
       &__contentGrid {
         display: grid;

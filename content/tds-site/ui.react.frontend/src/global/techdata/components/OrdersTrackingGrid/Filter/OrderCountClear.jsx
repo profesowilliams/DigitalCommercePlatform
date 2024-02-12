@@ -30,7 +30,7 @@ const OrderCountClear = ({ onQueryChanged, children, filtersRefs }) => {
     <div className={'count-clear tag_dark_teal'}>
       <div className={'filter-count-wrapper'}>{children}</div>
       <span className="filter-clear-button" onClick={onClear}>
-        <FilterClearIcon />
+        <FilterClearIcon className="svg-clear-filter" />
       </span>
     </div>
   );

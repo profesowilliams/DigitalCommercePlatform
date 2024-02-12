@@ -78,7 +78,7 @@ const OrderTrackingDetailHeader = ({
     content.status !== 'Completed' &&
     content.orderEditable;
   const areSerialNumbersAvailable = content.serialsAny === true;
-  const areXMLMessageAvailable = content.xmlAvailable;
+  const areXMLMessageAvailable = content?.xmlAvailable === true;
   const isModifiable = hasOrderModificationRights && orderEditable;
   const id = content.orderNumber;
   const poNumber = content?.customerPO;
@@ -135,7 +135,7 @@ const OrderTrackingDetailHeader = ({
   };
 
   const triggerXMLMessage = async () => {
-    const url = `${componentProps.uiCommerceServiceDomain}/v3/ITOrderXML/${id}`;
+    const url = `${componentProps.uiCommerceServiceDomain}/v3/Order/ITOrderXML/${id}`;
     await usGet(url)
       .then((response) => {
         if (response?.data?.status === '200') {
@@ -180,12 +180,15 @@ const OrderTrackingDetailHeader = ({
       label: labels?.exportSerialNumbers,
       onClick: triggerExportFlyout,
     },
-    {
-      condition: areXMLMessageAvailable,
-      label: labels?.xmlMessageLabel,
-      onClick: triggerXMLMessage,
-    },
   ];
+
+  const XMLelement = {
+    condition: true,
+    label: labels?.xmlMessageLabel,
+    onClick: triggerXMLMessage,
+  }
+
+  areXMLMessageAvailable && menuActionsItems.push(XMLelement);
 
   const createBackUrl = () => {
     const backParams = new URLSearchParams();

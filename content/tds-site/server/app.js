@@ -6218,9 +6218,11 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
       status: "REJECTED",
       statusText: "Rejected",
       serialsAny: false,
+      xmlAvailable: true,
       invoices: [],
       deliveryNotes: [],
       orderEditable: true,
+
     },
     error: {
       code: 0,
@@ -6397,6 +6399,7 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
               isShipment: false,
               invoices: [],
               serialsAny: false,
+              xmlAvailable: true,
             },
           ],
         },
@@ -6423,6 +6426,7 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
               isShipment: false,
               invoices: [],
               serialsAny: false,
+              xmlAvailable: true,
             },
           ],
         },
@@ -6581,7 +6585,7 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
     return res.status(200).json(response);
   }, 200);
 });
-app.get("/ui-commerce/v3/ITOrderXML/:id?", (req, res) => {
+app.get("/ui-commerce/v3/Order/ITOrderXML/:id?", (req, res) => {
   const response = {
     content: "ITOrderXML TEST MESSAGE",
     status: "200",
@@ -6619,6 +6623,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
               isShipment: false,
               invoices: [],
               serialsAny: false,
+              xmlAvailable: true,
             },
           ],
         },
@@ -6645,6 +6650,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
               isShipment: false,
               invoices: [],
               serialsAny: false,
+              xmlAvailable: true,
             },
           ],
         },
