@@ -75,21 +75,21 @@ public class PageIntouchImpl extends PageImpl {
     @PostConstruct
     protected void initModel() {
         LOG.debug("Inside PageImpl Model");
-
-        // to avoid Dispatcher cache for intouch pages (otherwise saleslogin is shared between different users)
-        // maybe we can move salesLogin (and intouch JS files - which contains url + saleslogin) somewhere and enable cache again?
-        String salesLogin = getSalesLogin();
-        if(!"".equals(salesLogin)) {
-            response.setHeader("Dispatcher", "no-cache");
-            // its used only as a information for developers because Dispatcher header is removed from response by Dispatcher itself
-            response.setHeader("X-Dispatcher", "no-cache"); 
-        }
+        //response.setHeader("Dispatcher", "no-cache");
+        //response.setHeader("X-Dispatcher", "no-cache"); 
     }
 
     public String getIntouchJSScriptsData() {
         IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
         String intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), addSalesLoginToUrl(intouchJSAPIUrl), "UK", "en-US");
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), addSalesLoginToUrl(intouchJSAPIUrl));
+        return intouchService.fetchScriptsData(intouchRequest);
+    }
+
+    public String getIntouchGTMScriptsData() {
+        IntouchConfiguration intouchConfiguration = currentPage.adaptTo(ConfigurationBuilder.class).as(IntouchConfiguration.class);
+        String intouchGTMAPIUrl = intouchConfiguration.gtmAPIUrl();
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.GTM_REQUEST.getId(), addSalesLoginToUrl(intouchGTMAPIUrl));
         return intouchService.fetchScriptsData(intouchRequest);
     }
 

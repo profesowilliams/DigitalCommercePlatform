@@ -263,6 +263,8 @@ public class CaConfigReader {
 
     private String intouchJSAPIUrl;
 
+    private String intouchGTMAPIUrl;
+
     private String intouchHeaderAPIUrl;
 
     private String intouchFooterAPIUrl;
@@ -386,6 +388,7 @@ public class CaConfigReader {
         if(intouchConfiguration != null) {
             intouchCSSAPIUrl = intouchConfiguration.cssAPIUrl();
             intouchJSAPIUrl = intouchConfiguration.jsAPIUrl();
+            intouchGTMAPIUrl = intouchConfiguration.gtmAPIUrl();
             intouchHeaderAPIUrl = intouchConfiguration.headerAPIUrl();
             intouchFooterAPIUrl = intouchConfiguration.footerAPIUrl();
             intouchUserCheckAPIUrl = intouchConfiguration.userCheckAPIUrl();
@@ -809,12 +812,17 @@ public class CaConfigReader {
     public String getGtmBodyJSScript() { return gtmBodyJSScript; }
 
     public String getIntouchCSSScriptsData() {
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl, "UK", "en-US");
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.CSS_REQUEST.getId(), intouchCSSAPIUrl);
         return intouchService.fetchScriptsData(intouchRequest);
     }
 
     public String getIntouchJSScriptsData() {
-        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), intouchJSAPIUrl, "UK", "en-US");
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.JS_REQUEST.getId(), intouchJSAPIUrl);
+        return intouchService.fetchScriptsData(intouchRequest);
+    }
+
+    public String getIntouchGTMScriptsData() {
+        IntouchRequest intouchRequest = new IntouchRequest(IntouchRequestType.GTM_REQUEST.getId(), intouchGTMAPIUrl);
         return intouchService.fetchScriptsData(intouchRequest);
     }
 
@@ -827,6 +835,8 @@ public class CaConfigReader {
     public String getIntouchCSSAPIUrl() { return intouchCSSAPIUrl; }
 
     public String getIntouchJSAPIUrl() { return intouchJSAPIUrl; }
+
+    public String getIntouchGTMAPIUrl() { return intouchGTMAPIUrl; }
 
     public String getEcommerceAuthenticationLoginEndpoint() { return ecommerceAuthenticationLoginEndpoint; }
 

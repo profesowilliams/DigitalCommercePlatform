@@ -18,10 +18,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static acscommons.com.google.common.net.HttpHeaders.CONTENT_TYPE;
 import static com.tdscore.core.services.IntouchRequestType.CSS_REQUEST;
 import static com.tdscore.core.services.IntouchRequestType.JS_REQUEST;
-import static org.apache.http.entity.ContentType.APPLICATION_JSON;
+import static com.tdscore.core.services.IntouchRequestType.GTM_REQUEST;
 
 @Component(service = IntouchRetrieveDataService.class, immediate = true)
 public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataService {
@@ -35,7 +34,8 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
     @Override
     public String fetchScriptsData(IntouchRequest intouchRequest) {
         if(intouchRequest.getRequestId() == CSS_REQUEST.getId() ||
-           intouchRequest.getRequestId() == JS_REQUEST.getId()) {
+           intouchRequest.getRequestId() == JS_REQUEST.getId() ||
+           intouchRequest.getRequestId() == GTM_REQUEST.getId()) {
             CloseableHttpClient httpClient =
                     httpUtil.buildHttpClient(httpClientBuilderFactory, CONNECTION_TIMEOUT_IN_MILLIS, SOCKET_TIMEOUT_IN_MILLIS);
             try {
@@ -49,9 +49,6 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
 
     private String callAPI(CloseableHttpClient httpClient, IntouchRequest request) throws IOException {
         HttpGet httpGet = new HttpGet(request.getApiUrl());
-        httpGet.setHeader(CONTENT_TYPE, APPLICATION_JSON.getMimeType());
-        httpGet.setHeader(ACCEPT_LANGUAGE_LABEL, request.getAcceptLanguage());
-        httpGet.setHeader(SITE_LABEL, request.getSite());
         if(httpClient != null) {
             CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
             return EntityUtils.toString(httpResponse.getEntity());
@@ -61,8 +58,5 @@ public class IntouchRetrieveDataServiceImpl implements IntouchRetrieveDataServic
 
     public static final int CONNECTION_TIMEOUT_IN_MILLIS = 30000;
     public static final int SOCKET_TIMEOUT_IN_MILLIS = 30000;
-    public static final String ACCEPT_LANGUAGE_LABEL = "Accept-Language";
-    public static final String SITE_LABEL = "Site";
     private static final Logger LOGGER = LoggerFactory.getLogger(IntouchRetrieveDataServiceImpl.class);
-
 }

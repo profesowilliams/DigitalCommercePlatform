@@ -14,6 +14,9 @@ public @interface IntouchConfiguration {
     @Property(label = "JS API Url", description = "API url that provides the JS urls.")
     String jsAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header/JS";
 
+    @Property(label = "GTM API Url", description = "API url that provides the GTM urls.")
+    String gtmAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header/GoogleTagManager";
+
     @Property(label = "Header API Url", description = "API url that provides the Header HTML Fragment.")
     String headerAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/Header";
 

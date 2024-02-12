@@ -53,12 +53,6 @@
             }
         });
     </script>
-
-    <sly data-sly-use.configData="com.tdscore.core.models.CaConfigReader">
-        <!-- Google Tag Manager in Body -->
-        ${configData.gtmBodyJSScript @ context = 'scriptComment'}
-        <!-- End Google Tag Manager in Body -->
-    </sly>
   
     <sly data-sly-test="${!(wcmmode.edit || wcmmode.preview)}">
       <style>

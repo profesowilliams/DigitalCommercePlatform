@@ -55,7 +55,7 @@ class IntouchRetrieveDataServiceImplTest {
     @Test
     void fetchScriptsDataTest() throws IOException {
         IntouchRequest intouchRequest =
-                new IntouchRequest(1234567, API_URL, SITE, ACCEPT_LANGUAGE_EN_US);
+                new IntouchRequest(1234567, API_URL);
         Mockito.lenient().when(httpUtil.buildHttpClient(httpClientBuilderFactory,
                 CONNECTION_TIMEOUT_IN_MILLIS, SOCKET_TIMEOUT_IN_MILLIS)).thenReturn(httpClient);
         Mockito.lenient().when(httpClient.execute(any())).thenReturn(httpResponse);
@@ -65,8 +65,6 @@ class IntouchRetrieveDataServiceImplTest {
     }
 
     final static String API_URL = "test-api-url";
-    final static String SITE = "uk";
-    final static String ACCEPT_LANGUAGE_EN_US = "en-us";
     final static String RESPONSE_JSON_STRING = "{\"name\":\"John\", \"age\":30, \"car\":null}";
     private static final Logger LOGGER = LoggerFactory.getLogger(IntouchRetrieveDataServiceImplTest.class);
 

@@ -34,7 +34,7 @@ public class IntouchTestServlet extends SlingSafeMethodsServlet {
             type = IntouchRequestType.JS_REQUEST.getId();
         }
 
-        IntouchRequest intouchRequest = new IntouchRequest(type, apiUrl, "UK", "en-US");
+        IntouchRequest intouchRequest = new IntouchRequest(type, apiUrl);
         String data = intouchRetrieveDataService.fetchScriptsData(intouchRequest);
         LOGGER.info("Data returned {} ", data);
     }
