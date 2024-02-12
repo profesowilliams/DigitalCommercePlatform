@@ -55,6 +55,7 @@ import useGet from '../../hooks/useGet';
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -92,7 +93,7 @@ function OrdersTrackingGrid(props) {
     { resetCallback, shouldGoToFirstPage, isOnSearchAction }
   );
   const userData = useOrderTrackingStore((st) => st.userData);
-  const { isGTMReady } = useGTMStatus()
+  const { isGTMReady } = useGTMStatus();
   const hasRights = (entitlement) =>
     userData?.roleList?.some((role) => role.entitlement === entitlement);
 
@@ -340,7 +341,7 @@ function OrdersTrackingGrid(props) {
     }
     getSessionInfo().then((data) => {
       setUserData(data[1]);
-      if(isGTMReady) {
+      if (isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
             country: data[1]?.country,
@@ -354,7 +355,7 @@ function OrdersTrackingGrid(props) {
         );
         pushDataLayerGoogle(getMainDashboardAnalyticsGoogle());
 
-        if(sendAnalyticsDataHome) {
+        if (sendAnalyticsDataHome) {
           if (hasAccess) {
             pushDataLayerGoogle(getHomeAnalyticsGoogle('Rights'));
             setSendAnalyticsDataHome(false);
@@ -395,7 +396,6 @@ function OrdersTrackingGrid(props) {
   }, [userData]);
 
   const authorizedContent = () => {
-
     return hasAccess ? (
       <div className="cmp-order-tracking-grid">
         <Criteria config={gridConfig} />
@@ -449,7 +449,11 @@ function OrdersTrackingGrid(props) {
             />
           )}
           onCellMouseOver={(e) =>
-            cellMouseOver(e, setToolTipData, gridConfig?.shipToTooltipTemplate)
+            cellMouseOver(
+              e,
+              setToolTipData,
+              getDictionaryValueOrKey(gridConfig?.shipToTooltipTemplate)
+            )
           }
           onCellMouseOut={() => cellMouseOut(setToolTipData)}
         />
@@ -463,7 +467,7 @@ function OrdersTrackingGrid(props) {
         />
       </div>
     ) : (
-        <AccessPermissionsNeeded noAccessProps={noAccessProps} />
+      <AccessPermissionsNeeded noAccessProps={noAccessProps} />
     );
   };
 
