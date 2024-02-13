@@ -4,7 +4,7 @@
  * @class cmp-order-tracking-grid-details
  * @classdesc Styles for the order tracking grid details component.
  */
- %clickable-action {
+%clickable-action {
   display: flex;
   gap: rem(8px);
   align-items: center;
@@ -15,14 +15,14 @@
   }
 }
 
-  .cmp-order-preview .cmp-grid.ag-theme-alpine {
-    & .ag-cell-value {
-      width: 100%
-    }
-    & .ag-cell-wrapper{
-      width: inherit;
-    }
+.cmp-order-preview .cmp-grid.ag-theme-alpine {
+  & .ag-cell-value {
+    width: 100%;
   }
+  & .ag-cell-wrapper {
+    width: inherit;
+  }
+}
 
 .cmp-order-tracking-grid-details {
   /* Styles for the base grid */
@@ -33,7 +33,7 @@
           padding-left: 4px;
         }
 
-        &[col-id="priceFormatted"] {
+        &[col-id='priceFormatted'] {
           .ag-header-cell-label {
             padding: 0px 12px 0px 0px;
             text-align: right;
@@ -50,12 +50,11 @@
           }
         }
       }
-    
     }
   }
   * {
-   & .ag-cell-value {
-      width: 100%
+    & .ag-cell-value {
+      width: 100%;
     }
   }
 
@@ -125,7 +124,7 @@
       }
     }
   }
-  
+
   &__splitLine {
     &-column {
       display: flex;
@@ -139,7 +138,7 @@
         .actions-dropdown.actions-dropdown.actions-dropdown {
           top: 60px;
         }
-      } 
+      }
     }
     &__separateLine {
       display: flex;
@@ -168,9 +167,10 @@
     }
     &--centerAlign {
       text-align: center;
+      vertical-align: baseline;
     }
     &--centerAlignActionButton {
-      place-items:  center;
+      place-items: center;
     }
   }
 }

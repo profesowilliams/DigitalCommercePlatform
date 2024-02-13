@@ -1677,6 +1677,24 @@
                                     </columns>
                                 </items>
                             </results>
+                            <orderStatuses
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Error Messages"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+								<items jcr:primaryType="nt:unstructured">
+									<column
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/container">
+										<items jcr:primaryType="nt:unstructured">
+                                            <statusesModal
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/include"
+                                                path="tds-core/components/orderstrackinggrid/v1/orderstrackinggrid/statuses-modal"/>
+                                        </items>
+									</column>
+								</items>
+							</orderStatuses>
                         </items>
                     </tabs>
                 </items>

@@ -23,6 +23,7 @@ use(["../common/utils.js"], function (utils) {
   const paginationLabels = {};
   const searchLabels = {};
   const filterLabels = {};
+  const statusesLabels = {};
 
   if (properties) {
     const labelsList = [
@@ -272,6 +273,7 @@ use(["../common/utils.js"], function (utils) {
 
     jsonObject["uiProactiveServiceDomain"] =
       this.serviceData.uiServiceDomain + `/ui-proactive`;
+
     const endpoints = [
       "orderModifyEndpoint",
       "orderModifyChangeEndpoint",
@@ -381,45 +383,40 @@ use(["../common/utils.js"], function (utils) {
     }
 
     // No Access Screen
-    if (properties["noAccessTitle"]) {
-      noAccessProps.noAccessTitle = properties["noAccessTitle"];
-    }
-    if (properties["noAccessMessage"]) {
-      noAccessProps.noAccessMessage = properties["noAccessMessage"];
-    }
-    if (properties["noAccessBack"]) {
-      noAccessProps.noAccessBack = properties["noAccessBack"];
-    }
-    if (noAccessProps != null) {
+    const noAccessProperties = [
+      "noAccessTitle",
+      "noAccessMessage",
+      "noAccessBack",
+    ];
+
+    noAccessProperties.forEach((property) => {
+      if (properties[property]) {
+        noAccessProps[property] = properties[property];
+      }
+    });
+
+    if (Object.keys(noAccessProps).length > 0) {
       jsonObject["noAccessProps"] = noAccessProps;
     }
 
     // Analytics Categories
-    if (properties["sortAnalyticsCategories"]) {
-      analyticsCategories.sort = properties["sortAnalyticsCategories"];
-    }
-    if (properties["searchAnalyticsCategories"]) {
-      analyticsCategories.search = properties["searchAnalyticsCategories"];
-    }
-    if (properties["filterAnalyticsCategories"]) {
-      analyticsCategories.filter = properties["filterAnalyticsCategories"];
-    }
-    if (properties["exportAnalyticsCategories"]) {
-      analyticsCategories.export = properties["exportAnalyticsCategories"];
-    }
-    if (properties["reportAnalyticsCategories"]) {
-      analyticsCategories.report = properties["reportAnalyticsCategories"];
-    }
-    if (properties["paginationAnalyticsCategories"]) {
-      analyticsCategories.pagination =
-        properties["paginationAnalyticsCategories"];
-    }
-    if (analyticsCategories != null) {
-      jsonObject["analyticsCategories"] = analyticsCategories;
-    }
+    const analyticsProperties = {
+      sortAnalyticsCategories: "sort",
+      searchAnalyticsCategories: "search",
+      filterAnalyticsCategories: "filter",
+      exportAnalyticsCategories: "export",
+      reportAnalyticsCategories: "report",
+      paginationAnalyticsCategories: "pagination",
+    };
 
-    if (properties["reportPillLabel"]) {
-      jsonObject["reportPillLabel"] = properties["reportPillLabel"];
+    Object.entries(analyticsProperties).forEach(([property, key]) => {
+      if (properties[property]) {
+        analyticsCategories[key] = properties[property];
+      }
+    });
+
+    if (Object.keys(analyticsCategories).length > 0) {
+      jsonObject["analyticsCategories"] = analyticsCategories;
     }
 
     //Pagination Labels
@@ -451,19 +448,18 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["searchLabels"] = searchLabels;
     }
 
-    if (properties["searchTitleLabel"]) {
-      jsonObject["searchTitleLabel"] = properties["searchTitleLabel"];
-    }
-    if (properties["searchEnterLabel"]) {
-      jsonObject["searchEnterLabel"] = properties["searchEnterLabel"];
-    }
-    if (properties["searchSorryNoRowsToDisplayLabel"]) {
-      jsonObject["searchSorryNoRowsToDisplayLabel"] =
-        properties["searchSorryNoRowsToDisplayLabel"];
-    }
-    if (properties["searchByLabel"]) {
-      jsonObject["searchByLabel"] = properties["searchByLabel"];
-    }
+    const searchProperties = [
+      "searchTitleLabel",
+      "searchEnterLabel",
+      "searchSorryNoRowsToDisplayLabel",
+      "searchByLabel",
+    ];
+
+    searchProperties.forEach((property) => {
+      if (properties[property]) {
+        jsonObject[property] = properties[property];
+      }
+    });
 
     let searchOptionsValues = utils.getDataFromMultifield(
       resourceResolver,
@@ -605,50 +601,25 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["filterLabels"] = filterLabels;
     }
 
-    if (properties["quoteIdLabel"]) {
-      productGrid["quoteIdLabel"] = properties["quoteIdLabel"];
-    }
+    const productGridProperties = [
+      "quoteIdLabel",
+      "refNoLabel",
+      "expiryDateLabel",
+      "downloadPDFLabel",
+      "downloadXLSLabel",
+      "showDownloadPDFButton",
+      "showDownloadXLSButton",
+      "showSeeDetailsButton",
+      "seeDetailsLabel",
+    ];
 
-    if (properties["refNoLabel"]) {
-      productGrid["refNoLabel"] = properties["refNoLabel"];
-    }
+    productGridProperties.map((key) => {
+      if (properties[key]) {
+        productGrid[key] = properties[key];
+      }
+    });
 
-    if (properties["expiryDateLabel"]) {
-      productGrid["expiryDateLabel"] = properties["expiryDateLabel"];
-    }
-
-    if (properties["downloadPDFLabel"]) {
-      productGrid["downloadPDFLabel"] = properties["downloadPDFLabel"];
-    }
-
-    if (properties["downloadXLSLabel"]) {
-      productGrid["downloadXLSLabel"] = properties["downloadXLSLabel"];
-    }
-
-    if (properties["showDownloadPDFButton"]) {
-      productGrid["showDownloadPDFButton"] =
-        properties["showDownloadPDFButton"];
-    }
-
-    if (properties["showDownloadXLSButton"]) {
-      productGrid["showDownloadXLSButton"] =
-        properties["showDownloadXLSButton"];
-    }
-
-    if (properties["showDownloadXLSButton"]) {
-      productGrid["showDownloadXLSButton"] =
-        properties["showDownloadXLSButton"];
-    }
-
-    if (properties["showSeeDetailsButton"]) {
-      productGrid["showSeeDetailsButton"] = properties["showSeeDetailsButton"];
-    }
-
-    if (properties["seeDetailsLabel"]) {
-      productGrid["seeDetailsLabel"] = properties["seeDetailsLabel"];
-    }
-
-    if (productGrid != null) {
+    if (Object.keys(productGrid).length > 0) {
       jsonObject["productGrid"] = productGrid;
     }
 
@@ -696,33 +667,87 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["hideExportOption"] = properties["hideExportOption"];
     }
 
-    if (properties["noResultsTitle"]) {
-      noResultsValues.noResultsTitle = properties["noResultsTitle"];
-    }
+    const noResultsProperties = {
+      noResultsTitle: "noResultsTitle",
+      noResultsDescription: "noResultsDescription",
+      noResultsImageFileReference: "noResultsImage",
+      noDataTitle: "noDataTitle",
+      noDataDescription: "noDataDescription",
+      noDataImageFileReference: "noDataImage",
+    };
 
-    if (properties["noResultsDescription"]) {
-      noResultsValues.noResultsDescription = properties["noResultsDescription"];
-    }
+    Object.entries(noResultsProperties).forEach(([property, key]) => {
+      if (properties[property]) {
+        noResultsValues[key] = properties[property];
+      }
+    });
 
-    if (properties["noResultsImageFileReference"]) {
-      noResultsValues.noResultsImage =
-        properties["noResultsImageFileReference"];
-    }
-
-    if (properties["noDataTitle"]) {
-      noResultsValues.noDataTitle = properties["noDataTitle"];
-    }
-
-    if (properties["noDataDescription"]) {
-      noResultsValues.noDataDescription = properties["noDataDescription"];
-    }
-
-    if (properties["noDataImageFileReference"]) {
-      noResultsValues.noDataImage = properties["noDataImageFileReference"];
-    }
-
-    if (noResultsValues != null) {
+    if (Object.keys(noResultsValues).length > 0) {
       jsonObject["searchResultsError"] = noResultsValues;
+    }
+
+    //Statuses Modal
+
+    const statusLabelsKeys = ["statusesTitle", "statusesClose"];
+    const statusesList = [
+      {
+        title: "statusTitleAcknowledged",
+        explanation: "statusExplanationAcknowledged",
+      },
+      {
+        title: "statusTitleEstimated",
+        explanation: "statusExplanationEstimated",
+      },
+      {
+        title: "statusTitleConfirmed",
+        explanation: "statusExplanationConfirmed",
+      },
+      {
+        title: "statusTitleAvailable",
+        explanation: "statusExplanationAvailable",
+      },
+      { title: "statusTitleShipped", explanation: "statusExplanationShipped" },
+      {
+        title: "statusTitleConstraint",
+        explanation: "statusExplanationConstraint",
+      },
+      {
+        title: "statusTitleExpedited",
+        explanation: "statusExplanationExpedited",
+      },
+      { title: "statusTitleTransit", explanation: "statusExplanationTransit" },
+      {
+        title: "statusTitleInvestigation",
+        explanation: "statusExplanationInvestigation",
+      },
+      { title: "statusTitleDamaged", explanation: "statusExplanationDamaged" },
+      {
+        title: "statusTitleLateDelivery",
+        explanation: "statusExplanationLateDelivery",
+      },
+      {
+        title: "statusTitleDelivered",
+        explanation: "statusExplanationDelivered",
+      },
+    ];
+
+    statusLabelsKeys.map((key) => {
+      if (properties[key]) {
+        statusesLabels[key] = properties[key];
+      }
+    });
+
+    statusesList.map((el) => {
+      if (properties[el.title] && properties[el.explanation]) {
+        el.title = properties[el.title];
+        el.explanation = properties[el.explanation];
+      }
+    });
+
+    statusesLabels['statusesList'] = statusesList;
+
+    if (Object.keys(statusesLabels).length > 0) {
+      jsonObject["statusesLabels"] = statusesLabels;
     }
   }
 

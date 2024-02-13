@@ -205,10 +205,10 @@
     overflow-y: overlay !important;
   }
   .ag-header-cell.ag-focus-managed {
-      .ag-react-container {
-        align-self: flex-end;
-        margin-bottom: 4px;
-      }
+    .ag-react-container {
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
   }
   .ag-row.ag-row-level-0.ag-row-group.ag-row-position-absolute.ag-after-created.ag-row-group-expanded {
     border-bottom: 1px solid $td-neutral-gray;
@@ -244,13 +244,17 @@
 .not-shipped-header-end {
   display: flex;
 
-  &__qty-column{
+  &__qty-column {
     width: 77px;
     background-color: $td-neutral-gray;
     align-self: flex-end;
   }
   &__delivery-column {
     background-color: $td-neutral-gray;
+    svg {
+      margin-left: 5px;
+      cursor: pointer;
+    }
   }
 }
 .order-line-details {
@@ -447,7 +451,7 @@
         flex-direction: column;
         justify-content: center;
         min-height: 73px;
-        height:auto;
+        height: auto;
         padding-top: 12px;
         padding-bottom: 12px;
         border-bottom: 1px solid $brand-text-lightgray;
@@ -455,7 +459,7 @@
       &__separateLineText {
         line-height: 24px;
         margin: 0;
-        word-wrap:break-word;
+        word-wrap: break-word;
         white-space: normal;
       }
       &__text {
@@ -466,10 +470,10 @@
         display: flex;
       }
       &__qty-column {
-        width: 90px
+        width: 90px;
       }
       &__delivery-column {
-        width: 234px
+        width: 234px;
       }
     }
     &__description {
@@ -505,8 +509,9 @@
     min-height: 394px;
     height: auto;
     position: absolute;
-    top: 30%;
-    left: 30%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: $brand-white;
     padding: 24px;
   }
@@ -611,5 +616,29 @@
       padding: 18px;
       float: right;
     }
+  }
+}
+
+.order-modal__wrapper.order-status-modal {
+  .order-modal__wrapper__icon-close {
+    float: right;
+    svg {
+      cursor: pointer;
+    }
+  }
+  .order-modal__header {
+    position: relative;
+    top: unset;
+    font-family: $font-family-arial;
+  }
+  ul {
+    list-style: initial;
+    padding: 18px;
+    font-family: $font-family-arial;
+    line-height: 24px;
+  }
+  .order-modal__secondary-button {
+    font-size: 16px !important;
+    float: right;
   }
 }

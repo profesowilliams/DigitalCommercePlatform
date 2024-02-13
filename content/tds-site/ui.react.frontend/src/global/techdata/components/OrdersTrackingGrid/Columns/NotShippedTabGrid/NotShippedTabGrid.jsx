@@ -11,6 +11,8 @@ import { useOrderTrackingStore } from '../../store/OrderTrackingStore';
 import OrderReleaseModal from '../../Modals/OrderReleaseModal';
 import { usPost } from '../../../../../../utils/api';
 import OrderReleaseAlertModal from '../../Modals/OrderReleaseAlertModal';
+import OrderStatusModal from '../../Modals/OrderStatusModal';
+import { GreenInfoIcon } from '../../../../../../fluentIcons/FluentIcons';
 
 function NotShippedTabGrid({
   data,
@@ -40,6 +42,7 @@ function NotShippedTabGrid({
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
+  const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -56,6 +59,7 @@ function NotShippedTabGrid({
       </div>
       <div className="not-shipped-header-end__delivery-column">
         {getDictionaryValueOrKey(deliveryEstimate)}
+        <GreenInfoIcon onClick={() => setOpenStatusesModal(true)} />
       </div>
     </div>
   );
@@ -201,6 +205,13 @@ function NotShippedTabGrid({
         }}
         orderLineDetails={config?.orderLineDetails}
         releaseSuccess={releaseSuccess}
+      />
+      <OrderStatusModal
+        open={openStatusesModal}
+        handleClose={() => {
+          setOpenStatusesModal(false);
+        }}
+        labels={config?.statusesLabels}
       />
     </section>
   );
