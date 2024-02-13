@@ -77,7 +77,7 @@ function SoldToCard({ shipTo = {}, config }) {
       <div className="card-container__title">
         {getDictionaryValueOrKey(config?.soldToLabels?.soldTo)}
       </div>
-      <div>
+      <div className="shipto-card">
         {template ? (
           renderTemplate(template)
         ) : (
