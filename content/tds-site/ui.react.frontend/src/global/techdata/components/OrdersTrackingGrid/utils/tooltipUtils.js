@@ -5,17 +5,17 @@ export function tooltipVal(event, aemTemplate) {
   const { name, address } = value || {};
   const { line1, line2, line3, city, state, zip, country } = address || {};
 
-  const renderedTemplate = (aemTemplate) => {
-    const replacements = {
-      '{name}': name,
-      '{address.line1}': line1,
-      '{address.line2}': line2,
-      '{address.line3}': line3,
-      '{address.city}': city,
-      '{address.state}': state,
-      '{address.zip}': zip,
-      '{address.country}': country,
-    };
+  const replacements = {
+    '{name}': name,
+    '{address.line1}': line1,
+    '{address.line2}': line2,
+    '{address.line3}': line3,
+    '{address.city}': city,
+    '{address.state}': state,
+    '{address.zip}': zip,
+    '{address.country}': country,
+  };
+  const renderTemplate = (aemTemplate) => {
     let replacedTemplate = aemTemplate;
     for (const [placeholder, val] of Object.entries(replacements)) {
       if (val !== undefined && val !== null) {
@@ -25,7 +25,11 @@ export function tooltipVal(event, aemTemplate) {
       }
     }
     const result = replacedTemplate.split('<br/>');
-    return result.map((el, idx) => <p key={idx}>{el}</p>);
+    return result.map((el, idx) => (
+      <p key={idx} className="tool-tip-text">
+        {el}
+      </p>
+    ));
   };
 
   switch (colDef.field) {
@@ -33,7 +37,7 @@ export function tooltipVal(event, aemTemplate) {
       return <div>{value && typeof value === 'string' ? value : '-'}</div>;
     case 'shipTo':
       if (value && aemTemplate) {
-        return <div>{renderedTemplate(aemTemplate)}</div>;
+        return <div>{renderTemplate(aemTemplate)}</div>;
       } else if (value && !aemTemplate) {
         return (
           <div>

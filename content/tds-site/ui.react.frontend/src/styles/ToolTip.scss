@@ -1,14 +1,21 @@
 .tool-tip {
   position: absolute;
   height: auto;
-  padding: 0 12px !important;
+  padding: 0 12px;
   border-radius: 2px;
   background-color: $tooltip-background-dark;
-  color: $brand-white !important;
+  color: $brand-white;
   font-size: 12px;
   letter-spacing: 0;
   line-height: 32px;
   text-align: left;
+}
+.tool-tip-text {
+  color: $brand-white;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 32px;
+  margin-bottom: 0;
 }
 .status-column-container {
   display: flex;
