@@ -115,7 +115,12 @@ use(["../../../common/utils.js"], function (utils) {
   }
 
   // SoldToLabels
-  const soldToLabelsList = ["soldTo", "soldToPhone", "soldToEmail"];
+  const soldToLabelsList = [
+    "soldTo",
+    "soldToPhone",
+    "soldToEmail",
+    "shipToTemplate",
+  ];
 
   properties &&
     soldToLabelsList.map((property) => {

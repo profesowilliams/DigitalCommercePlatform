@@ -75,6 +75,13 @@
                                                 fieldLabel="Ship To Email Label"
                                                 name="./soldToEmail"
                                                 required="{Boolean}true"/>
+											<shipToTemplate
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Ship To Template"
+                                                fieldLabel="Ship To Template"
+                                                name="./shipToTemplate"
+                                                required="{Boolean}true"/>
 											<orderAcknowledgement
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

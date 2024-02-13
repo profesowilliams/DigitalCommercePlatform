@@ -6190,6 +6190,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         zip: "SW10",
         country: "GB",
         phoneNumber: "01256 847777",
+        email: "johndoe@gmail.com",
       },
       reseller: {
         id: "325009",
@@ -6222,7 +6223,6 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
       invoices: [],
       deliveryNotes: [],
       orderEditable: true,
-
     },
     error: {
       code: 0,

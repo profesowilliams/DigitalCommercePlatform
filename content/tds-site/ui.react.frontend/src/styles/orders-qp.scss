@@ -1,6 +1,6 @@
 .cmp-orders-qp__config-grid {
   * {
-    font-family: Arial;
+    font-family: $font-family-arial;
   }
 }
 
@@ -136,6 +136,11 @@
       min-width: 275px;
       padding: 18px 25px;
       color: #000000;
+
+      & * {
+        font-family: $font-family-arial !important;
+      }
+
       &__title {
         font-weight: 700;
         margin-bottom: 19px;
@@ -153,10 +158,16 @@
         grid-gap: 16px;
         font-size: 14px;
       }
+      &__text {
+        font-size: 14px;
+      }
       &__bottom {
         margin-top: 19px;
         font-size: 14px;
       }
+    }
+    .card-container__bottom + .card-container__bottom {
+      margin-top: 0;
     }
     .cmp-loader-roller {
       display: flex;
@@ -178,7 +189,7 @@
 }
 .footer-container {
   * {
-    font-family: Arial;
+    font-family: $font-family-arial;
     color: $brand-black;
   }
   margin: 0 2rem;
@@ -239,7 +250,7 @@
   }
 
   * {
-    font-family: Arial;
+    font-family: $font-family-arial;
   }
   padding: 0 2rem;
 
