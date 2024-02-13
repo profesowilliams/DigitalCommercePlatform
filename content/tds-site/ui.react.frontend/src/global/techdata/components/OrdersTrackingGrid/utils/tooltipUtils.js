@@ -24,7 +24,7 @@ export function tooltipVal(event, aemTemplate) {
         replacedTemplate = replacedTemplate.replace(placeholder, '');
       }
     }
-    const result = replacedTemplate.split('</br>');
+    const result = replacedTemplate.split('<br/>');
     return result.map((el, idx) => <p key={idx}>{el}</p>);
   };
 

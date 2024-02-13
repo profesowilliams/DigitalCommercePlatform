@@ -66,7 +66,7 @@ function SoldToCard({ shipTo = {}, config }) {
         replacedTemplate = replacedTemplate.replace(placeholder, '');
       }
     }
-    const result = replacedTemplate.split('</br>');
+    const result = replacedTemplate.split('<br/>');
 
     return result.map((el, idx) => {
       return renderElement(el, idx);
