@@ -33,6 +33,7 @@ function OrdersTrackingDetailGrid({
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
+  const [response, setResponse] = useState(null);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const refreshOrderTrackingDetailApi = useStore(
     (state) => state.refreshOrderTrackingDetailApi
@@ -94,8 +95,22 @@ function OrdersTrackingDetailGrid({
     setIsLoading(false);
   };
 
+  const loadingCellRenderer = () => {
+    const rowsToZero = response?.data?.content?.items?.map((item) => {
+      if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
+        item.totalPrice = 0;
+        item.totalPriceFormatted = '0';
+        item.quantity = 0;
+        item.orderQuantity = 0;
+      }
+      return item;
+    });
+    gridRef.current?.api.setRowData(rowsToZero);
+  }
+
   const customRequestInterceptor = async () => {
     const response = await fetchData(config);
+    setResponse(response);
     let subtotalValueSum = 0;
     response?.data?.content?.items?.map((item) => {
       subtotalValueSum += parseFloat(item?.unitPrice) ?? 0;
@@ -233,6 +248,7 @@ function OrdersTrackingDetailGrid({
                 mapServiceData={mapServiceData}
                 onAfterGridInit={_onAfterGridInit}
                 onDataLoad={onDataLoad}
+                loadingCellRenderer={loadingCellRenderer}
                 rowClassRules={rowClassRules}
                 gridRef={gridRef}
                 responseError={responseError}
