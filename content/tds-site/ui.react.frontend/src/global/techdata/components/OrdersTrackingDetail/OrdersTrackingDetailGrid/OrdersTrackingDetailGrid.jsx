@@ -20,6 +20,8 @@ import {
 import { fetchData } from './utils/orderTrackingUtils';
 import useExtendGridOperations from '../../BaseGrid/Hooks/useExtendGridOperations';
 import { useStore } from '../../../../../utils/useStore';
+import { GreenInfoIcon } from '../../../../../fluentIcons/FluentIcons';
+import OrderStatusModal from '../../OrdersTrackingGrid/Modals/OrderStatusModal';
 
 function OrdersTrackingDetailGrid({
   gridProps,
@@ -31,6 +33,7 @@ function OrdersTrackingDetailGrid({
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
+  const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const refreshOrderTrackingDetailApi = useStore(
     (state) => state.refreshOrderTrackingDetailApi
   );
@@ -94,14 +97,23 @@ function OrdersTrackingDetailGrid({
   const customRequestInterceptor = async () => {
     const response = await fetchData(config);
     let subtotalValueSum = 0;
-    response?.data?.content?.items?.map(item=>{
-      subtotalValueSum+=(parseFloat(item?.unitPrice)??0)
+    response?.data?.content?.items?.map((item) => {
+      subtotalValueSum += parseFloat(item?.unitPrice) ?? 0;
     });
     setSubtotalValue(subtotalValueSum.toFixed(2));
     setResponseError(false);
     const mappedResponse = mapServiceData(response);
     return mappedResponse;
   };
+
+  const CustomStatusComponent = () => (
+    <div className="ag-cell-label-container">
+      <span className="ag-header-cell-text">
+        {getDictionaryValueOrKey(config?.itemsLabels?.lineStatus)}
+        <GreenInfoIcon onClick={() => setOpenStatusesModal(true)} />
+      </span>
+    </div>
+  );
 
   const columnDefinitionsOverride = [
     {
@@ -120,7 +132,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'status',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
+      headerComponentFramework: CustomStatusComponent,
       cellRenderer: ({ data }) => (
         <LineStatusColumn
           line={data}
@@ -235,6 +247,13 @@ function OrdersTrackingDetailGrid({
                   successSubmission: 'successSubmission',
                   failedSubmission: 'failedSubmission',
                 }}
+              />
+              <OrderStatusModal
+                open={openStatusesModal}
+                handleClose={() => {
+                  setOpenStatusesModal(false);
+                }}
+                labels={config?.statusesLabels}
               />
             </div>
           ) : (

@@ -21,7 +21,7 @@ const OrderStatusModal = ({ open, handleClose, labels }) => {
           {getDictionaryValueOrKey(statusesTitle)}
         </div>
         <ul>
-          {statusesList.map((status) => (
+          {statusesList?.map((status) => (
             <li>
               <span className="bold">
                 {getDictionaryValueOrKey(status.title)}:{' '}

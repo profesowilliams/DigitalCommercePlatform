@@ -214,6 +214,60 @@
       replacementAddNewLine: "Add new line",
       replacementPleaseTryAgain: "Please try again.",
     },
+    statusesLabels: {
+      statusesTitle: "Order status explained",
+      statusesClose: "Close",
+      statusesList: [
+        {
+          title: "Acknowledged",
+          explanation: "We have received your order."
+        },
+        {
+          title: "Estimated",
+          explanation: "We have a PO open with the supplier that will fulfill your order, but they didn't confirm the delivery date yet."
+        },
+        {
+          title: "Confirmed",
+          explanation: "This delivery date was provided by the supplier of the product."
+        },
+        {
+          title: "Available",
+          explanation: "The product is available in our TD SYNNEX warehouse, but it cannot be shipped yet. For example, we are waiting for the other products in the order."
+        },
+        {
+          title: "Shipped",
+          explanation: "The product has been shipped to its final destination."
+        },
+        {
+          title: "Constraint",
+          explanation: "There is a constraint situation, and at the moment it is uncertain when the stock will be available for your order."
+        },
+        {
+          title: "Expedited",
+          explanation: "The supplier agreed to give your order a higher priority."
+        },
+        {
+          title: "Transit",
+          explanation: "The stock that will fulfill your order are now in transit to our TD SYNNEX warehouse."
+        },
+        {
+          title: "Investigation",
+          explanation: "The delivery date was flagged by our internal quality controls. We are reviewing the delivery date with our supplier."
+        },
+        {
+          title: "Damaged",
+          explanation: "The product arrived damaged at our warehouse - or was missing during the scheduled delivery. We are looking for a solution with the supplier."
+        },
+        {
+          title: "Late Delivery",
+          explanation: "We passed the expected delivery date, and working on getting you a new confirmation from the supplier."
+        },
+        {
+          title: "Delivered",
+          explanation: "The product has been delivered at its final destination. It could still be open in the backlog for administrative reasons (e.g. a price issue being resolved)."
+        }
+      ]
+    },
   };
   renewalsGridDom.dataset.config = JSON.stringify(AEM_DATA);
 </script>

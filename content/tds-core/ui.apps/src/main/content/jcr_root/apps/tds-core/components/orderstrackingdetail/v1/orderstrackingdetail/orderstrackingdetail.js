@@ -18,6 +18,7 @@ use(["../../../common/utils.js"], function (utils) {
   const invoicesFlyout = {};
   const exportFlyout = {};
   const productReplacementFlyout = {};
+  const statusesLabels = {};
 
   jsonObject["uiServiceDomain"] = this.uiServiceDomain;
   jsonObject["uiCommerceServiceDomain"] = this.uiServiceDomain + `/ui-commerce`;
@@ -428,6 +429,76 @@ use(["../../../common/utils.js"], function (utils) {
 
   if (productReplacementFlyout != null) {
     jsonObject["productReplacementFlyout"] = productReplacementFlyout;
+  }
+
+  //Statuses Modal
+
+  const statusLabelsKeys = ["statusesTitle", "statusesClose"];
+  const statusesList = [
+    {
+      title: "statusTitleAcknowledged",
+      explanation: "statusExplanationAcknowledged",
+    },
+    {
+      title: "statusTitleEstimated",
+      explanation: "statusExplanationEstimated",
+    },
+    {
+      title: "statusTitleConfirmed",
+      explanation: "statusExplanationConfirmed",
+    },
+    {
+      title: "statusTitleAvailable",
+      explanation: "statusExplanationAvailable",
+    },
+    { title: "statusTitleShipped", explanation: "statusExplanationShipped" },
+    {
+      title: "statusTitleConstraint",
+      explanation: "statusExplanationConstraint",
+    },
+    {
+      title: "statusTitleExpedited",
+      explanation: "statusExplanationExpedited",
+    },
+    { title: "statusTitleTransit", explanation: "statusExplanationTransit" },
+    {
+      title: "statusTitleInvestigation",
+      explanation: "statusExplanationInvestigation",
+    },
+    { title: "statusTitleDamaged", explanation: "statusExplanationDamaged" },
+    {
+      title: "statusTitleLateDelivery",
+      explanation: "statusExplanationLateDelivery",
+    },
+    {
+      title: "statusTitleDelivered",
+      explanation: "statusExplanationDelivered",
+    },
+  ];
+
+  statusLabelsKeys.map((key) => {
+    if (properties[key]) {
+      statusesLabels[key] = properties[key];
+    }
+  });
+
+  const newStatusesList = [];
+
+  statusesList.forEach((el) => {
+    if (properties[el.title] && properties[el.explanation]) {
+      newStatusesList.push({
+        title: properties[el.title],
+        explanation: properties[el.explanation],
+      });
+      el.title = properties[el.title];
+      el.explanation = properties[el.explanation];
+    }
+  });
+
+  statusesLabels["statusesList"] = newStatusesList;
+
+  if (Object.keys(statusesLabels).length > 0) {
+    jsonObject["statusesLabels"] = statusesLabels;
   }
 
   jsonObject["orderModifyEndpoint"] =

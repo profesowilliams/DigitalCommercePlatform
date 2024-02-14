@@ -15,11 +15,11 @@
     padding: 27px 15px 0 0;
     justify-content: space-between;
     .details-preview {
-        color: $brand-charcoal;
-        font-size: 20px;
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 30px;
+      color: $brand-charcoal;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 30px;
     }
   }
   .loader-rotate {
@@ -55,7 +55,7 @@
         text-underline-offset: 3px;
       }
       &:disabled {
-        color: #D9D8D7;
+        color: #d9d8d7;
         text-decoration: none;
         cursor: default;
       }
@@ -126,15 +126,15 @@
         color: $brand-cobalt;
         cursor: pointer;
       }
-    }    
+    }
   }
 
-  .cmp-unitprice{
+  .cmp-unitprice {
     width: 100%;
     margin: 0 auto;
   }
-  .cmp-unitprice-edit{
-    #formatted-uniteprice-input{
+  .cmp-unitprice-edit {
+    #formatted-uniteprice-input {
       text-align: right;
       color: #555555;
     }
@@ -166,6 +166,10 @@
       font-weight: 700;
       line-height: 1rem;
       min-width: 150px;
+      svg {
+        margin-left: 5px;
+        cursor: pointer;
+      }
     }
   }
 
@@ -175,34 +179,34 @@
       height: 42px !important;
       background-color: transparent;
       &-row {
-        color:$brand-charcoal;
+        color: $brand-charcoal;
       }
     }
     .ag-root-wrapper {
       border: none;
     }
-    .ag-cell{
+    .ag-cell {
       font-size: 16px;
       font-family: 'Arial' !important;
       line-height: 1.5rem;
       color: $brand-charcoal;
     }
-    .ag-row{
+    .ag-row {
       border-bottom: 1px solid $brand-cool-gray-1;
       background-color: transparent;
     }
-    .ag-row-odd{
+    .ag-row-odd {
       background-color: transparent;
     }
     .ag-cell-value {
       overflow: visible;
     }
   }
-  
+
   .right-aligned {
     text-align: right;
   }
-  
+
   .center-aligned {
     text-align: center;
   }
