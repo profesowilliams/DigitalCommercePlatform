@@ -55,7 +55,7 @@ import useGet from '../../hooks/useGet';
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { getDictionaryValue } from '../../../../utils/utils';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -377,6 +377,9 @@ function OrdersTrackingGrid(props) {
   const hasOrderModificationRights = hasRights('OrderModification');
   const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
 
+  const shipToTooltipTemplateDefault =
+    '{name}<br/>{address.line1}<br/>{address.line2}<br/>{address.line3}<br/>{address.city} {address.state} {address.zip} {address.country}';
+
   useEffect(() => {
     if (!userData || !areUrlSearchParamsPresent) {
       return;
@@ -452,7 +455,10 @@ function OrdersTrackingGrid(props) {
             cellMouseOver(
               e,
               setToolTipData,
-              getDictionaryValueOrKey(gridConfig?.shipToTooltipTemplate)
+              getDictionaryValue(
+                gridConfig?.shipToTooltipTemplate,
+                shipToTooltipTemplateDefault
+              )
             )
           }
           onCellMouseOut={() => cellMouseOut(setToolTipData)}

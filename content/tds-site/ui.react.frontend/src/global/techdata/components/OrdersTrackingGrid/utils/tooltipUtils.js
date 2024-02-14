@@ -36,25 +36,8 @@ export function tooltipVal(event, aemTemplate) {
     case 'customerPO':
       return <div>{value && typeof value === 'string' ? value : '-'}</div>;
     case 'shipTo':
-      if (value && aemTemplate) {
+      if (value) {
         return <div>{renderTemplate(aemTemplate)}</div>;
-      } else if (value && !aemTemplate) {
-        return (
-          <div>
-            {name && <div>{name}</div>}
-            {line1 && <div>{line1}</div>}
-            {line2 && <div>{line2}</div>}
-            {line3 && <div>{line3}</div>}
-            {address && (
-              <div>
-                {city && <span>{city}&nbsp;</span>}
-                {state && <span>{state}&nbsp;</span>}
-                {zip && <span>{zip}&nbsp;</span>}
-                {country && <span>{country}</span>}
-              </div>
-            )}
-          </div>
-        );
       } else {
         return <div>-</div>;
       }
