@@ -273,7 +273,6 @@ use(["../common/utils.js"], function (utils) {
 
     jsonObject["uiProactiveServiceDomain"] =
       this.serviceData.uiServiceDomain + `/ui-proactive`;
-
     const endpoints = [
       "orderModifyEndpoint",
       "orderModifyChangeEndpoint",
@@ -383,40 +382,45 @@ use(["../common/utils.js"], function (utils) {
     }
 
     // No Access Screen
-    const noAccessProperties = [
-      "noAccessTitle",
-      "noAccessMessage",
-      "noAccessBack",
-    ];
-
-    noAccessProperties.forEach((property) => {
-      if (properties[property]) {
-        noAccessProps[property] = properties[property];
-      }
-    });
-
-    if (Object.keys(noAccessProps).length > 0) {
+    if (properties["noAccessTitle"]) {
+      noAccessProps.noAccessTitle = properties["noAccessTitle"];
+    }
+    if (properties["noAccessMessage"]) {
+      noAccessProps.noAccessMessage = properties["noAccessMessage"];
+    }
+    if (properties["noAccessBack"]) {
+      noAccessProps.noAccessBack = properties["noAccessBack"];
+    }
+    if (noAccessProps != null) {
       jsonObject["noAccessProps"] = noAccessProps;
     }
 
     // Analytics Categories
-    const analyticsProperties = {
-      sortAnalyticsCategories: "sort",
-      searchAnalyticsCategories: "search",
-      filterAnalyticsCategories: "filter",
-      exportAnalyticsCategories: "export",
-      reportAnalyticsCategories: "report",
-      paginationAnalyticsCategories: "pagination",
-    };
-
-    Object.entries(analyticsProperties).forEach(([property, key]) => {
-      if (properties[property]) {
-        analyticsCategories[key] = properties[property];
-      }
-    });
-
-    if (Object.keys(analyticsCategories).length > 0) {
+    if (properties["sortAnalyticsCategories"]) {
+      analyticsCategories.sort = properties["sortAnalyticsCategories"];
+    }
+    if (properties["searchAnalyticsCategories"]) {
+      analyticsCategories.search = properties["searchAnalyticsCategories"];
+    }
+    if (properties["filterAnalyticsCategories"]) {
+      analyticsCategories.filter = properties["filterAnalyticsCategories"];
+    }
+    if (properties["exportAnalyticsCategories"]) {
+      analyticsCategories.export = properties["exportAnalyticsCategories"];
+    }
+    if (properties["reportAnalyticsCategories"]) {
+      analyticsCategories.report = properties["reportAnalyticsCategories"];
+    }
+    if (properties["paginationAnalyticsCategories"]) {
+      analyticsCategories.pagination =
+        properties["paginationAnalyticsCategories"];
+    }
+    if (analyticsCategories != null) {
       jsonObject["analyticsCategories"] = analyticsCategories;
+    }
+
+    if (properties["reportPillLabel"]) {
+      jsonObject["reportPillLabel"] = properties["reportPillLabel"];
     }
 
     //Pagination Labels
@@ -448,18 +452,19 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["searchLabels"] = searchLabels;
     }
 
-    const searchProperties = [
-      "searchTitleLabel",
-      "searchEnterLabel",
-      "searchSorryNoRowsToDisplayLabel",
-      "searchByLabel",
-    ];
-
-    searchProperties.forEach((property) => {
-      if (properties[property]) {
-        jsonObject[property] = properties[property];
-      }
-    });
+    if (properties["searchTitleLabel"]) {
+      jsonObject["searchTitleLabel"] = properties["searchTitleLabel"];
+    }
+    if (properties["searchEnterLabel"]) {
+      jsonObject["searchEnterLabel"] = properties["searchEnterLabel"];
+    }
+    if (properties["searchSorryNoRowsToDisplayLabel"]) {
+      jsonObject["searchSorryNoRowsToDisplayLabel"] =
+        properties["searchSorryNoRowsToDisplayLabel"];
+    }
+    if (properties["searchByLabel"]) {
+      jsonObject["searchByLabel"] = properties["searchByLabel"];
+    }
 
     let searchOptionsValues = utils.getDataFromMultifield(
       resourceResolver,
@@ -601,25 +606,50 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["filterLabels"] = filterLabels;
     }
 
-    const productGridProperties = [
-      "quoteIdLabel",
-      "refNoLabel",
-      "expiryDateLabel",
-      "downloadPDFLabel",
-      "downloadXLSLabel",
-      "showDownloadPDFButton",
-      "showDownloadXLSButton",
-      "showSeeDetailsButton",
-      "seeDetailsLabel",
-    ];
+    if (properties["quoteIdLabel"]) {
+      productGrid["quoteIdLabel"] = properties["quoteIdLabel"];
+    }
 
-    productGridProperties.map((key) => {
-      if (properties[key]) {
-        productGrid[key] = properties[key];
-      }
-    });
+    if (properties["refNoLabel"]) {
+      productGrid["refNoLabel"] = properties["refNoLabel"];
+    }
 
-    if (Object.keys(productGrid).length > 0) {
+    if (properties["expiryDateLabel"]) {
+      productGrid["expiryDateLabel"] = properties["expiryDateLabel"];
+    }
+
+    if (properties["downloadPDFLabel"]) {
+      productGrid["downloadPDFLabel"] = properties["downloadPDFLabel"];
+    }
+
+    if (properties["downloadXLSLabel"]) {
+      productGrid["downloadXLSLabel"] = properties["downloadXLSLabel"];
+    }
+
+    if (properties["showDownloadPDFButton"]) {
+      productGrid["showDownloadPDFButton"] =
+        properties["showDownloadPDFButton"];
+    }
+
+    if (properties["showDownloadXLSButton"]) {
+      productGrid["showDownloadXLSButton"] =
+        properties["showDownloadXLSButton"];
+    }
+
+    if (properties["showDownloadXLSButton"]) {
+      productGrid["showDownloadXLSButton"] =
+        properties["showDownloadXLSButton"];
+    }
+
+    if (properties["showSeeDetailsButton"]) {
+      productGrid["showSeeDetailsButton"] = properties["showSeeDetailsButton"];
+    }
+
+    if (properties["seeDetailsLabel"]) {
+      productGrid["seeDetailsLabel"] = properties["seeDetailsLabel"];
+    }
+
+    if (productGrid != null) {
       jsonObject["productGrid"] = productGrid;
     }
 
@@ -667,25 +697,34 @@ use(["../common/utils.js"], function (utils) {
       jsonObject["hideExportOption"] = properties["hideExportOption"];
     }
 
-    const noResultsProperties = {
-      noResultsTitle: "noResultsTitle",
-      noResultsDescription: "noResultsDescription",
-      noResultsImageFileReference: "noResultsImage",
-      noDataTitle: "noDataTitle",
-      noDataDescription: "noDataDescription",
-      noDataImageFileReference: "noDataImage",
-    };
-
-    Object.entries(noResultsProperties).forEach(([property, key]) => {
-      if (properties[property]) {
-        noResultsValues[key] = properties[property];
-      }
-    });
-
-    if (Object.keys(noResultsValues).length > 0) {
-      jsonObject["searchResultsError"] = noResultsValues;
+    if (properties["noResultsTitle"]) {
+      noResultsValues.noResultsTitle = properties["noResultsTitle"];
     }
 
+    if (properties["noResultsDescription"]) {
+      noResultsValues.noResultsDescription = properties["noResultsDescription"];
+    }
+
+    if (properties["noResultsImageFileReference"]) {
+      noResultsValues.noResultsImage =
+        properties["noResultsImageFileReference"];
+    }
+
+    if (properties["noDataTitle"]) {
+      noResultsValues.noDataTitle = properties["noDataTitle"];
+    }
+
+    if (properties["noDataDescription"]) {
+      noResultsValues.noDataDescription = properties["noDataDescription"];
+    }
+
+    if (properties["noDataImageFileReference"]) {
+      noResultsValues.noDataImage = properties["noDataImageFileReference"];
+    }
+
+    if (noResultsValues != null) {
+      jsonObject["searchResultsError"] = noResultsValues;
+    }
     //Statuses Modal
 
     const statusLabelsKeys = ["statusesTitle", "statusesClose"];
@@ -737,14 +776,20 @@ use(["../common/utils.js"], function (utils) {
       }
     });
 
-    statusesList.map((el) => {
+    const newStatusesList = [];
+
+    statusesList.forEach((el) => {
       if (properties[el.title] && properties[el.explanation]) {
+        newStatusesList.push({
+          title: properties[el.title],
+          explanation: properties[el.explanation],
+        });
         el.title = properties[el.title];
         el.explanation = properties[el.explanation];
       }
     });
 
-    statusesLabels['statusesList'] = statusesList;
+    statusesLabels["statusesList"] = newStatusesList;
 
     if (Object.keys(statusesLabels).length > 0) {
       jsonObject["statusesLabels"] = statusesLabels;

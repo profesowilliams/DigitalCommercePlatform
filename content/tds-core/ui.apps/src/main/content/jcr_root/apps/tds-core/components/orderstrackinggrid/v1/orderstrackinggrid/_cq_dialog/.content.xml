@@ -1679,7 +1679,7 @@
                             </results>
                             <orderStatuses
                                 jcr:primaryType="nt:unstructured"
-                                jcr:title="Error Messages"
+                                jcr:title="Order Statuses"
                                 sling:resourceType="granite/ui/components/coral/foundation/container"
                                 margin="{Boolean}true">
 								<items jcr:primaryType="nt:unstructured">
