@@ -17,13 +17,12 @@ export const validateCountryAndLanguage = (userData) => {
 
 const redirectBasedOnCountry = (userData) => {
   if (userData?.country && userData?.language) {
-    console.log("redirectBasedOnCountry country = " + userData?.country + ", language = " + userData?.language);
     let countryCodeFromAPI = '/' + userData?.country.toLowerCase() + '/' + userData?.language.toLowerCase();
     if (window.location.href.toLowerCase().indexOf(countryCodeFromAPI.toLowerCase()) < 0) {
       return validateCountryFromUrlAndAPI(countryCodeFromAPI);
     }
   } else {
-    console.log("redirectBasedOnCountry missing required data");
+    console.log("RedirectBasedOnCountry missing required data");
   }
   return false;
 }

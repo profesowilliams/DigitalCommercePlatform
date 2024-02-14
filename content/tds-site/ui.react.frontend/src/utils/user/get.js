@@ -7,10 +7,10 @@ import moment from 'moment';
 import { memoryCache } from '../memoryCache';
 
 export const headerInfo = getHeaderInfo();
-//let getUserDataPromise = null;
-//let checkIntouchUserPromise = null;
-//let cachedUserData = null;
-const CACHE_DURATION = 600; // TODO: value should be configurable
+let getUserDataPromise = null;
+let checkIntouchUserPromise = null;
+const CACHE_DURATION = 600;
+const PROMISE_DELAY = 25; // in ms
 
 const cachedUserData = {
   set current(data) {
@@ -64,20 +64,14 @@ export async function getSessionInfo() {
 }
 
 async function getUserData() {
-  console.log('getUserData');
-
   if (cachedUserData.current && Date.now() < cachedUserData.expiresOn) {
-    console.log(
-      'Returning user data from local cache cacheExpiration = ' +
-        new Date(cachedUserData.expiresOn)
-    );
     return cachedUserData.current;
   }
 
-  //if (getUserDataPromise) {
-  //    console.log("Returning user promise");
-  //    return getUserDataPromise;
-  //}
+  if (getUserDataPromise) {
+    await delay(PROMISE_DELAY);
+    return await getUserData();
+  }
 
   try {
     let headers = {
@@ -89,7 +83,7 @@ async function getUserData() {
     };
     headerInfo.salesLogin && (headers['SalesLogin'] = headerInfo.salesLogin);
 
-    let getUserDataPromise = fetch(uiServiceDomain() + getUserEndpoint(), {
+    getUserDataPromise = fetch(uiServiceDomain() + getUserEndpoint(), {
       headers: headers,
       body: null,
       method: 'GET',
@@ -101,7 +95,6 @@ async function getUserData() {
     if (response.ok) {
       const data = await response.json();
       cachedUserData.current = data.content.user;
-      console.log('Returned user data from API call');
       return cachedUserData.current;
     } else {
       console.log('HTTP-Error: ' + response.status);
@@ -116,23 +109,20 @@ async function getUserData() {
 }
 
 export async function checkIntouchUser(forceRedirectWhenReady) {
-  console.log(
-    'checkIntouchUser: forceRedirectWhenReady=' + forceRedirectWhenReady
-  );
-
   const url = intouchUserCheckAPIUrl();
   if (!url) return;
 
-  //if (checkIntouchUserPromise) {
-  //    return checkIntouchUserPromise;
-  //}
+  if (checkIntouchUserPromise) {
+    await delay(PROMISE_DELAY);
+    return await checkIntouchUser(forceRedirectWhenReady);
+  }
 
   let headers = {
     'Content-Type': 'application/json',
     'Accept-Language': headerInfo.acceptLanguage,
   };
 
-  let checkIntouchUserPromise = fetch(url + window.location.href, {
+  checkIntouchUserPromise = fetch(url + window.location.href, {
     headers: headers,
     body: null,
     method: 'GET',
@@ -152,4 +142,8 @@ export async function checkIntouchUser(forceRedirectWhenReady) {
   } else {
     console.error('Error ${xhr.status}: ${xhr.statusText}');
   }
+}
+
+function delay(time) {
+  return new Promise(resolve => setTimeout(resolve, time));
 }

@@ -19,7 +19,6 @@ const renderIntouchHeaderHTML = () => {
     .then(parseResponse)
     .then(function (data) {
       element.innerHTML = data;
-      console.log("Intouch header loaded");
     }).catch(function (error) {
       console.log('Request failed', error);
     });
@@ -43,7 +42,6 @@ const renderIntouchFooterHTML = () => {
     .then(parseResponse)
     .then(function (data) {
       element.innerHTML = data;
-      console.log("Intouch footer loaded");
     }).catch(function (error) {
       console.log('Request failed', error);
     });
@@ -62,26 +60,19 @@ const parseResponse = (response) => {
 }
 
 export const loadIntouchHeaderAndFooter = () => {
-  console.log('loadIntouchHeaderAndFooter()');
-
   document.addEventListener(
     'DOMContentLoaded',
     function () {
       let authorMode = !(typeof Granite === 'undefined' || typeof Granite.author === 'undefined');
       if (!authorMode) {
-        console.log('AUTHOR:Load header/footer');
-        checkIntouchUser().then(function () {
-          Promise.all([
-            renderIntouchHeaderHTML(),
-            renderIntouchFooterHTML()
-          ]).then(function () {
-            console.log("$htmlLoaded resolve");
-            window.td.deferred.$htmlLoaded.resolve();
-          })
+        Promise.all([
+          checkIntouchUser(),
+          renderIntouchHeaderHTML(),
+          renderIntouchFooterHTML()
+        ]).then(function () {
+          window.td.deferred.$htmlLoaded.resolve();
         })
-      } else {
-        console.log('AUTHOR:Skip header/footer');
-      }
+      } 
     },
     false
   );
