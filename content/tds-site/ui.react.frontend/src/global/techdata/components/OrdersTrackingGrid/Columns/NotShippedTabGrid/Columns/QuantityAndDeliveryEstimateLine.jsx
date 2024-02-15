@@ -17,7 +17,7 @@ function QuantityAndDeliveryEstimateLine({ line, el, index }) {
           isSingleElement || isLastElement
             ? '__separateLine'
             : '__separateLineMultiple'
-        } order-line-details__content__innerTableNotShipped__qty-column`}
+        }`}
       >
         <span className="order-line-details__content__innerTableNotShipped__separateLineText">
           {el.quantity} / {line.orderQuantity}

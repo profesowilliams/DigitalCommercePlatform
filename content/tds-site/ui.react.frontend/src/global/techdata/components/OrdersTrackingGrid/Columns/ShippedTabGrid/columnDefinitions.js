@@ -40,17 +40,15 @@ const columnDefs = [
     autoHeight: true,
   },
   {
-    headerName: 'VALUE',
-    field: 'totalPriceFormatted',
-    sortable: false,
-    cellStyle: { padding: '12px 0' },
-    autoHeight: true,
-  },
-  {
     headerName: 'QTY',
     field: 'quantity',
     sortable: false,
-    cellStyle: { padding: '12px 0' },
+    cellStyle: {
+      padding: '12px 0',
+      'text-align': 'right',
+      paddingRight: '26px',
+    },
+    headerClass: 'right-aligned-shipped-qty',
     autoHeight: true,
   },
   {

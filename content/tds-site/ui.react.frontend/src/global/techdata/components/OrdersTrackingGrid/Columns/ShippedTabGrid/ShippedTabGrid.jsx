@@ -34,8 +34,7 @@ function ShippedTabGrid({
     shipDate: '185px',
     dnote: '158px',
     invoice: '158px',
-    value: '184px',
-    qty: '184x',
+    qty: '526px',
     track: '184px',
   });
   const columnDefinitionsOverride = [
@@ -77,11 +76,6 @@ function ShippedTabGrid({
         />
       ),
       width: gridColumnWidths.invoice,
-    },
-    {
-      field: 'totalPriceFormatted',
-      headerName: getDictionaryValueOrKey(value),
-      width: gridColumnWidths.value,
     },
     {
       field: 'quantity',

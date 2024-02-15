@@ -52,11 +52,6 @@
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                     fieldLabel="Invoice Label"
                     name="./invoice"/>
-                <value
-                    jcr:primaryType="nt:unstructured"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldLabel="Value Label"
-                    name="./value"/>
                 <qty
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

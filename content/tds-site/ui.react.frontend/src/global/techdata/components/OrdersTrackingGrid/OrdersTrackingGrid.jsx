@@ -117,7 +117,6 @@ function OrdersTrackingGrid(props) {
     analyticsCategories,
     paginationLabels,
     searchLabels,
-    criteriaLabels,
   } = componentProp;
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);

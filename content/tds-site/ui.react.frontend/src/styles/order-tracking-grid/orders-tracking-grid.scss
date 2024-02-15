@@ -416,6 +416,8 @@
       &__quantity {
         color: $brand-charcoal;
         font-size: 14px !important;
+        display: flex;
+        justify-content: flex-end;
       }
       &__image {
         width: 50px;
@@ -450,6 +452,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        min-width: 77px;
         min-height: 73px;
         height: auto;
         padding-top: 12px;
@@ -469,9 +472,6 @@
       &__container-row {
         display: flex;
       }
-      &__qty-column {
-        width: 90px;
-      }
       &__delivery-column {
         width: 234px;
       }
@@ -485,6 +485,11 @@
       }
     }
   }
+  .right-aligned-shipped-qty {
+    text-align: right;
+    padding-right: '26px !important';
+  }
+
   // Overrides for inner grid
   * {
     &.cmp-grid.ag-theme-alpine {

@@ -164,7 +164,6 @@ use(["../common/utils.js"], function (utils) {
       "shipDate",
       "dnote",
       "invoice",
-      "value",
       "qty",
       "track",
     ];

@@ -7,7 +7,7 @@ function DropdownOrderShippedTabGridDetails({ data }) {
       thumbnail: '50px',
       item: '475px',
       pnsku: '148px',
-      qty: '70px',
+      qty: '130px',
       deliveryEstimate: '50px',
     };
    
