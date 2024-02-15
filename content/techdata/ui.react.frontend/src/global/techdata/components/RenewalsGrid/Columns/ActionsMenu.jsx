@@ -118,6 +118,12 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
         setCustomState({ key: 'copyFlyout', value: { data, show:true} });
     };
 
+  const triggerShareFlyout = () => {
+      data['link'] = '';
+      onClose();
+      setCustomState({ key: 'shareFlyout', value: { data, show:true} });
+  };
+
     return (
         <Dialog
             onClose={onClose}
@@ -153,7 +159,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                 {enableShareOption ? (
                     <div
                         className="cmp-renewals-actions-menu__item"
-                        onClick={triggerCopyFlyout}
+                        onClick={triggerShareFlyout}
                     >
                         <span className="cmp-renewals-actions-menu__item-icon">
                             <ShareIcon width="16" height="16" />

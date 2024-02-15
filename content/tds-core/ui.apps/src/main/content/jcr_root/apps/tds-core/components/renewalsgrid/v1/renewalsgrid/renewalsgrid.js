@@ -7,6 +7,7 @@ use(['../../../common/utils.js'], function(utils) {
     let icons = {};
     let noResultsValues = {};
     let copyFlyout = {};
+    let shareFlyout = {};
 
     if (properties && properties["detailUrl"]) {
         jsonObject["detailUrl"] = properties["detailUrl"];
@@ -391,12 +392,47 @@ use(['../../../common/utils.js'], function(utils) {
         copyFlyout.button = properties["copyFlyoutButton"];
     }
 
+     if (properties && properties["shareFlyoutTitle"]) {
+      shareFlyout.shareFlyoutTitle = properties["shareFlyoutTitle"];
+    }
+
+    if (properties && properties["shareFlyoutDescription"]) {
+        shareFlyout.shareFlyoutDescription = properties["shareFlyoutDescription"];
+    }
+     if (properties && properties["emailPreviewDescription"]) {
+            shareFlyout.emailPreviewDescription = properties["emailPreviewDescription"];
+     }
+    if (properties && properties["shareFlyoutQuoteButtonLabel"]) {
+        shareFlyout.shareFlyoutQuoteButtonLabel = properties["shareFlyoutQuoteButtonLabel"];
+    }
+    if (properties && properties["shareFlyoutCommentCountText"]) {
+        shareFlyout.shareFlyoutCommentCountText = properties["shareFlyoutCommentCountText"];
+    }
+    if (properties && properties["shareFlyoutCommentCount"]) {
+        shareFlyout.shareFlyoutCommentCount = properties["shareFlyoutCommentCount"];
+    }
+    if (properties && properties["shareFlyoutQuoteHeading"]) {
+        shareFlyout.shareFlyoutQuoteHeading = properties["shareFlyoutQuoteHeading"];
+    }
+
+    if (properties && properties["shareFlyoutQuoteDescription"]) {
+        shareFlyout.shareFlyoutQuoteDescription = properties["shareFlyoutQuoteDescription"];
+    }
+
+    if (properties && properties["shareFlyoutButtonLabel"]) {
+        shareFlyout.shareFlyoutButtonLabel = properties["shareFlyoutButtonLabel"];
+    }
+
     if (noResultsValues != null) {
         jsonObject["searchResultsError"] = noResultsValues;
     }
 
     if (copyFlyout != null) {
         jsonObject["copyFlyout"] = copyFlyout;
+    }
+
+    if (shareFlyout != null) {
+        jsonObject["shareFlyout"] = shareFlyout;
     }
 
     return {

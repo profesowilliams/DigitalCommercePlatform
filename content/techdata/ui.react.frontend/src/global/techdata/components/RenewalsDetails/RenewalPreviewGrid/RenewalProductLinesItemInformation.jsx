@@ -115,17 +115,21 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
               <b>{lineDetailsLabels?.instanceLabel}</b>
               {line.instance}
             </span>}
-            {disableMultipleAgreement && dataObj?.formattedDueDate?.indexOf('see line') > -1 && line?.contract?.dueDate && <span>
+            {disableMultipleAgreement && dataObj?.formattedDueDate?.indexOf('see line') > -1 && line?.contract?.dueDate && !line?.dueDateFlag && <span>
               <b>{lineDetailsLabels?.dueDateLabel}</b>
               {line?.contract?.formattedEndDate}
             </span>}
-            {disableMultipleAgreement && dataObj?.agreementDuration?.indexOf('see line') > -1 && line?.contract?.duration && <span>
+            {disableMultipleAgreement && dataObj?.agreementDuration?.indexOf('see line') > -1 && line?.contract?.duration && !line?.agreementDurationFlag && <span>
               <b>{lineDetailsLabels?.durationLabel}</b>
               {line?.contract?.formattedStartDate} - {line?.contract?.formattedEndDate}
             </span>}
-            {disableMultipleAgreement && line?.contract?.usagePeriod && <span>
+            {disableMultipleAgreement && line?.contract?.usagePeriod && !line?.usagePeriodFlag && <span>
               <b>{lineDetailsLabels?.usagePeriodLabel}</b>
               {line?.contract?.formattedUsagePeriod}
+            </span>}
+            {disableMultipleAgreement && line?.contract?.serviceLevel && !line?.serviceLevelFlag && <span>
+              <b>{lineDetailsLabels?.supportLevelLabel}</b>
+              {line?.contract?.serviceLevel}
             </span>}
           </div>
         </div>

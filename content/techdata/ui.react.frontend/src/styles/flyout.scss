@@ -189,12 +189,140 @@ $flyout-small-height-formax: 779px;
     }
   }
   &__content-search {
-      #combo-box-demo {
-          &::placeholder {
-              color: transparent;
-          }
+    #combo-box-demo {
+        &::placeholder {
+            color: transparent;
+        }
+    }
+  }
+  // share flyout styles
+
+  &.share-flyout {
+    .cmp-flyout__content {
+      > p {
+        font-size: 16px;
+        line-height: 24px;
+        color: #1D252D;
+      }
+      label {
+        font-size: 12px;
+        line-height: 18px;
+        color: #888B8D;
+      }
+      .email-preview-section {
+        margin-top: 20px;
+        &-title {
+          font-size: 12px;
+          line-height: 14px;
+          color: #888B8D;
+          margin-bottom: 10px;
+        }
+        &-product {
+          font-size: 14px;
+          line-height: 21px;
+          font-weight: 700;
+        }
+        &-desc {
+          font-size: 14px;
+          line-height: 21px;
+          font-weight: 400;
+          margin-bottom: 10px;
+        }
+        &-quote-btn {
+          padding: 8px 20px;
+          background-color: #00558C;
+          color: white;
+          font-size: 14px;
+          line-height: 21px;
+          margin-top: 10px;
+          display: inline-block;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      }
+      textarea {
+        display: block;
+        width: 100%;
+        resize: none;
+        font-size: 14px;
+        line-height: 21px;
+        padding: 10px;
+        margin-bottom: 5px;
+        &::placeholder {
+          color: #888B8D;
+          font-size: 14px;
+          line-height: 21px;
+        }
+      }
+      .char-count {
+        font-size: 12px;
+        line-height: 18px;
+        color: #888B8D;
+        display: block;
       }
     }
+    .cmp-flyout__header {
+      padding: 18px;
+      border-color: #D9D8D7;
+      margin-bottom: 15px;
+      &-title {
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 700;
+      }
+      &-icon {
+        height: 24px;
+        svg {
+          height: 24px;
+        }
+      }
+    }
+    .cmp-flyout__footer {
+      padding: 10px 0;
+      border-top: 1px solid lightgrey;
+
+      &-buttons {
+        justify-content: end;
+      }
+
+      &-button {
+        width: auto;
+        margin-right: 20px;
+        height: auto;
+        padding: 5px 15px;
+      }
+    }
+    .MuiFilledInput-root:after {
+      border-color: #006FBA;
+    }
+    .MuiFilledInput-root {
+      background-color: white;
+      padding-left: 0;
+    }
+    .css-e4w4as-MuiFormLabel-root-MuiInputLabel-root {
+      transform: translate(0, 16px) scale(1);
+    }
+    .css-o943dk-MuiFormLabel-root-MuiInputLabel-root {
+      transform: translate(0, 7px) scale(0.75);
+    }
+    #cc-email-label {
+      transform: translate(0, 30px);
+    }
+    .MuiAutocomplete-root:nth-child(2) .MuiFilledInput-root {
+      padding-left: 20px;
+    }
+    .MuiAutocomplete-endAdornment {
+        top: calc(50% - 4px);
+    }
+    .MuiChip-root {
+        background-color: white;
+        border: 1px solid #00558C;
+        height: auto;
+    }
+    .MuiChip-root svg {
+        display: none;
+    }
+  }
 }
 .MuiAutocomplete-option .cmp-flyout-autocomplete__option-name .cmp-flyout__quotecmp-flyout__selected-quote  {
   font-family: $font-family-arial;

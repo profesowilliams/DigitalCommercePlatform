@@ -231,11 +231,11 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         }
         return !(data?.id?.includes('Agreement')) ? data.id :
           <div className="row-header">
-            <div><span>{data.id?.split(":")[0]}:</span> {data.id?.split(":")[1]}</div> |
-            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.serviceLevel && data.serviceLevelFlag && <><div><span>Support Level:</span> {data?.contract?.serviceLevel}</div> |</>}
-            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.dueDate && data.dueDateFlag && <><div><span>Due Date:</span> {data?.contract?.dueDate?.split('T')[0]}</div> |</>}
-            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.agreementDuration && data?.contract?.endDate && data.agreementDurationFlag && <><div><span>Duration:</span> {data?.contract?.agreementDuration}</div> |</>}
-            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.formattedUsagePeriod && data.usagePeriodFlag && <div><span>Usage Period:</span> {data?.contract?.formattedUsagePeriod}</div>}
+            <div><span>{data.id?.split(":")[0]}:</span> {data.id?.split(":")[1]}</div>
+            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.serviceLevel && data.serviceLevelFlag && <> | <div><span>Support Level:</span> {data?.contract?.serviceLevel}</div></>}
+            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.dueDate && data.dueDateFlag && <> | <div><span>Due Date:</span> {data?.contract?.dueDate?.split('T')[0]}</div></>}
+            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.agreementDuration && data?.contract?.endDate && data.agreementDurationFlag && <> | <div><span>Duration:</span> {data?.contract?.agreementDuration}</div></>}
+            {!compProps?.quotePreview?.agreementInfo?.disableMultipleAgreement && data?.contract?.formattedUsagePeriod && data.usagePeriodFlag && <> | <div><span>Usage Period:</span> {data?.contract?.formattedUsagePeriod}</div></>}
           </div>
       },
       headerClass: contractMap.size <= 1 ? 'contract-header' : "normal-header",

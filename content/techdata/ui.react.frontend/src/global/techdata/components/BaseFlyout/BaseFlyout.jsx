@@ -25,6 +25,7 @@ function BaseFlyout({
   analyticsData,
   analyticsCallback,
   buttonsSection = null,
+  classText = ''
 }) {
   const BottomContent = () => bottomContent('footer');
   const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
@@ -62,7 +63,7 @@ function BaseFlyout({
         },
       }}
     >
-      <div className={`cmp-flyout ${isTDSynnex && 'cmp-flyout-td-synnex'}`}>
+      <div className={`cmp-flyout ${classText} ${isTDSynnex && 'cmp-flyout-td-synnex'}`}>
         <section className="cmp-flyout__header">
           <h4 className="cmp-flyout__header-title">
             {getDictionaryValueOrKey(titleLabel)}

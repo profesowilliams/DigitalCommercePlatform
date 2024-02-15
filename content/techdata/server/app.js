@@ -4708,7 +4708,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
               },
             },
           },
-          
+
           "shipTo": {
               "id": {
                   "text": "0000179854",
