@@ -5,6 +5,7 @@ PassEnv DISP_ID
 <VirtualHost *:80>
 	ServerName	publish
 	# Put names of which domains are used for your published site/content here
+	ServerAlias	dc.quality.tdsynnex.eu techdata-digital-dev.adobecqms.net
 	ServerAlias	uat.dc.tdebusiness.cloud techdata-digital-dev.adobecqms.net
 	ServerAlias stage.dc.tdebusiness.cloud techdata-digital-stage.adobecqms.net
 	ServerAlias prod.dc.tdebusiness.cloud preprod.dc.tdebusiness.cloud preprod-author.dc.tdebusiness.cloud
