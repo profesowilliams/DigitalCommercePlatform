@@ -41,25 +41,25 @@ function SoldToCard({ shipTo = {}, config }) {
       return (
         <div key={idx} className="card-container__bottom">
           {el === phoneNumber && (
-            <p>
+            <div>
               {getDictionaryValueOrKey(config?.soldToLabels?.soldToPhone)}{' '}
               {phoneNumber}
               <br />
-            </p>
+            </div>
           )}
           {el === email && (
-            <p>
+            <div>
               {getDictionaryValueOrKey(config?.soldToLabels?.soldToEmail)}{' '}
               {email}
-            </p>
+            </div>
           )}
         </div>
       );
     } else {
       return (
-        <p key={idx} className="card-container__text">
+        <div key={idx} className="card-container__text">
           {el}
-        </p>
+        </div>
       );
     }
   };
