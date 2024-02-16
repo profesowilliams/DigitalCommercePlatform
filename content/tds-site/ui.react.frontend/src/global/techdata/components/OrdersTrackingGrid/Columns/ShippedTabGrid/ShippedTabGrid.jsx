@@ -27,6 +27,7 @@ function ShippedTabGrid({
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
+  const enableGrid = data.length > 0;
   const { shipDate, dnote, invoice, value, qty } =
     config?.orderLineDetailsShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -103,16 +104,18 @@ function ShippedTabGrid({
           {getDictionaryValueOrKey(config?.orderLineDetails?.shippedLabel)}
         </span>
       </div>
-      <div className="order-line-details__content__grid">
-        <Grid
-          columnDefinition={myColumnDefs}
-          config={config}
-          data={data}
-          customizedDetailedRender={(props) => (
-            <ShippedTabGridRenderers {...props} config={config} />
-          )}
-        />
-      </div>
+      {enableGrid && (
+        <div className="order-line-details__content__grid">
+          <Grid
+            columnDefinition={myColumnDefs}
+            config={config}
+            data={data}
+            customizedDetailedRender={(props) => (
+              <ShippedTabGridRenderers {...props} config={config} />
+            )}
+          />
+        </div>
+      )}
     </section>
   );
 }

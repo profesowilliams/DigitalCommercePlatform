@@ -37,12 +37,13 @@ function NotShippedTabGrid({
     ensureDomOrder: true,
   };
   const effects = useOrderTrackingStore((state) => state.effects);
-
+  
   const { setCustomState } = effects;
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
+  const enableGrid = data.length > 0;
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -181,7 +182,7 @@ function NotShippedTabGrid({
           )}
         </span>
       </div>
-      <div>
+      {enableGrid && (
         <Grid
           columnDefinition={myColumnDefs}
           config={config}
@@ -189,7 +190,7 @@ function NotShippedTabGrid({
           rowClassRules={rowClassRules}
           gridRef={gridRef}
         />
-      </div>
+      )}
       <OrderReleaseModal
         open={releaseOrderShow}
         handleClose={() => setReleaseOrderShow(false)}
