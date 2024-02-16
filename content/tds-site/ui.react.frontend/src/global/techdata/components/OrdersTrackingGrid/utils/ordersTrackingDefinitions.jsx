@@ -53,7 +53,7 @@ export const ordersTrackingDefinition = (
   };
 
   const columnsMinWidth = {
-    select: 35,
+    select: 41,
     updated: 90,
     shipTo: 160,
     statusText: 140,
@@ -66,7 +66,7 @@ export const ordersTrackingDefinition = (
   };
 
   const columnsWidth = {
-    select: '35px',
+    select: '41px',
     updated: '90px',
     shipTo: '160px',
     statusText: '140px',

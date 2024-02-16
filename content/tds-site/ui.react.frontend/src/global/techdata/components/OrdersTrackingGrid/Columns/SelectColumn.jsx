@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from 'react';
-
+import {
+  ChevronRightIcon,
+  ChevronDownIcon,
+} from '../../../../../fluentIcons/FluentIcons';
 function SelectColumn({ eventProps }) {
   const [isToggled, setIsToggled] = useState(false);
 
@@ -16,11 +19,11 @@ function SelectColumn({ eventProps }) {
       className="cmp-order-tracking-grid__select-column"
       onClick={toggleDetails}
     >
-      <div style={{ display: isToggled ? 'none' : 'block' }}>
-        <i className="fas fa-chevron-right"></i>
+      <div style={{ display: isToggled ? 'none' : 'flex' }}>
+        <ChevronRightIcon />
       </div>
-      <div style={{ display: isToggled ? 'block' : 'none' }}>
-        <i className="fas fa-chevron-down"></i>
+      <div style={{ display: isToggled ? 'flex' : 'none' }}>
+        <ChevronDownIcon />
       </div>
     </div>
   );

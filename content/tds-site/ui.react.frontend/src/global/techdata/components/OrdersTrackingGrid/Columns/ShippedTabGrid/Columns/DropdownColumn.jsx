@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import {
-  ChevronRightIcon,
-  ChevronDownIcon,
+  ChevronRightSmallIcon,
+  ChevronDownSmallIcon,
 } from '../../../../../../../fluentIcons/FluentIcons';
 function DropdownColumn({ eventProps }) {
   const [isToggled, setIsToggled] = useState(false);
@@ -16,10 +16,10 @@ function DropdownColumn({ eventProps }) {
       onClick={toggleDetails}
     >
       <div style={{ display: isToggled ? 'none' : 'block' }}>
-        <ChevronRightIcon />
+        <ChevronRightSmallIcon />
       </div>
       <div style={{ display: isToggled ? 'block' : 'none' }}>
-        <ChevronDownIcon />
+        <ChevronDownSmallIcon />
       </div>
     </div>
   );
