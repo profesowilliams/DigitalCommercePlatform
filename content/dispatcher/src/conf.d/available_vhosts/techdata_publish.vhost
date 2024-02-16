@@ -5,16 +5,12 @@ PassEnv DISP_ID
 <VirtualHost *:80>
 	ServerName	publish
 	# Put names of which domains are used for your published site/content here
-	ServerAlias	dc.quality.tdsynnex.eu techdata-digital-dev.adobecqms.net
 	ServerAlias	uat.dc.tdebusiness.cloud techdata-digital-dev.adobecqms.net
 	ServerAlias stage.dc.tdebusiness.cloud techdata-digital-stage.adobecqms.net
 	ServerAlias prod.dc.tdebusiness.cloud preprod.dc.tdebusiness.cloud preprod-author.dc.tdebusiness.cloud
 	ServerAlias www.techdata.com techdata.com asia.techdata.com techdata-digital-prod.adobecqms.net
 	ServerAlias  dispatcher1eastus2.dev.techdata-digital.adobecqms.net
 	ServerAlias  dispatcher2eastus2.stage.techdata-digital.adobecqms.net   dispatcher1eastus2.stage.techdata-digital.adobecqms.net
-	#ServerAlias	uat-tdsynnex.dc.tdebusiness.cloud www.uat-tdsynnex.dc.tdebusiness.cloud
-	#ServerAlias	stage-tdsynnex.dc.tdebusiness.cloud www.stage-tdsynnex.dc.tdebusiness.cloud
-	#ServerAlias	tdsynnex.com www.tdsynnex.com
 
 	# Use a doc root that matches what's in the /etc/httpd/conf/publish-farm.any
 	DocumentRoot	${PUBLISH_DOCROOT}
@@ -82,6 +78,7 @@ PassEnv DISP_ID
 <VirtualHost *:80>
 	ServerName	publish
 	# Put names of which domains are used for your published site/content here
+	ServerAlias	dc.quality.tdsynnex.eu www.uat-tdsynnex.dc.tdebusiness.cloud
 	ServerAlias	uat-tdsynnex.dc.tdebusiness.cloud www.uat-tdsynnex.dc.tdebusiness.cloud
     ServerAlias	stage-tdsynnex.dc.tdebusiness.cloud www.stage-tdsynnex.dc.tdebusiness.cloud
     ServerAlias	tdsynnex.com www.tdsynnex.com
