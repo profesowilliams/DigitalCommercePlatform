@@ -3,7 +3,7 @@ import { get } from '../../../utils/api';
 import { useStore } from "../../../utils/useStore"
 import { isExtraReloadDisabled, isHttpOnlyEnabled } from "../../../utils/featureFlagUtils";
 import useAuth from "./useAuth";
-import { loginPageUrl } from "../../../utils/user/get"
+import { loginPageUrl, checkIntouchUser } from "../../../utils/user/get"
 
 // hook for getting data from API on component init, checks if component is mounted before call
 // return array of three states = [ response - actual response, 
@@ -25,7 +25,9 @@ export default function useGet(url, id) {
       console.log('authorMode or localhost = ', authorMode || isLocalhost);
     } else {
       if (error && error.response && error.response.status === 401) {
-        window.location = loginPageUrl;
+        checkIntouchUser().then(function () {
+          window.location = loginPageUrl;
+        })
       }
     }
   };
