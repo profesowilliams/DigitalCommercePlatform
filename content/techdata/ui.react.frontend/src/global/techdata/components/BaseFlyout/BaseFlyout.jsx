@@ -1,7 +1,6 @@
 import { Drawer } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import Button from "../Widgets/Button";
-import usePositionBelowSubheader from '../../hooks/usePositionBelowSubheader';
 import { DismissFilledIcon, LoaderIcon} from '../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
@@ -29,11 +28,6 @@ function BaseFlyout({
 }) {
   const BottomContent = () => bottomContent('footer');
   const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
-  const { positioning, calculatePosition } = usePositionBelowSubheader(
-    { unmountedFn: false },
-    subheaderReference
-  );
-  const { top, height } = positioning;
 
   useEffect(() => {
     let timer;
@@ -56,7 +50,6 @@ function BaseFlyout({
       sx={{
         '& .MuiPaper-root': {
           width,
-          ...(top && height ? { top, height } : {}),
           '@media (max-width: 600px)': {
             width: '100%',
           },
