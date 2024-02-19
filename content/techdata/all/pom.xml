@@ -213,11 +213,6 @@
         </dependency>
         <dependency>
             <groupId>com.adobe.cq</groupId>
-            <artifactId>core.wcm.components.extensions.amp.content</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.cq</groupId>
             <artifactId>core.wcm.components.extensions.amp</artifactId>
         </dependency>
         <dependency>

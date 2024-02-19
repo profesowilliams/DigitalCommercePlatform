@@ -711,12 +711,6 @@ Bundle-DocURL:
             </dependency>
             <dependency>
                 <groupId>com.adobe.cq</groupId>
-                <artifactId>core.wcm.components.extensions.amp.content</artifactId>
-                <type>zip</type>
-                <version>${core.wcm.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.adobe.cq</groupId>
                 <artifactId>core.wcm.components.examples.ui.apps</artifactId>
                 <type>zip</type>
                 <version>${core.wcm.components.version}</version>
