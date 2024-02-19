@@ -344,7 +344,7 @@ function OrdersTrackingGrid(props) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
             country: data[1]?.country,
-            internalTraffic: data[1]?.isInternal,
+            internalTraffic: data[1]?.isInternalUser,
             pageName: 'Main Dashboard',
             number: '',
             userID: data[1]?.id,

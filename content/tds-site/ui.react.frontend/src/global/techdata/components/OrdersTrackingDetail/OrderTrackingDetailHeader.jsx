@@ -27,6 +27,7 @@ const OrderTrackingDetailHeader = ({
   hasOrderModificationRights,
   openFilePdf,
   componentProps,
+  userData,
 }) => {
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
@@ -78,7 +79,8 @@ const OrderTrackingDetailHeader = ({
     content.status !== 'Completed' &&
     content.orderEditable;
   const areSerialNumbersAvailable = content.serialsAny === true;
-  const areXMLMessageAvailable = content?.xmlAvailable === true;
+  const areXMLMessageAvailable =
+    content?.xmlAvailable === true && userData.isInternalUser;
   const isModifiable = hasOrderModificationRights && orderEditable;
   const id = content.orderNumber;
   const poNumber = content?.customerPO;
@@ -149,8 +151,8 @@ const OrderTrackingDetailHeader = ({
         setTimeout(() => {
           setOpenXMLAlert(false);
         }, 5000);
-      });;
-  }
+      });
+  };
 
   const menuActionsItems = [
     {
@@ -186,7 +188,7 @@ const OrderTrackingDetailHeader = ({
     condition: true,
     label: labels?.xmlMessageLabel,
     onClick: triggerXMLMessage,
-  }
+  };
 
   areXMLMessageAvailable && menuActionsItems.push(XMLelement);
 
@@ -212,20 +214,18 @@ const OrderTrackingDetailHeader = ({
     };
     const url = `${componentProps.uiCommerceServiceDomain}/v2/ChangeDeliveryFlag`;
     await usPost(url, params)
-      .then(
-        (response) => {
-          const {
-            data: {
-              content: { changeDelFlag, isError },
-            },
-          } = response;
-          if (changeDelFlag?.isError === false && isError === false) {
-            setReleaseSuccess(true);
-          } else {
-            setReleaseSuccess(false);
-          }
+      .then((response) => {
+        const {
+          data: {
+            content: { changeDelFlag, isError },
+          },
+        } = response;
+        if (changeDelFlag?.isError === false && isError === false) {
+          setReleaseSuccess(true);
+        } else {
+          setReleaseSuccess(false);
         }
-      )
+      })
       .finally(() => {
         setOpenAlert(true);
         setTimeout(() => {

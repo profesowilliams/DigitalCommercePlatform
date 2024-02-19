@@ -82,7 +82,7 @@ function OrdersTrackingDetail(props) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
             country: data[1]?.country,
-            internalTraffic: data[1]?.isInternal,
+            internalTraffic: data[1]?.isInternalUser,
             pageName: 'Order Details',
             number: id,
             userID: data[1]?.id,
@@ -117,6 +117,7 @@ function OrdersTrackingDetail(props) {
                 hasOrderModificationRights={hasOrderModificationRights}
                 openFilePdf={openFilePdf}
                 componentProps={componentProps}
+                userData={userData}
               />
               <OrderTrackingDetailBody
                 config={config}
