@@ -204,7 +204,7 @@ function MainGridHeader({
   }, [reportFilterValue.current.value]);
 
   return (
-    <div className="cmp-base-grid-subheader">
+    <div className="grid-subheader-pagination">
       <div className="cmp-base-grid-subheader-left">
         {leftComponents.map((component, index) =>
           cloneElement(component, { key: index })

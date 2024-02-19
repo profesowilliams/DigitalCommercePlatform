@@ -27,14 +27,16 @@ const MainGridFooter = ({
         closeEnabled={true}
       />
       <ToolTip toolTipData={toolTipData} />
-      <OrderTrackingGridPagination
-        ref={customPaginationRef}
-        onQueryChanged={onQueryChanged}
-        disabled={isLoading}
-        paginationAnalyticsLabel={analyticsCategories.pagination}
-        resultsLabel={paginationLabels.results}
-        ofLabel={paginationLabels.of}
-      />
+      <div className="grid-subheader-pagination">
+        <OrderTrackingGridPagination
+          ref={customPaginationRef}
+          onQueryChanged={onQueryChanged}
+          disabled={isLoading}
+          paginationAnalyticsLabel={analyticsCategories.pagination}
+          resultsLabel={paginationLabels.results}
+          ofLabel={paginationLabels.of}
+        />
+      </div>
     </>
   );
 };
