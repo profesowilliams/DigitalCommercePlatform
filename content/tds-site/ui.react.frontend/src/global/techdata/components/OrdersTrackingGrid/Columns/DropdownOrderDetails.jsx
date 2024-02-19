@@ -24,6 +24,8 @@ function DropdownOrderDetails({
     `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
     'lineDetails'
   );
+  const [activeTab, setActiveTab] = useState(0);
+
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const noShippedItems = shippedItemsLeft === 0;
@@ -82,6 +84,7 @@ function DropdownOrderDetails({
           shipCompleted={shipCompleted}
           status={status}
           ordersOrderEditable={ordersOrderEditable}
+          activeTab={activeTab}
         />
       ) : (
         isLoading && <LoaderIcon className="loadingIcon-rotate" />
@@ -89,7 +92,6 @@ function DropdownOrderDetails({
     },
   ];
 
-  const [activeTab, setActiveTab] = useState(0);
   const handleTabChange = (tabIndex) => {
     if (!noShippedItems || tabIndex === 1) {
       setActiveTab(tabIndex);

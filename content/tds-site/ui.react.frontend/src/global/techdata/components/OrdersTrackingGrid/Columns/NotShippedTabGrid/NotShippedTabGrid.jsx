@@ -26,6 +26,7 @@ function NotShippedTabGrid({
   shipCompleted,
   status,
   ordersOrderEditable,
+  activeTab,
 }) {
   const config = {
     ...gridProps,
@@ -37,13 +38,15 @@ function NotShippedTabGrid({
     ensureDomOrder: true,
   };
   const effects = useOrderTrackingStore((state) => state.effects);
-  
+
   const { setCustomState } = effects;
+
+  const [isTabActive, setIsTabActive] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
-  const enableGrid = data.length > 0;
+  const enableGrid = data.length > 0 && isTabActive;
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -152,6 +155,11 @@ function NotShippedTabGrid({
       },
     });
   }, []);
+  useEffect(() => {
+    if (!isTabActive && activeTab === 1) {
+      setIsTabActive(true);
+    }
+  }, [activeTab]);
 
   return (
     <section>
