@@ -170,7 +170,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
   });
 
   const resultArray = [];
-  let i = 0;
   contractMap?.forEach((contractGroup, index) => {
     if (contractGroup.length >= 1 && contractMap?.size > 1) {
       let dueDateFlag = 0;
@@ -189,9 +188,12 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         contractGroup[i].agreementDurationFlag = agreementDurationFlag === contractGroup.length;
         contractGroup[i].usagePeriodFlag = usagePeriodFlag === contractGroup.length;
       });
+      const activeGridData = gridData.filter((data) => {
+          return data.contract.id === index;
+      })
       resultArray.push(
         {
-          ...gridData[i],
+          ...activeGridData[0],
           totalPrice: 0,
           value: 0,
           unitPrice: 0,
@@ -204,7 +206,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
           id: `Agreement No:  ${index}`
         }
       );
-      i++;
     }
     resultArray.push(...contractGroup);
   });
