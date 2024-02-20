@@ -29,8 +29,8 @@ function OrderModificationFlyout({
   labels = {},
   gridConfig = {},
   content,
-  gridRef,
-  rowsToGrayOutTDNameRef,
+  gridRef = null,
+  rowsToGrayOutTDNameRef = null,
 }) {
   const { id = '' } = getUrlParams();
   const [items, setItems] = useState([]);
@@ -56,6 +56,9 @@ function OrderModificationFlyout({
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
   const orderNumber = id || orderModificationConfig?.id;
+  const notShippedTabGridRef = orderModificationConfig?.gridRef;
+  const notShippedTabGridRowsRef =
+    orderModificationConfig?.rowsToGrayOutTDNameRef;
   const flyoutVisible = orderModificationConfig?.show;
   const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
@@ -132,8 +135,12 @@ function OrderModificationFlyout({
   });
 
   const greyOutRows = async (rows) => {
-    rowsToGrayOutTDNameRef.current = [...rows];
-    gridRef.current?.api.redrawRows();
+    rowsToGrayOutTDNameRef
+      ? (rowsToGrayOutTDNameRef.current = [...rows])
+      : (notShippedTabGridRowsRef.current = [...rows]);
+    gridRef
+      ? gridRef.current?.api.redrawRows()
+      : notShippedTabGridRef.current?.api.redrawRows();
   };
 
   const handleUpdate = async () => {

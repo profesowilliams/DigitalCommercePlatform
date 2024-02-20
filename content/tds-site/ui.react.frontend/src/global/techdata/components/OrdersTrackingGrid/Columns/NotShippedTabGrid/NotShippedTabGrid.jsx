@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import Grid from '../../../Grid/Grid';
 import columnDefs from './columnDefinitions';
 import buildColumnDefinitions from '../NotShippedTabGrid/buildColumnDefinitions';
@@ -19,14 +19,14 @@ function NotShippedTabGrid({
   orderEditable,
   gridProps,
   hasOrderModificationRights,
-  gridRef,
-  rowsToGrayOutTDNameRef,
   PONo,
   orderNo,
   shipCompleted,
   status,
   ordersOrderEditable,
   activeTab,
+  gridRef,
+  rowsToGrayOutTDNameRef,
 }) {
   const config = {
     ...gridProps,
@@ -108,6 +108,8 @@ function NotShippedTabGrid({
           data: null,
           id: orderNo,
           show: true,
+          gridRef,
+          rowsToGrayOutTDNameRef,
         },
       });
   };

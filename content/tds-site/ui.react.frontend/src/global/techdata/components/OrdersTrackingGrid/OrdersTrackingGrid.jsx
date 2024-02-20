@@ -75,8 +75,6 @@ function OrdersTrackingGrid(props) {
   const reportFilterValue = useRef({ value: '' });
   const customPaginationRef = useRef();
   const filtersRefs = useRef({});
-  const gridRef = useRef();
-  const rowsToGrayOutTDNameRef = useRef([]);
   const resetCallback = useRef(null);
   const shouldGoToFirstPage = useRef(false);
   const isOnSearchAction = useRef(false);
@@ -446,8 +444,6 @@ function OrdersTrackingGrid(props) {
               }
               hasAIORights={hasAIORights}
               hasOrderModificationRights={hasOrderModificationRights}
-              gridRef={gridRef}
-              rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
             />
           )}
           onCellMouseOver={(e) =>
@@ -486,8 +482,6 @@ function OrdersTrackingGrid(props) {
         openFilePdf={openFilePdf}
         analyticsCategories={analyticsCategories}
         onQueryChanged={onQueryChanged}
-        gridRef={gridRef}
-        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
         searchParams={{
           reports: reportFilterValue,

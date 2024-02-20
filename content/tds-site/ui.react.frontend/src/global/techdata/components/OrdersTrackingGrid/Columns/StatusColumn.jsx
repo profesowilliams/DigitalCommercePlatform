@@ -38,9 +38,9 @@ const StatusColumn = ({ data, iconsStatuses }) => {
       case 'Open':
         return shipComplete
           ? getDictionaryValueOrKey(iconsStatuses?.completeDeliveryOnly)
-          : null;
+          : '';
       default:
-        return null;
+        return '';
     }
   };
 

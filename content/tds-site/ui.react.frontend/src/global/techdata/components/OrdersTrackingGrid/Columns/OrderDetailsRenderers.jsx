@@ -8,8 +8,6 @@ function OrderDetailsRenderers({
   openFilePdf,
   hasAIORights,
   hasOrderModificationRights,
-  gridRef,
-  rowsToGrayOutTDNameRef,
 }) {
   const detailRender = useOrderTrackingStore(
     (state) => state.filter.detailRender
@@ -23,8 +21,6 @@ function OrderDetailsRenderers({
           openFilePdf={openFilePdf}
           hasAIORights={hasAIORights}
           hasOrderModificationRights={hasOrderModificationRights}
-          gridRef={gridRef}
-          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         />
       )}
     </>

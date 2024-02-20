@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
   TruckIcon,
@@ -17,13 +17,13 @@ function DropdownOrderDetails({
   openFilePdf,
   hasAIORights,
   hasOrderModificationRights,
-  gridRef,
-  rowsToGrayOutTDNameRef,
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
     'lineDetails'
   );
+  const gridRef = useRef();
+  const rowsToGrayOutTDNameRef = useRef([]);
   const [activeTab, setActiveTab] = useState(0);
 
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
@@ -77,14 +77,14 @@ function DropdownOrderDetails({
           orderEditable={apiResponse?.content?.orderEditable}
           gridProps={aemConfig}
           hasOrderModificationRights={hasOrderModificationRights}
-          gridRef={gridRef}
-          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
           PONo={PONo}
           orderNo={orderNo}
           shipCompleted={shipCompleted}
           status={status}
           ordersOrderEditable={ordersOrderEditable}
           activeTab={activeTab}
+          gridRef={gridRef}
+          rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         />
       ) : (
         isLoading && <LoaderIcon className="loadingIcon-rotate" />
@@ -115,7 +115,6 @@ function DropdownOrderDetails({
       gridRef.current?.api.setRowData(apiResponse.content?.notShipped);
     }
   }, [apiResponse]);
-
   return (
     <div className="order-line-details">
       <div className="order-line-details__header">

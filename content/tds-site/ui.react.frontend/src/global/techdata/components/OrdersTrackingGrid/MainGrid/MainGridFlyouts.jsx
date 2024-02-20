@@ -14,8 +14,6 @@ const MainGridFlyouts = ({
   downloadFileBlob,
   analyticsCategories,
   onQueryChanged,
-  gridRef,
-  rowsToGrayOutTDNameRef,
   userData,
   searchParams,
   resetReports,
@@ -83,8 +81,6 @@ const MainGridFlyouts = ({
         subheaderReference={document.querySelector('.subheader > div > div')}
         labels={gridConfig?.orderModifyLabels}
         gridConfig={gridConfig}
-        gridRef={gridRef}
-        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         userData={userData}
       />
       <SettingsFlyout
