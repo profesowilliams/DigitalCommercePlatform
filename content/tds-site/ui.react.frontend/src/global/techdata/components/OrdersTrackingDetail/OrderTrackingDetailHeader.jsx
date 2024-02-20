@@ -140,7 +140,7 @@ const OrderTrackingDetailHeader = ({
     const url = `${componentProps.uiCommerceServiceDomain}/v3/Order/ITOrderXML/${id}`;
     await usGet(url)
       .then((response) => {
-        if (response?.data?.status === '200') {
+        if (response?.status === 200) {
           let xmlWindow = window.open('', '_blank');
           xmlWindow.document.write(JSON.stringify(response));
         } else {
