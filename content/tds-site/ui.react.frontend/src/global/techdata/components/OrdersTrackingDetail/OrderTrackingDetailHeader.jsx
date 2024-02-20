@@ -80,7 +80,7 @@ const OrderTrackingDetailHeader = ({
     content.orderEditable;
   const areSerialNumbersAvailable = content.serialsAny === true;
   const areXMLMessageAvailable =
-    content?.xmlAvailable === true && userData.isInternalUser;
+    content?.xmlAvailable === true && userData?.isInternalUser;
   const isModifiable = hasOrderModificationRights && orderEditable;
   const id = content.orderNumber;
   const poNumber = content?.customerPO;
