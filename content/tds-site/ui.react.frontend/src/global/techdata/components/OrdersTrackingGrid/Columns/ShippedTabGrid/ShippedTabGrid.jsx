@@ -103,19 +103,17 @@ function ShippedTabGrid({
           {getDictionaryValueOrKey(config?.orderLineDetails?.shippedLabel)}
         </span>
       </div>
-      {enableGrid && (
-        <div className="order-line-details__content__grid">
-          <Grid
-            columnDefinition={myColumnDefs}
-            config={config}
-            data={data}
-            customizedDetailedRender={(props) => (
-              <ShippedTabGridRenderers {...props} config={config} />
-            )}
-            customErrorMessage={true}
-          />
-        </div>
-      )}
+      <div className="order-line-details__content__grid">
+        <Grid
+          columnDefinition={myColumnDefs}
+          config={config}
+          data={data}
+          customizedDetailedRender={(props) => (
+            <ShippedTabGridRenderers {...props} config={config} />
+          )}
+          customErrorMessage={true}
+        />
+      </div>
     </section>
   );
 }
