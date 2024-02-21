@@ -7,6 +7,16 @@
             jcr:primaryType="nt:unstructured"
             sling:resourceType="granite/ui/components/coral/foundation/well">
             <items jcr:primaryType="nt:unstructured">
+                <migrationInfoBoxText
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="Due to data migration, a new order was created for items that have not been shipped. Label"
+                    name="./migrationInfoBoxText"/>
+                <viewOrderText
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                    fieldLabel="View order Label"
+                    name="./viewOrderText"/>
                 <shippedLabel
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

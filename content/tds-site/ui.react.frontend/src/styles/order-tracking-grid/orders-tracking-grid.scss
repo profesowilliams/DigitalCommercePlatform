@@ -302,6 +302,29 @@
   margin-left: 40px;
   margin-right: 40px;
   padding-bottom: 29px;
+  &__info-box {
+    display: flex;
+    padding: 20px;
+    height: 64px;
+    background-color: $brand-cobalt-light;
+    border-left: 4px solid $brand-cobalt;
+    border-radius: 0px 4px 4px 0px;
+    &__content {
+      display: flex;
+      justify-content: space-between;
+      align-self: center;
+      width: 100%;
+      margin-left: 20px;
+      font-size: 16px;
+      &__text {
+        color: $brand-charcoal;
+      }
+      &__link {
+        color: $brand-green;
+        cursor: pointer;
+      }
+    }
+  }
   &__header {
     display: flex;
     align-items: flex-start;

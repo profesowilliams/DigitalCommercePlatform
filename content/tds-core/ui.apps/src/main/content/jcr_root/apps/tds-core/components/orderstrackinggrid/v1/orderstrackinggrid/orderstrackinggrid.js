@@ -133,6 +133,8 @@ use(["../common/utils.js"], function (utils) {
 
     // Order Details Tab
     const orderLineDetailsLabels = [
+      "migrationInfoBoxText",
+      "viewOrderText",
       "shippedLabel",
       "notShippedLabel",
       "itemsLabel",

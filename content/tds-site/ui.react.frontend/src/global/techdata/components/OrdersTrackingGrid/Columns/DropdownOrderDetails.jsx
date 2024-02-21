@@ -10,6 +10,7 @@ import ShippedTabGrid from './ShippedTabGrid/ShippedTabGrid';
 import NotShippedTabGrid from './NotShippedTabGrid/NotShippedTabGrid';
 import useGet from '../../../hooks/useGet';
 import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
+import MigrationInfoBox from './MigrationInfoBox';
 
 function DropdownOrderDetails({
   data,
@@ -26,6 +27,8 @@ function DropdownOrderDetails({
   const rowsToGrayOutTDNameRef = useRef([]);
   const [activeTab, setActiveTab] = useState(0);
 
+  const infoBoxEnable =
+    apiResponse?.content?.sapOrderMigration?.referenceType === 'Migrated';
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const noShippedItems = shippedItemsLeft === 0;
@@ -117,6 +120,15 @@ function DropdownOrderDetails({
   }, [apiResponse]);
   return (
     <div className="order-line-details">
+      {infoBoxEnable && (
+        <MigrationInfoBox
+          id={apiResponse?.content?.sapOrderMigration?.id}
+          migrationInfoBoxLabel={
+            aemConfig?.orderLineDetails?.migrationInfoBoxText
+          }
+          viewOrderLabel={aemConfig?.orderLineDetails?.viewOrderText}
+        />
+      )}
       <div className="order-line-details__header">
         {tabsConfig.map((tab) => (
           <div
