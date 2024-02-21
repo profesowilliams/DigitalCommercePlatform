@@ -48,6 +48,7 @@ function Grid(props) {
     responseError = null,
     rowClassRules,
     gridRef,
+    customErrorMessage = null,
   } = Object.assign({}, props);
   let isLicenseSet = false;
   const componentVersion = '1.3.0';
@@ -68,7 +69,7 @@ function Grid(props) {
   const serverSide = config?.serverSide ?? true;
   const suppressContextMenu = config?.suppressContextMenu ?? false;
   const enableCellTextSelection = config?.enableCellTextSelection ?? false;
-  const ensureDomOrder = config?.ensureDomOrder ?? false;    
+  const ensureDomOrder = config?.ensureDomOrder ?? false;
   const gridNodeRef = useRef(null);
   const gridId = useRef(null);
   const gridApi = useRef(null);
@@ -80,8 +81,7 @@ function Grid(props) {
       : null;
 
   const getAgGridDomLayout = () => {
-    if (config?.domLayout)
-      return config.domLayout;
+    if (config?.domLayout) return config.domLayout;
     if (serverSide) {
       return pagination ? 'autoHeight' : 'normal';
     }
@@ -100,6 +100,18 @@ function Grid(props) {
           title: config.searchResultsError?.noDataTitle,
           description: config.searchResultsError?.noDataDescription,
         };
+
+    if (customErrorMessage) {
+      return (
+        <div className=" customErrorNoRows">
+          {getDictionaryValue(
+            'techdata.grids.message.noRows',
+            'No rows found.'
+          )}
+          <i className="far info-circle errorIcon"></i>
+        </div>
+      );
+    }
 
     return (
       <>

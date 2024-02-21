@@ -33,10 +33,29 @@
   }
 }
 
+@mixin horizontal_scroll {
+  @media screen and (max-width: 1739px) {
+    & .ag-root-wrapper-body {
+      overflow-x: scroll;
+    }
+    & .ag-root {
+      &.ag-unselectable {
+        &.ag-layout-auto-height {
+          overflow: unset;
+          width: unset;
+          min-height: 150px;
+        }
+      }
+    }
+  }
+}
+
 .cmp-order-tracking-grid {
   /* Styles for the base grid */
   & .cmp-base-grid .cmp-grid {
     &.ag-theme-alpine {
+      @include horizontal_scroll;
+
       & .ag-header {
         padding-top: 0;
       }
@@ -529,6 +548,9 @@
     &.ag-root-wrapper-body.ag-layout-auto-height.ag-focus-managed {
       overflow-x: hidden !important;
     }
+  }
+  .customErrorNoRows {
+    margin-top: 0;
   }
 }
 .order-modal {

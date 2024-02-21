@@ -27,8 +27,7 @@ function ShippedTabGrid({
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const enableGrid = data.length > 0;
-  const { shipDate, dnote, invoice, value, qty } =
+  const { shipDate, dnote, invoice, qty } =
     config?.orderLineDetailsShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
     dropdownArrow: '50px',
@@ -113,6 +112,7 @@ function ShippedTabGrid({
             customizedDetailedRender={(props) => (
               <ShippedTabGridRenderers {...props} config={config} />
             )}
+            customErrorMessage={true}
           />
         </div>
       )}

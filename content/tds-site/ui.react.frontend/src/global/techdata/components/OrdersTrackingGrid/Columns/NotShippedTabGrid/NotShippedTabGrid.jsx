@@ -46,7 +46,6 @@ function NotShippedTabGrid({
   const [openAlert, setOpenAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
-  const enableGrid = data.length > 0 && isTabActive;
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
   const gridColumnWidths = Object.freeze({
@@ -192,13 +191,14 @@ function NotShippedTabGrid({
           )}
         </span>
       </div>
-      {enableGrid && (
+      {isTabActive && (
         <Grid
           columnDefinition={myColumnDefs}
           config={config}
           data={data}
           rowClassRules={rowClassRules}
           gridRef={gridRef}
+          customErrorMessage={true}
         />
       )}
       <OrderReleaseModal

@@ -50,8 +50,6 @@ function OrdersTrackingDetailGrid({
     ...gridProps,
     serverSide: true,
     paginationStyle: 'none',
-    noRowsErrorMessage: 'No data found',
-    errorGettingDataMessage: 'Internal server error please refresh the page',
     suppressContextMenu: true,
     enableCellTextSelection: true,
     ensureDomOrder: true,
