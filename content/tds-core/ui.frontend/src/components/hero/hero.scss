@@ -393,10 +393,10 @@
 .cmp-teaser {
   .mobile-image {
     display: none;
-    min-height: 22.5rem;
+    min-height: 31.5rem;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 65%;
+    background-position: inherit;
     @include mobile {
       display: block;
     }
