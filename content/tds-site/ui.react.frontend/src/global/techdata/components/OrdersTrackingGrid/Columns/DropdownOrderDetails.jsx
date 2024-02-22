@@ -28,7 +28,7 @@ function DropdownOrderDetails({
   const [activeTab, setActiveTab] = useState(0);
 
   const infoBoxEnable =
-    apiResponse?.content?.sapOrderMigration?.referenceType === 'Migrated';
+    apiResponse?.content?.sapOrderMigration?.referenceType?.length > 0;
   const shippedItemsLeft = apiResponse?.content?.totalShipQuantity;
   const notShippedItemsLeft = apiResponse?.content?.totalOpenQuantity;
   const noShippedItems = shippedItemsLeft === 0;
@@ -122,11 +122,9 @@ function DropdownOrderDetails({
     <div className="order-line-details">
       {infoBoxEnable && (
         <MigrationInfoBox
-          id={apiResponse?.content?.sapOrderMigration?.id}
-          migrationInfoBoxLabel={
-            aemConfig?.orderLineDetails?.migrationInfoBoxText
-          }
-          viewOrderLabel={aemConfig?.orderLineDetails?.viewOrderText}
+          config={aemConfig?.orderLineDetails}
+          id={apiResponse?.content?.sapOrderMigration?.iD}
+          referenceType={apiResponse?.content?.sapOrderMigration?.referenceType}
         />
       )}
       <div className="order-line-details__header">

@@ -6572,8 +6572,8 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
         },
       ],
       sapOrderMigration: {
-        id: "I038551797",
-        referenceType: "Migrated",
+        iD: "I038551797",
+        referenceType: "Original",
       },
       orderEditable: true,
       totalOpenQuantity: 429.0,
