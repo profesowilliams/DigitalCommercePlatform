@@ -728,11 +728,11 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Button Label"
 															name="./shareFlyoutButtonLabel"/>
-													<shareFlyoutQuoteHeading
+													<shareFlyoutSignatureLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-															fieldLabel="Share Flyout Quote Heading"
-															name="./shareFlyoutQuoteHeading"/>
+															fieldLabel="Share Flyout Signature Label"
+															name="./shareFlyoutSignatureLabel"/>
 													<shareFlyoutQuoteDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

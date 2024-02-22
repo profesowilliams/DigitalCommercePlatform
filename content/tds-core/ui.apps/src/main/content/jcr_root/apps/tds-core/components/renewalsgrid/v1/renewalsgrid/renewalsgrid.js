@@ -411,8 +411,8 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["shareFlyoutCommentCount"]) {
         shareFlyout.shareFlyoutCommentCount = properties["shareFlyoutCommentCount"];
     }
-    if (properties && properties["shareFlyoutQuoteHeading"]) {
-        shareFlyout.shareFlyoutQuoteHeading = properties["shareFlyoutQuoteHeading"];
+    if (properties && properties["shareFlyoutSignatureLabel"]) {
+        shareFlyout.shareFlyoutSignatureLabel = properties["shareFlyoutSignatureLabel"];
     }
 
     if (properties && properties["shareFlyoutQuoteDescription"]) {

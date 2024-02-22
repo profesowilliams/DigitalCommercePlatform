@@ -7,12 +7,19 @@ import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Button, TextField, Autocomplete, Chip } from '@mui/material';
 import Box from '@mui/material/Box';
 import { CustomTextField } from '../Widgets/CustomTextField';
+import { EmailInput } from '../ShareFlyout/EmailInput';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 
 export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const shareFlyoutConfig = store((st) => st.shareFlyout);
+  console.log(shareFlyoutConfig);
+  const vendorName = shareFlyoutConfig?.data?.vendor?.name || '';
+  const endUserName = shareFlyoutConfig?.data?.endUser?.name || '';
+  const firstName = shareFlyoutConfig?.data?.endUser?.contact?.firstName || '';
+  const lastName = shareFlyoutConfig?.data?.endUser?.contact?.lastName || '';
+  const quoteType = shareFlyoutConfig?.data?.quoteType || getDictionaryValueOrKey('quote');
   const activeAgreementID = shareFlyoutConfig?.data?.source?.id || '';
   const effects = store((st) => st.effects);
   const [enableShare, setEnableShare] = useState(false);
@@ -54,36 +61,16 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
           noValidate
           autoComplete="off"
         >
-          <Autocomplete
-            multiple
+          <EmailInput
             id="to-email"
-            options={[]}
-            freeSolo={true}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="filled"
-                label={getDictionaryValueOrKey("Email to")}
-                required
-              />
-            )}
-          />
-          <Autocomplete
-            multiple
-            id="cc-email"
-            options={[]}
-            freeSolo={true}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="filled"
-                label={getDictionaryValueOrKey("CC")}
-              />
-            )}
-          />
+            label="Email to"
+            required="true"/>
+         <EmailInput
+             id="cc-email"
+             label="CC"/>
           <div className="email-preview-section">
             <h3 className="email-preview-section-title">{getDictionaryValueOrKey(shareFlyoutContent.emailPreviewDescription)}:</h3>
-            <p className="email-preview-section-product">{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteHeading)} - {activeAgreementID}</p>
+            <p className="email-preview-section-product">{vendorName} {quoteType} for {endUserName} - {activeAgreementID}</p>
             <p className="email-preview-section-desc">{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteDescription)}</p>
             <a className="email-preview-section-quote-btn" href={`#`}>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteButtonLabel)}</a>
           </div>
@@ -92,6 +79,10 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
             <span className="char-count">{count} {getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCountText)}</span>
           </div>
         </Box>
+        <div className="email-signature">
+          <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)}</p>
+          <p>{firstName} {lastName}</p>
+        </div>
       </section>
     </BaseFlyout>
   );

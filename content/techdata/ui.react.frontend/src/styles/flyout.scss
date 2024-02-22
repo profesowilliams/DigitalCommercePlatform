@@ -273,6 +273,13 @@ $flyout-small-height-formax: 779px;
         color: #888b8d;
         display: block;
       }
+      .email-signature {
+        p {
+          font-size: 14px;
+          line-height: 21px;
+          color: #262626;
+        }
+      }
     }
     .cmp-flyout__header {
       padding: 18px;
