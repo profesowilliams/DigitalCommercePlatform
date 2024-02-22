@@ -10,7 +10,7 @@ import ShippedTabGrid from './ShippedTabGrid/ShippedTabGrid';
 import NotShippedTabGrid from './NotShippedTabGrid/NotShippedTabGrid';
 import useGet from '../../../hooks/useGet';
 import { LoaderIcon } from '../../../../../fluentIcons/FluentIcons';
-import MigrationInfoBox from './MigrationInfoBox';
+import MigrationInfoBox from '../../MigrationInfoBox/MigrationInfoBox';
 
 function DropdownOrderDetails({
   data,

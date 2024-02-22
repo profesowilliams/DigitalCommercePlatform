@@ -44,6 +44,9 @@ use(["../../../common/utils.js"], function (utils) {
     "orderNo",
     "completeDeliveryOnly",
     "actions",
+    "migrationInfoBoxText",
+    "originalInfoBoxText",
+    "viewOrderText",
   ];
 
   properties &&

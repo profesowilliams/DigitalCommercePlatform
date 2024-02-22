@@ -6223,6 +6223,10 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
       invoices: [],
       deliveryNotes: [],
       orderEditable: true,
+      sapOrderMigration: {
+        iD: "I038551797",
+        referenceType: "Original",
+      },
     },
     error: {
       code: 0,

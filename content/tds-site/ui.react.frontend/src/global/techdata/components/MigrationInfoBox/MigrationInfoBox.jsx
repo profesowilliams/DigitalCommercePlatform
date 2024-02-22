@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { CobaltInfoIcon } from '../../../../../fluentIcons/FluentIcons';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { getUrlParamsCaseInsensitive } from '../../../../../utils';
+import { CobaltInfoIcon } from '../../../../fluentIcons/FluentIcons';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { getUrlParamsCaseInsensitive } from '../../../../utils';
 
 function MigrationInfoBox({ config, id, referenceType }) {
   const { saleslogin = '' } = getUrlParamsCaseInsensitive();

@@ -19,6 +19,7 @@ import OrderReleaseModal from '../OrdersTrackingGrid/Modals/OrderReleaseModal';
 import { usGet, usPost } from '../../../../utils/api';
 import OrderReleaseAlertModal from '../OrdersTrackingGrid/Modals/OrderReleaseAlertModal';
 import XMLMessageModal from '../OrdersTrackingGrid/Modals/XMLMessageModal';
+import MigrationInfoBox from '../MigrationInfoBox/MigrationInfoBox';
 
 const OrderTrackingDetailHeader = ({
   config,
@@ -38,6 +39,7 @@ const OrderTrackingDetailHeader = ({
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
   const orderEditable = content?.orderEditable === true;
+  const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
 
   const handleActionMouseOver = () => {
     setActionsDropdownVisible(true);
@@ -271,6 +273,13 @@ const OrderTrackingDetailHeader = ({
           </div>
         </div>
       </div>
+      {infoBoxEnable && (
+        <MigrationInfoBox
+          config={config?.labels}
+          id={content?.sapOrderMigration?.iD}
+          referenceType={content?.sapOrderMigration?.referenceType}
+        />
+      )}
       <div className="info-container">
         <SoldToCard shipTo={content.shipTo} config={config} />
         <OrderAcknowledgementCard content={content} config={config} />

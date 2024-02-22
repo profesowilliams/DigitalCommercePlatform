@@ -54,6 +54,27 @@
                                                 fieldLabel="Actions Label"
                                                 name="./actions"
                                                 required="{Boolean}true"/>
+											<migrationInfoBoxText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Due do data migration, a new order was created for items that have not been shipped. Label"
+                                                fieldLabel="Due do data migration, a new order was created for items that have not been shipped. Label"
+                                                name="./migrationInfoBoxText"
+                                                required="{Boolean}true"/>
+											<originalInfoBoxText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter Due do data migration, this new order was created for items hat have not been shipped in a previous order. Label"
+                                                fieldLabel="Due do data migration, this new order was created for items hat have not been shipped in a previous order. Label"
+                                                name="./originalInfoBoxText"
+                                                required="{Boolean}true"/>
+											<viewOrderText
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldDescription="Enter View order Label"
+                                                fieldLabel="View order Label"
+                                                name="./viewOrderText"
+                                                required="{Boolean}true"/>
 											<soldTo
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
