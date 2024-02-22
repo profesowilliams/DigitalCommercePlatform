@@ -136,6 +136,46 @@ export const getPageReloadAnalyticsGoogle = ({
   };
 };
 
+export const getProActiveSettingsAnalyticsGoogle = () => {
+  return {
+    event: 'Pro Active Messaging- Settings',
+    orderTracking: 'Pro Active Messaging',
+  };
+};
+
+export const getProActiveSettingsActivactionAnalyticsGoogle = ({active}) => {
+  return {
+    event: 'Order tracking - Pro Active Messaging- Settings',
+    orderTracking: 'Pro Active Messaging - Type Active',
+    label: active,
+  };
+};
+
+export const getProActiveNotificationMessagesAnalyticsGoogle = ({label}) => {
+  return {
+    event: 'Order tracking - Pro Active Messaging- Settings',
+    orderTracking: 'Pro Active Messaging - Type Notification Messages',
+    label
+  };
+};
+
+export const getProActiveTypesAnalyticsGoogle = ({ label }) => {
+  return {
+    event: 'Order tracking - Pro Active Messaging- Settings',
+    orderTracking: 'Pro Active Messaging - Type types',
+    label,
+  };
+};
+
+export const getProActiveMailAnalyticsGoogle = ({ label, isAdditional }) => {
+  const additional = isAdditional ? " Additional" : "";
+  return {
+    event: 'Order tracking - Pro Active Messaging- Settings',
+    orderTracking: `Pro Active Messaging - Type${additional} Email`,
+    label,
+  };
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],

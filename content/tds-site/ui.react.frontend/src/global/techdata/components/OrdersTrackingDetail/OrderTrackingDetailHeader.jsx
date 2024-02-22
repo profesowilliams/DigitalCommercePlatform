@@ -141,8 +141,10 @@ const OrderTrackingDetailHeader = ({
     await usGet(url)
       .then((response) => {
         if (response?.status === 200) {
-          let xmlWindow = window.open('', '_blank');
-          xmlWindow.document.write(JSON.stringify(response));
+          const xmlContent = new Blob([response?.data], { type: 'text/xml' });
+          const urlXML = URL.createObjectURL(xmlContent);
+          window.open(urlXML, '_blank');
+          URL.revokeObjectURL(urlXML);
         } else {
           setOpenXMLAlert(true);
         }
