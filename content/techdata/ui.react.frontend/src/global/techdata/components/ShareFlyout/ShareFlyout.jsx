@@ -14,7 +14,6 @@ import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
 
 export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const shareFlyoutConfig = store((st) => st.shareFlyout);
-  console.log(shareFlyoutConfig);
   const vendorName = shareFlyoutConfig?.data?.vendor?.name || '';
   const endUserName = shareFlyoutConfig?.data?.endUser?.name || '';
   const firstName = shareFlyoutConfig?.data?.endUser?.contact?.firstName || '';
@@ -30,7 +29,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   }, []);
 
   const handleCommentChange = (e) => {
-
+    const count = getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount) || 500;
+    setCount(parseInt(count) - e.target.value.length);
   };
 
   const formBoxStyle = {
@@ -39,11 +39,15 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
     '&.MuiBox-root': { marginTop: '20px' },
   };
 
+  const enableShareButton = (flag) => {
+    setEnableShare(flag);
+  };
+
   return (
     <BaseFlyout
       open={shareFlyoutConfig?.show}
       onClose={closeFlyout}
-      width="425px"
+      width="768px"
       anchor="right"
       subheaderReference={subheaderReference}
       titleLabel={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutTitle) || 'Share'}
@@ -64,7 +68,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
           <EmailInput
             id="to-email"
             label="Email to"
-            required="true"/>
+            required="true"
+            enableShareButton={enableShareButton}/>
          <EmailInput
              id="cc-email"
              label="CC"/>

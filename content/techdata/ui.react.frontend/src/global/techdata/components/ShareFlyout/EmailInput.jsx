@@ -6,10 +6,18 @@ import { CustomTextField } from '../Widgets/CustomTextField';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
-export function EmailInput({ id, label, required }) {
+export function EmailInput({ id, label, required, enableShareButton }) {
 
   const [inputValue, setInputValue] = useState("");
   const [selectedEmails, setSelectedEmails] = useState([]);
+
+  useEffect(() =>{
+    if (selectedEmails?.length && enableShareButton) {
+      enableShareButton(true);
+    } else if (enableShareButton) {
+      enableShareButton(false);
+    }
+  }, [selectedEmails]);
 
   const isValidEmailFormat = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
