@@ -5,6 +5,7 @@ import { LicenseManager } from "ag-grid-enterprise";
 import { get } from "../../../../utils/api";
 import {
   getDictionaryValue,
+  getDictionaryValueOrKey,
   setDefaultSearchDateRange,
   fromExceptionToErrorObject,
   normalizeErrorCode,
@@ -124,15 +125,17 @@ function Grid(props) {
               />
             </div>
             <div className="cmp-renewal-search-error__title">
-              {configInfo.title}
+              {getDictionaryValueOrKey(configInfo.title)}
             </div>
             <div className="cmp-renewal-search-error__description">
-              {configInfo.description}
+              {getDictionaryValueOrKey(configInfo.description)}
             </div>
           </div>
         ) : (
           <div className=" customErrorNoRows">
-            {props.noRowsMessageFunc(props)}
+            {getDictionaryValueOrKey(
+              noRowsMessageFuncprops.noRowsMessageFunc(props)
+            )}
             <i className="far info-circle errorIcon"></i>
           </div>
         )}
@@ -160,7 +163,7 @@ function Grid(props) {
 
   const loadingCellRendererParams = useMemo(() => {
     return {
-      loadingMessage: 'Loading...',
+      loadingMessage: getDictionaryValueOrKey('Loading...'),
     };
   }, []);
 
@@ -442,11 +445,16 @@ function Grid(props) {
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
       const url = new URL(config.uiServiceEndPoint);
-      const pages = pageSize && pageNumber ? `PageSize=${pageSize}&PageNumber=${pageNumber}` : null;
+      const pages =
+        pageSize && pageNumber
+          ? `PageSize=${pageSize}&PageNumber=${pageNumber}`
+          : null;
       const sortParams =
         sortKey && sortDir
           ? `&SortDirection=${sortDir}&SortBy=${sortKey}${dateRangeUrlParam}`
-          : (dateRangeUrlParam ? `&SortDirection=desc&SortBy=id${dateRangeUrlParam}` : null); // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
+          : dateRangeUrlParam
+          ? `&SortDirection=desc&SortBy=id${dateRangeUrlParam}`
+          : null; // For some reason the sortKey and sortDir is coming like undefined so force the Sortparam to don't break the component
       let pathName = url.pathname ?? '';
       pathName.slice(-1) === '/' && (pathName = pathName.slice(0, -1));
       const apiUrl = `${url.origin}${pathName ?? ''}${url.search ?? ''}${
