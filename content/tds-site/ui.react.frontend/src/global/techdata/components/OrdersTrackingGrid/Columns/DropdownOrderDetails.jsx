@@ -123,7 +123,7 @@ function DropdownOrderDetails({
       {infoBoxEnable && (
         <MigrationInfoBox
           config={aemConfig?.orderLineDetails}
-          id={apiResponse?.content?.sapOrderMigration?.iD}
+          id={apiResponse?.content?.sapOrderMigration?.id}
           referenceType={apiResponse?.content?.sapOrderMigration?.referenceType}
         />
       )}

@@ -276,7 +276,7 @@ const OrderTrackingDetailHeader = ({
       {infoBoxEnable && (
         <MigrationInfoBox
           config={config?.labels}
-          id={content?.sapOrderMigration?.iD}
+          id={content?.sapOrderMigration?.id}
           referenceType={content?.sapOrderMigration?.referenceType}
         />
       )}

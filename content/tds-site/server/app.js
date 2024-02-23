@@ -6224,7 +6224,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
       deliveryNotes: [],
       orderEditable: true,
       sapOrderMigration: {
-        iD: "I038551797",
+        id: "I038551797",
         referenceType: "Original",
       },
     },
@@ -6576,7 +6576,7 @@ app.get("/ui-commerce/v3/order/:id?/lines", (req, res) => {
         },
       ],
       sapOrderMigration: {
-        iD: "I038551797",
+        id: "I038551797",
         referenceType: "Original",
       },
       orderEditable: true,
