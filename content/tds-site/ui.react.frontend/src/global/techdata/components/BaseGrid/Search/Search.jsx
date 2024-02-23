@@ -366,27 +366,50 @@ function _GridSearch(
       <div className="cmp-renewal-search" onMouseLeave={handleMouseLeave}>
         <If condition={!isDropdownVisible}>
           <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
-            {!hideLabel && <If condition={!isSearchCapsuleVisible} Else={<span className="cmp-renewal-search-dnone" />}>
-              <span className="cmp-renewal-search__text">{getDictionaryValue("grids.common.label.search", "Search")}</span>
-            </If>}
-            <div onMouseOver={handleMouseOverSearch} onMouseLeave={handleMouseLeaveSearch}>            
-              {isSearchHovered ? <SearchIconFilled className="search-icon__dark" /> 
-              : <SearchIcon className="search-icon__dark"/>}
+            {!hideLabel && (
+              <If
+                condition={!isSearchCapsuleVisible}
+                Else={<span className="cmp-renewal-search-dnone" />}
+              >
+                <span className="cmp-renewal-search__text">
+                  {getDictionaryValue('grids.common.label.search', 'Search')}
+                </span>
+              </If>
+            )}
+            <div
+              onMouseOver={handleMouseOverSearch}
+              onMouseLeave={handleMouseLeaveSearch}
+            >
+              {isSearchHovered ? <SearchIconFilled /> : <SearchIcon />}
             </div>
           </div>
         </If>
         <If condition={isDropdownVisible}>
           <div className="cmp-search-select-container" ref={node}>
             <div className="cmp-search-select-container__box">
-              <input className={computeClassName("inputStyle")} placeholder={getDictionaryValue("grids.common.label.search", "Search")} disabled />
-              <button className={computeClassName("cmp-search-tooltip__button")}>
+              <input
+                className={computeClassName('inputStyle')}
+                placeholder={getDictionaryValue(
+                  'grids.common.label.search',
+                  'Search'
+                )}
+                disabled
+              />
+              <button
+                className={computeClassName('cmp-search-tooltip__button')}
+              >
                 <SearchIcon className="search-icon__light" />
               </button>
             </div>
             <div className="cmp-search-select-container__filler"></div>
             <If condition={true}>
-              <div className={computeClassName("cmp-search-options")}>
-                {options.map((option) => <RenderWithPermissions option={option} key={option.searchKey} />)}
+              <div className={computeClassName('cmp-search-options')}>
+                {options.map((option) => (
+                  <RenderWithPermissions
+                    option={option}
+                    key={option.searchKey}
+                  />
+                ))}
               </div>
             </If>
           </div>
