@@ -104,7 +104,9 @@ export default function FlyoutTable({
                 <TableRow
                   hover
                   onClick={(event) => {
-                    handleCheckboxEnabled(row) ? handleClick(event, row.id) : undefined;
+                    handleCheckboxEnabled(row)
+                      ? handleClick(event, row.id)
+                      : undefined;
                   }}
                   role="checkbox"
                   aria-checked={isItemSelected}
@@ -133,12 +135,20 @@ export default function FlyoutTable({
                     />
                   </TableCell>
                   <TableCell
-                    onClick={(e) => handleCheckboxEnabled(row) ? handleSingleLinkClick(e, row.id || row.Id) : undefined}
+                    onClick={(e) =>
+                      handleCheckboxEnabled(row)
+                        ? handleSingleLinkClick(e, row.id || row.Id)
+                        : undefined
+                    }
                     component="th"
                     id={labelId}
                     scope="row"
                     padding="normal"
-                    sx={handleCheckboxEnabled(row) ? { color: '#006FBA' } : disabledLink}
+                    sx={
+                      handleCheckboxEnabled(row)
+                        ? { color: '#005758' }
+                        : disabledLink
+                    }
                   >
                     {row.id || row.Id}
                   </TableCell>
