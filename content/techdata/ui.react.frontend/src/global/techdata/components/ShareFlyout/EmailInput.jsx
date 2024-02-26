@@ -6,7 +6,7 @@ import { CustomTextField } from '../Widgets/CustomTextField';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
-export function EmailInput({ id, label, required, enableShareButton }) {
+export function EmailInput({ id, label, required, enableShareButton, requiredText }) {
 
   const [inputValue, setInputValue] = useState("");
   const [selectedEmails, setSelectedEmails] = useState([]);
@@ -52,7 +52,7 @@ export function EmailInput({ id, label, required, enableShareButton }) {
     const clipboardData = event.clipboardData || window.clipboardData;
     const pastedText = clipboardData.getData("text");
 
-    const emailsToPaste = pastedText.split(/[\s,]+/).filter(Boolean);
+    const emailsToPaste = pastedText.split(/[\s,;]+/).filter(Boolean);
 
     const validEmails = emailsToPaste.filter((email) =>
       isValidEmailFormat(email)
@@ -67,6 +67,7 @@ export function EmailInput({ id, label, required, enableShareButton }) {
   }, []);
 
   return (
+        <>
           <Autocomplete
             multiple
             id={id}
@@ -89,6 +90,11 @@ export function EmailInput({ id, label, required, enableShareButton }) {
               />
             )}
           />
+          {
+          required && requiredText ? (
+            <p className="required-text">{requiredText}</p> ) : null
+           }
+       </>
   );
 }
 

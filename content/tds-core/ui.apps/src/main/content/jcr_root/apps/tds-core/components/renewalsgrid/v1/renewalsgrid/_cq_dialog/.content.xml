@@ -728,11 +728,31 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Button Label"
 															name="./shareFlyoutButtonLabel"/>
+													<emailToLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Email To Label"
+															name="./emailToLabel"/>
+													<emailCCLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Email CC Label"
+															name="./emailCCLabel"/>
 													<shareFlyoutSignatureLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Signature Label"
 															name="./shareFlyoutSignatureLabel"/>
+													<requiredText
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Share Flyout Field Required Text"
+															name="./requiredText"/>
+													<shareFlyoutCommentsLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Share Flyout Comments Label"
+															name="./shareFlyoutCommentsLabel"/>
 													<shareFlyoutQuoteDescription
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

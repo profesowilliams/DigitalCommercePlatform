@@ -414,9 +414,24 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["shareFlyoutSignatureLabel"]) {
         shareFlyout.shareFlyoutSignatureLabel = properties["shareFlyoutSignatureLabel"];
     }
+    if (properties && properties["requiredText"]) {
+        shareFlyout.requiredText = properties["requiredText"];
+    }
+
+    if (properties && properties["shareFlyoutCommentsLabel"]) {
+          shareFlyout.shareFlyoutCommentsLabel = properties["shareFlyoutCommentsLabel"];
+      }
 
     if (properties && properties["shareFlyoutQuoteDescription"]) {
         shareFlyout.shareFlyoutQuoteDescription = properties["shareFlyoutQuoteDescription"];
+    }
+
+    if (properties && properties["emailToLabel"]) {
+        shareFlyout.emailToLabel = properties["emailToLabel"];
+    }
+
+    if (properties && properties["emailCCLabel"]) {
+        shareFlyout.emailCCLabel = properties["emailCCLabel"];
     }
 
     if (properties && properties["shareFlyoutButtonLabel"]) {

@@ -26,11 +26,16 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const [count, setCount] = useState(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
 
   useEffect(() => {
-  }, []);
+    resetCount();
+  }, [shareFlyoutConfig]);
 
   const handleCommentChange = (e) => {
     const count = getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount) || 500;
     setCount(parseInt(count) - e.target.value.length);
+  };
+
+  const resetCount = () => {
+    setCount(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
   };
 
   const formBoxStyle = {
@@ -67,12 +72,13 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
         >
           <EmailInput
             id="to-email"
-            label="Email to"
+            label={getDictionaryValueOrKey(shareFlyoutContent.emailToLabel)}
             required="true"
-            enableShareButton={enableShareButton}/>
+            enableShareButton={enableShareButton}
+            requiredText={getDictionaryValueOrKey(shareFlyoutContent.requiredText)}/>
          <EmailInput
              id="cc-email"
-             label="CC"/>
+             label={getDictionaryValueOrKey(shareFlyoutContent.emailCCLabel)}/>
           <div className="email-preview-section">
             <h3 className="email-preview-section-title">{getDictionaryValueOrKey(shareFlyoutContent.emailPreviewDescription)}:</h3>
             <p className="email-preview-section-product">{vendorName} {quoteType} for {endUserName} - {activeAgreementID}</p>
@@ -80,7 +86,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
             <a className="email-preview-section-quote-btn" href={`#`}>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutQuoteButtonLabel)}</a>
           </div>
           <div>
-            <textarea type="text" placeholder="Comments" className="comments" maxLength={count} onChange={(e) => handleCommentChange(e)}/>
+            <textarea type="text" placeholder={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentsLabel)} className="comments" maxLength={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount)} onChange={(e) => handleCommentChange(e)}/>
             <span className="char-count">{count} {getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCountText)}</span>
           </div>
         </Box>

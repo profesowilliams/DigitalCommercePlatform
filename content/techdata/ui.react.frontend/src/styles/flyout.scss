@@ -223,7 +223,7 @@ $flyout-small-height-formax: 779px;
         color: #888b8d;
       }
       .email-preview-section {
-        margin-top: 20px;
+        margin-top: 40px;
         &-title {
           font-size: 12px;
           line-height: 14px;
@@ -234,6 +234,7 @@ $flyout-small-height-formax: 779px;
           font-size: 14px;
           line-height: 21px;
           font-weight: 700;
+          margin-bottom: 15px;
         }
         &-desc {
           font-size: 14px;
@@ -309,18 +310,31 @@ $flyout-small-height-formax: 779px;
         width: auto;
         margin-right: 20px;
         height: auto;
-        padding: 5px 15px;
+        padding: 12px 20px 12px 20px;
+        border-radius: 2px;
+        &.cmp-flyout__footer-button--enabled {
+          background-color: $brand-green;
+        }
       }
     }
     .MuiFilledInput-root:after {
       border-color: #006fba;
+    }
+    .MuiAutocomplete-root {
+      margin-bottom: 0;
+      margin-top: 10px;
+    }
+    .required-text {
+      font-size: 12px;
+      line-height: 18px;
+      color: #888B8D;
     }
     .MuiFilledInput-root {
       background-color: white;
       padding-left: 0;
     }
     .css-e4w4as-MuiFormLabel-root-MuiInputLabel-root {
-      transform: translate(0, 16px) scale(1);
+      transform: translate(0, 30px) scale(1);
     }
     .css-o943dk-MuiFormLabel-root-MuiInputLabel-root {
       transform: translate(0, 7px) scale(0.75);
@@ -334,13 +348,24 @@ $flyout-small-height-formax: 779px;
     .MuiAutocomplete-endAdornment {
       top: calc(50% - 4px);
     }
+    .MuiAutocomplete-root label {
+        transform: translate(0, 30px) scale(1);
+    }
+    .MuiAutocomplete-root.Mui-focused label {
+        transform: translate(0, 7px) scale(0.75);
+    }
     .MuiChip-root {
       background-color: white;
       border: 1px solid #00558c;
       height: auto;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+      }
     }
     .MuiChip-root svg {
-      display: none;
+      font-size: 15px;
+      color: rgba(0, 0, 0, 0.26);
     }
   }
 }
