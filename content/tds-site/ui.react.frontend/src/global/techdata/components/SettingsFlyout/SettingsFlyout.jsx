@@ -5,6 +5,7 @@ import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTracking
 import SettingsContent from './SettingsContent';
 import { useStore } from '../../../../utils/useStore';
 import { usPut } from '../../../../utils/api';
+import { getProActiveMailAnalyticsGoogle, getProActiveNotificationAnalyticsGoogle, getProActiveSettingsActivactionAnalyticsGoogle, getProActiveTypesAnalyticsGoogle, pushDataLayerGoogle } from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 const settingsKeys = [
   'active',
@@ -38,6 +39,30 @@ const SettingsFlyout = ({
   const changeRefreshDetailApiState = useStore(
     (state) => state.changeRefreshDetailApiState
   );
+
+  const pushGoogleDataProactiveMessaging = () => {
+    const diff = Object.keys(dataCopy).filter(
+      (key) => dataCopy[key] !== data[key]
+    );
+    diff.includes('active') &&
+      pushDataLayerGoogle(
+        getProActiveSettingsActivactionAnalyticsGoogle(data.active)
+      );
+    diff.includes('range') &&
+      pushDataLayerGoogle(
+        getProActiveNotificationAnalyticsGoogle(data.range)
+      );
+    diff.includes('types') &&
+      pushDataLayerGoogle(getProActiveTypesAnalyticsGoogle(data.types.join()));
+    diff.includes('emailActive') &&
+      pushDataLayerGoogle(
+        getProActiveMailAnalyticsGoogle(data.emailActive, false)
+      );
+    diff.includes('additionalEmailActive') &&
+      pushDataLayerGoogle(
+        getProActiveMailAnalyticsGoogle(data.additionalEmailActive, true)
+      );
+  };
 
   const closeFlyout = () => {
     effects.setCustomState({
@@ -85,6 +110,7 @@ const SettingsFlyout = ({
       effects.setCustomState({ key: 'toaster', value: { ...errorToaster } });
     }
     changeRefreshDetailApiState('settings');
+    pushGoogleDataProactiveMessaging();
     closeFlyout();
   };
 

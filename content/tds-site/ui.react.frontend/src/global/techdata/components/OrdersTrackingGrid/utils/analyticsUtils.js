@@ -136,43 +136,36 @@ export const getPageReloadAnalyticsGoogle = ({
   };
 };
 
-export const getProActiveSettingsAnalyticsGoogle = () => {
-  return {
-    event: 'Pro Active Messaging- Settings',
-    orderTracking: 'Pro Active Messaging',
-  };
-};
-
-export const getProActiveSettingsActivactionAnalyticsGoogle = ({active}) => {
+export const getProActiveSettingsActivactionAnalyticsGoogle = (active) => {
   return {
     event: 'Order tracking - Pro Active Messaging- Settings',
-    orderTracking: 'Pro Active Messaging - Type Active',
+    orderTracking: `Pro Active Messaging - Type Active`,
     label: active,
   };
 };
 
-export const getProActiveNotificationMessagesAnalyticsGoogle = ({label}) => {
+export const getProActiveNotificationAnalyticsGoogle = (value) => {
   return {
     event: 'Order tracking - Pro Active Messaging- Settings',
     orderTracking: 'Pro Active Messaging - Type Notification Messages',
-    label
+    label: value === 'Intouch' ? 'InTouch' : 'All',
   };
 };
 
-export const getProActiveTypesAnalyticsGoogle = ({ label }) => {
+export const getProActiveTypesAnalyticsGoogle = ( value ) => {
   return {
     event: 'Order tracking - Pro Active Messaging- Settings',
     orderTracking: 'Pro Active Messaging - Type types',
-    label,
+    label: value,
   };
 };
 
-export const getProActiveMailAnalyticsGoogle = ({ label, isAdditional }) => {
+export const getProActiveMailAnalyticsGoogle = (value, isAdditional) => {
   const additional = isAdditional ? " Additional" : "";
   return {
     event: 'Order tracking - Pro Active Messaging- Settings',
     orderTracking: `Pro Active Messaging - Type${additional} Email`,
-    label,
+    label: value,
   };
 };
 
