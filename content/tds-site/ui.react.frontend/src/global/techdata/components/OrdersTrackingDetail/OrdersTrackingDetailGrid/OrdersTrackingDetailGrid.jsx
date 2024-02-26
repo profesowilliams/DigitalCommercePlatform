@@ -29,7 +29,6 @@ function OrdersTrackingDetailGrid({
   hasAIORights,
   gridRef,
   rowsToGrayOutTDNameRef,
-  setSubtotalValue,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
@@ -109,11 +108,6 @@ function OrdersTrackingDetailGrid({
   const customRequestInterceptor = async () => {
     const response = await fetchData(config);
     setResponse(response);
-    let subtotalValueSum = 0;
-    response?.data?.content?.items?.map((item) => {
-      subtotalValueSum += parseFloat(item?.unitPrice) ?? 0;
-    });
-    setSubtotalValue(subtotalValueSum.toFixed(2));
     setResponseError(false);
     const mappedResponse = mapServiceData(response);
     return mappedResponse;

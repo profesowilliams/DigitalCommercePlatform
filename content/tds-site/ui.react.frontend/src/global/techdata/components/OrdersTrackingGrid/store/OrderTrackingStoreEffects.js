@@ -447,5 +447,11 @@ export const orderTrackingEffects = (set, get) => {
         },
       }));
     },
+    setReturnCounter(value) {
+      set((state) => ({
+        ...state,
+        returnCounter: value,
+      }));
+    },
   };
 };

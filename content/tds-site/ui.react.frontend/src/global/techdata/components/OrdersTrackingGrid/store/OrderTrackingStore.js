@@ -122,6 +122,7 @@ const INITIAL_STATE = {
     reasonDropdownValues: [],
     doesReasonDropdownHaveEmptyItems: false,
   },
+  returnCounter:1,
 };
 
 const store = (set, get) => ({

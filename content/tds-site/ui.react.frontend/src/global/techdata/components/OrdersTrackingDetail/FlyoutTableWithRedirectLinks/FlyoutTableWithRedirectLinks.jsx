@@ -1,5 +1,7 @@
 import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getReturnAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 
 export default function FlyoutTableWithRedirectLinks({
   data,
@@ -10,6 +12,8 @@ export default function FlyoutTableWithRedirectLinks({
   shipDateLabel,
   shipDateField,
 }) {
+  const returnCounter = useOrderTrackingStore((state) => state.returnCounter);
+  const { setReturnCounter } = useOrderTrackingStore((st) => st.effects);
   return (
     <div>
       <div className="cmp-flyout-with-links__content__tableHeader">
@@ -27,6 +31,8 @@ export default function FlyoutTableWithRedirectLinks({
           const shipDateValue = shipDateField ? line[shipDateField] : '';
           const handleClick = () => {
             handleButtonClick(fieldValue);
+            pushDataLayerGoogle(getReturnAnalyticsGoogle(returnCounter));
+            setReturnCounter(returnCounter+1);
           };
           return (
             <div

@@ -169,6 +169,14 @@ export const getProActiveMailAnalyticsGoogle = (value, isAdditional) => {
   };
 };
 
+export const getReturnAnalyticsGoogle = (counter) => {
+  return {
+    event: 'Order tracking - Return link',
+    orderTracking: `Return link ${counter}`,
+    label: 'Order Details',
+  };
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],

@@ -7,6 +7,7 @@ import {
   addUrlParam,
 } from '../../../../../utils/utils';
 import { usGet } from '../../../../../utils/api';
+import { getReturnAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const iconStyle = {
@@ -17,6 +18,8 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   };
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [actionButtonVisible, setActionButtonVisible] = useState(true);
+  const returnCounter = useOrderTrackingStore((state) => state.returnCounter);
+  const { setReturnCounter } = useOrderTrackingStore((st) => st.effects);
 
   const multiple = line?.lineDetails?.length > 1;
   const isLastElement = multiple && index === line?.lineDetails?.length - 1;
@@ -119,6 +122,8 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
 
   const handleReturn = () => {
     const newUrl = element.invoices[0].returnUrl;
+    pushDataLayerGoogle(getReturnAnalyticsGoogle(returnCounter));
+    setReturnCounter(returnCounter + 1);
     window.open(newUrl, '_blank');
   };
 

@@ -21,9 +21,6 @@ function OrdersTrackingDetail(props) {
   const rowsToGrayOutTDNameRef = useRef([]);
   const [newItem, setNewItem] = useState(null);
   const [content, setContent] = useState(null);
-  const [subtotalValue, setSubtotalValue] = useState(
-    null
-  );
   const { isGTMReady } = useGTMStatus();
   const componentProps = JSON.parse(props.componentProp);
   const config = {
@@ -127,12 +124,10 @@ function OrdersTrackingDetail(props) {
                 gridRef={gridRef}
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                 newItem={newItem}
-                setSubtotalValue={setSubtotalValue}
               />
               <OrderTrackingDetailFooter
                 config={config}
                 content={content}
-                subtotalValue={subtotalValue}
               />
             </>
           )}
