@@ -55,7 +55,10 @@ import useGet from '../../hooks/useGet';
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import { getDictionaryValue } from '../../../../utils/utils';
+import {
+  getDictionaryValue,
+  getDictionaryValueOrKey,
+} from '../../../../utils/utils';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -155,9 +158,7 @@ function OrdersTrackingGrid(props) {
   const params = new URLSearchParams(window.location.search);
 
   const areUrlSearchParamsPresent =
-    params.has('customerId') &&
-    params.has('salesOrg') &&
-    params.get('report') === 'EOL';
+    params.has('customerId') && params.has('salesOrg');
 
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
@@ -378,20 +379,28 @@ function OrdersTrackingGrid(props) {
     '{name}<br/>{address.line1}<br/>{address.line2}<br/>{address.line3}<br/>{address.city} {address.state} {address.zip} {address.country}';
 
   useEffect(() => {
-    if (!userData || !areUrlSearchParamsPresent) {
+    if (!userData) {
       return;
-    } else if (
+    }
+    if (
+      areUrlSearchParamsPresent &&
       params.get('customerId') === customerNumber &&
       params.get('salesOrg') === salesOrg
     ) {
-      if (params.get('report') === 'EOL') {
-        reportFilterValue.current.value = 'EOLReport';
-        onQueryChanged();
-      }
       areSearchParamsValid.current = true;
     } else {
       areSearchParamsValid.current = false;
       setResponseError(true);
+    }
+    if (params.get('report') === 'EOL') {
+      reportFilterValue.current.value = 'EOLOrders';
+      setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, {
+        key: 'EOLOrders',
+        label: getDictionaryValueOrKey(
+          gridConfig?.reportLabels?.eolReportLabel
+        ),
+      });
+      onQueryChanged();
     }
   }, [userData]);
 
