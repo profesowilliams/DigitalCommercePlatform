@@ -225,7 +225,7 @@ $flyout-small-height-formax: 779px;
       font-family: $font-family-arial;
 
       .cmp-flyout__content-search__quote--highlighted {
-        color: $brand-cobalt;
+        color: $brand-green;
         font-weight: 700;
         font-family: $font-family-arial;
       }
@@ -324,7 +324,7 @@ $flyout-small-height-formax: 779px;
     padding: 24px 16px 0 16px;
     border-top: 1px solid $v-divider-gray;
     color: $brand-charcoal !important;
-    font-family: $font-family-arial!important;
+    font-family: $font-family-arial !important;
   }
 }
 
@@ -394,7 +394,7 @@ $flyout-small-height-formax: 779px;
         cursor: pointer;
 
         &:before {
-          content: "\f054";
+          content: '\f054';
           @include font-awesome;
           padding-right: 16px;
           font-weight: 900;
@@ -402,7 +402,7 @@ $flyout-small-height-formax: 779px;
 
         &.active {
           &:before {
-            content: "\f078";
+            content: '\f078';
             padding-right: 10px;
           }
         }
@@ -499,7 +499,7 @@ $flyout-small-height-formax: 779px;
 
   .decreased-reason-select {
     border-radius: 0 !important;
-  
+
     .MuiSelect-select {
       border-left: 0 !important;
       border-right: 0 !important;
@@ -510,7 +510,7 @@ $flyout-small-height-formax: 779px;
     color: $brand-text-lightgray;
     font-size: 12px;
     line-height: 18px;
-  }  
+  }
 }
 
 .cmp-flyout-list {
@@ -529,7 +529,7 @@ $flyout-small-height-formax: 779px;
     grid-column-gap: 0;
     grid-row-gap: 0;
     * {
-      font-family: $font-family-arial!important;
+      font-family: $font-family-arial !important;
     }
 
     p {
@@ -549,11 +549,11 @@ $flyout-small-height-formax: 779px;
     &__title {
       grid-area: 1 / 3 / 2 / 4;
       p {
-        color: $brand-cobalt;
+        color: $brand-green;
         font-size: 16px;
       }
       &__mfr-number {
-        color: $brand-charcoal !important
+        color: $brand-charcoal !important;
       }
     }
     &__counter {
@@ -577,7 +577,7 @@ $flyout-small-height-formax: 779px;
         margin-left: 30px;
         font-size: 14px;
         text-decoration: none;
-        color: $brand-cobalt;
+        color: $brand-green;
       }
     }
     &__price {
@@ -642,7 +642,8 @@ $flyout-small-height-formax: 779px;
     &__line-total {
       grid-area: 2 / 5 / 3 / 6;
     }
-    &__unit-cost, &__line-total {
+    &__unit-cost,
+    &__line-total {
       p {
         text-align: right;
       }
@@ -681,9 +682,9 @@ $flyout-small-height-formax: 779px;
     overflow-y: auto;
     height: calc(100% - 117px);
     & * {
-      font-family: inherit; 
+      font-family: inherit;
       font-size: inherit;
-      color: inherit
+      color: inherit;
     }
     &__contentFlex {
       display: flex;
@@ -691,11 +692,11 @@ $flyout-small-height-formax: 779px;
       margin-top: 12px;
     }
     &__detailsLeft {
-      width: 80px
+      width: 80px;
     }
     &__image {
-      width:100%;
-      height:auto;
+      width: 100%;
+      height: auto;
     }
     &__detailsRight {
       display: flex;
@@ -718,7 +719,7 @@ $flyout-small-height-formax: 779px;
       text-overflow: ellipsis;
       width: 100%;
       max-width: 35ch;
-      color: $brand-cobalt;
+      color: $brand-green;
       line-height: 21px;
     }
     &__value {
@@ -755,11 +756,11 @@ $flyout-small-height-formax: 779px;
     }
     &__tableValue {
       display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 100%;
-        max-width: 35ch;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+      max-width: 35ch;
     }
     &__button {
       color: $brand-green;
