@@ -13,6 +13,7 @@ import {
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
+import { getOrderDetailsAnalyticsGoogle } from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();

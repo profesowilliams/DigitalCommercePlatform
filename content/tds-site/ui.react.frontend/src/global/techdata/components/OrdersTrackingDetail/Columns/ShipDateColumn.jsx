@@ -3,6 +3,14 @@ function ShipDateColumn({ line, sortedLineDetails }) {
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
 
+  const shipDateText = (el) =>
+    `${el.shipDateFormatted || ''} ${el.shipDateDetailsTranslated || ''}`;
+
+  const text = (el) =>
+    el.shipDateFormatted || el.shipDateDetailsTranslated
+      ? shipDateText(el)
+      : el.shipDateNotAvailableTranslated || '-';
+
   return (
     <div className="cmp-order-tracking-grid-details__splitLine-column cmp-order-tracking-grid-details__splitLine--centerAlign">
       {sortedLineDetails(line)?.map((el, index) => {
@@ -19,10 +27,7 @@ function ShipDateColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText">
-              {el.shipDateDetailsTranslated ||
-                el.shipDateFormatted ||
-                el.shipDateNotAvailableTranslated ||
-                '-'}
+              {text(el)}
             </span>
           </div>
         );

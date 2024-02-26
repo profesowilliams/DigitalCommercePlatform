@@ -32,7 +32,9 @@ function QuantityAndDeliveryEstimateLine({ line, el, index }) {
       >
         {shipDateText ? (
           <span className="order-line-details__content__innerTableNotShipped__separateLineText">
-            {shipDateText}
+            {el.shipDateFormatted ? el.shipDateFormatted : ''}
+            <br />
+            {el.shipDateDetailsTranslated ? el.shipDateDetailsTranslated : ''}
           </span>
         ) : (
           <span></span>
