@@ -113,8 +113,17 @@ function MainGridHeader({
   };
 
   const removeQueryParams = () => {
-    const newURL = window.location.pathname;
-    window.history.pushState({}, document.title, newURL);
+    const params = new URLSearchParams(window.location.search);
+    params.forEach((value, key) => {
+      if (key !== 'saleslogin') {
+        params.delete(key);
+      }
+    });
+    window.history.pushState(
+      {},
+      document.title,
+      `${window.location.pathname}?${params}`
+    );
   };
 
   const handleDeletePill = () => {
