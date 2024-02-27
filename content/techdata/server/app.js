@@ -4870,6 +4870,8 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           "canEditResellerPrice": true,
           "canEditLines": true,
           "canCopy": true,
+          "canOrder":false,
+          "canShareQuote": true,
           "customerPO": {
               "text": "test po",
               "isValid": true,

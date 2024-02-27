@@ -5,7 +5,7 @@ import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
-import { CopyIcon, DownloadIcon } from "../../../../../fluentIcons/FluentIcons";
+import { CopyIcon, DownloadIcon, ShareIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 import Toaster from "../../Widgets/Toaster";
@@ -101,6 +101,14 @@ function GridHeader({ gridProps, data }) {
         {gridProps.lineItemDetailsLabel}
       </span>
       <div className="cmp-renewal-preview__download">
+        {
+            gridProps.enableShareOption && data?.canShareQuote && (
+            <button onClick={openCopyFlyOut} className='share-button'>
+              <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) && 'separator'}>
+                <ShareIcon className="cmp-renewal-preview__download--icon"/>Share
+              </span>
+            </button>
+          )}
         {
           data?.canCopy && (
           <button onClick={openCopyFlyOut}>

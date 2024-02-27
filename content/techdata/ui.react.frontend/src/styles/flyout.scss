@@ -354,12 +354,15 @@ $flyout-small-height-formax: 779px;
     .MuiAutocomplete-root.Mui-focused label {
         transform: translate(0, 7px) scale(0.75);
     }
+    .MuiAutocomplete-root label[data-shrink='true'] {
+        transform: translate(0, 7px) scale(0.75);
+    }
     .MuiChip-root {
       background-color: white;
       border: 1px solid #00558c;
       height: auto;
       &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 111, 186, 0.1);
         cursor: pointer;
       }
     }

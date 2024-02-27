@@ -28,10 +28,13 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
     setInputValue(value);
   };
 
-  const handleSelect = (event, value) => {
+  const handleSelect = (event, value, situation, option) => {
     if (event?.keyCode === 8) {
       selectedEmails.pop();
       setSelectedEmails([...selectedEmails]);
+    } else if (situation === 'removeOption') {
+      const filteredEmails = selectedEmails.filter(item => item !== option.option);
+      setSelectedEmails([...filteredEmails]);
     } else {
       if (isValidEmailFormat(value[value.length - 1])) {
         if (selectedEmails.length < 10) {
@@ -77,15 +80,26 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
             disableClearable
             defaultValue={[]}
             value={selectedEmails}
-            onChange={handleSelect}
+            //onChange={handleSelect}
+            onChange={(e, value, situation, option) => {
+              handleSelect(e, value, situation, option);
+            }}
             inputValue={inputValue}
             onInputChange={handleInputChange}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  variant="outlined"
+                  label={option}
+                  {...getTagProps({ index })}
+                />
+              ))
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
                 variant="filled"
                 label={getDictionaryValueOrKey(label)}
-                required={required}
                 onPaste={handlePaste}
               />
             )}

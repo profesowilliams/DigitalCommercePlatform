@@ -127,6 +127,10 @@ use(['../../../common/utils.js'], function(utils) {
         quotePreview["addressesEndpoint"] = this.serviceData.uiServiceDomain + this.addressesEndpoint;
     }
 
+    if (this.serviceData && this.serviceData.enableShareOption) {
+        jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
+    }
+
     if (properties && properties["quotePreviewlabel"]) {
         quotePreview["quotePreviewlabel"] = properties["quotePreviewlabel"];
     }

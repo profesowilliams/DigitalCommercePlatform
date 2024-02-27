@@ -18,7 +18,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const endUserName = shareFlyoutConfig?.data?.endUser?.name || '';
   const firstName = shareFlyoutConfig?.data?.endUser?.contact?.firstName || '';
   const lastName = shareFlyoutConfig?.data?.endUser?.contact?.lastName || '';
-  const quoteType = shareFlyoutConfig?.data?.quoteType || getDictionaryValueOrKey('quote');
+  const quoteType = getDictionaryValueOrKey('Renewal');
   const activeAgreementID = shareFlyoutConfig?.data?.source?.id || '';
   const effects = store((st) => st.effects);
   const [enableShare, setEnableShare] = useState(false);

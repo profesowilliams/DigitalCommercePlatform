@@ -234,7 +234,6 @@ function RenewalPreviewGrid({ data, gridProps, shopDomainPage, isEditing, compPr
         if (contractMap.size > 1) {
           setMultipleFlag(true);
         }
-        console.log(data, 'test');
         return !(data?.id?.includes('Agreement')) ? data.id :
           <div className="row-header">
             <div><span>{data.id?.split(":")[0]}:</span> {data.id?.split(":")[1]}</div>
