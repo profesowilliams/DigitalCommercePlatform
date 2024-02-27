@@ -34,17 +34,10 @@
 }
 
 @mixin horizontal_scroll {
-  @media screen and (max-width: 1739px) {
-    & .ag-root-wrapper-body {
-      overflow-x: scroll;
-    }
-    & .ag-root {
-      &.ag-unselectable {
-        &.ag-layout-auto-height {
-          overflow: unset;
-          width: unset;
-          min-height: 150px;
-        }
+  & .ag-root {
+    &.ag-unselectable {
+      &.ag-layout-auto-height {
+        min-height: 150px;
       }
     }
   }

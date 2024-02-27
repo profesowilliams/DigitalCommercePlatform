@@ -116,7 +116,7 @@ function OrdersTrackingDetailGrid({
   const CustomStatusComponent = () => (
     <div className="ag-cell-label-container">
       <span className="ag-header-cell-text">
-        {getDictionaryValueOrKey(config?.itemsLabels?.lineStatus)}
+        {getDictionaryValueOrKey(config?.itemsLabels?.shipDate)}
         <GreenInfoIcon onClick={() => setOpenStatusesModal(true)} />
       </span>
     </div>
@@ -139,7 +139,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'status',
-      headerComponentFramework: CustomStatusComponent,
+      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
       cellRenderer: ({ data }) => (
         <LineStatusColumn
           line={data}
@@ -151,7 +151,7 @@ function OrdersTrackingDetailGrid({
     },
     {
       field: 'shipDate',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.shipDate),
+      headerComponentFramework: CustomStatusComponent,
       cellRenderer: ({ data }) => (
         <ShipDateColumn
           line={data}

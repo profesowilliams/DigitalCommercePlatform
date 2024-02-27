@@ -133,9 +133,7 @@ function Grid(props) {
           </div>
         ) : (
           <div className=" customErrorNoRows">
-            {getDictionaryValueOrKey(
-              noRowsMessageFuncprops.noRowsMessageFunc(props)
-            )}
+            {getDictionaryValueOrKey(props.noRowsMessageFunc(props))}
             <i className="far info-circle errorIcon"></i>
           </div>
         )}
