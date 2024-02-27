@@ -120,11 +120,11 @@ function DropdownOrderDetails({
   }, [apiResponse]);
   return (
     <div className="order-line-details">
-      {infoBoxEnable && (
+      {infoBoxEnable && apiResponse?.content && (
         <MigrationInfoBox
           config={aemConfig?.orderLineDetails}
-          id={apiResponse?.content?.sapOrderMigration?.id}
-          referenceType={apiResponse?.content?.sapOrderMigration?.referenceType}
+          id={apiResponse.content.sapOrderMigration?.id}
+          referenceType={apiResponse.content.sapOrderMigration?.referenceType}
         />
       )}
       <div className="order-line-details__header">
