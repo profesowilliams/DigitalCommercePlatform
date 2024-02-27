@@ -17,7 +17,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     width: '1.3rem',
   };
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
-  const [actionButtonVisible, setActionButtonVisible] = useState(true);
+  const actionButtonVisible = element?.quantity > 0;
   const returnCounter = useOrderTrackingStore((state) => state.returnCounter);
   const { setReturnCounter } = useOrderTrackingStore((st) => st.effects);
 
@@ -175,13 +175,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
       onClick: hasMultipleReturnLinks ? triggerReturnFlyout : handleReturn,
     },
   ];
-  useEffect(() => {
-    if (line?.lineDetails[0]?.quantity === 0) {
-      return setActionButtonVisible(false);
-    } else {
-      return setActionButtonVisible(true);
-    }
-  }, [line?.lineDetails[0]?.quantity]);
+ 
   return (
     <div
       className={`cmp-order-tracking-grid-details__splitLine${
