@@ -11,6 +11,7 @@ import { EmailInput } from '../ShareFlyout/EmailInput';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS } from '../Analytics/analytics';
+import {useStore} from '../../../../utils/useStore';
 
 export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const shareFlyoutConfig = store((st) => st.shareFlyout);
@@ -24,6 +25,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const [enableShare, setEnableShare] = useState(false);
   const closeFlyout = () => effects.setCustomState({ key: 'shareFlyout', value: {show:false} });
   const [count, setCount] = useState(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
+  const userData = useStore(state => state.userData);
+  console.log(userData, 'userData');
 
   useEffect(() => {
     resetCount();

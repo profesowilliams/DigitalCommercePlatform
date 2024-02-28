@@ -342,8 +342,8 @@ $flyout-small-height-formax: 779px;
     #cc-email-label {
       transform: translate(0, 30px);
     }
-    .MuiAutocomplete-root:nth-child(2) .MuiFilledInput-root {
-      padding-left: 20px;
+    #cc-email {
+      padding-left: 24px;
     }
     .MuiAutocomplete-endAdornment {
       top: calc(50% - 4px);
@@ -366,6 +366,7 @@ $flyout-small-height-formax: 779px;
         cursor: pointer;
       }
     }
+
     .MuiChip-root svg {
       font-size: 15px;
       color: rgba(0, 0, 0, 0.26);
