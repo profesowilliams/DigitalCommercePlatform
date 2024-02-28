@@ -1,6 +1,6 @@
 .filter-modal-container {
   position: fixed;
-  background: rgba(0, 12, 33, .28);
+  background: rgba(0, 12, 33, 0.28);
   height: 100vh;
   width: 100vw;
   top: 0;
@@ -17,7 +17,7 @@
 
   .filter-modal-container {
     &__popup {
-      *:not([class*="fas"]) {
+      *:not([class*='fas']) {
         font-family: Arial;
       }
     }
@@ -27,7 +27,7 @@
 .filter-modal-content {
   all: initial;
   font-family: Arial;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   position: absolute;
   top: 220px;
   right: 0;
@@ -66,14 +66,14 @@
     background-color: transparent;
 
     &:before {
-      content: "\f057";
+      content: '\f057';
       @include font-awesome;
       font-weight: 900;
       font-size: 30px;
     }
 
     &:after {
-      content: "";
+      content: '';
       width: 2.2rem;
       height: 2.2rem;
       background: $brand-white;
@@ -186,7 +186,6 @@
   }
 }
 
-
 .filter-option {
   &__checkbox {
     accent-color: black;
@@ -216,9 +215,9 @@
     display: block !important;
     padding-left: 40px;
 
-    >ul,
-    >li {
-      margin-bottom: .45rem;
+    > ul,
+    > li {
+      margin-bottom: 0.45rem;
 
       label {
         text-transform: capitalize;
@@ -302,7 +301,7 @@
 
     &.active {
       &:before {
-        content: "\f078";
+        content: '\f078';
       }
     }
 
@@ -311,7 +310,7 @@
     }
 
     &:before {
-      content: "\f054";
+      content: '\f054';
       @include font-awesome;
       padding-right: 11px;
       font-weight: 900;
@@ -320,13 +319,10 @@
 }
 
 .order-filter-tags-more {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 40px;
   height: 1px;
-  width: 82px;
   box-sizing: border-box;
-  border: 2px solid $filter-light-gray;
-  border-radius: 10px;
   cursor: pointer;
 }
 .filter-order-tags-container {
@@ -345,14 +341,14 @@
 }
 
 .activated {
-  height: 84px;
+  height: 83px;
 }
 
 .order-filter-tags-container {
   display: flex;
   flex-wrap: wrap;
-  overflow-y: scroll;
-  justify-content: center;
+  overflow-y: hidden;
+  justify-content: flex-start;
   width: 100%;
   padding: 0 20px;
   margin-bottom: 10px;
@@ -372,7 +368,7 @@
     height: 20px;
     margin-bottom: 10px;
 
-    &>span:nth-child(2) {
+    & > span:nth-child(2) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -392,7 +388,7 @@
 
     &__close {
       color: $brand-white;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-size: 9px;
       letter-spacing: 0;
       line-height: 10px;
@@ -413,7 +409,7 @@
     li {
       list-style: none;
       padding-left: 21px;
-      margin-bottom: .45rem;
+      margin-bottom: 0.45rem;
 
       label {
         color: #555555;
@@ -424,7 +420,7 @@
         user-select: none;
       }
 
-      input[type="radio"] {
+      input[type='radio'] {
         accent-color: black;
         margin-right: 6px;
         vertical-align: middle;
@@ -432,11 +428,10 @@
         cursor: pointer;
       }
 
-      input[type="radio"].td-synnex {
+      input[type='radio'].td-synnex {
         accent-color: $brand-green;
       }
     }
-
   }
 }
 
@@ -476,8 +471,8 @@
   height: 16px;
   padding-left: 5px;
   padding-block-end: 0;
-  padding-block-start: 0; 
-  padding-inline-end: 0; 
+  padding-block-start: 0;
+  padding-inline-end: 0;
   padding-inline-start: 0;
   cursor: pointer;
   line-height: 16px;
@@ -502,14 +497,14 @@
   .filter-modal-content {
     &__close {
       &::before {
-        color: $brand-blue
+        color: $brand-blue;
       }
     }
 
     .filter-datepicker-container {
       .datepicker-checks {
         li {
-          input[type="radio"] {
+          input[type='radio'] {
             accent-color: $brand-blue;
           }
         }
@@ -526,7 +521,6 @@
       }
     }
   }
-
 
   .filter-modal-bottom {
     .filter-tags-container {
@@ -551,8 +545,8 @@
 }
 
 .height_order_filters {
-    overflow-y: scroll !important;
-      overflow: auto;
+  overflow-y: scroll !important;
+  overflow: auto;
 }
 
 .teal_scroll::-webkit-scrollbar-track {

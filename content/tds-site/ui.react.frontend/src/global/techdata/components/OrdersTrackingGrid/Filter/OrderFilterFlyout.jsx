@@ -10,6 +10,10 @@ import {
 } from '../utils/analyticsUtils';
 import { setLocalStorageData } from '../utils/gridUtils';
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import {
+  CollapseIcon,
+  ExpandIcon,
+} from '../../../../../fluentIcons/FluentIcons';
 
 const OrderFilterFlyout = ({
   filterLabels,
@@ -44,7 +48,7 @@ const OrderFilterFlyout = ({
 
   const dateType = useOrderTrackingStore((state) => state.filter.dateType);
 
-  const [showLess, setShowLess] = useState(true);
+  const [showLess, setShowLess] = useState(false);
 
   const isFilterModalOpen = useOrderTrackingStore(
     (state) => state.filter.isFilterModalOpen
@@ -167,10 +171,9 @@ const OrderFilterFlyout = ({
             showLess ? 'activated' : ''
           }`}
         >
-          <span
-            onClick={toggleShowLess}
-            className="order-filter-tags-more"
-          ></span>
+          <span onClick={toggleShowLess} className="order-filter-tags-more">
+            {showLess ? <ExpandIcon /> : <CollapseIcon />}
+          </span>
           <OrderFilterTags
             filterDateOptions={filterDateOptions}
             filtersRefs={filtersRefs}
