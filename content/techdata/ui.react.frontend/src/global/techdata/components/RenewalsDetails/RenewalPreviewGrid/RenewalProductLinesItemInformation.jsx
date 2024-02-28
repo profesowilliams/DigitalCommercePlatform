@@ -121,13 +121,13 @@ function RenewalProductLinesItemInformation({ line, dataObj, isLinkDisabled="fal
             </span>}
             {disableMultipleAgreement && dataObj?.agreementDuration?.indexOf('see line') > -1 && line?.contract?.duration && !line?.agreementDurationFlag && <span>
               <b>{lineDetailsLabels?.durationLabel}</b>
-              {line?.contract?.formattedStartDate} - {line?.contract?.formattedEndDate}
+              {line?.contract?.formattedNewAgreementStartDate} - {line?.contract?.formattedNewAgreementEndDate}
             </span>}
             {disableMultipleAgreement && line?.contract?.usagePeriod && !line?.usagePeriodFlag && <span>
               <b>{lineDetailsLabels?.usagePeriodLabel}</b>
               {line?.contract?.formattedUsagePeriod}
             </span>}
-            {disableMultipleAgreement && line?.contract?.serviceLevel && !line?.serviceLevelFlag && <span>
+            {disableMultipleAgreement && dataObj?.quoteSupportLevel?.indexOf('see line') > -1 && line?.contract?.serviceLevel && !line?.serviceLevelFlag && <span>
               <b>{lineDetailsLabels?.supportLevelLabel}</b>
               {line?.contract?.serviceLevel}
             </span>}
