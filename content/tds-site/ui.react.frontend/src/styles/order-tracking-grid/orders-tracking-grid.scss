@@ -401,6 +401,9 @@
       font-weight: 400;
       color: $brand-green;
       border: 1px solid $brand-green !important;
+      &:hover {
+        border-radius: 2px;
+      }
     }
     &__release-button {
       height: 44px;
