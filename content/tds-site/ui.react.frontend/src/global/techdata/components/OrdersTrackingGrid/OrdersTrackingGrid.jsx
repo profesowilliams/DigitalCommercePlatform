@@ -342,8 +342,8 @@ function OrdersTrackingGrid(props) {
       if (isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
-            country: data[1]?.country,
-            internalTraffic: data[1]?.isInternalUser,
+            country: (data[1]?.country == 'UK') ? 'GB' : data[1]?.country,
+            internalTraffic: data[1]?.isInternalUser ? 'True' : 'False',
             pageName: 'Main Dashboard',
             number: '',
             userID: data[1]?.id,

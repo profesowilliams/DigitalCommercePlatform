@@ -79,8 +79,8 @@ function OrdersTrackingDetail(props) {
       if(isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
-            country: data[1]?.country,
-            internalTraffic: data[1]?.isInternalUser,
+            country: (data[1]?.country == 'UK') ? 'GB' : data[1]?.country,
+            internalTraffic: data[1]?.isInternalUser ? 'True' : 'False',
             pageName: 'Order Details',
             number: id,
             userID: data[1]?.id,
