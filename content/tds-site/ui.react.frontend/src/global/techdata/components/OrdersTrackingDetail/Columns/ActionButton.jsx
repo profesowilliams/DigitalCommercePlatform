@@ -7,7 +7,7 @@ import {
   addUrlParam,
 } from '../../../../../utils/utils';
 import { usGet } from '../../../../../utils/api';
-import { getReturnAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { getReturnAnalyticsGoogle, getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const iconStyle = {
@@ -19,7 +19,12 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const actionButtonVisible = element?.quantity > 0;
   const returnCounter = useOrderTrackingStore((state) => state.returnCounter);
-  const { setReturnCounter } = useOrderTrackingStore((st) => st.effects);
+  const { setReturnCounter, setTrackAndTraceCounter } = useOrderTrackingStore(
+    (st) => st.effects
+  );
+  const trackAndTraceCounter = useOrderTrackingStore(
+    (state) => state.trackAndTraceCounter
+  );
 
   const multiple = line?.lineDetails?.length > 1;
   const isLastElement = multiple && index === line?.lineDetails?.length - 1;
@@ -95,6 +100,10 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   };
 
   const handleTrackAndTrace = async () => {
+    pushDataLayerGoogle(
+      getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, false)
+    );
+    setTrackAndTraceCounter(trackAndTraceCounter + 1);
     try {
       const endpointUrl = enableLineId
         ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`

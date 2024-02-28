@@ -123,6 +123,7 @@ const INITIAL_STATE = {
     doesReasonDropdownHaveEmptyItems: false,
   },
   returnCounter:1,
+  trackAndTraceCounter:1,
 };
 
 const store = (set, get) => ({

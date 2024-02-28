@@ -453,5 +453,11 @@ export const orderTrackingEffects = (set, get) => {
         returnCounter: value,
       }));
     },
+    setTrackAndTraceCounter(value) {
+      set((state) => ({
+        ...state,
+        trackAndTraceCounter: value,
+      }));
+    },
   };
 };

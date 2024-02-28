@@ -1,11 +1,18 @@
 import React from 'react';
 import { getDictionaryValueOrKey, addUrlParam } from '../../../../../../../utils/utils';
 import { usGet } from '../../../../../../../utils/api';
+import { getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../../utils/analyticsUtils';
 
 function TrackColumn({ line, config, id }) {
   const trackAndTraceAvailable = line?.canTrackAndTrace;
+  const trackAndTraceCounter = useOrderTrackingStore((state) => state.trackAndTraceCounter);
+  const { setTrackAndTraceCounter } = useOrderTrackingStore((st) => st.effects);
 
   const handleTrackAndTrace = async () => {
+    pushDataLayerGoogle(
+      getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, true)
+    );
+    setTrackAndTraceCounter(trackAndTraceCounter+1);
     try {
       const enableLineId = line?.items?.length === 1;
       const orderId = id;

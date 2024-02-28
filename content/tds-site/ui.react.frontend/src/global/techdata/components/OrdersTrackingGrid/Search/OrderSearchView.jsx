@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
-import { getDictionaryValue } from '../../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 import useComputeBranding from './../../../hooks/useComputeBranding';
 
@@ -25,7 +25,7 @@ const OrderSearchView = ({
         <div className="cmp-renewal-search" onClick={handleDropdownSwitch}>
           {!hideLabel ? (
             <span className="cmp-renewal-search__text">
-              {getDictionaryValue(gridConfig?.searchTitleLabel)}
+              {getDictionaryValueOrKey(gridConfig?.searchTitleLabel)}
             </span>
           ) : (
             <span className="cmp-renewal-search-dnone" />
@@ -44,11 +44,9 @@ const OrderSearchView = ({
           onMouseLeave={handleMouseLeave}
         >
           <div className="order-search-select-container__box">
-            <input
-              className={computeClassName('inputStyle')}
-              placeholder={getDictionaryValue(gridConfig?.searchTitleLabel)}
-              disabled
-            />
+            <span className="inputStyle">
+              {getDictionaryValueOrKey(gridConfig?.searchTitleLabel)}
+            </span>
             <button
               className={computeClassName('order-search-tooltip__button')}
             >

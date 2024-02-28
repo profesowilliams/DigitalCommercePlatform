@@ -4,6 +4,7 @@ import { usGet } from '../../../../../utils/api';
 import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/FlyoutTableWithRedirectLinks';
 import { getDictionaryValueOrKey, addUrlParam } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 function TrackingFlyout({
   config,
@@ -13,7 +14,12 @@ function TrackingFlyout({
 }) {
   const [dNoteId, setDNoteId] = useState(null);
   const trackingFlyoutConfig = useOrderTrackingStore((st) => st.trackingFlyout);
-  const effects = useOrderTrackingStore((st) => st.effects);
+  const trackAndTraceCounter = useOrderTrackingStore(
+    (state) => state.trackAndTraceCounter
+  );
+  const { setTrackAndTraceCounter, setCustomState } = useOrderTrackingStore(
+    (st) => st.effects
+  );
   const data = trackingFlyoutConfig?.line?.deliveryNotes;
   const { line, urlProductImage, mfrNumber, tdNumber, displayName } =
     trackingFlyoutConfig?.line || {};
@@ -23,7 +29,7 @@ function TrackingFlyout({
   const enableLineId = lineId?.length === 1;
 
   const closeFlyout = () => {
-    effects.setCustomState({
+    setCustomState({
       key: 'trackingFlyout',
       value: { data: null, show: false },
     });
@@ -31,6 +37,10 @@ function TrackingFlyout({
 
   const handleTrackAndTrace = async (dNoteParam) => {
     setDNoteId(dNoteParam);
+    pushDataLayerGoogle(
+      getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, false)
+    );
+    setTrackAndTraceCounter(trackAndTraceCounter + 1);
     try {
       const endpointUrl = enableLineId
         ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`

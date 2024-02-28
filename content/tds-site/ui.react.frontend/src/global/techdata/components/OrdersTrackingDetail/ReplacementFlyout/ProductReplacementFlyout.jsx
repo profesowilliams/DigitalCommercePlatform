@@ -10,6 +10,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { usGet, usPost } from '../../../../../utils/api';
 import { useStore } from '../../../../../utils/useStore';
+import { getEolCancelAnalyticsGoogle, getEolReplacementAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -81,6 +82,14 @@ function ProductReplacementFlyout({
       Operation: operation,
       ProductID: newProductId,
     };
+    const mfrSelected = options.find((opt) => opt.key === selected)?.content
+      ?.props?.data?.mfrNumber;
+    const mfrReplacement = productReplacementConfig?.data?.line?.mfrNumber;
+    pushDataLayerGoogle(
+      operation === 'Replace'
+        ? getEolReplacementAnalyticsGoogle(mfrReplacement, mfrSelected)
+        : getEolCancelAnalyticsGoogle(mfrReplacement)
+    );
     try {
       const result = await usPost(
         `${config.uiCommerceServiceDomain + '/v2/OrderEOL'}`,

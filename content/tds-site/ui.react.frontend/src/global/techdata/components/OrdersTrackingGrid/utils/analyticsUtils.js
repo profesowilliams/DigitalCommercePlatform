@@ -177,6 +177,46 @@ export const getReturnAnalyticsGoogle = (counter) => {
   };
 };
 
+export const getTrackAndTraceAnalyticsGoogle = (counter, isMainGrid) => {
+  return {
+    event: 'Order tracking - Track & Trace',
+    orderTracking: `Track & Trace: "Carrier Link" ${counter}`,
+    label: isMainGrid ? 'Main Grid' : 'Order Details',
+  };
+}
+
+export const getAddLineAnalyticsGoogle = (sku) => {
+  return {
+    event: 'Order tracking - Order Modification',
+    orderTracking: 'Order Modification - addLine',
+    label: sku,
+  };
+};
+
+export const getReduceQuantityAnalyticsGoogle = (sku) => {
+  return {
+    event: 'Order tracking - Order Modification',
+    orderTracking: 'Order Modification - reduceQuantity',
+    label: sku,
+  };
+};
+
+export const getEolCancelAnalyticsGoogle = (sku) => {
+  return {
+    event: 'Order tracking - Order Modification',
+    orderTracking: 'Order Modification - eolCancel',
+    label: sku,
+  };
+};
+
+export const getEolReplacementAnalyticsGoogle = (sku, addedSku) => {
+  return {
+    event: 'Order tracking - Order Modification',
+    orderTracking: 'Order Modification - eolReplacement',
+    label: `${sku} replaced by ${addedSku}`,
+  };
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],

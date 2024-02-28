@@ -9,6 +9,7 @@ import { useStore } from '../../../../../utils/useStore';
 import { getUrlParams } from '../../../../../utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
+import { getAddLineAnalyticsGoogle, getReduceQuantityAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   //// This function compares only quantities rather than all items' parameters
@@ -95,7 +96,7 @@ function OrderModificationFlyout({
       value: { show: false },
     });
   };
-
+  const reduceLineForGTM = []
   const reduceLine = itemsCopy.reduce((filtered, item) => {
     if (item && item?.status === 'Rejected') {
       const newItem = {
@@ -103,11 +104,12 @@ function OrderModificationFlyout({
         Qty: item.orderQuantity,
         RejectionReason: item.RejectionReason,
       };
+      reduceLineForGTM.push(item.mfrNumber);
       filtered.push(newItem);
     }
     return filtered;
   }, []);
-
+  const addLineForGTM = [];
   const addLine = itemsCopy.reduce((filtered, item) => {
     if (item?.orderQuantity > item?.origQuantity) {
       const newItem = {
@@ -116,6 +118,7 @@ function OrderModificationFlyout({
         UAN: '',
       };
       filtered.push(newItem);
+      addLineForGTM.push(item.mfrNumber);
     }
     return filtered;
   }, []);
@@ -149,6 +152,12 @@ function OrderModificationFlyout({
       .map((item) => item.tdNumber);
     greyOutRows(rowsDeleted);
     closeFlyout();
+    addLineForGTM.map(line=>{
+      pushDataLayerGoogle(getAddLineAnalyticsGoogle(line))
+    });
+    reduceLineForGTM.map((line) => {
+      pushDataLayerGoogle(getReduceQuantityAnalyticsGoogle(line));
+    });
     try {
       const result = await usPost(requestURLLineModify, getPayload());
 
