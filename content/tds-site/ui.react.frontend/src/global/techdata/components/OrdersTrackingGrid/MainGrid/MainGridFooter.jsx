@@ -27,7 +27,7 @@ const MainGridFooter = ({
         closeEnabled={true}
       />
       <ToolTip toolTipData={toolTipData} />
-      <div className="grid-subheader-pagination">
+      <div className="grid-subheader-pagination-right">
         <OrderTrackingGridPagination
           ref={customPaginationRef}
           onQueryChanged={onQueryChanged}
