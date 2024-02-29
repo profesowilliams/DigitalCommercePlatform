@@ -145,13 +145,6 @@
                                                 fieldLabel="Contact Label"
                                                 name="./contact"
                                                 required="{Boolean}true"/>
-											<contactName
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Contact Name Label"
-                                                fieldLabel="Contact Name Label"
-                                                name="./contactName"
-                                                required="{Boolean}true"/>
 											<contactPhone
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -159,13 +152,6 @@
                                                 fieldLabel="Contact Phone Label"
                                                 name="./contactPhone"
                                                 required="{Boolean}true"/>
-											<contactEmail
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="Enter Contact Email Label"
-                                                fieldLabel="Contact Email Label"
-                                                name="./contactEmail"
-                                                required="{Boolean}true"/>											
 											<totalOrderNetPrice
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

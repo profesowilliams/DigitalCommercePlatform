@@ -154,12 +154,7 @@ use(["../../../common/utils.js"], function (utils) {
   }
 
   // ContactLabels
-  const contactLabelsList = [
-    "contact",
-    "contactName",
-    "contactPhone",
-    "contactEmail",
-  ];
+  const contactLabelsList = ["contact", "contactPhone"];
 
   properties &&
     contactLabelsList.map((property) => {

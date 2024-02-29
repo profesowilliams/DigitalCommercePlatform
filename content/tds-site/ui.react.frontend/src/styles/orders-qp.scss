@@ -5,27 +5,20 @@
 }
 
 .contact-card {
-  display: grid;
-  grid-template-columns: auto 272px;
-  grid-gap: 16px;
-  grid-row-gap: 5px;
+  display: flex;
+  flex-direction: column;
   font-family: $font-family-arial;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  grid-template-rows: 16px;
-  span {
-    min-width: 77px;
-    overflow-wrap: anywhere;
-  }
 }
 
 .acknowledgement-card {
   display: grid;
   grid-template-columns: auto 147px;
   grid-gap: 16px;
-  grid-row-gap: 5px;
+  grid-row-gap: 0;
   font-family: $font-family-arial;
   font-size: 14px;
   font-style: normal;
@@ -163,10 +156,23 @@
         font-family: $font-family-arial !important;
       }
 
+      &__horizontal {
+        display: flex;
+        align-items: flex-start;
+      }
       &__title {
         font-weight: 700;
         margin-bottom: 19px;
         font-size: 14px;
+      }
+      &__image {
+        max-width: 64px;
+        height: auto;
+        object-fit: contain;
+        margin-right: 13px;
+      }
+      &__email {
+        color: $brand-green;
       }
       &__contentGrid {
         display: grid;

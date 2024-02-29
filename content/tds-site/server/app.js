@@ -6210,6 +6210,8 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         name: "Richard  Farrell",
         email: "Richard.Farrell@techdata.co.uk",
         phoneNumber: "01256 864200",
+        imageUrl:
+          "https://intouch.integration.tdsynnex.com/CatAdminHtmlContentEditor/uploads/country/DE/test/bfb5bf60-2a45-4811-a73f-0e749e80692d.png",
       },
       paymentDetails: {
         currency: "GBP",
