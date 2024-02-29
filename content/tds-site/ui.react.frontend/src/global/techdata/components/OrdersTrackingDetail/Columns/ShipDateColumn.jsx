@@ -3,8 +3,13 @@ function ShipDateColumn({ line, sortedLineDetails }) {
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
 
-  const shipDateText = (el) =>
-    `${el.shipDateFormatted || ''} ${el.shipDateDetailsTranslated || ''}`;
+  const shipDateText = (el) => (
+    <>
+      {el.shipDateFormatted && <span>{el.shipDateFormatted}</span>}
+      <br />
+      {el.shipDateFormatted && <span>{el.shipDateDetailsTranslated}</span>}
+    </>
+  );
 
   const text = (el) =>
     el.shipDateFormatted || el.shipDateDetailsTranslated

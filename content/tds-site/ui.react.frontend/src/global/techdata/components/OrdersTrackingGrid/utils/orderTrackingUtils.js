@@ -252,8 +252,12 @@ export function addCurrentPageNumber(customPaginationRef, request) {
 
 export const getDateRangeLabel = (startDate, endDate, shortDateFormat) => {
   if (startDate && endDate) {
-    const startDateFormatted = startDate.format(shortDateFormat);
-    const endDateFormatted = endDate.format(shortDateFormat);
+    const startDateFormatted = startDate.format(
+      getDictionaryValueOrKey(shortDateFormat)
+    );
+    const endDateFormatted = endDate.format(
+      getDictionaryValueOrKey(shortDateFormat)
+    );
 
     return `${startDateFormatted} - ${endDateFormatted}`;
   } else {

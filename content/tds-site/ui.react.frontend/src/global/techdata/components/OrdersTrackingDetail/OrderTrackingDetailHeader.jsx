@@ -40,7 +40,7 @@ const OrderTrackingDetailHeader = ({
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
-  const { setCustomState } = effects;
+  const { setCustomState, setFeatureFlags } = effects;
   const orderEditable = content?.orderEditable === true;
   const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
 
@@ -179,11 +179,15 @@ const OrderTrackingDetailHeader = ({
       label: labels?.releaseTheOrder,
       onClick: () => setReleaseOrderShow(true),
     },
-    {
-      condition: isModifiable && orderModificationFlag,
-      label: labels?.actionModifyOrder,
-      onClick: handleOrderModification,
-    },
+    ...(orderModificationFlag
+      ? [
+          {
+            condition: isModifiable,
+            label: labels?.actionModifyOrder,
+            onClick: handleOrderModification,
+          },
+        ]
+      : []),
     {
       condition: areSerialNumbersAvailable,
       label: labels?.exportSerialNumbers,
@@ -240,6 +244,18 @@ const OrderTrackingDetailHeader = ({
         }, 5000);
       });
   };
+
+  const fetchFiltersRefinements = async () => {
+    const results = await usGet(
+      `${componentProps.uiCommerceServiceDomain}/v3/refinements`
+    );
+    return results.data.content;
+  };
+
+  useEffect(async () => {
+    const refinements = await fetchFiltersRefinements();
+    setFeatureFlags(refinements?.featureFlags);
+  }, []);
 
   return (
     <div className="cmp-orders-qp__config-grid">
