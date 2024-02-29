@@ -21,6 +21,16 @@ function MigrationInfoBox({ config, id, referenceType }) {
         break;
     }
   };
+  const handleHref = () => {
+    const baseUrl = window.location.href.substring(
+      0,
+      window.location.href.lastIndexOf('.')
+    );
+    const orderDetailsUrl = window.location.href.includes('order-details.html')
+      ? '.html'
+      : '/order-details.html';
+    return `${baseUrl}${orderDetailsUrl}?id=${id}${salesLoginParam}`;
+  };
 
   useEffect(() => {
     handleReferenceTypechange(referenceType);
@@ -35,10 +45,7 @@ function MigrationInfoBox({ config, id, referenceType }) {
         </div>
         <a
           className="order-line-details__info-box__content__link"
-          href={`${location.href.substring(
-            0,
-            location.href.lastIndexOf('.')
-          )}/order-details.html?id=${id}${salesLoginParam}`}
+          href={handleHref()}
         >
           {getDictionaryValueOrKey(viewOrderText)} {id}
         </a>
