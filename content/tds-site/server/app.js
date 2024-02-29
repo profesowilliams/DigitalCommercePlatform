@@ -8456,6 +8456,10 @@ app.get("/ui-commerce/v3/refinements", function (req, res) {
           typeText: "Third Party order",
         },
       ],
+      featureFlags: {
+        OrderModification: true,
+        ProactiveMessage: true,
+      },
     },
     error: {
       code: 0,

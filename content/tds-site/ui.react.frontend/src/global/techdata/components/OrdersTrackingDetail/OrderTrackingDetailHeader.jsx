@@ -37,6 +37,9 @@ const OrderTrackingDetailHeader = ({
   const [openXMLAlert, setOpenXMLAlert] = useState(false);
   const [releaseSuccess, setReleaseSuccess] = useState(false);
   const effects = useOrderTrackingStore((state) => state.effects);
+  const orderModificationFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.orderModification
+  );
   const { setCustomState } = effects;
   const orderEditable = content?.orderEditable === true;
   const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
@@ -177,7 +180,7 @@ const OrderTrackingDetailHeader = ({
       onClick: () => setReleaseOrderShow(true),
     },
     {
-      condition: isModifiable,
+      condition: isModifiable && orderModificationFlag,
       label: labels?.actionModifyOrder,
       onClick: handleOrderModification,
     },

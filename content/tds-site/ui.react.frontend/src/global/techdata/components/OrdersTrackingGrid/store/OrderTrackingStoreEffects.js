@@ -459,5 +459,14 @@ export const orderTrackingEffects = (set, get) => {
         trackAndTraceCounter: value,
       }));
     },
+    setFeatureFlags(value) {
+      set((state) => ({
+        ...state,
+        featureFlags: {
+          orderModification: value?.OrderModification || false,
+          proactiveMessage: value?.ProactiveMessage || false,
+        },
+      }));
+    },
   };
 };

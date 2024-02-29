@@ -38,6 +38,9 @@ function MainGridHeader({
   settings,
 }) {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
+  const proactiveMessagingFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.proactiveMessage
+  );
   const [pill, setPill] = useState(
     getLocalStorageData(REPORTS_LOCAL_STORAGE_KEY) || null
   );
@@ -177,7 +180,7 @@ function MainGridHeader({
       reportOptions={reportOptions}
     />,
     <VerticalSeparator />,
-    ...(settings
+    ...(settings && proactiveMessagingFlag
       ? [<Settings settings={settings} />, <VerticalSeparator />]
       : []),
     <OrderExport />,

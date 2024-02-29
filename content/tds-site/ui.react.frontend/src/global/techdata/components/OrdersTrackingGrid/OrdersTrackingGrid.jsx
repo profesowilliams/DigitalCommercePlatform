@@ -88,6 +88,7 @@ function OrdersTrackingGrid(props) {
     closeAndCleanToaster,
     setFilterList,
     setCustomFiltersChecked,
+    setFeatureFlags,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
@@ -317,6 +318,7 @@ function OrdersTrackingGrid(props) {
     filtersRefs.current = getInitialFiltersDataFromLS();
     redirectedFrom && deleteSearchParam('redirectedFrom');
     const refinements = await fetchFiltersRefinements();
+    setFeatureFlags(refinements?.featureFlags);
     const predefined = getFilterFlyoutPredefined(filterLabels, refinements);
     const customized = getFilterFlyoutCustomized(
       dateOptionsList,

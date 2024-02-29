@@ -37,6 +37,9 @@ function NotShippedTabGrid({
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
+  const orderModificationFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.orderModification
+  );
   const effects = useOrderTrackingStore((state) => state.effects);
 
   const { setCustomState } = effects;
@@ -48,6 +51,7 @@ function NotShippedTabGrid({
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
+
   const gridColumnWidths = Object.freeze({
     lineNumber: '60px',
     item: '425px',
@@ -55,6 +59,7 @@ function NotShippedTabGrid({
     nqtyDeliveryEstimate: '234px',
     action: '60px',
   });
+
   const CustomHeaderComponent = () => (
     <div className="not-shipped-header-end">
       <div className="not-shipped-header-end__qty-column">
@@ -66,6 +71,7 @@ function NotShippedTabGrid({
       </div>
     </div>
   );
+
   const columnDefinitionsOverride = [
     {
       field: 'lineNumber',
@@ -94,6 +100,7 @@ function NotShippedTabGrid({
       width: gridColumnWidths.deliveryEstimate,
     },
   ];
+
   const myColumnDefs = useMemo(
     () => buildColumnDefinitions(columnDefinitionsOverride),
     []
@@ -112,15 +119,18 @@ function NotShippedTabGrid({
         },
       });
   };
-  function getRowClass({ node }) {
+
+  const getRowClass = ({ node }) => {
     const nodeData = node.group ? node.aggData : node.data;
     if (rowsToGrayOutTDNameRef.current.includes(nodeData.tdNumber)) {
       return true;
     }
-  }
+  };
+
   const rowClassRules = {
     'gray-out-changing-rows': getRowClass,
   };
+
   const handleReleaseOrder = async () => {
     setReleaseOrderShow(false);
     const params = {
@@ -156,11 +166,15 @@ function NotShippedTabGrid({
       },
     });
   }, []);
+
   useEffect(() => {
     if (!isTabActive && activeTab === 1) {
       setIsTabActive(true);
     }
   }, [activeTab]);
+
+  const isOrderModificationButtonVisible =
+    hasOrderModificationRights && orderEditable && orderModificationFlag;
 
   return (
     <section>
@@ -179,7 +193,7 @@ function NotShippedTabGrid({
               )}
             </button>
           )}
-          {hasOrderModificationRights && orderEditable && (
+          {isOrderModificationButtonVisible && (
             <button
               className="order-line-details__content__title-button"
               onClick={handleOrderModification}

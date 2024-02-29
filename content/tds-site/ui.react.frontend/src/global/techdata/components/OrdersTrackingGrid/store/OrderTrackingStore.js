@@ -122,8 +122,12 @@ const INITIAL_STATE = {
     reasonDropdownValues: [],
     doesReasonDropdownHaveEmptyItems: false,
   },
-  returnCounter:1,
-  trackAndTraceCounter:1,
+  returnCounter: 1,
+  trackAndTraceCounter: 1,
+  featureFlags: {
+    orderModification: false,
+    proactiveMessage: false,
+  },
 };
 
 const store = (set, get) => ({
