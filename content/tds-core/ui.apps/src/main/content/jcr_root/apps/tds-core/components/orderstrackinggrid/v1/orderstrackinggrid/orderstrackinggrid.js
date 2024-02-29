@@ -600,6 +600,7 @@ use(["../common/utils.js"], function (utils) {
       "invoiceDateLabel",
       "datePlaceholder",
       "dateFormat",
+      "shortDateFormat",
     ];
 
     filterLabelsKeys.map((key) => (filterLabels[key] = properties[key]));

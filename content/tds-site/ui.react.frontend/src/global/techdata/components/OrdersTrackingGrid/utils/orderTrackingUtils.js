@@ -250,19 +250,12 @@ export function addCurrentPageNumber(customPaginationRef, request) {
   return mapStrucToUrlStr(urlMap);
 }
 
-export const getDateRangeLabel = (startDate, endDate) => {
+export const getDateRangeLabel = (startDate, endDate, shortDateFormat) => {
   if (startDate && endDate) {
-    const shortStartDateMonth = startDate.format('MMMM').substring(0, 3);
-    const startDateMonth = startDate.format('M');
-    const startDateDay = startDate.format('D');
+    const startDateFormatted = startDate.format(shortDateFormat);
+    const endDateFormatted = endDate.format(shortDateFormat);
 
-    const shortEndDateMonth = endDate.format('MMMM').substring(0, 3);
-    const endDateMonth = endDate.format('M');
-    const endDateDay = endDate.format('D');
-
-    return startDateMonth === endDateMonth
-      ? `${shortStartDateMonth} ${startDateDay}-${endDateDay}`
-      : `${shortStartDateMonth} ${startDateDay}-${shortEndDateMonth} ${endDateDay}`;
+    return `${startDateFormatted} - ${endDateFormatted}`;
   } else {
     return '';
   }

@@ -151,7 +151,7 @@ function OrderFilterTags({ filtersRefs, filterDateOptions }) {
           closeHandler={() => handleFilterCloseClick(filter.id, filter?.group)}
           value={
             filter?.group === 'date'
-              ? `${dateTypeLabel} : ${filter.filterOptionLabel}`
+              ? `${dateTypeLabel}: ${filter.filterOptionLabel}`
               : filter.filterOptionLabel
           }
           id={filter.id}

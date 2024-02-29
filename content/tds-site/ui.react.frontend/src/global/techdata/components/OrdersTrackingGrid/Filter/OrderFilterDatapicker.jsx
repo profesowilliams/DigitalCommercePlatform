@@ -29,7 +29,7 @@ export default function OrderFilterDatePicker({
     setCurrentEndDate,
   } = useOrderTrackingStore((state) => state.effects);
   const dateType = useOrderTrackingStore((state) => state.filter.dateType);
-  const { dateFormat, datePlaceholder } = filterLabels;
+  const { dateFormat, datePlaceholder, shortDateFormat } = filterLabels;
 
   const dateRangeFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.dateRangeFiltersChecked
@@ -109,7 +109,7 @@ export default function OrderFilterDatePicker({
       const endDateDay = endDate.format('DD');
       const endDateYear = endDate.format('YYYY');
       endDateFormatted.current = `${endDateYear}-${endDateMonth}-${endDateDay}`;
-      const dateLabel = getDateRangeLabel(startDate, endDate);
+      const dateLabel = getDateRangeLabel(startDate, endDate, shortDateFormat);
       const newDate = [
         {
           id: 1,

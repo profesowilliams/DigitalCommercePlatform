@@ -547,19 +547,25 @@
                                                 fieldLabel="Add Invoice Date Label"
                                                 name="./invoiceDateLabel"
                                             />
-                                          <invoiceDateLabel
+                                            <invoiceDateLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Add Date Placeholder"
                                                 name="./datePlaceholder"
                                             />
-                                          <dateFormatLabel
+                                            <dateFormatLabel
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Add Date Format"
                                                 name="./dateFormat"
                                             />
-                                          <filterType
+                                            <shortDateFormatLabel
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Add Short Date Format"
+                                                name="./shortDateFormat"
+                                            />
+                                            <filterType
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                                 fieldLabel="Filter Type"

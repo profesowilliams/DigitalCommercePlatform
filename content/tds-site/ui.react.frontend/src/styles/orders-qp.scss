@@ -264,6 +264,18 @@
     overflow: visible;
   }
 
+  .ag-header-container .ag-header-row {
+    [col-id='shipDate'] {
+      padding: 0;
+      display: flex;
+      justify-content: center;
+
+      .ag-cell-label-container span.ag-header-cell-text {
+        min-width: 0;
+      }
+    }
+  }
+
   .ag-theme-alpine [class^='ag-'],
   .ag-theme-alpine [class^='ag-']:focus,
   .ag-theme-alpine [class^='ag-']:after,
