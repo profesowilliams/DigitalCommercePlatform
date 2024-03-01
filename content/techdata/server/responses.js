@@ -366,6 +366,7 @@ const renewalSearchResponse = {
                     "id": "U100000010256"
                 },
                 "canPlaceOrder": true,
+                "canShareQuote": true,
                 "isValid": true,
                 "reseller": {
                     "incumbent": false,
@@ -516,6 +517,7 @@ const renewalSearchResponse = {
                     "id": "U100000001277"
                 },
                 "canPlaceOrder": true,
+                "canShareQuote": true,
                 "isValid": true,
                 "reseller": {
                     "incumbent": false,
@@ -671,6 +673,7 @@ const renewalSearchResponse = {
                     "id": "U100000001307"
                 },
                 "canPlaceOrder": true,
+                "canShareQuote": false,
                 "isValid": false,
                 "reseller": {
                     "incumbent": false,

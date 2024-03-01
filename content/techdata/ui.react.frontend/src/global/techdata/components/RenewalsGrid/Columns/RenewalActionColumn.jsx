@@ -45,6 +45,7 @@ function _RenewalActionColumn({ eventProps }) {
   );
 
   const canCopy = data?.canCopy;
+  const canShare = data?.canShareQuote;
   data.orderSource = 'Grid';
 
   const { handleCartIconClick, details, toggleOrderDialog, closeDialog } =
@@ -223,6 +224,7 @@ function _RenewalActionColumn({ eventProps }) {
           menuOptions={productGrid}
           sx={dialogStyling}
           canCopy={canCopy}
+          canShare={canShare}
           detailUrl={detailUrl}
           data={data}
           endpoints={endpoints}

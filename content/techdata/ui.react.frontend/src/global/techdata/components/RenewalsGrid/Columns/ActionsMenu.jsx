@@ -12,7 +12,7 @@ import { redirectToRenewalDetail } from '../utils/renewalUtils';
 import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from '../../../../../utils/utils';
 
-function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, detailUrl }) {
+function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy, canShare, detailUrl }) {
     const dialogRef = useRef();
     const { productGrid } = useRenewalGridState(st => st.aemConfig);
     const { setCustomState } = useRenewalGridState(st => st.effects);
@@ -156,7 +156,7 @@ function ActionsMenu({ data, open, onClose, sx, menuOptions, endpoints, canCopy,
                         <span className="cmp-renewals-actions-menu__item-label">Copy</span>
                     </div>
                 ) : null}
-                {enableShareOption ? (
+                {enableShareOption && canShare? (
                     <div
                         className="cmp-renewals-actions-menu__item"
                         onClick={triggerShareFlyout}

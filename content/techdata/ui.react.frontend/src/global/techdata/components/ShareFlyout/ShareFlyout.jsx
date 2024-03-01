@@ -26,7 +26,6 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const closeFlyout = () => effects.setCustomState({ key: 'shareFlyout', value: {show:false} });
   const [count, setCount] = useState(getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutCommentCount));
   const userData = useStore(state => state.userData);
-  console.log(userData, 'userData');
 
   useEffect(() => {
     resetCount();
@@ -95,7 +94,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
         </Box>
         <div className="email-signature">
           <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutSignatureLabel)}</p>
-          <p>{firstName} {lastName}</p>
+          <p>{userData?.firstName} {userData?.lastName}</p>
         </div>
       </section>
     </BaseFlyout>
