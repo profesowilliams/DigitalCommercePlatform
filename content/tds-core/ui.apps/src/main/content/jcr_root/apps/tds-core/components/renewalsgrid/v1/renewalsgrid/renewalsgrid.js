@@ -9,8 +9,25 @@ use(['../../../common/utils.js'], function(utils) {
     let copyFlyout = {};
     let shareFlyout = {};
 
+    let runModes = sling
+      .getService(Packages.org.apache.sling.settings.SlingSettingsService)
+      .getRunModes();
+
+    let isEnvWithDispatcher =
+      !(runModes.contains("sit") || runModes.contains("dit"));
+    let currentPageParentPath = currentPage.getParent(4).getPath();
+
     if (properties && properties["detailUrl"]) {
+      if (isEnvWithDispatcher) {
+        //UAT, Stage, Prod
+        jsonObject["detailUrl"] = properties["detailUrl"].replace(
+          currentPageParentPath,
+          ""
+        );
+      } else {
+        //SIT, DIT
         jsonObject["detailUrl"] = properties["detailUrl"];
+      }
     }
 
     if (properties && properties["displayCurrencyName"]) {
@@ -285,13 +302,24 @@ use(['../../../common/utils.js'], function(utils) {
         if (populated && daysPropertyName) {obj[daysPropertyName] = populated};
     }
     
-    if (properties){     
-        populateOutterProperty(icons,overdueProperties);
-        populateOutterProperty(icons,thirtyDaysProperties);
-        populateOutterProperty(icons,sixtyOneDaysProperties);
-        populateOutterProperty(icons,sixtyOnePlusProperties);  
-        const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
-        if (!!orderingFromDashboard) {jsonObject['orderingFromDashboard'] = orderingFromDashboard};
+    if (properties){
+      populateOutterProperty(icons, overdueProperties);
+      populateOutterProperty(icons, thirtyDaysProperties);
+      populateOutterProperty(icons, sixtyOneDaysProperties);
+      populateOutterProperty(icons, sixtyOnePlusProperties);
+      const orderingFromDashboard =
+        utils.fillFieldsDialogProperties(orderingProperties);
+      if (!!orderingFromDashboard) {
+        if (isEnvWithDispatcher) {
+          orderingFromDashboard.termsAndConditionsLink =
+            orderingFromDashboard.termsAndConditionsLink.replace(
+              currentPageParentPath,
+              ""
+            );
+        }
+
+        jsonObject["orderingFromDashboard"] = orderingFromDashboard;
+      }
     }
 
     if (!!icons) {jsonObject['icons'] = icons};
