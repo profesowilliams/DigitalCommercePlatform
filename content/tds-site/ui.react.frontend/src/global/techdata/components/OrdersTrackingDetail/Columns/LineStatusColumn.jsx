@@ -13,6 +13,9 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
   const isSingleElement = !multiple;
   const effects = useOrderTrackingStore((state) => state.effects);
   const { setCustomState } = effects;
+  const orderModificationFlag = useOrderTrackingStore(
+    (state) => state.featureFlags.orderModification
+  );
 
   const getValidationData = async () => {
     try {
@@ -72,9 +75,11 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
         <WarningTriangle />
         {getDictionaryValueOrKey(config?.itemsLabels?.endOfLife)}
       </span>
-      <p className="line-status-link">
-        {getDictionaryValueOrKey(config?.itemsLabels?.seeOptions)}
-      </p>
+      {orderModificationFlag && (
+        <p className="line-status-link">
+          {getDictionaryValueOrKey(config?.itemsLabels?.seeOptions)}
+        </p>
+      )}
     </>
   );
 
@@ -94,7 +99,9 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
           >
             <span
               className="cmp-order-tracking-grid-details__splitLine__separateLineText"
-              onClick={isEOL ? handleSeeOptionsClick : null}
+              onClick={
+                isEOL && orderModificationFlag ? handleSeeOptionsClick : null
+              }
             >
               {isEOL ? EOLStatus : el.statusText || ''}
             </span>

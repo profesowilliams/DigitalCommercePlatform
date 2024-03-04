@@ -175,13 +175,13 @@ const OrderTrackingDetailHeader = ({
         ? triggerInvoicesFlyout
         : handleDownloadInvoice,
     },
-    {
-      condition: areReleaseTheOrderAvailable,
-      label: labels?.releaseTheOrder,
-      onClick: () => setReleaseOrderShow(true),
-    },
     ...(orderModificationFlag
       ? [
+          {
+            condition: areReleaseTheOrderAvailable,
+            label: labels?.releaseTheOrder,
+            onClick: () => setReleaseOrderShow(true),
+          },
           {
             condition: isModifiable,
             label: labels?.actionModifyOrder,
