@@ -20,7 +20,7 @@ export const ordersTrackingDefinition = (
       // US 399164: We will update the field mapping later when the UI service is ready.
       // pniewiadomski: I'll add a null check and render `created` for the time being so that it will be testable on mocked api
       // and will render order date on DIT and SIT env
-      select: <SelectColumn eventProps={eventProps} />,
+      select: <SelectColumn eventProps={eventProps} orderId={data?.id} />,
       actualShipDate: data?.actualShipDateFormatted,
       shipTo: <ShipToColumn data={data?.shipTo} />,
       statusText: <StatusColumn data={data} iconsStatuses={iconsStatuses} />,

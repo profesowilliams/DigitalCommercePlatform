@@ -217,6 +217,73 @@ export const getEolReplacementAnalyticsGoogle = (sku, addedSku) => {
   };
 };
 
+export const getDNoteDownloadFailedAnalyticsGoogle = (counter, isMainGrid) => {
+  return {
+    event: 'Order tracking - D-Note View download failed',
+    orderTracking: `D-Note View download failed: ${counter}`,
+    label: isMainGrid ? 'Main Grid' : 'Order Details',
+  };
+};
+
+export const getInvoiceDownloadFailedAnalyticsGoogle = (
+  counter,
+  isMainGrid
+) => {
+  return {
+    event: 'Order tracking - Invoice View download failed',
+    orderTracking: `Invoice View download failed: ${counter}`,
+    label: isMainGrid ? 'Main Grid' : 'Order Details',
+  };
+};
+
+export const getExpandedLineAnalyticsGoogle = (orderId) => {
+  return {
+    event: 'Order tracking - Expanded Line View',
+    orderTracking: `Expanded Line VIew`,
+    label: orderId,
+  };
+};
+
+export const getExportSerialNumbersAnalyticsGoogle = () => {
+  return {
+    event: 'Export Serial Numbers - Header',
+    orderTracking: 'Serial Numbers',
+    label: 'Header Action Menu',
+  };
+};
+
+export const getCopySerialNumbersAnalyticsGoogle = () => {
+  return {
+    event: 'Copy Serial Numbers - Line',
+    orderTracking: 'Serial Numbers',
+    label: 'Line Level Action Menu',
+  };
+};
+
+export const getSearchNRFAnalyticsGoogle = () => {
+  return {
+    event: 'Search|NRF',
+    orderTracking: 'NRF',
+    label: 'No results found',
+  };
+};
+
+export const getAdvancedSearchNRFAnalyticsGoogle = () => {
+  return {
+    event: 'Advanced Search|NRF',
+    orderTracking: 'NRF',
+    label: 'No results found',
+  };
+};
+
+export const getReportsNRFAnalyticsGoogle = (reportName) => {
+  return {
+    event: 'Reports|NRF',
+    orderTracking: `NRF <${reportName}>`,
+    label: 'No results found',
+  };
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],

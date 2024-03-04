@@ -13,6 +13,7 @@ import {
   getLocalStorageData,
 } from './gridUtils';
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import { getAdvancedSearchNRFAnalyticsGoogle, getReportsNRFAnalyticsGoogle, getSearchNRFAnalyticsGoogle, pushDataLayerGoogle } from './analyticsUtils';
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   const searchParams = new URLSearchParams(defaultDateRange);
@@ -67,6 +68,19 @@ export const fetchOrdersCount = async (
     (filtersRefs.current.type ?? '') + (filtersRefs.current.status ?? '');
   try {
     const result = await usGet(requestUrl.href + filtersStatusAndType);
+    if (
+      !result?.content?.totalItems ||
+      result?.isError
+    ) {
+      if (reportValue) {
+        pushDataLayerGoogle(getReportsNRFAnalyticsGoogle(reportValue));
+      } else if (searchCriteria.current?.field) {
+        pushDataLayerGoogle(getSearchNRFAnalyticsGoogle());
+      }
+      if (filtersStatusAndType === '' || dateFilters.length > 0) {
+        pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
+      }
+    }
     return result;
   } catch (error) {
     console.error('error on orders count >>', error);

@@ -40,7 +40,7 @@ const OrderTrackingDetailHeader = ({
   const orderModificationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.orderModification
   );
-  const { setCustomState, setFeatureFlags } = effects;
+  const { setCustomState, setFeatureFlags, setExportFlyoutSource } = effects;
   const orderEditable = content?.orderEditable === true;
   const infoBoxEnable = content?.sapOrderMigration?.referenceType?.length > 0;
 
@@ -139,6 +139,7 @@ const OrderTrackingDetailHeader = ({
       key: 'exportFlyout',
       value: { data: config.exportFlyout, show: true, id },
     });
+    setExportFlyoutSource("Details");
   };
 
   const triggerXMLMessage = async () => {

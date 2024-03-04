@@ -459,6 +459,21 @@ export const orderTrackingEffects = (set, get) => {
         trackAndTraceCounter: value,
       }));
     },
+    setDNoteDownloadFailedCounter(value) {
+      set((state) => ({
+        ...state,
+        dNoteDownloadFailedCounter: value,
+      }));
+    },
+    setInvoiceDownloadFailedCounter(value) {
+      set((state) => ({
+        ...state,
+        invoiceDownloadFailedCounter: value,
+      }));
+    },
+    setExportFlyoutSource(value) {
+      exportFlyoutSource = value;
+    },
     setFeatureFlags(value) {
       set((state) => ({
         ...state,

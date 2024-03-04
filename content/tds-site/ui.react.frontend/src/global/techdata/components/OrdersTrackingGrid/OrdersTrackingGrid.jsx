@@ -29,6 +29,8 @@ import {
   getSortAnalyticsGoogle,
   pushDataLayerGoogle,
   getPageReloadAnalyticsGoogle,
+  getDNoteDownloadFailedAnalyticsGoogle,
+  getInvoiceDownloadFailedAnalyticsGoogle,
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import { cellMouseOut, cellMouseOver } from './utils/tooltipUtils';
@@ -89,10 +91,18 @@ function OrdersTrackingGrid(props) {
     setFilterList,
     setCustomFiltersChecked,
     setFeatureFlags,
+    setDNoteDownloadFailedCounter,
+    setInvoiceDownloadFailedCounter,
   } = useOrderTrackingStore((st) => st.effects);
   const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
     useOrderTrackingStore,
     { resetCallback, shouldGoToFirstPage, isOnSearchAction }
+  );
+  const dNoteDownloadFailedCounter = useOrderTrackingStore(
+    (state) => state.dNoteDownloadFailedCounter
+  );
+  const invoiceDownloadFailedCounter = useOrderTrackingStore(
+    (state) => state.invoiceDownloadFailedCounter
   );
   const userData = useOrderTrackingStore((st) => st.userData);
   const { isGTMReady } = useGTMStatus();
@@ -272,6 +282,23 @@ function OrdersTrackingGrid(props) {
         redirect: false,
       });
     } catch (error) {
+      if (flyoutType === 'DNote') {
+        pushDataLayerGoogle(
+          getDNoteDownloadFailedAnalyticsGoogle(
+            dNoteDownloadFailedCounter,
+            true
+          )
+        );
+        setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter + 1);
+      } else if (flyoutType === 'Invoice') {
+        pushDataLayerGoogle(
+          getInvoiceDownloadFailedAnalyticsGoogle(
+            invoiceDownloadFailedCounter,
+            true
+          )
+        );
+        setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
+      } 
       console.error('Error', error);
     }
   };

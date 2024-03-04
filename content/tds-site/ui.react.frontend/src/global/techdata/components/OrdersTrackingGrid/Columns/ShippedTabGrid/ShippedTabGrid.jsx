@@ -44,7 +44,7 @@ function ShippedTabGrid({
       width: gridColumnWidths.dropdownArrow,
       cellRenderer: (eventProps) => (
         <section className="cmp-product-lines-grid__row">
-          <DropdownColumn eventProps={eventProps} />
+          <DropdownColumn eventProps={eventProps} orderId={id} />
         </section>
       ),
     },

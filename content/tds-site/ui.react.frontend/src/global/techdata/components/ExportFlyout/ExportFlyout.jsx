@@ -15,6 +15,7 @@ import { getUrlParams } from '../../../../utils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import {
   getExportAnalyticsGoogle,
+  getExportSerialNumbersAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 
@@ -59,6 +60,9 @@ function ExportFlyout({
     'order-details.html?id='
   );
   const exportFlyoutConfig = useOrderTrackingStore((st) => st.exportFlyout);
+  const exportFlyoutSource = useOrderTrackingStore(
+    (state) => state.exportFlyoutSource
+  );
   let urlSearchParams = new URLSearchParams();
   if (searchParams) {
     const { reports, sort, search, filters } = searchParams;
@@ -202,6 +206,10 @@ function ExportFlyout({
         });
 
       closeFlyout();
+    }
+    if (exportFlyoutSource === 'Details') {
+      pushDataLayerGoogle(getExportSerialNumbersAnalyticsGoogle());
+      effects.setExportFlyoutSource(null);
     }
   };
 

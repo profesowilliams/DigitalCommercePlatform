@@ -7,7 +7,7 @@ import {
   addUrlParam,
 } from '../../../../../utils/utils';
 import { usGet } from '../../../../../utils/api';
-import { getReturnAnalyticsGoogle, getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { getCopySerialNumbersAnalyticsGoogle, getReturnAnalyticsGoogle, getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const iconStyle = {
@@ -97,6 +97,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     const serialsText = lineSerials.join('\n');
     serialsText && navigator.clipboard.writeText(serialsText);
     effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+    pushDataLayerGoogle(getCopySerialNumbersAnalyticsGoogle());
   };
 
   const handleTrackAndTrace = async () => {

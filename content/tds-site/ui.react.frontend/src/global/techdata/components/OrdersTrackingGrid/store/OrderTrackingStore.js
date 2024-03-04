@@ -124,6 +124,9 @@ const INITIAL_STATE = {
   },
   returnCounter: 1,
   trackAndTraceCounter: 1,
+  dNoteDownloadFailedCounter: 1,
+  invoiceDownloadFailedCounter: 1,
+  exportFlyoutSource: null,
   featureFlags: {
     orderModification: false,
     proactiveMessage: false,

@@ -8,6 +8,8 @@ import { getSessionInfo } from '../../../../utils/user/get';
 import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import Flyouts from './Flyouts';
 import {
+  getDNoteDownloadFailedAnalyticsGoogle,
+  getInvoiceDownloadFailedAnalyticsGoogle,
   getPageReloadAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
@@ -32,8 +34,10 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { setUserData } = useOrderTrackingStore((st) => st.effects);
+  const { setUserData, setDNoteDownloadFailedCounter, setInvoiceDownloadFailedCounter } = useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
+  const dNoteDownloadFailedCounter = useOrderTrackingStore((state) => state.dNoteDownloadFailedCounter);
+  const invoiceDownloadFailedCounter = useOrderTrackingStore((state) => state.invoiceDownloadFailedCounter);
 
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
@@ -52,6 +56,18 @@ function OrdersTrackingDetail(props) {
         redirect: false,
       });
     } catch (error) {
+      if (flyoutType==='DNote'){
+        pushDataLayerGoogle(getDNoteDownloadFailedAnalyticsGoogle(dNoteDownloadFailedCounter, false));
+        setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter+1);
+      } else if (flyoutType==='Invoice'){
+        pushDataLayerGoogle(
+          getInvoiceDownloadFailedAnalyticsGoogle(
+            invoiceDownloadFailedCounter,
+            false
+          )
+        );
+        setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
+      } 
       console.error('Error', error);
     }
   };
