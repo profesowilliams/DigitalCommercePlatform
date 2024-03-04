@@ -58,6 +58,8 @@ export const fetchOrdersCount = async (
     addDefaultDateRangeToUrl(requestUrl, defaultSearchDateRange);
   }
   if (dateFilters.length > 0) {
+    requestUrl.searchParams.delete('createdFrom');
+    requestUrl.searchParams.delete('createdTo');
     dateFilters.forEach((filter) =>
       requestUrl.searchParams.set(filter[0], filter[1])
     );
@@ -77,7 +79,7 @@ export const fetchOrdersCount = async (
       } else if (searchCriteria.current?.field) {
         pushDataLayerGoogle(getSearchNRFAnalyticsGoogle());
       }
-      if (filtersStatusAndType === '' || dateFilters.length > 0) {
+      if (filtersStatusAndType !== '' || dateFilters.length > 0) {
         pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
       }
     }

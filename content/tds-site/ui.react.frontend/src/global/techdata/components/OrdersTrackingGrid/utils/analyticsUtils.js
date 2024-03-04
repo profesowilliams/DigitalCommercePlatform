@@ -1,4 +1,3 @@
-import { getDictionaryValueOrKey } from "../../../../../utils/utils";
 
 export const pushDataLayerGoogle = (analyticsData) => {
   window.dataLayer = window.dataLayer || [];
@@ -11,7 +10,7 @@ export const getSortAnalyticsGoogle = (category, sortedModel) => {
     .join();
   return {
     event: 'Order tracking - Grid Sort',
-    category: getDictionaryValueOrKey(category),
+    category,
     orderTracking: sortData,
   };
 };
@@ -19,7 +18,7 @@ export const getSortAnalyticsGoogle = (category, sortedModel) => {
 export const getPaginationAnalyticsGoogle = (category, pageEvent) => {
   return {
     event: 'Order tracking - Pagination',
-    category: getDictionaryValueOrKey(category),
+    category,
     orderTracking: pageEvent,
   };
 };
@@ -28,7 +27,7 @@ export const getFilterAnalyticsGoogle = (category, filterData, dateLabel) => {
   const filters = filterData?.length > 0 ? filterData : [];
   return {
     event: 'Order tracking - Advanced Search',
-    category: getDictionaryValueOrKey(category),
+    category,
     orderTracking: filters.join('|'),
     label: dateLabel,
   };
@@ -37,16 +36,16 @@ export const getFilterAnalyticsGoogle = (category, filterData, dateLabel) => {
 export const getReportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Reports',
-    category: getDictionaryValueOrKey(category),
-    orderTracking: getDictionaryValueOrKey(option?.label),
+    category,
+    orderTracking: option?.label,
   };
 };
 
 export const getExportAnalyticsGoogle = (category, option) => {
   return {
     event: 'Order tracking - Export',
-    category: getDictionaryValueOrKey(category),
-    orderTracking: getDictionaryValueOrKey(option),
+    category,
+    orderTracking: option,
   };
 };
 
@@ -57,15 +56,15 @@ export const getSearchAnalyticsGoogle = (
 ) => {
   return {
     event: 'Order tracking - Search',
-    category: getDictionaryValueOrKey(category),
-    orderTracking: `${getDictionaryValueOrKey(dropdownOption)}: ${textInput}`,
+    category,
+    orderTracking: `${dropdownOption}: ${textInput}`,
   };
 };
 
 export const getHomeAnalyticsGoogle = (rights) => {
   return {
     event: 'Order tracking - Home',
-    orderTracking: `Home: ${getDictionaryValueOrKey(rights)}`,
+    orderTracking: `Home: ${rights}`,
     action: 'Rights',
   };
 };
@@ -81,7 +80,7 @@ export const getDNoteViewAnalyticsGoogle = (numberOfDownloads, dNoteLabel) => {
   return {
     event: 'Order tracking - D-Note View',
     orderTracking: `D-Note View: ${numberOfDownloads}`,
-    label: getDictionaryValueOrKey(dNoteLabel),
+    label: dNoteLabel,
   };
 };
 
@@ -89,7 +88,7 @@ export const getMainGridAnalyticsGoogle = (number, invoiceLabel) => {
   return {
     event: 'Order tracking - Main Grid',
     orderTracking: `Invoice View: ${number}`,
-    label: getDictionaryValueOrKey(invoiceLabel),
+    label: invoiceLabel,
   };
 };
 
@@ -97,7 +96,7 @@ export const getInvoiceViewAnalyticsGoogle = (number, invoiceLabel) => {
   return {
     event: 'Order tracking - Invoice View',
     orderTracking: `Invoice View: ${number}`,
-    label: getDictionaryValueOrKey(invoiceLabel),
+    label: invoiceLabel,
   };
 };
 
