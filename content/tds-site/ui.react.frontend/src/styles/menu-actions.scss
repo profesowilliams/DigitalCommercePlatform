@@ -8,7 +8,8 @@
   .actions-dropdown.actions-dropdown.actions-dropdown {
     border-top: 2px $brand-cobalt solid;
     position: absolute;
-    width: 192px;
+    min-width: 192px;
+    width: auto;
     top: 25px;
     right: 0;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.24);
