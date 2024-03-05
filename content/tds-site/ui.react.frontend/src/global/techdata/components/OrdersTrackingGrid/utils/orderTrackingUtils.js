@@ -370,26 +370,31 @@ export const getPredefinedSearchOptionsList = (aemData) => {
   return [
     {
       searchLabel: getDictionaryValueOrKey(orderNo),
+      param: 'id',
       searchKey: 'Id',
       showIfIsHouseAccount: false,
     },
     {
       searchLabel: getDictionaryValueOrKey(dnoteNo),
+      param: 'deliveryNote',
       searchKey: 'DeliveryNote',
       showIfIsHouseAccount: false,
     },
     {
       searchLabel: getDictionaryValueOrKey(invoiceNo),
+      param: 'invoiceId',
       searchKey: 'InvoiceId',
       showIfIsHouseAccount: false,
     },
     {
       searchLabel: getDictionaryValueOrKey(poNo),
+      param: 'customerPO',
       searchKey: 'CustomerPO',
       showIfIsHouseAccount: false,
     },
     {
       searchLabel: getDictionaryValueOrKey(serialNo),
+      param: 'serialNo',
       searchKey: 'SerialNo',
       showIfIsHouseAccount: false,
     },

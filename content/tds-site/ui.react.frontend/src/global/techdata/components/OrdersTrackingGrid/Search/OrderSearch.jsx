@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useRef,
   useState,
+  useEffect,
   useImperativeHandle,
   forwardRef,
 } from 'react';
@@ -74,8 +75,10 @@ const _OrderSearch = (
     input: getInitialValueState(),
     option: getInitialFieldState(),
     label:
-      options.find((option) => option.searchKey === getInitialFieldState())
-        ?.searchLabel || '',
+      options.find(
+        (option) =>
+          option.searchKey === (getInitialFieldState() || ref.current.field)
+      )?.searchLabel || '',
   };
   const [values, setValues] = useState({
     ...customSearchValues,
@@ -181,10 +184,22 @@ const _OrderSearch = (
       setIsDropdownVisible(false);
     }
   };
-
+  const removeQueryParamsSearch = () => {
+    const params = new URLSearchParams(window.location.search);
+    options.forEach((el) => {
+      if (params.has(el.param)) {
+        params.delete(el.param);
+      }
+    });
+    const queryString = params.toString();
+    const finalUrl =
+      window.location.pathname + (queryString ? `?${queryString}` : '');
+    window.history.pushState({}, document.title, finalUrl);
+  };
   const handleCapsuleClose = () => {
     setIsSearchCapsuleVisible(false);
     fetchAll();
+    removeQueryParamsSearch();
   };
 
   const handleCapsuleTextClick = () => {
@@ -255,6 +270,11 @@ const _OrderSearch = (
     setIsSearchHovered(false);
     setIsDropdownVisible(false);
   };
+  useEffect(() => {
+    if (ref.current.value) {
+      setIsSearchCapsuleVisible(true);
+    }
+  }, [ref.current.value]);
   return (
     <>
       {isSearchCapsuleVisible ? (
@@ -263,8 +283,12 @@ const _OrderSearch = (
             capsuleSearchValue={capsuleSearchValue}
             handleCapsuleClose={handleCapsuleClose}
             handleCapsuleTextClick={handleCapsuleTextClick}
-            inputValue={inputRef?.current?.value}
-            label={capsuleValues.label}
+            inputValue={
+              ref.current.value ? ref.current.value : inputRef?.current?.value
+            }
+            label={
+              ref.current.value ? customSearchValues.label : capsuleValues.label
+            }
           />
           {!isDropdownVisible ? (
             <div className="cmp-renewal-search">

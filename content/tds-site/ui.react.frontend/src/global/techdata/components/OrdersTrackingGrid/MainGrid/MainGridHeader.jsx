@@ -115,10 +115,10 @@ function MainGridHeader({
     });
   };
 
-  const removeQueryParams = () => {
+  const removeQueryParamsReport = () => {
     const params = new URLSearchParams(window.location.search);
     params.forEach((value, key) => {
-      if (key !== 'saleslogin') {
+      if (key === 'report') {
         params.delete(key);
       }
     });
@@ -130,7 +130,7 @@ function MainGridHeader({
   };
 
   const handleDeletePill = () => {
-    removeQueryParams();
+    removeQueryParamsReport();
     setPill();
     onQueryChanged();
     removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
@@ -145,7 +145,6 @@ function MainGridHeader({
     removeDefaultDateRange();
     onQueryChanged({ onSearchAction: true });
   };
-
   const rightComponents = [
     ...(pill
       ? [

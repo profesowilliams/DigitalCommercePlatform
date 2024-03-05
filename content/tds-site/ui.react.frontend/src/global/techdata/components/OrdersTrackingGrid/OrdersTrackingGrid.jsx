@@ -61,6 +61,7 @@ import {
   getDictionaryValue,
   getDictionaryValueOrKey,
 } from '../../../../utils/utils';
+import { getPredefinedSearchOptionsList } from './utils/orderTrackingUtils';
 
 const searchParamsKeys = [
   ORDER_PAGINATION_LOCAL_STORAGE_KEY,
@@ -371,7 +372,7 @@ function OrdersTrackingGrid(props) {
       if (isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
-            country: (data[1]?.country == 'UK') ? 'GB' : data[1]?.country,
+            country: data[1]?.country == 'UK' ? 'GB' : data[1]?.country,
             internalTraffic: data[1]?.isInternalUser ? 'True' : 'False',
             pageName: 'Main Dashboard',
             number: '',
@@ -407,6 +408,10 @@ function OrdersTrackingGrid(props) {
   const shipToTooltipTemplateDefault =
     '{name}<br/>{address.line1}<br/>{address.line2}<br/>{address.line3}<br/>{address.city} {address.state} {address.zip} {address.country}';
 
+  const searchOptions = [
+    ...getPredefinedSearchOptionsList(searchLabels),
+    ...searchOptionsList,
+  ];
   useEffect(() => {
     if (!userData) {
       return;
@@ -431,6 +436,17 @@ function OrdersTrackingGrid(props) {
       });
       onQueryChanged();
     }
+    searchOptions.forEach((el) => {
+      if (params.has(el.param)) {
+        searchCriteria.current.field = el.searchKey;
+        searchCriteria.current.value = params.get(el.param);
+        setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
+          field: el.searchKey,
+          value: params.get(el.param),
+        });
+        onQueryChanged({ onSearchAction: true });
+      }
+    });
   }, [userData]);
 
   const authorizedContent = () => {
