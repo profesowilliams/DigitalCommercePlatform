@@ -278,11 +278,7 @@ const OrderTrackingDetailHeader = ({
             onMouseOver={handleActionMouseOver}
             onMouseLeave={handleActionMouseLeave}
           >
-            <span
-              className="quote-actions"
-              onMouseOver={handleActionMouseOver}
-              onMouseLeave={handleActionMouseLeave}
-            >
+            <span className="quote-actions">
               {getDictionaryValueOrKey(config.labels?.actions)}
             </span>
             {actionsDropdownVisible && (
