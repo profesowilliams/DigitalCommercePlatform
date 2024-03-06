@@ -176,10 +176,11 @@ export const getReturnAnalyticsGoogle = (counter) => {
   };
 };
 
-export const getTrackAndTraceAnalyticsGoogle = (counter, isMainGrid) => {
+export const getTrackAndTraceAnalyticsGoogle = (counter, isMainGrid, host) => {
+  const hostname = host ? `www.${host.toLowerCase()}.com` : "";
   return {
     event: 'Order tracking - Track & Trace',
-    orderTracking: `Track & Trace: "Carrier Link" ${counter}`,
+    orderTracking: `Track & Trace: "Carrier Link ${hostname}" ${counter}`,
     label: isMainGrid ? 'Main Grid' : 'Order Details',
   };
 }

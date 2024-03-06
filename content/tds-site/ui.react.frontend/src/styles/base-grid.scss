@@ -144,6 +144,10 @@
     align-items: flex-end;
     height: 60px;
     margin: 24px 0 12px 0;
+    svg {
+        fill: $brand-green;
+        height: 16px;
+      }
   }
   /*
       Styles for pagination

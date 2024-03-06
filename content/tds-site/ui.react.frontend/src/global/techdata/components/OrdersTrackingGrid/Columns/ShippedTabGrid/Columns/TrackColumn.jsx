@@ -10,9 +10,6 @@ function TrackColumn({ line, config, id }) {
   const { setTrackAndTraceCounter } = useOrderTrackingStore((st) => st.effects);
 
   const handleTrackAndTrace = async () => {
-    pushDataLayerGoogle(
-      getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, true)
-    );
     setTrackAndTraceCounter(trackAndTraceCounter+1);
     try {
       const enableLineId = line?.items?.length === 1;
@@ -24,7 +21,7 @@ function TrackColumn({ line, config, id }) {
         ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
         : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
       const result = await usGet(endpointUrl);
-      const { baseUrl, parameters } = result.data;
+      const { baseUrl, parameters, carrier } = result.data;
       if (baseUrl) {
         let trackAndTraceParams = '';
         if (parameters) {
@@ -33,6 +30,13 @@ function TrackColumn({ line, config, id }) {
           );
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');
+        pushDataLayerGoogle(
+          getTrackAndTraceAnalyticsGoogle(
+            trackAndTraceCounter,
+            false,
+            carrier
+          )
+        );
       }
     } catch (error) {
       console.error(error);

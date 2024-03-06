@@ -101,16 +101,13 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   };
 
   const handleTrackAndTrace = async () => {
-    pushDataLayerGoogle(
-      getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, false)
-    );
     setTrackAndTraceCounter(trackAndTraceCounter + 1);
     try {
       const endpointUrl = enableLineId
         ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
         : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
       const result = await usGet(endpointUrl);
-      const { baseUrl, parameters } = result.data;
+      const { baseUrl, parameters, carrier } = result.data;
       if (baseUrl) {
         let trackAndTraceParams = '';
         if (parameters) {
@@ -124,6 +121,13 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
           );
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');
+        pushDataLayerGoogle(
+          getTrackAndTraceAnalyticsGoogle(
+            trackAndTraceCounter,
+            false,
+            carrier
+          )
+        );
       }
     } catch (error) {
       console.error(error);
