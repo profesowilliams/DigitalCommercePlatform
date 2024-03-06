@@ -12,9 +12,20 @@ function DescriptionColumn({ line, config }) {
         />
       </div>
       <div className="cmp-order-tracking-grid-details__description-right">
-        {line?.displayName && (
-          <div className="cmp-order-tracking-grid-details__description-link">{`${line?.displayName}`}</div>
-        )}
+        {line?.displayName &&
+          (line?.urlProductDetailsPage ? (
+            <a
+              href={line?.urlProductDetailsPage}
+              target="_blank"
+              className="cmp-order-tracking-grid-details__description-link"
+            >
+              {line?.displayName}
+            </a>
+          ) : (
+            <div className="cmp-order-tracking-grid-details__description-link--disabled">
+              {line?.displayName}
+            </div>
+          ))}
         <div className="cmp-order-tracking-grid-details__description-text">
           {line?.mfrNumber && (
             <div>{`${getDictionaryValueOrKey(config?.itemsLabels?.mfrPartNo)} ${
