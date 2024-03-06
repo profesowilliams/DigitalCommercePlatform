@@ -70,7 +70,7 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     (invoice) => invoice.canDownloadDocument
   );
 
-  const trackAndTraceAvailable = line?.canTrackAndTrace;
+  const trackAndTraceAvailable = line?.lineDetails?.length > index ? line.lineDetails[index].canTrackAndTrace : false;
   const areDeliveryNotesAvailable =
     deliveryNotes?.length === 1 && deliveryNotes[0].canDownloadDocument;
   const areInvoicesAvailable =
