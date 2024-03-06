@@ -34,10 +34,18 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const { setUserData, setDNoteDownloadFailedCounter, setInvoiceDownloadFailedCounter } = useOrderTrackingStore((st) => st.effects);
+  const {
+    setUserData,
+    setDNoteDownloadFailedCounter,
+    setInvoiceDownloadFailedCounter,
+  } = useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
-  const dNoteDownloadFailedCounter = useOrderTrackingStore((state) => state.dNoteDownloadFailedCounter);
-  const invoiceDownloadFailedCounter = useOrderTrackingStore((state) => state.invoiceDownloadFailedCounter);
+  const dNoteDownloadFailedCounter = useOrderTrackingStore(
+    (state) => state.dNoteDownloadFailedCounter
+  );
+  const invoiceDownloadFailedCounter = useOrderTrackingStore(
+    (state) => state.invoiceDownloadFailedCounter
+  );
 
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
@@ -56,10 +64,15 @@ function OrdersTrackingDetail(props) {
         redirect: false,
       });
     } catch (error) {
-      if (flyoutType==='DNote'){
-        pushDataLayerGoogle(getDNoteDownloadFailedAnalyticsGoogle(dNoteDownloadFailedCounter, false));
-        setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter+1);
-      } else if (flyoutType==='Invoice'){
+      if (flyoutType === 'DNote') {
+        pushDataLayerGoogle(
+          getDNoteDownloadFailedAnalyticsGoogle(
+            dNoteDownloadFailedCounter,
+            false
+          )
+        );
+        setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter + 1);
+      } else if (flyoutType === 'Invoice') {
         pushDataLayerGoogle(
           getInvoiceDownloadFailedAnalyticsGoogle(
             invoiceDownloadFailedCounter,
@@ -67,7 +80,7 @@ function OrdersTrackingDetail(props) {
           )
         );
         setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
-      } 
+      }
       console.error('Error', error);
     }
   };
@@ -88,14 +101,24 @@ function OrdersTrackingDetail(props) {
   const handleAddNewItem = (item) => {
     setNewItem(item);
   };
+  
+  const redirectToMainDashboard = () => {
+    let currentUrl = new URL(window.location.href);
+    currentUrl.search = '';
+    currentUrl.pathname = currentUrl.pathname.replace(
+      '/order-details.html',
+      '.html'
+    );
+    window.location.href = currentUrl.href;
+  };
 
   useEffect(() => {
     getSessionInfo().then((data) => {
       setUserData(data[1]);
-      if(isGTMReady) {
+      if (isGTMReady) {
         pushDataLayerGoogle(
           getPageReloadAnalyticsGoogle({
-            country: (data[1]?.country == 'UK') ? 'GB' : data[1]?.country,
+            country: data[1]?.country == 'UK' ? 'GB' : data[1]?.country,
             internalTraffic: data[1]?.isInternalUser ? 'True' : 'False',
             pageName: 'Order Details',
             number: id,
@@ -104,7 +127,9 @@ function OrdersTrackingDetail(props) {
             industryKey: data[1]?.industryKey,
           })
         );
-        pushDataLayerGoogle(getOrderDetailsAnalyticsGoogle(content?.orderNumber));
+        pushDataLayerGoogle(
+          getOrderDetailsAnalyticsGoogle(content?.orderNumber)
+        );
       }
     });
   }, [isGTMReady]);
@@ -113,6 +138,9 @@ function OrdersTrackingDetail(props) {
     try {
       const apiResponse = await usGet(`${config.orderDetailEndpoint}/${id}`);
       setContent(apiResponse?.data?.content);
+      if (apiResponse.status === 204) {
+        redirectToMainDashboard();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -141,10 +169,7 @@ function OrdersTrackingDetail(props) {
                 rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
                 newItem={newItem}
               />
-              <OrderTrackingDetailFooter
-                config={config}
-                content={content}
-              />
+              <OrderTrackingDetailFooter config={config} content={content} />
             </>
           )}
         </section>
