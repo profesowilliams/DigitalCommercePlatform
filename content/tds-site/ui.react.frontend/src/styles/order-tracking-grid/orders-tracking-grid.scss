@@ -77,6 +77,11 @@
             }
           }
         }
+        &[col-id='statusText'] {
+          .ag-header-cell-label {
+            padding-left: 21px;
+          }
+        }
       }
       & .ag-root-wrapper-body {
         overflow-x: hidden !important;
