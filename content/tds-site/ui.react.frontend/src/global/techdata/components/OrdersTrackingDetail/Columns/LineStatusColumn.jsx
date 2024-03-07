@@ -8,7 +8,6 @@ import { usGet } from '../../../../../utils/api';
 function LineStatusColumn({ line, config, sortedLineDetails }) {
   const { id = '' } = getUrlParams();
 
-  const isEOL = line.isEOL;
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
   const effects = useOrderTrackingStore((state) => state.effects);
@@ -86,8 +85,9 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
   return (
     <div className="cmp-order-tracking-grid-details__splitLine-column">
       {sortedLineDetails(line)?.map((el, index) => {
-        const isLastElement =
-          multiple && index === line?.lineDetails?.length - 1;
+        const isLastElement = multiple && index === line?.lineDetails?.length - 1;
+        const isEOL = line.lineDetails[index].isEOL;
+
         return (
           <div
             key={line.tdNumber}
