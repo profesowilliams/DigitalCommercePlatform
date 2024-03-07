@@ -255,6 +255,8 @@ public class CaConfigReader {
 
     private String copyQuoteEndpoint;
 
+    private String shareQuoteEndpoint;
+
     private String addressesEndpoint;
 
     private String gtmBodyJSScript;
@@ -353,6 +355,7 @@ public class CaConfigReader {
         accountLookUpEndpoint = serviceEndPointsConfiguration.accountLookUpEndpoint();
         checkQuoteExitsforResellerEndpoint = serviceEndPointsConfiguration.checkQuoteExitsforResellerEndpoint();
         copyQuoteEndpoint = serviceEndPointsConfiguration.copyQuoteEndpoint();
+        shareQuoteEndpoint = serviceEndPointsConfiguration.shareQuoteEndpoint();
         addressesEndpoint = serviceEndPointsConfiguration.addressesEndpoint();
         cartURL = mcConfiguration.cartURL();
         expressCheckoutRedirectUrl = mcConfiguration.expressCheckoutRedirectUrl();
@@ -806,6 +809,8 @@ public class CaConfigReader {
     public String getCheckQuoteExitsforResellerEndpoint() { return checkQuoteExitsforResellerEndpoint; }
 
     public String getCopyQuoteEndpoint() { return copyQuoteEndpoint; }
+
+    public String getShareQuoteEndpoint() { return shareQuoteEndpoint; }
 
     public String getAddressesEndpoint() { return addressesEndpoint; }
 

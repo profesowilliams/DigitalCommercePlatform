@@ -773,6 +773,71 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 															fieldLabel="Share Flyout Comment Count"
 															name="./shareFlyoutCommentCount"/>
+													<shareFailedLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Share Failed Label"
+															name="./shareFailedLabel"/>
+													<shareFailedDescription
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+															fieldLabel="Share Failed Description"
+															name="./shareFailedDescription"/>
+													<shareFailedCancelLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Share Failed Cancel Button Label"
+															name="./shareFailedCancelLabel"/>
+													<shareFailedTryAgainLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Share Failed Try Again Button Label"
+															name="./shareFailedTryAgainLabel"/>
+													<incorrectEmailLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Incorrect Email Label"
+															name="./incorrectEmailLabel"/>
+													<incorrectEmailDescription
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+															fieldLabel="Incorrect Email Description"
+															name="./incorrectEmailDescription"/>
+													<incorrectEmailCancelLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Incorrect Email Cancel Button Label"
+															name="./incorrectEmailCancelLabel"/>
+													<incorrectEmailTryAgainLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Incorrect Email Try Again Button Label"
+															name="./incorrectEmailTryAgainLabel"/>
+													<recipientNotFoundLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Recipient Not Found Label"
+															name="./recipientNotFoundLabel"/>
+													<recipientNotFoundDescription
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+															fieldLabel="Recipient Not Found Description"
+															name="./recipientNotFoundDescription"/>
+													<recipientNotFoundCancelLabel
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Recipient Not Found Cancel Button Label"
+															name="./recipientNotFoundCancelLabel"/>
+													<recipientNotFoundContinue
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+															fieldLabel="Recipient Not Found Continue Button Label"
+															name="./recipientNotFoundContinueLabel"/>
+													<shareSuccessMessage
+															jcr:primaryType="nt:unstructured"
+															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+															fieldLabel="Share Success Message"
+															name="./shareSuccessMessage"/>
 												</items>
 											</shareFlyoutGroup>
 										</items>

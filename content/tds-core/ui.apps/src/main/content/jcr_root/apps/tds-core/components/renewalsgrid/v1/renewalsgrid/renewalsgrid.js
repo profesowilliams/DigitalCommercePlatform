@@ -466,6 +466,50 @@ use(['../../../common/utils.js'], function(utils) {
         shareFlyout.shareFlyoutButtonLabel = properties["shareFlyoutButtonLabel"];
     }
 
+    if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {
+        shareFlyout.shareQuoteEndpoint = this.serviceData.uiServiceDomain + this.shareQuoteEndpoint;
+    }
+
+    if (properties && properties["shareFailedLabel"]) {
+        shareFlyout.shareFailedLabel = properties["shareFailedLabel"];
+    }
+    if (properties && properties["shareFailedDescription"]) {
+        shareFlyout.shareFailedDescription = properties["shareFailedDescription"];
+    }
+    if (properties && properties["shareFailedCancelLabel"]) {
+        shareFlyout.shareFailedCancelLabel = properties["shareFailedCancelLabel"];
+    }
+    if (properties && properties["shareFailedTryAgainLabel"]) {
+        shareFlyout.shareFailedTryAgainLabel = properties["shareFailedTryAgainLabel"];
+    }
+    if (properties && properties["incorrectEmailLabel"]) {
+        shareFlyout.incorrectEmailLabel = properties["incorrectEmailLabel"];
+    }
+    if (properties && properties["incorrectEmailDescription"]) {
+        shareFlyout.incorrectEmailDescription = properties["incorrectEmailDescription"];
+    }
+    if (properties && properties["incorrectEmailCancelLabel"]) {
+        shareFlyout.incorrectEmailCancelLabel = properties["incorrectEmailCancelLabel"];
+    }
+    if (properties && properties["incorrectEmailTryAgainLabel"]) {
+        shareFlyout.incorrectEmailTryAgainLabel = properties["incorrectEmailTryAgainLabel"];
+    }
+    if (properties && properties["recipientNotFoundLabel"]) {
+        shareFlyout.recipientNotFoundLabel = properties["recipientNotFoundLabel"];
+    }
+    if (properties && properties["recipientNotFoundDescription"]) {
+        shareFlyout.recipientNotFoundDescription = properties["recipientNotFoundDescription"];
+    }
+    if (properties && properties["recipientNotFoundCancelLabel"]) {
+        shareFlyout.recipientNotFoundCancelLabel = properties["recipientNotFoundCancelLabel"];
+    }
+    if (properties && properties["recipientNotFoundContinueLabel"]) {
+        shareFlyout.recipientNotFoundContinueLabel = properties["recipientNotFoundContinueLabel"];
+    }
+    if (properties && properties["shareSuccessMessage"]) {
+        shareFlyout.shareSuccessMessage = properties["shareSuccessMessage"];
+    }
+
     if (noResultsValues != null) {
         jsonObject["searchResultsError"] = noResultsValues;
     }

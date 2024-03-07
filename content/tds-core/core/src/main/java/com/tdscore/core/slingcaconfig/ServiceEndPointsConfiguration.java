@@ -205,4 +205,7 @@ public @interface ServiceEndPointsConfiguration {
     
     @Property(label = "Get Addresses Endpoint", description = "Get Addresses Endpoint")
     String addressesEndpoint();
+
+    @Property(label = "Share Quote Endpoint", description = "Share Quote Endpoint")
+    String shareQuoteEndpoint();
 }

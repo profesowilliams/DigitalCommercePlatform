@@ -6,7 +6,7 @@ import { CustomTextField } from '../Widgets/CustomTextField';
 import { useRenewalGridState } from '../RenewalsGrid/store/RenewalsStore';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
-export function EmailInput({ id, label, required, enableShareButton, requiredText }) {
+export function EmailInput({ id, label, required, enableShareButton, requiredText, updateRequestObject }) {
 
   const [inputValue, setInputValue] = useState("");
   const [selectedEmails, setSelectedEmails] = useState([]);
@@ -14,8 +14,14 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
   useEffect(() =>{
     if (selectedEmails?.length && enableShareButton) {
       enableShareButton(true);
+      updateRequestObject({
+        'ToEmail': selectedEmails
+      });
     } else if (enableShareButton) {
       enableShareButton(false);
+      updateRequestObject({
+        'ToEmail': []
+      });
     }
   }, [selectedEmails]);
 

@@ -4937,6 +4937,20 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   res.json(response);
 });
 
+app.get("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
+  const response = {
+     "content": {
+         "success": true
+     },
+     "error": {
+         "code": 0,
+         "messages": [],
+         "isError": false
+     }
+ }
+  res.json(response);
+});
+
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
   res.json({
     "details.common.validation.invalidEmail":
