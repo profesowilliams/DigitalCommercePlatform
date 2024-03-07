@@ -27,6 +27,7 @@
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
     ofTextLabel="of"
+    endOfLife="End Of Life"
     menuCopyLink="Copy link"
     overdueDaysRange="0-30"
     overdueIcon="fas fa-bell"     

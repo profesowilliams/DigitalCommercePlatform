@@ -41,6 +41,7 @@ use(["../common/utils.js"], function (utils) {
       "menuOpenLink",
       "menuCopyLink",
       "ofTextLabel",
+      "endOfLife"
     ];
 
     labelsList.map((property) => {

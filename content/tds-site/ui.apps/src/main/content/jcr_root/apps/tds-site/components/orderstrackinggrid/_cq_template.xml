@@ -26,7 +26,7 @@
     menuCsvExport="CSV Export"
     menuExcelExport="Excel Eport"
     menuOpenLink="Open link in new tab"
-    ofTextLabel="of"
+    ofTextLabel="of" 
     menuCopyLink="Copy link"
     overdueDaysRange="0-30"
     overdueIcon="fas fa-bell"     

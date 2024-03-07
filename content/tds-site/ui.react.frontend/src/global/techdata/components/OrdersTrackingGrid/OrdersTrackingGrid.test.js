@@ -152,6 +152,7 @@ const mockedProps = {
   menuOpenLink: 'Open link in new tab',
   menuCopyLink: 'Copy link',
   ofTextLabel: 'of',
+  endOfLife: 'End Of Life',
   dateOptionValues: [{ label: 'Data Range1', field: 'custom' }],
   defaultSearchDateRange: '30',
   filterListValues: [

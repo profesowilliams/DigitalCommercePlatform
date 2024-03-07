@@ -1,7 +1,7 @@
 import React from 'react';
 import QuantityAndDeliveryEstimateLine from './QuantityAndDeliveryEstimateLine';
 
-function QuantityAndDeliveryEstimateColumn({ line }) {
+function QuantityAndDeliveryEstimateColumn({ line, config }) {
   return (
     <div className="order-line-details__content__innerTableNotShipped__item-column">
       {line?.lineDetails?.map((el, index) => (
@@ -10,6 +10,7 @@ function QuantityAndDeliveryEstimateColumn({ line }) {
           el={el}
           index={index}
           key={index}
+          config={config}
         />
       ))}
     </div>

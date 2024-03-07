@@ -142,13 +142,19 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Order Completed Label"
 												name="./completed"/>
-                                            <multiple
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Multiple Label"
-                                                name="./multiple"
+                                          <multiple
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                              fieldLabel="Multiple Label"
+                                              name="./multiple"
                                             />
-                                            <shipToTooltipTemplate
+                                          <endOfLife
+                                              jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                              fieldLabel="End Of Life Label"
+                                              name="./endOfLife"
+                                            />
+                                          <shipToTooltipTemplate
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Ship To Column Template"

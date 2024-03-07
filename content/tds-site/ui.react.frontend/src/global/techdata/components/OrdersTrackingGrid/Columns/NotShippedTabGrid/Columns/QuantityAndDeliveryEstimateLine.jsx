@@ -1,10 +1,24 @@
 import React from 'react';
-function QuantityAndDeliveryEstimateLine({ line, el, index }) {
+import { getDictionaryValueOrKey } from '../../../../../../../utils/utils';
+import { WarningTriangle } from '../../../../../../../fluentIcons/FluentIcons';
+
+function QuantityAndDeliveryEstimateLine({ line, el, index, config }) {
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
   const isLastElement = multiple && index === line?.lineDetails?.length - 1;
+  const isEOL = line?.isEOL;
 
   const shipDateText = el.shipDateDetailsTranslated || el.shipDateFormatted;
+
+  const EOLStatus = (
+    <>
+      <span className="line-status">
+        <WarningTriangle />
+        {getDictionaryValueOrKey(config?.endOfLife)}
+      </span>
+    </>
+  );
+
   return (
     <div
       key={el.id}
@@ -41,7 +55,7 @@ function QuantityAndDeliveryEstimateLine({ line, el, index }) {
         )}
         {el.statusText ? (
           <span className="order-line-details__content__innerTableNotShipped__separateLineText">
-            {el.statusText}
+            {isEOL ? EOLStatus : el.statusText || ''}
           </span>
         ) : (
           <span></span>
