@@ -15,7 +15,7 @@
                 <originalInfoBoxText
                     jcr:primaryType="nt:unstructured"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                    fieldLabel="Due do data migration, this new order was created for items hat have not been shipped in a previous order. Label"
+                    fieldLabel="Due to data migration, this new order was created for items that have not been shipped in a previous order. Label"
                     name="./originalInfoBoxText"/>
                 <viewOrderText
                     jcr:primaryType="nt:unstructured"
