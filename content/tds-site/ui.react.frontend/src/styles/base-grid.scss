@@ -277,3 +277,7 @@
     display: inline;
   }
 }
+
+section.cmp-tds-title > div.cmp-title > h3.dp-title__text{
+  padding-top:30px; /*overrides style beyond app*/;
+}

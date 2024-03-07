@@ -408,6 +408,14 @@
       border: 1px solid $brand-green !important;
       &:hover {
         border-radius: 2px;
+        background-color: $brand-green-secondary;
+      }
+      &::selection {
+        color: $brand-white;
+        background-color: $brand-green;
+      }
+      &:active {
+        background-color: $brand-green-secondary-pressed;
       }
     }
     &__release-button {
