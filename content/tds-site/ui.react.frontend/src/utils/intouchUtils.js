@@ -5,7 +5,7 @@ export const intouchFooterAPIUrl = () => addSalesLogin(document.body.getAttribut
 export const intouchUserCheckAPIUrl = () => addSalesLogin(document.body.getAttribute("data-intouch-user-check-api-url"));
 export const uiServiceDomain = () => document.body.getAttribute("data-ui-service-domain");
 export const getUserEndpoint = () => document.body.getAttribute("data-get-user-endpoint");
-export const getSalesLogin = () => { return getUrlParamsCaseInsensitive().saleslogin; };
+export const getSalesLogin = () => { return getUrlParamsCaseInsensitive().get("saleslogin"); };
 
 export const addSalesLogin = (url) => {
   let salesLogin = getSalesLogin();

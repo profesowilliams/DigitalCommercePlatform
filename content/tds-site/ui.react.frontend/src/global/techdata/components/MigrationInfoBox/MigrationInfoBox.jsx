@@ -4,7 +4,7 @@ import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getUrlParamsCaseInsensitive } from '../../../../utils';
 
 function MigrationInfoBox({ config, id, referenceType }) {
-  const { saleslogin = '' } = getUrlParamsCaseInsensitive();
+  const saleslogin = getUrlParamsCaseInsensitive().get("saleslogin");
   const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
   const [description, setDescription] = useState('');
   const { migrationInfoBoxText, originalInfoBoxText, viewOrderText } = config;

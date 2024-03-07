@@ -4,7 +4,7 @@ import { getOrderDetailsAnalyticsGoogle } from '../utils/analyticsUtils';
 import { getUrlParamsCaseInsensitive } from '../../../../../utils';
 
 function OrderNoColumn({ id, detailUrl }) {
-  const { saleslogin = '' } = getUrlParamsCaseInsensitive();
+  const saleslogin = getUrlParamsCaseInsensitive().get("saleslogin");
   const salesLoginParam = saleslogin ? `&saleslogin=${saleslogin}` : '';
 
   return detailUrl && !isJavaScriptProtocol.test(detailUrl) ? (

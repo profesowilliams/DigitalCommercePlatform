@@ -117,16 +117,14 @@ export const deleteSearchParam = (searchParam) => {
   history.replaceState({}, '', formattedUrl);
 }; 
 
-export const getUrlParamsCaseInsensitive = () =>
-  Object.fromEntries(
-    new Map(
-      window.location.search
-        .replace('?', '')
-        .toLowerCase()
-        .split('&')
-        .map((item) => item.split('='))
-    )
-  );
+export const getUrlParamsCaseInsensitive = () => {
+  const newParams = new URLSearchParams();
+  const params = new URLSearchParams(window.location.search);
+  for (const [name, value] of params) {
+    newParams.append(name.toLowerCase(), value);
+  }
+  return newParams;
+}
 
 export const isObject = (val) =>
   typeof val === "object" && !Array.isArray(val) && val !== null;

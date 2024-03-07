@@ -12,6 +12,7 @@ import useExtendGridOperations from '../BaseGrid/Hooks/useExtendGridOperations';
 import { useOrderTrackingStore } from './store/OrderTrackingStore';
 import { ordersTrackingDefinition } from './utils/ordersTrackingDefinitions';
 import { requestFileBlobWithoutModal } from '../../../../utils/utils';
+import { getUrlParamsCaseInsensitive } from '../../../../utils';
 import AccessPermissionsNeeded from './../AccessPermissionsNeeded/AccessPermissionsNeeded';
 import {
   addCurrentPageNumber,
@@ -167,10 +168,10 @@ function OrdersTrackingGrid(props) {
     };
     config.columnApi.applyColumnState({ ...columnState });
   };
-  const params = new URLSearchParams(window.location.search);
+  const params = getUrlParamsCaseInsensitive();
 
   const areUrlSearchParamsPresent =
-    params.has('customerId') && params.has('salesOrg');
+    params.has('customerid') && params.has('salesorg');
 
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
@@ -418,8 +419,8 @@ function OrdersTrackingGrid(props) {
     }
     if (
       areUrlSearchParamsPresent &&
-      params.get('customerId') === customerNumber &&
-      params.get('salesOrg') === salesOrg
+      params.get('customerid') === customerNumber &&
+      params.get('salesorg') === salesOrg
     ) {
       areSearchParamsValid.current = true;
     } else {

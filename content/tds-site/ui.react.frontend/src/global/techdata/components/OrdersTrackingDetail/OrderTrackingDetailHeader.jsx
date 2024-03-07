@@ -30,7 +30,7 @@ const OrderTrackingDetailHeader = ({
   componentProps,
   userData,
 }) => {
-  const { saleslogin = '' } = getUrlParamsCaseInsensitive();
+  const saleslogin = getUrlParamsCaseInsensitive().get("saleslogin");
   const [actionsDropdownVisible, setActionsDropdownVisible] = useState(false);
   const [releaseOrderShow, setReleaseOrderShow] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
