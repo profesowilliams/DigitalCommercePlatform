@@ -34,7 +34,7 @@ function QuantityAndDeliveryEstimateLine({ line, el, index, config }) {
         }`}
       >
         <span className="order-line-details__content__innerTableNotShipped__separateLineText">
-          {el.quantity} / {line.orderQuantity}
+          {el.quantity}/{line.orderQuantity}
         </span>
       </div>
       <div
