@@ -204,7 +204,7 @@ use(["../../../common/utils.js"], function (utils) {
     "cancelNewItem",
     "updateSucessMessage",
     "modifyErrorMessage",
-    "updateErrorMessage",
+    "modifyUpdateErrorMessage",
     "updateErrorListMessage",
     "line",
     "reduceQuantity",

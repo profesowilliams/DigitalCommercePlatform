@@ -223,7 +223,9 @@ function OrderModificationFlyout({
         origin: 'fromUpdate',
         isAutoClose: true,
         isSuccess: false,
-        message: getDictionaryValueOrKey(labels?.updateErrorMessage),
+        message: getDictionaryValueOrKey(
+          labels?.updateErrorMessage || labels?.modifyUpdateErrorMessage
+        ),
       };
       console.error('Error updating order:', error);
       effects.setCustomState({ key: 'toaster', value: { ...toasterError } });

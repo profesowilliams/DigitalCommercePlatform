@@ -573,11 +573,11 @@
                                                 fieldLabel="It was not possible to modify your order at this time. Please try again later. Label"
                                                 name="./modifyErrorMessage"
                                                 required="{Boolean}true"/>
-                                            <updateErrorMessage
+                                            <modifyUpdateErrorMessage
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="It was not possible to complete your request at this time, please try again later. Label"
-												name="./updateErrorMessage"/>
+												name="./modifyUpdateErrorMessage"/>
                                             <updateErrorListMessage
 												jcr:primaryType="nt:unstructured"
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
