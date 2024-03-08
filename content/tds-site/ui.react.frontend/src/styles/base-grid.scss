@@ -132,9 +132,11 @@
   display: flex;
   justify-content: space-between;
   line-height: 17px;
-  margin: 24px 0 12px 0;
+  padding: 24px 0 12px 0;
   align-items: center;
   height: 60px;
+  background-color: $td-neutral-gray;
+
   &-left {
     display: flex;
     gap: 0.5rem;
@@ -145,9 +147,9 @@
     height: 60px;
     margin: 24px 0 12px 0;
     svg {
-        fill: $brand-green;
-        height: 16px;
-      }
+      fill: $brand-green;
+      height: 16px;
+    }
   }
   /*
       Styles for pagination
@@ -205,6 +207,11 @@
           text-align: center;
           &.goSmall {
             font-size: 12px;
+          }
+        }
+        .cmp-input-underline {
+          input {
+            background-color: $td-neutral-gray;
           }
         }
         /* Chrome, Safari, Edge, Opera */
@@ -278,6 +285,7 @@
   }
 }
 
-section.cmp-tds-title > div.cmp-title > h3.dp-title__text{
-  padding-top:30px; /*overrides style beyond app*/;
+section.cmp-tds-title > div.cmp-title > h3.dp-title__text {
+  padding-top: 30px; /*overrides style beyond app*/
+  background-color: $td-neutral-gray;
 }
