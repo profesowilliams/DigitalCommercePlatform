@@ -113,7 +113,7 @@ const NewItemForm = ({
           <TextField
             {...params}
             id="standard-basic"
-            label="Manufacturer's part number"
+            label={getDictionaryValueOrKey(labels.manufacturersPartNumber)}
             variant="standard"
             error={!focused && isError}
             onFocus={() => setFocused(true)}
