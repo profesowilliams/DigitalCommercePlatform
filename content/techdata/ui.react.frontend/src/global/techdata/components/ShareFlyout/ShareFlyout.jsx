@@ -30,34 +30,32 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [requestObj, setRequestObj] = useState({});
-  const [apiResponseFlag, setApiResponseFlag] = useState(true);
+  const [apiResponseFlag, setApiResponseFlag] = useState(false);
+  const [errorFlags, setErrorFlags] = useState({
+    incorrect: false,
+    notFound: false,
+    serverError: false
+  })
   const [errorObj, setErrorObj] = useState({
-                                           	"error": {
-                                           		"code": 400,
-                                           		"messages": [
-                                           			{
-                                           				"email": "abctest.com",
-                                           				"message": "Invalid Email Format"
-                                           			},
-                                           			{
-                                           				"email": "Tbc@test.com",
-                                           				"message": "Dont have access to this quote"
-                                           			},
-                                           			{
-                                           				"email": null,
-                                           				"message": "Internal Server Error"
-                                           			}
-                                           		],
-                                           		"isError": true
-                                           	}
-                                           });
-
-  useEffect(() => {
-  }, []);
-
-  useEffect(() => {
-    console.log(requestObj, 'request');
-  }, [requestObj]);
+    "error": {
+      "code": 400,
+      "messages": [
+        {
+          "email": "abctest.com",
+          "message": "Invalid Email Format"
+        },
+        {
+          "email": "Tbc@test.com",
+          "message": "Dont have access to this quote"
+        },
+        {
+          "email": null,
+          "message": "Internal Server Error"
+        }
+      ],
+      "isError": true
+    }
+   });
 
   useEffect(() => {
     resetCount();
@@ -81,23 +79,79 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
   }, [shareFlyoutConfig]);
 
   const closeAlert = () => {
+    setErrorFlags({
+      incorrect: false,
+      notFound: false,
+      serverError: false
+    });
     setApiResponseFlag(false);
   };
 
+  const handleTryAgainBtn = (e) => {
+    if(event) {
+      e.preventDefault();
+    }
+    closeAlert();
+    handleShareItClick();
+  };
+
   const handleShareItClick = async (event) => {
+    if(event) {
+      event.preventDefault();
+    }
     setIsLoading(true);
+    let toaster = null;
     const response = await shareQuote(
       requestObj,
       shareFlyoutContent.shareQuoteEndpoint
     );
     setIsLoading(false);
-    if (response && response.success) {
+    if (response?.success) {
       // set success message
+      toaster = {
+          isOpen: true,
+          origin: 'fromShareFlyout',
+          isAutoClose: true,
+          isSuccess: true,
+          message: getDictionaryValueOrKey(shareFlyoutContent.shareSuccessMessage)
+      }
+
+      if (toaster) {
+        closeFlyout();
+        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+      }
     }
     else {
-      //setErrorMessage(shareFlyoutContent.unknownError);
-      setErrorObj(response.error);
+      if (response?.code === 400) {
+        setErrorObj(response.messages);
+        setApiResponseFlag(true);
+        for(var i = 0; i < response.messages.length; i++) {
+          if (response.messages[i]?.message?.indexOf('Invalid ') > -1) {
+            setErrorFlags({
+              ...errorFlags,
+              incorrect: true
+            });
+            break;
+          } else if (response.messages[i]?.message?.indexOf('access ') > -1) {
+            setErrorFlags({
+              ...errorFlags,
+              notFound: true
+            });
+            break;
+          } else {
+             setErrorFlags({
+              ...errorFlags,
+              serverError: true
+             });
+             break;
+          }
+        }
+      }
     }
+  };
+
+  const onCloseToaster = () => {
+    effects.setCustomState({ key: 'toaster', value: false });
   };
 
   const updateRequestObject = (updatedData) => {
@@ -186,11 +240,11 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
         {
           apiResponseFlag ? (
             <>
-              <div className="backdrop"></div>
+              <div className="backdrop" onClick={closeAlert}></div>
               <div className="api-failed-section">
                 <div className="content-section">
                   {
-                    false ?
+                    errorFlags.serverError ?
                     (
                       <>
                         <h3>{shareFlyoutContent.shareFailedLabel}</h3>
@@ -199,23 +253,25 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                     ) : null
                   }
                   {
-                    true ?
+                    errorFlags.incorrect ?
                     (
                       <>
                         <h3>{shareFlyoutContent.incorrectEmailLabel}</h3>
                         <p>{shareFlyoutContent.incorrectEmailDescription}</p>
                         {
                           errorObj?.error?.messages?.map((item) => {
-                            return (
-                              <span className="email-pills">{item.email}</span>
-                            )
+                            if (item.email && item.message.indexOf('Invalid') > -1) {
+                              return (
+                                <span className="email-pills">{item.email}</span>
+                              )
+                            }
                           })
                         }
                       </>
                     ) : null
                   }
                   {
-                    false ?
+                    errorFlags.notFound ?
                     (
                       <>
                         <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
@@ -226,32 +282,35 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                 </div>
                 <div className="button-section">
                   {
-                    true ?
+                    errorFlags.serverError ?
                     (
                       <>
                         <a className="cancel-btn" href={`#`}
                           onClick={closeAlert}>{shareFlyoutContent.shareFailedCancelLabel}</a>
-                        <a className="try-again-btn" href={`#`}>{shareFlyoutContent.shareFailedTryAgainLabel}</a>
+                        <a className="try-again-btn" href={`#`}
+                          onClick={handleTryAgainBtn}>{shareFlyoutContent.shareFailedTryAgainLabel}</a>
                       </>
                     ) : null
                   }
                   {
-                    false ?
+                    errorFlags.incorrect ?
                     (
                       <>
                         <a className="cancel-btn" href={`#`}
                         onClick={closeAlert}>{shareFlyoutContent.incorrectEmailCancelLabel}</a>
-                        <a className="try-again-btn" href={`#`}>{shareFlyoutContent.incorrectEmailTryAgainLabel}</a>
+                        <a className="try-again-btn" href={`#`}
+                          onClick={handleTryAgainBtn}>{shareFlyoutContent.incorrectEmailTryAgainLabel}</a>
                       </>
                     ) : null
                   }
                   {
-                    false ?
+                    errorFlags.notFound ?
                     (
                       <>
                         <a className="cancel-btn" href={`#`}
                         onClick={closeAlert}>{shareFlyoutContent.recipientNotFoundCancelLabel}</a>
-                        <a className="try-again-btn" href={`#`}>{shareFlyoutContent.recipientNotFoundTryAgainLabel}</a>
+                        <a className="try-again-btn" href={`#`}
+                          onClick={handleTryAgainBtn}>{shareFlyoutContent.recipientNotFoundContinueLabel}</a>
                       </>
                     ) : null
                   }

@@ -79,7 +79,7 @@ function BaseFlyout({
                 onClick={onClickButton}
                 analyticsCallback={analyticsCallback}
               >
-                {!isLoading && getDictionaryValueOrKey(buttonLabel)}{' '}
+                {getDictionaryValueOrKey(buttonLabel)}
                 {isLoading && <LoaderIcon />}
               </Button>
             </div>

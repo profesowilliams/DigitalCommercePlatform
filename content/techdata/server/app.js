@@ -4937,18 +4937,50 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
   res.json(response);
 });
 
-app.get("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
-  const response = {
-     "content": {
-         "success": true
-     },
-     "error": {
-         "code": 0,
-         "messages": [],
-         "isError": false
-     }
- }
-  res.json(response);
+app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
+
+  const success = {
+       "content": {
+           "success": true
+       },
+       "error": {
+           "code": 0,
+           "messages": [],
+           "isError": false
+       }
+   }
+
+    const notFound = {
+      "error": {
+        "code": 400,
+        "messages": [
+          {
+            "email": "abc@test.com",
+            "message": "Invalid Email Format"
+          },
+          {
+            "email": "abc@test.com",
+            "message": "Dont have access to this quote"
+          },
+          {
+            "email": "Gbc@test.com",
+            "message": "Dont have access to this quote"
+          },
+
+          {
+            "email": null,
+            "message": "Internal Server Error"
+          }
+        ],
+        "isError": true
+      }
+   }
+
+    //mockResponses.failedResponse
+
+    setTimeout(() => {
+      return res.status(200).json(success);
+    }, 1000);
 });
 
 app.get("/libs/cq/i18n/dictionary", function (req, res) {
