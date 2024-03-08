@@ -163,7 +163,6 @@ function MainGridHeader({
       options={searchOptions}
       onQueryChanged={onSearchChange}
       ref={searchCriteria}
-      store={useOrderTrackingStore}
       hideLabel={true}
       gridConfig={gridConfig}
       searchAnalyticsLabel={analyticsCategories.search}

@@ -2,12 +2,16 @@ import React from 'react';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 
-function Criteria({ config }) {
+const Criteria = ({ config }) => {
   const predefinedFiltersApplied = useOrderTrackingStore(
     (state) => state.filter.predefinedFiltersApplied
   );
   const enableCriteriaTextOnSearch = useOrderTrackingStore(
     (state) => state.showCriteria
+  );
+
+  const isPartialSearch = useOrderTrackingStore(
+    (state) => state.isPartialSearch
   );
 
   const hasDateRangeFilter = predefinedFiltersApplied.some(
@@ -19,7 +23,7 @@ function Criteria({ config }) {
   const showCriteria = !hasDateRangeFilter && enableCriteriaTextOnSearch;
 
   const selectedLabel = showCriteria
-    ? hasOtherFilters
+    ? hasOtherFilters || isPartialSearch
       ? getDictionaryValueOrKey(config?.last90DaysCriteria)
       : getDictionaryValueOrKey(config?.last30DaysCriteria)
     : '';
@@ -27,6 +31,6 @@ function Criteria({ config }) {
   return (
     <div className="cmp-order-tracking-grid__criteria">{selectedLabel}</div>
   );
-}
+};
 
 export default Criteria;

@@ -11,11 +11,7 @@ import {
   ANALYTICS_TYPES,
   pushEvent,
 } from '../../../../../utils/dataLayerUtils';
-import {
-  getLocalStorageData,
-  hasLocalStorageData,
-  setLocalStorageData,
-} from '../utils/gridUtils';
+import { getLocalStorageData, setLocalStorageData } from '../utils/gridUtils';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import OrderSearchEditView from './OrderSearchEditView';
 import OrderSearchView from './OrderSearchView';
@@ -29,41 +25,17 @@ import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
-const getInitialFieldState = () => {
-  if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field;
-  } else {
-    return '';
-  }
-};
+const getInitialFieldState = () =>
+  getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field || '';
 
-const getInitialLabelState = () => {
-  if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).field;
-  }
-  return '';
-};
-
-const getInitialValueState = () => {
-  if (hasLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY)) {
-    return getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).value;
-  }
-  return '';
-};
-
-const hasPreviousSearchTerm = () => {
-  if (getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).value) {
-    return true;
-  }
-  return false;
-};
+const getInitialValueState = () =>
+  getLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY).value || '';
 
 const _OrderSearch = (
   {
     options,
     searchCounter,
     onQueryChanged,
-    store,
     hideLabel = false,
     gridConfig,
     searchAnalyticsLabel,
@@ -86,11 +58,8 @@ const _OrderSearch = (
   const [callbackExecuted, setCallbackExecuted] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isSearchHovered, setIsSearchHovered] = useState(false);
-  const { option } = values;
-  const node = useRef();
-  const inputRef = useRef();
   const [isSearchCapsuleVisible, setIsSearchCapsuleVisible] = useState(
-    hasPreviousSearchTerm()
+    getInitialValueState().length
   );
   const [isEditView, setIsEditView] = useState(false);
   const [searchTerm, setSearchTerm] = useState(getInitialValueState());
@@ -98,13 +67,18 @@ const _OrderSearch = (
     getInitialValueState()
   );
   const [searchTriggered, setSearchTriggered] = useState(false);
-  const effects = store((state) => state.effects);
-  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
-  const { closeAndCleanToaster } = effects;
   const [inputValueState, setInputValueState] = useState(
     getInitialValueState()
   );
   const [capsuleValues, setCapsuleValues] = useState({ ...customSearchValues });
+
+  const { option } = values;
+  const node = useRef();
+  const inputRef = useRef();
+
+  const { setCustomState, closeAndCleanToaster } = useOrderTrackingStore(
+    (state) => state.effects
+  );
 
   useImperativeHandle(
     ref,
@@ -135,9 +109,14 @@ const _OrderSearch = (
         key: 'showCriteria',
         value: true,
       });
+      setCustomState({
+        key: 'isPartialSearch',
+        value: false,
+      });
     }
     setSearchTriggered(false);
     setSearchTerm('');
+    setInputValueState('');
     setCapsuleSearchValue('');
     clearValues();
     setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
@@ -196,6 +175,7 @@ const _OrderSearch = (
       window.location.pathname + (queryString ? `?${queryString}` : '');
     window.history.pushState({}, document.title, finalUrl);
   };
+
   const handleCapsuleClose = () => {
     setIsSearchCapsuleVisible(false);
     fetchAll();
@@ -239,7 +219,11 @@ const _OrderSearch = (
     setIsDropdownVisible(false);
     setCustomState({
       key: 'showCriteria',
-      value: false,
+      value: inputValue.length !== 10,
+    });
+    setCustomState({
+      key: 'isPartialSearch',
+      value: inputValue.length < 10,
     });
   };
 
@@ -270,11 +254,13 @@ const _OrderSearch = (
     setIsSearchHovered(false);
     setIsDropdownVisible(false);
   };
+
   useEffect(() => {
     if (ref.current.value) {
       setIsSearchCapsuleVisible(true);
     }
   }, [ref.current.value]);
+
   return (
     <>
       {isSearchCapsuleVisible ? (
@@ -330,14 +316,13 @@ const _OrderSearch = (
             </div>
           )}
         </>
-      ) : option.length && isEditView ? (
+      ) : option?.length && isEditView ? (
         <OrderSearchEditView
           inputRef={inputRef}
           values={values}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           triggerSearchOnEnter={triggerSearchOnEnter}
-          store={store}
           triggerSearch={triggerSearch}
           searchCounter={searchCounter}
           onReset={onReset}
@@ -355,7 +340,6 @@ const _OrderSearch = (
           handleMouseLeaveSearch={handleMouseLeaveSearch}
           isSearchHovered={isSearchHovered}
           node={node}
-          store={store}
           options={options}
           changeHandler={changeHandler}
           gridConfig={gridConfig}

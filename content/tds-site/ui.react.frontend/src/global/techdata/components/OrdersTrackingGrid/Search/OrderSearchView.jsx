@@ -3,6 +3,7 @@ import { SearchIcon } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import OrderRenderWithPermissions from './OrderRenderWithPermissions';
 import useComputeBranding from './../../../hooks/useComputeBranding';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const OrderSearchView = ({
   handleMouseLeave,
@@ -14,10 +15,9 @@ const OrderSearchView = ({
   node,
   options,
   changeHandler,
-  store,
   gridConfig,
 }) => {
-  const { computeClassName } = useComputeBranding(store);
+  const { computeClassName } = useComputeBranding(useOrderTrackingStore);
 
   return (
     <>

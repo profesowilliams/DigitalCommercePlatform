@@ -116,6 +116,7 @@ const INITIAL_STATE = {
     isSuccess: false,
   },
   showCriteria: true,
+  isPartialSearch: false,
   isTDSynnex: true,
   analyticsCategory: 'order tracking',
   orderModification: {

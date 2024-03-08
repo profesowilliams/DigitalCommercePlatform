@@ -429,10 +429,10 @@ use(["../common/utils.js"], function (utils) {
     //Pagination Labels
 
     if (properties["ofLabel"]) {
-      paginationLabels.of = properties["ofLabel"];
+      paginationLabels.ofLabel = properties["ofLabel"];
     }
     if (properties["resultsLabel"]) {
-      paginationLabels.results = properties["resultsLabel"];
+      paginationLabels.resultsLabel = properties["resultsLabel"];
     }
     if (paginationLabels != null) {
       jsonObject["paginationLabels"] = paginationLabels;

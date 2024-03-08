@@ -3,6 +3,7 @@ import { ChevronDownIcon } from './../../../../../fluentIcons/FluentIcons';
 import useComputeBranding from './../../../hooks/useComputeBranding';
 import { OrderSearchField } from './OrderSearchFilter';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const OrderSearchEditView = ({
   inputRef,
@@ -10,14 +11,13 @@ const OrderSearchEditView = ({
   searchTerm,
   setSearchTerm,
   triggerSearchOnEnter,
-  store,
   triggerSearch,
   searchCounter,
   onReset,
   callbackExecuted,
   gridConfig,
 }) => {
-  const { isTDSynnex } = useComputeBranding(store);
+  const { isTDSynnex } = useComputeBranding(useOrderTrackingStore);
 
   return (
     <>
@@ -30,7 +30,7 @@ const OrderSearchEditView = ({
             setSearchTerm={setSearchTerm}
             triggerSearchOnEnter={triggerSearchOnEnter}
             triggerSearch={triggerSearch}
-            store={store}
+            store={useOrderTrackingStore}
             gridConfig={gridConfig}
           />
         </div>
