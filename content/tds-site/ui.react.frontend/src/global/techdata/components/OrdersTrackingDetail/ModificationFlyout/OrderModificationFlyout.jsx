@@ -32,6 +32,7 @@ function OrderModificationFlyout({
   content,
   gridRef = null,
   rowsToGrayOutTDNameRef = null,
+  setOrderModifyHeaderInfo = false,
 }) {
   const { id = '' } = getUrlParams();
   const [items, setItems] = useState([]);
@@ -96,7 +97,7 @@ function OrderModificationFlyout({
       value: { show: false },
     });
   };
-  const reduceLineForGTM = []
+  const reduceLineForGTM = [];
   const reduceLine = itemsCopy.reduce((filtered, item) => {
     if (item && item?.status === 'Rejected') {
       const newItem = {
@@ -152,8 +153,8 @@ function OrderModificationFlyout({
       .map((item) => item.tdNumber);
     greyOutRows(rowsDeleted);
     closeFlyout();
-    addLineForGTM.map(line=>{
-      pushDataLayerGoogle(getAddLineAnalyticsGoogle(line))
+    addLineForGTM.map((line) => {
+      pushDataLayerGoogle(getAddLineAnalyticsGoogle(line));
     });
     reduceLineForGTM.map((line) => {
       pushDataLayerGoogle(getReduceQuantityAnalyticsGoogle(line));
@@ -228,6 +229,7 @@ function OrderModificationFlyout({
       effects.setCustomState({ key: 'toaster', value: { ...toasterError } });
     } finally {
       greyOutRows([]);
+      setOrderModifyHeaderInfo(true);
     }
   };
 

@@ -16,6 +16,7 @@ const Flyouts = ({
   gridRef,
   rowsToGrayOutTDNameRef,
   addNewItem,
+  setOrderModifyHeaderInfo,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   return (
@@ -64,6 +65,7 @@ const Flyouts = ({
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         content={content}
+        setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
       />
       <ExportFlyout
         componentProp={config}

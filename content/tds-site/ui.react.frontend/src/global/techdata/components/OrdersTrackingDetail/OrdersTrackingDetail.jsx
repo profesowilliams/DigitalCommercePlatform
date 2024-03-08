@@ -23,6 +23,7 @@ function OrdersTrackingDetail(props) {
   const rowsToGrayOutTDNameRef = useRef([]);
   const [newItem, setNewItem] = useState(null);
   const [content, setContent] = useState(null);
+  const [orderModifyHeaderInfo, setOrderModifyHeaderInfo] = useState(false);
   const { isGTMReady } = useGTMStatus();
   const componentProps = JSON.parse(props.componentProp);
   const config = {
@@ -53,6 +54,27 @@ function OrdersTrackingDetail(props) {
   const hasOrderModificationRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderModification'
   );
+  
+  const redirectToMainDashboard = () => {
+    let currentUrl = new URL(window.location.href);
+    currentUrl.search = '';
+    currentUrl.pathname = currentUrl.pathname.replace(
+      '/order-details.html',
+      '.html'
+    );
+    window.location.href = currentUrl.href;
+  };
+  const headerRequest = async () => {
+    try {
+      const apiResponse = await usGet(`${config.orderDetailEndpoint}/${id}`);
+      setContent(apiResponse?.data?.content);
+      if (apiResponse.status === 204) {
+        redirectToMainDashboard();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
     try {
@@ -101,16 +123,6 @@ function OrdersTrackingDetail(props) {
   const handleAddNewItem = (item) => {
     setNewItem(item);
   };
-  
-  const redirectToMainDashboard = () => {
-    let currentUrl = new URL(window.location.href);
-    currentUrl.search = '';
-    currentUrl.pathname = currentUrl.pathname.replace(
-      '/order-details.html',
-      '.html'
-    );
-    window.location.href = currentUrl.href;
-  };
 
   useEffect(() => {
     getSessionInfo().then((data) => {
@@ -135,17 +147,14 @@ function OrdersTrackingDetail(props) {
   }, [isGTMReady]);
 
   useEffect(async () => {
-    try {
-      const apiResponse = await usGet(`${config.orderDetailEndpoint}/${id}`);
-      setContent(apiResponse?.data?.content);
-      if (apiResponse.status === 204) {
-        redirectToMainDashboard();
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    headerRequest();
   }, []);
 
+  useEffect(() => {
+    if (orderModifyHeaderInfo) {
+      headerRequest();
+    }
+  }, [orderModifyHeaderInfo]);
   return (
     <>
       <div className="cmp-quote-preview cmp-order-preview">
@@ -182,6 +191,7 @@ function OrdersTrackingDetail(props) {
         gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={handleAddNewItem}
+        setOrderModifyHeaderInfo={setOrderModifyHeaderInfo}
       />
     </>
   );
