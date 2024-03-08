@@ -83,6 +83,11 @@
           }
         }
       }
+      & .ag-cell {
+        &[col-id='select'] {
+          padding-left: 10px;
+        }
+      }
       & .ag-root-wrapper-body {
         overflow-x: hidden !important;
       }
