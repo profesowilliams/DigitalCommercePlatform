@@ -33,8 +33,7 @@ const MainGridFooter = ({
           onQueryChanged={onQueryChanged}
           disabled={isLoading}
           paginationAnalyticsLabel={analyticsCategories.pagination}
-          resultsLabel={paginationLabels.results}
-          ofLabel={paginationLabels.of}
+          paginationLabels={paginationLabels}
         />
       </div>
     </>

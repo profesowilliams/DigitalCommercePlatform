@@ -18,11 +18,11 @@ function OrderTrackingGridPagination(
     onQueryChanged,
     disabled = false,
     paginationAnalyticsLabel,
-    resultsLabel,
-    ofLabel,
+    paginationLabels,
   },
   ref
 ) {
+  const { resultsLabel, ofLabel } = paginationLabels;
   const {
     paginationStates,
     paginationHandlers,
@@ -56,7 +56,6 @@ function OrderTrackingGridPagination(
   if (totalCounter === 0) {
     return null;
   }
-
 
   return (
     <div className="cmp-renewals__pagination--bottom">
