@@ -54,7 +54,7 @@ function OrdersTrackingDetail(props) {
   const hasOrderModificationRights = userData?.roleList?.some(
     (role) => role.entitlement === 'OrderModification'
   );
-  
+
   const redirectToMainDashboard = () => {
     let currentUrl = new URL(window.location.href);
     currentUrl.search = '';
@@ -62,8 +62,10 @@ function OrdersTrackingDetail(props) {
       '/order-details.html',
       '.html'
     );
+    currentUrl.search = `?id=${id}`;
     window.location.href = currentUrl.href;
   };
+
   const headerRequest = async () => {
     try {
       const apiResponse = await usGet(`${config.orderDetailEndpoint}/${id}`);

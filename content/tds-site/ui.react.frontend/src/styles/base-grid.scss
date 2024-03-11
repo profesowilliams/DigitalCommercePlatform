@@ -288,4 +288,21 @@
 section.cmp-tds-title > div.cmp-title > h3.dp-title__text {
   padding-top: 30px; /*overrides style beyond app*/
   background-color: $td-neutral-gray;
+  position: relative;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    height: 148px;
+    top: 0;
+    width: 100%;
+    background-color: $td-neutral-gray;
+  }
+  &:before {
+    left: -100%;
+  }
+  &:after {
+    left: 100%;
+  }
 }
