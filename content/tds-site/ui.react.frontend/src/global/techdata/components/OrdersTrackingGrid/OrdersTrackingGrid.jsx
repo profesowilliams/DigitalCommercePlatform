@@ -435,6 +435,10 @@ function OrdersTrackingGrid(props) {
           gridConfig?.reportLabels?.eolReportLabel
         ),
       });
+      setCustomState({
+        key: 'showCriteria',
+        value: false,
+      });
       onQueryChanged();
     }
     searchOptions.forEach((el) => {
