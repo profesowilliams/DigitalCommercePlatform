@@ -284,6 +284,33 @@ export const getReportsNRFAnalyticsGoogle = (reportName) => {
   };
 };
 
+export const pushFailedDownloadGoogleAnalytics = (
+  flyoutType,
+  isMainGrid,
+  dNoteDownloadFailedCounter,
+  setDNoteDownloadFailedCounter,
+  invoiceDownloadFailedCounter,
+  setInvoiceDownloadFailedCounter,
+) => {
+  if (flyoutType === 'DNote') {
+    pushDataLayerGoogle(
+      getDNoteDownloadFailedAnalyticsGoogle(
+        dNoteDownloadFailedCounter,
+        isMainGrid
+      )
+    );
+    setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter + 1);
+  } else if (flyoutType === 'Invoice') {
+    pushDataLayerGoogle(
+      getInvoiceDownloadFailedAnalyticsGoogle(
+        invoiceDownloadFailedCounter,
+        isMainGrid
+      )
+    );
+    setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
+  }
+};
+
 export const ANALYTIC_CONSTANTS = {
   Grid: {
     Category: ['Order Tracking'],

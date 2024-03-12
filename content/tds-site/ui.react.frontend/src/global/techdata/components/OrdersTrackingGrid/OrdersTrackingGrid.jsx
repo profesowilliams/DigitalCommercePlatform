@@ -30,8 +30,7 @@ import {
   getSortAnalyticsGoogle,
   pushDataLayerGoogle,
   getPageReloadAnalyticsGoogle,
-  getDNoteDownloadFailedAnalyticsGoogle,
-  getInvoiceDownloadFailedAnalyticsGoogle,
+  pushFailedDownloadGoogleAnalytics,
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import { cellMouseOut, cellMouseOver } from './utils/tooltipUtils';
@@ -275,32 +274,38 @@ function OrdersTrackingGrid(props) {
   };
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
+    let response = null;
     try {
       const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
       const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
       const downloadOrderInvoicesUrl =
         url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
-      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, null, {
-        redirect: false,
-      });
+      response = await requestFileBlobWithoutModal(
+        downloadOrderInvoicesUrl,
+        null,
+        {
+          redirect: false,
+        }
+      );
+      if (response?.status === 204) {
+        pushFailedDownloadGoogleAnalytics(
+          flyoutType,
+          true,
+          dNoteDownloadFailedCounter,
+          setDNoteDownloadFailedCounter,
+          invoiceDownloadFailedCounter,
+          setInvoiceDownloadFailedCounter
+        );
+      }
     } catch (error) {
-      if (flyoutType === 'DNote') {
-        pushDataLayerGoogle(
-          getDNoteDownloadFailedAnalyticsGoogle(
-            dNoteDownloadFailedCounter,
-            true
-          )
-        );
-        setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter + 1);
-      } else if (flyoutType === 'Invoice') {
-        pushDataLayerGoogle(
-          getInvoiceDownloadFailedAnalyticsGoogle(
-            invoiceDownloadFailedCounter,
-            true
-          )
-        );
-        setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
-      } 
+      pushFailedDownloadGoogleAnalytics(
+        flyoutType,
+        true,
+        dNoteDownloadFailedCounter,
+        setDNoteDownloadFailedCounter,
+        invoiceDownloadFailedCounter,
+        setInvoiceDownloadFailedCounter
+      );
       console.error('Error', error);
     }
   };
@@ -308,9 +313,32 @@ function OrdersTrackingGrid(props) {
     const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
     const singleDownloadUrl =
       url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, null, {
-      redirect: true,
-    });
+      let response = null;
+      try {
+        response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
+          redirect: true,
+        });
+        if (response?.status === 204) {
+          pushFailedDownloadGoogleAnalytics(
+            flyoutType,
+            true,
+            dNoteDownloadFailedCounter,
+            setDNoteDownloadFailedCounter,
+            invoiceDownloadFailedCounter,
+            setInvoiceDownloadFailedCounter
+          );
+        }
+      } catch (error) {
+        pushFailedDownloadGoogleAnalytics(
+          flyoutType,
+          true,
+          dNoteDownloadFailedCounter,
+          setDNoteDownloadFailedCounter,
+          invoiceDownloadFailedCounter,
+          setInvoiceDownloadFailedCounter
+        );
+        console.error('Error', error);
+      }
   };
 
   const onCloseToaster = () => {

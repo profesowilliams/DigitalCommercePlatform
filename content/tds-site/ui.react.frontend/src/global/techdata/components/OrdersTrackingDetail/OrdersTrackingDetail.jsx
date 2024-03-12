@@ -8,10 +8,9 @@ import { getSessionInfo } from '../../../../utils/user/get';
 import OrderTrackingDetailBody from './OrderTrackingDetailBody';
 import Flyouts from './Flyouts';
 import {
-  getDNoteDownloadFailedAnalyticsGoogle,
-  getInvoiceDownloadFailedAnalyticsGoogle,
   getPageReloadAnalyticsGoogle,
   pushDataLayerGoogle,
+  pushFailedDownloadGoogleAnalytics,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
@@ -79,32 +78,38 @@ function OrdersTrackingDetail(props) {
   };
 
   const downloadFileBlob = async (flyoutType, orderId, selectedId) => {
+    let response = null;
     try {
       const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
       const mapIds = selectedId.map((ids) => `&id=${ids}`).join('');
       const downloadOrderInvoicesUrl =
         url + `?Order=${orderId}&Type=${flyoutType}${mapIds}`;
-      await requestFileBlobWithoutModal(downloadOrderInvoicesUrl, null, {
-        redirect: false,
-      });
-    } catch (error) {
-      if (flyoutType === 'DNote') {
-        pushDataLayerGoogle(
-          getDNoteDownloadFailedAnalyticsGoogle(
-            dNoteDownloadFailedCounter,
-            false
-          )
+      response = await requestFileBlobWithoutModal(
+        downloadOrderInvoicesUrl,
+        null,
+        {
+          redirect: false,
+        }
+      );
+      if (response?.status === 204) {
+        pushFailedDownloadGoogleAnalytics(
+          flyoutType,
+          false,
+          dNoteDownloadFailedCounter,
+          setDNoteDownloadFailedCounter,
+          invoiceDownloadFailedCounter,
+          setInvoiceDownloadFailedCounter
         );
-        setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter + 1);
-      } else if (flyoutType === 'Invoice') {
-        pushDataLayerGoogle(
-          getInvoiceDownloadFailedAnalyticsGoogle(
-            invoiceDownloadFailedCounter,
-            false
-          )
-        );
-        setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
       }
+    } catch (error) {
+      pushFailedDownloadGoogleAnalytics(
+        flyoutType,
+        false,
+        dNoteDownloadFailedCounter,
+        setDNoteDownloadFailedCounter,
+        invoiceDownloadFailedCounter,
+        setInvoiceDownloadFailedCounter
+      );
       console.error('Error', error);
     }
   };
@@ -117,9 +122,31 @@ function OrdersTrackingDetail(props) {
     const url = `${componentProps.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
     const singleDownloadUrl =
       url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
-    await requestFileBlobWithoutModal(singleDownloadUrl, null, {
-      redirect: true,
-    });
+    let response = null;
+    try{      
+      response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
+        redirect: true,
+      });
+      if (response?.status === 204) {
+        pushFailedDownloadGoogleAnalytics(
+          flyoutType,
+          false,
+          dNoteDownloadFailedCounter,
+          setDNoteDownloadFailedCounter,
+          invoiceDownloadFailedCounter,
+          setInvoiceDownloadFailedCounter
+        );
+      }
+    }catch(error){
+      pushFailedDownloadGoogleAnalytics(
+        flyoutType, 
+        false, 
+        dNoteDownloadFailedCounter, 
+        setDNoteDownloadFailedCounter, 
+        invoiceDownloadFailedCounter, 
+        setInvoiceDownloadFailedCounter
+      );
+    }
   }
 
   const handleAddNewItem = (item) => {

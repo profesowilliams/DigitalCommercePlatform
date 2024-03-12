@@ -182,6 +182,7 @@ export const requestFileBlobWithoutModal = async (
   } else {
     throw new Error('Validation failed');
   }
+  return response;
 };
 
 const currentDate = new Date();

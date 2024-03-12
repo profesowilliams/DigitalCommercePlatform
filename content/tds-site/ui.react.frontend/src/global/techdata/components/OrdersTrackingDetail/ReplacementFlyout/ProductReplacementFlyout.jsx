@@ -82,14 +82,6 @@ function ProductReplacementFlyout({
       Operation: operation,
       ProductID: newProductId,
     };
-    const mfrSelected = options.find((opt) => opt.key === selected)?.content
-      ?.props?.data?.mfrNumber;
-    const mfrReplacement = productReplacementConfig?.data?.line?.mfrNumber;
-    pushDataLayerGoogle(
-      operation === 'Replace'
-        ? getEolReplacementAnalyticsGoogle(mfrReplacement, mfrSelected)
-        : getEolCancelAnalyticsGoogle(mfrReplacement)
-    );
     try {
       const result = await usPost(
         `${config.uiCommerceServiceDomain + '/v2/OrderEOL'}`,
@@ -170,6 +162,15 @@ function ProductReplacementFlyout({
       };
       console.error('Error replacing product:', error);
       effects.setCustomState({ key: 'toaster', value: { ...toasterError } });
+    } finally {
+      const mfrSelected = options.find((opt) => opt.key === selected)?.content
+        ?.props?.data?.mfrNumber;
+      const mfrReplacement = productReplacementConfig?.data?.line?.mfrNumber;
+      pushDataLayerGoogle(
+        operation === 'Replace'
+          ? getEolReplacementAnalyticsGoogle(mfrReplacement, mfrSelected)
+          : getEolCancelAnalyticsGoogle(mfrReplacement)
+      );
     }
     closeFlyout();
     const chosenItemIndex = productDtos.findIndex(
