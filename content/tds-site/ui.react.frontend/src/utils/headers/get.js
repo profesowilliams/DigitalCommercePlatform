@@ -44,6 +44,8 @@ export function getHeaderInfo() {
 }
 
 function resolveAcceptLanguage(language, country) {
-    const collectiveCountry = country === "UK" ? "GB" : country;
-    return language + "-" + collectiveCountry;
+  const collectiveCountry = country === 'UK' ? 'GB' : country;
+  const collectiveLanguage = country === 'BE' ? 'en' : language;
+
+  return collectiveLanguage + '-' + collectiveCountry;
 }

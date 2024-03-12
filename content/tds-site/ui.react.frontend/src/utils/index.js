@@ -146,7 +146,7 @@ export function getHeaderInfoFromUrl(pathName) {
   };
 }
 
-function resolveAcceptLanguage (language, country) {
+function resolveAcceptLanguage(language, country) {
   const collectiveCountry = country === 'UK' ? 'GB' : country;
   return language + '-' + collectiveCountry;
 }

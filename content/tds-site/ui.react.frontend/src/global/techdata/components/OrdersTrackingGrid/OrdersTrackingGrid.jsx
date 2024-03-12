@@ -169,9 +169,6 @@ function OrdersTrackingGrid(props) {
   };
   const params = getUrlParamsCaseInsensitive();
 
-  const areUrlSearchParamsPresent =
-    params.has('customerid') && params.has('salesorg');
-
   const customRequestInterceptor = async (request) => {
     const gridApi = gridApiRef?.current?.api;
     const queryOperations = {
@@ -218,11 +215,6 @@ function OrdersTrackingGrid(props) {
 
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
-    } else if (
-      areUrlSearchParamsPresent &&
-      areSearchParamsValid.current === false
-    ) {
-      return;
     } else {
       setResponseError(false);
       const mappedResponse = mapServiceData(response);
@@ -425,9 +417,6 @@ function OrdersTrackingGrid(props) {
     });
   }, [isGTMReady]);
 
-  const customerNumber = userData?.activeCustomer?.customerNumber;
-  const salesOrg = userData?.activeCustomer?.salesOrg;
-
   const hasAIORights = hasRights('AIO');
   const hasCanViewOrdersRights = hasRights('CanViewOrders');
   const hasOrderTrackingRights = hasRights('OrderTracking');
@@ -445,17 +434,7 @@ function OrdersTrackingGrid(props) {
     if (!userData) {
       return;
     }
-    if (
-      areUrlSearchParamsPresent &&
-      params.get('customerid') === customerNumber &&
-      params.get('salesorg') === salesOrg
-    ) {
-      areSearchParamsValid.current = true;
-    } else {
-      areSearchParamsValid.current = false;
-      setResponseError(true);
-    }
-    if (params.get('report') === 'EOL') {
+    if (params.get('report') && params.get('report').toLowerCase() === 'EOL'.toLowerCase()) {
       reportFilterValue.current.value = 'EOLOrders';
       setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, {
         key: 'EOLOrders',
