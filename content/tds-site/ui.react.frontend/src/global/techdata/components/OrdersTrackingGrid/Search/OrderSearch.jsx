@@ -258,6 +258,15 @@ const _OrderSearch = (
   useEffect(() => {
     if (ref.current.value) {
       setIsSearchCapsuleVisible(true);
+      setCustomState({
+        key: 'showCriteria',
+        value: ref.current.value.length !== 10,
+      });
+      setCustomState({
+        key: 'isPartialSearch',
+        value: ref.current.value.length < 10,
+      });
+      if (!searchTriggered) setSearchTriggered(true);
     }
   }, [ref.current.value]);
 

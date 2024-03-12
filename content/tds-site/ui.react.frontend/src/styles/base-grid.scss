@@ -136,6 +136,23 @@
   align-items: center;
   height: 60px;
   background-color: $td-neutral-gray;
+  position: relative;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    top: 0;
+    width: 100%;
+    background-color: $td-neutral-gray;
+  }
+  &:before {
+    left: -100%;
+  }
+  &:after {
+    left: 100%;
+  }
 
   &-left {
     display: flex;
@@ -294,7 +311,7 @@ section.cmp-tds-title > div.cmp-title > h3.dp-title__text {
   &:after {
     content: '';
     position: absolute;
-    height: 148px;
+    height: 100%;
     top: 0;
     width: 100%;
     background-color: $td-neutral-gray;
