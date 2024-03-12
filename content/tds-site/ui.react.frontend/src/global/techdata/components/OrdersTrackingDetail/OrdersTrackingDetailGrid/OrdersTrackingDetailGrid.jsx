@@ -53,6 +53,7 @@ function OrdersTrackingDetailGrid({
     enableCellTextSelection: true,
     ensureDomOrder: true,
     domLayout: 'autoHeight',
+    itemsPerPage: 99999,
   };
   const gridApiRef = useRef();
 

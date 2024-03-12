@@ -26,7 +26,7 @@ export const mapServiceData = (response) => {
           items: null,
           totalItems,
           pageCount,
-          pageNumber
+          pageNumber,
         },
       },
     };
@@ -36,8 +36,9 @@ export const mapServiceData = (response) => {
     items: itemsWithActions,
     totalItems,
     pageCount,
-    pageNumber
+    pageNumber,
   };
+
   return mappedResponse;
 };
 

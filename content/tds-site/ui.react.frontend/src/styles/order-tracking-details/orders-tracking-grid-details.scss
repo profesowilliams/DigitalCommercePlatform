@@ -34,7 +34,7 @@
         }
 
         &[col-id='priceFormatted'] {
-          .ag-header-cell-label {
+          + .ag-header-cell-label {
             padding: 0px 12px 0px 0px;
             text-align: right;
 
