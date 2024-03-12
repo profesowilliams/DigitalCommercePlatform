@@ -12,6 +12,7 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
     unitPrice,
     unitPriceFormatted,
     currency,
+    lineDetails,
   } = item || {};
   return (
     <div
@@ -30,7 +31,7 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
         </div>
         <div className="cmp-flyout-list__element__quantity">
           <p className="bold">{getDictionaryValueOrKey(labels.qty)}:</p>
-          <p>{originalOrderQuantity}</p>
+          <p>{lineDetails[0]?.quantity ?? originalOrderQuantity}</p>
         </div>
         <div className="cmp-flyout-list__element__unit-cost">
           <p className="bold">
