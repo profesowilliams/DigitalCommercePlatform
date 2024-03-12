@@ -142,7 +142,6 @@
   }
   .ag-cell-label-container .ag-header-cell-label span.ag-header-cell-text {
     white-space: nowrap;
-    margin-left: 0;
   }
 }
 .cmp-base-grid-subheader {
@@ -679,7 +678,6 @@ button.icon-box {
 
     & .ag-cell-label-container .ag-header-cell-label span.ag-header-cell-text {
       @include font-arial-normal($weight: 700, $size: 0.875rem);
-      position: relative;
     }
 
     .cmp-grid {
@@ -695,7 +693,7 @@ button.icon-box {
           color: #262626;
         }
         & .ag-header-cell {
-          padding-left: 0;
+          padding-left: 9px;
           &[col-id='total'] {
             padding-right: 3px;
             .ag-header-cell-label {
@@ -720,7 +718,7 @@ button.icon-box {
         }
         & .ag-cell {
           color: #262626;
-          padding-left: 0;
+          padding-left: 4px;
           &[col-id='dueDays'] {
             padding-left: 18px;
           }
@@ -731,9 +729,8 @@ button.icon-box {
 
         & .ag-header-cell-sortable {
           & .ag-header-cell-text::before {
-            top: 2px;
-            left: unset;
-            right: -17px;
+            top: 10px;
+            left: 1px;
           }
           & .ag-header-cell-sorted-none {
             & .ag-header-cell-text::before {
