@@ -37,7 +37,15 @@ function MainGridHeader({
   filtersRefs,
   settings,
 }) {
-  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
+  const {
+    setCustomState,
+    clearAllOrderFilters,
+    setFilterClicked,
+    setPredefinedFiltersApplied,
+    setCustomizedFiltersApplied,
+    clearCheckedButNotAppliedOrderFilters,
+  } = useOrderTrackingStore((st) => st.effects);
+
   const proactiveMessagingFlag = useOrderTrackingStore(
     (state) => state.featureFlags.proactiveMessage
   );
@@ -59,6 +67,7 @@ function MainGridHeader({
     last7DaysShipmentsLabel,
     last30DaysShipmentsLabel,
   } = gridConfig?.reportLabels;
+
   const reportOptions = [
     {
       key: 'OpenOrders',
@@ -94,11 +103,37 @@ function MainGridHeader({
     },
   ];
 
+  const clearFilters = () => {
+    filtersRefs.current = {};
+    clearAllOrderFilters();
+    setFilterClicked(false);
+    setPredefinedFiltersApplied([]);
+    setCustomizedFiltersApplied([]);
+    setLocalStorageData(ORDER_FILTER_LOCAL_STORAGE_KEY, {
+      dates: [],
+      types: [],
+      statuses: [],
+    });
+    clearCheckedButNotAppliedOrderFilters();
+    onQueryChanged({ onSearchAction: true });
+  };
+
+  const clearReports = () => {
+    removeQueryParamsReport();
+    setPill();
+    removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
+    setCustomState({
+      key: 'showCriteria',
+      value: true,
+    });
+  };
+
   const removeDefaultDateRange = () => {
     setDateRange(null);
   };
 
   const onReportChange = (option) => {
+    clearFilters();
     setLocalStorageData(ORDER_SEARCH_LOCAL_STORAGE_KEY, {
       field: '',
       value: '',
@@ -130,14 +165,8 @@ function MainGridHeader({
   };
 
   const handleDeletePill = () => {
-    removeQueryParamsReport();
-    setPill();
+    clearReports();
     onQueryChanged();
-    removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
-    setCustomState({
-      key: 'showCriteria',
-      value: true,
-    });
   };
 
   const onSearchChange = () => {
@@ -168,7 +197,7 @@ function MainGridHeader({
       searchAnalyticsLabel={analyticsCategories.search}
     />,
     <VerticalSeparator />,
-    <OrderFilter onQueryChanged={onQueryChanged} filtersRefs={filtersRefs} />,
+    <OrderFilter clearFilters={clearFilters} />,
     <VerticalSeparator />,
     <Report
       selectOption={onReportChange}

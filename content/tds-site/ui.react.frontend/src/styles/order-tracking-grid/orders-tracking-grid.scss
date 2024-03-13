@@ -111,11 +111,12 @@
       position: absolute;
       height: 100%;
       top: 0;
-      width: 100%;
+      width: calc((100vw - 1280px) / 2);
       background-color: $td-neutral-gray;
     }
     &:before {
-      left: -100%;
+      left: 0;
+      transform: translateX(-100%);
     }
     &:after {
       left: 100%;
@@ -317,7 +318,7 @@
     margin-bottom: 4px;
   }
   .ag-header-cell-text::before {
-    top: 1px !important;
+    top: 27px !important;
   }
   .ag-header .ag-focus-managed .ag-pivot-off {
     height: 30px;
@@ -728,8 +729,4 @@
     font-size: 16px !important;
     float: right;
   }
-}
-
-body {
-  overflow: hidden;
 }

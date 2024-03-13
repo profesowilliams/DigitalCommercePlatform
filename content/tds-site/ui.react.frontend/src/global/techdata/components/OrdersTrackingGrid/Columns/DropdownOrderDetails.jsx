@@ -60,7 +60,7 @@ function DropdownOrderDetails({
           id={data?.id}
         />
       ) : (
-        isLoading && <LoaderIcon className="loadingIcon-rotate" />
+        <LoaderIcon className="loadingIcon-rotate" />
       ),
     },
     {
@@ -90,7 +90,7 @@ function DropdownOrderDetails({
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         />
       ) : (
-        isLoading && <LoaderIcon className="loadingIcon-rotate" />
+        <LoaderIcon className="loadingIcon-rotate" />
       ),
     },
   ];
@@ -118,6 +118,7 @@ function DropdownOrderDetails({
       gridRef.current?.api.setRowData(apiResponse.content?.notShipped);
     }
   }, [apiResponse]);
+
   return (
     <div className="order-line-details">
       {infoBoxEnable && apiResponse?.content && (

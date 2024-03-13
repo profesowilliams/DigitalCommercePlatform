@@ -144,11 +144,12 @@
     position: absolute;
     height: 100%;
     top: 0;
-    width: 100%;
+    width: calc((100vw - 1280px) / 2);
     background-color: $td-neutral-gray;
   }
   &:before {
-    left: -100%;
+    left: 0;
+    transform: translateX(-100%);
   }
   &:after {
     left: 100%;
@@ -313,11 +314,12 @@ section.cmp-tds-title > div.cmp-title > h3.dp-title__text {
     position: absolute;
     height: 100%;
     top: 0;
-    width: 100%;
+    width: calc((100vw - 1280px) / 2);
     background-color: $td-neutral-gray;
   }
   &:before {
-    left: -100%;
+    left: 0;
+    transform: translateX(-100%);
   }
   &:after {
     left: 100%;

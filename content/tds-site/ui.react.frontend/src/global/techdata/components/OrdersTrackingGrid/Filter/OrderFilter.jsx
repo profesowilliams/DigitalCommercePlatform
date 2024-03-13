@@ -7,7 +7,7 @@ import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
 
-function OrderFilter({ onQueryChanged, filtersRefs }) {
+function OrderFilter({ clearFilters }) {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
@@ -40,10 +40,7 @@ function OrderFilter({ onQueryChanged, filtersRefs }) {
         )}
       </div>
       {orderFilterCounter > 0 && (
-        <OrderCountClear
-          onQueryChanged={onQueryChanged}
-          filtersRefs={filtersRefs}
-        >
+        <OrderCountClear clearFilters={clearFilters}>
           {orderFilterCounter}
         </OrderCountClear>
       )}

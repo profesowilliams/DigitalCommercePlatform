@@ -188,10 +188,11 @@ const _OrderSearch = (
   };
 
   const triggerSearch = () => {
+    removeQueryParamsSearch();
     setIsDropdownVisible(false);
     if (!searchTriggered) setSearchTriggered(true);
     const { option } = values;
-    const inputValue = inputRef.current.value;
+    const inputValue = inputRef.current.value.trim();
     if (!inputValue) return fetchAll();
     // if (inputValue.length < 3) { // TODO: add proper handling in case there are less than 3 characters
     //   return;
