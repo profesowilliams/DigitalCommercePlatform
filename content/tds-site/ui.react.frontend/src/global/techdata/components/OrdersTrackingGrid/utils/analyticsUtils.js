@@ -288,9 +288,7 @@ export const pushFailedDownloadGoogleAnalytics = (
   flyoutType,
   isMainGrid,
   dNoteDownloadFailedCounter,
-  setDNoteDownloadFailedCounter,
   invoiceDownloadFailedCounter,
-  setInvoiceDownloadFailedCounter,
 ) => {
   if (flyoutType === 'DNote') {
     pushDataLayerGoogle(
@@ -299,7 +297,6 @@ export const pushFailedDownloadGoogleAnalytics = (
         isMainGrid
       )
     );
-    setDNoteDownloadFailedCounter(dNoteDownloadFailedCounter + 1);
   } else if (flyoutType === 'Invoice') {
     pushDataLayerGoogle(
       getInvoiceDownloadFailedAnalyticsGoogle(
@@ -307,7 +304,6 @@ export const pushFailedDownloadGoogleAnalytics = (
         isMainGrid
       )
     );
-    setInvoiceDownloadFailedCounter(invoiceDownloadFailedCounter + 1);
   }
 };
 

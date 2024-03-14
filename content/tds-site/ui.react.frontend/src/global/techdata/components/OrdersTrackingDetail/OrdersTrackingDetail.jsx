@@ -20,6 +20,8 @@ function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
   const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
+  const dNoteFailCounter = useRef(1);
+  const invoiceFailCounter = useRef(1);
   const [newItem, setNewItem] = useState(null);
   const [content, setContent] = useState(null);
   const [orderModifyHeaderInfo, setOrderModifyHeaderInfo] = useState(false);
@@ -36,17 +38,8 @@ function OrdersTrackingDetail(props) {
   };
   const {
     setUserData,
-    setDNoteDownloadFailedCounter,
-    setInvoiceDownloadFailedCounter,
   } = useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
-  const dNoteDownloadFailedCounter = useOrderTrackingStore(
-    (state) => state.dNoteDownloadFailedCounter
-  );
-  const invoiceDownloadFailedCounter = useOrderTrackingStore(
-    (state) => state.invoiceDownloadFailedCounter
-  );
-
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
   );
@@ -95,21 +88,27 @@ function OrdersTrackingDetail(props) {
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           false,
-          dNoteDownloadFailedCounter,
-          setDNoteDownloadFailedCounter,
-          invoiceDownloadFailedCounter,
-          setInvoiceDownloadFailedCounter
+          dNoteFailCounter.current,
+          invoiceFailCounter.current
         );
+        if (flyoutType === 'DNote') {
+          dNoteFailCounter.current++;
+        } else if (flyoutType === 'Invoice') {
+          invoiceFailCounter.current++;
+        }
       }
     } catch (error) {
       pushFailedDownloadGoogleAnalytics(
         flyoutType,
         false,
-        dNoteDownloadFailedCounter,
-        setDNoteDownloadFailedCounter,
-        invoiceDownloadFailedCounter,
-        setInvoiceDownloadFailedCounter
+        dNoteFailCounter.current,
+        invoiceFailCounter.current
       );
+      if (flyoutType === 'DNote') {
+        dNoteFailCounter.current++;
+      } else if (flyoutType === 'Invoice') {
+        invoiceFailCounter.current++;
+      }
       console.error('Error', error);
     }
   };
@@ -131,21 +130,27 @@ function OrdersTrackingDetail(props) {
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           false,
-          dNoteDownloadFailedCounter,
-          setDNoteDownloadFailedCounter,
-          invoiceDownloadFailedCounter,
-          setInvoiceDownloadFailedCounter
+          dNoteFailCounter.current,
+          invoiceFailCounter.current
         );
+        if (flyoutType === 'DNote') {
+          dNoteFailCounter.current++;
+        } else if (flyoutType === 'Invoice') {
+          invoiceFailCounter.current++;
+        }
       }
     }catch(error){
       pushFailedDownloadGoogleAnalytics(
-        flyoutType, 
-        false, 
-        dNoteDownloadFailedCounter, 
-        setDNoteDownloadFailedCounter, 
-        invoiceDownloadFailedCounter, 
-        setInvoiceDownloadFailedCounter
+        flyoutType,
+        false,
+        dNoteFailCounter.current,
+        invoiceFailCounter.current
       );
+      if (flyoutType === 'DNote') {
+        dNoteFailCounter.current++;
+      } else if (flyoutType === 'Invoice') {
+        invoiceFailCounter.current++;
+      }
     }
   }
 

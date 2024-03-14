@@ -238,7 +238,7 @@ function ProductReplacementFlyout({
         console.error(error);
       }
     }
-  }, [productReplacementConfig?.data?.line]);
+  }, [productReplacementConfig?.show]);
 
   return (
     <BaseFlyout
