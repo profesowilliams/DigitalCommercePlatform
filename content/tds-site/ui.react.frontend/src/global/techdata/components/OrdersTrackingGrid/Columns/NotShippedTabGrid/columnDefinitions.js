@@ -2,7 +2,7 @@ const columnDefs = [
   {
     headerName: 'LINE',
     field: 'lineNumber',
-    width: '60px',
+    width: '83px',
     sortable: false,
     cellStyle: {
       'white-space': 'normal',
@@ -15,7 +15,7 @@ const columnDefs = [
     headerName: 'ITEM',
     field: 'item',
     sortable: false,
-    width: '425px',
+    width: '590px',
     cellStyle: {
       'white-space': 'normal',
       padding: '12px 0',
@@ -26,7 +26,7 @@ const columnDefs = [
     headerName: 'PN/SKU',
     field: 'pnsku',
     sortable: false,
-    width: '180px',
+    width: '250px',
     cellStyle: {
       'white-space': 'normal',
       padding: '12px 0',
@@ -36,7 +36,7 @@ const columnDefs = [
   {
     field: 'nqtyDeliveryEstimate',
     sortable: false,
-    width: '254px',
+    width: '277px',
     cellStyle: {
       padding: '0 0',
     },

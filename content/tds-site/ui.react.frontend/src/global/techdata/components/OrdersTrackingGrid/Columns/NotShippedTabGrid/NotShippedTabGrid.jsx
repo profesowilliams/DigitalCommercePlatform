@@ -53,11 +53,10 @@ function NotShippedTabGrid({
     config?.orderLineDetailsNotShippedColumnLabels;
 
   const gridColumnWidths = Object.freeze({
-    lineNumber: '60px',
-    item: '425px',
-    pnsku: '180px',
-    nqtyDeliveryEstimate: '234px',
-    action: '60px',
+    lineNumber: '83px',
+    item: '590px',
+    pnsku: '250px',
+    nqtyDeliveryEstimate: '277px',
   });
 
   const CustomHeaderComponent = () => (
@@ -97,7 +96,7 @@ function NotShippedTabGrid({
       cellRenderer: ({ data }) => (
         <QuantityAndDeliveryEstimateColumn line={data} config={gridProps} />
       ),
-      width: gridColumnWidths.deliveryEstimate,
+      width: gridColumnWidths.nqtyDeliveryEstimate,
     },
   ];
 
