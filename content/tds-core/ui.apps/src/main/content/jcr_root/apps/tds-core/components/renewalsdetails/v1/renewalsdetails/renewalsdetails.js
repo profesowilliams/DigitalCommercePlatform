@@ -350,7 +350,11 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (properties) {
         const orderingFromDashboard = utils.fillFieldsDialogProperties(orderingProperties);
-        if (!!orderingFromDashboard) {jsonObject['orderingFromDashboard'] = orderingFromDashboard};
+        if (!!orderingFromDashboard) {
+            orderingFromDashboard.termsAndConditionsLink = transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink);
+
+            jsonObject['orderingFromDashboard'] = orderingFromDashboard
+        };
     }
 
     if (properties && properties["hideCopyHeaderOption"]) {

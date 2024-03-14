@@ -443,7 +443,7 @@
                                                                 name="./termsAndConditions"/>
                                                             <termsAndConditionsLink
                                                                 jcr:primaryType="nt:unstructured"
-                                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
                                                                 fieldLabel="Terms and Conditions Link"
                                                                 name="./termsAndConditionsLink"/>
                                                             <successSubmission

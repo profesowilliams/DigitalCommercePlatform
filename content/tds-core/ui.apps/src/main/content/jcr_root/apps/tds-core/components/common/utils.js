@@ -62,12 +62,31 @@ use(function () {
         }
         return url;
     }
+    function transformUrlGivenEnvironment(url) {
+        let runModes = sling
+            .getService(Packages.org.apache.sling.settings.SlingSettingsService)
+            .getRunModes();
+
+        let isEnvWithDispatcher =
+            !(runModes.contains("sit") || runModes.contains("dit"));
+        let currentPageParentPath = currentPage.getParent(4).getPath();
+
+        let detailUrl = url;
+
+        //UAT, Stage, Prod
+        if (isEnvWithDispatcher) {
+            detailUrl = url.replace(currentPageParentPath, "");
+        }
+
+        return detailUrl;
+    }
     return {
         getDataFromMultifield: getDataFromMultifield,
         populateCommonConfigurations: populateCommonConfigurations,
         getCheckoutConfigurations: getCheckoutConfigurations,
         fillFieldsDialogProperties:fillFieldsDialogProperties,
         populateOutterProperty:populateOutterProperty,
-        addHtmlIfNeeded: addHtmlIfNeeded
+        addHtmlIfNeeded: addHtmlIfNeeded,
+        transformUrlGivenEnvironment: transformUrlGivenEnvironment
     }
 });

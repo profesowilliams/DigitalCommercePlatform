@@ -9,25 +9,8 @@ use(['../../../common/utils.js'], function(utils) {
     let copyFlyout = {};
     let shareFlyout = {};
 
-    let runModes = sling
-      .getService(Packages.org.apache.sling.settings.SlingSettingsService)
-      .getRunModes();
-
-    let isEnvWithDispatcher =
-      !(runModes.contains("sit") || runModes.contains("dit"));
-    let currentPageParentPath = currentPage.getParent(4).getPath();
-
     if (properties && properties["detailUrl"]) {
-      if (isEnvWithDispatcher) {
-        //UAT, Stage, Prod
-        jsonObject["detailUrl"] = properties["detailUrl"].replace(
-          currentPageParentPath,
-          ""
-        );
-      } else {
-        //SIT, DIT
-        jsonObject["detailUrl"] = properties["detailUrl"];
-      }
+      jsonObject["detailUrl"] = transformUrlGivenEnvironment(properties["detailUrl"]);
     }
 
     if (properties && properties["displayCurrencyName"]) {
@@ -310,13 +293,7 @@ use(['../../../common/utils.js'], function(utils) {
       const orderingFromDashboard =
         utils.fillFieldsDialogProperties(orderingProperties);
       if (!!orderingFromDashboard) {
-        if (isEnvWithDispatcher) {
-          orderingFromDashboard.termsAndConditionsLink =
-            orderingFromDashboard.termsAndConditionsLink.replace(
-              currentPageParentPath,
-              ""
-            );
-        }
+        orderingFromDashboard.termsAndConditionsLink = transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink);
 
         jsonObject["orderingFromDashboard"] = orderingFromDashboard;
       }
