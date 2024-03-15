@@ -43,7 +43,9 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
           <p className="bold">
             {getDictionaryValueOrKey(labels.lineTotal)} ({currency})
           </p>
-          <p>{Number(unitPrice) * Number(originalOrderQuantity)}</p>
+          <p>
+            {lineDetails[0]?.subtotalPriceFormatted}
+          </p>
         </div>
       </div>
     </div>
