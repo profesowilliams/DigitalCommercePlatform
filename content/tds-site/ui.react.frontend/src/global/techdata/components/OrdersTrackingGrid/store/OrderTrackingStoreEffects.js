@@ -471,5 +471,11 @@ export const orderTrackingEffects = (set, get) => {
         },
       }));
     },
+    setOrderDetailSubtotalValue(value) {
+      set((state) => ({
+        ...state,
+        orderDetailSubtotalValue: value,
+      }));
+    },
   };
 };

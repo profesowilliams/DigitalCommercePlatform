@@ -12,7 +12,7 @@ const ActionsColumn = ({
     <div className="cmp-order-tracking-grid-details__splitLine-column">
       {sortedLineDetails(line)?.map((el, index) => (
         <ActionButton
-          key={line.tdNumber}
+          key={line.tdNumber + index}
           line={line}
           element={el}
           index={index}

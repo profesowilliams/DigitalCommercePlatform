@@ -1,7 +1,9 @@
-import React from 'react';
-function ShipDateColumn({ line, sortedLineDetails }) {
+import React, { useEffect, useState } from 'react';
+
+function ShipDateColumn({ line, sortedLineDetails, rowsToGrayOutTDNameRef }) {
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
+  const [temporaryValue, setTemporaryValue] = useState(null);
 
   const shipDateText = (el) => (
     <>
@@ -16,6 +18,12 @@ function ShipDateColumn({ line, sortedLineDetails }) {
       ? shipDateText(el)
       : el.shipDateNotAvailableTranslated || '-';
 
+  useEffect(() => {
+    if (rowsToGrayOutTDNameRef.current.includes(line?.tdNumber)) {
+      setTemporaryValue('-');
+    }
+  }, [rowsToGrayOutTDNameRef]);
+
   return (
     <div className="cmp-order-tracking-grid-details__splitLine-column cmp-order-tracking-grid-details__splitLine--centerAlign">
       {sortedLineDetails(line)?.map((el, index) => {
@@ -24,7 +32,7 @@ function ShipDateColumn({ line, sortedLineDetails }) {
 
         return (
           <div
-            key={line.tdNumber}
+            key={line.tdNumber + index}
             className={`cmp-order-tracking-grid-details__splitLine${
               isSingleElement || isLastElement
                 ? '__separateLine'
@@ -32,7 +40,7 @@ function ShipDateColumn({ line, sortedLineDetails }) {
             }`}
           >
             <span className="cmp-order-tracking-grid-details__splitLine__separateLineText">
-              {text(el)}
+              {temporaryValue || text(el)}
             </span>
           </div>
         );

@@ -36,9 +36,7 @@ function OrdersTrackingDetail(props) {
     enableCellTextSelection: true,
     ensureDomOrder: true,
   };
-  const {
-    setUserData,
-  } = useOrderTrackingStore((st) => st.effects);
+  const { setUserData } = useOrderTrackingStore((st) => st.effects);
   const userData = useOrderTrackingStore((st) => st.userData);
   const hasAIORights = userData?.roleList?.some(
     (role) => role.entitlement === 'AIO'
@@ -122,7 +120,7 @@ function OrdersTrackingDetail(props) {
     const singleDownloadUrl =
       url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
     let response = null;
-    try{      
+    try {
       response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
         redirect: true,
       });
@@ -139,7 +137,7 @@ function OrdersTrackingDetail(props) {
           invoiceFailCounter.current++;
         }
       }
-    }catch(error){
+    } catch (error) {
       pushFailedDownloadGoogleAnalytics(
         flyoutType,
         false,

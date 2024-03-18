@@ -32,196 +32,205 @@ function OrdersTrackingDetailGrid({
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
-  const [response, setResponse] = useState(null);
-  const [openStatusesModal, setOpenStatusesModal] = useState(false);
-  const refreshOrderTrackingDetailApi = useStore(
-    (state) => state.refreshOrderTrackingDetailApi
-  );
-  const userData = useOrderTrackingStore((st) => st.userData);
-  const resetCallback = useRef(null);
-  const shouldGoToFirstPage = useRef(false);
-  const isOnSearchAction = useRef(false);
-  const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
-    useOrderTrackingStore,
-    { resetCallback, shouldGoToFirstPage, isOnSearchAction }
-  );
-  const config = {
-    ...gridProps,
-    serverSide: true,
-    paginationStyle: 'none',
-    suppressContextMenu: true,
-    enableCellTextSelection: true,
-    ensureDomOrder: true,
-    domLayout: 'autoHeight',
-    itemsPerPage: 99999,
-  };
-  const gridApiRef = useRef();
+const [response, setResponse] = useState(null);
+const [openStatusesModal, setOpenStatusesModal] = useState(false);
+const refreshOrderTrackingDetailApi = useStore(
+  (state) => state.refreshOrderTrackingDetailApi
+);
+const userData = useOrderTrackingStore((st) => st.userData);
+const resetCallback = useRef(null);
+const shouldGoToFirstPage = useRef(false);
+const isOnSearchAction = useRef(false);
+const { onAfterGridInit, onQueryChanged } = useExtendGridOperations(
+  useOrderTrackingStore,
+  { resetCallback, shouldGoToFirstPage, isOnSearchAction }
+);
+const config = {
+  ...gridProps,
+  serverSide: true,
+  paginationStyle: 'none',
+  suppressContextMenu: true,
+  enableCellTextSelection: true,
+  ensureDomOrder: true,
+  domLayout: 'autoHeight',
+  itemsPerPage: 99999,
+};
+const gridApiRef = useRef();
 
-  const hasRights = (entitlement) =>
-    userData?.roleList?.some((role) => role.entitlement === entitlement);
-  const hasCanViewOrdersRights = hasRights('CanViewOrders');
-  const hasOrderTrackingRights = hasRights('OrderTracking');
-  const hasAccess =
-    hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
+const hasRights = (entitlement) =>
+  userData?.roleList?.some((role) => role.entitlement === entitlement);
+const hasCanViewOrdersRights = hasRights('CanViewOrders');
+const hasOrderTrackingRights = hasRights('OrderTracking');
+const hasAccess =
+  hasCanViewOrdersRights || hasOrderTrackingRights || isLocalDevelopment;
 
-  const gridColumnWidths = Object.freeze({
-    id: '95px',
-    description: '287px',
-    status: '173x',
-    shipDate: '99px',
-    unitPriceFormatted: '150px',
-    quantity: '58px',
-    totalPriceFormatted: '150px',
-    actions: '50px',
+const gridColumnWidths = Object.freeze({
+  id: '95px',
+  description: '287px',
+  status: '173x',
+  shipDate: '99px',
+  unitPriceFormatted: '150px',
+  quantity: '58px',
+  totalPriceFormatted: '150px',
+  actions: '50px',
+});
+
+const sortedLineDetails = (
+  line // TODO:move to UI-COMMERCE
+) =>
+  line?.lineDetails?.slice().sort((a, b) => {
+    const dateA = new Date(a.shipDateFormatted);
+    const dateB = new Date(b.shipDateFormatted);
+    return dateA - dateB;
   });
 
-  const sortedLineDetails = (
-    line // TODO:move to UI-COMMERCE
-  ) =>
-    line?.lineDetails?.slice().sort((a, b) => {
-      const dateA = new Date(a.shipDateFormatted);
-      const dateB = new Date(b.shipDateFormatted);
-      return dateA - dateB;
-    });
+const _onAfterGridInit = (config) => {
+  onAfterGridInit(config);
+  gridApiRef.current = config;
+};
 
-  const _onAfterGridInit = (config) => {
-    onAfterGridInit(config);
-    gridApiRef.current = config;
-  };
+const onDataLoad = () => {
+  setIsLoading(false);
+};
 
-  const onDataLoad = () => {
-    setIsLoading(false);
-  };
-
-  const loadingCellRenderer = () => {
-    const rowsToZero = response?.data?.content?.items?.map((item) => {
-      if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
-        item.totalPrice = 0;
-        item.totalPriceFormatted = '0';
-        item.quantity = 0;
-        item.orderQuantity = 0;
-      }
-      return item;
-    });
-    gridRef.current?.api.setRowData(rowsToZero);
-  }
-
-  const customRequestInterceptor = async () => {
-    const response = await fetchData(config);
-    setResponse(response);
-    setResponseError(false);
-    const mappedResponse = mapServiceData(response);
-    return mappedResponse;
-  };
-
-  const CustomStatusComponent = () => (
-    <div className="ag-cell-label-container">
-      <span className="ag-header-cell-text">
-        {getDictionaryValueOrKey(config?.itemsLabels?.shipDate)}
-        <GreenInfoIcon onClick={() => setOpenStatusesModal(true)} />
-      </span>
-    </div>
-  );
-
-  const columnDefinitionsOverride = [
-    {
-      field: 'id',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
-      cellRenderer: ({ data }) => <LineNumberColumn line={data} />,
-      width: gridColumnWidths.id,
-    },
-    {
-      field: 'description',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.descriptionPN),
-      cellRenderer: ({ data }) => (
-        <DescriptionColumn line={data} config={gridProps} />
-      ),
-      width: gridColumnWidths.description,
-    },
-    {
-      field: 'status',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
-      cellRenderer: ({ data }) => (
-        <LineStatusColumn
-          line={data}
-          config={gridProps}
-          sortedLineDetails={sortedLineDetails}
-        />
-      ),
-      width: gridColumnWidths.status,
-    },
-    {
-      field: 'shipDate',
-      headerComponentFramework: CustomStatusComponent,
-      cellRenderer: ({ data }) => (
-        <ShipDateColumn
-          line={data}
-          config={gridProps}
-          sortedLineDetails={sortedLineDetails}
-        />
-      ),
-      width: gridColumnWidths.shipDate,
-    },
-    {
-      field: 'unitPriceFormatted',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.unitPrice),
-      cellRenderer: ({ data }) => (
-        <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
-      ),
-      width: gridColumnWidths.unitPriceFormatted,
-    },
-    {
-      field: 'quantity',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
-      cellRenderer: ({ data }) => (
-        <QuantityColumn line={data} sortedLineDetails={sortedLineDetails} />
-      ),
-      width: gridColumnWidths.quantity,
-    },
-    {
-      field: 'totalPriceFormatted',
-      headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineTotalPrice),
-      cellRenderer: ({ data }) => (
-        <TotalColumn line={data} sortedLineDetails={sortedLineDetails} />
-      ),
-      width: gridColumnWidths.totalPriceFormatted,
-    },
-    {
-      field: 'actions',
-      headerName: '',
-      cellRenderer: ({ data }) => (
-        <ActionsColumn
-          line={data}
-          config={gridProps}
-          openFilePdf={openFilePdf}
-          hasAIORights={hasAIORights}
-          sortedLineDetails={sortedLineDetails}
-        />
-      ),
-      width: gridColumnWidths.actions,
-    },
-  ];
-  function getRowClass({ node }) {
-    const data = node.group ? node.aggData : node.data;
-    if (rowsToGrayOutTDNameRef.current.includes(data?.tdNumber)) {
-      return true;
+const loadingCellRenderer = () => {
+  const rowsToZero = response?.data?.content?.items?.map((item) => {
+    if (item?.status === 'Rejected' && item?.orderQuantity === 0) {
+      item.totalPrice = 0;
+      item.totalPriceFormatted = '0';
+      item.quantity = 0;
+      item.orderQuantity = 0;
     }
+    return item;
+  });
+  gridRef.current?.api.setRowData(rowsToZero);
+};
+
+const customRequestInterceptor = async () => {
+  const response = await fetchData(config);
+  setResponse(response);
+  setResponseError(false);
+  const mappedResponse = mapServiceData(response);
+  return mappedResponse;
+};
+
+const CustomStatusComponent = () => (
+  <div className="ag-cell-label-container">
+    <span className="ag-header-cell-text">
+      {getDictionaryValueOrKey(config?.itemsLabels?.shipDate)}
+      <GreenInfoIcon onClick={() => setOpenStatusesModal(true)} />
+    </span>
+  </div>
+);
+
+const columnDefinitionsOverride = [
+  {
+    field: 'id',
+    headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
+    cellRenderer: ({ data }) => <LineNumberColumn line={data} />,
+    width: gridColumnWidths.id,
+  },
+  {
+    field: 'description',
+    headerName: getDictionaryValueOrKey(config?.itemsLabels?.descriptionPN),
+    cellRenderer: ({ data }) => (
+      <DescriptionColumn line={data} config={gridProps} />
+    ),
+    width: gridColumnWidths.description,
+  },
+  {
+    field: 'status',
+    headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineStatus),
+    cellRenderer: ({ data }) => (
+      <LineStatusColumn
+        line={data}
+        config={gridProps}
+        sortedLineDetails={sortedLineDetails}
+      />
+    ),
+    width: gridColumnWidths.status,
+  },
+  {
+    field: 'shipDate',
+    headerComponentFramework: CustomStatusComponent,
+    cellRenderer: ({ data }) => (
+      <ShipDateColumn
+        line={data}
+        config={gridProps}
+        sortedLineDetails={sortedLineDetails}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+      />
+    ),
+    width: gridColumnWidths.shipDate,
+  },
+  {
+    field: 'unitPriceFormatted',
+    headerName: getDictionaryValueOrKey(config?.itemsLabels?.unitPrice),
+    cellRenderer: ({ data }) => (
+      <UnitCostColumn line={data} sortedLineDetails={sortedLineDetails} />
+    ),
+    width: gridColumnWidths.unitPriceFormatted,
+  },
+  {
+    field: 'quantity',
+    headerName: getDictionaryValueOrKey(config?.itemsLabels?.itemsQuantity),
+    cellRenderer: ({ data }) => (
+      <QuantityColumn
+        line={data}
+        sortedLineDetails={sortedLineDetails}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+      />
+    ),
+    width: gridColumnWidths.quantity,
+  },
+  {
+    field: 'totalPriceFormatted',
+    headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineTotalPrice),
+    cellRenderer: ({ data }) => (
+      <TotalColumn
+        line={data}
+        sortedLineDetails={sortedLineDetails}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+      />
+    ),
+    width: gridColumnWidths.totalPriceFormatted,
+  },
+  {
+    field: 'actions',
+    headerName: '',
+    cellRenderer: ({ data }) => (
+      <ActionsColumn
+        line={data}
+        config={gridProps}
+        openFilePdf={openFilePdf}
+        hasAIORights={hasAIORights}
+        sortedLineDetails={sortedLineDetails}
+      />
+    ),
+    width: gridColumnWidths.actions,
+  },
+];
+const getRowClass = ({ node }) => {
+  const data = node.group ? node.aggData : node.data;
+  if (rowsToGrayOutTDNameRef.current.includes(data?.tdNumber)) {
+    return true;
   }
+};
 
-  const rowClassRules = {
-    'gray-out-changing-rows': getRowClass,
-  };
+const rowClassRules = {
+  'gray-out-changing-rows': getRowClass,
+};
 
-  const myColumnDefs = useMemo(
-    () => buildColumnDefinitions(columnDefinitionsOverride),
-    []
-  );
+const myColumnDefs = useMemo(
+  () => buildColumnDefinitions(columnDefinitionsOverride),
+  []
+);
 
-  const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
+const { closeAndCleanToaster } = useOrderTrackingStore((st) => st.effects);
 
-  function onCloseToaster() {
-    closeAndCleanToaster();
-  }
+const onCloseToaster = () => {
+  closeAndCleanToaster();
+};
 
   useEffect(() => {
     onQueryChanged();

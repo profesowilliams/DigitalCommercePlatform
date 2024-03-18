@@ -11,7 +11,10 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
   const userDataLS = localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA)
     ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA))
     : null;
-  const userData = useOrderTrackingStore((st) => st.userData);
+  const userData = useOrderTrackingStore((state) => state.userData);
+  const orderDetailSubtotalValue = useOrderTrackingStore(
+    (state) => state.orderDetailSubtotalValue
+  );
   const currentUserData =
     isExtraReloadDisabled() || isHttpOnlyEnabled() ? userData : userDataLS;
   const activeCustomer = currentUserData?.activeCustomer;
@@ -41,7 +44,8 @@ const OrderTrackingDetailFooter = ({ content, config }) => {
               {getDictionaryValueOrKey(config.footerLabels?.totalOrderNetPrice)}
             </span>
             <span className="box-container__rightPart-subtotalValue">
-              {content.paymentDetails?.subtotalFormatted}{' '}
+              {orderDetailSubtotalValue ||
+                content.paymentDetails?.subtotalFormatted}{' '}
               {currency ?? defaultCurrency}
             </span>
           </div>

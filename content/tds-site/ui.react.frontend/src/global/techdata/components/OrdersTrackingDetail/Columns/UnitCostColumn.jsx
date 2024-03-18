@@ -10,7 +10,7 @@ function UnitCostColumn({ line, sortedLineDetails }) {
           multiple && index === line?.lineDetails?.length - 1;
         return (
           <div
-            key={line.tdNumber}
+            key={line.tdNumber + index}
             className={`cmp-order-tracking-grid-details__splitLine${
               isSingleElement || isLastElement
                 ? '__separateLine'

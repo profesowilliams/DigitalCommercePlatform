@@ -52,9 +52,10 @@ function OrderModificationFlyout({
   const doesReasonDropdownHaveEmptyItems = useOrderTrackingStore(
     (st) => st.orderModification.doesReasonDropdownHaveEmptyItems
   );
-  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
-  const effects = useOrderTrackingStore((state) => state.effects);
-  const userData = useOrderTrackingStore((st) => st.userData);
+  const { setCustomState, setOrderDetailSubtotalValue } = useOrderTrackingStore(
+    (state) => state.effects
+  );
+  const userData = useOrderTrackingStore((state) => state.userData);
   const [orderModificationResponse, setOrderModificationResponse] =
     useState(null);
   const orderNumber = id || orderModificationConfig?.id;
@@ -79,7 +80,7 @@ function OrderModificationFlyout({
         message: getDictionaryValueOrKey(labels?.modifyErrorMessage),
       };
       !orderEditable &&
-        effects.setCustomState({ key: 'toaster', value: { ...toaster } });
+        setCustomState({ key: 'toaster', value: { ...toaster } });
       return result;
     } catch (error) {
       console.error('Error:', error);
@@ -148,9 +149,16 @@ function OrderModificationFlyout({
   };
 
   const handleUpdate = async () => {
-    const rowsDeleted = itemsCopy
-      ?.filter((item) => item?.status === 'Rejected')
-      .map((item) => item.tdNumber);
+    let subtotalValue = 0;
+    const rowsDeleted = itemsCopy?.reduce((array, item) => {
+      if (item?.status === 'Rejected') {
+        return [...array, item.tdNumber];
+      } else {
+        subtotalValue += item.unitPrice * item.originalOrderQuantity;
+        return array;
+      }
+    }, []);
+    setOrderDetailSubtotalValue(subtotalValue);
     greyOutRows(rowsDeleted);
     closeFlyout();
     addLineForGTM.map((line) => {
@@ -209,10 +217,10 @@ function OrderModificationFlyout({
       };
       if (result.data && !result.data?.error?.isError) {
         changeRefreshDetailApiState('lineDetails');
-        effects.setCustomState({ key: 'toaster', value: { ...toasterSucess } });
+        setCustomState({ key: 'toaster', value: { ...toasterSucess } });
       }
       if (addLineError || reduceLineError) {
-        effects.setCustomState({
+        setCustomState({
           key: 'toaster',
           value: { ...toasterListedError },
         });
@@ -228,9 +236,10 @@ function OrderModificationFlyout({
         ),
       };
       console.error('Error updating order:', error);
-      effects.setCustomState({ key: 'toaster', value: { ...toasterError } });
+      setCustomState({ key: 'toaster', value: { ...toasterError } });
     } finally {
       greyOutRows([]);
+      setOrderDetailSubtotalValue(null);
       setOrderModifyHeaderInfo(true);
     }
   };
@@ -291,6 +300,7 @@ function OrderModificationFlyout({
         .then((result) => {
           setOrderModificationResponse(result?.data?.content?.items);
           setItems(result?.data?.content?.items);
+          setItemsCopy(result?.data?.content?.items);
           setOrderModificationContent(result.data.content);
         })
         .catch((error) => {

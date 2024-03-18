@@ -130,6 +130,7 @@ const INITIAL_STATE = {
     orderModification: false,
     proactiveMessage: false,
   },
+  orderDetailSubtotalValue: null,
 };
 
 const store = (set, get) => ({
