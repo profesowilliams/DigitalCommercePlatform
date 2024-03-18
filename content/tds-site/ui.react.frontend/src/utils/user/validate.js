@@ -34,8 +34,8 @@ const validateCountryFromUrlAndAPI = (countryCodeFromAPI) => {
 }
 
 const performRedirect = (countryCodeFromUrl, countryCodeFromAPI) => {
-  if (countryCodeFromAPI.toLowerCase().indexOf(countryCodeFromUrl.toLowerCase()) < 0) {
-    let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl, countryCodeFromAPI);
+    if (countryCodeFromAPI.toLowerCase().indexOf(countryCodeFromUrl.toLowerCase()) < 0) {
+    let resultantRedirectUrl = window.location.href.replace(countryCodeFromUrl.toLowerCase(), countryCodeFromAPI);
     window.location.href = resultantRedirectUrl;
     return true;
   } else {
