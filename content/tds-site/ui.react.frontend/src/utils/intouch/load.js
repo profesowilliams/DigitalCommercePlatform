@@ -9,10 +9,6 @@ const renderIntouchHeaderHTML = () => {
 
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept-Language': headerInfo.acceptLanguage
-    },
     credentials: "include"
   })
     .then(checkStatus)
@@ -32,10 +28,6 @@ const renderIntouchFooterHTML = () => {
 
   return fetch(url, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'text/plain',
-      'Accept-Language': headerInfo.acceptLanguage
-    },
     credentials: "include"
   })
     .then(checkStatus)
