@@ -33,7 +33,7 @@ const renderIntouchFooterHTML = () => {
   return fetch(url, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'text/plain',
       'Accept-Language': headerInfo.acceptLanguage
     },
     credentials: "include"
