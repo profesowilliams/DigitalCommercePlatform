@@ -41,9 +41,9 @@
   text-align: center;
 }
 
-.MuiTooltip-popper[data-popper-placement*='bottom']
+.MuiTooltip-popper[data-popper-placement*='top']
   div[class^='MuiTooltip-tooltip'] {
-  margin-top: 19px;
+  margin-bottom: 5px;
 }
 div[class*='MuiTooltip-tooltip'] {
   background-color: $tooltip-background;

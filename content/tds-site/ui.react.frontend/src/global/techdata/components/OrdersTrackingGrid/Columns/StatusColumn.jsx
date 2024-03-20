@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ParcelIcon,
   WarningModifiedIcon,
@@ -6,7 +6,7 @@ import {
   CompletedIcon,
 } from '../../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 
 const StatusColumn = ({ data, iconsStatuses }) => {
   const { status, shipComplete } = data || {};
@@ -53,17 +53,23 @@ const StatusColumn = ({ data, iconsStatuses }) => {
     <div className="status-column-container">
       <Tooltip
         title={renderTooltip()}
-        placement="bottom"
+        placement="top"
         arrow
         disableHoverListener={enableTooltip ? false : true}
         disableInteractive={true}
       >
         <span className="status-span-icon">{renderIcon()}</span>
       </Tooltip>
-
-      <span className={noIcon ? 'status-icon-offset' : ''}>
-        {data?.statusText}
-      </span>
+      <Tooltip
+        title={data?.statusText}
+        placement="top"
+        arrow
+        disableInteractive={true}
+      >
+        <span className={noIcon ? 'status-icon-offset' : ''}>
+          {data?.statusText}
+        </span>
+      </Tooltip>
     </div>
   ) : (
     <span>-</span>
