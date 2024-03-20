@@ -326,6 +326,16 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="It was not possible to complete your request at this time, please try again later. Label"
 												name="./itemsUpdateErrorMessage"/>
+                                            <endUserInfoTemplate
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="End User Info Template"
+												name="./endUserInfoTemplate"/>
+                                            <endUserInfoClose
+												jcr:primaryType="nt:unstructured"
+												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+												fieldLabel="Close Label"
+												name="./endUserInfoClose"/>
 											<ordersUrl
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"

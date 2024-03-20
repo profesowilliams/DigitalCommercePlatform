@@ -73,6 +73,8 @@ use(["../../../common/utils.js"], function (utils) {
     "seeOptions",
     "endOfLife",
     "itemsUpdateErrorMessage",
+    "endUserInfoTemplate",
+    "endUserInfoClose",
   ];
 
   properties &&

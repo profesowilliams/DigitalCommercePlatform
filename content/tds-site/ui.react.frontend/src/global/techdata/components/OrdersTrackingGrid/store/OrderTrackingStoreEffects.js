@@ -468,6 +468,7 @@ export const orderTrackingEffects = (set, get) => {
         featureFlags: {
           orderModification: value?.OrderModification || false,
           proactiveMessage: value?.ProactiveMessage || false,
+          endUserInformation: value?.EndUserInformation || false,
         },
       }));
     },

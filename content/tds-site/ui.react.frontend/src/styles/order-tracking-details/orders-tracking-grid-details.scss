@@ -92,6 +92,11 @@
       text-align: left;
       display: flex;
     }
+    &-user-info-row {
+      text-align: left;
+      display: flex;
+      align-items: center;
+    }
 
     &-image {
       width: 80px !important;
@@ -126,6 +131,23 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+    }
+    &-user-info-link {
+      margin-left: 4px;
+      color: $brand-green;
+      max-width: 177px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+    }
+
+    &-button {
+      width: auto !important;
+      margin-top: 12px;
+      color: $brand-green;
+      font-size: 16px !important;
     }
 
     &-text {
@@ -182,5 +204,24 @@
     &--centerAlignActionButton {
       place-items: center;
     }
+  }
+}
+
+.cmp-order-tracking-grid-details__description-text {
+  div[class*='MuiTooltip-tooltip'] {
+    background-color: $brand-white;
+    color: $brand-charcoal;
+    line-height: 21px;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+  }
+  div[class*='MuiPopper-root-MuiTooltip-popper'] .MuiTooltip-arrow::before {
+    background-color: $brand-white;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+  }
+  .MuiTooltip-popper[data-popper-placement*='top']
+    div[class^='MuiTooltip-tooltip'] {
+    margin-bottom: 5px;
   }
 }

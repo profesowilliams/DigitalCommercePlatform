@@ -6697,6 +6697,20 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
               serialsAny: false,
             },
           ],
+          endUserDetails: {
+            name: "End user full name",
+            firstName: "end user first name",
+            lastName: "end user last name",
+            email: "enduser@email.com",
+            phone: "+1234567",
+            line1: "Adr line 1",
+            line2: "Adr line 2",
+            line3: "Adr line 3",
+            city: "end user city",
+            state: "end user state",
+            zip: "end user state zip",
+            country: "end user country",
+          },
         },
         {
           line: "20",
@@ -6712,6 +6726,20 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
           canTrackAndTrace: true,
           unitPrice: 123.25,
           unitPriceFormatted: "123.25",
+          endUserDetails: {
+            name: "End user full name",
+            firstName: "end user first name",
+            lastName: "end user last name",
+            email: "enduser@email.com",
+            phone: "+1234567",
+            line1: "Adr line 1",
+            line2: "Adr line 2",
+            line3: "Adr line 3",
+            city: "end user city",
+            state: "end user state",
+            zip: "end user state zip",
+            country: "end user country",
+          },
           lineDetails: [
             {
               quantity: 0.0,
@@ -8459,6 +8487,7 @@ app.get("/ui-commerce/v3/refinements", function (req, res) {
       featureFlags: {
         OrderModification: true,
         ProactiveMessage: true,
+        EndUserInformation: true,
       },
     },
     error: {

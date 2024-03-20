@@ -129,6 +129,7 @@ const INITIAL_STATE = {
   featureFlags: {
     orderModification: false,
     proactiveMessage: false,
+    endUserInformation: false,
   },
   orderDetailSubtotalValue: null,
 };
