@@ -17,22 +17,22 @@ const NewItemForm = ({
   });
   const [open, setOpen] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
+  const loading = open && suggestions.length === 0;
   const [autocompleteInputValue, setAutocompleteInputValue] = useState('');
 
   const setNewSuggestions = (response) => {
     if (response && autocompleteInputValue) {
       let matchingKey = 'manufacturerPartNumber';
       if (
-        response.products[0].manufacturerPartNumber
+        response.products?.[0]?.manufacturerPartNumber
           ?.toLowerCase()
           ?.includes(autocompleteInputValue.toLowerCase())
       ) {
         matchingKey = 'manufacturerPartNumber';
       } else if (
-        response.products[0].id
+        response.products?.[0]?.id
           .toLowerCase()
           ?.includes(autocompleteInputValue.toLowerCase())
       ) {
@@ -60,13 +60,10 @@ const NewItemForm = ({
       return result;
     } catch (error) {
       console.error('Error:', error);
-    } finally {
-      setLoading(false);
     }
   };
 
   const handleAutocompleteInput = (newValue) => {
-    setLoading(true);
     setAutocompleteInputValue(newValue);
     fetchSuggestions(newValue).then((result) => {
       setNewSuggestions(result.data.content);
@@ -88,7 +85,13 @@ const NewItemForm = ({
     if (!open) {
       setSuggestions([]);
     }
-  }, [open, values]);
+  }, [open]);
+
+  useEffect(() => {
+    if (suggestions.length > 0) {
+      setOpen(true);
+    }
+  }, [suggestions]);
 
   return (
     <div className="new-item-form">

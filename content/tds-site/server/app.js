@@ -8656,5 +8656,5 @@ app.get("/ui-commerce/v2/SearchProduct", function (req, res) {
   };
   setTimeout(() => {
     return res.status(200).json(response);
-  }, 200);
+  }, 2000);
 });
