@@ -21,6 +21,7 @@ import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
 import EditFlow from './ConfigGrid/Common/EditFlow'; 
 import { removeDashboardSeparator } from "../../../../utils/utils";
 import useAuth from "../../hooks/useAuth";
+import { getSessionInfo } from "../../../../utils/intouch/user/get";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);
@@ -32,6 +33,9 @@ function RenewalsDetails(props) {
     `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
   );
   const userData = useStore((state) => state.userData);
+
+  const setUserData = useStore((state) => state.setUserData);
+
   const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
   const shopURL = componentProp.shopURL;
   const { isUserLoggedIn:isLoggedIn } = useAuth();
@@ -67,6 +71,14 @@ function RenewalsDetails(props) {
     let branding = isTechdata ? 'cmp-grid-techdata' : (isTDSynnex ? 'td-synnex' : '');    
     effects.setCustomState({key:'branding', value:branding});
   },[])
+
+  useEffect(() => {
+    if(enableIntouchLogin()) {
+      getSessionInfo().then((data) => {
+        setUserData(data[1]);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     // Remove Dashboard separator(s) from only Renewal Details page

@@ -40,6 +40,9 @@ import useExtendGridOperations from "../BaseGrid/Hooks/useExtendGridOperations";
 import ToolTip from './../BaseGrid/ToolTip';
 import { useStore } from "../../../../utils/useStore";
 import { pushDataLayer, getSortAnalytics } from '../Analytics/analytics'
+import { getSessionInfo } from "../../../../utils/intouch/user/get";
+import { loadIntouchHeaderAndFooter } from "../../../../utils/intouch/intouch/load";
+import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
 
 const USER_DATA = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_USER_DATA));
 
@@ -68,6 +71,7 @@ function RenewalsGrid(props) {
   const gridApiRef = useRef();
   const firstAPICall = useRef(true);
   const userData = useStore((state) => state.userData);
+  const setUserData = useStore((state) => state.setUserData);
   
   const { setToolTipData, setCustomState, closeAndCleanToaster } = effects;
 
@@ -126,6 +130,16 @@ function RenewalsGrid(props) {
 
     return () => window.removeEventListener("click",catchPriceColumnClickEvent);
   },[])
+
+  useEffect(() => {
+    if(enableIntouchLogin()) {
+      loadIntouchHeaderAndFooter();
+  
+      getSessionInfo().then((data) => {
+        setUserData(data[1]);
+      });
+    }
+  }, []);
 
   useEffect(() => setCustomState({ key: 'aemConfig', value: componentProp }), [])
 

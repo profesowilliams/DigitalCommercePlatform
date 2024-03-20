@@ -25,4 +25,7 @@ public @interface IntouchConfiguration {
 
     @Property(label = "User Validation API Url", description = "API url that provides user validation (based on SWATpass cookie).")
     String userCheckAPIUrl() default "https://intouch.integration.tdsynnex.com/InTouch/MVC/api/User/Check?continueUrl=";
+
+    @Property(label = "Enable Intouch Login", description = "Enable Intouch Login")
+    boolean enableIntouchLogin() default false;
 }

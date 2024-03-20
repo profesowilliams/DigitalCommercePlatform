@@ -6,6 +6,8 @@ import { dateToString } from "../global/techdata/helpers/formatting";
 import { getHeaderInfoFromUrl } from "./index";
 import { intouchHeaderAPIUrl, intouchFooterAPIUrl, intouchUserCheckAPIUrl } from "./featureFlagUtils";
 import { SEARCH_LOCAL_STORAGE_KEY, FILTER_LOCAL_STORAGE_KEY } from "./constants";
+import { loadIntouchHeaderAndFooter } from "./intouch/intouch/load";
+import { enableIntouchLogin } from "./intouch/intouchUtils";
 
 export const fileExtensions = {
     xls: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -554,3 +556,17 @@ export const isJavaScriptProtocol = /^[\u0000-\u001F ]*j[\r\n\t]*a[\r\n\t]*v[\r\
 export const addSeparator = (items) => {
     return items?.filter(Boolean)?.join(', ');
 };
+
+//TODO:remove from here
+if(enableIntouchLogin()) {
+    /**
+    * Remove the style attribute on body tag if sessionId is present
+    */
+    window.onload = function () {
+        if (localStorage.getItem('sessionId') !== null) {
+            document.getElementsByClassName('basicpage')[0].setAttribute('style', '');
+        }
+    }
+
+    loadIntouchHeaderAndFooter();
+}

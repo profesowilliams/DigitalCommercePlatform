@@ -10,7 +10,7 @@ use(['../../../common/utils.js'], function(utils) {
     let shareFlyout = {};
 
     if (properties && properties["detailUrl"]) {
-      jsonObject["detailUrl"] = transformUrlGivenEnvironment(properties["detailUrl"]);
+      jsonObject["detailUrl"] = utils.transformUrlGivenEnvironment(properties["detailUrl"]);
     }
 
     if (properties && properties["displayCurrencyName"]) {
@@ -293,7 +293,7 @@ use(['../../../common/utils.js'], function(utils) {
       const orderingFromDashboard =
         utils.fillFieldsDialogProperties(orderingProperties);
       if (!!orderingFromDashboard) {
-        orderingFromDashboard.termsAndConditionsLink = transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink);
+        orderingFromDashboard.termsAndConditionsLink = utils.transformUrlGivenEnvironment(orderingFromDashboard.termsAndConditionsLink);
 
         jsonObject["orderingFromDashboard"] = orderingFromDashboard;
       }
