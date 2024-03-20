@@ -115,7 +115,7 @@ function DescriptionColumn({ line, config }) {
               line?.tdNumber
             }`}</div>
           )}
-          {endUserInformationFlag && (
+          {endUserInformationFlag && line?.endUserDetails && (
             <Tooltip
               title={renderTemplate(template)}
               placement="top"
