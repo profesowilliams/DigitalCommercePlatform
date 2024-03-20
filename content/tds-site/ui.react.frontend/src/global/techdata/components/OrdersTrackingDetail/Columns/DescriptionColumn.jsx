@@ -23,7 +23,7 @@ function DescriptionColumn({ line, config }) {
     state,
     zip,
     country,
-  } = line?.endUserDetails;
+  } = line?.endUserDetails || {};
   const endUserInformationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.endUserInformation
   );
