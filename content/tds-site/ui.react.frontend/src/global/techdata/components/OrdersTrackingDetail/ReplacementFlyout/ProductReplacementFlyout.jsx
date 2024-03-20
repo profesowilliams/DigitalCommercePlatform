@@ -53,7 +53,7 @@ function ProductReplacementFlyout({
   );
 
   const enableReplace = productReplacementConfig?.enableReplace;
-  const lineId = productReplacementConfig?.data?.line?.id;
+  const lineId = productReplacementConfig?.data?.line?.line;
   const tdNumber = productReplacementConfig?.data?.line?.tdNumber;
 
   const closeFlyout = () => {
@@ -78,7 +78,7 @@ function ProductReplacementFlyout({
       CustomerID: userData?.customersV2?.[0]?.customerNumber,
       SalesOrg: userData?.customersV2?.[0]?.salesOrg,
       OrderID: id,
-      LineID: lineId,
+      LineID: lineId ?? null,
       Operation: operation,
       ProductID: newProductId,
     };
