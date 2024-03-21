@@ -86,7 +86,7 @@ function LineStatusColumn({ line, config, sortedLineDetails }) {
     <div className="cmp-order-tracking-grid-details__splitLine-column">
       {sortedLineDetails(line)?.map((el, index) => {
         const isLastElement = multiple && index === line?.lineDetails?.length - 1;
-        const isEOL = line.lineDetails[index].isEOL;
+        const isEOL = line?.lineDetails[index].isEOL;
         return (
           <div
             key={line.tdNumber + index}

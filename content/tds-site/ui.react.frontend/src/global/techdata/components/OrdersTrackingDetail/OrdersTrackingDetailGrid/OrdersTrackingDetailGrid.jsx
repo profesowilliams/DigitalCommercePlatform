@@ -234,7 +234,7 @@ const onCloseToaster = () => {
 
   useEffect(() => {
     onQueryChanged();
-  }, [refreshOrderTrackingDetailApi.lineDetails]);
+  }, [refreshOrderTrackingDetailApi?.lineDetails]);
 
   return (
     <>
