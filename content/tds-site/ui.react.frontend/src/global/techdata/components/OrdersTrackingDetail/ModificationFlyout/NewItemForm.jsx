@@ -23,7 +23,7 @@ const NewItemForm = ({
   const [autocompleteInputValue, setAutocompleteInputValue] = useState('');
 
   const setNewSuggestions = (response) => {
-    if (response && autocompleteInputValue) {
+    if (response) {
       let matchingKey = 'manufacturerPartNumber';
       if (
         response.products?.[0]?.manufacturerPartNumber
