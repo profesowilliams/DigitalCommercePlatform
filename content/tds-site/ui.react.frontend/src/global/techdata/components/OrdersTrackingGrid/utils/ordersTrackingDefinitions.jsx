@@ -9,7 +9,7 @@ import TotalColumn from '../Columns/TotalColumn';
 import StatusColumn from '../Columns/StatusColumn';
 
 export const ordersTrackingDefinition = (
-  { detailUrl, multiple, iconsStatuses },
+  { detailUrl, multiple, iconsStatuses, shipToTooltipTemplate },
   openFilePdf,
   hasAIORights
 ) => {
@@ -22,7 +22,12 @@ export const ordersTrackingDefinition = (
       // and will render order date on DIT and SIT env
       select: <SelectColumn eventProps={eventProps} orderId={data?.id} />,
       actualShipDate: data?.actualShipDateFormatted,
-      shipTo: <ShipToColumn data={data?.shipTo} />,
+      shipTo: (
+        <ShipToColumn
+          data={data?.shipTo}
+          shipToTooltipTemplate={shipToTooltipTemplate}
+        />
+      ),
       statusText: <StatusColumn data={data} iconsStatuses={iconsStatuses} />,
       created: data?.createdFormatted ?? data?.created,
       id: <OrderNoColumn id={data?.id} detailUrl={detailUrl} />,

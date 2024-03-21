@@ -1,7 +1,16 @@
 import React from 'react';
+import Tooltip from '@mui/material/Tooltip';
 
 function ResellerColumn({ data }) {
-    return data ? <span>{data}</span> : <span>-</span>;
+  return data ? (
+    <div className="status-column-container">
+      <Tooltip title={data} placement="top" arrow disableInteractive={true}>
+        <span>{data}</span>
+      </Tooltip>
+    </div>
+  ) : (
+    <span>-</span>
+  );
 }
 
 export default ResellerColumn;

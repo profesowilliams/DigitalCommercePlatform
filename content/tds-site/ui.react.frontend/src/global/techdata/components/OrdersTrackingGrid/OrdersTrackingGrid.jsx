@@ -33,7 +33,6 @@ import {
   pushFailedDownloadGoogleAnalytics,
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
-import { cellMouseOut, cellMouseOver } from './utils/tooltipUtils';
 import MainGridHeader from './MainGrid/MainGridHeader';
 import {
   addCurrencyToTotalColumn,
@@ -57,10 +56,7 @@ import useGet from '../../hooks/useGet';
 import { getUrlParams, deleteSearchParam } from '../../../../utils';
 import Criteria from './Criteria/Criteria';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
-import {
-  getDictionaryValue,
-  getDictionaryValueOrKey,
-} from '../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 import { getPredefinedSearchOptionsList } from './utils/orderTrackingUtils';
 
 const searchParamsKeys = [
@@ -305,25 +301,12 @@ function OrdersTrackingGrid(props) {
     const url = `${componentProp.uiCommerceServiceDomain}/v3/orders/downloaddocuments`;
     const singleDownloadUrl =
       url + `?Order=${orderId}&Type=${flyoutType}&id=${selectedId}`;
-      let response = null;
-      try {
-        response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
-          redirect: true,
-        });
-        if (response?.status === 204) {
-          pushFailedDownloadGoogleAnalytics(
-            flyoutType,
-            true,
-            dNoteFailedCounter.current,
-            invoiceFailedCounter.current
-          );
-          if (flyoutType === 'DNote') {
-            dNoteFailedCounter.current++;
-          } else if (flyoutType === 'Invoice') {
-            invoiceFailedCounter.current++;
-          }
-        }
-      } catch (error) {
+    let response = null;
+    try {
+      response = await requestFileBlobWithoutModal(singleDownloadUrl, null, {
+        redirect: true,
+      });
+      if (response?.status === 204) {
         pushFailedDownloadGoogleAnalytics(
           flyoutType,
           true,
@@ -335,8 +318,21 @@ function OrdersTrackingGrid(props) {
         } else if (flyoutType === 'Invoice') {
           invoiceFailedCounter.current++;
         }
-        console.error('Error', error);
       }
+    } catch (error) {
+      pushFailedDownloadGoogleAnalytics(
+        flyoutType,
+        true,
+        dNoteFailedCounter.current,
+        invoiceFailedCounter.current
+      );
+      if (flyoutType === 'DNote') {
+        dNoteFailedCounter.current++;
+      } else if (flyoutType === 'Invoice') {
+        invoiceFailedCounter.current++;
+      }
+      console.error('Error', error);
+    }
   };
 
   const onCloseToaster = () => {
@@ -440,7 +436,10 @@ function OrdersTrackingGrid(props) {
     if (!userData) {
       return;
     }
-    if (params.get('report') && params.get('report').toLowerCase() === 'EOL'.toLowerCase()) {
+    if (
+      params.get('report') &&
+      params.get('report').toLowerCase() === 'EOL'.toLowerCase()
+    ) {
       reportFilterValue.current.value = 'EOLOrders';
       setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, {
         key: 'EOLOrders',
@@ -518,17 +517,6 @@ function OrdersTrackingGrid(props) {
               hasOrderModificationRights={hasOrderModificationRights}
             />
           )}
-          onCellMouseOver={(e) =>
-            cellMouseOver(
-              e,
-              setToolTipData,
-              getDictionaryValue(
-                gridConfig?.shipToTooltipTemplate,
-                shipToTooltipTemplateDefault
-              )
-            )
-          }
-          onCellMouseOut={() => cellMouseOut(setToolTipData)}
         />
         <MainGridFooter
           analyticsCategories={analyticsCategories}

@@ -66,9 +66,7 @@ const StatusColumn = ({ data, iconsStatuses }) => {
         arrow
         disableInteractive={true}
       >
-        <span className={noIcon ? 'status-icon-offset' : ''}>
-          {data?.statusText}
-        </span>
+        <span>{data?.statusText}</span>
       </Tooltip>
     </div>
   ) : (
