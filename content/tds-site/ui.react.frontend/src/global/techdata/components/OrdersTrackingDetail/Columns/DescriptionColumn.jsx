@@ -23,7 +23,7 @@ function DescriptionColumn({ line, config }) {
     state,
     zip,
     country,
-  } = line?.endUserDetails || {};
+  } = line?.endUser || {};
   const endUserInformationFlag = useOrderTrackingStore(
     (state) => state.featureFlags.endUserInformation
   );
@@ -115,7 +115,7 @@ function DescriptionColumn({ line, config }) {
               line?.tdNumber
             }`}</div>
           )}
-          {endUserInformationFlag && line?.endUserDetails && (
+          {endUserInformationFlag && line?.endUser && (
             <Tooltip
               title={renderTemplate(template)}
               placement="top"

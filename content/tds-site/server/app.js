@@ -6712,7 +6712,7 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
           canTrackAndTrace: true,
           unitPrice: 123.25,
           unitPriceFormatted: "123.25",
-          endUserDetails: {
+          endUser: {
             name: "End user full name",
             firstName: "end user first name",
             lastName: "end user last name",
