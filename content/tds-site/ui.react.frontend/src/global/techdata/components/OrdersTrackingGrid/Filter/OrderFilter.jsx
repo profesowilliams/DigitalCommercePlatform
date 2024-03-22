@@ -6,8 +6,9 @@ import {
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
-
-function OrderFilter({ clearFilters }) {
+import Tooltip from '@mui/material/Tooltip';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+function OrderFilter({ clearFilters, gridConfig }) {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
@@ -24,21 +25,28 @@ function OrderFilter({ clearFilters }) {
 
   return (
     <>
-      <div
-        className="cmp-order-tracking-grid__filter"
-        onMouseOver={handleMouseOverFilter}
-        onMouseLeave={handleMouseLeaveFilter}
-        onClick={() => {
-          toggleFilterModal();
-          setFilterClicked(false);
-        }}
+      <Tooltip
+        title={getDictionaryValueOrKey(gridConfig?.filterTooltip)}
+        placement="top"
+        arrow
+        disableInteractive={true}
       >
-        {isFilterHovered ? (
-          <OptionsIconFilled fill="#262626" className="icon-hover" />
-        ) : (
-          <OptionsIcon fill="#262626" className="icon-hover" />
-        )}
-      </div>
+        <div
+          className="cmp-order-tracking-grid__filter"
+          onMouseOver={handleMouseOverFilter}
+          onMouseLeave={handleMouseLeaveFilter}
+          onClick={() => {
+            toggleFilterModal();
+            setFilterClicked(false);
+          }}
+        >
+          {isFilterHovered ? (
+            <OptionsIconFilled fill="#262626" className="icon-hover" />
+          ) : (
+            <OptionsIcon fill="#262626" className="icon-hover" />
+          )}
+        </div>
+      </Tooltip>
       {orderFilterCounter > 0 && (
         <OrderCountClear clearFilters={clearFilters}>
           {orderFilterCounter}

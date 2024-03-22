@@ -5,8 +5,10 @@ import {
 } from '../../../../../fluentIcons/FluentIcons';
 import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
+import Tooltip from '@mui/material/Tooltip';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
-const Settings = ({ settings }) => {
+const Settings = ({ settings, gridConfig }) => {
   const { setCustomState } = useOrderTrackingStore((st) => st.effects);
   const [settingsHovered, setSettingsHovered] = useState(false);
 
@@ -24,14 +26,21 @@ const Settings = ({ settings }) => {
   };
 
   return (
-    <div
-      onClick={triggerSettingsFlyout}
-      onMouseOver={handleMouseOverSettings}
-      onMouseLeave={handleMouseLeaveSettings}
-      className="cmp-order-tracking-grid__settings"
+    <Tooltip
+      title={getDictionaryValueOrKey(gridConfig?.settingsTooltip)}
+      placement="top"
+      arrow
+      disableInteractive={true}
     >
-      {settingsHovered ? <SettingsIconFilled /> : <SettingsIcon />}
-    </div>
+      <div
+        onClick={triggerSettingsFlyout}
+        onMouseOver={handleMouseOverSettings}
+        onMouseLeave={handleMouseLeaveSettings}
+        className="cmp-order-tracking-grid__settings"
+      >
+        {settingsHovered ? <SettingsIconFilled /> : <SettingsIcon />}
+      </div>
+    </Tooltip>
   );
 };
 

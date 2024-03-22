@@ -14,9 +14,17 @@ import {
 } from '../utils/analyticsUtils';
 import { setLocalStorageData } from '../utils/gridUtils';
 import { REPORTS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
+import Tooltip from '@mui/material/Tooltip';
+import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 
 function Report(
-  { selectOption, selectedKey, reportAnalyticsLabel, reportOptions },
+  {
+    selectOption,
+    selectedKey,
+    reportAnalyticsLabel,
+    reportOptions,
+    gridConfig,
+  },
   ref
 ) {
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
@@ -62,26 +70,33 @@ function Report(
   );
 
   return (
-    <div
-      onClick={handleDropdownClick}
-      className="cmp-order-tracking-grid__report"
-      onMouseOver={handleMouseOverSearch}
-      onMouseLeave={handleMouseLeaveSearch}
-      data-testid="report"
+    <Tooltip
+      title={getDictionaryValueOrKey(gridConfig?.reportTooltip)}
+      placement="top"
+      arrow
+      disableInteractive={true}
     >
-      {isReportHovered ? (
-        <ReportIconFilled fill="#262626" className="icon-hover" />
-      ) : (
-        <ReportIcon fill="#262626" className="icon-hover" />
-      )}
-      {isDropDownOpen && (
-        <ReportDropdown
-          ref={wrapperRef}
-          reportOptions={reportOptions}
-          selectOption={handleSelectOption}
-        />
-      )}
-    </div>
+      <div
+        onClick={handleDropdownClick}
+        className="cmp-order-tracking-grid__report"
+        onMouseOver={handleMouseOverSearch}
+        onMouseLeave={handleMouseLeaveSearch}
+        data-testid="report"
+      >
+        {isReportHovered ? (
+          <ReportIconFilled fill="#262626" className="icon-hover" />
+        ) : (
+          <ReportIcon fill="#262626" className="icon-hover" />
+        )}
+        {isDropDownOpen && (
+          <ReportDropdown
+            ref={wrapperRef}
+            reportOptions={reportOptions}
+            selectOption={handleSelectOption}
+          />
+        )}
+      </div>
+    </Tooltip>
   );
 }
 

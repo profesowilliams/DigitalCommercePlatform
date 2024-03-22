@@ -36,12 +36,16 @@ use(["../common/utils.js"], function (utils) {
       "menuCopy",
       "menuCopyWithHeaders",
       "menuExport",
+      "filterTooltip",
+      "reportTooltip",
+      "settingsTooltip",
+      "exportTooltip",
       "menuCsvExport",
       "menuExcelExport",
       "menuOpenLink",
       "menuCopyLink",
       "ofTextLabel",
-      "endOfLife"
+      "endOfLife",
     ];
 
     labelsList.map((property) => {

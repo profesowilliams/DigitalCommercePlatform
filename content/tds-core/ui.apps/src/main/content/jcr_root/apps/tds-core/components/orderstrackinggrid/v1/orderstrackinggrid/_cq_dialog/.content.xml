@@ -142,24 +142,24 @@
 												sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
 												fieldLabel="Order Completed Label"
 												name="./completed"/>
-                                          <multiple
-                                              jcr:primaryType="nt:unstructured"
-                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                              fieldLabel="Multiple Label"
-                                              name="./multiple"
-                                            />
-                                          <endOfLife
-                                              jcr:primaryType="nt:unstructured"
-                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                              fieldLabel="End Of Life Label"
-                                              name="./endOfLife"
-                                            />
-                                          <shipToTooltipTemplate
+                                            <multiple
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Ship To Column Template"
-                                                name="./shipToTooltipTemplate"
-                                            />
+                                                fieldLabel="Multiple Label"
+                                                name="./multiple"
+                                                />
+                                            <endOfLife
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="End Of Life Label"
+                                                name="./endOfLife"
+                                                />
+                                            <shipToTooltipTemplate
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldLabel="Ship To Column Template"
+                                                    name="./shipToTooltipTemplate"
+                                                />
                                             <menuCopyWithHeaders
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -170,6 +170,26 @@
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldLabel="Context Menu Export Label"
                                                 name="./menuExport" />
+                                            <filterTooltip
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Filtering by date, status and order type Label"
+                                                name="./filterTooltip" />
+                                            <reportTooltip
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Predefined reports Label"
+                                                name="./reportTooltip" />
+                                            <settingsTooltip
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Pro-active messaging settings Label"
+                                                name="./settingsTooltip" />
+                                            <exportTooltip
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="Export to excel Label"
+                                                name="./exportTooltip" />
                                             <menuCsvExport
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

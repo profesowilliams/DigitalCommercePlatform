@@ -197,7 +197,7 @@ function MainGridHeader({
       searchAnalyticsLabel={analyticsCategories.search}
     />,
     <VerticalSeparator />,
-    <OrderFilter clearFilters={clearFilters} />,
+    <OrderFilter clearFilters={clearFilters} gridConfig={gridConfig} />,
     <VerticalSeparator />,
     <Report
       selectOption={onReportChange}
@@ -205,12 +205,16 @@ function MainGridHeader({
       selectedKey={pill?.key}
       reportAnalyticsLabel={analyticsCategories.report}
       reportOptions={reportOptions}
+      gridConfig={gridConfig}
     />,
     <VerticalSeparator />,
     ...(settings && proactiveMessagingFlag
-      ? [<Settings settings={settings} />, <VerticalSeparator />]
+      ? [
+          <Settings settings={settings} gridConfig={gridConfig} />,
+          <VerticalSeparator />,
+        ]
       : []),
-    <OrderExport />,
+    <OrderExport gridConfig={gridConfig} />,
   ];
   const leftComponents = [
     <OrderTrackingGridPagination
