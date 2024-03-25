@@ -5,6 +5,7 @@ import InvoicesFlyout from '../../InvoicesFlyout/InvoicesFlyout';
 import OrderFilterFlyout from '../Filter/OrderFilterFlyout';
 import OrderModificationFlyout from '../../OrdersTrackingDetail/ModificationFlyout/OrderModificationFlyout';
 import SettingsFlyout from '../../SettingsFlyout/SettingsFlyout';
+import ProductReplacementFlyout from '../../ReplacementFlyout/ProductReplacementFlyout';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 const MainGridFlyouts = ({
@@ -18,6 +19,9 @@ const MainGridFlyouts = ({
   searchParams,
   defaultDateRange,
   settings,
+  gridRef,
+  rowsToGrayOutTDNameRef,
+  addNewItem,
 }) => {
   const isTDSynnex = useOrderTrackingStore((st) => st.isTDSynnex);
   function downloadAllFile(flyoutType, orderId, selectedId) {
@@ -86,6 +90,17 @@ const MainGridFlyouts = ({
         labels={gridConfig.settingsFlyoutLabels}
         config={gridConfig}
         settings={settings}
+      />
+      <ProductReplacementFlyout
+        subheaderReference={document.querySelector('.subheader > div > div')}
+        labels={{
+          ...gridConfig?.productReplacementFlyout,
+          ...gridConfig?.orderModifyLabels,
+        }}
+        config={gridConfig}
+        gridRef={gridRef}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        addNewItem={addNewItem}
       />
     </>
   );

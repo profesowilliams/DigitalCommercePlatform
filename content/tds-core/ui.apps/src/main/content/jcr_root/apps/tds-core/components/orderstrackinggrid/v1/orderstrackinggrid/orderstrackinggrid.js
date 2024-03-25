@@ -23,6 +23,7 @@ use(["../common/utils.js"], function (utils) {
   const paginationLabels = {};
   const searchLabels = {};
   const filterLabels = {};
+  const productReplacementFlyout = {};
   const statusesLabels = {};
 
   if (properties) {
@@ -733,6 +734,33 @@ use(["../common/utils.js"], function (utils) {
     if (noResultsValues != null) {
       jsonObject["searchResultsError"] = noResultsValues;
     }
+
+    // Product Replacement Flyout
+    const productReplacementFlyoutLabels = [
+      "replacementModifyOrder",
+      "pleaseSelect",
+      "qty",
+      "unitCost",
+      "replaceWithSuggestedItem",
+      "removeWithoutReplacement",
+      "replacementUpdateSucessMessage",
+      "replacementUpdateErrorMessage",
+      "replacementUpdateErrorListMessage",
+      "replacementLine",
+      "replacementReduceQuantity",
+      "replacementAddNewLine",
+      "replacementPleaseTryAgain",
+    ];
+
+    properties &&
+      productReplacementFlyoutLabels.map((property) => {
+        productReplacementFlyout[property] = properties[property];
+      });
+
+    if (productReplacementFlyout != null) {
+      jsonObject["productReplacementFlyout"] = productReplacementFlyout;
+    }
+
     //Statuses Modal
 
     const statusLabelsKeys = ["statusesTitle", "statusesClose"];

@@ -18,13 +18,16 @@ function DropdownOrderDetails({
   openFilePdf,
   hasAIORights,
   hasOrderModificationRights,
+  gridRef,
+  rowsToGrayOutTDNameRef,
+  newItem,
 }) {
   const [apiResponse, isLoading, error] = useGet(
     `${aemConfig.uiCommerceServiceDomain}/v3/order/${data?.id}/lines`,
     'lineDetails'
   );
-  const gridRef = useRef();
-  const rowsToGrayOutTDNameRef = useRef([]);
+  // const gridRef = useRef();
+  // const rowsToGrayOutTDNameRef = useRef([]);
   const [activeTab, setActiveTab] = useState(0);
 
   const infoBoxEnable =
@@ -88,6 +91,7 @@ function DropdownOrderDetails({
           activeTab={activeTab}
           gridRef={gridRef}
           rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+          newItem={newItem}
         />
       ) : (
         <LoaderIcon className="loadingIcon-rotate" />

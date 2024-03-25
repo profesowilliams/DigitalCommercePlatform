@@ -6,7 +6,7 @@ import ExportFlyout from '../ExportFlyout/ExportFlyout';
 import InvoicesFlyout from '../InvoicesFlyout/InvoicesFlyout';
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import OrderModificationFlyout from './ModificationFlyout/OrderModificationFlyout';
-import ProductReplacementFlyout from './ReplacementFlyout/ProductReplacementFlyout';
+import ProductReplacementFlyout from '../ReplacementFlyout/ProductReplacementFlyout';
 
 const Flyouts = ({
   downloadAllFile,

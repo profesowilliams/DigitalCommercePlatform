@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { getUrlParams } from '../../../../../utils';
-import BaseFlyout from '../../BaseFlyout/BaseFlyout';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
+import { getUrlParams } from '../../../../utils';
+import BaseFlyout from '../BaseFlyout/BaseFlyout';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
+import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import LineItem from './LineItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { usGet, usPost } from '../../../../../utils/api';
-import { useStore } from '../../../../../utils/useStore';
-import { getEolCancelAnalyticsGoogle, getEolReplacementAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { usGet, usPost } from '../../../../utils/api';
+import { useStore } from '../../../../utils/useStore';
+import {
+  getEolCancelAnalyticsGoogle,
+  getEolReplacementAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../OrdersTrackingGrid/utils/analyticsUtils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -55,6 +59,7 @@ function ProductReplacementFlyout({
   const enableReplace = productReplacementConfig?.enableReplace;
   const lineId = productReplacementConfig?.data?.line?.line;
   const tdNumber = productReplacementConfig?.data?.line?.tdNumber;
+  const orderId = productReplacementConfig?.orderId;
 
   const closeFlyout = () => {
     setSelected(null);
@@ -77,7 +82,7 @@ function ProductReplacementFlyout({
     const payload = {
       CustomerID: userData?.customersV2?.[0]?.customerNumber,
       SalesOrg: userData?.customersV2?.[0]?.salesOrg,
-      OrderID: id,
+      OrderID: id ? id : orderId,
       LineID: lineId ?? null,
       Operation: operation,
       ProductID: newProductId,

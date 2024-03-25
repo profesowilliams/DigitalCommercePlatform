@@ -1,5 +1,5 @@
 import React from 'react';
-import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
   const item = data?.line;
@@ -43,9 +43,7 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
           <p className="bold">
             {getDictionaryValueOrKey(labels.lineTotal)} ({currency})
           </p>
-          <p>
-            {lineDetails[0]?.subtotalPriceFormatted}
-          </p>
+          <p>{lineDetails[0]?.subtotalPriceFormatted}</p>
         </div>
       </div>
     </div>

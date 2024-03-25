@@ -27,6 +27,7 @@ function NotShippedTabGrid({
   activeTab,
   gridRef,
   rowsToGrayOutTDNameRef,
+  newItem,
 }) {
   const config = {
     ...gridProps,
@@ -51,7 +52,8 @@ function NotShippedTabGrid({
   const [openStatusesModal, setOpenStatusesModal] = useState(false);
   const { lineNumber, item, pnsku, nqty, deliveryEstimate } =
     config?.orderLineDetailsNotShippedColumnLabels;
-
+  const isOrderModificationButtonVisible =
+    hasOrderModificationRights && orderEditable && orderModificationFlag;
   const gridColumnWidths = Object.freeze({
     lineNumber: '83px',
     item: '590px',
@@ -94,7 +96,12 @@ function NotShippedTabGrid({
       field: 'nqtyDeliveryEstimate',
       headerComponentFramework: CustomHeaderComponent,
       cellRenderer: ({ data }) => (
-        <QuantityAndDeliveryEstimateColumn line={data} config={gridProps} />
+        <QuantityAndDeliveryEstimateColumn
+          line={data}
+          config={gridProps}
+          id={orderNo}
+          isOrderModificationButtonVisible={isOrderModificationButtonVisible}
+        />
       ),
       width: gridColumnWidths.nqtyDeliveryEstimate,
     },
@@ -172,9 +179,27 @@ function NotShippedTabGrid({
     }
   }, [activeTab]);
 
-  const isOrderModificationButtonVisible =
-    hasOrderModificationRights && orderEditable && orderModificationFlag;
-
+  useEffect(() => {
+    if (newItem && data) {
+      const itemsCopy = [...data];
+      const newLineDetails = data[0].lineDetails;
+      newLineDetails[0] = { ...newLineDetails[0], statusText: 'New' };
+      itemsCopy.unshift({
+        ...data[0],
+        tdNumber: '',
+        key: Math.random(),
+        line: '10',
+        urlProductImage: newItem.images.default.url,
+        displayName: newItem.description,
+        mfrNumber: newItem.manufacturerPartNumber,
+        unitCost: newItem.price.bestPrice,
+        unitPriceCurrency: newItem.price.currency,
+        lineTotal: newItem.price.bestPrice,
+        isEOL: false,
+      });
+      gridRef.current?.api.setRowData(itemsCopy);
+    }
+  }, [newItem]);
   return (
     <section>
       <div className="order-line-details__content__title">

@@ -82,6 +82,8 @@ function OrdersTrackingGrid(props) {
   const isOnSearchAction = useRef(false);
   const dNoteFailedCounter = useRef(1);
   const invoiceFailedCounter = useRef(1);
+  const gridRef = useRef();
+  const rowsToGrayOutTDNameRef = useRef([]);
   const {
     setUserData,
     setToolTipData,
@@ -103,6 +105,7 @@ function OrdersTrackingGrid(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [responseError, setResponseError] = useState(null);
   const [sendAnalyticsDataHome, setSendAnalyticsDataHome] = useState(true);
+  const [newItem, setNewItem] = useState(null);
   const componentProp = JSON.parse(props.componentProp);
 
   const formattedDateRange = setDefaultSearchDateRange(
@@ -138,6 +141,9 @@ function OrdersTrackingGrid(props) {
   const options = {
     defaultSortingColumnKey: 'created',
     defaultSortingDirection: 'desc',
+  };
+  const handleAddNewItem = (item) => {
+    setNewItem(item);
   };
 
   const _onAfterGridInit = (config) => {
@@ -419,10 +425,6 @@ function OrdersTrackingGrid(props) {
   const hasOrderTrackingRights = hasRights('OrderTracking');
   const hasOrderModificationRights = hasRights('OrderModification');
   const hasAccess = hasCanViewOrdersRights || hasOrderTrackingRights;
-
-  const shipToTooltipTemplateDefault =
-    '{name}<br/>{address.line1}<br/>{address.line2}<br/>{address.line3}<br/>{address.city} {address.state} {address.zip} {address.country}';
-
   const searchOptions = [
     ...getPredefinedSearchOptionsList(searchLabels),
     ...searchOptionsList,
@@ -510,6 +512,9 @@ function OrdersTrackingGrid(props) {
               }
               hasAIORights={hasAIORights}
               hasOrderModificationRights={hasOrderModificationRights}
+              gridRef={gridRef}
+              rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+              newItem={newItem}
             />
           )}
         />
@@ -546,6 +551,9 @@ function OrdersTrackingGrid(props) {
         }}
         defaultDateRange={componentProp?.defaultSearchDateRange}
         settings={settingsResponse}
+        gridRef={gridRef}
+        rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
+        addNewItem={handleAddNewItem}
       />
     </>
   );

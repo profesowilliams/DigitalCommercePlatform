@@ -19,7 +19,7 @@ const OrderTrackingDetailBody = ({
       itemsCopy.unshift({
         ...content.items[0],
         tdNumber: '',
-        key: '23123',
+        key: Math.random(),
         line: '10',
         urlProductImage: newItem.images.default.url,
         displayName: newItem.description,

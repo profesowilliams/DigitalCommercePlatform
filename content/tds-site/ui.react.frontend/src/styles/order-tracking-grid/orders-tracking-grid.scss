@@ -543,6 +543,22 @@
         margin: 0;
         word-wrap: break-word;
         white-space: normal;
+
+        .line-status {
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          font-family: 'Arial';
+          svg {
+            vertical-align: middle;
+            margin-right: 5px;
+            width: auto;
+          }
+          &-link {
+            color: $brand-green;
+            cursor: pointer;
+          }
+        }
       }
       &__text {
         color: $brand-charcoal;
