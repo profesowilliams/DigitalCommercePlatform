@@ -94,12 +94,6 @@
       }
     }
 
-    &.active,
-    &:hover,
-    &:active {
-      box-shadow: 0 3px 0 0px map-get($color-palette, 'cobalt');
-    }
-
     &:focus(:not(.clicked)) {
       outline: inset;
       border-radius: 5px;
@@ -148,9 +142,9 @@
 
     p {
       font-family: 'Open Sans', sans-serif;
-      font-size: 13px;
+      font-size: 1rem;
       letter-spacing: 0;
-      line-height: 16px;
+      line-height: 150%;
       padding: 14px 0;
       text-align: left;
       box-sizing: border-box;
@@ -188,7 +182,7 @@
           }
 
           &--icon {
-            color: #1798d1;
+            color: map-get($color-palette, 'teal' );
 
             @include desktop {
               position: absolute;

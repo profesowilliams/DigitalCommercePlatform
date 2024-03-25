@@ -1,14 +1,14 @@
-@import "../../../../../tds-core/ui.frontend/src/components/hamburger-menu/hamburger-content.scss";
+@import '../../../../../tds-core/ui.frontend/src/components/hamburger-menu/hamburger-content.scss';
 #cmp-techdata-header {
-    &.cmp-experiencefragment--header-mobile.cmp-container {
-        &.cmp-tds-site-header {
-            .header-active.cmp-container {
-                background-color: map-get($color-palette, "td-dark-blue") !important; // To override the desktop inline style
-            }
+  &.cmp-experiencefragment--header-mobile.cmp-container {
+    &.cmp-tds-site-header {
+      .header-active.cmp-container {
+        background-color: map-get($color-palette, 'teal') !important; // To override the desktop inline style
+      }
 
-            .header-active.cmp-container .masthead .cmp-container {
-                background-color: map-get($color-palette, "td-dark-blue") !important; // To override the desktop inline style
-            }
-        }
+      .header-active.cmp-container .masthead .cmp-container {
+        background-color: map-get($color-palette, 'teal') !important; // To override the desktop inline style
+      }
     }
+  }
 }

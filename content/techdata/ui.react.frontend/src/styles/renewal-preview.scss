@@ -46,6 +46,7 @@
     top: 30px;
   }
   .icon-button {
+    gap: 0.31rem;
     display: flex;
     align-items: center;
     &.underlined_hover:not(.disabled):hover {
@@ -185,5 +186,45 @@
   
   .center-aligned {
     text-align: center;
+  }
+
+  .opportunity-quote {
+      padding: 20px;
+      background-color: #EBF3F9;
+      border-left: 4px solid #006FBA;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 30px;
+      margin-bottom: 15px;
+
+      p {
+        font-size: 16px;
+        line-height: 24px;
+        color: $brand-charcoal;
+        margin: 0;
+        display: flex;
+        gap: 15px;
+      }
+
+      a {
+        text-decoration: none;
+        font-size: 16px;
+        line-height: 24px;
+        color: $brand-cobalt;
+        margin-right: 20px;
+      }
+  }
+}
+
+.cmp-renewals-details__tds .cmp-renewals-qp__config-grid .export-container .opportunity-quote-disabled button {
+  pointer-events: none;
+  svg {
+    path {
+      fill: grey;
+    }
+  }
+  span {
+    color: grey;
   }
 }

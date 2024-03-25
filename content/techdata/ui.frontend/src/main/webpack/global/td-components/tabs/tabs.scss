@@ -18,7 +18,7 @@
       padding-bottom: 0;
 
       &:hover {
-        color: get-color(brand-light-blue);
+        color: map-get($color-palette, 'teal');
       }
     }
   }
@@ -58,14 +58,14 @@
       border-bottom: transparent 3px solid;
 
       &:hover {
-        border-bottom: get-color(brand-light-blue) 3px solid;
+        border-bottom: map-get($color-palette, 'teal') 3px solid;
       }
 
       min-height: 30px;
     }
 
     .cmp-tabs__tab--active {
-      border-bottom: get-color(brand-light-blue) 3px solid;
+      border-bottom: map-get($color-palette, 'teal') 3px solid;
     }
   }
 
@@ -94,18 +94,17 @@
             font-family: Arial;
             font-size: 20px;
             font-style: normal;
-            font-weight: 700;
             line-height: 26px;
             border-bottom: transparent 3px solid;
 
             &:hover {
-                border-bottom: get-color(brand-button-blue) 2px solid;
+                border-bottom: map-get($color-palette, 'teal') 2px solid;
             }
         }
 
         .cmp-tabs__tab--active {
-            color: get-color(brand-button-blue);
-            border-bottom: get-color(brand-button-blue) 2px solid;
+            color: map-get($color-palette, 'teal');
+            border-bottom: map-get($color-palette, 'teal') 2px solid;
         }
     }
 
@@ -324,12 +323,12 @@
         text-align: left;
 
         &:hover {
-          color: get-color(brand-light-blue);
+          color: map-get($color-palette, 'teal');
         }
       }
 
       &__tab--active {
-        color: get-color(brand-light-blue);
+        color: map-get($color-palette, 'teal');
       }
     }
 
@@ -408,7 +407,7 @@
       &:hover,
       &:active,
       &:focus {
-        background-color: get-color(brand-light-blue) !important;
+        background-color: map-get($color-palette, 'teal') !important;
         padding: rem(10px);
       }
     }
@@ -437,7 +436,7 @@
         outline: 0 none;
 
         .cmp-tabs__tab-image {
-          background-color: get-color(brand-light-blue) !important;
+          background-color: map-get($color-palette, 'teal') !important;
 
           svg path g polyline ellipse line line rect {
             fill: get-color(brand-white);

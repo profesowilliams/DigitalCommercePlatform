@@ -4896,7 +4896,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           "price": 1888754.56,
           "currency": "INR",
           "documentType": null,
-          "quoteType": "Renewal",
+          "quoteType": "Opportunity",
           "type": null,
           "level": null,
           "creator": null,
@@ -4974,6 +4974,16 @@ app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
         ],
         "isError": true
       }
+   }
+
+   const error = {
+    "error": {
+      "code": 500,
+      "messages": [
+        "userID"
+      ],
+      "isError": true
+    }
    }
 
     //mockResponses.failedResponse

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  SearchIcon,
-  WarningIcon,
+  WarningTriangleIcon,
+  ProhibitedIcon
 } from '../../../../fluentIcons/FluentIcons';
 import BaseFlyout from '../BaseFlyout/BaseFlyout';
 import { Button, TextField, Autocomplete, Chip } from '@mui/material';
@@ -36,26 +36,7 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
     notFound: false,
     serverError: false
   })
-  const [errorObj, setErrorObj] = useState({
-    "error": {
-      "code": 400,
-      "messages": [
-        {
-          "email": "abctest.com",
-          "message": "Invalid Email Format"
-        },
-        {
-          "email": "Tbc@test.com",
-          "message": "Dont have access to this quote"
-        },
-        {
-          "email": null,
-          "message": "Internal Server Error"
-        }
-      ],
-      "isError": true
-    }
-   });
+  const [errorObj, setErrorObj] = useState({});
 
   useEffect(() => {
     resetCount();
@@ -100,12 +81,17 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
       event.preventDefault();
     }
     setIsLoading(true);
+    setEnableShare(false);
     let toaster = null;
+    const finalRequestObj = {
+      Data: requestObj
+    }
     const response = await shareQuote(
-      requestObj,
+      finalRequestObj,
       shareFlyoutContent.shareQuoteEndpoint
     );
     setIsLoading(false);
+    setEnableShare(true);
     if (response?.success) {
       // set success message
       toaster = {
@@ -122,9 +108,9 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
       }
     }
     else {
+      setApiResponseFlag(true);
+      setErrorObj(response.messages);
       if (response?.code === 400) {
-        setErrorObj(response.messages);
-        setApiResponseFlag(true);
         for(var i = 0; i < response.messages.length; i++) {
           if (response.messages[i]?.message?.indexOf('Invalid ') > -1) {
             setErrorFlags({
@@ -146,6 +132,11 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
              break;
           }
         }
+      } else {
+        setErrorFlags({
+          ...errorFlags,
+          serverError: true
+        });
       }
     }
   };
@@ -197,6 +188,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
       onClickButton={handleShareItClick}
       buttonLabel={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutButtonLabel) || 'Share'}
       disabledButton={!enableShare}
+      isShareFlyout={true}
+      loadingButtonLabel={getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutButtonSharingLabel) || 'Sharing'}
     >
       <section className="cmp-flyout__content">
         <p>{getDictionaryValueOrKey(shareFlyoutContent.shareFlyoutDescription)}</p>
@@ -247,8 +240,11 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                     errorFlags.serverError ?
                     (
                       <>
-                        <h3>{shareFlyoutContent.shareFailedLabel}</h3>
-                        <p>{shareFlyoutContent.shareFailedDescription}</p>
+                        <WarningTriangleIcon />
+                        <div className="error-message-section">
+                          <h3>{shareFlyoutContent.shareFailedLabel}</h3>
+                          <p>{shareFlyoutContent.shareFailedDescription}</p>
+                        </div>
                       </>
                     ) : null
                   }
@@ -256,17 +252,20 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                     errorFlags.incorrect ?
                     (
                       <>
-                        <h3>{shareFlyoutContent.incorrectEmailLabel}</h3>
-                        <p>{shareFlyoutContent.incorrectEmailDescription}</p>
-                        {
-                          errorObj?.error?.messages?.map((item) => {
-                            if (item.email && item.message.indexOf('Invalid') > -1) {
-                              return (
-                                <span className="email-pills">{item.email}</span>
-                              )
-                            }
-                          })
-                        }
+                        <ProhibitedIcon />
+                        <div className="error-message-section">
+                          <h3>{shareFlyoutContent.incorrectEmailLabel}</h3>
+                          <p>{shareFlyoutContent.incorrectEmailDescription}</p>
+                          {
+                            errorObj?.map((item) => {
+                              if (item.email && item.message.indexOf('Invalid') > -1) {
+                                return (
+                                  <span className="email-pills">{item.email}</span>
+                                )
+                              }
+                            })
+                          }
+                        </div>
                       </>
                     ) : null
                   }
@@ -274,8 +273,20 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                     errorFlags.notFound ?
                     (
                       <>
-                        <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
-                        <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
+                        <WarningTriangleIcon />
+                        <div className="error-message-section">
+                          <h3>{shareFlyoutContent.recipientNotFoundLabel}</h3>
+                          <p>{shareFlyoutContent.recipientNotFoundDescription}</p>
+                          {
+                            errorObj?.map((item) => {
+                              if (item.email && item.message.indexOf('access') > -1) {
+                                return (
+                                  <span className="email-pills">{item.email}</span>
+                                )
+                              }
+                            })
+                          }
+                        </div>
                       </>
                     ) : null
                   }

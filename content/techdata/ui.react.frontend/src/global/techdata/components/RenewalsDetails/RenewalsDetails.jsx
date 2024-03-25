@@ -22,6 +22,7 @@ import EditFlow from './ConfigGrid/Common/EditFlow';
 import { removeDashboardSeparator } from "../../../../utils/utils";
 import useAuth from "../../hooks/useAuth";
 import { getSessionInfo } from "../../../../utils/intouch/user/get";
+import { enableIntouchLogin } from "../../../../utils/intouch/intouchUtils";
 
 function RenewalsDetails(props) {
   const componentProp = JSON.parse(props.componentProp);

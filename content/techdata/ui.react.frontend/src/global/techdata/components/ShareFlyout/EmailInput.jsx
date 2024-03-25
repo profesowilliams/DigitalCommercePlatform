@@ -10,15 +10,20 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
 
   const [inputValue, setInputValue] = useState("");
   const [selectedEmails, setSelectedEmails] = useState([]);
+  const [invalidEmails, setInvalidEmails] = useState([]);
 
   useEffect(() =>{
-    if (selectedEmails?.length && enableShareButton) {
-      enableShareButton(true);
+    if (selectedEmails?.length) {
+      if (enableShareButton) {
+        enableShareButton(true);
+      }
       updateRequestObject({
         'ToEmail': selectedEmails
       });
-    } else if (enableShareButton) {
-      enableShareButton(false);
+    } else {
+      if (enableShareButton) {
+        enableShareButton(false);
+      }
       updateRequestObject({
         'ToEmail': []
       });
@@ -42,10 +47,10 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
       const filteredEmails = selectedEmails.filter(item => item !== option.option);
       setSelectedEmails([...filteredEmails]);
     } else {
-      if (isValidEmailFormat(value[value.length - 1])) {
-        if (selectedEmails.length < 10) {
-          setSelectedEmails([...new Set([...selectedEmails, ...value])]);
-        }
+      const lastEmail = value[value.length - 1];
+      setSelectedEmails([...new Set([...selectedEmails, ...value])]);
+      if (!isValidEmailFormat(value[value.length - 1])) {
+        setInvalidEmails([...invalidEmails, lastEmail])
       }
     }
   };
@@ -55,6 +60,7 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
       (email) => email !== emailToDelete
     );
     setSelectedEmails(updatedEmails);
+    setInvalidEmails([]);
   };
 
   const handlePaste = (event) => {
@@ -63,12 +69,13 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
 
     const emailsToPaste = pastedText.split(/[\s,;]+/).filter(Boolean);
 
-    const validEmails = emailsToPaste.filter((email) =>
-      isValidEmailFormat(email)
+    const invalidEmailsFilter = emailsToPaste.filter((email) =>
+      !isValidEmailFormat(email)
     );
 
-    setSelectedEmails([...selectedEmails, ...validEmails]);
+    setSelectedEmails([...selectedEmails, ...emailsToPaste]);
     setInputValue("");
+    setInvalidEmails([...invalidEmails, ...invalidEmailsFilter]);
     event.preventDefault();
   };
 
@@ -97,6 +104,8 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
                 <Chip
                   variant="outlined"
                   label={option}
+                  onDelete={() => handleDelete(option)}
+                  color={invalidEmails.includes(option) ? "error" : "default"}
                   {...getTagProps({ index })}
                 />
               ))

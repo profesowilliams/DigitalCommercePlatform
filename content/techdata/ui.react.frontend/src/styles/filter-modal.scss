@@ -1,6 +1,6 @@
 .filter-modal-container {
   position: fixed;
-  background: rgba(0, 12, 33, .28);
+  background: rgba(0, 12, 33, 0.28);
 
   // background-color: #0067ab;
   height: 100vh;
@@ -20,7 +20,7 @@
 
   .filter-modal-container {
     &__popup {
-      *:not([class*="fas"]) {
+      *:not([class*='fas']) {
         font-family: Arial;
       }
     }
@@ -30,7 +30,7 @@
 .filter-modal-content {
   all: initial;
   font-family: Arial;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   position: absolute;
   top: 220px;
   right: 0;
@@ -70,14 +70,14 @@
     background-color: transparent;
 
     &:before {
-      content: "\f057";
+      content: '\f057';
       @include font-awesome;
       font-weight: 900;
       font-size: 30px;
     }
 
     &:after {
-      content: "";
+      content: '';
       width: 2.2rem;
       height: 2.2rem;
       background: $brand-white;
@@ -106,12 +106,12 @@
     justify-content: space-between;
     padding: 35px 25px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #000c21;
+    border-bottom: 2px solid map-get($color-palette, 'cool-gray-1');
 
     h3 {
-      color: #000c21;
-      font-size: 23px;
-      font-weight: 400;
+      color: map-get($color-palette, 'charcoal');
+      font-size: 1.25rem;
+      font-weight: 700;
       letter-spacing: 0;
       line-height: 32px;
       margin: 0;
@@ -172,7 +172,7 @@
 
   .cmp-quote-button:disabled {
     opacity: 0.8;
-    background-color: #000c21;
+    background-color: map-get($color-palette, 'teal');
     color: $brand-white;
     cursor: none;
   }
@@ -190,10 +190,9 @@
   }
 }
 
-
 .filter-option {
   &__checkbox {
-    accent-color: black;
+    accent-color: map-get($color-palette, 'teal');
     cursor: pointer;
     margin-right: 6px;
     vertical-align: middle;
@@ -220,9 +219,9 @@
     display: block !important;
     padding-left: 40px;
 
-    >ul,
-    >li {
-      margin-bottom: .45rem;
+    > ul,
+    > li {
+      margin-bottom: 0.45rem;
 
       label {
         text-transform: capitalize;
@@ -294,11 +293,11 @@ div.filter-accordion {
     margin: 14px 0;
 
     &.active {
-      color: $blue-dark;
+      color: map-get($color-palette, 'charcoal');
       font-weight: bold;
 
       &:before {
-        content: "\f078";
+        content: '\f078';
       }
     }
 
@@ -307,7 +306,7 @@ div.filter-accordion {
     }
 
     &:before {
-      content: "\f054";
+      content: '\f054';
       @include font-awesome;
       padding-right: 11px;
       font-weight: 900;
@@ -358,11 +357,11 @@ div.filter-accordion {
     margin: 14px 0;
 
     &.active {
-      color: $blue-dark;
+      color: map-get($color-palette, 'charcoal');
       font-weight: bold;
 
       &:before {
-        content: "\f078";
+        content: '\f078';
       }
     }
 
@@ -371,7 +370,7 @@ div.filter-accordion {
     }
 
     &:before {
-      content: "\f054";
+      content: '\f054';
       @include font-awesome;
       padding-right: 11px;
       font-weight: 900;
@@ -399,7 +398,7 @@ div.filter-accordion {
   justify-content: flex-end;
   align-items: center;
   padding-top: 0;
-    padding-bottom: 0;
+  padding-bottom: 0;
   gap: 20px;
   background: $brand-white;
   flex: none;
@@ -441,8 +440,8 @@ div.filter-accordion {
 
   .filter-tags {
     border-radius: 14px;
-    background-color: $blue-dark;
-      color: $brand-white;
+    background-color: map-get($color-palette, 'teal');
+    color: $brand-white;
     padding: 0 10px;
     margin-bottom: 10px;
     margin-right: 10px;
@@ -451,9 +450,9 @@ div.filter-accordion {
     align-items: center;
     gap: 6px;
     width: max-content;
-    max-height: 17px;
+    height: 1.25rem;
 
-    &>span:nth-child(2) {
+    & > span:nth-child(2) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -472,7 +471,7 @@ div.filter-accordion {
 
     &__close {
       color: $brand-white;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-size: 9px;
       letter-spacing: 0;
       line-height: 9px;
@@ -501,7 +500,7 @@ div.filter-accordion {
 
   .filter-tags {
     border-radius: 14px;
-    background-color: $blue-dark;
+    background-color: map-get($color-palette, 'teal');
     color: white;
     padding: 0 10px;
     margin-bottom: 10px;
@@ -511,9 +510,9 @@ div.filter-accordion {
     align-items: center;
     gap: 6px;
     width: max-content;
-    max-height: 17px;
+    height: 1.25rem;
 
-    &>span:nth-child(2) {
+    & > span:nth-child(2) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -532,7 +531,7 @@ div.filter-accordion {
 
     &__close {
       color: $brand-white;
-      font-family: "Font Awesome 5 Free";
+      font-family: 'Font Awesome 5 Free';
       font-size: 9px;
       letter-spacing: 0;
       line-height: 9px;
@@ -553,7 +552,7 @@ div.filter-accordion {
     li {
       list-style: none;
       padding-left: 21px;
-      margin-bottom: .45rem;
+      margin-bottom: 0.45rem;
 
       label {
         color: #555555;
@@ -564,7 +563,7 @@ div.filter-accordion {
         user-select: none;
       }
 
-      input[type="radio"] {
+      input[type='radio'] {
         accent-color: black;
         margin-right: 6px;
         vertical-align: middle;
@@ -572,11 +571,10 @@ div.filter-accordion {
         cursor: pointer;
       }
 
-      input[type="radio"].td-synnex {
+      input[type='radio'].td-synnex {
         accent-color: $brand-green;
       }
     }
-
   }
 }
 
@@ -586,8 +584,8 @@ div.filter-accordion {
 
 .count {
   border-radius: 9.5px;
-  background-color: $blue-dark;
-    color: $brand-white;
+  background-color: map-get($color-palette, 'deep-teal');
+  color: $brand-white;
   text-align: center;
   padding: 0px 12px;
   font-size: 13px;
@@ -603,14 +601,14 @@ div.filter-accordion {
   .filter-modal-content {
     &__close {
       &::before {
-        color: $brand-blue
+        color: map-get($color-palette, 'teal');
       }
     }
 
     .filter-datepicker-container {
       .datepicker-checks {
         li {
-          input[type="radio"] {
+          input[type='radio'] {
             accent-color: $brand-blue;
           }
         }
@@ -618,7 +616,7 @@ div.filter-accordion {
     }
 
     .cmp-quote-button {
-      background-color: $brand-blue;
+      background-color: map-get($color-palette, 'teal');
       color: $td-neutral-gray;
 
       &:disabled {
@@ -628,11 +626,10 @@ div.filter-accordion {
     }
   }
 
-
   .filter-modal-bottom {
     .filter-tags-container {
       .filter-tags {
-        background-color: $brand-blue;
+        background-color: map-get($color-palette, 'deep-teal');
       }
     }
   }
@@ -652,8 +649,8 @@ div.filter-accordion {
 }
 
 .height_order_filters {
-    overflow-y: scroll !important;
-      overflow: auto;
+  overflow-y: scroll !important;
+  overflow: auto;
 }
 
 .teal_scroll::-webkit-scrollbar-track {
@@ -671,20 +668,20 @@ div.filter-accordion {
 .datepicker-wrapper {
   height: 480px !important;
   min-height: 480px;
-  }
+}
 
-    .datepicker-wrapper-custom {
-      height: 380px !important;
-      min-height: 380px;
-    }
-  div.DateRangePicker.DateRangePicker_1 {
-    width: 339px;
-  }
-  
-  div.DateRangePickerInput.DateRangePickerInput_1 {
-    width: 255px;
-  }
-  
-  div.DateRangePickerInput_arrow.DateRangePickerInput_arrow_1 {
-    margin-right: 10px;
+.datepicker-wrapper-custom {
+  height: 380px !important;
+  min-height: 380px;
+}
+div.DateRangePicker.DateRangePicker_1 {
+  width: 339px;
+}
+
+div.DateRangePickerInput.DateRangePickerInput_1 {
+  width: 255px;
+}
+
+div.DateRangePickerInput_arrow.DateRangePickerInput_arrow_1 {
+  margin-right: 10px;
 }

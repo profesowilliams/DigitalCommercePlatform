@@ -304,7 +304,7 @@
     align-items: center;
 
     &:hover {
-      outline: rem(2px) solid get-color(brand-blue) !important;
+      outline: rem(2px) solid map-get($color-palette, 'teal') !important;
       box-shadow: 0 0 rem(4px) rem(4px) get-color(brand-box-shadow);
 
       .cmp-teaser__title {
@@ -312,7 +312,7 @@
         color: get-color(brand-light-blue) !important;
 
         .cmp-teaser__title-link {
-          color: get-color(brand-light-blue) !important;
+          color: map-get($color-palette, 'teal') !important;
         }
       }
     }
@@ -326,7 +326,7 @@
     .cmp-teaser__title {
       width: 100%;
       min-height: rem(45px);
-      background-color: get-color(brand-blue);
+      background-color: map-get($color-palette, 'teal');
       color: get-color(brand-white);
       text-align: center;
       font-weight: $font-weight-bold;
@@ -392,11 +392,6 @@
       margin-bottom: rem(8px);
       padding: rem(14px) rem(18px);
       margin: 0 !important;
-
-      a {
-        color: get-color(brand-blue);
-        text-decoration: none;
-      }
     }
 
     &__description {
@@ -870,11 +865,11 @@
             border: none;
 
             .cmp-teaser__title {
-              color: map-get($color-palette, 'brand-button-blue') !important;
+              color: map-get($color-palette, 'teal') !important;
             }
 
             .cmp-teaser__title .cmp-teaser__title-link {
-              color: map-get($color-palette, 'brand-light-blue') !important;
+              color: map-get($color-palette, 'teal') !important;
               font-weight: 400;
             }
           }
@@ -904,27 +899,13 @@
             .cmp-teaser__action-container {
               padding-bottom: 20px;
               padding-top: 15px;
-
-              .cmp-teaser__action-link {
-                color: map-get($color-palette, 'legacy-ocean');
-                text-decoration: none;
-                &:hover {
-                  color: lighten(map-get($color-palette, 'legacy-ocean'), 20%);
-                  text-decoration: underline;
-                }
-
-                &:active {
-                  color: darken(map-get($color-palette, 'legacy-ocean'), 20%);
-                  text-decoration: underline;
-                }
-              }
             }
           }
 
           .cmp-teaser__title,
           .cmp-teaser__title a {
             background-color: white;
-            color: #00558c;
+            color: map-get($color-palette, 'teal');
             font-weight: 400;
             text-align: left;
             font-family: 'Arial', sans-serif;

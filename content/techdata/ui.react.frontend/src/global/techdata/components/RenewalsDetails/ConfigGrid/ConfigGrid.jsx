@@ -5,7 +5,7 @@ import ResellerInfo from "./Reseller/ResellerInfo";
 import Link from "../../Widgets/Link";
 import { generateFileFromPost as generateExcelFileFromPost } from "../../../../../utils/utils";
 import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../../../../utils/utils";
-import { CopyIcon, DownloadIcon, ShareIcon } from "../../../../../fluentIcons/FluentIcons";
+import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
 import Toaster from "../../Widgets/Toaster";
@@ -15,6 +15,7 @@ function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] = useState(false);
   const effects = useRenewalGridState(state => state.effects);   
   const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
+  const isOpportunity = data.quoteType === 'Opportunity' ? true : false;
 
   const downloadXLS = () => {
     try {
@@ -96,7 +97,7 @@ function GridHeader({ gridProps, data }) {
   </button>
 
   return (
-    <div className="cmp-product-lines-grid__header">
+    <div className={isOpportunity ? "cmp-product-lines-grid__header opportunity-quote-disabled" : "cmp-product-lines-grid__header" }>
       <span className="cmp-product-lines-grid__header__title">
         {gridProps.lineItemDetailsLabel}
       </span>
@@ -185,6 +186,14 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           </span>
           <GridHeader data={data} gridProps={gridProps} />
         </div>
+        {
+          data.quoteType === 'Opportunity' && (
+            <div className='opportunity-quote'>
+              <p><InfoIcon />{gridProps.quotePreview.quoteOpportunityText}</p>
+              <a href='#quote'>{gridProps.quotePreview.quoteOpportunityRequestLabel}</a>
+            </div>
+          )
+        }
       </div>
       <div className="info-container">
         <ResellerInfo

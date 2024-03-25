@@ -126,7 +126,7 @@
 
           &:hover {
             box-shadow: none;
-            font-weight: bolder;            
+            text-shadow: 1px 0 0 currentColor;
           }
         }
 
@@ -139,7 +139,7 @@
           a,
           span {
             box-shadow: none;
-            font-weight: bolder;
+            text-shadow: 1px 0 0 currentColor;
           }
         }
 
@@ -155,7 +155,7 @@
       }
     }
 
-    
+
     @include mobile {
       display: grid !important;
 
@@ -198,7 +198,7 @@
           border-bottom-color: inherit;
         }
       }
-      
+
       &:first-child {
         margin-left: rem(48px);
       }
@@ -237,7 +237,7 @@
                 height: 2.5rem;
                 &:hover {
                   box-shadow: none;
-                  font-weight: bolder;
+                  text-shadow: 1px 0 0 currentColor;
                 }
               }
 
@@ -281,7 +281,7 @@
 
       span.cmp-sub-header__span {
         line-height: 2.5;
-        padding-right: rem(48px)!important; 
+        padding-right: rem(48px)!important;
         @media (max-width: 1023px) {
           padding-right: rem(40px)!important;
         }
@@ -356,7 +356,7 @@
   }
 }
 
-@media (min-width: 768.99px) and (max-width: 1199.98px) { 
+@media (min-width: 768.99px) and (max-width: 1199.98px) {
   .subheader {
     &.cmp-sub-header-no-logo {
       .cmp-tabs {
@@ -367,7 +367,7 @@
             height: 0;
 
             .cmp-sub-header--sub-nav__title {
-            }        
+            }
         }
       }
 
@@ -396,12 +396,12 @@
  }
 
 @media (max-width: 768.98px) {
-  .subheader {    
-      &.cmp-sub-header-no-logo {        
+  .subheader {
+      &.cmp-sub-header-no-logo {
         .cmp-sub-header--content {
           display: flex!important;
           height: 0px!important;
-    
+
           .cmp-sub-header--sub-nav__title {
             margin-top: 0!important;
           }

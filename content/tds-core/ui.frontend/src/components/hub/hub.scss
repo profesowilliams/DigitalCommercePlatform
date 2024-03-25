@@ -4,19 +4,7 @@
   display: inline-block;
   width: auto !important;
   z-index: 99;
-  &.active {
-    .cmp-button {
-      &:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 3px;
-        background: map-get($color-palette, 'cobalt');
-        bottom: 6px;
-        left: 0;
-      }
-    }
-  }
+
   .cmp-button {
     color: black;
     padding: 16px 0;
@@ -33,12 +21,12 @@
     }
     &__dropdown {
       display: none;
-      border-top: 2px solid get-color(header-links-blue);
+      border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
       position: absolute;
-      top: 61px;
+      top: 60px;
       right: 10px;
-      background-color: get-color(brand-white);
-      min-width: 165px;
+      background-color: map-get($color-palette, 'brilliant');
+      width: 12.0625rem;
       overflow: auto;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 999;
@@ -53,12 +41,16 @@
       }
     }
     &__dropdown a {
-      color: get-color(brand-text-gray);
-      font-size: rem(13px);
-      line-height: rem(18px);
-      padding: rem(12px) rem(12px);
+      color: var(--charcoal, map-get($color-palette, 'charcoal'));
+      font-size: 1rem;
+      line-height: 1.5rem;
+      padding: 0.5rem 1rem;
       text-decoration: none;
       display: block;
+
+      &:hover {
+        background-color: map-get($color-palette, 'neutral-gray-2');
+      }
     }
   }
 }
@@ -74,9 +66,6 @@
         color: white;
       }
     }
-  }
-  .cmp-button__dropdown {
-    top: 62px !important;
   }
 }
 
@@ -97,20 +86,6 @@
           margin: 0 2px;
         }
 
-        .hub .cmp-button:after {
-          background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE5LjE2NyA5LjE2N2EuODMzLjgzMyAwIDAwMC0xLjY2N0gzLjAwNWw2LjcyLTYuMDQ3QS44MzMuODMzIDAgMTA4LjYwOC4yMTRsLTguMzMzIDcuNWEuODMzLjgzMyAwIDAwMCAxLjI0bDguMzMzIDcuNWEuODMzLjgzMyAwIDAwMS4xMTUtMS4yNEwzLjAwNSA5LjE2N2gxNi4xNjJ6IiBmaWxsPSIjZmZmIi8+PC9zdmc+'); //back button
-          background-repeat: no-repeat;
-          background-position-y: center;
-          overflow: visible;
-          content: '';
-          position: absolute;
-          width: 30px;
-          height: 100%;
-          left: -28px;
-          top: 0;
-          background-color: transparent;
-        }
-
         .headerutility .headerutility,
         .megamenu,
         .headerutility .headerutility.button {
@@ -128,16 +103,16 @@
 
         .hub .cmp-button__dropdown {
           &.show {
-            background-color: #005758;
+            background-color: map-get($color-palette, 'teal');
             z-index: 9999;
             box-shadow: none;
             padding: 10px;
             max-width: none;
-            color: #fff;
+            color: map-get($color-palette, 'brilliant');
             position: absolute;
             left: -32px;
             right: 0;
-            width: calc(100vw - 2pc);
+            width: 12.0625rem;
             border-top: 1px solid #fff;
             margin: 0 1pc;
             top: 56px;

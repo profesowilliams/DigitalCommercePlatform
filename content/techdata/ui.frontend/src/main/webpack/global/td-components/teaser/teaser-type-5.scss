@@ -20,18 +20,50 @@
      * Teaser container styles.
      */
     display: flex;
-    width: 17.25rem;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 1rem !important;
     background: white;
     margin-right: 2rem;
+
+    @include desktop {
+      flex: 1 !important;
+    }
+
+    @include tablet {
+      flex: 1 !important;
+    }
+
+    @include mobile {
+      flex: unset !important;
+    }
+
+    [id^='teaser-'] {
+      flex-basis: 17.25rem;
+    }
 
     /**
      * Teaser image styles.
      */
     .cmp-teaser__image {
       // Add image styles here
+
+      .cmp-image__image {
+        width: auto;
+        max-width: clamp(300px, 40.5vw, 640px);
+      }
+
+      @include tablet {
+        .cmp-image__image {
+          width: 400px;
+        }
+      }
+
+      @include mobile {
+        .cmp-image__image {
+          width: 300px;
+        }
+      }
     }
 
     /**
@@ -50,8 +82,8 @@
        */
       .cmp-teaser__title {
         height: none;
-        padding-top: 2.5rem;
         padding-left: 2rem;
+        width: clamp(300px, 40.5vw, 640px);
       }
 
       /**

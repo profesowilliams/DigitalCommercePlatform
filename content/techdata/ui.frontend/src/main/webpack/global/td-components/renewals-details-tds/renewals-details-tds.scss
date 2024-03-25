@@ -1,4 +1,4 @@
-.ag-header-row:has(.contract-header){
+.ag-header-row:has(.contract-header) {
   background-color: #e4e5e6 !important;
 }
 .cmp-renewals-details__tds {
@@ -7,27 +7,26 @@
     padding: 10px 0 !important;
     font-weight: bold !important;
     font-size: 16px !important;
-    display:flex;
+    display: flex;
     justify-content: flex-start;
-     align-items:center;
-     gap: 10px;
-     div {
+    align-items: center;
+    gap: 10px;
+    div {
       font-size: 16px !important;
       line-height: 21px !important;
-     }
-     span{
+    }
+    span {
       font-weight: bold !important;
       font-size: 16px !important;
       line-height: 21px !important;
-     }
-
-}
-.ag-row {
-    &:has(.row-header) {
-    background-color: #e4e5e6 !important;
+    }
   }
-}
-  *:not([class*="fas"]) {
+  .ag-row {
+    &:has(.row-header) {
+      background-color: #e4e5e6 !important;
+    }
+  }
+  *:not([class*='fas']) {
     @include font-arial-normal();
   }
 
@@ -36,7 +35,7 @@
       .image-container {
         .back-to-renewal {
           @include font-arial-normal($line-height: 22px);
-          color: map-get($color-palette, 'charcoal');
+          color: map-get($color-palette, 'teal');
         }
       }
     }
@@ -92,7 +91,7 @@
         color: map-get($color-palette, 'cool-gray-9');
         font-weight: 400;
         font-size: 14px;
-        font-family: "Arial", sans-serif;
+        font-family: 'Arial', sans-serif;
       }
     }
 
@@ -105,25 +104,36 @@
       &--icon {
         display: inline-block;
         margin-right: 14px;
+        vertical-align: middle;
+        color: map-get($color-palette, 'teal');
+        fill: map-get($color-palette, 'teal');
+
+        svg path {
+          color: map-get($color-palette, 'teal');
+          fill: map-get($color-palette, 'teal');
+        }
       }
-      button{
-        &:hover span, &:hover svg path{
-          color: map-get($color-palette, td-lightblue);
-          fill: map-get($color-palette, td-lightblue);
+      button {
+        &:hover span,
+        &:hover svg path {
+          color: map-get($color-palette, 'teal');
+          fill: map-get($color-palette, 'teal');
         }
       }
     }
 
     .cmp-renewal-preview__subtotal {
       background-color: map-get($color-palette, neutral-gray-1);
-      &--note, &--note * {
+      &--note,
+      &--note * {
         b {
           font-weight: bolder;
         }
         color: map-get($color-palette, 'charcoal');
         @include font-arial-normal($weight: unset, $size: 14px, $line-height: 16px);
       }
-      &--description, &--value >span {
+      &--description,
+      &--value > span {
         color: map-get($color-palette, 'charcoal');
         @include font-arial-normal($size: 20px, $line-height: 23px);
       }
@@ -158,7 +168,7 @@
 
   .cmp-grid.ag-theme-alpine {
     .ag-row * {
-      @include font-arial-normal($size: 14px, $line-height:16px);
+      @include font-arial-normal($size: 14px, $line-height: 16px);
       color: map-get($color-palette, 'charcoal');
     }
 
@@ -173,23 +183,29 @@
 **/
 
 .cmp-grid-techdata {
-    .cmp-renewals-qp__reseller-info,
-    .cmp-renewals-qp__agreement-info,
-    .cmp-renewals-qp__enduser-info
-     {
-      &--title {
-        color: $brand-blue;
-      }
+  .cmp-renewals-qp__reseller-info,
+  .cmp-renewals-qp__agreement-info,
+  .cmp-renewals-qp__enduser-info {
+    &--title {
+      color: $brand-blue;
     }
+  }
 
   .cmp-renewals-qp__config-grid {
     .export-container {
       .quote-preview {
-        color: $brand-blue;
+        color: map-get($color-palette, 'teal');
+        fill: map-get($color-palette, 'teal');
       }
 
       button span {
-        color: $brand-blue;
+        color: map-get($color-palette, 'teal');
+        fill: map-get($color-palette, 'teal');
+
+        svg path {
+          color: map-get($color-palette, 'teal');
+          fill: map-get($color-palette, 'teal');
+        }
       }
     }
   }
@@ -197,37 +213,39 @@
   .cmp-renewal-preview {
     .details-container {
       .details-preview {
-        color: $brand-blue;
+        color: map-get($color-palette, 'teal');
         font-size: 20px;
         line-height: normal;
         font-weight: 700;
       }
     }
     .icon-button {
+      gap: 0.31rem;
+
       svg {
-        stroke: $brand-blue;
-       }
-       &__default {
-        color: $brand-blue;
-       }
+        stroke: map-get($color-palette, 'teal');
+      }
+      &__default {
+        color: map-get($color-palette, 'teal');
+      }
     }
   }
 
   .icon-button {
+    gap: 0.31rem;
 
     svg {
-     stroke: $brand-blue;
+      stroke: map-get($color-palette, 'teal');
     }
     &__default {
-      color: $brand-blue;
+      color: map-get($color-palette, 'teal');
     }
   }
 
   p {
     &.cmp-place-order-actions {
-
       button {
-        background-color: $brand-blue;
+        background-color: $brand-green;
         &:disabled {
           background-color: map-get($color-palette, 'neutral-gray-2');
         }
@@ -253,6 +271,6 @@
 }
 
 .renewals-has-multiple .ag-header-viewport {
-    border-top: 3px solid map-get($color-palette, 'charcoal');
-    border-bottom: 2px solid map-get($color-palette, 'charcoal');
+  border-top: 3px solid map-get($color-palette, 'charcoal');
+  border-bottom: 2px solid map-get($color-palette, 'charcoal');
 }

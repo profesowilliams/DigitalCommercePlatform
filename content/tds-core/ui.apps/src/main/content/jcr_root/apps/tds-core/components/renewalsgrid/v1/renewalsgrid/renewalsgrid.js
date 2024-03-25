@@ -443,6 +443,10 @@ use(['../../../common/utils.js'], function(utils) {
         shareFlyout.shareFlyoutButtonLabel = properties["shareFlyoutButtonLabel"];
     }
 
+    if (properties && properties["shareFlyoutButtonSharingLabel"]) {
+        shareFlyout.shareFlyoutButtonSharingLabel = properties["shareFlyoutButtonSharingLabel"];
+    }
+
     if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {
         shareFlyout.shareQuoteEndpoint = this.serviceData.uiServiceDomain + this.shareQuoteEndpoint;
     }

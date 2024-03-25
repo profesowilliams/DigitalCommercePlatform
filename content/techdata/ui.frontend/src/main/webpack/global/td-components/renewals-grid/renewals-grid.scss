@@ -1,141 +1,140 @@
-@import "../../../site/variables";
+@import '../../../site/variables';
 
-.cmp-renewals-grid, .cmp-base-grid {
-	width: 100%;
-	overflow: auto;
-    margin-right: rem(10px);
-	.ag-row .ag-cell {
-		display: flex;
-	}
-	& .status {
-		display: flex;
-	}
-	& .icon {
-		display: flex;
-		margin-top: rem(20px);
-		margin-right: rem(5px);
-	}
-	.cmp-renewal-plan-column{
-		display: grid;
-		grid-template-columns: repeat( auto-fit, minmax(380px, 1fr) );
-		grid-gap: 26px;
-		padding: 20px;
-		-webkit-box-shadow: inset 5px -5px 4px -4px #E1E1E1; 
-		box-shadow: inset 5px -5px 4px -4px #E1E1E1, inset -6px 3px 4px -4px #E1E1E1;
-		@media (max-width:750px){
-			display: flex;
-			flex-direction: column;
-		}
-		.card {	
-			padding: 20px;
-			text-align: left;
-			position: relative;
-			padding-bottom: 2rem;
-			&::after{
-				content: "";
-				position: absolute;
-				background-color: #e1e1e4;
-				width: 1px;
-				height: calc(100% - 15%);
-				top: 0;
-				bottom: 0;
-				right: 0;				
-			}
-			&:nth-child(-n+4){			
-				&::before{
-					content: "";
-					position: absolute;
-					background-color: #e1e1e4;
-					height: 1px;
-					width: calc(100% - 9%);
-					left: 9px;
-					bottom: 0;				
-				}
-				
-			}
-			.rightHeader {
-				float: right;
-				font-size: 20px;
-				color: #000c21;
-			}
-			.clear {
-				clear: both;
-			}
-			.leftHeader {
-				float: left;
-				font-size: 20px;
-				color: #000c21;
-				h4{
-					label{
-						cursor: pointer;
-					}
-				}
-			}
-			.planDetails {
-				text-align: left;
-				font-size: 12px;
-			}
-			.currentPlan {
-				text-align: left;
-				font-style: italic;
-				color: #0ab00a;
-			}		
-			.footer{
-				display: flex;
-				margin-top: 2rem;
-				gap: 1px;
-				button {
-					width : 130px;
-					background-color: white;
-					cursor: pointer;
-				}
-				span.vertical-separator{
-					background: #cbc9c9;
-					width: 1px;
-					height: 24px;
-				  }
-			}
-			
-			p {
-				line-height: 0.5em;
-			}
-		  }
-	}
-	.cmp-header-price{
-		text-align: center;
-		span.ag-header-cell-text{
-			position: relative;
-			&::before{
-				left: -15px !important;
-				top: 0 !important;
-			}
-		}
-	}
-	
+.cmp-renewals-grid,
+.cmp-base-grid {
+  width: 100%;
+  overflow: auto;
+  margin-right: rem(10px);
+  .ag-row .ag-cell {
+    display: flex;
+  }
+  & .status {
+    display: flex;
+  }
+  & .icon {
+    display: flex;
+    margin-top: rem(20px);
+    margin-right: rem(5px);
+  }
+  .cmp-renewal-plan-column {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    grid-gap: 26px;
+    padding: 20px;
+    -webkit-box-shadow: inset 5px -5px 4px -4px #e1e1e1;
+    box-shadow: inset 5px -5px 4px -4px #e1e1e1, inset -6px 3px 4px -4px #e1e1e1;
+    @media (max-width: 750px) {
+      display: flex;
+      flex-direction: column;
+    }
+    .card {
+      padding: 20px;
+      text-align: left;
+      position: relative;
+      padding-bottom: 2rem;
+      &::after {
+        content: '';
+        position: absolute;
+        background-color: #e1e1e4;
+        width: 1px;
+        height: calc(100% - 15%);
+        top: 0;
+        bottom: 0;
+        right: 0;
+      }
+      &:nth-child(-n + 4) {
+        &::before {
+          content: '';
+          position: absolute;
+          background-color: #e1e1e4;
+          height: 1px;
+          width: calc(100% - 9%);
+          left: 9px;
+          bottom: 0;
+        }
+      }
+      .rightHeader {
+        float: right;
+        font-size: 0.875rem;
+        line-height: 120%; /* 1.05rem */
+        color: map-get($color-palette, 'charcoal');
+      }
+      .clear {
+        clear: both;
+      }
+      .leftHeader {
+        float: left;
+        font-size: 0.875rem;
+        line-height: 120%; /* 1.05rem */
+        color: map-get($color-palette, 'charcoal');
+        h4 {
+          label {
+            cursor: pointer;
+          }
+        }
+      }
+      .planDetails {
+        text-align: left;
+        font-size: 0.875rem;
+      }
+      .currentPlan {
+        text-align: left;
+        font-style: italic;
+        color: map-get($color-palette, 'forest');
+      }
+      .footer {
+        display: flex;
+        margin-top: 2rem;
+        gap: 1px;
+        button {
+          width: 130px;
+          background-color: white;
+          cursor: pointer;
+        }
+        span.vertical-separator {
+          background: #cbc9c9;
+          width: 1px;
+          height: 24px;
+        }
+      }
+
+      p {
+        line-height: 0.5em;
+      }
+    }
+  }
+  .cmp-header-price {
+    text-align: center;
+    span.ag-header-cell-text {
+      position: relative;
+      &::before {
+        left: -15px !important;
+        top: 0 !important;
+      }
+    }
+  }
 }
 
 p.cmp-place-order-actions {
-    display: flex;
-    flex-direction: row-reverse;
-	button.cmp-grid-techdata{
-		background-color: $brand-blue;
-		&:hover{
-			background-color: lighten($brand-blue, 10%);
-		}
-	}
-	button.td-synnex{
-		background-color: $brand-green;
-		&:hover{
-			background-color: lighten($brand-green, 10%);
-		}
-	}
+  display: flex;
+  flex-direction: row-reverse;
+  button.cmp-grid-techdata {
+    background-color: map-get($color-palette, 'teal');
+    &:hover {
+      background-color: lighten(map-get($color-palette, 'teal'), 10%);
+    }
+  }
+  button.td-synnex {
+    background-color: $brand-green;
+    &:hover {
+      background-color: lighten($brand-green, 10%);
+    }
+  }
 }
 
-.cmp-place-order-terms{
-	a.cmp-place-order-link {
-		color: #00558C;
-		cursor: pointer;
-	}
+.cmp-place-order-terms {
+  a.cmp-place-order-link {
+    color: #00558c;
+    cursor: pointer;
+  }
 }
-
-

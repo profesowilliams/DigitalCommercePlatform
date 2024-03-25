@@ -359,7 +359,7 @@
             }
 
             .header-active .headerutility .minicart .cmp-cart__active .cmp-cart__number span {
-                color: black;
+                color: map-get($color-palette, 'charcoal');
             }
 
             .dp-figure {
@@ -372,7 +372,7 @@
             }
 
             &.cmp-container .header-active .languagenavigation .cmp-form-options__field-description {
-                color: black;
+                color: map-get($color-palette, 'charcoal');
             }
 
             .header-active.cmp-container .masthead .regionSelectDropdown {

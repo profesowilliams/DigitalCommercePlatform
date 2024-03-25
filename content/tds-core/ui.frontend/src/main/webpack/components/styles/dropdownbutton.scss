@@ -2,19 +2,7 @@
   position: relative;
   display: inline-block;
   width: auto !important;
-  &.active {
-    .cmp-button {
-      &:after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 3px;
-        background: get-color(brand-light-blue);
-        bottom: 12px;
-        left: 0;
-      }
-    }
-  }
+
   .cmp-button {
     padding: 16px 0;
     margin: 0 16px;
@@ -25,31 +13,42 @@
     position: relative;
     &__icon {
       @include font-awesome-custom-icon;
-      font-family: "FontAwesome" !important;
+      font-family: 'FontAwesome' !important;
+      vertical-align: middle;
     }
+
+    &__text {
+      vertical-align: middle;
+    }
+
     &__dropdown {
       display: none;
-      border-top: 2px solid get-color(header-links-blue);
+      border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
       position: absolute;
-      top: 56px;
-      background-color: get-color(brand-white);
-      min-width: 165px;
+      top: 60px;
+      background-color: map-get($color-palette, 'brilliant');
+      width: 12.0625rem;
       overflow: auto;
       box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
       z-index: 1;
+      right: 14px;
     }
     &__dropdown {
-      &.show{
+      &.show {
         display: block;
       }
     }
     &__dropdown a {
-      color: get-color(brand-text-gray);
-      font-size: rem(13px);
-      line-height:rem(18px);
-      padding: rem(12px) rem(12px);
+      color: var(--charcoal, map-get($color-palette, 'charcoal'));
+      font-size: 1rem;
+      line-height: 1.5rem;
+      padding: 0.5rem 1rem;
       text-decoration: none;
       display: block;
+
+      &:hover {
+        background-color: map-get($color-palette, 'neutral-gray-2');
+      }
     }
   }
   &.hidden {

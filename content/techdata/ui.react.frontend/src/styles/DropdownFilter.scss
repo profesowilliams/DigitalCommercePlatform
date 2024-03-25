@@ -1,6 +1,6 @@
 $brand-blue: #000c21;
 $secondary-link-blue: #006bae;
-$font-family-search:"Open Sans", sans-serif;
+$font-family-search: 'Open Sans', sans-serif;
 $brand-green: #005758;
 $brand-green-dark: #003031;
 .inputStyle {
@@ -16,7 +16,7 @@ $brand-green-dark: #003031;
   letter-spacing: 0;
   line-height: 16px;
   width: 15rem;
-  padding-bottom: 7px;  
+  padding-bottom: 7px;
 }
 
 .inputStyle.searchText {
@@ -62,8 +62,8 @@ $brand-green-dark: #003031;
   // width: 100%;
   height: 17.5px;
   width: 170px;
-  color: rgba(0, 12, 33, 1);
-  font-family: "Open Sans";
+  color: map-get($color-palette, 'teal');
+  font-family: 'Open Sans';
   top: 45px;
   font-size: 14px;
   letter-spacing: 0;
@@ -75,14 +75,15 @@ $brand-green-dark: #003031;
   padding: 0.5em;
   height: 50px;
   &__button {
-    background-color: $brand-blue;
+    background-color: map-get($color-palette, 'teal');
     cursor: pointer;
-    i, svg {
+    i,
+    svg {
       color: white !important;
     }
   }
   &__button.td-synnex {
-    background-color: $brand-green;   
+    background-color: $brand-green;
     z-index: 20;
   }
 }
@@ -115,16 +116,16 @@ $brand-green-dark: #003031;
   color: white;
 }
 
-.cmp-search-select-container{
+.cmp-search-select-container {
   position: relative;
   display: flex;
   flex-direction: column;
-  &__box{
+  &__box {
     cursor: pointer;
     display: flex;
-    &-search-field{
+    &-search-field {
       position: relative;
-      svg{
+      svg {
         cursor: pointer;
         fill: #555555;
         width: 16px;
@@ -133,13 +134,12 @@ $brand-green-dark: #003031;
         transform: translateY(-50%);
         right: 5px;
       }
-
     }
-  }  
+  }
   &__filler {
-    min-height: 4px; 
+    min-height: 4px;
     pointer-events: none;
-    cursor: default; 
+    cursor: default;
     opacity: 0;
   }
 }
@@ -152,12 +152,12 @@ $brand-green-dark: #003031;
   gap: 0.7rem;
   align-items: center;
   &__text {
-    color: #555555;
+    color: map-get($color-palette, 'teal');
   }
   &__icon {
-    color: $secondary-link-blue;
+    color: map-get($color-palette, 'teal');
   }
-  &-dnone{
+  &-dnone {
     display: none;
   }
   .inputStyle {
@@ -165,14 +165,14 @@ $brand-green-dark: #003031;
   }
 }
 .cmp-search-options.td-synnex {
-  box-shadow: 0px 0px 7px rgba(0,0,0,0.24);
+  // box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.24);
   top: 34px;
   width: 16.75rem;
 }
 .cmp-search-options {
   display: flex;
-  flex-direction: column; 
-  box-shadow: 0.5px 0.5px 8px #000000ad; 
+  flex-direction: column;
+  // box-shadow: 0.5px 0.5px 8px #000000ad;
   position: absolute;
   height: fit-content;
   z-index: 5;
@@ -181,25 +181,25 @@ $brand-green-dark: #003031;
   left: 50%;
   transform: translateX(-50%);
   width: 17rem;
-  padding: .5rem 0;
-  label{
+  padding: 0;
+  label {
     cursor: pointer;
     padding: 7px;
     padding-left: 1rem;
-    transition: all .4s ease;
+    transition: all 0.4s ease;
     flex: 1;
-    &:hover{
+    &:hover {
       background-color: #f2f2f2;
     }
   }
-  &__reset{
+  &__reset {
     display: flex;
     align-items: center;
     font-size: 12px;
     justify-content: space-between;
-    padding: 7px; 
+    padding: 7px;
     label {
-      padding: 0;    
+      padding: 0;
     }
     .cmp-search-options__reset__icon-container {
       height: 30px;
@@ -211,18 +211,18 @@ $brand-green-dark: #003031;
     svg {
       width: 16px;
       height: 16px;
-      transition: all .4s ease-out;
+      transition: all 0.4s ease-out;
       &:hover {
         font-weight: bold;
         transform: scale(1.065456);
       }
     }
-    a{
+    a {
       color: $secondary-link-blue;
       text-decoration: underline;
     }
   }
-  &:hover{
+  &:hover {
     display: flex;
   }
 }
@@ -230,11 +230,12 @@ $brand-green-dark: #003031;
   display: none;
 }
 
-.cmp-grid-td-synnex, .cmp-grid-techdata {
+.cmp-grid-td-synnex,
+.cmp-grid-techdata {
   & .cmp-renewal-search {
     & .search-icon {
       &__dark {
-        fill: $brand-charcoal;
+        fill: map-get($color-palette, 'teal');
       }
     }
   }
@@ -245,7 +246,7 @@ $brand-green-dark: #003031;
       & .search-icon {
         height: 24px;
         &__dark {
-          fill: $brand-charcoal;
+          fill: map-get($color-palette, 'teal');
         }
         &__light {
           fill: white;
@@ -254,17 +255,18 @@ $brand-green-dark: #003031;
     }
   }
   & .cmp-search-options {
-    top: 34px;
+    border-top: 2px solid map-get($color-palette, 'teal');
+    top: 25px;
     width: 100%;
-    padding: 6px 0;
+    // padding: 6px 0;
     &__reset {
-     padding: unset;
-     font-size: 13px;
+      padding: unset;
+      font-size: 13px;
 
-     svg {
-      margin-right: 16px;
-      fill: $brand-charcoal;
-     }
+      svg {
+        margin-right: 16px;
+        fill: $brand-charcoal;
+      }
       .cmp-search-options__reset__icon-container {
         svg {
           margin-right: 0;
@@ -273,10 +275,10 @@ $brand-green-dark: #003031;
     }
   }
   & .cmp-search-options label {
-    padding: 6px 16px;
+    padding: 0.62rem 1rem;
     color: $brand-charcoal;
     &:hover {
-      background-color: unset;
+      background-color: var(--Neutral-Gray-2, map-get($color-palette, 'neutral-gray-2'));
     }
   }
 
@@ -301,7 +303,7 @@ $brand-green-dark: #003031;
 .cmp-grid-techdata {
   .cmp-search-tooltip {
     &__button {
-      background-color: $brand-blue;
+      background-color: map-get($color-palette, 'teal');
     }
   }
 }

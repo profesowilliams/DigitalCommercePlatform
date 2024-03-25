@@ -231,7 +231,7 @@
         }
 
         .cmp-megamenu__secondary {
-            background-color: get-color(deep-teal);
+            background-color: map-get($color-palette, 'teal');
 
             a {
                 color: get-color(brand-white);

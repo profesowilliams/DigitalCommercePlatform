@@ -11,10 +11,10 @@
 }
 
 .cmp-widget .cmp-quote-button{
-  border: rem(1px) solid get-color(td-dark-blue);
+  border: rem(1px) solid map-get($color-palette, 'teal');
   // color: get-color(td-dark-blue);
   // background-color: get-color(brand-white);
-  background-color: get-color(td-dark-blue);
+  background-color: map-get($color-palette, 'teal');
   color: get-color(brand-white);
   font-size: rem(13px);
   padding: rem(6px) rem(25px);

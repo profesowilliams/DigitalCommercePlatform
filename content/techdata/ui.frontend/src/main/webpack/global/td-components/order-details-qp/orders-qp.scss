@@ -9,14 +9,13 @@
   background-color: get-color(neutral-gray-1);
   .cmp-order-preview {
     &__download {
-        .separator {
-          border-right: 1px solid #d8d8d8;
-          padding-right: 20px;
-          cursor: pointer;
-        }
-        &--icon {
-          display: none;
-        }
+      .separator {
+        padding-right: 10px;
+        cursor: pointer;
+      }
+      &--icon {
+        display: none;
+      }
     }
   }
   .header-container {
@@ -58,7 +57,7 @@
       line-height: 20px;
     }
     .quote-actions {
-      color:  map-get($color-palette,"teal");
+      color: map-get($color-palette, 'teal');
       cursor: pointer;
       font-size: 16px;
     }
@@ -84,7 +83,7 @@
           line-height: 36px;
 
           > li {
-			padding: 8px 16px;
+            padding: 8px 16px;
             font-size: 16px;
           }
           > li:hover {
@@ -128,32 +127,32 @@
   .info-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 16px; 
+    grid-gap: 16px;
     padding: 25px 0 42px 0;
     margin-top: 0;
 
-    .card-container{
+    .card-container {
       min-width: 275px;
       padding: 18px 25px;
       color: #000000;
-      &__title{
+      &__title {
         font-weight: 700;
         margin-bottom: 19px;
         font-size: 16px;
       }
-      &__contentGrid{
+      &__contentGrid {
         display: grid;
         grid-template-columns: 152px 1fr;
-        grid-gap: 16px; 
+        grid-gap: 16px;
         font-size: 14px;
       }
-      &__contentGridContact{
+      &__contentGridContact {
         display: grid;
         grid-template-columns: 50px 1fr;
-        grid-gap: 16px; 
+        grid-gap: 16px;
         font-size: 14px;
       }
-      &__bottom{
+      &__bottom {
         margin-top: 19px;
         font-size: 14px;
       }
@@ -172,12 +171,13 @@
         position: absolute;
         right: 20px;
         top: 30px;
+        gap: 0.31rem;
       }
     }
   }
 }
 
-.cmp-orders-qp__grid{
+.cmp-orders-qp__grid {
   * {
     font-family: Arial;
   }
@@ -196,10 +196,11 @@
         color: $brand-green--dark;
       }
     }
-}
+  }
 }
 
-.cmp-orders-grid, .cmp-base-grid {
+.cmp-orders-grid,
+.cmp-base-grid {
   .cmp-grid.ag-theme-alpine {
     .ag-root-wrapper {
       .ag-root-wrapper-body {

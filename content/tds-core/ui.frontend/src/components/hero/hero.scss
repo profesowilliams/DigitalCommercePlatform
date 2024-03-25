@@ -444,11 +444,11 @@
       }
 
       &:first-child {
-        background-color: var(--legacy-ocean, map-get($color-palette, 'legacy-ocean'));
+        background-color: var(--teal, map-get($color-palette, 'teal'));
       }
 
       &:last-child {
-        background-color: var(--legacy-dark-blue, map-get($color-palette, 'legacy-dark-blue'));
+        background-color: var(--deep-teal, map-get($color-palette, 'deep-teal'));
       }
 
       img {

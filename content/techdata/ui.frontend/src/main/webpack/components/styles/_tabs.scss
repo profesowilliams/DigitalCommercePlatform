@@ -13,11 +13,11 @@
       font-weight: bold;
 
       &:hover {
-        color: map-get($color-palette, 'legacy-ocean');
+        color: map-get($color-palette, 'teal');
         font-weight: bold;
         text-decoration: underline;
         text-underline-position: under;
-        text-decoration-color: map-get($color-palette, 'legacy-ocean');
+        text-decoration-color: map-get($color-palette, 'teal');
         text-underline-offset: 5px;
         text-decoration-thickness: 2px;
       }
@@ -26,11 +26,11 @@
     }
 
     .cmp-tabs__tab--active {
-      color: map-get($color-palette, 'legacy-ocean');
+      color: map-get($color-palette, 'teal');
       font-weight: bold;
       text-decoration: underline;
       text-underline-position: under;
-      text-decoration-color: map-get($color-palette, 'legacy-ocean');
+      text-decoration-color: map-get($color-palette, 'teal');
       text-underline-offset: 5px;
       text-decoration-thickness: 2px;
     }
@@ -78,7 +78,6 @@
       font-family: Arial;
       font-size: 20px;
       font-style: normal;
-      font-weight: 700;
       line-height: 26px;
       height: 2rem;
 
@@ -98,16 +97,16 @@
       &:hover,
       &:active {
         text-decoration: underline;
-        text-decoration-color: get-color(legacy-ocean);
+        text-decoration-color: map-get($color-palette, 'teal');
         text-underline-offset: 0.62rem;
         text-decoration-thickness: 2px;
       }
     }
 
     .cmp-tabs__tab--active {
-      color: get-color(legacy-ocean);
+      color: map-get($color-palette, 'teal');
       text-decoration: underline;
-      text-decoration-color: get-color(legacy-ocean);
+      text-decoration-color: map-get($color-palette, 'teal');
       text-underline-offset: 0.62rem;
       text-decoration-thickness: 2px;
     }

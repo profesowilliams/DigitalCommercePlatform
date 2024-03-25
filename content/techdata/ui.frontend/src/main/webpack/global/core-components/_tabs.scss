@@ -15,7 +15,7 @@
       outline: none;
     }
     &:hover {
-      color: map-get($color-palette, 'legacy-ocean');
+      color: map-get($color-palette, 'teal');
       text-decoration: underline;
       text-underline-position: under;
     }

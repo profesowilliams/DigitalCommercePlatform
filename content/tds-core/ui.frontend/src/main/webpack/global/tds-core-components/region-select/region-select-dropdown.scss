@@ -1,9 +1,9 @@
 .regionSelectDropdown {
-  background-color: get-color(brand-white);
+  border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
+  background-color: var(--brilliant, map-get($color-palette, 'brilliant'));
 }
 
 .cmp-region-select-dropdown {
-  box-shadow: inset 0 rem(2px) rem(1px) 0 get-color(td-dark-blue);
   border: rem(0rem);
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@
 }
 
 .cmp-dropbtn {
-  font-size: $font-size-small;
+  font-size: 1rem;
   margin: 0 rem(16px);
   padding: 0;
   min-height: rem(30px);
@@ -37,11 +37,11 @@
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
+    box-shadow: 0 rem(3px) 0 0px map-get($color-palette, 'teal');
   }
 
   &:active {
-    box-shadow: 0 rem(3px) 0 0px get-color(brand-light-blue);
+    box-shadow: 0 rem(3px) 0 0px map-get($color-palette, 'teal');
   }
 }
 
@@ -56,12 +56,13 @@
 }
 
 .cmp-show {
+  border-top: 3px solid var(--teal, map-get($color-palette, 'teal'));
   display: block;
 }
 
 .cmp-languagenavigation__item-link {
   text-decoration: none;
-  color: get-color(brand-black);
+  color: map-get($color-palette, 'charcoal');
 }
 
 .cmp-region-list {
@@ -105,7 +106,6 @@
         position: relative;
         top: rem(1px);
       }
-
     }
 
     &--name {
@@ -134,7 +134,6 @@
 }
 
 /* The Modal (background) */
-
 
 .language-modal {
   font-family: $font-family;
@@ -172,7 +171,7 @@
 
       &:hover,
       &:focus {
-        color: get-color(brand-black);
+        color: map-get($color-palette, 'charcoal');
         text-decoration: none;
         cursor: pointer;
       }
@@ -190,7 +189,7 @@
       }
 
       &:after {
-        content: "";
+        content: '';
         display: table;
         clear: both;
       }
@@ -227,7 +226,6 @@
         }
       }
 
-
       &:first-child,
       &:last-child {
         width: 25%;
@@ -248,7 +246,7 @@
         }
       }
 
-      &:last-child>&__separator {
+      &:last-child > &__separator {
         border-right: none;
       }
 
@@ -280,7 +278,6 @@
           }
         }
       }
-
     }
   }
 }

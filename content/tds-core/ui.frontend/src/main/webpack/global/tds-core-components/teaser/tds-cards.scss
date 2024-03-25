@@ -325,11 +325,11 @@
             border: none;
 
             .cmp-teaser__title {
-              color: map-get($color-palette, 'brand-button-blue') !important;
+              color: map-get($color-palette, 'teal') !important;
             }
 
             .cmp-teaser__title .cmp-teaser__title-link {
-              color: map-get($color-palette, 'brand-light-blue') !important;
+              color: map-get($color-palette, 'teal') !important;
               font-weight: 400;
             }
           }

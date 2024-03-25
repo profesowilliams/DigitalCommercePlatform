@@ -220,7 +220,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   &__region-select {
     color: get-color(brand-white);
     background-color: get-color(deep-teal);
-    font-size: $font-size-custom-xxsmall;
+    font-size: 1rem;
     width: 100%;
     cursor: pointer;
   }
@@ -231,7 +231,7 @@ $link-hover-color-opacity: rgba(255, 255, 255, 0.2);
   position: relative;
   padding-left: rem(22px);
   cursor: pointer;
-  font-size: $font-size-custom-xxsmall;
+  font-size: 1rem;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

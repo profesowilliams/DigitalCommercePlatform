@@ -9,8 +9,8 @@
 $font-arial: 'Arial';
 $font-everett: 'TWKEverett-Regular-web', 'Arial';
 $font-everett-medium: 'TWKEverett-Medium-web', 'Arial';
-$color-apj: var(--legacy-ocean, map.get($color-palette, 'legacy-ocean')); // Define APJ color
-$color-techdata: var(--cobalt, map.get($color-palette, 'cobalt')); // Define TECH DATA color
+$color-apj: var(--legacy-ocean, map.get($color-palette, 'teal')); // Define APJ color
+$color-techdata: var(--cobalt, map.get($color-palette, 'teal')); // Define TECH DATA color
 $color-tdsynnex: var(--teal, map.get($color-palette, 'teal')); // Define TD SYNNEX color
 
 // Default Styles
@@ -101,10 +101,15 @@ body {
   }
 
   p,
-  ul {
+  ul,
+  li {
     font-size: 1rem;
     line-height: 1.5rem;
     color: var(--charcoal, map.get($color-palette, 'charcoal'));
+
+    b {
+      font-weight: bold;
+    }
   }
 
   p.extra-small,
@@ -271,7 +276,9 @@ body {
       font-weight: normal;
     }
 
-    p {
+    p,
+    ul,
+    li {
       font-size: 0.875rem;
       line-height: 1.3125rem;
     }

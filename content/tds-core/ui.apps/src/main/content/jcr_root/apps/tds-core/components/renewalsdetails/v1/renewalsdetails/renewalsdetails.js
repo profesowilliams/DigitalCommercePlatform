@@ -141,7 +141,13 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["renewalsUrl"]) {
         quotePreview["renewalsUrl"] = properties["renewalsUrl"];
     }
+     if (properties && properties["quoteOpportunityText"]) {
+            quotePreview["quoteOpportunityText"] = properties["quoteOpportunityText"];
+        }
 
+        if (properties && properties["quoteOpportunityRequestLabel"]) {
+            quotePreview["quoteOpportunityRequestLabel"] = properties["quoteOpportunityRequestLabel"];
+        }
     if (properties && properties["resellerLabel"]) {
         reseller["resellerLabel"] = properties["resellerLabel"];
     }

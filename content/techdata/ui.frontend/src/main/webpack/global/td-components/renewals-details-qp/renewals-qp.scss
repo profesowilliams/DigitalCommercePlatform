@@ -1,15 +1,20 @@
+.cmp-renewal-preview__download button + button::before {
+  content: ' | ';
+  color: map-get($color-palette, 'cool-gray-8');
+  padding-right: 10px;
+}
+
 .cmp-renewals-qp__config-grid {
-  background: #F6F6F6 !important;
+  background: #f6f6f6 !important;
   .cmp-renewal-preview {
     &__download {
-        .separator {
-          border-right: 1px solid #d8d8d8;
-          padding-right: 20px;
-          cursor: pointer;
-        }
-        &--icon {
-          display: none;
-        }
+      .separator {
+        padding-right: 10px;
+        cursor: pointer;
+      }
+      &--icon {
+        display: none;
+      }
     }
   }
   .header-container {
@@ -38,7 +43,7 @@
     justify-content: space-between;
     align-items: center;
     .quote-preview {
-      color: rgba(0, 12, 33, 1);
+      color: map-get($color-palette, 'teal');
       font-size: 24px;
       font-weight: 600;
       letter-spacing: 0;
@@ -48,11 +53,8 @@
       background-color: inherit;
       border: none;
       span {
-        color: rgba(0, 12, 33, 1);
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: 0;
-        line-height: 33px;
+        color: map-get($color-palette, 'teal');
+        @include font-arial-normal($weight: unset, $size: 1rem, $line-height: 150%);
         cursor: pointer;
       }
     }
@@ -101,6 +103,7 @@
         position: absolute;
         right: 20px;
         top: 30px;
+        gap: 0.31rem;
       }
     }
   }
@@ -158,10 +161,11 @@
         color: $brand-green--dark;
       }
     }
-}
+  }
 }
 
-.cmp-renewals-grid, .cmp-base-grid {
+.cmp-renewals-grid,
+.cmp-base-grid {
   .cmp-grid.ag-theme-alpine {
     .ag-root-wrapper {
       .ag-root-wrapper-body {

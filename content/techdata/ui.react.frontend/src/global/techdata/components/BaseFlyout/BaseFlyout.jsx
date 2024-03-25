@@ -1,7 +1,7 @@
 import { Drawer } from '@mui/material';
 import React, { useEffect } from 'react';
 import Button from "../Widgets/Button";
-import { DismissFilledIcon, LoaderIcon} from '../../../../fluentIcons/FluentIcons';
+import { DismissFilledIcon, LoaderIcon, SyncIcon} from '../../../../fluentIcons/FluentIcons';
 import { getDictionaryValueOrKey } from '../../../../utils/utils';
 
 function BaseFlyout({
@@ -24,7 +24,9 @@ function BaseFlyout({
   analyticsData,
   analyticsCallback,
   buttonsSection = null,
-  classText = ''
+  classText = '',
+  isShareFlyout,
+  loadingButtonLabel
 }) {
   const BottomContent = () => bottomContent('footer');
   const SecondaryButton = () => secondaryButton(selected, secondaryButtonLabel);
@@ -79,8 +81,14 @@ function BaseFlyout({
                 onClick={onClickButton}
                 analyticsCallback={analyticsCallback}
               >
-                {getDictionaryValueOrKey(buttonLabel)}
-                {isLoading && <LoaderIcon />}
+                {
+                  (isLoading && isShareFlyout) ? (
+                    <>
+                      <SyncIcon />{getDictionaryValueOrKey(loadingButtonLabel)}
+                    </>
+                  ) : getDictionaryValueOrKey(buttonLabel)
+                }
+                {isLoading && !isShareFlyout && <LoaderIcon />}
               </Button>
             </div>
           )}
