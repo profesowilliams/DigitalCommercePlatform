@@ -154,6 +154,12 @@
                                                 fieldLabel="End Of Life Label"
                                                 name="./endOfLife"
                                                 />
+                                            <eolSeeOptions
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                fieldLabel="See options Label"
+                                                name="./eolSeeOptions"
+                                                />
                                             <shipToTooltipTemplate
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
