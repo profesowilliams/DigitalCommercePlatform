@@ -346,11 +346,6 @@ function OrdersTrackingGrid(props) {
     return results.data.content;
   };
 
-  const resetReports = () => {
-    removeLocalStorageData(REPORTS_LOCAL_STORAGE_KEY);
-    reportFilterValue.current = {};
-  };
-
   const [settingsResponse] = useGet(
     `${gridConfig.uiProactiveServiceDomain}/v1`,
     'settings'
@@ -549,7 +544,6 @@ function OrdersTrackingGrid(props) {
           search: searchCriteria,
           filters: filtersRefs,
         }}
-        resetReports={resetReports}
         defaultDateRange={componentProp?.defaultSearchDateRange}
         settings={settingsResponse}
       />

@@ -8,11 +8,12 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
 import Tooltip from '@mui/material/Tooltip';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
-function OrderFilter({ clearFilters, gridConfig }) {
+
+function OrderFilter({ clearFilters, gridConfig, clearReports }) {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
-  const { toggleFilterModal, setFilterClicked } = useOrderTrackingStore(
+  const { setFilterClicked, setCustomState } = useOrderTrackingStore(
     (st) => st.effects
   );
   const [isFilterHovered, setIsFilterHovered] = useState(false);
@@ -21,6 +22,13 @@ function OrderFilter({ clearFilters, gridConfig }) {
   };
   const handleMouseLeaveFilter = () => {
     setIsFilterHovered(false);
+  };
+
+  const triggerFiltersFlyout = () => {
+    setCustomState({
+      key: 'filtersFlyout',
+      value: { show: true, clearReports },
+    });
   };
 
   return (
@@ -36,7 +44,7 @@ function OrderFilter({ clearFilters, gridConfig }) {
           onMouseOver={handleMouseOverFilter}
           onMouseLeave={handleMouseLeaveFilter}
           onClick={() => {
-            toggleFilterModal();
+            triggerFiltersFlyout();
             setFilterClicked(false);
           }}
         >

@@ -174,13 +174,14 @@ function MainGridHeader({
     removeDefaultDateRange();
     onQueryChanged({ onSearchAction: true });
   };
+
   const rightComponents = [
     ...(pill
       ? [
           <Pill
             children={
               <span className="td-capsule__text">
-                {reportPillLabel}: {pill.label}
+                {getDictionaryValueOrKey(reportPillLabel)}: {pill.label}
               </span>
             }
             closeClick={handleDeletePill}
@@ -195,9 +196,14 @@ function MainGridHeader({
       hideLabel={true}
       gridConfig={gridConfig}
       searchAnalyticsLabel={analyticsCategories.search}
+      clearReports={clearReports}
     />,
     <VerticalSeparator />,
-    <OrderFilter clearFilters={clearFilters} gridConfig={gridConfig} />,
+    <OrderFilter
+      clearFilters={clearFilters}
+      gridConfig={gridConfig}
+      clearReports={clearReports}
+    />,
     <VerticalSeparator />,
     <Report
       selectOption={onReportChange}

@@ -16,7 +16,6 @@ const MainGridFlyouts = ({
   onQueryChanged,
   userData,
   searchParams,
-  resetReports,
   defaultDateRange,
   settings,
 }) => {
@@ -74,7 +73,6 @@ const MainGridFlyouts = ({
         filterLabels={filterLabels}
         analyticsCategories={analyticsCategories}
         subheaderReference={document.querySelector('.subheader > div > div')}
-        resetReports={resetReports}
       />
       <OrderModificationFlyout
         store={useOrderTrackingStore}

@@ -39,6 +39,7 @@ const _OrderSearch = (
     hideLabel = false,
     gridConfig,
     searchAnalyticsLabel,
+    clearReports,
   },
   ref
 ) => {
@@ -189,6 +190,7 @@ const _OrderSearch = (
 
   const triggerSearch = () => {
     removeQueryParamsSearch();
+    clearReports();
     setIsDropdownVisible(false);
     if (!searchTriggered) setSearchTriggered(true);
     const { option } = values;

@@ -22,7 +22,6 @@ const OrderFilterFlyout = ({
   isTDSynnex,
   subheaderReference,
   analyticsCategories,
-  resetReports,
 }) => {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
@@ -39,9 +38,6 @@ const OrderFilterFlyout = ({
   const customFiltersChecked = useOrderTrackingStore(
     (state) => state.filter.customFiltersChecked
   );
-  const filterClicked = useOrderTrackingStore(
-    (state) => state.filter.filterClicked
-  );
   const areThereAnyFiltersSelectedButNotApplied = useOrderTrackingStore(
     (state) => state.filter.areThereAnyFiltersSelectedButNotApplied
   );
@@ -50,12 +46,12 @@ const OrderFilterFlyout = ({
 
   const [showLess, setShowLess] = useState(false);
 
-  const isFilterModalOpen = useOrderTrackingStore(
-    (state) => state.filter.isFilterModalOpen
+  const filtersFlyoutConfig = useOrderTrackingStore(
+    (state) => state.filtersFlyout
   );
 
   const {
-    toggleFilterModal,
+    setCustomState,
     clearCheckedButNotAppliedOrderFilters,
     setFilterClicked,
     closeAllFilterOptions,
@@ -83,7 +79,7 @@ const OrderFilterFlyout = ({
   ];
 
   const showResult = () => {
-    resetReports();
+    filtersFlyoutConfig.clearReports();
     if (orderFilterCounter !== 0) {
       let checkedFilters = [];
       orderStatusFiltersChecked.length > 0 &&
@@ -112,7 +108,10 @@ const OrderFilterFlyout = ({
         )
       );
     }
-    toggleFilterModal();
+    setCustomState({
+      key: 'filtersFlyout',
+      value: { show: false },
+    });
     closeAllFilterOptions();
     setFilterClicked(false);
     setPredefinedFiltersApplied([
@@ -133,7 +132,10 @@ const OrderFilterFlyout = ({
   const handleClearFilter = () => {
     setFilterClicked(false);
     clearCheckedButNotAppliedOrderFilters();
-    toggleFilterModal();
+    setCustomState({
+      key: 'filtersFlyout',
+      value: { show: false },
+    });
     closeAllFilterOptions();
     setAreThereAnyFiltersSelectedButNotApplied();
   };
@@ -145,7 +147,7 @@ const OrderFilterFlyout = ({
 
   return (
     <BaseFlyout
-      open={isFilterModalOpen}
+      open={filtersFlyoutConfig?.show}
       onClose={handleClearFilter}
       width="425px"
       anchor="right"
