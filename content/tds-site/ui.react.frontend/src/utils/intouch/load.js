@@ -9,7 +9,8 @@ const renderIntouchHeaderHTML = () => {
 
   return fetch(url, {
     method: 'GET',
-    credentials: "include"
+    credentials: "include",
+    redirect: "follow"
   })
     .then(checkStatus)
     .then(parseResponse)
@@ -28,7 +29,8 @@ const renderIntouchFooterHTML = () => {
 
   return fetch(url, {
     method: 'GET',
-    credentials: "include"
+    credentials: "include",
+    redirect: "follow"
   })
     .then(checkStatus)
     .then(parseResponse)
