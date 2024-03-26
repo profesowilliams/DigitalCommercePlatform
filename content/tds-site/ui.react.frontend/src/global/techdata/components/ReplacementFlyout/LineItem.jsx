@@ -9,7 +9,6 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
     displayName,
     mfrNumber,
     originalOrderQuantity,
-    unitPrice,
     unitPriceFormatted,
     currency,
     lineDetails,
@@ -26,22 +25,27 @@ const LineItem = ({ data, labels = {}, toBeReplacedItem = false }) => {
         <div className="cmp-flyout-list__element__title">
           <p>{displayName}</p>
           <div>{`${getDictionaryValueOrKey(
-            labels?.lineMfgPartNo
+            labels?.lineMfgPartNo || labels?.lineMfgPartNoReplacement
           )} ${mfrNumber}`}</div>
         </div>
         <div className="cmp-flyout-list__element__quantity">
-          <p className="bold">{getDictionaryValueOrKey(labels.qty)}:</p>
+          <p className="bold">
+            {getDictionaryValueOrKey(labels?.qty || labels?.qtyReplacement)}:
+          </p>
           <p>{lineDetails[0]?.quantity ?? originalOrderQuantity}</p>
         </div>
         <div className="cmp-flyout-list__element__unit-cost">
           <p className="bold">
-            {getDictionaryValueOrKey(labels.unitCost)} ({currency})
+            {getDictionaryValueOrKey(labels?.unitCost)} ({currency})
           </p>
           <p>{unitPriceFormatted}</p>
         </div>
         <div className="cmp-flyout-list__element__line-total">
           <p className="bold">
-            {getDictionaryValueOrKey(labels.lineTotal)} ({currency})
+            {getDictionaryValueOrKey(
+              labels?.lineTotal || labels?.lineTotalReplacement
+            )}{' '}
+            ({currency})
           </p>
           <p>{lineDetails[0]?.subtotalPriceFormatted}</p>
         </div>

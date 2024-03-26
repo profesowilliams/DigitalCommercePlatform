@@ -191,10 +191,10 @@ function ProductReplacementFlyout({
   const buttonsSection = (
     <div className="cmp-flyout__footer-buttons order-modification">
       <button disabled={!selected} className="primary" onClick={handleUpdate}>
-        {getDictionaryValueOrKey(labels.update)}
+        {getDictionaryValueOrKey(labels?.update || labels?.updateReplacement)}
       </button>
       <button className="secondary" onClick={closeFlyout}>
-        {getDictionaryValueOrKey(labels.cancel)}
+        {getDictionaryValueOrKey(labels?.cancel || labels?.cancelReplacement)}
       </button>
     </div>
   );
@@ -204,7 +204,7 @@ function ProductReplacementFlyout({
       ...(enableReplace
         ? productDtos.map((product) => ({
             key: product.source.id,
-            label: getDictionaryValueOrKey(labels.replaceWithSuggestedItem),
+            label: getDictionaryValueOrKey(labels?.replaceWithSuggestedItem),
             content: (
               <LineItem
                 data={{
@@ -227,7 +227,7 @@ function ProductReplacementFlyout({
     //   },
     {
       key: 'removeWithoutReplacement',
-      label: getDictionaryValueOrKey(labels.removeWithoutReplacement),
+      label: getDictionaryValueOrKey(labels?.removeWithoutReplacement),
       content: null,
     },
   ];
@@ -252,7 +252,7 @@ function ProductReplacementFlyout({
       width="929px"
       anchor="right"
       subheaderReference={subheaderReference}
-      titleLabel={getDictionaryValueOrKey(labels.replacementModifyOrder)}
+      titleLabel={getDictionaryValueOrKey(labels?.replacementModifyOrder)}
       secondaryButton={null}
       isTDSynnex={isTDSynnex}
       onClickButton={null}
@@ -268,7 +268,7 @@ function ProductReplacementFlyout({
           />
         )}
         <p className="replacement-text">
-          {getDictionaryValueOrKey(labels.pleaseSelect)}
+          {getDictionaryValueOrKey(labels?.pleaseSelect)}
         </p>
         <div className="replacement-list">
           <FormControl>
