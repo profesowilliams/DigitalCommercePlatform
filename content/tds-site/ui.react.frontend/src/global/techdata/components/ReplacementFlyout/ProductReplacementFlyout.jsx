@@ -233,7 +233,7 @@ function ProductReplacementFlyout({
   ];
 
   useEffect(async () => {
-    if (tdNumber) {
+    if (tdNumber && productReplacementConfig?.show) {
       try {
         const result = await usGet(
           `${config.uiCommerceServiceDomain}/v2/ReplacementProduct?id=${tdNumber}`

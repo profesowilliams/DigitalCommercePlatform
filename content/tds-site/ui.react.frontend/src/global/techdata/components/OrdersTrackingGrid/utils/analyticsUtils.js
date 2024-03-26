@@ -33,11 +33,35 @@ export const getFilterAnalyticsGoogle = (category, filterData, dateLabel) => {
   };
 };
 
+const getEnglishReportLabel = (optionKey) => {
+  switch (optionKey) {
+    case 'OpenOrders':
+      return 'Open Orders';
+    case 'NewBacklog':
+      return 'New Backlog';
+    case 'EOLOrders':
+      return 'End of Life Orders';
+    case 'TodaysShipmentsDeliveries':
+      return `Today's Shipments/Deliveries`;
+    case 'Last7DaysOrders':
+      return 'Last 7 Days Orders';
+    case 'Last30DaysOrders':
+      return 'Last 30 Days Orders';
+    case 'Last7DaysShipments':
+      return 'Last 7 Days Shipments';
+    case 'Last30DaysShipments':
+      return 'Last 30 Days Shipments';
+    default:
+      return optionKey;
+  }
+}
+
 export const getReportAnalyticsGoogle = (category, option) => {
+  const reportEnglishLabel = getEnglishReportLabel(option.key);
   return {
     event: 'Order tracking - Reports',
     category,
-    orderTracking: option?.label,
+    orderTracking: reportEnglishLabel,
   };
 };
 
