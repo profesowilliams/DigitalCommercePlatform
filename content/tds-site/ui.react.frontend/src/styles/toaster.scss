@@ -1,8 +1,8 @@
 @mixin toasterContent($borderColor: #38853c) {
-  padding: 29px;
-  border-left: 9px solid $borderColor;
+  padding: 20px;
+  border-left: 4px solid $borderColor;
   display: flex;
-  gap: 1rem;
+  gap: 22px;
   position: relative;
 
   p {
@@ -31,6 +31,7 @@
 
     .cmp-toaster-content {
       @include toasterContent;
+      background-color: $light-forrest;
 
       &__message {
         font-family: $font-family-arial;
@@ -52,6 +53,7 @@
 
     .cmp-toaster-content-error {
       @include toasterContent($borderColor: #cd163f);
+      background-color: $light-cherry;
 
       p {
         margin-bottom: 0;
@@ -61,7 +63,7 @@
 }
 
 @mixin toasterContentOTG($borderColor: #38853c) {
-  padding: 20px 22px !important;
+  padding: 20px;
   border-left: 4px solid $borderColor;
   display: flex;
   gap: 22px;
@@ -93,6 +95,7 @@
 
     .cmp-toaster-content {
       @include toasterContentOTG;
+      background-color: $light-forrest;
 
       &__message {
         font-family: $font-family-arial;
@@ -121,6 +124,7 @@
 
     .cmp-toaster-content-error {
       @include toasterContent($borderColor: #cd163f);
+      background-color: $light-cherry;
 
       p {
         margin-bottom: 0;
