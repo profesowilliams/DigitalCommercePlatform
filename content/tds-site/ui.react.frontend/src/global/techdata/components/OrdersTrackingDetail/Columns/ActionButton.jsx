@@ -51,7 +51,6 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
   const lineId = line.line;
   const enableLineId = line.line.length === 1;
   const dNoteId = deliveryNotes?.length > 0 ? deliveryNotes[0].id : null;
-
   const toaster = {
     isOpen: true,
     origin: 'fromUpdate',
@@ -70,7 +69,8 @@ const ActionsButton = ({ line, element, index, config = {}, openFilePdf }) => {
     (invoice) => invoice.canDownloadDocument
   );
 
-  const trackAndTraceAvailable = line?.lineDetails?.length > index ? line?.lineDetails[index].canTrackAndTrace : false;
+  const trackAndTraceAvailable =
+    line?.lineDetails?.length > index ? element.canTrackAndTrace : false;
   const areDeliveryNotesAvailable =
     deliveryNotes?.length === 1 && deliveryNotes[0].canDownloadDocument;
   const areInvoicesAvailable =

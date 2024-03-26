@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { usGet } from '../../../../../utils/api';
 import FlyoutTableWithRedirectLinks from '../FlyoutTableWithRedirectLinks/FlyoutTableWithRedirectLinks';
-import { getDictionaryValueOrKey, addUrlParam } from '../../../../../utils/utils';
+import {
+  getDictionaryValueOrKey,
+  addUrlParam,
+} from '../../../../../utils/utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
-import { getTrackAndTraceAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import {
+  getTrackAndTraceAnalyticsGoogle,
+  pushDataLayerGoogle,
+} from '../../OrdersTrackingGrid/utils/analyticsUtils';
 
 function TrackingFlyout({
   config,
@@ -12,7 +18,6 @@ function TrackingFlyout({
   subheaderReference,
   isTDSynnex,
 }) {
-  const [dNoteId, setDNoteId] = useState(null);
   const trackingFlyoutConfig = useOrderTrackingStore((st) => st.trackingFlyout);
   const trackAndTraceCounter = useOrderTrackingStore(
     (state) => state.trackAndTraceCounter
@@ -36,12 +41,11 @@ function TrackingFlyout({
   };
 
   const handleTrackAndTrace = async (dNoteParam) => {
-    setDNoteId(dNoteParam);
     setTrackAndTraceCounter(trackAndTraceCounter + 1);
     try {
       const endpointUrl = enableLineId
-        ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteId}`
-        : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteId}`;
+        ? `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${lineId}/${dNoteParam}`
+        : `${config.uiCommerceServiceDomain}/v3/order/carrierurl/${orderId}/${dNoteParam}`;
       const result = await usGet(endpointUrl);
       const { baseUrl, parameters, carrier } = result.data;
       if (baseUrl) {
@@ -58,11 +62,7 @@ function TrackingFlyout({
         }
         window.open(baseUrl + trackAndTraceParams, '_blank');
         pushDataLayerGoogle(
-          getTrackAndTraceAnalyticsGoogle(
-            trackAndTraceCounter,
-            false,
-            carrier
-          )
+          getTrackAndTraceAnalyticsGoogle(trackAndTraceCounter, false, carrier)
         );
       }
     } catch (error) {
