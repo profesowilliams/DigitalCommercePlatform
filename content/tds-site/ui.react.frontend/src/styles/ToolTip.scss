@@ -48,5 +48,26 @@ div[class*='MuiTooltip-tooltip'] {
   padding: 8px;
 }
 div[class*='MuiPopper-root-MuiTooltip-popper'] .MuiTooltip-arrow::before {
-  background-color: $tooltip-background;
+  background-color: $tooltip-background !important;
+}
+.hover {
+  position: relative;
+
+  &:hover &__no-hover {
+    opacity: 0;
+  }
+
+  &:hover &__hover {
+    opacity: 1;
+  }
+
+  &__hover {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+  }
+
+  &__no-hover {
+    opacity: 1;
+  }
 }

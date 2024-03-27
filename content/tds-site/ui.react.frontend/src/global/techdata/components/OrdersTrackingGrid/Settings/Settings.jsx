@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   SettingsIcon,
   SettingsIconFilled,
@@ -7,17 +7,11 @@ import '../../../../../../src/styles/TopIconsBar.scss';
 import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import Tooltip from '@mui/material/Tooltip';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import Hover from '../../Hover/Hover';
 
 const Settings = ({ settings, gridConfig }) => {
-  const { setCustomState } = useOrderTrackingStore((st) => st.effects);
-  const [settingsHovered, setSettingsHovered] = useState(false);
+  const { setCustomState } = useOrderTrackingStore((state) => state.effects);
 
-  const handleMouseOverSettings = () => {
-    setSettingsHovered(true);
-  };
-  const handleMouseLeaveSettings = () => {
-    setSettingsHovered(false);
-  };
   const triggerSettingsFlyout = () => {
     setCustomState({
       key: 'settingsFlyout',
@@ -34,11 +28,11 @@ const Settings = ({ settings, gridConfig }) => {
     >
       <div
         onClick={triggerSettingsFlyout}
-        onMouseOver={handleMouseOverSettings}
-        onMouseLeave={handleMouseLeaveSettings}
         className="cmp-order-tracking-grid__settings"
       >
-        {settingsHovered ? <SettingsIconFilled /> : <SettingsIcon />}
+        <Hover onHover={<SettingsIconFilled />}>
+          <SettingsIcon />
+        </Hover>
       </div>
     </Tooltip>
   );

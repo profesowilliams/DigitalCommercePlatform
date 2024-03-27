@@ -16,6 +16,7 @@ import { setLocalStorageData } from '../utils/gridUtils';
 import { REPORTS_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 import Tooltip from '@mui/material/Tooltip';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import Hover from '../../Hover/Hover';
 
 function Report(
   {
@@ -30,13 +31,7 @@ function Report(
   const [isDropDownOpen, setIsDropdownOpen] = useState(false);
   const [currentValue, setCurrentValue] = useState(selectedKey);
   const wrapperRef = useRef(null);
-  const [isReportHovered, setIsReportHovered] = useState(false);
-  const handleMouseOverSearch = () => {
-    setIsReportHovered(true);
-  };
-  const handleMouseLeaveSearch = () => {
-    setIsReportHovered(false);
-  };
+
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropDownOpen);
   };
@@ -45,7 +40,6 @@ function Report(
     pushDataLayerGoogle(getReportAnalyticsGoogle(reportAnalyticsLabel, option));
     setCurrentValue(option.key);
     selectOption(option);
-    setIsReportHovered(false);
     setLocalStorageData(REPORTS_LOCAL_STORAGE_KEY, option);
   };
 
@@ -79,15 +73,13 @@ function Report(
       <div
         onClick={handleDropdownClick}
         className="cmp-order-tracking-grid__report"
-        onMouseOver={handleMouseOverSearch}
-        onMouseLeave={handleMouseLeaveSearch}
         data-testid="report"
       >
-        {isReportHovered ? (
-          <ReportIconFilled fill="#262626" className="icon-hover" />
-        ) : (
+        <Hover
+          onHover={<ReportIconFilled fill="#262626" className="icon-hover" />}
+        >
           <ReportIcon fill="#262626" className="icon-hover" />
-        )}
+        </Hover>
         {isDropDownOpen && (
           <ReportDropdown
             ref={wrapperRef}

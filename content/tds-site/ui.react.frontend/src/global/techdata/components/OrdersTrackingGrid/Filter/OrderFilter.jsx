@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   OptionsIcon,
   OptionsIconFilled,
@@ -8,21 +8,15 @@ import { useOrderTrackingStore } from './../store/OrderTrackingStore';
 import OrderCountClear from './OrderCountClear';
 import Tooltip from '@mui/material/Tooltip';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
+import Hover from '../../Hover/Hover';
 
 function OrderFilter({ clearFilters, gridConfig, clearReports }) {
   const orderFilterCounter = useOrderTrackingStore(
     (state) => state.filter.orderFilterCounter
   );
   const { setFilterClicked, setCustomState } = useOrderTrackingStore(
-    (st) => st.effects
+    (state) => state.effects
   );
-  const [isFilterHovered, setIsFilterHovered] = useState(false);
-  const handleMouseOverFilter = () => {
-    setIsFilterHovered(true);
-  };
-  const handleMouseLeaveFilter = () => {
-    setIsFilterHovered(false);
-  };
 
   const triggerFiltersFlyout = () => {
     setCustomState({
@@ -41,18 +35,18 @@ function OrderFilter({ clearFilters, gridConfig, clearReports }) {
       >
         <div
           className="cmp-order-tracking-grid__filter"
-          onMouseOver={handleMouseOverFilter}
-          onMouseLeave={handleMouseLeaveFilter}
           onClick={() => {
             triggerFiltersFlyout();
             setFilterClicked(false);
           }}
         >
-          {isFilterHovered ? (
-            <OptionsIconFilled fill="#262626" className="icon-hover" />
-          ) : (
+          <Hover
+            onHover={
+              <OptionsIconFilled fill="#262626" className="icon-hover" />
+            }
+          >
             <OptionsIcon fill="#262626" className="icon-hover" />
-          )}
+          </Hover>
         </div>
       </Tooltip>
       {orderFilterCounter > 0 && (
