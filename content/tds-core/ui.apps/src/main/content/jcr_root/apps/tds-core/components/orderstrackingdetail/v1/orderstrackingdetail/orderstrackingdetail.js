@@ -75,6 +75,8 @@ use(["../../../common/utils.js"], function (utils) {
     "itemsUpdateErrorMessage",
     "endUserInfoTemplate",
     "endUserInfoClose",
+    "shippedByLabel",
+    "tdSynnexPOLabel",
   ];
 
   properties &&

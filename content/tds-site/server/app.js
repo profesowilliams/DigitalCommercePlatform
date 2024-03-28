@@ -7210,6 +7210,57 @@ app.get("/ui-commerce/v3/Order/ITOrderXML/:id?", (req, res) => {
 });
 
 app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
+  const responseWithGroups = {
+    content: {
+      orderNumber: "6083426137",
+      customerPO: "4516345036",
+      currency: "EUR",
+      orderEditable: false,
+      group: [
+        {
+          Manufacturer: "IBM",
+          TDSynnexPO: "12345",
+          items: [
+            {
+              line: "10",
+              urlProductImage:
+                "https://cdn.cs.1worldsync.com/48/04/4804da15-e6cf-4b91-9588-582c19e3abe1.jpg",
+              urlProductDetailsPage:
+                "https://intouch.tdsynnex.com/GUIOnlineCheckNav/OnlineCheck.aspx?prodid=3526839",
+              displayName: "HP LJ Pro 550-sheet tray M454 M479",
+              tdNumber: "3526839",
+              mfrNumber: "CF404A",
+              isEOL: false,
+              originalOrderQuantity: 1,
+              canTrackAndTrace: false,
+              unitPrice: 89.23,
+              unitPriceFormatted: "89,23",
+              lineDetails: [
+                {
+                  quantity: 1,
+                  subtotalPrice: 89.23,
+                  subtotalPriceFormatted: "89,23",
+                  shipDate: "03-06-2024",
+                  shipDateFormatted: "06.03.2024",
+                  shipDateDetailsTranslated: "In Bearbeitung",
+                  status: "OPEN",
+                  statusText: "Offen",
+                  isShipment: false,
+                  serialsAny: false,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    error: {
+      code: 0,
+      messages: [],
+      isError: false,
+    },
+  };
+
   const response = {
     content: {
       orderNumber: "6083968023",
@@ -7408,7 +7459,9 @@ app.get("/ui-commerce/v3/orderdetails/orderlines/:id?/lines", (req, res) => {
   };
 
   setTimeout(() => {
-    return res.status(200).json(response);
+    return res
+      .status(200)
+      .json(Math.round(Math.random()) ? response : responseWithGroups); // Simulate random return of one of 2 kinds of responses
   }, 200);
 });
 

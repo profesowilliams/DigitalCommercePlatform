@@ -80,6 +80,21 @@
     padding-right: 12px;
   }
 
+  &__manufacturer {
+    top: -12px;
+    position: absolute;
+    font-size: 14px;
+    left: 4px;
+    text-wrap: nowrap;
+    b {
+      font-weight: 600;
+    }
+    .separator {
+      margin: 0 16px;
+      color: $cool-gray;
+    }
+  }
+
   &__line {
     text-align: right;
   }

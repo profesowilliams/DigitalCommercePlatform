@@ -106,11 +106,38 @@ const loadingCellRenderer = () => {
   gridRef.current?.api.setRowData(rowsToZero);
 };
 
+
+const prepareGroupedItems = (content) => {
+  let items = [];
+
+  content.group.forEach((group) => {
+    group.items.forEach((item, index) => {
+      items.push({
+        ...item,
+        ...(index === 0
+          ? { TDSynnexPO: group.TDSynnexPO, manufacturer: group.Manufacturer }
+          : {}),
+      });
+    });
+  });
+  return items;
+};
+
 const customRequestInterceptor = async () => {
   const response = await fetchData(config);
-  setResponse(response);
+  let mappedResponse;
+  if ('group' in response.data.content) {
+    const groupedItemsResponse = mapServiceData({
+      ...response,
+      data: { content: { items: prepareGroupedItems(response.data.content) } },
+    });
+    setResponse(groupedItemsResponse);
+    mappedResponse = groupedItemsResponse;
+  } else {
+    setResponse(response);
+    mappedResponse = mapServiceData(response);
+  }
   setResponseError(false);
-  const mappedResponse = mapServiceData(response);
   return mappedResponse;
 };
 
@@ -127,7 +154,9 @@ const columnDefinitionsOverride = [
   {
     field: 'id',
     headerName: getDictionaryValueOrKey(config?.itemsLabels?.lineNo),
-    cellRenderer: ({ data }) => <LineNumberColumn line={data} />,
+    cellRenderer: ({ data }) => (
+      <LineNumberColumn line={data} labels={config?.itemsLabels} />
+    ),
     width: gridColumnWidths.id,
   },
   {
@@ -216,9 +245,16 @@ const getRowClass = ({ node }) => {
     return true;
   }
 };
+const getGroupHeaderClass = ({ node }) => {
+  const data = node.group ? node.aggData : node.data;
+  if (data?.manufacturer) {
+    return true;
+  }
+};
 
 const rowClassRules = {
   'gray-out-changing-rows': getRowClass,
+  'group-header-row': getGroupHeaderClass,
 };
 
 const myColumnDefs = useMemo(

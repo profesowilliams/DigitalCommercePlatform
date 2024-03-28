@@ -299,6 +299,10 @@
   .gray-out-changing-rows {
     opacity: 0.3;
   }
+  .ag-row.ag-row-group.group-header-row {
+    padding-top: 30px;
+    border-top: 1px solid $cool-gray;
+  }
 }
 
 .cmp-order-preview {
