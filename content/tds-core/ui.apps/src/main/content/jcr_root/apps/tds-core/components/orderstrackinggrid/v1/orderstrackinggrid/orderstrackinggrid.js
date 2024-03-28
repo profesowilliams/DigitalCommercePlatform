@@ -34,6 +34,7 @@ use(["../common/utils.js"], function (utils) {
       "last90DaysCriteria",
       "multiple",
       "shipToTooltipTemplate",
+      "eolUpdateErrorMessage",
       "menuCopy",
       "menuCopyWithHeaders",
       "menuExport",
