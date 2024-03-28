@@ -77,7 +77,7 @@
 
   &__closeIcon {
     position: absolute;
-    top: 22px;
+    top: 12px;
     right: 22px;
     cursor: pointer;
     svg {
@@ -130,6 +130,14 @@
         margin-bottom: 0;
       }
     }
+  }
+}
+
+.cmp-toaster-content {
+  display: flex;
+  align-items: flex-start;
+  &__closeIcon {
+    margin-left: 20px;
   }
 }
 
