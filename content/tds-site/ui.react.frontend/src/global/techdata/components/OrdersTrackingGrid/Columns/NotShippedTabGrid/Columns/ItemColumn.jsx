@@ -1,4 +1,6 @@
 import React from 'react';
+import Tooltip from '@mui/material/Tooltip';
+
 function ItemColumn({ line }) {
   return (
     <div className="order-line-details__content__innerTableNotShipped__item-row">
@@ -7,11 +9,18 @@ function ItemColumn({ line }) {
         src={line?.urlProductImage}
         alt=""
       />
-      <div className="order-line-details__content__innerTableNotShipped__right">
-        <span className="order-line-details__content__innerTableNotShipped__ellipsis">
-          {line?.displayName}
-        </span>
-      </div>
+      <Tooltip
+        title={line?.displayName ?? ''}
+        placement="top"
+        arrow
+        disableInteractive={true}
+      >
+        <div className="order-line-details__content__innerTableNotShipped__right">
+          <span className="order-line-details__content__innerTableNotShipped__ellipsis">
+            {line?.displayName}
+          </span>
+        </div>
+      </Tooltip>
     </div>
   );
 }
