@@ -1,4 +1,5 @@
 import React from 'react';
+import Tooltip from '@mui/material/Tooltip';
 
 function DropdownOrderShippedTabGridDetails({ data }) {
   const ProductTable = ({ data }) => {
@@ -10,7 +11,7 @@ function DropdownOrderShippedTabGridDetails({ data }) {
       qty: '130px',
       deliveryEstimate: '50px',
     };
-   
+
     return (
       <div className="order-line-details__content__innerTable">
         {data.map((item, index) => {
@@ -45,17 +46,25 @@ function DropdownOrderShippedTabGridDetails({ data }) {
                   alt=""
                 />
               </div>
-              <div
-                style={{ width: defaultWidth.item }}
-                className="order-line-details__content__innerTable__column"
+
+              <Tooltip
+                title={displayName ?? ''}
+                placement="top"
+                arrow
+                disableInteractive={true}
               >
-                <span
-                  style={{ maxWidth: defaultWidth.item }}
-                  className="order-line-details__content__innerTable__text"
+                <div
+                  style={{ width: defaultWidth.item }}
+                  className="order-line-details__content__innerTable__column"
                 >
-                  {displayName}
-                </span>
-              </div>
+                  <span
+                    style={{ maxWidth: defaultWidth.item }}
+                    className="order-line-details__content__innerTable__text"
+                  >
+                    {displayName}
+                  </span>
+                </div>
+              </Tooltip>
               <div
                 style={{ width: defaultWidth.pnsku }}
                 className="order-line-details__content__innerTable__column"
