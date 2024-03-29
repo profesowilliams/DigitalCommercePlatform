@@ -10,7 +10,7 @@ function QuantityAndDeliveryEstimateLine({
   index,
   config,
   id,
-  isOrderModificationButtonVisible,
+  isSeeOptionsButtonVisible,
 }) {
   const multiple = line?.lineDetails?.length > 1;
   const isSingleElement = !multiple;
@@ -77,7 +77,7 @@ function QuantityAndDeliveryEstimateLine({
         <WarningTriangleLarge />
         {getDictionaryValueOrKey(config?.endOfLife)}
       </span>
-      {isOrderModificationButtonVisible && (
+      {isSeeOptionsButtonVisible && (
         <p className="line-status-link">
           {getDictionaryValueOrKey(config?.eolSeeOptions)}
         </p>
@@ -123,9 +123,7 @@ function QuantityAndDeliveryEstimateLine({
           <span
             className="order-line-details__content__innerTableNotShipped__separateLineText"
             onClick={
-              isEOL && isOrderModificationButtonVisible
-                ? handleSeeOptionsClick
-                : null
+              isEOL && isSeeOptionsButtonVisible ? handleSeeOptionsClick : null
             }
           >
             {isEOL ? EOLStatus : el.statusText || ''}

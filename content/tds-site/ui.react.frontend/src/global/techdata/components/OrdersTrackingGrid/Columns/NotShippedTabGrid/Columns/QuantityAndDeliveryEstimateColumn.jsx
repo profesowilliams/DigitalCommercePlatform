@@ -5,7 +5,7 @@ function QuantityAndDeliveryEstimateColumn({
   line,
   config,
   id,
-  isOrderModificationButtonVisible,
+  isSeeOptionsButtonVisible,
 }) {
   return (
     <div className="order-line-details__content__innerTableNotShipped__item-column">
@@ -17,7 +17,7 @@ function QuantityAndDeliveryEstimateColumn({
           key={index}
           config={config}
           id={id}
-          isOrderModificationButtonVisible={isOrderModificationButtonVisible}
+          isSeeOptionsButtonVisible={isSeeOptionsButtonVisible}
         />
       ))}
     </div>
