@@ -308,6 +308,8 @@ function OrderModificationFlyout({
         });
   }, [orderNumber, flyoutVisible]);
 
+  useEffect(() => () => setOrderModificationResponse(null), []);
+
   return (
     <BaseFlyout
       open={orderModificationConfig?.show}
