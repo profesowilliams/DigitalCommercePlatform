@@ -49,19 +49,18 @@
       // Add image styles here
 
       .cmp-image__image {
-        width: auto;
-        max-width: clamp(300px, 40.5vw, 640px);
+        max-width: auto;
       }
 
       @include tablet {
         .cmp-image__image {
-          width: 400px;
+          max-width: auto;
         }
       }
 
       @include mobile {
         .cmp-image__image {
-          width: 300px;
+          max-width: auto;
         }
       }
     }
@@ -77,13 +76,11 @@
      * Teaser content styles.
      */
     .cmp-teaser__content {
-      /**
-       * Teaser title styles.
-       */
+      padding-top: 2.5rem;
+
       .cmp-teaser__title {
         height: none;
         padding-left: 2rem;
-        width: clamp(300px, 40.5vw, 640px);
       }
 
       /**
