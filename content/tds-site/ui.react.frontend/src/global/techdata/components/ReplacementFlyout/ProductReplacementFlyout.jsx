@@ -209,7 +209,7 @@ function ProductReplacementFlyout({
               <LineItem
                 data={{
                   ...productReplacementConfig?.data,
-                  urlProductImage: product.images.default.url,
+                  urlProductImage: product.image.url,
                   displayName: product.description,
                   mfrNumber: product.manufacturerPartNumber,
                   unitPrice: product.price.bestPrice,

@@ -617,7 +617,7 @@ $flyout-small-height-formax: 779px;
   }
   .cmp-flyout-list__element {
     display: grid;
-    grid-template-columns: 36px 100px 55px 138px repeat(3, 1fr);
+    grid-template-columns: 36px 100px 55px 138px 138px repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0;
     grid-row-gap: 0;
