@@ -19,7 +19,6 @@ const MainGridFlyouts = ({
   searchParams,
   defaultDateRange,
   settings,
-  gridRef,
   rowsToGrayOutTDNameRef,
   addNewItem,
 }) => {
@@ -98,7 +97,6 @@ const MainGridFlyouts = ({
           ...gridConfig?.orderModifyLabels,
         }}
         config={gridConfig}
-        gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={addNewItem}
       />

@@ -39,7 +39,6 @@ import {
   getPaginationValue,
   setLocalStorageData,
   updateQueryString,
-  removeLocalStorageData,
   mapServiceData,
   isFirstTimeSortParameters,
   getLocalStorageData,
@@ -69,7 +68,6 @@ const searchParamsKeys = [
 
 function OrdersTrackingGrid(props) {
   const { redirectedFrom = '' } = getUrlParams();
-  const areSearchParamsValid = useRef(false);
   const previousFilter = useRef(false);
   const hasSortChanged = useRef(false);
   const previousSortChanged = useRef(false);
@@ -82,11 +80,10 @@ function OrdersTrackingGrid(props) {
   const isOnSearchAction = useRef(false);
   const dNoteFailedCounter = useRef(1);
   const invoiceFailedCounter = useRef(1);
-  const gridRef = useRef();
   const rowsToGrayOutTDNameRef = useRef([]);
+
   const {
     setUserData,
-    setToolTipData,
     setCustomState,
     closeAndCleanToaster,
     setFilterList,
@@ -512,7 +509,6 @@ function OrdersTrackingGrid(props) {
               }
               hasAIORights={hasAIORights}
               hasOrderModificationRights={hasOrderModificationRights}
-              gridRef={gridRef}
               rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
               newItem={newItem}
             />
@@ -551,7 +547,6 @@ function OrdersTrackingGrid(props) {
         }}
         defaultDateRange={componentProp?.defaultSearchDateRange}
         settings={settingsResponse}
-        gridRef={gridRef}
         rowsToGrayOutTDNameRef={rowsToGrayOutTDNameRef}
         addNewItem={handleAddNewItem}
       />
