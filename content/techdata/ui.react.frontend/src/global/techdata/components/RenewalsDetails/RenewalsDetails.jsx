@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ConfigGrid from "./ConfigGrid/ConfigGrid";
 import RenewalPreviewGrid from "./RenewalPreviewGrid/RenewalPreviewGrid";
-import useGet from "../../hooks/useGet";
+import usePost from "../../hooks/usePost";
 import Loader from "../Widgets/Loader";
 import Modal from '../Modal/Modal';
 import { getUrlParams } from "../../../../utils";
@@ -18,7 +18,7 @@ import CancelDialog from "./Cancel/CancelDialog";
 import { get, post } from '../../../../utils/api';
 import { getStatusLoopUntilStatusIsActive, mapRenewalForUpdateDetails } from '../RenewalsGrid/Orders/orderingRequests';
 import { useRenewalsDetailsStore } from "./store/RenewalsDetailsStore";
-import EditFlow from './ConfigGrid/Common/EditFlow'; 
+import EditFlow from './ConfigGrid/Common/EditFlow';
 import { removeDashboardSeparator } from "../../../../utils/utils";
 import useAuth from "../../hooks/useAuth";
 import { getSessionInfo } from "../../../../utils/intouch/user/get";
@@ -30,8 +30,11 @@ function RenewalsDetails(props) {
   const effects = useRenewalsDetailsStore(state => state.effects);
   const { id = "U100000008378", type = "renewal" } = getUrlParams();
   const [modal, setModal] = useState(null);
-  const [apiResponse, isLoading, error] = useGet(
-    `${componentProp.uiServiceEndPoint}?id=${id}&type=${type}`
+  const params = {
+    id: id
+  };
+  const [apiResponse, isLoading, error] = usePost(
+    `${componentProp.uiServiceEndPoint}`, params
   );
   const userData = useStore((state) => state.userData);
 
