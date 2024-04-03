@@ -52,6 +52,7 @@ function DropdownOrderShippedTabGridDetails({ data }) {
                 placement="top"
                 arrow
                 disableInteractive={true}
+                disableHoverListener={displayName?.length < 56}
               >
                 <div
                   style={{ width: defaultWidth.item }}

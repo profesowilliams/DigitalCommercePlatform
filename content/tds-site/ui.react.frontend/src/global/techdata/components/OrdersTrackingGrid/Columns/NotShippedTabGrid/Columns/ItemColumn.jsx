@@ -14,6 +14,7 @@ function ItemColumn({ line }) {
         placement="top"
         arrow
         disableInteractive={true}
+        disableHoverListener={line?.displayName?.length < 53}
       >
         <div className="order-line-details__content__innerTableNotShipped__right">
           <span className="order-line-details__content__innerTableNotShipped__ellipsis">

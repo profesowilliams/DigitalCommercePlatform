@@ -95,6 +95,7 @@ function DescriptionColumn({ line, config }) {
           placement="top"
           arrow
           disableInteractive={true}
+          disableHoverListener={line?.displayName?.length < 50}
         >
           {line?.displayName &&
             (line?.urlProductDetailsPage ? (
