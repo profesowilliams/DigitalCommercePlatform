@@ -37,6 +37,7 @@ use(["../../../common/utils.js"], function (utils) {
 
   // Labels
   const propertiesList = [
+    "pageTitle",
     "menuCopy",
     "menuCopyWithHeaders",
     "menuExport",

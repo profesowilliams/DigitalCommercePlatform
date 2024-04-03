@@ -15,6 +15,7 @@ import {
 import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTrackingStore';
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getOrderDetailsAnalyticsGoogle } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { getDictionaryValueOrKey } from './../../../../utils/utils';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -183,10 +184,15 @@ function OrdersTrackingDetail(props) {
   }, []);
 
   useEffect(() => {
+    document.title = getDictionaryValueOrKey(config?.labels?.pageTitle);
+  }, []);
+
+  useEffect(() => {
     if (orderModifyHeaderInfo) {
       headerRequest();
     }
   }, [orderModifyHeaderInfo]);
+
   return (
     <>
       <div className="cmp-quote-preview cmp-order-preview">

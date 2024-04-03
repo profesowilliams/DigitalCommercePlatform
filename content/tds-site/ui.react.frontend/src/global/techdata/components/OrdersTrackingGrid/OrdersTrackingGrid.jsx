@@ -361,6 +361,7 @@ function OrdersTrackingGrid(props) {
   };
 
   useEffect(async () => {
+    document.title = getDictionaryValueOrKey(gridConfig?.pageTitle);
     if (!(redirectedFrom === 'detailsPage' || pageAccessedByReload)) {
       resetLocalStorage(searchParamsKeys);
     }
@@ -426,6 +427,7 @@ function OrdersTrackingGrid(props) {
     ...getPredefinedSearchOptionsList(searchLabels),
     ...searchOptionsList,
   ];
+
   useEffect(() => {
     if (!userData) {
       return;

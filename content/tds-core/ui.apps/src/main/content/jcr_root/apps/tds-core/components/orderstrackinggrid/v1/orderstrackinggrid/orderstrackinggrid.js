@@ -496,6 +496,9 @@ use(["../common/utils.js"], function (utils) {
     if (this.agGridLicenseKey) {
       jsonObject["agGridLicenseKey"] = this.agGridLicenseKey;
     }
+    if (properties["pageTitle"]) {
+      jsonObject["pageTitle"] = properties["pageTitle"];
+    }
     if (properties["itemsPerPage"]) {
       jsonObject["itemsPerPage"] = properties["itemsPerPage"];
     }
