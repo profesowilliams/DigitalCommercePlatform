@@ -79,6 +79,22 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
     event.preventDefault();
   };
 
+  const handleEmailEdit = (event) => {
+    const emailToEdit = event?.currentTarget?.innerText;
+    const updatedEmails = selectedEmails.filter(
+      (email) => email !== emailToEdit
+    );
+    console.log(updatedEmails);
+    if (inputValue !== '') {
+      updatedEmails.push(inputValue);
+    }
+    setSelectedEmails([...updatedEmails]);
+    if (!isValidEmailFormat(inputValue)) {
+      setInvalidEmails([...invalidEmails, inputValue])
+    }
+    setInputValue(emailToEdit);
+  };
+
   useEffect(() => {
   }, []);
 
@@ -89,7 +105,6 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
             id={id}
             options={[]}
             freeSolo={true}
-            options={[]}
             disableClearable
             defaultValue={[]}
             value={selectedEmails}
@@ -104,6 +119,7 @@ export function EmailInput({ id, label, required, enableShareButton, requiredTex
                 <Chip
                   variant="outlined"
                   label={option}
+                  onDoubleClick = {handleEmailEdit}
                   onDelete={() => handleDelete(option)}
                   color={invalidEmails.includes(option) ? "error" : "default"}
                   {...getTagProps({ index })}

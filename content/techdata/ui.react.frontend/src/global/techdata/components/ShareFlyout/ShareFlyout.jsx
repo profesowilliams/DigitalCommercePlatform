@@ -307,10 +307,8 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
                     errorFlags.incorrect ?
                     (
                       <>
-                        <a className="cancel-btn" href={`#`}
-                        onClick={closeAlert}>{shareFlyoutContent.incorrectEmailCancelLabel}</a>
                         <a className="try-again-btn" href={`#`}
-                          onClick={handleTryAgainBtn}>{shareFlyoutContent.incorrectEmailTryAgainLabel}</a>
+                        onClick={closeAlert}>{shareFlyoutContent.incorrectEmailTryAgainLabel}</a>
                       </>
                     ) : null
                   }

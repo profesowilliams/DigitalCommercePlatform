@@ -808,11 +808,6 @@
 															sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
 															fieldLabel="Incorrect Email Description"
 															name="./incorrectEmailDescription"/>
-													<incorrectEmailCancelLabel
-															jcr:primaryType="nt:unstructured"
-															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-															fieldLabel="Incorrect Email Cancel Button Label"
-															name="./incorrectEmailCancelLabel"/>
 													<incorrectEmailTryAgainLabel
 															jcr:primaryType="nt:unstructured"
 															sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

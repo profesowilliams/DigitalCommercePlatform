@@ -469,9 +469,6 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["incorrectEmailDescription"]) {
         shareFlyout.incorrectEmailDescription = properties["incorrectEmailDescription"];
     }
-    if (properties && properties["incorrectEmailCancelLabel"]) {
-        shareFlyout.incorrectEmailCancelLabel = properties["incorrectEmailCancelLabel"];
-    }
     if (properties && properties["incorrectEmailTryAgainLabel"]) {
         shareFlyout.incorrectEmailTryAgainLabel = properties["incorrectEmailTryAgainLabel"];
     }

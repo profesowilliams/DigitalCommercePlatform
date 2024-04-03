@@ -15,7 +15,7 @@ function GridHeader({ gridProps, data }) {
   const [isPDFDownloadableOnDemand, setPDFDownloadableOnDemand] = useState(false);
   const effects = useRenewalGridState(state => state.effects);   
   const analyticsCategory = useRenewalGridState((state) => state.analyticsCategory);
-  const isOpportunity = data.quoteType === 'Opportunity' ? true : false;
+  const isOpportunity = data.canRequestQuote;
 
   const downloadXLS = () => {
     try {
@@ -187,7 +187,7 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           <GridHeader data={data} gridProps={gridProps} />
         </div>
         {
-          data.quoteType === 'Opportunity' && (
+          data.canRequestQuote && (
             <div className='opportunity-quote'>
               <p><InfoIcon />{gridProps.quotePreview.quoteOpportunityText}</p>
               <a href='#quote'>{gridProps.quotePreview.quoteOpportunityRequestLabel}</a>

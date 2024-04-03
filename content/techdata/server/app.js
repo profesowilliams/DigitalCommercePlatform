@@ -4897,6 +4897,7 @@ app.get("/ui-renewal/v1/Details", function (req, res) {
           "currency": "INR",
           "documentType": null,
           "quoteType": "Opportunity",
+          "canRequestQuote": true,
           "type": null,
           "level": null,
           "creator": null,
@@ -4989,7 +4990,7 @@ app.post("/ui-renewal/v1/ShareQuoteEmail", function (req, res) {
     //mockResponses.failedResponse
 
     setTimeout(() => {
-      return res.status(200).json(success);
+      return res.status(200).json(notFound);
     }, 1000);
 });
 
