@@ -13,7 +13,6 @@ import {
   getLocalStorageData,
 } from './gridUtils';
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
-import { getAdvancedSearchNRFAnalyticsGoogle, getReportsNRFAnalyticsGoogle, getSearchNRFAnalyticsGoogle, pushDataLayerGoogle } from './analyticsUtils';
 
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   const searchParams = new URLSearchParams(defaultDateRange);
@@ -103,14 +102,6 @@ export async function fetchReport(
 
   try {
     const result = await usGet(finalUrl);
-    if (
-      !result?.content?.totalItems ||
-      result?.isError
-    ) {
-      if (reportValue) {
-        pushDataLayerGoogle(getReportsNRFAnalyticsGoogle(reportValue));
-      }
-    }
     return result;
   } catch (error) {
     console.error('🚀error on orders tracking grid >>', error);
@@ -233,16 +224,6 @@ export async function fetchData(config) {
 
   try {
     const result = await usGet(filterUrl, params);
-    if(!result?.content?.totalItems ||
-      result?.isError
-    ) {
-    if (searchCriteria.current?.field) {
-      pushDataLayerGoogle(getSearchNRFAnalyticsGoogle());
-    }
-    if (filtersStatusAndType !== '' || dateFilters.length > 0) {
-      pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
-    }
-  }
     previousFilter.current = { ...params };
     return result;
   } catch (error) {

@@ -31,6 +31,9 @@ import {
   pushDataLayerGoogle,
   getPageReloadAnalyticsGoogle,
   pushFailedDownloadGoogleAnalytics,
+  getSearchNRFAnalyticsGoogle,
+  getAdvancedSearchNRFAnalyticsGoogle,
+  getReportsNRFAnalyticsGoogle,
 } from './utils/analyticsUtils';
 import OrderDetailsRenderers from './Columns/OrderDetailsRenderers';
 import MainGridHeader from './MainGrid/MainGridHeader';
@@ -208,6 +211,19 @@ function OrdersTrackingGrid(props) {
 
     if (ordersCountResponse.error?.isError) {
       setResponseError(true);
+      if (reportFilterValue?.current?.value) {
+        pushDataLayerGoogle(
+          getReportsNRFAnalyticsGoogle(reportFilterValue.current.value)
+        );
+      } 
+      if (searchCriteria?.current?.field) {
+        pushDataLayerGoogle(getSearchNRFAnalyticsGoogle());
+      }
+      const filtersStatusAndType =
+        (filtersRefs?.current?.type ?? '') + (filtersRefs?.current?.status ?? '');
+      if (filtersStatusAndType !== '' || dateFilters.length > 0) {
+        pushDataLayerGoogle(getAdvancedSearchNRFAnalyticsGoogle());
+      }
     } else {
       setResponseError(false);
       const mappedResponse = mapServiceData(response);
