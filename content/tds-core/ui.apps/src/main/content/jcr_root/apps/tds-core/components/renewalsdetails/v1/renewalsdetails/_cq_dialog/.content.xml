@@ -541,6 +541,161 @@
                                     </column>
                                 </items>
                             </copyFlyout>
+                            <shareFlyout
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="Share Flyout"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <shareFlyoutGroup
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <shareFlyoutTitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Title"
+                                                            name="./shareFlyoutTitle"/>
+                                                    <shareFlyoutDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Description"
+                                                            name="./shareFlyoutDescription"/>
+                                                    <emailPreviewDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Email Preview Description"
+                                                            name="./emailPreviewDescription"/>
+                                                    <shareFlyoutButtonLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Button Label"
+                                                            name="./shareFlyoutButtonLabel"/>
+                                                    <shareFlyoutButtonSharingLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Button Loading Label"
+                                                            name="./shareFlyoutButtonSharingLabel"/>
+                                                    <emailToLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Email To Label"
+                                                            name="./emailToLabel"/>
+                                                    <emailCCLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Email CC Label"
+                                                            name="./emailCCLabel"/>
+                                                    <shareFlyoutSignatureLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Signature Label"
+                                                            name="./shareFlyoutSignatureLabel"/>
+                                                    <requiredText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Field Required Text"
+                                                            name="./requiredText"/>
+                                                    <shareFlyoutCommentsLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Comments Label"
+                                                            name="./shareFlyoutCommentsLabel"/>
+                                                    <shareFlyoutQuoteDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Quote Description"
+                                                            name="./shareFlyoutQuoteDescription"/>
+                                                    <shareFlyoutQuoteButtonLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Quote Button Label"
+                                                            name="./shareFlyoutQuoteButtonLabel"/>
+                                                    <shareFlyoutCommentCountText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Comment Count Text"
+                                                            name="./shareFlyoutCommentCountText"/>
+                                                    <shareFlyoutCommentCount
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Flyout Comment Count"
+                                                            name="./shareFlyoutCommentCount"/>
+                                                    <shareFailedLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Failed Label"
+                                                            name="./shareFailedLabel"/>
+                                                    <shareFailedDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Share Failed Description"
+                                                            name="./shareFailedDescription"/>
+                                                    <shareFailedCancelLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Failed Cancel Button Label"
+                                                            name="./shareFailedCancelLabel"/>
+                                                    <shareFailedTryAgainLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Share Failed Try Again Button Label"
+                                                            name="./shareFailedTryAgainLabel"/>
+                                                    <incorrectEmailLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Incorrect Email Label"
+                                                            name="./incorrectEmailLabel"/>
+                                                    <incorrectEmailDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Incorrect Email Description"
+                                                            name="./incorrectEmailDescription"/>
+                                                    <incorrectEmailCancelLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Incorrect Email Cancel Button Label"
+                                                            name="./incorrectEmailCancelLabel"/>
+                                                    <incorrectEmailTryAgainLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Incorrect Email Try Again Button Label"
+                                                            name="./incorrectEmailTryAgainLabel"/>
+                                                    <recipientNotFoundLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Recipient Not Found Label"
+                                                            name="./recipientNotFoundLabel"/>
+                                                    <recipientNotFoundDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Recipient Not Found Description"
+                                                            name="./recipientNotFoundDescription"/>
+                                                    <recipientNotFoundCancelLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Recipient Not Found Cancel Button Label"
+                                                            name="./recipientNotFoundCancelLabel"/>
+                                                    <recipientNotFoundContinue
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Recipient Not Found Continue Button Label"
+                                                            name="./recipientNotFoundContinueLabel"/>
+                                                    <shareSuccessMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Share Success Message"
+                                                            name="./shareSuccessMessage"/>
+                                                </items>
+                                            </shareFlyoutGroup>
+                                        </items>
+                                    </column>
+                                </items>
+                            </shareFlyout>
 							<headerCards
 	                            jcr:primaryType="nt:unstructured"
 	                            jcr:title="Header Cards"
@@ -720,6 +875,78 @@
                                     </columns>
                                 </items>
                             </lineItemDetailLabels>
+                            <requestQuote
+                                jcr:primaryType="nt:unstructured"
+                                jcr:title="Request Quote"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <columns
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                        margin="{Boolean}true">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <column
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <requestQuoteHeading
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldDescription="Request Quote Heading"
+                                                            fieldLabel="Request Quote Heading"
+                                                            name="./requestQuoteHeading"/>
+                                                    <requestQuoteDescription
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Request Quote Description"
+                                                            name="./requestQuoteDescription"/>
+                                                    <additionalInformationLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Additional Information Label"
+                                                            name="./additionalInformationLabel"/>
+                                                    <additionalInformationPlaceholderText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Additional Information Placeholder Text"
+                                                            name="./additionalInformationPlaceholderText"/>
+                                                    <requestQuoteCommentCountText
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Flyout Comment Count Text"
+                                                            name="./requestQuoteCommentCountText"/>
+                                                    <requestQuoteCommentCount
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Flyout Comment Count"
+                                                            name="./requestQuoteCommentCount"/>
+                                                    <requestQuoteButtonLabel
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Request Quote Button Label"
+                                                            name="./requestQuoteButtonLabel"/>
+                                                    <successToastMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Success Toast Message"
+                                                            name="./successToastMessage"/>
+                                                    <errorToastMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Error Toast Message"
+                                                            name="./errorToastMessage"/>
+                                                    <quoteRequestedMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Quote Requested Message"
+                                                            name="./quoteRequestedMessage"/>
+                                                </items>
+                                            </column>
+                                        </items>
+                                    </columns>
+                                </items>
+                            </requestQuote>
                         </items>
                     </tabs>
                 </items>

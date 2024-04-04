@@ -367,6 +367,7 @@ const renewalSearchResponse = {
                 },
                 "canPlaceOrder": true,
                 "canShareQuote": true,
+                "canRequestQuote": true,
                 "isValid": true,
                 "reseller": {
                     "incumbent": false,
@@ -518,6 +519,7 @@ const renewalSearchResponse = {
                 },
                 "canPlaceOrder": true,
                 "canShareQuote": true,
+                "canRequestQuote": true,
                 "isValid": true,
                 "reseller": {
                     "incumbent": false,
@@ -674,6 +676,7 @@ const renewalSearchResponse = {
                 },
                 "canPlaceOrder": true,
                 "canShareQuote": false,
+                "canRequestQuote": false,
                 "isValid": false,
                 "reseller": {
                     "incumbent": false,

@@ -8,6 +8,8 @@ import { fileExtensions, generateFileFromPost, getDictionaryValue } from "../../
 import { CopyIcon, DownloadIcon, ShareIcon, InfoIcon } from "../../../../../fluentIcons/FluentIcons";
 import { useRenewalGridState } from "../../RenewalsGrid/store/RenewalsStore";
 import CopyFlyout from "../../CopyFlyout/CopyFlyout";
+import ShareFlyout from "../../ShareFlyout/ShareFlyout";
+import RequestFlyout from "../../RequestFlyout/RequestFlyout";
 import Toaster from "../../Widgets/Toaster";
 import { getRowAnalytics, ANALYTIC_CONSTANTS, pushDataLayer } from '../../Analytics/analytics';
 
@@ -86,7 +88,14 @@ function GridHeader({ gridProps, data }) {
       agreementNumber: data?.items[0]?.contract?.id,
       analyticsAction: ANALYTIC_CONSTANTS.Detail.Actions.CopyDetail};
     effects.setCustomState({ key: 'copyFlyout', value: { data: flyoutData, show: true } });
-  }; 
+  };
+
+  const openShareFlyOut = () => {
+    const flyoutData = {
+      ...data,
+      agreementNumber: data?.items[0]?.contract?.id};
+    effects.setCustomState({ key: 'shareFlyout', value: { data: flyoutData, show: true } });
+  };
 
   function onCloseToaster() {
     effects.closeAndCleanToaster();    
@@ -104,7 +113,7 @@ function GridHeader({ gridProps, data }) {
       <div className="cmp-renewal-preview__download">
         {
             gridProps.enableShareOption && data?.canShareQuote && (
-            <button onClick={openCopyFlyOut} className='share-button'>
+            <button onClick={openShareFlyOut} className='share-button'>
               <span className={(gridProps?.productLines?.showDownloadPDFButton || gridProps?.productLines?.showDownloadXLSButton) && 'separator'}>
                 <ShareIcon className="cmp-renewal-preview__download--icon"/>Share
               </span>
@@ -147,6 +156,16 @@ function GridHeader({ gridProps, data }) {
         copyFlyout={gridProps.copyFlyout}
         subheaderReference={document.querySelector('.subheader > div > div')}
         />
+       <ShareFlyout
+       store={useRenewalGridState}
+       shareFlyoutContent={gridProps.shareFlyout}
+       subheaderReference={document.querySelector('.subheader > div > div')}
+       />
+     <RequestFlyout
+        store={useRenewalGridState}
+        requestFlyoutContent={gridProps.requestQuote}
+        subheaderReference={document.querySelector('.subheader > div > div')}
+      />
     </div>
   );
 }
@@ -154,6 +173,7 @@ function GridHeader({ gridProps, data }) {
 function ConfigGrid({ data, gridProps, updateDetails }) {
   const { reseller, endUser, items, programName, formattedDueDate, endUserType, source, formattedExpiry, vendorLogo, EANumber, vendorReference, shipTo, agreementDuration, quoteSupportLevel, renewedDuration, agreementNumber } = data;
   const { quotePreview } = gridProps;
+  const effects = useRenewalGridState(state => state.effects);
   Object.keys(quotePreview).forEach(key => {
     if (typeof quotePreview[key] === 'string') {
       quotePreview[key] = quotePreview[key].replace(/ No:/g,' \u2116:');
@@ -165,7 +185,13 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
       });
     }
   });
-  
+  const openRequestFlyOut = () => {
+      const flyoutData = {
+        ...data,
+        agreementNumber: data?.items[0]?.contract?.id};
+      effects.setCustomState({ key: 'requestFlyout', value: { data: flyoutData, show: true } });
+    };
+
   return (
     <div className="cmp-renewals-qp__config-grid">
       <div className="header-container">
@@ -187,10 +213,10 @@ function ConfigGrid({ data, gridProps, updateDetails }) {
           <GridHeader data={data} gridProps={gridProps} />
         </div>
         {
-          data.canRequestQuote && (
+          gridProps.enableRequestQuote && data.canRequestQuote && (
             <div className='opportunity-quote'>
               <p><InfoIcon />{gridProps.quotePreview.quoteOpportunityText}</p>
-              <a href='#quote'>{gridProps.quotePreview.quoteOpportunityRequestLabel}</a>
+              <button onClick={openRequestFlyOut}>{gridProps.quotePreview.quoteOpportunityRequestLabel}</button>
             </div>
           )
         }

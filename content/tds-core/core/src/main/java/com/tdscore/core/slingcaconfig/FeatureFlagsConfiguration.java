@@ -32,5 +32,8 @@ public @interface FeatureFlagsConfiguration {
     @Property(label = "Enable Share Option to Ellipsis Menu", description = "Helps to enable Share Option to Ellipsis Menu in Renewals grid.")
     boolean enableShareOption() default false;
 
+    @Property(label = "Enable Request Quote Option", description = "Helps to enable Request Quote Option in Renewals grid and Renewals details.")
+    boolean enableRequestQuote() default false;
+
 
 }

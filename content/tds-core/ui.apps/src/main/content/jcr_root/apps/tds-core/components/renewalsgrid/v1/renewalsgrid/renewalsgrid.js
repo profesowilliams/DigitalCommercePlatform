@@ -8,6 +8,7 @@ use(['../../../common/utils.js'], function(utils) {
     let noResultsValues = {};
     let copyFlyout = {};
     let shareFlyout = {};
+    let requestQuote = {};
 
     if (properties && properties["detailUrl"]) {
       jsonObject["detailUrl"] = utils.transformUrlGivenEnvironment(properties["detailUrl"]);
@@ -28,6 +29,10 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (this.serviceData && this.serviceData.enableShareOption) {
         jsonObject["enableShareOption"] = this.serviceData.enableShareOption;
+    }
+
+    if (this.serviceData && this.serviceData.enableRequestQuote) {
+        jsonObject["enableRequestQuote"] = this.serviceData.enableRequestQuote;
     }
 
     //Column definition
@@ -487,6 +492,41 @@ use(['../../../common/utils.js'], function(utils) {
     if (properties && properties["shareSuccessMessage"]) {
         shareFlyout.shareSuccessMessage = properties["shareSuccessMessage"];
     }
+
+    if (properties && properties["requestQuoteHeading"]) {
+            requestQuote.requestQuoteHeading = properties["requestQuoteHeading"];
+        }
+        if (properties && properties["requestQuoteDescription"]) {
+            requestQuote.requestQuoteDescription = properties["requestQuoteDescription"];
+        }
+        if (properties && properties["additionalInformationLabel"]) {
+            requestQuote.additionalInformationLabel = properties["additionalInformationLabel"];
+        }
+        if (properties && properties["additionalInformationPlaceholderText"]) {
+            requestQuote.additionalInformationPlaceholderText = properties["additionalInformationPlaceholderText"];
+        }
+        if (properties && properties["requestQuoteButtonLabel"]) {
+            requestQuote.requestQuoteButtonLabel = properties["requestQuoteButtonLabel"];
+        }
+        if (properties && properties["successToastMessage"]) {
+            requestQuote.successToastMessage = properties["successToastMessage"];
+        }
+        if (properties && properties["errorToastMessage"]) {
+            requestQuote.errorToastMessage = properties["errorToastMessage"];
+        }
+        if (properties && properties["quoteRequestedMessage"]) {
+            requestQuote.quoteRequestedMessage = properties["quoteRequestedMessage"];
+        }
+        if (properties && properties["requestQuoteCommentCountText"]) {
+            requestQuote.requestQuoteCommentCountText = properties["requestQuoteCommentCountText"];
+        }
+        if (properties && properties["requestQuoteCommentCount"]) {
+            requestQuote.requestQuoteCommentCount = properties["requestQuoteCommentCount"];
+        }
+
+        if (requestQuote != null) {
+            jsonObject["requestQuote"] = requestQuote;
+        }
 
     if (noResultsValues != null) {
         jsonObject["searchResultsError"] = noResultsValues;

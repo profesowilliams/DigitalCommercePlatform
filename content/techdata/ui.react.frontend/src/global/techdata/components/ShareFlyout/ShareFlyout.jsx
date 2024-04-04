@@ -207,10 +207,6 @@ export function ShareFlyout({ store, shareFlyoutContent, subheaderReference }) {
             enableShareButton={enableShareButton}
             updateRequestObject={updateRequestObject}
             requiredText={getDictionaryValueOrKey(shareFlyoutContent.requiredText)}/>
-         <EmailInput
-             id="cc-email"
-             updateRequestObject={updateRequestObject}
-             label={getDictionaryValueOrKey(shareFlyoutContent.emailCCLabel)}/>
           <div className="email-preview-section">
             <h3 className="email-preview-section-title">{getDictionaryValueOrKey(shareFlyoutContent.emailPreviewDescription)}:</h3>
             <p className="email-preview-section-product">{vendorName} {quoteType} for {endUserName} - {activeAgreementID}</p>

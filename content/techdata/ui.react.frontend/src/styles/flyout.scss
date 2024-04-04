@@ -371,20 +371,20 @@ $flyout-small-height-formax: 779px;
     }
 
     .MuiChip-root {
-         svg {
-           font-size: 15px;
-           color: rgba(0, 0, 0, 0.26);
-         }
-         &.MuiChip-colorError {
-           border-color: rgba(205, 22, 63, 1);
-           .MuiChip-label {
-             color: rgba(205, 22, 63, 1);
-           }
-         }
-         &.MuiChip-colorError svg {
+       svg {
+         font-size: 15px;
+         color: rgba(0, 0, 0, 0.26);
+       }
+       &.MuiChip-colorError {
+         border-color: rgba(205, 22, 63, 1);
+         .MuiChip-label {
            color: rgba(205, 22, 63, 1);
          }
        }
+       &.MuiChip-colorError svg {
+         color: rgba(205, 22, 63, 1);
+       }
+     }
      .backdrop {
       position: absolute;
       z-index: 9;
@@ -458,6 +458,84 @@ $flyout-small-height-formax: 779px;
         .cancel-btn {
           color: #00558c;
           background-color: white;
+        }
+      }
+    }
+  }
+  &.request-flyout {
+    .cmp-flyout__content {
+      > p {
+        font-size: 16px;
+        line-height: 24px;
+        color: #262626;
+      }
+      label {
+        font-size: 12px;
+        line-height: 18px;
+        color: #888b8d;
+        margin-bottom: 12px;
+        display: block;
+      }
+      textarea {
+        display: block;
+        width: 100%;
+        resize: none;
+        font-size: 16px;
+        line-height: 24px;
+        padding: 16px;
+        margin-bottom: 5px;
+        height: 58px;
+        &::placeholder {
+          color: #888b8d;
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+      .char-count {
+        font-size: 12px;
+        line-height: 18px;
+        color: #888b8d;
+        display: block;
+      }
+    }
+    .cmp-flyout__header {
+      padding: 18px;
+      border-color: #d9d8d7;
+      margin-bottom: 15px;
+      &-title {
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 700;
+      }
+      &-icon {
+        height: 24px;
+        svg {
+          height: 24px;
+        }
+      }
+    }
+    .cmp-flyout__footer {
+      padding: 10px 0;
+      border-top: 1px solid lightgrey;
+
+      &-buttons {
+        justify-content: end;
+      }
+
+      &-button {
+        width: auto;
+        margin-right: 20px;
+        height: auto;
+        padding: 12px 20px 12px 20px;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        &.cmp-flyout__footer-button--enabled {
+          background-color: #262626;
+
+          &:hover {
+            background-color: $brand-green;
+          }
         }
       }
     }

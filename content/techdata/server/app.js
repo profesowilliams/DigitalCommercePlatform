@@ -4522,7 +4522,7 @@ app.get("/ui-account/v1/topActions", function (req, res) {
 
   res.json(response);
 });
-app.get("/ui-renewal/v1/Details", function (req, res) {
+app.post("/ui-renewal/v1/Details", function (req, res) {
   const { id } = req.query;
   const response = {
     content: {

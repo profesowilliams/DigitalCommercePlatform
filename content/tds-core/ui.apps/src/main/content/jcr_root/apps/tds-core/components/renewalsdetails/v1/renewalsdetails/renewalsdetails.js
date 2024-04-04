@@ -10,7 +10,9 @@ use(['../../../common/utils.js'], function(utils) {
     var endCustomer = {};
     var quoteEditing = {};
     var lineItemDetailLabels = {};
+    var requestQuote = {};
     let copyFlyout = {};
+    let shareFlyout = {};
     
     if (properties && properties["line"]) {
         productLines["line"] = properties["line"];
@@ -465,6 +467,143 @@ use(['../../../common/utils.js'], function(utils) {
 
     if (lineItemDetailLabels != null) {
         jsonObject["lineItemDetailLabels"] = lineItemDetailLabels;
+    }
+
+    if (properties && properties["shareFlyoutTitle"]) {
+      shareFlyout.shareFlyoutTitle = properties["shareFlyoutTitle"];
+    }
+
+    if (properties && properties["shareFlyoutDescription"]) {
+        shareFlyout.shareFlyoutDescription = properties["shareFlyoutDescription"];
+    }
+     if (properties && properties["emailPreviewDescription"]) {
+            shareFlyout.emailPreviewDescription = properties["emailPreviewDescription"];
+     }
+    if (properties && properties["shareFlyoutQuoteButtonLabel"]) {
+        shareFlyout.shareFlyoutQuoteButtonLabel = properties["shareFlyoutQuoteButtonLabel"];
+    }
+    if (properties && properties["shareFlyoutCommentCountText"]) {
+        shareFlyout.shareFlyoutCommentCountText = properties["shareFlyoutCommentCountText"];
+    }
+    if (properties && properties["shareFlyoutCommentCount"]) {
+        shareFlyout.shareFlyoutCommentCount = properties["shareFlyoutCommentCount"];
+    }
+    if (properties && properties["shareFlyoutSignatureLabel"]) {
+        shareFlyout.shareFlyoutSignatureLabel = properties["shareFlyoutSignatureLabel"];
+    }
+    if (properties && properties["requiredText"]) {
+        shareFlyout.requiredText = properties["requiredText"];
+    }
+
+    if (properties && properties["shareFlyoutCommentsLabel"]) {
+          shareFlyout.shareFlyoutCommentsLabel = properties["shareFlyoutCommentsLabel"];
+      }
+
+    if (properties && properties["shareFlyoutQuoteDescription"]) {
+        shareFlyout.shareFlyoutQuoteDescription = properties["shareFlyoutQuoteDescription"];
+    }
+
+    if (properties && properties["emailToLabel"]) {
+        shareFlyout.emailToLabel = properties["emailToLabel"];
+    }
+
+    if (properties && properties["emailCCLabel"]) {
+        shareFlyout.emailCCLabel = properties["emailCCLabel"];
+    }
+
+    if (properties && properties["shareFlyoutButtonLabel"]) {
+        shareFlyout.shareFlyoutButtonLabel = properties["shareFlyoutButtonLabel"];
+    }
+
+    if (properties && properties["shareFlyoutButtonSharingLabel"]) {
+        shareFlyout.shareFlyoutButtonSharingLabel = properties["shareFlyoutButtonSharingLabel"];
+    }
+
+    if (this.shareQuoteEndpoint && this.serviceData.uiServiceDomain) {
+        shareFlyout.shareQuoteEndpoint = this.serviceData.uiServiceDomain + this.shareQuoteEndpoint;
+    }
+
+    if (properties && properties["shareFailedLabel"]) {
+        shareFlyout.shareFailedLabel = properties["shareFailedLabel"];
+    }
+    if (properties && properties["shareFailedDescription"]) {
+        shareFlyout.shareFailedDescription = properties["shareFailedDescription"];
+    }
+    if (properties && properties["shareFailedCancelLabel"]) {
+        shareFlyout.shareFailedCancelLabel = properties["shareFailedCancelLabel"];
+    }
+    if (properties && properties["shareFailedTryAgainLabel"]) {
+        shareFlyout.shareFailedTryAgainLabel = properties["shareFailedTryAgainLabel"];
+    }
+    if (properties && properties["incorrectEmailLabel"]) {
+        shareFlyout.incorrectEmailLabel = properties["incorrectEmailLabel"];
+    }
+    if (properties && properties["incorrectEmailDescription"]) {
+        shareFlyout.incorrectEmailDescription = properties["incorrectEmailDescription"];
+    }
+    if (properties && properties["incorrectEmailCancelLabel"]) {
+        shareFlyout.incorrectEmailCancelLabel = properties["incorrectEmailCancelLabel"];
+    }
+    if (properties && properties["incorrectEmailTryAgainLabel"]) {
+        shareFlyout.incorrectEmailTryAgainLabel = properties["incorrectEmailTryAgainLabel"];
+    }
+    if (properties && properties["recipientNotFoundLabel"]) {
+        shareFlyout.recipientNotFoundLabel = properties["recipientNotFoundLabel"];
+    }
+    if (properties && properties["recipientNotFoundDescription"]) {
+        shareFlyout.recipientNotFoundDescription = properties["recipientNotFoundDescription"];
+    }
+    if (properties && properties["recipientNotFoundCancelLabel"]) {
+        shareFlyout.recipientNotFoundCancelLabel = properties["recipientNotFoundCancelLabel"];
+    }
+    if (properties && properties["recipientNotFoundContinueLabel"]) {
+        shareFlyout.recipientNotFoundContinueLabel = properties["recipientNotFoundContinueLabel"];
+    }
+    if (properties && properties["shareSuccessMessage"]) {
+        shareFlyout.shareSuccessMessage = properties["shareSuccessMessage"];
+    }
+
+    if (shareFlyout != null) {
+        jsonObject["shareFlyout"] = shareFlyout;
+    }
+
+    if (properties && properties["requestQuoteHeading"]) {
+        requestQuote.requestQuoteHeading = properties["requestQuoteHeading"];
+    }
+    if (properties && properties["requestQuoteDescription"]) {
+        requestQuote.requestQuoteDescription = properties["requestQuoteDescription"];
+    }
+    if (properties && properties["additionalInformationLabel"]) {
+        requestQuote.additionalInformationLabel = properties["additionalInformationLabel"];
+    }
+    if (properties && properties["additionalInformationPlaceholderText"]) {
+        requestQuote.additionalInformationPlaceholderText = properties["additionalInformationPlaceholderText"];
+    }
+    if (properties && properties["requestQuoteCommentCountText"]) {
+        requestQuote.requestQuoteCommentCountText = properties["requestQuoteCommentCountText"];
+    }
+    if (properties && properties["requestQuoteCommentCount"]) {
+        requestQuote.requestQuoteCommentCount = properties["requestQuoteCommentCount"];
+    }
+    if (properties && properties["requestQuoteButtonLabel"]) {
+        requestQuote.requestQuoteButtonLabel = properties["requestQuoteButtonLabel"];
+    }
+    if (properties && properties["successToastMessage"]) {
+        requestQuote.successToastMessage = properties["successToastMessage"];
+    }
+    if (properties && properties["errorToastMessage"]) {
+        requestQuote.errorToastMessage = properties["errorToastMessage"];
+    }
+    if (properties && properties["quoteRequestedMessage"]) {
+        requestQuote.quoteRequestedMessage = properties["quoteRequestedMessage"];
+    }
+
+    if (requestQuote != null) {
+        jsonObject["requestQuote"] = requestQuote;
+    }
+
+    if (this.serviceData && this.serviceData.enableRequestQuote) {
+        jsonObject["enableRequestQuote"] = this.serviceData.enableRequestQuote;
     }
 
     return {

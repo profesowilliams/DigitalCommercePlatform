@@ -283,6 +283,8 @@ public class CaConfigReader {
 
     private boolean enableShareOption;
 
+    private boolean enableRequestQuote;
+
     @PostConstruct
     public void init() {
 
@@ -367,6 +369,7 @@ public class CaConfigReader {
         gtmBodyJSScript = analyticsConfiguration.gtmBodyJSScript();
         disableMultipleAgreement = featureFlagsConfiguration.disableMultipleAgreement();
         enableShareOption = featureFlagsConfiguration.enableShareOption();
+        enableRequestQuote = featureFlagsConfiguration.enableRequestQuote();
 
         buildSearchConfigurations();
 
@@ -856,5 +859,9 @@ public class CaConfigReader {
 
     public boolean getEnableShareOption() {
         return enableShareOption;
+    }
+
+    public boolean getEnableRequestQuote() {
+        return enableRequestQuote;
     }
 }
