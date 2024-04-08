@@ -7,8 +7,13 @@ function LineNumberColumn({ line, labels }) {
       <span className="cmp-order-tracking-grid-details__manufacturer">
         {line.manufacturer && (
           <>
-            <b>{getDictionaryValueOrKey(labels?.shippedByLabel)}: </b>
-            {line.manufacturer} <span className="separator">|</span>
+            <b>{getDictionaryValueOrKey(labels?.shippedByLabel)}:</b>{' '}
+            {line.manufacturer}
+          </>
+        )}
+        {line.manufacturer && line.TDSynnexPO && (
+          <>
+            <span className="separator">|</span>
           </>
         )}
         {line.TDSynnexPO && (
