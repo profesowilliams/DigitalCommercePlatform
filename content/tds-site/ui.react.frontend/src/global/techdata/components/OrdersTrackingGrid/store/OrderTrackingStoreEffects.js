@@ -469,6 +469,7 @@ export const orderTrackingEffects = (set, get) => {
           orderModification: value?.OrderModification || false,
           proactiveMessage: value?.ProactiveMessage || false,
           endUserInformation: value?.EndUserInformation || false,
+          groupLines: value?.GroupLines || false,
         },
       }));
     },

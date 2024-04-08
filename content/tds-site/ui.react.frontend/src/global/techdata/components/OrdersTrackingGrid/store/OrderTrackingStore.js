@@ -130,6 +130,7 @@ const INITIAL_STATE = {
     orderModification: false,
     proactiveMessage: false,
     endUserInformation: false,
+    groupLines: false,
   },
   orderDetailSubtotalValue: null,
 };
