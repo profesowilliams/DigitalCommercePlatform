@@ -6,7 +6,7 @@ export async function fetchData(config) {
 
   try {
     const result = await usGet(
-      `${config.uiServiceEndPoint}/v3/orderdetails/${id}/lines`
+      `${config.uiCommerceServiceDomain}/v3/orderdetails/${id}/lines`
     );
     return result;
   } catch (error) {

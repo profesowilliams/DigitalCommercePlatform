@@ -6229,6 +6229,7 @@ app.get("/ui-commerce/v3/orderdetails/:id?", (req, res) => {
         id: "I038551797",
         referenceType: "Original",
       },
+      serialsAny: true,
     },
     error: {
       code: 0,
@@ -7869,10 +7870,7 @@ app.get("/ui-commerce/v3/ordermodification/:id", function (req, res) {
   }, 200);
 });
 
-app.get("/ui-commerce/v2/OrderExport", function (req, res) {
-  return res.download("exportOrderDetail.xlsx");
-});
-app.get("/ui-commerce/v2/ReportOrdersExport", function (req, res) {
+app.get("/ui-commerce/v3/OrderExport", function (req, res) {
   return res.download("exportOrderDetail.xlsx");
 });
 

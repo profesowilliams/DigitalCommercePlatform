@@ -377,6 +377,7 @@ use(["../../../common/utils.js"], function (utils) {
     { key: "secondaryDescription", name: "exportFlyoutSecondaryDescription" },
     { key: "button", name: "exportFlyoutButton" },
     { key: "exportSuccessMessage", name: "exportSuccessMessage" },
+    { key: "exportFailedMessage", name: "exportFailedMessage" },
   ];
 
   properties &&

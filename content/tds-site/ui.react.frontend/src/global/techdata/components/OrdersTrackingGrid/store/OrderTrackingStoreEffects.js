@@ -460,7 +460,10 @@ export const orderTrackingEffects = (set, get) => {
       }));
     },
     setExportFlyoutSource(value) {
-      exportFlyoutSource = value;
+      set((state) => ({
+        ...state,
+        exportFlyoutSource: value,
+      }));
     },
     setFeatureFlags(value) {
       set((state) => ({
