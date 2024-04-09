@@ -14,6 +14,19 @@ import {
 } from './gridUtils';
 import { ORDER_FILTER_LOCAL_STORAGE_KEY } from '../../../../../utils/constants';
 
+export const endpoints = {
+  ordersReport: '/v2/ReportOrders',
+  ordersReportCount: '/v2/ReportOrdersCount',
+  exportAllOrderLines: '/v2/OrdersExport',
+  exportLinesWithSerialNumbersOnly: '/v2/ReportOrdersExport',
+  orderModify: '/v2/OrderModify',
+  orderModifyChange: '/v2/OrderModifyChange',
+  uiService: '/v2/orders',
+  orderDetail: '/v3/orderdetails',
+  replaceProduct: '/v2/OrderEOL',
+  replacementsProducts: '/v2/ReplacementProduct',
+};
+
 export const addDefaultDateRangeToUrl = (url, defaultDateRange) => {
   const searchParams = new URLSearchParams(defaultDateRange);
   if (defaultDateRange) {

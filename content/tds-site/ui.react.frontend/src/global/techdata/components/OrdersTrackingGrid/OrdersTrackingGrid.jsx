@@ -23,6 +23,7 @@ import {
   getFilterFlyoutPredefined,
   getFilterFlyoutCustomized,
   getInitialFiltersDataFromLS,
+  endpoints,
 } from './utils/orderTrackingUtils';
 import {
   getHomeAnalyticsGoogle,
@@ -182,9 +183,12 @@ function OrdersTrackingGrid(props) {
       isOnSearchAction,
     };
     request.url = addCurrentPageNumber(customPaginationRef, request);
-    const ordersReportUrl = new URL(componentProp.ordersReportEndpoint);
+    const ordersReportUrl = new URL(
+      componentProp.uiCommerceServiceDomain + endpoints.ordersReport
+    );
     const ordersReportCountUrl = new URL(
-      componentProp.ordersReportCountEndpoint
+      componentProp.uiCommerceServiceDomain +
+        endpoints.ordersReportCountEndpoint
     );
 
     const ordersCountUrl = new URL(
@@ -265,7 +269,11 @@ function OrdersTrackingGrid(props) {
       !compareSort(currentSortState, hasSortChanged.current)
     ) {
       pushDataLayerGoogle(
-        getSortAnalyticsGoogle(analyticsCategories.sort, sortedModel)
+        getSortAnalyticsGoogle(sortedModel, 'Click')
+      );
+    } else if (sortingEventFilter.length === 1) {
+      pushDataLayerGoogle(
+        getSortAnalyticsGoogle(sortedModel, 'View')
       );
     }
   };

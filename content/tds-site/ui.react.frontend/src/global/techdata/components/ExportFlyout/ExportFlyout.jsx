@@ -18,6 +18,7 @@ import {
   getExportSerialNumbersAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -131,7 +132,9 @@ function ExportFlyout({
   };
 
   function getExportAllOrderLines() {
-    const url = componentProp?.exportAllOrderLinesEndpoint || 'nourl';
+    const url =
+      componentProp?.uiCommerceServiceDomain +
+        endpoints.exportAllOrderLines || 'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', false);
     return requestFileBlobWithoutModal(
       url + '?' + urlSearchParams.toString(),
@@ -144,7 +147,8 @@ function ExportFlyout({
 
   function getExportLinesWithSerialNumbersOnly() {
     const url =
-      componentProp?.exportLinesWithSerialNumbersOnlyEndpoint || 'nourl';
+      componentProp?.uiCommerceServiceDomain +
+        endpoints.exportLinesWithSerialNumbersOnly || 'nourl';
     urlSearchParams.set('OnlyWithSerialNumbers', true);
     return requestFileBlobWithoutModal(
       url + '?' + urlSearchParams.toString(),

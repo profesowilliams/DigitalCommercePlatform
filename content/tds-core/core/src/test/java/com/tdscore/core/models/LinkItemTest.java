@@ -27,7 +27,6 @@ public class LinkItemTest {
     @Mock
     private ResourceResolver resolver;
 
-    private String UIServiceEndPoint;
     private String externalUrl;
     private String sessionID;
 

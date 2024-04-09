@@ -273,10 +273,6 @@ use(function () {
         jsonObject["downloadInvoicesEndpoint"] = this.uiServiceDomain+this.downloadIndividualInvoiceEndpoint;
     }
 
-    if (this.uiServiceDomain != null && this.orderDetailEndpoint != null) {
-        jsonObject["uiServiceEndPoint"] = this.uiServiceDomain+this.orderDetailEndpoint;
-    }
-
     if (this.uiServiceDomain != null && this.downloadOrderDetailsEndpoint != null) {
         jsonObject["downloadOrderDetailsEndpoint"] = this.uiServiceDomain+this.downloadOrderDetailsEndpoint;
     }

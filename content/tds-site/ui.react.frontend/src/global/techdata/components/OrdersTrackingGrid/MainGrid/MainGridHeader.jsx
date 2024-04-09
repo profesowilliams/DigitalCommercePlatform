@@ -227,7 +227,6 @@ function MainGridHeader({
       ref={customPaginationRef}
       onQueryChanged={onQueryChanged}
       disabled={isLoading}
-      paginationAnalyticsLabel={analyticsCategories.pagination}
       paginationLabels={paginationLabels}
     />,
   ];

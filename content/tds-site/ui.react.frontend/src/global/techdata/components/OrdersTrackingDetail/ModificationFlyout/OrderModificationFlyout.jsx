@@ -10,6 +10,7 @@ import { getUrlParams } from '../../../../../utils';
 import { useOrderTrackingStore } from '../../OrdersTrackingGrid/store/OrderTrackingStore';
 import { InfoIcon } from './../../../../../fluentIcons/FluentIcons';
 import { getAddLineAnalyticsGoogle, getReduceQuantityAnalyticsGoogle, pushDataLayerGoogle } from '../../OrdersTrackingGrid/utils/analyticsUtils';
+import { endpoints } from '../../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 const areItemsListIdentical = (items, itemsCopy) => {
   //// This function compares only quantities rather than all items' parameters
@@ -65,7 +66,7 @@ function OrderModificationFlyout({
   const flyoutVisible = orderModificationConfig?.show;
   const enableAddLine = orderModificationContent?.addLine === true;
   const requestURLData = `${gridConfig.uiCommerceServiceDomain}/v3/ordermodification/${orderNumber}`;
-  const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}/v2/OrderModify`;
+  const requestURLLineModify = `${gridConfig.uiCommerceServiceDomain}${endpoints.orderModifyEndpoint}`;
 
   const getOrderModificationData = async () => {
     try {

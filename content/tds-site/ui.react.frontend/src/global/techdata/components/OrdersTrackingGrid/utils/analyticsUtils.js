@@ -4,22 +4,24 @@ export const pushDataLayerGoogle = (analyticsData) => {
   window.dataLayer.push(analyticsData);
 };
 
-export const getSortAnalyticsGoogle = (category, sortedModel) => {
+export const getSortAnalyticsGoogle = (sortedModel, searchTrigger) => {
   const sortData = sortedModel
     .map((item) => `${item.colId}: ${item.sort}`)
     .join();
   return {
     event: 'Order tracking - Grid Sort',
-    category,
+    category: 'Sort',
     orderTracking: sortData,
+    searchTrigger,
   };
 };
 
-export const getPaginationAnalyticsGoogle = (category, pageEvent) => {
+export const getPaginationAnalyticsGoogle = (pageEvent, pageNum) => {
   return {
     event: 'Order tracking - Pagination',
-    category,
+    category: 'Pagination',
     orderTracking: pageEvent,
+    pageNumber: pageNum,
   };
 };
 
@@ -55,6 +57,28 @@ const getEnglishReportLabel = (optionKey) => {
       return optionKey;
   }
 }
+
+export const getEnglishFiltersLabel = (optionKey) => {
+  const labels = {
+    OPEN: 'Open',
+    INVESTIGATION: 'Investigation',
+    SHIPPING: 'Shipping',
+    COMPLETED: 'Completed',
+    REJECTED: 'Rejected',
+    CANCELLED: 'Cancelled',
+    ON_HOLD: 'On Hold',
+    SHIPPED: 'Shipped',
+    IN_PROCESS: 'In Process',
+    INTOUCH: 'In Touch',
+    EDI_OR_XML: 'EDI or XML',
+    LICENSING: 'Licensing',
+    MANUAL: 'Manual',
+    STOCKING_ORDER: 'Stocking Order',
+    THIRD_PARTY: 'Third Party',
+    STREAM_ONE: 'Stream One',
+  };
+  return labels[optionKey] || optionKey;
+};
 
 export const getReportAnalyticsGoogle = (category, option) => {
   const reportEnglishLabel = getEnglishReportLabel(option.key);

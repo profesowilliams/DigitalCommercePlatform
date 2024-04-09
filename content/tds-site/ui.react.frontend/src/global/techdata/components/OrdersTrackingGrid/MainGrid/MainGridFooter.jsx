@@ -32,7 +32,6 @@ const MainGridFooter = ({
           ref={customPaginationRef}
           onQueryChanged={onQueryChanged}
           disabled={isLoading}
-          paginationAnalyticsLabel={analyticsCategories.pagination}
           paginationLabels={paginationLabels}
         />
       </div>

@@ -80,7 +80,7 @@ public class LinkItem {
     @SuppressWarnings("java:S116")
     @Inject
     private String UIServiceEndPoint;
-
+    
     @Inject
     private String externalUrl;
 

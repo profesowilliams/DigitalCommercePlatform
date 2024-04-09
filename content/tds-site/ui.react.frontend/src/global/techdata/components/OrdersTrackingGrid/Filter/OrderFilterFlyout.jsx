@@ -5,6 +5,7 @@ import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 import BaseFlyout from '../../BaseFlyout/BaseFlyout';
 import { getDictionaryValueOrKey } from '../../../../../utils/utils';
 import {
+  getEnglishFiltersLabel,
   getFilterAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../utils/analyticsUtils';
@@ -85,19 +86,19 @@ const OrderFilterFlyout = ({
       orderStatusFiltersChecked.length > 0 &&
         checkedFilters.push(
           `${orderStatus}: ${orderStatusFiltersChecked
-            .map((filter) => filter.filterOptionLabel)
+            .map((filter) => getEnglishFiltersLabel(filter.filterOptionKey))
             .join()}`
         );
       orderTypeFiltersChecked.length > 0 &&
         checkedFilters.push(
           `${orderType}: ${orderTypeFiltersChecked
-            .map((filter) => filter.filterOptionLabel)
+            .map((filter) => getEnglishFiltersLabel(filter.filterOptionKey))
             .join()}`
         );
       dateRangeFiltersChecked.length > 0 &&
         checkedFilters.push(
           `${dateRange}: ${dateRangeFiltersChecked
-            .map((filter) => filter.filterOptionLabel)
+            .map((filter) => getEnglishFiltersLabel(filter.filterOptionKey))
             .join()}`
         );
       pushDataLayerGoogle(

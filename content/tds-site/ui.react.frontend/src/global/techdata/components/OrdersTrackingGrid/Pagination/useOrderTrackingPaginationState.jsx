@@ -15,7 +15,6 @@ import { useOrderTrackingStore } from '../store/OrderTrackingStore';
 
 function useOrderTrackingPaginationState({
   onQueryChanged,
-  paginationAnalyticsLabel,
   resultsLabel,
   ofLabel,
 }) {
@@ -97,8 +96,8 @@ function useOrderTrackingPaginationState({
     }
     pushDataLayerGoogle(
       getPaginationAnalyticsGoogle(
-        paginationAnalyticsLabel,
-        ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo
+        ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
+        value+1
       )
     );
     goToSpecificPage(value);
@@ -111,8 +110,8 @@ function useOrderTrackingPaginationState({
     if (target.value.length >= 3) {
       pushDataLayerGoogle(
         getPaginationAnalyticsGoogle(
-          paginationAnalyticsLabel,
-          ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo
+          ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageNo,
+          value+1
         )
       );
       goToSpecificPage(value);
@@ -191,7 +190,6 @@ function useOrderTrackingPaginationState({
     paginationStates,
     paginationHandlers,
     processPaginationString,
-    paginationAnalyticsLabel,
   };
 }
 

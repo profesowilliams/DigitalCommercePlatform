@@ -284,13 +284,6 @@ use(["../common/utils.js"], function (utils) {
     jsonObject["uiProactiveServiceDomain"] =
       this.serviceData.uiServiceDomain + `/ui-proactive`;
     const endpoints = [
-      "orderModifyEndpoint",
-      "orderModifyChangeEndpoint",
-      "uiServiceEndPointForDetails",
-      "ordersReportEndpoint",
-      "ordersReportCountEndpoint",
-      "exportAllOrderLinesEndpoint",
-      "exportLinesWithSerialNumbersOnlyEndpoint",
       "downloadAllInvoicesEndpoint",
     ];
 

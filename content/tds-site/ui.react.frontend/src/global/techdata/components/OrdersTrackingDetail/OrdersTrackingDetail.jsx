@@ -16,6 +16,7 @@ import { useOrderTrackingStore } from '../OrdersTrackingGrid/store/OrderTracking
 import { useGTMStatus } from '../../hooks/useGTMStatus';
 import { getOrderDetailsAnalyticsGoogle } from '../OrdersTrackingGrid/utils/analyticsUtils';
 import { getDictionaryValueOrKey } from './../../../../utils/utils';
+import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 function OrdersTrackingDetail(props) {
   const { id = '' } = getUrlParams();
@@ -59,7 +60,9 @@ function OrdersTrackingDetail(props) {
 
   const headerRequest = async () => {
     try {
-      const apiResponse = await usGet(`${config.orderDetailEndpoint}/${id}`);
+      const apiResponse = await usGet(
+        `${config.uiCommerceServiceDomain+endpoints.orderDetailEndpoint}/${id}`
+      );
       setContent(apiResponse?.data?.content);
       if (apiResponse.status === 204) {
         redirectToMainDashboard();

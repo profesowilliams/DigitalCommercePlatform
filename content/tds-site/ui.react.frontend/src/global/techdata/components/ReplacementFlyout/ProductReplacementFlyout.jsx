@@ -15,6 +15,7 @@ import {
   getEolReplacementAnalyticsGoogle,
   pushDataLayerGoogle,
 } from '../OrdersTrackingGrid/utils/analyticsUtils';
+import { endpoints } from '../OrdersTrackingGrid/utils/orderTrackingUtils';
 
 const styleOverrideFormControlLabel = {
   '& .MuiSvgIcon-root': {
@@ -89,7 +90,7 @@ function ProductReplacementFlyout({
     };
     try {
       const result = await usPost(
-        `${config.uiCommerceServiceDomain + '/v2/OrderEOL'}`,
+        `${config.uiCommerceServiceDomain + endpoints.replaceProduct}`,
         payload
       );
 
@@ -236,7 +237,7 @@ function ProductReplacementFlyout({
     if (tdNumber && productReplacementConfig?.show) {
       try {
         const result = await usGet(
-          `${config.uiCommerceServiceDomain}/v2/ReplacementProduct?id=${tdNumber}`
+          `${config.uiCommerceServiceDomain}${endpoints.replacementsProducts}?id=${tdNumber}`
         );
         setProductDtos(result?.data?.content?.productDtos || []);
       } catch (error) {

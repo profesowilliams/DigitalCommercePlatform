@@ -15,6 +15,7 @@ import {
 
 import { isObject } from '../../../../utils';
 import useAuth from '../../hooks/useAuth';
+import { endpoints } from "../OrdersTrackingGrid/utils/orderTrackingUtils";
 
 function Grid(props) {
   let {
@@ -442,7 +443,7 @@ function Grid(props) {
         : '';
     if (gridId.current) {
       // check if there are additional query params in url, append grid specific params
-      const url = new URL(config.uiServiceEndPoint);
+      const url = new URL(config.uiCommerceServiceDomain+endpoints.uiService);
       const pages =
         pageSize && pageNumber
           ? `PageSize=${pageSize}&PageNumber=${pageNumber}`

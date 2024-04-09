@@ -17,7 +17,6 @@ function OrderTrackingGridPagination(
   {
     onQueryChanged,
     disabled = false,
-    paginationAnalyticsLabel,
     paginationLabels,
   },
   ref
@@ -27,10 +26,8 @@ function OrderTrackingGridPagination(
     paginationStates,
     paginationHandlers,
     processPaginationString,
-    analyticsCategory,
   } = useOrderTrackingPaginationState({
     onQueryChanged,
-    paginationAnalyticsLabel,
     resultsLabel,
     ofLabel,
   });
@@ -67,9 +64,9 @@ function OrderTrackingGridPagination(
             disabled={isGoBackDisabled}
             onClick={goToFirstPage}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
-              paginationAnalyticsLabel,
-              analyticsCategory,
-              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin
+              null,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBegin,
+              1
             )}
           >
             <ChevronDoubleLeftIcon />
@@ -79,9 +76,9 @@ function OrderTrackingGridPagination(
             disabled={isGoBackDisabled}
             onClick={decrementHandler}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
-              paginationAnalyticsLabel,
-              analyticsCategory,
-              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack
+              null,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageBack,
+              pageNumber-1
             )}
           >
             <ChevronLeftIcon />
@@ -112,9 +109,9 @@ function OrderTrackingGridPagination(
             disabled={isGoForwardDisabled}
             onClick={incrementHandler}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
-              paginationAnalyticsLabel,
-              analyticsCategory,
-              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward
+              null,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageForward,
+              pageNumber+1
             )}
           >
             <ChevronRightIcon />
@@ -124,9 +121,9 @@ function OrderTrackingGridPagination(
             disabled={isGoForwardDisabled}
             onClick={gotToLastPage}
             analyticsCallback={getPaginationAnalyticsGoogle.bind(
-              paginationAnalyticsLabel,
-              analyticsCategory,
-              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd
+              null,
+              ANALYTIC_CONSTANTS.Grid.PaginationEvent.PageEnd,
+              pageCount
             )}
           >
             <ChevronDoubleRightIcon />
